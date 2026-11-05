@@ -1,0 +1,21 @@
+{
+ "at": "2026-10-26T22:24:55.601Z",
+ "apply": false,
+ "run": null,
+ "reason": "#6560 Gemini 3.8 Flash low correction of the Yigdzin read (image + draft), ya-btags changes kept only where Opus saw them on the leaf",
+ "written": 521,
+ "skipped": {
+  "reply wrapper: reply cut before <<<END>>>": 1,
+  "correction changes 47% of the draft's syllables: check by eye": 1,
+  "held for a leaf check (ya-btags)": 2
+ },
+ "held_yatags": 2,
+ "yatags_hits": 0,
+ "yatags_kept": 0,
+ "yatags_reverted": 0,
+ "written_page_ids": [],
+ "write_guard_repaired": 0,
+ "write_guard_refused": [],
+ "yatags_held_hits": 2,
+ "failed_reads": 1
+}

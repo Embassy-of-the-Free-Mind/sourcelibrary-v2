@@ -16,14 +16,26 @@
  *   node scripts/split-book.mjs <slug-or-id>
  *   node scripts/split-book.mjs <slug-or-id> --dry-run
  *   node scripts/split-book.mjs <slug-or-id> --with-ocr   # also run Gemini OCR (realtime)
+ *   node scripts/split-book.mjs <id> --positions-file=F --by=NAME [--stage]
+ *        Reviewed folds WITH the text cut (#7605): each frame is cut at its reviewed fold, and its stored OCR is cut at
+ *        its own <page-break/> (scripts/lib/split-stage.mjs leavesForFrame). A frame with no single break gives two
+ *        leaves without text, for a fresh read; no model is called. --stage builds the leaves HIDDEN and leaves the
+ *        spreads live (build, then swap: scripts/maintenance/split-swap.mjs makes them live once read and translated).
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
 import { NOT_HELD } from './lib/pipeline-hold.mjs';
 import { recountBook } from './lib/page-counts.mjs';
 import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
+import { gatedImageCall } from './lib/agy-cli.mjs';
+import { leavesForFrame, cutSpreadText, stagedPageNumber, stagedLeavesQuery, frameOcrHash } from './lib/split-stage.mjs';
+import { contentHash } from './lib/write-provenance.mjs';
+import { recordSweepAction } from './lib/sweep-log.mjs';
+import { voteSpreadOrder } from './lib/split-page-order.mjs';
+import { plateSpanVerdict } from './lib/plate-spread.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -59,14 +71,26 @@ const APPROVAL_ARG = APPROVE_CENTER ? 500 : APPROVE_SPLIT;
 // for a book the detectors cannot read (woodblock spreads whose inter-column gaps look like gutters). null = keep the
 // page whole. Replaces pixel/Gemini detection for every page; a page missing from the map stops the run. Gutter-only.
 const POSITIONS_FILE = args.find(a => a.startsWith('--positions-file='))?.split('=').slice(1).join('=') || null;
-if (POSITIONS_FILE && !GUTTER_ONLY) { console.log('--positions-file applies to --gutter-only runs'); process.exit(1); }
+// Without --gutter-only, reviewed positions cut the stored OCR at its <page-break/> onto the leaves (#7605): TEXT_CUT.
+// It never calls a model: a frame whose OCR does not break once gives leaves without text, for a lane to read.
+const TEXT_CUT = !!POSITIONS_FILE && !GUTTER_ONLY;
+// --stage (#7605, build then swap): write the leaves hidden, leave the spreads live and the book's flags alone.
+const STAGE = args.includes('--stage');
+// --text-sides=FILE (#7605): { "<page_number>": "lr" | "rl" | null } from scripts/maintenance/split-text-sides.mjs — which
+// leaf the text before each <page-break/> is on, checked against the leaf images. Required when TEXT_CUT has breaks
+// to cut: the spread prompt's left-then-right order was broken on 1 of 3 frames checked on the gate book.
+const TEXT_SIDES_FILE = args.find(a => a.startsWith('--text-sides='))?.split('=').slice(1).join('=') || null;
+if (TEXT_SIDES_FILE && !TEXT_CUT) { console.log('--text-sides applies to --positions-file runs without --gutter-only'); process.exit(1); }
+const TEXT_SIDES = TEXT_SIDES_FILE ? JSON.parse((await import('node:fs')).readFileSync(TEXT_SIDES_FILE, 'utf8')) : null;
+if (STAGE && !POSITIONS_FILE) { console.log('--stage needs --positions-file (reviewed folds)'); process.exit(1); }
+if (STAGE && WITH_OCR) { console.log('--stage does not run OCR'); process.exit(1); }
 if (POSITIONS_FILE && !APPROVED_BY) { console.log('--positions-file needs --by=<name> (who reviewed the positions)'); process.exit(1); }
 const REVIEWED_POSITIONS = POSITIONS_FILE ? JSON.parse((await import('node:fs')).readFileSync(POSITIONS_FILE, 'utf8')) : null;
 let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import cost on OCR runs) // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
-  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl] [--approve-center | --approve-split=N | --positions-file=F] [--overlap=0.03] --by=<name>');
+  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl] [--approve-center | --approve-split=N | --positions-file=F [--stage]] [--overlap=0.03] --by=<name>');
   process.exit(1);
 }
 
@@ -99,7 +123,7 @@ function spPath(bookId, pageNum, suffix) {
 async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
   const full = await sharp(buf).extract({ left, top: 0, width, height }).jpeg({ quality: 90, progressive: true }).toBuffer();
   const fullDim = { width, height };
-  const display = await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
+  const display = await markDisplay(await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer(), { bookId, pageNumber: pageNum });
   const thumb = await sharp(full).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), full),
@@ -111,7 +135,7 @@ async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
 
 async function uploadFullImage(buf, bookId, pageNum) {
   const fm = await sharp(buf).metadata();
-  const display = await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
+  const display = await markDisplay(await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer(), { bookId, pageNumber: pageNum });
   const thumb = await sharp(buf).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), buf),
@@ -243,28 +267,25 @@ async function runSpreadOCR(imageBuf) {
 // normal single-page OCR pipeline (batch, 50% off) instead of realtime.
 // NO center hint: measured that "usually 400-600" anchors the model to ~500 and
 // it ignores the real (often offset) gutter. Without the hint, gemini-3-flash-preview
-// localizes the gutter to within ~3/1000 of the pixel detector even on strongly
-// offset RTL manuscripts. flash-lite stays center-biased — must use preview.
-const GUTTER_MODEL = 'gemini-3-flash-preview';
-const GUTTER_PROMPT = `This is a photo of an open book showing a left page and a right page. Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
+// localized the gutter to within ~3/1000 of the pixel detector even on strongly
+// offset RTL manuscripts. flash-lite stays center-biased — must use Flash.
+// Since 2026-10-08 the paid API allows flash-lite only, so this runs 3.8 Flash low
+// through the agy CLI on the subscription (#5771, measured 2026-10-28 on 33
+// reviewed spreads: 33/33 called two pages, median 3/1000 from the reviewed cut,
+// worst 24/1000, never inside text; ~16 s a call).
+const GUTTER_MODEL = 'gemini-3.8-flash-low';
+const GUTTER_PROMPT = (f) => `This is a photo of an open book showing a left page and a right page: @./${f}
+Find the GUTTER — the vertical line where the two pages meet at the binding (often a shadow, or the innermost margins of the two pages). It may NOT be at the center; look carefully.
 
-Respond with EXACTLY one tag and nothing else:
+Do not use any tool other than viewing the attached image. Respond with EXACTLY one tag and nothing else:
 - Two-page spread: <split-position>N</split-position> where N (0-1000) is the gutter's horizontal position. 0 = far left edge, 1000 = far right edge.
 - Single page (not a spread): <split-position>null</split-position>`;
 
-async function initGeminiGutter() {
-  const { GoogleGenerativeAI } = await import('@google/generative-ai');
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  geminiModel = genAI.getGenerativeModel({ model: GUTTER_MODEL });
-}
-
 async function runGutterDetect(imageBuf) {
-  const r = await geminiModel.generateContent([
-    GUTTER_PROMPT,
-    { inlineData: { mimeType: 'image/jpeg', data: imageBuf.toString('base64') } }
-  ]);
-  const text = r.response.text();
-  const m = text.match(/<split-position>([^<]*)<\/split-position>/);
+  const small = await sharp(imageBuf).resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 88 }).toBuffer();
+  const r = await gatedImageCall(GUTTER_PROMPT, small, { model: GUTTER_MODEL });
+  if (r.cls) throw new Error(`agy ${r.cls}${r.err ? `: ${r.err}` : ''}`);
+  const m = r.text.match(/<split-position>([^<]*)<\/split-position>/);
   if (!m) return null; // unparseable — caller decides fallback
   const n = parseInt(m[1]);
   return (!isNaN(n) && n > 0 && n < 1000) ? n : 'single';
@@ -322,21 +343,23 @@ if (!book) { console.log('Book not found:', targetSlug); process.exit(1); }
 console.log(`\n=== ${book.title} ===`);
 console.log(`Current: ${book.pages_count} pages | needs_splitting: ${book.needs_splitting} | split_completed: ${book.split_completed}`);
 
-// --- Reading order (#4796) ---
-// A spread's two halves become consecutive pages. In a left-to-right book the
-// left leaf is read first; in a right-to-left book (Hebrew, Arabic, Persian,
-// Syriac, Urdu) and a vertically-set CJK book (Chinese, Japanese, Korean) the
-// RIGHT leaf is read first. Emitting left-then-right for every book put 41
-// books' pages in reversed reading order (Pardes Rimmonim: page 101 is ch.
-// 17–18, page 100 is ch. 18–19). `--page-order ltr|rtl` overrides the language
-// default (a modern horizontally-set Japanese book is ltr); the decision is
-// recorded on the book as `split_page_order` so it can be audited and undone.
+// --- Reading order (#4796, #5699) ---
+// A spread's two halves become consecutive pages, and one of them is read first.
+// The language only gives a PROVISIONAL order: right leaf first for Hebrew,
+// Arabic, Persian, Syriac, Urdu and vertically-set CJK. It is wrong for a book
+// bound the other way — both Maqrizi volumes are Arabic, bound left to right,
+// and every spread of both was stored backwards (#5699). So after the cut
+// (Step 4b) the printed numbers on the two halves decide the order; when they
+// cannot be read the book is FLAGGED (sweep_log `split-order-unverified`), not
+// refused, so the split lanes keep running. `--page-order ltr|rtl` is a
+// person's decision and is kept (a disagreement with the numbers is flagged).
+// The order is recorded on the book as `split_page_order`.
 const RIGHT_FIRST = /arabic|hebrew|aramaic|syriac|persian|urdu|ottoman|chinese|japanese|korean|manchu/i;
 const orderArg = args.find(a => a.startsWith('--page-order='))?.split('=')[1];
 if (orderArg && orderArg !== 'ltr' && orderArg !== 'rtl') { console.log(`--page-order must be ltr or rtl, got "${orderArg}"`); process.exit(1); }
-const PAGE_ORDER = orderArg || (RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr');
-const SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
-console.log(`Reading order: ${PAGE_ORDER} (${orderArg ? '--page-order' : `language "${book.language || 'unknown'}"`}) — ${SIDE_ORDER[0]} leaf first`);
+let PAGE_ORDER = orderArg || (RIGHT_FIRST.test(String(book.language || '')) ? 'rtl' : 'ltr');
+let SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
+console.log(`Reading order: ${PAGE_ORDER} (${orderArg ? '--page-order' : `provisional, from language "${book.language || 'unknown'}"; checked against the printed numbers after the cut`}) — ${SIDE_ORDER[0]} leaf first`);
 
 // --- Step 1: Get original image URLs ---
 const manifestUrl = book.image_source?.iiif_manifest;
@@ -475,7 +498,7 @@ console.log('\n--- Step 2: Load existing page OCR ---');
 const allExistingPages = await db.collection('pages')
   .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }) // live pages only — skip spreads archived by a prior run (idempotency)
   .sort({ page_number: 1 })
-  .project({ id: 1, page_number: 1, photo: 1, page_type: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
+  .project({ id: 1, page_number: 1, photo: 1, page_type: 1, ocr: 1, detected_images: 1 })
   .toArray();
 
 // Only use the first N pages matching the source image count (the original spreads).
@@ -483,6 +506,12 @@ const allExistingPages = await db.collection('pages')
 const existingPages = allExistingPages.slice(0, iiifUrls.length);
 
 console.log(`  ${allExistingPages.length} existing page records, using first ${existingPages.length} (matching ${iiifUrls.length} source images)`);
+
+// A staged run must be the only one (#7605): a second stage would leave two sets of hidden leaves for one book.
+if (STAGE) {
+  const already = await db.collection('pages').countDocuments(stagedLeavesQuery(book.id));
+  if (already) { console.log(`ERROR: ${already} staged leaves already exist for this book — swap them (split-swap.mjs) or remove them first`); process.exit(1); }
+}
 
 // Check if OCR has spread markers
 const withPageBreak = existingPages.filter(p => p.ocr?.data?.includes('<page-break/>'));
@@ -499,7 +528,7 @@ if (GUTTER_ONLY) {
   //   both confident but DISAGREE (>8%) → uncertain (don't trust either blindly)
   //   neither confident + wide          → center, uncertain
   //   neither confident + tight         → keep whole, uncertain
-  // Gemini = gemini-3-flash-preview with a no-center-hint prompt (it tracks
+  // Gemini = 3.8 Flash low via the agy CLI, no-center-hint prompt (it tracks
   // offset gutters to ~3/1000; flash-lite + the old hint just guessed center).
   // Pixel is free and runs first; Gemini cross-checks / rescues the tail.
   // Book-level park: too many uncertain pages, OR confident gutter positions
@@ -562,10 +591,9 @@ if (GUTTER_ONLY) {
 
   console.log('\n--- Step 3: Gutter detection — pixel/page (free), Gemini on a sample (no OCR) ---');
   ({ detectGutterPixel } = await import('./lib/gutter-detect.mjs'));
-  let geminiReady = false;
   const stats = { portrait: 0, agree: 0, pixelOnly: 0, geminiOnly: 0, disagree: 0, centerUncertain: 0, keptWholeUncertain: 0 };
   const AGREE_TOL = 80; // 0-1000 → 8% of width
-  // The binding is stable book-wide, so Gemini (the paid call) only needs to run
+  // The binding is stable book-wide, so Gemini (a ~16 s CLI call) only needs to run
   // on a small SAMPLE to validate/establish the book gutter. Pixel runs on every
   // page (free); non-sample pages where pixel is unsure snap to the book median.
   const GEM_SAMPLE = Math.min(8, iiifUrls.length);
@@ -607,7 +635,6 @@ if (GUTTER_ONLY) {
         const pixPos = (pix.confidence === 'high' && pix.column != null) ? Math.round((pix.column / meta.width) * 1000) : null;
         let gemPos = null;
         if (gemSampleIdx.has(idx)) {
-          if (!geminiReady) { await initGeminiGutter(); geminiReady = true; }
           try { const g = await runGutterDetect(buf); if (typeof g === 'number') gemPos = g; } catch (e) {
             // Gemini is optional (pixel carries the page) but a silent skip hid
             // a dead model name / geo-blocked key for months (#4796): count it
@@ -673,7 +700,9 @@ if (GUTTER_ONLY) {
 
   // Park only when there's no trustworthy consensus: too few confident pages, or
   // genuinely scattered positions (maps/plates, not a spread book).
-  let parkReason = !enoughSignal
+  // Reviewed positions (#6099, #7454) were placed on every page by a person who opened it: the signal and scatter gates
+  // measure the detectors, and here none ran. A book with one spread among single leaves parked as "too little signal".
+  let parkReason = REVIEWED_POSITIONS ? null : !enoughSignal
     ? `only ${confidentPositions.length}/${landscapeCount} landscape pages gave a confident gutter — too little signal`
     : scattered
       ? `gutter positions scattered (MAD ${mad}/1000 > ${SCATTER_MAD}) — inconsistent binding, needs review`
@@ -731,7 +760,8 @@ if (GUTTER_ONLY) {
   }
   if (parkReason && !DRY_RUN) {
     console.error(`\n  PARK: ${parkReason}. Not splitting — flagging needs_attention for review.`);
-    await db.collection('books').updateOne({ id: book.id }, {
+    // A held book keeps its status (#4790): needs_attention over `held` took two books out of their hold (#7454).
+    await db.collection('books').updateOne({ id: book.id, ...NOT_HELD }, {
       $set: {
         'pipeline_auto.status': 'needs_attention',
         'pipeline_auto.error': `Split review needed (#2454): ${parkReason}`,
@@ -744,6 +774,18 @@ if (GUTTER_ONLY) {
     });
     await client.close();
     process.exit(0);
+  }
+} else if (TEXT_CUT) {
+  // Reviewed folds, existing OCR: the fold comes from the review, the text from the spread's own <page-break/>.
+  console.log(`\n--- Step 3: Reviewed folds (${APPROVED_BY}), text cut at each frame's <page-break/> ---`);
+  if (withPageBreak.length && !TEXT_SIDES) { console.log(`ERROR: ${withPageBreak.length} frames carry <page-break/>: pass --text-sides=FILE (split-text-sides.mjs) so each half goes to the leaf it was read from`); process.exit(1); }
+  for (const page of existingPages) {
+    const key = String(page.page_number);
+    if (!(key in REVIEWED_POSITIONS)) { console.log(`ERROR: no reviewed position for p.${page.page_number} in ${POSITIONS_FILE}`); process.exit(1); }
+    const pct = REVIEWED_POSITIONS[key];
+    if (pct != null && !(pct > 20 && pct < 80)) { console.log(`ERROR: reviewed position ${pct} for p.${page.page_number} is outside 20–80%`); process.exit(1); }
+    page._gutter = pct == null ? 'single' : Math.round(pct * 10);
+    page._splitMethod = pct == null ? `reviewed-single(${APPROVED_BY})` : `reviewed(${pct}%, ${APPROVED_BY})`;
   }
 } else if (WITH_OCR || withPageBreak.length === 0) {
   if (!WITH_OCR && withPageBreak.length === 0) {
@@ -779,6 +821,29 @@ if (GUTTER_ONLY) {
   console.log('\n--- Step 3: Using existing spread OCR ---');
 }
 
+// --- Step 3.9: A plate across the fold stays whole (#8042) ---
+// The book-level imgFrac gate above keeps a PLATE BOOK whole, but a plate bound into a text book was cut at the
+// gutter like the text around it (Khunrath's Emerald Table, BPH 69ef33e2 frame -127). Each frame's own read decides:
+// plate-typed + single-page split position, or a detected image across the cut → keep whole and flag it. Applies to
+// reviewed positions too (the #7605 lane): a reviewed cut through one image is flagged, not written. A <page-break/>
+// always splits. --cut-plates overrides for a book a person has checked.
+const plateFlags = [];
+if ((GUTTER_ONLY || TEXT_CUT) && !args.includes('--cut-plates')) {
+  for (const page of existingPages) {
+    if (page._error || typeof page._gutter !== 'number') continue;
+    const v = plateSpanVerdict({ ocrText: page.ocr?.data, pageType: page.page_type, detectedImages: page.detected_images }, page._gutter);
+    if (!v.keepWhole) continue;
+    plateFlags.push({ page_number: page.page_number, cut: page._gutter, method: page._splitMethod, reason: v.reason });
+    page._gutter = 'single';
+    page._splitMethod = `plate-whole(${v.reason})`;
+    page._uncertain = false;
+  }
+  if (plateFlags.length) {
+    console.log(`  PLATE FLAG: ${plateFlags.length} frame(s) hold one image across the fold — kept whole, not cut (#8042):`);
+    for (const f of plateFlags) console.log(`    p.${f.page_number} cut ${f.cut}/1000 (${f.method}): ${f.reason}`);
+  }
+}
+
 // --- Step 4: Build the new page list ---
 console.log('\n--- Step 4: Build new page list ---');
 
@@ -806,6 +871,18 @@ for (let idx = 0; idx < existingPages.length; idx++) {
     continue;
   }
 
+  if (TEXT_CUT) {
+    const fold = page._gutter === 'single' ? null : page._gutter;
+    const key = String(page.page_number);
+    const cuttable = fold != null && cutSpreadText(page.ocr?.data).kind === 'cut';
+    if (cuttable && !(key in TEXT_SIDES)) { console.log(`ERROR: p.${page.page_number} has a <page-break/> to cut and no entry in ${TEXT_SIDES_FILE}`); process.exit(1); }
+    const sides = cuttable ? TEXT_SIDES[key] : 'lr';
+    for (const leaf of leavesForFrame({ fold, ocr: page.ocr?.data, sides }, SIDE_ORDER)) {
+      newPages.push({ side: leaf.side, ocr: leaf.ocr, textFrom: leaf.text_from, sourceIdx: idx, splitPosition: fold, splitMethod: page._splitMethod, pageType: leaf.ocr ? extractPageType(leaf.ocr) : undefined });
+    }
+    continue;
+  }
+
   const parsed = parseSpreadOCR(page.ocr?.data);
   if (!parsed) {
     newPages.push({ side: 'single', ocr: null, sourceIdx: idx, splitPosition: null });
@@ -825,7 +902,42 @@ for (let idx = 0; idx < existingPages.length; idx++) {
   }
 }
 
+// --- Step 4b: set the order from the printed numbers on the two halves (#5699) ---
+// Each cut spread contributes its two halves' text; a pair votes when both carry
+// a printed number one apart. A clear vote that disagrees with the provisional
+// order swaps every cut pair; no clear vote flags the book (recorded below).
+const ORDER_CHECK = (() => {
+  const bySource = new Map();
+  for (const p of newPages) if (p.side === 'left' || p.side === 'right') (bySource.get(p.sourceIdx) || bySource.set(p.sourceIdx, {}).get(p.sourceIdx))[p.side] = p.ocr || null;
+  const pairs = [...bySource.values()].filter(x => 'left' in x && 'right' in x);
+  return { ...voteSpreadOrder(pairs), provisional: PAGE_ORDER, decided_by: orderArg ? '--page-order' : null };
+})();
+if (ORDER_CHECK.pairs) {
+  const v = ORDER_CHECK.verdict;
+  console.log(`  printed-number check: ${v} (ltr ${ORDER_CHECK.ltr}, rtl ${ORDER_CHECK.rtl}, ${ORDER_CHECK.readable} of ${ORDER_CHECK.pairs} pairs readable)`);
+  if (v !== 'unreadable' && v !== PAGE_ORDER) {
+    if (orderArg) {
+      console.log(`  WARNING: the printed numbers say ${v}, --page-order says ${orderArg}; keeping --page-order and flagging the book`);
+    } else {
+      PAGE_ORDER = v;
+      SIDE_ORDER = PAGE_ORDER === 'rtl' ? ['right', 'left'] : ['left', 'right'];
+      for (let i = 0; i + 1 < newPages.length; i++) {
+        const a = newPages[i], b = newPages[i + 1];
+        if (a.sourceIdx === b.sourceIdx && (a.side === 'left' || a.side === 'right') && (b.side === 'left' || b.side === 'right')) { newPages[i] = b; newPages[i + 1] = a; i++; }
+      }
+      console.log(`  order set from the printed numbers: ${PAGE_ORDER} — ${SIDE_ORDER[0]} leaf first`);
+    }
+  }
+  ORDER_CHECK.final = PAGE_ORDER;
+  ORDER_CHECK.flag = v === 'unreadable' || (orderArg && v !== orderArg);
+  if (ORDER_CHECK.flag && !orderArg) console.log(`  FLAG: the printed numbers do not settle the order (kept the provisional ${PAGE_ORDER}); recorded as split-order-unverified for a check after OCR`);
+}
+
 const spreads = newPages.filter(p => p.side === 'left').length;
+if (TEXT_CUT) {
+  const t = newPages.reduce((m, p) => ({ ...m, [p.textFrom || 'fresh-read']: (m[p.textFrom || 'fresh-read'] || 0) + 1 }), {});
+  console.log(`  text on the leaves: ${JSON.stringify(t)}${STAGE ? ' — STAGED: leaves hidden, spreads stay live' : ''}`);
+}
 const singles = newPages.filter(p => p.side === 'single').length;
 const errors = newPages.filter(p => p.side === 'error').length;
 
@@ -835,7 +947,7 @@ if (DRY_RUN) {
   console.log('\n--- DRY RUN — would create: ---');
   for (let i = 0; i < newPages.length; i++) {
     const p = newPages[i];
-    console.log(`  p.${i + 1} ${p.side.padEnd(7)} source:${p.sourceIdx + 1} split:${p.splitPosition || '-'} ${p.splitMethod ? `[${p.splitMethod}${p.uncertain ? ' UNCERTAIN' : ''}]` : ''} type:${p.pageType || '-'} ocr:${p.ocr?.length || 0}ch`);
+    console.log(`  p.${i + 1} ${p.side.padEnd(7)} source:${p.sourceIdx + 1} split:${p.splitPosition || '-'} ${p.splitMethod ? `[${p.splitMethod}${p.uncertain ? ' UNCERTAIN' : ''}]` : ''} type:${p.pageType || '-'} ocr:${p.ocr?.length || 0}ch${p.textFrom ? ` (${p.textFrom})` : ''}`);
   }
   await client.close();
   process.exit(0);
@@ -924,10 +1036,27 @@ console.log('\n--- Step 6: Archive old spreads, insert new pages ---');
 const ocrModel = WITH_OCR ? 'gemini-3.1-flash-lite' : (existingPages[0]?.ocr?.model || 'gemini-3.1-flash-lite');
 const promptVersion = WITH_OCR ? `spread-v2+ocr-v${ocrVersion}` : (existingPages[0]?.ocr?.prompt_version || 'spread-v2+ocr-v10');
 
+// The text cut from a spread keeps the read it came from (#7605): the spread's model, prompt and engine block, and
+// where on the spread it was cut. It is the same reading, moved; no model saw the leaf.
+function cutOcr(frame, leaf) {
+  const src = frame.ocr || {};
+  return {
+    data: leaf.ocr,
+    model: src.model || ocrModel,
+    prompt_version: src.prompt_version || promptVersion,
+    ...(src.source ? { source: src.source } : {}),
+    ...(src.engine ? { engine: src.engine } : {}),
+    content_hash: contentHash(leaf.ocr),
+    cut_from: { page_id: frame.id, side: leaf.side, text_from: leaf.textFrom, spread_ocr_hash: frameOcrHash(frame), spread_ocr_updated_at: src.updated_at ?? null },
+    updated_at: new Date(),
+  };
+}
+
 // Find best cover
 let coverPage = null;
 
 const newDocs = [];
+const leavesBySource = new Map(); // spread index → its leaves' ids, in reading order (split_into, #5842)
 for (let i = 0; i < newPages.length; i++) {
   const p = newPages[i];
   const pageNum = i + 1;
@@ -935,6 +1064,7 @@ for (let i = 0; i < newPages.length; i++) {
   if (!p._photo) continue; // skip failed pages
 
   const id = new ObjectId().toHexString();
+  leavesBySource.set(p.sourceIdx, [...(leavesBySource.get(p.sourceIdx) || []), id]);
   const doc = {
     _id: new ObjectId(id),
     id,
@@ -948,12 +1078,17 @@ for (let i = 0; i < newPages.length; i++) {
     thumbnail_blob: p._thumb,
     ...(p._imgW ? { image_width: p._imgW, image_height: p._imgH } : {}), // #1491: dims on each page record
     ...(iiifUrls[p.sourceIdx] ? { spread_source: iiifUrls[p.sourceIdx] } : {}), // lineage to the pre-split spread
-    ocr: p.ocr ? {
+    ocr: p.ocr ? (TEXT_CUT ? cutOcr(existingPages[p.sourceIdx], p) : {
       data: p.ocr,
       model: ocrModel,
       prompt_version: promptVersion,
-    } : undefined,
+    }) : undefined,
     page_type: p.pageType,
+    ...(STAGE ? {
+      page_number: stagedPageNumber(pageNum),
+      hidden: true,
+      staged_split: { run: RUN_ID, leaf: pageNum, frame_id: existingPages[p.sourceIdx].id, frame_ocr_hash: frameOcrHash(existingPages[p.sourceIdx]), side: p.side, at: new Date(), by: APPROVED_BY, mode: TEXT_CUT ? 'text-cut' : 'gutter-only', issue: 7605 },
+    } : {}),
     split_from_spread: true,
     split_side: p.side === 'error' ? 'single' : p.side,
     split_position: p.splitPosition,
@@ -994,6 +1129,20 @@ if (newDocs.length === 0) {
   process.exit(1);
 }
 
+if (STAGE) {
+  // BUILD, not swap (#7605): the leaves go in hidden; the spreads, the book's flags and its counts are untouched.
+  // Leaf numbers must run 1..N for the swap; a crop that failed leaves a gap, so nothing is staged.
+  if (failedCount > 0) { console.error(`\nABORT: ${failedCount} leaves failed to crop; nothing staged. Re-run.`); await client.close(); process.exit(1); }
+  console.log(`  Staging ${newDocs.length} hidden leaves (run ${RUN_ID}); ${existingPages.length} spreads stay live`);
+  await db.collection('pages').insertMany(newDocs);
+  const unread = newDocs.filter(d => !d.ocr?.data).length;
+  await db.collection('book_events').insertOne({ book_id: book.id, type: 'spread_split_staged', at: new Date(), source: 'split-book', details: { issue: 7605, run: RUN_ID, frames: existingPages.length, leaves: newDocs.length, leaves_with_cut_text: newDocs.length - unread, leaves_to_read: unread, by: APPROVED_BY, page_order: PAGE_ORDER } });
+  await recordSweepAction(db, { sweep: 'split-stage-7605', book_id: book.id, action: 'staged-leaves', detail: { run: RUN_ID, frames: existingPages.length, leaves: newDocs.length, leaves_to_read: unread, page_order: PAGE_ORDER, order_check: ORDER_CHECK, by: APPROVED_BY } });
+  console.log(`  staged: ${newDocs.length} leaves, ${newDocs.length - unread} with cut text, ${unread} to read. Swap: scripts/maintenance/split-swap.mjs ${book.id}`);
+  await client.close();
+  process.exit(0);
+}
+
 // Save pre-split revision snapshot.
 const pagesWithOcrData = allExistingPages.filter(p => p.ocr?.data);
 if (pagesWithOcrData.length > 0) {
@@ -1024,6 +1173,14 @@ await db.collection('pages').updateMany(
     updated_at: new Date(),
   } }]
 );
+// Each archived spread names its leaves (#5842, #7605). Without split_into the reader opened an old page URL on the
+// book's first page; with it, the URL redirects to the spread's first leaf in reading order.
+const splitInto = existingPages.map((p, idx) => [p.id, leavesBySource.get(idx)]).filter(([, ids]) => ids?.length);
+if (splitInto.length) {
+  await db.collection('pages').bulkWrite(splitInto.map(([id, ids]) => ({
+    updateOne: { filter: { id, book_id: book.id, page_type: 'archived-spread' }, update: { $set: { split_into: ids } } },
+  })));
+}
 // The archived spreads must stop being served by semantic search: their rows carry the old
 // positive page_number, which now belongs to one of the halves (#6270).
 await withdrawPageVectors(allExistingPages.map(p => p.id), { reason: 'archived', writer: 'split-book' });
@@ -1053,6 +1210,10 @@ await db.collection('books').updateOne({ id: book.id }, {
     updated_at: new Date(),
   }
 });
+if (ORDER_CHECK.pairs) {
+  // A row, not a column (#3969): what decided the order, and whether it is unverified.
+  await recordSweepAction(db, { sweep: 'split-page-order-5699', book_id: book.id, action: ORDER_CHECK.flag ? 'split-order-unverified' : 'split-order-verified', detail: ORDER_CHECK });
+}
 
 if (GUTTER_ONLY) {
   // #2454: pages were created without OCR — requeue the book so the normal

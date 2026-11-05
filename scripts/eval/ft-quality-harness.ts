@@ -520,7 +520,7 @@ async function main() {
   // its attempts on that book (found if found-votes > none-votes).
   const famVotes = new Map<string, Map<string, { found: number; none: number }>>();
   const cur = db.collection<FirstTranslationAttempt>('first_translation_attempts')
-    .find({}, { projection: { book_id: 1, method: 1, notes: 1, result: 1, queries: 1 } });
+    .find({}, { projection: { book_id: 1, method: 1, notes: 1, result: 1, queries: 1 } }).batchSize(1000);
   let attemptsSeen = 0;
   for await (const a of cur) {
     attemptsSeen++;

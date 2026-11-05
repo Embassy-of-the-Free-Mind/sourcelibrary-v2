@@ -15,12 +15,16 @@
 // BIGGEST CHANGE FIRST across the whole list is done in tiers: run with --threshold=0.5, then 0.8,
 // 0.9, 0.95 over the same --dir; a later tier skips, unpaid, every page an earlier tier translated.
 // The budget counts every tier's spend since the first run (state.since, or --since=ISO).
-//   node --env-file=… scripts/batch/greek-reocr-5813/stage4-run.mjs --compare=F --dir=DIR --budget-usd=N [--threshold=0.95] [--concurrency=4] [--dry-run]
+// --lite is passed to every realtime-translate.mjs this spawns, so Greek goes to gemini-3.1-flash-lite
+// and not to the router's Flash (the 2026-10-08 Gemini rule: only lite on the paid API). A paid run
+// refuses to start without it; --model-ok=flash is the explicit way to run on the router's model.
+//   node --env-file=… scripts/batch/greek-reocr-5813/stage4-run.mjs --compare=F --dir=DIR --budget-usd=N --lite [--threshold=0.95] [--concurrency=4] [--dry-run]
 import fs from 'node:fs';
 import { spawn } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3) ?? d;
 const DRY = process.argv.includes('--dry-run');
+const LITE = process.argv.includes('--lite');
 const DIR = arg('dir'), THRESHOLD = Number(arg('threshold', '0.95')), BUDGET = Number(arg('budget-usd', '0')), CONC = Number(arg('concurrency', '4'));
 // Realtime list prices per token (scripts/lib/model-pricing.mjs is per-model; a row without a model match is priced as flash).
 const PRICE = (m) => /flash-lite/.test(m || '') ? [0.25e-6, 1.5e-6] : [0.5e-6, 3e-6];
@@ -40,6 +44,7 @@ const books = [...byBook.values()].sort((a, b) => b.change - a.change).flatMap((
 console.log(`${rows.length} pages under ${THRESHOLD} in ${books.length} books; budget $${BUDGET}`);
 if (DRY) { for (const b of books.slice(0, 15)) console.log(`  ${b.id} ${b.pages.length} pages, change ${b.change.toFixed(1)}`); process.exit(0); }
 if (!(BUDGET > 0)) { console.error('--budget-usd is required'); process.exit(1); }
+if (!LITE && arg('model-ok') !== 'flash') { console.error('refusing: without --lite the router sends Greek to Flash on the paid API (Gemini rule: lite only). Pass --lite, or --model-ok=flash to run on the router model on purpose.'); process.exit(1); }
 fs.mkdirSync(`${DIR}/stage4`, { recursive: true });
 const statePath = `${DIR}/stage4/state.json`;
 const state = fs.existsSync(statePath) ? JSON.parse(fs.readFileSync(statePath, 'utf8')) : { since: arg('since', new Date().toISOString()), done: {} };
@@ -62,7 +67,7 @@ const runBook = (b) => new Promise((resolve) => {
   const pf = `${DIR}/stage4/${tag}.json`;
   fs.writeFileSync(pf, JSON.stringify(b.pages));
   const log = fs.openSync(`${DIR}/stage4/${tag}.log`, 'a');
-  const p = spawn(process.execPath, ['scripts/batch/realtime-translate.mjs', `--book-id=${b.id}`, `--pages-file=${pf}`, `--limit=${b.pages.length}`], { stdio: ['ignore', log, log], env: process.env });
+  const p = spawn(process.execPath, ['scripts/batch/realtime-translate.mjs', `--book-id=${b.id}`, `--pages-file=${pf}`, `--limit=${b.pages.length}`, ...(LITE ? ['--lite'] : [])], { stdio: ['ignore', log, log], env: process.env });
   p.on('exit', (code) => { fs.closeSync(log); resolve(code); });
 });
 let i = 0, stopped = false;

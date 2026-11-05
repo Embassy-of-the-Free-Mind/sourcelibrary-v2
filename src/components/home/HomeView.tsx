@@ -31,7 +31,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, untranslatedShelf, subjectShelves } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, nativeShelfTotal, beginnerShelf, untranslatedShelf, subjectShelves } = data;
   const subjectShelvesText = NATIVE_SUBJECT_SHELVES[lang];
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
@@ -115,7 +115,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </Link>
             </div>
             <p className="text-muted mb-6 max-w-2xl">
-              {t.nativeShelfSubtitle}
+              {nativeShelfTotal > 0 && t.nativeShelfTotal ? t.nativeShelfTotal(nativeShelfTotal) : t.nativeShelfSubtitle}
             </p>
             <BookSlider books={nativeShelf as unknown as MiniBook[]} lang={lang} />
           </div>
@@ -293,7 +293,9 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.recentlyTranslatedHeading}
               </h2>
               <Link
-                href="/catalog?sort=last_translated"
+                // On /es the band holds Spanish editions, so "see all" is the
+                // Spanish list, not the English catalog (#7496).
+                href={spanishCollection ? lp(`/collections/${spanishCollection.slug}`) : '/catalog?sort=last_translated'}
                 className="hidden sm:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
@@ -302,6 +304,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </div>
             <p className="text-muted mb-6 max-w-2xl">
               {t.recentlyTranslatedSubtitle}
+              {!spanishCollection && (
+                <>
+                  {' '}
+                  <Link href="/new-in-english" className="underline hover:text-primary">
+                    See everything new this week
+                  </Link>
+                </>
+              )}
             </p>
             <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>

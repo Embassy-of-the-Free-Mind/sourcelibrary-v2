@@ -1,0 +1,795 @@
+{
+ "issue": 5803,
+ "line": "12 of #7268 (whole-book maps for the 45 high books)",
+ "date": "2026-10-24",
+ "reader": "scripts/audit/printed-page-image-read.mjs (gemini-3.1-flash-lite)",
+ "pages_read": 15209,
+ "unread": 194,
+ "cost_usd": 6.39,
+ "offset_sign": "offset = src - leaf: leaf N carries the text that should sit on N+offset; -1 = each leaf shows the NEXT leaf's text",
+ "arbitration": [
+  {
+   "book": "69b64e7118b87551bfc88abe",
+   "leaf": 88,
+   "served_r2": "p.69",
+   "pages.photo (e-rara canvas)": "p.70",
+   "stored_text": "p.70",
+   "side": "image"
+  },
+  {
+   "book": "69b69d87080b19f98fd0c378",
+   "leaf": 217,
+   "served_r2": "p.172 (clef-high by eye)",
+   "pages.photo (e-rara canvas)": "p.173",
+   "stored_text": "p.173",
+   "side": "image"
+  }
+ ],
+ "books": [
+  {
+   "class": "aligned",
+   "id": "69905d10aaa7f10ed4cfdb66",
+   "provider": "internet_archive",
+   "title": "Lessons in Truth: A Course of ",
+   "read": 99,
+   "leaves": 99,
+   "own_ok": 36,
+   "moved": 0,
+   "unsure": 57,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "aligned",
+   "id": "6a16ce8d36e7b50b389158e9",
+   "provider": "morgan",
+   "title": "Histoire Naturelle des Indes",
+   "read": 124,
+   "leaves": 125,
+   "own_ok": 82,
+   "moved": 0,
+   "unsure": 39,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "aligned",
+   "id": "6a1b7d89343719711d6ecfaa",
+   "provider": "bph",
+   "title": "Notebook",
+   "read": 82,
+   "leaves": 83,
+   "own_ok": 34,
+   "moved": 0,
+   "unsure": 41,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "aligned",
+   "id": "6a1b91a0e136dfef78198316",
+   "provider": "bph",
+   "title": "Concerning the divine magic or",
+   "read": 73,
+   "leaves": 74,
+   "own_ok": 25,
+   "moved": 0,
+   "unsure": 28,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "aligned",
+   "id": "6a20331a18654bf8e19042ab",
+   "provider": "leiden",
+   "title": "Naẓm Ḍawī al-Arḥām Or. 83",
+   "read": 19,
+   "leaves": 19,
+   "own_ok": 9,
+   "moved": 0,
+   "unsure": 3,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "aligned",
+   "id": "6a3538c5c8ce407afbe0542b",
+   "provider": "internet_archive",
+   "title": "Horizon, Vol. 4 No. 1 (Spring ",
+   "read": 58,
+   "leaves": 59,
+   "own_ok": 37,
+   "moved": 0,
+   "unsure": 21,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "constant shift",
+   "id": "69aec44d3b6ebce5e0ee5ba8",
+   "provider": "internet_archive",
+   "title": "Notes on the State of Virginia",
+   "read": 398,
+   "leaves": 402,
+   "own_ok": 3,
+   "moved": 358,
+   "unsure": 23,
+   "top_offsets": [
+    [
+     -1,
+     356
+    ],
+    [
+     -3,
+     2
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69af0c30067c0c26ee26ab97",
+   "provider": "internet_archive",
+   "title": "Anatomia seu Interiora Rerum",
+   "read": 524,
+   "leaves": 528,
+   "own_ok": 1,
+   "moved": 447,
+   "unsure": 31,
+   "top_offsets": [
+    [
+     -1,
+     447
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69b6493418b87551bfc5b5b7",
+   "provider": "e-rara",
+   "title": "Practica Musicae utriusque can",
+   "read": 231,
+   "leaves": 232,
+   "own_ok": 3,
+   "moved": 181,
+   "unsure": 36,
+   "top_offsets": [
+    [
+     -1,
+     181
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69b64e7118b87551bfc88abe",
+   "provider": "e-rara",
+   "title": "Georgii Agricolae De re metall",
+   "read": 601,
+   "leaves": 602,
+   "own_ok": 1,
+   "moved": 523,
+   "unsure": 62,
+   "top_offsets": [
+    [
+     -1,
+     523
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69b69a89080b19f98fcfeb4c",
+   "provider": "e-rara",
+   "title": "Universae Geometriae mixtaeque",
+   "read": 629,
+   "leaves": 630,
+   "own_ok": 6,
+   "moved": 566,
+   "unsure": 51,
+   "top_offsets": [
+    [
+     -1,
+     566
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69b69d87080b19f98fd0c378",
+   "provider": "e-rara",
+   "title": "M. Vitruvii Pollionis de archi",
+   "read": 584,
+   "leaves": 586,
+   "own_ok": 1,
+   "moved": 520,
+   "unsure": 48,
+   "top_offsets": [
+    [
+     -1,
+     520
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69b6b0fa96dc15d4a16cfb67",
+   "provider": "e-rara",
+   "title": "P. Gasparis Schotti ... Magiae",
+   "read": 524,
+   "leaves": 525,
+   "own_ok": 4,
+   "moved": 452,
+   "unsure": 40,
+   "top_offsets": [
+    [
+     -1,
+     452
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69bd9cb16120d54bd03705ed",
+   "provider": "e-rara",
+   "title": "In hoc vo lumine De alchemia c",
+   "read": 409,
+   "leaves": 410,
+   "own_ok": 2,
+   "moved": 378,
+   "unsure": 16,
+   "top_offsets": [
+    [
+     -1,
+     378
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69bd9eb7f6d63c919747c751",
+   "provider": "e-rara",
+   "title": "Oswaldi Crollii ... Hassi Chym",
+   "read": 581,
+   "leaves": 582,
+   "own_ok": 0,
+   "moved": 537,
+   "unsure": 35,
+   "top_offsets": [
+    [
+     -1,
+     537
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69bda047f6d63c9197485cc0",
+   "provider": "e-rara",
+   "title": "Fasciculus unterschiedlicher a",
+   "read": 338,
+   "leaves": 338,
+   "own_ok": 1,
+   "moved": 322,
+   "unsure": 13,
+   "top_offsets": [
+    [
+     -1,
+     322
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "69bda054f6d63c91974860a6",
+   "provider": "e-rara",
+   "title": "Medicina metallorum, das ist, ",
+   "read": 515,
+   "leaves": 516,
+   "own_ok": 22,
+   "moved": 467,
+   "unsure": 20,
+   "top_offsets": [
+    [
+     -1,
+     467
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "constant shift",
+   "id": "6a3e6628629ea5110b4c8c98",
+   "provider": "internet_archive",
+   "title": "Your Forces, and How to Use Th",
+   "read": 199,
+   "leaves": 200,
+   "own_ok": 1,
+   "moved": 175,
+   "unsure": 8,
+   "top_offsets": [
+    [
+     -1,
+     174
+    ],
+    [
+     -63,
+     1
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "mixed/blocks",
+   "id": "69af48642a821385be062737",
+   "provider": "internet_archive",
+   "title": "Arati Phaenomena, Geographia, ",
+   "read": 246,
+   "leaves": 248,
+   "own_ok": 17,
+   "moved": 163,
+   "unsure": 59,
+   "top_offsets": [
+    [
+     -3,
+     128
+    ],
+    [
+     -1,
+     35
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "mixed/blocks",
+   "id": "69b21d42ddb4fa7c305b4693",
+   "provider": "internet_archive",
+   "title": "Platonis Opera Quae Extant, Vo",
+   "read": 1001,
+   "leaves": 1010,
+   "own_ok": 16,
+   "moved": 953,
+   "unsure": 25,
+   "top_offsets": [
+    [
+     -11,
+     314
+    ],
+    [
+     -7,
+     278
+    ],
+    [
+     -9,
+     214
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "mixed/blocks",
+   "id": "69b6305f1c1c21a373801112",
+   "provider": "e-rara",
+   "title": "Canticum canticorum Solomonis,",
+   "read": 54,
+   "leaves": 54,
+   "own_ok": 20,
+   "moved": 22,
+   "unsure": 3,
+   "top_offsets": [
+    [
+     -1,
+     21
+    ],
+    [
+     1,
+     1
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "no signal",
+   "id": "699383a150654cbbe29179f7",
+   "provider": "vatican",
+   "title": "Lucian of Samosata (MS, 9th-10",
+   "read": 756,
+   "leaves": 758,
+   "own_ok": 18,
+   "moved": 3,
+   "unsure": 327,
+   "top_offsets": [
+    [
+     100,
+     1
+    ],
+    [
+     241,
+     1
+    ],
+    [
+     -130,
+     1
+    ]
+   ],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "6993881874305116d72cf0ab",
+   "provider": "vatican",
+   "title": "Ptolemy, Almagest (Syntaxis Ma",
+   "read": 576,
+   "leaves": 582,
+   "own_ok": 37,
+   "moved": 5,
+   "unsure": 467,
+   "top_offsets": [
+    [
+     420,
+     1
+    ],
+    [
+     -1,
+     1
+    ],
+    [
+     -69,
+     1
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "no signal",
+   "id": "69a5f1ff1cf742c360413320",
+   "provider": "vatican",
+   "title": "Hymns on Paradise (Madrashe d-",
+   "read": 199,
+   "leaves": 200,
+   "own_ok": 0,
+   "moved": 0,
+   "unsure": 188,
+   "top_offsets": [],
+   "hold": "syriac-retranslation-awaits-derek"
+  },
+  {
+   "class": "no signal",
+   "id": "69a5f3b71cf742c3604135bb",
+   "provider": "vatican",
+   "title": "Syriac Lectionary",
+   "read": 119,
+   "leaves": 120,
+   "own_ok": 0,
+   "moved": 0,
+   "unsure": 116,
+   "top_offsets": [],
+   "hold": "syriac-retranslation-awaits-derek"
+  },
+  {
+   "class": "no signal",
+   "id": "69aebb3439a4307877772f55",
+   "provider": "loc",
+   "title": "四書集注 (Four Books with Collecte",
+   "read": 844,
+   "leaves": 851,
+   "own_ok": 20,
+   "moved": 0,
+   "unsure": 762,
+   "top_offsets": [],
+   "hold": "paddle-print-6101"
+  },
+  {
+   "class": "no signal",
+   "id": "69b3e5af304c1c6b39509880",
+   "provider": "bodleian",
+   "title": "Zohar (Parashat Bereshit, with",
+   "read": 374,
+   "leaves": 378,
+   "own_ok": 3,
+   "moved": 5,
+   "unsure": 320,
+   "top_offsets": [
+    [
+     267,
+     1
+    ],
+    [
+     166,
+     1
+    ],
+    [
+     293,
+     1
+    ]
+   ],
+   "hold": "cursive-hebrew-invention-6048"
+  },
+  {
+   "class": "no signal",
+   "id": "69b3f736a107e55a0ee1c0b0",
+   "provider": "leiden",
+   "title": "Kniha dokonalého vmění Chymick",
+   "read": 626,
+   "leaves": 631,
+   "own_ok": 34,
+   "moved": 0,
+   "unsure": 584,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69b52c133dd6d9423027d89c",
+   "provider": "laurenziana",
+   "title": "Aelianus De proprietate animal",
+   "read": 668,
+   "leaves": 672,
+   "own_ok": 43,
+   "moved": 4,
+   "unsure": 607,
+   "top_offsets": [
+    [
+     2,
+     2
+    ],
+    [
+     85,
+     1
+    ],
+    [
+     -60,
+     1
+    ]
+   ],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69c1baba8522835be8459dc6",
+   "provider": "manchester",
+   "title": "Novellae on the Arbaʾah Ṭurim ",
+   "read": 624,
+   "leaves": 630,
+   "own_ok": 53,
+   "moved": 2,
+   "unsure": 535,
+   "top_offsets": [
+    [
+     473,
+     1
+    ],
+    [
+     448,
+     1
+    ]
+   ],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69c1bb658522835be845f635",
+   "provider": "manchester",
+   "title": "Autobiography of Reyna Cohen",
+   "read": 404,
+   "leaves": 418,
+   "own_ok": 2,
+   "moved": 1,
+   "unsure": 383,
+   "top_offsets": [
+    [
+     4,
+     1
+    ]
+   ],
+   "hold": "syriac-retranslation-awaits-derek"
+  },
+  {
+   "class": "no signal",
+   "id": "69c736b46a0f3d112faf76b0",
+   "provider": "bph",
+   "title": "Jesuitici templi stupenda",
+   "read": 204,
+   "leaves": 208,
+   "own_ok": 5,
+   "moved": 0,
+   "unsure": 174,
+   "top_offsets": [],
+   "hold": "wrong-work-and-invented-ocr-6056"
+  },
+  {
+   "class": "no signal",
+   "id": "69c7b18425ec2ba5ccd7f44e",
+   "provider": "bph",
+   "title": "[Hebrew: Sefer pardes rimmonim",
+   "read": 338,
+   "leaves": 348,
+   "own_ok": 20,
+   "moved": 1,
+   "unsure": 264,
+   "top_offsets": [
+    [
+     -16,
+     1
+    ]
+   ],
+   "hold": "ocr-rashi-type-garble-6056"
+  },
+  {
+   "class": "no signal",
+   "id": "69d5abdc4dc55b8478ddd24d",
+   "provider": "gallica",
+   "title": "Four Gospels (Georgian)",
+   "read": 496,
+   "leaves": 511,
+   "own_ok": 3,
+   "moved": 1,
+   "unsure": 385,
+   "top_offsets": [
+    [
+     -229,
+     1
+    ]
+   ],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "no signal",
+   "id": "69d5acb04dc55b8478dde57f",
+   "provider": "internet_archive",
+   "title": "Mahzor Korban Aharon",
+   "read": 327,
+   "leaves": 332,
+   "own_ok": 59,
+   "moved": 0,
+   "unsure": 232,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69d5adadd0bd3547a565638a",
+   "provider": "kyoto_rmda",
+   "title": "Daihannya Haramittakyo Vol. 40",
+   "read": 19,
+   "leaves": 19,
+   "own_ok": 0,
+   "moved": 0,
+   "unsure": 17,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69d5ae474dc55b8478de136d",
+   "provider": "kyoto_rmda",
+   "title": "Daihannya Haramittakyo Vol. 56",
+   "read": 16,
+   "leaves": 16,
+   "own_ok": 0,
+   "moved": 0,
+   "unsure": 14,
+   "top_offsets": [],
+   "hold": "wrong-leaf-clef-audit-5803"
+  },
+  {
+   "class": "no signal",
+   "id": "69d66beb4da4f8dce52f2434",
+   "provider": "gallica",
+   "title": "Treatise on Alchemy (Armenian,",
+   "read": 247,
+   "leaves": 249,
+   "own_ok": 5,
+   "moved": 1,
+   "unsure": 237,
+   "top_offsets": [
+    [
+     -16,
+     1
+    ]
+   ],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69dfebad090ad7d5c33b1903",
+   "provider": "ndl",
+   "title": "Kojiki (古事記), Vol. 1",
+   "read": 71,
+   "leaves": 72,
+   "own_ok": 1,
+   "moved": 0,
+   "unsure": 68,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "69f1341dc8d07a681065333c",
+   "provider": "sat_daizokyo",
+   "title": "[Da fang guang fo hua yan jing",
+   "read": 14,
+   "leaves": 15,
+   "own_ok": 0,
+   "moved": 0,
+   "unsure": 11,
+   "top_offsets": [],
+   "hold": "served-audit-6691"
+  },
+  {
+   "class": "no signal",
+   "id": "69f336b5876dd827cbc50d9c",
+   "provider": "harvard",
+   "title": "Epistola ad heremitas Sancti A",
+   "read": 41,
+   "leaves": 41,
+   "own_ok": 11,
+   "moved": 0,
+   "unsure": 28,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "6a16b362410dd8afcae61d83",
+   "provider": "morgan",
+   "title": "Worksop Bestiary",
+   "read": 127,
+   "leaves": 129,
+   "own_ok": 16,
+   "moved": 0,
+   "unsure": 104,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "6a19526a3e125aa8d6dfe297",
+   "provider": "b-nice",
+   "title": "Babad Tanah Djawi",
+   "read": 297,
+   "leaves": 358,
+   "own_ok": 10,
+   "moved": 0,
+   "unsure": 275,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "6a2032ad18654bf8e1903546",
+   "provider": "leiden",
+   "title": "[Mystical verses in Persian an",
+   "read": 15,
+   "leaves": 15,
+   "own_ok": 3,
+   "moved": 0,
+   "unsure": 10,
+   "top_offsets": [],
+   "hold": null
+  },
+  {
+   "class": "no signal",
+   "id": "6a49edde0c5d29e580a6f94d",
+   "provider": "mdz",
+   "title": "Conclusiones legales ex tit. F",
+   "read": 15,
+   "leaves": 16,
+   "own_ok": 3,
+   "moved": 0,
+   "unsure": 9,
+   "top_offsets": [],
+   "hold": "wrong-leaf-clef-audit-5803"
+  }
+ ]
+}

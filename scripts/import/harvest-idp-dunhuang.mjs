@@ -53,7 +53,7 @@ async function fetchWithRetry(url, options = {}, retries = 3) {
         ...options,
         signal: AbortSignal.timeout(30000),
         headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly research)',
+          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
           ...options.headers,
         },
       });

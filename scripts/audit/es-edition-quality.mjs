@@ -100,7 +100,7 @@ const books = await db.collection('books').find(bookFilter, { projection: { _id:
 
 const report = { generated: new Date().toISOString(), books: [], totals: { pages: 0, flagged: 0, byFlag: {} } };
 for (const b of books) {
-  const cur = db.collection('pages').find({ book_id: b.id, 'translations.es.data': { $type: 'string', $ne: '' } }, { projection: { id: 1, page_number: 1, 'translation.data': 1, 'translations.es.data': 1 }, sort: { page_number: 1 }, ...(LIMIT ? { limit: LIMIT } : {}) });
+  const cur = db.collection('pages').find({ book_id: b.id, 'translations.es.data': { $type: 'string', $ne: '' } }, { projection: { id: 1, page_number: 1, 'translation.data': 1, 'translations.es.data': 1 }, sort: { page_number: 1 }, ...(LIMIT ? { limit: LIMIT } : {}) }).batchSize(1000);
   const stat = { id: b.id, title: (b.title || '').slice(0, 60), language: b.language, pages: 0, flagged: 0, ratios: [], spanish: [], byFlag: {}, worst: [] };
   for await (const p of cur) {
     const r = checkPage(p.translation?.data, p.translations.es.data);

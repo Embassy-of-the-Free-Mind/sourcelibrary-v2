@@ -1,0 +1,128 @@
+{
+ "n": 30,
+ "top_third": 10,
+ "cutoff": 0.178392,
+ "rule": "a page goes to Opus when signal >= cutoff",
+ "rows": [
+  {
+   "key": "V4-6a3ced944701a906f10e19af",
+   "signal": 0.079545
+  },
+  {
+   "key": "V4-6a3cee384701a906f10e743a",
+   "signal": 0.036458
+  },
+  {
+   "key": "V4-6a3cc2f3af74b230c690afbd",
+   "signal": 0.050076
+  },
+  {
+   "key": "V4-6a3c5f8340c88a541d8e7211",
+   "signal": 0.112948
+  },
+  {
+   "key": "V4-6a3c800d01fe4f593c21f417",
+   "signal": 0.084058
+  },
+  {
+   "key": "V4-6a3cec288642f0445b15a0b2",
+   "signal": 0.16129
+  },
+  {
+   "key": "V4-6992cd7643713c66ea636a7d",
+   "signal": 0.666667
+  },
+  {
+   "key": "V4-6a3c62e140c88a541d8f6ecc",
+   "signal": 0.916522
+  },
+  {
+   "key": "V4-6a3c604c40c88a541d8e7d09",
+   "signal": 0.213531
+  },
+  {
+   "key": "V4-6a0a4e9f7cd8e1e3d0f49716",
+   "signal": 0.547893
+  },
+  {
+   "key": "V4-6a3cbbcd87ee3d48c89d14ad",
+   "signal": 0.154605
+  },
+  {
+   "key": "V4-6a0a4eec7cd8e1e3d0f49d29",
+   "signal": 0.552511
+  },
+  {
+   "key": "V4-6a3cc320af74b230c690cb5a",
+   "signal": 0.097015
+  },
+  {
+   "key": "V4-6a3cec278642f0445b159fea",
+   "signal": 0.082067
+  },
+  {
+   "key": "V4-69c6616a01a26ccff09f5256",
+   "signal": 0.238095
+  },
+  {
+   "key": "V4-6a3cef0d8642f0445b160362",
+   "signal": 0.034286
+  },
+  {
+   "key": "V4-6a3cc010f9474f825c16da57",
+   "signal": 0.098592
+  },
+  {
+   "key": "V4-6a3c5e9e40c88a541d8e402c",
+   "signal": 0.091877
+  },
+  {
+   "key": "V4-6a3ce7950a0011cb4bc0a144",
+   "signal": 0.078125
+  },
+  {
+   "key": "V4-6a3c6fff01fe4f593c1cfa25",
+   "signal": 0.155378
+  },
+  {
+   "key": "V4-6a3cc13fec254ff6cae0aafb",
+   "signal": 0.038076
+  },
+  {
+   "key": "V4-6a3c63700339d4df9abcbb23",
+   "signal": 0.178392
+  },
+  {
+   "key": "V4-6a3cf0098642f0445b161e87",
+   "signal": 0.12093
+  },
+  {
+   "key": "V4-6a3c6b6139b4508b04e436af",
+   "signal": 0.030928
+  },
+  {
+   "key": "V4-6992cd9743713c66ea637712",
+   "signal": 0.772263
+  },
+  {
+   "key": "V4-6a3c7a8501fe4f593c217fa4",
+   "signal": 0.092732
+  },
+  {
+   "key": "V4-6a3c655539b4508b04e2df19",
+   "signal": 0.179259
+  },
+  {
+   "key": "V4-6a3cee024701a906f10e55e7",
+   "signal": 0.107692
+  },
+  {
+   "key": "V4-6992cea877d26f93217775f2",
+   "signal": 0.075424
+  },
+  {
+   "key": "V4-6a3c6552af3c49b59c5cb775",
+   "signal": 0.278049
+  }
+ ]
+}

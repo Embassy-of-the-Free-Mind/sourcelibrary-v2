@@ -4,10 +4,11 @@
 // scans are in order or whether a translation is short or echoed. The detectors live in
 // scripts/lib/page-integrity.mjs (pure, tested).
 /**
- * page-integrity — nine exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
+ * page-integrity — ten exact checks over the local corpus mirror (~/sl-corpus/books/*.jsonl):
  * catchword continuity, printed page-number sequence, duplicate consecutive scans, truncated
  * translations, echoed source (2026-09-24), and from the page-error taxonomy (2026-09-25):
  * <vocab> words absent from the body (O5 #5136) and a block repeated inside one page (O4 #5135);
+ * one block reused in a second slot — a <margin> copying the body, a heading set twice (#3591);
  * and text hidden in the continuity <meta> (#5305 tq9); and a STORED translation the write door
  * would refuse today as a runaway (#4098: the door only judges what is written from now on).
  * MEASUREMENT ONLY: writes files, touches no store.
@@ -34,7 +35,7 @@ import os from 'os';
 import zlib from 'zlib';
 import {
   catchwordBoundary, pageNumberBreaks, duplicateScan, truncationRatio, echoedSource, ocrReasoningLeak,
-  vocabAbsent, repeatedBlocks,
+  vocabAbsent, repeatedBlocks, duplicateSlots,
   metaPayload,
 } from '../lib/page-integrity.mjs';
 import { parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
@@ -120,6 +121,7 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
     // page-error taxonomy (2026-09-25): O5 vocab-vs-body, O4 repeated blocks
     vocab: { judged: 0, flagged: 0, flagged2: 0, unjudged: {} },
     repeat: { judged: 0, block: 0, loop: 0 },
+    slot: { judged: 0, copied: 0, heading: 0 },
     meta: { marker: 0, shapes: {}, unjudged: 0, wholePage: 0 },
     overlong: { judged: 0, flagged: 0, shapes: {} },
   };
@@ -176,6 +178,14 @@ export function scanBook(id, rows, { bookLang = 'unknown', medians = null, detai
         bk.repeat.judged++;
         if (rb.kind === 'loop') bk.repeat.loop++;
         if (rb.flag) { bk.repeat.block++; lines.push({ kind: 'repeat', book: id, p: A.p, longest: rb.longest, copies: rb.copies, share: rb.share, ttr: rb.ttr, units: rb.units, unsegmented: !!rb.unsegmented, sample: rb.sample, type: A.type || null }); }
+      }
+      // 7b. #3591 — a block reused in a second slot (a <margin> that copies the body, a heading twice)
+      const ds = duplicateSlots(A.ocr);
+      if (ds.judged) {
+        bk.slot.judged++;
+        if (ds.copiedSlots.length) bk.slot.copied++;
+        if (ds.repeatedHeads.length) bk.slot.heading++;
+        if (ds.flag) lines.push({ kind: 'slot', book: id, p: A.p, copiedSlots: ds.copiedSlots, repeatedHeads: ds.repeatedHeads, type: A.type || null });
       }
     }
     if (!A.tr || !A.tr.trim()) continue;
@@ -305,6 +315,7 @@ export function summarize(out) {
     echo: { judged: 0, echo: 0, listLike: 0, books: 0, unjudged: {} },
     vocab: { judged: 0, flagged: 0, flagged2: 0, books: 0, unjudged: {} },
     repeat: { judged: 0, block: 0, loop: 0, books: 0 },
+    slot: { judged: 0, copied: 0, heading: 0, books: 0 },
     meta: { marker: 0, shapes: {}, unjudged: 0, wholePage: 0, booksWithHidden: 0, booksWithWholePage: 0 },
     overlong: { judged: 0, flagged: 0, shapes: {}, books: 0 },
   });
@@ -341,6 +352,7 @@ export function summarize(out) {
         // taxonomy signals (absent on shard rows written before they existed)
         if (b.vocab) { S.vocab.judged += b.vocab.judged; S.vocab.flagged += b.vocab.flagged; S.vocab.flagged2 += b.vocab.flagged2 || 0; if (b.vocab.flagged) S.vocab.books++; for (const [k, v] of Object.entries(b.vocab.unjudged || {})) add(S.vocab.unjudged, k, v); }
         if (b.repeat) { S.repeat.judged += b.repeat.judged; S.repeat.block += b.repeat.block; S.repeat.loop += b.repeat.loop; if (b.repeat.block) S.repeat.books++; }
+        if (b.slot) { S.slot.judged += b.slot.judged; S.slot.copied += b.slot.copied; S.slot.heading += b.slot.heading; if (b.slot.copied || b.slot.heading) S.slot.books++; }
         if (b.meta) { // absent on rows written before the check existed
           S.meta.marker += b.meta.marker; S.meta.unjudged += b.meta.unjudged; S.meta.wholePage += b.meta.wholePage;
           for (const [k, v] of Object.entries(b.meta.shapes)) add(S.meta.shapes, k, v);
@@ -376,6 +388,9 @@ export function summarize(out) {
  *                     meta holds nearly all of the page
  *   overlong-translation  a stored translation the write door would refuse today as a runaway
  *                     (#4098); `shape` = padding | loop | overrun
+ *   duplicate-slot    one block in two slots (#3591): a <margin>/<insert>/<note>/<footnote> that
+ *                     copies the body, or a heading set twice; `descsDiffer` when the page's own
+ *                     <image-desc>s say the two headings differ
  */
 export function report(out, reportDir, date) {
   const files = fs.readdirSync(out).filter(f => /^shard-\d+\.jsonl$/.test(f));
@@ -386,7 +401,7 @@ export function report(out, reportDir, date) {
     try { const b = JSON.parse(line); vis.set(b.id, { visible: !!b.visible, title: b.display_title || b.title || '' }); } catch {}
   }
   const lists = { 'duplicate-scans': [], 'repeated-page-books': [], 'leaf-order': [], truncated: [], echoed: [], 'ocr-reasoning-leak': [],
-    'vocab-absent': [], 'repeated-block': [], 'hidden-meta-text': [], 'overlong-translation': [] };
+    'vocab-absent': [], 'repeated-block': [], 'hidden-meta-text': [], 'overlong-translation': [], 'duplicate-slot': [] };
   const pagesOf = new Map();
   for (const f of files) {
     const byBook = new Map();
@@ -419,6 +434,7 @@ export function report(out, reportDir, date) {
       for (const r of rows.filter(x => x.kind === 'ocrleak')) lists['ocr-reasoning-leak'].push({ book, visible: v.visible, page: r.p });
       for (const r of rows.filter(x => x.kind === 'vocab')) lists['vocab-absent'].push({ book, visible: v.visible, page: r.p, terms: r.terms, absent: r.absent, capitalised: r.capitalised, share: r.share, type: r.type });
       for (const r of rows.filter(x => x.kind === 'repeat')) lists['repeated-block'].push({ book, visible: v.visible, page: r.p, longest: r.longest, copies: r.copies, share: r.share, ttr: r.ttr, unsegmented: r.unsegmented, sample: r.sample, type: r.type });
+      for (const r of rows.filter(x => x.kind === 'slot')) lists['duplicate-slot'].push({ book, visible: v.visible, page: r.p, copiedSlots: r.copiedSlots, repeatedHeads: r.repeatedHeads, type: r.type });
       for (const r of rows.filter(x => x.kind === 'overlong')) lists['overlong-translation'].push({ book, visible: v.visible, page: r.p, lang: r.lang, shape: r.shape, tr: r.tr, src: r.src, trBody: r.trBody, srcBody: r.srcBody, type: r.type });
       for (const r of rows.filter(x => x.kind === 'meta')) lists['hidden-meta-text'].push({ book, visible: v.visible, page: r.p, lang: r.lang, shape: r.shape, words: r.words, inPrev: r.inPrev, wholePage: !!r.wholePage });
     }

@@ -79,7 +79,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   let n = 0;
   for (const b of books.sort((x, y) => x.catalog_ids.derge_tengyur_volume - y.catalog_ids.derge_tengyur_volume)) {
     const vol = b.catalog_ids.derge_tengyur_volume, section = sectionOf(b.title);
-    const cur = db.collection('pages').find({ book_id: b.id, 'translation.data': { $type: 'string', $nin: [''] } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } });
+    const cur = db.collection('pages').find({ book_id: b.id, 'translation.data': { $type: 'string', $nin: [''] } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } }).batchSize(1000);
     for await (const p of cur) {
       const r = detectPage(p.ocr?.data, p.translation.data);
       delete r._efBody;

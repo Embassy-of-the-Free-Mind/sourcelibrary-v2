@@ -100,6 +100,8 @@ Rules:
 - One line on #6056: strata, weighted rate, show/caveat/don't counts, and the PR.
 - **Showcase pages are partner-facing:** list them for Derek. Nothing goes to the partner without Derek's eye
   (`feedback_demo_links_checked_by_eye`: open two pages yourself first).
+- **Write one experiment file**, `scripts/eval/experiments/YYYY-MM-DD-<slug>.md` with the header in that folder's
+  `README.md`: the question, the shelves, the rates with n and date, what it concluded, and the `<dir>` it came from.
 - Commit `<dir>` and open a PR (`tier:auto` expected).
 
 Budget: 6 Opus reviewers for 96 pages ≈ $15–19 API-equivalent, about 0.6–0.75 of a weekly point (#6174), $0 API.

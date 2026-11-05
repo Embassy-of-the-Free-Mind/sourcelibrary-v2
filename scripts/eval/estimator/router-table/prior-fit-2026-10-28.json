@@ -1,0 +1,307 @@
+{
+ "table": "scripts/eval/estimator/router-table/2026-10-28-backfill-all.json",
+ "routes": [
+  {
+   "cell": "latin-lite",
+   "route": "lite",
+   "m": 0.035,
+   "basis": "measured",
+   "k": 447,
+   "n": 732,
+   "ke": 9.0833,
+   "ne": 14.0,
+   "obs": 0.6488071428571428
+  },
+  {
+   "cell": "latin-lite",
+   "route": "lite>opus",
+   "m": 0.803912,
+   "basis": "measured",
+   "k": 689,
+   "n": 780,
+   "ke": 8.8333,
+   "ne": 10.0,
+   "obs": 0.88333
+  },
+  {
+   "cell": "latin-lite",
+   "route": "lite>agy-flash-low",
+   "m": 0.7787255000000001,
+   "basis": "measured",
+   "k": 429,
+   "n": 530,
+   "ke": 8.0943,
+   "ne": 10.0,
+   "obs": 0.8094300000000001
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "m": 0.736,
+   "basis": "measured",
+   "k": 43,
+   "n": 54,
+   "ke": 28.3333,
+   "ne": 38.0,
+   "obs": 0.7456131578947369
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash>agy-flash-low",
+   "m": 0.9362704,
+   "basis": "pooled",
+   "k": 23,
+   "n": 30,
+   "ke": 23,
+   "ne": 30,
+   "obs": 0.7666666666666667
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite>opus",
+   "m": 0.88685,
+   "basis": "pooled",
+   "k": 272,
+   "n": 280,
+   "ke": 37.76,
+   "ne": 40.0,
+   "obs": 0.944
+  },
+  {
+   "cell": "german-lite",
+   "route": "lite>agy-flash-low",
+   "m": 0.8792,
+   "basis": "pooled",
+   "k": 28,
+   "n": 30,
+   "ke": 28,
+   "ne": 30,
+   "obs": 0.9333333333333333
+  },
+  {
+   "cell": "german-flash3",
+   "route": "3flash>opus",
+   "m": 0.87495,
+   "basis": "pooled",
+   "k": 29,
+   "n": 29,
+   "ke": 29,
+   "ne": 29,
+   "obs": 1.0
+  },
+  {
+   "cell": "german-flash3",
+   "route": "3flash>agy-flash-low",
+   "m": 0.8545499999999999,
+   "basis": "pooled",
+   "k": 26,
+   "n": 30,
+   "ke": 26,
+   "ne": 30,
+   "obs": 0.8666666666666667
+  },
+  {
+   "cell": "french-lite",
+   "route": "lite>agy-flash-low",
+   "m": 0.86235,
+   "basis": "pooled",
+   "k": 27,
+   "n": 29,
+   "ke": 27,
+   "ne": 29,
+   "obs": 0.9310344827586207
+  },
+  {
+   "cell": "tibetan-yigdzin",
+   "route": "yigdzin>agy-flash-low",
+   "m": 0.7827,
+   "basis": "pooled",
+   "k": 53,
+   "n": 60,
+   "ke": 53,
+   "ne": 60,
+   "obs": 0.8833333333333333
+  },
+  {
+   "cell": "tibetan-yigdzin",
+   "route": "yigdzin>opus",
+   "m": 0.72385,
+   "basis": "pooled",
+   "k": 52,
+   "n": 60,
+   "ke": 52,
+   "ne": 60,
+   "obs": 0.8666666666666667
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle>opus",
+   "m": 0.6356999999999999,
+   "basis": "pooled",
+   "k": 26,
+   "n": 30,
+   "ke": 26,
+   "ne": 30,
+   "obs": 0.8666666666666667
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle>agy-flash-high",
+   "m": 0.63655,
+   "basis": "pooled",
+   "k": 17,
+   "n": 30,
+   "ke": 17,
+   "ne": 30,
+   "obs": 0.5666666666666667
+  },
+  {
+   "cell": "arabic-lite",
+   "route": "lite",
+   "m": 0.389,
+   "basis": "measured",
+   "k": 102,
+   "n": 305,
+   "ke": 7.0128,
+   "ne": 17.0,
+   "obs": 0.41251764705882354
+  }
+ ],
+ "fits": {
+  "all": {
+   "W": 7.028687580589293,
+   "ll": -200.17150543033935,
+   "ci90": [
+    3.4903429574618414,
+    14.512349839590913
+   ],
+   "at_grid_edge": false,
+   "n_routes": 15,
+   "bootstrap_W": [
+    3.404166082790819,
+    7.767901106306771,
+    25.790339917193062
+   ],
+   "calibration": {
+    "alpha": 1.2,
+    "beta": 0.4,
+    "W": 20.085536923187668,
+    "beta_ci90": [
+     0.2,
+     0.6
+    ],
+    "ll": -194.60520029313358
+   },
+   "loo": {
+    "latin-lite/lite": 14.879731724872837,
+    "latin-lite/lite>opus": 6.6858944422792685,
+    "latin-lite/lite>agy-flash-low": 6.6858944422792685,
+    "latin-flash3/3flash": 6.5208191203301125,
+    "latin-flash3/3flash>agy-flash-low": 7.028687580589293,
+    "german-lite/lite>opus": 6.5208191203301125,
+    "german-lite/lite>agy-flash-low": 6.5208191203301125,
+    "german-flash3/3flash>opus": 8.166169912567652,
+    "german-flash3/3flash>agy-flash-low": 6.5208191203301125,
+    "french-lite/lite>agy-flash-low": 6.6858944422792685,
+    "tibetan-yigdzin/yigdzin>agy-flash-low": 6.6858944422792685,
+    "tibetan-yigdzin/yigdzin>opus": 7.028687580589293,
+    "zh-paddle-dice-lt090/paddle>opus": 7.576110944636845,
+    "zh-paddle-dice-lt090/paddle>agy-flash-high": 6.5208191203301125,
+    "arabic-lite/lite": 6.5208191203301125
+   },
+   "ll_at": {
+    "0.1": -235.85363459605796,
+    "0.5": -216.2281770320098,
+    "1": -209.41328981648454,
+    "2": -204.19758289928453,
+    "4": -201.01496869753356
+   },
+   "mae": 0.1192065775935105
+  },
+  "measured": {
+   "W": 4.263114515168817,
+   "ll": -58.979270602190056,
+   "ci90": [
+    1.4190675485932571,
+    12.490895263606808
+   ],
+   "at_grid_edge": false,
+   "n_routes": 5,
+   "bootstrap_W": [
+    1.6904588483790914,
+    4.371035772929758,
+    98715.7710107605
+   ],
+   "calibration": {
+    "alpha": 0.8,
+    "beta": 0.2,
+    "W": 42.52108200006278,
+    "beta_ci90": [
+     0.0,
+     0.4
+    ],
+    "ll": -53.98813900798396
+   },
+   "loo": {
+    "latin-lite/lite": 98715.7710107605,
+    "latin-lite/lite>opus": 3.6692966676192444,
+    "latin-lite/lite>agy-flash-low": 3.4903429574618414,
+    "latin-flash3/3flash": 3.3201169227365472,
+    "arabic-lite/lite": 3.4903429574618414
+   },
+   "ll_at": {
+    "0.1": -70.29839866333056,
+    "0.5": -63.43708963638891,
+    "1": -61.17466982108347,
+    "2": -59.61819015432262,
+    "4": -58.98472414046112
+   },
+   "mae": 0.15141208956214064
+  },
+  "pooled": {
+   "W": 10.485569724727576,
+   "ll": -140.6720209419191,
+   "ci90": [
+    4.0551999668446745,
+    29.22428378123494
+   ],
+   "at_grid_edge": false,
+   "n_routes": 10,
+   "bootstrap_W": [
+    5.338795149073176,
+    10.751013186076355,
+    25.790339917193062
+   ],
+   "calibration": {
+    "alpha": 0.8,
+    "beta": 0.7,
+    "W": 20.085536923187668,
+    "beta_ci90": [
+     0.0,
+     1.3
+    ],
+    "ll": -139.0996029065897
+   },
+   "loo": {
+    "latin-flash3/3flash>agy-flash-low": 11.302229419279579,
+    "german-lite/lite>opus": 9.487735836358526,
+    "german-lite/lite>agy-flash-low": 9.487735836358526,
+    "german-flash3/3flash>opus": 14.1540386453758,
+    "german-flash3/3flash>agy-flash-low": 9.025013499434122,
+    "french-lite/lite>agy-flash-low": 9.727919012559884,
+    "tibetan-yigdzin/yigdzin>agy-flash-low": 9.974182454814718,
+    "tibetan-yigdzin/yigdzin>opus": 11.023176380641601,
+    "zh-paddle-dice-lt090/paddle>opus": 13.131317158490017,
+    "zh-paddle-dice-lt090/paddle>agy-flash-high": 9.253482803906893
+   },
+   "ll_at": {
+    "0.1": -165.5552359327274,
+    "0.5": -152.79108739562088,
+    "1": -148.23861999540105,
+    "2": -144.57939274496192,
+    "4": -142.03024455707242
+   },
+   "mae": 0.10310382160919543
+  }
+ }
+}

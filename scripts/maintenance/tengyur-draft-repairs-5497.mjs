@@ -168,7 +168,7 @@ async function leftovers() {
   for (const b of inScope) {
     const vol = volOf(b);
     const pending = [];
-    const cur = db.collection('pages').find({ book_id: b.id, 'translation.data': { $exists: true, $nin: [null, ''] } }, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1 } });
+    const cur = db.collection('pages').find({ book_id: b.id, 'translation.data': { $exists: true, $nin: [null, ''] } }, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1 } }).batchSize(1000);
     for await (const p of cur) {
       report.pages_scanned++;
       const en = p.translation.data;
@@ -211,7 +211,7 @@ async function main() {
   const report = { apply: APPLY, since: SINCE?.toISOString() ?? null, job: JOB, books: bookIds.length, pages_translated: 0, hash: { pages: 0, marks: 0, written: 0, skipped: {} }, notes: { pages: 0, ids: [] }, tohoku: { src_pages: 0, field_missing: [], en_dropped: 0 } };
   const touched = [];
   const q = { book_id: { $in: bookIds }, 'translation.data': { $exists: true, $nin: [null, ''] }, ...(SINCE ? { 'translation.updated_at': { $gte: SINCE } } : {}) };
-  const cur = db.collection('pages').find(q, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1, 'ocr.text_edition.tohoku': 1 } });
+  const cur = db.collection('pages').find(q, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1, 'ocr.text_edition.tohoku': 1 } }).batchSize(1000);
   for await (const p of cur) {
     report.pages_translated++;
     const en = p.translation.data;

@@ -42,7 +42,9 @@ test.describe('Catalog', () => {
     await expect(page.locator('#main-content').getByText(/\d[\d,]+ books/).first()).toBeVisible({ timeout: 15_000 });
 
     // Search runs on submit (Enter / Search button), not live-as-you-type.
-    await page.fill('input[placeholder*="Search"]', 'Agrippa');
+    // The catalogue's own box: a bare placeholder*="Search" also matches the header's
+    // site-wide search, which navigates to /search instead of filtering (#6485).
+    await page.locator('#main-content').getByPlaceholder('Search titles and authors').fill('Agrippa');
     await page.keyboard.press('Enter');
     // Should show filtered count ("N of M books")
     await expect(page.locator('text=/\\d+ of \\d[\\d,]+ books/')).toBeVisible({ timeout: 5_000 });

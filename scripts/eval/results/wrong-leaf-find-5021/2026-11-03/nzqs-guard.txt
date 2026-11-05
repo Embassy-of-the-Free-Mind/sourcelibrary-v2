@@ -1,0 +1,40 @@
+book-slice k 1.316
+488 src 762 en 1111 log(en/src)-k -0.94
+489 src 1175 en 3435 log(en/src)-k -0.24
+490 src 973 en 2736 log(en/src)-k -0.28
+491 src 1275 en 5154 log(en/src)-k 0.08
+492 src 1567 en 5506 log(en/src)-k -0.06
+
+1. dropDriftedPages (caseless), the whole write-time guard without anchors:
+[{"prev":488,"next":489,"kind":"moved","fragment":"農政全書卷之三十六"}]
+  absorptions (call k): []
+  number votes: []
+  caseless clause drift per boundary:
+    488 → 489 true  0.81
+    489 → 490 false translation N leaves its last sentence open 
+    490 → 491 false translation N+1 marks the continuation 
+    491 → 492 false translation N+1 marks the continuation 
+
+2. book-level number classifier (leaf-shift.mjs, gappy, names, absorb) over pp.470-510:
+  rows 486-494: 486:none 487:none 488:none 489:none 490:none 491:none 492:none 493:none 494:none
+  runs: [] absorptions: []
+
+3. LaBSE (sentence-transformers/LaBSE, CPU), margin = s_own - max(s_prev, s_next); Han threshold -0.249 (2026-11-03 floor, 1% false alarms)
+  whole-page p.486 own 0.747 prev 0.748 next 0.687 margin -0.001 
+  whole-page p.487 own 0.781 prev 0.693 next 0.610 margin +0.088 
+  whole-page p.488 own 0.715 prev 0.606 next 0.361 margin +0.109 
+  whole-page p.489 own 0.646 prev 0.421 next 0.647 margin -0.001 
+  whole-page p.490 own 0.745 prev 0.494 next 0.722 margin +0.023 
+  whole-page p.491 own 0.704 prev 0.824 next 0.782 margin -0.119 
+  whole-page p.492 own 0.799 prev 0.789 next 0.665 margin +0.010 
+  whole-page p.493 own 0.770 prev 0.821 next 0.746 margin -0.051 
+  whole-page p.494 own 0.772 prev 0.725 next 0.103 margin +0.047 
+  --windows  p.486 own 0.708 prev 0.597 next 0.549 margin +0.111 
+  --windows  p.487 own 0.687 prev 0.524 next 0.568 margin +0.120 
+  --windows  p.488 own 0.737 prev 0.472 next 0.237 margin +0.265 
+  --windows  p.489 own 0.549 prev 0.372 next 0.470 margin +0.079 
+  --windows  p.490 own 0.547 prev 0.574 next 0.536 margin -0.027 
+  --windows  p.491 own 0.611 prev 0.681 next 0.555 margin -0.070 
+  --windows  p.492 own 0.614 prev 0.682 next 0.583 margin -0.068 
+  --windows  p.493 own 0.705 prev 0.439 next 0.354 margin +0.266 
+  --windows  p.494 own 0.691 prev 0.540 next 0.049 margin +0.150 

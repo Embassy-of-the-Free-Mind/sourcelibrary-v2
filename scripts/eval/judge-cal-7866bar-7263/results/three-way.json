@@ -1,0 +1,7700 @@
+{
+ "generated_at": "2026-11-02T15:25:25.253Z",
+ "issue": 7941,
+ "inbox_note": "Derek 2026-11-02 13:48Z: one normaliser, same wrapping, cuts by Archive engine and century, benchmark books flagged, random Archive stratum",
+ "normaliser": "three-way.mjs normalise (furniture by source, then NFC, long s to s, line-end hyphens joined, whitespace collapsed, re-wrapped to 72 columns); normalizeForScript v4 for cer_conv",
+ "align_rule": "set A/B: best F1 of typed-reference words over every Archive leaf >= 0.5; set C: the image's own leaf (moved only for a clear drift)",
+ "judge": "route-judge-6740 judgePrompt via confidence-7866 judgeAbsolute; claude -p --model opus (subscription); blind to source, normalised text",
+ "adjudicators": "opus + sonnet via claude -p, ADJ3_PROMPT, all arms of a page in one call, unlabelled; confirmed = both say the page prints something else",
+ "difficulty": {
+  "A": "easy: books with a same-edition typed edition (DTA, EEBO-TCP, CAMENA), cleaner copies than the library at large",
+  "B": "easy: English books with a proofread Wikisource / Gutenberg transcription, cleaner copies than the library at large",
+  "C": "typical: pages drawn at random from Archive-sourced books in the library"
+ },
+ "rates": "flagged/confirmed per 1,000 words of the typed reference (set C: of the larger of the two normalised reads); CER = order-free character error of the typed reference inside the text (raw: no normaliser; norm: normalised, case and punctuation kept; conv: normalised + normalizeForScript folds); numbers = typed-page digit runs missing from the text",
+ "three_way": {
+  "pages": 65,
+  "by_lang": {
+   "ALL": [
+    {
+     "arm": "archive",
+     "n_pages": 65,
+     "n_books": 65,
+     "words": 18581,
+     "judge_accept": 0.1846,
+     "judge_bad": 0.8154,
+     "judge_bad_ci95": [
+      0.7077,
+      0.9077
+     ],
+     "mean_fidelity": 3.0308,
+     "flagged": 420,
+     "flagged_per_1k": 22.6037,
+     "flagged_per_1k_ci95": [
+      18.0082,
+      27.537
+     ],
+     "adjudicated_pages": 25,
+     "adjudicated_words": 6588,
+     "adjudicated_flags": 135,
+     "confirmed": 125,
+     "split": 10,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 18.9739,
+     "confirmed_per_1k_ci95": [
+      12.0035,
+      27.7203
+     ],
+     "confirmed_or_split_per_1k": 20.4918,
+     "o7_numeral_flags": 45,
+     "normaliser_artefact_flags": 46,
+     "flagged_per_1k_without_artefacts": 20.1281,
+     "flagged_per_1k_without_artefacts_ci95": [
+      15.8305,
+      24.7687
+     ],
+     "cer_raw": 0.0606,
+     "cer_raw_ci95": [
+      0.0466,
+      0.0751
+     ],
+     "cer_norm": 0.0592,
+     "cer_norm_ci95": [
+      0.0461,
+      0.0729
+     ],
+     "cer_conv": 0.0481,
+     "cer_conv_ci95": [
+      0.0366,
+      0.0597
+     ],
+     "cer_norm_median_page": 0.0506,
+     "ref_numbers": 399,
+     "numbers_wrong": 71,
+     "number_error_rate": 0.1779,
+     "number_error_rate_ci95": [
+      0.1127,
+      0.2839
+     ],
+     "pages_with_numbers": 35
+    },
+    {
+     "arm": "ours",
+     "n_pages": 65,
+     "n_books": 65,
+     "words": 18581,
+     "judge_accept": 0.7231,
+     "judge_bad": 0.2769,
+     "judge_bad_ci95": [
+      0.1692,
+      0.3846
+     ],
+     "mean_fidelity": 3.7538,
+     "flagged": 41,
+     "flagged_per_1k": 2.2066,
+     "flagged_per_1k_ci95": [
+      1.3843,
+      3.1445
+     ],
+     "adjudicated_pages": 25,
+     "adjudicated_words": 6588,
+     "adjudicated_flags": 9,
+     "confirmed": 8,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.2143,
+     "confirmed_per_1k_ci95": [
+      0.4068,
+      2.0112
+     ],
+     "confirmed_or_split_per_1k": 1.3661,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 4,
+     "flagged_per_1k_without_artefacts": 1.9913,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.15,
+      2.9366
+     ],
+     "cer_raw": 0.08,
+     "cer_raw_ci95": [
+      0.0361,
+      0.1365
+     ],
+     "cer_norm": 0.0687,
+     "cer_norm_ci95": [
+      0.0255,
+      0.1243
+     ],
+     "cer_conv": 0.0612,
+     "cer_conv_ci95": [
+      0.0175,
+      0.1172
+     ],
+     "cer_norm_median_page": 0.0142,
+     "ref_numbers": 399,
+     "numbers_wrong": 33,
+     "number_error_rate": 0.0827,
+     "number_error_rate_ci95": [
+      0.0254,
+      0.1696
+     ],
+     "pages_with_numbers": 35
+    },
+    {
+     "arm": "human",
+     "n_pages": 65,
+     "n_books": 65,
+     "words": 18581,
+     "judge_accept": 0.6615,
+     "judge_bad": 0.3385,
+     "judge_bad_ci95": [
+      0.2308,
+      0.4615
+     ],
+     "mean_fidelity": 3.7385,
+     "flagged": 66,
+     "flagged_per_1k": 3.552,
+     "flagged_per_1k_ci95": [
+      2.348,
+      4.8786
+     ],
+     "adjudicated_pages": 25,
+     "adjudicated_words": 6588,
+     "adjudicated_flags": 19,
+     "confirmed": 18,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.7322,
+     "confirmed_per_1k_ci95": [
+      0.6782,
+      5.3074
+     ],
+     "confirmed_or_split_per_1k": 2.884,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 5,
+     "flagged_per_1k_without_artefacts": 3.2829,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.1497,
+      4.5973
+     ]
+    }
+   ],
+   "English": [
+    {
+     "arm": "archive",
+     "n_pages": 48,
+     "n_books": 48,
+     "words": 15562,
+     "judge_accept": 0.2083,
+     "judge_bad": 0.7917,
+     "judge_bad_ci95": [
+      0.6667,
+      0.8958
+     ],
+     "mean_fidelity": 3.0833,
+     "flagged": 284,
+     "flagged_per_1k": 18.2496,
+     "flagged_per_1k_ci95": [
+      13.9613,
+      22.939
+     ],
+     "adjudicated_pages": 15,
+     "adjudicated_words": 4624,
+     "adjudicated_flags": 56,
+     "confirmed": 51,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 11.0294,
+     "confirmed_per_1k_ci95": [
+      4.6316,
+      16.192
+     ],
+     "confirmed_or_split_per_1k": 12.1107,
+     "o7_numeral_flags": 30,
+     "normaliser_artefact_flags": 27,
+     "flagged_per_1k_without_artefacts": 16.5146,
+     "flagged_per_1k_without_artefacts_ci95": [
+      12.5474,
+      21.1125
+     ],
+     "cer_raw": 0.0563,
+     "cer_raw_ci95": [
+      0.0407,
+      0.0721
+     ],
+     "cer_norm": 0.0552,
+     "cer_norm_ci95": [
+      0.0403,
+      0.07
+     ],
+     "cer_conv": 0.0454,
+     "cer_conv_ci95": [
+      0.0326,
+      0.058
+     ],
+     "cer_norm_median_page": 0.0437,
+     "ref_numbers": 333,
+     "numbers_wrong": 46,
+     "number_error_rate": 0.1381,
+     "number_error_rate_ci95": [
+      0.0874,
+      0.2339
+     ],
+     "pages_with_numbers": 27
+    },
+    {
+     "arm": "ours",
+     "n_pages": 48,
+     "n_books": 48,
+     "words": 15562,
+     "judge_accept": 0.6458,
+     "judge_bad": 0.3542,
+     "judge_bad_ci95": [
+      0.2292,
+      0.4792
+     ],
+     "mean_fidelity": 3.6875,
+     "flagged": 36,
+     "flagged_per_1k": 2.3133,
+     "flagged_per_1k_ci95": [
+      1.4637,
+      3.2221
+     ],
+     "adjudicated_pages": 15,
+     "adjudicated_words": 4624,
+     "adjudicated_flags": 8,
+     "confirmed": 7,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.5138,
+     "confirmed_per_1k_ci95": [
+      0.463,
+      2.5746
+     ],
+     "confirmed_or_split_per_1k": 1.7301,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 4,
+     "flagged_per_1k_without_artefacts": 2.0563,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.2029,
+      3.0149
+     ],
+     "cer_raw": 0.0809,
+     "cer_raw_ci95": [
+      0.0261,
+      0.147
+     ],
+     "cer_norm": 0.0787,
+     "cer_norm_ci95": [
+      0.0246,
+      0.146
+     ],
+     "cer_conv": 0.0733,
+     "cer_conv_ci95": [
+      0.0191,
+      0.1402
+     ],
+     "cer_norm_median_page": 0.0144,
+     "ref_numbers": 333,
+     "numbers_wrong": 32,
+     "number_error_rate": 0.0961,
+     "number_error_rate_ci95": [
+      0.0315,
+      0.2
+     ],
+     "pages_with_numbers": 27
+    },
+    {
+     "arm": "human",
+     "n_pages": 48,
+     "n_books": 48,
+     "words": 15562,
+     "judge_accept": 0.5833,
+     "judge_bad": 0.4167,
+     "judge_bad_ci95": [
+      0.2708,
+      0.5625
+     ],
+     "mean_fidelity": 3.6667,
+     "flagged": 61,
+     "flagged_per_1k": 3.9198,
+     "flagged_per_1k_ci95": [
+      2.6126,
+      5.439
+     ],
+     "adjudicated_pages": 15,
+     "adjudicated_words": 4624,
+     "adjudicated_flags": 16,
+     "confirmed": 15,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.2439,
+     "confirmed_per_1k_ci95": [
+      0.6972,
+      6.6193
+     ],
+     "confirmed_or_split_per_1k": 3.4602,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 3.727,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.4837,
+      5.1535
+     ]
+    }
+   ],
+   "Latin": [
+    {
+     "arm": "archive",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1255,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.4286,
+     "flagged": 88,
+     "flagged_per_1k": 70.1195,
+     "flagged_per_1k_ci95": [
+      52.2548,
+      89.942
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 749,
+     "adjudicated_flags": 51,
+     "confirmed": 47,
+     "split": 4,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 62.7503,
+     "confirmed_per_1k_ci95": [
+      41.5094,
+      86.5385
+     ],
+     "confirmed_or_split_per_1k": 68.0908,
+     "o7_numeral_flags": 11,
+     "normaliser_artefact_flags": 9,
+     "flagged_per_1k_without_artefacts": 62.9482,
+     "flagged_per_1k_without_artefacts_ci95": [
+      44.7761,
+      79.5678
+     ],
+     "cer_raw": 0.1261,
+     "cer_raw_ci95": [
+      0.0955,
+      0.1769
+     ],
+     "cer_norm": 0.1178,
+     "cer_norm_ci95": [
+      0.085,
+      0.1853
+     ],
+     "cer_conv": 0.0931,
+     "cer_conv_ci95": [
+      0.0675,
+      0.1437
+     ],
+     "cer_norm_median_page": 0.0962,
+     "ref_numbers": 48,
+     "numbers_wrong": 21,
+     "number_error_rate": 0.4375,
+     "number_error_rate_ci95": [
+      0.3636,
+      0.7333
+     ],
+     "pages_with_numbers": 5
+    },
+    {
+     "arm": "ours",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1255,
+     "judge_accept": 0.8571,
+     "judge_bad": 0.1429,
+     "judge_bad_ci95": [
+      0,
+      0.4286
+     ],
+     "mean_fidelity": 3.8571,
+     "flagged": 5,
+     "flagged_per_1k": 3.9841,
+     "flagged_per_1k_ci95": [
+      0,
+      10.5691
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 749,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.3351,
+     "confirmed_per_1k_ci95": [
+      0,
+      3.6232
+     ],
+     "confirmed_or_split_per_1k": 1.3351,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.9841,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      10.5691
+     ],
+     "cer_raw": 0.1061,
+     "cer_raw_ci95": [
+      0.0462,
+      0.2014
+     ],
+     "cer_norm": 0.034,
+     "cer_norm_ci95": [
+      0.0134,
+      0.0652
+     ],
+     "cer_conv": 0.0171,
+     "cer_conv_ci95": [
+      0.0042,
+      0.0382
+     ],
+     "cer_norm_median_page": 0.017,
+     "ref_numbers": 48,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 5
+    },
+    {
+     "arm": "human",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1255,
+     "judge_accept": 0.8571,
+     "judge_bad": 0.1429,
+     "judge_bad_ci95": [
+      0,
+      0.4286
+     ],
+     "mean_fidelity": 4.1429,
+     "flagged": 1,
+     "flagged_per_1k": 0.7968,
+     "flagged_per_1k_ci95": [
+      0,
+      2.5641
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 749,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0.7968,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      2.5641
+     ]
+    }
+   ],
+   "German": [
+    {
+     "arm": "archive",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 1764,
+     "judge_accept": 0.2,
+     "judge_bad": 0.8,
+     "judge_bad_ci95": [
+      0.5,
+      1
+     ],
+     "mean_fidelity": 3.2,
+     "flagged": 48,
+     "flagged_per_1k": 27.2109,
+     "flagged_per_1k_ci95": [
+      15.9428,
+      40.182
+     ],
+     "adjudicated_pages": 6,
+     "adjudicated_words": 1215,
+     "adjudicated_flags": 28,
+     "confirmed": 27,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 22.2222,
+     "confirmed_per_1k_ci95": [
+      11.4068,
+      35.3201
+     ],
+     "confirmed_or_split_per_1k": 23.0453,
+     "o7_numeral_flags": 4,
+     "normaliser_artefact_flags": 10,
+     "flagged_per_1k_without_artefacts": 21.542,
+     "flagged_per_1k_without_artefacts_ci95": [
+      10.9409,
+      34.1168
+     ],
+     "cer_raw": 0.0425,
+     "cer_raw_ci95": [
+      0.0189,
+      0.0697
+     ],
+     "cer_norm": 0.0445,
+     "cer_norm_ci95": [
+      0.0194,
+      0.0733
+     ],
+     "cer_conv": 0.0337,
+     "cer_conv_ci95": [
+      0.0143,
+      0.0542
+     ],
+     "cer_norm_median_page": 0.0448,
+     "ref_numbers": 18,
+     "numbers_wrong": 4,
+     "number_error_rate": 0.2222,
+     "number_error_rate_ci95": [
+      0,
+      0.25
+     ],
+     "pages_with_numbers": 3
+    },
+    {
+     "arm": "ours",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 1764,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 6,
+     "adjudicated_words": 1215,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0548,
+     "cer_raw_ci95": [
+      0.0271,
+      0.0869
+     ],
+     "cer_norm": 0.0231,
+     "cer_norm_ci95": [
+      0.0065,
+      0.046
+     ],
+     "cer_conv": 0.0075,
+     "cer_conv_ci95": [
+      0.0004,
+      0.0219
+     ],
+     "cer_norm_median_page": 0.0119,
+     "ref_numbers": 18,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0556,
+     "number_error_rate_ci95": [
+      0,
+      0.0625
+     ],
+     "pages_with_numbers": 3
+    },
+    {
+     "arm": "human",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 1764,
+     "judge_accept": 0.9,
+     "judge_bad": 0.1,
+     "judge_bad_ci95": [
+      0,
+      0.3
+     ],
+     "mean_fidelity": 3.8,
+     "flagged": 4,
+     "flagged_per_1k": 2.2676,
+     "flagged_per_1k_ci95": [
+      0,
+      6.5243
+     ],
+     "adjudicated_pages": 6,
+     "adjudicated_words": 1215,
+     "adjudicated_flags": 3,
+     "confirmed": 3,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.4691,
+     "confirmed_per_1k_ci95": [
+      0,
+      8.8149
+     ],
+     "confirmed_or_split_per_1k": 2.4691,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 1.1338,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      2.7855
+     ]
+    }
+   ]
+  },
+  "difficulty": "easy: books with a same-edition typed edition (DTA, EEBO-TCP, CAMENA), cleaner copies than the library at large; easy: English books with a proofread Wikisource / Gutenberg transcription, cleaner copies than the library at large. The easy-page comparison only."
+ },
+ "cuts": {
+  "set": {
+   "A": [
+    {
+     "arm": "archive",
+     "n_pages": 30,
+     "n_books": 30,
+     "words": 7047,
+     "judge_accept": 0.0667,
+     "judge_bad": 0.9333,
+     "judge_bad_ci95": [
+      0.8333,
+      1
+     ],
+     "mean_fidelity": 2.7,
+     "flagged": 276,
+     "flagged_per_1k": 39.1656,
+     "flagged_per_1k_ci95": [
+      30.962,
+      48.6916
+     ],
+     "adjudicated_pages": 14,
+     "adjudicated_words": 3486,
+     "adjudicated_flags": 117,
+     "confirmed": 107,
+     "split": 10,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 30.6942,
+     "confirmed_per_1k_ci95": [
+      21.5983,
+      44.5923
+     ],
+     "confirmed_or_split_per_1k": 33.5628,
+     "o7_numeral_flags": 19,
+     "normaliser_artefact_flags": 36,
+     "flagged_per_1k_without_artefacts": 34.057,
+     "flagged_per_1k_without_artefacts_ci95": [
+      26.2379,
+      43.1577
+     ],
+     "cer_raw": 0.0921,
+     "cer_raw_ci95": [
+      0.0734,
+      0.1109
+     ],
+     "cer_norm": 0.0878,
+     "cer_norm_ci95": [
+      0.0686,
+      0.1071
+     ],
+     "cer_conv": 0.0697,
+     "cer_conv_ci95": [
+      0.0542,
+      0.0848
+     ],
+     "cer_norm_median_page": 0.087,
+     "ref_numbers": 87,
+     "numbers_wrong": 33,
+     "number_error_rate": 0.3793,
+     "number_error_rate_ci95": [
+      0.2857,
+      0.5
+     ],
+     "pages_with_numbers": 13
+    },
+    {
+     "arm": "ours",
+     "n_pages": 30,
+     "n_books": 30,
+     "words": 7047,
+     "judge_accept": 0.7667,
+     "judge_bad": 0.2333,
+     "judge_bad_ci95": [
+      0.1,
+      0.4
+     ],
+     "mean_fidelity": 3.8,
+     "flagged": 16,
+     "flagged_per_1k": 2.2705,
+     "flagged_per_1k_ci95": [
+      1.0029,
+      3.7249
+     ],
+     "adjudicated_pages": 14,
+     "adjudicated_words": 3486,
+     "adjudicated_flags": 6,
+     "confirmed": 6,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.7212,
+     "confirmed_per_1k_ci95": [
+      0.3554,
+      2.773
+     ],
+     "confirmed_or_split_per_1k": 1.7212,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 2.1286,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.8512,
+      3.5537
+     ],
+     "cer_raw": 0.0762,
+     "cer_raw_ci95": [
+      0.0359,
+      0.1425
+     ],
+     "cer_norm": 0.0477,
+     "cer_norm_ci95": [
+      0.0164,
+      0.1114
+     ],
+     "cer_conv": 0.0357,
+     "cer_conv_ci95": [
+      0.006,
+      0.0973
+     ],
+     "cer_norm_median_page": 0.0149,
+     "ref_numbers": 87,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0115,
+     "number_error_rate_ci95": [
+      0,
+      0.038
+     ],
+     "pages_with_numbers": 13
+    },
+    {
+     "arm": "human",
+     "n_pages": 30,
+     "n_books": 30,
+     "words": 7047,
+     "judge_accept": 0.8667,
+     "judge_bad": 0.1333,
+     "judge_bad_ci95": [
+      0.0333,
+      0.2667
+     ],
+     "mean_fidelity": 4.0667,
+     "flagged": 13,
+     "flagged_per_1k": 1.8448,
+     "flagged_per_1k_ci95": [
+      0.6273,
+      3.3567
+     ],
+     "adjudicated_pages": 14,
+     "adjudicated_words": 3486,
+     "adjudicated_flags": 4,
+     "confirmed": 4,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.1474,
+     "confirmed_per_1k_ci95": [
+      0,
+      3.5211
+     ],
+     "confirmed_or_split_per_1k": 1.1474,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 1.5609,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.5098,
+      2.9639
+     ]
+    }
+   ],
+   "B": [
+    {
+     "arm": "archive",
+     "n_pages": 35,
+     "n_books": 35,
+     "words": 11534,
+     "judge_accept": 0.2857,
+     "judge_bad": 0.7143,
+     "judge_bad_ci95": [
+      0.5429,
+      0.8571
+     ],
+     "mean_fidelity": 3.3143,
+     "flagged": 144,
+     "flagged_per_1k": 12.4848,
+     "flagged_per_1k_ci95": [
+      8.5779,
+      16.7257
+     ],
+     "adjudicated_pages": 11,
+     "adjudicated_words": 3102,
+     "adjudicated_flags": 18,
+     "confirmed": 18,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 5.8027,
+     "confirmed_per_1k_ci95": [
+      1.1291,
+      11.3952
+     ],
+     "confirmed_or_split_per_1k": 5.8027,
+     "o7_numeral_flags": 26,
+     "normaliser_artefact_flags": 10,
+     "flagged_per_1k_without_artefacts": 11.6178,
+     "flagged_per_1k_without_artefacts_ci95": [
+      7.8567,
+      15.6964
+     ],
+     "cer_raw": 0.0393,
+     "cer_raw_ci95": [
+      0.0218,
+      0.058
+     ],
+     "cer_norm": 0.0399,
+     "cer_norm_ci95": [
+      0.0238,
+      0.0572
+     ],
+     "cer_conv": 0.0335,
+     "cer_conv_ci95": [
+      0.0191,
+      0.0484
+     ],
+     "cer_norm_median_page": 0.0123,
+     "ref_numbers": 312,
+     "numbers_wrong": 38,
+     "number_error_rate": 0.1218,
+     "number_error_rate_ci95": [
+      0.0732,
+      0.2093
+     ],
+     "pages_with_numbers": 22
+    },
+    {
+     "arm": "ours",
+     "n_pages": 35,
+     "n_books": 35,
+     "words": 11534,
+     "judge_accept": 0.6857,
+     "judge_bad": 0.3143,
+     "judge_bad_ci95": [
+      0.1714,
+      0.4857
+     ],
+     "mean_fidelity": 3.7143,
+     "flagged": 25,
+     "flagged_per_1k": 2.1675,
+     "flagged_per_1k_ci95": [
+      1.1678,
+      3.3568
+     ],
+     "adjudicated_pages": 11,
+     "adjudicated_words": 3102,
+     "adjudicated_flags": 3,
+     "confirmed": 2,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.6447,
+     "confirmed_per_1k_ci95": [
+      0,
+      1.469
+     ],
+     "confirmed_or_split_per_1k": 0.9671,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 1.9074,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.877,
+      3.1466
+     ],
+     "cer_raw": 0.0826,
+     "cer_raw_ci95": [
+      0.0193,
+      0.1741
+     ],
+     "cer_norm": 0.0829,
+     "cer_norm_ci95": [
+      0.0196,
+      0.1734
+     ],
+     "cer_conv": 0.0784,
+     "cer_conv_ci95": [
+      0.0158,
+      0.1698
+     ],
+     "cer_norm_median_page": 0.0102,
+     "ref_numbers": 312,
+     "numbers_wrong": 32,
+     "number_error_rate": 0.1026,
+     "number_error_rate_ci95": [
+      0.035,
+      0.212
+     ],
+     "pages_with_numbers": 22
+    },
+    {
+     "arm": "human",
+     "n_pages": 35,
+     "n_books": 35,
+     "words": 11534,
+     "judge_accept": 0.4857,
+     "judge_bad": 0.5143,
+     "judge_bad_ci95": [
+      0.3429,
+      0.6857
+     ],
+     "mean_fidelity": 3.4571,
+     "flagged": 53,
+     "flagged_per_1k": 4.5951,
+     "flagged_per_1k_ci95": [
+      3.0027,
+      6.4522
+     ],
+     "adjudicated_pages": 11,
+     "adjudicated_words": 3102,
+     "adjudicated_flags": 15,
+     "confirmed": 14,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 4.5132,
+     "confirmed_per_1k_ci95": [
+      0.692,
+      8.6697
+     ],
+     "confirmed_or_split_per_1k": 4.8356,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 4.335,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.8126,
+      6.1544
+     ]
+    }
+   ]
+  },
+  "century": {
+   "16th": [
+    {
+     "arm": "archive",
+     "n_pages": 3,
+     "n_books": 3,
+     "words": 622,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.3333,
+     "flagged": 25,
+     "flagged_per_1k": 40.1929,
+     "flagged_per_1k_ci95": [
+      19.084,
+      90.9091
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 468,
+     "adjudicated_flags": 11,
+     "confirmed": 11,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 23.5043,
+     "confirmed_per_1k_ci95": [
+      19.084,
+      29.1262
+     ],
+     "confirmed_or_split_per_1k": 23.5043,
+     "o7_numeral_flags": 8,
+     "normaliser_artefact_flags": 4,
+     "flagged_per_1k_without_artefacts": 33.7621,
+     "flagged_per_1k_without_artefacts_ci95": [
+      11.4504,
+      77.9221
+     ],
+     "cer_raw": 0.1225,
+     "cer_raw_ci95": [
+      0.0566,
+      0.2902
+     ],
+     "cer_norm": 0.1348,
+     "cer_norm_ci95": [
+      0.0506,
+      0.3459
+     ],
+     "cer_conv": 0.1074,
+     "cer_conv_ci95": [
+      0.0462,
+      0.2621
+     ],
+     "cer_norm_median_page": 0.0718,
+     "ref_numbers": 37,
+     "numbers_wrong": 14,
+     "number_error_rate": 0.3784,
+     "number_error_rate_ci95": [
+      0,
+      0.3889
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "ours",
+     "n_pages": 3,
+     "n_books": 3,
+     "words": 622,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 1.6077,
+     "flagged_per_1k_ci95": [
+      0,
+      4.8544
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 468,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.1368,
+     "confirmed_per_1k_ci95": [
+      0,
+      4.8544
+     ],
+     "confirmed_or_split_per_1k": 2.1368,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 1.6077,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      4.8544
+     ],
+     "cer_raw": 0.0364,
+     "cer_raw_ci95": [
+      0.0179,
+      0.0902
+     ],
+     "cer_norm": 0.044,
+     "cer_norm_ci95": [
+      0.0141,
+      0.125
+     ],
+     "cer_conv": 0.0219,
+     "cer_conv_ci95": [
+      0.0008,
+      0.082
+     ],
+     "cer_norm_median_page": 0.018,
+     "ref_numbers": 37,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "human",
+     "n_pages": 3,
+     "n_books": 3,
+     "words": 622,
+     "judge_accept": 0.6667,
+     "judge_bad": 0.3333,
+     "judge_bad_ci95": [
+      0,
+      1
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 1.6077,
+     "flagged_per_1k_ci95": [
+      0,
+      6.4935
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 468,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 1.6077,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      6.4935
+     ]
+    }
+   ],
+   "17th": [
+    {
+     "arm": "archive",
+     "n_pages": 23,
+     "n_books": 23,
+     "words": 7578,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.5217,
+     "flagged": 277,
+     "flagged_per_1k": 36.5532,
+     "flagged_per_1k_ci95": [
+      28.3721,
+      47.6971
+     ],
+     "adjudicated_pages": 6,
+     "adjudicated_words": 1803,
+     "adjudicated_flags": 78,
+     "confirmed": 69,
+     "split": 9,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 38.2696,
+     "confirmed_per_1k_ci95": [
+      24.2962,
+      71.8133
+     ],
+     "confirmed_or_split_per_1k": 43.2612,
+     "o7_numeral_flags": 13,
+     "normaliser_artefact_flags": 28,
+     "flagged_per_1k_without_artefacts": 32.8583,
+     "flagged_per_1k_without_artefacts_ci95": [
+      25.2796,
+      42.9122
+     ],
+     "cer_raw": 0.1071,
+     "cer_raw_ci95": [
+      0.0961,
+      0.1211
+     ],
+     "cer_norm": 0.0997,
+     "cer_norm_ci95": [
+      0.09,
+      0.1107
+     ],
+     "cer_conv": 0.081,
+     "cer_conv_ci95": [
+      0.0725,
+      0.0901
+     ],
+     "cer_norm_median_page": 0.0957,
+     "ref_numbers": 82,
+     "numbers_wrong": 26,
+     "number_error_rate": 0.3171,
+     "number_error_rate_ci95": [
+      0.2,
+      0.4677
+     ],
+     "pages_with_numbers": 13
+    },
+    {
+     "arm": "ours",
+     "n_pages": 23,
+     "n_books": 23,
+     "words": 7578,
+     "judge_accept": 0.4783,
+     "judge_bad": 0.5217,
+     "judge_bad_ci95": [
+      0.3043,
+      0.7391
+     ],
+     "mean_fidelity": 3.5652,
+     "flagged": 28,
+     "flagged_per_1k": 3.6949,
+     "flagged_per_1k_ci95": [
+      2.2374,
+      5.1506
+     ],
+     "adjudicated_pages": 6,
+     "adjudicated_words": 1803,
+     "adjudicated_flags": 5,
+     "confirmed": 5,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.7732,
+     "confirmed_per_1k_ci95": [
+      0.8117,
+      3.9526
+     ],
+     "confirmed_or_split_per_1k": 2.7732,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 3.5629,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.1249,
+      5.0129
+     ],
+     "cer_raw": 0.0765,
+     "cer_raw_ci95": [
+      0.0368,
+      0.1445
+     ],
+     "cer_norm": 0.0542,
+     "cer_norm_ci95": [
+      0.0211,
+      0.118
+     ],
+     "cer_conv": 0.0455,
+     "cer_conv_ci95": [
+      0.0122,
+      0.1084
+     ],
+     "cer_norm_median_page": 0.0229,
+     "ref_numbers": 82,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0122,
+     "number_error_rate_ci95": [
+      0,
+      0.0319
+     ],
+     "pages_with_numbers": 13
+    },
+    {
+     "arm": "human",
+     "n_pages": 23,
+     "n_books": 23,
+     "words": 7578,
+     "judge_accept": 0.8261,
+     "judge_bad": 0.1739,
+     "judge_bad_ci95": [
+      0.0435,
+      0.3478
+     ],
+     "mean_fidelity": 4.087,
+     "flagged": 18,
+     "flagged_per_1k": 2.3753,
+     "flagged_per_1k_ci95": [
+      0.9918,
+      4.0989
+     ],
+     "adjudicated_pages": 6,
+     "adjudicated_words": 1803,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.5546,
+     "confirmed_per_1k_ci95": [
+      0,
+      0.9696
+     ],
+     "confirmed_or_split_per_1k": 0.5546,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.3753,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.9918,
+      4.0989
+     ]
+    }
+   ],
+   "18th": [
+    {
+     "arm": "archive",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1078,
+     "judge_accept": 0.2,
+     "judge_bad": 0.8,
+     "judge_bad_ci95": [
+      0.4,
+      1
+     ],
+     "mean_fidelity": 3.4,
+     "flagged": 26,
+     "flagged_per_1k": 24.1187,
+     "flagged_per_1k_ci95": [
+      14.5914,
+      37.3444
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 979,
+     "adjudicated_flags": 25,
+     "confirmed": 25,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 25.5363,
+     "confirmed_per_1k_ci95": [
+      15.07,
+      41.6667
+     ],
+     "confirmed_or_split_per_1k": 25.5363,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 4,
+     "flagged_per_1k_without_artefacts": 20.4082,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.1833,
+      30.8555
+     ],
+     "cer_raw": 0.0605,
+     "cer_raw_ci95": [
+      0.0228,
+      0.0861
+     ],
+     "cer_norm": 0.0539,
+     "cer_norm_ci95": [
+      0.0231,
+      0.0759
+     ],
+     "cer_conv": 0.0454,
+     "cer_conv_ci95": [
+      0.0158,
+      0.0621
+     ],
+     "cer_norm_median_page": 0.0564,
+     "ref_numbers": 0,
+     "numbers_wrong": 0,
+     "number_error_rate": null,
+     "number_error_rate_ci95": null,
+     "pages_with_numbers": 0
+    },
+    {
+     "arm": "ours",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1078,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 0.9276,
+     "flagged_per_1k_ci95": [
+      0,
+      1.606
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 979,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.0215,
+     "confirmed_per_1k_ci95": [
+      0,
+      1.7055
+     ],
+     "confirmed_or_split_per_1k": 1.0215,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0.9276,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      1.606
+     ],
+     "cer_raw": 0.0821,
+     "cer_raw_ci95": [
+      0.0542,
+      0.1274
+     ],
+     "cer_norm": 0.0373,
+     "cer_norm_ci95": [
+      0.0139,
+      0.0757
+     ],
+     "cer_conv": 0.0217,
+     "cer_conv_ci95": [
+      0.0003,
+      0.0445
+     ],
+     "cer_norm_median_page": 0.0268,
+     "ref_numbers": 0,
+     "numbers_wrong": 0,
+     "number_error_rate": null,
+     "number_error_rate_ci95": null,
+     "pages_with_numbers": 0
+    },
+    {
+     "arm": "human",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1078,
+     "judge_accept": 0.6,
+     "judge_bad": 0.4,
+     "judge_bad_ci95": [
+      0,
+      0.8
+     ],
+     "mean_fidelity": 3.2,
+     "flagged": 12,
+     "flagged_per_1k": 11.1317,
+     "flagged_per_1k_ci95": [
+      0,
+      16.2933
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 979,
+     "adjudicated_flags": 12,
+     "confirmed": 11,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 11.236,
+     "confirmed_per_1k_ci95": [
+      0,
+      16.0116
+     ],
+     "confirmed_or_split_per_1k": 12.2574,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 9.2764,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      14.6899
+     ]
+    }
+   ],
+   "19th": [
+    {
+     "arm": "archive",
+     "n_pages": 14,
+     "n_books": 14,
+     "words": 3670,
+     "judge_accept": 0.1429,
+     "judge_bad": 0.8571,
+     "judge_bad_ci95": [
+      0.6429,
+      1
+     ],
+     "mean_fidelity": 3.2143,
+     "flagged": 53,
+     "flagged_per_1k": 14.4414,
+     "flagged_per_1k_ci95": [
+      9.0859,
+      20.7612
+     ],
+     "adjudicated_pages": 5,
+     "adjudicated_words": 1104,
+     "adjudicated_flags": 17,
+     "confirmed": 16,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 14.4928,
+     "confirmed_per_1k_ci95": [
+      6.237,
+      22.7273
+     ],
+     "confirmed_or_split_per_1k": 15.3986,
+     "o7_numeral_flags": 7,
+     "normaliser_artefact_flags": 7,
+     "flagged_per_1k_without_artefacts": 12.5341,
+     "flagged_per_1k_without_artefacts_ci95": [
+      7.6781,
+      18.3635
+     ],
+     "cer_raw": 0.021,
+     "cer_raw_ci95": [
+      0.0111,
+      0.0322
+     ],
+     "cer_norm": 0.0228,
+     "cer_norm_ci95": [
+      0.011,
+      0.0377
+     ],
+     "cer_conv": 0.0168,
+     "cer_conv_ci95": [
+      0.0072,
+      0.0286
+     ],
+     "cer_norm_median_page": 0.0123,
+     "ref_numbers": 75,
+     "numbers_wrong": 7,
+     "number_error_rate": 0.0933,
+     "number_error_rate_ci95": [
+      0.03,
+      0.2174
+     ],
+     "pages_with_numbers": 8
+    },
+    {
+     "arm": "ours",
+     "n_pages": 14,
+     "n_books": 14,
+     "words": 3670,
+     "judge_accept": 0.7857,
+     "judge_bad": 0.2143,
+     "judge_bad_ci95": [
+      0,
+      0.4286
+     ],
+     "mean_fidelity": 3.5714,
+     "flagged": 4,
+     "flagged_per_1k": 1.0899,
+     "flagged_per_1k_ci95": [
+      0.2674,
+      2.019
+     ],
+     "adjudicated_pages": 5,
+     "adjudicated_words": 1104,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.9058,
+     "confirmed_per_1k_ci95": [
+      0,
+      2.8143
+     ],
+     "confirmed_or_split_per_1k": 0.9058,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 0.8174,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      1.7123
+     ],
+     "cer_raw": 0.1868,
+     "cer_raw_ci95": [
+      0.0137,
+      0.4267
+     ],
+     "cer_norm": 0.1819,
+     "cer_norm_ci95": [
+      0.0096,
+      0.4244
+     ],
+     "cer_conv": 0.176,
+     "cer_conv_ci95": [
+      0.0041,
+      0.421
+     ],
+     "cer_norm_median_page": 0.0102,
+     "ref_numbers": 75,
+     "numbers_wrong": 14,
+     "number_error_rate": 0.1867,
+     "number_error_rate_ci95": [
+      0.0134,
+      0.7179
+     ],
+     "pages_with_numbers": 8
+    },
+    {
+     "arm": "human",
+     "n_pages": 14,
+     "n_books": 14,
+     "words": 3670,
+     "judge_accept": 0.7143,
+     "judge_bad": 0.2857,
+     "judge_bad_ci95": [
+      0.0714,
+      0.5
+     ],
+     "mean_fidelity": 3.7143,
+     "flagged": 13,
+     "flagged_per_1k": 3.5422,
+     "flagged_per_1k_ci95": [
+      1.1587,
+      6.2859
+     ],
+     "adjudicated_pages": 5,
+     "adjudicated_words": 1104,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.9058,
+     "confirmed_per_1k_ci95": [
+      0,
+      2.8143
+     ],
+     "confirmed_or_split_per_1k": 0.9058,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 3.2698,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.0366,
+      5.8015
+     ]
+    }
+   ],
+   "20th": [
+    {
+     "arm": "archive",
+     "n_pages": 20,
+     "n_books": 20,
+     "words": 5633,
+     "judge_accept": 0.45,
+     "judge_bad": 0.55,
+     "judge_bad_ci95": [
+      0.35,
+      0.75
+     ],
+     "mean_fidelity": 3.5,
+     "flagged": 39,
+     "flagged_per_1k": 6.9235,
+     "flagged_per_1k_ci95": [
+      4.0525,
+      10.2733
+     ],
+     "adjudicated_pages": 8,
+     "adjudicated_words": 2234,
+     "adjudicated_flags": 4,
+     "confirmed": 4,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.7905,
+     "confirmed_per_1k_ci95": [
+      0,
+      4.5568
+     ],
+     "confirmed_or_split_per_1k": 1.7905,
+     "o7_numeral_flags": 11,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 6.3909,
+     "flagged_per_1k_without_artefacts_ci95": [
+      3.6597,
+      9.5075
+     ],
+     "cer_raw": 0.0173,
+     "cer_raw_ci95": [
+      0.0065,
+      0.0366
+     ],
+     "cer_norm": 0.0215,
+     "cer_norm_ci95": [
+      0.0088,
+      0.0412
+     ],
+     "cer_conv": 0.0184,
+     "cer_conv_ci95": [
+      0.0065,
+      0.0373
+     ],
+     "cer_norm_median_page": 0.0084,
+     "ref_numbers": 205,
+     "numbers_wrong": 24,
+     "number_error_rate": 0.1171,
+     "number_error_rate_ci95": [
+      0.0584,
+      0.2735
+     ],
+     "pages_with_numbers": 12
+    },
+    {
+     "arm": "ours",
+     "n_pages": 20,
+     "n_books": 20,
+     "words": 5633,
+     "judge_accept": 0.85,
+     "judge_bad": 0.15,
+     "judge_bad_ci95": [
+      0,
+      0.3
+     ],
+     "mean_fidelity": 4,
+     "flagged": 7,
+     "flagged_per_1k": 1.2427,
+     "flagged_per_1k_ci95": [
+      0.1671,
+      2.958
+     ],
+     "adjudicated_pages": 8,
+     "adjudicated_words": 2234,
+     "adjudicated_flags": 1,
+     "confirmed": 0,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0.4476,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 0.8876,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      2.565
+     ],
+     "cer_raw": 0.0151,
+     "cer_raw_ci95": [
+      0.0041,
+      0.0346
+     ],
+     "cer_norm": 0.0186,
+     "cer_norm_ci95": [
+      0.0057,
+      0.0383
+     ],
+     "cer_conv": 0.015,
+     "cer_conv_ci95": [
+      0.0031,
+      0.0338
+     ],
+     "cer_norm_median_page": 0.0036,
+     "ref_numbers": 205,
+     "numbers_wrong": 18,
+     "number_error_rate": 0.0878,
+     "number_error_rate_ci95": [
+      0.0163,
+      0.2121
+     ],
+     "pages_with_numbers": 12
+    },
+    {
+     "arm": "human",
+     "n_pages": 20,
+     "n_books": 20,
+     "words": 5633,
+     "judge_accept": 0.45,
+     "judge_bad": 0.55,
+     "judge_bad_ci95": [
+      0.35,
+      0.75
+     ],
+     "mean_fidelity": 3.45,
+     "flagged": 22,
+     "flagged_per_1k": 3.9056,
+     "flagged_per_1k_ci95": [
+      2.381,
+      5.4635
+     ],
+     "adjudicated_pages": 8,
+     "adjudicated_words": 2234,
+     "adjudicated_flags": 5,
+     "confirmed": 5,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.2381,
+     "confirmed_per_1k_ci95": [
+      0,
+      5.16
+     ],
+     "confirmed_or_split_per_1k": 2.2381,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 3.5505,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.1918,
+      4.9828
+     ]
+    }
+   ]
+  },
+  "archive_engine": {
+   "ABBYY FineReader 11.0": [
+    {
+     "arm": "archive",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1868,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.8,
+     "flagged": 38,
+     "flagged_per_1k": 20.3426,
+     "flagged_per_1k_ci95": [
+      11.7271,
+      38.0435
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 423,
+     "adjudicated_flags": 18,
+     "confirmed": 13,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 30.7329,
+     "confirmed_per_1k_ci95": [
+      25.5102,
+      35.2423
+     ],
+     "confirmed_or_split_per_1k": 42.5532,
+     "o7_numeral_flags": 3,
+     "normaliser_artefact_flags": 6,
+     "flagged_per_1k_without_artefacts": 17.1306,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.6319,
+      30.7549
+     ],
+     "cer_raw": 0.0816,
+     "cer_raw_ci95": [
+      0.0735,
+      0.0918
+     ],
+     "cer_norm": 0.082,
+     "cer_norm_ci95": [
+      0.076,
+      0.0905
+     ],
+     "cer_conv": 0.0705,
+     "cer_conv_ci95": [
+      0.0663,
+      0.0776
+     ],
+     "cer_norm_median_page": 0.0843,
+     "ref_numbers": 22,
+     "numbers_wrong": 4,
+     "number_error_rate": 0.1818,
+     "number_error_rate_ci95": [
+      0,
+      0.3333
+     ],
+     "pages_with_numbers": 3
+    },
+    {
+     "arm": "ours",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1868,
+     "judge_accept": 0.2,
+     "judge_bad": 0.8,
+     "judge_bad_ci95": [
+      0.4,
+      1
+     ],
+     "mean_fidelity": 3.2,
+     "flagged": 5,
+     "flagged_per_1k": 2.6767,
+     "flagged_per_1k_ci95": [
+      1.5232,
+      3.5461
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 423,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.3641,
+     "confirmed_per_1k_ci95": [
+      0,
+      5.102
+     ],
+     "confirmed_or_split_per_1k": 2.3641,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 2.1413,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.78,
+      2.8525
+     ],
+     "cer_raw": 0.13,
+     "cer_raw_ci95": [
+      0.018,
+      0.4658
+     ],
+     "cer_norm": 0.1249,
+     "cer_norm_ci95": [
+      0.0153,
+      0.4536
+     ],
+     "cer_conv": 0.1183,
+     "cer_conv_ci95": [
+      0.0072,
+      0.4493
+     ],
+     "cer_norm_median_page": 0.0229,
+     "ref_numbers": 22,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 3
+    },
+    {
+     "arm": "human",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1868,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4.4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 423,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "ABBYY FineReader 8.0": [
+    {
+     "arm": "archive",
+     "n_pages": 8,
+     "n_books": 8,
+     "words": 3248,
+     "judge_accept": 0.125,
+     "judge_bad": 0.875,
+     "judge_bad_ci95": [
+      0.625,
+      1
+     ],
+     "mean_fidelity": 3.25,
+     "flagged": 61,
+     "flagged_per_1k": 18.7808,
+     "flagged_per_1k_ci95": [
+      9.7731,
+      27.0197
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 1394,
+     "adjudicated_flags": 28,
+     "confirmed": 28,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 20.0861,
+     "confirmed_per_1k_ci95": [
+      19.8135,
+      20.5224
+     ],
+     "confirmed_or_split_per_1k": 20.0861,
+     "o7_numeral_flags": 7,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 17.8571,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.831,
+      25.9009
+     ],
+     "cer_raw": 0.0568,
+     "cer_raw_ci95": [
+      0.0222,
+      0.0794
+     ],
+     "cer_norm": 0.0583,
+     "cer_norm_ci95": [
+      0.0241,
+      0.0834
+     ],
+     "cer_conv": 0.049,
+     "cer_conv_ci95": [
+      0.0179,
+      0.0711
+     ],
+     "cer_norm_median_page": 0.0564,
+     "ref_numbers": 63,
+     "numbers_wrong": 9,
+     "number_error_rate": 0.1429,
+     "number_error_rate_ci95": [
+      0.025,
+      0.4444
+     ],
+     "pages_with_numbers": 4
+    },
+    {
+     "arm": "ours",
+     "n_pages": 8,
+     "n_books": 8,
+     "words": 3248,
+     "judge_accept": 0.625,
+     "judge_bad": 0.375,
+     "judge_bad_ci95": [
+      0,
+      0.75
+     ],
+     "mean_fidelity": 3.75,
+     "flagged": 8,
+     "flagged_per_1k": 2.4631,
+     "flagged_per_1k_ci95": [
+      1.0166,
+      3.5951
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 1394,
+     "adjudicated_flags": 4,
+     "confirmed": 4,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.8694,
+     "confirmed_per_1k_ci95": [
+      1.8657,
+      3.4965
+     ],
+     "confirmed_or_split_per_1k": 2.8694,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 2.1552,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.7062,
+      3.2841
+     ],
+     "cer_raw": 0.0315,
+     "cer_raw_ci95": [
+      0.0133,
+      0.0517
+     ],
+     "cer_norm": 0.0192,
+     "cer_norm_ci95": [
+      0.0093,
+      0.0303
+     ],
+     "cer_conv": 0.0137,
+     "cer_conv_ci95": [
+      0.0048,
+      0.0231
+     ],
+     "cer_norm_median_page": 0.0187,
+     "ref_numbers": 63,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 4
+    },
+    {
+     "arm": "human",
+     "n_pages": 8,
+     "n_books": 8,
+     "words": 3248,
+     "judge_accept": 0.5,
+     "judge_bad": 0.5,
+     "judge_bad_ci95": [
+      0.125,
+      0.875
+     ],
+     "mean_fidelity": 3.5,
+     "flagged": 20,
+     "flagged_per_1k": 6.1576,
+     "flagged_per_1k_ci95": [
+      1.9314,
+      11.3402
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 1394,
+     "adjudicated_flags": 10,
+     "confirmed": 9,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 6.4562,
+     "confirmed_per_1k_ci95": [
+      1.1655,
+      14.9254
+     ],
+     "confirmed_or_split_per_1k": 7.1736,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.1576,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.9314,
+      11.3402
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.13": [
+    {
+     "arm": "archive",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 658,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 8,
+     "flagged_per_1k": 12.1581,
+     "flagged_per_1k_ci95": [
+      8.7719,
+      15.8228
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 5,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 12.1581,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.7719,
+      15.8228
+     ],
+     "cer_raw": 0.0081,
+     "cer_raw_ci95": [
+      0.0052,
+      0.0112
+     ],
+     "cer_norm": 0.0183,
+     "cer_norm_ci95": [
+      0.0046,
+      0.0328
+     ],
+     "cer_conv": 0.0154,
+     "cer_conv_ci95": [
+      0.0013,
+      0.0304
+     ],
+     "cer_norm_median_page": 0.0328,
+     "ref_numbers": 86,
+     "numbers_wrong": 8,
+     "number_error_rate": 0.093,
+     "number_error_rate_ci95": [
+      0,
+      0.0941
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "ours",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 658,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0014,
+     "cer_raw_ci95": [
+      0.0007,
+      0.002
+     ],
+     "cer_norm": 0.0135,
+     "cer_norm_ci95": [
+      0.0026,
+      0.0252
+     ],
+     "cer_conv": 0.0115,
+     "cer_conv_ci95": [
+      0,
+      0.0238
+     ],
+     "cer_norm_median_page": 0.0252,
+     "ref_numbers": 86,
+     "numbers_wrong": 8,
+     "number_error_rate": 0.093,
+     "number_error_rate_ci95": [
+      0,
+      0.0941
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "human",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 658,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.5,
+     "flagged": 4,
+     "flagged_per_1k": 6.079,
+     "flagged_per_1k_ci95": [
+      5.848,
+      6.3291
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.079,
+     "flagged_per_1k_without_artefacts_ci95": [
+      5.848,
+      6.3291
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.14": [
+    {
+     "arm": "archive",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 457,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.5,
+     "flagged": 20,
+     "flagged_per_1k": 43.7637,
+     "flagged_per_1k_ci95": [
+      28.4553,
+      61.6114
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 246,
+     "adjudicated_flags": 7,
+     "confirmed": 7,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 28.4553,
+     "confirmed_per_1k_ci95": [
+      28.4553,
+      28.4553
+     ],
+     "confirmed_or_split_per_1k": 28.4553,
+     "o7_numeral_flags": 4,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 37.1991,
+     "flagged_per_1k_without_artefacts_ci95": [
+      20.3252,
+      56.872
+     ],
+     "cer_raw": 0.0778,
+     "cer_raw_ci95": [
+      0.0517,
+      0.1116
+     ],
+     "cer_norm": 0.0841,
+     "cer_norm_ci95": [
+      0.0512,
+      0.1268
+     ],
+     "cer_conv": 0.0644,
+     "cer_conv_ci95": [
+      0.0486,
+      0.0849
+     ],
+     "cer_norm_median_page": 0.1268,
+     "ref_numbers": 16,
+     "numbers_wrong": 4,
+     "number_error_rate": 0.25,
+     "number_error_rate_ci95": [
+      0.25,
+      0.25
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 457,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 246,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0531,
+     "cer_raw_ci95": [
+      0.0362,
+      0.0749
+     ],
+     "cer_norm": 0.0183,
+     "cer_norm_ci95": [
+      0,
+      0.042
+     ],
+     "cer_conv": 0.0038,
+     "cer_conv_ci95": [
+      0,
+      0.0088
+     ],
+     "cer_norm_median_page": 0.042,
+     "ref_numbers": 16,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0625,
+     "number_error_rate_ci95": [
+      0.0625,
+      0.0625
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 457,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 2.1882,
+     "flagged_per_1k_ci95": [
+      0,
+      4.7393
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 246,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.1882,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      4.7393
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.15": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 262,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 5,
+     "flagged_per_1k": 19.084,
+     "flagged_per_1k_ci95": [
+      19.084,
+      19.084
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 262,
+     "adjudicated_flags": 5,
+     "confirmed": 5,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 19.084,
+     "confirmed_per_1k_ci95": [
+      19.084,
+      19.084
+     ],
+     "confirmed_or_split_per_1k": 19.084,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 11.4504,
+     "flagged_per_1k_without_artefacts_ci95": [
+      11.4504,
+      11.4504
+     ],
+     "cer_raw": 0.0718,
+     "cer_raw_ci95": [
+      0.0718,
+      0.0718
+     ],
+     "cer_norm": 0.0718,
+     "cer_norm_ci95": [
+      0.0718,
+      0.0718
+     ],
+     "cer_conv": 0.0608,
+     "cer_conv_ci95": [
+      0.0608,
+      0.0608
+     ],
+     "cer_norm_median_page": 0.0718,
+     "ref_numbers": 0,
+     "numbers_wrong": 0,
+     "number_error_rate": null,
+     "number_error_rate_ci95": null,
+     "pages_with_numbers": 0
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 262,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 262,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.018,
+     "cer_raw_ci95": [
+      0.018,
+      0.018
+     ],
+     "cer_norm": 0.018,
+     "cer_norm_ci95": [
+      0.018,
+      0.018
+     ],
+     "cer_conv": 0.0008,
+     "cer_conv_ci95": [
+      0.0008,
+      0.0008
+     ],
+     "cer_norm_median_page": 0.018,
+     "ref_numbers": 0,
+     "numbers_wrong": 0,
+     "number_error_rate": null,
+     "number_error_rate_ci95": null,
+     "pages_with_numbers": 0
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 262,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 262,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.16": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 441,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2,
+     "flagged": 26,
+     "flagged_per_1k": 58.9569,
+     "flagged_per_1k_ci95": [
+      58.9569,
+      58.9569
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 56.6893,
+     "flagged_per_1k_without_artefacts_ci95": [
+      56.6893,
+      56.6893
+     ],
+     "cer_raw": 0.1009,
+     "cer_raw_ci95": [
+      0.1009,
+      0.1009
+     ],
+     "cer_norm": 0.1371,
+     "cer_norm_ci95": [
+      0.1371,
+      0.1371
+     ],
+     "cer_conv": 0.1086,
+     "cer_conv_ci95": [
+      0.1086,
+      0.1086
+     ],
+     "cer_norm_median_page": 0.1371,
+     "ref_numbers": 2,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.5,
+     "number_error_rate_ci95": [
+      0.5,
+      0.5
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 441,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 3,
+     "flagged_per_1k": 6.8027,
+     "flagged_per_1k_ci95": [
+      6.8027,
+      6.8027
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.8027,
+     "flagged_per_1k_without_artefacts_ci95": [
+      6.8027,
+      6.8027
+     ],
+     "cer_raw": 0.0624,
+     "cer_raw_ci95": [
+      0.0624,
+      0.0624
+     ],
+     "cer_norm": 0.0243,
+     "cer_norm_ci95": [
+      0.0243,
+      0.0243
+     ],
+     "cer_conv": 0.0178,
+     "cer_conv_ci95": [
+      0.0178,
+      0.0178
+     ],
+     "cer_norm_median_page": 0.0243,
+     "ref_numbers": 2,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 441,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 2.2676,
+     "flagged_per_1k_ci95": [
+      2.2676,
+      2.2676
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.2676,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.2676,
+      2.2676
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.21": [
+    {
+     "arm": "archive",
+     "n_pages": 45,
+     "n_books": 45,
+     "words": 11381,
+     "judge_accept": 0.2222,
+     "judge_bad": 0.7778,
+     "judge_bad_ci95": [
+      0.6444,
+      0.8889
+     ],
+     "mean_fidelity": 3.0444,
+     "flagged": 261,
+     "flagged_per_1k": 22.933,
+     "flagged_per_1k_ci95": [
+      17.0625,
+      30.2702
+     ],
+     "adjudicated_pages": 18,
+     "adjudicated_words": 3997,
+     "adjudicated_flags": 76,
+     "confirmed": 71,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 17.7633,
+     "confirmed_per_1k_ci95": [
+      7.72,
+      31.6965
+     ],
+     "confirmed_or_split_per_1k": 19.0143,
+     "o7_numeral_flags": 25,
+     "normaliser_artefact_flags": 31,
+     "flagged_per_1k_without_artefacts": 20.2091,
+     "flagged_per_1k_without_artefacts_ci95": [
+      14.91,
+      26.8212
+     ],
+     "cer_raw": 0.0601,
+     "cer_raw_ci95": [
+      0.0403,
+      0.0812
+     ],
+     "cer_norm": 0.0552,
+     "cer_norm_ci95": [
+      0.0384,
+      0.0748
+     ],
+     "cer_conv": 0.044,
+     "cer_conv_ci95": [
+      0.0296,
+      0.0602
+     ],
+     "cer_norm_median_page": 0.0437,
+     "ref_numbers": 209,
+     "numbers_wrong": 45,
+     "number_error_rate": 0.2153,
+     "number_error_rate_ci95": [
+      0.1121,
+      0.3443
+     ],
+     "pages_with_numbers": 23
+    },
+    {
+     "arm": "ours",
+     "n_pages": 45,
+     "n_books": 45,
+     "words": 11381,
+     "judge_accept": 0.7778,
+     "judge_bad": 0.2222,
+     "judge_bad_ci95": [
+      0.1111,
+      0.3556
+     ],
+     "mean_fidelity": 3.8,
+     "flagged": 25,
+     "flagged_per_1k": 2.1966,
+     "flagged_per_1k_ci95": [
+      1.0111,
+      3.5916
+     ],
+     "adjudicated_pages": 18,
+     "adjudicated_words": 3997,
+     "adjudicated_flags": 4,
+     "confirmed": 3,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.7506,
+     "confirmed_per_1k_ci95": [
+      0,
+      1.6611
+     ],
+     "confirmed_or_split_per_1k": 1.0008,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 2.0209,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.8396,
+      3.3864
+     ],
+     "cer_raw": 0.0951,
+     "cer_raw_ci95": [
+      0.0322,
+      0.1865
+     ],
+     "cer_norm": 0.0835,
+     "cer_norm_ci95": [
+      0.0225,
+      0.1758
+     ],
+     "cer_conv": 0.0753,
+     "cer_conv_ci95": [
+      0.0139,
+      0.168
+     ],
+     "cer_norm_median_page": 0.0119,
+     "ref_numbers": 209,
+     "numbers_wrong": 24,
+     "number_error_rate": 0.1148,
+     "number_error_rate_ci95": [
+      0.0208,
+      0.281
+     ],
+     "pages_with_numbers": 23
+    },
+    {
+     "arm": "human",
+     "n_pages": 45,
+     "n_books": 45,
+     "words": 11381,
+     "judge_accept": 0.6444,
+     "judge_bad": 0.3556,
+     "judge_bad_ci95": [
+      0.2222,
+      0.4889
+     ],
+     "mean_fidelity": 3.7333,
+     "flagged": 40,
+     "flagged_per_1k": 3.5146,
+     "flagged_per_1k_ci95": [
+      2.2586,
+      4.8893
+     ],
+     "adjudicated_pages": 18,
+     "adjudicated_words": 3997,
+     "adjudicated_flags": 9,
+     "confirmed": 9,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.2517,
+     "confirmed_per_1k_ci95": [
+      0.4035,
+      4.6499
+     ],
+     "confirmed_or_split_per_1k": 2.2517,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 5,
+     "flagged_per_1k_without_artefacts": 3.0753,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.9884,
+      4.2499
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 3.7594,
+     "flagged_per_1k_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.7594,
+     "confirmed_per_1k_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "confirmed_or_split_per_1k": 3.7594,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.7594,
+     "flagged_per_1k_without_artefacts_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "cer_raw": 0.003,
+     "cer_raw_ci95": [
+      0.003,
+      0.003
+     ],
+     "cer_norm": 0.003,
+     "cer_norm_ci95": [
+      0.003,
+      0.003
+     ],
+     "cer_conv": 0.0024,
+     "cer_conv_ci95": [
+      0.0024,
+      0.0024
+     ],
+     "cer_norm_median_page": 0.003,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0059,
+     "cer_raw_ci95": [
+      0.0059,
+      0.0059
+     ],
+     "cer_norm": 0,
+     "cer_norm_ci95": [
+      0,
+      0
+     ],
+     "cer_conv": 0,
+     "cer_conv_ci95": [
+      0,
+      0
+     ],
+     "cer_norm_median_page": 0,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  "in_benchmark": {
+   "in a reference set": [
+    {
+     "arm": "archive",
+     "n_pages": 45,
+     "n_books": 45,
+     "words": 13358,
+     "judge_accept": 0.2222,
+     "judge_bad": 0.7778,
+     "judge_bad_ci95": [
+      0.6444,
+      0.8889
+     ],
+     "mean_fidelity": 3.1111,
+     "flagged": 260,
+     "flagged_per_1k": 19.464,
+     "flagged_per_1k_ci95": [
+      13.9378,
+      25.5094
+     ],
+     "adjudicated_pages": 15,
+     "adjudicated_words": 3851,
+     "adjudicated_flags": 69,
+     "confirmed": 65,
+     "split": 4,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 16.8787,
+     "confirmed_per_1k_ci95": [
+      6.5706,
+      30.8343
+     ],
+     "confirmed_or_split_per_1k": 17.9174,
+     "o7_numeral_flags": 37,
+     "normaliser_artefact_flags": 24,
+     "flagged_per_1k_without_artefacts": 17.6673,
+     "flagged_per_1k_without_artefacts_ci95": [
+      12.6668,
+      23.1965
+     ],
+     "cer_raw": 0.0535,
+     "cer_raw_ci95": [
+      0.0365,
+      0.0707
+     ],
+     "cer_norm": 0.0526,
+     "cer_norm_ci95": [
+      0.0367,
+      0.0692
+     ],
+     "cer_conv": 0.043,
+     "cer_conv_ci95": [
+      0.0295,
+      0.0566
+     ],
+     "cer_norm_median_page": 0.0313,
+     "ref_numbers": 360,
+     "numbers_wrong": 59,
+     "number_error_rate": 0.1639,
+     "number_error_rate_ci95": [
+      0.0957,
+      0.2767
+     ],
+     "pages_with_numbers": 27
+    },
+    {
+     "arm": "ours",
+     "n_pages": 45,
+     "n_books": 45,
+     "words": 13358,
+     "judge_accept": 0.7111,
+     "judge_bad": 0.2889,
+     "judge_bad_ci95": [
+      0.1556,
+      0.4222
+     ],
+     "mean_fidelity": 3.7556,
+     "flagged": 31,
+     "flagged_per_1k": 2.3207,
+     "flagged_per_1k_ci95": [
+      1.3041,
+      3.4857
+     ],
+     "adjudicated_pages": 15,
+     "adjudicated_words": 3851,
+     "adjudicated_flags": 4,
+     "confirmed": 3,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.779,
+     "confirmed_per_1k_ci95": [
+      0,
+      1.6565
+     ],
+     "confirmed_or_split_per_1k": 1.0387,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 2.0961,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.0449,
+      3.287
+     ],
+     "cer_raw": 0.0839,
+     "cer_raw_ci95": [
+      0.0295,
+      0.1587
+     ],
+     "cer_norm": 0.0747,
+     "cer_norm_ci95": [
+      0.0213,
+      0.1505
+     ],
+     "cer_conv": 0.0682,
+     "cer_conv_ci95": [
+      0.0149,
+      0.1438
+     ],
+     "cer_norm_median_page": 0.0144,
+     "ref_numbers": 360,
+     "numbers_wrong": 32,
+     "number_error_rate": 0.0889,
+     "number_error_rate_ci95": [
+      0.0281,
+      0.1894
+     ],
+     "pages_with_numbers": 27
+    },
+    {
+     "arm": "human",
+     "n_pages": 45,
+     "n_books": 45,
+     "words": 13358,
+     "judge_accept": 0.5556,
+     "judge_bad": 0.4444,
+     "judge_bad_ci95": [
+      0.3111,
+      0.5778
+     ],
+     "mean_fidelity": 3.6,
+     "flagged": 56,
+     "flagged_per_1k": 4.1922,
+     "flagged_per_1k_ci95": [
+      2.7071,
+      5.7917
+     ],
+     "adjudicated_pages": 15,
+     "adjudicated_words": 3851,
+     "adjudicated_flags": 15,
+     "confirmed": 14,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.6354,
+     "confirmed_per_1k_ci95": [
+      0.5333,
+      7.2904
+     ],
+     "confirmed_or_split_per_1k": 3.8951,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 3.9677,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.5617,
+      5.5287
+     ]
+    }
+   ],
+   "not in any reference set": [
+    {
+     "arm": "archive",
+     "n_pages": 20,
+     "n_books": 20,
+     "words": 5223,
+     "judge_accept": 0.1,
+     "judge_bad": 0.9,
+     "judge_bad_ci95": [
+      0.75,
+      1
+     ],
+     "mean_fidelity": 2.85,
+     "flagged": 160,
+     "flagged_per_1k": 30.6337,
+     "flagged_per_1k_ci95": [
+      23.2501,
+      39.3197
+     ],
+     "adjudicated_pages": 10,
+     "adjudicated_words": 2737,
+     "adjudicated_flags": 66,
+     "confirmed": 60,
+     "split": 6,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 21.9218,
+     "confirmed_per_1k_ci95": [
+      16.3221,
+      28.8162
+     ],
+     "confirmed_or_split_per_1k": 24.114,
+     "o7_numeral_flags": 8,
+     "normaliser_artefact_flags": 22,
+     "flagged_per_1k_without_artefacts": 26.4216,
+     "flagged_per_1k_without_artefacts_ci95": [
+      19.0129,
+      34.9301
+     ],
+     "cer_raw": 0.0779,
+     "cer_raw_ci95": [
+      0.0564,
+      0.095
+     ],
+     "cer_norm": 0.0755,
+     "cer_norm_ci95": [
+      0.0541,
+      0.0921
+     ],
+     "cer_conv": 0.0606,
+     "cer_conv_ci95": [
+      0.0424,
+      0.0745
+     ],
+     "cer_norm_median_page": 0.0718,
+     "ref_numbers": 39,
+     "numbers_wrong": 12,
+     "number_error_rate": 0.3077,
+     "number_error_rate_ci95": [
+      0.2083,
+      0.4706
+     ],
+     "pages_with_numbers": 8
+    },
+    {
+     "arm": "ours",
+     "n_pages": 20,
+     "n_books": 20,
+     "words": 5223,
+     "judge_accept": 0.75,
+     "judge_bad": 0.25,
+     "judge_bad_ci95": [
+      0.05,
+      0.45
+     ],
+     "mean_fidelity": 3.75,
+     "flagged": 10,
+     "flagged_per_1k": 1.9146,
+     "flagged_per_1k_ci95": [
+      0.6647,
+      3.0906
+     ],
+     "adjudicated_pages": 10,
+     "adjudicated_words": 2737,
+     "adjudicated_flags": 5,
+     "confirmed": 5,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.8268,
+     "confirmed_per_1k_ci95": [
+      0,
+      2.9955
+     ],
+     "confirmed_or_split_per_1k": 1.8268,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 1.7231,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.4516,
+      2.8664
+     ],
+     "cer_raw": 0.0706,
+     "cer_raw_ci95": [
+      0.025,
+      0.1581
+     ],
+     "cer_norm": 0.0539,
+     "cer_norm_ci95": [
+      0.0126,
+      0.1423
+     ],
+     "cer_conv": 0.0439,
+     "cer_conv_ci95": [
+      0.0043,
+      0.1316
+     ],
+     "cer_norm_median_page": 0.0141,
+     "ref_numbers": 39,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0256,
+     "number_error_rate_ci95": [
+      0,
+      0.0513
+     ],
+     "pages_with_numbers": 8
+    },
+    {
+     "arm": "human",
+     "n_pages": 20,
+     "n_books": 20,
+     "words": 5223,
+     "judge_accept": 0.9,
+     "judge_bad": 0.1,
+     "judge_bad_ci95": [
+      0,
+      0.25
+     ],
+     "mean_fidelity": 4.05,
+     "flagged": 10,
+     "flagged_per_1k": 1.9146,
+     "flagged_per_1k_ci95": [
+      0.4034,
+      3.9555
+     ],
+     "adjudicated_pages": 10,
+     "adjudicated_words": 2737,
+     "adjudicated_flags": 4,
+     "confirmed": 4,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.4615,
+     "confirmed_per_1k_ci95": [
+      0,
+      4.6605
+     ],
+     "confirmed_or_split_per_1k": 1.4615,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 1.5317,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.3829,
+      3.31
+     ]
+    }
+   ]
+  },
+  "language_x_engine": {
+   "English / ABBYY FineReader 11.0": [
+    {
+     "arm": "archive",
+     "n_pages": 4,
+     "n_books": 4,
+     "words": 1641,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.75,
+     "flagged": 30,
+     "flagged_per_1k": 18.2815,
+     "flagged_per_1k_ci95": [
+      8.49,
+      33.5196
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 196,
+     "adjudicated_flags": 10,
+     "confirmed": 5,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 25.5102,
+     "confirmed_per_1k_ci95": [
+      25.5102,
+      25.5102
+     ],
+     "confirmed_or_split_per_1k": 51.0204,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 16.4534,
+     "flagged_per_1k_without_artefacts_ci95": [
+      6.6707,
+      31.6574
+     ],
+     "cer_raw": 0.0817,
+     "cer_raw_ci95": [
+      0.0723,
+      0.095
+     ],
+     "cer_norm": 0.0821,
+     "cer_norm_ci95": [
+      0.0748,
+      0.0927
+     ],
+     "cer_conv": 0.0714,
+     "cer_conv_ci95": [
+      0.0668,
+      0.0806
+     ],
+     "cer_norm_median_page": 0.087,
+     "ref_numbers": 21,
+     "numbers_wrong": 4,
+     "number_error_rate": 0.1905,
+     "number_error_rate_ci95": [
+      0,
+      0.3333
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "ours",
+     "n_pages": 4,
+     "n_books": 4,
+     "words": 1641,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 5,
+     "flagged_per_1k": 3.0469,
+     "flagged_per_1k_ci95": [
+      2.5304,
+      3.9809
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 196,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 5.102,
+     "confirmed_per_1k_ci95": [
+      5.102,
+      5.102
+     ],
+     "confirmed_or_split_per_1k": 5.102,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 2.4375,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.0764,
+      2.9732
+     ],
+     "cer_raw": 0.1417,
+     "cer_raw_ci95": [
+      0.0142,
+      0.5855
+     ],
+     "cer_norm": 0.1463,
+     "cer_norm_ci95": [
+      0.0168,
+      0.5859
+     ],
+     "cer_conv": 0.1407,
+     "cer_conv_ci95": [
+      0.0111,
+      0.5839
+     ],
+     "cer_norm_median_page": 0.0325,
+     "ref_numbers": 21,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "human",
+     "n_pages": 4,
+     "n_books": 4,
+     "words": 1641,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4.5,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 196,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "English / ABBYY FineReader 8.0": [
+    {
+     "arm": "archive",
+     "n_pages": 8,
+     "n_books": 8,
+     "words": 3248,
+     "judge_accept": 0.125,
+     "judge_bad": 0.875,
+     "judge_bad_ci95": [
+      0.625,
+      1
+     ],
+     "mean_fidelity": 3.25,
+     "flagged": 61,
+     "flagged_per_1k": 18.7808,
+     "flagged_per_1k_ci95": [
+      9.7731,
+      27.0197
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 1394,
+     "adjudicated_flags": 28,
+     "confirmed": 28,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 20.0861,
+     "confirmed_per_1k_ci95": [
+      19.8135,
+      20.5224
+     ],
+     "confirmed_or_split_per_1k": 20.0861,
+     "o7_numeral_flags": 7,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 17.8571,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.831,
+      25.9009
+     ],
+     "cer_raw": 0.0568,
+     "cer_raw_ci95": [
+      0.0222,
+      0.0794
+     ],
+     "cer_norm": 0.0583,
+     "cer_norm_ci95": [
+      0.0241,
+      0.0834
+     ],
+     "cer_conv": 0.049,
+     "cer_conv_ci95": [
+      0.0179,
+      0.0711
+     ],
+     "cer_norm_median_page": 0.0564,
+     "ref_numbers": 63,
+     "numbers_wrong": 9,
+     "number_error_rate": 0.1429,
+     "number_error_rate_ci95": [
+      0.025,
+      0.4444
+     ],
+     "pages_with_numbers": 4
+    },
+    {
+     "arm": "ours",
+     "n_pages": 8,
+     "n_books": 8,
+     "words": 3248,
+     "judge_accept": 0.625,
+     "judge_bad": 0.375,
+     "judge_bad_ci95": [
+      0,
+      0.75
+     ],
+     "mean_fidelity": 3.75,
+     "flagged": 8,
+     "flagged_per_1k": 2.4631,
+     "flagged_per_1k_ci95": [
+      1.0166,
+      3.5951
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 1394,
+     "adjudicated_flags": 4,
+     "confirmed": 4,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.8694,
+     "confirmed_per_1k_ci95": [
+      1.8657,
+      3.4965
+     ],
+     "confirmed_or_split_per_1k": 2.8694,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 2.1552,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.7062,
+      3.2841
+     ],
+     "cer_raw": 0.0315,
+     "cer_raw_ci95": [
+      0.0133,
+      0.0517
+     ],
+     "cer_norm": 0.0192,
+     "cer_norm_ci95": [
+      0.0093,
+      0.0303
+     ],
+     "cer_conv": 0.0137,
+     "cer_conv_ci95": [
+      0.0048,
+      0.0231
+     ],
+     "cer_norm_median_page": 0.0187,
+     "ref_numbers": 63,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 4
+    },
+    {
+     "arm": "human",
+     "n_pages": 8,
+     "n_books": 8,
+     "words": 3248,
+     "judge_accept": 0.5,
+     "judge_bad": 0.5,
+     "judge_bad_ci95": [
+      0.125,
+      0.875
+     ],
+     "mean_fidelity": 3.5,
+     "flagged": 20,
+     "flagged_per_1k": 6.1576,
+     "flagged_per_1k_ci95": [
+      1.9314,
+      11.3402
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 1394,
+     "adjudicated_flags": 10,
+     "confirmed": 9,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 6.4562,
+     "confirmed_per_1k_ci95": [
+      1.1655,
+      14.9254
+     ],
+     "confirmed_or_split_per_1k": 7.1736,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.1576,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.9314,
+      11.3402
+     ]
+    }
+   ],
+   "English / ia-ocr (tesseract) 0.0.13": [
+    {
+     "arm": "archive",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 658,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 8,
+     "flagged_per_1k": 12.1581,
+     "flagged_per_1k_ci95": [
+      8.7719,
+      15.8228
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 5,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 12.1581,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.7719,
+      15.8228
+     ],
+     "cer_raw": 0.0081,
+     "cer_raw_ci95": [
+      0.0052,
+      0.0112
+     ],
+     "cer_norm": 0.0183,
+     "cer_norm_ci95": [
+      0.0046,
+      0.0328
+     ],
+     "cer_conv": 0.0154,
+     "cer_conv_ci95": [
+      0.0013,
+      0.0304
+     ],
+     "cer_norm_median_page": 0.0328,
+     "ref_numbers": 86,
+     "numbers_wrong": 8,
+     "number_error_rate": 0.093,
+     "number_error_rate_ci95": [
+      0,
+      0.0941
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "ours",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 658,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0014,
+     "cer_raw_ci95": [
+      0.0007,
+      0.002
+     ],
+     "cer_norm": 0.0135,
+     "cer_norm_ci95": [
+      0.0026,
+      0.0252
+     ],
+     "cer_conv": 0.0115,
+     "cer_conv_ci95": [
+      0,
+      0.0238
+     ],
+     "cer_norm_median_page": 0.0252,
+     "ref_numbers": 86,
+     "numbers_wrong": 8,
+     "number_error_rate": 0.093,
+     "number_error_rate_ci95": [
+      0,
+      0.0941
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "human",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 658,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.5,
+     "flagged": 4,
+     "flagged_per_1k": 6.079,
+     "flagged_per_1k_ci95": [
+      5.848,
+      6.3291
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.079,
+     "flagged_per_1k_without_artefacts_ci95": [
+      5.848,
+      6.3291
+     ]
+    }
+   ],
+   "English / ia-ocr (tesseract) 0.0.15": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 262,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 5,
+     "flagged_per_1k": 19.084,
+     "flagged_per_1k_ci95": [
+      19.084,
+      19.084
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 262,
+     "adjudicated_flags": 5,
+     "confirmed": 5,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 19.084,
+     "confirmed_per_1k_ci95": [
+      19.084,
+      19.084
+     ],
+     "confirmed_or_split_per_1k": 19.084,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 11.4504,
+     "flagged_per_1k_without_artefacts_ci95": [
+      11.4504,
+      11.4504
+     ],
+     "cer_raw": 0.0718,
+     "cer_raw_ci95": [
+      0.0718,
+      0.0718
+     ],
+     "cer_norm": 0.0718,
+     "cer_norm_ci95": [
+      0.0718,
+      0.0718
+     ],
+     "cer_conv": 0.0608,
+     "cer_conv_ci95": [
+      0.0608,
+      0.0608
+     ],
+     "cer_norm_median_page": 0.0718,
+     "ref_numbers": 0,
+     "numbers_wrong": 0,
+     "number_error_rate": null,
+     "number_error_rate_ci95": null,
+     "pages_with_numbers": 0
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 262,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 262,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.018,
+     "cer_raw_ci95": [
+      0.018,
+      0.018
+     ],
+     "cer_norm": 0.018,
+     "cer_norm_ci95": [
+      0.018,
+      0.018
+     ],
+     "cer_conv": 0.0008,
+     "cer_conv_ci95": [
+      0.0008,
+      0.0008
+     ],
+     "cer_norm_median_page": 0.018,
+     "ref_numbers": 0,
+     "numbers_wrong": 0,
+     "number_error_rate": null,
+     "number_error_rate_ci95": null,
+     "pages_with_numbers": 0
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 262,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 262,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "English / ia-ocr (tesseract) 0.0.16": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 441,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2,
+     "flagged": 26,
+     "flagged_per_1k": 58.9569,
+     "flagged_per_1k_ci95": [
+      58.9569,
+      58.9569
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 56.6893,
+     "flagged_per_1k_without_artefacts_ci95": [
+      56.6893,
+      56.6893
+     ],
+     "cer_raw": 0.1009,
+     "cer_raw_ci95": [
+      0.1009,
+      0.1009
+     ],
+     "cer_norm": 0.1371,
+     "cer_norm_ci95": [
+      0.1371,
+      0.1371
+     ],
+     "cer_conv": 0.1086,
+     "cer_conv_ci95": [
+      0.1086,
+      0.1086
+     ],
+     "cer_norm_median_page": 0.1371,
+     "ref_numbers": 2,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.5,
+     "number_error_rate_ci95": [
+      0.5,
+      0.5
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 441,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 3,
+     "flagged_per_1k": 6.8027,
+     "flagged_per_1k_ci95": [
+      6.8027,
+      6.8027
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.8027,
+     "flagged_per_1k_without_artefacts_ci95": [
+      6.8027,
+      6.8027
+     ],
+     "cer_raw": 0.0624,
+     "cer_raw_ci95": [
+      0.0624,
+      0.0624
+     ],
+     "cer_norm": 0.0243,
+     "cer_norm_ci95": [
+      0.0243,
+      0.0243
+     ],
+     "cer_conv": 0.0178,
+     "cer_conv_ci95": [
+      0.0178,
+      0.0178
+     ],
+     "cer_norm_median_page": 0.0243,
+     "ref_numbers": 2,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 441,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 2.2676,
+     "flagged_per_1k_ci95": [
+      2.2676,
+      2.2676
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.2676,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.2676,
+      2.2676
+     ]
+    }
+   ],
+   "English / ia-ocr (tesseract) 0.0.21": [
+    {
+     "arm": "archive",
+     "n_pages": 32,
+     "n_books": 32,
+     "words": 9312,
+     "judge_accept": 0.2813,
+     "judge_bad": 0.7188,
+     "judge_bad_ci95": [
+      0.5625,
+      0.875
+     ],
+     "mean_fidelity": 3.125,
+     "flagged": 154,
+     "flagged_per_1k": 16.5378,
+     "flagged_per_1k_ci95": [
+      11.2433,
+      22.1037
+     ],
+     "adjudicated_pages": 11,
+     "adjudicated_words": 2772,
+     "adjudicated_flags": 13,
+     "confirmed": 13,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 4.6898,
+     "confirmed_per_1k_ci95": [
+      1.0005,
+      10.1667
+     ],
+     "confirmed_or_split_per_1k": 4.6898,
+     "o7_numeral_flags": 17,
+     "normaliser_artefact_flags": 18,
+     "flagged_per_1k_without_artefacts": 14.6048,
+     "flagged_per_1k_without_artefacts_ci95": [
+      9.9285,
+      19.7025
+     ],
+     "cer_raw": 0.0526,
+     "cer_raw_ci95": [
+      0.0309,
+      0.0755
+     ],
+     "cer_norm": 0.0477,
+     "cer_norm_ci95": [
+      0.0286,
+      0.0675
+     ],
+     "cer_conv": 0.0384,
+     "cer_conv_ci95": [
+      0.0221,
+      0.0557
+     ],
+     "cer_norm_median_page": 0.0233,
+     "ref_numbers": 161,
+     "numbers_wrong": 24,
+     "number_error_rate": 0.1491,
+     "number_error_rate_ci95": [
+      0.0702,
+      0.2984
+     ],
+     "pages_with_numbers": 18
+    },
+    {
+     "arm": "ours",
+     "n_pages": 32,
+     "n_books": 32,
+     "words": 9312,
+     "judge_accept": 0.7188,
+     "judge_bad": 0.2813,
+     "judge_bad_ci95": [
+      0.125,
+      0.4375
+     ],
+     "mean_fidelity": 3.75,
+     "flagged": 20,
+     "flagged_per_1k": 2.1478,
+     "flagged_per_1k_ci95": [
+      0.9483,
+      3.5148
+     ],
+     "adjudicated_pages": 11,
+     "adjudicated_words": 2772,
+     "adjudicated_flags": 3,
+     "confirmed": 2,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.7215,
+     "confirmed_per_1k_ci95": [
+      0,
+      1.9598
+     ],
+     "confirmed_or_split_per_1k": 1.0823,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 1.933,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.7733,
+      3.3557
+     ],
+     "cer_raw": 0.0957,
+     "cer_raw_ci95": [
+      0.0191,
+      0.2064
+     ],
+     "cer_norm": 0.0965,
+     "cer_norm_ci95": [
+      0.0201,
+      0.2056
+     ],
+     "cer_conv": 0.0913,
+     "cer_conv_ci95": [
+      0.0145,
+      0.2013
+     ],
+     "cer_norm_median_page": 0.0102,
+     "ref_numbers": 161,
+     "numbers_wrong": 24,
+     "number_error_rate": 0.1491,
+     "number_error_rate_ci95": [
+      0.0311,
+      0.354
+     ],
+     "pages_with_numbers": 18
+    },
+    {
+     "arm": "human",
+     "n_pages": 32,
+     "n_books": 32,
+     "words": 9312,
+     "judge_accept": 0.5625,
+     "judge_bad": 0.4375,
+     "judge_bad_ci95": [
+      0.2813,
+      0.625
+     ],
+     "mean_fidelity": 3.6563,
+     "flagged": 36,
+     "flagged_per_1k": 3.866,
+     "flagged_per_1k_ci95": [
+      2.477,
+      5.3769
+     ],
+     "adjudicated_pages": 11,
+     "adjudicated_words": 2772,
+     "adjudicated_flags": 6,
+     "confirmed": 6,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.1645,
+     "confirmed_per_1k_ci95": [
+      0,
+      4.5627
+     ],
+     "confirmed_or_split_per_1k": 2.1645,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 3.5438,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.2673,
+      4.8921
+     ]
+    }
+   ],
+   "German / ia-ocr (tesseract) 0.0.14": [
+    {
+     "arm": "archive",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 457,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.5,
+     "flagged": 20,
+     "flagged_per_1k": 43.7637,
+     "flagged_per_1k_ci95": [
+      28.4553,
+      61.6114
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 246,
+     "adjudicated_flags": 7,
+     "confirmed": 7,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 28.4553,
+     "confirmed_per_1k_ci95": [
+      28.4553,
+      28.4553
+     ],
+     "confirmed_or_split_per_1k": 28.4553,
+     "o7_numeral_flags": 4,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 37.1991,
+     "flagged_per_1k_without_artefacts_ci95": [
+      20.3252,
+      56.872
+     ],
+     "cer_raw": 0.0778,
+     "cer_raw_ci95": [
+      0.0517,
+      0.1116
+     ],
+     "cer_norm": 0.0841,
+     "cer_norm_ci95": [
+      0.0512,
+      0.1268
+     ],
+     "cer_conv": 0.0644,
+     "cer_conv_ci95": [
+      0.0486,
+      0.0849
+     ],
+     "cer_norm_median_page": 0.1268,
+     "ref_numbers": 16,
+     "numbers_wrong": 4,
+     "number_error_rate": 0.25,
+     "number_error_rate_ci95": [
+      0.25,
+      0.25
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 457,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 246,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0531,
+     "cer_raw_ci95": [
+      0.0362,
+      0.0749
+     ],
+     "cer_norm": 0.0183,
+     "cer_norm_ci95": [
+      0,
+      0.042
+     ],
+     "cer_conv": 0.0038,
+     "cer_conv_ci95": [
+      0,
+      0.0088
+     ],
+     "cer_norm_median_page": 0.042,
+     "ref_numbers": 16,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0625,
+     "number_error_rate_ci95": [
+      0.0625,
+      0.0625
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 2,
+     "n_books": 2,
+     "words": 457,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 2.1882,
+     "flagged_per_1k_ci95": [
+      0,
+      4.7393
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 246,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.1882,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      4.7393
+     ]
+    }
+   ],
+   "German / ia-ocr (tesseract) 0.0.21": [
+    {
+     "arm": "archive",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1041,
+     "judge_accept": 0.1429,
+     "judge_bad": 0.8571,
+     "judge_bad_ci95": [
+      0.5714,
+      1
+     ],
+     "mean_fidelity": 3.2857,
+     "flagged": 27,
+     "flagged_per_1k": 25.9366,
+     "flagged_per_1k_ci95": [
+      16.4745,
+      37.8875
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 703,
+     "adjudicated_flags": 20,
+     "confirmed": 19,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 27.027,
+     "confirmed_per_1k_ci95": [
+      14.7059,
+      41.6667
+     ],
+     "confirmed_or_split_per_1k": 28.4495,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 7,
+     "flagged_per_1k_without_artefacts": 19.2123,
+     "flagged_per_1k_without_artefacts_ci95": [
+      9.3023,
+      30.9989
+     ],
+     "cer_raw": 0.0371,
+     "cer_raw_ci95": [
+      0.0151,
+      0.0685
+     ],
+     "cer_norm": 0.0377,
+     "cer_norm_ci95": [
+      0.0136,
+      0.0657
+     ],
+     "cer_conv": 0.0282,
+     "cer_conv_ci95": [
+      0.009,
+      0.0515
+     ],
+     "cer_norm_median_page": 0.0281,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1041,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 703,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.07,
+     "cer_raw_ci95": [
+      0.028,
+      0.1107
+     ],
+     "cer_norm": 0.0321,
+     "cer_norm_ci95": [
+      0.0088,
+      0.0629
+     ],
+     "cer_conv": 0.0114,
+     "cer_conv_ci95": [
+      0.0004,
+      0.0355
+     ],
+     "cer_norm_median_page": 0.0119,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1041,
+     "judge_accept": 0.8571,
+     "judge_bad": 0.1429,
+     "judge_bad_ci95": [
+      0,
+      0.4286
+     ],
+     "mean_fidelity": 3.7143,
+     "flagged": 3,
+     "flagged_per_1k": 2.8818,
+     "flagged_per_1k_ci95": [
+      0,
+      9.7614
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 703,
+     "adjudicated_flags": 3,
+     "confirmed": 3,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 4.2674,
+     "confirmed_per_1k_ci95": [
+      0,
+      14.658
+     ],
+     "confirmed_or_split_per_1k": 4.2674,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 0.9606,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      3.2538
+     ]
+    }
+   ],
+   "German / unknown": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 3.7594,
+     "flagged_per_1k_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.7594,
+     "confirmed_per_1k_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "confirmed_or_split_per_1k": 3.7594,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.7594,
+     "flagged_per_1k_without_artefacts_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "cer_raw": 0.003,
+     "cer_raw_ci95": [
+      0.003,
+      0.003
+     ],
+     "cer_norm": 0.003,
+     "cer_norm_ci95": [
+      0.003,
+      0.003
+     ],
+     "cer_conv": 0.0024,
+     "cer_conv_ci95": [
+      0.0024,
+      0.0024
+     ],
+     "cer_norm_median_page": 0.003,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0059,
+     "cer_raw_ci95": [
+      0.0059,
+      0.0059
+     ],
+     "cer_norm": 0,
+     "cer_norm_ci95": [
+      0,
+      0
+     ],
+     "cer_conv": 0,
+     "cer_conv_ci95": [
+      0,
+      0
+     ],
+     "cer_norm_median_page": 0,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "Latin / ABBYY FineReader 11.0": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 227,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 8,
+     "flagged_per_1k": 35.2423,
+     "flagged_per_1k_ci95": [
+      35.2423,
+      35.2423
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 227,
+     "adjudicated_flags": 8,
+     "confirmed": 8,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 35.2423,
+     "confirmed_per_1k_ci95": [
+      35.2423,
+      35.2423
+     ],
+     "confirmed_or_split_per_1k": 35.2423,
+     "o7_numeral_flags": 3,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 22.0264,
+     "flagged_per_1k_without_artefacts_ci95": [
+      22.0264,
+      22.0264
+     ],
+     "cer_raw": 0.0811,
+     "cer_raw_ci95": [
+      0.0811,
+      0.0811
+     ],
+     "cer_norm": 0.0818,
+     "cer_norm_ci95": [
+      0.0818,
+      0.0818
+     ],
+     "cer_conv": 0.0657,
+     "cer_conv_ci95": [
+      0.0657,
+      0.0657
+     ],
+     "cer_norm_median_page": 0.0818,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 227,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 227,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0709,
+     "cer_raw_ci95": [
+      0.0709,
+      0.0709
+     ],
+     "cer_norm": 0.017,
+     "cer_norm_ci95": [
+      0.017,
+      0.017
+     ],
+     "cer_conv": 0.0049,
+     "cer_conv_ci95": [
+      0.0049,
+      0.0049
+     ],
+     "cer_norm_median_page": 0.017,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 227,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 227,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "Latin / ia-ocr (tesseract) 0.0.21": [
+    {
+     "arm": "archive",
+     "n_pages": 6,
+     "n_books": 6,
+     "words": 1028,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.3333,
+     "flagged": 80,
+     "flagged_per_1k": 77.821,
+     "flagged_per_1k_ci95": [
+      63.1488,
+      95.7207
+     ],
+     "adjudicated_pages": 3,
+     "adjudicated_words": 522,
+     "adjudicated_flags": 43,
+     "confirmed": 39,
+     "split": 4,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 74.7126,
+     "confirmed_per_1k_ci95": [
+      57.1429,
+      90.9091
+     ],
+     "confirmed_or_split_per_1k": 82.3755,
+     "o7_numeral_flags": 8,
+     "normaliser_artefact_flags": 6,
+     "flagged_per_1k_without_artefacts": 71.9844,
+     "flagged_per_1k_without_artefacts_ci95": [
+      61.0465,
+      84.0336
+     ],
+     "cer_raw": 0.1371,
+     "cer_raw_ci95": [
+      0.1046,
+      0.1978
+     ],
+     "cer_norm": 0.1266,
+     "cer_norm_ci95": [
+      0.0861,
+      0.2098
+     ],
+     "cer_conv": 0.0998,
+     "cer_conv_ci95": [
+      0.0685,
+      0.1628
+     ],
+     "cer_norm_median_page": 0.0991,
+     "ref_numbers": 47,
+     "numbers_wrong": 21,
+     "number_error_rate": 0.4468,
+     "number_error_rate_ci95": [
+      0.3846,
+      0.7778
+     ],
+     "pages_with_numbers": 4
+    },
+    {
+     "arm": "ours",
+     "n_pages": 6,
+     "n_books": 6,
+     "words": 1028,
+     "judge_accept": 0.8333,
+     "judge_bad": 0.1667,
+     "judge_bad_ci95": [
+      0,
+      0.5
+     ],
+     "mean_fidelity": 3.8333,
+     "flagged": 5,
+     "flagged_per_1k": 4.8638,
+     "flagged_per_1k_ci95": [
+      0,
+      12.2951
+     ],
+     "adjudicated_pages": 3,
+     "adjudicated_words": 522,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.9157,
+     "confirmed_per_1k_ci95": [
+      0,
+      4.7619
+     ],
+     "confirmed_or_split_per_1k": 1.9157,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 4.8638,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      12.2951
+     ],
+     "cer_raw": 0.1147,
+     "cer_raw_ci95": [
+      0.0426,
+      0.2278
+     ],
+     "cer_norm": 0.0382,
+     "cer_norm_ci95": [
+      0.0122,
+      0.0771
+     ],
+     "cer_conv": 0.0201,
+     "cer_conv_ci95": [
+      0.0038,
+      0.0464
+     ],
+     "cer_norm_median_page": 0.0451,
+     "ref_numbers": 47,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 4
+    },
+    {
+     "arm": "human",
+     "n_pages": 6,
+     "n_books": 6,
+     "words": 1028,
+     "judge_accept": 0.8333,
+     "judge_bad": 0.1667,
+     "judge_bad_ci95": [
+      0,
+      0.5
+     ],
+     "mean_fidelity": 4.1667,
+     "flagged": 1,
+     "flagged_per_1k": 0.9728,
+     "flagged_per_1k_ci95": [
+      0,
+      3.1513
+     ],
+     "adjudicated_pages": 3,
+     "adjudicated_words": 522,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0.9728,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      3.1513
+     ]
+    }
+   ]
+  },
+  "archive_engine_family": {
+   "ABBYY FineReader": [
+    {
+     "arm": "archive",
+     "n_pages": 13,
+     "n_books": 13,
+     "words": 5116,
+     "judge_accept": 0.0769,
+     "judge_bad": 0.9231,
+     "judge_bad_ci95": [
+      0.7692,
+      1
+     ],
+     "mean_fidelity": 3.0769,
+     "flagged": 99,
+     "flagged_per_1k": 19.3511,
+     "flagged_per_1k_ci95": [
+      12.9491,
+      26.4951
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1817,
+     "adjudicated_flags": 46,
+     "confirmed": 41,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 22.5647,
+     "confirmed_per_1k_ci95": [
+      20.0861,
+      30.7329
+     ],
+     "confirmed_or_split_per_1k": 25.3165,
+     "o7_numeral_flags": 10,
+     "normaliser_artefact_flags": 9,
+     "flagged_per_1k_without_artefacts": 17.5919,
+     "flagged_per_1k_without_artefacts_ci95": [
+      11.3658,
+      24.1736
+     ],
+     "cer_raw": 0.066,
+     "cer_raw_ci95": [
+      0.0458,
+      0.0811
+     ],
+     "cer_norm": 0.0671,
+     "cer_norm_ci95": [
+      0.0466,
+      0.0831
+     ],
+     "cer_conv": 0.057,
+     "cer_conv_ci95": [
+      0.039,
+      0.0712
+     ],
+     "cer_norm_median_page": 0.0803,
+     "ref_numbers": 85,
+     "numbers_wrong": 13,
+     "number_error_rate": 0.1529,
+     "number_error_rate_ci95": [
+      0.0441,
+      0.3509
+     ],
+     "pages_with_numbers": 7
+    },
+    {
+     "arm": "ours",
+     "n_pages": 13,
+     "n_books": 13,
+     "words": 5116,
+     "judge_accept": 0.4615,
+     "judge_bad": 0.5385,
+     "judge_bad_ci95": [
+      0.3077,
+      0.7692
+     ],
+     "mean_fidelity": 3.5385,
+     "flagged": 13,
+     "flagged_per_1k": 2.541,
+     "flagged_per_1k_ci95": [
+      1.5946,
+      3.3306
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1817,
+     "adjudicated_flags": 5,
+     "confirmed": 5,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.7518,
+     "confirmed_per_1k_ci95": [
+      1.1403,
+      3.7951
+     ],
+     "confirmed_or_split_per_1k": 2.7518,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 2.1501,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.095,
+      2.9025
+     ],
+     "cer_raw": 0.0681,
+     "cer_raw_ci95": [
+      0.0211,
+      0.1723
+     ],
+     "cer_norm": 0.0585,
+     "cer_norm_ci95": [
+      0.015,
+      0.1622
+     ],
+     "cer_conv": 0.0526,
+     "cer_conv_ci95": [
+      0.0091,
+      0.1556
+     ],
+     "cer_norm_median_page": 0.0187,
+     "ref_numbers": 85,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 7
+    },
+    {
+     "arm": "human",
+     "n_pages": 13,
+     "n_books": 13,
+     "words": 5116,
+     "judge_accept": 0.6923,
+     "judge_bad": 0.3077,
+     "judge_bad_ci95": [
+      0.0769,
+      0.5385
+     ],
+     "mean_fidelity": 3.8462,
+     "flagged": 20,
+     "flagged_per_1k": 3.9093,
+     "flagged_per_1k_ci95": [
+      0.9688,
+      7.7501
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1817,
+     "adjudicated_flags": 10,
+     "confirmed": 9,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 4.9532,
+     "confirmed_per_1k_ci95": [
+      0,
+      13.079
+     ],
+     "confirmed_or_split_per_1k": 5.5036,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.9093,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.9688,
+      7.7501
+     ]
+    }
+   ],
+   "ia-ocr (tesseract)": [
+    {
+     "arm": "archive",
+     "n_pages": 51,
+     "n_books": 51,
+     "words": 13199,
+     "judge_accept": 0.1961,
+     "judge_bad": 0.8039,
+     "judge_bad_ci95": [
+      0.6863,
+      0.902
+     ],
+     "mean_fidelity": 3,
+     "flagged": 320,
+     "flagged_per_1k": 24.2443,
+     "flagged_per_1k_ci95": [
+      18.5836,
+      30.8337
+     ],
+     "adjudicated_pages": 20,
+     "adjudicated_words": 4505,
+     "adjudicated_flags": 88,
+     "confirmed": 83,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 18.424,
+     "confirmed_per_1k_ci95": [
+      9.3043,
+      30.7246
+     ],
+     "confirmed_or_split_per_1k": 19.5339,
+     "o7_numeral_flags": 35,
+     "normaliser_artefact_flags": 37,
+     "flagged_per_1k_without_artefacts": 21.441,
+     "flagged_per_1k_without_artefacts_ci95": [
+      16.1226,
+      27.6285
+     ],
+     "cer_raw": 0.06,
+     "cer_raw_ci95": [
+      0.0429,
+      0.0773
+     ],
+     "cer_norm": 0.0577,
+     "cer_norm_ci95": [
+      0.0421,
+      0.0754
+     ],
+     "cer_conv": 0.046,
+     "cer_conv_ci95": [
+      0.033,
+      0.0603
+     ],
+     "cer_norm_median_page": 0.0448,
+     "ref_numbers": 313,
+     "numbers_wrong": 58,
+     "number_error_rate": 0.1853,
+     "number_error_rate_ci95": [
+      0.1122,
+      0.3087
+     ],
+     "pages_with_numbers": 27
+    },
+    {
+     "arm": "ours",
+     "n_pages": 51,
+     "n_books": 51,
+     "words": 13199,
+     "judge_accept": 0.7843,
+     "judge_bad": 0.2157,
+     "judge_bad_ci95": [
+      0.098,
+      0.3333
+     ],
+     "mean_fidelity": 3.8039,
+     "flagged": 28,
+     "flagged_per_1k": 2.1214,
+     "flagged_per_1k_ci95": [
+      1.0716,
+      3.3125
+     ],
+     "adjudicated_pages": 20,
+     "adjudicated_words": 4505,
+     "adjudicated_flags": 4,
+     "confirmed": 3,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.6659,
+     "confirmed_per_1k_ci95": [
+      0,
+      1.484
+     ],
+     "confirmed_or_split_per_1k": 0.8879,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 1.9698,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.9178,
+      3.1826
+     ],
+     "cer_raw": 0.0864,
+     "cer_raw_ci95": [
+      0.0318,
+      0.1631
+     ],
+     "cer_norm": 0.0743,
+     "cer_norm_ci95": [
+      0.0214,
+      0.1514
+     ],
+     "cer_conv": 0.066,
+     "cer_conv_ci95": [
+      0.0128,
+      0.1437
+     ],
+     "cer_norm_median_page": 0.0136,
+     "ref_numbers": 313,
+     "numbers_wrong": 33,
+     "number_error_rate": 0.1054,
+     "number_error_rate_ci95": [
+      0.0389,
+      0.2184
+     ],
+     "pages_with_numbers": 27
+    },
+    {
+     "arm": "human",
+     "n_pages": 51,
+     "n_books": 51,
+     "words": 13199,
+     "judge_accept": 0.6471,
+     "judge_bad": 0.3529,
+     "judge_bad_ci95": [
+      0.2353,
+      0.4902
+     ],
+     "mean_fidelity": 3.7059,
+     "flagged": 46,
+     "flagged_per_1k": 3.4851,
+     "flagged_per_1k_ci95": [
+      2.4033,
+      4.726
+     ],
+     "adjudicated_pages": 20,
+     "adjudicated_words": 4505,
+     "adjudicated_flags": 9,
+     "confirmed": 9,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.9978,
+     "confirmed_per_1k_ci95": [
+      0.4239,
+      4.3103
+     ],
+     "confirmed_or_split_per_1k": 1.9978,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 5,
+     "flagged_per_1k_without_artefacts": 3.1063,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.1117,
+      4.1632
+     ]
+    }
+   ],
+   "unknown": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 3.7594,
+     "flagged_per_1k_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.7594,
+     "confirmed_per_1k_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "confirmed_or_split_per_1k": 3.7594,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.7594,
+     "flagged_per_1k_without_artefacts_ci95": [
+      3.7594,
+      3.7594
+     ],
+     "cer_raw": 0.003,
+     "cer_raw_ci95": [
+      0.003,
+      0.003
+     ],
+     "cer_norm": 0.003,
+     "cer_norm_ci95": [
+      0.003,
+      0.003
+     ],
+     "cer_conv": 0.0024,
+     "cer_conv_ci95": [
+      0.0024,
+      0.0024
+     ],
+     "cer_norm_median_page": 0.003,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ],
+     "cer_raw": 0.0059,
+     "cer_raw_ci95": [
+      0.0059,
+      0.0059
+     ],
+     "cer_norm": 0,
+     "cer_norm_ci95": [
+      0,
+      0
+     ],
+     "cer_conv": 0,
+     "cer_conv_ci95": [
+      0,
+      0
+     ],
+     "cer_norm_median_page": 0,
+     "ref_numbers": 1,
+     "numbers_wrong": 0,
+     "number_error_rate": 0,
+     "number_error_rate_ci95": [
+      0,
+      0
+     ],
+     "pages_with_numbers": 1
+    },
+    {
+     "arm": "human",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 266,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 266,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  "ours_read": {
+   "our stored read has text": [
+    {
+     "arm": "archive",
+     "n_pages": 62,
+     "n_books": 62,
+     "words": 17725,
+     "judge_accept": 0.1774,
+     "judge_bad": 0.8226,
+     "judge_bad_ci95": [
+      0.7258,
+      0.9194
+     ],
+     "mean_fidelity": 3.0323,
+     "flagged": 406,
+     "flagged_per_1k": 22.9055,
+     "flagged_per_1k_ci95": [
+      18.1807,
+      28.3342
+     ],
+     "adjudicated_pages": 24,
+     "adjudicated_words": 6392,
+     "adjudicated_flags": 125,
+     "confirmed": 120,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 18.7735,
+     "confirmed_per_1k_ci95": [
+      11.5807,
+      27.1429
+     ],
+     "confirmed_or_split_per_1k": 19.5557,
+     "o7_numeral_flags": 44,
+     "normaliser_artefact_flags": 45,
+     "flagged_per_1k_without_artefacts": 20.3667,
+     "flagged_per_1k_without_artefacts_ci95": [
+      15.865,
+      25.3876
+     ],
+     "cer_raw": 0.0621,
+     "cer_raw_ci95": [
+      0.0481,
+      0.0764
+     ],
+     "cer_norm": 0.0607,
+     "cer_norm_ci95": [
+      0.0474,
+      0.0741
+     ],
+     "cer_conv": 0.0493,
+     "cer_conv_ci95": [
+      0.0379,
+      0.0606
+     ],
+     "cer_norm_median_page": 0.0512,
+     "ref_numbers": 387,
+     "numbers_wrong": 70,
+     "number_error_rate": 0.1809,
+     "number_error_rate_ci95": [
+      0.116,
+      0.2876
+     ],
+     "pages_with_numbers": 33
+    },
+    {
+     "arm": "ours",
+     "n_pages": 62,
+     "n_books": 62,
+     "words": 17725,
+     "judge_accept": 0.7581,
+     "judge_bad": 0.2419,
+     "judge_bad_ci95": [
+      0.1452,
+      0.3548
+     ],
+     "mean_fidelity": 3.8871,
+     "flagged": 38,
+     "flagged_per_1k": 2.1439,
+     "flagged_per_1k_ci95": [
+      1.2607,
+      3.124
+     ],
+     "adjudicated_pages": 24,
+     "adjudicated_words": 6392,
+     "adjudicated_flags": 8,
+     "confirmed": 7,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.0951,
+     "confirmed_per_1k_ci95": [
+      0.3089,
+      1.9087
+     ],
+     "confirmed_or_split_per_1k": 1.2516,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 2.031,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.1646,
+      3.0211
+     ],
+     "cer_raw": 0.0363,
+     "cer_raw_ci95": [
+      0.0252,
+      0.0497
+     ],
+     "cer_norm": 0.0244,
+     "cer_norm_ci95": [
+      0.017,
+      0.0325
+     ],
+     "cer_conv": 0.0166,
+     "cer_conv_ci95": [
+      0.0097,
+      0.0244
+     ],
+     "cer_norm_median_page": 0.0141,
+     "ref_numbers": 387,
+     "numbers_wrong": 21,
+     "number_error_rate": 0.0543,
+     "number_error_rate_ci95": [
+      0.0114,
+      0.1034
+     ],
+     "pages_with_numbers": 33
+    },
+    {
+     "arm": "human",
+     "n_pages": 62,
+     "n_books": 62,
+     "words": 17725,
+     "judge_accept": 0.6613,
+     "judge_bad": 0.3387,
+     "judge_bad_ci95": [
+      0.2258,
+      0.4516
+     ],
+     "mean_fidelity": 3.7258,
+     "flagged": 64,
+     "flagged_per_1k": 3.6107,
+     "flagged_per_1k_ci95": [
+      2.4288,
+      5.0689
+     ],
+     "adjudicated_pages": 24,
+     "adjudicated_words": 6392,
+     "adjudicated_flags": 19,
+     "confirmed": 18,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.816,
+     "confirmed_per_1k_ci95": [
+      0.7075,
+      5.5602
+     ],
+     "confirmed_or_split_per_1k": 2.9725,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 5,
+     "flagged_per_1k_without_artefacts": 3.3286,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.2078,
+      4.7108
+     ]
+    }
+   ],
+   "our stored read is empty": [
+    {
+     "arm": "archive",
+     "n_pages": 3,
+     "n_books": 3,
+     "words": 856,
+     "judge_accept": 0.3333,
+     "judge_bad": 0.6667,
+     "judge_bad_ci95": [
+      0,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 14,
+     "flagged_per_1k": 16.3551,
+     "flagged_per_1k_ci95": [
+      0,
+      51.0204
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 196,
+     "adjudicated_flags": 10,
+     "confirmed": 5,
+     "split": 5,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 25.5102,
+     "confirmed_per_1k_ci95": [
+      25.5102,
+      25.5102
+     ],
+     "confirmed_or_split_per_1k": 51.0204,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 15.1869,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      45.9184
+     ],
+     "cer_raw": 0.0282,
+     "cer_raw_ci95": [
+      0.0014,
+      0.1011
+     ],
+     "cer_norm": 0.0267,
+     "cer_norm_ci95": [
+      0,
+      0.0989
+     ],
+     "cer_conv": 0.0223,
+     "cer_conv_ci95": [
+      0,
+      0.0869
+     ],
+     "cer_norm_median_page": 0.01,
+     "ref_numbers": 12,
+     "numbers_wrong": 1,
+     "number_error_rate": 0.0833,
+     "number_error_rate_ci95": [
+      0,
+      0.1
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "ours",
+     "n_pages": 3,
+     "n_books": 3,
+     "words": 856,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 1,
+     "flagged": 3,
+     "flagged_per_1k": 3.5047,
+     "flagged_per_1k_ci95": [
+      2.9586,
+      5.102
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 196,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 5.102,
+     "confirmed_per_1k_ci95": [
+      5.102,
+      5.102
+     ],
+     "confirmed_or_split_per_1k": 5.102,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 1.1682,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      2.9586
+     ],
+     "cer_raw": 1,
+     "cer_raw_ci95": [
+      1,
+      1
+     ],
+     "cer_norm": 1,
+     "cer_norm_ci95": [
+      1,
+      1
+     ],
+     "cer_conv": 1,
+     "cer_conv_ci95": [
+      1,
+      1
+     ],
+     "cer_norm_median_page": 1,
+     "ref_numbers": 12,
+     "numbers_wrong": 12,
+     "number_error_rate": 1,
+     "number_error_rate_ci95": [
+      1,
+      1
+     ],
+     "pages_with_numbers": 2
+    },
+    {
+     "arm": "human",
+     "n_pages": 3,
+     "n_books": 3,
+     "words": 856,
+     "judge_accept": 0.6667,
+     "judge_bad": 0.3333,
+     "judge_bad_ci95": [
+      0,
+      1
+     ],
+     "mean_fidelity": 4,
+     "flagged": 2,
+     "flagged_per_1k": 2.3364,
+     "flagged_per_1k_ci95": [
+      0,
+      5.9172
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 196,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.3364,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      5.9172
+     ]
+    }
+   ]
+  }
+ },
+ "archive_vs_ours_random": {
+  "difficulty": "typical: pages drawn at random from Archive-sourced books in the library",
+  "headline": "English 1800–1930, the random stratum (Derek 14:16Z: the headline for Archive vs ours)",
+  "pages": 80,
+  "by_lang": {
+   "English": [
+    {
+     "arm": "archive",
+     "n_pages": 60,
+     "n_books": 60,
+     "words": 19861,
+     "judge_accept": 0.45,
+     "judge_bad": 0.55,
+     "judge_bad_ci95": [
+      0.4167,
+      0.6667
+     ],
+     "mean_fidelity": 3.45,
+     "flagged": 216,
+     "flagged_per_1k": 10.8756,
+     "flagged_per_1k_ci95": [
+      7.3801,
+      14.8724
+     ],
+     "adjudicated_pages": 40,
+     "adjudicated_words": 12420,
+     "adjudicated_flags": 122,
+     "confirmed": 111,
+     "split": 11,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 8.9372,
+     "confirmed_per_1k_ci95": [
+      4.3564,
+      13.8006
+     ],
+     "confirmed_or_split_per_1k": 9.8229,
+     "o7_numeral_flags": 39,
+     "normaliser_artefact_flags": 8,
+     "flagged_per_1k_without_artefacts": 10.4728,
+     "flagged_per_1k_without_artefacts_ci95": [
+      7.0916,
+      14.3872
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 60,
+     "n_books": 60,
+     "words": 19861,
+     "judge_accept": 0.85,
+     "judge_bad": 0.15,
+     "judge_bad_ci95": [
+      0.0667,
+      0.25
+     ],
+     "mean_fidelity": 3.95,
+     "flagged": 21,
+     "flagged_per_1k": 1.0573,
+     "flagged_per_1k_ci95": [
+      0.5442,
+      1.6734
+     ],
+     "adjudicated_pages": 40,
+     "adjudicated_words": 12420,
+     "adjudicated_flags": 14,
+     "confirmed": 14,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.1272,
+     "confirmed_per_1k_ci95": [
+      0.4536,
+      1.8956
+     ],
+     "confirmed_or_split_per_1k": 1.1272,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 2,
+     "flagged_per_1k_without_artefacts": 0.9566,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.4701,
+      1.546
+     ]
+    }
+   ],
+   "Latin": [
+    {
+     "arm": "archive",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 2654,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.1,
+     "flagged": 92,
+     "flagged_per_1k": 34.6647,
+     "flagged_per_1k_ci95": [
+      25.0991,
+      48.3648
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 622,
+     "adjudicated_flags": 22,
+     "confirmed": 22,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 35.3698,
+     "confirmed_per_1k_ci95": [
+      32.3625,
+      38.3387
+     ],
+     "confirmed_or_split_per_1k": 35.3698,
+     "o7_numeral_flags": 9,
+     "normaliser_artefact_flags": 9,
+     "flagged_per_1k_without_artefacts": 31.2735,
+     "flagged_per_1k_without_artefacts_ci95": [
+      22.6537,
+      43.6717
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 2654,
+     "judge_accept": 0.6,
+     "judge_bad": 0.4,
+     "judge_bad_ci95": [
+      0.1,
+      0.7
+     ],
+     "mean_fidelity": 3.8,
+     "flagged": 16,
+     "flagged_per_1k": 6.0286,
+     "flagged_per_1k_ci95": [
+      1.3089,
+      11.3223
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 622,
+     "adjudicated_flags": 3,
+     "confirmed": 3,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 4.8232,
+     "confirmed_per_1k_ci95": [
+      3.1949,
+      6.4725
+     ],
+     "confirmed_or_split_per_1k": 4.8232,
+     "o7_numeral_flags": 2,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.0286,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.3089,
+      11.3223
+     ]
+    }
+   ],
+   "German": [
+    {
+     "arm": "archive",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 4187,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.5,
+     "flagged": 84,
+     "flagged_per_1k": 20.0621,
+     "flagged_per_1k_ci95": [
+      14.1732,
+      32.3944
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1197,
+     "adjudicated_flags": 33,
+     "confirmed": 32,
+     "split": 1,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 26.7335,
+     "confirmed_per_1k_ci95": [
+      21.1268,
+      40.5797
+     ],
+     "confirmed_or_split_per_1k": 27.5689,
+     "o7_numeral_flags": 9,
+     "normaliser_artefact_flags": 10,
+     "flagged_per_1k_without_artefacts": 17.6738,
+     "flagged_per_1k_without_artefacts_ci95": [
+      12.044,
+      28.5822
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 10,
+     "n_books": 10,
+     "words": 4187,
+     "judge_accept": 0.6,
+     "judge_bad": 0.4,
+     "judge_bad_ci95": [
+      0.1,
+      0.7
+     ],
+     "mean_fidelity": 4,
+     "flagged": 13,
+     "flagged_per_1k": 3.1048,
+     "flagged_per_1k_ci95": [
+      0.9721,
+      4.5266
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1197,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.8354,
+     "confirmed_per_1k_ci95": [
+      0,
+      2.8986
+     ],
+     "confirmed_or_split_per_1k": 0.8354,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.1048,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.9721,
+      4.5266
+     ]
+    }
+   ]
+  },
+  "by_engine": {
+   "ABBYY FineReader 11.0": [
+    {
+     "arm": "archive",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1949,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.2857,
+     "flagged": 74,
+     "flagged_per_1k": 37.9682,
+     "flagged_per_1k_ci95": [
+      21.875,
+      56.9211
+     ],
+     "adjudicated_pages": 5,
+     "adjudicated_words": 1543,
+     "adjudicated_flags": 52,
+     "confirmed": 50,
+     "split": 2,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 32.4044,
+     "confirmed_per_1k_ci95": [
+      14.2552,
+      47.5896
+     ],
+     "confirmed_or_split_per_1k": 33.7006,
+     "o7_numeral_flags": 10,
+     "normaliser_artefact_flags": 3,
+     "flagged_per_1k_without_artefacts": 36.4289,
+     "flagged_per_1k_without_artefacts_ci95": [
+      21.2106,
+      54.2075
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 7,
+     "n_books": 7,
+     "words": 1949,
+     "judge_accept": 0.2857,
+     "judge_bad": 0.7143,
+     "judge_bad_ci95": [
+      0.2857,
+      1
+     ],
+     "mean_fidelity": 3.4286,
+     "flagged": 10,
+     "flagged_per_1k": 5.1308,
+     "flagged_per_1k_ci95": [
+      1.6892,
+      11.0677
+     ],
+     "adjudicated_pages": 5,
+     "adjudicated_words": 1543,
+     "adjudicated_flags": 6,
+     "confirmed": 6,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.8885,
+     "confirmed_per_1k_ci95": [
+      1.7036,
+      6.9735
+     ],
+     "confirmed_or_split_per_1k": 3.8885,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 4.6178,
+     "flagged_per_1k_without_artefacts_ci95": [
+      1.3667,
+      10.4167
+     ]
+    }
+   ],
+   "ABBYY FineReader 8.0": [
+    {
+     "arm": "archive",
+     "n_pages": 11,
+     "n_books": 11,
+     "words": 3269,
+     "judge_accept": 0.1818,
+     "judge_bad": 0.8182,
+     "judge_bad_ci95": [
+      0.5455,
+      1
+     ],
+     "mean_fidelity": 2.8182,
+     "flagged": 69,
+     "flagged_per_1k": 21.1074,
+     "flagged_per_1k_ci95": [
+      10.9091,
+      34.0674
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1112,
+     "adjudicated_flags": 13,
+     "confirmed": 13,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 11.6906,
+     "confirmed_per_1k_ci95": [
+      0,
+      25.8418
+     ],
+     "confirmed_or_split_per_1k": 11.6906,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 6,
+     "flagged_per_1k_without_artefacts": 19.2719,
+     "flagged_per_1k_without_artefacts_ci95": [
+      9.9359,
+      31.0448
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 11,
+     "n_books": 11,
+     "words": 3269,
+     "judge_accept": 0.8182,
+     "judge_bad": 0.1818,
+     "judge_bad_ci95": [
+      0,
+      0.4545
+     ],
+     "mean_fidelity": 4.0909,
+     "flagged": 6,
+     "flagged_per_1k": 1.8354,
+     "flagged_per_1k_ci95": [
+      0.4184,
+      3.2319
+     ],
+     "adjudicated_pages": 4,
+     "adjudicated_words": 1112,
+     "adjudicated_flags": 2,
+     "confirmed": 2,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.7986,
+     "confirmed_per_1k_ci95": [
+      0,
+      5.1282
+     ],
+     "confirmed_or_split_per_1k": 1.7986,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 1.8354,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.4184,
+      3.2319
+     ]
+    }
+   ],
+   "ABBYY FineReader 9.0": [
+    {
+     "arm": "archive",
+     "n_pages": 4,
+     "n_books": 4,
+     "words": 854,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.25,
+     "flagged": 37,
+     "flagged_per_1k": 43.3255,
+     "flagged_per_1k_ci95": [
+      33.0368,
+      50.8475
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 423,
+     "adjudicated_flags": 16,
+     "confirmed": 14,
+     "split": 2,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 33.0969,
+     "confirmed_per_1k_ci95": [
+      16.4835,
+      45.6432
+     ],
+     "confirmed_or_split_per_1k": 37.8251,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 6,
+     "flagged_per_1k_without_artefacts": 36.2998,
+     "flagged_per_1k_without_artefacts_ci95": [
+      30.4956,
+      41.8079
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 4,
+     "n_books": 4,
+     "words": 854,
+     "judge_accept": 0.75,
+     "judge_bad": 0.25,
+     "judge_bad_ci95": [
+      0,
+      0.75
+     ],
+     "mean_fidelity": 4,
+     "flagged": 2,
+     "flagged_per_1k": 2.3419,
+     "flagged_per_1k_ci95": [
+      0,
+      4.7281
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 423,
+     "adjudicated_flags": 2,
+     "confirmed": 2,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 4.7281,
+     "confirmed_per_1k_ci95": [
+      4.1494,
+      5.4945
+     ],
+     "confirmed_or_split_per_1k": 4.7281,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.3419,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      4.7281
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.11": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 373,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 9,
+     "flagged_per_1k": 24.1287,
+     "flagged_per_1k_ci95": [
+      24.1287,
+      24.1287
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 373,
+     "adjudicated_flags": 9,
+     "confirmed": 9,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 24.1287,
+     "confirmed_per_1k_ci95": [
+      24.1287,
+      24.1287
+     ],
+     "confirmed_or_split_per_1k": 24.1287,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 24.1287,
+     "flagged_per_1k_without_artefacts_ci95": [
+      24.1287,
+      24.1287
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 373,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 2.681,
+     "flagged_per_1k_ci95": [
+      2.681,
+      2.681
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 373,
+     "adjudicated_flags": 1,
+     "confirmed": 1,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 2.681,
+     "confirmed_per_1k_ci95": [
+      2.681,
+      2.681
+     ],
+     "confirmed_or_split_per_1k": 2.681,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 2.681,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.681,
+      2.681
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.12": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 294,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 3.4014,
+     "flagged_per_1k_ci95": [
+      3.4014,
+      3.4014
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.4014,
+     "flagged_per_1k_without_artefacts_ci95": [
+      3.4014,
+      3.4014
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 294,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 1,
+     "flagged_per_1k": 3.4014,
+     "flagged_per_1k_ci95": [
+      3.4014,
+      3.4014
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 3.4014,
+     "flagged_per_1k_without_artefacts_ci95": [
+      3.4014,
+      3.4014
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.14": [
+    {
+     "arm": "archive",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 2254,
+     "judge_accept": 0.4,
+     "judge_bad": 0.6,
+     "judge_bad_ci95": [
+      0.2,
+      1
+     ],
+     "mean_fidelity": 3.4,
+     "flagged": 15,
+     "flagged_per_1k": 6.6548,
+     "flagged_per_1k_ci95": [
+      1.0045,
+      16.3286
+     ],
+     "adjudicated_pages": 3,
+     "adjudicated_words": 1153,
+     "adjudicated_flags": 10,
+     "confirmed": 10,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 8.673,
+     "confirmed_per_1k_ci95": [
+      0,
+      27.7008
+     ],
+     "confirmed_or_split_per_1k": 8.673,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 6.2112,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.5023,
+      16.3286
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 2254,
+     "judge_accept": 0.6,
+     "judge_bad": 0.4,
+     "judge_bad_ci95": [
+      0,
+      0.8
+     ],
+     "mean_fidelity": 3.4,
+     "flagged": 3,
+     "flagged_per_1k": 1.331,
+     "flagged_per_1k_ci95": [
+      0,
+      3.0756
+     ],
+     "adjudicated_pages": 3,
+     "adjudicated_words": 1153,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 0.8873,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      2.8169
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.15": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 199,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 199,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 199,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 199,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.18": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 506,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 506,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 506,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 1,
+     "adjudicated_words": 506,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0,
+     "confirmed_per_1k_ci95": [
+      0,
+      0
+     ],
+     "confirmed_or_split_per_1k": 0,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.19": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 123,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 3,
+     "flagged": 4,
+     "flagged_per_1k": 32.5203,
+     "flagged_per_1k_ci95": [
+      32.5203,
+      32.5203
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 24.3902,
+     "flagged_per_1k_without_artefacts_ci95": [
+      24.3902,
+      24.3902
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 123,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "ia-ocr (tesseract) 0.0.21": [
+    {
+     "arm": "archive",
+     "n_pages": 48,
+     "n_books": 48,
+     "words": 16881,
+     "judge_accept": 0.4375,
+     "judge_bad": 0.5625,
+     "judge_bad_ci95": [
+      0.4167,
+      0.7083
+     ],
+     "mean_fidelity": 3.375,
+     "flagged": 183,
+     "flagged_per_1k": 10.8406,
+     "flagged_per_1k_ci95": [
+      7.5502,
+      14.2867
+     ],
+     "adjudicated_pages": 29,
+     "adjudicated_words": 8930,
+     "adjudicated_flags": 77,
+     "confirmed": 69,
+     "split": 8,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 7.7268,
+     "confirmed_per_1k_ci95": [
+      3.3678,
+      12.187
+     ],
+     "confirmed_or_split_per_1k": 8.6226,
+     "o7_numeral_flags": 39,
+     "normaliser_artefact_flags": 10,
+     "flagged_per_1k_without_artefacts": 10.2482,
+     "flagged_per_1k_without_artefacts_ci95": [
+      7.0795,
+      13.6803
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 48,
+     "n_books": 48,
+     "words": 16881,
+     "judge_accept": 0.8542,
+     "judge_bad": 0.1458,
+     "judge_bad_ci95": [
+      0.0625,
+      0.25
+     ],
+     "mean_fidelity": 4.0208,
+     "flagged": 27,
+     "flagged_per_1k": 1.5994,
+     "flagged_per_1k_ci95": [
+      0.5512,
+      2.8867
+     ],
+     "adjudicated_pages": 29,
+     "adjudicated_words": 8930,
+     "adjudicated_flags": 7,
+     "confirmed": 7,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.7839,
+     "confirmed_per_1k_ci95": [
+      0.1132,
+      1.633
+     ],
+     "confirmed_or_split_per_1k": 0.7839,
+     "o7_numeral_flags": 3,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 1.5994,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.5512,
+      2.8867
+     ]
+    }
+   ]
+  },
+  "by_century": {
+   "16th": [
+    {
+     "arm": "archive",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1362,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2.2,
+     "flagged": 46,
+     "flagged_per_1k": 33.7739,
+     "flagged_per_1k_ci95": [
+      24.3001,
+      47.8011
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 6,
+     "normaliser_artefact_flags": 5,
+     "flagged_per_1k_without_artefacts": 30.1028,
+     "flagged_per_1k_without_artefacts_ci95": [
+      22.9682,
+      41.7091
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 1362,
+     "judge_accept": 0.8,
+     "judge_bad": 0.2,
+     "judge_bad_ci95": [
+      0,
+      0.6
+     ],
+     "mean_fidelity": 3.8,
+     "flagged": 9,
+     "flagged_per_1k": 6.6079,
+     "flagged_per_1k_ci95": [
+      0,
+      13.3476
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 2,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 6.6079,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      13.3476
+     ]
+    }
+   ],
+   "17th": [
+    {
+     "arm": "archive",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 2232,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 2,
+     "flagged": 58,
+     "flagged_per_1k": 25.9857,
+     "flagged_per_1k_ci95": [
+      14.3293,
+      64.5503
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 554,
+     "adjudicated_flags": 23,
+     "confirmed": 23,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 41.5162,
+     "confirmed_per_1k_ci95": [
+      38.3387,
+      45.6432
+     ],
+     "confirmed_or_split_per_1k": 41.5162,
+     "o7_numeral_flags": 7,
+     "normaliser_artefact_flags": 6,
+     "flagged_per_1k_without_artefacts": 23.2975,
+     "flagged_per_1k_without_artefacts_ci95": [
+      12.243,
+      59.2593
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 5,
+     "n_books": 5,
+     "words": 2232,
+     "judge_accept": 0.4,
+     "judge_bad": 0.6,
+     "judge_bad_ci95": [
+      0.2,
+      1
+     ],
+     "mean_fidelity": 3.6,
+     "flagged": 13,
+     "flagged_per_1k": 5.8244,
+     "flagged_per_1k_ci95": [
+      2.0067,
+      13.7566
+     ],
+     "adjudicated_pages": 2,
+     "adjudicated_words": 554,
+     "adjudicated_flags": 2,
+     "confirmed": 2,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 3.6101,
+     "confirmed_per_1k_ci95": [
+      3.1949,
+      4.1494
+     ],
+     "confirmed_or_split_per_1k": 3.6101,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 5.8244,
+     "flagged_per_1k_without_artefacts_ci95": [
+      2.0067,
+      13.7566
+     ]
+    }
+   ],
+   "18th": [
+    {
+     "arm": "archive",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 226,
+     "judge_accept": 0,
+     "judge_bad": 1,
+     "judge_bad_ci95": [
+      1,
+      1
+     ],
+     "mean_fidelity": 1,
+     "flagged": 4,
+     "flagged_per_1k": 17.6991,
+     "flagged_per_1k_ci95": [
+      17.6991,
+      17.6991
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 13.2743,
+     "flagged_per_1k_without_artefacts_ci95": [
+      13.2743,
+      13.2743
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 1,
+     "n_books": 1,
+     "words": 226,
+     "judge_accept": 1,
+     "judge_bad": 0,
+     "judge_bad_ci95": [
+      0,
+      0
+     ],
+     "mean_fidelity": 4,
+     "flagged": 0,
+     "flagged_per_1k": 0,
+     "flagged_per_1k_ci95": [
+      0,
+      0
+     ],
+     "adjudicated_pages": 0,
+     "adjudicated_words": 0,
+     "adjudicated_flags": 0,
+     "confirmed": 0,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": null,
+     "confirmed_per_1k_ci95": null,
+     "confirmed_or_split_per_1k": null,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 0,
+     "flagged_per_1k_without_artefacts": 0,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0,
+      0
+     ]
+    }
+   ],
+   "19th": [
+    {
+     "arm": "archive",
+     "n_pages": 31,
+     "n_books": 31,
+     "words": 10207,
+     "judge_accept": 0.3548,
+     "judge_bad": 0.6452,
+     "judge_bad_ci95": [
+      0.4839,
+      0.8065
+     ],
+     "mean_fidelity": 3.3226,
+     "flagged": 128,
+     "flagged_per_1k": 12.5404,
+     "flagged_per_1k_ci95": [
+      8.3832,
+      17.3187
+     ],
+     "adjudicated_pages": 21,
+     "adjudicated_words": 6455,
+     "adjudicated_flags": 84,
+     "confirmed": 81,
+     "split": 3,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 12.5484,
+     "confirmed_per_1k_ci95": [
+      6.4623,
+      18.8775
+     ],
+     "confirmed_or_split_per_1k": 13.0132,
+     "o7_numeral_flags": 11,
+     "normaliser_artefact_flags": 5,
+     "flagged_per_1k_without_artefacts": 12.0506,
+     "flagged_per_1k_without_artefacts_ci95": [
+      8.1106,
+      16.7078
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 31,
+     "n_books": 31,
+     "words": 10207,
+     "judge_accept": 0.7419,
+     "judge_bad": 0.2581,
+     "judge_bad_ci95": [
+      0.129,
+      0.4194
+     ],
+     "mean_fidelity": 3.9032,
+     "flagged": 16,
+     "flagged_per_1k": 1.5676,
+     "flagged_per_1k_ci95": [
+      0.7256,
+      2.6152
+     ],
+     "adjudicated_pages": 21,
+     "adjudicated_words": 6455,
+     "adjudicated_flags": 10,
+     "confirmed": 10,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 1.5492,
+     "confirmed_per_1k_ci95": [
+      0.4355,
+      2.9693
+     ],
+     "confirmed_or_split_per_1k": 1.5492,
+     "o7_numeral_flags": 1,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 1.4696,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.6526,
+      2.5275
+     ]
+    }
+   ],
+   "20th": [
+    {
+     "arm": "archive",
+     "n_pages": 38,
+     "n_books": 38,
+     "words": 12675,
+     "judge_accept": 0.4211,
+     "judge_bad": 0.5789,
+     "judge_bad_ci95": [
+      0.4211,
+      0.7368
+     ],
+     "mean_fidelity": 3.3684,
+     "flagged": 156,
+     "flagged_per_1k": 12.3077,
+     "flagged_per_1k_ci95": [
+      7.2776,
+      18.1424
+     ],
+     "adjudicated_pages": 23,
+     "adjudicated_words": 7230,
+     "adjudicated_flags": 70,
+     "confirmed": 61,
+     "split": 9,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 8.4371,
+     "confirmed_per_1k_ci95": [
+      2.4346,
+      15.6433
+     ],
+     "confirmed_or_split_per_1k": 9.6819,
+     "o7_numeral_flags": 32,
+     "normaliser_artefact_flags": 10,
+     "flagged_per_1k_without_artefacts": 11.5187,
+     "flagged_per_1k_without_artefacts_ci95": [
+      6.7295,
+      17.0734
+     ]
+    },
+    {
+     "arm": "ours",
+     "n_pages": 38,
+     "n_books": 38,
+     "words": 12675,
+     "judge_accept": 0.8684,
+     "judge_bad": 0.1316,
+     "judge_bad_ci95": [
+      0.0263,
+      0.2368
+     ],
+     "mean_fidelity": 4.0263,
+     "flagged": 12,
+     "flagged_per_1k": 0.9467,
+     "flagged_per_1k_ci95": [
+      0.4247,
+      1.6014
+     ],
+     "adjudicated_pages": 23,
+     "adjudicated_words": 7230,
+     "adjudicated_flags": 6,
+     "confirmed": 6,
+     "split": 0,
+     "false_alarm": 0,
+     "unanswered": 0,
+     "confirmed_per_1k": 0.8299,
+     "confirmed_per_1k_ci95": [
+      0.1423,
+      1.6454
+     ],
+     "confirmed_or_split_per_1k": 0.8299,
+     "o7_numeral_flags": 0,
+     "normaliser_artefact_flags": 1,
+     "flagged_per_1k_without_artefacts": 0.8679,
+     "flagged_per_1k_without_artefacts_ci95": [
+      0.394,
+      1.4426
+     ]
+    }
+   ]
+  }
+ },
+ "random_over_typed_english": {
+  "archive": {
+   "flagged_per_1k": 1.253,
+   "judge_bad": 0.839,
+   "confirmed_per_1k": 3.276,
+   "typed": {
+    "flagged_per_1k": 8.6831,
+    "judge_bad": 0.6552,
+    "n": 29
+   },
+   "random": {
+    "flagged_per_1k": 10.8756,
+    "judge_bad": 0.55,
+    "n": 60
+   }
+  },
+  "ours": {
+   "flagged_per_1k": 0.797,
+   "judge_bad": 0.725,
+   "confirmed_per_1k": 2.892,
+   "typed": {
+    "flagged_per_1k": 1.3266,
+    "judge_bad": 0.2069,
+    "n": 29
+   },
+   "random": {
+    "flagged_per_1k": 1.0573,
+    "judge_bad": 0.15,
+    "n": 60
+   }
+  }
+ },
+ "paired_flags": {
+  "three_way": {
+   "pages": 65,
+   "archive_fewer_flags": 1,
+   "ours_fewer_flags": 57,
+   "tied": 7
+  },
+  "random": {
+   "pages": 80,
+   "archive_fewer_flags": 2,
+   "ours_fewer_flags": 55,
+   "tied": 23
+  }
+ },
+ "alignment": {
+  "set_A_pages": 60,
+  "by_status": {
+   "aligned": 30,
+   "not_aligned": 16,
+   "no_ia_identifier": 14
+  },
+  "by_lang": {
+   "English": {
+    "aligned": 13,
+    "no_ia_identifier": 3,
+    "not_aligned": 4
+   },
+   "Latin": {
+    "aligned": 7,
+    "no_ia_identifier": 4,
+    "not_aligned": 9
+   },
+   "German": {
+    "aligned": 10,
+    "not_aligned": 3,
+    "no_ia_identifier": 7
+   }
+  },
+  "aligned_at_image_leaf": "30/30",
+  "not_aligned_best_is_image_leaf": "10/16",
+  "not_aligned_by_engine": {
+   "ABBYY FineReader 11.0": 1,
+   "ABBYY FineReader 8.0": 1,
+   "ABBYY FineReader 9.0": 1,
+   "ia-ocr (tesseract) 0.0.21": 13
+  },
+  "set_B": {
+   "pages": 35,
+   "skipped": {
+    "we serve the Archive text on this page": 9,
+    "book not live": 5,
+    "no eligible stored read": 1
+   },
+   "same_leaf_as_5124": 35
+  },
+  "set_C": {
+   "pages": {
+    "English": 60,
+    "Latin": 10,
+    "German": 10
+   },
+   "frame_books": {
+    "English": 3836,
+    "Latin": 4725,
+    "German": 833
+   },
+   "skipped": {
+    "English: we serve the Archive text on this book": 41,
+    "English: no eligible page with an image of this Archive item": 6,
+    "English: no_djvu_xml": 1,
+    "Latin: no eligible page with an image of this Archive item": 3,
+    "German: no eligible page with an image of this Archive item": 1
+   },
+   "leaf_moved_from_image_leaf": 0
+  }
+ },
+ "archive_furniture_lines_dropped": 146,
+ "opus_calls": 402,
+ "sonnet_calls": 45
+}

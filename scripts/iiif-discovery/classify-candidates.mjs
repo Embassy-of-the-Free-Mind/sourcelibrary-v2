@@ -171,7 +171,7 @@ await withMongo(async (db) => {
 
   const cursor = col.find(filter, {
     projection: { title: 1, language: 1, 'metadata.collections': 1, source: 1 },
-  });
+  }).batchSize(1000);
 
   const tally = { record_type: {}, script: {}, language_iso: {} };
   let bulk = [];

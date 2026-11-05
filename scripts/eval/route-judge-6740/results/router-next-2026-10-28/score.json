@@ -1,0 +1,378 @@
+{
+ "generated_at": "2026-10-28T12:25:41.156Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 64,
+  "unparsed": 0,
+  "list_usd_equiv": 4.47
+ },
+ "meter": null,
+ "cells": {
+  "latin-lite": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "frame_books": 15792,
+    "books_walked": 114,
+    "held": 7,
+    "unsplit": 0,
+    "excluded": 0,
+    "no_waiting_page": 73,
+    "hand": "print",
+    "salt": "rn-7263-latin-lite",
+    "weight": "read_count + 1, without replacement (Efraimidis-Spirakis)",
+    "rule": "census bucket /flash-lite/, >= 300 chars; interior, not withheld or a skip type, not handwritten; held / unsplit / 69bd9d05 left out"
+   },
+   "controls": {
+    "agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "agy-flash-low": {
+     "served": "this run's fresh read of the image, waiting page (agy gemini-3.8-flash-low)",
+     "n": 26,
+     "books": 26,
+     "accept": "22/26",
+     "accept_rate": 0.85,
+     "accept_ci": {
+      "ci95": [
+       0.692,
+       0.962
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_pages": "2/26",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.192
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_classes": {
+      "O6": "2/26"
+     },
+     "classes_k_of_n": {
+      "O8": "14/26",
+      "E2": "13/26",
+      "O6": "10/26",
+      "O16": "4/26",
+      "O5": "2/26",
+      "O7": "2/26",
+      "O10": "1/26",
+      "O1": "1/26",
+      "T4": "1/26",
+      "T6": "1/26",
+      "O11": "1/26"
+     },
+     "fidelity_mean": 4.23,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6990660aef12272ffdc94ef0:670",
+       "quote": "in rebus vero unitas",
+       "severity": "wrong_text",
+       "what": "page has 'in rerum natura unitas' (rerũ nã); the candidate misread both abbreviations"
+      },
+      {
+       "page": "69dbc9451040d1d5e20a19f2:66",
+       "quote": "Vtrimque. enim hominum",
+       "severity": "wrong_text",
+       "what": "page has 'Vt .n.' (Ut enim), not 'Vtrimque'"
+      },
+      {
+       "page": "69dbc9451040d1d5e20a19f2:66",
+       "quote": "membra nulla coirent: de mente ipsa",
+       "severity": "wrong_text",
+       "what": "page reads 'cõtẽtõe mẽte' (contentione mente); the candidate invents 'coirent: de'"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000266
+     },
+     "counts": true,
+     "contain_answers": "0/26",
+     "contain_reasons": [],
+     "unchanged": "0/26",
+     "skipped": 8
+    }
+   },
+   "made_worse": {
+    "lite -> agy-flash-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  },
+  "latin-flash3": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "frame_books": 15792,
+    "books_walked": 89,
+    "held": 5,
+    "unsplit": 0,
+    "excluded": 0,
+    "no_waiting_page": 23,
+    "not_print": 27,
+    "hand": "print",
+    "salt": "rn-7263-latin-flash3",
+    "weight": "read_count + 1, without replacement (Efraimidis-Spirakis)",
+    "rule": "census bucket /^gemini-3-flash/, >= 300 chars; interior, not withheld or a skip type, not handwritten; held / unsplit / 69bd9d05 left out"
+   },
+   "controls": {
+    "3flash>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "3flash>agy-flash-low": {
+     "served": "this run's correction of the stored draft, waiting page (agy gemini-3.8-flash-low)",
+     "n": 34,
+     "books": 34,
+     "accept": "28/34",
+     "accept_rate": 0.82,
+     "accept_ci": {
+      "ci95": [
+       0.676,
+       0.941
+      ],
+      "unit": "book",
+      "units": 34
+     },
+     "wrong_text_pages": "4/34",
+     "wrong_text_ci": {
+      "ci95": [
+       0.029,
+       0.235
+      ],
+      "unit": "book",
+      "units": 34
+     },
+     "wrong_text_classes": {
+      "O6": "3/34",
+      "O10": "1/34",
+      "O3": "1/34",
+      "O8": "1/34"
+     },
+     "classes_k_of_n": {
+      "O8": "18/34",
+      "O6": "13/34",
+      "E2": "9/34",
+      "O16": "8/34",
+      "O12": "4/34",
+      "T6": "4/34",
+      "O5": "3/34",
+      "O7": "2/34",
+      "O10": "2/34",
+      "O11": "1/34",
+      "O3": "1/34",
+      "O1": "1/34"
+     },
+     "fidelity_mean": 4.32,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "6985ca7130d79dd170ec623f:86",
+       "quote": "immortale videlicet in primo <term>י</term> quod pulchritudinem Jod recipit",
+       "severity": "wrong_text",
+       "what": "page reads 'primo ה' (the first He receives Jod), not Yod"
+      },
+      {
+       "page": "6985ca7130d79dd170ec623f:86",
+       "quote": "Per hoc ergo <term>י</term> mens",
+       "severity": "wrong_text",
+       "what": "page has ה"
+      },
+      {
+       "page": "6985ca7130d79dd170ec623f:86",
+       "quote": "ejus Jod, vel <term>י</term> superius",
+       "severity": "wrong_text",
+       "what": "page reads 'ejus Jah, vel ה superius'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00342,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00415,
+      "agy_share": 0.00000273
+     },
+     "counts": true,
+     "contain_answers": "0/34",
+     "contain_reasons": [],
+     "unchanged": "0/34",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "3flash -> 3flash>agy-flash-low": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   }
+  },
+  "zh-dice": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "frame": {
+    "frame_books": 12787,
+    "books_walked": 55,
+    "held": 1,
+    "unsplit": 0,
+    "excluded": 0,
+    "no_waiting_page": 17,
+    "not_manuscript": 1,
+    "hand": "manuscript",
+    "salt": "rn-7263-zh-dice",
+    "weight": "read_count + 1, without replacement (Efraimidis-Spirakis)",
+    "rule": "census bucket /paddle/i, not the guarded apply, dice < 0.90, >= 40 Han; interior, not withheld or a skip type; held / unsplit / 69bd9d05 left out"
+   },
+   "controls": {
+    "paddle>agy-flash-high": {
+     "n": 0,
+     "passed": false,
+     "verdicts": []
+    }
+   },
+   "routes": {
+    "paddle>agy-flash-high": {
+     "served": "this run's correction of the stored draft, waiting page (agy gemini-3.8-flash-high)",
+     "n": 0,
+     "books": 0,
+     "accept": "0/0",
+     "accept_rate": null,
+     "accept_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_pages": "0/0",
+     "wrong_text_ci": {
+      "ci95": null,
+      "unit": "page",
+      "units": 0
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {},
+     "fidelity_mean": null,
+     "commonest": null,
+     "examples": [],
+     "cost": {
+      "usd": 0.000091,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-high call"
+     },
+     "cost_per_usable_page": null,
+     "counts": false,
+     "contain_answers": "0/0",
+     "contain_reasons": [],
+     "unchanged": "0/0",
+     "skipped": 36,
+     "name_check": {
+      "accepted": 0,
+      "checked": 0,
+      "unchecked": 0,
+      "with_name_error": 0,
+      "accept_after_name_check": "0/0",
+      "accept_after_name_check_strict": "0/0",
+      "rule": "accepted, name-checked against the image and Kanripo, and no personal or place name the checker reads on the image is missing from the candidate (Han only). strict: character by character; the headline folds GLYPH_VARIANTS (the same character in another glyph, by eye). An unchecked page (no Kanripo leaf within CER 0.5) does not count",
+      "errors": [],
+      "errors_strict": []
+     }
+    }
+   },
+   "made_worse": {
+    "paddle -> paddle>agy-flash-high": {
+     "pairs": 0,
+     "identical_text": 0,
+     "fidelity_diff": null,
+     "fidelity_diff_ci": null,
+     "worse": "0/0",
+     "better": "0/0",
+     "accept_lost": "0/0",
+     "accept_gained": "0/0",
+     "wrong_text_added": "0/0",
+     "worse_pages": []
+    }
+   },
+   "reference": {
+    "name": "Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)",
+    "align_status": {
+     "aligned:own": 30,
+     "unaligned": 4,
+     "aligned:one-neighbour": 2
+    },
+    "leaf_misplaced": 0,
+    "given_to_judge": true,
+    "per_route": {
+     "paddle>agy-flash-high": {
+      "n": 0,
+      "mean": null,
+      "ci95": null
+     }
+    },
+    "pages_with_ref": 0,
+    "pair_min_gap": 0.01,
+    "ordered_pairs": 0,
+    "judge_agrees": 0,
+    "judge_disagrees": 0,
+    "judge_ties": 0,
+    "agreement": null,
+    "disagreements": [],
+    "ref_mean_accepted": null,
+    "ref_mean_not_accepted": null
+   }
+  }
+ },
+ "contain_candidates": []
+}

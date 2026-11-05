@@ -1,0 +1,4 @@
+Round 6 predictions, recorded 2026-10-25 before review:
+P1 slot 5 Alle de wercken: record Latin, detector edition-language-vs-ocr says Dutch (share 0.84, strong) -> reviewer finds Dutch text / wrong language record.
+P2 slots 7-9 (EEB scans): no ProQuest in stored text after #7315 -> reviewer sees the stamp only on images, not in OCR/English.
+P3 slot 1 Bracton ca.1390, single gemini-3-flash read of a manuscript -> serious OCR misreads (O6/O1).

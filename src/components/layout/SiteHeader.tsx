@@ -352,6 +352,18 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             )}
           </div>
 
+          {/* Donate on phones too, beside the hamburger: inside the menu panel it
+              was one tap deeper than on a wide screen, where most readers are not. */}
+          {showSupport && (
+            <Link
+              href="/give"
+              onClick={() => trackEvent('give_nav_click', { source: 'header_mobile', url: '/give' })}
+              className="lg:hidden ml-auto inline-flex items-center h-[32px] px-3 whitespace-nowrap text-[13px] font-medium border border-white text-white bg-transparent hover:bg-white/10 transition-colors"
+            >
+              {t.support}
+            </Link>
+          )}
+
           {/* Hamburger: phones, and wide screens where the links don't fit. */}
           <button
             ref={burgerRef}
@@ -360,7 +372,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             aria-label={menuOpen ? CHROME_STRINGS[locale].close : t.menu}
             aria-expanded={menuOpen}
             aria-controls={MENU_ID}
-            className={`relative w-11 h-11 shrink-0 ml-auto text-white ${compact ? '' : 'lg:hidden'}`}
+            className={`relative w-11 h-11 shrink-0 text-white ${showSupport ? 'ml-1 lg:ml-auto' : 'ml-auto'} ${compact ? '' : 'lg:hidden'}`}
           >
             {[0, 1, 2].map((k) => (
               <i

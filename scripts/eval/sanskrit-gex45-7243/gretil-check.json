@@ -1,0 +1,30 @@
+{
+ "sa-1697c6ed-p499": {
+  "ref_chars": 769,
+  "gretil_chars": 769,
+  "edits": 0,
+  "cer_pct": 0.0,
+  "diffs": []
+ },
+ "sa-1697bec1-p584": {
+  "ref_chars": 769,
+  "gretil_chars": 769,
+  "edits": 0,
+  "cer_pct": 0.0,
+  "diffs": []
+ },
+ "sa-1697c43d-p421": {
+  "ref_chars": 798,
+  "gretil_chars": 798,
+  "edits": 0,
+  "cer_pct": 0.0,
+  "diffs": []
+ },
+ "sa-1697d8cb-p58": {
+  "ref_chars": 789,
+  "gretil_chars": 789,
+  "edits": 0,
+  "cer_pct": 0.0,
+  "diffs": []
+ }
+}

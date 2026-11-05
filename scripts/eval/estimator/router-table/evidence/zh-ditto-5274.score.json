@@ -1,0 +1,167 @@
+{
+ "generated_by": "scripts/eval/zh-ditto-restore-5274/score.mjs + score-judge.mjs (job zh-ditto-restore-5274, #5274; no model calls in this step)",
+ "provenance": "#5274 ditto-mark cell: 30 zero-丨 Paddle body pages, one per book, of 佩文韻府 / 駢字類編 (seed 5274), arms on the same page. Preregistered: scripts/eval/zh-ditto-restore-5274/PREREG.md",
+ "judge": "claude-opus-5-5 (claude -p), blind X/Y/Z with the Archive image, flash-reread-5924 verdict words",
+ "mapping": "wrong_text_pages = misleading; accept = not misleading; P1 arms were not judged (they failed the mark measures), so they carry no accept",
+ "cells": {
+  "zh-ditto-5274": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "pages": 30,
+   "controls": {
+    "wrong_page": [
+     {
+      "id": "swap0-zero-04e23f7f-p71",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap1-zero-04e27aff-p52",
+      "arm": "P2-ia",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap2-zero-e83515e4-p21",
+      "arm": "P3-ia",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap3-zero-7d170ebf-p98",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap4-zero-04e24bab-p58",
+      "arm": "P2-ia",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap0-zero-04e23f7f-p71",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap1-zero-04e27aff-p52",
+      "arm": "P2-r2",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap2-zero-e83515e4-p21",
+      "arm": "P2-ia",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap3-zero-7d170ebf-p98",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap4-zero-04e24bab-p58",
+      "arm": "P2-r2",
+      "accept": false,
+      "passed": true
+     }
+    ]
+   },
+   "routes": {
+    "P0": {
+     "n": 30,
+     "books": 30,
+     "usable": "1/30",
+     "ditto_count_recall": 0.026,
+     "ditto_count_precision": 0.929,
+     "ditto_run_recall": 0.026,
+     "cer_marks_removed_median": 0.114,
+     "served": "paddle",
+     "wrong_text_pages": "29/30",
+     "accept": "1/30"
+    },
+    "P2-r2": {
+     "n": 30,
+     "books": 30,
+     "usable": "28/30",
+     "ditto_count_recall": 0.996,
+     "ditto_count_precision": 0.986,
+     "ditto_run_recall": 0.961,
+     "cer_marks_removed_median": 0.037,
+     "served": "paddle>opus (ditto instruction, stored image)",
+     "wrong_text_pages": "7/30",
+     "accept": "23/30"
+    },
+    "P2-ia": {
+     "n": 30,
+     "books": 30,
+     "usable": "29/30",
+     "ditto_count_recall": 0.997,
+     "ditto_count_precision": 0.996,
+     "ditto_run_recall": 0.974,
+     "cer_marks_removed_median": 0.037,
+     "served": "paddle>opus (ditto instruction, Archive image)",
+     "wrong_text_pages": "2/30",
+     "accept": "28/30"
+    },
+    "P3-ia": {
+     "n": 30,
+     "books": 30,
+     "usable": "22/30",
+     "ditto_count_recall": 0.954,
+     "ditto_count_precision": 0.99,
+     "ditto_run_recall": 0.886,
+     "cer_marks_removed_median": 0.056,
+     "served": "paddle>agy-flash-low (ditto instruction, Archive image)",
+     "wrong_text_pages": "24/30",
+     "accept": "6/30"
+    },
+    "P1-r2": {
+     "n": 30,
+     "books": 30,
+     "usable": "2/30",
+     "ditto_count_recall": 0.058,
+     "ditto_count_precision": 0.967,
+     "ditto_run_recall": 0.057,
+     "cer_marks_removed_median": 0.135,
+     "served": "paddle repeat"
+    },
+    "P1-ia": {
+     "n": 30,
+     "books": 30,
+     "usable": "5/30",
+     "ditto_count_recall": 0.273,
+     "ditto_count_precision": 1,
+     "ditto_run_recall": 0.271,
+     "cer_marks_removed_median": 0.123,
+     "served": "paddle full resolution"
+    },
+    "P1-ia-nolayout": {
+     "n": 30,
+     "books": 30,
+     "usable": "12/30",
+     "ditto_count_recall": 0.608,
+     "ditto_count_precision": 0.997,
+     "ditto_run_recall": 0.591,
+     "cer_marks_removed_median": 0.077,
+     "served": "paddle full resolution, layout off"
+    },
+    "P1-up3": {
+     "n": 30,
+     "books": 30,
+     "usable": "4/30",
+     "ditto_count_recall": 0.263,
+     "ditto_count_precision": 1,
+     "ditto_run_recall": 0.267,
+     "cer_marks_removed_median": 0.119,
+     "served": "paddle stored image x3"
+    }
+   }
+  }
+ }
+}

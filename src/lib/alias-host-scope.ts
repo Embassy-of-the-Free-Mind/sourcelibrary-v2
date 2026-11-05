@@ -111,9 +111,11 @@ export const DEPLOYMENT_ALIAS_HOSTS = new Set(['sourcelibrary-v2.vercel.app']);
  * an outside party reading books through a stale worktree preview.
  *
  * The preview policy gates CONTENT for ANONYMOUS callers only. A request
- * carrying a session cookie (a signed-in dev — email sign-in works on any
- * host) or an Authorization header (API key / CRON_SECRET, verified at the
- * app layer) passes untouched, so branch review still works. Everything
+ * carrying a VERIFIED credential (a decodable session cookie: email sign-in
+ * works on any host; an active API key; CRON_SECRET) passes untouched, so
+ * branch review still works. Presence alone is not enough: the gate once
+ * accepted any Authorization header, and `Bearer x` read whole books (#7155,
+ * src/lib/preview-credential.ts). Everything
  * that isn't book content — UI pages, assets, auth, APIs the pages need —
  * is untouched for everyone.
  *

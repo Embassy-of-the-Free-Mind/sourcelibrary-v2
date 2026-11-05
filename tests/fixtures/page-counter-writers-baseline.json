@@ -72,7 +72,6 @@
     "src/app/api/[tenant]/pages/[id]/split/route.ts",
     "src/app/api/[tenant]/pages/batch-split/route.ts",
     "src/app/api/admin/backfill-cropped-images/route.ts",
-    "src/app/api/admin/sync-page-counts/route.ts",
     "src/app/api/books/[id]/auto-split-ml/route.ts",
     "src/app/api/books/[id]/batch-translate-async/route.ts",
     "src/app/api/books/[id]/clear-ocr/route.ts",

@@ -1,0 +1,1012 @@
+[
+ {
+  "book_id": "6ad191b942debc9626925467",
+  "slot": 1,
+  "title": "Chilam Balam Texts, vol. 1: Chumayel, Calkiní, Libro de los Médicos",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "19th-century hand copy of the Chilam Balam of Chumayel (Yucatec Maya prophetic/calendrical text); a genuine primary source, though the book carries no collection or tradition tag.",
+  "rights_flag": null,
+  "structure_note": "printed_repeats 109 is explained by the leaf numbering: rectos carry a blue ink number (22 on p45, 23 on p47) and versos repeat it in pencil (22 on p46), plus a second pencil series (25, 26). Not a defect. 70 of 294 pages untranslated.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "Numen: chuc: numen Ce lem",
+      "english": "of Numen: chuc: numen Ce lem",
+      "problem": "phrase left untranslated in the running English",
+      "severity": "minor"
+     },
+     {
+      "source": "tenel ahau.",
+      "english": "tenel ahau.",
+      "problem": "first words of the page left in Maya; meta claims the previous page ended '...and was seated: Kan', which I could not verify",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 46,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "tu chun nicte: pis 26 yax bac",
+      "image": "'26' is a later pencil numeral written into the gap in the line",
+      "problem": "later-hand foliation read as part of the text",
+      "severity": "moderate",
+      "class": "O13"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "pis 26 yax bac",
+      "english": "measure 26 first bone",
+      "problem": "pencil folio number translated as a numeral in the prophecy",
+      "severity": "moderate",
+      "class": "O13"
+     }
+    ],
+    "other": [
+     {
+      "note": "the OCR's <meta>, <warning> and <unclear>faint pencil note</unclear> block (a description of the scan) is copied verbatim to the top of the translation",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "çatal u naat çicnal u yum çicnal u naa",
+      "image": "çatal u naat yicnal u yum yicnal u naa",
+      "problem": "yicnal ('beside') misread as çicnal; the translation still gives 'beside'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "katan u uich",
+      "image": "kaxan u uich",
+      "problem": "x read as t; the translation 'bandaged' follows kaxan anyway",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "çauin u chi",
+      "english": "Greedy is his mouth",
+      "problem": "the same word çauin is 'crooked' in the run that ends on p46 and 'greedy' here, inconsistent across the page break",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A clean, careful transcription of a hard cursive Maya manuscript, with a literal translation that holds up. The one real slip is the pencil folio '26' read and translated as part of the text on p46."
+ },
+ {
+  "book_id": "6a40efd67f8d954eada8b8ab",
+  "slot": 2,
+  "title": "儒林外史(二十): The Scholars, vol 20",
+  "tradition": null,
+  "shelf_fit": "doubtful",
+  "shelf_note": "Wu Jingzi's 18th-century novel in a woodblock edition (ch. 55). Shelved only in the generic 'universallibrary' collection, which is fine, but it lies outside the library's core esoteric/early-science traditions.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 75,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "OCR tag <script>handwritten</script> on a woodblock-printed page",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 76,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "第五十五",
+      "image": "第五十五回 in the block margin (chapter 55), with leaf number 五",
+      "problem": "margin chapter label transcribed as running text, not tagged as furniture",
+      "severity": "moderate",
+      "class": "O11"
+     },
+     {
+      "ocr": "過恬",
+      "image": "過活",
+      "problem": "misread; the translation still says 'for his livelihood'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "第五十五",
+      "english": "Page 55",
+      "problem": "the margin label means chapter 55, not page 55; a false page number appears in the reader text",
+      "severity": "moderate",
+      "class": "O11"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 77,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "兩邉西條石磯",
+      "image": "兩邉四條石磯",
+      "problem": "四 'four' misread as 西; the translation drops the number of benches",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "An accurate OCR and a fluent, faithful translation of The Scholars, ch. 55. The only things a reader would notice are the margin chapter label rendered as 'Page 55' and the wrong 'handwritten' tag."
+ },
+ {
+  "book_id": "6a3cebe08642f0445b157ef6",
+  "slot": 3,
+  "title": "易原·卷四~卷五 (vol 2)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Cheng Dachang's Yi yuan, a Song Yijing treatise, in the Siku Quanshu manuscript copy (欽定四庫全書 in the margin). Correct for a Yijing/cosmology shelf.",
+  "rights_flag": null,
+  "structure_note": "Only 4 printed numbers detected. The Siku leaves carry folio numbers in the centre fold, mostly cut off at the frame edge, so the low count is expected. 3 of 122 pages untranslated.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 13,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "晉人孟景翼",
+      "english": "Meng Jingyi <note>Meng Yi, a fourth-century Jin dynasty scholar</note>",
+      "problem": "the note adds an unsupported alternative name and date (Meng Jingyi is usually placed in Southern Qi); invented gloss",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "六子役於乾坤",
+      "english": "Qian and Kun <note>Heaven and Earth, the two primary hexagrams</note>",
+      "problem": "in the context of the six children these are trigrams, not hexagrams",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 14,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 15,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "故信善美大自二中四下者積而上之",
+      "english": "from the two central qualities of trustworthiness and goodness down to beauty and greatness, one accumulates upward",
+      "problem": "'自二中四下' (from the second ... the four below) is forced into a reading the source does not clearly give; the Mencius note is reasonable",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "An excellent OCR of a clean Siku manuscript copy, with a careful translation. One invented biographical note on Meng Jingyi."
+ },
+ {
+  "book_id": "6a40efac7f8d954eada8b72d",
+  "slot": 4,
+  "title": "儒林外史(十六): The Scholars, vol 16",
+  "tradition": null,
+  "shelf_fit": "doubtful",
+  "shelf_note": "Wu Jingzi's novel (ch. 42, the examination-ghost story), the same edition as slot 2. Generic 'universallibrary' shelf, outside the core traditions.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 49,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "OCR tag <script>handwritten</script> on a woodblock print",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "大爺道",
+      "english": "The Eldest Master said",
+      "problem": "the same character is 'The First Young Master' on p49; inconsistent naming",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "the block-margin title 儒林外史 (transcribed as a bare first line) becomes a Markdown heading '# The Scholars' in the middle of the story",
+      "severity": "moderate",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Essentially perfect text and translation. The one blemish is the margin title rendered as an invented mid-narrative heading on p51."
+ },
+ {
+  "book_id": "6a3cc0c0f9474f825c171eab",
+  "slot": 5,
+  "title": "三易備遺·卷六~卷十 (vol 7)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Zhu Yuansheng's San Yi bei yi (Song Yijing numerology: Lianshan, Guicang, Zhouyi), Siku Quanshu copy. Fits a Yijing/cosmology shelf.",
+  "rights_flag": null,
+  "structure_note": "p92 is a chapter-end leaf with two lines of text and blank columns, correctly transcribed as short. The single backstep is probably a misread centre-fold folio. 17 of 216 pages untranslated.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 90,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 91,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "為周易之六六則之 | (p92) 河圖乾坤縱而六子衡也",
+      "english": "becomes the principle of six-by-six pairs in the Zhouyi. | (p92) In the Hetu, Qian and Kun are vertical",
+      "problem": "the closing '則之' ('takes as its model [the Hetu]') runs across the page break and is dropped, so the link between the 6x6 scheme and the Hetu is lost",
+      "severity": "minor",
+      "class": "T6"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 92,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "An accurate OCR and a faithful, well-glossed translation. The only issue is a small seam loss of '則之' across the page break between p91 and p92."
+ },
+ {
+  "book_id": "6a3cc13fec254ff6cae0aa41",
+  "slot": 6,
+  "title": "田間易學·卷五 (vol 7)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Qian Chengzhi's Tianjian Yixue, Siku Quanshu manuscript copy (欽定四庫全書 in the frame); a Yijing commentary belongs in the Universal Library Chinese set.",
+  "rights_flag": null,
+  "structure_note": "162 pages, all OCR'd, 154 translated. Only 13 printed numbers detected, so the 3 backsteps and 2 repeats are more likely misread folio marks in the frame than a broken order; the three pages here run in sequence (益 hexagram, 初九 to 六二).",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 18,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "初之不審𫝹過而後反焉",
+      "image": "初之不審念過而後反焉",
+      "problem": "念 read as a rare variant glyph; the translation then guesses 'accumulating errors'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "(none)",
+      "image": "欽定四庫全書 / 卷五 in the frame",
+      "problem": "running header not captured (captured on p.20)",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "初之不審𫝹過而後反焉",
+      "english": "If one is not watchful at the very start, accumulating errors before attempting to turn back",
+      "problem": "translates the misread glyph as 'accumulating'; the image has 念過 ('reflects on the fault only afterwards')",
+      "severity": "minor",
+      "class": "T7"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 19,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "焉能大作以厚其事乎",
+      "english": "how could it undertake great works to relieve the burdens of the people?",
+      "problem": "厚其事 is 'make its undertaking weighty'; 'relieve the burdens' is a loose gloss",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 20,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "火傳曰或益之自外來也",
+      "image": "大傳曰 (the Xiang commentary line, as 大傳 on p.19); the brush 大 has a dot that reads like 火",
+      "problem": "大 read as 火, which creates a work that does not exist",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "火傳曰",
+      "english": "The <term>Huochuan</term> <gloss>Transmission of the Fire</gloss> says",
+      "problem": "invents a commentary title, 'Transmission of the Fire', from the misread; the quoted line is the Great Commentary (象曰或益之自外來也), which p.19 renders as 'The Commentary says'",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "訂詁曰",
+      "english": "The Dinggu <gloss>Evaluations and Explanations</gloss>",
+      "problem": "the same work was glossed 'Rectifying the Commentaries' on p.18; inconsistent",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Sound Siku manuscript with clean PaddleOCR and a fluent, mostly faithful translation. The one visible slip: 大傳 read as 火傳 on p.20 becomes an invented 'Transmission of the Fire' commentary in the English."
+ },
+ {
+  "book_id": "6a40ef533a63957730efed48",
+  "slot": 7,
+  "title": "儒林外史(六): The Scholars, vol 6",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Wu Jingzi's Rulin waishi, a woodblock/lithograph edition from the Universal Library Chinese scans; ch.15 (Hong Hanxian's alchemy swindle).",
+  "rights_flag": null,
+  "structure_note": "64 pages, all OCR'd and translated; no printed numbers detected. The pages run continuously in ch.15 (leaf 五 on p.41).",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 40,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "每日燒爐傾鍛子",
+      "image": "傾銀子 (column break: 傾 / 銀子把那些黑煤)",
+      "problem": "銀 read as 鍛",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "一日憨先來請說話",
+      "english": "One day, Hanxian sent someone to invite him over",
+      "problem": "'sent someone' is added; minor",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 41,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "需林外史",
+      "image": "儒林外史 (block-centre title)",
+      "problem": "the title in the page furniture is misread",
+      "severity": "minor",
+      "class": "O11"
+     },
+     {
+      "ocr": "但此事須一居間之久",
+      "image": "居間之人",
+      "problem": "人 read as 久; the translation recovers 'intermediary'",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "the translation pane ends with '<column-break/>' then the untranslated Chinese block-centre furniture '儒林外史 / 第十五回 / 五' in the middle of the English",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 42,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "豈止數十百萬",
+      "english": "How could it yield merely hundreds of thousands?",
+      "problem": "數十百萬 is 'tens or hundreds of ten-thousands' (millions); understated",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Accurate OCR and a readable, faithful translation of the alchemy-swindle chapter. The only on-sight blemish is p.41's translation, which ends with a <column-break/> tag and raw Chinese furniture in the English."
+ },
+ {
+  "book_id": "6a40ef817f8d954eada8b5b3",
+  "slot": 8,
+  "title": "儒林外史(十二): The Scholars, vol 12",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Same Rulin waishi edition as slot 7 (Universal Library), ch.31 (Du Shaoqing, Bao Tingxi).",
+  "rights_flag": null,
+  "structure_note": "71 pages, all OCR'd and translated; no printed numbers detected. The pages run in sequence (leaves 七 and 八 visible).",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "備材外史",
+      "image": "儒林外史",
+      "problem": "block-centre title misread",
+      "severity": "minor",
+      "class": "O11"
+     },
+     {
+      "ocr": "臨行還要接他身上",
+      "image": "還要搜他身上",
+      "problem": "搜 'search' read as 接; the translation recovers 'searched their persons'",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "恐怕嘗家們",
+      "image": "管家們",
+      "problem": "管 read as 嘗",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "有人欠先君銀錢的",
+      "english": "owed my late father silver or grain",
+      "problem": "銀錢 is money, not grain",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 48,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "在家好庻",
+      "image": "在家好麼",
+      "problem": "麼 read as 庻",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "the block-centre furniture 儒林外史第三十一回 becomes a heading '# The Scholars, Chapter 31' at the foot of the English, after 'Since he has...'",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 49,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "你帶丁他進來",
+      "image": "你帶了他進來",
+      "problem": "了 read as 丁",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "玉鬍子出去",
+      "image": "王鬍子出去",
+      "problem": "the servant's name 王 read as 玉 (correct elsewhere on the page)",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "手木收下",
+      "english": "Accept his present",
+      "problem": "手本 is the visiting card / petition he sent in, not a present",
+      "severity": "minor"
+     },
+     {
+      "source": "是南京來的這位鮑兄我纔在路上遇見的",
+      "english": "Could this be that Brother Bao from Nanjing whom I just met on the road?",
+      "problem": "a statement ('This is the Brother Bao from Nanjing I just met on the road') turned into a question",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Good: a scatter of single-glyph OCR slips that the translation mostly corrects from context, and a faithful, fluent English. Nothing an expert would flag on sight beyond a stray chapter heading from the page furniture."
+ },
+ {
+  "book_id": "6aa94ea998dd95a320803cca",
+  "slot": 9,
+  "title": "Summa Angelica de casibus conscientie",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Angelo Carletti's Summa Angelica (Koberger 1498, BSB), a major casuistry manual, here the article Usura I. No collection is assigned (catalog_metadata.collections empty), so it sits on no shelf.",
+  "rights_flag": null,
+  "structure_note": "545 pages, 540 translated. Only 42 printed numbers detected, with 14 backsteps and 15 repeats: the book is foliated on rectos only, and the OCR tags header words as page numbers (p.526 <page-num>i.</page-num>, which is the 'Usura.i.' header), so the counts are noise, not a broken order. The three pages run in sequence (CCXLIX r, v, CCL r).",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 525,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "et ideo si locaret simpliciter pro fer. non poterit dari ad libellum nisi pro quinque",
+      "image": "pro sex. non poterit dari ad libellum nisi p quinq3",
+      "problem": "the rate 'sex' (six per cent) read as 'fer.'; the contrast six vs five is lost",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "ut ipse ticius constituat ipsi debitori redditus",
+      "image": "constituat se debitorem redditus",
+      "problem": "'makes himself debtor of the rent' read as 'establishes for the debtor'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "venditio a ficto terra chatba franchi",
+      "image": "venditio a ficto ⁊ a chatba franchi",
+      "problem": "the Tironian et expanded as 'terra'",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "quia in nullus est redditus",
+      "image": "q2 in re nullus est redditus",
+      "problem": "'re' dropped",
+      "severity": "minor",
+      "class": "O5"
+     },
+     {
+      "ocr": "per r r. annos",
+      "image": "p.xx.annos",
+      "problem": "numeral xx garbled (the translation recovers 'twenty')",
+      "severity": "minor",
+      "class": "O7"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "si locaret simpliciter pro fer.",
+      "english": "if one were to lease simply for profit, it could not be given by libellum except for five [percent]",
+      "problem": "'pro sex' (at six per cent) rendered 'for profit'; the rule compares a 6% simple lease with a 5% libellary one",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "venditio a ficto",
+      "english": "a \"fictitious sale\"",
+      "problem": "a ficto is the vernacular affitto (rent/lease), not 'fictitious'",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "constituat ipsi debitori redditus annualis",
+      "english": "so that Titius may establish for the debtor an annual rent",
+      "problem": "follows the misread; the source has Titius making himself debtor of the rent",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "l. ii. C. de iure emphyteutico ... c. si feneraveris ... l. si finitas",
+      "english": "Codex 4.66.2 ... (Decretals 5.19.6) ... Digest 18.1.8",
+      "problem": "modern numeric citations supplied by the model, some wrong (c. si feneraveris is in the Decretum, C.14 q.3, not Decretals 5.19.6, which is c. in civitate)",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "con cor. Sco. in. iiij. di. xv.",
+      "english": "(dropped)",
+      "problem": "the concordance with Scotus IV d.15, and 'et in d. c. conquestus', are omitted",
+      "severity": "minor",
+      "class": "T13"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 526,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "patuit. tenet clarus habenti oculos cordis",
+      "image": "patuit. tex. ē clarus habenti oculos cordis",
+      "problem": "'the text is clear' (tex. est clarus) read as 'tenet clarus'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "secundum Io. et Goffre.",
+      "image": "ꝑm Ho. ⁊ Goffre.",
+      "problem": "Ho(stiensis) read as Io.",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "tradit ei ad solum cambium Venetiarum",
+      "image": "ad forum cambij Venetiarum",
+      "problem": "forum read as solum",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "cum pacto quod teneat ipsi campsori tantum dare infra decem dies",
+      "image": "cum pacto ꝙ tenear ipi campsori tantū dare ꝗtum infra decem dies",
+      "problem": "'tenear' (I am bound) read as 'teneat', and 'quantum' dropped, so the clause loses its structure",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "<page-num>i.</page-num>",
+      "image": "'Usura.i.' running header; no page number on this verso",
+      "problem": "header word tagged as page number",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "tenet clarus habenti oculos cordis in .d.c.fi. de usuris",
+      "english": "The *Clarus* (a legal authority) holds this for those who have the eyes of the heart",
+      "problem": "invents a jurist 'Clarus' from 'the text is clear'",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "Et secundum Arch. flo. in summa",
+      "english": "according to Archidiaconus, *flo. in summa*",
+      "problem": "Arch. flo. is the Archbishop of Florence (Antoninus, Summa); misattributed to the Archdeacon (Guido de Baysio)",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "secundum Io. et Goffre.",
+      "english": "according to Johannes and Goffredus",
+      "problem": "follows the misread; the source is Hostiensis",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "cum pacto quod teneat ipsi campsori tantum dare infra decem dies ... valebunt libre grossorum venetiis",
+      "english": "with the pact that he must give to that same money-changer [the equivalent] within ten days ... The pounds of grossi in Venice are sometimes worth more",
+      "problem": "the pact (I must repay as much as the pounds of grossi will be worth in Venice ten days later) is split into two disconnected statements",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "<note>referring to the *Digest* or *Decretals* regarding usury</note>",
+      "english": "(added)",
+      "problem": "guessing notes added to citations",
+      "severity": "minor",
+      "class": "T10"
+     }
+    ],
+    "other": [
+     {
+      "note": "the translation opens with a Markdown '###' heading marker on a mid-sentence continuation ('### to diminish the principal...')",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 527,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "et tunc quicquid illius est pecunia deposita tenet omne lucrum restituere",
+      "image": "⁊ tūc q2 illicite vsus est pecunia deposita tenet̄ oē lucrū restituere",
+      "problem": "'because he used the deposited money illicitly' read as 'quicquid illius est'; the condition for restitution is lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "credens se obligatum ex causa reponens quod dicit bona fides durat",
+      "image": "credēs se obligatū excusat deponens ꝙ dicit bona fides durat",
+      "problem": "'excusat deponentem' (it excuses the depositor) garbled into 'ex causa reponens'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Mala obligatio antedictorum",
+      "image": "Mā obligatio antidotoꝝ",
+      "problem": "antidotorum (counter-gifts) read as antedictorum",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "non haberet tamen lucrum istud in illo",
+      "image": "non haberet tamen locum istud in illo",
+      "problem": "locum read as lucrum",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sicut enim non licet minuere de precio",
+      "image": "Sicut enī noluisset minuere de precio",
+      "problem": "'he would not have lowered' read as 'it is not permitted to lower'",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "det deponenti certum quid pro centenario licite recipiat",
+      "english": "may lawfully receive a certain percentage from the depositor",
+      "problem": "direction reversed: the merchant pays the depositor, and the question is whether the depositor may lawfully receive it",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "Mala obligatio antedictorum iusta parit receptionem per errorem soluti",
+      "english": "A faulty obligation of the aforementioned kind produces a just right to recover what was paid by mistake",
+      "problem": "the source says a (natural) obligation of counter-gifts makes the receipt just even of what was paid in error, so it may be kept; the English says the payer may recover it, which reverses the point",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "non haberet tamen lucrum istud in illo qui defert aliquas merces",
+      "english": "he would not have this profit in the case of one who brings goods",
+      "problem": "follows the misread; the source says 'this does not apply (non haberet locum) to one who brings goods'",
+      "severity": "moderate",
+      "class": "T7"
+     },
+     {
+      "source": "ad .l. scia. ff. ad .l. fal. ubi dicitur Precia rerum ...",
+      "english": "Thomas ... II-II, q. 77, ad 1, where it is said: \"The prices of things...\"",
+      "problem": "the quoted maxim belongs to l. pretia rerum (Digest, ad legem Falcidiam), which the translation drops, so the quotation is attributed to Aquinas",
+      "severity": "minor",
+      "class": "T13"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Usable but error-prone. On a dense, heavily abbreviated incunable the OCR misreads key abbreviations: a rate (sex → fer.), authorities (Ho. → Io., tex. est clarus → 'Clarus'), and condition clauses. The translation carries these into fluent English and adds misattributed authorities and model-supplied citation numbers. On p.527 the opening question and the antidota rule are reversed in sense."
+ },
+ {
+  "book_id": "69bd9f4bf6d63c91974800b0",
+  "slot": 10,
+  "title": "Kabbala denudata, seu, doctrina Hebraeorum transcendentalis et metaphysica atque theologica ...",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Knorr von Rosenroth's Kabbala denudata (e-rara), here the Latin version of Herrera's Porta Coelorum ('Philosophia Cabbalistica', Dissertatio II cap.1) on Adam Kadmon as the first Principiatum. Core Kabbalah, though no collection is assigned.",
+  "rights_flag": null,
+  "structure_note": "2547 pages, 2545 OCR'd, 2494/2526 translated (the field and the count disagree slightly). The 1693 printed repeats and 69 backsteps fit a multi-part work in which each treatise restarts its pagination; they do not point to a splice. Pages 36-37-38 run in order here.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 824,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "non fit nisi unum",
+      "image": "non sit nisi unum",
+      "problem": "long-s read as f",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 825,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "seque- / retur, aliud quid",
+      "image": "seque- / returque, aliud quid",
+      "problem": "enclitic -que dropped",
+      "severity": "minor",
+      "class": "O5"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "redundant notes '<note>original: \"Numen\"</note>' and '<note>original: \"Principiato\"</note>' clutter the reader text",
+      "severity": "minor",
+      "class": "T10"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 826,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "fima & pulcherrima ... sectione Brefchith",
+      "image": "ſima ... Breſchith",
+      "problem": "long-s read as f; the translation keeps the misspelt 'Brefchith' for Bereshit",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "<sig>F</sig>",
+      "image": "no signature visible at the foot (only show-through)",
+      "problem": "invented signature mark",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "Rex super Reges Regum",
+      "english": "the King above the King of Kings",
+      "problem": "the plural is lost ('King over the Kings of Kings')",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "six '<note>original: \"…\"</note>' echoes (Lorja, Sohar, Brefchith, Tikkunim, ben Jochai, Adam Kadmon) clutter the paragraph",
+      "severity": "minor",
+      "class": "T10"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clean: the OCR is near-perfect apart from long-s, and the translation is faithful. Its only blemish is repetitive '<note>original: …</note>' clutter."
+ }
+]

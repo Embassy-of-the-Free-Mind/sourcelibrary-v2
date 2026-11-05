@@ -6,7 +6,8 @@
 #   crontab (Hetzner):  30 4 1 * *  bash /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh
 #
 # It draws ~100 books (one interior page each) + 45 blinded controls with a fresh seed (the run date), builds the
-# 15-item packets, commits the run dir to branch eval/tca-<YYYY-MM> in a SEPARATE clone (never the auto-pull
+# 15-item packets, plus (#5274, from 2026-12) a Chinese strata oversample of 60 books (--zh-strata 60: translation model ×
+# transcription engine, kind of text and hand tag recorded; score.mjs weights it back so the headline keeps its estimand), commits the run dir to branch eval/tca-<YYYY-MM> in a SEPARATE clone (never the auto-pull
 # checkout) and pushes it. Stage 2 — the judge — is a claude.ai scheduled routine that fires on the 2nd, reads that
 # branch, judges the packets with Opus subagents, scores, and opens the PR.
 #
@@ -51,18 +52,20 @@ ln -sfn "$REPO/node_modules" node_modules
 [ ! -e "$OUT" ] || red "$OUT already exists on $REF — refusing to draw over another run"
 
 set -a; . "$REPO/.env.production.local"; set +a
-node scripts/eval/translation-corpus-audit/draw.mjs --out "$OUT" --seed "$SEED" --scale 0.32 --arm-quota off --extra-per-lang 4
+node scripts/eval/translation-corpus-audit/draw.mjs --out "$OUT" --seed "$SEED" --scale 0.32 --arm-quota off --extra-per-lang 4 --zh-strata 60
 node scripts/eval/translation-corpus-audit/build-packets.mjs --dir "$OUT" --seed "$SEED"
 
 # Shape check before publishing: a draw that came back thin is a failed draw, not a small month.
 MAIN=$(grep -c '"kind":"main"' "$OUT/manifest.jsonl" || true)
 CTRL=$(grep -c -E '"kind":"(swap|drop|repeat)"' "$OUT/manifest.jsonl" || true)
+ZH=$(grep -c '"kind":"zh"' "$OUT/manifest.jsonl" || true)
 [ "$MAIN" -ge 80 ] || red "only $MAIN main items drawn (expected ~100)"
 [ "$CTRL" -ge 40 ] || red "only $CTRL controls drawn (expected 45)"
+[ "$ZH" -ge 45 ] || red "only $ZH Chinese strata books drawn (expected 60)"
 
 git add "$OUT"
 git -c user.name="Hetzner" -c user.email="ops@sourcelibrary.org" commit --quiet -s \
-  -m "eval(translation-corpus-audit): monthly draw $DATE — $MAIN pages + $CTRL controls, seed $SEED (#5301)" \
+  -m "eval(translation-corpus-audit): monthly draw $DATE — $MAIN pages + $ZH Chinese strata + $CTRL controls, seed $SEED (#5301)" \
   -m "Stage 1 of 2 (Hetzner). Stage 2, the judge routine, runs on the 2nd and opens the PR. Refs #$ISSUE."
 git "${GIT_AUTH[@]}" push --quiet origin "$BRANCH"
-echo "pushed $BRANCH: $MAIN main + $CTRL controls"
+echo "pushed $BRANCH: $MAIN main + $ZH zh + $CTRL controls"

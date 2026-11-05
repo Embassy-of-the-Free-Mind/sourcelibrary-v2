@@ -76,7 +76,7 @@ const MANUSCRIPTS = [
 async function fetchIAMetadata(identifier) {
   try {
     const res = await fetch(`https://archive.org/metadata/${identifier}`, {
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
       signal: AbortSignal.timeout(15000),
     });
     if (!res.ok) return null;

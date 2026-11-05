@@ -11,7 +11,12 @@
  *
  * WHAT IT CHECKS (scripts/eval/experiments/, the schema in its README.md):
  *   - every file that HAS a header: it parses and validates (always);
- *   - every dated entry (YYYY-MM-DD-*.md) ADDED by the PR: it has a header (--pr / --base);
+ *   - every dated entry (YYYY-MM-DD-*.md) ADDED by the PR: it has a header (--pr / --base), and when it is a judged
+ *     OCR or translation result, a router_evidence field naming the router-table cells it fed, or "none — <why>" (#7263);
+ *     and, dated 2026-10-30 or later with stage ocr|translation, a defect_rates file (misleads / wrong_text per 1,000
+ *     words and fidelity per route) or "none — <why>" (#6740);
+ *     and, dated 2026-11-05 or later, `feeds:` (what the result should change), and when `status: adopted` and it
+ *     feeds something, `landed:` — a repo path that exists or a PR that is MERGED (#6553);
  *   - every dated entry: it has a header (--strict; once the backfill has landed).
  * Files without a header that were already on main are grandfathered and listed
  * as a count, until backfilled; the weekly garden (scripts/audit/experiments-garden.mjs)
@@ -26,26 +31,48 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { readExperiment, canonIds } from './lib/experiment-header.mjs';
+import { readExperiment, canonIds, routerCellIds, needsRouterEvidence, needsDefectRates, needsFeeds, needsLanded, landedPrs, FEEDS } from './lib/experiment-header.mjs';
 
 const DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'experiments');
 const REL = 'scripts/eval/experiments/';
 const DATED = /^\d{4}-\d{2}-\d{2}-[a-z0-9][a-z0-9-]*\.md$/;
 
 /** Lint a directory. `added` = names that must carry a header; strict = all dated entries must. */
-export function lintExperiments(dir = DIR, { added = [], strict = false, canons = canonIds() } = {}) {
+export function lintExperiments(dir = DIR, { added = [], strict = false, canons = canonIds(), routerCells = routerCellIds(), prState = null } = {}) {
   const names = fs.readdirSync(dir).filter((n) => n.endsWith('.md') && n !== 'README.md').sort();
   const exists = (n) => names.includes(n);
   const errors = [];
   const missing = [];
   for (const n of names) {
-    const { header, problems } = readExperiment(fs.readFileSync(path.join(dir, n), 'utf8'), { name: n, exists, canons });
+    const { header, problems } = readExperiment(fs.readFileSync(path.join(dir, n), 'utf8'), { name: n, exists, canons, routerCells });
     for (const p of problems) errors.push(`${n}: ${p}`);
+    if (header && added.includes(n) && needsRouterEvidence(header) && header.router_evidence == null) {
+      errors.push(`${n}: a judged ${header.stage} result needs router_evidence: [<cell ids>] — add its verdicts as evidence in scripts/eval/estimator/router-table/rules.json and rebuild (build.py) — or router_evidence: "none — <why>" (#7263)`);
+    }
+    if (header && added.includes(n) && needsDefectRates(header, n) && header.defect_rates == null) {
+      errors.push(`${n}: an ${header.stage} result from 2026-10-30 on needs defect_rates: <repo path> — the misleads and wrong_text per 1,000 words and fidelity per route (scripts/eval/route-judge-6740/defect-rate.py), decided against the live route (eval-design.md §10.3; text in scripts/eval/route-judge-6740/results/defect-rate-2026-10-30/eval-design-10.3.md) — or defect_rates: "none — <why>"`);
+    }
+    if (header && added.includes(n) && needsFeeds(n)) {
+      if (header.feeds == null) errors.push(`${n}: a new entry needs feeds: one of ${FEEDS.join(' | ')} — what the result should change if taken (#6553)`);
+      else if (needsLanded(header) && header.landed == null) errors.push(`${n}: an adopted result that feeds ${header.feeds} needs landed: <repo path> or "PR #<n>" (merged) — where the change is, so a reader can check it happened (#6553)`);
+    }
+    if (header && added.includes(n) && prState) {
+      for (const pr of landedPrs(header)) {
+        const st = prState(pr);
+        if (st && st !== 'MERGED') errors.push(`${n}: landed PR #${pr} is ${st}, not merged — land the change first, or point landed: at the path in this PR`);
+      }
+    }
     if (header || problems.length || !DATED.test(n)) continue;
     if (strict || added.includes(n)) errors.push(`${n}: no header — a new entry starts with the front matter in ${REL}README.md`);
     else missing.push(n);
   }
   return { errors, grandfathered: missing, files: names.length };
+}
+
+/** A PR's state via gh (MERGED | OPEN | CLOSED), or null when gh cannot say (then the check is skipped, with a note). */
+function ghPrState(pr) {
+  try { return execFileSync('gh', ['pr', 'view', String(pr), '--json', 'state', '-q', '.state'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() || null; }
+  catch { console.log(`experiments-lint: could not read PR #${pr} with gh; its merged state is not checked`); return null; }
 }
 
 function addedByPr(pr) {
@@ -62,7 +89,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const argv = process.argv.slice(2);
   const val = (f) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : null; };
   const added = val('--pr') ? addedByPr(val('--pr')) : val('--base') ? addedSince(val('--base')) : [];
-  const { errors, grandfathered, files } = lintExperiments(DIR, { added, strict: argv.includes('--strict') });
+  const { errors, grandfathered, files } = lintExperiments(DIR, { added, strict: argv.includes('--strict'), prState: added.length ? ghPrState : null });
   for (const e of errors) console.error(`experiments-lint: ${e}`);
   if (added.length) console.log(`${added.length} new file(s) checked for a header: ${added.join(', ')}`);
   if (grandfathered.length) console.log(`${grandfathered.length} older entries have no header yet (grandfathered until backfilled)`);

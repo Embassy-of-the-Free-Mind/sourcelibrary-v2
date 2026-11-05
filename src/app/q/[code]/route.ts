@@ -34,7 +34,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     const lang = /^[a-z]{2,3}$/.test(requested) && requested !== 'en' ? requested : null;
 
     const db = await getReadDb();
-    const [page, book] = await Promise.all([
+    const [found, redirect, book] = await Promise.all([
       // Only `page.id` is read below — the redirect target and the visit
       // log. The whole page doc (text, thumbnails, detections) was being
       // shipped for one string on every shortlink hit (#5184).
@@ -42,6 +42,13 @@ export async function GET(request: NextRequest, context: RouteContext) {
         { book_id: bookId, page_number: pageNumber },
         { projection: { _id: 0, id: 1 } },
       ) as unknown as Promise<Pick<Page, 'id'> | null>,
+      // A code minted before its book's spreads were split into leaves (#7605) names an OLD page number, which now
+      // belongs to a different leaf. split-swap.mjs writes a row for each known code: it opens the old spread's first
+      // leaf instead. One indexed lookup by code, run alongside the page lookup.
+      db.collection('shortlink_redirects').findOne(
+        { code },
+        { projection: { _id: 0, book_id: 1, page_id: 1 } },
+      ) as unknown as Promise<{ book_id?: string; page_id?: string } | null>,
       db.collection('books').findOne(
         { id: bookId },
         // The counter decides whether the localized twin exists. Sending a
@@ -51,6 +58,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
         { projection: { _id: 0, id: 1, slug: 1, ...(lang ? { [`pages_translated_${lang}`]: 1 } : {}) } },
       ),
     ]);
+    const page: Pick<Page, 'id'> | null = redirect?.page_id && redirect.book_id === bookId ? { id: redirect.page_id } : found;
     const bookPath = (book?.slug as string) || bookId;
     const prefix = lang && Number(book?.[`pages_translated_${lang}`] || 0) > 0 ? `/${lang}` : '';
 

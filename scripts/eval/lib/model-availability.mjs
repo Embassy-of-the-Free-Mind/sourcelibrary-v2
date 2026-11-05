@@ -48,7 +48,7 @@ export const agyHas = model => AGY.some(m => m === model || m.replace(/-(low|med
 const flat = s => s.replace(/\s+/g, ' ');
 export const SRC = {
   tesseract: { source: '.claude/docs/ocr-lane-decision-tree.md', quote: '**No Tesseract**, as an engine or as a free reference (Derek)' },
-  claude: { source: 'scripts/lib/agy-cli.mjs', quote: 'Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy' },
+  claude: { source: 'scripts/lib/agy-cli.mjs', quote: 'Claude runs through the Claude subscription (`claude -p`, subagents), and through agy only on an account whose Gemini weekly pool reads 0' },
   geminiApi: { source: 'scripts/batch/cli-ocr.mjs', quote: 'Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead' },
   paidApi: { source: 'scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md', quote: 'spend rule of 2026-10-08: only `gemini-3.1-flash-lite` on the paid API' },
   ocrLane: { source: 'scripts/lib/ocr-routing.mjs', quote: 'The first exception to OCR_LITE_ONLY: Greek reads on flash (#5575)' },

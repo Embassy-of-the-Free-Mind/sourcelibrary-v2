@@ -1,0 +1,530 @@
+[
+  {
+    "book_id": "69f33a41876dd827cbc57c62",
+    "slot": 48,
+    "title": "[38 Lamentations]",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A polyphonic choirbook of Lamentations settings (sacred music). It has no tradition or collection, and it sits outside the library's esoteric and early-science core.",
+    "rights_flag": null,
+    "structure_note": "Every 'page' is a contact strip about 2000x222 px holding six photographed choirbook openings side by side, so no single leaf can be read. The 38 records are contact sheets, not leaves (I7). In page 20's strip the second and third openings are the same photograph (a duplicate frame). The packet gives no backstep or repeat counts. The catalogue says 1559, but the OCR on page 29 claims a '17th-century Italianate hand'.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Incipit Lamentatio Ieremiae Prophetae. Aleph. Quomodo sedet sola civitas plena populo ... Vau. Et egressus est a filia Sion omnis decor eius.",
+            "image": "six thumbnail-sized choirbook openings; the underlay text is illegible at this resolution",
+            "problem": "Textbook Vulgate Lamentations 1:1–6 supplied as 'Folio 1–6'. The text cannot be read from the image, so it is a canonical-text substitution, not a transcription.",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Aleph. Quomodo sedet sola civitas ...",
+            "english": "How the city sits solitary that was full of people ...",
+            "problem": "A faithful translation of invented text. Nothing in it is a translation of what this image shows.",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented apparatus: '**Folio 1:** … **Folio 6:**' headings, plus a heading 'Transcription of Liturgical Text (Representative Segments)' that tells the reader nothing is actually transcribed",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "The page is a strip of six openings, not one leaf",
+            "severity": "serious",
+            "class": "I7"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 20,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Incipit Lamentatio Ieremiae Prophetae / Aleph. Quomodo sedet ... / Beth. Plorans ploravit ... / Gimel. Migravit Iuda ...",
+            "image": "six openings, illegible; some headings ('...Sabbato...'?) cannot be read",
+            "problem": "The same three Vulgate verses as pages 10 and 29, presented as 'representative text segments'. They are not read from this image.",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Aleph. Quomodo sedet sola civitas ...",
+            "english": "How the city sits solitary ...",
+            "problem": "A translation of substituted canonical text, not of the page",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "other": [
+          {
+            "note": "The reader pane is mostly the model's own description ('The manuscript contains musical settings…', 'Transcription of representative text segments:'), with <note>/<summary>/<keywords> wrappers",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "note": "Openings 2 and 3 of the strip are the same frame (a duplicate photograph inside the composite)",
+            "severity": "moderate",
+            "class": "I2"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 29,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Incipit Lamentatio ... Zain. Recordata est Ierusalem dierum afflictionis suae ...",
+            "image": "six openings, illegible at this size",
+            "problem": "Vulgate Lamentations 1:1–7 (skipping He) recited as if read from the strip. The same incipit appears on all three sampled pages, as it would if each were the opening of the book.",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "Beth. Plorans ploravit in nocte ...",
+            "english": "She weeps bitterly in the night ...",
+            "problem": "A translation of substituted text",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "other": [
+          {
+            "note": "The warning invents a date for the hand ('17th-century Italianate hand'), against the catalogue's 1559",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Not readable as a book: each record is a strip of six openings that cannot be read at this size. The OCR fills every page with the same opening verses of the Vulgate Lamentations, and the translation translates them. These pages should be held and withdrawn, and the record re-imaged leaf by leaf."
+  },
+  {
+    "book_id": "69de0ce780210ba13d79f8b7",
+    "slot": 86,
+    "title": "Erotopaegnion sive Priapeia veterum et recentiorum",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 1798 Paris anthology of ancient and neo-Latin priapic verse. The only collections are Internet Archive tags (bostonpubliclibrary, americana); 'americana' does not fit, and it has no place in the library's traditions.",
+    "rights_flag": null,
+    "structure_note": "224 pages, 224 with OCR, 220 translated. Printed page numbers on the sample (27, 80, 133) are consistent with the record order. Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Hæc eadem socium tenerâ spoliavit amicâ, quæque erat Æacidæ maluit esse suam.",
+            "english": "This same woman robbed her companion of her tender mistress, and preferred that she who was the Aeacidae's should be her own.",
+            "problem": "Briseis episode garbled: 'this same [love/lust] robbed the comrade of his tender girl and wanted the girl who was Achilles' to be its own'. The English invents a woman stealing a mistress.",
+            "severity": "moderate"
+          },
+          {
+            "source": "Nobilis hinc natâ nempè incipit Ilias irâ",
+            "english": "From this noble girl, the Iliad naturally begins",
+            "problem": "'irâ' (anger) dropped and 'natâ' read as 'girl'. Should be 'the noble Iliad begins with the wrath born of this'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "Ille Pelethroniam cecinit miserabile carmen ad citharam",
+            "english": "He sang a miserable song of Pelethronia to the cithara",
+            "problem": "Pelethroniam goes with citharam (the Thessalian lyre), not with the song",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 111,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "crine non tonso capitis verendi",
+            "english": "with the unclipped hair of your shameful part",
+            "problem": "'capitis verendi' is 'of your venerable head'. 'Shameful part' is a mistranslation that sexualises the line.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "<italic>Luxorius.</italic> / <italic>Idem.</italic> tags in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 166,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Hæc ista querna, sexquipedalis mentula",
+            "english": "This oak-wood, six-foot-long penis",
+            "problem": "'sesquipedalis' means a foot and a half, not six feet. The number is wrong.",
+            "severity": "moderate"
+          },
+          {
+            "source": "quid me canatim versibus mordes tuis?",
+            "english": "why do you bite me with your singing verses?",
+            "problem": "'canatim' means 'like a dog' (doggishly biting). Read as 'singing', the insult is lost.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->*Ælius Julius Crottus.*<-' arrows and a <header>RECENTIORUM.</header> tag in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Excellent OCR. The translation is mostly right but makes recurring moderate slips of sense (Briseis garbled, 'sesquipedalis' as six feet, 'canatim' as singing). The shelf placement is questionable."
+  },
+  {
+    "book_id": "69f334a7876dd827cbc4d248",
+    "slot": 16,
+    "title": "M. T. Ciceronis officiorum ad Marcum Ciceronem filium",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century Italian humanist manuscript of De officiis with rubricated marginal notes, a classical source of early modern learning. No tradition or collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "274 pages, 272 with OCR, 265 translated: a handful of leaves have no translation. The <page-num> values '1' and 'L.' come from a cross or monogram mark at the head of each leaf, not page numbers. They are mis-tagged furniture and harmless.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>1</page-num>",
+            "image": "a red cross/T-shaped mark above the text block",
+            "problem": "A head mark tagged as page number 1",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "alii studio si optimi",
+            "image": "studio- / si (line break)",
+            "problem": "'studiosi' split across the line break",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<meta> image description of the initial shown in the translation pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 134,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Scipionis sub <unclear>Iuba</unclear> et Catonis in africa. sic sex. pompeii",
+            "image": "Scipiois Iube et Catonis in afri ca. Itē Sex. pompeii",
+            "problem": "'Item Sex(ti) Pompeii' read as 'sic sex.', and a 'sub' invented. The translation renders Sextus Pompeius as 'thus six'.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "res benemeritos",
+            "image": "benemeritoꝝ (abbreviation for -orum)",
+            "problem": "Abbreviation expanded wrongly (benemeritorum)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ut proxime trium: saepe multorum clades imperatorum",
+            "english": "as recently the slaughter of three many commanders",
+            "problem": "Garbled. Should be 'as recently of three, and often of many commanders, the disasters'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "Trium exercituum ... sic sex. pompeii et Gnaei pompeii in hispania",
+            "english": "The three armies ... thus six. Pompey's and Gnaeus Pompey's in Spain",
+            "problem": "Sextus Pompeius becomes 'six' (carried over from the OCR misreading)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 200,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "hoc ipsum sensisse quod dixerit solere modo non oportere etiam",
+            "english": "felt the same thing—that they should not just be accustomed to it, but that it is not even fitting",
+            "problem": "The point is muddled. Cicero means 'by \"are accustomed\" he meant only that they do, not that they ought to'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "Turpe inter honestum et utile facere comparationem",
+            "english": "Shameful comparison between the honest and the useful",
+            "problem": "The marginal note should read 'it is shameful to make a comparison…'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A handsome humanist manuscript with strong OCR, including the rubricated marginalia. The translation is generally faithful, with occasional moderate garbles (Sextus Pompeius as 'six', the 'trium … multorum' clause). Showable."
+  },
+  {
+    "book_id": "6a4a37637517ab961c03347e",
+    "slot": 99,
+    "title": "Magnificat cum quatuor vocibus",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Morales's Magnificat is liturgical polyphony, outside the core traditions. More to the point, the record does not hold the music at all (see structure).",
+    "rights_flag": null,
+    "structure_note": "All three sampled images are BSB watermark radiographs: backlit or beta-radiograph shots of paper with a scale ruler, showing a crowned 'A' over a cross-and-8 device, a second crowned mark, and a third mark at the foot. They do not show the printed partbook. The 18-page record looks like the watermark documentation for bsb00159584, catalogued and published as the Magnificat edition (I7). All 18 pages carry a 'translation' that is only image notes.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<script>handwritten</script> ... ghost-text ... Handwritten [Early Modern cursive]",
+            "image": "show-through of printed text/music on a radiograph",
+            "problem": "The script self-tag is wrong. The faint show-through is print, not handwriting.",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The translation pane holds only <note> image descriptions and an <unclear> placeholder. A watermark plate is presented as a translated page.",
+            "severity": "moderate",
+            "class": "I7"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "appears to be a stylized bull's head or a similar heraldic crest",
+            "image": "a faint mark with a crown-like top over an oval/circle",
+            "problem": "The identification of the watermark motif is uncertain. It may be a crown over a circle rather than a bull's head.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "A translation of a watermark plate, made of image notes",
+            "severity": "minor",
+            "class": "I7"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "a dark, thick-lined drawing of an animal, possibly a bear or a boar ... palimpsest, multispectral scan",
+            "image": "a watermark (wire-line figure) near the foot of a radiographed sheet, with a ruler",
+            "problem": "A paper watermark is described as an ink drawing on a palimpsest. That is invented codicology a reader would take at face value.",
+            "severity": "moderate",
+            "class": "O14"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "'palimpsest' and 'multispectral scan' are claimed as manuscript facts that are not true of this image",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A reader who opens 'Magnificat cum quatuor vocibus' gets watermark radiographs, not the music. The record's identity or format is wrong, and the page notes add invented codicology (a 'palimpsest' with a 'drawing'). It should be relinked to the actual partbook scans or hidden."
+  },
+  {
+    "book_id": "6a4ee20ad5c834174f8160f6",
+    "slot": 74,
+    "title": "Corona Paschalis ... Autore Georgio Profelto Lipa-Bohemo",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 1609 Lutheran school Easter poem (a garland of flowers allegorised as graces, with German flower-names in the margin). Devotional neo-Latin verse with no tradition or collection assigned; adjacent at best.",
+    "rights_flag": null,
+    "structure_note": "12 pages, 12 with OCR, 11 translated. The sampled catchwords (Ut, Diruta, Germinat) and signature B are consistent. Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Quam vetito fatu primus abegit homo",
+            "image": "Quam vetito fætu primus abegit homo",
+            "problem": "'fætu' (forbidden fruit) misread as 'fatu'. The translation then says 'by a forbidden word'.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Suspice: ter gratus suspice",
+            "image": "Suspice: ter gratus suscipe",
+            "problem": "The second verb is normalised to match the first",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Quos ego: sed fas est iræ compescere fluctus",
+            "english": "I have: but it is right to curb the waves of wrath",
+            "problem": "Virgil's aposiopesis 'Whom I—!' (the threat broken off) is rendered as 'I have'",
+            "severity": "moderate"
+          },
+          {
+            "source": "Nec me pœniteat, dixit, finxisse potenti Dextra homines, pravique mala semper agunt?",
+            "english": "And did he say, \"It does not repent me to have fashioned men...?\"",
+            "problem": "The rhetorical 'Should I not repent of having made men, since they always do evil?' (after Gen 6:6) comes out as a confused denial",
+            "severity": "moderate"
+          },
+          {
+            "source": "<margin> Das erste sätzlein Gottes Gnad.",
+            "english": "1. The first little sentence, God's Grace.",
+            "problem": "A '1.' is added that is not on the page, and 'sätzlein' (a little plant or slip) is read as 'sentence'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<script>handwritten</script> <warning>Handwritten [humanist cursive script]</warning>",
+            "image": "printed italic type in a ruled border",
+            "problem": "The script self-tag is wrong: this is print",
+            "severity": "minor",
+            "class": "O16"
+          },
+          {
+            "ocr": "sed janua pacis amica",
+            "image": "sed janua pacis amicæ",
+            "problem": "Ending dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "tuus en inimicus amicus Est meus: hic animi portio summa mei est",
+            "english": "behold, your enemy is the friend Of my soul",
+            "problem": "Should be 'behold, your enemy [Christ] is my friend; he is the greatest part of my soul'. The line is rephrased loosely.",
+            "severity": "minor"
+          },
+          {
+            "source": "5. Wolgemuth.",
+            "english": "5. Noble-mindedness.",
+            "problem": "'Wolgemuth' is good cheer (also a flower name, wild marjoram), not noble-mindedness",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Corpore quod tenuit parto, divina, triumpho, Progenies, teneant corpora nostra, decus.",
+            "english": "What the divine offspring held in the triumph that was born, May our bodies hold, a beauty.",
+            "problem": "Close to unintelligible English. Should be 'the glory which the divine Offspring held in the body won by triumph, may our bodies hold'.",
+            "severity": "minor"
+          },
+          {
+            "source": "10. Tausendschön.",
+            "english": "10. Thousand beauty.",
+            "problem": "A flower name (amaranth or daisy) rendered word for word",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Centring arrows '->…<-' around every pentameter in both the OCR and the translation shown to the reader",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean OCR of an attractive italic Easter garland poem, with one meaning-changing misread (fætu as fatu). The translation is serviceable but stumbles on idiom (Quos ego, Nec me poeniteat), and the arrow markup shows on screen."
+  }
+]

@@ -1,0 +1,281 @@
+{
+ "book_id": "699376d2b0a84a5763961a97",
+ "model": "claude-opus-5-5",
+ "words": 295,
+ "brief": "## 1. The work\n\nA volume of a critical edition of Plato's dialogues, edited by Ioannes Burnet. It contains the Greek base text (Attic prose dialogue, conversational register) and editorial matter in scholarly Latin: a preface, a table of dialogues, a list of manuscript sigla, and a terse critical apparatus at the foot of each text page. There is no commentary or translation.\n\n## 2. Glossary\n\nδικαιοσύνη — justice\nδίκαιος — just\nἀδικία — injustice\nἀρετή — virtue\nτέχνη — art\nἐπιστήμη — knowledge\nδόξα — opinion\nὁμόνοια — concord\nὁμοδοξία — agreement in opinion\nφιλία — friendship\nψυχή — soul\nσῶμα — body\nἐπιμέλεια — care\nπροτροπή — exhortation\nπροτρέπω — exhort\nπροτρεπτικός — exhortatory\nἔργον — work\nἰατρική — medicine\nγυμναστική — gymnastics\nπολιτική — statesmanship\nκυβερνητική — steersmanship\nπαιδεία — education\nσυμφέρον — advantageous\nὠφέλιμος — beneficial\nλυσιτελοῦν — profitable\nἀκούσιος — involuntary\ncodex — manuscript\nlectio — reading\nrecensio — recension\ndiorthota — corrector\n\n## 3. Layout\n\n- **Main text:** Greek dialogue. Marginal Stephanus page numbers, section letters (a–e) and line numbers should be kept in square brackets. Speaker labels (ΣΩ., ΚΛΕΙ.) become SOCRATES, CLITOPHON. Running heads (ΠΛΑΤΩΝΟΣ / dialogue title) are omitted.\n- **Critical apparatus:** Keep it as notes. Keep the Greek readings and the sigla (A, A², F, D, M, a, f) unchanged. Translate the Latin abbreviations: om. = omits, add. = adds, secl. = brackets, in marg. = in the margin, s. v./suprascr. = written above.\n\n## 4. Names\n\nΣωκράτης — Socrates\nΚλειτοφῶν — Clitophon\nΛυσίας — Lysias\nΘρασύμαχος — Thrasymachus\nΓλαύκων — Glaucon\nἈδείμαντος — Adeimantus\nΠολέμαρχος — Polemarchus\nΚέφαλος — Cephalus\nΝικήρατος — Niceratus\nΕὐθύδημος — Euthydemus\nΠειραιεύς — Piraeus\nIoannes Burnet — John Burnet\nBekkerus — Bekker\nSchanzius — Schanz\nStobaeus; Proclus — Stobaeus; Proclus",
+ "key": [
+  {
+   "source": "δικαιοσύνη",
+   "forms": [
+    "δικαιοσύνης",
+    "δικαιοσύνην"
+   ],
+   "english": "justice"
+  },
+  {
+   "source": "δίκαιος",
+   "forms": [
+    "δίκαιος",
+    "δικαίους",
+    "δικαίως"
+   ],
+   "english": "just"
+  },
+  {
+   "source": "ἀδικία",
+   "forms": [
+    "ἀδικία"
+   ],
+   "english": "injustice"
+  },
+  {
+   "source": "ἀρετή",
+   "forms": [
+    "ἀρετῆς",
+    "ἀρετήν",
+    "ἀρετῇ",
+    "ἀρετὴ"
+   ],
+   "english": "virtue"
+  },
+  {
+   "source": "τέχνη",
+   "forms": [
+    "τέχνη",
+    "τέχνης",
+    "τέχνην",
+    "τέχνας",
+    "τεχνῶν",
+    "τέχναι"
+   ],
+   "english": "art"
+  },
+  {
+   "source": "ἐπιστήμη",
+   "forms": [
+    "ἐπιστήμην"
+   ],
+   "english": "knowledge"
+  },
+  {
+   "source": "δόξα",
+   "forms": [
+    "δόξαν"
+   ],
+   "english": "opinion"
+  },
+  {
+   "source": "ὁμόνοια",
+   "forms": [
+    "ὁμόνοιαν",
+    "ὁμόνοιά"
+   ],
+   "english": "concord"
+  },
+  {
+   "source": "ὁμοδοξία",
+   "forms": [
+    "ὁμοδοξίαν",
+    "ὁμοδοξίαι"
+   ],
+   "english": "agreement in opinion"
+  },
+  {
+   "source": "φιλία",
+   "forms": [
+    "φιλίαν",
+    "φιλίας"
+   ],
+   "english": "friendship"
+  },
+  {
+   "source": "ψυχή",
+   "forms": [
+    "ψυχῆς",
+    "ψυχῇ"
+   ],
+   "english": "soul"
+  },
+  {
+   "source": "σῶμα",
+   "forms": [
+    "σῶμα",
+    "σώματα",
+    "σώματι",
+    "σώματος"
+   ],
+   "english": "body"
+  },
+  {
+   "source": "ἐπιμέλεια",
+   "forms": [
+    "ἐπιμέλειαν"
+   ],
+   "english": "care"
+  },
+  {
+   "source": "προτροπή",
+   "forms": [
+    "προτροπὴν"
+   ],
+   "english": "exhortation"
+  },
+  {
+   "source": "προτρέπω",
+   "forms": [
+    "προτρέπειν",
+    "προτρέποντα",
+    "προτετραμμένους",
+    "προτετραμμένος",
+    "προτετραμμένῳ",
+    "προύτρεπεν"
+   ],
+   "english": "exhort"
+  },
+  {
+   "source": "προτρεπτικός",
+   "forms": [
+    "προτρεπτικωτάτους",
+    "προτρεπτικῶν",
+    "προτρεπτικῷ"
+   ],
+   "english": "exhortatory"
+  },
+  {
+   "source": "ἔργον",
+   "forms": [
+    "ἔργον"
+   ],
+   "english": "work"
+  },
+  {
+   "source": "ἰατρική",
+   "forms": [
+    "ἰατρική",
+    "ἰατρικὴ"
+   ],
+   "english": "medicine"
+  },
+  {
+   "source": "γυμναστική",
+   "forms": [
+    "γυμναστικὴν",
+    "γυμναστικὴ",
+    "γυμναστικῆς"
+   ],
+   "english": "gymnastics"
+  },
+  {
+   "source": "πολιτική",
+   "forms": [
+    "πολιτικήν"
+   ],
+   "english": "statesmanship"
+  },
+  {
+   "source": "κυβερνητική",
+   "forms": [
+    "κυβερνητικήν"
+   ],
+   "english": "steersmanship"
+  },
+  {
+   "source": "παιδεία",
+   "forms": [
+    "παιδείαν"
+   ],
+   "english": "education"
+  },
+  {
+   "source": "συμφέρον",
+   "forms": [
+    "συμφέρον"
+   ],
+   "english": "advantageous"
+  },
+  {
+   "source": "ὠφέλιμος",
+   "forms": [
+    "ὠφέλιμον",
+    "ὠφέλιμα",
+    "ὠφελιμωτάτους"
+   ],
+   "english": "beneficial"
+  },
+  {
+   "source": "λυσιτελοῦν",
+   "forms": [
+    "λυσιτελοῦν",
+    "λυσιτελοῦντα"
+   ],
+   "english": "profitable"
+  },
+  {
+   "source": "ἀκούσιος",
+   "forms": [
+    "ἀκούσιον"
+   ],
+   "english": "involuntary"
+  },
+  {
+   "source": "codex",
+   "forms": [
+    "codex",
+    "codicem",
+    "codicis",
+    "codices",
+    "codicum",
+    "cod."
+   ],
+   "english": "manuscript"
+  },
+  {
+   "source": "lectio",
+   "forms": [
+    "lectiones",
+    "lectionum",
+    "lectionis"
+   ],
+   "english": "reading"
+  },
+  {
+   "source": "recensio",
+   "forms": [
+    "recensio",
+    "recensionem",
+    "recensionis"
+   ],
+   "english": "recension"
+  },
+  {
+   "source": "diorthota",
+   "forms": [
+    "diorthota",
+    "diorthotae"
+   ],
+   "english": "corrector"
+  }
+ ],
+ "input_pages": [
+  7,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  27,
+  28
+ ]
+}

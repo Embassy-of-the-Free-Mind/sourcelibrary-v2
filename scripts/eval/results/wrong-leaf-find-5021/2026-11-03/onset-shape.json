@@ -1,0 +1,187 @@
+{
+ "onset_vs_same_groups": {
+  "source has an in-page rule (---)": {
+   "onset": [
+    0.132,
+    0.104,
+    0.166,
+    60,
+    454
+   ],
+   "other_unlabelled_pages_same_groups": [
+    0.1,
+    0.085,
+    0.117,
+    132,
+    1324
+   ]
+  },
+  "source < 600 chars": {
+   "onset": [
+    0.009,
+    0.003,
+    0.022,
+    4,
+    454
+   ],
+   "other_unlabelled_pages_same_groups": [
+    0.007,
+    0.004,
+    0.013,
+    9,
+    1324
+   ]
+  },
+  "odd page type (not text)": {
+   "onset": [
+    0.015,
+    0.007,
+    0.031,
+    7,
+    454
+   ],
+   "other_unlabelled_pages_same_groups": [
+    0.018,
+    0.012,
+    0.027,
+    24,
+    1324
+   ]
+  },
+  "English ends with ... or \u2026": {
+   "onset": [
+    0.088,
+    0.065,
+    0.118,
+    40,
+    454
+   ],
+   "other_unlabelled_pages_same_groups": [
+    0.069,
+    0.056,
+    0.084,
+    91,
+    1324
+   ]
+  },
+  "English starts with ... or \u2026": {
+   "onset": [
+    0.024,
+    0.014,
+    0.043,
+    11,
+    454
+   ],
+   "other_unlabelled_pages_same_groups": [
+    0.026,
+    0.018,
+    0.036,
+    34,
+    1324
+   ]
+  }
+ },
+ "first_next_position_in_group": {
+  "0": 93,
+  "1": 111,
+  "2": 130,
+  "3": 99,
+  "4": 60,
+  "5": 41,
+  "6": 13
+ },
+ "group_size_of_slides": {
+  "1": 19,
+  "2": 38,
+  "3": 26,
+  "4": 78,
+  "5": 68,
+  "6": 38,
+  "7": 35,
+  "8": 245
+ },
+ "slide_runs_to_group_end": {
+  "runs to end": 428,
+  "stops inside": 26
+ },
+ "labelled_pos": {
+  "0": {
+   "own": 119,
+   "shift": 113
+  },
+  "1": {
+   "own": 55,
+   "shift": 208
+  },
+  "2": {
+   "own": 47,
+   "shift": 279
+  },
+  "3": {
+   "own": 36,
+   "shift": 303
+  },
+  "4": {
+   "own": 28,
+   "shift": 241
+  },
+  "5": {
+   "own": 18,
+   "shift": 218
+  },
+  "6": {
+   "own": 13,
+   "shift": 160
+  },
+  "7": {
+   "own": 10,
+   "shift": 5
+  },
+  "8": {
+   "own": 15,
+   "shift": 0
+  }
+ },
+ "shape": {
+  "onset_log_len_resid_quartiles": [
+   0.26,
+   0.59,
+   0.68
+  ],
+  "n_onset": 454,
+  "earlier_pages_resid_quartiles": [
+   -0.07,
+   0.02,
+   0.16
+  ],
+  "n_earlier": 737,
+  "onset_share_resid_gt_0.4": 0.707,
+  "earlier_share_resid_gt_0.4": 0.145,
+  "opus_on_onset_page": {
+   "null": 367,
+   "mixed": 75,
+   "own": 10,
+   "other": 2
+  },
+  "opus_on_last_page_of_slid_group": {
+   "next": 132,
+   "null": 359,
+   "other": 18,
+   "own": 1
+  }
+ },
+ "after_group": {
+  "clean | next page in a group | 0-60 s later": 41165,
+  "clean | next page in a group | other time": 10287,
+  "clean | next page written alone | 0-60 s later": 1989,
+  "clean | next page written alone | other time": 2822,
+  "other | next page in a group | 0-60 s later": 369,
+  "other | next page in a group | other time": 37,
+  "other | next page written alone | 0-60 s later": 22,
+  "other | next page written alone | other time": 44,
+  "slid | next page in a group | 0-60 s later": 6,
+  "slid | next page in a group | other time": 14,
+  "slid | next page written alone | 0-60 s later": 49,
+  "slid | next page written alone | other time": 76
+ }
+}

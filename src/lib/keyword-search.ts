@@ -36,6 +36,7 @@
 import type { Db, Document } from 'mongodb';
 import { NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { STOPWORDS } from '@/lib/search/page-rollup';
+import { isRepeatCapture } from '@/lib/page-counts';
 
 export type KeywordSearchMode = 'off' | 'shadow' | 'serve';
 
@@ -305,13 +306,13 @@ export function synthesizeHighlights(page: { translation?: { data?: string }; oc
  * The service's rows as the Atlas lane's page documents, in service order:
  * one `find` by page id (the `id` index), text and page number from Mongo.
  * A page gone since the last sync, renumbered to ≤ 0, retyped as non-content,
- * or moved to another book is dropped — the read-side check the delta relies
+ * moved to another book, or hidden as a repeat capture is dropped — the read-side check the delta relies
  * on (sync-delta.mjs). Throws on a Mongo error, so the caller falls back.
  */
 export async function hydrateKeywordRows(db: Db, rows: KeywordServiceRow[], words: { query: string; variants?: string[] }, maxTimeMS = 5000): Promise<Document[]> {
   if (rows.length === 0) return [];
   const docs = await db.collection('pages')
-    .find({ id: { $in: rows.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, 'translation.data': 1, 'ocr.data': 1 } })
+    .find({ id: { $in: rows.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, repeat_of: 1, 'translation.data': 1, 'ocr.data': 1 } })
     .maxTimeMS(Math.max(1, Math.round(maxTimeMS)))
     .toArray();
   const byId = new Map(docs.map((d) => [d.id as string, d]));
@@ -321,6 +322,7 @@ export async function hydrateKeywordRows(db: Db, rows: KeywordServiceRow[], word
     const d = byId.get(r.page_id);
     if (!d || d.book_id !== r.book_id || !(Number(d.page_number) > 0)) continue;
     if (nonContent.has(d.page_type as string)) continue;
+    if (isRepeatCapture(d)) continue; // its leaf is a hit already (#5056)
     const hl = synthesizeHighlights(d as { translation?: { data?: string }; ocr?: { data?: string } }, r.src === 'variant' ? [...(words.variants || []), words.query] : [words.query]);
     out.push({ id: d.id, book_id: d.book_id, page_number: d.page_number, translation: d.translation, ocr: d.ocr, searchScore: r.score ?? 0, ...(hl ? { highlights: hl } : {}) });
   }

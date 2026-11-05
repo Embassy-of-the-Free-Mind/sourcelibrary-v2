@@ -100,23 +100,23 @@ try {
   const cursor = db.collection('books').find(
     { ...LIVE, $or: [{ summary: anyHit }, { 'summary.data': anyHit }, { description: anyHit }, { 'ai_metadata.description': anyHit }, { 'reading_summary.overview': anyHit }] },
     { projection: { id: 1, summary: 1, description: 1, 'ai_metadata.description': 1, 'reading_summary.overview': 1 } },
-  );
+  ).batchSize(1000);
   for await (const b of cursor) for (const [f, get] of BOOK_FIELDS) tally(stats, `books.${f}`, get(b), `book/${b.id || b._id}`);
   for (const [f] of BOOK_FIELDS) { (stats[`books.${f}`] ??= { docs: 0, em_dash: 0, quoted: 0, tell: 0, samples: [] }); stats[`books.${f}`].docs = `${docsTotal} live`; }
 
   // The rendered copy. book_indexes has no visibility of its own, so restrict to live book ids.
   const SUMMARY_KEYS = ['brief', 'abstract', 'detailed'];
   const liveIds = new Set();
-  for await (const b of db.collection('books').find(LIVE, { projection: { _id: 0, id: 1 } })) if (b.id) liveIds.add(b.id);
+  for await (const b of db.collection('books').find(LIVE, { projection: { _id: 0, id: 1 } }).batchSize(1000)) if (b.id) liveIds.add(b.id);
   const idxHit = { $or: SUMMARY_KEYS.map((k) => ({ [`bookSummary.${k}`]: anyHit })) };
-  for await (const d of db.collection('book_indexes').find(idxHit, { projection: { book_id: 1, bookSummary: 1 } })) {
+  for await (const d of db.collection('book_indexes').find(idxHit, { projection: { book_id: 1, bookSummary: 1 } }).batchSize(1000)) {
     if (!liveIds.has(d.book_id)) continue;
     for (const k of SUMMARY_KEYS) tally(stats, `book_indexes.bookSummary.${k}`, d.bookSummary?.[k], `book/${d.book_id}`);
   }
   const embHit = { ...LIVE, $or: SUMMARY_KEYS.map((k) => ({ [`index.bookSummary.${k}`]: anyHit })) };
   const emb = await db.collection('books').find(embHit, { projection: { id: 1, 'index.bookSummary': 1 } }).toArray();
   const indexed = new Set();
-  for await (const d of db.collection('book_indexes').find({ book_id: { $in: emb.map((b) => b.id) }, bookSummary: { $exists: true } }, { projection: { _id: 0, book_id: 1 } })) indexed.add(d.book_id);
+  for await (const d of db.collection('book_indexes').find({ book_id: { $in: emb.map((b) => b.id) }, bookSummary: { $exists: true } }, { projection: { _id: 0, book_id: 1 } }).batchSize(1000)) indexed.add(d.book_id);
   for (const b of emb) {
     if (indexed.has(b.id)) continue;
     for (const k of SUMMARY_KEYS) tally(stats, `books.index.bookSummary.${k} (no book_indexes row)`, b.index?.bookSummary?.[k], `book/${b.id}`);

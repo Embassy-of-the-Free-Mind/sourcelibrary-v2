@@ -1,0 +1,157 @@
+{
+ "lang": "chinese",
+ "old": "gemini-3-flash-preview",
+ "n": 20,
+ "ocr_source": "paddle",
+ "english_after_ocr": true,
+ "title": null,
+ "exclude_title": "韻府|類書|類編|類函|類聚|字典|駢字|子史精華|圖書編|格致鏡原|事類|御覽|冊府元龜|韻|字彙|辭",
+ "drawn_at": "2026-10-25T18:54:35.070Z",
+ "frame": {
+  "books": 10396,
+  "eligible_pages": 1746,
+  "books_with_eligible": 68
+ },
+ "pages": [
+  {
+   "page_id": "6a3c5e5540c88a541d8e1111",
+   "book_id": "6a3c5e5540c88a541d8e10ba",
+   "page_number": 87,
+   "title": "錦繡萬花谷別集(一) (vol 1)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5e5940c88a541d8e1402",
+   "book_id": "6a3c5e5940c88a541d8e13a3",
+   "page_number": 94,
+   "title": "周易義海撮要·卷一 (vol 1)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5e6040c88a541d8e189c",
+   "book_id": "6a3c5e6040c88a541d8e181b",
+   "page_number": 129,
+   "title": "周易義海撮要·卷八~卷九 (vol 8)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f0940c88a541d8e66e5",
+   "book_id": "6a3c5f0940c88a541d8e6674",
+   "page_number": 113,
+   "title": "景岳全書·卷七 (vol 4)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f0f879008ba7e15299e",
+   "book_id": "6a3c5f0f879008ba7e152984",
+   "page_number": 26,
+   "title": "景岳全書·卷十二~卷十三 (vol 7)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f12879008ba7e152b8f",
+   "book_id": "6a3c5f12879008ba7e152b69",
+   "page_number": 38,
+   "title": "景岳全書·卷十七~卷十八 (vol 10)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f26879008ba7e1533fb",
+   "book_id": "6a3c5f26879008ba7e1533be",
+   "page_number": 61,
+   "title": "景岳全書·卷四十二~卷四十三 (vol 24)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f2840c88a541d8e6a24",
+   "book_id": "6a3c5f2840c88a541d8e694e",
+   "page_number": 214,
+   "title": "景岳全書·卷四十六 (vol 27)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f2b40c88a541d8e6b8a",
+   "book_id": "6a3c5f2b40c88a541d8e6b30",
+   "page_number": 90,
+   "title": "景岳全書·卷四十八 (vol 29)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f31879008ba7e1535e0",
+   "book_id": "6a3c5f31879008ba7e153573",
+   "page_number": 109,
+   "title": "景岳全書·卷五十七 (vol 35)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c5f37879008ba7e1536df",
+   "book_id": "6a3c5f37879008ba7e15366b",
+   "page_number": 115,
+   "title": "景岳全書·卷五十八 (vol 36)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c61ac879008ba7e15fa1d",
+   "book_id": "6a3c61ac879008ba7e15f9fe",
+   "page_number": 31,
+   "title": "古今源流至論前集·卷六~卷七 (vol 3)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c621040c88a541d8f255c",
+   "book_id": "6a3c621040c88a541d8f24dc",
+   "page_number": 128,
+   "title": "西清古鑑·卷十一~卷十二 (vol 10)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c621740c88a541d8f2a36",
+   "book_id": "6a3c621740c88a541d8f2976",
+   "page_number": 192,
+   "title": "西清古鑑·卷二十~卷二十一 (vol 16)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c622f879008ba7e1615d1",
+   "book_id": "6a3c622f879008ba7e161581",
+   "page_number": 80,
+   "title": "西清古鑑·卷十七~卷十八 (vol 43)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c6231879008ba7e161733",
+   "book_id": "6a3c6231879008ba7e1616dd",
+   "page_number": 86,
+   "title": "西清古鑑·卷二十一~卷二十二 (vol 45)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c6232879008ba7e16182e",
+   "book_id": "6a3c6232879008ba7e1617b8",
+   "page_number": 117,
+   "title": "西清古鑑·卷二十三 (vol 46)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c624740c88a541d8f3107",
+   "book_id": "6a3c624740c88a541d8f30ed",
+   "page_number": 26,
+   "title": "春秋集傳釋義大成·卷八 (vol 5)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c6247879008ba7e16230f",
+   "book_id": "6a3c6247879008ba7e1622d9",
+   "page_number": 54,
+   "title": "春秋集傳釋義大成·卷六~卷七 (vol 4)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  },
+  {
+   "page_id": "6a3c6f4301fe4f593c1caa78",
+   "book_id": "6a3c6f4301fe4f593c1caa33",
+   "page_number": 69,
+   "title": "經問·卷十~卷十二 (vol 3)",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B"
+  }
+ ]
+}

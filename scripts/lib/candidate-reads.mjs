@@ -202,6 +202,40 @@ export async function hasKeptReads(bookId) {
   } catch { return false; }
 }
 
+/**
+ * Every kept read of one book and field, as [{ page_id, model }] (one LIST of the book's prefix, then one small GET
+ * per read to learn its model, only for `pageIds` when given). Unusable reads are left out. Never throws: an error
+ * returns [].
+ */
+export async function listKeptReads(bookId, field, pageIds = null) {
+  const want = pageIds ? new Set(pageIds) : null;
+  if (off() || !bookId) return [];
+  try {
+    const c = await client();
+    if (!c) return [];
+    const prefix = `${PREFIX}/${bookId}`;
+    assertBookScopedKey(prefix, bookId, 'candidate-reads book');
+    const keys = [];
+    let token;
+    do {
+      const r = await send(c, new sdk.ListObjectsV2Command({ Bucket: BUCKET, Prefix: `${prefix}/`, ContinuationToken: token }));
+      for (const o of r.Contents || []) if (o.Key.endsWith('.json') && o.Key.split('/')[3] === field && (!want || want.has(o.Key.split('/')[2]))) keys.push(o.Key);
+      token = r.IsTruncated ? r.NextContinuationToken : undefined;
+    } while (token);
+    const out = [];
+    for (const key of keys) {
+      try {
+        const r = await send(c, new sdk.GetObjectCommand({ Bucket: BUCKET, Key: key }));
+        const body = JSON.parse(await r.Body.transformToString());
+        const m = body.meta || {};
+        if (textProblem(body.text, field) || (m.exit !== undefined && m.exit !== 0) || m.error_class || m.wrapper) continue;
+        out.push({ page_id: body.page_id, model: body.reuse?.model ?? m.model_requested ?? body.model ?? null });
+      } catch { /* one unreadable object is one read not offered */ }
+    }
+    return out;
+  } catch (e) { warn('list', `listing ${bookId} failed: ${e.message}`); return []; }
+}
+
 /** The exact prompt kept for this book and hash, or null. Never throws. */
 export async function fetchPromptText(bookId, hash) {
   if (off() || !hash) return null;

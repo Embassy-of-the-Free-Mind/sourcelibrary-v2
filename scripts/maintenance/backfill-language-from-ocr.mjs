@@ -84,7 +84,7 @@ const cursor = db.collection('books').find(
     'image_source.provider': { $nin: ['wikimedia_commons', 'met_openaccess'] },
   },
   { projection: { _id: 1, title: 1, 'image_source.provider': 1, pages_count: 1 } }
-);
+).batchSize(1000);
 
 let scanned = 0, noOcr = 0, noTag = 0, wouldWrite = 0, written = 0;
 const samples = [];

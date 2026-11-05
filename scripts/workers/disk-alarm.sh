@@ -1,5 +1,5 @@
 #!/bin/bash
-# Root-disk alarm for the Hetzner box (#5534, #6223). Every 15 min from cron. Pages ntfy when the
+# Disk alarm for every job box, every mounted disk (#5534, #6223). Every 15 min from cron. Pages ntfy when the
 # level changes (ok → high → critical and back), and REPEATS every 2 h while the level is critical.
 #
 # Why: on 2026-10-01 the 150 GB root disk hit 100% and headless jobs died at worktree checkout
@@ -7,6 +7,19 @@
 # (#5539) runs once a day at 07:00 and emails; the disk filled within hours. This is the fast path.
 # Why the repeat (#6223): on 2026-10-07 the disk sat at 100% for hours after ONE page at the 85%
 # crossing; every later run logged level=high prev=high and stayed silent while ~10 jobs ran.
+#
+# Every mount, not just / (2026-10-26): cloudlayer's 492 GB /data/scratch volume reached 98% (9.8 GB free)
+# with no page, because this script watched only / and was not installed on cloudlayer or l7a at all.
+# Each real mount (no tmpfs, overlay, efivars, /boot) gets its own level and state file. A non-root page
+# names the mount's largest folders, since the steward's runbook only covers /root.
+# DISK_ALARM_MOUNT=/ restricts it to one mount (the old behaviour).
+#
+# After the steward (2026-10-29, #6223): disk-steward.sh runs hourly and archives idle folders to R2 until a disk
+# is back at 75%. So the 85% page means "the steward tried and could not", never "a disk is filling": a mount the
+# steward manages pages at `high` only when its last run (within STEWARD_FRESH_MIN) ended at or above the limit,
+# and the page names what it could not archive and why; or when the steward has not completed a run for that
+# long (it is broken, which is worth a page by itself). `critical` (95%) still pages at once: jobs die there.
+# Mounts the steward does not manage page as before.
 #
 # Channel: ntfy topic sourcelibrary-uptime, the same one scripts/uptime-monitor.mjs pages on.
 # Install (Hetzner crontab, beside the uptime monitor):
@@ -17,43 +30,90 @@ PCT_LIMIT=${DISK_ALARM_PCT:-85}
 PCT_CRIT=${DISK_ALARM_CRIT_PCT:-95}
 REPEAT_SEC=${DISK_ALARM_REPEAT_SEC:-7200}
 STATE=${DISK_ALARM_STATE:-/var/lib/sourcelibrary/disk-alarm.state}
+STEWARD_STATE=${DISK_STEWARD_STATE:-/var/lib/sourcelibrary/disk-steward.state}
+STEWARD_FRESH_MIN=${STEWARD_FRESH_MIN:-180}
 TOPIC=${DISK_ALARM_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}
-MOUNT=${DISK_ALARM_MOUNT:-/}
+MOUNTS=${DISK_ALARM_MOUNT:-$(df -P -x tmpfs -x devtmpfs -x overlay -x squashfs -x efivarfs 2>/dev/null | awk 'NR>1 && $6 !~ "^/(boot|sys|run|snap)" {print $6}')}
 mkdir -p "$(dirname "$STATE")"
 now=$(date -u +%FT%TZ); epoch=$(date +%s)
+case "$(hostname)" in clawdbot) DEF_BOX=Hetzner ;; earthai-live) DEF_BOX=cloudlayer ;; earthai-l7a) DEF_BOX=l7a ;; *) DEF_BOX=$(hostname) ;; esac
+BOX=${DISK_ALARM_BOX:-$DEF_BOX}  # gex45-1 runs this too (#5660)
 
-used=$(df --output=pcent "$MOUNT" 2>/dev/null | tail -1 | tr -dc '0-9')
-if [ -z "$used" ]; then
-  # An unreadable check is UNKNOWN, never clear: page once for it too.
-  level=unknown
-else
-  level=ok
-  [ "$used" -ge "$PCT_LIMIT" ] && level=high
-  [ "$used" -ge "$PCT_CRIT" ] && level=critical
-fi
-# State is "<level> <epoch of last page>"; a pre-#6223 state file holds the level alone.
-prev=""; last_paged=""
-[ -f "$STATE" ] && read -r prev last_paged < "$STATE"
-prev=${prev:-ok}; last_paged=${last_paged:-0}
-free=$(df -h --output=avail "$MOUNT" 2>/dev/null | tail -1 | tr -d ' ')
-echo "$now $MOUNT used=${used:-?}% free=${free:-?} level=$level prev=$prev limit=$PCT_LIMIT%/$PCT_CRIT%"
+check() {
+  local MOUNT=$1 st=$STATE
+  # / keeps the original state file so an upgrade does not re-page; other mounts get their own.
+  [ "$MOUNT" != / ] && st="$STATE.$(printf '%s' "$MOUNT" | tr -c 'A-Za-z0-9' '_')"
+  local used level prev="" last_paged="" free page="" title prio msg runbook what
+  used=$(df --output=pcent "$MOUNT" 2>/dev/null | tail -1 | tr -dc '0-9')
+  if [ -z "$used" ]; then
+    # An unreadable check is UNKNOWN, never clear: page once for it too.
+    level=unknown
+  else
+    level=ok
+    [ "$used" -ge "$PCT_LIMIT" ] && level=high
+    [ "$used" -ge "$PCT_CRIT" ] && level=critical
+  fi
+  # State is "<level> <epoch of last page>"; a pre-#6223 state file holds the level alone.
+  [ -f "$st" ] && read -r prev last_paged < "$st"
+  prev=${prev:-ok}; last_paged=${last_paged:-0}
+  free=$(df -h --output=avail "$MOUNT" 2>/dev/null | tail -1 | tr -d ' ')
+  echo "$now $MOUNT used=${used:-?}% free=${free:-?} level=$level prev=$prev limit=$PCT_LIMIT%/$PCT_CRIT%"
 
-page=""
-[ "$level" != "$prev" ] && page=change
-[ "$level" = critical ] && [ "$prev" = critical ] && [ $((epoch - last_paged)) -ge "$REPEAT_SEC" ] && page=repeat
-[ -z "$page" ] && exit 0
+  [ "$level" != "$prev" ] && page=change
+  [ "$level" = critical ] && [ "$prev" = critical ] && [ $((epoch - last_paged)) -ge "$REPEAT_SEC" ] && page=repeat
+  [ -z "$page" ] && return 0
 
-BOX=${DISK_ALARM_BOX:-$([ "$(hostname)" = clawdbot ] && echo Hetzner || hostname)}  # gex45-1 runs this too (#5660)
-runbook="Runbook #6223: scripts/workers/disk-steward.sh --apply moves idle /root folders to the volume /mnt/HC_Volume_105839809 and reaps merged worktrees."
-case "$level" in
-  critical) title="$BOX disk ${used}% full — jobs about to die"; prio=urgent; msg="Root disk at ${used}% (${free} free). Jobs die silently when it fills. ${runbook}" ;;
-  high)     title="$BOX disk ${used}% full"; prio=high; msg="Root disk at ${used}% (${free} free, alarm at ${PCT_LIMIT}%). ${runbook}" ;;
-  unknown)  title="$BOX disk check UNKNOWN"; prio=high; msg="df could not read ${MOUNT}. Treat as not-clear until checked (#5534)." ;;
-  ok)       title="$BOX disk recovered: ${used}%"; prio=low; msg="Root disk back under ${PCT_LIMIT}% (${free} free)." ;;
-esac
-[ "$page" = repeat ] && title="STILL: $title"
-if curl -fsS -m 15 -H "Title: $title" -H "Priority: $prio" -H "Tags: floppy_disk" -d "$msg" "$TOPIC" >/dev/null; then
-  echo "$level $epoch" > "$STATE"; echo "$now paged ($page): $title"
-else
-  echo "$now ntfy send FAILED; state left at $prev so the next run retries"
-fi
+  # What the steward made of this mount on its last run: "<end percent>|<what it could not archive>", or nothing.
+  local sw="" sw_ts=0 sw_pct="" sw_stuck="" sw_age=""
+  if [ -f "$STEWARD_STATE" ]; then
+    sw_ts=$(awk '$1 == "ts" {print $2}' "$STEWARD_STATE")
+    sw_pct=$(awk -v m="$MOUNT" '$1 == "mount" && $2 == m {print $3}' "$STEWARD_STATE")
+    sw_stuck=$(awk -v m="$MOUNT" '$1 == "stuck" && $2 == m {$1 = ""; $2 = ""; sub(/^  /, ""); print}' "$STEWARD_STATE")
+    sw_age=$(( (epoch - ${sw_ts:-0}) / 60 ))
+  fi
+  if [ -n "$sw_pct" ]; then
+    if [ "$sw_age" -gt "$STEWARD_FRESH_MIN" ]; then
+      sw=" disk-steward has not completed a run for ${sw_age} min: check /var/log/sourcelibrary/disk-steward.log."
+    elif [ "$level" = high ] && [ "$sw_pct" -lt "$PCT_LIMIT" ]; then
+      echo "$now $MOUNT held: the steward's run ${sw_age} min ago ended at ${sw_pct}%; it acts again within the hour"
+      return 0
+    else
+      sw=" The steward's run ${sw_age} min ago ended at ${sw_pct}% and could not archive: ${sw_stuck:-nothing listed}."
+    fi
+  fi
+
+  if [ "$MOUNT" = / ]; then
+    what="Root disk"
+    runbook="Runbook #6223: /root/bin/disk-steward.sh (hourly) archives idle folders to R2 above 75% and trims the HF cache; what it keeps, and why, is in its log."
+  else
+    what="Disk $MOUNT"
+    runbook="Largest: $(timeout 120 du -xsh "$MOUNT"/* 2>/dev/null | sort -rh | head -3 | awk '{printf "%s %s; ", $2, $1}')"
+    [ -z "$sw_pct" ] && runbook="${runbook}No steward manages this mount: free space by hand (#6223)."
+  fi
+  runbook="${sw# }${sw:+ }$runbook"
+  # What grew. On 2026-10-27 the root pages said "run disk-steward", which could not help: the 27 GB were agy's
+  # orphaned .tmp files, not idle folders. Name the three directories (three levels deep) with the most bytes in
+  # files over 20 MB written in the last 6 h, so the page points at the cause. Bounded; only at high or critical.
+  grew=""
+  if [ "$level" = high ] || [ "$level" = critical ]; then
+    grew=$(timeout 90 find "$MOUNT" -xdev -type f -mmin -360 -size +20M -printf '%s %h\n' 2>/dev/null \
+      | awk '{ n = split($2, p, "/"); d = ""; for (i = 2; i <= n && i <= 4; i++) d = d "/" p[i]; s[d] += $1; c[d]++ }
+             END { for (d in s) printf "%d %s %d\n", s[d], d, c[d] }' \
+      | sort -rn | head -3 | awk '{ printf "%s%s %.1f GB (%d files)", (NR > 1 ? "; " : ""), $2, $1 / 1073741824, $3 }')
+    [ -n "$grew" ] && grew=" Written in the last 6 h: ${grew}."
+  fi
+  case "$level" in
+    critical) title="$BOX $MOUNT ${used}% full — jobs about to die"; prio=urgent; msg="$what at ${used}% (${free} free). Jobs die silently when it fills.${grew} ${runbook}" ;;
+    high)     title="$BOX $MOUNT ${used}% full"; prio=high; msg="$what at ${used}% (${free} free, alarm at ${PCT_LIMIT}%).${grew} ${runbook}" ;;
+    unknown)  title="$BOX disk check UNKNOWN ($MOUNT)"; prio=high; msg="df could not read ${MOUNT}. Treat as not-clear until checked (#5534)." ;;
+    ok)       title="$BOX $MOUNT disk recovered: ${used}%"; prio=low; msg="$what back under ${PCT_LIMIT}% (${free} free)." ;;
+  esac
+  [ "$page" = repeat ] && title="STILL: $title"
+  if NTFY_SRC=disk-alarm.sh "$(dirname "$0")/ntfy-send.sh" "$TOPIC" "$title" "$prio" floppy_disk "$msg"; then
+    echo "$level $epoch" > "$st"; echo "$now paged ($page): $title"
+  else
+    echo "$now ntfy send FAILED; state left at $prev so the next run retries"
+  fi
+}
+
+for m in $MOUNTS; do check "$m"; done

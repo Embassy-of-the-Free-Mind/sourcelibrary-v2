@@ -113,3 +113,12 @@ export function expandLanguages(langs: string[]): string[] {
   }
   return [...result];
 }
+
+/**
+ * URL slug for a /languages/<slug> page. The /languages index and the sitemap
+ * must build the same slug: the sitemap used to keep punctuation, so
+ * "Greek/Latin" became /languages/greek/latin, a 404.
+ */
+export function languageSlug(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}

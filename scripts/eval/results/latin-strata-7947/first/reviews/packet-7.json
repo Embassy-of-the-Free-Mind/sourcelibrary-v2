@@ -1,0 +1,623 @@
+[
+  {
+    "book_id": "69f335b4876dd827cbc4ee76",
+    "slot": 15,
+    "title": "De vita et gestis Scipionis p'mi Affricani",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 15th-century humanist manuscript of Latin epic verse about Scipio and Carthage. It has no tradition or collection assigned, and it sits outside the library's core esoteric/early-science shelves; at best it is adjacent humanist literature.",
+    "rights_flag": null,
+    "structure_note": "All three pages are hexameter verse from Petrarch's epic Africa (Hannibal's lament, the battle of Zama: 'Turbine occurrunt alio... Impia carthago rerum tenuisset habenas'). They are not the prose life of Scipio that the title 'De vita et gestis Scipionis' names. The volume may bind both works, but the catalogue title does not describe these pages; possible I7. The leaf numbers 76 and 114 are written in pencil in the corner, and the OCR's page-num picks them up correctly. 308 of 314 pages are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Hec qui iterum libicos audisti",
+            "image": "Rex qui iterum libicos audisti (red initial R, guide letter r above)",
+            "problem": "the opening vocative 'Rex' (O king) is misread as 'Hec'. The image-desc also calls the initial an 'H'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Gratia fiducis est debita",
+            "image": "Gratia si dictis est debita",
+            "problem": "'if thanks are owed to [my] words' misread as a non-word 'fiducis', which the translation turns into 'the grace of your trust'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "qui duces sine leniter ille",
+            "image": "qui duces. Hic leniter ille",
+            "problem": "'Hic' (here, at this point) misread as 'sine', which breaks the speech attribution",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Tu petis angustis",
+            "image": "Tu petis anguste",
+            "problem": "ending misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "sermone tenere",
+            "image": "sermone teneri",
+            "problem": "ending",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Hec qui iterum libicos audisti ex ordine casus / Hospes ait",
+            "english": "You who have heard the Libyan disasters again in order, / The guest says",
+            "problem": "follows the OCR misread and so loses the address to the king ('King, who have heard...'): the reader cannot tell who is speaking to whom",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Gratia fiducis est debita vestra retexe / Principia uestros qui duces sine leniter ille",
+            "english": "The grace of your trust is owed. Unroll / The principles, who are your leaders, he says gently",
+            "problem": "garbled: the sense is 'if thanks are owed to my words, unfold your own origins and your leaders. Here he, gently smiling...'. 'principles' for 'principia' (beginnings) is wrong too",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Plena cadaueribus nec hostia fluuia cursum",
+            "english": "Full of corpses, nor do the rivers cease their course",
+            "problem": "the rivers choked at their mouths with corpses is rendered as rivers 'not ceasing'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta> note in the reader text describes a red initial 'H'. The initial is R",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 155,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "meritam dent solvere poenas",
+            "image": "meritas dent soluere poenas",
+            "problem": "ending",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Et tu pater natus misere tu causa",
+            "image": "Et pater natus misere. tu causa",
+            "problem": "an extra 'tu' is added, breaking the metre",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Tu certe iam digna lues",
+            "image": "Tu certe iam digna luis",
+            "problem": "'luis' (you pay [the penalty]) read as 'lues' (plague), which the translation follows",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Tu certe iam digna lues",
+            "english": "You certainly are now a worthy plague",
+            "problem": "the sense is 'you are now paying a deserved penalty'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Tuque deus invise parens",
+            "english": "And you, hateful god of a parent",
+            "problem": "the sense is 'and you, parent hateful to the gods' (deis inuise)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "at manes penetrare videbo / Agmine celorum et furiarum turbine septu",
+            "english": "But I will see the shades penetrated by a host of heaven and a whirlwind of Furies surrounding [you]",
+            "problem": "the sense is 'I will see you enter the underworld, hemmed in by a host of ... and a whirlwind of Furies'. The heaven/host reading is confused",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Omnia miscente meritam dent solvere poenas",
+            "english": "may they allow all who mix everything to pay deserved penalties",
+            "problem": "a fragment continuing from the previous leaf, rendered as near-nonsense",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 231,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Quisset si fors et enim nouissima poeno",
+            "image": "Fauisset (F with abbreviation) si fors et enim nouissima poeno",
+            "problem": "a non-word for 'favisset' (had favoured)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "siluntque repressia",
+            "image": "siluntque repressa",
+            "problem": "spelling",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "excesserat ardens / Scipio in colles immensa strage coactos",
+            "english": "the ardent Scipio had gone out onto the hills, gathered in immense slaughter",
+            "problem": "'coactos' goes with the enemy driven onto the hills with great slaughter, not with Scipio",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "seu quis ualidis foret exitus armis",
+            "english": "Whether any outcome would be for the strong arms",
+            "problem": "the indirect question is left dangling and barely meaningful",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real Petrarch 'Africa' manuscript, read reasonably well but with meaning-changing misreads (Rex→Hec, si dictis→fiducis, luis→lues), and a translation that is often confused about who is speaking. The title describes a different work (the prose Vita Scipionis), so a reader looking for that life will not find it."
+  },
+  {
+    "book_id": "6a243e810f0e4f405e63470f",
+    "slot": 88,
+    "title": "Tentamina Electrica ... / 2 : Tandem Aliqvando Hydravlicae Chymiae Et Vegetabilibvs Vtilia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Bose's 1747 electrical experiments, which include the early Leyden-jar letter on p. 44 of the sample. This is squarely early modern science.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "n) In additamentis ad Academiam del Cimento",
+            "image": "q) In additamentis ad Acad. del Cimento",
+            "problem": "footnote siglum given as n instead of q, so it no longer matches its call-out",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "ab ea iri proiectum",
+            "image": "ab ea iri prolectum",
+            "problem": "single-letter misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "DU FAY, in- / finito (catchword at foot)",
+            "english": "<meta>continues from previous page: infinito</meta> infinite <note>from context: the word \"infinite\" likely referred to the endless nature of electrical power or a mathematical limit mentioned on the prior page</note> experiment concerning...",
+            "problem": "the catchword at the FOOT of the page is moved to the head and rendered as 'infinite' with an invented speculative note about the 'prior page'. In fact it is the second half of 'in-finito' at the end of this page, leading into the next",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "a speculative editorial <note> ('likely referred to the endless nature of electrical power or a mathematical limit') is shown to the reader as if it were apparatus",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "->Nunc inaudita<-",
+            "image": "Nunc inaudita (first half of an indented couplet)",
+            "problem": "invented arrow markup around a verse line",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "ocr": "eiusmodis tenetitudinis",
+            "image": "eiusmodi teneritudinis",
+            "problem": "misreads",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<margin>o) Ovid. Fast. I. 160.</margin> ...",
+            "image": "footnotes at the foot of the page",
+            "problem": "footnotes are tagged as margins",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Nunc inaudita / Electri nouitas iure uocanda uenit.",
+            "english": "->Now unheard of<- / The novelty of electricity must rightly be called such.",
+            "problem": "one couplet split into two statements: the sense is 'Now has come the unheard-of novelty of electricity, rightly to be so named'",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "Stiria non solum uini spiritum ... accendi",
+            "english": "A stalactite <note>or icy mass/frozen stream</note> ignited",
+            "problem": "'stalactite' is misleading for the electrified drop or jet ('stiria') in an electrical experiment",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the arrow markup '->Now unheard of<-' appears in both reader panes",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "pollicum rhenolandorum",
+            "image": "pollicum rhenolandicorum",
+            "problem": "a syllable dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "nam post 24. horas aliqui elicuerunt adhuc scintillas, ego plerumque post horas 2. uel 3. tantum elicere potui",
+            "english": "for after 24 hours some have still elicited sparks, whereas I was only able to elicit them after 2 or 3 hours",
+            "problem": "the sense is that he could usually still draw sparks only up to 2–3 hours later. The English makes it sound as if sparks appeared only after a 2–3-hour delay",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "in tubo amplo uitreo iacere",
+            "english": "lies on a large glass tube",
+            "problem": "'in' a wide glass tube",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good OCR and a readable, mostly faithful translation of an important electrical text. It is let down by visible apparatus noise: an invented speculative note about 'infinito', arrow markup, and a footnote siglum misnumbered. It needs cleanup before showcasing."
+  },
+  {
+    "book_id": "69b63dd11c1c21a37385fa56",
+    "slot": 40,
+    "title": "Ioannis Boccatii de Certaldo insigne opus De claris mulieribus",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Boccaccio's De claris mulieribus (Bern 1539) is humanist biography. It has no tradition or collection assigned and is outside the core shelves, though a reasonable humanist adjunct.",
+    "rights_flag": null,
+    "structure_note": "Pages 46, 90 and 135 run in order (Iole, Veturia, Mariamne leading into 'DE CLEO.'). 183 of 184 pages have OCR and 176 are translated. Nothing else stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 46,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "patris mortem non armis sed dolis & lasciuia uita est",
+            "image": "patris mortem non armis sed dolis & lasciuia ulta est",
+            "problem": "'ulta est' (she avenged) read as 'uita est'. The translation then says she 'lived out' her father's death",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "et concupitos quandoq; deueniuntur amplus",
+            "image": "et in concupitos quandoq; deuenitur amplexus",
+            "problem": "'in' dropped and 'amplexus' read as 'amplus', which garbles the sentence",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nec id semper furor",
+            "image": "Nec ob id semper furor",
+            "problem": "'ob' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "patris mortem ... ulta est (OCR: uita est)",
+            "english": "lived out the death of her father not by weapons, but by guile and sensuality",
+            "problem": "the point of the chapter is reversed: Iole AVENGED her father's death on Hercules by guile",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "et in concupitos quandoque deuenitur amplexus",
+            "english": "And when they are sometimes attained by the desired",
+            "problem": "the sense is 'and at times one comes into the longed-for embraces'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Ast si minus deuenitur in votum",
+            "english": "But if one is not led into desire",
+            "problem": "the sense is 'if the wish is not attained'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "differentibus præter spem votis",
+            "english": "as desires differ beyond expectation",
+            "problem": "'differre' here means deferred, not differ",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "a <p> tag wraps the translation (it may show if not rendered)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 90,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "catchword: fiftas",
+            "image": "ſiſtas",
+            "problem": "long-s read as f in the catchword",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Iuere tertio cū infulis velati pontifices & suis cū insignibus supplices, sed frustrati rediere",
+            "english": "the pontiffs... returned as suppliants, but were frustrated",
+            "problem": "they WENT as suppliants and came back frustrated",
+            "severity": "minor"
+          },
+          {
+            "source": "Me miseram in hoc exoptata mortalibus, tui longitudo deduxisse me debuit",
+            "english": "did the length of your life, so desired by mortals, lead me here",
+            "problem": "a corrupt source sentence is rendered fluently with no sign of uncertainty",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 135,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Herodem alienigenam non ludum",
+            "image": "Herodem alienigenam non Iudeum",
+            "problem": "'Iudeum' (a Jew) read as 'ludum'. The translation then makes it 'not a noble', dropping Mariamne's taunt that Herod is not a Jew",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "cum mulauic iras",
+            "image": "cumulauit iras",
+            "problem": "'cumulauit' (heaped up) split into a non-word. The translation reads 'changed her temper'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Mariannis in se maleuolentia faceret",
+            "image": "Mariannis in se maleuolentia fidem faceret",
+            "problem": "'fidem' dropped",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Herodem alienigenam non Iudeum",
+            "english": "Herod was an alien, not a noble",
+            "problem": "the insult is that he is not a Jew. 'Not a noble' is invented to fill the misread",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "cumulauit iras",
+            "english": "she changed her temper",
+            "problem": "the sense is that her anger mounted",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ut a subornato ab eiusdem pincerna Herodi accusaretur",
+            "english": "she was accused to Herod by her own cupbearer",
+            "problem": "the cupbearer was suborned by Herod's mother and sister ('subornato'). That detail is lost",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean printed text with mostly fluent translation. On two of the three pages, misreads flow straight into the English: Iole 'lived out' instead of avenging her father's death, and Herod is 'not a noble' instead of 'not a Jew'. A careful reader would be misled on these points."
+  },
+  {
+    "book_id": "6a4bf38def49f280c10d9e90",
+    "slot": 71,
+    "title": "Temperamentum Vastationis Bellicae (Küpffender / Reuter, Wittenberg 1677)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A Wittenberg disputation on the law of war (devastation, ius gentium). It has no tradition assigned and sits outside the esoteric/early-science shelves.",
+    "rights_flag": null,
+    "structure_note": "Only 16 of 25 pages are translated and 24 have OCR, so about a third of a short dissertation has no English. place_published is 'Berlin', but the title page says Wittenberg, and Berlin is the holding library (SBB). This is a catalogue slip (I7).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Deuteronomio XX, 12. ... Floro Libro II. capite 20. ... Disputatio",
+            "image": "Deut. XX, 12. ... Floro lib. II. c. 20. ... Disput.",
+            "problem": "the printed abbreviations in the references are silently expanded",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "nunquam autem tali vastatione obtinebitur, quae oppugnandorum vi- [page ends]",
+            "english": "but it will never be obtained by such devastation that does not diminish the strength of those being attacked, nor can it take away their abundance of resources.",
+            "problem": "the page breaks mid-word. The translation completes the sentence with a verb and a whole clause ('nor can it take away their abundance of resources') that are not on this page. Whether the guess matches the next page cannot be verified here",
+            "severity": "serious",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "licitum est per dominum publicum",
+            "image": "licitum est per dominium publicum",
+            "problem": "'dominium' (public authority) read as 'dominum'. The translation then says 'the public lord'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "per dominium publicum",
+            "english": "is permitted by the public lord",
+            "problem": "the sense is 'by right of public dominion'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Hornius's quotation is set as a markdown blockquote. It is run-in text on the page",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Excellent OCR and a faithful translation of a dense legal disputation. The one serious slip is a page-end sentence finished with text not on the page. The book is a third untranslated, and its place of publication is wrong."
+  },
+  {
+    "book_id": "69d66608bf5afe33937f8c15",
+    "slot": 78,
+    "title": "Clavicula Salomonis Regis",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century Latin manuscript of the Key of Solomon. This is core grimoire material, though no tradition is set on the record.",
+    "rights_flag": null,
+    "structure_note": "Page 122 is a plate leaf: a pale blue paper roundel is pasted where a pentacle would be, and faint lines show through it. The text visible below the roundel is show-through from the other side of the leaf, not writing on this page. 228 of 245 pages are translated, which fits the plates being skipped or described.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 58,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Vas terreum Capax, Carbonibus plenum",
+            "english": "an earthen vessel capable of holding <note>coals</note>, full of coals",
+            "problem": "a redundant inserted note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Below the diagram, there are traces of very faint, illegible handwritten text, likely in Latin, which has faded significantly",
+            "image": "show-through from the other side of the leaf, beneath a pasted blue paper roundel",
+            "problem": "show-through is described as faded text on this page, and the pasted roundel is not mentioned",
+            "severity": "minor",
+            "class": "O14"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "a plate page is given a description and an <unclear> block in the translation pane, plus a summary claiming it is 'consistent with the protective seals found elsewhere in the manuscript', an unverified claim",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 184,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, faithful read of a legible 18th-century hand. The text pages are showcase quality. The plate page is described rather than transcribed, with minor over-description."
+  }
+]

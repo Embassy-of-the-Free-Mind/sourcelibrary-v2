@@ -27,18 +27,19 @@ type Partner = {
 // Logo PNGs are trimmed to their content (no internal transparent padding) so
 // every logo fills the shared h-12/h-16 box and they all appear equally tall.
 const PARTNERS: Partner[] = [
-  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
-  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
-  { name: 'Frond Studio', src: '/partners/frond-studio-white.png', href: 'https://frond-studio.com', width: 400, height: 213, invert: false },
+  { name: 'Embassy of the Free Mind', src: '/ai-partners/efm-white.png', href: 'https://embassyofthefreemind.com', width: 770, height: 326, invert: false },
+  { name: 'TU Delft', src: '/ai-partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 299, height: 117, invert: false },
+  { name: 'Frond Studio', src: '/ai-partners/frond-studio-white.png', href: 'https://frond-studio.com', width: 400, height: 213, invert: false },
 ];
 
-// Folium shows on sourcelibrary.org only. Partner subdomains keep exactly the
+// Folium and Wisdom Frontiers show on sourcelibrary.org only. Partner subdomains keep exactly the
 // row they have today (order included): a tenant reading room is the
 // partner's surface, so changes there wait for the partner. The Folium PNG
 // keeps some transparent space above and below, so the long one-line
 // wordmark sits at the same visual weight as the stacked logos beside it.
 const GLOBAL_PARTNERS: Partner[] = [
-  { name: 'Folium', src: '/partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
+  { name: 'Folium', src: '/ai-partners/folium-white.png', href: 'https://folium-studio.com', width: 800, height: 272, invert: false },
+  { name: 'Wisdom Frontiers', src: '/ai-partners/wisdom-frontiers-white.svg', href: 'https://wisdomfrontiers.org', width: 151, height: 25, invert: false },
 ];
 
 // Source Library's own accounts. Kept beside PARTNERS so the two lists that
@@ -141,10 +142,13 @@ export default function GlobalFooter() {
             </Link>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            <div className="col-start-1 md:col-start-2 lg:col-start-4 flex gap-1.5">
+            <div className="col-start-1 md:col-start-2 lg:col-start-4 flex items-center gap-5">
+              {/* A text link, not a bordered box: an outlined box beside the
+                  filled Donate button read as a text field and its submit
+                  button. Donate stays the one filled action in the bar. */}
               <FeedbackWidget
                 label={t.giveFeedback}
-                className="inline-flex items-center h-[34px] px-[13px] border border-white/20 text-sm font-medium text-white/70 hover:text-white hover:border-white/40 whitespace-nowrap transition-colors"
+                className="inline-flex items-center h-[34px] text-sm font-medium text-white/70 hover:text-white underline decoration-white/30 hover:decoration-white underline-offset-4 whitespace-nowrap transition-colors"
               />
               {showDonate && (
                 <Link
@@ -234,7 +238,7 @@ export default function GlobalFooter() {
                     width={partner.width}
                     height={partner.height}
                     sizes="auto"
-                    className={`w-auto ${partner.name === 'Folium' ? 'h-[26px] md:h-7' : partner.name === 'TU Delft' ? 'h-5 md:h-[21px]' : 'h-6'} ${partner.invert ? 'brightness-0 invert' : ''}`}
+                    className={`w-auto ${partner.name === 'Folium' ? 'h-[26px] md:h-7' : partner.name === 'TU Delft' ? 'h-5 md:h-[21px]' : partner.name === 'Wisdom Frontiers' ? 'h-[22px]' : 'h-6'} ${partner.invert ? 'brightness-0 invert' : ''}`}
                     unoptimized
                   />
                 </a>

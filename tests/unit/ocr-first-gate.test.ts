@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ocrFirstGate, ocrEngineMix } from '../../scripts/lib/ocr-first-gate.mjs';
+import { ocrFirstGate, ocrEngineMix, uncheckedLite } from '../../scripts/lib/ocr-first-gate.mjs';
 
 // #6865: two premium translation passes ran on a flash-lite Florentine transcription nobody had opened.
 const page = (model?: string) => ({ ocr: model ? { model } : {} });
@@ -33,5 +33,26 @@ describe('ocrFirstGate', () => {
     const m = ocrEngineMix([page('a'), page('a'), page()]);
     expect(m.total).toBe(3);
     expect(m.mix).toEqual([['a', 2], ['(no model recorded)', 1]]);
+  });
+
+  it('does not count a flash-lite page a person edited, or one whose read says it has no text (#7263)', () => {
+    const lite = 'gemini-3.1-flash-lite';
+    expect(uncheckedLite({ ocr: { model: lite, data: 'In principio erat verbum' } })).toBe(true);
+    expect(uncheckedLite({ ocr: { model: lite, data: 'x', edited_by: 'u1' } })).toBe(false);
+    expect(uncheckedLite({ ocr: { model: lite, data: 'x', source: 'manual' } })).toBe(false);
+    expect(uncheckedLite({ ocr: { model: lite, data: '<page-type>blank</page-type>' } })).toBe(false);
+    expect(uncheckedLite({ ocr: { model: lite, data: '<page-type> illustration</page-type>\n[figure]' } })).toBe(false);
+    expect(uncheckedLite({ ocr: { model: 'gemini-3.8-flash-low', data: 'x' } })).toBe(false);
+    // 3 of 5 pages are flash-lite, but one was edited and one is a plate: 1 of 5 unchecked passes the 20% bar
+    const pages = [
+      { ocr: { model: lite, data: 'text' } },
+      { ocr: { model: lite, data: 'text', edited_by: 'u1' } },
+      { ocr: { model: lite, data: '<page-type>plate</page-type>' } },
+      { ocr: { model: 'gemini-3.8-flash-low', data: 'text' } },
+      { ocr: { model: 'gemini-3.8-flash-low', data: 'text' } },
+    ];
+    const r = ocrFirstGate(pages, undefined);
+    expect(r.ok).toBe(true);
+    expect(r.message).toMatch(/2 flash-lite page\(s\) edited by a person or with no text: not counted/);
   });
 });

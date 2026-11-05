@@ -18,16 +18,31 @@
  * experiment write-up in scripts/eval/experiments/. 3 is stale when it is more than
  * --max-days older than today: new feedback arrives whether or not experiments do.
  *
+ * A fourth check (#7263) catches contradiction, not just lag: the newest MEASURED record
+ * (a write-up whose header carries an n_books and a verdict, read with
+ * scripts/eval/lib/experiment-header.mjs) must not be more than --max-measured-days (7)
+ * newer than PROSE_AS_OF. The 2026-11-01 audit found /quality passing this script while
+ * the served-corpus draw (#7866, 43% of live books bad) sat unreconciled beside 92–97%
+ * figures; a measured result that moves the headline has to be read into the prose
+ * within a week.
+ *
+ * A fifth (#6553) catches the ledger itself stopping: the newest date in the generated
+ * scripts/eval/experiments/index.json must not trail the newest write-up file by more than
+ * --max-index-lag-days (1). /quality reads index.json, not the files; when
+ * eval-ledgers-regenerate.yml fails (four times, the last for 37 hours, #8031) every new
+ * write-up is missing from the page while checks 1–4 still pass on the files.
+ *
  * No database, no secrets. Run weekly by .github/workflows/quality-center-watch.yml,
  * which files one issue when this fails and closes it when it passes again.
  *
- *   node scripts/audit/quality-center-freshness.mjs [--max-days 30] [--today YYYY-MM-DD]
+ *   node scripts/audit/quality-center-freshness.mjs [--max-days 30] [--max-measured-days 7] [--max-index-lag-days 1] [--today YYYY-MM-DD]
  *
  * Exit 0: current. Exit 1: something is stale (printed). Exit 2: a date could not be read.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readExperiment } from '../eval/lib/experiment-header.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DATED = /^(\d{4}-\d{2}-\d{2})-[a-z0-9][a-z0-9-]*\.md$/;
@@ -37,8 +52,14 @@ const toDay = (d) => new Date(d).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
 
 /** Pure: given the four dates, list what is stale. Dates are ISO YYYY-MM-DD. */
-export function checkFreshness({ proseAsOf, openWorkAsOf, newestExperiment, feedbackOn, today, maxDays = 30 }) {
+export function checkFreshness({ proseAsOf, openWorkAsOf, newestExperiment, newestMeasured, newestIndexed, feedbackOn, today, maxDays = 30, maxMeasuredDays = 7, maxIndexLagDays = 1 }) {
   const findings = [];
+  if (newestIndexed !== undefined) {
+    const lag = newestIndexed ? daysBetween(newestIndexed, newestExperiment) : Infinity;
+    if (lag > maxIndexLagDays) {
+      findings.push(`scripts/eval/experiments/index.json is newest at ${newestIndexed ?? '(no entries)'} but the newest write-up file is ${newestExperiment}: the ledger has stopped regenerating, and /quality does not show anything since. Read the last eval-ledgers-regenerate.yml run's log, fix the file it names, and run the workflow.`);
+    }
+  }
   const behind = (label, date, file) => {
     const d = daysBetween(date, newestExperiment);
     if (d > maxDays) {
@@ -47,6 +68,12 @@ export function checkFreshness({ proseAsOf, openWorkAsOf, newestExperiment, feed
   };
   behind('The prose on /quality', proseAsOf, 'src/app/quality/content.ts (PROSE_AS_OF)');
   behind('The open-work list /quality shows as Running and Next', openWorkAsOf, 'src/app/research/quality/open/issues.ts (AS_OF)');
+  if (newestMeasured) {
+    const d = daysBetween(proseAsOf, newestMeasured);
+    if (d > maxMeasuredDays) {
+      findings.push(`The prose on /quality is dated ${proseAsOf}, ${d} days older than the newest measured experiment record (${newestMeasured}, a write-up with n_books and a verdict). Read that result into "Where quality stands" and "What we have learned", then move PROSE_AS_OF in src/app/quality/content.ts.`);
+    }
+  }
   const age = daysBetween(feedbackOn, today);
   if (age > maxDays) {
     findings.push(`The feedback synthesis was generated on ${feedbackOn}, ${age} days ago. Regenerate it: node --env-file=.env.production.local scripts/analytics/quality-feedback-themes.mjs, then review the counts and the "what we did" lines.`);
@@ -60,15 +87,36 @@ export function readDates(root = ROOT) {
   const issues = fs.readFileSync(path.join(root, 'src/app/research/quality/open/issues.ts'), 'utf8');
   const openRaw = issues.match(/export const AS_OF\s*=\s*'([^']+)'/)?.[1];
   const openParsed = openRaw ? Date.parse(`${openRaw} 12:00 UTC`) : NaN;
-  const newest = fs.readdirSync(path.join(root, 'scripts/eval/experiments'))
-    .map((f) => DATED.exec(f)?.[1]).filter(Boolean).sort().pop();
-  const feedbackOn = JSON.parse(fs.readFileSync(path.join(root, 'src/data/quality-feedback-themes.json'), 'utf8')).generated_on;
+  const dir = path.join(root, 'scripts/eval/experiments');
+  const dated = fs.readdirSync(dir).filter((f) => DATED.test(f)).sort();
+  const newest = DATED.exec(dated.at(-1) ?? '')?.[1];
   return {
     proseAsOf: prose ?? null,
     openWorkAsOf: Number.isNaN(openParsed) ? null : toDay(openParsed),
     newestExperiment: newest ?? null,
-    feedbackOn: feedbackOn ?? null,
+    newestMeasured: newestMeasured(dir, dated),
+    newestIndexed: newestIndexed(path.join(dir, 'index.json')),
+    feedbackOn: readFeedbackOn(root),
   };
+}
+
+/** The newest entry date in the generated index.json, or null when it has none. */
+export function newestIndexed(file) {
+  const entries = JSON.parse(fs.readFileSync(file, 'utf8')).entries || [];
+  return entries.reduce((m, e) => (e.date && (!m || e.date > m) ? e.date : m), null);
+}
+
+/** The date of the newest write-up whose header has a whole-number n_books and a verdict. */
+export function newestMeasured(dir, files) {
+  for (const f of [...files].reverse()) {
+    const { header } = readExperiment(fs.readFileSync(path.join(dir, f), 'utf8'));
+    if (header && Number.isInteger(header.n_books) && typeof header.verdict === 'string' && header.verdict.trim()) return DATED.exec(f)[1];
+  }
+  return null;
+}
+
+function readFeedbackOn(root) {
+  return JSON.parse(fs.readFileSync(path.join(root, 'src/data/quality-feedback-themes.json'), 'utf8')).generated_on ?? null;
 }
 
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
@@ -76,6 +124,8 @@ if (isMain) {
   const args = process.argv.slice(2);
   const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
   const maxDays = Number(flag('max-days', 30));
+  const maxMeasuredDays = Number(flag('max-measured-days', 7));
+  const maxIndexLagDays = Number(flag('max-index-lag-days', 1));
   const today = flag('today', toDay(Date.now()));
   let dates;
   try {
@@ -89,8 +139,8 @@ if (isMain) {
     console.error(`could not read: ${missing.join(', ')}`);
     process.exit(2);
   }
-  console.log(`prose ${dates.proseAsOf} · open work ${dates.openWorkAsOf} · newest experiment ${dates.newestExperiment} · feedback ${dates.feedbackOn} · today ${today}`);
-  const findings = checkFreshness({ ...dates, today, maxDays });
+  console.log(`prose ${dates.proseAsOf} · open work ${dates.openWorkAsOf} · newest experiment ${dates.newestExperiment} · newest measured ${dates.newestMeasured} · newest indexed ${dates.newestIndexed} · feedback ${dates.feedbackOn} · today ${today}`);
+  const findings = checkFreshness({ ...dates, today, maxDays, maxMeasuredDays, maxIndexLagDays });
   for (const f of findings) console.log(`STALE: ${f}`);
   if (!findings.length) console.log('/quality is current.');
   process.exit(findings.length ? 1 : 0);

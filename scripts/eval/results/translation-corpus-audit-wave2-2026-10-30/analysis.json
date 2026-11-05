@@ -1,0 +1,3818 @@
+{
+  "dir": "scripts/eval/results/translation-corpus-audit-wave2-2026-10-30",
+  "judges": [
+    "opus",
+    "gemini-flash-low"
+  ],
+  "at": "2026-10-30T21:57:05.105Z",
+  "n_main": 365,
+  "n_books": 365,
+  "headline": {
+    "opus": {
+      "n": 365,
+      "ge4_lang_x_arm": {
+        "est": 86.3,
+        "ci": [
+          81.3,
+          90.9
+        ],
+        "n": 365
+      },
+      "major_lang_x_arm": {
+        "est": 13.6,
+        "ci": [
+          9,
+          18.7
+        ],
+        "n": 365
+      },
+      "ge4_lang": {
+        "est": 87.1,
+        "ci": [
+          82.7,
+          91.1
+        ],
+        "n": 365
+      },
+      "major_lang": {
+        "est": 12.8,
+        "ci": [
+          8.9,
+          17.1
+        ],
+        "n": 365
+      },
+      "fid5_lang_x_arm": {
+        "est": 46.8,
+        "ci": [
+          40.1,
+          53.7
+        ],
+        "n": 365
+      },
+      "le2_lang_x_arm": {
+        "est": 2.9,
+        "ci": [
+          0.8,
+          5.4
+        ],
+        "n": 365
+      },
+      "ocr_misread_lang_x_arm": {
+        "est": 21.3,
+        "ci": [
+          15.6,
+          26.9
+        ],
+        "n": 365
+      },
+      "ocr_wrong_leaf_n": 6,
+      "image_seen_n": 365,
+      "image_words_match_n": 334
+    },
+    "gemini-flash-low": {
+      "n": 365,
+      "ge4_lang_x_arm": {
+        "est": 90.3,
+        "ci": [
+          85.6,
+          94.1
+        ],
+        "n": 365
+      },
+      "major_lang_x_arm": {
+        "est": 8.7,
+        "ci": [
+          5.1,
+          13.1
+        ],
+        "n": 365
+      },
+      "ge4_lang": {
+        "est": 91.3,
+        "ci": [
+          87.8,
+          94.5
+        ],
+        "n": 365
+      },
+      "major_lang": {
+        "est": 7.9,
+        "ci": [
+          4.9,
+          11.2
+        ],
+        "n": 365
+      },
+      "fid5_lang_x_arm": {
+        "est": 72.5,
+        "ci": [
+          65.7,
+          78.9
+        ],
+        "n": 365
+      },
+      "le2_lang_x_arm": {
+        "est": 4.1,
+        "ci": [
+          1.6,
+          7.3
+        ],
+        "n": 365
+      },
+      "ocr_misread_lang_x_arm": {
+        "est": 14.3,
+        "ci": [
+          10,
+          19.2
+        ],
+        "n": 365
+      },
+      "ocr_wrong_leaf_n": 5,
+      "image_seen_n": 364,
+      "image_words_match_n": 343
+    }
+  },
+  "breakdowns": {
+    "opus": {
+      "language": {
+        "Latin": {
+          "n": 58,
+          "ge4": 84.5,
+          "major": 15.5,
+          "mean": 4.19
+        },
+        "Greek": {
+          "n": 35,
+          "ge4": 88.6,
+          "major": 8.6,
+          "mean": 4.4
+        },
+        "German": {
+          "n": 35,
+          "ge4": 94.3,
+          "major": 5.7,
+          "mean": 4.63
+        },
+        "English": {
+          "n": 35,
+          "ge4": 91.4,
+          "major": 8.6,
+          "mean": 4.54
+        },
+        "Arabic": {
+          "n": 24,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.25
+        },
+        "Tibetan": {
+          "n": 24,
+          "ge4": 91.7,
+          "major": 8.3,
+          "mean": 4.42
+        },
+        "French": {
+          "n": 24,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.83
+        },
+        "Chinese": {
+          "n": 24,
+          "ge4": 75,
+          "major": 25,
+          "mean": 4.08
+        },
+        "Sanskrit": {
+          "n": 18,
+          "ge4": 44.4,
+          "major": 55.6,
+          "mean": 3.5
+        },
+        "Spanish": {
+          "n": 18,
+          "ge4": 94.4,
+          "major": 5.6,
+          "mean": 4.61
+        },
+        "Italian": {
+          "n": 17,
+          "ge4": 88.2,
+          "major": 17.6,
+          "mean": 4.18
+        },
+        "Dutch": {
+          "n": 17,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.71
+        },
+        "Korean": {
+          "n": 12,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.08
+        },
+        "Japanese": {
+          "n": 12,
+          "ge4": 25,
+          "major": 66.7,
+          "mean": 2.25
+        },
+        "Hebrew": {
+          "n": 12,
+          "ge4": 66.7,
+          "major": 33.3,
+          "mean": 3.67
+        }
+      },
+      "script": {
+        "print": {
+          "n": 184,
+          "ge4": 83.2,
+          "major": 16.3,
+          "mean": 4.27
+        },
+        "unknown": {
+          "n": 108,
+          "ge4": 88.9,
+          "major": 11.1,
+          "mean": 4.39
+        },
+        "manuscript": {
+          "n": 73,
+          "ge4": 79.5,
+          "major": 20.5,
+          "mean": 4.07
+        }
+      },
+      "period": {
+        "1700-1900": {
+          "n": 144,
+          "ge4": 82.6,
+          "major": 16.7,
+          "mean": 4.28
+        },
+        "1500-1700": {
+          "n": 120,
+          "ge4": 86.7,
+          "major": 14.2,
+          "mean": 4.29
+        },
+        "1900+": {
+          "n": 50,
+          "ge4": 90,
+          "major": 10,
+          "mean": 4.4
+        },
+        "pre-1500": {
+          "n": 31,
+          "ge4": 71,
+          "major": 25.8,
+          "mean": 3.97
+        },
+        "unknown": {
+          "n": 20,
+          "ge4": 85,
+          "major": 15,
+          "mean": 4.15
+        }
+      },
+      "arm": {
+        "lite": {
+          "n": 146,
+          "ge4": 79.5,
+          "major": 20.5,
+          "mean": 4.14
+        },
+        "flash": {
+          "n": 117,
+          "ge4": 82.9,
+          "major": 16.2,
+          "mean": 4.2
+        },
+        "opus": {
+          "n": 54,
+          "ge4": 92.6,
+          "major": 7.4,
+          "mean": 4.65
+        },
+        "agy-flash": {
+          "n": 42,
+          "ge4": 92.9,
+          "major": 7.1,
+          "mean": 4.38
+        },
+        "gemini-legacy": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.33
+        }
+      },
+      "engine_api": {
+        "(none recorded)": {
+          "n": 226,
+          "ge4": 81,
+          "major": 19,
+          "mean": 4.15
+        },
+        "cli": {
+          "n": 95,
+          "ge4": 92.6,
+          "major": 7.4,
+          "mean": 4.53
+        },
+        "batch": {
+          "n": 39,
+          "ge4": 79.5,
+          "major": 17.9,
+          "mean": 4.21
+        },
+        "realtime": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.8
+        }
+      },
+      "prompt_version": {
+        "lite/v10": {
+          "n": 65,
+          "ge4": 78.5,
+          "major": 21.5,
+          "mean": 4.03
+        },
+        "agy-flash/13": {
+          "n": 42,
+          "ge4": 92.9,
+          "major": 7.1,
+          "mean": 4.38
+        },
+        "opus/13": {
+          "n": 42,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.88
+        },
+        "lite/13": {
+          "n": 40,
+          "ge4": 80,
+          "major": 17.5,
+          "mean": 4.28
+        },
+        "flash/v2": {
+          "n": 40,
+          "ge4": 82.5,
+          "major": 17.5,
+          "mean": 4.28
+        },
+        "lite/11": {
+          "n": 27,
+          "ge4": 74.1,
+          "major": 25.9,
+          "mean": 4.04
+        },
+        "flash/v10": {
+          "n": 23,
+          "ge4": 87,
+          "major": 13,
+          "mean": 4.3
+        },
+        "flash/13": {
+          "n": 16,
+          "ge4": 87.5,
+          "major": 12.5,
+          "mean": 4.19
+        },
+        "flash/11": {
+          "n": 13,
+          "ge4": 53.8,
+          "major": 38.5,
+          "mean": 3.31
+        },
+        "opus/1": {
+          "n": 11,
+          "ge4": 63.6,
+          "major": 36.4,
+          "mean": 3.73
+        },
+        "flash/v5.2026-02": {
+          "n": 10,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.7
+        },
+        "flash/v5.1.2026-03b": {
+          "n": 9,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.56
+        },
+        "lite/v1": {
+          "n": 9,
+          "ge4": 100,
+          "major": 11.1,
+          "mean": 4.67
+        },
+        "gemini-legacy/(none)": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.33
+        },
+        "flash/12": {
+          "n": 3,
+          "ge4": 33.3,
+          "major": 66.7,
+          "mean": 3
+        },
+        "flash/v1": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.5
+        },
+        "lite/2": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.5
+        },
+        "lite/1": {
+          "n": 2,
+          "ge4": 50,
+          "major": 50,
+          "mean": 4
+        },
+        "opus/v1": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "flash/(none)": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "lite/12": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        }
+      },
+      "language_script": {
+        "Latin/print": {
+          "n": 39,
+          "ge4": 82.1,
+          "major": 17.9,
+          "mean": 4.1
+        },
+        "German/print": {
+          "n": 26,
+          "ge4": 92.3,
+          "major": 7.7,
+          "mean": 4.5
+        },
+        "Greek/print": {
+          "n": 20,
+          "ge4": 95,
+          "major": 5,
+          "mean": 4.4
+        },
+        "Chinese/manuscript": {
+          "n": 19,
+          "ge4": 78.9,
+          "major": 21.1,
+          "mean": 4.16
+        },
+        "English/print": {
+          "n": 19,
+          "ge4": 89.5,
+          "major": 10.5,
+          "mean": 4.68
+        },
+        "French/print": {
+          "n": 18,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.83
+        },
+        "Latin/unknown": {
+          "n": 17,
+          "ge4": 88.2,
+          "major": 11.8,
+          "mean": 4.29
+        },
+        "Arabic/manuscript": {
+          "n": 16,
+          "ge4": 75,
+          "major": 25,
+          "mean": 4
+        },
+        "English/unknown": {
+          "n": 15,
+          "ge4": 93.3,
+          "major": 6.7,
+          "mean": 4.4
+        },
+        "Tibetan/manuscript": {
+          "n": 13,
+          "ge4": 84.6,
+          "major": 15.4,
+          "mean": 4.31
+        },
+        "Greek/unknown": {
+          "n": 11,
+          "ge4": 72.7,
+          "major": 18.2,
+          "mean": 4.27
+        },
+        "Spanish/print": {
+          "n": 11,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.82
+        },
+        "Tibetan/unknown": {
+          "n": 11,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.55
+        },
+        "Dutch/unknown": {
+          "n": 10,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.6
+        },
+        "Sanskrit/print": {
+          "n": 9,
+          "ge4": 33.3,
+          "major": 66.7,
+          "mean": 3.22
+        },
+        "Italian/print": {
+          "n": 9,
+          "ge4": 88.9,
+          "major": 11.1,
+          "mean": 4.33
+        },
+        "Sanskrit/unknown": {
+          "n": 8,
+          "ge4": 50,
+          "major": 50,
+          "mean": 3.63
+        },
+        "German/unknown": {
+          "n": 8,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Japanese/print": {
+          "n": 8,
+          "ge4": 25,
+          "major": 62.5,
+          "mean": 2.5
+        },
+        "Hebrew/unknown": {
+          "n": 7,
+          "ge4": 85.7,
+          "major": 14.3,
+          "mean": 4.14
+        },
+        "Italian/unknown": {
+          "n": 7,
+          "ge4": 85.7,
+          "major": 28.6,
+          "mean": 4
+        },
+        "Dutch/print": {
+          "n": 7,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.86
+        },
+        "Korean/manuscript": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4
+        },
+        "Korean/print": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.17
+        },
+        "Arabic/print": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.6
+        },
+        "Spanish/unknown": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.6
+        },
+        "French/unknown": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.8
+        },
+        "Greek/manuscript": {
+          "n": 4,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.75
+        },
+        "Japanese/manuscript": {
+          "n": 4,
+          "ge4": 25,
+          "major": 75,
+          "mean": 1.75
+        },
+        "Chinese/print": {
+          "n": 4,
+          "ge4": 50,
+          "major": 50,
+          "mean": 3.75
+        },
+        "Hebrew/print": {
+          "n": 3,
+          "ge4": 0,
+          "major": 100,
+          "mean": 2.33
+        },
+        "Arabic/unknown": {
+          "n": 3,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Spanish/manuscript": {
+          "n": 2,
+          "ge4": 50,
+          "major": 50,
+          "mean": 3.5
+        },
+        "Hebrew/manuscript": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        },
+        "Latin/manuscript": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Sanskrit/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "French/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Italian/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        },
+        "Chinese/unknown": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        },
+        "German/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "English/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        }
+      },
+      "within_cell_arms": {
+        "Greek|print|1500-1700": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Greek|print|1700-1900": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 3.67
+          }
+        },
+        "Greek|print|1900+": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Greek|unknown|1500-1700": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3.5
+          }
+        },
+        "Greek|unknown|1900+": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Arabic|manuscript|1700-1900": {
+          "agy-flash": {
+            "n": 3,
+            "ge4": 33.3,
+            "major": 66.7,
+            "mean": 3
+          },
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          }
+        },
+        "Arabic|manuscript|pre-1500": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Arabic|print|1700-1900": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Tibetan|manuscript|1700-1900": {
+          "lite": {
+            "n": 6,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 4
+          },
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Korean|manuscript|1500-1700": {
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Korean|manuscript|1700-1900": {
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3.5
+          }
+        },
+        "French|print|1500-1700": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "French|print|1700-1900": {
+          "opus": {
+            "n": 5,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "agy-flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          }
+        },
+        "Sanskrit|print|1700-1900": {
+          "opus": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Sanskrit|print|1900+": {
+          "opus": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3.5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          }
+        },
+        "Sanskrit|unknown|1700-1900": {
+          "opus": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          }
+        },
+        "Sanskrit|unknown|pre-1500": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Spanish|print|1700-1900": {
+          "opus": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Latin|print|1500-1700": {
+          "gemini-legacy": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          },
+          "agy-flash": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 4.25
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 3.25
+          },
+          "lite": {
+            "n": 15,
+            "ge4": 86.7,
+            "major": 13.3,
+            "mean": 4.27
+          }
+        },
+        "Latin|unknown|1500-1700": {
+          "gemini-legacy": {
+            "n": 5,
+            "ge4": 80,
+            "major": 20,
+            "mean": 4.2
+          },
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Greek|manuscript|pre-1500": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "German|print|1500-1700": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 3.75
+          },
+          "lite": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 4
+          }
+        },
+        "German|print|1700-1900": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 5,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "German|print|1900+": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "opus": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "German|unknown|1700-1900": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Spanish|print|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Spanish|unknown|1500-1700": {
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.33
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Latin|unknown|pre-1500": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "German|unknown|1500-1700": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Tibetan|unknown|1700-1900": {
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Latin|print|1700-1900": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.33
+          }
+        },
+        "Latin|print|pre-1500": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 4
+          }
+        },
+        "Japanese|manuscript|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 1
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 0,
+            "major": 100,
+            "mean": 1
+          }
+        },
+        "Japanese|print|1700-1900": {
+          "flash": {
+            "n": 2,
+            "ge4": 0,
+            "major": 50,
+            "mean": 2.5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3.5
+          }
+        },
+        "Japanese|print|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 1
+          }
+        },
+        "Hebrew|print|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          }
+        },
+        "Hebrew|unknown|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Hebrew|unknown|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Hebrew|unknown|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Italian|print|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 6,
+            "ge4": 83.3,
+            "major": 16.7,
+            "mean": 4.17
+          }
+        },
+        "Italian|unknown|1500-1700": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 100,
+            "mean": 4
+          }
+        },
+        "Italian|unknown|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Arabic|unknown|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Dutch|print|1500-1700": {
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Dutch|unknown|1500-1700": {
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Dutch|unknown|1700-1900": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Chinese|manuscript|1700-1900": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Chinese|manuscript|unknown": {
+          "opus": {
+            "n": 5,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.8
+          },
+          "agy-flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3.5
+          }
+        },
+        "French|unknown|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Chinese|manuscript|1500-1700": {
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Greek|unknown|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "English|print|1700-1900": {
+          "flash": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 4.33
+          },
+          "lite": {
+            "n": 8,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          }
+        },
+        "English|print|1900+": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 6,
+            "ge4": 83.3,
+            "major": 16.7,
+            "mean": 4.67
+          }
+        },
+        "English|unknown|1500-1700": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "English|unknown|1700-1900": {
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "English|unknown|1900+": {
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Latin|unknown|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        }
+      }
+    },
+    "gemini-flash-low": {
+      "language": {
+        "Latin": {
+          "n": 58,
+          "ge4": 91.4,
+          "major": 6.9,
+          "mean": 4.57
+        },
+        "Greek": {
+          "n": 35,
+          "ge4": 88.6,
+          "major": 11.4,
+          "mean": 4.49
+        },
+        "German": {
+          "n": 35,
+          "ge4": 94.3,
+          "major": 5.7,
+          "mean": 4.71
+        },
+        "English": {
+          "n": 35,
+          "ge4": 97.1,
+          "major": 2.9,
+          "mean": 4.74
+        },
+        "Arabic": {
+          "n": 24,
+          "ge4": 95.8,
+          "major": 4.2,
+          "mean": 4.63
+        },
+        "Tibetan": {
+          "n": 24,
+          "ge4": 87.5,
+          "major": 12.5,
+          "mean": 4.63
+        },
+        "French": {
+          "n": 24,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.96
+        },
+        "Chinese": {
+          "n": 24,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.5
+        },
+        "Sanskrit": {
+          "n": 18,
+          "ge4": 66.7,
+          "major": 27.8,
+          "mean": 4.06
+        },
+        "Spanish": {
+          "n": 18,
+          "ge4": 88.9,
+          "major": 11.1,
+          "mean": 4.56
+        },
+        "Italian": {
+          "n": 17,
+          "ge4": 88.2,
+          "major": 11.8,
+          "mean": 4.47
+        },
+        "Dutch": {
+          "n": 17,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.94
+        },
+        "Korean": {
+          "n": 12,
+          "ge4": 83.3,
+          "major": 8.3,
+          "mean": 4.42
+        },
+        "Japanese": {
+          "n": 12,
+          "ge4": 33.3,
+          "major": 58.3,
+          "mean": 2.67
+        },
+        "Hebrew": {
+          "n": 12,
+          "ge4": 75,
+          "major": 25,
+          "mean": 4
+        }
+      },
+      "script": {
+        "print": {
+          "n": 184,
+          "ge4": 87.5,
+          "major": 10.9,
+          "mean": 4.5
+        },
+        "unknown": {
+          "n": 108,
+          "ge4": 93.5,
+          "major": 5.6,
+          "mean": 4.69
+        },
+        "manuscript": {
+          "n": 73,
+          "ge4": 82.2,
+          "major": 17.8,
+          "mean": 4.32
+        }
+      },
+      "period": {
+        "1700-1900": {
+          "n": 144,
+          "ge4": 84,
+          "major": 14.6,
+          "mean": 4.44
+        },
+        "1500-1700": {
+          "n": 120,
+          "ge4": 90,
+          "major": 9.2,
+          "mean": 4.54
+        },
+        "1900+": {
+          "n": 50,
+          "ge4": 94,
+          "major": 6,
+          "mean": 4.74
+        },
+        "pre-1500": {
+          "n": 31,
+          "ge4": 83.9,
+          "major": 12.9,
+          "mean": 4.29
+        },
+        "unknown": {
+          "n": 20,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.8
+        }
+      },
+      "arm": {
+        "lite": {
+          "n": 146,
+          "ge4": 82.2,
+          "major": 15.8,
+          "mean": 4.31
+        },
+        "flash": {
+          "n": 117,
+          "ge4": 89.7,
+          "major": 9.4,
+          "mean": 4.57
+        },
+        "opus": {
+          "n": 54,
+          "ge4": 94.4,
+          "major": 5.6,
+          "mean": 4.78
+        },
+        "agy-flash": {
+          "n": 42,
+          "ge4": 97.6,
+          "major": 2.4,
+          "mean": 4.81
+        },
+        "gemini-legacy": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.33
+        }
+      },
+      "engine_api": {
+        "(none recorded)": {
+          "n": 226,
+          "ge4": 84.5,
+          "major": 13.7,
+          "mean": 4.42
+        },
+        "cli": {
+          "n": 95,
+          "ge4": 95.8,
+          "major": 4.2,
+          "mean": 4.79
+        },
+        "batch": {
+          "n": 39,
+          "ge4": 92.3,
+          "major": 7.7,
+          "mean": 4.54
+        },
+        "realtime": {
+          "n": 5,
+          "ge4": 80,
+          "major": 20,
+          "mean": 4
+        }
+      },
+      "prompt_version": {
+        "lite/v10": {
+          "n": 65,
+          "ge4": 76.9,
+          "major": 20,
+          "mean": 4.14
+        },
+        "agy-flash/13": {
+          "n": 42,
+          "ge4": 97.6,
+          "major": 2.4,
+          "mean": 4.81
+        },
+        "opus/13": {
+          "n": 42,
+          "ge4": 97.6,
+          "major": 2.4,
+          "mean": 4.88
+        },
+        "lite/13": {
+          "n": 40,
+          "ge4": 90,
+          "major": 10,
+          "mean": 4.47
+        },
+        "flash/v2": {
+          "n": 40,
+          "ge4": 92.5,
+          "major": 7.5,
+          "mean": 4.72
+        },
+        "lite/11": {
+          "n": 27,
+          "ge4": 74.1,
+          "major": 22.2,
+          "mean": 4.22
+        },
+        "flash/v10": {
+          "n": 23,
+          "ge4": 87,
+          "major": 13,
+          "mean": 4.43
+        },
+        "flash/13": {
+          "n": 16,
+          "ge4": 93.8,
+          "major": 6.3,
+          "mean": 4.63
+        },
+        "flash/11": {
+          "n": 13,
+          "ge4": 76.9,
+          "major": 23.1,
+          "mean": 4
+        },
+        "opus/1": {
+          "n": 11,
+          "ge4": 81.8,
+          "major": 18.2,
+          "mean": 4.36
+        },
+        "flash/v5.2026-02": {
+          "n": 10,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "flash/v5.1.2026-03b": {
+          "n": 9,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.89
+        },
+        "lite/v1": {
+          "n": 9,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.89
+        },
+        "gemini-legacy/(none)": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.33
+        },
+        "flash/12": {
+          "n": 3,
+          "ge4": 33.3,
+          "major": 33.3,
+          "mean": 3
+        },
+        "flash/v1": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "lite/2": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.5
+        },
+        "lite/1": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.5
+        },
+        "opus/v1": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "flash/(none)": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "lite/12": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        }
+      },
+      "language_script": {
+        "Latin/print": {
+          "n": 39,
+          "ge4": 92.3,
+          "major": 7.7,
+          "mean": 4.54
+        },
+        "German/print": {
+          "n": 26,
+          "ge4": 92.3,
+          "major": 7.7,
+          "mean": 4.62
+        },
+        "Greek/print": {
+          "n": 20,
+          "ge4": 95,
+          "major": 5,
+          "mean": 4.65
+        },
+        "Chinese/manuscript": {
+          "n": 19,
+          "ge4": 89.5,
+          "major": 10.5,
+          "mean": 4.63
+        },
+        "English/print": {
+          "n": 19,
+          "ge4": 94.7,
+          "major": 5.3,
+          "mean": 4.74
+        },
+        "French/print": {
+          "n": 18,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.94
+        },
+        "Latin/unknown": {
+          "n": 17,
+          "ge4": 88.2,
+          "major": 5.9,
+          "mean": 4.59
+        },
+        "Arabic/manuscript": {
+          "n": 16,
+          "ge4": 93.8,
+          "major": 6.3,
+          "mean": 4.56
+        },
+        "English/unknown": {
+          "n": 15,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.73
+        },
+        "Tibetan/manuscript": {
+          "n": 13,
+          "ge4": 76.9,
+          "major": 23.1,
+          "mean": 4.31
+        },
+        "Greek/unknown": {
+          "n": 11,
+          "ge4": 90.9,
+          "major": 9.1,
+          "mean": 4.64
+        },
+        "Spanish/print": {
+          "n": 11,
+          "ge4": 90.9,
+          "major": 9.1,
+          "mean": 4.64
+        },
+        "Tibetan/unknown": {
+          "n": 11,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Dutch/unknown": {
+          "n": 10,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.9
+        },
+        "Sanskrit/print": {
+          "n": 9,
+          "ge4": 55.6,
+          "major": 33.3,
+          "mean": 3.78
+        },
+        "Italian/print": {
+          "n": 9,
+          "ge4": 88.9,
+          "major": 11.1,
+          "mean": 4.67
+        },
+        "Sanskrit/unknown": {
+          "n": 8,
+          "ge4": 75,
+          "major": 25,
+          "mean": 4.25
+        },
+        "German/unknown": {
+          "n": 8,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Japanese/print": {
+          "n": 8,
+          "ge4": 37.5,
+          "major": 50,
+          "mean": 3
+        },
+        "Hebrew/unknown": {
+          "n": 7,
+          "ge4": 85.7,
+          "major": 14.3,
+          "mean": 4.43
+        },
+        "Italian/unknown": {
+          "n": 7,
+          "ge4": 85.7,
+          "major": 14.3,
+          "mean": 4.29
+        },
+        "Dutch/print": {
+          "n": 7,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Korean/manuscript": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 16.7,
+          "mean": 4.5
+        },
+        "Korean/print": {
+          "n": 6,
+          "ge4": 83.3,
+          "major": 0,
+          "mean": 4.33
+        },
+        "Arabic/print": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.6
+        },
+        "Spanish/unknown": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.8
+        },
+        "French/unknown": {
+          "n": 5,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Greek/manuscript": {
+          "n": 4,
+          "ge4": 50,
+          "major": 50,
+          "mean": 3.25
+        },
+        "Japanese/manuscript": {
+          "n": 4,
+          "ge4": 25,
+          "major": 75,
+          "mean": 2
+        },
+        "Chinese/print": {
+          "n": 4,
+          "ge4": 50,
+          "major": 50,
+          "mean": 4
+        },
+        "Hebrew/print": {
+          "n": 3,
+          "ge4": 33.3,
+          "major": 66.7,
+          "mean": 2.67
+        },
+        "Arabic/unknown": {
+          "n": 3,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Spanish/manuscript": {
+          "n": 2,
+          "ge4": 50,
+          "major": 50,
+          "mean": 3.5
+        },
+        "Hebrew/manuscript": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4.5
+        },
+        "Latin/manuscript": {
+          "n": 2,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Sanskrit/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "French/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "Italian/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        },
+        "Chinese/unknown": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 4
+        },
+        "German/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        },
+        "English/manuscript": {
+          "n": 1,
+          "ge4": 100,
+          "major": 0,
+          "mean": 5
+        }
+      },
+      "within_cell_arms": {
+        "Greek|print|1500-1700": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Greek|print|1700-1900": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 3.67
+          }
+        },
+        "Greek|print|1900+": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Greek|unknown|1500-1700": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Greek|unknown|1900+": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Arabic|manuscript|1700-1900": {
+          "agy-flash": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 3.67
+          },
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Arabic|manuscript|pre-1500": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Arabic|print|1700-1900": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Tibetan|manuscript|1700-1900": {
+          "lite": {
+            "n": 6,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 4
+          },
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 4.25
+          }
+        },
+        "Korean|manuscript|1500-1700": {
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Korean|manuscript|1700-1900": {
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          }
+        },
+        "French|print|1500-1700": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "French|print|1700-1900": {
+          "opus": {
+            "n": 5,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "agy-flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Sanskrit|print|1700-1900": {
+          "opus": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 0,
+            "mean": 3.5
+          }
+        },
+        "Sanskrit|print|1900+": {
+          "opus": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          }
+        },
+        "Sanskrit|unknown|1700-1900": {
+          "opus": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          }
+        },
+        "Sanskrit|unknown|pre-1500": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Spanish|print|1700-1900": {
+          "opus": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Latin|print|1500-1700": {
+          "gemini-legacy": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "agy-flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 4
+          },
+          "lite": {
+            "n": 15,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          }
+        },
+        "Latin|unknown|1500-1700": {
+          "gemini-legacy": {
+            "n": 5,
+            "ge4": 80,
+            "major": 20,
+            "mean": 4.2
+          },
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Greek|manuscript|pre-1500": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3
+          }
+        },
+        "German|print|1500-1700": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 3.75
+          },
+          "lite": {
+            "n": 4,
+            "ge4": 75,
+            "major": 25,
+            "mean": 4.25
+          }
+        },
+        "German|print|1700-1900": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 5,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.8
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "German|print|1900+": {
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "opus": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "German|unknown|1700-1900": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Spanish|print|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 4
+          }
+        },
+        "Spanish|unknown|1500-1700": {
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Latin|unknown|pre-1500": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "German|unknown|1500-1700": {
+          "opus": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Tibetan|unknown|1700-1900": {
+          "opus": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Latin|print|1700-1900": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.67
+          }
+        },
+        "Latin|print|pre-1500": {
+          "agy-flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 4.33
+          }
+        },
+        "Japanese|manuscript|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 1
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 0,
+            "major": 100,
+            "mean": 1
+          }
+        },
+        "Japanese|print|1700-1900": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Japanese|print|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 0,
+            "major": 0,
+            "mean": 3
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 1
+          }
+        },
+        "Hebrew|print|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Hebrew|unknown|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 50,
+            "major": 50,
+            "mean": 3.5
+          }
+        },
+        "Hebrew|unknown|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Hebrew|unknown|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Italian|print|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 6,
+            "ge4": 83.3,
+            "major": 16.7,
+            "mean": 4.5
+          }
+        },
+        "Italian|unknown|1500-1700": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Italian|unknown|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Arabic|unknown|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Dutch|print|1500-1700": {
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Dutch|unknown|1500-1700": {
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Dutch|unknown|1700-1900": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "Chinese|manuscript|1700-1900": {
+          "opus": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 2
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 100,
+            "mean": 3
+          }
+        },
+        "Chinese|manuscript|unknown": {
+          "opus": {
+            "n": 5,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "agy-flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.75
+          }
+        },
+        "French|unknown|1500-1700": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Chinese|manuscript|1500-1700": {
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "agy-flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "Greek|unknown|pre-1500": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.5
+          }
+        },
+        "English|print|1700-1900": {
+          "flash": {
+            "n": 3,
+            "ge4": 66.7,
+            "major": 33.3,
+            "mean": 4
+          },
+          "lite": {
+            "n": 8,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.88
+          }
+        },
+        "English|print|1900+": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 6,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4.83
+          }
+        },
+        "English|unknown|1500-1700": {
+          "flash": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "English|unknown|1700-1900": {
+          "flash": {
+            "n": 4,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 4
+          }
+        },
+        "English|unknown|1900+": {
+          "flash": {
+            "n": 3,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 2,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          }
+        },
+        "Latin|unknown|1700-1900": {
+          "flash": {
+            "n": 1,
+            "ge4": 100,
+            "major": 0,
+            "mean": 5
+          },
+          "lite": {
+            "n": 1,
+            "ge4": 0,
+            "major": 0,
+            "mean": 3
+          }
+        }
+      }
+    }
+  },
+  "reliability": {
+    "pair": [
+      "opus",
+      "gemini-flash-low"
+    ],
+    "n": 365,
+    "exact": 61.4,
+    "within1": 96.2,
+    "mean_a_minus_b": -0.255,
+    "measures": {
+      "fidelity": {
+        "alpha": 0.525644418415531,
+        "ci": [
+          0.43501909333299627,
+          0.6087253938592628
+        ],
+        "n_units": 365,
+        "level": "ordinal",
+        "verdict": "not settled",
+        "line": "fidelity (ordinal): α 0.53 [0.44, 0.61], 365 books — not settled"
+      },
+      "fidelity_ge4": {
+        "alpha": 0.5295219506052354,
+        "ci": [
+          0.3890285714285715,
+          0.6500673572722628
+        ],
+        "n_units": 365,
+        "level": "nominal",
+        "verdict": "not settled",
+        "line": "fidelity_ge4 (nominal): α 0.53 [0.39, 0.65], 365 books — not settled"
+      },
+      "major_defect": {
+        "alpha": 0.5208990536277602,
+        "ci": [
+          0.37900367997819273,
+          0.6456279531003908
+        ],
+        "n_units": 365,
+        "level": "nominal",
+        "verdict": "not settled",
+        "line": "major_defect (nominal): α 0.52 [0.38, 0.65], 365 books — not settled"
+      },
+      "omission": {
+        "alpha": 0.5295219506052354,
+        "ci": [
+          0.398523874529335,
+          0.6495482801491919
+        ],
+        "n_units": 365,
+        "level": "nominal",
+        "verdict": "not settled",
+        "line": "omission (nominal): α 0.53 [0.40, 0.65], 365 books — not settled"
+      },
+      "invention": {
+        "alpha": 0.5013278609367455,
+        "ci": [
+          0.34060877772534215,
+          0.6375370418249439
+        ],
+        "n_units": 365,
+        "level": "nominal",
+        "verdict": "not settled",
+        "line": "invention (nominal): α 0.50 [0.34, 0.64], 365 books — not settled"
+      },
+      "ocr_misread": {
+        "alpha": 0.5442610652663166,
+        "ci": [
+          0.43792198049512376,
+          0.6423773584905661
+        ],
+        "n_units": 365,
+        "level": "nominal",
+        "verdict": "not settled",
+        "line": "ocr_misread (nominal): α 0.54 [0.44, 0.64], 365 books — not settled"
+      }
+    }
+  },
+  "self_preference": {
+    "judge_a": "opus",
+    "judge_b": "gemini-flash-low",
+    "n_claude": 54,
+    "n_gemini": 311,
+    "fidelity": {
+      "claude_gap": -0.13,
+      "gemini_gap": -0.277,
+      "did": 0.147,
+      "ci": [
+        -0.03,
+        0.342
+      ]
+    },
+    "ge4_share": {
+      "claude_gap": -0.019,
+      "gemini_gap": -0.045,
+      "did": 0.026,
+      "ci": [
+        -0.051,
+        0.098
+      ]
+    },
+    "major_share": {
+      "claude_gap": -0.019,
+      "gemini_gap": -0.055,
+      "did": 0.036,
+      "ci": [
+        -0.042,
+        0.109
+      ]
+    },
+    "fidelity_matched": {
+      "cells": 15,
+      "n_claude": 54,
+      "n_gemini": 167,
+      "did": 0.16,
+      "ci": [
+        -0.02,
+        0.345
+      ]
+    }
+  },
+  "disputed": [
+    {
+      "id": "53eba5b610",
+      "language": "Greek",
+      "arm": "lite",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/69938985ce1538706594752c?page=233",
+      "image": "https://images.sourcelibrary.org/pages/69938985ce1538706594752c/0233.jpg",
+      "opus": 4,
+      "gemini-flash-low": 1,
+      "d": 3,
+      "opus_reason": "Apology 21c–24b text as transcribed rendered closely (politicians, poets, craftsmen, Meletus/Anytus/Lycon); only the garbled first line is papered over.",
+      "gemini-flash-low_reason": "Faithfully translates the provided Greek source text throughout with high accuracy, but evaluating strictly against source text."
+    },
+    {
+      "id": "a1be80bcb2",
+      "language": "Tibetan",
+      "arm": "lite",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/69e7abec5f1a22ab19aa0707?page=712",
+      "image": "https://images.sourcelibrary.org/pages/69e7abec5f1a22ab19aa0707/lfd9d0f71ef5d2306947535ae3.jpg",
+      "opus": 5,
+      "gemini-flash-low": 2,
+      "d": 3,
+      "opus_reason": "Rules for the reciter (no garlands, harsh or idle speech, tirthikas, candalas; the list of forbidden foods down to krisara) follow the source; the garbled repetitive opening is rendered literally and not smoothed over. I read Tibetan only moderately well.",
+      "gemini-flash-low_reason": "Line 1 in transcription is a severe garble/hallucination replacing line 1 of the leaf, which translation papers over with fluent nonsense, while lines 2-7 are translated accurately."
+    },
+    {
+      "id": "cf92626d76",
+      "language": "Chinese",
+      "arm": "opus",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/6a3ceaf795fcd45563052360?page=25",
+      "image": "https://images.sourcelibrary.org/pages/6a3ceaf795fcd45563052360/0025.jpg",
+      "opus": 5,
+      "gemini-flash-low": 2,
+      "d": 3,
+      "opus_reason": "Se, xiao and di scores romanized syllable by syllable, with tablature glyphs and pitch names kept as transcribed; a note gives the English of the stanza (漚紵 / 晤語) exactly as the source has it. Nothing wrong found.",
+      "gemini-flash-low_reason": "Transliterates the entire page into pinyin instead of translating it into English, relegating the English text to house notes"
+    },
+    {
+      "id": "5357b9fcbd",
+      "language": "Greek",
+      "arm": "lite",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/699388ea1075be7d320551a0?page=101",
+      "image": "https://images.sourcelibrary.org/pages/699388ea1075be7d320551a0/0101.jpg",
+      "opus": 5,
+      "gemini-flash-low": 2,
+      "d": 3,
+      "opus_reason": "Each row of the (suspiciously uniform) transcribed table is rendered faithfully: labels (head of Draco, jaw, bends 1-20, body parts) and values κδ=24, μδ=44, Α=1, δ=4; γ' given as 1/3. The meta speculation about earlier pages asserts nothing about this page's content.",
+      "gemini-flash-low_reason": "Transfers star descriptions faithfully from source Greek but invents identical tabular coordinate values (24, 1/3, 44, 1/3, 1, 4) down the entirety of both tables."
+    },
+    {
+      "id": "fb4d166c33",
+      "language": "Japanese",
+      "arm": "flash",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/6a0aca8b676a42ccd9775261?page=19",
+      "image": "https://images.sourcelibrary.org/pages/6a0aca8b676a42ccd9775261/0019.jpg",
+      "opus": 2,
+      "gemini-flash-low": 4,
+      "d": -2,
+      "opus_reason": "mechanism of the mercury-weight tumbling doll is garbled: lid/cylinder invented, the head (首) never named, the small-hole condition inverted, and the flip-over result replaced by an invented settling",
+      "gemini-flash-low_reason": "Correctly tracks the mechanism and mercury flow of the automaton, but mistranslates 首 (neck/head) as 'cylinder' and はりぬき as 'lid'."
+    },
+    {
+      "id": "e86406e2a9",
+      "language": "Hebrew",
+      "arm": "lite",
+      "script": "unknown",
+      "url": "https://sourcelibrary.org/book/69c1bb2e8522835be845d575?page=46",
+      "image": "https://images.sourcelibrary.org/pages/69c1bb2e8522835be845d575/0046.jpg",
+      "opus": 4,
+      "gemini-flash-low": 2,
+      "d": 2,
+      "opus_reason": "All 24 formula lines and both headings are rendered in order with the right attribute each time; the added 'is' and 'Sign' for siman are minor.",
+      "gemini-flash-low_reason": "Source is a litany of praise phrases (signs 68 and 69) which translation systematically expands into full copular assertions ('is the preciousness...'); otherwise matches Hebrew attributes listed in transcription."
+    },
+    {
+      "id": "0d9b5a6e26",
+      "language": "Tibetan",
+      "arm": "flash",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/69e7613ccc48e59ad74ee65d?page=144",
+      "image": "https://images.sourcelibrary.org/pages/69e7613ccc48e59ad74ee65d/0144.jpg",
+      "opus": 4,
+      "gemini-flash-low": 2,
+      "d": 2,
+      "opus_reason": "All three leaves are translated (in reverse order): the list of transmissions received, the practice and signs of accomplishment, and the song of realization. A few technical phrases are loosely rendered. I read Tibetan only moderately well.",
+      "gemini-flash-low_reason": "Translates the text accurately section by section but in reverse page/leaf order (leaf 3 -> leaf 2 -> leaf 1)."
+    },
+    {
+      "id": "4ab28b7b9c",
+      "language": "Tibetan",
+      "arm": "lite",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/69e78a8a4a6785cfd60d3a96?page=2657",
+      "image": "https://images.sourcelibrary.org/pages/69e78a8a4a6785cfd60d3a96/2657.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "The ending ('these are the ten paper scrolls', snake seal, a sign to be abandoned) follows the source, but the garbled divination lines are rendered as fluent instructions; I read this corrupted Tibetan weakly.",
+      "gemini-flash-low_reason": "Faithfully translates the OCR text line by line, including terms, condition clauses, and closing formula; trailing OCR noise correctly ignored."
+    },
+    {
+      "id": "7b0cd73b41",
+      "language": "Japanese",
+      "arm": "flash",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/6a08e2ce50bd891addfb51e6?page=23",
+      "image": "https://images.sourcelibrary.org/pages/6a08e2ce50bd891addfb51e6/0023.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "broad course of the scene (maid at the door, no oil, tinderbox, burning the old chest, friends barging in, drying off, asking for sake) is right, but several clauses of the early-modern prose are misconstrued; I read this register weakly",
+      "gemini-flash-low_reason": "Faithfully translates the provided Japanese source text sentence by sentence without omissions or inventions."
+    },
+    {
+      "id": "6ccbdcc374",
+      "language": "Hebrew",
+      "arm": "lite",
+      "script": "unknown",
+      "url": "https://sourcelibrary.org/book/69c1ba908522835be845944d?page=230",
+      "image": "https://images.sourcelibrary.org/pages/69c1ba908522835be845944d/0230.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "The aroma/pastida section follows the source reasonably, but חלב (fat) is read as milk throughout the second half, and the garbled stretches are papered over with fluent prose.",
+      "gemini-flash-low_reason": "Faithful translation of the halakhic source text across all three columns without omissions or inventions."
+    },
+    {
+      "id": "bfef3a4a94",
+      "language": "Sanskrit",
+      "arm": "flash",
+      "script": "unknown",
+      "url": "https://sourcelibrary.org/book/69906d1964d44bd0a0ef5210?page=8",
+      "image": "https://images.sourcelibrary.org/pages/69906d1964d44bd0a0ef5210/0008.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "broad sense of houses-as-relatives, travel/retrograde return rule and seventh-house woman rules is recovered, but much of the garbled commentary is papered over with fluent guesses; read the corrupt Sanskrit only partly",
+      "gemini-flash-low_reason": "Faithfully translates all astrological houses, travel queries, and planetary associations from the source transcription without omission or invention."
+    },
+    {
+      "id": "75a963a5f2",
+      "language": "Greek",
+      "arm": "lite",
+      "script": "unknown",
+      "url": "https://sourcelibrary.org/book/69938a93d5a98fd66f42d3fa?page=113",
+      "image": "https://images.sourcelibrary.org/pages/69938a93d5a98fd66f42d3fa/0113.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "Rhampsinitus' descent, the robe-and-wolf rite, metempsychosis and the Cheops transition follow the source; the garbled opening lines are rendered as confident nonsense prose.",
+      "gemini-flash-low_reason": "faithfully translates the transcribed Greek source text throughout without notable defects"
+    },
+    {
+      "id": "de3204af00",
+      "language": "Chinese",
+      "arm": "flash",
+      "script": "manuscript",
+      "url": "https://sourcelibrary.org/book/6a3c5ebb40c88a541d8e5477?page=73",
+      "image": "https://images.sourcelibrary.org/pages/6a3c5ebb40c88a541d8e5477/0073.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "most character-to-radical groupings follow the OCR, but the opening rows are regrouped and several characters are dropped or invented as entries; the OCR itself is unreliable",
+      "gemini-flash-low_reason": "Accurately translates and organizes every character and radical listed in the source text into tabular format with correct meanings."
+    },
+    {
+      "id": "cfdd57497d",
+      "language": "Latin",
+      "arm": "flash",
+      "script": "unknown",
+      "url": "https://sourcelibrary.org/book/59e68f94-49d0-4ed7-a610-b1f53e55b2f8?page=369",
+      "image": "https://images.sourcelibrary.org/pages/59e68f94-49d0-4ed7-a610-b1f53e55b2f8/0369.jpg",
+      "opus": 3,
+      "gemini-flash-low": 5,
+      "d": -2,
+      "opus_reason": "Section frame (Scincus, Spinach, Flaxseed, Alua, dung) and many properties follow the heavily abbreviated OCR, with honest [unclear] markers, but several garbled spans are turned into confident claims and some terms mistranslated; reading of the abbreviations is uncertain.",
+      "gemini-flash-low_reason": "Accurately renders the source text across all entries, faithfully following the OCR abbreviations and transcription without invention or omission."
+    },
+    {
+      "id": "785ecdc0f1",
+      "language": "Hebrew",
+      "arm": "flash",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/6a357f1ac6e2d5bb56a64539?page=204",
+      "image": "https://images.sourcelibrary.org/pages/6a357f1ac6e2d5bb56a64539/0204.jpg",
+      "opus": 2,
+      "gemini-flash-low": 1,
+      "d": 1,
+      "opus_reason": "Mishnah/Gemara of BB 3:11 and 4:1 rendered recognisably, but 'ויתר' (waived) is turned into 'permitted' reversing both views, and large commentary blocks (Amudei Yerushalayim, most of Mareh haPanim) are dropped.",
+      "gemini-flash-low_reason": "The source transcription is from a completely different folio/leaf than image.jpg (Ch. 3 Halakha 11 / Ch. 4 Halakha 1 vs. Ch. 4 Halakhot 2–4)."
+    },
+    {
+      "id": "974ae0ae78",
+      "language": "Italian",
+      "arm": "flash",
+      "script": "unknown",
+      "url": "https://sourcelibrary.org/book/6991eadd2f801130a473ea3c?page=31",
+      "image": "https://images.sourcelibrary.org/pages/6991eadd2f801130a473ea3c/0031.jpg",
+      "opus": 1,
+      "gemini-flash-low": 2,
+      "d": -1,
+      "opus_reason": "Label 'FEUILLETS INÉDITS DE LÉONARD DE VINCI … Feuillet n° 4 Verso' rendered correctly, but most of the output is invented anatomical text not on the page.",
+      "gemini-flash-low_reason": "Faithfully translates the publisher label text, but invents four paragraphs of anatomical notes about the spine and nerves not present in the source."
+    },
+    {
+      "id": "64e631dc91",
+      "language": "Sanskrit",
+      "arm": "opus",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/69ee89f34501bec896546e1d?page=770",
+      "image": "https://images.sourcelibrary.org/pages/69ee89f34501bec896546e1d/0770.jpg",
+      "opus": 2,
+      "gemini-flash-low": 3,
+      "d": -1,
+      "opus_reason": "Heavily abridged: Sāyaṇa's verse-5 comment, padapāṭha and all grammar notes dropped; verses 6–7 and their glosses kept in reduced form",
+      "gemini-flash-low_reason": "Translates verse lines and essential commentary for verses 6 and 7, but completely drops the preceding lines of text/commentary before the colophon and Sāyaṇa's grammatical notes"
+    },
+    {
+      "id": "369d2b577c",
+      "language": "Japanese",
+      "arm": "flash",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/69dfede68d34461cbe7f4df4?page=71",
+      "image": "https://images.sourcelibrary.org/pages/69dfede68d34461cbe7f4df4/0071.jpg",
+      "opus": 2,
+      "gemini-flash-low": 3,
+      "d": -1,
+      "opus_reason": "Source is an OCR repetition loop ('の三の三' x1344); translation treats it as a real collation list and explains it with an invented classification note.",
+      "gemini-flash-low_reason": "Faithfully translates items ①–㊿ and (1344), but replaces entries (51)–(1343) with an interpretive summary note."
+    },
+    {
+      "id": "b883cdf746",
+      "language": "Hebrew",
+      "arm": "lite",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/69b4cd3dd5b6c3815e1a504b?page=154",
+      "image": "https://images.sourcelibrary.org/pages/69b4cd3dd5b6c3815e1a504b/0154.jpg",
+      "opus": 2,
+      "gemini-flash-low": 3,
+      "d": -1,
+      "opus_reason": "Hebrew column (Lev 23:32-42) rendered correctly; the Aramaic column is dropped and replaced with Lev 23:43-44 imported from elsewhere.",
+      "gemini-flash-low_reason": "Translates the Hebrew column well, but completely drops the parallel Targum column and replaces it with verses (Lev 23:43-44) from the next page."
+    },
+    {
+      "id": "7209ac2836",
+      "language": "Italian",
+      "arm": "lite",
+      "script": "print",
+      "url": "https://sourcelibrary.org/book/6a084e0949638a50931b4b3d?page=422",
+      "image": "https://images.sourcelibrary.org/pages/6a084e0949638a50931b4b3d/0422.jpg",
+      "opus": 2,
+      "gemini-flash-low": 3,
+      "d": -1,
+      "opus_reason": "drops the first ~7 lines (harassing the river-diverting works, supply raid killing the tribune, ~1,400 killed with their officer); remainder from 'Per le quali rovine' to 'dubitava di' is faithful",
+      "gemini-flash-low_reason": "omits the opening paragraph/sentences describing the attacks on the Romans at the river and ditch (~1400 killed); remainder is translated faithfully"
+    }
+  ],
+  "wave_delta": {
+    "note": "wave 1 = 2026-09-30, Opus text-only; wave 2 = this run, Opus WITH the page image (the instrument changed as well as the corpus). lang×arm uses each run's own arm shares; \"lite/flash only\" restricts wave 2 to the two arms wave 1 could see.",
+    "wave1": {
+      "n": 311,
+      "ge4_lang_x_arm": {
+        "est": 87.2,
+        "ci": [
+          82,
+          92.1
+        ],
+        "n": 311
+      },
+      "major_lang_x_arm": {
+        "est": 14.4,
+        "ci": [
+          9,
+          20.1
+        ],
+        "n": 311
+      },
+      "ge4_lang": {
+        "est": 89.1,
+        "ci": [
+          85.5,
+          92.5
+        ],
+        "n": 311
+      },
+      "major_lang": {
+        "est": 11.4,
+        "ci": [
+          7.7,
+          15.6
+        ],
+        "n": 311
+      }
+    },
+    "wave2": {
+      "n": 365,
+      "ge4_lang_x_arm": {
+        "est": 86.3,
+        "ci": [
+          81.3,
+          90.9
+        ],
+        "n": 365
+      },
+      "major_lang_x_arm": {
+        "est": 13.6,
+        "ci": [
+          9,
+          18.7
+        ],
+        "n": 365
+      },
+      "ge4_lang": {
+        "est": 87.1,
+        "ci": [
+          82.7,
+          91.1
+        ],
+        "n": 365
+      },
+      "major_lang": {
+        "est": 12.8,
+        "ci": [
+          8.9,
+          17.1
+        ],
+        "n": 365
+      },
+      "ge4_lite_flash_only": {
+        "est": 85,
+        "ci": [
+          79.6,
+          90.1
+        ],
+        "n": 263
+      },
+      "major_lite_flash_only": {
+        "est": 14.8,
+        "ci": [
+          9.8,
+          19.9
+        ],
+        "n": 263
+      }
+    },
+    "delta": {
+      "ge4_lang_x_arm": {
+        "est": -0.9,
+        "ci": [
+          -7.8,
+          6.1
+        ]
+      },
+      "major_lang_x_arm": {
+        "est": -0.8,
+        "ci": [
+          -8.5,
+          6.4
+        ]
+      },
+      "ge4_lang": {
+        "est": -2,
+        "ci": [
+          -7.4,
+          3.5
+        ]
+      },
+      "major_lang": {
+        "est": 1.4,
+        "ci": [
+          -4.3,
+          7.1
+        ]
+      },
+      "ge4_lite_flash_only": {
+        "est": -2.2,
+        "ci": [
+          -8.9,
+          5
+        ]
+      },
+      "major_lite_flash_only": {
+        "est": 0.4,
+        "ci": [
+          -7.3,
+          8
+        ]
+      }
+    }
+  },
+  "monthly_2026_10": {
+    "n": 103,
+    "note": "Oct-1 draw (seed 20261001, monthly design: language quotas, lite/flash only), judged 2026-10-30 by Opus text-only (JUDGE-PROMPT.md verbatim)",
+    "ge4_lang": {
+      "est": 83.3,
+      "ci": [
+        74.4,
+        91.5
+      ],
+      "n": 103
+    },
+    "major_lang": {
+      "est": 14.8,
+      "ci": [
+        6.8,
+        23.8
+      ],
+      "n": 103
+    }
+  }
+}

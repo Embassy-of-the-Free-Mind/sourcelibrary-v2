@@ -224,6 +224,112 @@ export function classifyVariant(raw, opts = {}) {
   return { shape: 'clean', matchable: true, people: [v] };
 }
 
+/**
+ * Role words as catalogues abbreviate them, including plurals and the German
+ * forms (Hrsg., Bearb., Übers.) that `ROLE` does not carry. Kept apart from
+ * `ROLE` on purpose: widening `ROLE` would re-classify variants as unmatchable
+ * for every writer that links by name, which is a separate decision.
+ */
+const ROLE_WORD = /^(?:trans(?:l(?:ator|ators|ated)?)?|tr|eds?|editors?|edited|hrsg|herausgegeben|bearb|ubers|uebers|übers|comm(?:entary|entator)?|illus(?:t(?:rator|rated)?)?|engraver|printer|publisher|introd(?:uction)?|pref(?:ace)?|annot(?:ator|ated)?|compil(?:er|ed)?)\.?(?:\s+by)?$/i;
+const roleFromWord = (w) => {
+  const s = w.toLowerCase().replace(/\.$/, '');
+  if (/^(trans|transl|translator|translators|translated|tr|ubers|uebers|übers)/.test(s)) return 'trl';
+  if (/^(eds?|editors?|edited|hrsg|herausgegeben|bearb)$/.test(s)) return 'edt';
+  if (/^comm/.test(s)) return 'cmm';
+  if (/^(illus|engraver)/.test(s)) return 'ill';
+  if (s === 'printer') return 'prt';
+  if (s === 'publisher') return 'pbl';
+  return 'ctb';
+};
+
+/**
+ * Split one person fragment of a `books.author` string into the name and the
+ * role its annotation states (#7787). A bracket that names a role AND another
+ * person ("Plutarch (trans. William W. Goodwin)") is a second contributor, not
+ * a role of the first: it comes back in `extra`, and the first keeps no role.
+ *
+ *   parseContributor('Katherine Tingley (editor)') -> { name: 'Katherine Tingley', role: 'edt', extra: [] }
+ *   parseContributor('trans. Bernadotte Perrin')   -> { name: 'Bernadotte Perrin', role: 'trl', extra: [] }
+ *
+ * `roleFrom` says where the role came from: 'bracket', 'prefix' or 'suffix'.
+ * A caller uses it to decide whether a trailing "(eds.)" covers every name
+ * joined by "&" before it.
+ */
+export function parseContributor(fragment) {
+  let s = String(fragment ?? '').trim();
+  let role = null; let roleFrom = null;
+  const extra = []; const alsoRoles = [];
+  s = s.replace(/[([]([^)\]]*)[)\]]/g, (m, inner) => {
+    const words = inner.trim().split(/\s+/);
+    for (let n = Math.min(3, words.length); n >= 1; n--) {
+      const head = words.slice(0, n).join(' ');
+      if (!ROLE_WORD.test(head)) continue;
+      const rest = words.slice(n).join(' ').replace(/^by\s+/i, '').trim();
+      if (/\p{L}{2,}/u.test(rest)) extra.push({ name: rest, role: roleFromWord(words[0]) });
+      // "[Übers.] [Hrsg.]": one person, two roles; keep both.
+      else if (role && role !== roleFromWord(words[0])) alsoRoles.push(roleFromWord(words[0]));
+      else { role = roleFromWord(words[0]); roleFrom = 'bracket'; }
+      return ' ';
+    }
+    // Role LAST: "(Rivinus ed.)", "(Daisetz Teitaro Suzuki, trans.)" name a
+    // second person; "(李栻, compiler)" is the first person's own name in
+    // their script, so the role is theirs and the name stays.
+    const tail = inner.trim().match(/^(.*?)[,\s]+([\p{L}]+\.?)$/u);
+    if (tail && ROLE_WORD.test(tail[2]) && /\p{L}{2,}/u.test(tail[1])) {
+      if (hasNonLatin(tail[1])) { role = roleFromWord(tail[2]); roleFrom = 'bracket'; return ` (${tail[1].trim()})`; }
+      extra.push({ name: tail[1].trim(), role: roleFromWord(tail[2]) });
+      return ' ';
+    }
+    return m;
+  });
+  // Outside a bracket a bare "Ed" or "Tr" may be a name, so a prefix or suffix
+  // role needs a full stop, "by", or a word of six letters or more.
+  const plain = (w) => ROLE_WORD.test(w) && (/\.$|\sby$/i.test(w) || w.length >= 6);
+  // Mid-string: "Niccolò Machiavelli, tr. W.K. Marriott" is a second person.
+  const mid = s.match(/,\s+(\S+\.?(?:\s+by)?)\s+(\S.*)$/u);
+  if (mid && plain(mid[1]) && /\p{L}{2,}/u.test(mid[2])) {
+    extra.push({ name: mid[2].trim(), role: roleFromWord(mid[1].split(/\s+/)[0]) });
+    s = s.slice(0, mid.index);
+  }
+  const pre = s.match(/^((?:\S+\.?)(?:\s+by)?)\s+(?=\S)/);
+  if (pre && plain(pre[1])) { role = roleFromWord(pre[1].split(/\s+/)[0]); roleFrom = 'prefix'; s = s.slice(pre[0].length); }
+  const suf = s.match(/[,\s]+([\p{L}]+\.?)\s*$/u);
+  if (!role && suf && plain(suf[1]) && s.slice(0, suf.index).trim()) {
+    role = roleFromWord(suf[1]); roleFrom = 'suffix'; s = s.slice(0, suf.index);
+  }
+  const name = s.replace(/\s{2,}/g, ' ').replace(/^[,;:\s]+|[,;:\s]+$/g, '').trim();
+  for (const r of alsoRoles) extra.push({ name, role: r });
+  return { name, role, roleFrom, extra };
+}
+
+/** Separators between people in a `books.author` string, captured so the caller sees which joined each pair. */
+const CONTRIBUTOR_SEP = /(\s*[|;]\s*|\s+&\s+|\s+\/\s+|\s*,\s+(?:and|et)\s+)/;
+
+/**
+ * Split a whole `books.author` string into `{ name, role }` contributors, role
+ * null where the string states none (#7787). One splitter for the seed
+ * report, the slug repair and the writer, so they cannot disagree on who a
+ * string names.
+ *
+ * A bracketed role on the last of names joined by "&", "and" or "et" covers
+ * them all ("Philip Schaff & Henry Wace (eds.)"); after ";", "|" or "/" each
+ * part keeps its own ("Euclid; T.L. Heath (trans.)" makes Heath, not Euclid,
+ * the translator). Do not call it on a string `classifyVariant` called a
+ * script pair or an institution: those are one heading, not several people.
+ */
+export function splitContributors(author) {
+  const pieces = String(author ?? '').split(CONTRIBUTOR_SEP);
+  const parts = []; const seps = [];
+  pieces.forEach((p, i) => { if (i % 2) seps.push(p); else if (p.trim()) parts.push(p.trim()); });
+  const parsed = parts.map(parseContributor);
+  const last = parsed[parsed.length - 1];
+  if (parsed.length > 1 && last.roleFrom === 'bracket' && seps.every((x) => !/[|;/]/.test(x))
+      && parsed.slice(0, -1).every((p) => !p.role)) {
+    for (const p of parsed) p.role = last.role;
+  }
+  return parsed.flatMap((p) => [{ name: p.name, role: p.role }, ...p.extra]).filter((p) => p.name);
+}
+
 /** Drop a trailing/leading role annotation from one person fragment. */
 export function stripRole(s) {
   return String(s ?? '')

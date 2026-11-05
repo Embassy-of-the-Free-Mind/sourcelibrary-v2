@@ -1,0 +1,199 @@
+{
+ "scored_at": "2026-10-31T16:16:59.968Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled",
+ "strata": {
+  "all": {
+   "n_drawn": 48,
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "39/48",
+      "wrong_text": "3/48"
+     },
+     "written": {
+      "accept": "39/45",
+      "wrong_text": "3/45",
+      "invented_or_wrong_leaf": "0/45",
+      "p_acc_ge_080": 0.844,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "more than one transcription header": 2,
+      "reply wrapper": 1
+     },
+     "agy_calls_per_page": 0.383,
+     "calls": {
+      "calls": 72,
+      "pages": 188,
+      "per_page": 0.383,
+      "usd": 2.7033657,
+      "usd_per_1k_pages": 14.38
+     },
+     "gpu_secs_per_page": null,
+     "quota_usd_per_1k_pages": 14.38,
+     "quota_usd_per_1k_accepted": 17.698,
+     "usd_per_accepted_page": 0.00041,
+     "wrong_text_pages": [
+      {
+       "page_id": "69b69090080b19f98fcdfe2a",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O5: wie $\\text{BA}$, zu $\\text{AC}$, alſo das qua<lb/>drat $\\text{EF}$, zum quadrat  — the numbers printed under the letters are dropped: 16 and 12 under BA and AC, 36 and 27 under EF and FG",
+        "O5: Vnd wie $\\text{AB}$, zu $\\text{BC}$, alſo das quadrat $\\text{EF}$, zum quadrat $ — the line of numbers 16, 4, 36, 9 printed under AB, BC, EF and H is dropped"
+       ]
+      },
+      {
+       "page_id": "6ac50d984ba7223afe0217a3",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Hertzlich wir werden für jm ſtehn — page reads 'Herꝛlich' (Herrlich, 'gloriously'); candidate turns it into 'Hertzlich' ('heartily'), which changes the sense"
+       ]
+      },
+      {
+       "page_id": "6a4a3fc89edae40468f93561",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: von Waldtwißmat/ leg auff ein gelben — page reads 'von Waldtwißmat gemacht/ ein gelben'; 'gemacht' dropped and an extra 'leg auff' added",
+        "O6: da dieselben deß hohe Wesens sind — page reads 'Dingē/ da die Farbē deß hohē Wesens' (the colours), not 'dieselben'"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "agy-flash-low@8": {
+     "all_drawn": {
+      "accept": "41/48",
+      "wrong_text": "3/48"
+     },
+     "written": {
+      "accept": "41/45",
+      "wrong_text": "3/45",
+      "invented_or_wrong_leaf": "1/45",
+      "p_acc_ge_080": 0.968,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "more than one transcription header": 2,
+      "reply wrapper": 1
+     },
+     "agy_calls_per_page": 0.299,
+     "calls": {
+      "calls": 111,
+      "pages": 371,
+      "per_page": 0.299,
+      "usd": 2.878100775,
+      "usd_per_1k_pages": 7.758
+     },
+     "gpu_secs_per_page": null,
+     "quota_usd_per_1k_pages": 7.758,
+     "quota_usd_per_1k_accepted": 9.083,
+     "usd_per_accepted_page": 0.0003,
+     "wrong_text_pages": [
+      {
+       "page_id": "69b69090080b19f98fcdfe2a",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O5: wie BA, zu AC, alſo das qua<lb/>drat EF, zum quadrat FG, auß — The numbers printed under the line (16, 12 and 36, 27) are left out, so the working that produces √27 is missing",
+        "O5: Vnd wie AB, zu BC, alſo das quadrat EF, zum quadrat H, — The numbers printed under the line (16, 4, 36, 9) are left out"
+       ]
+      },
+      {
+       "page_id": "6a4a3fc89edae40468f93561",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: von Waldtwissmat/ leg auff ein gelben — page reads 'von Waldtwißmat gemacht/ ein gelben'; 'gemacht' dropped and 'leg auff' invented",
+        "O6: da dieselbe deß hohe Wesens sind — page reads 'da die Farbē deß hohē Wesens' (Farben), not 'dieselbe'"
+       ]
+      },
+      {
+       "page_id": "6ac4fc064ba7223afef719b2",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: im xv. grad — the page reads 'xx.' (20th degree), not 'xv.' (15th)",
+        "O7: dise zü­stuck — the page has the numeral 'ij.' (two pieces); the candidate turns it into the word 'zü', so the count is lost"
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "agy-flash-low@8|agy-flash-low@4": {
+     "n": 45,
+     "books": 45,
+     "both": 38,
+     "a_only": 3,
+     "b_only": 1,
+     "neither": 3,
+     "p_a_within_008": 0.992,
+     "rule": "P(acc_agy-flash-low@8 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "face": "all",
+      "kind": "D",
+      "route": "agy-flash-low@8",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "all",
+      "kind": "C",
+      "route": "agy-flash-low@8",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "replaces": [],
+    "voided": false,
+    "why": "routes that replace agy-flash-low@4 by RULE.md 2, cheapest per accepted page"
+   }
+  }
+ },
+ "decision": {
+  "passes": false,
+  "pick": "agy-flash-low@4"
+ }
+}

@@ -1,0 +1,6356 @@
+{
+ "issue": 6740,
+ "generated_by": "scripts/eval/ocr-pareto-chains-6740/run-chains.mjs cjk-tags",
+ "not_on_the_chart": true,
+ "removed": "warning, meta, image-desc, figure, note, scan-quality, language, page-type, columns, detected-images, vocab (the tags normAlpha drops with their text)",
+ "rows": [
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-11ad17-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-11ad17-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.293,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-152a1c-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.207,
+   "cer_tags_removed": 0.184
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-152a1c-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.172,
+   "cer_tags_removed": 0.184
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-153083-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.189,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-153083-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.14,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1530c9-p47",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.178,
+   "cer_tags_removed": 0.178
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1530c9-p47",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.183
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1548b9-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.337
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1548b9-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.322,
+   "cer_tags_removed": 0.337
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-155c4b-p38",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.256,
+   "cer_tags_removed": 0.087
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-155c4b-p38",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.169,
+   "cer_tags_removed": 0.087
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-155e0d-p172",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-155e0d-p172",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.153,
+   "cer_tags_removed": 0.125
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-155f3b-p62",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.181,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-155f3b-p62",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.158,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-156da2-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.49,
+   "cer_tags_removed": 0.126
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-156da2-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.689,
+   "cer_tags_removed": 0.152
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-157705-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.451,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-157705-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.457,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1589e1-p111",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.541,
+   "cer_tags_removed": 0.216
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1589e1-p111",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.345,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-158d4c-p41",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.316,
+   "cer_tags_removed": 0.1
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-158d4c-p41",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.292,
+   "cer_tags_removed": 0.168
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-159036-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.344,
+   "cer_tags_removed": 0.214
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-159036-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.277,
+   "cer_tags_removed": 0.219
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15bef8-p67",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.396,
+   "cer_tags_removed": 0.31
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15bef8-p67",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.331,
+   "cer_tags_removed": 0.315
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15c07e-p82",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.399,
+   "cer_tags_removed": 0.248
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15c07e-p82",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.332,
+   "cer_tags_removed": 0.245
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15d0ac-p98",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.272,
+   "cer_tags_removed": 0.136
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15d0ac-p98",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.158,
+   "cer_tags_removed": 0.154
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15d3af-p133",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15d3af-p133",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.333,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15ecc4-p70",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.38,
+   "cer_tags_removed": 0.107
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15ecc4-p70",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.141
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15edc6-p45",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.128,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15edc6-p45",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.088,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15edc6-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15edc6-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.111,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15ee1c-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.222,
+   "cer_tags_removed": 0.08
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-15ee1c-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.116,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-160118-p46",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.722,
+   "cer_tags_removed": 0.472
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-160118-p46",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.546,
+   "cer_tags_removed": 0.38
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-160118-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.704,
+   "cer_tags_removed": 0.454
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-160118-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.713,
+   "cer_tags_removed": 0.565
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-160c1b-p96",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.399,
+   "cer_tags_removed": 0.254
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-160c1b-p96",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.403,
+   "cer_tags_removed": 0.269
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-162a08-p78",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.077
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-162a08-p78",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.13,
+   "cer_tags_removed": 0.072
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1636e8-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.278,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1636e8-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.162,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-163e02-p15",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.298,
+   "cer_tags_removed": 0.216
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-163e02-p15",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.282,
+   "cer_tags_removed": 0.322
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-165dc2-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.245,
+   "cer_tags_removed": 0.176
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-165dc2-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.176
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-165e45-p31",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.321,
+   "cer_tags_removed": 0.166
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-165e45-p31",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.261,
+   "cer_tags_removed": 0.148
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1670d3-p111",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.503,
+   "cer_tags_removed": 0.222
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1670d3-p111",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.333,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1673a7-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.232,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1673a7-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.19,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-167a17-p97",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.41,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-167a17-p97",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.306,
+   "cer_tags_removed": 0.181
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-168118-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.392,
+   "cer_tags_removed": 0.292
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-168118-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.304,
+   "cer_tags_removed": 0.287
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1687bf-p98",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.48,
+   "cer_tags_removed": 0.23
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1687bf-p98",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.321,
+   "cer_tags_removed": 0.23
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16b388-p101",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.317,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16b388-p101",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.172,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16b73f-p31",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.361,
+   "cer_tags_removed": 0.303
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16b73f-p31",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.286,
+   "cer_tags_removed": 0.235
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16d713-p65",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.385,
+   "cer_tags_removed": 0.37
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16d713-p65",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.365,
+   "cer_tags_removed": 0.367
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16d713-p65",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.37,
+   "cer_tags_removed": 0.357
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16d713-p65",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.357,
+   "cer_tags_removed": 0.357
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16ecb1-p8",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.339,
+   "cer_tags_removed": 0.339
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-16ecb1-p8",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.339,
+   "cer_tags_removed": 0.339
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1af91e-p34",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.361,
+   "cer_tags_removed": 0.278
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1af91e-p34",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.317,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1afcd4-p94",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.215,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1afcd4-p94",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.141,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1afd63-p21",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.481,
+   "cer_tags_removed": 0.222
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1afd63-p21",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.438,
+   "cer_tags_removed": 0.232
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b0128-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b0128-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.256,
+   "cer_tags_removed": 0.103
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b113f-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.31
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b113f-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.352,
+   "cer_tags_removed": 0.329
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b298d-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.241,
+   "cer_tags_removed": 0.123
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b298d-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.191,
+   "cer_tags_removed": 0.123
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b2b4c-p81",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.275,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b2b4c-p81",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b4835-p170",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.048
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b4835-p170",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.149,
+   "cer_tags_removed": 0.048
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b4f83-p98",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.261,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b4f83-p98",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.163,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b70d8-p96",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.672,
+   "cer_tags_removed": 0.224
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b70d8-p96",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.397,
+   "cer_tags_removed": 0.293
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b7295-p59",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.309,
+   "cer_tags_removed": 0.2
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b7295-p59",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.264,
+   "cer_tags_removed": 0.2
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b77f8-p104",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.227,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b77f8-p104",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b855f-p9",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.399,
+   "cer_tags_removed": 0.086
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b855f-p9",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.62,
+   "cer_tags_removed": 0.129
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b8cfd-p34",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.261,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b8cfd-p34",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.254,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b9568-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.245,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b9568-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.152,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b9b6f-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.267,
+   "cer_tags_removed": 0.267
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1b9b6f-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.255,
+   "cer_tags_removed": 0.279
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ba7a1-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.132,
+   "cer_tags_removed": 0.07
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ba7a1-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.094,
+   "cer_tags_removed": 0.059
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ba9dd-p41",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.3,
+   "cer_tags_removed": 0.224
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ba9dd-p41",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.242,
+   "cer_tags_removed": 0.224
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bb750-p125",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.306,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bb750-p125",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.259,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bc725-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.079
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bc725-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.142,
+   "cer_tags_removed": 0.079
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bd0f2-p84",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.209,
+   "cer_tags_removed": 0.067
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bd0f2-p84",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.126,
+   "cer_tags_removed": 0.083
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bd7f3-p106",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.151,
+   "cer_tags_removed": 0.136
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1bd7f3-p106",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.154
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1be32c-p152",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.23,
+   "cer_tags_removed": 0.201
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1be32c-p152",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.201
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c003c-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.225,
+   "cer_tags_removed": 0.26
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c003c-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.225,
+   "cer_tags_removed": 0.265
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c037f-p153",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.446,
+   "cer_tags_removed": 0.338
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c037f-p153",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.446,
+   "cer_tags_removed": 0.338
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c0ee9-p44",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.344,
+   "cer_tags_removed": 0.176
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c0ee9-p44",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.16,
+   "cer_tags_removed": 0.137
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c16b2-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c16b2-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.136,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c1895-p37",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c1895-p37",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.109,
+   "cer_tags_removed": 0.091
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c20ef-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.296,
+   "cer_tags_removed": 0.246
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c20ef-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.275,
+   "cer_tags_removed": 0.271
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c2632-p40",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.36,
+   "cer_tags_removed": 0.24
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c2632-p40",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.285,
+   "cer_tags_removed": 0.235
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c35dd-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.319,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c35dd-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.142,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c39b7-p75",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.427,
+   "cer_tags_removed": 0.38
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c39b7-p75",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.384,
+   "cer_tags_removed": 0.384
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c3cae-p60",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.274,
+   "cer_tags_removed": 0.274
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c3cae-p60",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.302,
+   "cer_tags_removed": 0.285
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c5126-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.347,
+   "cer_tags_removed": 0.371
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c5126-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.359,
+   "cer_tags_removed": 0.371
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c54c2-p137",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.355,
+   "cer_tags_removed": 0.242
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c54c2-p137",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.398,
+   "cer_tags_removed": 0.251
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c7d36-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.199,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c7d36-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.139,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c8d13-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c8d13-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.262,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c8d68-p156",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.259,
+   "cer_tags_removed": 0.161
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c8d68-p156",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 1,
+   "cer_tags_removed": 0.909
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9230-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.275,
+   "cer_tags_removed": 0.248
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9230-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.248,
+   "cer_tags_removed": 0.275
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9345-p9",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.182,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9345-p9",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9432-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.3,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c9432-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.181,
+   "cer_tags_removed": 0.093
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c98a7-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.329,
+   "cer_tags_removed": 0.142
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1c98a7-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.142
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cac6c-p115",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.425,
+   "cer_tags_removed": 0.149
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cac6c-p115",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.246,
+   "cer_tags_removed": 0.179
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cb6d0-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cb6d0-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.159,
+   "cer_tags_removed": 0.123
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cbeff-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.536,
+   "cer_tags_removed": 0.143
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cbeff-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.262,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cc663-p145",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cc663-p145",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.088,
+   "cer_tags_removed": 0.082
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cc711-p104",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.298,
+   "cer_tags_removed": 0.244
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cc711-p104",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.244,
+   "cer_tags_removed": 0.244
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cefa4-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.324,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cefa4-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.207,
+   "cer_tags_removed": 0.135
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cf530-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.246,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cf530-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.213,
+   "cer_tags_removed": 0.18
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cfb7c-p71",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.331,
+   "cer_tags_removed": 0.223
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cfb7c-p71",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.271,
+   "cer_tags_removed": 0.223
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cfdf0-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.257,
+   "cer_tags_removed": 0.265
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1cfdf0-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.228,
+   "cer_tags_removed": 0.271
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d0a06-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.375,
+   "cer_tags_removed": 0.25
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d0a06-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.418,
+   "cer_tags_removed": 0.25
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d361b-p121",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.358,
+   "cer_tags_removed": 0.259
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d361b-p121",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.274,
+   "cer_tags_removed": 0.259
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d4966-p105",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.147
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d4966-p105",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.28,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d76c3-p106",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.253,
+   "cer_tags_removed": 0.214
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d76c3-p106",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.175
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d89bb-p120",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.206,
+   "cer_tags_removed": 0.22
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d89bb-p120",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.215,
+   "cer_tags_removed": 0.225
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d928d-p122",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.316,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d928d-p122",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.115,
+   "cer_tags_removed": 0.115
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d94ab-p12",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1d94ab-p12",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.173,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1da8f2-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.256,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1da8f2-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.301,
+   "cer_tags_removed": 0.18
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1db403-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.11,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1db403-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.143,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1dba23-p65",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.286,
+   "cer_tags_removed": 0.193
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1dba23-p65",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.224,
+   "cer_tags_removed": 0.193
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1dcb3f-p44",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.199,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1dcb3f-p44",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.114,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ddcd0-p80",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.222,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ddcd0-p80",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.174,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ddf24-p49",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.417,
+   "cer_tags_removed": 0.314
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ddf24-p49",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.397,
+   "cer_tags_removed": 0.319
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1de6e7-p38",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.231,
+   "cer_tags_removed": 0.122
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1de6e7-p38",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.122
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1df4d4-p15",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.068
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1df4d4-p15",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.11,
+   "cer_tags_removed": 0.079
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e2cbe-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.224,
+   "cer_tags_removed": 0.219
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e2cbe-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.259,
+   "cer_tags_removed": 0.189
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e30b7-p31",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.238,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e30b7-p31",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.272,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e3261-p63",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.263,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e3261-p63",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.125,
+   "cer_tags_removed": 0.081
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e3517-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.465,
+   "cer_tags_removed": 0.335
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e3517-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.5,
+   "cer_tags_removed": 0.339
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e37f3-p113",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.194,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e37f3-p113",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.103
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e38be-p142",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.375,
+   "cer_tags_removed": 0.26
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e38be-p142",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.308,
+   "cer_tags_removed": 0.221
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e38bf-p16",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.37,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e38bf-p16",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.25,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e41c1-p34",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.385
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e41c1-p34",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.339,
+   "cer_tags_removed": 0.374
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e6e3d-p90",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.223,
+   "cer_tags_removed": 0.244
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e6e3d-p90",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.228,
+   "cer_tags_removed": 0.244
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e74c1-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.461,
+   "cer_tags_removed": 0.272
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e74c1-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.403,
+   "cer_tags_removed": 0.277
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e87a4-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.475,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e87a4-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.406,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e9cd1-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.17,
+   "cer_tags_removed": 0.07
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e9cd1-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.179,
+   "cer_tags_removed": 0.079
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e9e50-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.341,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e9e50-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.294,
+   "cer_tags_removed": 0.31
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e9e9a-p27",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.442,
+   "cer_tags_removed": 0.202
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1e9e9a-p27",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.221,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eb63b-p113",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.276,
+   "cer_tags_removed": 0.173
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eb63b-p113",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.276,
+   "cer_tags_removed": 0.178
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eb63c-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.265,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eb63c-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.163,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eba3d-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.406,
+   "cer_tags_removed": 0.239
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eba3d-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.35,
+   "cer_tags_removed": 0.239
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ebe75-p32",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.343,
+   "cer_tags_removed": 0.348
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ebe75-p32",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.324,
+   "cer_tags_removed": 0.343
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ed188-p29",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.145,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ed188-p29",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.103,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ed838-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.31,
+   "cer_tags_removed": 0.201
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ed838-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.243,
+   "cer_tags_removed": 0.206
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1edd9a-p18",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.296,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1edd9a-p18",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eeb93-p10",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.321,
+   "cer_tags_removed": 0.329
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eeb93-p10",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.325,
+   "cer_tags_removed": 0.333
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ef65d-p130",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.22,
+   "cer_tags_removed": 0.134
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ef65d-p130",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.142
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eface-p53",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.2,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1eface-p53",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.178,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f060d-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.377,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f060d-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.358,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f090c-p191",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.19,
+   "cer_tags_removed": 0.092
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f090c-p191",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.158,
+   "cer_tags_removed": 0.103
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f1e9b-p39",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.192,
+   "cer_tags_removed": 0.178
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f1e9b-p39",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.169,
+   "cer_tags_removed": 0.178
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f1eee-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.119,
+   "cer_tags_removed": 0.054
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f1eee-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.08,
+   "cer_tags_removed": 0.057
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f233d-p118",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.241,
+   "cer_tags_removed": 0.05
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f233d-p118",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.155,
+   "cer_tags_removed": 0.065
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f27b4-p85",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.456,
+   "cer_tags_removed": 0.148
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f27b4-p85",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.329,
+   "cer_tags_removed": 0.134
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f2ae8-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.273,
+   "cer_tags_removed": 0.159
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f2ae8-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.187,
+   "cer_tags_removed": 0.166
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f3538-p13",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.39,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f3538-p13",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.226,
+   "cer_tags_removed": 0.147
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f37f6-p60",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.233,
+   "cer_tags_removed": 0.035
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f37f6-p60",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.073,
+   "cer_tags_removed": 0.041
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f51f5-p89",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.266,
+   "cer_tags_removed": 0.255
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f51f5-p89",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.266,
+   "cer_tags_removed": 0.266
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f58c4-p7",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.255,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f58c4-p7",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.172,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f5f9c-p150",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.327,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f5f9c-p150",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.207,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f683b-p141",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.301,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f683b-p141",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.337,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f855d-p136",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.342,
+   "cer_tags_removed": 0.286
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f855d-p136",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.3,
+   "cer_tags_removed": 0.289
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f8ad7-p27",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.449,
+   "cer_tags_removed": 0.382
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f8ad7-p27",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.422,
+   "cer_tags_removed": 0.387
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f98fe-p119",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.404,
+   "cer_tags_removed": 0.346
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f98fe-p119",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.375,
+   "cer_tags_removed": 0.341
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f9c80-p112",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.438,
+   "cer_tags_removed": 0.373
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1f9c80-p112",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.414,
+   "cer_tags_removed": 0.373
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fd323-p49",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.335,
+   "cer_tags_removed": 0.359
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fd323-p49",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.368
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fd5ab-p38",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.255,
+   "cer_tags_removed": 0.248
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fd5ab-p38",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.248,
+   "cer_tags_removed": 0.255
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fea07-p49",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.582,
+   "cer_tags_removed": 0.143
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fea07-p49",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.327,
+   "cer_tags_removed": 0.235
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1feade-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.139,
+   "cer_tags_removed": 0.089
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1feade-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.084,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fec0c-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.389,
+   "cer_tags_removed": 0.403
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1fec0c-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.431,
+   "cer_tags_removed": 0.453
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ff309-p166",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.186
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ff309-p166",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.312,
+   "cer_tags_removed": 0.293
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ffad4-p118",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.259,
+   "cer_tags_removed": 0.187
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ffad4-p118",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.233,
+   "cer_tags_removed": 0.083
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ffe4e-p100",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.465,
+   "cer_tags_removed": 0.396
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1ffe4e-p100",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.441,
+   "cer_tags_removed": 0.401
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-2014eb-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.198,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-2014eb-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.192,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-201f9d-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.289,
+   "cer_tags_removed": 0.268
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-201f9d-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.274,
+   "cer_tags_removed": 0.268
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-206f84-p147",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.246,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-206f84-p147",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.205,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-207976-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.224,
+   "cer_tags_removed": 0.143
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-207976-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.13,
+   "cer_tags_removed": 0.112
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-209557-p27",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.23,
+   "cer_tags_removed": 0.115
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-209557-p27",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.219,
+   "cer_tags_removed": 0.142
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-209a36-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.415,
+   "cer_tags_removed": 0.6
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-209a36-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.433,
+   "cer_tags_removed": 0.318
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20ae55-p29",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.531,
+   "cer_tags_removed": 0.268
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20ae55-p29",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.39,
+   "cer_tags_removed": 0.268
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20b4a4-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.553,
+   "cer_tags_removed": 0.407
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20b4a4-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.491,
+   "cer_tags_removed": 0.407
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20bf30-p28",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.345,
+   "cer_tags_removed": 0.207
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20bf30-p28",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.218
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20ca06-p59",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.299,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20ca06-p59",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.144,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20ce6a-p16",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.246,
+   "cer_tags_removed": 0.148
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20ce6a-p16",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.169,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20cffc-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.396,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20cffc-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20d0ad-p34",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.36,
+   "cer_tags_removed": 0.228
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20d0ad-p34",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.302,
+   "cer_tags_removed": 0.228
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20de2f-p75",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.213,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20de2f-p75",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.207,
+   "cer_tags_removed": 0.168
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20df47-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.219,
+   "cer_tags_removed": 0.204
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20df47-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.214,
+   "cer_tags_removed": 0.23
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20f11b-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.5,
+   "cer_tags_removed": 0.359
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-20f11b-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.401,
+   "cer_tags_removed": 0.359
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21136b-p141",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.147,
+   "cer_tags_removed": 0.103
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21136b-p141",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.152,
+   "cer_tags_removed": 0.103
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-213ec8-p79",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.233,
+   "cer_tags_removed": 0.145
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-213ec8-p79",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.197,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-214742-p16",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.255
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-214742-p16",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.294,
+   "cer_tags_removed": 0.335
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-216fad-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.168,
+   "cer_tags_removed": 0.092
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-216fad-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.145,
+   "cer_tags_removed": 0.121
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-218b59-p91",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.456,
+   "cer_tags_removed": 0.365
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-218b59-p91",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.397,
+   "cer_tags_removed": 0.361
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-2191b7-p93",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.412,
+   "cer_tags_removed": 0.285
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-2191b7-p93",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.348,
+   "cer_tags_removed": 0.285
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21945e-p19",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.199,
+   "cer_tags_removed": 0.137
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21945e-p19",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.13,
+   "cer_tags_removed": 0.106
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21b338-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.369,
+   "cer_tags_removed": 0.507
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21b338-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.364,
+   "cer_tags_removed": 0.373
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21cbac-p59",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.4,
+   "cer_tags_removed": 0.346
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-21cbac-p59",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.351,
+   "cer_tags_removed": 0.341
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-34fcf9-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.329,
+   "cer_tags_removed": 0.19
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-34fcf9-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-480fab-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.349,
+   "cer_tags_removed": 0.26
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-480fab-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.343,
+   "cer_tags_removed": 0.272
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48261a-p85",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.348,
+   "cer_tags_removed": 0.355
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48261a-p85",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.342,
+   "cer_tags_removed": 0.355
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48361c-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.328,
+   "cer_tags_removed": 0.271
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48361c-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.271,
+   "cer_tags_removed": 0.271
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-484a5b-p61",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.49,
+   "cer_tags_removed": 0.352
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-484a5b-p61",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.378,
+   "cer_tags_removed": 0.352
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-484bf9-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.542,
+   "cer_tags_removed": 0.395
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-484bf9-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.458,
+   "cer_tags_removed": 0.395
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-484e56-p68",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.298,
+   "cer_tags_removed": 0.263
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-484e56-p68",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.29,
+   "cer_tags_removed": 0.266
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-485101-p171",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.243,
+   "cer_tags_removed": 0.245
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-485101-p171",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.245,
+   "cer_tags_removed": 0.245
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4854da-p62",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.165,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4854da-p62",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.135,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48625f-p23",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.191,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48625f-p23",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.13
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-486346-p62",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.407,
+   "cer_tags_removed": 0.407
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-486346-p62",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.414,
+   "cer_tags_removed": 0.411
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48671c-p105",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.367,
+   "cer_tags_removed": 0.276
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48671c-p105",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.363,
+   "cer_tags_removed": 0.276
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-486849-p19",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-486849-p19",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.164,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-486ab5-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.305,
+   "cer_tags_removed": 0.351
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-486ab5-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.318,
+   "cer_tags_removed": 0.351
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-487174-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.218,
+   "cer_tags_removed": 0.214
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-487174-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.223,
+   "cer_tags_removed": 0.272
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4871cb-p118",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.283,
+   "cer_tags_removed": 0.26
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4871cb-p118",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.265
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-487579-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.31,
+   "cer_tags_removed": 0.307
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-487579-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.304,
+   "cer_tags_removed": 0.307
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48798e-p89",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48798e-p89",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.171,
+   "cer_tags_removed": 0.103
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4884f8-p75",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.362,
+   "cer_tags_removed": 0.394
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4884f8-p75",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.374,
+   "cer_tags_removed": 0.402
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48860f-p67",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.344,
+   "cer_tags_removed": 0.353
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48860f-p67",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.353
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-488c0d-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.204,
+   "cer_tags_removed": 0.115
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-488c0d-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.21,
+   "cer_tags_removed": 0.153
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-489739-p158",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.321,
+   "cer_tags_removed": 0.321
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-489739-p158",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.311,
+   "cer_tags_removed": 0.321
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-489e24-p52",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.338,
+   "cer_tags_removed": 0.15
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-489e24-p52",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.238,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48b999-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.245,
+   "cer_tags_removed": 0.245
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48b999-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.233,
+   "cer_tags_removed": 0.241
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48c286-p91",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.417,
+   "cer_tags_removed": 0.229
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48c286-p91",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.243,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48d48e-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.841,
+   "cer_tags_removed": 0.302
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48d48e-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.524,
+   "cer_tags_removed": 0.27
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48d74d-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.316,
+   "cer_tags_removed": 0.353
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48d74d-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.323,
+   "cer_tags_removed": 0.361
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48dff8-p72",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.481,
+   "cer_tags_removed": 0.394
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48dff8-p72",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.43,
+   "cer_tags_removed": 0.372
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e0d5-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.3,
+   "cer_tags_removed": 0.3
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e0d5-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.277,
+   "cer_tags_removed": 0.31
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e219-p74",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.211,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e219-p74",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e4ac-p70",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.174,
+   "cer_tags_removed": 0.092
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48e4ac-p70",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.128,
+   "cer_tags_removed": 0.096
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48fe8e-p90",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.189,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-48fe8e-p90",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-490b07-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.083
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-490b07-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.11,
+   "cer_tags_removed": 0.083
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-490d46-p17",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.331,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-490d46-p17",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.181,
+   "cer_tags_removed": 0.115
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4912de-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.372,
+   "cer_tags_removed": 0.278
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4912de-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.314,
+   "cer_tags_removed": 0.285
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-491397-p10",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.143
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-491397-p10",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-491607-p74",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.259,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-491607-p74",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.241,
+   "cer_tags_removed": 0.215
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-492415-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.389,
+   "cer_tags_removed": 0.403
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-492415-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.396,
+   "cer_tags_removed": 0.403
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4924f4-p125",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.492,
+   "cer_tags_removed": 0.436
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4924f4-p125",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.419,
+   "cer_tags_removed": 0.425
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-493195-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.212,
+   "cer_tags_removed": 0.139
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-493195-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.133
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-493212-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.297,
+   "cer_tags_removed": 0.115
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-493212-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.182,
+   "cer_tags_removed": 0.115
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4933b1-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.168,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4933b1-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.152,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49446d-p18",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.271,
+   "cer_tags_removed": 0.229
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49446d-p18",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.271,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4953e2-p31",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.219,
+   "cer_tags_removed": 0.064
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4953e2-p31",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.199,
+   "cer_tags_removed": 0.095
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49605b-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.252,
+   "cer_tags_removed": 0.15
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49605b-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.205,
+   "cer_tags_removed": 0.134
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4993a4-p150",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.359,
+   "cer_tags_removed": 0.3
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4993a4-p150",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.325,
+   "cer_tags_removed": 0.65
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49af24-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.293,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49af24-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.252,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49bd9d-p134",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.272,
+   "cer_tags_removed": 0.195
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49bd9d-p134",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.2,
+   "cer_tags_removed": 0.2
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49c4cc-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.385,
+   "cer_tags_removed": 0.089
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49c4cc-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.244,
+   "cer_tags_removed": 0.044
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49dcb8-p128",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.283,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49dcb8-p128",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.205,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e094-p67",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.367,
+   "cer_tags_removed": 0.136
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e094-p67",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.136
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e213-p29",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.396,
+   "cer_tags_removed": 0.101
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e213-p29",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.478,
+   "cer_tags_removed": 0.101
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e771-p110",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.332,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49e771-p110",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.125,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f12b-p94",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.175,
+   "cer_tags_removed": 0.066
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f12b-p94",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.125,
+   "cer_tags_removed": 0.066
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f1f1-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.3,
+   "cer_tags_removed": 0.183
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f1f1-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.2
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f2e3-p55",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.335,
+   "cer_tags_removed": 0.355
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f2e3-p55",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.321,
+   "cer_tags_removed": 0.355
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f991-p114",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.216,
+   "cer_tags_removed": 0.139
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-49f991-p114",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.148
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a07a2-p72",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.257,
+   "cer_tags_removed": 0.093
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a07a2-p72",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.224,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a0d9a-p165",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.24,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a0d9a-p165",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.18,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a12f5-p17",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.316,
+   "cer_tags_removed": 0.322
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a12f5-p17",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.301,
+   "cer_tags_removed": 0.322
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a448c-p88",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.142,
+   "cer_tags_removed": 0.087
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-4a448c-p88",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ca1ea-p92",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.281,
+   "cer_tags_removed": 0.07
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ca1ea-p92",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.111,
+   "cer_tags_removed": 0.08
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5caf81-p113",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.258,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5caf81-p113",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.145,
+   "cer_tags_removed": 0.123
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cc12c-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.376,
+   "cer_tags_removed": 0.342
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cc12c-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.371,
+   "cer_tags_removed": 0.342
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cdef8-p41",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.293,
+   "cer_tags_removed": 0.293
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cdef8-p41",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.283,
+   "cer_tags_removed": 0.255
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce05e-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.486,
+   "cer_tags_removed": 0.405
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce05e-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.416,
+   "cer_tags_removed": 0.41
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce05f-p9",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.327,
+   "cer_tags_removed": 0.153
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce05f-p9",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.267
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce0fd-p61",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.383,
+   "cer_tags_removed": 0.175
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce0fd-p61",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.25,
+   "cer_tags_removed": 0.133
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce26a-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.318,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ce26a-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.176,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cebf1-p102",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.163,
+   "cer_tags_removed": 0.073
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cebf1-p102",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.12,
+   "cer_tags_removed": 0.073
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cf541-p56",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.073
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cf541-p56",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.143,
+   "cer_tags_removed": 0.073
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cfb8d-p101",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.219,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5cfb8d-p101",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.152,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d0f3b-p122",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.411,
+   "cer_tags_removed": 0.26
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d0f3b-p122",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.333,
+   "cer_tags_removed": 0.26
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1c59-p53",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.091
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1c59-p53",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1d7e-p55",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.331,
+   "cer_tags_removed": 0.118
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1d7e-p55",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.148,
+   "cer_tags_removed": 0.118
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1ecb-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.338,
+   "cer_tags_removed": 0.292
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d1ecb-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.287
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d204a-p18",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.202,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d204a-p18",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d27bf-p84",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.186,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d27bf-p84",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.156,
+   "cer_tags_removed": 0.09
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d287f-p17",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.281,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d287f-p17",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.176,
+   "cer_tags_removed": 0.118
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d514f-p40",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.4,
+   "cer_tags_removed": 0.246
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d514f-p40",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.246
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d84b9-p44",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.19,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d84b9-p44",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.155,
+   "cer_tags_removed": 0.155
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d9761-p104",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.314,
+   "cer_tags_removed": 0.162
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5d9761-p104",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.171,
+   "cer_tags_removed": 0.105
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5da3a8-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.077
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5da3a8-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.16,
+   "cer_tags_removed": 0.083
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5db2a3-p92",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.474,
+   "cer_tags_removed": 0.186
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5db2a3-p92",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.272,
+   "cer_tags_removed": 0.195
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dbb39-p31",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.571,
+   "cer_tags_removed": 0.21
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dbb39-p31",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.479,
+   "cer_tags_removed": 0.193
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dbe2e-p116",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.167,
+   "cer_tags_removed": 0.111
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dbe2e-p116",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dc0cf-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.2,
+   "cer_tags_removed": 0.078
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dc0cf-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.244,
+   "cer_tags_removed": 0.089
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dd4a8-p127",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.388,
+   "cer_tags_removed": 0.24
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dd4a8-p127",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.332,
+   "cer_tags_removed": 0.25
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5de7f9-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.392,
+   "cer_tags_removed": 0.339
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5de7f9-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.328,
+   "cer_tags_removed": 0.328
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5de8ce-p116",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.167,
+   "cer_tags_removed": 0.178
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5de8ce-p116",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.183
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5deb60-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.25
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5deb60-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.266
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5df8f3-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.455,
+   "cer_tags_removed": 0.346
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5df8f3-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.431,
+   "cer_tags_removed": 0.355
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dfe7a-p126",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.126
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5dfe7a-p126",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.161,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e24df-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.565,
+   "cer_tags_removed": 0.391
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e24df-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.415,
+   "cer_tags_removed": 0.396
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3afd-p90",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.528,
+   "cer_tags_removed": 0.387
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3afd-p90",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.4,
+   "cer_tags_removed": 0.37
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3c79-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.394,
+   "cer_tags_removed": 0.2
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3c79-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.218
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3f47-p133",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.287,
+   "cer_tags_removed": 0.149
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e3f47-p133",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e4028-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.286,
+   "cer_tags_removed": 0.175
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e4028-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.201,
+   "cer_tags_removed": 0.185
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e523f-p7",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.13
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e523f-p7",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.179
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e6b7a-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.272,
+   "cer_tags_removed": 0.205
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e6b7a-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.305,
+   "cer_tags_removed": 0.205
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e77a8-p132",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.368,
+   "cer_tags_removed": 0.388
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e77a8-p132",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.388
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e7c4b-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.447,
+   "cer_tags_removed": 0.454
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e7c4b-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.427,
+   "cer_tags_removed": 0.454
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e81c4-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.306,
+   "cer_tags_removed": 0.161
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e81c4-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.194,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e8ad0-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.354,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e8ad0-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.129,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e8f07-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.472,
+   "cer_tags_removed": 0.412
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e8f07-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.376,
+   "cer_tags_removed": 0.38
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e9c24-p60",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.243,
+   "cer_tags_removed": 0.105
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e9c24-p60",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.211,
+   "cer_tags_removed": 0.112
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e9e15-p40",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.329,
+   "cer_tags_removed": 0.2
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5e9e15-p40",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.262,
+   "cer_tags_removed": 0.21
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ea245-p70",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.367,
+   "cer_tags_removed": 0.385
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ea245-p70",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.367,
+   "cer_tags_removed": 0.385
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ebb9d-p126",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.478,
+   "cer_tags_removed": 0.478
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ebb9d-p126",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.502,
+   "cer_tags_removed": 0.502
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ec75a-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.642,
+   "cer_tags_removed": 0.481
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5ec75a-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.536,
+   "cer_tags_removed": 0.491
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5eca59-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.303,
+   "cer_tags_removed": 0.202
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-5eca59-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.182,
+   "cer_tags_removed": 0.196
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71bf88-p88",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.317,
+   "cer_tags_removed": 0.276
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71bf88-p88",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.224,
+   "cer_tags_removed": 0.295
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71db9a-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.229,
+   "cer_tags_removed": 0.079
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71db9a-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.163,
+   "cer_tags_removed": 0.129
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71e496-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.371,
+   "cer_tags_removed": 0.25
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-71e496-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.297,
+   "cer_tags_removed": 0.325
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e181b-p39",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.325,
+   "cer_tags_removed": 0.156
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e181b-p39",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.194,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e3bb5-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.355,
+   "cer_tags_removed": 0.269
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e3bb5-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.285,
+   "cer_tags_removed": 0.269
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e71fd-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.215,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8e71fd-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.135,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ebbdc-p81",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.356,
+   "cer_tags_removed": 0.21
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ebbdc-p81",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.215
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ed884-p89",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.247,
+   "cer_tags_removed": 0.14
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ed884-p89",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.199,
+   "cer_tags_removed": 0.14
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ee8df-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.335,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ee8df-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.171,
+   "cer_tags_removed": 0.14
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ef950-p57",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.489,
+   "cer_tags_removed": 0.228
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8ef950-p57",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.322,
+   "cer_tags_removed": 0.244
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8efc51-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.296,
+   "cer_tags_removed": 0.133
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8efc51-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.262,
+   "cer_tags_removed": 0.146
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f0343-p40",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.343,
+   "cer_tags_removed": 0.152
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f0343-p40",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.275,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f0be1-p12",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.346,
+   "cer_tags_removed": 0.346
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f0be1-p12",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.322,
+   "cer_tags_removed": 0.343
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f0be1-p12",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.346,
+   "cer_tags_removed": 0.364
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f0be1-p12",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.346,
+   "cer_tags_removed": 0.361
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f12df-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.114,
+   "cer_tags_removed": 0.049
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f12df-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.175,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f1332-p17",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.466,
+   "cer_tags_removed": 0.404
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f1332-p17",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.429,
+   "cer_tags_removed": 0.408
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f1332-p17",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.445,
+   "cer_tags_removed": 0.389
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f1332-p17",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.424,
+   "cer_tags_removed": 0.395
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f185a-p66",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.269,
+   "cer_tags_removed": 0.278
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f185a-p66",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.266,
+   "cer_tags_removed": 0.274
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f185a-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.269,
+   "cer_tags_removed": 0.271
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f185a-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.269,
+   "cer_tags_removed": 0.271
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f277f-p15",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.587,
+   "cer_tags_removed": 0.427
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f277f-p15",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.467,
+   "cer_tags_removed": 0.44
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f2c62-p67",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.462,
+   "cer_tags_removed": 0.516
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f2c62-p67",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.407,
+   "cer_tags_removed": 0.505
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f36f3-p41",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.069,
+   "cer_tags_removed": 0.069
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f36f3-p41",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.097,
+   "cer_tags_removed": 0.059
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f4f2c-p114",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.311,
+   "cer_tags_removed": 0.095
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f4f2c-p114",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.14,
+   "cer_tags_removed": 0.09
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f5034-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.239,
+   "cer_tags_removed": 0.074
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f5034-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.099,
+   "cer_tags_removed": 0.069
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f62fc-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.171,
+   "cer_tags_removed": 0.045
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f62fc-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.191,
+   "cer_tags_removed": 0.054
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f6922-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.085
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-8f6922-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.141,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9cf922-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.072
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9cf922-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.093,
+   "cer_tags_removed": 0.072
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9cfca4-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.343,
+   "cer_tags_removed": 0.249
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9cfca4-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.279,
+   "cer_tags_removed": 0.252
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9d00fa-p37",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.264,
+   "cer_tags_removed": 0.162
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9d00fa-p37",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.228,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9d04d2-p41",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.208,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-9d04d2-p41",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.166,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-bcbd4c-p37",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.21,
+   "cer_tags_removed": 0.058
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-bcbd4c-p37",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.141,
+   "cer_tags_removed": 0.061
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c065ac-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.338,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c065ac-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.199,
+   "cer_tags_removed": 0.139
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c07883-p154",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.318,
+   "cer_tags_removed": 0.188
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c07883-p154",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.188
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08247-p94",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.136
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08247-p94",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08784-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.234
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08784-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.234
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08ec9-p11",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.248,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c08ec9-p11",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.175,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c09872-p159",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.235,
+   "cer_tags_removed": 0.219
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c09872-p159",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.219,
+   "cer_tags_removed": 0.23
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0a0d9-p39",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.601,
+   "cer_tags_removed": 0.304
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0a0d9-p39",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.601,
+   "cer_tags_removed": 0.297
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0b3fa-p60",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.119,
+   "cer_tags_removed": 0.078
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0b3fa-p60",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.123,
+   "cer_tags_removed": 0.093
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0ca6f-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.533,
+   "cer_tags_removed": 0.161
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c0ca6f-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.226,
+   "cer_tags_removed": 0.161
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c47994-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c47994-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.181,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c485a7-p16",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.241,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c485a7-p16",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.124,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4a3f4-p74",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.434,
+   "cer_tags_removed": 0.33
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4a3f4-p74",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.39,
+   "cer_tags_removed": 0.33
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4b95f-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.259,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4b95f-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.245,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4c212-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.355,
+   "cer_tags_removed": 0.364
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4c212-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.36,
+   "cer_tags_removed": 0.368
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4c847-p27",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.322,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4c847-p27",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.237,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4eee0-p8",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.243,
+   "cer_tags_removed": 0.228
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4eee0-p8",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.228,
+   "cer_tags_removed": 0.238
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4f335-p40",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.326,
+   "cer_tags_removed": 0.319
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4f335-p40",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.304,
+   "cer_tags_removed": 0.314
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4f9fd-p26",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.123
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c4f9fd-p26",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.247,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c50486-p132",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.274,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c50486-p132",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.253,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-debd3a-p47",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.343,
+   "cer_tags_removed": 0.316
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-debd3a-p47",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.324,
+   "cer_tags_removed": 0.326
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-decc7d-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.429,
+   "cer_tags_removed": 0.389
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-decc7d-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.404,
+   "cer_tags_removed": 0.404
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-ded617-p55",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.142,
+   "cer_tags_removed": 0.093
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-ded617-p55",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.081,
+   "cer_tags_removed": 0.223
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-deddcc-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.176,
+   "cer_tags_removed": 0.088
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-deddcc-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.109,
+   "cer_tags_removed": 0.259
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-def1cb-p23",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.317
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-def1cb-p23",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.302,
+   "cer_tags_removed": 0.322
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df0484-p75",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.277,
+   "cer_tags_removed": 0.139
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df0484-p75",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.153,
+   "cer_tags_removed": 0.149
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df40ed-p23",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.308,
+   "cer_tags_removed": 0.158
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df40ed-p23",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.308,
+   "cer_tags_removed": 0.15
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df43ad-p72",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.32,
+   "cer_tags_removed": 0.21
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df43ad-p72",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.39,
+   "cer_tags_removed": 0.21
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df55ff-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.106
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df55ff-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.225,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df6dc8-p12",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.158,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df6dc8-p12",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.092,
+   "cer_tags_removed": 0.092
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df716d-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.157,
+   "cer_tags_removed": 0.152
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df716d-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.135,
+   "cer_tags_removed": 0.157
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df880a-p12",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.203
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df880a-p12",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.198,
+   "cer_tags_removed": 0.198
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df91bd-p65",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.424,
+   "cer_tags_removed": 0.349
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df91bd-p65",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.407,
+   "cer_tags_removed": 0.395
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df98de-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.4,
+   "cer_tags_removed": 0.107
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-df98de-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.38,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfa73d-p80",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.36,
+   "cer_tags_removed": 0.402
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfa73d-p80",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.351,
+   "cer_tags_removed": 0.393
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfb47c-p15",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.537,
+   "cer_tags_removed": 0.192
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfb47c-p15",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.667,
+   "cer_tags_removed": 0.175
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfbed1-p19",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.287,
+   "cer_tags_removed": 0.133
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfbed1-p19",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.204,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfd090-p157",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.42,
+   "cer_tags_removed": 0.263
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfd090-p157",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.362,
+   "cer_tags_removed": 0.267
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfe0e4-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.204,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfe0e4-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.171
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfebb8-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.179,
+   "cer_tags_removed": 0.106
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfebb8-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.151,
+   "cer_tags_removed": 0.117
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfff5e-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.42,
+   "cer_tags_removed": 0.296
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-dfff5e-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.337,
+   "cer_tags_removed": 0.296
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e024af-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.397,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e024af-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.369,
+   "cer_tags_removed": 0.284
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e02ebb-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.425,
+   "cer_tags_removed": 0.179
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e02ebb-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.327,
+   "cer_tags_removed": 0.217
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e04b2f-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.233,
+   "cer_tags_removed": 0.106
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e04b2f-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.083
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e05774-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.235,
+   "cer_tags_removed": 0.112
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e05774-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.165,
+   "cer_tags_removed": 0.129
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2341d-p107",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.261,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2341d-p107",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.173,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e25a23-p78",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.328,
+   "cer_tags_removed": 0.201
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e25a23-p78",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.198,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e25c68-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.267,
+   "cer_tags_removed": 0.093
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e25c68-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e29319-p34",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.309,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e29319-p34",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.301,
+   "cer_tags_removed": 0.234
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2980b-p60",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.322,
+   "cer_tags_removed": 0.328
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2980b-p60",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.344
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2a41e-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.376,
+   "cer_tags_removed": 0.174
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2a41e-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.186,
+   "cer_tags_removed": 0.181
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2ee51-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.265,
+   "cer_tags_removed": 0.082
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e2ee51-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.143,
+   "cer_tags_removed": 0.165
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e30f6e-p57",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.304,
+   "cer_tags_removed": 0.14
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e30f6e-p57",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.214,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e31885-p61",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.22,
+   "cer_tags_removed": 0.152
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e31885-p61",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.22,
+   "cer_tags_removed": 0.16
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e32226-p107",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.265,
+   "cer_tags_removed": 0.09
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e32226-p107",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.167,
+   "cer_tags_removed": 0.951
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e33911-p76",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e33911-p76",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e35b4b-p27",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.298,
+   "cer_tags_removed": 0.227
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e35b4b-p27",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.247,
+   "cer_tags_removed": 0.227
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e35ba3-p112",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.182,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e35ba3-p112",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e39166-p28",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e39166-p28",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.12,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e39665-p88",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.252,
+   "cer_tags_removed": 0.164
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e39665-p88",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.151,
+   "cer_tags_removed": 0.101
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3e025-p139",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.475,
+   "cer_tags_removed": 0.308
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3e025-p139",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.364,
+   "cer_tags_removed": 0.308
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3e37a-p139",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.329,
+   "cer_tags_removed": 0.134
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3e37a-p139",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.221,
+   "cer_tags_removed": 0.141
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3f40c-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.346,
+   "cer_tags_removed": 0.358
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3f40c-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.451,
+   "cer_tags_removed": 0.413
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3fd86-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.403,
+   "cer_tags_removed": 0.164
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e3fd86-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.164
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e40649-p21",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.216,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e40649-p21",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.159,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4064a-p25",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.174
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4064a-p25",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.167,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e40873-p9",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.203,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e40873-p9",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.25,
+   "cer_tags_removed": 0.167
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e40bde-p10",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.313,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e40bde-p10",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.227,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e42f49-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.318,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e42f49-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.202,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e42fe2-p95",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.164
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e42fe2-p95",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.216,
+   "cer_tags_removed": 0.112
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4369e-p37",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.346,
+   "cer_tags_removed": 0.177
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4369e-p37",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.254,
+   "cer_tags_removed": 0.177
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e43b2b-p78",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.332,
+   "cer_tags_removed": 0.21
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e43b2b-p78",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.214,
+   "cer_tags_removed": 0.215
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44c6e-p122",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.201,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44c6e-p122",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.201,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44d09-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.107
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44d09-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.173,
+   "cer_tags_removed": 0.125
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44f88-p29",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44f88-p29",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44fd9-p209",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.261,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e44fd9-p209",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.209,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e45152-p89",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.244,
+   "cer_tags_removed": 0.268
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e45152-p89",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.282
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e45762-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.346,
+   "cer_tags_removed": 0.346
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e45762-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.337,
+   "cer_tags_removed": 0.346
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e46155-p20",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.4,
+   "cer_tags_removed": 0.329
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e46155-p20",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.41,
+   "cer_tags_removed": 0.338
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e47148-p11",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.193
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e47148-p11",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.196
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e47197-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.386,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e47197-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.407,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e478ba-p32",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.452
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e478ba-p32",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.23,
+   "cer_tags_removed": 0.244
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e48248-p33",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.288,
+   "cer_tags_removed": 0.15
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e48248-p33",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.203,
+   "cer_tags_removed": 0.111
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4b84f-p21",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.352,
+   "cer_tags_removed": 0.367
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4b84f-p21",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.333,
+   "cer_tags_removed": 0.348
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4bd15-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.141,
+   "cer_tags_removed": 0.092
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4bd15-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.114,
+   "cer_tags_removed": 0.098
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4c5d9-p27",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.215,
+   "cer_tags_removed": 0.196
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4c5d9-p27",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.19,
+   "cer_tags_removed": 0.196
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4c75a-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.276,
+   "cer_tags_removed": 0.323
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4c75a-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.306,
+   "cer_tags_removed": 0.323
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4cadd-p17",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.283,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4cadd-p17",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.278,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4dafe-p36",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.288,
+   "cer_tags_removed": 0.179
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4dafe-p36",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.255,
+   "cer_tags_removed": 0.185
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4e9c4-p32",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.472,
+   "cer_tags_removed": 0.419
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4e9c4-p32",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.43,
+   "cer_tags_removed": 0.419
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4ef56-p45",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.244,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4ef56-p45",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.205,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4f967-p53",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.397,
+   "cer_tags_removed": 0.332
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e4f967-p53",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.358,
+   "cer_tags_removed": 0.341
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e506a8-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.359,
+   "cer_tags_removed": 0.344
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e506a8-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.316,
+   "cer_tags_removed": 0.321
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e506a9-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.482,
+   "cer_tags_removed": 0.412
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e506a9-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.427,
+   "cer_tags_removed": 0.404
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e50dfb-p101",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.345,
+   "cer_tags_removed": 0.162
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e50dfb-p101",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.204,
+   "cer_tags_removed": 0.134
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e51f37-p122",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.479,
+   "cer_tags_removed": 0.388
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e51f37-p122",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.463,
+   "cer_tags_removed": 0.397
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e51fd7-p146",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.228,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e51fd7-p146",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.257,
+   "cer_tags_removed": 0.125
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5208e-p21",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.213
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5208e-p21",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.236,
+   "cer_tags_removed": 0.219
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e522a9-p23",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.377,
+   "cer_tags_removed": 0.186
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e522a9-p23",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.265,
+   "cer_tags_removed": 0.18
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52455-p17",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.145,
+   "cer_tags_removed": 0.145
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52455-p17",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.159
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e525c6-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.188
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e525c6-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.172,
+   "cer_tags_removed": 0.188
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52939-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.305,
+   "cer_tags_removed": 0.305
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52939-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.301,
+   "cer_tags_removed": 0.305
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52bd5-p50",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.324,
+   "cer_tags_removed": 0.232
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52bd5-p50",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.232,
+   "cer_tags_removed": 0.246
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52f07-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.176,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e52f07-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.226,
+   "cer_tags_removed": 0.17
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5318b-p112",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5318b-p112",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.133,
+   "cer_tags_removed": 0.127
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5352f-p19",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.295,
+   "cer_tags_removed": 0.295
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5352f-p19",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.333,
+   "cer_tags_removed": 0.285
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e53d11-p56",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.124,
+   "cer_tags_removed": 0.096
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e53d11-p56",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.118,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e54ac9-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.289,
+   "cer_tags_removed": 0.165
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e54ac9-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.278,
+   "cer_tags_removed": 0.165
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e55466-p58",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.211,
+   "cer_tags_removed": 0.148
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e55466-p58",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.162,
+   "cer_tags_removed": 0.141
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e566f8-p46",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.121
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e566f8-p46",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.121,
+   "cer_tags_removed": 0.121
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5814c-p51",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.36,
+   "cer_tags_removed": 0.249
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5814c-p51",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.311,
+   "cer_tags_removed": 0.253
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e58c29-p55",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.398,
+   "cer_tags_removed": 0.22
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e58c29-p55",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.461,
+   "cer_tags_removed": 0.299
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e59d9d-p22",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.124
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e59d9d-p22",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.186,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5b35f-p112",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.304,
+   "cer_tags_removed": 0.155
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5b35f-p112",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.203,
+   "cer_tags_removed": 0.169
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5d76b-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.14,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5d76b-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.122,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5e255-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.278,
+   "cer_tags_removed": 0.207
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5e255-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.225,
+   "cer_tags_removed": 0.207
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5e3e8-p122",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.473,
+   "cer_tags_removed": 0.168
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5e3e8-p122",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.351,
+   "cer_tags_removed": 0.176
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5f469-p44",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.213,
+   "cer_tags_removed": 0.186
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5f469-p44",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.197,
+   "cer_tags_removed": 0.197
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5fff4-p84",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.414,
+   "cer_tags_removed": 0.282
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e5fff4-p84",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.436,
+   "cer_tags_removed": 0.282
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e61617-p126",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.237,
+   "cer_tags_removed": 0.142
+  },
+  {
+   "page": "chinese-cohort-5547|chinese-cohort-5547-e61617-p126",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.219,
+   "cer_tags_removed": 0.166
+  },
+  {
+   "page": "chinese-ext|chinese-ext-052e60-p64",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.341,
+   "cer_tags_removed": 0.141
+  },
+  {
+   "page": "chinese-ext|chinese-ext-052e60-p64",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.311,
+   "cer_tags_removed": 0.141
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0eb8aa-p52",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.236,
+   "cer_tags_removed": 0.155
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0eb8aa-p52",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.205,
+   "cer_tags_removed": 0.174
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0f0237-p77",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.354,
+   "cer_tags_removed": 0.107
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0f0237-p77",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.253,
+   "cer_tags_removed": 0.079
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0f39db-p54",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.186,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-ext|chinese-ext-0f39db-p54",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.153,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese-ext|chinese-ext-15e88e-p63",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.186,
+   "cer_tags_removed": 0.126
+  },
+  {
+   "page": "chinese-ext|chinese-ext-15e88e-p63",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.148,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-ext|chinese-ext-172f3e-p87",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.33
+  },
+  {
+   "page": "chinese-ext|chinese-ext-172f3e-p87",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.335,
+   "cer_tags_removed": 0.335
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1b2a1f-p63",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.48,
+   "cer_tags_removed": 0.412
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1b2a1f-p63",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.452,
+   "cer_tags_removed": 0.416
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1b5581-p24",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.368,
+   "cer_tags_removed": 0.247
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1b5581-p24",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.295,
+   "cer_tags_removed": 0.242
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1b5581-p24",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.347,
+   "cer_tags_removed": 0.258
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1b5581-p24",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.247
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bcb79-p48",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.324,
+   "cer_tags_removed": 0.181
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bcb79-p48",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.319,
+   "cer_tags_removed": 0.206
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bcb79-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.196
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bcb79-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.235,
+   "cer_tags_removed": 0.186
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bccbb-p76",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.435,
+   "cer_tags_removed": 0.417
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1bccbb-p76",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.406,
+   "cer_tags_removed": 0.417
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1daf5d-p62",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.268,
+   "cer_tags_removed": 0.278
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1daf5d-p62",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.283,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1db1ce-p118",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.313,
+   "cer_tags_removed": 0.377
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1db1ce-p118",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.325,
+   "cer_tags_removed": 0.377
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1e2ff7-p100",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.181,
+   "cer_tags_removed": 0.076
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1e2ff7-p100",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.11,
+   "cer_tags_removed": 0.076
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1e8a14-p81",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.382,
+   "cer_tags_removed": 0.179
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1e8a14-p81",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.228,
+   "cer_tags_removed": 0.187
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1ffad4-p37",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.206,
+   "cer_tags_removed": 0.137
+  },
+  {
+   "page": "chinese-ext|chinese-ext-1ffad4-p37",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.131
+  },
+  {
+   "page": "chinese-ext|chinese-ext-2006a1-p13",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.349,
+   "cer_tags_removed": 0.368
+  },
+  {
+   "page": "chinese-ext|chinese-ext-2006a1-p13",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.355,
+   "cer_tags_removed": 0.372
+  },
+  {
+   "page": "chinese-ext|chinese-ext-20ad4b-p55",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.171,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-ext|chinese-ext-20ad4b-p55",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.146,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese-ext|chinese-ext-214948-p48",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.38,
+   "cer_tags_removed": 0.201
+  },
+  {
+   "page": "chinese-ext|chinese-ext-214948-p48",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.139
+  },
+  {
+   "page": "chinese-ext|chinese-ext-21513f-p32",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.184,
+   "cer_tags_removed": 0.086
+  },
+  {
+   "page": "chinese-ext|chinese-ext-21513f-p32",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.353,
+   "cer_tags_removed": 0.298
+  },
+  {
+   "page": "chinese-ext|chinese-ext-21d0fe-p23",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.399,
+   "cer_tags_removed": 0.286
+  },
+  {
+   "page": "chinese-ext|chinese-ext-21d0fe-p23",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.31,
+   "cer_tags_removed": 0.282
+  },
+  {
+   "page": "chinese-ext|chinese-ext-2b1beb-p47",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.345,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-ext|chinese-ext-2b1beb-p47",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.318,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-ext|chinese-ext-321834-p145",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.399,
+   "cer_tags_removed": 0.323
+  },
+  {
+   "page": "chinese-ext|chinese-ext-321834-p145",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.379,
+   "cer_tags_removed": 0.323
+  },
+  {
+   "page": "chinese-ext|chinese-ext-350724-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.394,
+   "cer_tags_removed": 0.228
+  },
+  {
+   "page": "chinese-ext|chinese-ext-350724-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.31,
+   "cer_tags_removed": 0.283
+  },
+  {
+   "page": "chinese-ext|chinese-ext-351f3b-p69",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.214,
+   "cer_tags_removed": 0.116
+  },
+  {
+   "page": "chinese-ext|chinese-ext-351f3b-p69",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.449,
+   "cer_tags_removed": 0.449
+  },
+  {
+   "page": "chinese-ext|chinese-ext-45261c-p166",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.203,
+   "cer_tags_removed": 0.133
+  },
+  {
+   "page": "chinese-ext|chinese-ext-45261c-p166",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.165,
+   "cer_tags_removed": 0.146
+  },
+  {
+   "page": "chinese-ext|chinese-ext-482748-p102",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.233,
+   "cer_tags_removed": 0.243
+  },
+  {
+   "page": "chinese-ext|chinese-ext-482748-p102",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.238,
+   "cer_tags_removed": 0.243
+  },
+  {
+   "page": "chinese-ext|chinese-ext-487512-p49",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.325,
+   "cer_tags_removed": 0.348
+  },
+  {
+   "page": "chinese-ext|chinese-ext-487512-p49",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.334,
+   "cer_tags_removed": 0.345
+  },
+  {
+   "page": "chinese-ext|chinese-ext-48d0b1-p86",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.702,
+   "cer_tags_removed": 0.475
+  },
+  {
+   "page": "chinese-ext|chinese-ext-48d0b1-p86",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.752,
+   "cer_tags_removed": 0.482
+  },
+  {
+   "page": "chinese-ext|chinese-ext-490b07-p55",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.238
+  },
+  {
+   "page": "chinese-ext|chinese-ext-490b07-p55",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.265,
+   "cer_tags_removed": 0.238
+  },
+  {
+   "page": "chinese-ext|chinese-ext-490b07-p55",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.291,
+   "cer_tags_removed": 0.238
+  },
+  {
+   "page": "chinese-ext|chinese-ext-490b07-p55",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.287,
+   "cer_tags_removed": 0.251
+  },
+  {
+   "page": "chinese-ext|chinese-ext-49260b-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.354,
+   "cer_tags_removed": 0.238
+  },
+  {
+   "page": "chinese-ext|chinese-ext-49260b-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.238
+  },
+  {
+   "page": "chinese-ext|chinese-ext-499e74-p14",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.168,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-ext|chinese-ext-499e74-p14",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.111,
+   "cer_tags_removed": 0.092
+  },
+  {
+   "page": "chinese-ext|chinese-ext-499f9f-p91",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.302,
+   "cer_tags_removed": 0.165
+  },
+  {
+   "page": "chinese-ext|chinese-ext-499f9f-p91",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.216,
+   "cer_tags_removed": 0.165
+  },
+  {
+   "page": "chinese-ext|chinese-ext-4a2980-p105",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.23,
+   "cer_tags_removed": 0.189
+  },
+  {
+   "page": "chinese-ext|chinese-ext-4a2980-p105",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.193,
+   "cer_tags_removed": 0.185
+  },
+  {
+   "page": "chinese-ext|chinese-ext-4d10d9-p170",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.216,
+   "cer_tags_removed": 0.086
+  },
+  {
+   "page": "chinese-ext|chinese-ext-4d10d9-p170",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.086,
+   "cer_tags_removed": 0.082
+  },
+  {
+   "page": "chinese-ext|chinese-ext-4d129c-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.26,
+   "cer_tags_removed": 0.094
+  },
+  {
+   "page": "chinese-ext|chinese-ext-4d129c-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.136,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-ext|chinese-ext-54c4ae-p83",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.455,
+   "cer_tags_removed": 0.187
+  },
+  {
+   "page": "chinese-ext|chinese-ext-54c4ae-p83",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.358,
+   "cer_tags_removed": 0.22
+  },
+  {
+   "page": "chinese-ext|chinese-ext-54cb4c-p123",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.524,
+   "cer_tags_removed": 0.455
+  },
+  {
+   "page": "chinese-ext|chinese-ext-54cb4c-p123",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.487,
+   "cer_tags_removed": 0.444
+  },
+  {
+   "page": "chinese-ext|chinese-ext-5d00b1-p132",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.287,
+   "cer_tags_removed": 0.138
+  },
+  {
+   "page": "chinese-ext|chinese-ext-5d00b1-p132",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.222,
+   "cer_tags_removed": 0.174
+  },
+  {
+   "page": "chinese-ext|chinese-ext-637837-p123",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.249,
+   "cer_tags_removed": 0.264
+  },
+  {
+   "page": "chinese-ext|chinese-ext-637837-p123",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.252,
+   "cer_tags_removed": 0.264
+  },
+  {
+   "page": "chinese-ext|chinese-ext-6384a8-p75",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.493,
+   "cer_tags_removed": 0.353
+  },
+  {
+   "page": "chinese-ext|chinese-ext-6384a8-p75",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.394,
+   "cer_tags_removed": 0.359
+  },
+  {
+   "page": "chinese-ext|chinese-ext-9090c0-p123",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.358,
+   "cer_tags_removed": 0.276
+  },
+  {
+   "page": "chinese-ext|chinese-ext-9090c0-p123",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.279,
+   "cer_tags_removed": 0.931
+  },
+  {
+   "page": "chinese-ext|chinese-ext-d9f7a0-p109",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.311,
+   "cer_tags_removed": 0.321
+  },
+  {
+   "page": "chinese-ext|chinese-ext-d9f7a0-p109",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.315,
+   "cer_tags_removed": 0.338
+  },
+  {
+   "page": "chinese-ext|chinese-ext-d9f7a0-p109",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.321,
+   "cer_tags_removed": 0.331
+  },
+  {
+   "page": "chinese-ext|chinese-ext-d9f7a0-p109",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.325,
+   "cer_tags_removed": 0.334
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5ac3-p566",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.235,
+   "cer_tags_removed": 0.15
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5ac3-p566",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.186,
+   "cer_tags_removed": 0.147
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5ac3-p566",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.237,
+   "cer_tags_removed": 0.145
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5ac3-p566",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.143
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5e4a-p15",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.114,
+   "cer_tags_removed": 0.114
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5e4a-p15",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.154,
+   "cer_tags_removed": 0.11
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5e4a-p15",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.244,
+   "cer_tags_removed": 0.161
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db5e4a-p15",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.091
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db76e7-p11",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.184,
+   "cer_tags_removed": 0.068
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db76e7-p11",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.061,
+   "cer_tags_removed": 0.048
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db76e7-p11",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.061
+  },
+  {
+   "page": "chinese-ext|chinese-ext-db76e7-p11",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.078,
+   "cer_tags_removed": 0.051
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbbedb-p66",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.095
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbbedb-p66",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.093,
+   "cer_tags_removed": 0.093
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbbedb-p66",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.213,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbbedb-p66",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.079,
+   "cer_tags_removed": 0.081
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbd9c7-p155",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.213,
+   "cer_tags_removed": 0.088
+  },
+  {
+   "page": "chinese-ext|chinese-ext-dbd9c7-p155",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.141,
+   "cer_tags_removed": 0.084
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e10920-p94",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.284,
+   "cer_tags_removed": 0.119
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e10920-p94",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.142,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e35006-p38",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.217,
+   "cer_tags_removed": 0.13
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e35006-p38",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.207,
+   "cer_tags_removed": 0.136
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e50556-p31",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.368,
+   "cer_tags_removed": 0.18
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e50556-p31",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.211,
+   "cer_tags_removed": 0.173
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e5d305-p131",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.335
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e5d305-p131",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.335
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e6c5d5-p580",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e6c5d5-p580",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.15,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e6c5d5-p580",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.179,
+   "cer_tags_removed": 0.078
+  },
+  {
+   "page": "chinese-ext|chinese-ext-e6c5d5-p580",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.088,
+   "cer_tags_removed": 0.088
+  },
+  {
+   "page": "chinese-ext|chinese-ext-fedb8a-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.354,
+   "cer_tags_removed": 0.354
+  },
+  {
+   "page": "chinese-ext|chinese-ext-fedb8a-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.335,
+   "cer_tags_removed": 0.707
+  },
+  {
+   "page": "chinese-ext|chinese-ext-feeb7c-p122",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.25,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese-ext|chinese-ext-feeb7c-p122",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.174,
+   "cer_tags_removed": 0.12
+  },
+  {
+   "page": "chinese|chinese-0db3cb-p118",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.308,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese|chinese-0db3cb-p118",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.276,
+   "cer_tags_removed": 0.109
+  },
+  {
+   "page": "chinese|chinese-160513-p37",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.491,
+   "cer_tags_removed": 0.276
+  },
+  {
+   "page": "chinese|chinese-160513-p37",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.526,
+   "cer_tags_removed": 0.276
+  },
+  {
+   "page": "chinese|chinese-160972-p14",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.177,
+   "cer_tags_removed": 0.18
+  },
+  {
+   "page": "chinese|chinese-160972-p14",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.17,
+   "cer_tags_removed": 0.18
+  },
+  {
+   "page": "chinese|chinese-16099d-p117",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.273,
+   "cer_tags_removed": 0.273
+  },
+  {
+   "page": "chinese|chinese-16099d-p117",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.269,
+   "cer_tags_removed": 0.305
+  },
+  {
+   "page": "chinese|chinese-16099d-p117",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.302,
+   "cer_tags_removed": 0.305
+  },
+  {
+   "page": "chinese|chinese-16099d-p117",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.28,
+   "cer_tags_removed": 0.305
+  },
+  {
+   "page": "chinese|chinese-17296e-p92",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.489,
+   "cer_tags_removed": 0.38
+  },
+  {
+   "page": "chinese|chinese-17296e-p92",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.437,
+   "cer_tags_removed": 0.384
+  },
+  {
+   "page": "chinese|chinese-1b5652-p23",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.075,
+   "cer_tags_removed": 0.075
+  },
+  {
+   "page": "chinese|chinese-1b5652-p23",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.123,
+   "cer_tags_removed": 0.088
+  },
+  {
+   "page": "chinese|chinese-1b5652-p23",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.167,
+   "cer_tags_removed": 0.097
+  },
+  {
+   "page": "chinese|chinese-1b5652-p23",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.11,
+   "cer_tags_removed": 0.088
+  },
+  {
+   "page": "chinese|chinese-1ba275-p97",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.188,
+   "cer_tags_removed": 0.195
+  },
+  {
+   "page": "chinese|chinese-1ba275-p97",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.185,
+   "cer_tags_removed": 0.195
+  },
+  {
+   "page": "chinese|chinese-1dde42-p77",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.196,
+   "cer_tags_removed": 0.074
+  },
+  {
+   "page": "chinese|chinese-1dde42-p77",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.135,
+   "cer_tags_removed": 0.074
+  },
+  {
+   "page": "chinese|chinese-1e9cd1-p43",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.149,
+   "cer_tags_removed": 0.057
+  },
+  {
+   "page": "chinese|chinese-1e9cd1-p43",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.158,
+   "cer_tags_removed": 0.104
+  },
+  {
+   "page": "chinese|chinese-1f5904-p88",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.281,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese|chinese-1f5904-p88",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.187,
+   "cer_tags_removed": 0.144
+  },
+  {
+   "page": "chinese|chinese-2041ed-p71",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.266,
+   "cer_tags_removed": 0.107
+  },
+  {
+   "page": "chinese|chinese-2041ed-p71",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.183,
+   "cer_tags_removed": 0.107
+  },
+  {
+   "page": "chinese|chinese-2075ff-p73",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.277,
+   "cer_tags_removed": 0.196
+  },
+  {
+   "page": "chinese|chinese-2075ff-p73",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.19,
+   "cer_tags_removed": 0.19
+  },
+  {
+   "page": "chinese|chinese-2077da-p41",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.295,
+   "cer_tags_removed": 0.102
+  },
+  {
+   "page": "chinese|chinese-2077da-p41",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.157,
+   "cer_tags_removed": 0.09
+  },
+  {
+   "page": "chinese|chinese-20f2c7-p71",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.532,
+   "cer_tags_removed": 0.211
+  },
+  {
+   "page": "chinese|chinese-20f2c7-p71",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.339,
+   "cer_tags_removed": 0.174
+  },
+  {
+   "page": "chinese|chinese-2104e7-p42",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.288,
+   "cer_tags_removed": 0.153
+  },
+  {
+   "page": "chinese|chinese-2104e7-p42",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.171,
+   "cer_tags_removed": 0.112
+  },
+  {
+   "page": "chinese|chinese-210615-p59",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.305,
+   "cer_tags_removed": 0.142
+  },
+  {
+   "page": "chinese|chinese-210615-p59",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.248,
+   "cer_tags_removed": 0.163
+  },
+  {
+   "page": "chinese|chinese-48e6c5-p77",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.361,
+   "cer_tags_removed": 0.37
+  },
+  {
+   "page": "chinese|chinese-48e6c5-p77",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.377,
+   "cer_tags_removed": 0.654
+  },
+  {
+   "page": "chinese|chinese-5dd970-p110",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.486,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese|chinese-5dd970-p110",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.33,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese|chinese-8ec8ed-p44",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.223,
+   "cer_tags_removed": 0.095
+  },
+  {
+   "page": "chinese|chinese-8ec8ed-p44",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.125,
+   "cer_tags_removed": 0.101
+  },
+  {
+   "page": "chinese|chinese-8f0639-p59",
+   "engine": "gemini-3-flash-preview>claude-opus-5-5+claude-cli",
+   "cer": 0.113,
+   "cer_tags_removed": 0.113
+  },
+  {
+   "page": "chinese|chinese-8f0639-p59",
+   "engine": "gemini-3-flash-preview>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.145,
+   "cer_tags_removed": 0.108
+  },
+  {
+   "page": "chinese|chinese-8f0639-p59",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.21,
+   "cer_tags_removed": 0.129
+  },
+  {
+   "page": "chinese|chinese-8f0639-p59",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.194,
+   "cer_tags_removed": 0.129
+  },
+  {
+   "page": "chinese|chinese-c0c30a-p30",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.195,
+   "cer_tags_removed": 0.132
+  },
+  {
+   "page": "chinese|chinese-c0c30a-p30",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.157,
+   "cer_tags_removed": 0.151
+  },
+  {
+   "page": "chinese|chinese-df4c22-p35",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.234,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese|chinese-df4c22-p35",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.163,
+   "cer_tags_removed": 0.128
+  },
+  {
+   "page": "chinese|chinese-e5addb-p100",
+   "engine": "paddleocr-vl-1.6>claude-opus-5-5+claude-cli",
+   "cer": 0.285,
+   "cer_tags_removed": 0.118
+  },
+  {
+   "page": "chinese|chinese-e5addb-p100",
+   "engine": "paddleocr-vl-1.6>gemini-3.8-flash+antigravity-cli",
+   "cer": 0.215,
+   "cer_tags_removed": 0.132
+  }
+ ]
+}

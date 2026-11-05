@@ -1,0 +1,82 @@
+{
+ "rates_per_m": {
+  "input": 0.75,
+  "output": 3.75,
+  "cache_read": 0.07500000000000001
+ },
+ "flash_low_usd": 0.00055,
+ "arms": {
+  "flash": {
+   "model": "gemini-3.8-flash-low",
+   "calls_with_usage": 585,
+   "parsed": 568,
+   "input": 13667.1,
+   "output": 688.5,
+   "thinking": 192.8,
+   "cache_read": 6570.3,
+   "list_usd_per_call": 0.013325,
+   "secs_mean": 16.3,
+   "calls_per_judgement": 1.03,
+   "quota": {
+    "calls": 585,
+    "weekly_drop": 0.0127,
+    "per_call": 0.0000216,
+    "pools": [
+     "/root/.agy-james"
+    ],
+    "note": "noisy: other lanes share the pool"
+   },
+   "ratio_to_low": 1,
+   "usd_per_call": 0.00055,
+   "usd_per_judgement": 0.000567
+  },
+  "flash-medium": {
+   "model": "gemini-3.8-flash-medium",
+   "calls_with_usage": 571,
+   "parsed": 570,
+   "input": 17480.8,
+   "output": 12423.7,
+   "thinking": 12123.5,
+   "cache_read": 3658.9,
+   "list_usd_per_call": 0.059974,
+   "secs_mean": 46.8,
+   "calls_per_judgement": 1.002,
+   "quota": {
+    "calls": 571,
+    "weekly_drop": 0.0193,
+    "per_call": 0.0000339,
+    "pools": [
+     "default"
+    ],
+    "note": "noisy: other lanes share the pool"
+   },
+   "ratio_to_low": 4.5,
+   "usd_per_call": 0.002475,
+   "usd_per_judgement": 0.00248
+  },
+  "flash-high": {
+   "model": "gemini-3.8-flash-high",
+   "calls_with_usage": 572,
+   "parsed": 570,
+   "input": 18426.5,
+   "output": 28798.4,
+   "thinking": 28498.1,
+   "cache_read": 2252.1,
+   "list_usd_per_call": 0.121983,
+   "secs_mean": 100.7,
+   "calls_per_judgement": 1.004,
+   "quota": {
+    "calls": 572,
+    "weekly_drop": 0.0378,
+    "per_call": 0.0000661,
+    "pools": [
+     "default"
+    ],
+    "note": "noisy: other lanes share the pool"
+   },
+   "ratio_to_low": 9.15,
+   "usd_per_call": 0.005033,
+   "usd_per_judgement": 0.005053
+  }
+ }
+}

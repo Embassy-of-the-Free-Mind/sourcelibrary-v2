@@ -1,0 +1,78 @@
+{
+ "at": "2026-11-03T09:08:44.205Z",
+ "books": 319,
+ "pages": 70409,
+ "pages_ocr": 57673,
+ "by_stratum": {
+  "live|hanja/print": {
+   "books": 103,
+   "pages": 30753,
+   "pages_ocr": 25807,
+   "eligible": 23680
+  },
+  "live|hanja/manuscript": {
+   "books": 134,
+   "pages": 30113,
+   "pages_ocr": 28467,
+   "eligible": 26259
+  },
+  "live|hangul/print": {
+   "books": 1,
+   "pages": 222,
+   "pages_ocr": 222,
+   "eligible": 195
+  },
+  "live|hangul/manuscript": {
+   "books": 16,
+   "pages": 1728,
+   "pages_ocr": 1701,
+   "eligible": 1480
+  },
+  "live|unknown/unknown": {
+   "books": 34,
+   "pages": 4472,
+   "pages_ocr": 0,
+   "eligible": 0
+  },
+  "hidden|unknown/unknown": {
+   "books": 18,
+   "pages": 1248,
+   "pages_ocr": 0,
+   "eligible": 0
+  },
+  "hidden|hangul/print": {
+   "books": 1,
+   "pages": 52,
+   "pages_ocr": 52,
+   "eligible": 41
+  },
+  "hidden|hanja/print": {
+   "books": 3,
+   "pages": 338,
+   "pages_ocr": 338,
+   "eligible": 308
+  },
+  "hidden|hanja/manuscript": {
+   "books": 2,
+   "pages": 744,
+   "pages_ocr": 742,
+   "eligible": 701
+  },
+  "live|mixed/manuscript": {
+   "books": 6,
+   "pages": 601,
+   "pages_ocr": 206,
+   "eligible": 180
+  },
+  "hidden|hangul/manuscript": {
+   "books": 1,
+   "pages": 138,
+   "pages_ocr": 138,
+   "eligible": 135
+  }
+ },
+ "stored_routes": {
+  "lite": 17193,
+  "3flash": 40480
+ }
+}

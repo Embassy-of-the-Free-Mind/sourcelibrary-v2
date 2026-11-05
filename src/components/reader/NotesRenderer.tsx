@@ -16,6 +16,7 @@ import { getReaderStrings } from '@/lib/reader-strings';
 import { applyNotesOff } from '@/lib/notes-off';
 import { separateTermDefinitions } from '@/lib/term-definitions';
 import { repairLeakedMarkup } from '../../../scripts/lib/leaked-markup.mjs';
+import { BRACKETED_PARAGRAPH, INTERP_PATTERN, isLacunaMark, looksLikeImageDescription } from '../../../scripts/lib/legacy-note-syntax.mjs';
 import AiBadge from '@/components/ui/AiBadge';
 
 /**
@@ -299,43 +300,10 @@ export const NOTES_ALLOWED_ELEMENTS = [
   'lacuna',
 ];
 
-// A paragraph that is nothing but one single-bracket run: blank line (or start)
-// before, blank line (or end) after, no nesting, single line.
-const BRACKETED_PARAGRAPH = /(^|\n[ \t]*\n)[ \t]*\[([^\[\]\n]{3,})\][ \t]*(?=\n[ \t]*\n|\n?$)/g;
-
-// The noun that makes a bracketed paragraph a picture, not a stage direction.
-const PICTORIAL_NOUN = /^(?:woodcuts?|wood-?blocks?|engravings?|etchings?|illustrations?|images?|pictures?|diagrams?|figures?|emblems?|head-?pieces?|tail-?pieces?|vignettes?|ornaments?|fleurons?|initials?|frontispieces?|portraits?|plates?|drawings?|sketch(?:es)?|maps?|charts?|borders?|cartouches?|seals?|miniatures?|illuminations?)$/i;
-
-// What may follow the noun: the start of a description, or nothing at all.
-// A bare number is a reference ("[Figure 3]") and stays an interpolation; a
-// numbered caption ("Illustration 35: …", "Plate III and VI.") is a picture.
-const DESCRIPTION_TAIL = /^(?:$|[:,.;—–-]|\s+[0-9IVXLC]+[a-z]?(?:[:.]|\s+and\b)|\s+(?:of|with|showing|shows|depicting|depicts|containing|contains|featuring|illustrating|representing|labell?ed|in|on|at|from|after|and|centred|centered|printed|framed|surrounded|spanning|occupying|description|omitted|caption)\b)/i;
-
-// Words that open a sentence rather than modify a noun: "[Therefore the figure of
-// the Sun …]" is the author speaking, whatever noun follows.
-const NOT_A_MODIFIER = new Set(['in', 'that', 'this', 'these', 'those', 'when', 'therefore', 'it', 'he', 'she', 'they', 'we', 'i', 'is', 'was', 'are', 'were', 'for', 'and', 'but', 'if', 'as', 'so', 'which', 'who', 'then', 'thus', 'here', 'there', 'now', 'not', 'no', 'to', 'from', 'by', 'at', 'on', 'see', 'cf', 'note']);
-
-/**
- * True when a bracketed paragraph opens with a picture's noun phrase:
- * an optional article, up to three modifiers, a pictorial noun, then a
- * description or the end ("Ornate woodcut headpiece with floral motifs",
- * "Engraving of a man's head", "Diagram: A vertical section").
- */
-export function looksLikeImageDescription(inner: string): boolean {
-  const words = inner.trim().split(/\s+/);
-  let i = /^(?:an?|the)$/i.test(words[0] ?? '') ? 1 : 0;
-  for (let mods = 0; i < words.length && mods <= 3; i++, mods++) {
-    const word = words[i].replace(/[:,.;]$/, '');
-    if (NOT_A_MODIFIER.has(word.toLowerCase())) return false;
-    // Whatever follows the bare noun, its own trailing punctuation included. A
-    // noun followed by another word is a modifier ("woodcut headpiece"): go on.
-    if (PICTORIAL_NOUN.test(word) && DESCRIPTION_TAIL.test(words.slice(i).join(' ').slice(word.length))) {
-      return true;
-    }
-    if (!/^[A-Za-z'’-]+,?$/.test(word)) return false;
-  }
-  return false;
-}
+// The bracketed-paragraph and interpolation rules (#4298, #4385) live in
+// scripts/lib/legacy-note-syntax.mjs, shared with the notes-layer parser (#5942)
+// so the stored clean text hides exactly what this reader hides.
+export { looksLikeImageDescription };
 
 // Pre-process bracket note tags to XML tags before ReactMarkdown sees them
 // Converts [[tag: content]] to <tag>content</tag> which rehype-raw handles
@@ -383,10 +351,9 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   // the rest of the editorial voice. Conservative match: single line, no
   // nesting, never a markdown link ("[text](url)"), and a lacuna mark such as
   // "[…]" always survives — it reports missing text, not commentary.
-  const interpPattern = /(?<!\[)\[([^\[\]\n]{1,240})\](?!\]|\()/g;
   result = showNotes
-    ? result.replace(interpPattern, '<interp>[$1]</interp>')
-    : result.replace(interpPattern, (m, inner) => (/^[\s.…·—–-]*$/.test(inner) ? m : ''));
+    ? result.replace(INTERP_PATTERN, '<interp>[$1]</interp>')
+    : result.replace(INTERP_PATTERN, (m, inner) => (isLacunaMark(inner) ? m : ''));
 
   return result;
 }

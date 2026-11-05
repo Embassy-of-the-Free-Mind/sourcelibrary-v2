@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { stripEditorialWrappers, stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
-import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, ORIGINAL_LANGUAGE_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
+import { languageCode, toBcp47 } from '@/lib/language-normalize';
 import { romanizedForQuote } from '@/lib/romanization';
 import { CONTENT_LICENSE, type ContentLicense } from '@/lib/license-info';
 import { getPageImageUrl } from '@/lib/page-image-url';
@@ -170,14 +172,17 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // until #4366. The success response sets X-Pages-Served so the wrapper
     // logs the page into the pool.
     const budget = await checkPageBudget({ identity, request });
+    const { id: bookId } = await context.params;
     if (!budget.allowed) {
-      return NextResponse.json(bulkBudgetExceededBody(budget), {
+      // /book/<id>/page/<n> redirects to the reader page for that printed page.
+      const asked = parseInt(new URL(request.url).searchParams.get('page') || '1');
+      const readOnSite = `https://sourcelibrary.org/book/${encodeURIComponent(bookId)}/page/${Number.isFinite(asked) && asked > 0 ? asked : 1}`;
+      return NextResponse.json(bulkBudgetExceededBody(budget, readOnSite), {
         status: 429,
         headers: { 'Retry-After': '3600' },
       });
     }
 
-    const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const pageNumber = parseInt(searchParams.get('page') || '1');
     const includeOriginal = searchParams.get('include_original') !== 'false';
@@ -243,12 +248,16 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const quotable = resolveQuoteText(page, book.id, requestedLang, { book });
 
     // A caller that explicitly said include_original=false wants English we
     // produced, so an English-original page has nothing to give it either.
     if (!quotable || (quotable.source === 'ocr_original' && !includeOriginal)) {
       const hasOriginal = !!page.ocr?.data;
+      // The way back in for a transcribed foreign page (#7458): ask for it in its
+      // own language. Named here because the caller cannot guess the code.
+      const originalLang = hasOriginal ? toBcp47(languageCode(book.language)) : null;
       return NextResponse.json({
         // Two different facts, and they need different sentences: an
         // untranscribed leaf holds no text at all, while "no translation" now
@@ -261,6 +270,12 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         // Lets the caller fall back to the original language instead of reading
         // this as "the page is missing" (see src/lib/mcp-errors.ts).
         has_original: hasOriginal,
+        ...(originalLang && originalLang !== 'en' && includeOriginal
+          ? {
+              original_lang: originalLang,
+              hint: `Retry with lang=${originalLang} to quote this page's transcription in its own language.`,
+            }
+          : {}),
       }, { status: 404 });
     }
 
@@ -271,7 +286,11 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // The citation links follow the edition actually served, never the one
     // asked for — a `/es` URL for a book we fell back on would 307 straight
     // back to English.
-    const citation = generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, quotable.lang, page.printed_page);
+    // A transcription served in its own language is read in the ordinary reader,
+    // not under a `/de` locale (which does not exist and 307s), and carries no
+    // "trans. Source Library" credit: the words are the leaf's (#7458).
+    const servesTranscription = quotable.source === 'ocr_original';
+    const citation = generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, servesTranscription ? undefined : quotable.lang, page.printed_page, { transcription: servesTranscription });
 
     // Build response
     const response: QuoteResponse = {
@@ -292,7 +311,9 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         ...(requestedLang !== quotable.lang
           ? { lang_note: `This page has no text in "${requestedLang}", so the English translation was served (lang: "${quotable.lang}"). Do not present it as the "${requestedLang}" edition.` }
           : {}),
-        ...(quotable.source === 'ocr_original' ? { transcription_note: OCR_ORIGINAL_NOTE } : {}),
+        ...(quotable.source === 'ocr_original'
+          ? { transcription_note: quotable.lang === 'en' ? OCR_ORIGINAL_NOTE : ORIGINAL_LANGUAGE_NOTE }
+          : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),
         // Checked on the served text AND the OCR original: a translation often
         // renders the note without the mark-up, so the transcription is the

@@ -42,6 +42,7 @@
 
 import { MongoClient } from 'mongodb';
 import blockedAsnPrefixes from '../../src/lib/blocked-asn-prefixes.json' with { type: 'json' };
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 // Same topic as uptime-monitor.mjs and daily-health-snapshot.mjs — the channel
 // Derek actually reads daily. Deliberately NOT email: `sync_worker_missing`
@@ -53,7 +54,7 @@ const NO_PUSH = process.argv.includes('--no-push');
 async function pushNtfy(title, message, priority) {
   if (NO_PUSH) { console.log('[traffic-anomaly] --no-push: skipping ntfy'); return; }
   try {
-    await fetch(NTFY_TOPIC, {
+    await ntfyPost(NTFY_TOPIC, {
       method: 'POST',
       headers: { Title: title, Priority: priority, Tags: 'rotating_light' },
       body: message,

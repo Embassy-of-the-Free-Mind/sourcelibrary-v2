@@ -50,7 +50,7 @@ async function main() {
   console.log(`Found ${total} gallery images missing dimensions`);
   if (total === 0) { await client.close(); return; }
 
-  const cursor = db.collection('gallery_images').find(query);
+  const cursor = db.collection('gallery_images').find(query).batchSize(1000);
   if (limit > 0) cursor.limit(limit);
 
   let processed = 0, failed = 0, updated = 0;

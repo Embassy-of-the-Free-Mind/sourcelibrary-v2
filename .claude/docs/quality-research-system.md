@@ -2,6 +2,8 @@
 
 # The quality research system: one loop from evidence to routing
 
+> **Design, not running (checked 2026-10-29, #7759)** except where the "exists today" column says so. The checks that run in production are listed in `book-process.md`.
+
 **Read this when** you are about to design a quality test, choose which model reads or translates a kind of page, or
 build anything in the Quality Center. Status: **design, 2026-10-11** (Derek: "conceptualize this as a research system
 … its own search and embedding and dedupe … and routing system"). Tracking: #6553. Nothing here is built yet except

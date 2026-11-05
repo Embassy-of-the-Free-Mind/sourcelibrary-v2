@@ -1,0 +1,598 @@
+{
+ "seed": 6740,
+ "rule": "prep.py plant(): 3 per folio, in syllables the draft has right against Derge",
+ "anchor_ids": [
+  "69e7aadf5f1a22ab19a8ed59",
+  "69e7aae25f1a22ab19a8f0ad",
+  "69e7ab065f1a22ab19a91926",
+  "69e7ab1b5f1a22ab19a9314e",
+  "69e7ab225f1a22ab19a9379b",
+  "69e7abfe5f1a22ab19aa1dfb",
+  "69e7ac005f1a22ab19aa1f68",
+  "69e7ac245f1a22ab19aa44b2",
+  "69e7ac2b5f1a22ab19aa4c57",
+  "69e7ac385f1a22ab19aa5ad5"
+ ],
+ "plants": {
+  "69e7ab1b5f1a22ab19a9314e": {
+   "plants": [
+    {
+     "kind": "vowel",
+     "line": 4,
+     "offset": 148,
+     "token_index": 211,
+     "orig": "ཆེན",
+     "planted": "ཆིན",
+     "prev": [
+      "རྒྱལ",
+      "པོ",
+      "ལྷ"
+     ],
+     "next": [
+      "པོས",
+      "གཞོན",
+      "ནུ"
+     ]
+    },
+    {
+     "kind": "letter",
+     "line": 9,
+     "offset": 15,
+     "token_index": 354,
+     "orig": "སྙམ",
+     "planted": "སྙས",
+     "prev": [
+      "ཆུབ",
+      "ཐོབ",
+      "བོ"
+     ],
+     "next": [
+      "ན",
+      "ཁྱོད",
+      "ཀྱིས"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 11,
+     "offset": 172,
+     "token_index": 484,
+     "orig": "གྱི",
+     "planted": "རྗེས",
+     "prev": [
+      "པོ",
+      "དང",
+      "ཁྲོམ"
+     ],
+     "next": [
+      "རུ",
+      "བ",
+      "དང"
+     ]
+    }
+   ]
+  },
+  "69e7aadf5f1a22ab19a8ed59": {
+   "plants": [
+    {
+     "kind": "swap",
+     "line": 9,
+     "offset": 145,
+     "token_index": 366,
+     "orig": "བྱང",
+     "planted": "འཁོར",
+     "prev": [
+      "གདོང",
+      "ཅན",
+      "ནི"
+     ],
+     "next": [
+      "དང",
+      "དབང",
+      "ལྡན"
+     ]
+    },
+    {
+     "kind": "letter",
+     "line": 6,
+     "offset": 125,
+     "token_index": 277,
+     "orig": "པ",
+     "planted": "བ",
+     "prev": [
+      "རིངས",
+      "དང",
+      "སྤེན"
+     ],
+     "next": [
+      "དག",
+      "ནི",
+      "ནུབ"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 13,
+     "offset": 48,
+     "token_index": 487,
+     "orig": "ནི",
+     "planted": "ནེ",
+     "prev": [
+      "སྐྱོང",
+      "བ",
+      "རྣམས"
+     ],
+     "next": [
+      "ནང",
+      "དང",
+      "ཕྱི"
+     ]
+    }
+   ]
+  },
+  "69e7aae25f1a22ab19a8f0ad": {
+   "plants": [
+    {
+     "kind": "letter",
+     "line": 4,
+     "offset": 162,
+     "token_index": 239,
+     "orig": "ལས",
+     "planted": "ཡས",
+     "prev": [
+      "པ",
+      "དེ",
+      "རྣམས"
+     ],
+     "next": [
+      "ཆ",
+      "གཉིས",
+      "ལ"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 10,
+     "offset": 13,
+     "token_index": 426,
+     "orig": "པར",
+     "planted": "རེ",
+     "prev": [
+      "ཐམས",
+      "ཅད",
+      "སྦྱངས"
+     ],
+     "next": [
+      "གྱུར",
+      "པ",
+      "ན"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 13,
+     "offset": 138,
+     "token_index": 618,
+     "orig": "ནི",
+     "planted": "ནེ",
+     "prev": [
+      "པ",
+      "རྣམས",
+      "ཀྱིས"
+     ],
+     "next": [
+      "སེམས",
+      "ཅན",
+      "ཐམས"
+     ]
+    }
+   ]
+  },
+  "69e7ab065f1a22ab19a91926": {
+   "plants": [
+    {
+     "kind": "letter",
+     "line": 9,
+     "offset": 78,
+     "token_index": 435,
+     "orig": "ཕུང",
+     "planted": "ཕུད",
+     "prev": [
+      "པའི",
+      "མུན",
+      "པའི"
+     ],
+     "next": [
+      "པོ",
+      "ཐམས",
+      "ཅད"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 6,
+     "offset": 33,
+     "token_index": 346,
+     "orig": "པ",
+     "planted": "ཏི",
+     "prev": [
+      "པ",
+      "ཤཱཀྱ",
+      "ཐུབ"
+     ],
+     "next": [
+      "དེ",
+      "ལ",
+      "གནོད"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 10,
+     "offset": 112,
+     "token_index": 478,
+     "orig": "སྙིང",
+     "planted": "སྙེང",
+     "prev": [
+      "མའི",
+      "ཤུགས",
+      "ཀྱི"
+     ],
+     "next": [
+      "པོ",
+      "དེས",
+      "འདི"
+     ]
+    }
+   ]
+  },
+  "69e7abfe5f1a22ab19aa1dfb": {
+   "plants": [
+    {
+     "kind": "letter",
+     "line": 12,
+     "offset": 110,
+     "token_index": 445,
+     "orig": "ཆུས",
+     "planted": "ཇུས",
+     "prev": [
+      "མ",
+      "དང",
+      "ཁ"
+     ],
+     "next": [
+      "བརླན",
+      "པ",
+      "སྟེང"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 13,
+     "offset": 87,
+     "token_index": 476,
+     "orig": "ནུར",
+     "planted": "ནོར",
+     "prev": [
+      "སྐྱེད",
+      "ཅིང",
+      "ནུར"
+     ],
+     "next": [
+      "པོ",
+      "དང",
+      "མེར"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 14,
+     "offset": 60,
+     "token_index": 506,
+     "orig": "རྐང",
+     "planted": "པའོ",
+     "prev": [
+      "ལག",
+      "པ",
+      "དང"
+     ],
+     "next": [
+      "པ",
+      "དང",
+      "འགྲམ"
+     ]
+    }
+   ]
+  },
+  "69e7ac245f1a22ab19aa44b2": {
+   "plants": [
+    {
+     "kind": "swap",
+     "line": 6,
+     "offset": 4,
+     "token_index": 223,
+     "orig": "འདས",
+     "planted": "བཅོམ",
+     "prev": [
+      "ནས",
+      "བཅོམ",
+      "ལྡན"
+     ],
+     "next": [
+      "ཀྱིས",
+      "དེའི",
+      "ཚེ"
+     ]
+    },
+    {
+     "kind": "letter",
+     "line": 14,
+     "offset": 81,
+     "token_index": 505,
+     "orig": "ཏེ",
+     "planted": "དེ",
+     "prev": [
+      "སྙམ",
+      "དུ",
+      "སེམས"
+     ],
+     "next": [
+      "མི",
+      "གང",
+      "དག"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 9,
+     "offset": 68,
+     "token_index": 317,
+     "orig": "བཞིན",
+     "planted": "བཞེན",
+     "prev": [
+      "ལྡན",
+      "འདས",
+      "དེ"
+     ],
+     "next": [
+      "གཤེགས",
+      "པ",
+      "དགྲ"
+     ]
+    }
+   ]
+  },
+  "69e7ac005f1a22ab19aa1f68": {
+   "plants": [
+    {
+     "kind": "vowel",
+     "line": 0,
+     "offset": 74,
+     "token_index": 20,
+     "orig": "མི",
+     "planted": "མེ",
+     "prev": [
+      "ལྟ",
+      "བུ",
+      "ལ"
+     ],
+     "next": [
+      "སྤྱོད",
+      "དམ",
+      "དེས"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 11,
+     "offset": 29,
+     "token_index": 401,
+     "orig": "པོ",
+     "planted": "འཆི",
+     "prev": [
+      "དང",
+      "ལུས",
+      "སུལ"
+     ],
+     "next": [
+      "རྣམས",
+      "ཀྱིས",
+      "ཀྱང"
+     ]
+    },
+    {
+     "kind": "letter",
+     "line": 12,
+     "offset": 40,
+     "token_index": 438,
+     "orig": "དགས",
+     "planted": "ངགས",
+     "prev": [
+      "ཟ",
+      "དང",
+      "ཡི"
+     ],
+     "next": [
+      "དང",
+      "གྲུལ",
+      "བུམ"
+     ]
+    }
+   ]
+  },
+  "69e7ab225f1a22ab19a9379b": {
+   "plants": [
+    {
+     "kind": "vowel",
+     "line": 10,
+     "offset": 49,
+     "token_index": 413,
+     "orig": "ཀོར",
+     "planted": "ཀུར",
+     "prev": [
+      "པའོ",
+      "དེའི",
+      "ཉིན"
+     ],
+     "next": [
+      "གང",
+      "ཞེ",
+      "ན"
+     ]
+    },
+    {
+     "kind": "letter",
+     "line": 9,
+     "offset": 30,
+     "token_index": 362,
+     "orig": "ན",
+     "planted": "ཏ",
+     "prev": [
+      "སྐོར",
+      "གང",
+      "ཞེ"
+     ],
+     "next": [
+      "སོ",
+      "སོ",
+      "ཐ"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 5,
+     "offset": 28,
+     "token_index": 231,
+     "orig": "གཅིག",
+     "planted": "འདོམ",
+     "prev": [
+      "པ",
+      "ཉེན",
+      "ཀོར"
+     ],
+     "next": [
+      "པ",
+      "གང",
+      "ཞེ"
+     ]
+    }
+   ]
+  },
+  "69e7ac2b5f1a22ab19aa4c57": {
+   "plants": [
+    {
+     "kind": "swap",
+     "line": 6,
+     "offset": 127,
+     "token_index": 263,
+     "orig": "དུ",
+     "planted": "གྱི",
+     "prev": [
+      "ལྟ",
+      "བ",
+      "ཅན"
+     ],
+     "next": [
+      "གནས",
+      "ཀྱང",
+      "ལུས"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 10,
+     "offset": 122,
+     "token_index": 377,
+     "orig": "བའི",
+     "planted": "བའེ",
+     "prev": [
+      "བར",
+      "བྱའོ",
+      "དགེ"
+     ],
+     "next": [
+      "རྩ",
+      "བ",
+      "ཐམས"
+     ]
+    },
+    {
+     "kind": "letter",
+     "line": 8,
+     "offset": 66,
+     "token_index": 282,
+     "orig": "སེམས",
+     "planted": "མེམས",
+     "prev": [
+      "གྱི",
+      "ཁམས",
+      "ཀྱི"
+     ],
+     "next": [
+      "ཅན",
+      "ཇི",
+      "སྙེད"
+     ]
+    }
+   ]
+  },
+  "69e7ac385f1a22ab19aa5ad5": {
+   "plants": [
+    {
+     "kind": "letter",
+     "line": 1,
+     "offset": 72,
+     "token_index": 57,
+     "orig": "གསོལ",
+     "planted": "གམོལ",
+     "prev": [
+      "འདི",
+      "སྐད",
+      "ཅེས"
+     ],
+     "next": [
+      "ཏོ",
+      "བཅོམ",
+      "ལྡན"
+     ]
+    },
+    {
+     "kind": "vowel",
+     "line": 3,
+     "offset": 146,
+     "token_index": 145,
+     "orig": "བཅོམ",
+     "planted": "བཅུམ",
+     "prev": [
+      "ཐམས",
+      "ཅད",
+      "ནི"
+     ],
+     "next": [
+      "ལྡན",
+      "འདས",
+      "སངས"
+     ]
+    },
+    {
+     "kind": "swap",
+     "line": 14,
+     "offset": 125,
+     "token_index": 523,
+     "orig": "ཤཱ",
+     "planted": "དུ",
+     "prev": [
+      "བར",
+      "གནས",
+      "སོ"
+     ],
+     "next": [
+      "རིའི",
+      "བུ",
+      "ཤེས"
+     ]
+    }
+   ]
+  }
+ }
+}

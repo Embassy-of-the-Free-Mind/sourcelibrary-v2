@@ -61,3 +61,11 @@ jobs:
       - name: next build (compile only)
         if: steps.inputs.outputs.build == 'yes'
         run: npm run build -- --experimental-build-mode compile
+
+      # A green compile is not a deployable build: #7299 compiled, then the release failed
+      # at deploy on a 500 MB /quality function (Vercel's limit is 250 MB). This sums each
+      # function's traced files from the .nft.json the build just wrote and fails above
+      # 220 MB, naming the function and its five largest files (#7318).
+      - name: Vercel function size
+        if: steps.inputs.outputs.build == 'yes'
+        run: node scripts/audit/function-size.mjs --max-mb 220

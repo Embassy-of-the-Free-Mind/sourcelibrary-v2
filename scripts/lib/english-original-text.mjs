@@ -73,3 +73,31 @@ export function servesTranscriptionInsteadOfTranslation(page, book) {
   if (!isEnglishOriginalBook(book)) return false;
   return isEnglishOriginalPage(ocr);
 }
+
+/**
+ * The pages enrichment (enrich-worker Phase 6) should read, with an English
+ * original's English leaves carrying their TRANSCRIPTION in `translation.data`.
+ *
+ * Phase 6 reads only `translation.data` — batching, the index prompt, entity
+ * page attribution, page summaries and quote grounding all key off it. An
+ * English original has no translation (the translate lanes skip English since
+ * #5384), so it enriched to an empty index, no entities and no or placeholder
+ * summary while still advancing its status (#6559: Brinton's Cakchiquel
+ * grammar, Codex Perez, Tozzer's Maya grammar). Where a stale translation
+ * does exist it is a rewording, and quotes grounded on it are not the author's
+ * words (#7100) — so the transcription wins there too.
+ *
+ * Every other page — a non-English book, or a foreign leaf of an English
+ * edition (a Loeb's Latin facing page) — is returned untouched. Returns new
+ * page objects; the input is not mutated and nothing here is ever written back.
+ */
+export function pagesForEnrichment(pages, book) {
+  if (!isEnglishOriginalBook(book)) return pages;
+  return pages.map((page) => {
+    const ocr = typeof page?.ocr?.data === 'string' ? page.ocr.data : '';
+    // A blank leaf's OCR is only its tags (`<page-type>blank</page-type>`).
+    const body = ocr.replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '').trim();
+    if (!body || !isEnglishOriginalPage(ocr)) return page;
+    return { ...page, translation: { ...(page.translation || {}), data: ocr, source: 'ocr_original' } };
+  });
+}

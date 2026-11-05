@@ -89,13 +89,13 @@ msg_idle="GEX45-1 (Hetzner GPU box, \$249/mo flat) is ${state^^}: ${detail}. It 
 if [ "$alert" = 1 ]; then
   if [ "$DRY" = 1 ]; then log "[dry-run] would ntfy + comment on #$ISSUE: $msg_idle"
   else
-    curl -fsS --max-time 20 -H "Title: GEX45 ${state}" -H "Tags: warning" -d "$msg_idle" "$NTFY_TOPIC" >/dev/null || log "ntfy FAILED"
+    NTFY_SRC=gex45-idle-alert.sh "$(dirname "$0")/../workers/ntfy-send.sh" "$NTFY_TOPIC" "GEX45 ${state}" default warning "$msg_idle" || log "ntfy FAILED"
     gh issue comment "$ISSUE" --repo "$REPO" --body "**GEX45 idle alert** (\`scripts/maintenance/gex45-idle-alert.sh\`, $(date -u +%FT%TZ)): the box is **${state}**. ${detail}. A dedicated box bills the same when idle, so this does not power it off. Queue work under \`/root/jobs/<name>/\` on the box, or decide to cancel. Next reminder in ${NAG_HOURS} h if nothing changes." >/dev/null || log "gh comment FAILED"
     palerted=$now
   fi
 fi
 if [ "$resumed" = 1 ] && [ "$DRY" = 0 ]; then
-  curl -fsS --max-time 20 -H "Title: GEX45 busy again" -d "GEX45-1 is writing output again: ${detail}" "$NTFY_TOPIC" >/dev/null || log "ntfy FAILED"
+  NTFY_SRC=gex45-idle-alert.sh "$(dirname "$0")/../workers/ntfy-send.sh" "$NTFY_TOPIC" "GEX45 busy again" default "" "GEX45-1 is writing output again: ${detail}" || log "ntfy FAILED"
 fi
 [ "$state" = busy ] && palerted=0
 

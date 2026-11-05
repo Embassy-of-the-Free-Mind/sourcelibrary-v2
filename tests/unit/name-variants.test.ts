@@ -2,13 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // The lookup is mocked; everything else under test is pure.
 const find = vi.fn();
+const authorsFind = vi.fn();
 vi.mock('@/lib/mongodb', () => ({
-  getDb: async () => ({ collection: () => ({ find }) }),
+  getDb: async () => ({ collection: (name: string) => ({ find: name === 'authors' ? authorsFind : find }) }),
 }));
 
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import {
   MAX_NAME_VARIANTS,
+  authorNameRecord,
   buildNameVariants,
   expandPersonNames,
   isSpellingOf,
@@ -274,7 +276,11 @@ describe('buildPageSearchStage with name variants', () => {
 });
 
 describe('expandPersonNames', () => {
-  beforeEach(() => { find.mockReset(); });
+  beforeEach(() => {
+    find.mockReset();
+    authorsFind.mockReset();
+    authorsFind.mockImplementation(() => cursor([]));
+  });
 
   it('looks nothing up and returns [] for a query with no name-shaped span', async () => {
     expect(await expandPersonNames('"an exact phrase"')).toEqual([]);
@@ -310,5 +316,65 @@ describe('expandPersonNames', () => {
     expect(await expandPersonNames('Sendivogius')).toEqual([]);
     find.mockImplementation((q: any) => cursor(q.name ? [{ name: 'Sendivogius', type: 'person', book_count: 80 }] : []));
     expect(await expandPersonNames('Sendivogius')).toContain('Sendivogii');
+  });
+});
+
+// #7786: the `authors` thesaurus as a second source of names.
+const KIRCHER_DOC = {
+  canonical_name: 'Athanasius Kircher',
+  wikidata_id: 'Q76738',
+  variants: ['Athanasius Kircher', 'Kircher, Athanasius', 'Kircher Magneticum', 'Kircher, Athanasius, 1602-1680', 'Kircherus, Athanasius'],
+  aliases: ['Athanasius Kircherus', 'Kircher', 'Атанасий Кирхер'],
+  book_count: 71,
+};
+
+describe('authorNameRecord', () => {
+  it('keeps catalogue variants whose every word spells an authority name', () => {
+    const r = authorNameRecord(KIRCHER_DOC)!;
+    expect(r.name).toBe('Athanasius Kircher');
+    expect(r.type).toBe('person');
+    expect(r.aliases).toEqual(expect.arrayContaining(['Kircher', 'Athanasius Kircherus', 'Kircher, Athanasius', 'Kircherus, Athanasius']));
+  });
+
+  it('drops search-string, dated and compound variants — they are not names', () => {
+    const r = authorNameRecord({
+      ...KIRCHER_DOC,
+      variants: [...KIRCHER_DOC.variants, 'Paracelsus; ed. A.E. Waite', 'Kircher & Schott'],
+    })!;
+    expect(r.aliases).not.toContain('Kircher Magneticum');
+    expect(r.aliases).not.toContain('Kircher, Athanasius, 1602-1680');
+    expect(r.aliases).not.toContain('Paracelsus; ed. A.E. Waite');
+    expect(r.aliases).not.toContain('Kircher & Schott');
+  });
+
+  it('refuses an unanchored doc, a tombstone, and types an institution as a non-person', () => {
+    expect(authorNameRecord({ canonical_name: 'Zürich', variants: ['Zürich'] })).toBeNull();
+    expect(authorNameRecord({ ...KIRCHER_DOC, merged_into: 'athanasius-kircher' })).toBeNull();
+    expect(authorNameRecord({ canonical_name: 'British Museum', viaf_id: '1', is_person: false })!.type).toBe('organization');
+  });
+
+  it('a variant that matched the lookup but is not a name does not make its words a person', () => {
+    const r = authorNameRecord(KIRCHER_DOC)!;
+    // "kircher magneticum": Kircher is the name, magneticum stays a topic word.
+    expect(topicWords('Kircher Magneticum', [r])).toEqual(['Magneticum']);
+  });
+});
+
+describe('expandPersonNames with the authors thesaurus', () => {
+  beforeEach(() => { find.mockReset(); authorsFind.mockReset(); });
+
+  it('expands a person only the thesaurus knows', async () => {
+    find.mockImplementation(() => cursor([]));
+    authorsFind.mockImplementation(() => cursor([{
+      canonical_name: 'Cornelius Drebbel', wikidata_id: 'Q365463',
+      variants: ['Drebbel, Cornelis', 'Drebbel, Cornelius'], aliases: ['Cornelis Drebbel', 'Drebbel'], book_count: 17,
+    }]));
+    expect((await expandPersonNames('drebbel thesaurus')).map(v => v.toLowerCase())).toEqual(expect.arrayContaining(['drebel', 'drebbelius']));
+  });
+
+  it('a thesaurus failure leaves the entities expansion standing', async () => {
+    find.mockImplementation((q: any) => cursor(q.name ? [{ name: 'Sendivogius', type: 'person', book_count: 80 }] : []));
+    authorsFind.mockImplementation(() => { throw new Error('authors unavailable'); });
+    expect(await expandPersonNames('Sendivogius thesaurus')).toContain('Sendivogii');
   });
 });

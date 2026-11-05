@@ -1,0 +1,239 @@
+{
+ "generated_at": "2026-10-29T22:27:39.189Z",
+ "floor_7503": {
+  "rate": 0.0458,
+  "breaks": 13937,
+  "books": 138,
+  "note": "the Han guard on this lane at 1/call, measured 2026-10-29 21:25Z (#5600)"
+ },
+ "weight_output": 6,
+ "arms": {
+  "A": {
+   "pages": 120,
+   "ok": 120,
+   "calls": 120,
+   "calls_per_page": 1,
+   "refused_calls": 0,
+   "gemini_filter_refusals": 0,
+   "pages_reread_alone": 0,
+   "call_sizes": {
+    "1": 120
+   },
+   "per_page": {
+    "input": 8023,
+    "output": 656,
+    "thinking": 158,
+    "cache_read": 1961
+   },
+   "quota_index": 12906,
+   "quota_index_uncached": 10945,
+   "guard": {
+    "breaks": 90,
+    "flagged": 4,
+    "rate": 0.0444,
+    "p_at_least_k_under_floor": 0.595,
+    "kind": "every break, read as if a block (1/call cannot move text: floor)",
+    "flags": [
+     {
+      "book": "6a3cef4e4701a906f10ee69c",
+      "break": "44→45",
+      "flagged": true,
+      "shift": 0.065
+     },
+     {
+      "book": "6a3cbf5af9474f825c16774d",
+      "break": "89→90",
+      "flagged": true,
+      "shift": 0.137
+     },
+     {
+      "book": "6a3cbdc8ec254ff6cadfa3e8",
+      "break": "56→57",
+      "flagged": true,
+      "shift": 0.308
+     },
+     {
+      "book": "6a3c5f71879008ba7e1558b7",
+      "break": "6→7",
+      "flagged": true,
+      "shift": 0.423
+     }
+    ]
+   },
+   "final_texts": {
+    "breaks": 90,
+    "flagged": 4,
+    "flags": [
+     {
+      "book": "6a3cef4e4701a906f10ee69c",
+      "break": "44→45",
+      "flagged": true
+     },
+     {
+      "book": "6a3cbf5af9474f825c16774d",
+      "break": "89→90",
+      "flagged": true
+     },
+     {
+      "book": "6a3cbdc8ec254ff6cadfa3e8",
+      "break": "56→57",
+      "flagged": true
+     },
+     {
+      "book": "6a3c5f71879008ba7e1558b7",
+      "break": "6→7",
+      "flagged": true
+     }
+    ]
+   },
+   "quota_rel_A": 1,
+   "quota_rel_A_uncached": 1,
+   "calls_rel_A": 1
+  },
+  "B": {
+   "pages": 120,
+   "ok": 118,
+   "calls": 64,
+   "calls_per_page": 0.533,
+   "refused_calls": 5,
+   "gemini_filter_refusals": 5,
+   "pages_reread_alone": 5,
+   "call_sizes": {
+    "1": 36,
+    "2": 5,
+    "3": 6,
+    "4": 17
+   },
+   "per_page": {
+    "input": 4237,
+    "output": 575,
+    "thinking": 122,
+    "cache_read": 1219
+   },
+   "quota_index": 8417,
+   "quota_index_uncached": 7199,
+   "guard": {
+    "breaks": 61,
+    "flagged": 1,
+    "rate": 0.0164,
+    "p_at_least_k_under_floor": 0.943,
+    "kind": "in-block breaks the guard saw in production",
+    "flags": [
+     {
+      "book": "6a3cbe4aec254ff6cadfeea4",
+      "break": "54→55",
+      "call": "siku-lane-5600-percall-test-6a3cbe4aec254ff6cadfeea4-52-4-0",
+      "flagged": true,
+      "shift": 0.438
+     }
+    ]
+   },
+   "final_texts": {
+    "breaks": 90,
+    "flagged": 3,
+    "flags": [
+     {
+      "book": "6a3cbf5af9474f825c16774d",
+      "break": "89→90",
+      "flagged": true
+     },
+     {
+      "book": "6a3c5f71879008ba7e1558b7",
+      "break": "4→5",
+      "flagged": true
+     },
+     {
+      "book": "6a3c5f71879008ba7e1558b7",
+      "break": "6→7",
+      "flagged": true
+     }
+    ]
+   },
+   "quota_rel_A": 0.652,
+   "quota_rel_A_uncached": 0.658,
+   "calls_rel_A": 0.533
+  },
+  "C": {
+   "pages": 120,
+   "ok": 120,
+   "calls": 120,
+   "calls_per_page": 1,
+   "refused_calls": 0,
+   "gemini_filter_refusals": 0,
+   "pages_reread_alone": 0,
+   "call_sizes": {
+    "1": 120
+   },
+   "per_page": {
+    "input": 7055,
+    "output": 573,
+    "thinking": 101,
+    "cache_read": 2977
+   },
+   "quota_index": 11096,
+   "quota_index_uncached": 8119,
+   "guard": {
+    "breaks": 90,
+    "flagged": 4,
+    "rate": 0.0444,
+    "p_at_least_k_under_floor": 0.595,
+    "kind": "every break, read as if a block (1/call cannot move text: floor)",
+    "flags": [
+     {
+      "book": "6a3cef4e4701a906f10ee69c",
+      "break": "44→45",
+      "flagged": true,
+      "shift": 0.096
+     },
+     {
+      "book": "6a3cbdc8ec254ff6cadfa3e8",
+      "break": "56→57",
+      "flagged": true,
+      "shift": 0.16
+     },
+     {
+      "book": "6a3c5f71879008ba7e1558b7",
+      "break": "6→7",
+      "flagged": true,
+      "shift": 0.365
+     },
+     {
+      "book": "6a3ced294701a906f10ddf58",
+      "break": "28→29",
+      "flagged": true,
+      "shift": 0.327
+     }
+    ]
+   },
+   "final_texts": {
+    "breaks": 90,
+    "flagged": 4,
+    "flags": [
+     {
+      "book": "6a3cef4e4701a906f10ee69c",
+      "break": "44→45",
+      "flagged": true
+     },
+     {
+      "book": "6a3cbdc8ec254ff6cadfa3e8",
+      "break": "56→57",
+      "flagged": true
+     },
+     {
+      "book": "6a3c5f71879008ba7e1558b7",
+      "break": "6→7",
+      "flagged": true
+     },
+     {
+      "book": "6a3ced294701a906f10ddf58",
+      "break": "28→29",
+      "flagged": true
+     }
+    ]
+   },
+   "quota_rel_A": 0.86,
+   "quota_rel_A_uncached": 0.742,
+   "calls_rel_A": 1
+  }
+ }
+}

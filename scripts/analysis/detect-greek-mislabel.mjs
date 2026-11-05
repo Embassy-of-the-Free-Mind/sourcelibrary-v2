@@ -104,13 +104,13 @@ const B = db.collection('books');
 let cursor;
 if (val('--ids', null)) {
   const ids = val('--ids', '').split(',').map((s) => ObjectId.createFromHexString(s.trim()));
-  cursor = B.find({ _id: { $in: ids } });
+  cursor = B.find({ _id: { $in: ids } }).batchSize(1000);
 } else if (flag('--all')) {
   // Authoritative full scan (slow): every English-labeled book with real pagination.
-  cursor = B.find({ language: 'English', pages_count: { $gt: 20 } });
+  cursor = B.find({ language: 'English', pages_count: { $gt: 20 } }).batchSize(1000);
 } else {
   // Cheap high-signal pre-filter: English-labeled but flagged as a Greek original/translation.
-  cursor = B.find({ language: 'English', pages_count: { $gt: 20 }, original_language: 'Greek' });
+  cursor = B.find({ language: 'English', pages_count: { $gt: 20 }, original_language: 'Greek' }).batchSize(1000);
 }
 
 const results = [];

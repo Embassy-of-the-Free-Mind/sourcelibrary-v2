@@ -1,0 +1,70 @@
+[
+  {
+    "book_id": "b13-t", "slot": 1,
+    "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 17th-century alchemical miscellany: a Latin recipe text headed 'Speculum luminum' (p.45, an older, heavily abbreviated gothic cursive), an English/Latin treatise on the one Materia citing the Turba and Morienus (p.88), and Ripley's 'Pupilla Alchymiae. Pars Practicalis' (p.132). Squarely alchemy; the 'R.C.' in the title suggests a Rosicrucian attribution. No tradition is set, though.",
+    "rights_flag": null,
+    "structure_note": "There are no structure counts in the packet. None of the three sampled pages has a translation (translation is empty on all three), so a reader gets only the transcription of a mostly abbreviated Latin/English manuscript. The title 'Ex Ilss.' is almost certainly a misreading of 'Ex MSS.' (I7, moderate). The book mixes hands: p.45 is a much older gothic cursive with its own foliation (17), so this is probably a composite volume. That is not a defect, but the catalogue's single '17th Century' date undersells it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "pone in duplum vini fortis", "image": "pone in duplo urine p[re]pat[e] (vzine)", "problem": "the ingredient 'urine' is read as 'strong wine', so a reader following the recipe gets the wrong menstruum", "severity": "serious", "class": "O6" },
+          { "ocr": "per silentium ad hoc opus paratum", "image": "p[er] filtru[m] ad ho[c] op[us] p[ar]atu[m]", "problem": "'filtrum' (filter) is read as 'silentium', which makes nonsense of the step", "severity": "moderate", "class": "O6" },
+          { "ocr": "permitte infundi et quando fuerit finit distillare", "image": "p[er]mitte infri[gidari] et q[ua]n[do] fri[gidum] fuerit distilla", "problem": "'let it cool and when it is cold, distil' becomes 'let it be poured in and when it has finished distilling'", "severity": "moderate", "class": "O6" },
+          { "ocr": "accipe sal communis partem", "image": "accipe sal co[mmun]e p[re]patu[m]", "problem": "'prepared common salt' is read as 'a part of common salt'", "severity": "moderate", "class": "O6" },
+          { "ocr": "3. partes et mixta bene sit et cinere", "image": "3. li[bras?] et mistis b[e]n[e] sit et cineres", "problem": "the quantity unit is probably 'li.' (pounds), not 'partes'; low confidence on the abbreviation", "severity": "moderate" },
+          { "ocr": "in sanguinis faecis lixivio", "image": "in sang[uinis] aq[ua] q[ua] fecisti lixiviu[m]", "problem": "garbled: 'in the blood-water with which you made the lye'", "severity": "minor" },
+          { "ocr": "aqua transstet", "image": "aqua euanescat (?)", "problem": "the verb is uncertain; the OCR form is not a Latin word", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page; the reader sees only an expanded transcription of a heavily abbreviated recipe", "severity": "moderate", "class": "other:untranslated" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 88,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Materia.", "image": "Materiae.", "problem": "the heading's genitive is normalised to the nominative", "severity": "minor" },
+          { "ocr": "<sig>ej</sig>", "image": "ej (catchword at the foot)", "problem": "the catchword is tagged as a signature", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation, although half of the page is Latin", "severity": "moderate", "class": "other:untranslated" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 132,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "finis est written, terminum posuisti", "image": "Since it is written, terminum posuisti", "problem": "'Since it is' is misread as Latin 'finis est', which garbles the sentence that introduces the scriptural quotation", "severity": "moderate", "class": "O6" },
+          { "ocr": "our 2 most necessary", "image": "o[u]r 2 ☿ most necessary", "problem": "the mercury symbol is dropped, so it no longer says what the 'two' are (mercuries)", "severity": "moderate", "class": "O10" },
+          { "ocr": "& this vegetable &", "image": "& this vegetable ☿", "problem": "the final mercury symbol is read as '&'", "severity": "minor" },
+          { "ocr": "out of the we drawe", "image": "out of the[m] we drawe", "problem": "the abbreviation for 'them' is not expanded", "severity": "minor" },
+          { "ocr": "prae-rire", "image": "praete-rire", "problem": "a syllable is dropped (praeterire)", "severity": "minor" },
+          { "ocr": "Pupilla Alchymie. G: Ripley.", "image": "PUPILLA ALCHYMIAE. G: RIPLEI.", "problem": "the title is normalised", "severity": "minor" },
+          { "ocr": "<margin>*desunt ista in al. ms.</margin> (at top)", "image": "the asterisk is keyed to 'health*' in line 2", "problem": "the marginal note is detached from its anchor", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The centring arrows '->…<-' around the two headings may show in the reader text if the renderer does not consume them", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A genuine alchemical manuscript miscellany. The later English/Latin hands are transcribed well (p.88, p.132). The older abbreviated gothic recipe on p.45 is not: it turns 'urine' into 'strong wine' and 'filter' into 'silence'. No sampled page is translated, and the title misreads 'MSS.' as 'Ilss.'."
+  }
+]

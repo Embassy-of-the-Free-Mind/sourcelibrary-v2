@@ -64,7 +64,7 @@ if (IDS) {
   if (!ALL) filter.created_at = { $gte: new Date(Date.now() - SINCE_DAYS * 86400e3) };
 }
 const proj = { projection: { id: 1, title: 1, year: 1, language: 1, pages_count: 1, hidden_reason: 1, 'image_source.provider': 1 } };
-const cursor = db.collection('books').find(filter, proj).sort({ id: 1 });
+const cursor = db.collection('books').find(filter, proj).batchSize(1000).sort({ id: 1 });
 
 const pageProj = { projection: { page_number: 1, 'ocr.data': 1 } };
 const rows = [];

@@ -32,6 +32,7 @@ import zlib from 'node:zlib';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { contentHash } from './write-provenance.mjs';
 import { writePageText } from './page-text-writer.mjs';
+import { laneForWrite } from './lanes.mjs';
 import { PADDLE, MIN_HAN, MAX_CHAR_RUN, convertPaddle, bodyHanCount, longestCharRun, isHumanEdited } from './paddle-zh-lane.mjs';
 
 export { isHumanEdited, markTranslationsStale, STALE_OCR_FIELDS } from './paddle-zh-lane.mjs';
@@ -42,6 +43,7 @@ export const LANE = 'paddle-print-2026-10';
 export const LANE_ISSUE = 6101;
 export const HOLD_REASON = 'paddle-print-6101';
 export const HOLD_RELEASE = 'the Paddle split-leaf read of this print book is written (#6101, OCR only); translation is its own decision (job qwen-translate-eval-6101 decides the engine); release with --to ocr_complete';
+export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'decision', ref: 'release paddle-print-6101' });
 export const REVISION_REASON = 'reocr_paddle_print_6101';
 export const BOOK_EVENT = 'paddle_print_ocr';
 
@@ -312,6 +314,25 @@ export function stableRead(a, b) {
   return { ok: sim >= STABLE_SIM, sim: +sim.toFixed(3) };
 }
 
+/**
+ * Ditto / headword marks (丨, also read as ｜ or |) per 1,000 Han. Derek's spot-check (#6056 round 3, 2026-10-23):
+ * PaddleOCR-VL silently drops them on about half the pages of 韻府 / 類書-type works (佩文韻府: bimodal, 0 vs 40–100
+ * per 1k), and the translation then invents words for the gaps. In a book whose median page carries ≥ DITTO_BOOK_MIN
+ * per 1k, a page with ≥ 100 Han and none is not written (keyed on the book's own rate, not its title).
+ */
+export const DITTO_BOOK_MIN = 20;
+export function dittoRate(text) {
+  const t = String(text || '');
+  const han = (t.match(/\p{Script=Han}/gu) || []).length - (t.match(/丨/g) || []).length;
+  return han > 0 ? ((t.match(/[丨｜|]/g) || []).length / han) * 1000 : 0;
+}
+export function dittoDropped(texts) {
+  const big = texts.map((t, i) => ({ i, han: hanOf(t).length, rate: dittoRate(t) })).filter((x) => x.han >= 100);
+  const rates = big.map((x) => x.rate).sort((a, b) => a - b);
+  const med = rates.length ? rates[rates.length >> 1] : 0;
+  return { median: +med.toFixed(1), dropped: med >= DITTO_BOOK_MIN ? big.filter((x) => x.rate === 0).map((x) => x.i) : [] };
+}
+
 export function envelope(body, language) {
   return `<language>${language}</language>\n<script>printed</script>\n\n${String(body || '').trim()}`;
 }
@@ -329,6 +350,7 @@ export function ocrField(text, { language, run, now = new Date(), imageUrl = nul
     model: PADDLE.model,
     source: 'paddle',
     pipeline: LANE,
+    lane: laneForWrite('ocr', { call_site: 'scripts/lib/paddle-print-lane.mjs' }),
     updated_at: now,
     engine: {
       name: PADDLE.name, model: PADDLE.model, version: PADDLE.version, model_label: PADDLE.label,
@@ -348,6 +370,25 @@ export function ocrField(text, { language, run, now = new Date(), imageUrl = nul
       replaced: why,
     },
   };
+}
+
+/**
+ * Where a page this lane did not write goes next (the routing row's fallback, job paddle-rejects-flash-6101):
+ *   'flash'        Gemini Flash through agy (scripts/batch/cli-ocr.mjs), the reader row `chinese-print` names for rejects
+ *   'blank'        left unread: a blank leaf is not a Flash job (readers invent text on show-through)
+ *   'unfetchable'  no image to read: the archive-fetch lane's
+ *   null           not a fallback page (written, kept, human-edited, out of the lane)
+ * By eye 2026-10-26 (#6101): 12/12 textless pages whose every leaf was under INK_FAINT were covers and endpapers; 6 of 8
+ * pages turned away for a faint leaf carried text (thin strokes on tinted paper, a captioned bronze), so a faint leaf
+ * goes to Flash; the two leaf errors were transient (both images fetched again).
+ */
+export function fallbackRoute({ verdict, reason, leaves = [], prepError = null }) {
+  if (prepError) return 'unfetchable';
+  if (verdict === 'reject') return 'flash';
+  if (verdict === 'textless' || reason === 'paddle_textless_kept') {
+    return leaves.every((lf) => lf.blank || (lf.ink != null && lf.ink < INK_FAINT)) ? 'blank' : 'flash';
+  }
+  return null;
 }
 
 /** Write one page through the one writer (#7058): revision with the whole prior field, CAS on the prior text. */

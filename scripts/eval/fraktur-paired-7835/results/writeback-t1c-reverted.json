@@ -1,0 +1,56 @@
+{
+ "at": "2026-10-31T12:47Z",
+ "why": "T1 (c) best pages: step 1 wrote arm (a), then apply refused the reused correction (draft.source file); arm (a) reverted with revert-run.mjs --run-id <run> --page-ids-file (restorable 1, changed since 0, each)",
+ "pages": [
+  {
+   "page_id": "6a26d352f5273a8d907a9561",
+   "run_id": "cli-ocr-20261031124445-1073753",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6a905180ee2696c623562608",
+   "run_id": "cli-ocr-20261031124448-1073957",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6a26d7a46be3d771538bd18c",
+   "run_id": "cli-ocr-20261031124451-1074191",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6ac4f9f84ba7223afef6b8f5",
+   "run_id": "cli-ocr-20261031124455-1074406",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6ac502044ba7223afefa02ed",
+   "run_id": "cli-ocr-20261031124459-1074538",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6a267d0e6c1f37c9c4f384f2",
+   "run_id": "cli-ocr-20261031124503-1074996",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6ac507424ba7223afefd8ed1",
+   "run_id": "cli-ocr-20261031124507-1075211",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6a26d13cf5273a8d9079ce4f",
+   "run_id": "cli-ocr-20261031124513-1075426",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6ac507dd4ba7223afefdf4ab",
+   "run_id": "cli-ocr-20261031124516-1075633",
+   "revert": "applied"
+  },
+  {
+   "page_id": "6aa1d1ca77169abff161a1aa",
+   "run_id": "cli-ocr-20261031124521-1075923",
+   "revert": "applied"
+  }
+ ]
+}

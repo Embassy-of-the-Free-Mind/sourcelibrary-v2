@@ -1,0 +1,54 @@
+[
+  {
+    "book_id": "b12-k", "slot": 1, "title": "Lapis Philosophicus (PH436)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection given in the packet; the pages are a Latin alchemical florilegium (Hermes, Bonellus, Clangor, Rasis, Albertus Magnus, 'Sententiæ'), so the book would fit an alchemy shelf.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The written page numbers line up with the scan positions at a fixed offset (scan 51 = p. 43, 101 = p. 93, 151 = p. 143), so the pagination runs straight through this stretch. All three pages have a transcription and none has a translation.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Scitote itaque quod", "image": "Scitote itaquè quòd", "problem": "accent marks dropped (normalised); does not change the meaning", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation on this page (translation is empty), so a reader of the English pane gets nothing", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation on this page (translation is empty)", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 151,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "virtus generatiua", "image": "virtus genratiua", "problem": "scribe's spelling silently corrected", "severity": "minor" },
+          { "ocr": "aut in se retinere", "image": "ant in se retinere", "problem": "letterform read as the intended 'aut', which is defensible; noted only for completeness", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation on this page (translation is empty)", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The three transcriptions are close to perfect against a clear humanist-italic manuscript hand. Later pencil cross-references are tagged as margin text, and headings and catchwords are caught. The only slips are accent and spelling normalisations. No page has a translation, so this book reads as Latin only."
+  }
+]

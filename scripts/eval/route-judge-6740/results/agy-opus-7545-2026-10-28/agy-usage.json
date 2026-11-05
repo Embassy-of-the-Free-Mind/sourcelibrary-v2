@@ -1,0 +1,554 @@
+{
+ "lite>agy-opus": {
+  "model": "claude-opus-5-5-low",
+  "pages": 15,
+  "median_secs": 19,
+  "median_input_tokens": 25575,
+  "median_cache_read": 15523,
+  "median_output_tokens": 1415,
+  "errors": [],
+  "rows": [
+   {
+    "page_id": "699052368d19cbc90d9d5a50",
+    "secs": 9,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25339,
+    "output": 192,
+    "cache_read": 15520,
+    "total": 25531
+   },
+   {
+    "page_id": "69b51e2bcf111105c4297c70",
+    "secs": 14,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25476,
+    "output": 1110,
+    "cache_read": 15520,
+    "total": 26586
+   },
+   {
+    "page_id": "69b51e3447b06ecd5818bdcc",
+    "secs": 31,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 29879,
+    "output": 3295,
+    "cache_read": 15533,
+    "total": 33174
+   },
+   {
+    "page_id": "69b51eba47b06ecd58196120",
+    "secs": 25,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25828,
+    "output": 2814,
+    "cache_read": 15518,
+    "total": 28642
+   },
+   {
+    "page_id": "69b51ebc9a81ef7feb3da65e",
+    "secs": 16,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25034,
+    "output": 1240,
+    "cache_read": 15537,
+    "total": 26274
+   },
+   {
+    "page_id": "69b65ee2b3f4fc0441524f12",
+    "secs": 20,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 26667,
+    "output": 1736,
+    "cache_read": 15515,
+    "total": 28403
+   },
+   {
+    "page_id": "69b697c6080b19f98fcf46d6",
+    "secs": 30,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 28683,
+    "output": 3073,
+    "cache_read": 15521,
+    "total": 31756
+   },
+   {
+    "page_id": "69dbc9731040d1d5e20a35d4",
+    "secs": 16,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25568,
+    "output": 1112,
+    "cache_read": 15530,
+    "total": 26680
+   },
+   {
+    "page_id": "69dbc9db1040d1d5e20a7ac3",
+    "secs": 19,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 26109,
+    "output": 1415,
+    "cache_read": 15530,
+    "total": 27524
+   },
+   {
+    "page_id": "69dbcc600f8c5edf20f4ac6c",
+    "secs": 40,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 30919,
+    "output": 4149,
+    "cache_read": 15535,
+    "total": 35068
+   },
+   {
+    "page_id": "69dbcc9d0f8c5edf20f4cb2b",
+    "secs": 22,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25346,
+    "output": 1665,
+    "cache_read": 15536,
+    "total": 27011
+   },
+   {
+    "page_id": "6a267be16c1f37c9c4f3427b",
+    "secs": 19,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25158,
+    "output": 1727,
+    "cache_read": 15526,
+    "total": 26885
+   },
+   {
+    "page_id": "6a42be1097284560a2b08594",
+    "secs": 14,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25064,
+    "output": 985,
+    "cache_read": 15520,
+    "total": 26049
+   },
+   {
+    "page_id": "6a43808357a09c2c0fcba20c",
+    "secs": 17,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25575,
+    "output": 1205,
+    "cache_read": 15523,
+    "total": 26780
+   },
+   {
+    "page_id": "6a4927c01bbf4176e1e881d0",
+    "secs": 11,
+    "calls": 1,
+    "tools": [
+     "read_file"
+    ],
+    "error": null,
+    "input": 25707,
+    "output": 321,
+    "cache_read": 15523,
+    "total": 26028
+   }
+  ]
+ },
+ "agy-opus-tr": {
+  "model": "claude-opus-5-5-low",
+  "pages": 30,
+  "median_secs": 11.0,
+  "median_input_tokens": 10998.0,
+  "median_cache_read": 5166.0,
+  "median_output_tokens": 848.5,
+  "errors": [
+   "text outside the markers",
+   "text outside the markers",
+   "text outside the markers",
+   "text outside the markers"
+  ],
+  "rows": [
+   {
+    "page_id": "6974fcd058fe79f5dcb49257",
+    "secs": 18,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 12176,
+    "output": 1557,
+    "cache_read": 5166,
+    "total": 13733
+   },
+   {
+    "page_id": "697654fea8505ab8b795bc30",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11235,
+    "output": 871,
+    "cache_read": 5166,
+    "total": 12106
+   },
+   {
+    "page_id": "69906a08d69de0e69806f485",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10978,
+    "output": 926,
+    "cache_read": 5166,
+    "total": 11904
+   },
+   {
+    "page_id": "699f0b65e07999634478b08b",
+    "secs": 14,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11791,
+    "output": 1197,
+    "cache_read": 5166,
+    "total": 12988
+   },
+   {
+    "page_id": "69b51dd1efd8df28f2dab839",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11241,
+    "output": 909,
+    "cache_read": 5166,
+    "total": 12150
+   },
+   {
+    "page_id": "69b51defcf111105c4293ae8",
+    "secs": 10,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10438,
+    "output": 746,
+    "cache_read": 5166,
+    "total": 11184
+   },
+   {
+    "page_id": "69b51df9768235dc6598a9e7",
+    "secs": 10,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11057,
+    "output": 656,
+    "cache_read": 5166,
+    "total": 11713
+   },
+   {
+    "page_id": "69b51e1ecf111105c42975e1",
+    "secs": 9,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10767,
+    "output": 683,
+    "cache_read": 5166,
+    "total": 11450
+   },
+   {
+    "page_id": "69b51e959a81ef7feb3d7ace",
+    "secs": 12,
+    "calls": 1,
+    "tools": [],
+    "error": "text outside the markers",
+    "input": 11450,
+    "output": 1004,
+    "cache_read": 5166,
+    "total": 12454
+   },
+   {
+    "page_id": "69b51edd9a81ef7feb3dbf7c",
+    "secs": 13,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11018,
+    "output": 925,
+    "cache_read": 5166,
+    "total": 11943
+   },
+   {
+    "page_id": "69b525db9658af9164709ef8",
+    "secs": 40,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 15818,
+    "output": 4448,
+    "cache_read": 5166,
+    "total": 20266
+   },
+   {
+    "page_id": "69c836255086e114bfe51df2",
+    "secs": 15,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11502,
+    "output": 1221,
+    "cache_read": 5166,
+    "total": 12723
+   },
+   {
+    "page_id": "69c868296c6f3cc53c85666b",
+    "secs": 12,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11039,
+    "output": 1007,
+    "cache_read": 5166,
+    "total": 12046
+   },
+   {
+    "page_id": "69c8a4c464c9442f03e299e3",
+    "secs": 10,
+    "calls": 1,
+    "tools": [],
+    "error": "text outside the markers",
+    "input": 10666,
+    "output": 694,
+    "cache_read": 5166,
+    "total": 11360
+   },
+   {
+    "page_id": "69d391260472a2eb7f767b33",
+    "secs": 10,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10647,
+    "output": 690,
+    "cache_read": 5166,
+    "total": 11337
+   },
+   {
+    "page_id": "69f69f5d4fc76b5fdf2df3dd",
+    "secs": 10,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11384,
+    "output": 882,
+    "cache_read": 5166,
+    "total": 12266
+   },
+   {
+    "page_id": "69f6e48f71801140bd3c586f",
+    "secs": 13,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10832,
+    "output": 1129,
+    "cache_read": 5166,
+    "total": 11961
+   },
+   {
+    "page_id": "69f7398440c9f2ef06fc0c9b",
+    "secs": 15,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11947,
+    "output": 1392,
+    "cache_read": 5166,
+    "total": 13339
+   },
+   {
+    "page_id": "6a0b50411615109dc53b262e",
+    "secs": 9,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 9891,
+    "output": 636,
+    "cache_read": 5166,
+    "total": 10527
+   },
+   {
+    "page_id": "6a1db8eb1b32cb867ec5a20d",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11299,
+    "output": 716,
+    "cache_read": 5166,
+    "total": 12015
+   },
+   {
+    "page_id": "6a267ad96c1f37c9c4f2f0fd",
+    "secs": 10,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11094,
+    "output": 769,
+    "cache_read": 5166,
+    "total": 11863
+   },
+   {
+    "page_id": "6a267cba6c1f37c9c4f36d47",
+    "secs": 9,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10726,
+    "output": 579,
+    "cache_read": 5166,
+    "total": 11305
+   },
+   {
+    "page_id": "6a267ce36c1f37c9c4f3780c",
+    "secs": 8,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10735,
+    "output": 524,
+    "cache_read": 5166,
+    "total": 11259
+   },
+   {
+    "page_id": "6a267f5888f11913ee9c8dc3",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10708,
+    "output": 792,
+    "cache_read": 5166,
+    "total": 11500
+   },
+   {
+    "page_id": "6a26bfb40e247ebad6dee5d2",
+    "secs": 9,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10551,
+    "output": 590,
+    "cache_read": 5166,
+    "total": 11141
+   },
+   {
+    "page_id": "6a26c15faad44c98627c0043",
+    "secs": 16,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 11358,
+    "output": 1334,
+    "cache_read": 5166,
+    "total": 12692
+   },
+   {
+    "page_id": "6a26c305aad44c98627c785e",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": "text outside the markers",
+    "input": 10893,
+    "output": 700,
+    "cache_read": 5166,
+    "total": 11593
+   },
+   {
+    "page_id": "6a26c4abaad44c98627d0e71",
+    "secs": 18,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10944,
+    "output": 1585,
+    "cache_read": 5166,
+    "total": 12529
+   },
+   {
+    "page_id": "6a26c518aad44c98627d486d",
+    "secs": 12,
+    "calls": 1,
+    "tools": [],
+    "error": null,
+    "input": 10858,
+    "output": 826,
+    "cache_read": 5166,
+    "total": 11684
+   },
+   {
+    "page_id": "6a425eac744db9e3105a4ae3",
+    "secs": 11,
+    "calls": 1,
+    "tools": [],
+    "error": "text outside the markers",
+    "input": 10415,
+    "output": 655,
+    "cache_read": 5166,
+    "total": 11070
+   }
+  ]
+ }
+}

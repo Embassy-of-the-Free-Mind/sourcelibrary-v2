@@ -33,7 +33,13 @@ const PER_PACKET = 5;
 const CHECK_IMAGES = !args.includes('--no-check-images');
 const CANON_STATUS = 'scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
 
-if (!['public', 'canon'].includes(FRAME)) throw new Error(`--frame must be public or canon, not ${FRAME}`);
+// `recent` (#6056, 2026-10-24): the FLOW, not the stock. Books with pages whose English was written in the last
+// --days days, hidden books included (they are the next to be published), and the run drawn from those pages only.
+// The other frames measure the library as it stands; this one measures what the lanes are writing now, so a fix
+// can be seen to work. Note: bulk rewrites that move translation.updated_at (a re-translation run) count as new output.
+const DAYS = Number(opt('days', 7));
+const SINCE = new Date(Date.now() - DAYS * 86400000);
+if (!['public', 'canon', 'recent'].includes(FRAME)) throw new Error(`--frame must be public, canon or recent, not ${FRAME}`);
 if (existsSync(join(OUT, 'sample.json'))) throw new Error(`${OUT}/sample.json exists — refusing to draw over a run`);
 
 const client = await MongoClient.connect(process.env.MONGODB_URI);
@@ -47,6 +53,10 @@ let frame;
 const traditionOf = new Map();
 if (FRAME === 'public') {
   frame = (await books.find({ ...LIVE, pages_translated: { $gte: RUN_LENGTH } }, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id).filter(Boolean);
+} else if (FRAME === 'recent') {
+  // translation.updated_at is indexed; distinct over the window, then keep books that still exist with pages.
+  const ids = await pages.distinct('book_id', { 'translation.updated_at': { $gte: SINCE }, page_number: { $gt: 0 } });
+  frame = (await books.find({ id: { $in: ids }, pages_count: { $gt: 0 } }, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id).filter(Boolean).sort();
 } else {
   const status = JSON.parse(readFileSync(CANON_STATUS, 'utf8'));
   for (const t of status.traditions) for (const b of t.book_pages) if (b[5] >= RUN_LENGTH && !traditionOf.has(b[0])) traditionOf.set(b[0], t.id);
@@ -58,7 +68,9 @@ console.log(`frame ${FRAME}: ${frame.length} books · seed ${SEED} · n ${N}`);
 // Only pages a reader can reach: page_number > 0 (≤ 0 is the soft-hide convention, scripts/lib/page-counts.mjs, #3293).
 // Before 2026-10-19 this was unfiltered, so a run could land on records no reader sees (5.3% of public books carry them).
 const translatedFor = async (id) =>
-  (await pages.find({ book_id: id, page_number: { $gt: 0 }, 'translation.data': { $regex: '\\S' } },{ projection: { _id: 0, page_number: 1 } }).toArray()).map((p) => p.page_number);
+  (await pages.find({ book_id: id, page_number: { $gt: 0 }, 'translation.data': { $regex: '\\S' },
+    ...(FRAME === 'recent' ? { 'translation.updated_at': { $gte: SINCE } } : {}) },
+  { projection: { _id: 0, page_number: 1 } }).toArray()).map((p) => p.page_number);
 
 const { picks, rejected } = await drawSample({ frame, n: N, seed: SEED, translatedFor });
 if (picks.length < N) throw new Error(`only ${picks.length} books qualified (rejected ${rejected.length})`);
@@ -128,7 +140,8 @@ let sha = null;
 try { sha = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim(); } catch { /* not a checkout */ }
 const pageRows = sample.flatMap((b) => b.pages);
 const log = {
-  issue: 5914, date: DATE, seed: SEED, frame: FRAME, frame_size: frame.length, n_books: sample.length,
+  issue: 5914, date: DATE, seed: SEED, frame: FRAME, frame_size: frame.length,
+  ...(FRAME === 'recent' ? { recent_days: DAYS, recent_since: SINCE.toISOString() } : {}), n_books: sample.length,
   n_page_records: pageRows.length, rejected_no_run: rejected,
   images: { checked: CHECK_IMAGES, ok: pageRows.filter((p) => p.image_status === 200).length, missing_url: pageRows.filter((p) => !p.image_url).length },
   rng: 'mulberry32 (paired-stats makeRng); books seed, runs seed ^ 0x9e3779b9', code_sha: sha,

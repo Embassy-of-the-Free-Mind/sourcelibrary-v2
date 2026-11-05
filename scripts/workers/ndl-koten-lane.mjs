@@ -39,13 +39,14 @@ import os from 'node:os';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
+import { recordFailedReads, fromTextless } from '../lib/ocr-failed-read.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import {
-  LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, NDL,
+  LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, NDL,
   routeBook, pilotDraw, pagePolicy, envelope, bodyText, charCount, ocrSetFields,
   isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/ndl-koten-lane.mjs';
@@ -111,7 +112,7 @@ async function plan() {
         id: 1, page_number: 1, ocr: 1, photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
       } }).sort({ page_number: 1 }).toArray();
       if (APPLY) {
-        const h = await holdBook(db, bid, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { route, pilot: !!PILOT } });
+        const h = await holdBook(db, bid, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { route, pilot: !!PILOT } });
         log(`${bid} hold: ${h.outcome} (from ${h.from ?? '—'}) | ${String(book.title).slice(0, 50)}`);
         if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); continue; }
       }
@@ -225,7 +226,11 @@ async function apply() {
           // NDL saw no text: never store an empty reading. Where the page has a stored reading it is
           // kept (a picture page, or text NDL missed); where it has none it stays unread. A textless
           // read replaces only a loop, which is not a reading of anything.
-          if (APPLY) append(F.skipped, { stage: 'apply', bid, pn: r.pn, why: 'ndl_textless_kept', chars, old_chars: charCount(p.ocr?.data) });
+          if (APPLY) {
+            append(F.skipped, { stage: 'apply', bid, pn: r.pn, why: 'ndl_textless_kept', chars, old_chars: charCount(p.ocr?.data) });
+            // NDL returned no text: a failed read (#7378); on a blank leaf it stays an `empty` stamp, not a failure
+            await recordFailedReads(db, [fromTextless({ pageId: p.id, model: `ndl-koten/v${NDL.version}`, engine: 'scripts/workers/ndl-koten-lane.mjs', chars, at: fs.statSync(outTxt(bid, r.pn)).mtime })]);
+          }
           totals.textless_kept++; continue;
         }
         const text = envelope(raw, r.route);

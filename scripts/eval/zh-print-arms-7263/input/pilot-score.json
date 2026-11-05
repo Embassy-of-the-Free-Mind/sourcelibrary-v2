@@ -1,0 +1,1232 @@
+{
+ "at": "2026-11-04T10:25:20.616Z",
+ "bar": "at least 50/60 accepted, no more than 4 wrong-text",
+ "accepted": 51,
+ "judged": 60,
+ "wrong_text": 6,
+ "sets": {
+  "one": {
+   "judged": 30,
+   "n": 30,
+   "accepted": 24,
+   "wrong_text": 3,
+   "not_this_leaf": 2,
+   "mean_fidelity": 4.3,
+   "served": {
+    "unchanged": 2,
+    "written": 25,
+    "refused by apply": 1,
+    "contain": 2
+   },
+   "controls": {
+    "n": 2,
+    "accepted": 0
+   },
+   "outcomes": {
+    "unchanged": 2,
+    "corrected": 26,
+    "contain": 2
+   },
+   "calls": 31,
+   "pages": 30,
+   "list_usd": 3.15,
+   "own_leaf": {
+    "checked": 26,
+    "own_below_neighbour": 0,
+    "own_below_05": 1,
+    "flagged": [
+     {
+      "page_id": "69ea51f3e0662c881fb5c7fa",
+      "page_number": 82,
+      "own": 0.434,
+      "neighbour": 0,
+      "position": 1
+     }
+    ]
+   },
+   "rows": [
+    {
+     "key": "P-69f13434365e3fcae574dfbf",
+     "page_id": "69f13434365e3fcae574dfbf",
+     "page_number": 12,
+     "title": "Yao shi liu li guang ru lai ben yuan gong de jing",
+     "served": "unchanged",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All ten columns of the opening appear in the correct order with the right words; only a few variant character forms are regularised.",
+     "defects": []
+    },
+    {
+     "key": "P-69e7880e4a6785cfd60ced37",
+     "page_id": "69e7880e4a6785cfd60ced37",
+     "page_number": 3,
+     "title": "本草綱目 (Běncǎo Gāngmù), Vol. 15",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A complete, accurate contents leaf for juan 42 of the Bencao gangmu: all 23 entries with source notes, the seven appended insects and the prescription tally match the page; the only blemish is a needless uncertainty mark on 梗雞.",
+     "defects": []
+    },
+    {
+     "key": "P-69e792f880b52390feb173a1",
+     "page_id": "69e792f880b52390feb173a1",
+     "page_number": 24,
+     "title": "紅樓夢 (Hónglóumèng / Dream of the Red Chamber)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "The transcription matches the page line by line, including paragraphing and the page number 22; a reader would notice no lost, added or changed text.",
+     "defects": []
+    },
+    {
+     "key": "P-69af123e0092756351e44888",
+     "page_id": "69af123e0092756351e44888",
+     "page_number": 20,
+     "title": "新鐫節義鴛鴦塚嬌紅記 (The Story of Jiaoniang and Feihong)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "Every column of both halves of the opening reads correctly and in order, including the 第三齣 會嬌 heading and the four-line upper-margin comment, whose doubtful characters are marked unclear; only a variant glyph and the circle marks are regularised or left out.",
+     "defects": []
+    },
+    {
+     "key": "P-69f33c10876dd827cbc59aeb",
+     "page_id": "69f33c10876dd827cbc59aeb",
+     "page_number": 766,
+     "title": "Liu yi liu bie, 20 juan",
+     "served": "written",
+     "position": 1,
+     "accept": false,
+     "fidelity": 3,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All lines are present and in order, but a reader comparing closely would find several wrong characters in the 定情篇, such as 靚 for 覩, 欸欸 for 欵欵 and 徒倚 for 徙倚.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "逍遙莫誰靚",
+       "severity": "misleads",
+       "what": "page reads 覩 (to see), not 靚"
+      },
+      {
+       "class": "O6",
+       "quote": "中情既欸欸",
+       "severity": "misleads",
+       "what": "page reads 欵欵 (variant of 款款, sincere); 欸 is a different character"
+      },
+      {
+       "class": "O6",
+       "quote": "徒倚無所之",
+       "severity": "misleads",
+       "what": "page reads 徙倚 (to linger); 徒 is a misread"
+      },
+      {
+       "class": "O6",
+       "quote": "紈素三條裾",
+       "severity": "misleads",
+       "what": "last character appears to be 裙 (skirt), not 裾; glyph is small, so moderate confidence"
+      }
+     ]
+    },
+    {
+     "key": "P-69935b6f2c63944063134140",
+     "page_id": "69935b6f2c63944063134140",
+     "page_number": 61,
+     "title": "Qiu sheng ge dao zong si jing (Four Daoist Classics incl. Daodejing)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All eighteen columns are present, in order, with the right words; the only slips are 炁 for the page's 氣 in two places and an unrecorded leaf number.",
+     "defects": []
+    },
+    {
+     "key": "P-69e787e04a6785cfd60cdf66",
+     "page_id": "69e787e04a6785cfd60cdf66",
+     "page_number": 2,
+     "title": "本草綱目圖 (Bencao Gangmu Illustrations), Vol. 1",
+     "served": "refused by apply",
+     "position": 1,
+     "accept": false,
+     "fidelity": 2,
+     "wrong": true,
+     "not_leaf": false,
+     "summary": "The page opens correctly and is recognisably the same preface, but several characters are wrong, the closing clause is garbled, the kana glosses are not those on the leaf, and the block-cutter credits and section label are misread or missing.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "折<gloss>セツ</gloss>其",
+       "severity": "misleads",
+       "what": "page has 析 (analyse), not 折 (break)"
+      },
+      {
+       "class": "O6",
+       "quote": "指<gloss>シ</gloss>棃橘柚之疑",
+       "severity": "wrong_text",
+       "what": "page has 樝 (hawthorn), one of the fruits in the list; misread as 指 (point), which loses the fruit and changes the sense"
+      },
+      {
+       "class": "O6",
+       "quote": "擬<gloss>キ</gloss>於目<gloss>マナコニ</gloss>逼真",
+       "severity": "wrong_text",
+       "what": "page reads 擬月逼真; 於 is not on the page and 月 is read as 目"
+      },
+      {
+       "class": "O6",
+       "quote": "遠<gloss>エン</gloss>方",
+       "severity": "misleads",
+       "what": "page has 遐 (cut like 退) 方, not 遠方; the sense is close but the word is changed"
+      }
+     ]
+    },
+    {
+     "key": "P-69e728a5a409200ea79f045c",
+     "page_id": "69e728a5a409200ea79f045c",
+     "page_number": 86,
+     "title": "聊齋志異 Vol. 13",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine columns of text and both red marginal comments match the leaf in order; only the disclosed, indistinct fold title and the leaf number (marked unclear) stay unconfirmed, and the first margin character is also marked unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-69e72895a409200ea79f0276",
+     "page_id": "69e72895a409200ea79f0276",
+     "page_number": 119,
+     "title": "聊齋志異 Vol. 10",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine columns of red-printed commentary match the leaf in order, with the page number and 十之五八 present; the only gap is a probable volume mark in the smudged block-edge title.",
+     "defects": []
+    },
+    {
+     "key": "P-6a1d81b45afc14a085e6da93",
+     "page_id": "6a1d81b45afc14a085e6da93",
+     "page_number": 497,
+     "title": "道宗六書 (6種36卷, incl. 譚子化書): Daozong liushu (Six Books of the Daoist Lineage)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All text on both leaves is present and in order, including the Zhu commentary and the small-character sound glosses. It also keeps the page's own 實熟則剝則辱 rather than normalising it to the received 剝剝則辱.",
+     "defects": []
+    },
+    {
+     "key": "P-69e7269ea409200ea79ef9fb",
+     "page_id": "69e7269ea409200ea79ef9fb",
+     "page_number": 133,
+     "title": "聊齋志異 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 4",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine main-text columns and the fifteen-column red headnote match the leaf in order; the damaged fold-column title is honestly marked unclear, and the red circle punctuation is not reproduced.",
+     "defects": []
+    },
+    {
+     "key": "P-69e8b25c2ff2a8dc09e777d2",
+     "page_id": "69e8b25c2ff2a8dc09e777d2",
+     "page_number": 151,
+     "title": "道德經 (Dào Dé Jīng)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All Chinese characters, the running head, the chapter title, the side label and the French are correct and in order; only the small character counters and circle punctuation are missing from the Chinese block.",
+     "defects": []
+    },
+    {
+     "key": "P-69e72692a409200ea79ef84d",
+     "page_id": "69e72692a409200ea79ef84d",
+     "page_number": 55,
+     "title": "聊齋志異 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 2",
+     "served": "written",
+     "position": 1,
+     "accept": false,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "The text is complete and in order, including the red headnote and brush note 爬, but one misread character makes the monk rise 'suddenly' rather than 'angrily'.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "僧忽然而起",
+       "severity": "misleads",
+       "what": "The page reads 忿然 (rose angrily), not 忽然 (rose suddenly), so the monk's anger is lost."
+      }
+     ]
+    },
+    {
+     "key": "P-69e788144a6785cfd60cf00d",
+     "page_id": "69e788144a6785cfd60cf00d",
+     "page_number": 16,
+     "title": "本草綱目 (Běncǎo Gāngmù), Vol. 20",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All twelve columns appear in order with the right wording, and I found no misreads, omissions or additions; the text breaks off mid-sentence at 可, as it does on the page.",
+     "defects": []
+    },
+    {
+     "key": "P-69e72c83a409200ea79f4c11",
+     "page_id": "69e72c83a409200ea79f4c11",
+     "page_number": 16,
+     "title": "列子沖虛真經 (Liezi), Vol. 2",
+     "served": "contain",
+     "position": 1,
+     "accept": false,
+     "fidelity": 1,
+     "wrong": true,
+     "not_leaf": true,
+     "summary": "The transcription does not match the image: the leaf shows the 列子·湯問 passage on the land reached 於山下 and King Mu's visit (leaf 四十九), while the text beside it starts at 管仲勉齊桓公, which seems to be the next page.",
+     "defects": [
+      {
+       "class": "I1",
+       "quote": "管仲勉齊桓公因游遼口俱之其國幾尅舉隰朋",
+       "severity": "wrong_text",
+       "what": "The main text belongs to a different page, apparently the next one, where the passage continues after this page's last words 數月乃復. None of the nine columns on this leaf (於山下經營一國亡不悉徧土氣和亡札厲人性 … 其國㒇然自失不進酒肉不召嬪御者數月乃復) is transcribed."
+      },
+      {
+       "class": "I1",
+       "quote": "駱丞檄喑嗚則山嶽崩頽叱咤則風雲變色何法本此",
+       "severity": "wrong_text",
+       "what": "These upper-margin notes are not on this leaf and appear to come from the same other page. The leaf has one red note, roughly 排亦是法第總不如錯綜之渾妙, and it is missing from the candidate."
+      }
+     ]
+    },
+    {
+     "key": "P-69e7288fa409200ea79f019f",
+     "page_id": "69e7288fa409200ea79f019f",
+     "page_number": 81,
+     "title": "聊齋志異 Vol. 9",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine lines, two black and seven red, match the leaf in order, and the block-centre title, leaf number and circle marks are correctly noted; the doubled 表 across lines 1-2 is on the page.",
+     "defects": []
+    },
+    {
+     "key": "P-69e787fd4a6785cfd60ce526",
+     "page_id": "69e787fd4a6785cfd60ce526",
+     "page_number": 25,
+     "title": "本草綱目 (Běncǎo Gāngmù), Vol. 1",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All twelve columns of this Bencao Gangmu table of contents (juan 37–42, with category names and species counts) match the leaf in order, and the numerals are correct; the only untranscribed text is the partly hidden character at the foot of the fold, which the candidate openly flags.",
+     "defects": []
+    },
+    {
+     "key": "P-6958ea57d3a8928334815a64",
+     "page_id": "6958ea57d3a8928334815a64",
+     "page_number": 350,
+     "title": "Ekiken Zenshu (Collected Works Vol. 2)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "Both registers read complete and in order, including kunten marks, the two boxed blanks and the 天門 spelling; only 字書辨訛 (possibly 字畫) could not be settled at this resolution, and it is not flagged as a defect.",
+     "defects": []
+    },
+    {
+     "key": "P-699249f2a2d53df4853c179d",
+     "page_id": "699249f2a2d53df4853c179d",
+     "page_number": 312,
+     "title": "Li Ki: Mémoires sur les bienséances et les cérémonies",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A complete, faithful reading in page order: the 13 Chinese columns, romanization, French translation, two-column notes and Latin all match the leaf, with only breve-versus-caron differences in the romanization (e.g. 'mě' for 'mĕ').",
+     "defects": []
+    },
+    {
+     "key": "P-69e72c75a409200ea79f4999",
+     "page_id": "69e72c75a409200ea79f4999",
+     "page_number": 35,
+     "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 5",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All six columns, the interlinear glosses and the block-centre furniture match the leaf in order; the worn characters in the gloss and the block-centre are honestly marked as unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-6a0acab24d80f9c159497451",
+     "page_id": "6a0acab24d80f9c159497451",
+     "page_number": 615,
+     "title": "Resshi 列子: Japanese kanbun edition of the Liezi with Zhang Zhan commentary (cont",
+     "served": "written",
+     "position": 1,
+     "accept": false,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "The Chinese text follows all 15 columns in order and is nearly clean, but 還闕 appears to misread 還鬪, and the Japanese reading marks on the page are not transcribed.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "敵人還闕",
+       "severity": "misleads",
+       "what": "The character after 還 looks like 鬪/闘 (the enemy turns back to fight), not 闕 ('gap, palace'). The scan is small, but 闕 changes the sense."
+      }
+     ]
+    },
+    {
+     "key": "P-69e7287fa409200ea79effe9",
+     "page_id": "69e7287fa409200ea79effe9",
+     "page_number": 158,
+     "title": "聊齋志異 Vol. 6",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All black main-text and red commentary lines match the leaf in order, including the commentary's break at 羅; the only gap is the partly cut-off leaf number, which the candidate says it omitted.",
+     "defects": []
+    },
+    {
+     "key": "P-6992cad1d4d545ae73feeb5d",
+     "page_id": "6992cad1d4d545ae73feeb5d",
+     "page_number": 10,
+     "title": "Pelliot chinois 2088",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All 30 full columns are present and in order, including the scribe's 善得 beside 善德; only variant character forms are regularised and punctuation added, and the half-cut column at the left edge is omitted, as the meta note discloses.",
+     "defects": []
+    },
+    {
+     "key": "P-69de984e1b234a773e43842a",
+     "page_id": "69de984e1b234a773e43842a",
+     "page_number": 303,
+     "title": "琵琶記 (Pipa Ji / The Tale of the Lute)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All four lines of the manuscript slip are transcribed correctly and in order, including the role markers; the library seal at lower left is read plausibly and marked as unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-6992cbd8018b80967354bcb7",
+     "page_id": "6992cbd8018b80967354bcb7",
+     "page_number": 630,
+     "title": "農政全書 (Nongzheng Quanshu: Complete Treatise on Agricultural Administration)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All seven list lines and the closing line 農政全書卷之四十五終 match the leaf in order, including every numeral; the fold at the right edge is cropped, so the folio number can only be read as 四 (as the candidate warns), and faint cut-off traces there are unreadable.",
+     "defects": []
+    },
+    {
+     "key": "P-6a23f362cf679bf73b474e69",
+     "page_id": "6a23f362cf679bf73b474e69",
+     "page_number": 270,
+     "title": "性命雙修萬神圭旨: Xingming guizhi (Principles of Joint Cultivation of Nature and Life)",
+     "served": "contain",
+     "position": 1,
+     "accept": false,
+     "fidelity": 1,
+     "wrong": true,
+     "not_leaf": true,
+     "summary": "The transcription does not match the image: the page quotes 玄奧集, 陳泥丸, 玄學統宗, 觀吾判惑歌 and 金丹賦, while the text beside it gives different quotations, mostly from other authors (薛道光, 劉海蟾, 王子真, 蕭紫虛, 陳翠虛).",
+     "defects": [
+      {
+       "class": "I1",
+       "quote": "陳泥丸云真陰真陽是真道只在眼前何遠討",
+       "severity": "wrong_text",
+       "what": "The whole candidate is another page's text, in the same 'before the eyes' anthology style and probably from a nearby leaf. None of its 11 lines matches the leaf, which opens 玄奧集云青牛人去幾多年此道分明在目前 and ends 之主母子包羅於匡廓育養因依於鼎釜. All of the page's own text is missing (玄奧集, 陳泥丸 大道分明在眼前, 玄學統宗, 觀吾判惑歌, 金丹賦), as are the margin marks 利 and 三十二."
+      }
+     ]
+    },
+    {
+     "key": "P-69ea51f3e0662c881fb5c7fa",
+     "page_id": "69ea51f3e0662c881fb5c7fa",
+     "page_number": 82,
+     "title": "增補繪像山海經廣註 (Illustrated Shanhai Jing), Vol. 3",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All columns are present and in order, including the double-column commentary. The rare fish-radical characters in the 江賦 and 海賦 quotations are hard to confirm at this resolution, but the candidate marks them as unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-69f133f81764d779d0c72192",
+     "page_id": "69f133f81764d779d0c72192",
+     "page_number": 13,
+     "title": "Hsüan-tsang: Mahāprajñāpāramita sūtra. 2",
+     "served": "unchanged",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All 12 columns match the leaf in order, including the 15-character column 10 with its squeezed 十八; only a variant-character regularisation and an unsupported section and volume attribution in the note stand out.",
+     "defects": []
+    },
+    {
+     "key": "P-69f1340cc8d07a6810653184",
+     "page_id": "69f1340cc8d07a6810653184",
+     "page_number": 24,
+     "title": "Fo mu da kong que ming wang zhou jing. 3",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All ten columns of the opened leaf are present and in order; the only difference a reader might spot is 孥 for the page's 拏 in 誐嚕拏, which does not affect the sense.",
+     "defects": []
+    },
+    {
+     "key": "P-69e7268ca409200ea79ef742",
+     "page_id": "69e7268ca409200ea79ef742",
+     "page_number": 7,
+     "title": "聊齋志異 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 1",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All ten columns, the 序 header and the leaf number 一 are present and in order; only one hard-to-read character at the end of column 6 differs slightly from the leaf.",
+     "defects": []
+    }
+   ]
+  },
+  "ten": {
+   "judged": 30,
+   "n": 30,
+   "accepted": 27,
+   "wrong_text": 3,
+   "not_this_leaf": 0,
+   "mean_fidelity": 4.5,
+   "served": {
+    "unchanged": 2,
+    "written": 27,
+    "refused by apply": 1
+   },
+   "controls": {
+    "n": 2,
+    "accepted": 0
+   },
+   "outcomes": {
+    "unchanged": 20,
+    "corrected": 279,
+    "contain": 1
+   },
+   "calls": 32,
+   "pages": 300,
+   "list_usd": 29.65,
+   "own_leaf": {
+    "checked": 279,
+    "own_below_neighbour": 1,
+    "own_below_05": 19,
+    "flagged": [
+     {
+      "page_id": "69e72698a409200ea79ef8d7",
+      "page_number": 20,
+      "own": 0.494,
+      "neighbour": 0.058,
+      "position": 5
+     },
+     {
+      "page_id": "69e014d947b76785d4ec83ba",
+      "page_number": 191,
+      "own": 0.469,
+      "neighbour": 0.215,
+      "position": 8
+     },
+     {
+      "page_id": "69e014d947b76785d4ec83bb",
+      "page_number": 192,
+      "own": 0.075,
+      "neighbour": 0.009,
+      "position": 9
+     },
+     {
+      "page_id": "69e014d947b76785d4ec83bc",
+      "page_number": 193,
+      "own": 0.2,
+      "neighbour": 0,
+      "position": 10
+     },
+     {
+      "page_id": "69aebb3439a4307877772f8c",
+      "page_number": 55,
+      "own": 0.106,
+      "neighbour": 0.085,
+      "position": 1
+     },
+     {
+      "page_id": "69aebb3439a4307877772f8d",
+      "page_number": 56,
+      "own": 0.32,
+      "neighbour": 0.052,
+      "position": 2
+     },
+     {
+      "page_id": "69aebb3439a4307877772f8e",
+      "page_number": 57,
+      "own": 0.397,
+      "neighbour": 0.051,
+      "position": 3
+     },
+     {
+      "page_id": "69aebb3439a4307877772f8f",
+      "page_number": 58,
+      "own": 0.183,
+      "neighbour": 0.082,
+      "position": 4
+     },
+     {
+      "page_id": "69aebb3439a4307877772f90",
+      "page_number": 59,
+      "own": 0.418,
+      "neighbour": 0.054,
+      "position": 5
+     },
+     {
+      "page_id": "69aebb3439a4307877772f91",
+      "page_number": 60,
+      "own": 0.166,
+      "neighbour": 0.097,
+      "position": 6
+     },
+     {
+      "page_id": "69aebb3439a4307877772f92",
+      "page_number": 61,
+      "own": 0.257,
+      "neighbour": 0.06,
+      "position": 7
+     },
+     {
+      "page_id": "69aebb3439a4307877772f93",
+      "page_number": 62,
+      "own": 0.095,
+      "neighbour": 0.103,
+      "position": 8
+     },
+     {
+      "page_id": "69aebb3439a4307877772f94",
+      "page_number": 63,
+      "own": 0.069,
+      "neighbour": 0.061,
+      "position": 9
+     },
+     {
+      "page_id": "69aebb3439a4307877772f95",
+      "page_number": 64,
+      "own": 0.22,
+      "neighbour": 0.023,
+      "position": 10
+     },
+     {
+      "page_id": "699df07e3430a1d77dc79182",
+      "page_number": 233,
+      "own": 0.065,
+      "neighbour": 0.054,
+      "position": 5
+     },
+     {
+      "page_id": "69f1347c365e3fcae574ed89",
+      "page_number": 109,
+      "own": 0.499,
+      "neighbour": 0.074,
+      "position": 10
+     },
+     {
+      "page_id": "69bd0b0bb01b17638a098a07",
+      "page_number": 260,
+      "own": 0.34,
+      "neighbour": 0.081,
+      "position": 1
+     },
+     {
+      "page_id": "69bd0b0bb01b17638a098a10",
+      "page_number": 269,
+      "own": 0.423,
+      "neighbour": 0.089,
+      "position": 10
+     },
+     {
+      "page_id": "69e728b5a409200ea79f0627",
+      "page_number": 20,
+      "own": 0.369,
+      "neighbour": 0.046,
+      "position": 9
+     }
+    ]
+   },
+   "rows": [
+    {
+     "key": "P-6a09f79aec7a5a72f8dab431",
+     "page_id": "6a09f79aec7a5a72f8dab431",
+     "page_number": 1100,
+     "title": "史記 (Shiji, 130 juan): Qing 1884 photolithograph, vols. 1-6",
+     "served": "unchanged",
+     "position": 5,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All ten columns of this 史記卷十四考證 leaf are transcribed in order with the right characters and numerals, and the header and leaf number 六 are captured; the page ends mid-sentence at 為, as the leaf itself does.",
+     "defects": []
+    },
+    {
+     "key": "P-69e72698a409200ea79ef8d9",
+     "page_id": "69e72698a409200ea79ef8d9",
+     "page_number": 22,
+     "title": "聊齋志異 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 3",
+     "served": "written",
+     "position": 7,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine columns, including the double-column note on 不託於音, are present and in order; the only slip a reader might notice is 蕭 for 簫 in the poem's 簫鼓.",
+     "defects": []
+    },
+    {
+     "key": "P-69e75e57cc48e59ad74ec5cb",
+     "page_id": "69e75e57cc48e59ad74ec5cb",
+     "page_number": 10,
+     "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 24",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine main-text columns, the header, the leaf number, 藏板 and the upper-margin comment match the page in order, and the blue-grey show-through is correctly left out; only the 。 punctuation is interpretive and sometimes splits a phrase, and the one hard-to-read margin word 寵是 is honestly marked unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-69de99261b234a773e43a294",
+     "page_id": "69de99261b234a773e43a294",
+     "page_number": 31,
+     "title": "韓非子 (Han Feizi)",
+     "served": "written",
+     "position": 10,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "The main text matches the page in full and in order, with the header and page number correct; only the furigana and the circle emphasis marks on one sentence are missing.",
+     "defects": []
+    },
+    {
+     "key": "P-69e014d947b76785d4ec83bb",
+     "page_id": "69e014d947b76785d4ec83bb",
+     "page_number": 192,
+     "title": "Korean Buddhist Text (Coréen 8, 1481 woodblock)",
+     "served": "written",
+     "position": 9,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All three entries (諸田, 職田, 官屯田) and the 正布/楮貨 table match the leaf in order; only a cramped four-character span in 職田 is uncertain, and it is marked as unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-69b99f786ed9e0490990acd4",
+     "page_id": "69b99f786ed9e0490990acd4",
+     "page_number": 261,
+     "title": "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+     "served": "refused by apply",
+     "position": 1,
+     "accept": false,
+     "fidelity": 2,
+     "wrong": true,
+     "not_leaf": false,
+     "summary": "The page's overall subject is recognisable, but passages are dropped, invented or repeated, 羼提 and 禪那 are repeatedly replaced by 尸羅 or 檀那, and the collation notes are missing, so it can't stand as this page's text.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "提波羅蜜毘梨耶波羅蜜。檀那波羅蜜般若",
+       "severity": "wrong_text",
+       "what": "Page has 羼提 (the 羼 is misread as 若 in the line) and 禪那波羅蜜; candidate gives 檀那, so the list of perfections is wrong"
+      },
+      {
+       "class": "O5",
+       "quote": "般若波羅蜜菩薩摩訶薩大誓莊嚴",
+       "severity": "wrong_text",
+       "what": "Drops 波羅蜜為一切眾生故住般若波羅蜜行 before this phrase"
+      },
+      {
+       "class": "O6",
+       "quote": "我當度。若千人。不足。餘人",
+       "severity": "wrong_text",
+       "what": "Page reads 我當度若干人不度餘人; 不足 and 若千 change the sense"
+      },
+      {
+       "class": "O5",
+       "quote": "是菩薩摩訶薩為一切眾生",
+       "severity": "misleads",
+       "what": "Drops 普 from 普為一切眾生"
+      }
+     ]
+    },
+    {
+     "key": "P-695924fa1cac2ce31a4a8a93",
+     "page_id": "695924fa1cac2ce31a4a8a93",
+     "page_number": 96,
+     "title": "道藏 (Daozang - Taoist Canon)",
+     "served": "written",
+     "position": 4,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A reader would find every line of all three registers present and in order, including the three verse sections and the 道言 passages, with only an unnecessary uncertainty mark on 霱; the check was made at the supplied image resolution, so very fine stroke differences in dense characters could not be ruled out.",
+     "defects": []
+    },
+    {
+     "key": "P-6992f3d4dc69844b023ff282",
+     "page_id": "6992f3d4dc69844b023ff282",
+     "page_number": 90,
+     "title": "釋氏源流應化事蹟 (Shishi Yuanliu: Illustrated Life of the Buddha)",
+     "served": "written",
+     "position": 3,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "The title and all twelve columns of text match the leaf in order and wording, and the illustration is described accurately; only the faint juan and leaf labels at the fold are left out.",
+     "defects": []
+    },
+    {
+     "key": "P-69aebb3439a4307877772f95",
+     "page_id": "69aebb3439a4307877772f95",
+     "page_number": 64,
+     "title": "四書集注 (Four Books with Collected Annotations)",
+     "served": "written",
+     "position": 10,
+     "accept": false,
+     "fidelity": 3,
+     "wrong": true,
+     "not_leaf": false,
+     "summary": "The two pages appear in reverse order, so the text breaks at the seam, and a run of slipped line-end characters in the 財/悖 passage garbles '財散於下', '亦悖而入' and '君有逆命'; most other lines match the page.",
+     "defects": [
+      {
+       "class": "I6",
+       "quote": "有人之謂也。不善則失之者。悖入而悖出之",
+       "severity": "misleads",
+       "what": "Left page (leaf 34) is placed before right page (leaf 33). The text runs right to left: 33 ends '有德而' and continues on 34 with '有人之謂也', so the seam and passage order are broken."
+      },
+      {
+       "class": "O6",
+       "quote": "則民散於下矣。而\n散於下",
+       "severity": "wrong_text",
+       "what": "Line-final 財 is misread as 而; the page has '財散於下', so the subject is lost."
+      },
+      {
+       "class": "O6",
+       "quote": "言悖而出者亦悖<unclear>逆</unclear>\n入貨悖而入者",
+       "severity": "wrong_text",
+       "what": "Line-final 而 is given as 逆; the page reads '亦悖而入'. The tag marks doubt, but the character belongs to the next line's end."
+      },
+      {
+       "class": "O5",
+       "quote": "鄭氏以爲君有\n命則民有逆辭",
+       "severity": "wrong_text",
+       "what": "逆 at the end of the line is dropped; the page has '君有逆命', and the omission reverses the sense to 'the ruler has a command'."
+      }
+     ]
+    },
+    {
+     "key": "P-699356c68ed86e583b7b851a",
+     "page_id": "699356c68ed86e583b7b851a",
+     "page_number": 486,
+     "title": "Lotus Sutra (Miao fa lian hua jing) - Sixi Tripitaka Edition",
+     "served": "unchanged",
+     "position": 4,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All five columns of this sutra leaf are present, in order and word for word; the only difference is the variant form 爲 on the page, given as 為, which changes nothing.",
+     "defects": []
+    },
+    {
+     "key": "P-6a05f0bf6a888f57ebd7743c",
+     "page_id": "6a05f0bf6a888f57ebd7743c",
+     "page_number": 22,
+     "title": "正統道藏 Zhengtong Daozang vol. 5 (Ming imperial Daoist canon, with 黃庭經 Huangting ji",
+     "served": "written",
+     "position": 5,
+     "accept": false,
+     "fidelity": 3,
+     "wrong": true,
+     "not_leaf": false,
+     "summary": "The page is complete and in order across all three registers, but a few misread characters change the wording, notably 修齋 for 倏欻 and 綿靉 for 綿雲皎.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "修齋之間",
+       "severity": "wrong_text",
+       "what": "page reads 倏欻之間 ('in an instant'); misread as 'during the fast'"
+      },
+      {
+       "class": "O6",
+       "quote": "地靄綿靉如柔玉",
+       "severity": "wrong_text",
+       "what": "page reads 綿雲皎如柔玉; 雲皎 collapsed into 靉, leaving the column one character short"
+      },
+      {
+       "class": "O6",
+       "quote": "靈篇通至妙氣",
+       "severity": "misleads",
+       "what": "page appears to read 迎至妙氣, not 通"
+      },
+      {
+       "class": "O6",
+       "quote": "泉真翊侍",
+       "severity": "misleads",
+       "what": "probably 眾真 ('the assembled perfected', as in 眾真監度 on this page); 泉 makes no sense here, though the glyph could not be checked at higher zoom"
+      }
+     ]
+    },
+    {
+     "key": "P-69e7288aa409200ea79f00b3",
+     "page_id": "69e7288aa409200ea79f00b3",
+     "page_number": 20,
+     "title": "聊齋志異 Vol. 8",
+     "served": "written",
+     "position": 5,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine columns of the leaf are present, in order and with the right characters; the header gives the fold title, and the uniform 。 only roughly follows the page's red circles and ticks, which the meta note acknowledges.",
+     "defects": []
+    },
+    {
+     "key": "P-6a087eaab2a99026ccf6fed2",
+     "page_id": "6a087eaab2a99026ccf6fed2",
+     "page_number": 465,
+     "title": "The Chinese Classics, Vol. 4, Part 2: The She King",
+     "served": "written",
+     "position": 6,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A complete and faithful two-column transcription: all headwords, romanisations, glosses, embedded Chinese phrases and references match the page in order, including the printed 'Fity' and '(2)' misprints, with at most two trivial punctuation regularisations.",
+     "defects": []
+    },
+    {
+     "key": "P-69d5ae594dc55b8478de138f",
+     "page_id": "69d5ae594dc55b8478de138f",
+     "page_number": 15,
+     "title": "Shi Jing, Shu Jing, Yi Jing",
+     "served": "written",
+     "position": 6,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All lines of pp. 16-17 are present and in order, including both section headings, with only two trivial punctuation differences.",
+     "defects": []
+    },
+    {
+     "key": "P-69bd0a12b01b17638a0978dc",
+     "page_id": "69bd0a12b01b17638a0978dc",
+     "page_number": 22,
+     "title": "道宗六書 (Dao Zong Liu Shu, Six Daoist Classics, 36 juan)",
+     "served": "written",
+     "position": 7,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "Both pages of the spread are read in the correct order, right then left. The Laozi text, the double-column commentary, the chapter headings for 7 and 8 and the fold furniture all match the leaf, with only the uncertain last signature character flagged.",
+     "defects": []
+    },
+    {
+     "key": "P-699df07e3430a1d77dc79184",
+     "page_id": "699df07e3430a1d77dc79184",
+     "page_number": 235,
+     "title": "新鐫神峰張先生通考闢謬命理正宗大全 (Orthodox Compendium of Fate Calculation)",
+     "served": "written",
+     "position": 7,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All verse lines of both half-leaves are present and in the correct right-to-left order; the one slip a reader might notice is 壬日戊提 for the page's 壬日戌提.",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "壬日戊提",
+       "severity": "misleads",
+       "what": "The page reads 戌 (an earthly branch, as 提 requires), not the stem 戊."
+      }
+     ]
+    },
+    {
+     "key": "P-69e72c60a409200ea79f478f",
+     "page_id": "69e72c60a409200ea79f478f",
+     "page_number": 153,
+     "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 1",
+     "served": "written",
+     "position": 2,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All six main-text columns, the glosses, the page furniture and the interlinear notes are present and in order; the only likely slip is one character in a small note (諂 for what looks like 訕).",
+     "defects": [
+      {
+       "class": "O6",
+       "quote": "此皆遭讒諂以為人役而失其自得者",
+       "severity": "misleads",
+       "what": "The interlinear note appears to read 讒訕 (slander), not 讒諂 (flattery); the small, worn glyph makes this a probable misread."
+      }
+     ]
+    },
+    {
+     "key": "P-6a087eb1b2a99026ccf6ff85",
+     "page_id": "6a087eb1b2a99026ccf6ff85",
+     "page_number": 89,
+     "title": "The Chinese Classics, Vol. 5, Part 1: The Ch'un Ts'ew with the Tso Chuen (Dukes ",
+     "served": "written",
+     "position": 8,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A faithful, complete transcription: all English and Chinese text is present and in order, with only minor punctuation regularisation.",
+     "defects": []
+    },
+    {
+     "key": "P-69e75e3fcc48e59ad74ec3f1",
+     "page_id": "69e75e3fcc48e59ad74ec3f1",
+     "page_number": 10,
+     "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 10",
+     "served": "written",
+     "position": 2,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "Faithful: all table-of-contents entries are in page order, including the run-over title note ending 知爲鬼火云, and the header, leaf number 四 and 藏板 are correct; the only difference is that the note's two columns are joined into one line, which is harmless.",
+     "defects": []
+    },
+    {
+     "key": "P-69af12630092756351e44a9d",
+     "page_id": "69af12630092756351e44a9d",
+     "page_number": 164,
+     "title": "墨子 (Mozi)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All 22 columns of both leaves appear in order, right page first, with the red marginal characters kept and the doubtful 麾 marked unclear. Unusual readings such as 函, 吏部 and 地五官 follow the leaf rather than the received text; a few worn glyphs (其往, 畫, 如今, 謹) could not be fully confirmed at this resolution, but nothing was found to be wrong.",
+     "defects": []
+    },
+    {
+     "key": "P-6a087ebab2a99026ccf70380",
+     "page_id": "6a087ebab2a99026ccf70380",
+     "page_number": 521,
+     "title": "The Chinese Classics, Vol. 5, Part 2: The Ch'un Ts'ew with the Tso Chuen (Dukes ",
+     "served": "written",
+     "position": 9,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A complete and accurate transcription of both columns, in order, with headwords, radical headings, Chinese phrases and citations matching the page; the only differences are two tiny romanisation details.",
+     "defects": []
+    },
+    {
+     "key": "P-69f1347c365e3fcae574ed88",
+     "page_id": "69f1347c365e3fcae574ed88",
+     "page_number": 108,
+     "title": "Kumārajīva um 412: Miao fa lian hua jing",
+     "served": "written",
+     "position": 9,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All 40 columns, from 或遭王難苦 to the break at 遮, are present and in order, including the 陀羅尼品 heading; the neighbouring sheets' edge strips are rightly left out, and only small variant-form and punctuation differences remain, with the faint folio number flagged as uncertain.",
+     "defects": []
+    },
+    {
+     "key": "P-69af120ff78a272df25b5626",
+     "page_id": "69af120ff78a272df25b5626",
+     "page_number": 83,
+     "title": "渾蓋通憲圖說 (Illustrated Explanation of the Armillary Sphere)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All columns of both leaves are present, in order and with the right words and numerals; the only differences are a few added stops, the omitted folio numbers, and 度 correctly marked as unclear at the paper tear.",
+     "defects": []
+    },
+    {
+     "key": "P-69bd0b0bb01b17638a098a07",
+     "page_id": "69bd0b0bb01b17638a098a07",
+     "page_number": 260,
+     "title": "楞嚴經要解 (Shurangama Sutra with Essential Commentary)",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All 20 columns of the opening (pp. 三–四) read correctly and in order, with the headings and the 撰述/支那 fold labels recorded; a reader would notice no difference from the page beyond normalised forms such as 為 for 爲.",
+     "defects": []
+    },
+    {
+     "key": "P-69e75e3acc48e59ad74ec369",
+     "page_id": "69e75e3acc48e59ad74ec369",
+     "page_number": 15,
+     "title": "笠翁一家言全集 (Lǐwēng Collected Works), Vol. 6",
+     "served": "written",
+     "position": 1,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine titles of this juan 5 contents leaf appear in order with the right characters, and the block-edge title, leaf number 五 and 芥子園 are all captured; show-through from the next leaf is correctly ignored.",
+     "defects": []
+    },
+    {
+     "key": "P-69e728b5a409200ea79f0620",
+     "page_id": "69e728b5a409200ea79f0620",
+     "page_number": 13,
+     "title": "聊齋志異 Vol. 16",
+     "served": "written",
+     "position": 2,
+     "accept": true,
+     "fidelity": 4,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All nine columns are present and in order, and the text follows the leaf; a reader would notice only one flagged doubtful character (欿) and possibly 君 where the print seems to have 若.",
+     "defects": []
+    },
+    {
+     "key": "P-6992cbd7018b80967354b630",
+     "page_id": "6992cbd7018b80967354b630",
+     "page_number": 342,
+     "title": "格致鏡原 (Gezhi Jingyuan: Mirror of Scientific Origins) 100 Volumes",
+     "served": "written",
+     "position": 4,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All 15 lines match the leaf in order and wording, and the boxed source titles (事林廣記, 名義考, 燈影記 and others) appear inline where the page prints them; a reader would notice no difference.",
+     "defects": []
+    },
+    {
+     "key": "P-6a087e8cb2a99026ccf6f681",
+     "page_id": "6a087e8cb2a99026ccf6f681",
+     "page_number": 388,
+     "title": "The Chinese Classics, Vol. 2: The Works of Mencius",
+     "served": "written",
+     "position": 9,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "All Chinese, English and note text matches the page in order; a reader would notice only that the Chinese has modern punctuation and quotation marks instead of the page's simple stops.",
+     "defects": []
+    },
+    {
+     "key": "P-69e8b2562ff2a8dc09e77729",
+     "page_id": "69e8b2562ff2a8dc09e77729",
+     "page_number": 633,
+     "title": "孟子 (Mencius): Chinese Classics Vol. 2",
+     "served": "written",
+     "position": 3,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "A faithful two-column transcription: all entries, romanisations and Mencius references match the leaf in order, and the one doubtful glyph (於陵) is marked unclear.",
+     "defects": []
+    },
+    {
+     "key": "P-699df0873430a1d77dc7933b",
+     "page_id": "699df0873430a1d77dc7933b",
+     "page_number": 271,
+     "title": "天文圖註祥異賦 (Illustrated Astronomical Omen Compendium)",
+     "served": "written",
+     "position": 5,
+     "accept": true,
+     "fidelity": 5,
+     "wrong": false,
+     "not_leaf": false,
+     "summary": "Both half-leaves of the spread are given in the correct order, right page first, and the text matches line by line with their headings and illustrations; the only oddity is a needless uncertainty mark on 西.",
+     "defects": []
+    }
+   ]
+  }
+ },
+ "pass": false
+}

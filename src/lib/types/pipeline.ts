@@ -83,6 +83,12 @@ export interface PipelineHold {
   held_from_status: PipelineAutoStatus | null;
   /** One sentence: what must be true before the hold may be lifted. */
   release: string;
+  /**
+   * The release condition in a form a detector can test (#7860): a decision in ops DECIDED.md, an
+   * issue closing, a named check passing, or a date. Required on every new hold; backfilled on the
+   * holds of 2026-10-31. Read by scripts/audit/hold-release-check.mjs.
+   */
+  release_when?: { kind: 'decision' | 'issue' | 'test' | 'date'; ref: string | number; note: string | null; /** set on the holds backfilled 2026-10-31 (scripts/maintenance/backfill-hold-release-when.mjs) */ backfilled_by?: string };
   detail?: Record<string, unknown> | null;
 }
 

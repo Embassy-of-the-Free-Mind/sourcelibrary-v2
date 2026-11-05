@@ -7,7 +7,7 @@ canons: []
 n_books: 132
 n_pages: 132
 verdict: "3.1 Pro with full thinking does not beat 3.8 Flash given the same prompt (Opus judge −0.02 [−0.23, +0.19], 53 pages). Opus as a translator beats 3.8 Flash in all five languages under the cross-family Pro judge (+0.47 to +0.52). Correcting the stored English helps, but less than retranslating with Opus."
-status: undecided
+status: rejected
 decision: "Route Persian, Sanskrit, Chinese, Greek and Hebrew translation to Opus (claude -p) where subscription capacity allows; otherwise keep 3.8 Flash. Not 3.1 Pro. No correction pass (#6545)"
 superseded_by: null
 issue: [6545, 6553]

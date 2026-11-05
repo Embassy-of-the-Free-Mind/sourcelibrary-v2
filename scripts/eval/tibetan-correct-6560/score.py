@@ -31,9 +31,13 @@ RES = os.path.join(REPO, 'scripts/eval/results/tibetan-correct-6560')
 MANIFEST = os.path.join(REPO, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl')
 ARMS = ['opus-corr', 'pro-corr', 'opus-redo', 'pro-redo', 'sonnet-corr', 'haiku-corr',  # #6667 added sonnet, haiku
         'flash-low-corr', 'flash-high-corr',  # Gemini 3.8 Flash at low and high thinking (agy -p), same CORR prompt
-        'g4l-corr']  # Gemini 4 Argon at low thinking (agy -p), same CORR prompt (2026-10-15)
+        'g4l-corr',  # Gemini 4 Argon at low thinking (agy -p), same CORR prompt (2026-10-15)
+        'lite-corr', 'lite-noimg-corr', 'lite-corr-r2', 'lite-p2-corr']  # #7263: gemini-3.1-flash-lite (paid API), same CORR prompt;
+#   noimg = no image attached (control), r2 = a repeat read on 10 folios (noise floor), p2 = the production-shaped
+#   prompt (PREREG amendment 1: live OCR prompt + correctInstruction + Siku v2 rule)
 ANCHOR_ARMS = ['opus-corr-anchor', 'pro-corr-anchor', 'sonnet-corr-anchor', 'haiku-corr-anchor',
-               'flash-low-corr-anchor', 'flash-high-corr-anchor', 'g4l-corr-anchor']
+               'flash-low-corr-anchor', 'flash-high-corr-anchor', 'g4l-corr-anchor',
+               'lite-corr-anchor', 'lite-noimg-corr-anchor', 'lite-p2-corr-anchor']
 FAMILY = {'opus': 'claude', 'pro': 'gemini'}
 # who reads off whose toward-Derge changes: always the other family. The Flash arms get their own Opus key so the
 # committed opus-settles key (Pro's arms) is not rebuilt.
@@ -371,6 +375,11 @@ def score(a):
                 s['delta_vs_baseline'] = round(fd(rd), 4); s['delta_ci'] = boot(rd, fd)
                 s['better'] = sum(pages[p][arm]['identity'] > pages[p]['baseline']['identity'] for p in rd)
                 s['worse'] = sum(pages[p][arm]['identity'] < pages[p]['baseline']['identity'] for p in rd)
+                # #7263 wreck count: duplication or a looped/garbled read (more lines than the draft + 2, syllables
+                # over 115% of the draft's, or identity below 0.85)
+                bl = lambda p: len([l for l in manuscript_text(man[p]['served_text']).split('\n') if l.strip()])
+                s['wreck'] = [man[p]['seq'] for p in rd if pages[p][arm].get('lines', 0) > bl(p) + 2
+                              or pages[p][arm]['syl'] > 1.15 * pages[p]['baseline']['syl'] or pages[p][arm]['identity'] < 0.85]
                 secs = [pages[p][arm]['secs'] for p in sel if pages[p][arm].get('secs') is not None]
                 s['secs_median'] = sorted(secs)[len(secs) // 2] if secs else None
                 s['secs_mean'] = round(sum(secs) / len(secs), 1) if secs else None
@@ -399,7 +408,10 @@ def score(a):
                      ('flash-low-corr', 'opus-corr'), ('flash-high-corr', 'opus-corr'), ('flash-high-corr', 'flash-low-corr'),
                      ('flash-low-corr', 'pro-corr'), ('flash-high-corr', 'pro-corr'),
                      ('flash-low-corr-anchor', 'opus-corr-anchor'), ('flash-high-corr-anchor', 'opus-corr-anchor'),
-                     ('g4l-corr', 'flash-low-corr'), ('g4l-corr', 'opus-corr'), ('g4l-corr-anchor', 'flash-low-corr-anchor')]:
+                     ('g4l-corr', 'flash-low-corr'), ('g4l-corr', 'opus-corr'), ('g4l-corr-anchor', 'flash-low-corr-anchor'),
+                     ('lite-corr', 'opus-corr'), ('lite-corr', 'flash-low-corr'), ('lite-corr', 'lite-noimg-corr'),
+                     ('lite-corr-r2', 'lite-corr'), ('lite-corr-anchor', 'opus-corr-anchor'),
+                     ('lite-p2-corr', 'opus-corr'), ('lite-p2-corr', 'lite-corr'), ('lite-p2-corr-anchor', 'opus-corr-anchor')]:
         both = [p for p in ids if pages[p].get(arm, {}).get('status') == 'read' and pages[p].get(ref, {}).get('status') == 'read']
         if both:
             fp, fo = pooled(arm, both), pooled(ref, both)

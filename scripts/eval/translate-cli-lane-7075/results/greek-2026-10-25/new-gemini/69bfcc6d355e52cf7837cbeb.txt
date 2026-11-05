@@ -1,0 +1,12 @@
+<warning>The leather binding is severely worn and cracked, particularly along the spine. The paper label is torn and the ink is significantly faded, making the handwriting nearly illegible.</warning>
+
+<note>A dark leather book binding, likely from the sixteenth or seventeenth century, decorated with blind-stamped impressions. On the right, the front cover is framed by a rectangular border filled with an interlaced guilloché pattern. A circular rosette stamp accents each corner of this frame. At the center of the cover, five stamps are arranged vertically: two larger circular medallions bearing a heraldic eagle with outspread wings, separated and flanked by three smaller circular rosettes. On the left, the worn spine shows the remnant of a light paper label with faint handwritten characters.</note>
+
+<insert>
+<unclear>p</unclear>
+<unclear>q</unclear>
+<unclear>2</unclear>
+</insert>
+
+<summary>This page presents the binding of the manuscript, featuring a dark leather cover with blind-stamped decorative rosettes, guilloché borders, and heraldic eagles, along with a worn spine bearing an illegible label fragment.</summary>
+<keywords>binding, leather, blind-stamping, heraldic eagle, rosette, guilloché, manuscript cover, spine</keywords>

@@ -14,7 +14,7 @@
  *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME] [--reread]
  *   node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *
- * --books-file: book ids, one per line; reads every page of each that has NO OCR yet (a page with text is never
+ * --books-file: book ids, one per line; reads every live page (page_number > 0) of each that has NO OCR yet (a page with text is never
  * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped
  * unless --reread is given (page-ids mode only: a re-read is chosen page by page, never a whole book). Each page's meta
  * then records `reread: true` and the OCR model it was read over (`replaces_model`); `cli-ocr.mjs apply` still holds
@@ -47,11 +47,16 @@ import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { readPageIdsFile, parseBookIds } from '../lib/ocr-targeting.mjs';
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
 import { ocrReadProblem } from '../lib/cli-chatter.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
+import { ocrBlockRefusals } from '../lib/block-page-guard.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
+import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../lib/candidate-reads.mjs';
 
 const READ_SITE = 'scripts/batch/claude-ocr.mjs';
@@ -162,11 +167,16 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
-  const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.model': 1 };
+  const PAGE_FIELDS = { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.model': 1, 'ocr.data': 1 };
+  // A book's soft-hidden pages (page_number <= 0: the spreads a split archived) are never read: reading them pays for
+  // text no reader sees, and on a just-split book they are a third of the "pages without OCR" (#7341).
   const filter = arg('books-file')
-    ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...NO_OCR }
+    ? { book_id: { $in: parseBookIds(fs.readFileSync(arg('books-file'), 'utf8')) }, ...VISIBLE_PAGE_MATCH, ...NO_OCR }
     : { id: { $in: readPageIdsFile(arg('page-ids-file')) }, ...(!REREAD && NO_OCR) };
   const pages = await db.collection('pages').find(filter, { projection: PAGE_FIELDS }).sort({ book_id: 1, page_number: 1 }).toArray();
+  // The job's book list, recorded with the job for the lane registry (#7301 item 5). The lane is the one that will
+  // stamp these pages when cli-ocr.mjs apply writes them (an anthropic engine). No page or book is written here.
+  await recordLaneBooks(db, { lane: laneForWrite('ocr', { call_site: 'scripts/batch/cli-ocr.mjs', name: 'anthropic' }), ...laneJob(JOB), pages });
   const books = new Map((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] } }, { projection: { id: 1, language: 1, title: 1 } }).toArray()).map((b) => [b.id, b]));
   const { base, ref } = await liveOcrPrompt(db);   // the auto-detect base, for the log line; each book's slot is filled here
   const promptFor = {};
@@ -241,9 +251,14 @@ async function main() {
       console.log(`  ${group[0].book_id} p.${group[0].page_number}-${group[group.length - 1].page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round(r.secs)}s)`);
       return r.cls ? 'failed' : 'mismatch';
     }
-    group.forEach((p, i) => writePage(p, texts[i], { ...common, call_position: i + 1, exit: 0, error_class: null, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha }));
+    // #5021 (block-page-guard.mjs ocrBlockRefusals): a page whose read holds a neighbour's leaf (against its stored
+    // text, where it has one) or prints the same page number as another read of the call is not written from this
+    // call; the queue below reads it alone.
+    const wrongLeaf = new Set(group.length > 1 ? ocrBlockRefusals(group, texts, { stored: new Map(group.map((p) => [p.id, p.ocr?.data || ''])) }).map((g) => { fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: g }) + '\n'); return g.page_number; }) : []);
+    group.forEach((p, i) => { if (!wrongLeaf.has(p.page_number)) writePage(p, texts[i], { ...common, call_position: i + 1, exit: 0, error_class: null, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha }); });
     // Kept the moment they are paid for (#7075), with the prompt the call sent; best effort, never fails the read.
     for (const [i, p] of group.entries()) {
+      if (wrongLeaf.has(p.page_number)) continue;
       const meta = JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8'));
       await keepRead({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, field: 'ocr', text: texts[i], model: MODEL, prompt_hash: reuseKeyOf(p, imgs[i].sha), job: JOB, meta, prompt_text: sent, source_path: path.join(OUT, `${p.id}.txt`) });
     }
@@ -275,11 +290,14 @@ async function main() {
       if (r !== 'ok' && !stop) r = await readGroup(group, 1);
       // Still refused: each page alone, so one hard page does not cost its neighbours.
       if (r !== 'ok' && !stop && group.length > 1) for (const p of group) { if (stop) break; await readGroup([p], 2); }
-      // A page whose text fails the chatter guard is read once more alone (#6420 rule 4); apply refuses it otherwise.
+      // A page the wrong-leaf guard kept out of an accepted block (#5021): read alone.
+      if (r === 'ok' && !stop && group.length > 1) for (const p of group) { if (stop) break; if (!fs.existsSync(path.join(OUT, `${p.id}.meta.json`))) await readGroup([p], 2); }
+      // A page whose text fails the chatter guard, or that the write guard calls truncated (#5055: a tag left open at
+      // its tail, a text ending inside a tag), is read once more alone (#6420 rule 4); apply refuses it otherwise.
       for (const p of group) {
         if (stop || !fs.existsSync(path.join(OUT, `${p.id}.txt`))) continue;
         const t = fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8');
-        if (t && ocrReadProblem(t) && !JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8')).call_id?.endsWith('-3')) await readGroup([p], 3);
+        if (t && (ocrReadProblem(t) || checkWrittenText(t, { kind: 'ocr' }).verdict === 'truncated') && !JSON.parse(fs.readFileSync(path.join(OUT, `${p.id}.meta.json`), 'utf8')).call_id?.endsWith('-3')) await readGroup([p], 3);
       }
     }
   }));

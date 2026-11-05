@@ -1,6 +1,6 @@
 # Pipeline Operations
 
-Operational reference for pipeline monitoring, debugging, and processing. For full architecture details, see `.claude/docs/pipeline-architecture.md`.
+Operational reference for pipeline monitoring, debugging, and processing. **The process today is `.claude/docs/book-process.md`** and the live lanes, quota and page counts are on https://sourcelibrary.org/admin/pipeline/now (#7759). Several dated notes below describe the orchestrator era; check them against that page before acting.
 
 ## Where Everything Runs
 

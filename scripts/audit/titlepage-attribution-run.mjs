@@ -117,7 +117,7 @@ if (LANGS) { q.language = { $in: LANGS.split(',').map((s) => s.trim()) }; consol
 const total = await db.collection('books').countDocuments(q);
 console.log(`target population: ${total.toLocaleString()} books that reach no author page`);
 
-const cursor = db.collection('books').find(q, { projection: { id: 1, title: 1, author: 1 } });
+const cursor = db.collection('books').find(q, { projection: { id: 1, title: 1, author: 1 } }).batchSize(1000);
 const queue = [];
 for await (const b of cursor) {
   if (done.has(b.id)) continue;

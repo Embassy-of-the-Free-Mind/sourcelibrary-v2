@@ -1,0 +1,2216 @@
+{
+  "dir": "scripts/eval/results/zh-translation-strata-5274",
+  "judge": "opus",
+  "weights": "books",
+  "iters": 4000,
+  "at": "2026-11-03T12:23:59.246Z",
+  "gate": {
+    "pass": true,
+    "checks": {
+      "swap": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      },
+      "drop": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.8666666666666667,
+        "pass": true
+      },
+      "repeat": {
+        "n": 15,
+        "rate": 1,
+        "need": 0.9333333333333333,
+        "pass": true
+      }
+    }
+  },
+  "frame": {
+    "books": 2904,
+    "translated_pages": 354069,
+    "strata": {
+      "3-flash|paddle": {
+        "pages": 156288,
+        "books_with_pages": 1510,
+        "w_pages": 0.4414054887606653,
+        "w_books": 0.3978960604634932
+      },
+      "flash-lite|paddle": {
+        "pages": 25205,
+        "books_with_pages": 396,
+        "w_pages": 0.0711866896000497,
+        "w_books": 0.05216502887429212
+      },
+      "flash-lite|gemini": {
+        "pages": 24704,
+        "books_with_pages": 454,
+        "w_pages": 0.06977171116364324,
+        "w_books": 0.05285615955177199
+      },
+      "3-flash|gemini": {
+        "pages": 19585,
+        "books_with_pages": 607,
+        "w_pages": 0.055314077199641876,
+        "w_books": 0.04955162384094253
+      },
+      "3.8-flash|paddle": {
+        "pages": 95325,
+        "books_with_pages": 1365,
+        "w_pages": 0.26922718453182853,
+        "w_books": 0.3333636871957875
+      },
+      "3.8-flash|gemini": {
+        "pages": 6794,
+        "books_with_pages": 552,
+        "w_pages": 0.019188350293304412,
+        "w_books": 0.03085876475214146
+      },
+      "opus|gemini": {
+        "pages": 3691,
+        "books_with_pages": 177,
+        "w_pages": 0.010424521774004502,
+        "w_books": 0.010985337465642711
+      },
+      "3.8-flash|other": {
+        "pages": 1385,
+        "books_with_pages": 284,
+        "w_pages": 0.003911666934975951,
+        "w_books": 0.003847880252545478
+      },
+      "opus|paddle": {
+        "pages": 18277,
+        "books_with_pages": 181,
+        "w_pages": 0.05161988200040105,
+        "w_books": 0.049299685002865835
+      },
+      "3-flash|other": {
+        "pages": 2741,
+        "books_with_pages": 69,
+        "w_pages": 0.007741428930519193,
+        "w_books": 0.01896691289616575
+      }
+    },
+    "dropped": {
+      "flash-lite|other": {
+        "pages": 72,
+        "books_with_pages": 23,
+        "w_pages": 0.00020335019445362343,
+        "w_books": 0.0002074455252208378
+      },
+      "opus|other": {
+        "pages": 2,
+        "books_with_pages": 1,
+        "w_pages": 0.000005648616512600652,
+        "w_books": 0.000001414179125584763
+      }
+    },
+    "covered_weight": 0.9998
+  },
+  "n_units": 120,
+  "n_books": 120,
+  "english_words": 45766,
+  "images_seen": 120,
+  "overall": {
+    "fid_ge4": {
+      "est": 67.3,
+      "ci": [
+        55,
+        80
+      ]
+    },
+    "fid_le2": {
+      "est": 4.2,
+      "ci": [
+        2.1,
+        6.3
+      ]
+    },
+    "major": {
+      "est": 29.4,
+      "ci": [
+        17,
+        42
+      ]
+    },
+    "major_per_1k_words": {
+      "est": 0.88,
+      "ci": [
+        0.56,
+        1.21
+      ]
+    },
+    "ocr_bad": {
+      "est": 35.5,
+      "ci": [
+        22.9,
+        48.2
+      ]
+    },
+    "e2e_wrong": {
+      "est": 50.4,
+      "ci": [
+        39.9,
+        60.2
+      ]
+    },
+    "inherited_share": {
+      "est": 49.3,
+      "ci": [
+        19,
+        77.2
+      ]
+    },
+    "p_major_given_ocr_bad": {
+      "est": 40.8,
+      "ci": [
+        15.5,
+        67.1
+      ]
+    },
+    "p_major_given_ocr_ok": {
+      "est": 23.1,
+      "ci": [
+        9.9,
+        35.7
+      ]
+    },
+    "attributable_fraction": {
+      "est": 21.3,
+      "ci": [
+        -13.2,
+        59.4
+      ]
+    },
+    "n_books": 120,
+    "dist": [
+      4,
+      6,
+      15,
+      43,
+      52
+    ],
+    "dist_weighted": [
+      1.7,
+      2.6,
+      28.5,
+      39,
+      28.3
+    ],
+    "major_pages": 24,
+    "words": 45766
+  },
+  "by_stratum": {
+    "3-flash|gemini": {
+      "w_pages": 5.5,
+      "w_books": 5,
+      "n": 12,
+      "fid_ge4": 50,
+      "fid_le2": 50,
+      "major": 50,
+      "major_per_1k_words": 1.43,
+      "ocr_bad": 16.7,
+      "e2e_wrong": 66.7,
+      "inherited": "0/6",
+      "dist": [
+        4,
+        2,
+        0,
+        4,
+        2
+      ]
+    },
+    "3-flash|other": {
+      "w_pages": 0.8,
+      "w_books": 1.9,
+      "n": 12,
+      "fid_ge4": 83.3,
+      "fid_le2": 0,
+      "major": 16.7,
+      "major_per_1k_words": 0.3,
+      "ocr_bad": 25,
+      "e2e_wrong": 41.7,
+      "inherited": "0/2",
+      "dist": [
+        0,
+        0,
+        2,
+        7,
+        3
+      ]
+    },
+    "3-flash|paddle": {
+      "w_pages": 44.1,
+      "w_books": 39.8,
+      "n": 12,
+      "fid_ge4": 41.7,
+      "fid_le2": 0,
+      "major": 50,
+      "major_per_1k_words": 1.11,
+      "ocr_bad": 58.3,
+      "e2e_wrong": 83.3,
+      "inherited": "3/6",
+      "dist": [
+        0,
+        0,
+        7,
+        5,
+        0
+      ]
+    },
+    "3.8-flash|gemini": {
+      "w_pages": 1.9,
+      "w_books": 3.1,
+      "n": 12,
+      "fid_ge4": 100,
+      "fid_le2": 0,
+      "major": 0,
+      "major_per_1k_words": 0,
+      "ocr_bad": 16.7,
+      "e2e_wrong": 16.7,
+      "inherited": "0/0",
+      "dist": [
+        0,
+        0,
+        0,
+        4,
+        8
+      ]
+    },
+    "3.8-flash|other": {
+      "w_pages": 0.4,
+      "w_books": 0.4,
+      "n": 12,
+      "fid_ge4": 100,
+      "fid_le2": 0,
+      "major": 0,
+      "major_per_1k_words": 0,
+      "ocr_bad": 0,
+      "e2e_wrong": 0,
+      "inherited": "0/0",
+      "dist": [
+        0,
+        0,
+        0,
+        7,
+        5
+      ]
+    },
+    "3.8-flash|paddle": {
+      "w_pages": 26.9,
+      "w_books": 33.3,
+      "n": 12,
+      "fid_ge4": 91.7,
+      "fid_le2": 0,
+      "major": 8.3,
+      "major_per_1k_words": 0.25,
+      "ocr_bad": 8.3,
+      "e2e_wrong": 8.3,
+      "inherited": "1/1",
+      "dist": [
+        0,
+        0,
+        1,
+        5,
+        6
+      ]
+    },
+    "flash-lite|gemini": {
+      "w_pages": 7,
+      "w_books": 5.3,
+      "n": 12,
+      "fid_ge4": 83.3,
+      "fid_le2": 0,
+      "major": 16.7,
+      "major_per_1k_words": 0.7,
+      "ocr_bad": 66.7,
+      "e2e_wrong": 66.7,
+      "inherited": "2/2",
+      "dist": [
+        0,
+        0,
+        2,
+        5,
+        5
+      ]
+    },
+    "flash-lite|paddle": {
+      "w_pages": 7.1,
+      "w_books": 5.2,
+      "n": 12,
+      "fid_ge4": 41.7,
+      "fid_le2": 33.3,
+      "major": 58.3,
+      "major_per_1k_words": 3.89,
+      "ocr_bad": 41.7,
+      "e2e_wrong": 83.3,
+      "inherited": "2/7",
+      "dist": [
+        0,
+        4,
+        3,
+        5,
+        0
+      ]
+    },
+    "opus|gemini": {
+      "w_pages": 1,
+      "w_books": 1.1,
+      "n": 12,
+      "fid_ge4": 100,
+      "fid_le2": 0,
+      "major": 0,
+      "major_per_1k_words": 0,
+      "ocr_bad": 33.3,
+      "e2e_wrong": 33.3,
+      "inherited": "0/0",
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        11
+      ]
+    },
+    "opus|paddle": {
+      "w_pages": 5.2,
+      "w_books": 4.9,
+      "n": 12,
+      "fid_ge4": 100,
+      "fid_le2": 0,
+      "major": 0,
+      "major_per_1k_words": 0,
+      "ocr_bad": 33.3,
+      "e2e_wrong": 33.3,
+      "inherited": "0/0",
+      "dist": [
+        0,
+        0,
+        0,
+        0,
+        12
+      ]
+    }
+  },
+  "by_model": {
+    "3-flash": {
+      "fid_ge4": {
+        "est": 44.2,
+        "ci": [
+          22.2,
+          67.7
+        ]
+      },
+      "fid_le2": {
+        "est": 5.3,
+        "ci": [
+          2.7,
+          8
+        ]
+      },
+      "major": {
+        "est": 48.6,
+        "ci": [
+          25,
+          71.7
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 1.1,
+        "ci": [
+          0.59,
+          1.61
+        ]
+      },
+      "ocr_bad": {
+        "est": 52.6,
+        "ci": [
+          29.7,
+          75.3
+        ]
+      },
+      "e2e_wrong": {
+        "est": 79.9,
+        "ci": [
+          58.7,
+          95.3
+        ]
+      },
+      "inherited_share": {
+        "est": 43.8,
+        "ci": [
+          0,
+          79.6
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 40.6,
+        "ci": [
+          0,
+          78.2
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 57.6,
+        "ci": [
+          22.6,
+          88.3
+        ]
+      },
+      "attributable_fraction": {
+        "est": -18.4,
+        "ci": [
+          -86.5,
+          38.3
+        ]
+      },
+      "n_books": 36,
+      "dist": [
+        4,
+        2,
+        9,
+        16,
+        5
+      ],
+      "dist_weighted": [
+        3.5,
+        1.8,
+        50.4,
+        41.5,
+        2.8
+      ],
+      "major_pages": 14,
+      "words": 17623
+    },
+    "3.8-flash": {
+      "fid_ge4": {
+        "est": 92.5,
+        "ci": [
+          77.4,
+          100
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 7.5,
+        "ci": [
+          0,
+          22.6
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.23,
+        "ci": [
+          0,
+          0.65
+        ]
+      },
+      "ocr_bad": {
+        "est": 8.9,
+        "ci": [
+          0,
+          25.4
+        ]
+      },
+      "e2e_wrong": {
+        "est": 8.9,
+        "ci": [
+          0,
+          25.4
+        ]
+      },
+      "inherited_share": {
+        "est": 100,
+        "ci": [
+          100,
+          100
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 84.4,
+        "ci": [
+          0,
+          100
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "attributable_fraction": {
+        "est": 100,
+        "ci": [
+          100,
+          100
+        ]
+      },
+      "n_books": 36,
+      "dist": [
+        0,
+        0,
+        1,
+        16,
+        19
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        7.5,
+        41.1,
+        51.3
+      ],
+      "major_pages": 1,
+      "words": 13859
+    },
+    "flash-lite": {
+      "fid_ge4": {
+        "est": 62.6,
+        "ci": [
+          46,
+          79.3
+        ]
+      },
+      "fid_le2": {
+        "est": 16.6,
+        "ci": [
+          4.1,
+          29
+        ]
+      },
+      "major": {
+        "est": 37.4,
+        "ci": [
+          20.7,
+          54
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 2.51,
+        "ci": [
+          1.18,
+          4.05
+        ]
+      },
+      "ocr_bad": {
+        "est": 54.2,
+        "ci": [
+          37.5,
+          71
+        ]
+      },
+      "e2e_wrong": {
+        "est": 74.9,
+        "ci": [
+          58.2,
+          91.6
+        ]
+      },
+      "inherited_share": {
+        "est": 44.6,
+        "ci": [
+          12.6,
+          75.1
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 30.7,
+        "ci": [
+          7.6,
+          57.1
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 45.2,
+        "ci": [
+          19.8,
+          72.6
+        ]
+      },
+      "attributable_fraction": {
+        "est": -21.1,
+        "ci": [
+          -94.5,
+          37.9
+        ]
+      },
+      "n_books": 24,
+      "dist": [
+        0,
+        4,
+        5,
+        10,
+        5
+      ],
+      "dist_weighted": [
+        0,
+        16.6,
+        20.8,
+        41.7,
+        21
+      ],
+      "major_pages": 9,
+      "words": 6733
+    },
+    "opus": {
+      "fid_ge4": {
+        "est": 100,
+        "ci": [
+          100,
+          100
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "ocr_bad": {
+        "est": 33.3,
+        "ci": [
+          12.9,
+          56.8
+        ]
+      },
+      "e2e_wrong": {
+        "est": 33.3,
+        "ci": [
+          12.9,
+          56.8
+        ]
+      },
+      "inherited_share": {
+        "est": null,
+        "ci": null
+      },
+      "p_major_given_ocr_bad": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "attributable_fraction": {
+        "est": null,
+        "ci": null
+      },
+      "n_books": 24,
+      "dist": [
+        0,
+        0,
+        0,
+        1,
+        23
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        0,
+        1.5,
+        98.5
+      ],
+      "major_pages": 0,
+      "words": 7551
+    }
+  },
+  "by_engine": {
+    "gemini": {
+      "fid_ge4": {
+        "est": 76.7,
+        "ci": [
+          64.7,
+          88.5
+        ]
+      },
+      "fid_le2": {
+        "est": 17.2,
+        "ci": [
+          8.6,
+          25.8
+        ]
+      },
+      "major": {
+        "est": 23.3,
+        "ci": [
+          11.5,
+          35.3
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.85,
+        "ci": [
+          0.37,
+          1.44
+        ]
+      },
+      "ocr_bad": {
+        "est": 36.3,
+        "ci": [
+          23.3,
+          49.5
+        ]
+      },
+      "e2e_wrong": {
+        "est": 53.4,
+        "ci": [
+          38.9,
+          67.5
+        ]
+      },
+      "inherited_share": {
+        "est": 26.2,
+        "ci": [
+          0,
+          51.6
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 16.8,
+        "ci": [
+          0,
+          40.9
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 26.9,
+        "ci": [
+          12,
+          42.2
+        ]
+      },
+      "attributable_fraction": {
+        "est": -15.7,
+        "ci": [
+          -52.1,
+          27
+        ]
+      },
+      "n_books": 48,
+      "dist": [
+        4,
+        2,
+        2,
+        14,
+        26
+      ],
+      "dist_weighted": [
+        11.5,
+        5.7,
+        6.1,
+        34.5,
+        42.2
+      ],
+      "major_pages": 8,
+      "words": 16363
+    },
+    "other": {
+      "fid_ge4": {
+        "est": 86.1,
+        "ci": [
+          65.4,
+          100
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 13.9,
+        "ci": [
+          0,
+          34.6
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.26,
+        "ci": [
+          0,
+          0.6
+        ]
+      },
+      "ocr_bad": {
+        "est": 20.8,
+        "ci": [
+          0,
+          41.6
+        ]
+      },
+      "e2e_wrong": {
+        "est": 34.6,
+        "ci": [
+          13.9,
+          55.4
+        ]
+      },
+      "inherited_share": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 17.5,
+        "ci": [
+          0,
+          41.6
+        ]
+      },
+      "attributable_fraction": {
+        "est": null,
+        "ci": null
+      },
+      "n_books": 24,
+      "dist": [
+        0,
+        0,
+        2,
+        14,
+        8
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        13.9,
+        58.3,
+        27.8
+      ],
+      "major_pages": 2,
+      "words": 12555
+    },
+    "paddle": {
+      "fid_ge4": {
+        "est": 65.1,
+        "ci": [
+          50.4,
+          80.4
+        ]
+      },
+      "fid_le2": {
+        "est": 2.1,
+        "ci": [
+          0.5,
+          3.7
+        ]
+      },
+      "major": {
+        "est": 30.9,
+        "ci": [
+          16,
+          46
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.91,
+        "ci": [
+          0.54,
+          1.28
+        ]
+      },
+      "ocr_bad": {
+        "est": 35.8,
+        "ci": [
+          21,
+          50.6
+        ]
+      },
+      "e2e_wrong": {
+        "est": 50.3,
+        "ci": [
+          38,
+          61.7
+        ]
+      },
+      "inherited_share": {
+        "est": 52.9,
+        "ci": [
+          18.1,
+          84.4
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 45.6,
+        "ci": [
+          15.8,
+          76.7
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 22.7,
+        "ci": [
+          6.5,
+          37.4
+        ]
+      },
+      "attributable_fraction": {
+        "est": 26.6,
+        "ci": [
+          -13,
+          71.1
+        ]
+      },
+      "n_books": 48,
+      "dist": [
+        0,
+        4,
+        11,
+        15,
+        18
+      ],
+      "dist_weighted": [
+        0,
+        2.1,
+        32.8,
+        39.2,
+        25.9
+      ],
+      "major_pages": 14,
+      "words": 16848
+    }
+  },
+  "by_kind": {
+    "prose": {
+      "fid_ge4": {
+        "est": 81.9,
+        "ci": [
+          67.2,
+          93
+        ]
+      },
+      "fid_le2": {
+        "est": 4.2,
+        "ci": [
+          1.4,
+          7.5
+        ]
+      },
+      "major": {
+        "est": 18.1,
+        "ci": [
+          7,
+          32.8
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.74,
+        "ci": [
+          0.34,
+          1.22
+        ]
+      },
+      "ocr_bad": {
+        "est": 30,
+        "ci": [
+          16.1,
+          46
+        ]
+      },
+      "e2e_wrong": {
+        "est": 40.8,
+        "ci": [
+          26.1,
+          56
+        ]
+      },
+      "inherited_share": {
+        "est": 40.6,
+        "ci": [
+          7.8,
+          76.8
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 24.5,
+        "ci": [
+          4,
+          52.6
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 15.4,
+        "ci": [
+          4.8,
+          30.2
+        ]
+      },
+      "attributable_fraction": {
+        "est": 15.1,
+        "ci": [
+          -25.4,
+          62.2
+        ]
+      },
+      "n_books": 91,
+      "dist": [
+        1,
+        5,
+        9,
+        34,
+        42
+      ],
+      "dist_weighted": [
+        0.7,
+        3.5,
+        13.9,
+        51.1,
+        30.8
+      ],
+      "major_pages": 15,
+      "words": 31935
+    },
+    "reference": {
+      "fid_ge4": {
+        "est": 43.8,
+        "ci": [
+          18.7,
+          69
+        ]
+      },
+      "fid_le2": {
+        "est": 4.3,
+        "ci": [
+          1,
+          9
+        ]
+      },
+      "major": {
+        "est": 47.5,
+        "ci": [
+          21.8,
+          74.5
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 1.04,
+        "ci": [
+          0.52,
+          1.55
+        ]
+      },
+      "ocr_bad": {
+        "est": 44.4,
+        "ci": [
+          18.9,
+          71.2
+        ]
+      },
+      "e2e_wrong": {
+        "est": 66,
+        "ci": [
+          43.1,
+          88
+        ]
+      },
+      "inherited_share": {
+        "est": 54.6,
+        "ci": [
+          0,
+          92.3
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 58.5,
+        "ci": [
+          0,
+          100
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 38.8,
+        "ci": [
+          7.3,
+          73.3
+        ]
+      },
+      "attributable_fraction": {
+        "est": 18.3,
+        "ci": [
+          -32.1,
+          81.1
+        ]
+      },
+      "n_books": 29,
+      "dist": [
+        3,
+        1,
+        6,
+        9,
+        10
+      ],
+      "dist_weighted": [
+        3.2,
+        1.1,
+        51.9,
+        19.5,
+        24.3
+      ],
+      "major_pages": 9,
+      "words": 13831
+    }
+  },
+  "by_hand": {
+    "manuscript": {
+      "fid_ge4": {
+        "est": 65.4,
+        "ci": [
+          49.6,
+          81.8
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 30.4,
+        "ci": [
+          14.3,
+          46.4
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.78,
+        "ci": [
+          0.4,
+          1.15
+        ]
+      },
+      "ocr_bad": {
+        "est": 37.2,
+        "ci": [
+          21.6,
+          53.4
+        ]
+      },
+      "e2e_wrong": {
+        "est": 50.8,
+        "ci": [
+          37.1,
+          63.5
+        ]
+      },
+      "inherited_share": {
+        "est": 55.2,
+        "ci": [
+          17.8,
+          92
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 45.1,
+        "ci": [
+          14.3,
+          76.3
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 21.7,
+        "ci": [
+          3,
+          38.3
+        ]
+      },
+      "attributable_fraction": {
+        "est": 28.6,
+        "ci": [
+          -14.3,
+          85.3
+        ]
+      },
+      "n_books": 55,
+      "dist": [
+        0,
+        0,
+        12,
+        18,
+        25
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        34.6,
+        40.7,
+        24.7
+      ],
+      "major_pages": 11,
+      "words": 21266
+    },
+    "print": {
+      "fid_ge4": {
+        "est": 76.9,
+        "ci": [
+          59.2,
+          90.1
+        ]
+      },
+      "fid_le2": {
+        "est": 13.1,
+        "ci": [
+          3.2,
+          26.8
+        ]
+      },
+      "major": {
+        "est": 23.1,
+        "ci": [
+          9.9,
+          40.8
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 1.65,
+        "ci": [
+          0.62,
+          3.03
+        ]
+      },
+      "ocr_bad": {
+        "est": 31.1,
+        "ci": [
+          15.6,
+          51
+        ]
+      },
+      "e2e_wrong": {
+        "est": 44.2,
+        "ci": [
+          26,
+          66.7
+        ]
+      },
+      "inherited_share": {
+        "est": 43.1,
+        "ci": [
+          0,
+          80.1
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 31.9,
+        "ci": [
+          0,
+          64.1
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 19.1,
+        "ci": [
+          5.1,
+          40.7
+        ]
+      },
+      "attributable_fraction": {
+        "est": 17.4,
+        "ci": [
+          -29.7,
+          66.1
+        ]
+      },
+      "n_books": 40,
+      "dist": [
+        0,
+        4,
+        3,
+        13,
+        20
+      ],
+      "dist_weighted": [
+        0,
+        13.1,
+        9.9,
+        26.2,
+        50.7
+      ],
+      "major_pages": 7,
+      "words": 12804
+    },
+    "untagged": {
+      "fid_ge4": {
+        "est": 69.6,
+        "ci": [
+          50,
+          86.7
+        ]
+      },
+      "fid_le2": {
+        "est": 30.4,
+        "ci": [
+          13.3,
+          50.1
+        ]
+      },
+      "major": {
+        "est": 30.4,
+        "ci": [
+          13.3,
+          50.1
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.91,
+        "ci": [
+          0.33,
+          1.75
+        ]
+      },
+      "ocr_bad": {
+        "est": 26.8,
+        "ci": [
+          9.3,
+          45.9
+        ]
+      },
+      "e2e_wrong": {
+        "est": 57.2,
+        "ci": [
+          37,
+          77.8
+        ]
+      },
+      "inherited_share": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 41.6,
+        "ci": [
+          19.3,
+          65.8
+        ]
+      },
+      "attributable_fraction": {
+        "est": null,
+        "ci": null
+      },
+      "n_books": 25,
+      "dist": [
+        4,
+        2,
+        0,
+        12,
+        7
+      ],
+      "dist_weighted": [
+        20.3,
+        10.1,
+        0,
+        42.8,
+        26.8
+      ],
+      "major_pages": 6,
+      "words": 11696
+    }
+  },
+  "by_kind_x_engine": {
+    "prose · gemini": {
+      "fid_ge4": {
+        "est": 86.4,
+        "ci": [
+          73.7,
+          96.8
+        ]
+      },
+      "fid_le2": {
+        "est": 6.6,
+        "ci": [
+          0,
+          15.8
+        ]
+      },
+      "major": {
+        "est": 13.6,
+        "ci": [
+          3.2,
+          26.4
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.5,
+        "ci": [
+          0.09,
+          1.08
+        ]
+      },
+      "ocr_bad": {
+        "est": 41.8,
+        "ci": [
+          27.2,
+          57.1
+        ]
+      },
+      "e2e_wrong": {
+        "est": 48.4,
+        "ci": [
+          33,
+          63.8
+        ]
+      },
+      "inherited_share": {
+        "est": 51.6,
+        "ci": [
+          0,
+          100
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 16.8,
+        "ci": [
+          0,
+          40.9
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 11.3,
+        "ci": [
+          0,
+          26.7
+        ]
+      },
+      "attributable_fraction": {
+        "est": 16.9,
+        "ci": [
+          -40.8,
+          100
+        ]
+      },
+      "n_books": 43,
+      "dist": [
+        1,
+        1,
+        2,
+        13,
+        26
+      ],
+      "dist_weighted": [
+        3.3,
+        3.3,
+        7,
+        37.7,
+        48.7
+      ],
+      "major_pages": 4,
+      "words": 14452
+    },
+    "prose · other": {
+      "fid_ge4": {
+        "est": 83.9,
+        "ci": [
+          59.7,
+          100
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 16.1,
+        "ci": [
+          0,
+          40.3
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.3,
+        "ci": [
+          0,
+          0.69
+        ]
+      },
+      "ocr_bad": {
+        "est": 24.2,
+        "ci": [
+          0,
+          49.2
+        ]
+      },
+      "e2e_wrong": {
+        "est": 40.3,
+        "ci": [
+          15.9,
+          66.7
+        ]
+      },
+      "inherited_share": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 21.3,
+        "ci": [
+          0,
+          50
+        ]
+      },
+      "attributable_fraction": {
+        "est": null,
+        "ci": null
+      },
+      "n_books": 14,
+      "dist": [
+        0,
+        0,
+        2,
+        9,
+        3
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        16.1,
+        59.7,
+        24.2
+      ],
+      "major_pages": 2,
+      "words": 6990
+    },
+    "prose · paddle": {
+      "fid_ge4": {
+        "est": 80.6,
+        "ci": [
+          61.8,
+          94.7
+        ]
+      },
+      "fid_le2": {
+        "est": 3.7,
+        "ci": [
+          0.9,
+          7.4
+        ]
+      },
+      "major": {
+        "est": 19.4,
+        "ci": [
+          5.3,
+          38.3
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.83,
+        "ci": [
+          0.32,
+          1.46
+        ]
+      },
+      "ocr_bad": {
+        "est": 27.1,
+        "ci": [
+          8.8,
+          47.2
+        ]
+      },
+      "e2e_wrong": {
+        "est": 38.8,
+        "ci": [
+          19.4,
+          58.2
+        ]
+      },
+      "inherited_share": {
+        "est": 39.9,
+        "ci": [
+          0,
+          83.1
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 28.5,
+        "ci": [
+          0,
+          71.9
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 16,
+        "ci": [
+          3.5,
+          34.2
+        ]
+      },
+      "attributable_fraction": {
+        "est": 17.6,
+        "ci": [
+          -28,
+          73.6
+        ]
+      },
+      "n_books": 34,
+      "dist": [
+        0,
+        4,
+        5,
+        12,
+        13
+      ],
+      "dist_weighted": [
+        0,
+        3.7,
+        15.7,
+        54.2,
+        26.4
+      ],
+      "major_pages": 9,
+      "words": 10493
+    },
+    "reference · gemini": {
+      "fid_ge4": {
+        "est": 13.5,
+        "ci": [
+          0,
+          45.4
+        ]
+      },
+      "fid_le2": {
+        "est": 86.5,
+        "ci": [
+          54.6,
+          100
+        ]
+      },
+      "major": {
+        "est": 86.5,
+        "ci": [
+          54.6,
+          100
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 2.85,
+        "ci": [
+          1.52,
+          4.44
+        ]
+      },
+      "ocr_bad": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "e2e_wrong": {
+        "est": 86.5,
+        "ci": [
+          54.6,
+          100
+        ]
+      },
+      "inherited_share": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": null,
+        "ci": null
+      },
+      "p_major_given_ocr_ok": {
+        "est": 86.5,
+        "ci": [
+          54.6,
+          100
+        ]
+      },
+      "attributable_fraction": {
+        "est": null,
+        "ci": null
+      },
+      "n_books": 5,
+      "dist": [
+        3,
+        1,
+        0,
+        1,
+        0
+      ],
+      "dist_weighted": [
+        64.9,
+        21.6,
+        0,
+        13.5,
+        0
+      ],
+      "major_pages": 4,
+      "words": 1911
+    },
+    "reference · other": {
+      "fid_ge4": {
+        "est": 100,
+        "ci": [
+          100,
+          100
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "ocr_bad": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "e2e_wrong": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "inherited_share": {
+        "est": null,
+        "ci": null
+      },
+      "p_major_given_ocr_bad": {
+        "est": null,
+        "ci": null
+      },
+      "p_major_given_ocr_ok": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "attributable_fraction": {
+        "est": null,
+        "ci": null
+      },
+      "n_books": 10,
+      "dist": [
+        0,
+        0,
+        0,
+        5,
+        5
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        0,
+        50,
+        50
+      ],
+      "major_pages": 0,
+      "words": 5565
+    },
+    "reference · paddle": {
+      "fid_ge4": {
+        "est": 44.9,
+        "ci": [
+          18.3,
+          72.3
+        ]
+      },
+      "fid_le2": {
+        "est": 0,
+        "ci": [
+          0,
+          0
+        ]
+      },
+      "major": {
+        "est": 45.9,
+        "ci": [
+          18.6,
+          74.7
+        ]
+      },
+      "major_per_1k_words": {
+        "est": 0.98,
+        "ci": [
+          0.43,
+          1.51
+        ]
+      },
+      "ocr_bad": {
+        "est": 47.1,
+        "ci": [
+          20.2,
+          76.1
+        ]
+      },
+      "e2e_wrong": {
+        "est": 65.5,
+        "ci": [
+          41,
+          89
+        ]
+      },
+      "inherited_share": {
+        "est": 60,
+        "ci": [
+          0,
+          100
+        ]
+      },
+      "p_major_given_ocr_bad": {
+        "est": 58.5,
+        "ci": [
+          0,
+          100
+        ]
+      },
+      "p_major_given_ocr_ok": {
+        "est": 34.7,
+        "ci": [
+          0,
+          73.4
+        ]
+      },
+      "attributable_fraction": {
+        "est": 24.4,
+        "ci": [
+          -33.1,
+          100
+        ]
+      },
+      "n_books": 14,
+      "dist": [
+        0,
+        0,
+        6,
+        3,
+        5
+      ],
+      "dist_weighted": [
+        0,
+        0,
+        55.1,
+        19.6,
+        25.4
+      ],
+      "major_pages": 5,
+      "words": 6355
+    }
+  },
+  "sensitivity_page_within_stratum": {
+    "fid_ge4": 69.9,
+    "major": 26.7,
+    "e2e_wrong": 51.4,
+    "ocr_bad": 40.2
+  },
+  "major_defect_kinds": {
+    "mistranslation": {
+      "pages": 9,
+      "defects": 9,
+      "weighted_page_pct": 14.3,
+      "reference_pages": 3,
+      "examples": [
+        {
+          "id": "9654d7b8c7",
+          "url": "https://sourcelibrary.org/book/699df0863430a1d77dc7922c?page=300",
+          "stratum": "3-flash|other",
+          "kind": "prose",
+          "detail": "'發屋折木者糴大貴' (grain prices soar) rendered 'indicate a fear of a great uprising' with a note on a non-existent '大首 … rebel leader'"
+        },
+        {
+          "id": "0f9d408c14",
+          "url": "https://sourcelibrary.org/book/6992ca1bd4d545ae73fed80a?page=21",
+          "stratum": "3-flash|other",
+          "kind": "prose",
+          "detail": "菩提煩惱無有差別 ('bodhi and the afflictions are without difference') rendered twice as 'Bodhi/enlightenment is like all things, without any distinction', dropping 煩惱 at the core of the teaching"
+        },
+        {
+          "id": "d5264e3182",
+          "url": "https://sourcelibrary.org/book/6a3c60a340c88a541d8e939a?page=50",
+          "stratum": "3-flash|paddle",
+          "kind": "reference",
+          "detail": "'或曰東北神明之舍…||下宜立祠上帝以合符應' (the [heavenly auspice] has descended, a shrine to the Supreme God should be built) rendered 'Below this, it is noted that a temple to the High Deity should be established'"
+        }
+      ]
+    },
+    "omission": {
+      "pages": 4,
+      "defects": 4,
+      "weighted_page_pct": 4.6,
+      "reference_pages": 0,
+      "examples": [
+        {
+          "id": "3a885f78e3",
+          "url": "https://sourcelibrary.org/book/6a3c775901fe4f593c2016c5?page=71",
+          "stratum": "3-flash|paddle",
+          "kind": "prose",
+          "detail": "功成而天下安之矣此根之難拔者不輕動以激其變惡之既稔者 collapsed into 'When the achievement is ripe, do not delay the cure' — drops 'the realm is at peace' and 'what is deep-rooted is not moved lightly so as to provoke upheaval'"
+        },
+        {
+          "id": "f04c0f9e00",
+          "url": "https://sourcelibrary.org/book/69e788024a6785cfd60ce896?page=52",
+          "stratum": "flash-lite|gemini",
+          "kind": "prose",
+          "detail": "一百五十年而成磁石二百年而成鐵又二百年…而成銅 becomes 'After 150 years, it becomes magnetite. After another 200 years… it becomes copper'; the stage where it becomes iron is dropped"
+        },
+        {
+          "id": "00683827a5",
+          "url": "https://sourcelibrary.org/book/69e80689fdad300064d9f8a4?page=60",
+          "stratum": "flash-lite|paddle",
+          "kind": "prose",
+          "detail": "Yanyi drops 莫若甘遂快利用之為君 and 欲和脾胃除心下堅又必以半夏佐之然芍藥停濕何留飲用之; 必更用藥盡逐之 rendered 'use Banxia again'"
+        }
+      ]
+    },
+    "invention": {
+      "pages": 10,
+      "defects": 12,
+      "weighted_page_pct": 4.2,
+      "reference_pages": 4,
+      "examples": [
+        {
+          "id": "2ce59f1e64",
+          "url": "https://sourcelibrary.org/book/6992ce7177d26f9321776eb3?page=54",
+          "stratum": "3-flash|gemini",
+          "kind": "reference",
+          "detail": "source carries only heading 牽牛子 and an illustration -> translation adds a full 'Chinese Clematis' (威靈仙) entry: habitat, morphology, harvest days, running-water rule"
+        },
+        {
+          "id": "2ce59f1e64",
+          "url": "https://sourcelibrary.org/book/6992ce7177d26f9321776eb3?page=54",
+          "stratum": "3-flash|gemini",
+          "kind": "reference",
+          "detail": "<meta> claims 'the descriptive text is a direct continuation of the entry for Chinese Clematis' — no text on the page"
+        },
+        {
+          "id": "e275b30f01",
+          "url": "https://sourcelibrary.org/book/6992cdf281c9d7efb84d0ee0?page=36",
+          "stratum": "3-flash|gemini",
+          "kind": "reference",
+          "detail": "source is only the title 大功服圖 and an illustration; translation adds 'Page 19' and five mourning-rule headings (married daughter mourning parents, heir brother, 在室 daughter, 所生母, great-grandparents) with glosses, none in the source"
+        }
+      ]
+    },
+    "name": {
+      "pages": 2,
+      "defects": 2,
+      "weighted_page_pct": 3.8,
+      "reference_pages": 1,
+      "examples": [
+        {
+          "id": "2315e97ebc",
+          "url": "https://sourcelibrary.org/book/6a3c64e139b4508b04e2ad45?page=49",
+          "stratum": "3-flash|paddle",
+          "kind": "reference",
+          "detail": "上謂王曰…王頓首謝曰 (the Emperor to King Xiao of Liang, the father) rendered 'The Emperor said to the Prince…The Prince bowed'"
+        },
+        {
+          "id": "00683827a5",
+          "url": "https://sourcelibrary.org/book/69e80689fdad300064d9f8a4?page=60",
+          "stratum": "flash-lite|paddle",
+          "kind": "prose",
+          "detail": "加擯擯(檳榔)三七枚 (21 pieces of areca) → 'add 3 to 7 pieces of Zhishi'"
+        }
+      ]
+    },
+    "garble_passthrough": {
+      "pages": 1,
+      "defects": 1,
+      "weighted_page_pct": 3.3,
+      "reference_pages": 1,
+      "examples": [
+        {
+          "id": "c5c94cf94e",
+          "url": "https://sourcelibrary.org/book/6a3c639d93327f06e8351be4?page=80",
+          "stratum": "3-flash|paddle",
+          "kind": "reference",
+          "detail": "李白詩吾亦 遊詩原是人間 陸 (fragmented, headword marks lost) -> fluent 'I am also an inhabitant of the world'"
+        }
+      ]
+    },
+    "inversion": {
+      "pages": 4,
+      "defects": 5,
+      "weighted_page_pct": 1.7,
+      "reference_pages": 0,
+      "examples": [
+        {
+          "id": "ec72a1a501",
+          "url": "https://sourcelibrary.org/book/69f1344e365e3fcae574e0df?page=112",
+          "stratum": "flash-lite|paddle",
+          "kind": "prose",
+          "detail": "梵天言誰能見法答言不逆諸因緣法者 (Who can see the Dharma? Those who do not go against dependent origination) rendered as a question 'Who can go against the dharma of dependent origination?' with the answer dropped"
+        },
+        {
+          "id": "00683827a5",
+          "url": "https://sourcelibrary.org/book/69e80689fdad300064d9f8a4?page=60",
+          "stratum": "flash-lite|paddle",
+          "kind": "prose",
+          "detail": "雖心下續堅滿 (though below the heart it stays hard and full) → 'even though the clumping beneath the heart dissipates'"
+        },
+        {
+          "id": "9ff04cb996",
+          "url": "https://sourcelibrary.org/book/6a3c5e40879008ba7e151a94?page=54",
+          "stratum": "flash-lite|paddle",
+          "kind": "prose",
+          "detail": "或借者許彼辦竟方還不即索者則得 (if borrowed, let them finish then return; if the lender does not demand at once, permitted) rendered 'they must be returned, and one should not be allowed to borrow them just to satisfy the requirement'"
+        }
+      ]
+    },
+    "number": {
+      "pages": 1,
+      "defects": 1,
+      "weighted_page_pct": 0.4,
+      "reference_pages": 0,
+      "examples": [
+        {
+          "id": "00683827a5",
+          "url": "https://sourcelibrary.org/book/69e80689fdad300064d9f8a4?page=60",
+          "stratum": "flash-lite|paddle",
+          "kind": "prose",
+          "detail": "半夏十二枚以水一升煮取半升…甘草如指大一枚以水一升煮取半升…以蜜半升…合一升半煎取八合 → 'using 6 sheng of water… boil in 6 sheng of water'; 芍藥 and the honey dropped"
+        }
+      ]
+    }
+  },
+  "wrong_page_or_reply": [
+    {
+      "id": "2ce59f1e64",
+      "url": "https://sourcelibrary.org/book/6992ce7177d26f9321776eb3?page=54",
+      "book_id": "6992ce7177d26f9321776eb3",
+      "page": 54,
+      "stratum": "3-flash|gemini",
+      "fid": 1,
+      "wrong_page": false,
+      "ocr_wrong_leaf": false,
+      "reason": "heading 牽牛子 rendered, but most of the output is an invented Wei Lingxian entry with no counterpart in the source or the image",
+      "image_note": ""
+    },
+    {
+      "id": "4b4b9c815f",
+      "url": "https://sourcelibrary.org/book/6992cd8043713c66ea636ec0?page=53",
+      "book_id": "6992cd8043713c66ea636ec0",
+      "page": 53,
+      "stratum": "3-flash|gemini",
+      "fid": 1,
+      "wrong_page": false,
+      "ocr_wrong_leaf": false,
+      "reason": "Only the caption 'Dog Country' is on the page; all the ethnographic prose is invented",
+      "image_note": ""
+    },
+    {
+      "id": "fb384ac517",
+      "url": "https://sourcelibrary.org/book/6992ce7c673ee1e40e320b48?page=54",
+      "book_id": "6992ce7c673ee1e40e320b48",
+      "page": 54,
+      "stratum": "3-flash|gemini",
+      "fid": 1,
+      "wrong_page": false,
+      "ocr_wrong_leaf": false,
+      "reason": "Only the title 'Melon Vines' is on the page; the entire descriptive and medicinal passage is invented",
+      "image_note": ""
+    },
+    {
+      "id": "85e9f4aab0",
+      "url": "https://sourcelibrary.org/book/6992c906453c7175dc1bcc1b?page=72",
+      "book_id": "6992c906453c7175dc1bcc1b",
+      "page": 72,
+      "stratum": "3-flash|gemini",
+      "fid": 1,
+      "wrong_page": false,
+      "ocr_wrong_leaf": false,
+      "reason": "Only the title 'Volume 11 of the Treatise on Architectural Methods' corresponds to the source; the body text about scripture cabinets is invented.",
+      "image_note": "Page is an end-of-juan leaf: only the title 營造法式卷十一 and the margin header; all other columns blank, matching the transcription."
+    },
+    {
+      "id": "b8b40643f0",
+      "url": "https://sourcelibrary.org/book/69af1226b8bbede5a0084e63?page=56",
+      "book_id": "69af1226b8bbede5a0084e63",
+      "page": 56,
+      "stratum": "flash-lite|gemini",
+      "fid": 4,
+      "wrong_page": false,
+      "ocr_wrong_leaf": true,
+      "reason": "Venus/Mercury comparison and the 宮鈴/宗動天 explanation rendered accurately against the transcription; one questionable zodiac gloss",
+      "image_note": "image is about 火星, 木星 and 金星 in 酉宮 ('木星依回回曆從正月初一日至三月二十三日在酉宮內'); transcription is about 金星 in 寅宮 and 水星 in 丑宮 — a different leaf"
+    }
+  ]
+}

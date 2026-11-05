@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: artwork records, not page images (#4406).
 /**
  * Import CC0 Java/Indonesia objects from the Rijksmuseum as artwork entries.
  *

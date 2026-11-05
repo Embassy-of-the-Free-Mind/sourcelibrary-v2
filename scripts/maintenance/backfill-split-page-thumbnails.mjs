@@ -46,6 +46,7 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { parseArgs } from 'util';
 
 const THUMB_WIDTH = 150;
@@ -137,7 +138,8 @@ async function renderHalf(page) {
   const region = cropRegion(page.crop, meta.width, meta.height);
   const cropped = await sharp(buf, { limitInputPixels: MAX_INPUT_PIXELS }).extract(region).toBuffer();
   const [display, thumb] = await Promise.all([
-    sharp(cropped).resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: DISPLAY_QUALITY, progressive: true }).toBuffer(),
+    sharp(cropped).resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: DISPLAY_QUALITY, progressive: true }).toBuffer()
+      .then((b) => markDisplay(b, { bookId: page.book_id, pageNumber: page.page_number })),
     sharp(cropped).resize(THUMB_WIDTH, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: THUMB_QUALITY, progressive: true }).toBuffer(),
   ]);
   return { display, thumb };
@@ -207,7 +209,7 @@ async function main() {
   }
 
   // --apply: process candidates with bounded concurrency.
-  const cursor = p.find(filter).project(proj);
+  const cursor = p.find(filter).batchSize(1000).project(proj);
   const r2 = getR2Client();
   const counts = { written: 0, 'skip-no-source': 0, 'skip-no-dimensions': 0, errored: 0 };
   let processed = 0;

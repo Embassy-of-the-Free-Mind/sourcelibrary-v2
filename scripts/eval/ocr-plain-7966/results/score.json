@@ -1,0 +1,3479 @@
+{
+ "generated_at": "2026-11-02T23:36:14.188Z",
+ "issue": 7966,
+ "prereg": "scripts/eval/ocr-plain-7966/PREREGISTRATION.md",
+ "prompts": {
+  "ref": {
+   "id": "6ac02220413a82637da889bb",
+   "name": "Standard OCR",
+   "version": "19.1",
+   "hash": "9d8f959e053491362b2c4acec1e20c9a"
+  },
+  "base_md5": "79a7257d516eaabefe76594978e8c4f4",
+  "arms": {
+   "A": {
+    "md5": "79a7257d516eaabefe76594978e8c4f4",
+    "chars": 12761
+   },
+   "A2": {
+    "md5": "79a7257d516eaabefe76594978e8c4f4",
+    "chars": 12761
+   },
+   "B": {
+    "md5": "98e15a2d424400a7b4c48fd67dc6a901",
+    "chars": 12560
+   },
+   "C": {
+    "md5": "c8093848fc229313c16689b522eb300b",
+    "chars": 12218
+   }
+  }
+ },
+ "engines": {
+  "lite": {
+   "n_pages": 115,
+   "by_lang": {
+    "ALL": {
+     "n": 115,
+     "arms": {
+      "A": {
+       "severe_per_1k": 7.441,
+       "judge_bad": 0.565,
+       "lines_omitted_per_100": 22.967,
+       "notes_omitted_per_100": 40,
+       "miss": 0.327,
+       "extra": 0.314,
+       "cer_norm": 0.312,
+       "out_tokens": 380.122,
+       "out_tokens_median": 384,
+       "counts": {
+        "note": 16,
+        "vocab": 94,
+        "term": 0,
+        "image_desc": 13
+       }
+      },
+      "A2": {
+       "severe_per_1k": 6.984,
+       "judge_bad": 0.6,
+       "lines_omitted_per_100": 22.967,
+       "notes_omitted_per_100": 40,
+       "miss": 0.329,
+       "extra": 0.314,
+       "cer_norm": 0.312,
+       "out_tokens": 521.722,
+       "out_tokens_median": 389
+      },
+      "B": {
+       "severe_per_1k": 7.335,
+       "judge_bad": 0.539,
+       "lines_omitted_per_100": 19.909,
+       "notes_omitted_per_100": 50,
+       "miss": 0.31,
+       "extra": 0.298,
+       "cer_norm": 0.294,
+       "out_tokens": 505.435,
+       "out_tokens_median": 364
+      },
+      "C": {
+       "severe_per_1k": 6.844,
+       "judge_bad": 0.548,
+       "lines_omitted_per_100": 22.576,
+       "notes_omitted_per_100": 40,
+       "miss": 0.323,
+       "extra": 0.314,
+       "cer_norm": 0.308,
+       "out_tokens": 403.713,
+       "out_tokens_median": 356
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": -0.456,
+        "ci95": [
+         -1.187,
+         0.144
+        ],
+        "abs_q95": 1.073
+       },
+       "judge_bad": {
+        "diff": 0.035,
+        "ci95": [
+         -0.009,
+         0.087
+        ],
+        "abs_q95": 0.078
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.002,
+        "ci95": [
+         0,
+         0.006
+        ],
+        "abs_q95": 0.005
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "cer_norm": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "out_tokens": {
+        "diff": 141.6,
+        "ci95": [
+         -0.122,
+         420
+        ],
+        "abs_q95": 414.626
+       },
+       "out_tokens_median": {
+        "diff": 5,
+        "ci95": [
+         -8,
+         31
+        ],
+        "abs_q95": 26
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": -0.105,
+        "ci95": [
+         -1.036,
+         0.742
+        ],
+        "abs_q95": 0.916
+       },
+       "judge_bad": {
+        "diff": -0.026,
+        "ci95": [
+         -0.087,
+         0.026
+        ],
+        "abs_q95": 0.07
+       },
+       "lines_omitted_per_100": {
+        "diff": -3.058,
+        "ci95": [
+         -9.019,
+         0
+        ],
+        "abs_q95": 8.068
+       },
+       "notes_omitted_per_100": {
+        "diff": 10,
+        "ci95": [
+         0,
+         28.571
+        ],
+        "abs_q95": 25
+       },
+       "miss": {
+        "diff": -0.017,
+        "ci95": [
+         -0.051,
+         0.002
+        ],
+        "abs_q95": 0.045
+       },
+       "extra": {
+        "diff": -0.017,
+        "ci95": [
+         -0.053,
+         0.002
+        ],
+        "abs_q95": 0.049
+       },
+       "cer_norm": {
+        "diff": -0.018,
+        "ci95": [
+         -0.054,
+         0.002
+        ],
+        "abs_q95": 0.048
+       },
+       "out_tokens": {
+        "diff": 125.313,
+        "ci95": [
+         -25.4,
+         414.496
+        ],
+        "abs_q95": 399.383
+       },
+       "out_tokens_median": {
+        "diff": -20,
+        "ci95": [
+         -48,
+         24
+        ],
+        "abs_q95": 43
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -0.597,
+        "ci95": [
+         -1.814,
+         0.412
+        ],
+        "abs_q95": 1.574
+       },
+       "judge_bad": {
+        "diff": -0.017,
+        "ci95": [
+         -0.087,
+         0.052
+        ],
+        "abs_q95": 0.078
+       },
+       "lines_omitted_per_100": {
+        "diff": -0.39,
+        "ci95": [
+         -1.254,
+         0
+        ],
+        "abs_q95": 1.077
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.005,
+        "ci95": [
+         -0.014,
+         0.002
+        ],
+        "abs_q95": 0.012
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         -0.002,
+         0.001
+        ],
+        "abs_q95": 0.002
+       },
+       "cer_norm": {
+        "diff": -0.003,
+        "ci95": [
+         -0.011,
+         0.001
+        ],
+        "abs_q95": 0.009
+       },
+       "out_tokens": {
+        "diff": 23.591,
+        "ci95": [
+         -31.339,
+         126.27
+        ],
+        "abs_q95": 119.043
+       },
+       "out_tokens_median": {
+        "diff": -28,
+        "ci95": [
+         -61,
+         0
+        ],
+        "abs_q95": 58
+       }
+      }
+     }
+    },
+    "ANSWERED": {
+     "n": 94,
+     "arms": {
+      "A": {
+       "severe_per_1k": 9.146,
+       "judge_bad": 0.468,
+       "lines_omitted_per_100": 1.086,
+       "notes_omitted_per_100": 0,
+       "miss": 0.082,
+       "extra": 0.011,
+       "cer_norm": 0.033,
+       "out_tokens": 465.043,
+       "out_tokens_median": 453,
+       "counts": {
+        "note": 16,
+        "vocab": 94,
+        "term": 0,
+        "image_desc": 13
+       }
+      },
+      "A2": {
+       "severe_per_1k": 8.524,
+       "judge_bad": 0.511,
+       "lines_omitted_per_100": 1.086,
+       "notes_omitted_per_100": 0,
+       "miss": 0.085,
+       "extra": 0.011,
+       "cer_norm": 0.033,
+       "out_tokens": 638.277,
+       "out_tokens_median": 458
+      },
+      "B": {
+       "severe_per_1k": 9.05,
+       "judge_bad": 0.447,
+       "lines_omitted_per_100": 0.585,
+       "notes_omitted_per_100": 16.667,
+       "miss": 0.079,
+       "extra": 0.011,
+       "cer_norm": 0.03,
+       "out_tokens": 610.266,
+       "out_tokens_median": 432
+      },
+      "C": {
+       "severe_per_1k": 8.332,
+       "judge_bad": 0.447,
+       "lines_omitted_per_100": 0.585,
+       "notes_omitted_per_100": 0,
+       "miss": 0.076,
+       "extra": 0.01,
+       "cer_norm": 0.029,
+       "out_tokens": 493.904,
+       "out_tokens_median": 433
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": -0.623,
+        "ci95": [
+         -1.599,
+         0.244
+        ],
+        "abs_q95": 1.431
+       },
+       "judge_bad": {
+        "diff": 0.043,
+        "ci95": [
+         -0.011,
+         0.096
+        ],
+        "abs_q95": 0.096
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.003,
+        "ci95": [
+         0,
+         0.008
+        ],
+        "abs_q95": 0.006
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "cer_norm": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "out_tokens": {
+        "diff": 173.234,
+        "ci95": [
+         -0.106,
+         513.245
+        ],
+        "abs_q95": 504.468
+       },
+       "out_tokens_median": {
+        "diff": 5,
+        "ci95": [
+         -4,
+         28
+        ],
+        "abs_q95": 22
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": -0.096,
+        "ci95": [
+         -1.334,
+         1.064
+        ],
+        "abs_q95": 1.23
+       },
+       "judge_bad": {
+        "diff": -0.021,
+        "ci95": [
+         -0.085,
+         0.043
+        ],
+        "abs_q95": 0.074
+       },
+       "lines_omitted_per_100": {
+        "diff": -0.501,
+        "ci95": [
+         -1.511,
+         0.136
+        ],
+        "abs_q95": 1.322
+       },
+       "notes_omitted_per_100": {
+        "diff": 16.667,
+        "ci95": [
+         0,
+         50
+        ],
+        "abs_q95": 40
+       },
+       "miss": {
+        "diff": -0.004,
+        "ci95": [
+         -0.014,
+         0.005
+        ],
+        "abs_q95": 0.012
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         -0.003,
+         0.003
+        ],
+        "abs_q95": 0.003
+       },
+       "cer_norm": {
+        "diff": -0.003,
+        "ci95": [
+         -0.013,
+         0.004
+        ],
+        "abs_q95": 0.011
+       },
+       "out_tokens": {
+        "diff": 145.223,
+        "ci95": [
+         -34.021,
+         490.021
+        ],
+        "abs_q95": 480.957
+       },
+       "out_tokens_median": {
+        "diff": -21,
+        "ci95": [
+         -43,
+         14
+        ],
+        "abs_q95": 39
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -0.814,
+        "ci95": [
+         -2.378,
+         0.53
+        ],
+        "abs_q95": 2.067
+       },
+       "judge_bad": {
+        "diff": -0.021,
+        "ci95": [
+         -0.106,
+         0.064
+        ],
+        "abs_q95": 0.085
+       },
+       "lines_omitted_per_100": {
+        "diff": -0.501,
+        "ci95": [
+         -1.509,
+         0
+        ],
+        "abs_q95": 1.301
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.006,
+        "ci95": [
+         -0.018,
+         0.003
+        ],
+        "abs_q95": 0.016
+       },
+       "extra": {
+        "diff": -0.001,
+        "ci95": [
+         -0.003,
+         0.001
+        ],
+        "abs_q95": 0.003
+       },
+       "cer_norm": {
+        "diff": -0.005,
+        "ci95": [
+         -0.014,
+         0.001
+        ],
+        "abs_q95": 0.012
+       },
+       "out_tokens": {
+        "diff": 28.862,
+        "ci95": [
+         -38.319,
+         154.319
+        ],
+        "abs_q95": 144.819
+       },
+       "out_tokens_median": {
+        "diff": -20,
+        "ci95": [
+         -60,
+         0
+        ],
+        "abs_q95": 55
+       }
+      }
+     }
+    },
+    "English": {
+     "n": 55,
+     "arms": {
+      "A": {
+       "severe_per_1k": 3.506,
+       "judge_bad": 0.491,
+       "lines_omitted_per_100": 31.154,
+       "notes_omitted_per_100": 80,
+       "miss": 0.399,
+       "extra": 0.394,
+       "cer_norm": 0.397,
+       "out_tokens": 372.109,
+       "out_tokens_median": 386,
+       "counts": {
+        "note": 16,
+        "vocab": 38,
+        "term": 0,
+        "image_desc": 2
+       }
+      },
+      "A2": {
+       "severe_per_1k": 3.337,
+       "judge_bad": 0.564,
+       "lines_omitted_per_100": 31.154,
+       "notes_omitted_per_100": 80,
+       "miss": 0.399,
+       "extra": 0.394,
+       "cer_norm": 0.397,
+       "out_tokens": 371.709,
+       "out_tokens_median": 386
+      },
+      "B": {
+       "severe_per_1k": 3.28,
+       "judge_bad": 0.455,
+       "lines_omitted_per_100": 25.128,
+       "notes_omitted_per_100": 80,
+       "miss": 0.371,
+       "extra": 0.37,
+       "cer_norm": 0.368,
+       "out_tokens": 360.4,
+       "out_tokens_median": 351
+      },
+      "C": {
+       "severe_per_1k": 3.11,
+       "judge_bad": 0.527,
+       "lines_omitted_per_100": 30.385,
+       "notes_omitted_per_100": 80,
+       "miss": 0.394,
+       "extra": 0.393,
+       "cer_norm": 0.391,
+       "out_tokens": 344.509,
+       "out_tokens_median": 362
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": -0.17,
+        "ci95": [
+         -0.999,
+         0.324
+        ],
+        "abs_q95": 0.881
+       },
+       "judge_bad": {
+        "diff": 0.073,
+        "ci95": [
+         0.018,
+         0.145
+        ],
+        "abs_q95": 0.127
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "cer_norm": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "out_tokens": {
+        "diff": -0.4,
+        "ci95": [
+         -0.8,
+         -0.073
+        ],
+        "abs_q95": 0.727
+       },
+       "out_tokens_median": {
+        "diff": 0,
+        "ci95": [
+         -4,
+         3
+        ],
+        "abs_q95": 4
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": -0.226,
+        "ci95": [
+         -1.359,
+         0.809
+        ],
+        "abs_q95": 1.149
+       },
+       "judge_bad": {
+        "diff": -0.036,
+        "ci95": [
+         -0.145,
+         0.055
+        ],
+        "abs_q95": 0.127
+       },
+       "lines_omitted_per_100": {
+        "diff": -6.026,
+        "ci95": [
+         -18.732,
+         0.105
+        ],
+        "abs_q95": 15.892
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.029,
+        "ci95": [
+         -0.083,
+         0
+        ],
+        "abs_q95": 0.075
+       },
+       "extra": {
+        "diff": -0.025,
+        "ci95": [
+         -0.078,
+         0
+        ],
+        "abs_q95": 0.071
+       },
+       "cer_norm": {
+        "diff": -0.029,
+        "ci95": [
+         -0.083,
+         0
+        ],
+        "abs_q95": 0.076
+       },
+       "out_tokens": {
+        "diff": -11.709,
+        "ci95": [
+         -31.273,
+         21.327
+        ],
+        "abs_q95": 30.527
+       },
+       "out_tokens_median": {
+        "diff": -35,
+        "ci95": [
+         -81,
+         54
+        ],
+        "abs_q95": 79
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -0.396,
+        "ci95": [
+         -1.531,
+         0.341
+        ],
+        "abs_q95": 1.322
+       },
+       "judge_bad": {
+        "diff": 0.036,
+        "ci95": [
+         -0.036,
+         0.127
+        ],
+        "abs_q95": 0.109
+       },
+       "lines_omitted_per_100": {
+        "diff": -0.769,
+        "ci95": [
+         -2.46,
+         0
+        ],
+        "abs_q95": 2.072
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.005,
+        "ci95": [
+         -0.015,
+         0
+        ],
+        "abs_q95": 0.014
+       },
+       "extra": {
+        "diff": -0.001,
+        "ci95": [
+         -0.003,
+         0
+        ],
+        "abs_q95": 0.003
+       },
+       "cer_norm": {
+        "diff": -0.006,
+        "ci95": [
+         -0.015,
+         0
+        ],
+        "abs_q95": 0.014
+       },
+       "out_tokens": {
+        "diff": -27.6,
+        "ci95": [
+         -37.073,
+         -19.509
+        ],
+        "abs_q95": 35.345
+       },
+       "out_tokens_median": {
+        "diff": -24,
+        "ci95": [
+         -91,
+         -12
+        ],
+        "abs_q95": 82
+       }
+      }
+     }
+    },
+    "Latin": {
+     "n": 20,
+     "arms": {
+      "A": {
+       "severe_per_1k": 11.687,
+       "judge_bad": 0.65,
+       "lines_omitted_per_100": 6.034,
+       "notes_omitted_per_100": 0,
+       "miss": 0.043,
+       "extra": 0.044,
+       "cer_norm": 0.073,
+       "out_tokens": 473,
+       "out_tokens_median": 531,
+       "counts": {
+        "note": 0,
+        "vocab": 19,
+        "term": 0,
+        "image_desc": 5
+       }
+      },
+      "A2": {
+       "severe_per_1k": 10.788,
+       "judge_bad": 0.65,
+       "lines_omitted_per_100": 6.034,
+       "notes_omitted_per_100": 0,
+       "miss": 0.043,
+       "extra": 0.044,
+       "cer_norm": 0.073,
+       "out_tokens": 474.4,
+       "out_tokens_median": 531
+      },
+      "B": {
+       "severe_per_1k": 10.788,
+       "judge_bad": 0.6,
+       "lines_omitted_per_100": 6.034,
+       "notes_omitted_per_100": 20,
+       "miss": 0.049,
+       "extra": 0.051,
+       "cer_norm": 0.081,
+       "out_tokens": 437.15,
+       "out_tokens_median": 491
+      },
+      "C": {
+       "severe_per_1k": 12.586,
+       "judge_bad": 0.5,
+       "lines_omitted_per_100": 6.034,
+       "notes_omitted_per_100": 0,
+       "miss": 0.046,
+       "extra": 0.047,
+       "cer_norm": 0.075,
+       "out_tokens": 436.95,
+       "out_tokens_median": 492
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": -0.899,
+        "ci95": [
+         -3.048,
+         1.218
+        ],
+        "abs_q95": 2.724
+       },
+       "judge_bad": {
+        "diff": 0,
+        "ci95": [
+         -0.15,
+         0.15
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0,
+        "ci95": [
+         -0.001,
+         0
+        ],
+        "abs_q95": 0.001
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         -0.001,
+         0
+        ],
+        "abs_q95": 0.001
+       },
+       "cer_norm": {
+        "diff": 0,
+        "ci95": [
+         -0.001,
+         0
+        ],
+        "abs_q95": 0.001
+       },
+       "out_tokens": {
+        "diff": 1.4,
+        "ci95": [
+         -3.25,
+         8.2
+        ],
+        "abs_q95": 6.9
+       },
+       "out_tokens_median": {
+        "diff": 0,
+        "ci95": [
+         -9,
+         0
+        ],
+        "abs_q95": 9
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": -0.899,
+        "ci95": [
+         -3.053,
+         1.066
+        ],
+        "abs_q95": 2.777
+       },
+       "judge_bad": {
+        "diff": -0.05,
+        "ci95": [
+         -0.15,
+         0
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": 20,
+        "ci95": [
+         0,
+         50
+        ],
+        "abs_q95": 50
+       },
+       "miss": {
+        "diff": 0.006,
+        "ci95": [
+         0,
+         0.019
+        ],
+        "abs_q95": 0.017
+       },
+       "extra": {
+        "diff": 0.006,
+        "ci95": [
+         0,
+         0.02
+        ],
+        "abs_q95": 0.018
+       },
+       "cer_norm": {
+        "diff": 0.008,
+        "ci95": [
+         0,
+         0.025
+        ],
+        "abs_q95": 0.022
+       },
+       "out_tokens": {
+        "diff": -35.85,
+        "ci95": [
+         -42.3,
+         -28.9
+        ],
+        "abs_q95": 41.4
+       },
+       "out_tokens_median": {
+        "diff": -40,
+        "ci95": [
+         -54,
+         -18
+        ],
+        "abs_q95": 50
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": 0.899,
+        "ci95": [
+         -1.348,
+         3.192
+        ],
+        "abs_q95": 2.79
+       },
+       "judge_bad": {
+        "diff": -0.15,
+        "ci95": [
+         -0.3,
+         0
+        ],
+        "abs_q95": 0.3
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.003,
+        "ci95": [
+         -0.001,
+         0.009
+        ],
+        "abs_q95": 0.008
+       },
+       "extra": {
+        "diff": 0.003,
+        "ci95": [
+         -0.001,
+         0.009
+        ],
+        "abs_q95": 0.008
+       },
+       "cer_norm": {
+        "diff": 0.002,
+        "ci95": [
+         -0.003,
+         0.008
+        ],
+        "abs_q95": 0.007
+       },
+       "out_tokens": {
+        "diff": -36.05,
+        "ci95": [
+         -49.4,
+         -21.85
+        ],
+        "abs_q95": 47.25
+       },
+       "out_tokens_median": {
+        "diff": -39,
+        "ci95": [
+         -72,
+         -16
+        ],
+        "abs_q95": 57
+       }
+      }
+     }
+    },
+    "German": {
+     "n": 20,
+     "arms": {
+      "A": {
+       "severe_per_1k": 2.116,
+       "judge_bad": 0.3,
+       "lines_omitted_per_100": 21.76,
+       "notes_omitted_per_100": null,
+       "miss": 0.18,
+       "extra": 0.179,
+       "cer_norm": 0.204,
+       "out_tokens": 370.55,
+       "out_tokens_median": 403,
+       "counts": {
+        "note": 0,
+        "vocab": 17,
+        "term": 0,
+        "image_desc": 5
+       }
+      },
+      "A2": {
+       "severe_per_1k": 2.646,
+       "judge_bad": 0.35,
+       "lines_omitted_per_100": 21.76,
+       "notes_omitted_per_100": null,
+       "miss": 0.18,
+       "extra": 0.179,
+       "cer_norm": 0.204,
+       "out_tokens": 370,
+       "out_tokens_median": 396
+      },
+      "B": {
+       "severe_per_1k": 3.175,
+       "judge_bad": 0.35,
+       "lines_omitted_per_100": 21.76,
+       "notes_omitted_per_100": null,
+       "miss": 0.18,
+       "extra": 0.179,
+       "cer_norm": 0.203,
+       "out_tokens": 340.6,
+       "out_tokens_median": 381
+      },
+      "C": {
+       "severe_per_1k": 3.704,
+       "judge_bad": 0.45,
+       "lines_omitted_per_100": 21.76,
+       "notes_omitted_per_100": null,
+       "miss": 0.18,
+       "extra": 0.179,
+       "cer_norm": 0.204,
+       "out_tokens": 336.05,
+       "out_tokens_median": 364
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 0.529,
+        "ci95": [
+         0,
+         1.316
+        ],
+        "abs_q95": 1.135
+       },
+       "judge_bad": {
+        "diff": 0.05,
+        "ci95": [
+         0,
+         0.15
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "cer_norm": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "out_tokens": {
+        "diff": -0.55,
+        "ci95": [
+         -1.5,
+         0.1
+        ],
+        "abs_q95": 1.3
+       },
+       "out_tokens_median": {
+        "diff": -7,
+        "ci95": [
+         -8,
+         1
+        ],
+        "abs_q95": 8
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 1.058,
+        "ci95": [
+         0,
+         2.483
+        ],
+        "abs_q95": 2.18
+       },
+       "judge_bad": {
+        "diff": 0.05,
+        "ci95": [
+         0,
+         0.15
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         -0.001,
+         0
+        ],
+        "abs_q95": 0.001
+       },
+       "cer_norm": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "out_tokens": {
+        "diff": -29.95,
+        "ci95": [
+         -41.55,
+         -19.35
+        ],
+        "abs_q95": 39.35
+       },
+       "out_tokens_median": {
+        "diff": -22,
+        "ci95": [
+         -57,
+         9
+        ],
+        "abs_q95": 50
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": 1.587,
+        "ci95": [
+         0.473,
+         3.016
+        ],
+        "abs_q95": 2.775
+       },
+       "judge_bad": {
+        "diff": 0.15,
+        "ci95": [
+         0,
+         0.3
+        ],
+        "abs_q95": 0.3
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0.001
+        ],
+        "abs_q95": 0.001
+       },
+       "extra": {
+        "diff": 0,
+        "ci95": [
+         -0.001,
+         0.001
+        ],
+        "abs_q95": 0.001
+       },
+       "cer_norm": {
+        "diff": 0.001,
+        "ci95": [
+         0,
+         0.001
+        ],
+        "abs_q95": 0.001
+       },
+       "out_tokens": {
+        "diff": -34.5,
+        "ci95": [
+         -47.4,
+         -22
+        ],
+        "abs_q95": 45.8
+       },
+       "out_tokens_median": {
+        "diff": -39,
+        "ci95": [
+         -59,
+         2
+        ],
+        "abs_q95": 52
+       }
+      }
+     }
+    },
+    "Chinese": {
+     "n": 20,
+     "arms": {
+      "A": {
+       "severe_per_1k": 27.898,
+       "judge_bad": 0.95,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.39,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 318.85,
+       "out_tokens_median": 262,
+       "counts": {
+        "note": 0,
+        "vocab": 20,
+        "term": 0,
+        "image_desc": 1
+       }
+      },
+      "A2": {
+       "severe_per_1k": 25.46,
+       "judge_bad": 0.9,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.406,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 1133.3,
+       "out_tokens_median": 253
+      },
+      "B": {
+       "severe_per_1k": 27.898,
+       "judge_bad": 0.9,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.389,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 1137.4,
+       "out_tokens_median": 248
+      },
+      "C": {
+       "severe_per_1k": 22.752,
+       "judge_bad": 0.75,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.376,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 600.95,
+       "out_tokens_median": 234
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": -2.438,
+        "ci95": [
+         -5.814,
+         0.56
+        ],
+        "abs_q95": 5.192
+       },
+       "judge_bad": {
+        "diff": -0.05,
+        "ci95": [
+         -0.2,
+         0
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.016,
+        "ci95": [
+         -0.001,
+         0.041
+        ],
+        "abs_q95": 0.036
+       },
+       "extra": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "cer_norm": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "out_tokens": {
+        "diff": 814.45,
+        "ci95": [
+         0.75,
+         2409.15
+        ],
+        "abs_q95": 2367.65
+       },
+       "out_tokens_median": {
+        "diff": -9,
+        "ci95": [
+         -18,
+         56
+        ],
+        "abs_q95": 21
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 0,
+        "ci95": [
+         -3.605,
+         4.237
+        ],
+        "abs_q95": 4.018
+       },
+       "judge_bad": {
+        "diff": -0.05,
+        "ci95": [
+         -0.15,
+         0
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": -0.001,
+        "ci95": [
+         -0.037,
+         0.029
+        ],
+        "abs_q95": 0.034
+       },
+       "extra": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "cer_norm": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "out_tokens": {
+        "diff": 818.55,
+        "ci95": [
+         -17.45,
+         2433.8
+        ],
+        "abs_q95": 2382.75
+       },
+       "out_tokens_median": {
+        "diff": -14,
+        "ci95": [
+         -44,
+         186
+        ],
+        "abs_q95": 107
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -5.146,
+        "ci95": [
+         -11.05,
+         0.302
+        ],
+        "abs_q95": 10.054
+       },
+       "judge_bad": {
+        "diff": -0.2,
+        "ci95": [
+         -0.4,
+         -0.05
+        ],
+        "abs_q95": 0.35
+       },
+       "lines_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": -0.014,
+        "ci95": [
+         -0.067,
+         0.028
+        ],
+        "abs_q95": 0.06
+       },
+       "extra": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "cer_norm": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "out_tokens": {
+        "diff": 282.1,
+        "ci95": [
+         -22.15,
+         841.1
+        ],
+        "abs_q95": 816.25
+       },
+       "out_tokens_median": {
+        "diff": -28,
+        "ci95": [
+         -48,
+         25
+        ],
+        "abs_q95": 48
+       }
+      }
+     }
+    }
+   },
+   "rule": {
+    "margin_severe_per_1k": 1.073,
+    "margin_lines_omitted_per_100": 1,
+    "margin_notes_omitted_per_100": 2,
+    "B": {
+     "non_inferior_severe": true,
+     "no_omission_rise": false,
+     "passes": false,
+     "superior_severe": false
+    },
+    "C": {
+     "non_inferior_severe": true,
+     "no_omission_rise": true,
+     "passes": true,
+     "superior_severe": false
+    }
+   }
+  },
+  "agy": {
+   "n_pages": 115,
+   "by_lang": {
+    "ALL": {
+     "n": 115,
+     "arms": {
+      "A": {
+       "severe_per_1k": 4.492,
+       "judge_bad": 0.443,
+       "lines_omitted_per_100": 21.275,
+       "notes_omitted_per_100": 30,
+       "miss": 0.264,
+       "extra": 0.257,
+       "cer_norm": 0.266,
+       "out_tokens": 1567.713,
+       "out_tokens_median": 694,
+       "counts": {
+        "note": 1,
+        "vocab": 97,
+        "term": 20,
+        "image_desc": 16
+       }
+      },
+      "A2": {
+       "severe_per_1k": 5.335,
+       "judge_bad": 0.417,
+       "lines_omitted_per_100": 18.412,
+       "notes_omitted_per_100": 30,
+       "miss": 0.237,
+       "extra": 0.222,
+       "cer_norm": 0.235,
+       "out_tokens": 1852.696,
+       "out_tokens_median": 704
+      },
+      "B": {
+       "severe_per_1k": 4.633,
+       "judge_bad": 0.409,
+       "lines_omitted_per_100": 17.762,
+       "notes_omitted_per_100": 30,
+       "miss": 0.234,
+       "extra": 0.22,
+       "cer_norm": 0.229,
+       "out_tokens": 1654.035,
+       "out_tokens_median": 662
+      },
+      "C": {
+       "severe_per_1k": 4.247,
+       "judge_bad": 0.409,
+       "lines_omitted_per_100": 17.567,
+       "notes_omitted_per_100": 50,
+       "miss": 0.255,
+       "extra": 0.237,
+       "cer_norm": 0.251,
+       "out_tokens": 1892.974,
+       "out_tokens_median": 645
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 0.842,
+        "ci95": [
+         0.17,
+         1.671
+        ],
+        "abs_q95": 1.528
+       },
+       "judge_bad": {
+        "diff": -0.026,
+        "ci95": [
+         -0.096,
+         0.035
+        ],
+        "abs_q95": 0.078
+       },
+       "lines_omitted_per_100": {
+        "diff": -2.863,
+        "ci95": [
+         -9.184,
+         2.605
+        ],
+        "abs_q95": 8.254
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.027,
+        "ci95": [
+         -0.077,
+         0.011
+        ],
+        "abs_q95": 0.066
+       },
+       "extra": {
+        "diff": -0.035,
+        "ci95": [
+         -0.093,
+         0.008
+        ],
+        "abs_q95": 0.083
+       },
+       "cer_norm": {
+        "diff": -0.031,
+        "ci95": [
+         -0.081,
+         0.007
+        ],
+        "abs_q95": 0.072
+       },
+       "out_tokens": {
+        "diff": 284.983,
+        "ci95": [
+         -628.696,
+         1348.348
+        ],
+        "abs_q95": 1145.478
+       },
+       "out_tokens_median": {
+        "diff": 10,
+        "ci95": [
+         -48,
+         66
+        ],
+        "abs_q95": 60
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 0.14,
+        "ci95": [
+         -0.778,
+         1.052
+        ],
+        "abs_q95": 0.966
+       },
+       "judge_bad": {
+        "diff": -0.035,
+        "ci95": [
+         -0.104,
+         0.035
+        ],
+        "abs_q95": 0.096
+       },
+       "lines_omitted_per_100": {
+        "diff": -3.513,
+        "ci95": [
+         -12.169,
+         4.769
+        ],
+        "abs_q95": 10.624
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.029,
+        "ci95": [
+         -0.085,
+         0.021
+        ],
+        "abs_q95": 0.076
+       },
+       "extra": {
+        "diff": -0.037,
+        "ci95": [
+         -0.096,
+         0.014
+        ],
+        "abs_q95": 0.087
+       },
+       "cer_norm": {
+        "diff": -0.036,
+        "ci95": [
+         -0.092,
+         0.012
+        ],
+        "abs_q95": 0.081
+       },
+       "out_tokens": {
+        "diff": 86.322,
+        "ci95": [
+         -651.757,
+         918.435
+        ],
+        "abs_q95": 826.061
+       },
+       "out_tokens_median": {
+        "diff": -32,
+        "ci95": [
+         -97,
+         25
+        ],
+        "abs_q95": 88
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -0.246,
+        "ci95": [
+         -1.247,
+         0.688
+        ],
+        "abs_q95": 1.054
+       },
+       "judge_bad": {
+        "diff": -0.035,
+        "ci95": [
+         -0.113,
+         0.043
+        ],
+        "abs_q95": 0.104
+       },
+       "lines_omitted_per_100": {
+        "diff": -3.709,
+        "ci95": [
+         -12.195,
+         4.34
+        ],
+        "abs_q95": 10.735
+       },
+       "notes_omitted_per_100": {
+        "diff": 20,
+        "ci95": [
+         0,
+         60
+        ],
+        "abs_q95": 50
+       },
+       "miss": {
+        "diff": -0.008,
+        "ci95": [
+         -0.071,
+         0.052
+        ],
+        "abs_q95": 0.063
+       },
+       "extra": {
+        "diff": -0.02,
+        "ci95": [
+         -0.083,
+         0.039
+        ],
+        "abs_q95": 0.072
+       },
+       "cer_norm": {
+        "diff": -0.014,
+        "ci95": [
+         -0.077,
+         0.044
+        ],
+        "abs_q95": 0.067
+       },
+       "out_tokens": {
+        "diff": 325.261,
+        "ci95": [
+         -683.261,
+         1575.513
+        ],
+        "abs_q95": 1379.67
+       },
+       "out_tokens_median": {
+        "diff": -49,
+        "ci95": [
+         -107,
+         9
+        ],
+        "abs_q95": 97
+       }
+      }
+     }
+    },
+    "ANSWERED": {
+     "n": 94,
+     "arms": {
+      "A": {
+       "severe_per_1k": 4.616,
+       "judge_bad": 0.33,
+       "lines_omitted_per_100": 6.886,
+       "notes_omitted_per_100": 0,
+       "miss": 0.055,
+       "extra": 0.027,
+       "cer_norm": 0.054,
+       "out_tokens": 1520.181,
+       "out_tokens_median": 665,
+       "counts": {
+        "note": 1,
+        "vocab": 94,
+        "term": 14,
+        "image_desc": 15
+       }
+      },
+      "A2": {
+       "severe_per_1k": 5.447,
+       "judge_bad": 0.319,
+       "lines_omitted_per_100": 6.565,
+       "notes_omitted_per_100": 0,
+       "miss": 0.066,
+       "extra": 0.032,
+       "cer_norm": 0.055,
+       "out_tokens": 1001.468,
+       "out_tokens_median": 644
+      },
+      "B": {
+       "severe_per_1k": 4.801,
+       "judge_bad": 0.309,
+       "lines_omitted_per_100": 8.167,
+       "notes_omitted_per_100": 0,
+       "miss": 0.066,
+       "extra": 0.042,
+       "cer_norm": 0.062,
+       "out_tokens": 1425.181,
+       "out_tokens_median": 616
+      },
+      "C": {
+       "severe_per_1k": 4.754,
+       "judge_bad": 0.319,
+       "lines_omitted_per_100": 5.604,
+       "notes_omitted_per_100": 0,
+       "miss": 0.082,
+       "extra": 0.051,
+       "cer_norm": 0.078,
+       "out_tokens": 1717.234,
+       "out_tokens_median": 607
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 0.831,
+        "ci95": [
+         0,
+         1.784
+        ],
+        "abs_q95": 1.62
+       },
+       "judge_bad": {
+        "diff": -0.011,
+        "ci95": [
+         -0.085,
+         0.064
+        ],
+        "abs_q95": 0.074
+       },
+       "lines_omitted_per_100": {
+        "diff": -0.32,
+        "ci95": [
+         -0.963,
+         0
+        ],
+        "abs_q95": 0.823
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.011,
+        "ci95": [
+         -0.005,
+         0.029
+        ],
+        "abs_q95": 0.026
+       },
+       "extra": {
+        "diff": 0.004,
+        "ci95": [
+         -0.005,
+         0.019
+        ],
+        "abs_q95": 0.016
+       },
+       "cer_norm": {
+        "diff": 0.001,
+        "ci95": [
+         -0.012,
+         0.016
+        ],
+        "abs_q95": 0.014
+       },
+       "out_tokens": {
+        "diff": -518.713,
+        "ci95": [
+         -1192.426,
+         104.447
+        ],
+        "abs_q95": 1071.383
+       },
+       "out_tokens_median": {
+        "diff": -21,
+        "ci95": [
+         -68,
+         45
+        ],
+        "abs_q95": 58
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 0.185,
+        "ci95": [
+         -0.783,
+         1.165
+        ],
+        "abs_q95": 1.039
+       },
+       "judge_bad": {
+        "diff": -0.021,
+        "ci95": [
+         -0.096,
+         0.043
+        ],
+        "abs_q95": 0.085
+       },
+       "lines_omitted_per_100": {
+        "diff": 1.281,
+        "ci95": [
+         -7.391,
+         9.462
+        ],
+        "abs_q95": 8.887
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.011,
+        "ci95": [
+         -0.019,
+         0.044
+        ],
+        "abs_q95": 0.04
+       },
+       "extra": {
+        "diff": 0.015,
+        "ci95": [
+         -0.014,
+         0.052
+        ],
+        "abs_q95": 0.045
+       },
+       "cer_norm": {
+        "diff": 0.009,
+        "ci95": [
+         -0.026,
+         0.047
+        ],
+        "abs_q95": 0.04
+       },
+       "out_tokens": {
+        "diff": -95,
+        "ci95": [
+         -905.511,
+         918.915
+        ],
+        "abs_q95": 910.245
+       },
+       "out_tokens_median": {
+        "diff": -49,
+        "ci95": [
+         -90,
+         20
+        ],
+        "abs_q95": 81
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": 0.138,
+        "ci95": [
+         -1.021,
+         1.302
+        ],
+        "abs_q95": 1.22
+       },
+       "judge_bad": {
+        "diff": -0.011,
+        "ci95": [
+         -0.106,
+         0.096
+        ],
+        "abs_q95": 0.096
+       },
+       "lines_omitted_per_100": {
+        "diff": -1.281,
+        "ci95": [
+         -8.783,
+         4.885
+        ],
+        "abs_q95": 7.377
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.027,
+        "ci95": [
+         -0.016,
+         0.08
+        ],
+        "abs_q95": 0.07
+       },
+       "extra": {
+        "diff": 0.024,
+        "ci95": [
+         -0.014,
+         0.073
+        ],
+        "abs_q95": 0.064
+       },
+       "cer_norm": {
+        "diff": 0.025,
+        "ci95": [
+         -0.022,
+         0.081
+        ],
+        "abs_q95": 0.069
+       },
+       "out_tokens": {
+        "diff": 197.053,
+        "ci95": [
+         -916.33,
+         1713.255
+        ],
+        "abs_q95": 1372.17
+       },
+       "out_tokens_median": {
+        "diff": -58,
+        "ci95": [
+         -119,
+         -4
+        ],
+        "abs_q95": 109
+       }
+      }
+     }
+    },
+    "English": {
+     "n": 55,
+     "arms": {
+      "A": {
+       "severe_per_1k": 2.092,
+       "judge_bad": 0.418,
+       "lines_omitted_per_100": 22.821,
+       "notes_omitted_per_100": 60,
+       "miss": 0.313,
+       "extra": 0.31,
+       "cer_norm": 0.314,
+       "out_tokens": 1778.418,
+       "out_tokens_median": 811,
+       "counts": {
+        "note": 1,
+        "vocab": 41,
+        "term": 3,
+        "image_desc": 4
+       }
+      },
+      "A2": {
+       "severe_per_1k": 2.092,
+       "judge_bad": 0.364,
+       "lines_omitted_per_100": 14.872,
+       "notes_omitted_per_100": 60,
+       "miss": 0.257,
+       "extra": 0.249,
+       "cer_norm": 0.26,
+       "out_tokens": 1856.691,
+       "out_tokens_median": 814
+      },
+      "B": {
+       "severe_per_1k": 2.262,
+       "judge_bad": 0.345,
+       "lines_omitted_per_100": 19.103,
+       "notes_omitted_per_100": 60,
+       "miss": 0.265,
+       "extra": 0.255,
+       "cer_norm": 0.264,
+       "out_tokens": 1852.545,
+       "out_tokens_median": 835
+      },
+      "C": {
+       "severe_per_1k": 2.149,
+       "judge_bad": 0.364,
+       "lines_omitted_per_100": 15,
+       "notes_omitted_per_100": 60,
+       "miss": 0.29,
+       "extra": 0.275,
+       "cer_norm": 0.292,
+       "out_tokens": 1769.636,
+       "out_tokens_median": 792
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 0,
+        "ci95": [
+         -0.371,
+         0.406
+        ],
+        "abs_q95": 0.387
+       },
+       "judge_bad": {
+        "diff": -0.055,
+        "ci95": [
+         -0.127,
+         0.018
+        ],
+        "abs_q95": 0.127
+       },
+       "lines_omitted_per_100": {
+        "diff": -7.949,
+        "ci95": [
+         -20.097,
+         -0.141
+        ],
+        "abs_q95": 17.615
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.056,
+        "ci95": [
+         -0.125,
+         0
+        ],
+        "abs_q95": 0.112
+       },
+       "extra": {
+        "diff": -0.061,
+        "ci95": [
+         -0.136,
+         -0.001
+        ],
+        "abs_q95": 0.121
+       },
+       "cer_norm": {
+        "diff": -0.054,
+        "ci95": [
+         -0.122,
+         0
+        ],
+        "abs_q95": 0.11
+       },
+       "out_tokens": {
+        "diff": 78.273,
+        "ci95": [
+         -915.182,
+         1189.818
+        ],
+        "abs_q95": 1079.145
+       },
+       "out_tokens_median": {
+        "diff": 3,
+        "ci95": [
+         -385,
+         263
+        ],
+        "abs_q95": 333
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 0.17,
+        "ci95": [
+         -0.483,
+         0.986
+        ],
+        "abs_q95": 0.814
+       },
+       "judge_bad": {
+        "diff": -0.073,
+        "ci95": [
+         -0.164,
+         0.018
+        ],
+        "abs_q95": 0.164
+       },
+       "lines_omitted_per_100": {
+        "diff": -3.718,
+        "ci95": [
+         -17.867,
+         10.197
+        ],
+        "abs_q95": 15.482
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.048,
+        "ci95": [
+         -0.13,
+         0.025
+        ],
+        "abs_q95": 0.114
+       },
+       "extra": {
+        "diff": -0.055,
+        "ci95": [
+         -0.135,
+         0.016
+        ],
+        "abs_q95": 0.119
+       },
+       "cer_norm": {
+        "diff": -0.05,
+        "ci95": [
+         -0.127,
+         0.019
+        ],
+        "abs_q95": 0.112
+       },
+       "out_tokens": {
+        "diff": 74.127,
+        "ci95": [
+         -985.582,
+         1075.964
+        ],
+        "abs_q95": 1035.055
+       },
+       "out_tokens_median": {
+        "diff": 24,
+        "ci95": [
+         -379,
+         223
+        ],
+        "abs_q95": 328
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": 0.057,
+        "ci95": [
+         -0.541,
+         0.719
+        ],
+        "abs_q95": 0.659
+       },
+       "judge_bad": {
+        "diff": -0.055,
+        "ci95": [
+         -0.182,
+         0.055
+        ],
+        "abs_q95": 0.145
+       },
+       "lines_omitted_per_100": {
+        "diff": -7.821,
+        "ci95": [
+         -20.336,
+         0.982
+        ],
+        "abs_q95": 17.73
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.023,
+        "ci95": [
+         -0.112,
+         0.06
+        ],
+        "abs_q95": 0.099
+       },
+       "extra": {
+        "diff": -0.035,
+        "ci95": [
+         -0.12,
+         0.042
+        ],
+        "abs_q95": 0.106
+       },
+       "cer_norm": {
+        "diff": -0.022,
+        "ci95": [
+         -0.107,
+         0.055
+        ],
+        "abs_q95": 0.093
+       },
+       "out_tokens": {
+        "diff": -8.782,
+        "ci95": [
+         -1098.782,
+         1291.636
+        ],
+        "abs_q95": 1190.309
+       },
+       "out_tokens_median": {
+        "diff": -19,
+        "ci95": [
+         -409,
+         229
+        ],
+        "abs_q95": 331
+       }
+      }
+     }
+    },
+    "Latin": {
+     "n": 20,
+     "arms": {
+      "A": {
+       "severe_per_1k": 6.593,
+       "judge_bad": 0.45,
+       "lines_omitted_per_100": 11.782,
+       "notes_omitted_per_100": 0,
+       "miss": 0.078,
+       "extra": 0.061,
+       "cer_norm": 0.109,
+       "out_tokens": 1548.1,
+       "out_tokens_median": 708,
+       "counts": {
+        "note": 0,
+        "vocab": 20,
+        "term": 11,
+        "image_desc": 6
+       }
+      },
+      "A2": {
+       "severe_per_1k": 7.192,
+       "judge_bad": 0.3,
+       "lines_omitted_per_100": 16.954,
+       "notes_omitted_per_100": 0,
+       "miss": 0.086,
+       "extra": 0.089,
+       "cer_norm": 0.119,
+       "out_tokens": 1277.85,
+       "out_tokens_median": 755
+      },
+      "B": {
+       "severe_per_1k": 6.593,
+       "judge_bad": 0.45,
+       "lines_omitted_per_100": 4.598,
+       "notes_omitted_per_100": 0,
+       "miss": 0.045,
+       "extra": 0.046,
+       "cer_norm": 0.068,
+       "out_tokens": 1062.45,
+       "out_tokens_median": 673
+      },
+      "C": {
+       "severe_per_1k": 5.993,
+       "judge_bad": 0.4,
+       "lines_omitted_per_100": 7.471,
+       "notes_omitted_per_100": 40,
+       "miss": 0.053,
+       "extra": 0.053,
+       "cer_norm": 0.079,
+       "out_tokens": 2447.35,
+       "out_tokens_median": 678
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 0.599,
+        "ci95": [
+         -2.433,
+         4.264
+        ],
+        "abs_q95": 3.589
+       },
+       "judge_bad": {
+        "diff": -0.15,
+        "ci95": [
+         -0.35,
+         0.05
+        ],
+        "abs_q95": 0.3
+       },
+       "lines_omitted_per_100": {
+        "diff": 5.172,
+        "ci95": [
+         -2.647,
+         19.231
+        ],
+        "abs_q95": 16.575
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": 0.009,
+        "ci95": [
+         -0.058,
+         0.093
+        ],
+        "abs_q95": 0.08
+       },
+       "extra": {
+        "diff": 0.027,
+        "ci95": [
+         -0.026,
+         0.105
+        ],
+        "abs_q95": 0.093
+       },
+       "cer_norm": {
+        "diff": 0.01,
+        "ci95": [
+         -0.057,
+         0.094
+        ],
+        "abs_q95": 0.08
+       },
+       "out_tokens": {
+        "diff": -270.25,
+        "ci95": [
+         -2252.25,
+         1121.6
+        ],
+        "abs_q95": 1943.2
+       },
+       "out_tokens_median": {
+        "diff": 47,
+        "ci95": [
+         -17,
+         236
+        ],
+        "abs_q95": 168
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 0,
+        "ci95": [
+         -2.772,
+         2.809
+        ],
+        "abs_q95": 2.787
+       },
+       "judge_bad": {
+        "diff": 0,
+        "ci95": [
+         -0.25,
+         0.25
+        ],
+        "abs_q95": 0.25
+       },
+       "lines_omitted_per_100": {
+        "diff": -7.184,
+        "ci95": [
+         -31.008,
+         12.134
+        ],
+        "abs_q95": 25.858
+       },
+       "notes_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "miss": {
+        "diff": -0.032,
+        "ci95": [
+         -0.149,
+         0.072
+        ],
+        "abs_q95": 0.131
+       },
+       "extra": {
+        "diff": -0.016,
+        "ci95": [
+         -0.112,
+         0.083
+        ],
+        "abs_q95": 0.101
+       },
+       "cer_norm": {
+        "diff": -0.041,
+        "ci95": [
+         -0.162,
+         0.059
+        ],
+        "abs_q95": 0.139
+       },
+       "out_tokens": {
+        "diff": -485.65,
+        "ci95": [
+         -1361.5,
+         -14.9
+        ],
+        "abs_q95": 1304.45
+       },
+       "out_tokens_median": {
+        "diff": -35,
+        "ci95": [
+         -84,
+         30
+        ],
+        "abs_q95": 73
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -0.599,
+        "ci95": [
+         -3.176,
+         2.553
+        ],
+        "abs_q95": 2.911
+       },
+       "judge_bad": {
+        "diff": -0.05,
+        "ci95": [
+         -0.25,
+         0.15
+        ],
+        "abs_q95": 0.25
+       },
+       "lines_omitted_per_100": {
+        "diff": -4.31,
+        "ci95": [
+         -30,
+         19.945
+        ],
+        "abs_q95": 26.064
+       },
+       "notes_omitted_per_100": {
+        "diff": 40,
+        "ci95": [
+         0,
+         100
+        ],
+        "abs_q95": 100
+       },
+       "miss": {
+        "diff": -0.025,
+        "ci95": [
+         -0.149,
+         0.101
+        ],
+        "abs_q95": 0.134
+       },
+       "extra": {
+        "diff": -0.009,
+        "ci95": [
+         -0.112,
+         0.11
+        ],
+        "abs_q95": 0.111
+       },
+       "cer_norm": {
+        "diff": -0.031,
+        "ci95": [
+         -0.158,
+         0.086
+        ],
+        "abs_q95": 0.136
+       },
+       "out_tokens": {
+        "diff": 899.25,
+        "ci95": [
+         -1739.9,
+         4362.7
+        ],
+        "abs_q95": 3538.45
+       },
+       "out_tokens_median": {
+        "diff": -30,
+        "ci95": [
+         -103,
+         61
+        ],
+        "abs_q95": 100
+       }
+      }
+     }
+    },
+    "German": {
+     "n": 20,
+     "arms": {
+      "A": {
+       "severe_per_1k": 1.323,
+       "judge_bad": 0.2,
+       "lines_omitted_per_100": 26.406,
+       "notes_omitted_per_100": null,
+       "miss": 0.187,
+       "extra": 0.183,
+       "cer_norm": 0.222,
+       "out_tokens": 1711.5,
+       "out_tokens_median": 665,
+       "counts": {
+        "note": 0,
+        "vocab": 18,
+        "term": 0,
+        "image_desc": 6
+       }
+      },
+      "A2": {
+       "severe_per_1k": 2.116,
+       "judge_bad": 0.2,
+       "lines_omitted_per_100": 26.406,
+       "notes_omitted_per_100": null,
+       "miss": 0.212,
+       "extra": 0.211,
+       "cer_norm": 0.245,
+       "out_tokens": 915.65,
+       "out_tokens_median": 613
+      },
+      "B": {
+       "severe_per_1k": 2.116,
+       "judge_bad": 0.25,
+       "lines_omitted_per_100": 26.406,
+       "notes_omitted_per_100": null,
+       "miss": 0.211,
+       "extra": 0.21,
+       "cer_norm": 0.244,
+       "out_tokens": 2905.45,
+       "out_tokens_median": 606
+      },
+      "C": {
+       "severe_per_1k": 2.381,
+       "judge_bad": 0.35,
+       "lines_omitted_per_100": 31.051,
+       "notes_omitted_per_100": null,
+       "miss": 0.224,
+       "extra": 0.221,
+       "cer_norm": 0.255,
+       "out_tokens": 678.45,
+       "out_tokens_median": 584
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 0.794,
+        "ci95": [
+         -0.76,
+         3.111
+        ],
+        "abs_q95": 2.601
+       },
+       "judge_bad": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.025,
+        "ci95": [
+         0,
+         0.076
+        ],
+        "abs_q95": 0.071
+       },
+       "extra": {
+        "diff": 0.028,
+        "ci95": [
+         0,
+         0.085
+        ],
+        "abs_q95": 0.078
+       },
+       "cer_norm": {
+        "diff": 0.023,
+        "ci95": [
+         -0.002,
+         0.073
+        ],
+        "abs_q95": 0.067
+       },
+       "out_tokens": {
+        "diff": -795.85,
+        "ci95": [
+         -2192.7,
+         275.6
+        ],
+        "abs_q95": 1914.9
+       },
+       "out_tokens_median": {
+        "diff": -52,
+        "ci95": [
+         -169,
+         65
+        ],
+        "abs_q95": 162
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": 0.794,
+        "ci95": [
+         -0.76,
+         3.111
+        ],
+        "abs_q95": 2.601
+       },
+       "judge_bad": {
+        "diff": 0.05,
+        "ci95": [
+         0,
+         0.15
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "abs_q95": 0
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.025,
+        "ci95": [
+         0,
+         0.076
+        ],
+        "abs_q95": 0.07
+       },
+       "extra": {
+        "diff": 0.027,
+        "ci95": [
+         0,
+         0.084
+        ],
+        "abs_q95": 0.077
+       },
+       "cer_norm": {
+        "diff": 0.022,
+        "ci95": [
+         -0.005,
+         0.072
+        ],
+        "abs_q95": 0.065
+       },
+       "out_tokens": {
+        "diff": 1193.95,
+        "ci95": [
+         -1601.3,
+         5083.3
+        ],
+        "abs_q95": 4306.75
+       },
+       "out_tokens_median": {
+        "diff": -59,
+        "ci95": [
+         -222,
+         76
+        ],
+        "abs_q95": 209
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": 1.058,
+        "ci95": [
+         -0.484,
+         2.911
+        ],
+        "abs_q95": 2.526
+       },
+       "judge_bad": {
+        "diff": 0.15,
+        "ci95": [
+         0,
+         0.3
+        ],
+        "abs_q95": 0.3
+       },
+       "lines_omitted_per_100": {
+        "diff": 4.645,
+        "ci95": [
+         0,
+         15.659
+        ],
+        "abs_q95": 13.801
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.037,
+        "ci95": [
+         -0.003,
+         0.124
+        ],
+        "abs_q95": 0.112
+       },
+       "extra": {
+        "diff": 0.038,
+        "ci95": [
+         0,
+         0.125
+        ],
+        "abs_q95": 0.114
+       },
+       "cer_norm": {
+        "diff": 0.033,
+        "ci95": [
+         -0.007,
+         0.12
+        ],
+        "abs_q95": 0.106
+       },
+       "out_tokens": {
+        "diff": -1033.05,
+        "ci95": [
+         -2323.2,
+         -26.95
+        ],
+        "abs_q95": 2092.15
+       },
+       "out_tokens_median": {
+        "diff": -81,
+        "ci95": [
+         -245,
+         -28
+        ],
+        "abs_q95": 220
+       }
+      }
+     }
+    },
+    "Chinese": {
+     "n": 20,
+     "arms": {
+      "A": {
+       "severe_per_1k": 17.335,
+       "judge_bad": 0.75,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.275,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 864.1,
+       "out_tokens_median": 468,
+       "counts": {
+        "note": 0,
+        "vocab": 18,
+        "term": 6,
+        "image_desc": 0
+       }
+      },
+      "A2": {
+       "severe_per_1k": 22.481,
+       "judge_bad": 0.9,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.306,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 3353.6,
+       "out_tokens_median": 454
+      },
+      "B": {
+       "severe_per_1k": 16.793,
+       "judge_bad": 0.7,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.283,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 448.3,
+       "out_tokens_median": 377
+      },
+      "C": {
+       "severe_per_1k": 14.626,
+       "judge_bad": 0.6,
+       "lines_omitted_per_100": null,
+       "notes_omitted_per_100": null,
+       "miss": 0.306,
+       "extra": null,
+       "cer_norm": null,
+       "out_tokens": 2892.3,
+       "out_tokens_median": 370
+      }
+     },
+     "diffs": {
+      "A2-A": {
+       "severe_per_1k": {
+        "diff": 5.146,
+        "ci95": [
+         1.936,
+         8.931
+        ],
+        "abs_q95": 8.278
+       },
+       "judge_bad": {
+        "diff": 0.15,
+        "ci95": [
+         -0.05,
+         0.35
+        ],
+        "abs_q95": 0.35
+       },
+       "lines_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.031,
+        "ci95": [
+         -0.085,
+         0.136
+        ],
+        "abs_q95": 0.121
+       },
+       "extra": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "cer_norm": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "out_tokens": {
+        "diff": 2489.5,
+        "ci95": [
+         -676,
+         7692.9
+        ],
+        "abs_q95": 6821.15
+       },
+       "out_tokens_median": {
+        "diff": -14,
+        "ci95": [
+         -96,
+         131
+        ],
+        "abs_q95": 104
+       }
+      },
+      "B-A": {
+       "severe_per_1k": {
+        "diff": -0.542,
+        "ci95": [
+         -5.863,
+         4.484
+        ],
+        "abs_q95": 5.316
+       },
+       "judge_bad": {
+        "diff": -0.05,
+        "ci95": [
+         -0.15,
+         0
+        ],
+        "abs_q95": 0.15
+       },
+       "lines_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.008,
+        "ci95": [
+         -0.124,
+         0.181
+        ],
+        "abs_q95": 0.157
+       },
+       "extra": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "cer_norm": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "out_tokens": {
+        "diff": -415.8,
+        "ci95": [
+         -1113.3,
+         -49.7
+        ],
+        "abs_q95": 1094.3
+       },
+       "out_tokens_median": {
+        "diff": -91,
+        "ci95": [
+         -173,
+         -23
+        ],
+        "abs_q95": 166
+       }
+      },
+      "C-A": {
+       "severe_per_1k": {
+        "diff": -2.709,
+        "ci95": [
+         -8.491,
+         2.999
+        ],
+        "abs_q95": 7.548
+       },
+       "judge_bad": {
+        "diff": -0.15,
+        "ci95": [
+         -0.35,
+         0.05
+        ],
+        "abs_q95": 0.35
+       },
+       "lines_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "notes_omitted_per_100": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "miss": {
+        "diff": 0.03,
+        "ci95": [
+         -0.112,
+         0.204
+        ],
+        "abs_q95": 0.175
+       },
+       "extra": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "cer_norm": {
+        "diff": null,
+        "ci95": [
+         null,
+         null
+        ],
+        "abs_q95": null
+       },
+       "out_tokens": {
+        "diff": 2028.2,
+        "ci95": [
+         -1085.85,
+         7264.35
+        ],
+        "abs_q95": 6928.55
+       },
+       "out_tokens_median": {
+        "diff": -98,
+        "ci95": [
+         -174,
+         -27
+        ],
+        "abs_q95": 170
+       }
+      }
+     }
+    }
+   },
+   "rule": {
+    "margin_severe_per_1k": 1.528,
+    "margin_lines_omitted_per_100": 8.254,
+    "margin_notes_omitted_per_100": 2,
+    "B": {
+     "non_inferior_severe": true,
+     "no_omission_rise": true,
+     "passes": true,
+     "superior_severe": false
+    },
+    "C": {
+     "non_inferior_severe": true,
+     "no_omission_rise": false,
+     "passes": false,
+     "superior_severe": false
+    }
+   }
+  }
+ },
+ "lite_spend": [
+  {
+   "arm": "A",
+   "job": "batches/tze8gdqmif137r8cg7579aivwo3tl5j2vk1m",
+   "responses": 115,
+   "outcomes": {
+    "text": 94,
+    "refusal": 21
+   },
+   "in_tokens": 499158,
+   "out_tokens": 43714,
+   "cost_usd": 0.09518025
+  },
+  {
+   "arm": "A2",
+   "job": "batches/3i2yong2b5uikaw059ls0zvounf7kre1g9g6",
+   "responses": 115,
+   "outcomes": {
+    "text": 94,
+    "refusal": 21
+   },
+   "in_tokens": 499158,
+   "out_tokens": 59998,
+   "cost_usd": 0.10739325
+  },
+  {
+   "arm": "B",
+   "job": "batches/wyh9jbt2y7px73dyyz6dakx5jtlxxehm7t6f",
+   "responses": 115,
+   "outcomes": {
+    "text": 94,
+    "refusal": 20,
+    "truncated": 1
+   },
+   "in_tokens": 492258,
+   "out_tokens": 58125,
+   "cost_usd": 0.105126
+  },
+  {
+   "arm": "C",
+   "job": "batches/tv51e0qafpw4h80kua9gz60rl16piytx6aul",
+   "responses": 115,
+   "outcomes": {
+    "text": 94,
+    "refusal": 21
+   },
+   "in_tokens": 482138,
+   "out_tokens": 46427,
+   "cost_usd": 0.0950875
+  }
+ ],
+ "opus_calls": 709,
+ "verdicts_reused_identical_text": 62
+}

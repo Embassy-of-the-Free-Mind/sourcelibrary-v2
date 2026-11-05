@@ -55,6 +55,11 @@ export const BOOK_FIELDS = Object.freeze([
   // core bibliographic
   'title', 'display_title', 'display_author', 'original_title',
   'author', 'language', 'original_language',
+  // contributors[]: everyone who made the book, each { author_id, name, role,
+  // source, method }, role a MARC relator code (#7787). `author`/`author_id`
+  // stay the primary-author projection; the one writer is
+  // scripts/lib/contributors.mjs writeContributors().
+  'contributors',
   // languages[] + language_multi: the ONE multilingual-edition array
   // (invariants/language-fields.md). Written by normalize-language-tags.mjs on
   // 45K books; an importer that already knows an edition is facing-page
@@ -74,7 +79,7 @@ export const BOOK_FIELDS = Object.freeze([
   'notes', 'scholarly_notes',
   'normalized_title', 'normalized_author',
   'is_translation', 'text_role', 'text_source', 'translation_status',
-  'content_type', 'work_id',
+  'content_type', 'work_id', 'work_id_source',
   // provenance / source
   'ia_identifier', 'source_fingerprint', 'source_fingerprints',
   'image_source', 'contributing_library',
@@ -99,6 +104,11 @@ export const BOOK_FIELDS = Object.freeze([
   'pages_translatable', 'pages_blank',
   // when recountBook() (scripts/lib/page-counts.mjs) last wrote all six counters (#5325)
   'page_counts_at',
+  // #7343 lazy pages: { state: manifest_only|materializing|materialized, since, … }.
+  // A manifest-only importer sets initialPagesState() from scripts/lib/pages-state.mjs
+  // and writes NO page docs; materializePages() (scripts/lib/lazy-pages.mjs) is the
+  // only other writer. Absent = the book's pages exist (every book before #7343).
+  'pages_state',
   // NOT here, deliberately: `translation_state` — { rung, english_original,
   // translated, translatable, whole, ocr, exact, version, computed_at }, the
   // translation-state ladder (#5284, .claude/docs/translation-state.md). Its
@@ -130,6 +140,9 @@ export const BOOK_FIELDS = Object.freeze([
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',
+  // pages carrying a Chinese edition (translations.zh), written by the job that writes
+  // the text (#7537, Flora Sinensis from the Latin); read by editionsForBook
+  'pages_translated_zh',
   // language-keyed metadata glosses { es: { title } } — ONE map, never title_<lang>
   // columns; written by scripts/maintenance/localize-metadata.mjs (src/lib/localized.ts)
   'localized',
@@ -166,9 +179,18 @@ export const PAGE_FIELDS = Object.freeze([
   'photo', 'photo_original', 'display_photo', 'archived_photo',
   'thumbnail', 'image_thumb', 'thumbnail_blob',
   'image_width', 'image_height', 'width', 'height',
+  // What the source says native is, and how many tiles were stitched (#4406; written by
+  // archive-acquired / archive-eap, and at materialize from the manifest ledger, #5448).
+  'iiif_info', 'stitched_tiles',
   // #5876: where the page sits inside the scan (fractions of the display image).
   'page_frame',
   // text
+  // `translation` sub-fields added by #5942 (decided 2026-10-10): `text` — the book's words, the
+  // annotation-layer parser's output; `text_from` — { source: 'parser'|'model', parser_version,
+  // data_hash, annotations } where data_hash is contentHash() of the stored `data` at parse time.
+  // `data` stays the raw model output and is never rewritten for them. Read `text` only
+  // through getTranslationText() (scripts/lib/translation-text.mjs, src/lib/translation-text.ts);
+  // the notes go to the `page_annotations` collection, one doc per page and source.
   'ocr', 'summary', 'translation', 'transliteration',
   // ETCSL text editions: the composite lines and translation paragraph a page holds (#4391)
   'etcsl_line_range', 'etcsl_paragraph_id',
@@ -195,6 +217,16 @@ export const PAGE_FIELDS = Object.freeze([
   // received (CONTENTdm item record, IIIF canvas metadata). Same field as on
   // books; a fact about the page, not a job's action (#4896, #3471).
   'catalog_metadata',
+  // #5056: a later capture of a leaf the book already holds (the same spread uploaded or
+  // photographed twice). `repeat_of` is the `id` of the kept capture; the page keeps its
+  // page_number and id (shortlinks, citations), and no reader list, counter or lane sees it.
+  // `repeat_of_meta` is its provenance: { by, at, issue, method, r, dice }. Written by
+  // scripts/maintenance/hide-repeat-captures.mjs; unsetting both restores the page.
+  'repeat_of', 'repeat_of_meta',
+  // #7605: a leaf built hidden by split-book.mjs --stage while its spread stays live —
+  // { run, leaf, frame_id, frame_ocr_hash, side, at, by, mode, issue, swapped_at? }. Its page_number is
+  // leaf - 1,000,000 until scripts/maintenance/split-swap.mjs swaps it in (scripts/lib/split-stage.mjs).
+  'staged_split',
   // timestamps
   'created_at', 'updated_at',
 ]);

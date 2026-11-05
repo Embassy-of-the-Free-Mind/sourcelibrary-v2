@@ -27,7 +27,7 @@ const t0 = Date.now();
 for (let i = 0; i < ids.length; i += 100) {
   const chunk = ids.slice(i, i + 100);
   const cur = db.collection('pages').find({ book_id: { $in: chunk }, 'ocr.source': 'paddle' },
-    { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.engine.issue': 1, 'ocr.engine.run': 1, 'ocr.unreadable': 1 } });
+    { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.engine.issue': 1, 'ocr.engine.run': 1, 'ocr.unreadable': 1 } }).batchSize(1000);
   const buf = [];
   for await (const p of cur) {
     T.pages++;

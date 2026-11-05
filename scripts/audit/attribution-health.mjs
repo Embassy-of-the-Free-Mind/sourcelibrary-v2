@@ -102,7 +102,7 @@ const authors = db.collection('authors');
 
 // The thesaurus, loaded once: slug -> is it authority-anchored?
 const anchored = new Map();
-for await (const a of authors.find({}, { projection: { wikidata_id: 1, viaf_id: 1, merged_into: 1 } })) {
+for await (const a of authors.find({}, { projection: { wikidata_id: 1, viaf_id: 1, merged_into: 1 } }).batchSize(1000)) {
   anchored.set(a._id, {
     anchored: Boolean(a.wikidata_id || a.viaf_id),
     tombstone: Boolean(a.merged_into),
@@ -131,7 +131,7 @@ const titleish = new Set();
 
   // title opening -> set of book ids whose title starts that way
   const openings = new Map();
-  for await (const b of books.find(scope, { projection: { normalized_title: 1, title: 1 } })) {
+  for await (const b of books.find(scope, { projection: { normalized_title: 1, title: 1 } }).batchSize(1000)) {
     const words = normKey(b.normalized_title || b.title).split(' ').filter(Boolean);
     for (let n = 2; n <= 4 && n <= words.length; n++) {
       const k = words.slice(0, n).join(' ');
@@ -143,7 +143,7 @@ const titleish = new Set();
   // author string -> the books carrying it, and whether it is anchored
   const carriers = new Map();
   for await (const b of books.find({ ...scope, author: { $type: 'string', $ne: '' } },
-    { projection: { author: 1, author_id: 1 } })) {
+    { projection: { author: 1, author_id: 1 } }).batchSize(1000)) {
     const a = b.author.trim();
     if (!carriers.has(a)) carriers.set(a, { ids: new Set(), anchored: false });
     carriers.get(a).ids.add(b._id.toString());
@@ -183,7 +183,7 @@ let collective = 0;
 
 const cursor = books.find(scope, {
   projection: { author: 1, author_id: 1, 'ai_metadata.author': 1 },
-});
+}).batchSize(1000);
 for await (const b of cursor) {
   total++;
   const a = typeof b.author === 'string' ? b.author.trim() : '';

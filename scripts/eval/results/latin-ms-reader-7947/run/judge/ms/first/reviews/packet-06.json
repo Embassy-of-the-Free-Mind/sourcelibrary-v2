@@ -1,0 +1,69 @@
+[
+  {
+    "book_id": "b06-k", "slot": 1, "title": "Actus et consecratio crismatis in cena domini", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      { "page_number": 1, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" },
+      { "page_number": 2, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" },
+      { "page_number": 3, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" }
+    ],
+    "book_verdict": "Clean, complete readings of all three pages: the rubric 'Actus et consecratio…' is right, the blessing crosses on the Te igitur leaf are kept ('Hec do ✠ na'), the page breaks ('Quoniam', 'co', 'Panem') stop where the leaf stops, and the initials are described as they are painted."
+  },
+  {
+    "book_id": "b06-m", "slot": 2, "title": "Actus et consecratio crismatis in cena domini", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      { "page_number": 1, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [ { "ocr": "### Missus et consecratio crismatis in cena domini.", "image": "Actus et consecratio crismatis in cena dñi", "problem": "opening word of the rubric heading misread ('Missus' is not a Latin word here; the red A is clear)", "severity": "moderate", "class": "O6" } ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "illuminated manuscript initial tagged type=\"woodcut\"", "severity": "minor", "class": "O16" } ],
+        "confidence": "high" },
+      { "page_number": 2, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Hec dona hec munera Hec sancta sacrificia", "image": "Hec do ✠ na · Hec mu ✠ nera · Hec san ✠ cta", "problem": "rubricated blessing crosses dropped", "severity": "minor" },
+          { "ocr": "quorum tibi fides cognita", "image": "quorū tibi fides cō", "problem": "last word completed past the end of the leaf ('-gnita' is on the next page)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" },
+      { "page_number": 3, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" }
+    ],
+    "book_verdict": "Text is accurate apart from the heading, which reads 'Missus' for 'Actus' on the opening leaf; crosses dropped and one word completed past the page edge."
+  },
+  {
+    "book_id": "b06-r", "slot": 3, "title": "Actus et consecratio crismatis in cena domini", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      { "page_number": 1, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "image-desc invents the initial's subject: 'a bird (likely a pelican) feeding its young' — the N is formed of two hybrid human-headed figures on columns with a winged creature as the diagonal; no pelican", "severity": "moderate", "class": "other:invented image description" } ],
+        "confidence": "high" },
+      { "page_number": 2, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "haec dona haec munera haec sancta … quae tibi offerimus", "image": "Hec do ✠ na … que tibi offerimus", "problem": "medieval spellings normalised to classical (hec→haec, que→quae) and blessing crosses dropped", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" },
+      { "page_number": 3, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" }
+    ],
+    "book_verdict": "The words are read accurately (page 2 classicised to haec/quae), but the opening leaf's image description invents a pelican-in-her-piety initial that is not there, which an expert looking at the leaf would catch at once."
+  },
+  {
+    "book_id": "b06-t", "slot": 4, "title": "Actus et consecratio crismatis in cena domini", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      { "page_number": 1, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [ { "ocr": "Missa et consecratio crismatis in cena domini.", "image": "Actus et consecratio crismatis in cena dñi", "problem": "rubric's first word normalised toward the expected 'Missa'", "severity": "moderate", "class": "O8" } ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "illuminated manuscript initial tagged type=\"woodcut\"", "severity": "minor", "class": "O16" } ],
+        "confidence": "high" },
+      { "page_number": 2, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [ { "ocr": "Hec do na · hec munera · Hec sancta", "image": "Hec do ✠ na · Hec mu ✠ nera · Hec san ✠ cta", "problem": "rubricated blessing crosses dropped (gap left in 'do na')", "severity": "minor" } ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high" },
+      { "page_number": 3, "right_page": "yes", "ocr_score": 5, "ocr_errors": [], "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<image-desc> tag placed inline in the middle of the text line ('dicere· <image-desc …>Pater noster')", "severity": "minor", "class": "D1" } ],
+        "confidence": "high" }
+    ],
+    "book_verdict": "Line-by-line readings that are accurate, except that the heading is normalised to 'Missa' where the leaf reads 'Actus'; the crosses are dropped and one image tag sits inside a text line."
+  }
+]
