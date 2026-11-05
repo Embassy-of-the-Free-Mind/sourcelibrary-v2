@@ -927,6 +927,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // --- /collection/<slug> → /collections/<slug> ---
+  // The singular is not a route, and AI answers write it: all 18 distinct ones in
+  // 30 days of Librarian answers named a live collection (#8216). Pathname-only,
+  // so a partner subdomain stays on-host; an unknown slug still 404s on arrival.
+  const singularCollectionMatch = pathname.match(/^(\/es)?\/collection\/([^/]+)\/?$/);
+  if (singularCollectionMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = `${singularCollectionMatch[1] ?? ''}/collections/${singularCollectionMatch[2]}`;
+    return NextResponse.redirect(url, 308);
+  }
+
   // --- Guessed famous-text book slug → library search ---
   // Single-segment /book/<slug> only; real book slugs aren't in the map, so
   // they fall through to normal routing untouched. Pathname-only change keeps
