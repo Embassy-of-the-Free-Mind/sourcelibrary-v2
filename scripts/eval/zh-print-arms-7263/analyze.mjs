@@ -71,7 +71,8 @@ const block = (sel) => { const arms = Object.fromEntries(['S', 'O', 'O_pilot', '
 
 // The method of 2026-11-03-zh-reocr-cheap-arms-7263.md: subscription quota priced at the fee. Opus at $5.72 per 1K at 1 a call and $2.77 at 10
 // (#8008); F by its list cost against the pilot's own 1-a-call list cost. Agy: $0.00055 x mean list cost / the #7611 Flash-low $0.0084; Paddle adds ~$0.09 per 1K.
-const flashList = (u) => ((u.input - (u.cache_read || 0)) * 0.75 + (u.cache_read || 0) * 0.075 + (u.output + (u.thinking || 0)) * 3.75) / 1e6;
+// output_tokens already holds the thinking (total = input + output), so thinking is not added again: this gives the cheap-arms record's $7.75 from its own calls.
+const flashList = (u) => ((u.input - (u.cache_read || 0)) * 0.75 + (u.cache_read || 0) * 0.075 + u.output * 3.75) / 1e6;
 const calls = (set, arm) => jsonl(path.join(SCR, set, `set-${arm}`, 'calls.jsonl'));
 const pilot = rj(path.join(path.dirname(new URL(import.meta.url).pathname), 'input/pilot-score.json'));
 const pilotOne = pilot.sets.one.list_usd / pilot.sets.one.pages;
