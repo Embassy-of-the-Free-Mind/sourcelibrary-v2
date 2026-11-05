@@ -8,8 +8,8 @@
  * phrase, so it cannot correct one word of two. `levenshtein` is reused from it.
  *
  * This module is pure. The route feeds it rows and then confirms each candidate
- * with a real count, because a corrected phrase is not guaranteed to occur: the
- * search box matches the query as one contiguous string.
+ * with a real count, because a corrected query is not guaranteed to find anything,
+ * least of all under the filters the reader has on.
  */
 
 import { levenshtein } from '@/lib/fuzzy';
