@@ -71,6 +71,7 @@ interface Props {
 const SORT_LABELS: [CatalogSort, string][] = [
   ['relevance', 'Most relevant'], ['popular', 'Most read'], ['year_asc', 'Oldest first'],
   ['year_desc', 'Newest first'], ['title', 'Title A–Z'], ['author', 'Author A–Z'],
+  ['last_translated', 'Recently translated'],
 ];
 /**
  * Things to try, chosen to be fun and each tested on the real page for good

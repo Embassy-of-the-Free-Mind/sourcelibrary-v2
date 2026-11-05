@@ -14,9 +14,9 @@
 /** Results per page on the catalogue. */
 export const CATALOG_PAGE_SIZE = 100;
 
-export type CatalogSort = 'relevance' | 'popular' | 'year_asc' | 'year_desc' | 'title' | 'author';
+export type CatalogSort = 'relevance' | 'popular' | 'year_asc' | 'year_desc' | 'title' | 'author' | 'last_translated';
 
-export const CATALOG_SORTS: readonly CatalogSort[] = ['relevance', 'popular', 'year_asc', 'year_desc', 'title', 'author'];
+export const CATALOG_SORTS: readonly CatalogSort[] = ['relevance', 'popular', 'year_asc', 'year_desc', 'title', 'author', 'last_translated'];
 
 export interface CatalogFilters {
   /** Words in the title or author, every word required. */
