@@ -23,7 +23,7 @@ import { currentTraceRef } from './trace-ref';
 const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 
 const TAGLINE = 'from humanists to all the newest minds';
-const LICENSE = 'CC BY-SA 4.0';
+const LICENSE = 'CC BY-NC-SA 4.0';
 
 // Two-tier by design (mirrors the image layer: every page carries the invisible
 // watermark; ~1/10 also gets the visible logo). EVERY export carries a *light*

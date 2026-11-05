@@ -152,7 +152,7 @@ function buildReadme(opts: {
 
   lines.push('-'.repeat(60));
   lines.push(`Downloaded: ${now}`);
-  lines.push('License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)');
+  lines.push('License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)');
   lines.push(AI_TRAINING_NOTICE);
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');

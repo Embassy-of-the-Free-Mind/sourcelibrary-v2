@@ -448,7 +448,7 @@ export const GET = withApiAuth(async (
       if (localizedChapterRange) lines.push(`# Chapter: ${localizedChapterRange.title ?? chapterParam} (pages ${localizedChapterRange.from}–${localizedChapterRange.to})`);
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
       lines.push(`# Source: https://sourcelibrary.org/book/${resolvedBookId}`);
-      lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
+      lines.push(`# License: CC BY-NC-SA 4.0 (https://sourcelibrary.org/terms)`);
       lines.push(`# ${AI_TRAINING_NOTICE}`);
       if (windowNote) lines.push(`# ${windowNote}`);
       if (partnerTermsNote) lines.push(`# ${partnerTermsNote}`);

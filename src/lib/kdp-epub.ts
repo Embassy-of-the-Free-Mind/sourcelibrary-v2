@@ -28,7 +28,7 @@ export interface KdpEpubOptions {
   introduction?: string;
   /** Translation methodology note (optional). */
   methodology?: string;
-  /** SPDX/CC license id for the copyright page (default CC-BY-SA-4.0). */
+  /** SPDX/CC license id for the copyright page (default CC-BY-NC-SA-4.0). */
   license?: string;
   /**
    * Pre-generated cover JPEG to embed as the EPUB cover-image. Pass the same
@@ -318,7 +318,7 @@ export async function generateKdpEpub(
   const now = new Date().toISOString().split('T')[0];
   const modified = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
   const uuid = `urn:uuid:${book.id}`;
-  const license = options?.license || 'CC-BY-SA-4.0';
+  const license = options?.license || 'CC-BY-NC-SA-4.0';
 
   const translatedPages = pages.filter(p => p.translation?.data);
 

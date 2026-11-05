@@ -59,7 +59,7 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: strin
       ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
       ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
     },
-    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
     isAccessibleForFree: true,
     ...(excerpt ? { text: excerpt } : {}),
   };
