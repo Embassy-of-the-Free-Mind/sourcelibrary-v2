@@ -1,5 +1,6 @@
 'use client';
 
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
@@ -42,7 +43,7 @@ interface DownloadButtonProps {
 
 export default function DownloadButton({ bookId, bookTitle, hasTranslations, hasOcr, hasImages = true, imageRestricted = false, imageAccess = 'open', variant = 'default', iconOnly = false, inline = false, bookTenantId = null }: DownloadButtonProps) {
   const { data: session } = useSession();
-  const isMember = (session?.user as any)?.membership != null;
+  const isMember = sessionHasMemberBenefits(session?.user);
   const [isOpen, setIsOpen] = useState(inline);
   const chrome = CHROME_STRINGS[useLocale()];
   const [downloading, setDownloading] = useState<string | null>(null);

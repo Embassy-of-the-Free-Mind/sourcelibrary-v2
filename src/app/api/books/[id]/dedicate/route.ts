@@ -1,3 +1,4 @@
+import { membershipState } from '@/lib/membership-status';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     { projection: { membership: 1, name: 1 } }
   );
 
-  if (!user?.membership?.active) {
+  if (!user || membershipState(user.membership).kind !== 'paid') {
     return NextResponse.json({ error: 'Membership required' }, { status: 403 });
   }
 

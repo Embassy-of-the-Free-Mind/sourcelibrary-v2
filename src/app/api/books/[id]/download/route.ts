@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
 import { downloadChargesEnabled } from '@/lib/payment-flags';
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
@@ -2502,7 +2503,7 @@ async function downloadGET(request: NextRequest, { params }: RouteParams) {
         return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
       }
     } else if (userId && !isPremiumFormat(format)) {
-      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isMember = sessionHasMemberBenefits(session?.user);
       const isExemptEditor = await isInnerCircle();
       const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
       if (!isMember && !isExemptEditor && !isPurchased) {
