@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
+import { bphSeeAlsoQueries } from '@/lib/bph-catalog-see-also';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal, Download } from 'lucide-react';
 import { useEmbed } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
@@ -353,6 +354,7 @@ export default function BphCatalogBrowser({
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [didYouMean, setDidYouMean] = useState<string | null>(null);
+  const [seeAlso, setSeeAlso] = useState<Array<{ query: string; total: number }>>([]);
   const [searchQuery, setSearchQuery] = useState(initialQ);
   const [sort, setSort] = useState(initialSort);
   const [keyword, setKeyword] = useState(initialKeyword);
@@ -444,6 +446,8 @@ export default function BphCatalogBrowser({
 
     setLoading(true);
     setDidYouMean(null);
+    // Paging through one search keeps its see-also line.
+    if (off === 0) setSeeAlso([]);
     try {
       const params = buildParams(q, s, kw, off, a);
       const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
@@ -466,6 +470,15 @@ export default function BphCatalogBrowser({
           .then((r) => r.json())
           .then((s: { suggestion?: string | null }) => {
             if (abortRef.current === controller) setDidYouMean(s.suggestion ?? null);
+          })
+          .catch(() => {});
+      }
+      // Only a search holding a listed word asks, so most searches cost nothing.
+      if (off === 0 && bphSeeAlsoQueries(q).length > 0) {
+        fetch(`/api/catalog/bph/see-also?${params}`, { signal: controller.signal })
+          .then((r) => r.json())
+          .then((s: { seeAlso?: Array<{ query: string; total: number }> }) => {
+            if (abortRef.current === controller) setSeeAlso(s.seeAlso ?? []);
           })
           .catch(() => {});
       }
@@ -531,7 +544,7 @@ export default function BphCatalogBrowser({
     debouncedSearch(value);
   };
 
-  const acceptDidYouMean = (value: string) => {
+  const searchFor = (value: string) => {
     debouncedSearch.cancel();
     setSearchQuery(value);
     setOffset(0);
@@ -547,7 +560,7 @@ export default function BphCatalogBrowser({
           Did you mean{' '}
           <button
             type="button"
-            onClick={() => acceptDidYouMean(didYouMean)}
+            onClick={() => searchFor(didYouMean)}
             className="font-semibold text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
           >
             {didYouMean}
@@ -790,6 +803,25 @@ export default function BphCatalogBrowser({
             {resultsHeaderSlot}
           </div>
         </div>
+      )}
+
+      {seeAlso.length > 0 && (
+        <p className="mb-4 text-sm text-muted">
+          See also:{' '}
+          {seeAlso.map((item, i) => (
+            <span key={item.query}>
+              {i > 0 && ' · '}
+              <button
+                type="button"
+                onClick={() => searchFor(item.query)}
+                className="text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
+              >
+                {item.query}
+              </button>{' '}
+              ({item.total.toLocaleString('en-US')})
+            </span>
+          ))}
+        </p>
       )}
 
       {/* Advanced search panel */}
