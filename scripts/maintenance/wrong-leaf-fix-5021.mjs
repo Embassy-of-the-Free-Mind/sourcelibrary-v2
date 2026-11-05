@@ -74,8 +74,23 @@ import { claudeBlocked } from '../lib/model-limits.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
-const ISSUE = 5021;
-const HOLD_REASON = 'leaf-shift-5021';
+// --issue=5274 (near-blank-fix-5274, Derek 2026-11-04 "fix those too"): the same runner on the near-blank Chinese
+// leaves the #5274 screen found carrying invented English (a captioned woodcut given the entry the model expected).
+// Its queue, gate pick, judge and hold differ; the readers, the writer, the pools and the ledger are this file's.
+const PROFILE = String(process.argv.find((a) => a.startsWith('--issue='))?.split('=')[1] ?? '5021');
+// --issue=5274cb (context-bleed-find-fix-5274, Derek 2026-11-04 "find it and fix/redo"): the library-wide screen's
+// pages (a nearly empty leaf carrying a neighbour's English, scripts/eval/context-bleed-5274/) and the #5274 near-blank
+// list, queued with `enqueue --from=` and read --own-leaf: the page's own transcription only, no previous page's English,
+// no neighbour OCR (the continuity English is what the Feb–Mar lanes' model translated on these leaves), caption leaves
+// let past the no-body floor, and the caption line on leaves whose source is nearly empty. Judged by
+// scripts/eval/context-bleed-5274/judge.mjs (blind, scans of n-1, n, n+1). It shares 5274's withheld markers; no hold.
+const P5274CB = PROFILE === '5274cb';
+const P5274 = PROFILE === '5274' || P5274CB;
+const ISSUE = P5274 ? 5274 : 5021;
+const HOLD_REASON = P5274CB ? null : P5274 ? 'near-blank-invented-5274' : 'leaf-shift-5021';
+const NB_DIR = path.join(ROOT, 'scripts/eval/results/zh-near-blank-screen-5274');
+// The one prompt line the 5274 gate may add (--prompt-line), appended to each page's prompt via --instructions-file.
+const NB_PROMPT_LINE = 'This leaf may carry only a title, a caption or a few labels beside a picture. In the translation, the notes, the summary and the keywords alike, say only what is printed on this leaf or plainly visible in its picture: translate the printed words, describe the picture if there is one, and add no entry text, use, date, dynasty, source work, author or background that the leaf itself does not give.';
 const REREAD_LANE = 'agy-reread-lite-7853';
 const AGY_MODEL = 'gemini-3.8-flash-low';
 const FLAG_CUTOFF = '2026-11-03T12:00:00Z';
@@ -88,7 +103,7 @@ const VERDICT_FILES = [
 // Named by eye on #5021 / #5274 (2026-11-03): 農政全書 p.490-492 withheld, p.489's English stops halfway down the
 // leaf; 皇極經世書 p.63's OCR and English add four table columns (its OCR is Flash-Lite, so it is re-read first).
 const NAMED = [['6992cbd8018b80967354ba40', [489, 490, 491, 492]], ['6a0a4e9f7cd8e1e3d0f496d7', [63]]];
-const FINAL = new Set(['retranslated', 'ocr-refused', 'apply-refused', 'read-failed', 'not-translatable', 'skip-human', 'skip-changed', 'skip-gone', 'gate-refused']);
+const FINAL = new Set(['retranslated', 'ocr-refused', 'apply-refused', 'read-failed', 'not-translatable', 'skip-human', 'skip-changed', 'skip-gone', 'gate-refused', 'skip-opus-context', 'skip-ocr-neighbour']);
 /** The reader's own skip lines in a book's run.log ("  63 skipped: english-book") → Map(page_number → reason). */
 export function readerSkips(logText) {
   const m = new Map();
@@ -103,13 +118,13 @@ const MODE = process.argv[2];
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
 const has = (n) => process.argv.includes(`--${n}`);
 const OUT = arg('out') && path.resolve(arg('out'));
-if (!OUT || !['build', 'gate-pick', 'run', 'judge', 'gate-verdict', 'release', 'status'].includes(MODE)) {
-  console.error('usage: wrong-leaf-fix-5021.mjs build|gate-pick|run|judge|gate-verdict|release|status --out=DIR (see the header)');
+if (!OUT || !['build', 'enqueue', 'gate-pick', 'run', 'judge', 'gate-verdict', 'release', 'status'].includes(MODE)) {
+  console.error('usage: wrong-leaf-fix-5021.mjs build|enqueue|gate-pick|run|judge|gate-verdict|release|status --out=DIR [--issue=5274] (see the header)');
   process.exit(2);
 }
 fs.mkdirSync(OUT, { recursive: true });
 const ENV_FILE = process.env.SL_ENV_FILE || path.join(ROOT, '.env.production.local');
-const JOB = process.env.JOB_NAME || 'wrong-leaf-fix-5021';
+const JOB = process.env.JOB_NAME || (P5274CB ? 'context-bleed-find-fix-5274' : P5274 ? 'near-blank-fix-5274' : 'wrong-leaf-fix-5021');
 const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const gz = (f) => (f.endsWith('.gz') ? zlib.gunzipSync(fs.readFileSync(f)).toString() : fs.readFileSync(f, 'utf8'));
 const LEDGER = path.join(OUT, 'ledger.jsonl');
@@ -148,6 +163,41 @@ async function build() {
   const sw = await db.collection('sweep_log').find({ sweep: 'withhold-by-eye', 'detail.issue': { $in: [ISSUE, String(ISSUE)] } }, { projection: { book_id: 1, 'detail.pages': 1 } }).toArray();
   for (const r of sw) for (const p of r.detail.pages) add(r.book_id, p, 'withheld-5021');
   for (const [b, ps] of NAMED) for (const p of ps) add(b, p, 'named');
+  const { rows, left, books: nb } = await makeRows(want);
+  writeQueue(rows, want.size, left, nb);
+}
+
+/** #5274: every near-blank page the screen called invented that is logged withheld by eye under 5274 (sweep_log) — the
+ * 12 of 2026-11-03 and the 518 of 2026-11-04 — and the screen's ocr_dropped pages, which are re-read before their English. */
+async function build5274() {
+  const want = new Map();
+  const verdicts = readJsonl(path.join(NB_DIR, 'verdicts.jsonl'));
+  const fam = new Map(verdicts.map((v) => [`${v.book_id}:${v.page_number}`, v.family]));
+  const add = (b, p, src) => { const k = `${b}:${p}`; const w = want.get(k) || { book_id: b, page: Number(p), src: [], family: fam.get(k) ?? null }; if (!w.src.includes(src)) w.src.push(src); want.set(k, w); };
+  const invented = new Set(verdicts.filter((v) => v.verdict === 'invented').map((v) => `${v.book_id}:${v.page_number}`));
+  const sw = await db.collection('sweep_log').find({ sweep: 'withhold-by-eye', 'detail.issue': { $in: [ISSUE, String(ISSUE)] } }, { projection: { book_id: 1, 'detail.pages': 1 } }).toArray();
+  let otherLogged = 0;
+  for (const r of sw) for (const p of r.detail.pages) { if (invented.has(`${r.book_id}:${p}`)) add(r.book_id, p, 'near-blank-invented'); else otherLogged++; }
+  for (const l of fs.readFileSync(path.join(NB_DIR, 'reocr-candidates.tsv'), 'utf8').trim().split('\n').slice(1)) { const [b, p] = l.split('\t'); add(b, p, 'ocr-dropped'); }
+  const { rows, left, books } = await makeRows(want);
+  left.logged_5274_not_near_blank = otherLogged;
+  writeQueue(rows, want.size, left, books);
+}
+
+const WITHHELD_SRC = ['withheld-5021', 'named', 'near-blank-invented', 'ocr-dropped', 'confirmed'];
+// The withheld markers a row may carry and still be this repair's to lift: 5021/5274 by eye, and for the #5274
+// ocr_dropped pages the stale marker a re-OCR left (the English was withheld because its OCR changed under it).
+const OWN_MARKERS = P5274 ? ['invented_by_eye', 'stale_after_reocr'] : ['invented_by_eye'];
+const NB_SCREENED = '2026-11-03T13:00:00Z';
+// #5274cb: no page translated twice in a week — a page whose English is younger than this is left out (`since`)
+let ocrDupSet = null;
+const ocrDup = () => (ocrDupSet ??= new Set(readJsonl(path.join(OUT, 'ocr-overlap.jsonl')).filter((o) => o.ocr_dup).map((o) => o.page_id)));
+const CB_WEEK_AGO = new Date(Date.now() - 7 * 86400e3).toISOString();
+// #5274cb: the caption line, on leaves whose source is nearly empty (near_blank in the queue row). Stricter than
+// NB_PROMPT_LINE on the summary and keywords, where gate 2 of near-blank-fix-5274 found its four misses.
+const CB_CAPTION_LINE = 'This leaf carries little or no text: a title, a caption or a few labels, perhaps beside a picture. Translate only the words printed on this leaf. If there is a picture, describe only what is visible, in one short note. Add nothing else: no entry text, explanation, use, date, dynasty, source work, author or background, in the translation, the notes, the summary or the keywords. The summary is one sentence saying what is printed and shown on this leaf.';
+
+async function makeRows(want) {
   const byBook = new Map();
   for (const w of want.values()) { const a = byBook.get(w.book_id) || []; a.push(w.page); byBook.set(w.book_id, a); }
   const books = new Map((await db.collection('books').find({ id: { $in: [...byBook.keys()] } }, { projection: { id: 1, title: 1, language: 1, publisher: 1, image_source: 1, visible: 1, human_read_count: 1, 'pipeline_auto.hold.reason': 1 } }).toArray()).map((b) => [b.id, b]));
@@ -158,7 +208,7 @@ async function build() {
     const lane = translateLaneForBook(bk);
     const ps = await db.collection('pages').aggregate([
       { $match: { book_id: b, page_number: { $in: pages } } },
-      { $project: { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'translation.updated_at': 1, 'translation.edited_by': 1, 'translation.source': 1,
+      { $project: { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'translation.updated_at': 1, 'translation.edited_by': 1, 'translation.source': 1,
         has_tr: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
         no_text: { $regexMatch: { input: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] }, regex: '<page-type>\\s*(illustration|plate|map|blank)', options: 'i' } },
         tw: '$translation_withheld.reason', tw_at: '$translation_withheld.withheld_at' } },
@@ -167,37 +217,103 @@ async function build() {
     left.missing += pages.filter((p) => !found.has(p)).length;
     for (const p of ps) {
       const w = want.get(`${b}:${p.page_number}`);
-      const withheld = p.tw === 'invented_by_eye' && (w.src.includes('withheld-5021') || w.src.includes('named'));
+      const withheld = OWN_MARKERS.includes(p.tw) && w.src.some((s) => WITHHELD_SRC.includes(s));
       if (p.translation?.edited_by || p.translation?.source === 'manual') { left.human++; continue; }
       if (p.tw && !withheld) { left.other_withheld++; continue; }
       if (!withheld && !p.has_tr) { left.no_english++; continue; }
       const trAt = p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null;
-      if (!withheld && trAt && trAt >= FLAG_CUTOFF) { left.since++; continue; }
+      if (!withheld && trAt && trAt >= (P5274CB ? CB_WEEK_AGO : FLAG_CUTOFF)) { left.since++; continue; }
       const ocr = { ...p.ocr, data: p.no_text ? '<page-type>blank' : '' };
+      // #5274 ocr_dropped: the OCR the screen saw left the leaf's text out, so it is re-read first whatever its model,
+      // unless it was rewritten after the screen.
+      const ocrAt = p.ocr?.updated_at ? new Date(p.ocr.updated_at).toISOString() : null;
+      const ocrForce = w.src.includes('ocr-dropped') && !(ocrAt && ocrAt >= NB_SCREENED);
       rows.push({
         page_id: p.id, book_id: b, page: p.page_number, src: w.src, state: withheld ? 'withheld' : 'served', tr_at: trAt,
-        ocr_model: p.ocr?.model ?? null, ocr_first: uncheckedLite({ ocr }), language: bk.language, title: String(bk.title || '').slice(0, 90),
+        ocr_model: p.ocr?.model ?? null, ocr_first: ocrForce || uncheckedLite({ ocr }), ...(ocrForce && { ocr_force: true }), ...(w.family && { family: w.family }),
+        language: bk.language, title: String(bk.title || '').slice(0, 90),
         lane_row: lane.row?.id ?? 'default', engine: lane.engine, channel: lane.channel ?? 'batch', reader: translateReader(lane),
-        reads: bk.human_read_count || 0, hold: bk.pipeline_auto?.hold?.reason ?? null,
+        reads: bk.human_read_count || 0, hold: bk.pipeline_auto?.hold?.reason ?? null, ...(w.near_blank && { near_blank: true }),
       });
     }
   }
+  return { rows, left, books: byBook.size };
+}
+
+function rankRows(rows) {
   const per = new Map();
   for (const r of rows) { const s = per.get(r.book_id) || { reads: r.reads, withheld: 0, n: 0 }; s.n++; if (r.state === 'withheld') s.withheld++; per.set(r.book_id, s); }
   const rank = (b) => per.get(b);
   rows.sort((x, y) => (rank(y.book_id).reads - rank(x.book_id).reads) || (rank(y.book_id).withheld - rank(x.book_id).withheld) || (rank(y.book_id).n - rank(x.book_id).n) || (x.book_id < y.book_id ? -1 : x.book_id > y.book_id ? 1 : x.page - y.page));
+  return rows;
+}
+
+function writeQueue(rows, targets, left) {
+  rankRows(rows);
   fs.writeFileSync(path.join(OUT, 'queue.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   const tab = {};
   for (const r of rows) { const k = `${r.state} ${routeClass(r)} ${r.reader}`; tab[k] = (tab[k] || 0) + 1; }
-  const summary = { built_at: new Date().toISOString(), targets: want.size, queued: rows.length, books: per.size, withheld: rows.filter((r) => r.state === 'withheld').length, served: rows.filter((r) => r.state === 'served').length, ocr_first: rows.filter((r) => r.ocr_first).length, left_out: left, by_class: tab };
+  const summary = { built_at: new Date().toISOString(), issue: ISSUE, targets, queued: rows.length, books: new Set(rows.map((r) => r.book_id)).size, withheld: rows.filter((r) => r.state === 'withheld').length, served: rows.filter((r) => r.state === 'served').length, ocr_first: rows.filter((r) => r.ocr_first).length, left_out: left, by_class: tab };
   fs.writeFileSync(path.join(OUT, 'build.json'), JSON.stringify(summary, null, 1));
   console.log(JSON.stringify(summary, null, 1));
 }
 
+/** Add pages to an existing queue without rebuilding it (a rebuild would drop every page the run already rewrote):
+ * --from=FILE, a JSON { pages: [{ book_id, page }] } such as wrong-leaf-find-5021's confirmed-for-fix.json.
+ * Pages already queued are left as they are; the new rows go to the FRONT, so the next run takes them first. */
+async function enqueue() {
+  const f = arg('from');
+  const src = JSON.parse(fs.readFileSync(f, 'utf8'));
+  const q = readJsonl(path.join(OUT, 'queue.jsonl'));
+  const have = new Set(q.map((r) => `${r.book_id}:${r.page}`));
+  const want = new Map();
+  let already = 0;
+  for (const p of src.pages || src) {
+    const k = `${p.book_id}:${p.page ?? p.page_number}`;
+    if (have.has(k)) { already++; continue; }
+    want.set(k, { book_id: p.book_id, page: Number(p.page ?? p.page_number), src: ['confirmed', ...(p.src ? [].concat(p.src) : [])], ...(p.near_blank && { near_blank: true }) });
+  }
+  const { rows, left } = await makeRows(want);
+  rankRows(rows);
+  fs.writeFileSync(path.join(OUT, 'queue.jsonl'), [...rows, ...q].map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const s = { enqueued_at: new Date().toISOString(), from: f, asked: (src.pages || src).length, already_queued: already, added: rows.length, left_out: left, added_ids: rows.map((r) => r.page_id) };
+  fs.writeFileSync(path.join(OUT, `enqueue-${path.basename(f, '.json')}.json`), JSON.stringify(s, null, 1));
+  console.log(JSON.stringify({ ...s, added_ids: undefined }, null, 1));
+}
+
 // ── gate-pick ──
 function mulberry32(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+/** #5274 gate strata: the three picture encyclopedias the screen found worst on 3 Flash, and the rest. */
+const nbBucket = (r) => (['三才圖會', '武備志', '植物名實圖考'].includes(r.family) ? r.family : 'other');
+const gateEligible = (r) => (P5274 ? r.state === 'withheld' && r.src.includes('near-blank-invented') : r.state === 'served' && r.src.includes('flag'));
+const gateClass = (r) => (P5274 ? nbBucket(r) : routeClass(r));
+
+/** #5274: 30 withheld near-blank pages, one per book, weighted to 三才圖會, 武備志, 植物名實圖考 and "other"
+ * (--alloc=10,7,6,7), seeded. Pages the ledger already holds (an earlier gate's) are left out, so a re-gate is on
+ * fresh pages; an earlier gate.json is kept as gate-<k>.json. */
+function gatePick5274() {
+  const [a, b, c, d] = String(arg('alloc', '10,7,6,7')).split(',').map(Number);
+  const alloc = new Map([['三才圖會', a], ['武備志', b], ['植物名實圖考', c], ['other', d]]);
+  const rnd = mulberry32(Number(arg('seed', 52740)));
+  const led = ledgerState();
+  const gf = path.join(OUT, 'gate.json');
+  if (fs.existsSync(gf)) { let k = 1; while (fs.existsSync(path.join(OUT, `gate-${k}.json`))) k++; fs.renameSync(gf, path.join(OUT, `gate-${k}.json`)); }
+  const q = readJsonl(path.join(OUT, 'queue.jsonl')).filter((r) => gateEligible(r) && !led.has(r.page_id));
+  const usedBooks = new Set(), picked = [];
+  for (const [k, n0] of alloc) {
+    const pool = q.filter((r) => nbBucket(r) === k).sort((x, y) => (x.page_id < y.page_id ? -1 : 1));
+    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+    let n = n0;
+    for (const r of pool) { if (n <= 0) break; if (usedBooks.has(r.book_id)) continue; usedBooks.add(r.book_id); picked.push(r); n--; }
+  }
+  fs.writeFileSync(gf, JSON.stringify({ seed: Number(arg('seed', 52740)), n: picked.length, alloc: Object.fromEntries(alloc), prompt_line: has('prompt-line') ? NB_PROMPT_LINE : null, pages: picked }, null, 1));
+  const got = {}; for (const r of picked) got[nbBucket(r)] = (got[nbBucket(r)] || 0) + 1;
+  console.log(`gate: ${picked.length} pages in ${usedBooks.size} books`, got);
+}
+
 function gatePick() {
   if (has('top-up')) return gateTopUp();
+  if (P5274) return gatePick5274();
   const N = Number(arg('n', 30)), rnd = mulberry32(Number(arg('seed', 50213)));
   const q = readJsonl(path.join(OUT, 'queue.jsonl')).filter((r) => r.state === 'served' && r.src.includes('flag'));
   const byClass = new Map();
@@ -228,14 +344,30 @@ function gateTopUp() {
   const ok = g.pages.filter((p) => ['read', 'retranslated'].includes(led.get(p.page_id)?.state));
   const out = g.pages.filter((p) => !ok.includes(p) && FINAL.has(led.get(p.page_id)?.state));
   const books = new Set(g.pages.map((p) => p.book_id));
-  const q = readJsonl(path.join(OUT, 'queue.jsonl')).filter((r) => r.state === 'served' && r.src.includes('flag') && !books.has(r.book_id) && !led.has(r.page_id) && !/^english/i.test(r.language || ''));
+  const q = readJsonl(path.join(OUT, 'queue.jsonl')).filter((r) => gateEligible(r) && !books.has(r.book_id) && !led.has(r.page_id) && !/^english/i.test(r.language || ''));
   const add = [];
   for (const o of out) {
-    const pool = q.filter((r) => routeClass(r) === routeClass(o) && !books.has(r.book_id)).sort((a, b) => (a.page_id < b.page_id ? -1 : 1));
-    const pick = pool.length ? pool[Math.floor(rnd() * pool.length)] : null;
-    if (pick) { books.add(pick.book_id); add.push(pick); }
+    const pool = q.filter((r) => gateClass(r) === gateClass(o) && !books.has(r.book_id)).sort((a, b) => (a.page_id < b.page_id ? -1 : 1));
+    // #5274: a stratum with no book left (植物名實圖考: 11 books, most leaves caption-only and refused as no-body)
+    // is filled from the rest of the queue; the substitution is recorded in gate.json `filled_from_other`.
+    const any = P5274 && !pool.length ? q.filter((r) => !books.has(r.book_id)).sort((a, b) => (a.page_id < b.page_id ? -1 : 1)) : [];
+    const from = pool.length ? pool : any;
+    const pick = from.length ? from[Math.floor(rnd() * from.length)] : null;
+    if (pick) { books.add(pick.book_id); add.push(pick); if (!pool.length) g.filled_from_other = [...(g.filled_from_other || []), { for: gateClass(o), page_id: pick.page_id, class: gateClass(pick) }]; }
   }
-  g.replaced = [...(g.replaced || []), ...out.map((p) => ({ page_id: p.page_id, class: routeClass(p), state: led.get(p.page_id)?.state }))];
+  // --fill-to=N (#5274): a gate that lost pages to a stratum with no book left is filled back to N from the rest.
+  const fillTo = Number(arg('fill-to', 0));
+  const keep = g.pages.length - out.length + add.length;
+  if (P5274 && keep < fillTo) {
+    const rest = q.filter((r) => !books.has(r.book_id)).sort((a, b) => (a.page_id < b.page_id ? -1 : 1));
+    for (let i = keep; i < fillTo && rest.length; i++) {
+      const pick = rest.splice(Math.floor(rnd() * rest.length), 1)[0];
+      if (books.has(pick.book_id)) { i--; continue; }
+      books.add(pick.book_id); add.push(pick);
+      g.filled_from_other = [...(g.filled_from_other || []), { for: 'fill-to', page_id: pick.page_id, class: gateClass(pick) }];
+    }
+  }
+  g.replaced = [...(g.replaced || []), ...out.map((p) => ({ page_id: p.page_id, class: gateClass(p), state: led.get(p.page_id)?.state, why: led.get(p.page_id)?.why }))];
   g.pages = [...ok, ...g.pages.filter((p) => !ok.includes(p) && !out.includes(p)), ...add];
   g.n = g.pages.length;
   fs.writeFileSync(path.join(OUT, 'gate.json'), JSON.stringify(g, null, 1));
@@ -262,7 +394,7 @@ function pickPool() {
 }
 
 // ── run ──
-async function doBook(rows, { applyOcr, apply, home }) {
+async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   const book = rows[0].book_id, dir = path.join(OUT, 'books', book);
   fs.mkdirSync(dir, { recursive: true });
   const log = path.join(dir, 'run.log');
@@ -279,19 +411,34 @@ async function doBook(rows, { applyOcr, apply, home }) {
     if (!p) { out.push({ ...r, state: 'skip-gone' }); continue; }
     if (p.translation?.edited_by || p.translation?.source === 'manual') { out.push({ ...r, state: 'skip-human' }); continue; }
     const trAt = p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null;
+    // #5274cb: claude-translate.mjs (the Opus route, Pali) still sends the previous page's English; not read here, listed
+    // #5274cb: the page's OWN OCR is a neighbour's text (show-through, a wrong-leaf read; ocr-overlap.mjs): re-translating
+    // it gives the same wrong English, so it is listed for an OCR repair instead of read
+    if (P5274CB && ocrDup().has(r.page_id)) { out.push({ ...r, state: 'skip-ocr-neighbour', why: 'its OCR is a neighbour leaf\'s text (ocr-overlap.jsonl): needs an OCR re-read from the image, not a re-translation' }); continue; }
+    if (P5274CB && r.reader === 'opus') { out.push({ ...r, state: 'skip-opus-context', why: 'the Opus route sends neighbour context; not read by the own-leaf repair' }); continue; }
     if (r.state === 'served' && trAt !== r.tr_at) { out.push({ ...r, state: 'skip-changed', why: `English rewritten ${trAt} since the queue was built` }); continue; }
     if (r.state === 'withheld' && !p.translation_withheld) { out.push({ ...r, state: 'skip-changed', why: 'no longer withheld' }); continue; }
     work.push({ ...r, _p: p });
   }
   // 1. OCR first: unchecked Flash-Lite drafts are re-read, one page a call, and written only with --apply-ocr.
-  const lite = work.filter((r) => uncheckedLite({ ocr: { ...r._p.ocr, data: r._p.no_text ? '<page-type>blank' : '' } }));
+  const lite = work.filter((r) => r.ocr_force || uncheckedLite({ ocr: { ...r._p.ocr, data: r._p.no_text ? '<page-type>blank' : '' } }));
   if (lite.length) {
     const ids = path.join(dir, 'ocr-ids.json');
     fs.writeFileSync(ids, JSON.stringify(lite.map((r) => r.page_id)));
-    const code = await spawnP([path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${path.join(dir, 'ocr')}`, `--model=${AGY_MODEL}`, `--lane=${REREAD_LANE}`, `--job=${JOB}`, '--stop-on-quota'], { env, log });
+    // --retry=ocr-refused: the refused read is moved aside (kept) and the re-read is --fresh, as for the English below.
+    const ocrDir = path.join(dir, 'ocr'), again = lite.filter((r) => retryIds.has(r.page_id));
+    if (again.length && fs.existsSync(ocrDir)) {
+      const aside = path.join(dir, `ocr-before-retry-${Date.now()}`);
+      fs.mkdirSync(aside, { recursive: true });
+      for (const r of again) for (const f of fs.readdirSync(ocrDir).filter((f) => f.startsWith(`${r.page_id}.`))) fs.renameSync(path.join(ocrDir, f), path.join(aside, f));
+    }
+    const code = await spawnP([path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${ocrDir}`, `--model=${AGY_MODEL}`, `--lane=${REREAD_LANE}`, `--job=${JOB}`, '--stop-on-quota', ...(again.length ? ['--fresh'] : [])], { env, log });
     if (code === 3) return { quota: true, out };
     if (applyOcr) {
-      await spawnP([path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'apply', `--out=${path.join(dir, 'ocr')}`, `--only=${ids}`, `--reason=#5021 OCR first: the stored Flash-Lite draft under a wrong-leaf page is re-read (agy ${AGY_MODEL}, one page a call, the ${REREAD_LANE} route) before its English is re-translated`, `--lane=${REREAD_LANE}`, '--print-only', '--apply'], { env, log });
+      const why = P5274
+        ? `#5274 OCR first: the stored OCR under a near-blank-flagged page is re-read (agy ${AGY_MODEL}, one page a call, the ${REREAD_LANE} route) before its English is re-translated: the screen found it dropped text that is on the leaf, or it is an unchecked Flash-Lite draft`
+        : `#5021 OCR first: the stored Flash-Lite draft under a wrong-leaf page is re-read (agy ${AGY_MODEL}, one page a call, the ${REREAD_LANE} route) before its English is re-translated`;
+      await spawnP([path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'apply', `--out=${path.join(dir, 'ocr')}`, `--only=${ids}`, `--reason=${why}`, `--lane=${REREAD_LANE}`, '--print-only', '--apply'], { env, log });
       const after = new Map((await db.collection('pages').find({ id: { $in: lite.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'ocr.model': 1, 'ocr.pipeline': 1 } }).toArray()).map((p) => [p.id, p]));
       for (const r of lite) {
         const a = after.get(r.page_id);
@@ -308,11 +455,33 @@ async function doBook(rows, { applyOcr, apply, home }) {
   // 2. The English, one page a call.
   const ids = path.join(dir, 'tr-ids.json'), trDir = path.join(dir, 'tr');
   fs.writeFileSync(ids, JSON.stringify(work.map((r) => r.page_id)));
+  // --retry: the earlier read of a retried page is moved aside (kept, never deleted) and the reader is told --fresh,
+  // so it neither skips the page as "already read" nor hands back the same kept read.
+  const retried = work.filter((r) => retryIds.has(r.page_id));
+  if (retried.length && fs.existsSync(trDir)) {
+    const aside = path.join(dir, `tr-before-retry-${Date.now()}`);
+    fs.mkdirSync(aside, { recursive: true });
+    for (const r of retried) for (const f of fs.readdirSync(trDir).filter((f) => f.startsWith(`${r.page_id}.`))) fs.renameSync(path.join(trDir, f), path.join(aside, f));
+  }
   const opus = work[0].reader === 'opus';
   if (opus && claudeBlocked()) return { quota: true, out, why: 'claude blocked' };
+  // --prompt-line (#5274 gate, round 2): one line appended to each page's prompt, recorded in the read's meta.
+  let instr = [];
+  if (P5274CB) {
+    const nb = work.filter((r) => r.near_blank);
+    if (nb.length) {
+      const f = path.join(dir, 'instructions.json');
+      fs.writeFileSync(f, JSON.stringify(Object.fromEntries(nb.map((r) => [r.page_id, CB_CAPTION_LINE]))));
+      instr = [`--instructions-file=${f}`];
+    }
+  } else if (has('prompt-line') && P5274) {
+    const f = path.join(dir, 'instructions.json');
+    fs.writeFileSync(f, JSON.stringify(Object.fromEntries(work.map((r) => [r.page_id, NB_PROMPT_LINE]))));
+    instr = [`--instructions-file=${f}`];
+  }
   const readArgs = opus
     ? [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, '--model=opus', '--per-call=1', `--job=${JOB}`]
-    : [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, `--model=${AGY_MODEL}`];
+    : [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, `--model=${AGY_MODEL}`, ...instr, ...(P5274CB ? ['--own-leaf', '--caption-leaves'] : []), ...(retried.length ? ['--fresh'] : [])];
   const rc = await spawnP(readArgs, { env, log });
   if (rc === 3) return { quota: true, out };
   if (rc === 2) { for (const r of work) out.push({ ...r, _p: undefined, state: 'gate-refused' }); return { out }; }
@@ -323,7 +492,13 @@ async function doBook(rows, { applyOcr, apply, home }) {
   if (!apply) { for (const r of work) out.push({ ...r, _p: undefined, ...(hasRead(r) ? { state: 'read' } : unread(r)) }); return { out }; }
   // 3. Write through translate-core's door, then lift the withheld marker on what it wrote.
   const t0 = new Date();
-  await spawnP([path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'apply', `--out=${trDir}`, `--reason=#5021 wrong-leaf repair: this page served another leaf's English (Flash-Lite screen flag or Opus with the scans); re-translated one page a call from its own transcription (${opus ? 'Opus, claude -p' : `agy ${AGY_MODEL}`})`, '--apply'], { env, log });
+  const reader = opus ? 'Opus, claude -p' : `agy ${AGY_MODEL}`;
+  const why = P5274CB
+    ? `#5274 context-bleed repair: this leaf's English was another leaf's text (the previous page's English was sent as context and translated in its place) or composed for the leaf; re-translated one page a call from its own transcription only, no neighbouring text (${reader}${instr.length ? ', with the caption line' : ''})`
+    : P5274
+    ? `#5274 near-blank repair: this leaf's English carried text that is not on the leaf (Opus screen with the image; withheld by eye) or its OCR dropped the leaf's text; re-translated one page a call from its own transcription (${reader}${instr.length ? ', with the caption-only prompt line' : ''})`
+    : `#5021 wrong-leaf repair: this page served another leaf's English (Flash-Lite screen flag or Opus with the scans); re-translated one page a call from its own transcription (${reader})`;
+  await spawnP([path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'apply', `--out=${trDir}`, `--reason=${why}`, '--apply'], { env, log });
   const now = new Map((await db.collection('pages').find({ id: { $in: work.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, 'translation.data': 1, 'translation.updated_at': 1, translation_withheld: 1 } }).toArray()).map((p) => [p.id, p]));
   for (const r of work) {
     const p = now.get(r.page_id);
@@ -364,8 +539,13 @@ async function run() {
   const applyOcr = has('apply-ocr') || has('apply'), apply = has('apply');
   let q = readJsonl(path.join(OUT, 'queue.jsonl'));
   if (frame === 'gate') { const g = new Set(JSON.parse(fs.readFileSync(path.join(OUT, 'gate.json'), 'utf8')).pages.map((p) => p.page_id)); q = q.filter((r) => g.has(r.page_id)); }
+  if (frame === 'ids') { const g = new Set(JSON.parse(fs.readFileSync(arg('ids-file'), 'utf8'))); q = q.filter((r) => g.has(r.page_id)); }
   const led = ledgerState();
-  const todo = q.filter((r) => !FINAL.has(led.get(r.page_id)?.state) && !(frame !== 'gate' && !apply && led.get(r.page_id)?.state === 'read'));
+  // --retry=apply-refused[,ocr-refused]: take pages again whose last state was one of these (a new ledger row supersedes).
+  const retry = new Set(String(arg('retry', '')).split(',').filter(Boolean));
+  const isFinal = (s) => FINAL.has(s) && !retry.has(s);
+  const todo = q.filter((r) => !isFinal(led.get(r.page_id)?.state) && !(frame !== 'gate' && !apply && led.get(r.page_id)?.state === 'read'));
+  const retryIds = new Set(todo.filter((r) => retry.has(led.get(r.page_id)?.state)).map((r) => r.page_id));
   const books = [];
   const seen = new Map();
   for (const r of todo) { if (!seen.has(r.book_id)) { seen.set(r.book_id, []); books.push(r.book_id); } seen.get(r.book_id).push(r); }
@@ -388,7 +568,7 @@ async function run() {
       const book = queue.shift();
       if (!book) break;
       const rows = seen.get(book);
-      const res = await doBook(rows, { applyOcr, apply, home: pick.pool?.home ?? null });
+      const res = await doBook(rows, { applyOcr, apply, home: pick.pool?.home ?? null, retryIds });
       note(res.out);
       if (res.quota) { console.log(`  ${book}: quota reply (${res.why || 'agy'}); back of the queue, pools re-read`); poolCache.at = 0; queue.push(book); await new Promise((r) => setTimeout(r, 60e3)); continue; }
       done++;
@@ -402,16 +582,90 @@ async function run() {
   const p = progress({ running: false, finished_at: new Date().toISOString() });
   console.log(JSON.stringify(p, null, 1));
   let rel = null;
-  if (frame === 'all' && apply && has('release')) rel = await release();
-  if (frame === 'all' && apply && has('notify')) {
-    const msg = `wrong-leaf-fix-5021 run finished: ${JSON.stringify(p.by_state)}${rel ? `; holds released ${rel.released.length} of ${rel.held}` : ''}. Progress: ${path.join(OUT, 'progress.json')}`;
-    spawnSync('curl', ['-s', '-H', 'Title: #5021 wrong-leaf re-translation done', '-d', msg, 'https://ntfy.sh/sourcelibrary-uptime']);
-    spawnSync('gh', ['issue', 'comment', String(ISSUE), '--body', `**wrong-leaf-fix-5021 runner finished** (${p.finished_at}).\n\n\`\`\`\n${JSON.stringify(p.by_state, null, 1)}\n\`\`\`\nState key: \`withheld|served : retranslated | ocr-refused (the Flash-Lite OCR could not be re-read under the guards; English kept or still withheld) | apply-refused | read-failed | skip-*\`. ${rel ? `\n\nHolds \`leaf-shift-5021\`: ${rel.released.length} of ${rel.held} released; ${rel.kept_queue} kept with queued pages, ${rel.kept_withheld} kept with a withheld page.` : ''}\nLedger: \`${LEDGER}\`.`], { cwd: ROOT });
+  if (['all', 'ids'].includes(frame) && apply && has('release')) rel = await release();
+  if (['all', 'ids'].includes(frame) && apply && has('notify')) {
+    const msg = `${JOB} run finished: ${JSON.stringify(p.by_state)}${rel ? `; holds released ${rel.released.length} of ${rel.held}` : ''}. Progress: ${path.join(OUT, 'progress.json')}`;
+    spawnSync('curl', ['-s', '-H', `Title: #${ISSUE} ${P5274 ? 'near-blank' : 'wrong-leaf'} re-translation done`, '-d', msg, 'https://ntfy.sh/sourcelibrary-uptime']);
+    spawnSync('gh', ['issue', 'comment', String(ISSUE), '--body', `**${JOB} runner finished** (${p.finished_at}, \`--issue=${ISSUE}\`).\n\n\`\`\`\n${JSON.stringify(p.by_state, null, 1)}\n\`\`\`\nState key: \`withheld|served : retranslated | ocr-refused (the Flash-Lite OCR could not be re-read under the guards; English kept or still withheld) | apply-refused | read-failed | skip-*\`. ${rel ? `\n\nHolds \`${HOLD_REASON}\`: ${rel.released.length} of ${rel.held} released; ${rel.kept_queue} kept with queued pages, ${rel.kept_withheld} kept with a withheld page.` : ''}\nLedger: \`${LEDGER}\`. Progress: \`node --env-file=.env.production.local scripts/maintenance/wrong-leaf-fix-5021.mjs status --issue=${PROFILE} --out=${OUT}\``], { cwd: ROOT });
   }
 }
 
 // ── judge (gate) ──
+/** #5274: one sealed `claude -p --model opus` call per gate page with ITS scan and transcription and two Englishes
+ * (the withheld one and the new read) in a seeded random order, not told which is which. For each: is every sentence
+ * on the leaf (a translation of printed words, or a description of the picture presented as one), or does it add
+ * text that is not printed there. The failure being beaten: under a captioned woodcut the model writes the entry it
+ * expects. Judged on that, not on fluency. */
+async function judge5274() {
+  const { fetchLeaf, claudeCall } = await import('../audit/leaf-shift-confirm-5021.mjs');
+  const { getPageSource } = await import('../lib/page-image-url.mjs');
+  const g = JSON.parse(fs.readFileSync(path.join(OUT, 'gate.json'), 'utf8')).pages;
+  const resFile = path.join(OUT, 'judge.jsonl');
+  const done = new Set(readJsonl(resFile).filter((r) => r.verdict).map((r) => r.page_id));
+  const rnd = mulberry32(5274);
+  const items = g.map((r) => ({ r, newFirst: rnd() < 0.5 })).filter(({ r }) => !done.has(r.page_id));
+  const CONC = Number(arg('concurrency', 4));
+  const worker = async () => {
+    for (let it = items.shift(); it; it = items.shift()) {
+      const { r, newFirst } = it;
+      const readFile = path.join(OUT, 'books', r.book_id, 'tr', `${r.page_id}.txt`);
+      const fresh = fs.existsSync(readFile) ? fs.readFileSync(readFile, 'utf8').trim() : '';
+      if (!fresh) { fs.appendFileSync(resFile, JSON.stringify({ page_id: r.page_id, book_id: r.book_id, page: r.page, cls: 'no_new_read' }) + '\n'); continue; }
+      const p = await db.collection('pages').findOne({ id: r.page_id }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, translation_withheld: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1 } });
+      const stored = String(p?.translation_withheld?.text || p?.translation?.data || '');
+      const dir = path.join(OUT, 'judge', r.page_id);
+      fs.mkdirSync(dir, { recursive: true });
+      const got = await fetchLeaf({ display_photo: getPageSource(p) }, path.join(dir, 'leaf.jpg'));
+      if (!got) { fs.appendFileSync(resFile, JSON.stringify({ page_id: r.page_id, book_id: r.book_id, page: r.page, cls: 'no_image' }) + '\n'); continue; }
+      const [X, Y] = newFirst ? [fresh, stored] : [stored, fresh];
+      const L = [
+        `You are checking English translations of ONE page of "${r.title}" (language: ${r.language}) against the page itself. Open the scan with the Read tool first: leaf.jpg. Below it is a machine transcription of the page, which can be wrong or incomplete; trust the image.`,
+        '', 'Transcription:', '<<<', String(p?.ocr?.data || '(empty)').slice(0, 4000), '>>>', '',
+        'Two English versions, X and Y, have been produced for this page. They come from different processes; do not assume either is better.',
+        '', 'Version X:', '<<<', X.slice(0, 6000), '>>>', '', 'Version Y:', '<<<', Y.slice(0, 6000), '>>>', '',
+        'For EACH version, go through it piece by piece and sort every sentence into one of:',
+        '  (a) a translation of words printed on THIS leaf (title, caption, labels, text);',
+        '  (b) a description of what the picture on this leaf visibly shows, presented as a description (in a <note>, bracketed, or "the illustration shows ..."), adding no facts that are neither printed nor visible;',
+        '  (g) a translator\'s gloss marked as a note (<note>...</note>) on a word printed on the leaf: its original characters, romanization, or a phrase saying what the term means. Readers see these as notes, not as the page;',
+        '  (c) anything else: text presented as if it were the page\'s content but not printed on the leaf (an entry, a description of the plant or animal or weapon, a poem, a biography, a table, a commentary in the author\'s voice), or background or explanation beyond a short gloss.',
+        '<summary>, <keywords> and <vocab> blocks are metadata about the page: a summary that says what is on the leaf is (b); one that claims content not on the leaf is (c).',
+        'verdict "clean" when every piece is (a), (b) or (g); "adds" when any piece is (c). Do not judge style or fluency. Also list printed text left untranslated (omitted) and meaning changed (mistranslated), each major (a reader is misled) or minor.',
+        'Answer with JSON only, no code fence: {"X":{"verdict":"clean|adds","adds":[{"quote":"a few words of the English","why":"..."}],"omitted":[{"severity":"major|minor","note":"..."}],"mistranslated":[{"severity":"major|minor","note":"..."}]},"Y":{...},"leaf":"one line: what is printed on the leaf"}',
+      ];
+      const prompt = L.join('\n');
+      fs.writeFileSync(path.join(dir, 'prompt.txt'), prompt);
+      const res = await claudeCall(prompt, dir);
+      let v = null;
+      try { const a = res.text.indexOf('{'), b = res.text.lastIndexOf('}'); v = JSON.parse(res.text.slice(a, b + 1)); } catch { /* unparsed */ }
+      const verdict = v && v.X && v.Y ? { new: newFirst ? v.X : v.Y, stored: newFirst ? v.Y : v.X, leaf: v.leaf } : null;
+      fs.appendFileSync(resFile, JSON.stringify({ page_id: r.page_id, book_id: r.book_id, page: r.page, family: r.family, bucket: nbBucket(r), new_was: newFirst ? 'X' : 'Y', verdict, cls: res.cls || (verdict ? null : 'unparsed'), model: res.model, turns: res.usage?.turns, secs: res.secs, ...(verdict ? {} : { raw: String(res.text).slice(0, 800), err: res.err }) }) + '\n');
+      console.log(`  ${r.page_id} ${r.family}: new ${verdict?.new?.verdict} (${verdict?.new?.adds?.length ?? '?'}), stored ${verdict?.stored?.verdict}${res.cls ? ` ${res.cls}` : ''}`);
+      if (res.cls === 'usage_limit') { items.length = 0; console.log('usage limit: stopping; re-run to resume'); }
+    }
+  };
+  await Promise.all(Array.from({ length: CONC }, worker));
+}
+
+function gateVerdict5274() {
+  const g = JSON.parse(fs.readFileSync(path.join(OUT, 'gate.json'), 'utf8'));
+  const ids = new Set(g.pages.map((p) => p.page_id));
+  const last = new Map(); for (const r of readJsonl(path.join(OUT, 'judge.jsonl'))) if (ids.has(r.page_id)) last.set(r.page_id, r);
+  const rs = [...last.values()].filter((r) => r.verdict);
+  const maj = (v) => [...(v.omitted || []), ...(v.mistranslated || [])].filter((d) => d.severity === 'major').length;
+  const clean = rs.filter((r) => r.verdict.new.verdict === 'clean').length;
+  const v = {
+    judged: rs.length, of: g.n, prompt_line: g.prompt_line ?? null, new_clean: clean, stored_clean: rs.filter((r) => r.verdict.stored.verdict === 'clean').length,
+    major_other: { new: rs.reduce((s, r) => s + maj(r.verdict.new), 0), stored: rs.reduce((s, r) => s + maj(r.verdict.stored), 0) },
+    by_bucket: Object.fromEntries(['三才圖會', '武備志', '植物名實圖考', 'other'].map((k) => { const x = rs.filter((r) => r.bucket === k); return [k, `${x.filter((r) => r.verdict.new.verdict === 'clean').length}/${x.length}`]; })),
+    pass: rs.length === g.n && clean >= 27,
+    adds: rs.filter((r) => r.verdict.new.verdict !== 'clean').map((r) => ({ page_id: r.page_id, book_id: r.book_id, page: r.page, family: r.family, adds: r.verdict.new.adds })),
+  };
+  fs.writeFileSync(path.join(OUT, 'gate-verdict.json'), JSON.stringify(v, null, 1));
+  console.log(JSON.stringify(v, null, 1));
+}
+
 async function judge() {
+  if (P5274) return judge5274();
   const { fetchLeaf, claudeCall } = await import('../audit/leaf-shift-confirm-5021.mjs');
   const g = JSON.parse(fs.readFileSync(path.join(OUT, 'gate.json'), 'utf8')).pages;
   const resFile = path.join(OUT, 'judge.jsonl');
@@ -459,6 +713,7 @@ async function judge() {
 }
 
 function gateVerdict() {
+  if (P5274) return gateVerdict5274();
   const rs = readJsonl(path.join(OUT, 'judge.jsonl')).filter((r) => r.verdict);
   const w = (ds) => (ds || []).reduce((s, d) => s + (d.severity === 'major' ? 3 : 1), 0);
   const own = rs.filter((r) => r.verdict.new.leaf === 'own').length;
@@ -477,14 +732,18 @@ function gateVerdict() {
 async function release() {
   const q = readJsonl(path.join(OUT, 'queue.jsonl'));
   const led = relabel(ledgerState());
-  const open = new Set(q.filter((r) => led.get(r.page_id)?.state !== 'retranslated' && !String(led.get(r.page_id)?.state || '').startsWith('skip-')).map((r) => r.book_id));
+  // #5021: a book is open while any queued page is not re-translated. #5274: while any queued page has no final state
+  // (a served ocr_dropped page the OCR re-read refused keeps its English and does not hold the book; a withheld page
+  // that is not re-translated is caught by the withheld count below).
+  const open = new Set(q.filter((r) => { const s = led.get(r.page_id)?.state; return P5274 ? !FINAL.has(s) : s !== 'retranslated' && !String(s || '').startsWith('skip-'); }).map((r) => r.book_id));
+  if (!HOLD_REASON) { console.log('this profile holds no book: nothing to release'); return null; }
   const held = await db.collection('books').find({ 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1, title: 1 } }).toArray();
   const out = { held: held.length, released: [], kept_queue: 0, kept_withheld: 0 };
   for (const b of held) {
     if (open.has(b.id)) { out.kept_queue++; continue; }
     const w = await db.collection('pages').countDocuments({ book_id: b.id, 'translation_withheld.reason': { $gt: '' } });
     if (w) { out.kept_withheld++; continue; }
-    const r = await releaseBook(db, b.id, { note: `#5021: every wrong-leaf page of this book is re-translated one page a call and no page is withheld (${JOB})`, source: JOB, reason: HOLD_REASON }, { dryRun: !has('apply') });
+    const r = await releaseBook(db, b.id, { note: P5274 ? `#5274: every near-blank page of this book withheld for invented English is re-translated one page a call and no page is withheld (${JOB})` : `#5021: every wrong-leaf page of this book is re-translated one page a call and no page is withheld (${JOB})`, source: JOB, reason: HOLD_REASON }, { dryRun: !has('apply') });
     out.released.push({ id: b.id, title: String(b.title || '').slice(0, 60), outcome: r.outcome, to: r.to });
   }
   fs.writeFileSync(path.join(OUT, `release${has('apply') ? '' : '-dry'}.json`), JSON.stringify(out, null, 1));
@@ -493,7 +752,8 @@ async function release() {
 }
 
 try {
-  if (MODE === 'build') await build();
+  if (MODE === 'build') await (P5274 ? build5274() : build());
+  if (MODE === 'enqueue') await enqueue();
   if (MODE === 'gate-pick') gatePick();
   if (MODE === 'run') await run();
   if (MODE === 'judge') await judge();

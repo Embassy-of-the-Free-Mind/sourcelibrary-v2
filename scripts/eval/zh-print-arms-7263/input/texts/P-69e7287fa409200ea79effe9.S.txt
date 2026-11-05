@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>四庫全書 詩七</header>
+
+矣。
+異史氏曰香草沉羅血滿胸，憶東山珮玦，恨漬泥沙。古有忠臣孝子，至死不諒於君父者，公孫九娘豈以負骸骨之託而怨懟不釋於中耶？脾膈間物，不能掬以相示，冤乎哉。
+
+生彼株連死成梓，里以慧麗女子，賣恨重泉。游魂異域，雖復陽臺雲作畫閣春，生而露冷楓林，血腥羅裙。人兒異類，豈能白頭相守哉？獨惜其既託收骨，欲得所依，徒嘆蓬遊，遂忘墓表，豈白楊風雨，可辨孤墳羅。
+
+<vocab>異史氏, 公孫九娘, 忠臣, 孝子, 魂, 墓</vocab>

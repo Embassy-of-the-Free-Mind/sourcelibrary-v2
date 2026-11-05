@@ -17,7 +17,9 @@
  * of its translated pages and the next), or from page N when the id is written `id:N`. draw-log.json records
  * `mode: "picked"`, and overview-score.mjs refuses such a run: books chosen for interest give no rate.
  *
- * strata.json: [{ name, desc, ids: [book ids] }] — the frame of each stratum, built by whoever runs it and copied
+ * strata.json: [{ name, desc, ids: [book ids], pages? }] — `pages: "ocr"` draws pages with OCR rather than translated
+ * pages, for a stratum with little or no English (#8053).
+ * The ids are the frame of each stratum, built by whoever runs it and copied
  * into the output (draw-log.json) so the weights travel with the result. Books need ≥ 2×bins translated pages.
  * Writes sample.json, packets/<stratum>.json (one reviewer per stratum), draw-log.json.
  */
@@ -41,6 +43,9 @@ const db = client.db('bookstore');
 const rng = makeRng(SEED);
 const shuffle = (a) => { a = [...a].sort(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
+// A stratum with `"pages": "ocr"` draws from pages with OCR instead of translated pages (#8053: held OCR-only books,
+// scored on the transcription alone). Every other stratum is unchanged. The field is recorded in draw-log.json.
+const TEXT_FIELD = (st) => (st.pages === 'ocr' ? 'ocr.data' : 'translation.data');
 const sample = [], log = PICKED ? { issue: 6056, mode: 'picked', pages_per_book: 2, strata: [] } : { issue: 6056, mode: 'random', seed: SEED, books_per_stratum: K, bins: BINS, strata: [] };
 mkdirSync(join(OUT, 'packets'), { recursive: true });
 for (const st of STRATA) {
@@ -48,7 +53,7 @@ for (const st of STRATA) {
   for (const entry of PICKED ? st.ids : shuffle(st.ids)) {
     if (!PICKED && chosen.length >= K) break;
     const [id, at] = String(entry).split(':');
-    const tr = (await db.collection('pages').find({ book_id: id, page_number: { $gt: 0 }, 'translation.data': { $regex: '\\S' } }, { projection: { _id: 0, page_number: 1 } }).toArray())
+    const tr = (await db.collection('pages').find({ book_id: id, page_number: { $gt: 0 }, [TEXT_FIELD(st)]: { $regex: '\\S' } }, { projection: { _id: 0, page_number: 1 } }).toArray())
       .map((p) => p.page_number).sort((a, b) => a - b);
     if (PICKED) {
       const start = Number(at) || tr[Math.floor(tr.length * 0.45)];
@@ -77,7 +82,7 @@ for (const st of STRATA) {
     console.log(`${st.name.padEnd(24)} ${id} ${String(b.language).padEnd(10)} p${picks.join(',')} ${String(b.title).slice(0, 44)}`);
   }
   writeFileSync(join(OUT, 'packets', `${st.name}.json`), JSON.stringify(packet, null, 1));
-  log.strata.push({ name: st.name, desc: st.desc, frame_size: st.ids.length, drawn: chosen.length, frame_ids: st.ids.map((x) => String(x).split(':')[0]) });
+  log.strata.push({ name: st.name, desc: st.desc, pages_field: TEXT_FIELD(st), frame_size: st.ids.length, drawn: chosen.length, frame_ids: st.ids.map((x) => String(x).split(':')[0]) });
 }
 await client.close();
 writeFileSync(join(OUT, 'sample.json'), JSON.stringify(sample, null, 1));

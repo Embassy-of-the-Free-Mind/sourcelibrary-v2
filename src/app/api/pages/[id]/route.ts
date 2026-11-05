@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getDb } from '@/lib/mongodb';
 import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
@@ -11,6 +13,7 @@ import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo conven
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { isScriptOnPartnerPages, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { poolRefFor } from '@/lib/suspected-pool';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
@@ -81,8 +84,17 @@ export async function GET(
       }
     }
 
+    // A tenant's book can have untagged page rows; the reader's Referer brings the tenant here.
+    if (!page && tenantId) {
+      [page = null] = await findUntaggedPagesOfTenantBooks(db, [id], tenantId, projection);
+    }
+
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    if (await isScriptOnPartnerPages(request, db, [page])) {
+      return new NextResponse(SURFACE_REFUSED_RESPONSE, { status: 403, headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } });
     }
 
     // The notes layer (#7965): read while the page still carries translation.text, which goes no further.
@@ -107,6 +119,7 @@ export async function GET(
     // Deterministic for readers; a flagged proxy pool also gets its extraction
     // ref (#6950), and that response is never cached.
     const ref = await poolRefFor(request);
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     return NextResponse.json(markPageForReader(applyReaderTextLayer(page, layers), undefined, { ref }), {
       headers: { 'Cache-Control': ref ? 'private, no-store' : 'private, max-age=30, stale-while-revalidate=60' }
     });

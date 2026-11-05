@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 /**
  * Attack canary: play every scraper trick we have blocked, and every kind of
@@ -23,7 +24,7 @@ import { ntfyPost } from '../lib/ntfy-send.mjs';
  * residential proxy. That passes, by design; the levers against it are the
  * breadth cap (#5995) and the edge detector, not a header rule.
  *
- * Cost: ~25 requests a week, from the Hetzner box. HTML page loads only, so no
+ * Cost: ~42 requests a week, from the Hetzner box. HTML page loads only, so no
  * analytics pageview is written (that needs our JavaScript). Each URL carries
  * ?_canary=attack so the edge logs can be filtered.
  *
@@ -43,6 +44,10 @@ const NO_PUSH = process.argv.includes('--no-push');
 
 // A public book that resolves directly (no redirect) on the canonical host.
 const BOOK_PATH = '/book/the-cabinet-of-minerals-vreeswyk';
+
+// Translated URLs are the same reader pages, and were outside every /book rule
+// until 2026-11-04. tests/unit/edge-locale-paths.test.ts pins this to locale-path.ts.
+const LOCALE_BOOK_PATHS = ['/es/book', '/la/book', '/nl/book', '/zh/book'].map((p) => `${p}/the-cabinet-of-minerals-vreeswyk`);
 
 const UA = {
   // Fleet strings, as observed (#4476, crawl register).
@@ -121,6 +126,49 @@ async function newestProductionBuildHost() {
   return null;
 }
 
+/**
+ * The hidden-mark round trip (#8150): fetch a live quote the way a reader's
+ * copy would get it, hand it to the deployed public decoder, and require a
+ * verified signature. It fails if the quote path stops marking, if the
+ * decoder page loses PROVENANCE_SECRET_KEY, or if the two disagree on the
+ * scheme. Two requests; no key needed, the decoder holds it.
+ */
+function internalKey() {
+  try {
+    return process.env.SL_INTERNAL_KEY || readFileSync('/root/.sl-internal-key', 'utf8').trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+const QUOTE_PATH = '/api/books/the-cabinet-of-minerals-vreeswyk/quote?page=10';
+
+async function markRoundTrip() {
+  const row = { host: 'sourcelibrary.org', name: 'quote text verifies in /decode', rule: 'provenance mark (#8150)', expect: 'authentic' };
+  try {
+    const headers = { 'user-agent': UA.ours };
+    // The box's anonymous page budget is shared with every other job on it and
+    // is often spent (first run: quote 429). Read with the box's own key when it
+    // has one; the decoder call needs none.
+    const key = internalKey();
+    const q = await fetch(`https://sourcelibrary.org${QUOTE_PATH}&_canary=attack`, { headers: key ? { ...headers, authorization: `Bearer ${key}` } : headers, signal: AbortSignal.timeout(30_000) });
+    if (!q.ok) return { ...row, got: `quote ${q.status}`, ok: false };
+    const text = (await q.json())?.quote?.translation;
+    if (typeof text !== 'string' || !text) return { ...row, got: 'no quote text', ok: false };
+    const d = await fetch('https://sourcelibrary.org/api/decode?_canary=attack', {
+      method: 'POST',
+      headers: { ...headers, 'content-type': 'application/json' },
+      body: JSON.stringify({ text }),
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!d.ok) return { ...row, got: `decode ${d.status}`, ok: false };
+    const got = (await d.json())?.status || 'no status';
+    return { ...row, got, ok: got === 'authentic' };
+  } catch (err) {
+    return { ...row, got: `error: ${err.message}`, ok: false };
+  }
+}
+
 function classify(res) {
   const mitigated = (res.headers.get('cf-mitigated') || '').toLowerCase();
   if (mitigated === 'challenge') return 'challenge';
@@ -134,7 +182,7 @@ function classify(res) {
 }
 
 async function probe(host, c) {
-  const url = `https://${host}${BOOK_PATH}?_canary=attack`;
+  const url = `https://${host}${c.path || BOOK_PATH}?_canary=attack`;
   const headers = { ...(c.headers || {}) };
   // fetch() sends its own UA when none is given; '' must reach the edge as empty.
   headers['user-agent'] = c.ua;
@@ -151,6 +199,12 @@ async function probe(host, c) {
 async function main() {
   const rows = [];
   for (const c of CANONICAL_CASES) rows.push(await probe('sourcelibrary.org', c));
+  for (const path of LOCALE_BOOK_PATHS) {
+    const at = path.slice(0, 3);
+    rows.push(await probe('sourcelibrary.org', { path, name: `${at}: fake Chrome, no client hints`, rule: 'CF cb7dfe4b', ua: UA.linux149, expect: 'block' }));
+    rows.push(await probe('sourcelibrary.org', { path, name: `${at}: fake Chrome, unquoted platform hint`, rule: 'CF cb7dfe4b', ua: UA.mac155, headers: hints(155, 'Mac OS X'), expect: 'block' }));
+    rows.push(await probe('sourcelibrary.org', { path, name: `${at}: real Chrome with hints`, rule: 'must pass', ua: UA.mac155, headers: hints(155, '"macOS"'), expect: 'pass' }));
+  }
   for (const { host, layer } of OTHER_HOSTS) {
     rows.push(await probe(host, { name: 'fake Chrome, no client hints', rule: layer, ua: UA.linux149, expect: 'block' }));
     rows.push(await probe(host, { name: 'real Chrome with hints', rule: 'must pass', ua: UA.mac155, headers: hints(155, '"macOS"'), expect: 'pass' }));
@@ -164,6 +218,8 @@ async function main() {
   } else {
     rows.push({ host: 'github deployments', name: 'find newest production build', rule: 'canary input', expect: 'found', got: 'none', ok: false });
   }
+
+  rows.push(await markRoundTrip());
 
   const failed = rows.filter((r) => !r.ok);
   for (const r of rows) {

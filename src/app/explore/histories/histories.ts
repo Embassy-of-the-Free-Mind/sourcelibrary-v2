@@ -6,12 +6,14 @@
 import index from './content/index.json';
 import picks from './content/picks.json';
 import figures from './content/figures.json';
+import lanes from './content/lanes.json';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 
 export type ClaimSource = { l: string; loc?: string; q?: string; qo?: string; u?: string; np?: 1 };
 export type Claim = { id: string; s: string; d: string; k: string; p?: 1; src: ClaimSource[] };
 export type Essay = { slug: string; title: string; md: string };
 export type Audit = { n: number; rejected: number; pct: number; lo: number; hi: number; date: string; corrected?: boolean };
+export type AuditKinds = { overstates: number; misattributed: number; notOnPage: number; noneContradicted: boolean };
 export type KeepTerm = { term: string; translit?: string; lang?: string; gloss?: string; avoid: string[]; evidence?: string };
 export type Concept = {
   slug: string; title: string; question: string; map: string | null;
@@ -21,7 +23,7 @@ export type Concept = {
   audit: Audit | null;
 };
 
-export const HISTORIES = index as { generated: string; audit: { all: Audit; judge: { caught: number; planted: number; pct: number; lo: number; hi: number } }; concepts: Concept[] };
+export const HISTORIES = index as { generated: string; audit: { all: Audit; kinds: AuditKinds; judge: { caught: number; planted: number; pct: number; lo: number; hi: number } }; concepts: Concept[] };
 export const conceptBySlug = (slug: string) => HISTORIES.concepts.find((c) => c.slug === slug);
 
 export async function loadEssays(slug: string): Promise<Essay[]> {
@@ -36,19 +38,58 @@ export const day = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateStr
 export const claimsHref = (c: string, d: string) => `/explore/histories/${c}/claims/${d}`;
 export const domainLabel = (d: string) => d.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
-/** The quality statement for one concept (quality-statements.md: what was measured, by whom, when, on how much). */
-export function qualityStatement(c: Concept): string {
-  const { all, judge } = HISTORIES.audit;
+/** An essay's title without the number it carries in the private repository ("2. Like and unlike"). */
+export const plainTitle = (t: string) => t.replace(/^\d+\.\s*/, '').replace(/^./, (x) => x.toUpperCase());
+
+/** The quality statement for one concept (quality-statements.md: what was measured, by whom, when, on how much): the result first, then how it was reached. */
+export function qualityStatement(c: Concept): { lead: string; paragraphs: string[] } {
+  const { all, kinds, judge } = HISTORIES.audit;
   const made = `The claims were drafted by AI (Claude) from the library’s pages, and each quote was matched against its page when the claim was written.`;
   const audited = HISTORIES.concepts.filter((x) => x.audit).length;
-  const allLine = `Across the ${audited} audited histories, ${all.rejected} of ${all.n} were rejected (${all.pct}%, ${all.lo}–${all.hi}%). In a test, the reviewer caught ${judge.caught} of ${judge.planted} deliberately planted errors.`;
+  const byKind = `${kinds.overstates} were overstated, ${kinds.misattributed} misattributed and ${kinds.notOnPage} not on the cited page${kinds.noneContradicted ? '; no sampled claim was flatly contradicted by its page' : ''}`;
+  const allLine = `Across the ${audited} audited histories, ${all.rejected} of ${all.n} were rejected (${all.pct}%, ${all.lo}–${all.hi}%): ${byKind}. In a test, the reviewer caught ${judge.caught} of ${judge.planted} deliberately planted errors.`;
   const notChecked = `Partly verified claims and the essays themselves were not audited, and no scholar has reviewed them yet.`;
   const a = c.audit;
-  if (!a) return `${made} This history has not been audited yet. ${allLine} ${notChecked}`;
+  if (!a) return { lead: 'This history has not been audited yet.', paragraphs: [made, allLine, notChecked] };
+  const outside = 'Claims outside the sample were not individually reviewed, so expect errors of these kinds at about this rate.';
   const fixed = a.corrected === false
-    ? 'The rejected claims have not yet been corrected.'
-    : 'The rejected claims were corrected or withdrawn before publication.';
-  return `${made} On ${day(a.date)}, AI reviewers (Claude Opus as judge, each rejection confirmed by a second Opus reading after a Gemini read) checked a random sample of ${a.n} verified claims against the pages they cite: ${a.n - a.rejected} held and ${a.rejected} were rejected as overstated, misattributed or not on the cited page (${a.pct}%; 95% interval ${a.lo}–${a.hi}%). ${fixed} A sample of ${a.n} gives a wide interval. ${allLine} ${notChecked}`;
+    ? `The rejected claims have not yet been corrected. ${outside}`
+    : `The rejected claims in the sample were corrected or withdrawn before publication. ${outside}`;
+  return {
+    lead: `Of ${a.n} verified claims sampled at random, AI reviewers upheld ${a.n - a.rejected} and rejected ${a.rejected}.`,
+    paragraphs: [
+      `${made} On ${day(a.date)}, AI reviewers (Claude Opus as judge, each rejection confirmed by a second Opus reading after a Gemini read) checked the sample against the pages it cites, and rejected claims as overstated, misattributed or not on the cited page (${a.pct}%; 95% interval ${a.lo}–${a.hi}%). A sample of ${a.n} gives a wide interval.`,
+      fixed,
+      allLine,
+      notChecked,
+    ],
+  };
+}
+
+// ---- the senses over time (#7623) ------------------------------------------------------------------------------
+// content/lanes.json places claims by hand; everything said about a claim comes from its concept's claims file, so
+// the chart cannot drift from the record. tests/unit/history-lanes.test.ts fails if a re-import drops a placed claim.
+type LaneDot = { c: string; id: string; who: string; date: number; approx?: boolean; label?: boolean | string };
+type Lane = { key: string; label: string; gloss: string; apart?: boolean; dots: LaneDot[] };
+type LaneChart = { title: string; finding: string; lanes: Lane[] };
+export type ResolvedDot = LaneDot & { href: string; statement: string; partial: boolean };
+export type ResolvedLanes = Omit<LaneChart, 'lanes'> & { lanes: (Omit<Lane, 'dots'> & { dots: ResolvedDot[] })[] };
+
+export async function loadLanes(slug: string): Promise<ResolvedLanes | null> {
+  const chart = (lanes as unknown as { concepts: Record<string, LaneChart> }).concepts[slug];
+  if (!chart) return null;
+  const cited = [...new Set(chart.lanes.flatMap((l) => l.dots.map((d) => d.c)))];
+  const claims = new Map(await Promise.all(cited.map(async (c) => [c, new Map((await loadClaims(c)).map((x) => [x.id, x]))] as const)));
+  return {
+    ...chart,
+    lanes: chart.lanes.map((lane) => ({
+      ...lane,
+      dots: lane.dots.flatMap((d) => {
+        const claim = claims.get(d.c)?.get(d.id);
+        return claim ? [{ ...d, href: `${claimsHref(d.c, claim.d)}#${d.id}`, statement: claim.s, partial: claim.p === 1 }] : [];
+      }),
+    })),
+  };
 }
 
 // ---- pictures and quotes (#7623) -------------------------------------------------------------------------------

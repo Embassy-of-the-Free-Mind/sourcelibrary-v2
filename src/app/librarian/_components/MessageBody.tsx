@@ -87,7 +87,9 @@ export default function LibrarianMessageBody({ content, variant = 'thread' }: Li
               <a
                 href={href}
                 target="_blank"
-                rel="noopener noreferrer"
+                // Links into the library keep their referrer, so not_found_reports
+                // can tell a dead link in an answer from any other 404 (#8216).
+                rel={href?.startsWith('https://sourcelibrary.org/') ? 'noopener' : 'noopener noreferrer'}
                 className="text-[#9e4a3a] font-medium underline underline-offset-2 decoration-[#9e4a3a]/80 hover:decoration-[#9e4a3a]"
               >{children}</a>
             ),

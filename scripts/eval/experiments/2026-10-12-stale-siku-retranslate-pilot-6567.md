@@ -7,7 +7,8 @@ canons: []
 n_books: 289
 n_pages: 30
 verdict: "The 300-page pilot of the stale-Siku retranslation (3.8 Flash via the CLI, production prompt, CER < 0.1) wrote 289 pages with 0 failed reads. On 30 random written pages the new English beats the stored English under both blind judges (Opus 0.97 → 0.17 material errors per page, Gemini 3.1 Pro 2.77 → 1.53), but Pro's 1.53 fails the pre-registered GO bar of ≤ 0.5. Most of Pro's material errors cite Chinese the Paddle reading does not have, so they come from the reading, not the translation. The run stopped at the pilot."
-status: undecided
+status: adopted
+landed: "scripts/batch/stale-retranslate-6567.mjs"
 decision: null
 superseded_by: null
 issue: [6567, 6561, 6388]

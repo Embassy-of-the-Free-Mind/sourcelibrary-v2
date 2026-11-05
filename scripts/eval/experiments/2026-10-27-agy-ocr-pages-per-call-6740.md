@@ -7,7 +7,7 @@ canons: []
 n_books: 30
 n_pages: 60
 verdict: "Two pages per call holds for a fresh Siku read (accepted 8/30 vs 8 and 7 at 1/call, paired CER -0.6 pts, 0 cross-page faults) at 0.83 of the quota per page, and fails for the German Flash-Lite correction (23/30 vs 27 and 27), where the block corrector put new errors into correct drafts (hyphen seams read as s, a Latin word replaced by Chinese characters) and missed fixes both 1/call runs made. The saving is 17-25%, not ~30%: agy's fixed context is ~10K tokens a call, each page image ~17-18K."
-status: undecided
+status: informational
 decision: "T2 (correction): 1 page per call stays. T1 (fresh read): the rule is met, so 2 per call is ALLOWED for agy fresh reads of Siku pages; nothing is wired here (no routing edit in scope), and Flash low is accepted on only 8/30 Siku pages whichever arm reads."
 superseded_by: null
 issue: [6740, 7503, 7522]

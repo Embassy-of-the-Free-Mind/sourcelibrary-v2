@@ -14,6 +14,13 @@ const check = (brief: string, landings = '') => {
   const r = spawnSync('bash', [SCRIPT, f], { encoding: 'utf8', env: { ...process.env, JOB_LANDINGS: path.join(dir, 'landings.txt') } });
   return { code: r.status, out: r.stdout.trim() };
 };
+/** PATH shims that fail the way macOS's date and paste do: no -d, and paste wants a file operand. */
+const bsdShims = () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'bsd-'));
+  fs.writeFileSync(path.join(dir, 'date'), '#!/bin/sh\nfor a in "$@"; do case "$a" in -d) echo "date: illegal option -- d" >&2; exit 1 ;; -v-48H) exec /usr/bin/env -i PATH=/usr/bin:/bin date -u -d "48 hours ago" +%FT%TZ ;; esac; done\nexec /usr/bin/env -i PATH=/usr/bin:/bin date "$@"\n', { mode: 0o755 });
+  fs.writeFileSync(path.join(dir, 'paste'), '#!/bin/sh\nlast=""; for a in "$@"; do last="$a"; done\n[ "$last" = "-" ] || { echo "usage: paste [-s] [-d delimiters] file ..." >&2; exit 1; }\nexec /usr/bin/env -i PATH=/usr/bin:/bin paste "$@"\n', { mode: 0o755 });
+  return dir;
+};
 const WRITE = '\n# Task\nOCR the visible books with cli-ocr-lane.mjs run --apply.\n';
 
 describe('brief-route-check.sh', () => {
@@ -49,5 +56,28 @@ describe('brief-route-check.sh', () => {
     expect(check('Lands: #7830\n# Task\nFix CSS.\n', line(60, 7830)).out).not.toMatch(/warn:/);
     expect(check('Lands: #7830\n# Task\nFix CSS.\n', line(5, 78301)).out).not.toMatch(/warn:/);
     expect(check('Lands: #1\nRoute: none\n' + WRITE, line(5, 1))).toMatchObject({ code: 8 });
+  });
+  it('the 48-hour landing check works on BSD date and paste too (it silently did nothing on macOS)', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'brief-'));
+    const f = path.join(dir, 'brief.md');
+    fs.writeFileSync(f, 'Lands: #7830\nPR: yes\n# Task\nFix the gallery CSS.\n');
+    const iso = (h: number) => new Date(Date.now() - h * 3600_000).toISOString().replace(/\.\d+Z$/, 'Z');
+    fs.writeFileSync(path.join(dir, 'l.txt'), `${iso(5)} | main | new-7830 | ok [#7830 from Lands header]\n${iso(60)} | main | old-7830 | ok [#7830 from Lands header]\n`);
+    const r = spawnSync('bash', [SCRIPT, f], { encoding: 'utf8', env: { ...process.env, JOB_LANDINGS: path.join(dir, 'l.txt'), PATH: `${bsdShims()}:${process.env.PATH}` } });
+    expect(r.stderr).toBe('');
+    expect(r.stdout).toMatch(/warn: #7830 had a job land in the last 48 h \(new-7830/);
+    expect(r.stdout).not.toMatch(/old-7830/);
+  });
+  it('warns, never refuses, when a brief reads pages against their images and has no Checks line', () => {
+    const r = check('Lands: #none\nPR: no\n# Task\nRead 30 pages against the page image and report the rate.\n');
+    expect(r.code).toBe(0);
+    expect(r.out).toMatch(/\nwarn: this brief reads pages against their images and has no 'Checks:' line/);
+    expect(check('# Task\nAn Opus judge reads the lane output.\n').out).toMatch(/Checks:/);
+    expect(check('# Task\nA spot check of 10 pages.\n').out).toMatch(/Checks:/);
+    expect(check('Checks: lane-spot-check\n# Task\nRead 30 pages against the page image.\n').out).not.toMatch(/warn:/);
+    expect(check('Checks: none — candidate text only\n# Task\nRead by eye.\n').out).not.toMatch(/warn:/);
+    expect(check('# Task\nFix the gallery CSS.\n').out).not.toMatch(/warn:/);
+    // Beside a refusal it does not change the refusal.
+    expect(check('# Task\nOCR the visible books with cli-ocr-lane.mjs run --apply, by eye.\n').code).toBe(8);
   });
 });

@@ -92,6 +92,19 @@ export function installToolGate(dir, { task = 'ocr' } = {}) {
 }
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
 
+/**
+ * #5274: an agy read that never opened its image. The model sees a page only through its own allowed read_file /
+ * view_file turn (#7558). When every such turn was denied (seen 2026-11-04: the model asked for books/<page_id>/…
+ * where the file was books/<book_id>/…), it still answered: a blank-page stub, or a whole invented page (a Latin
+ * legal treatise on a Dào Dé Jīng leaf), and the reply passed every text guard. A read recorded with the gate's
+ * `tool_calls` and no allowed read is that case. A read with no `tool_calls` field (before the gate, or another CLI)
+ * is not judged here.
+ */
+export function imageNeverOpened(meta) {
+  if (!meta || meta.cli !== 'agy' || !Array.isArray(meta.tool_calls)) return false;
+  return !meta.tool_calls.some((t) => t === 'read_file' || t === 'view_file');
+}
+
 /** The paths the gate let the model read, from the same log. */
 export const gateReads = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.decision === 'allow' && r.path).map((r) => r.path); } catch { return []; } };
 

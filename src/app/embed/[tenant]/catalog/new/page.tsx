@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Metadata } from 'next';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL } from '@/lib/auth';
@@ -29,6 +30,7 @@ interface Props {
 
 export default async function NewCatalogEntryPage({ params }: Props) {
   const { tenant } = await params;
+  const room = await getRoomHref(tenant);
   if (tenant !== 'bph') notFound();
 
   const session = await auth();
@@ -42,7 +44,7 @@ export default async function NewCatalogEntryPage({ params }: Props) {
 
   // Creating new records is editor+ only (see the create API route).
   if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['editor']) {
-    redirect('/catalog');
+    redirect(room('/catalog'));
   }
 
   const suggestedUbn = await suggestNewUbn();
@@ -51,7 +53,7 @@ export default async function NewCatalogEntryPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={room('/catalog')}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Back to catalogue
@@ -61,7 +63,7 @@ export default async function NewCatalogEntryPage({ params }: Props) {
         </h1>
         <p className="text-sm text-muted mb-6">
           Adding a record · Signed in as {session.user.email} ·{' '}
-          <a href="/catalog/help" className="text-accent-rust hover:underline">
+          <a href={room('/catalog/help')} className="text-accent-rust hover:underline">
             How does this work?
           </a>
         </p>

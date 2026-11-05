@@ -23,7 +23,7 @@
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
-import { labelNumber, slotOffsets, bookVerdict, offsetRuns } from '../lib/canvas-label-alignment.mjs';
+import { labelNumber, ordinalLabels, slotOffsets, bookVerdict, offsetRuns } from '../lib/canvas-label-alignment.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
@@ -39,7 +39,9 @@ async function manifestLabels(url) {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const j = await r.json();
       const canvases = j.sequences?.[0]?.canvases ?? j.items ?? [];
-      return canvases.map((c) => labelNumber(c.label));
+      const labels = canvases.map((c) => labelNumber(c.label));
+      // Canvas ordinals (IA manifests) carry no printed numbers: score nothing rather than a false shift.
+      return ordinalLabels(labels) ? labels.map(() => null) : labels;
     } catch (e) {
       if (attempt === 2) throw e;
       await new Promise((res) => setTimeout(res, 2000 * (attempt + 1)));

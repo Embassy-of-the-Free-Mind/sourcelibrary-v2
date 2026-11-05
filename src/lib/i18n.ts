@@ -178,6 +178,7 @@ export interface FooterStrings {
   researchNotes: string;
   privacy: string;
   cookieSettings: string;
+  hiddenMarks: string;
   terms: string;
   copyright: string;
   licensing: string;
@@ -397,6 +398,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Articles',
     privacy: 'Privacy',
     cookieSettings: 'Cookie settings',
+    hiddenMarks: 'Hidden marks',
     terms: 'Terms',
     copyright: 'Copyright & DMCA',
     licensing: 'Licensing',
@@ -410,7 +412,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     giveFeedback: 'Give feedback',
     checkPages: 'Volunteer',
     qualityCenter: 'Quality center',
-    licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
+    licenseLine: 'Public domain originals · Translations CC BY-NC-SA 4.0 · AI training requires a license',
     partnersLabel: 'In partnership with',
     blurb: "Rare texts from the world's libraries, transcribed and translated for a new renaissance.",
     signUp: 'Sign up',
@@ -451,6 +453,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Artículos',
     privacy: 'Privacidad',
     cookieSettings: 'Preferencias de cookies',
+    hiddenMarks: 'Marcas ocultas',
     terms: 'Términos',
     copyright: 'Derechos de autor y DMCA',
     licensing: 'Licencias',
@@ -464,7 +467,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     giveFeedback: 'Enviar comentarios',
     checkPages: 'Hazte voluntario',
     qualityCenter: 'Centro de calidad',
-    licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
+    licenseLine: 'Originales de dominio público · Traducciones CC BY-NC-SA 4.0 · El entrenamiento de IA requiere licencia',
     partnersLabel: 'En colaboración con',
     blurb: 'Textos raros de las bibliotecas del mundo, transcritos y traducidos para un nuevo renacimiento.',
     signUp: 'Regístrate',
@@ -506,6 +509,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Commentarii',
     privacy: 'De secreto',
     cookieSettings: 'Optiones crustulorum',
+    hiddenMarks: 'Notae occultae',
     terms: 'Condiciones',
     copyright: 'Ius auctoris et DMCA',
     licensing: 'Licentiae',
@@ -519,7 +523,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     giveFeedback: 'Scribe nobis',
     checkPages: 'Voluntarius fias',
     qualityCenter: 'De qualitate',
-    licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
+    licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-NC-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
     partnersLabel: 'Cum sociis',
     blurb: 'Textus rari ex bibliothecis orbis terrarum, descripti et conversi ad novam renascentiam.',
     signUp: 'Nomen da',
@@ -561,6 +565,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: 'Artikelen',
     privacy: 'Privacy',
     cookieSettings: 'Cookie-instellingen',
+    hiddenMarks: 'Verborgen merktekens',
     terms: 'Voorwaarden',
     copyright: 'Auteursrecht en DMCA',
     licensing: 'Licenties',
@@ -574,7 +579,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     giveFeedback: 'Feedback geven',
     checkPages: 'Vrijwilliger worden',
     qualityCenter: 'Kwaliteitscentrum',
-    licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-SA 4.0 · Voor AI-training is een licentie nodig',
+    licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-NC-SA 4.0 · Voor AI-training is een licentie nodig',
     partnersLabel: 'In samenwerking met',
     blurb: 'Zeldzame teksten uit de bibliotheken van de wereld, getranscribeerd en vertaald voor een nieuwe renaissance.',
     signUp: 'Aanmelden',
@@ -615,6 +620,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     researchNotes: '文章',
     privacy: '隐私',
     cookieSettings: 'Cookie 设置',
+    hiddenMarks: '隐藏标记',
     terms: '条款',
     copyright: '版权与 DMCA',
     licensing: '许可',
@@ -628,7 +634,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     giveFeedback: '提交反馈',
     checkPages: '成为志愿者',
     qualityCenter: '质量中心',
-    licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
+    licenseLine: '原本属公共领域 · 译文采用 CC BY-NC-SA 4.0 许可 · 用于 AI 训练须获授权',
     partnersLabel: '合作伙伴',
     blurb: '来自世界各地图书馆的珍稀文献，经转录与翻译，迎接新的文艺复兴。',
     signUp: '注册',

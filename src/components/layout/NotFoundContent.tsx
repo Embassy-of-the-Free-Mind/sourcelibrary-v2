@@ -5,6 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, Home, BookOpen } from 'lucide-react';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useEmbedHref } from '@/lib/EmbedContext';
+import { localeFromPathname, localePath } from '@/lib/locale-path';
+import { isResolvableSlug, parseDeadContentLink, searchTermFromSlug } from '@/lib/not-found-recovery';
 
 const QUOTES = [
   {
@@ -61,8 +65,14 @@ const QUOTES = [
 
 export default function NotFoundContent() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [quote, setQuote] = useState(QUOTES[0]);
+  // Set after mount: each quote links to a book, and the server cannot know
+  // whether a partner's subdomain is asking (its HTML would carry foreign books).
+  const [quote, setQuote] = useState<(typeof QUOTES)[number] | null>(null);
+  // The closest book we hold for a dead /book/<slug> link (#8216).
+  const [suggestion, setSuggestion] = useState<{ href: string; title: string } | null>(null);
   const router = useRouter();
+  const isEmbedded = useIsEmbedded();
+  const embedHref = useEmbedHref();
 
   useEffect(() => {
     setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
@@ -77,12 +87,54 @@ export default function NotFoundContent() {
     }).catch(() => {});
   }, []);
 
+  // A dead link to a book or author usually names something we hold under
+  // another slug: Librarian answers, copied links, other AI clients. Never
+  // inside a partner's room, because the suggestion searches the whole library.
+  useEffect(() => {
+    if (isEmbedded) return;
+    const { pathname } = window.location;
+    const dead = parseDeadContentLink(pathname);
+    if (!dead) return;
+    setSearchQuery(searchTermFromSlug(dead.slug));
+    if (dead.kind !== 'book' || !isResolvableSlug(dead.slug)) return;
+    fetch(`/api/not-found/suggestion?slug=${encodeURIComponent(dead.slug)}`)
+      .then(res => (res.ok ? res.json() : null))
+      .then(data => {
+        const held = data?.suggestion;
+        if (held?.slug) {
+          setSuggestion({ href: localePath(`/book/${held.slug}`, localeFromPathname(pathname)), title: held.title });
+        }
+      })
+      .catch(() => {});
+  }, [isEmbedded]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
+
+  // Inside a partner's room there is no library to wander into (tenant-lockdown.md).
+  if (isEmbedded) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12">
+        <div className="max-w-xl w-full text-center">
+          <h1 className="text-2xl font-serif font-semibold text-primary mb-3">Page not found</h1>
+          <p className="text-muted mb-6">This page is not in the collection.</p>
+          <div className="flex gap-3 justify-center">
+            <Link
+              href={embedHref('/catalog')}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-warm hover:bg-accent-rust/10 text-secondary rounded-xl transition-colors text-sm"
+            >
+              <Search className="w-4 h-4" />
+              Search the catalogue
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12">
@@ -91,10 +143,23 @@ export default function NotFoundContent() {
         <h2 className="text-2xl font-serif font-semibold text-primary mb-3">
           Lost in the Stacks
         </h2>
-        <Link href={quote.href} className="block text-muted mb-8 italic hover:text-secondary transition-colors group">
-          <span>&ldquo;{quote.text}&rdquo;</span>
-          <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">{quote.source}</span>
-        </Link>
+        {quote ? (
+          <Link href={quote.href} className="block text-muted mb-8 italic hover:text-secondary transition-colors group">
+            <span>&ldquo;{quote.text}&rdquo;</span>
+            <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">{quote.source}</span>
+          </Link>
+        ) : (
+          <div className="mb-8 min-h-12" />
+        )}
+
+        {suggestion && (
+          <div className="bg-white rounded-xl border border-light p-5 mb-4 text-left">
+            <p className="text-sm text-muted mb-1">No book has this exact address. The closest we hold:</p>
+            <Link href={suggestion.href} className="font-serif text-lg text-accent-rust hover:underline">
+              {suggestion.title}
+            </Link>
+          </div>
+        )}
 
         <div className="bg-white rounded-xl border border-light p-6 mb-6">
           <form onSubmit={handleSearch} className="mb-5">

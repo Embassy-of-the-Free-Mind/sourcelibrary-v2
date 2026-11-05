@@ -1,0 +1,218 @@
+{
+ "generated_by": "scripts/batch/zh-ditto-5274/pilot.mjs score-arms + evidence (job zh-ditto-correct-5274, #5274; no model calls in this step)",
+ "provenance": "#5274 production pilot: 60 zero-丨 Paddle pages of 佩文韻府 / 駢字類編 / 韻府拾遺, one per book (30 at --per-call=1, 30 scored inside runs of 10 at --per-call=10; seed 52740), 10 keep pages; books not in the test draw. Marks scored against the Kanripo WYG leaf; Experiment: scripts/eval/experiments/2026-11-04-zh-ditto-pilot-5274.md",
+ "judge": "claude-opus-5-5 (claude -p), blind, up to six labelled texts with the Archive image, zh-ditto-restore-5274 verdict words (scripts/batch/zh-ditto-5274/judge-multi.mjs)",
+ "mapping": "wrong_text_pages = misleading; accept = not misleading; an arm judged in more than one pass takes its first pass",
+ "cells": {
+  "zh-ditto-5274": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "pages": 60,
+   "controls": {
+    "wrong_page": [
+     {
+      "id": "swap0-zero-s10-7d170c3e-p32",
+      "judge": "judge4",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap1-zero-s10-04e2521e-p44",
+      "judge": "judge4",
+      "arm": "P2-r2",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap2-zero-s10-04e2759c-p98",
+      "judge": "judge4",
+      "arm": "P2-flash-low",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap3-zero-s10-9c5c9a4c-p36",
+      "judge": "judge4",
+      "arm": "opus-fresh",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap4-zero-s1-7e166488-p65",
+      "judge": "judge4",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap0-zero-s10-7d170c3e-p32",
+      "judge": "judge-sc",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap1-zero-s10-04e2521e-p44",
+      "judge": "judge-sc",
+      "arm": "P2-r2",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap2-zero-s10-04e2759c-p98",
+      "judge": "judge-sc",
+      "arm": "P2-r2-sonnet",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap3-zero-s10-9c5c9a4c-p36",
+      "judge": "judge-sc",
+      "arm": "P0",
+      "accept": false,
+      "passed": true
+     },
+     {
+      "id": "swap4-zero-s1-7e166488-p65",
+      "judge": "judge-sc",
+      "arm": "P2-r2",
+      "accept": false,
+      "passed": true
+     }
+    ]
+   },
+   "routes": {
+    "P0": {
+     "n": 60,
+     "books": 60,
+     "usable": "0/60",
+     "usable_per_call_1": "0/30",
+     "usable_per_call_10": "0/30",
+     "ditto_count_recall": 0,
+     "ditto_count_precision": 0,
+     "ditto_run_recall": 0,
+     "cer_marks_removed_median": 0.103,
+     "served": "paddle (stored)",
+     "wrong_text_pages": "57/60",
+     "accept": "3/60",
+     "judges": [
+      "judge4"
+     ],
+     "keep_pages": {
+      "usable": "10/10",
+      "wrong_text_pages": "8/10"
+     },
+     "paired_vs_P2_r2": {
+      "usable_gained": 0,
+      "usable_lost": 56,
+      "misleading_added": 45,
+      "misleading_removed": 0
+     }
+    },
+    "P2-r2": {
+     "n": 60,
+     "books": 60,
+     "usable": "56/60",
+     "usable_per_call_1": "27/30",
+     "usable_per_call_10": "29/30",
+     "ditto_count_recall": 0.981,
+     "ditto_count_precision": 0.998,
+     "ditto_run_recall": 0.958,
+     "cer_marks_removed_median": 0.045,
+     "served": "paddle>opus correct, ditto instruction, stored image (correct.mjs)",
+     "wrong_text_pages": "12/60",
+     "accept": "48/60",
+     "judges": [
+      "judge4"
+     ],
+     "keep_pages": {
+      "usable": "10/10",
+      "wrong_text_pages": "2/10"
+     }
+    },
+    "P2-r2-sonnet": {
+     "n": 60,
+     "books": 60,
+     "usable": "40/60",
+     "usable_per_call_1": "19/30",
+     "usable_per_call_10": "21/30",
+     "ditto_count_recall": 0.971,
+     "ditto_count_precision": 0.969,
+     "ditto_run_recall": 0.866,
+     "cer_marks_removed_median": 0.052,
+     "served": "paddle>sonnet correct, ditto instruction, stored image",
+     "wrong_text_pages": "39/60",
+     "accept": "21/60",
+     "judges": [
+      "judge-sc"
+     ],
+     "keep_pages": {
+      "usable": "9/10",
+      "wrong_text_pages": "6/10"
+     },
+     "paired_vs_P2_r2": {
+      "usable_gained": 2,
+      "usable_lost": 18,
+      "misleading_added": 30,
+      "misleading_removed": 3
+     }
+    },
+    "P2-flash-low": {
+     "n": 60,
+     "books": 60,
+     "usable": "36/60",
+     "usable_per_call_1": "18/30",
+     "usable_per_call_10": "18/30",
+     "ditto_count_recall": 0.932,
+     "ditto_count_precision": 0.993,
+     "ditto_run_recall": 0.825,
+     "cer_marks_removed_median": 0.053,
+     "served": "paddle>agy gemini-3.8-flash-low correct, ditto instruction",
+     "wrong_text_pages": "46/60",
+     "accept": "14/60",
+     "judges": [
+      "judge4"
+     ],
+     "keep_pages": {
+      "usable": "9/10",
+      "wrong_text_pages": "5/10"
+     },
+     "paired_vs_P2_r2": {
+      "usable_gained": 1,
+      "usable_lost": 21,
+      "misleading_added": 36,
+      "misleading_removed": 2
+     }
+    },
+    "opus-fresh": {
+     "n": 60,
+     "books": 60,
+     "usable": "43/60",
+     "usable_per_call_1": "23/30",
+     "usable_per_call_10": "20/30",
+     "ditto_count_recall": 0.964,
+     "ditto_count_precision": 0.993,
+     "ditto_run_recall": 0.906,
+     "cer_marks_removed_median": 0.053,
+     "served": "opus fresh read, live first-read prompt, no draft",
+     "wrong_text_pages": "47/60",
+     "accept": "13/60",
+     "judges": [
+      "judge4"
+     ],
+     "keep_pages": {
+      "usable": "5/10",
+      "wrong_text_pages": "9/10"
+     },
+     "paired_vs_P2_r2": {
+      "usable_gained": 1,
+      "usable_lost": 14,
+      "misleading_added": 39,
+      "misleading_removed": 4
+     }
+    }
+   }
+  }
+ }
+}

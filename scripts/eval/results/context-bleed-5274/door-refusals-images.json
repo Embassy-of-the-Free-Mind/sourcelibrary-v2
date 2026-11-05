@@ -1,0 +1,881 @@
+{
+ "at": "2026-11-04T11:03:03.456Z",
+ "n": 401,
+ "with_detected_images": 401,
+ "refused_was": 90,
+ "refused_now": 3,
+ "context_dropped": 42,
+ "added": [],
+ "lifted": [
+  {
+   "page_id": "6991e710ebc7adff9a0b225a",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 1,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 859,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b225c",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 3,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 2369,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b225d",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 4,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1550,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b225e",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 5,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1002,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b225f",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 6,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 887,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2260",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 7,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 947,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2261",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 8,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1111,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2262",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 9,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1492,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2263",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 10,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1188,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2264",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 11,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1465,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2265",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 12,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1200,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2269",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 16,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 883,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b226c",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 19,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 824,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b226d",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 20,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 2044,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b226e",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 21,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 2237,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2270",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 23,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1052,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2271",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 24,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1357,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2272",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 25,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1964,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e710ebc7adff9a0b2273",
+   "book_id": "6991e70febc7adff9a0b2259",
+   "page": 26,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1926,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69906d0a64d44bd0a0ef50ec",
+   "book_id": "69906d0a64d44bd0a0ef50e9",
+   "page": 3,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 649,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992cdde81c9d7efb84d0850",
+   "book_id": "6992cdde81c9d7efb84d0815",
+   "page": 59,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 637,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991c5853074a1745a41199d",
+   "book_id": "6991c5853074a1745a41199b",
+   "page": 2,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 844,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991c5853074a1745a4119a7",
+   "book_id": "6991c5853074a1745a41199b",
+   "page": 12,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1475,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991c5853074a1745a4119b3",
+   "book_id": "6991c5853074a1745a41199b",
+   "page": 24,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1083,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991c5853074a1745a4119b4",
+   "book_id": "6991c5853074a1745a41199b",
+   "page": 25,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1598,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b6d",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 27,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 449,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b6e",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 28,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 421,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b6f",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 29,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 451,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b70",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 30,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 451,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b71",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 31,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 506,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b74",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 34,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 446,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b78",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 38,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 402,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b79",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 39,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 494,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b7a",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 40,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 423,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b7b",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 41,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 479,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69b52597cced70d8e6d72b80",
+   "book_id": "69b52597cced70d8e6d72b52",
+   "page": 46,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 477,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6953a8b277f38f6761bd36f1",
+   "book_id": "6953a8b277f38f6761bd365c",
+   "page": 149,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 471,
+   "context_dropped": false
+  },
+  {
+   "page_id": "69907e11b91bcb2db3f6df49",
+   "book_id": "69907e11b91bcb2db3f6df46",
+   "page": 3,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 441,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90bc",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 1,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 465,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90c5",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 10,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 606,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90cd",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 18,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 497,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90cf",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 20,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 596,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90d1",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 22,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 524,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90df",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 36,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 539,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90e5",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 42,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 503,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90e7",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 44,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 572,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90ef",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 52,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 532,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea90f9",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 62,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 541,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea9109",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 78,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 496,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce512960dc4e5cea910f",
+   "book_id": "6992ce502960dc4e5cea90bb",
+   "page": 84,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 524,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991eaf92f801130a473eed3",
+   "book_id": "6991eaf92f801130a473ee76",
+   "page": 93,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1613,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991eaf92f801130a473eeef",
+   "book_id": "6991eaf92f801130a473ee76",
+   "page": 121,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1872,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6985ca97c2d0de96fd41ada9",
+   "book_id": "6985ca6c9d0a51f65288235f",
+   "page": 1,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 478,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991eafb2f801130a473ef07",
+   "book_id": "6991eafb2f801130a473eefa",
+   "page": 13,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 508,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991eafb2f801130a473ef0f",
+   "book_id": "6991eafb2f801130a473eefa",
+   "page": 21,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 529,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991eafb2f801130a473ef1f",
+   "book_id": "6991eafb2f801130a473eefa",
+   "page": 37,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 641,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991eafb2f801130a473ef3e",
+   "book_id": "6991eafb2f801130a473eefa",
+   "page": 68,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 934,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a6a",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 7,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 705,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a6b",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 8,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1348,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a72",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 15,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 857,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a73",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 16,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 902,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a79",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 22,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 562,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a7a",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 23,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 679,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a8c",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 41,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 453,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a8f",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 44,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 649,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a90",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 45,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 594,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a91",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 46,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 500,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992ce073ea667fbac827a94",
+   "book_id": "6992ce073ea667fbac827a63",
+   "page": 49,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 670,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991ea602f801130a473d452",
+   "book_id": "6991ea602f801130a473d44e",
+   "page": 4,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 404,
+   "context_dropped": true
+  },
+  {
+   "page_id": "69906a861cf6ed5fbc8f5d22",
+   "book_id": "69906a861cf6ed5fbc8f5d21",
+   "page": 1,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 461,
+   "context_dropped": true
+  },
+  {
+   "page_id": "69906a861cf6ed5fbc8f5d27",
+   "book_id": "69906a861cf6ed5fbc8f5d21",
+   "page": 6,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 439,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e93135ed50020acc145f",
+   "book_id": "6991e93135ed50020acc1458",
+   "page": 7,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 458,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991e93135ed50020acc1460",
+   "book_id": "6991e93135ed50020acc1458",
+   "page": 8,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 587,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6991e93135ed50020acc147d",
+   "book_id": "6991e93135ed50020acc1458",
+   "page": 37,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 610,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e93135ed50020acc1705",
+   "book_id": "6991e93135ed50020acc1458",
+   "page": 685,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1750,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6991e93135ed50020acc194f",
+   "book_id": "6991e93135ed50020acc1458",
+   "page": 1271,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 905,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992cef4673ee1e40e321cd1",
+   "book_id": "6992cef3673ee1e40e321cc5",
+   "page": 12,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 785,
+   "context_dropped": false
+  },
+  {
+   "page_id": "695004edf426a210d109aa04",
+   "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+   "page": 2,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 808,
+   "context_dropped": false
+  },
+  {
+   "page_id": "695004edf426a210d109aa05",
+   "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+   "page": 3,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 952,
+   "context_dropped": false
+  },
+  {
+   "page_id": "695004edf426a210d109aabf",
+   "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+   "page": 189,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 751,
+   "context_dropped": false
+  },
+  {
+   "page_id": "695004edf426a210d109aac3",
+   "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+   "page": 193,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 425,
+   "context_dropped": false
+  },
+  {
+   "page_id": "695004edf426a210d109aac4",
+   "book_id": "86fe639a-5f3d-4e9e-9d99-128742a10809",
+   "page": 194,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 506,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6952d0fa77f38f6761bc5af4",
+   "book_id": "6952d0fa77f38f6761bc5aef",
+   "page": 5,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 718,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6952d0fa77f38f6761bc5b07",
+   "book_id": "6952d0fa77f38f6761bc5aef",
+   "page": 24,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 897,
+   "context_dropped": true
+  },
+  {
+   "page_id": "6992597e3d2d40d1b058fffc",
+   "book_id": "6992597e3d2d40d1b058fffa",
+   "page": 1,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 413,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992597e3d2d40d1b058fffd",
+   "book_id": "6992597e3d2d40d1b058fffa",
+   "page": 2,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 510,
+   "context_dropped": false
+  },
+  {
+   "page_id": "6992597e3d2d40d1b058fffe",
+   "book_id": "6992597e3d2d40d1b058fffa",
+   "page": 3,
+   "has_detected_images": true,
+   "was": "collapsed",
+   "now": "ok",
+   "src_chars_removed": 1244,
+   "context_dropped": false
+  }
+ ]
+}

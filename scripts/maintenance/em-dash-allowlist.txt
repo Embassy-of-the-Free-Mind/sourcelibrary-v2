@@ -246,7 +246,7 @@ src/app/embed/[tenant]/catalog/[ubn]/history/page.tsx 6  # rewritten in a #6215 
 src/app/embed/[tenant]/catalog/[ubn]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/embed/[tenant]/catalogue/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/embed/[tenant]/catalog/workspace/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/embed/[tenant]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/(library)/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/[name]/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/encyclopedia/[name]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -505,3 +505,4 @@ src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseli
 src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/articles/aliveness/page.tsx 2  # verbatim quotation: Helen Wilmans, A Search for Freedom (1898), p. 88, prints 'I was — in my own way — tremendously alive'
 src/app/articles/agrippa-against-himself/page.tsx 4  # em dashes inside SourceQuote quotations, kept as the library's translation prints them (Derek, 2026-10-28)
+src/app/articles/kircher-hieroglyphs/page.tsx 6  # verbatim quotations of the library's English in SourceQuote; they must match the linked page character for character (#7983)

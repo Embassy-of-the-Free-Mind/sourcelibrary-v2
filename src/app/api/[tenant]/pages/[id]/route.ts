@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withdrawPageVectors } from '@/lib/withdraw-page-vectors';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
@@ -81,6 +82,11 @@ export async function GET(
           projection ? { projection } : undefined
         );
       }
+    }
+
+    // A partner's book can have untagged page rows: the embed's page turns need them too.
+    if (!page) {
+      [page = null] = await findUntaggedPagesOfTenantBooks(db, [id], tenantId, projection);
     }
 
     if (!page) {

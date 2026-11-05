@@ -80,6 +80,18 @@ const SKQS_LINE = /^[欽钦金]?定?四庫全書$/u;
 /** A bare juan line as the fold strip carries it: 卷四 / 卷四之二 / 卷十上. A body heading carries the work title before 卷. */
 const JUAN_LINE = new RegExp(`^[卷巻]${NUM}+(?:之${NUM}+|[上中下])?$`, 'u');
 const LEAF_LINE = new RegExp(`^${NUM}{1,4}$`, 'u');
+/**
+ * The 欽定四庫全書 margin column misread so badly that it carries neither 全書 nor 四庫 (#8053, #5142 O11): 次定曰事全焉,
+ * 次定四軍全司, 欠定曰年人焉, 次之曰車之書, 欠巳曰三二三. Counted on the Four Histories (#7546): 674 OCR'd pages kept such a
+ * line as body text, and the English made 61 of them into a commentator "Ci Ding" / "Jin Ding". 次定 / 欠定 / 金定 / 飲定 /
+ * 欽定 open the line; 次之 and 欠 + one glyph only when 曰 or 四 follows (the column's 定 → 之/巳, 四 → 曰). Only at the
+ * page edge and only 4-9 characters: a body column of the Siku is ~20.
+ */
+const SKQS_GARBLE = /^(?:[次欠金飲欽钦]定|次之[曰四]|欠.[曰四])/u;
+export function isGarbledSkqsMargin(bare) {
+  const b = String(bare || '').replace(/\s/g, '');
+  return b.length >= 4 && b.length <= 9 && SKQS_GARBLE.test(b);
+}
 
 /** Han characters in a text (tags and their names do not count: they are ASCII). */
 export function hanCount(text) {
@@ -150,7 +162,7 @@ export function convertPaddle(raw, { workTitle = null, keepKana = false } = {}) 
   const textIdx = seq.map((e, i) => (e.kind === 'text' ? i : -1)).filter((i) => i >= 0);
   const edge = new Set([...textIdx.slice(0, 4), ...textIdx.slice(-4)]);
   // the strip's title misread (欽定司事全書, 欽定曰事全書 on the pilot): short, at the page edge, still carrying 全書/四庫/欽定
-  const garbledSkqs = (e, i) => edge.has(i) && e.bare.length >= 4 && e.bare.length <= 8 && /全書|四庫|^欽定/u.test(e.bare);
+  const garbledSkqs = (e, i) => edge.has(i) && ((e.bare.length >= 4 && e.bare.length <= 8 && /全書|四庫|^欽定/u.test(e.bare)) || isGarbledSkqsMargin(e.bare));
   const anchor = seq.map((e, i) => e.kind === 'kana' || (e.kind === 'text' && (isMarginHead(e.bare) || garbledSkqs(e, i))));
   const near = (i, marks, w = 3) => { for (let k = Math.max(0, i - w); k <= Math.min(seq.length - 1, i + w); k++) if (k !== i && marks[k]) return true; return false; };
   const leaf = seq.map((e) => e.kind === 'text' && LEAF_LINE.test(e.bare));
