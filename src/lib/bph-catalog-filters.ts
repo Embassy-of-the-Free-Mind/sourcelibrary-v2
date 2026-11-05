@@ -88,6 +88,61 @@ export function isUnfiltered(f: BphFilters): boolean {
   );
 }
 
+/** A term of only digits, and the shape that may be a publication year. */
+const isNumber = (term: string) => /^\p{N}+$/u.test(term);
+const isYearShaped = (term: string) => /^\d{3,4}$/.test(term);
+/** One letter or digit, with or without an initial's full stop: "m", "2", "j.". */
+const isLone = (term: string) => /^[\p{L}\p{N}]\.?$/u.test(term);
+
+/**
+ * Split a search into terms that must all appear in a record, in any order, so
+ * "bruno giordano" finds what "giordano bruno" finds and a reader need not guess
+ * how the record words it. Terms are normalised like `search_norm`.
+ *
+ * Double quotes keep an exact phrase, as in a library catalogue.
+ *
+ * Two shapes stay together as a phrase, because apart they match nearly every
+ * record and bury the one the librarian asked for:
+ *   - a lone letter or digit, with its neighbour: "M 309", "PH 2", "Myst Alg S";
+ *   - a number after a short word: "PH 144", "BPH 131", "Ms 12".
+ *
+ * Initials keep their full stops, because records print them that way: "c.g. jung"
+ * must look for "c.g.", and "j. dee" stays the phrase it always was.
+ */
+export function parseBphSearchTerms(q: string): string[] {
+  const terms: Array<{ text: string; quoted: boolean }> = [];
+  for (const match of q.matchAll(/"([^"]+)"|(?:\p{L}\.)+|[\p{L}\p{M}\p{N}]+/gu)) {
+    const quoted = match[1] !== undefined;
+    // Inside a phrase the characters a PostgREST filter reserves become wildcards,
+    // so "Fludd, Robert" still reaches the comma in the record.
+    const text = normalizeBphSearchText(match[1] ?? match[0]).replace(/[,()"]/g, '%').trim();
+    if (text) terms.push({ text, quoted });
+  }
+
+  const merged: Array<{ text: string; quoted: boolean }> = [];
+  for (const term of terms) {
+    const previous = merged[merged.length - 1];
+    const staysWithPrevious = previous && !previous.quoted && !term.quoted && (
+      isLone(term.text) ||
+      isLone(previous.text) ||
+      (isNumber(term.text) && !isNumber(previous.text) && [...previous.text].length <= 4)
+    );
+    if (staysWithPrevious) previous.text = `${previous.text} ${term.text}`;
+    else merged.push({ ...term });
+  }
+  return merged.map((term) => term.text);
+}
+
+/**
+ * One term as a PostgREST filter. A year-shaped term also matches the year
+ * column, which the text columns do not carry, so "hermes 1650" works.
+ */
+function termFilter(term: string): string {
+  return isYearShaped(term)
+    ? `or(search_norm.ilike.%${term}%,year.eq.${term})`
+    : `search_norm.ilike.%${term}%`;
+}
+
 /** What the current schema can answer. Detected and cached by the browsing route. */
 export interface SchemaCaps {
   mode: 'new' | 'legacy';
@@ -127,8 +182,13 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
       if (yearQ) {
         query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ},${ubnLane}`);
       } else {
-        const normQ = sanitizeFilterValue(normalizeBphSearchText(f.q));
-        query = normQ.length > 0 ? query.or(`search_norm.ilike.%${normQ}%,${ubnLane}`) : query.or(ubnLane);
+        const terms = parseBphSearchTerms(f.q);
+        if (terms.length === 0) {
+          query = query.or(ubnLane);
+        } else {
+          const words = terms.map(termFilter);
+          query = query.or(`${words.length === 1 ? words[0] : `and(${words.join(',')})`},${ubnLane}`);
+        }
       }
     } else if (mode === 'new') {
       if (yearQ) {

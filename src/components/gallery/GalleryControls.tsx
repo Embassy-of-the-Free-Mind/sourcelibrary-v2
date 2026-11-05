@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Camera, ChevronDown } from 'lucide-react';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
+import SortSelect from '@/components/search-kit/SortSelect';
 import FilterChips, { type Chip } from '@/components/search-kit/FilterChips';
 import ApplyFooter from '@/components/search-kit/ApplyFooter';
 import DidYouMean, { useRescue } from '@/components/search-kit/DidYouMean';
@@ -245,21 +246,12 @@ export default function GalleryControls({ state, replace, update, data, loading,
         </button>
         <FilterChips chips={chips} onRemove={removeChip} onClearAll={clearAll} />
         <div className="order-2 sm:order-none ml-auto flex items-center gap-2 sm:gap-2.5">
-          <label className="sr-only" htmlFor="gallery-sort">Sort</label>
-          <select id="gallery-sort" value={sortValue}
-            onChange={(e) => {
-              const next = e.target.value;
+          <SortSelect value={sortValue}
+            options={[['', sortLabelBest], ['oldest', 'Oldest first'], ['newest', 'Newest first'], ['book', 'By book'], ['recent', 'Recently added'], ['random', 'Random']]}
+            onChange={(next) => {
               // A fresh shuffle each time Random is chosen; the seed stays in the URL.
               update({ sort: next, seed: next === 'random' ? String(Math.floor(Math.random() * RANDOM_SEEDS)) : '' });
-            }}
-            className="h-9 sm:h-[38px] w-[140px] sm:w-auto border border-border-medium bg-white px-2.5 sm:px-3 text-base sm:text-sm text-primary">
-            <option value="">{sortLabelBest}</option>
-            <option value="oldest">Oldest first</option>
-            <option value="newest">Newest first</option>
-            <option value="book">By book</option>
-            <option value="recent">Recently added</option>
-            <option value="random">Random</option>
-          </select>
+            }} />
         </div>
       </div>
 

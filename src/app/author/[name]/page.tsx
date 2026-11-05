@@ -13,7 +13,7 @@ import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
-import { authorThesaurusReadpathEnabled, findAuthorByReorderedSlug, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
+import { authorThesaurusReadpathEnabled, findAuthorByReorderedSlug, resolveAuthorSlugByName, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
 import { isPublishedEntity, type EntityPublishFields } from '@/lib/entity-publish';
 import { isArtworkRecord } from '@/lib/artwork-record';
@@ -257,6 +257,7 @@ async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // esli
   artworks: Book[];
   canonicalSlug: string;
   nonPerson: NonPersonAuthor | null;
+  hanName: string | null;
 } | null> {
   const resolved = await resolveCanonicalAuthor(db, slug, BOOK_PROJECTION);
   if (!resolved || resolved.books.length === 0) return null;
@@ -270,6 +271,7 @@ async function loadCanonicalAuthorData(db: any, slug: string): Promise<{ // esli
     // Only the thesaurus knows a heading is not a person; the legacy string
     // path below has no such record, so it renders as before.
     nonPerson: classifyNonPersonAuthor(resolved.doc),
+    hanName: resolved.doc.localized?.zh?.name ?? null,
   };
 }
 
@@ -306,7 +308,12 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
   // Redirect old %20-style URLs to hyphenated slugs
   if (decoded !== name) {
-    redirect(`/author/${authorSlug(decoded)}`);
+    const slug = authorSlug(decoded);
+    if (slug) redirect(`/author/${slug}`);
+    // Han characters slug to nothing: find the person by name, never send them to the index.
+    const person = await resolveAuthorSlugByName(await getReadDb(), decoded);
+    if (person) redirect(`/author/${person}`);
+    notFound();
   }
 
   const db = await getReadDb();
@@ -319,6 +326,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   // the thesaurus, so this stays null on the legacy path — which is correct:
   // without a thesaurus doc there is no evidence the heading is not a person.
   let nonPerson: NonPersonAuthor | null = null;
+  // /author/ has no /zh twin, so the page carries both names for every reader (#8035).
+  let hanName: string | null = null;
   if (authorThesaurusReadpathEnabled()) {
     const canonical = await loadCanonicalAuthorData(db, name);
     if (canonical) {
@@ -327,6 +336,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       }
       data = canonical;
       nonPerson = canonical.nonPerson;
+      hanName = canonical.hanName;
     }
   }
   if (!data) data = await loadAuthorData(db, name);
@@ -455,6 +465,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           <div className="flex-1 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-display font-bold">
             {authorName}
+            {hanName && !authorName.includes(hanName) && <> <span lang="zh-Hant">{hanName}</span></>}
           </h1>
           {nonPerson && (
             <p className="text-stone-400 mt-2 text-sm">

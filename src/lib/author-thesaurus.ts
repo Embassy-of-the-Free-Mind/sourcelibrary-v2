@@ -68,6 +68,8 @@ export interface AuthorThesaurusDoc {
   wikidata_description?: string;
   wikidata_birth_year?: number;
   wikidata_death_year?: number;
+  /** The person's name per language, for a heading in another script (#8035). */
+  localized?: Record<string, { name?: string }>;
 }
 
 export interface AuthorEntityEnrichment {
@@ -248,6 +250,19 @@ async function getCanonicalNameIndex(
   }
   canonicalNameIndex = { map, builtAt: now };
   return map;
+}
+
+/**
+ * The canonical slug of the one doc that answers to a name as written, or null
+ * when none does or two do. For a /author/ URL in Han characters, which
+ * `authorSlug` folds to nothing (#8035).
+ */
+export async function resolveAuthorSlugByName(
+  db: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  name: string,
+): Promise<string | null> {
+  const index = await getCanonicalNameIndex(db.collection('authors'));
+  return index.get(norm(name)) ?? null;
 }
 
 /**

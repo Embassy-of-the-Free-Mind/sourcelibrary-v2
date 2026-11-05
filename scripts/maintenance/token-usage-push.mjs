@@ -125,18 +125,19 @@ function countRequest(r, d, m, ms, ctx, fileState) {
   const fam = modelFamily(m.model);
   const iso = new Date(ms).toISOString();
   const day = iso.slice(0, 10);
+  const account = ctx.accountAt ? ctx.accountAt(ms) : ctx.account;
 
-  const dk = `${day}|${ctx.account}|${fam}`;
+  const dk = `${day}|${account}|${fam}`;
   let dr = r.days.get(dk);
-  if (!dr) r.days.set(dk, dr = { day, account: ctx.account, model: fam, cost: 0, req: 0, parts: emptyParts() });
+  if (!dr) r.days.set(dk, dr = { day, account, model: fam, cost: 0, req: 0, parts: emptyParts() });
   dr.cost += cost; dr.req += 1; addParts(dr.parts, parts);
 
-  const hk = `${iso.slice(0, 13)}|${ctx.account}`;
+  const hk = `${iso.slice(0, 13)}|${account}`;
   r.hours.set(hk, (r.hours.get(hk) || 0) + cost);
 
-  const jk = `${ctx.account}|${ctx.label}`;
+  const jk = `${account}|${ctx.label}`;
   let j = r.jobs.get(jk);
-  if (!j) r.jobs.set(jk, j = { job: ctx.label, account: ctx.account, cost: 0, req: 0, ctx_sum: 0, max_ctx: 0, big: 0, sub: 0, sub_opus: 0, polls: 0, poll_cost: 0, sessions: new Set(), first: iso, last: iso, parts: emptyParts() });
+  if (!j) r.jobs.set(jk, j = { job: ctx.label, account, cost: 0, req: 0, ctx_sum: 0, max_ctx: 0, big: 0, sub: 0, sub_opus: 0, polls: 0, poll_cost: 0, sessions: new Set(), first: iso, last: iso, parts: emptyParts() });
   j.cost += cost; j.req += 1; j.ctx_sum += context; j.max_ctx = Math.max(j.max_ctx, context); j.sessions.add(ctx.session);
   addParts(j.parts, parts);
   if (iso < j.first) j.first = iso;
@@ -204,6 +205,35 @@ function accountOf(home) {
   try { return JSON.parse(fs.readFileSync(f, 'utf8')).oauthAccount.emailAddress; } catch { return 'unknown'; }
 }
 
+/**
+ * A transcript does not record its account, and a machine whose login changes (the laptop, by /login) would
+ * otherwise file its whole history under whoever is logged in now. climits appends each change to this file.
+ * Lines before 2026-11-05 are inferred from which meter rose (source: inferred-from-meters), so an estimate.
+ */
+export function parseLoginTimeline(text) {
+  return text.split('\n').flatMap(l => {
+    try {
+      const e = JSON.parse(l);
+      const t = Date.parse(e.t);
+      return e.account && Number.isFinite(t) ? [{ t, account: e.account }] : [];
+    } catch { return []; }
+  }).sort((x, y) => x.t - y.t);
+}
+
+/** The login in force at `ms`. Before the first entry there is no record, so it says so. */
+export function loginAt(timeline, ms) {
+  let found = 'unknown';
+  for (const e of timeline) {
+    if (e.t > ms) break;
+    found = e.account;
+  }
+  return found;
+}
+
+function readLoginTimeline() {
+  try { return parseLoginTimeline(fs.readFileSync(path.join(os.homedir(), '.claude-limits', 'login-history.jsonl'), 'utf8')); } catch { return []; }
+}
+
 function* transcripts(dir, sinceMs) {
   let entries;
   try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
@@ -220,13 +250,16 @@ async function scan(sinceMs) {
   const r = newRollup();
   const scanned = [];
   let files = 0;
+  const timeline = readLoginTimeline();
   for (const home of homes()) {
     const account = accountOf(home);
     scanned.push(account);
+    // Only the default home follows /login. A named home (~/.claude-team) stays on its own account.
+    const accountAt = timeline.length && home === path.join(os.homedir(), '.claude') ? ms => loginAt(timeline, ms) : null;
     const root = path.join(home, 'projects');
     for (const f of transcripts(root, sinceMs)) {
       const rel = path.relative(root, f).split(path.sep);
-      const ctx = { account, label: jobLabel(rel[0]), session: (rel[1] || '').replace('.jsonl', ''), isSub: f.includes(`${path.sep}subagents${path.sep}`), since: sinceMs };
+      const ctx = { account, accountAt, label: jobLabel(rel[0]), session: (rel[1] || '').replace('.jsonl', ''), isSub: f.includes(`${path.sep}subagents${path.sep}`), since: sinceMs };
       const fileState = { afterSleep: false };
       let stream;
       try { stream = fs.createReadStream(f, 'utf8'); } catch { continue; }

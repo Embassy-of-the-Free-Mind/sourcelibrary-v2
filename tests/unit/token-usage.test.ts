@@ -4,7 +4,7 @@
  */
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error plain .mjs script, no declarations
-import { feedLine, finishRollup, jobLabel, meterSeries, newRollup, parseEstimate, priceUsage } from '../../scripts/maintenance/token-usage-push.mjs';
+import { feedLine, finishRollup, jobLabel, loginAt, meterSeries, newRollup, parseLoginTimeline, parseEstimate, priceUsage } from '../../scripts/maintenance/token-usage-push.mjs';
 import { dollarsPerPoint, estimateVerdict, evenPacePercent, forecast, freshness, mergeMeters, pointsUsed, type AccountWeek, type MeterDoc, type UsageDoc } from '@/lib/token-usage';
 
 const T = '2026-11-04T10:00:00.000Z';
@@ -89,6 +89,35 @@ describe('feedLine', () => {
     const out = finishRollup(r, { maxJobs: 1 });
     expect(out.jobs.map((j: { job: string }) => j.job)).toEqual(['big']);
     expect(out.jobs_omitted).toBe(1);
+  });
+});
+
+describe('login timeline', () => {
+  const timeline = parseLoginTimeline([
+    '{"t":"2026-11-03T11:00:00Z","account":"gmail"}',
+    'not json',
+    '{"t":"2026-10-29T23:00:00Z","account":"sl"}',
+    '{"t":"2026-11-05T10:00:00Z","account":"sl"}',
+  ].join('\n'));
+
+  it('reads entries in time order and skips a bad line', () => {
+    expect(timeline.map((e: { account: string }) => e.account)).toEqual(['sl', 'gmail', 'sl']);
+  });
+  it('gives the login in force at a moment, and says when there is no record', () => {
+    expect(loginAt(timeline, Date.parse('2026-11-04T12:00:00Z'))).toBe('gmail');
+    expect(loginAt(timeline, Date.parse('2026-11-06T12:00:00Z'))).toBe('sl');
+    expect(loginAt(timeline, Date.parse('2026-10-01T00:00:00Z'))).toBe('unknown');
+  });
+  it('files each message under its own moment, so a later /login cannot relabel history: the page showed all $3,730 under one account', () => {
+    const r = newRollup();
+    const accountAt = (ms: number) => loginAt(timeline, ms);
+    const c = { ...ctx, since: 0, accountAt };
+    feedLine(r, line('a', { output_tokens: 100 }, {}, '2026-11-04T12:00:00.000Z'), c, { afterSleep: false });
+    feedLine(r, line('b', { output_tokens: 100 }, {}, '2026-11-05T12:00:00.000Z'), c, { afterSleep: false });
+    const out = finishRollup(r);
+    expect(out.days.map((d: { account: string }) => d.account).sort()).toEqual(['gmail', 'sl']);
+    expect(out.jobs.map((j: { account: string }) => j.account).sort()).toEqual(['gmail', 'sl']);
+    expect(out.hours.map((h: { account: string }) => h.account).sort()).toEqual(['gmail', 'sl']);
   });
 });
 

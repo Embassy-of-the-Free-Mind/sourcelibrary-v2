@@ -629,6 +629,218 @@ The frame is 93,277 by the brief and 93,271 by today's `results/stale.json`, in 
 - Whether the frame's held books behave like set B.
 - Print English for PO.
 
+## 2026-11-04 · Can a model punctuate our Chinese text (句读) well enough to serve it as a layer? (#8140)
+
+**Question.** 168 of 169 random Chinese pages we serve have no punctuation. Can a model insert marks, never changing a character, well enough to build a reader layer? And which arm does it better: gemini-3.8-flash-low on `agy -p` or Opus on `claude -p`, both on subscriptions? Prereg: `PREREGISTRATION-zh-punct-8140.md`, committed (418758e9b) before any arm ran. The decision rule is #8140's, unchanged.
+
+**Answer.** **No layer.** Rules 1 and 2 pass. Rule 3 fails: 13 of 30 Siku pages had at least one harmful break, and the rule allows 3.
+
+### Design
+
+- **Frame A (key = CBETA).** One page per book from the 66 `cbeta-xml-p5` books of #6101, seeded at Mulberry32(8140), each with at least 100 Han characters (`zh-punct-8140/draw-A.json`).
+  - **The key is punctuated.** It has a median of 0.19 marks per Han character, measured on the draw before any arm ran.
+  - **Two styles.** 39 pages use modern punctuation. 25 use only 。 as a generic break; these include all 12 Siku manuscript pages of 五燈會元.
+  - **Two exclusions.** Two lineage lists with no marks were excluded by the prereg rule (under 0.02 marks per Han character). That leaves **64 scored pages**.
+- **Input.** CBETA's text with every mark, the `（）` around inline notes and all whitespace stripped. The note text stays.
+- **Arms.** Same prompt, one page per call.
+  - **G:** gemini-3.8-flash-low on `agy -p`, milo pool, no fallback.
+  - **O:** Opus on `claude -p`, text only.
+  - **G2:** G re-run on 30 pages, as the noise floor.
+- **Guard.** Before any repair, the arm's marks are stripped and the result is compared to the input code point for code point. Then one of two policies:
+  - **K (primary).** The input is served with only those insertions whose neighbours align on both sides.
+  - **R.** Any changed page is rejected outright.
+  - Under either policy, the served characters are always the input's.
+- **Metrics.**
+  - P/R/F1 on break positions (any mark vs none), micro-pooled.
+  - P/R/F1 on sentence-final breaks (。？！ vs the rest), on the 39 modern-style pages only. On 。-only pages, 。 is not a sentence end.
+  - Intervals use a book-cluster bootstrap (2,000 resamples). With one page per book this is the page bootstrap.
+- **Frame B (does it carry over?).**
+  - **Pages.** 30 non-Buddhist Siku Quanshu pages with Paddle OCR, one per book, seeded at Mulberry32(81402), no table pages (`draw-B.json`). The draw is the Siku mix as drawn: it includes reference works (說文, 集韻, 佩文韻府 ×3, 淵鑑類函 ×3).
+  - **Arm.** G only, the chosen arm, under policy K.
+  - **Judge.** A blind Opus judge with the page image rated each of 1,344 breaks as fine, debatable or harmful (changes the sense), and flagged breaks caused by OCR errors.
+  - **Controls, mixed in blind.** 6 pages with shuffled breaks and 4 wrong-page pages.
+- **Licence.** CBETA is CC BY-NC-SA 4.0. No CBETA text, arm output or excerpt is committed: only scores and page ids (`scripts/eval/results/zh-punct-8140/`).
+
+### Result 1: frame A against CBETA (n = 64 pages, 64 books; policy K)
+
+| measure | G (Flash) | O (Opus) |
+|---|---|---|
+| sentence-final F1, modern-style pages (n = 39) — **rule 2** | **0.857 [0.834, 0.877]** (P 0.812, R 0.906) | 0.860 [0.832, 0.884] (P 0.838, R 0.883) |
+| break F1, all pages (n = 64) | 0.905 [0.888, 0.923] (P 0.862, R 0.953) | 0.904 [0.881, 0.925] |
+| break F1, modern-style (n = 39) | 0.929 [0.918, 0.938] | 0.927 [0.899, 0.948] |
+| break F1, 。-only (n = 25) | 0.865 [0.836, 0.896] | 0.864 [0.834, 0.895] |
+| break F1, Siku 五燈會元 (n = 12) | 0.960 [0.940, 0.975] | 0.946 [0.915, 0.969] |
+| break F1, not Siku (n = 52) | 0.899 [0.881, 0.916] | 0.899 [0.873, 0.921] |
+| sentence-final F1, modern-style, **policy R** | 0.826 [0.775, 0.865] | 0.857 [0.825, 0.882] |
+| pages with a changed character, **before the guard** | **5/64 = 7.8 % [3.4, 17.0]** | 1/64 = 1.6 % [0.3, 8.3] |
+| calls / retries | 64 / 0 | 64 / 0 |
+| median seconds per page | 6.6 | 8.9 |
+
+- **Paired G − O.**
+  - Sentence-final F1 (modern-style pages): Δ −0.003 [−0.019, +0.015].
+  - Break F1 (all pages): Δ +0.001 [−0.010, +0.017].
+  - This is a tie, so **G was chosen** as the cheaper arm, as preregistered.
+- **Noise floor.** G2 against G on 30 pages:
+  - The two runs agree at break F1 0.974 and sentence-final F1 0.953.
+  - Against the key, G2 − G is Δ +0.001 [−0.003, +0.005].
+  - G2 changed characters on 2/30 pages.
+- **Changed characters, by hand from the diffs.**
+  - **G's five pages** are variant swaps (個→箇, 楊→揚, 什→甚, 滿→滴) and one doubled 用.
+  - **O's one page** is a reply cut off at 167 of 352 characters, plus an inserted 舉.
+  - The guard drops all of these, and no changed character is served under K or R. But **a raw arm output is not safe to serve.**
+- **Sentence-final F1 on all 64 pages** (G 0.695, O 0.691) is low because on 。-only pages CBETA's 。 marks every break. That number measures the style, not the arm.
+
+### Result 2: frame B, Siku non-Buddhist pages, judged with the image (G, policy K)
+
+- **The judge passed its gate** (40 calls; every call opened the image; median 13 s).
+  - **Shuffled breaks:** harmful breaks found on 6/6 pages (median 85 % of breaks called harmful).
+  - **Wrong page:** caught 4/4.
+  - **Real pages:** none was said to mismatch its image.
+- **Real pages (n = 30 pages, 30 books, 1,344 breaks).**
+  - **Pages with ≥ 1 harmful break: 13/30 = 43 % [27.4, 60.8] — rule 3 needs ≤ 3/30. FAIL.**
+  - **Discounting OCR-caused breaks** still leaves 8/30 pages with a harmful break, which also fails.
+  - **Harmful breaks:** 31, or 2.3 per 100 breaks. The judge attributed 19 of them to OCR errors in the input.
+  - **Debatable breaks:** 23, or 1.7 per 100.
+- **Changed characters.** G changed characters on 8/30 pages before the guard. They were mostly corrections of OCR misreads (聞→闑, 葬→彝, 土→士, 巳→已). The guard drops them, so the layer would keep the OCR error and lose the correction.
+- **Opened by eye** (the image and the punctuated text, read by the author of this file):
+  - `210933-p131` 喻林. The source notes come after each quotation, and G attached each attribution to the next passage. Every attribution on the page shifts. **Confirmed harmful.**
+  - `5e7f4a-p122` 儀禮集釋. 鄭注 runs into the main text. The indented note column is a layout cue that a text-only arm cannot see. **Confirmed.**
+  - `0f0b67-p66` 淵鑑類函. A five-character poem line is split (相羣俊，學為名). **Confirmed.**
+  - `5cbc46-p137` 周易口義. A 。 after 大正之道. **Borderline:** a comma would be fine.
+  - `dfc0fd-p6` 證治準繩. There is no break after 而已, although G itself fixed 巳→已 there. **Confirmed.**
+
+### Decision under the #8140 rule
+
+1. **No changed character after the guard: PASS.** This holds by construction under K and R. Before the guard, characters changed on 7.8 % of frame-A pages (G) and 27 % of frame-B pages.
+2. **Sentence-final F1 ≥ 0.85 on CBETA: PASS at the point estimate** (G 0.857). The CI's lower bound is 0.834, and under policy R G scores 0.826.
+3. **Harmful breaks on ≤ 3/30 Siku pages: FAIL** (13/30).
+
+**Do not build the layer.** The page-level rule is strict. At about 45 breaks per page, passing it needs a harmful rate below about 0.2 % of breaks, and G runs at 2.3 %. Two failure classes stand out:
+
+- **OCR-caused breaks** (19 of 31). These are not the arm's fault, but a layer would serve them.
+- **Layout the text arm cannot see:** note columns, small double-line notes, and source notes placed after quotations.
+
+### Cost (both arms on subscriptions, $0 API)
+
+- **G.**
+  - **Calls.** 124 Gemini calls (64 G + 30 G2 + 30 frame B), one per page with no retries. Median 6.6 s per page.
+  - **Quota.** The milo pool's weekly quota went from 0.4731 to 0.4694, about 0.003 % per call, or roughly 270 pages per 1 % of a week.
+  - **At ~2M pages,** that is ~2M calls, or about 74 pool-weeks of one pool. This is rough: other jobs share the pool, and long pages cost more.
+- **O.**
+  - **Calls.** 104 Opus calls (64 arm + 40 judge). Median 8.9 s per arm page and 13 s per judge page.
+  - **Quota.** The `claude -p` subscription meter is not visible from this box, so its quota cost per page is not measured.
+
+### Not established
+
+- **CBETA's punctuation is one editor's choice among several valid ones.** F1 against it understates any arm whose breaks are defensible but differ.
+- **Frame A is Buddhist (Chan) text, and famous.** It is on the web, so memorisation is possible. G's variant "corrections" toward other editions hint at this, and so does its F1 of 0.96 on the Siku 五燈會元 pages. The scores may not carry to Confucian commentary, medicine or reference works, and frame B suggests they do not.
+- **Frame B was judged, not keyed.** It has one judge (Opus) rating Gemini's output, and the Opus arm was never run on frame B.
+- **An image-aware arm is untested.** It would see note columns and small notes, and it might fix the layout class of harmful breaks. Punctuating after a better OCR is also untested. Both are possible follow-ups; neither is in scope here.
+- **n = 30 per page-level rule.** The 13/30 interval is wide [27, 61 %], but even its lower bound is far above 3/30.
+
+### Files
+
+- `scripts/eval/PREREGISTRATION-zh-punct-8140.md`. The prereg.
+- `scripts/eval/zh-punct-8140/`. The draw, arm, score, frame-B draw and judge scripts, the prompt, and the page ids.
+- `scripts/eval/results/zh-punct-8140/scoreA.json`, `scoreA-pages.jsonl`, `scoreB.json`. The scores, with counts and ids only.
+
+## 2026-11-04 · Does Opus correction hold on the Gemini-read Chinese print pages at frame scale, and at how many pages a call? (#7263)
+
+Derek, 2026-11-04: "fix those too". #8008 measured `gemini>opus` at 26/30 on print with a stricter page rule and one page a call. This pilot runs the bulk's own frame through its own reader and writer before any write.
+
+PRIOR ART:
+- `2026-11-03-zh-gemini-reocr-cell-7263.md`, `2026-11-03-zh-reocr-cheap-arms-7263.md`: the cell test and the route. The route is not re-chosen here.
+- `scripts/eval/zh-gemini-reocr-7263/` and `router-confirm/confirm.mjs judge`: the plan and judge shape, run unchanged. `draw.mjs` draws one page a book only at one a call, so `scripts/batch/zh-print-correct-7263/pilot.mjs` restates the draw.
+- `scripts/batch/ocr-convergence/correct.mjs`, `cli-ocr.mjs apply`: the reader and the writer, run unchanged. `apply` was run dry here.
+- `scripts/batch/cli-ocr-lane.mjs correct`: the scheduled twin. It reads agy pools and needs a cron, which the brief forbids; hence `runner.mjs`.
+- `scripts/lib/leaf-shift.mjs`: votes on printed numbers, which these pages mostly lack. The own-leaf test compares Han bigrams with stored texts instead.
+
+### Frame
+
+`frame.mjs`, from Mongo, read-only. 211 true print books hold 29,495 Gemini-read pages (the brief's estimate was 29,506); the Siku pages are out.
+
+| page state | pages |
+|---|---:|
+| owed (reading text, 30+ Han, not human-edited, not tagged handwritten) | 22,944 |
+| not a page of reading text | 2,620 |
+| under 30 Han | 1,992 |
+| tagged handwritten or mixed | 1,875 |
+| English withheld by eye | 63 |
+| `ocr.unreadable` | 1 |
+
+20,621 owed pages in 183 books can be written now; the rest are deferred by `writeGate` and re-checked each wave. 21,946 owed pages carry English. `zh-ditto-correct-5274` owns pages in books titled 佩文韻府, 駢字類編 or 韻府拾遺: none of the 211 is one, so no page has two owners.
+
+### Design
+
+Set before any text was judged.
+
+- **Bar.** At least 50/60 accepted and no more than 4 wrong-text pages. Counted on all 60 judged pages, including those where the lane serves the stored text.
+- **Sets.** 60 books, one judged page each. Set `one` (30 books): one page a call. Set `ten` (30 books): a call of ten consecutive owed pages, of which one is judged, at a seeded position. 330 pages read.
+- **Served text.** What `cli-ocr.mjs apply --emit-written` would write. A refused page, or an UNCHANGED, CONTAIN or no answer, serves the stored text.
+- **Judge.** `judgeAbsolute`, Opus, image attached, one text a call, blind. 4 wrong-page controls.
+- **Own leaf.** Every correction, by Han bigrams, against its own stored text and its neighbours'.
+
+### Result
+
+| set | accepted | wrong-text | not this leaf | mean fidelity | served | controls | list price a page |
+|---|---:|---:|---:|---:|---|---:|---:|
+| one a call | 24/30 | 3 | 2 | 4.3 | written 25, unchanged 2, CONTAIN 2, refused 1 | 0/2 | $0.105 |
+| ten a call | 27/30 | 3 | 0 | 4.5 | written 27, unchanged 2, refused 1 | 0/2 | $0.099 |
+| **both** | **51/60** | **6** | 2 | | written 52, unchanged 4, CONTAIN 2, refused 2 | 0/4 | |
+
+**The six wrong-text pages:**
+
+| page | served | what |
+|---|---|---|
+| 列子沖虛真經 vol. 2 p.16 | CONTAIN, stored | stored text is another leaf; confirmed by eye |
+| 性命雙修萬神圭旨 p.270 | CONTAIN, stored | stored text is another leaf; confirmed by eye |
+| 本草綱目圖 p.2 | refused, stored | apply's 40% shared-words guard refused the correction |
+| 大正新脩大藏經 vol. 8 p.261 | refused, stored | the same guard |
+| 四書集注 p.64 | written, ten a call | a dense spread, its two pages in the wrong order at the seam |
+| 正統道藏 vol. 5 p.22 | written, ten a call | misreads; by eye the judge is right: the leaf reads 倏欻之間 and 綿雲皎 |
+
+The bar counted all four stored pages against the lane because it was written that way. **Written pages alone give 47/52 accepted and 2/52 wrong-text, which would pass. That cut came after the data, so it does not change the result.** Whether the bar should count only what the lane writes is Derek's call.
+
+The third CONTAIN answer, 格致鏡原 p.344, fell outside the judged pages: by eye that side shows only an empty frame and show-through, and its stored text and English are invented.
+
+**Own leaf (#5021).** No slide in either set. One a call: 0 of 26 corrections sit closer to a neighbour than to their own stored text. Ten a call: 1 of 279 (四書集注 p.62, own 0.095, neighbour 0.103), where the stored text is Gemini reading across the columns and the correction is coherent 大學或問 text. Under 0.5 own overlap: 1 of 26 and 19 of 279, the highest neighbour figure among the 19 being 0.215.
+
+**One page a call.** Ten is no worse on the bar, but it saves only about 6%, apply refused more of it (21/279 against 1/26, concentrated in a few books), and both written wrong-text pages came from it. These differences do not separate at this n; with no real saving there is no reason to carry the #5021 risk.
+
+### Cost
+
+$32.80 list across the pilot's reads, cash $0. Bulk at one a call: 20,621 writable pages x $0.105 = about $2,165 list. At the issue's measured 0.04 to 0.054 points per list dollar that is about 87 to 117 points, 0.9 to 1.2 account-weeks, inside the brief's 3.5. The meter went from 78% to 84% across the pilot, but other jobs share the login and it reads whole points, so that bounds the rate rather than measures it.
+
+### What reads a changed OCR text
+
+Checked in code before any write, for whichever job runs the bulk. Apply runs with `--only=<the corrections>`, no `--mark-stale`, and lane `opus-correct-zh-print-7263`; each overwrite snapshots to `page_revisions`; human-edited pages are refused.
+
+| reader | when | what it does to a corrected page |
+|---|---|---|
+| `mark-stale-translations` | 07:30, main | stamps `translation_stale` {`ocr_newer`}: a flag only |
+| `withhold-stale-translations` | 08:20, gex45 | arm 1 acts on `WITHHOLD_LANES` only; this lane is not in it, so the English stays served |
+| `cli-translate-lane stale` | :05, gex45 | reads `--stale-lane=agy-reread-lite-7853` only |
+| `cli-translate-lane run` | main :40, gex45 :10 | untranslated pages only |
+| `translate-worker` | */2, main, PAID | stale pages only inside a job, and it dispatches only `ocr_complete` and `translate_partial` books; `writeGate` writes none of those |
+| Phase 4 gap-fill | PAID | books under 90% translated, OCR-newer pages included. `translationLaneReason` defers books under 92%: 6 books, 347 pages deferred, re-checked each wave |
+| `translate-batch-worker --chained` | PAID | same selector; `planNextRound` drops translated pages, so Batch never re-translates a stale page |
+| `realtime-translate --stale`, `stale-retranslate-6567`, `reader-request-lane` | no cron, or by hand | none, or untranslated only |
+| derived metadata, `concept-abstracts` | | made from the English, which does not change; `concept-abstracts` skips stale pages |
+| `embed-gemini --incremental` | 30 */4, main, PAID | re-embeds the same English at $0.20/M: about 20K x 500 tokens = about $2 |
+| `sync-pages-content`, vector delta | | free |
+| `lane-judge-sampler` | nightly | may sample the lane: harmless |
+
+So corrected pages queue no paid Batch re-translation, and no global switch is needed. **One caveat:** 128 books are held `paddle-print-6101`. No lane selects them while held, but on RELEASE any under 90% or at `ocr_complete` would re-translate corrected pages on a paid lane. That release is its own priced decision.
+
+### Containment
+
+By eye, in the same run, under `containment-on-finding.md`. The three CONTAIN answers were not written. Their English is withheld (`withhold-stale-translations.mjs --by-eye-pages`, snapshotted, undo with `restore-withheld-translation.mjs`); all three books were already held `paddle-print-6101`. These pages still need repairing, and bulk would meet more: 3 CONTAIN answers in 330 pages read. Those three withholds are the pilot's only Mongo writes.
+
+### Not done here
+
+- The comparison arms Derek asked for (Paddle + Flash low and medium, Opus fresh read) need gex45's GPU and more quota than this box had, so they run as job `zh-print-arms-7263` on these 60 pages, input in `scripts/eval/zh-print-arms-7263/input/`.
+- Re-translating the English.
+
 ## 2026-11-04 · Which lane should read printed Chinese: Opus correction, Paddle > Flash, or an Opus fresh read? (#7263)
 
 Derek's notes of 2026-11-04 to job zh-print-correct-7263, after its pilot failed the bar (51/60 accepted, 6 wrong-text pages against a limit of 4). Same 60 pages as that pilot. Derek has since released print bulk on Opus at one page a call, as a decision and not a pass; that job does not wait for this one.
@@ -3245,6 +3457,107 @@ sampled, and pooled only for a language whose first draw came close (Latin: 14/1
 Why a page goes unwritten: the apply guards decline it. Most often a diff-guard flag that is not a like-for-like
 substitution, or one that spans a tag. Also: a corrector `<script>handwritten|mixed</script>` tag, under N% of the
 words in the GPU draft, or no draft. These refusals are guards working, not reads lost to quota.
+
+## 2026-11-04 · How often is the typed Chinese reference itself wrong, judged at the image? Kanripo WYG, CBETA, and a three-way on T262 (#6552)
+
+<!-- PRIOR ART: 2026-10-04-human-ceiling-transcription-5762.md (agreement of two human keyings, 0.28% on Taisho Chinese, neither is the truth; found Kanripo KR6 is CBETA, and WYG and zh.wikisource are one keying); 2026-11-02-three-way-ocr-archive-ours-human-7941.md (judged flags per 1,000 words on easy Latin-script pages); 2026-10-07-chinese-print-against-cbeta-6101.md (uses CBETA as a reference and assumes it correct). None puts a Chinese reference against the leaf. -->
+
+**Question.** Every Chinese accuracy figure treats the typed reference as correct. Where the typed text and our read differ, what does the leaf say? What is the smallest engine gap we may report? This measures our references. It is not a critique of Kanripo or CBETA, and nothing was submitted upstream.
+
+**Harness and numbers.** `scripts/eval/human-error-zh-6552/`; every figure below is in `results.json` (numbers and hashes only). The hidden editions' text stays in private scratch under eval-design's `in-copyright` rule. Only `witness_sha256` and counts are here.
+
+**Design.**
+- **A. Kanripo WYG × the Siku 文淵閣 manuscript.** 30 works, one page each (KR1 9, KR2 9, KR3 9, KR4 3; 漢書 and 後漢書 forced in), Dice ≥ 0.9, 4,745 characters compared. Second witness is our Paddle read, stored on 22 pages. On 8 (KR2, KR4) nothing was stored, so a local PaddleOCR-VL read was used, scratch only.
+- **B. CBETA × Taisho.** 30 pages, 29 works, 39,094 characters, all from one volume (vol. 8). **How the edition was established:** book page − printed page is 16 on all 217 of the 230 stored reads with Dice > 0.7; Dice with its own CBETA page against the runner-up (one page at 0.887, the rest ≥ 0.9; highest runner-up 0.751); the printed Taisho number in the running head, by eye on two works.
+- **C. Three-way on T262.** Three witnesses and an arbiter:
+  - CBETA;
+  - a modern print with our stored Paddle read (20 pages, 4,450 characters, hidden);
+  - an old woodblock print, a Staatsbibliothek Berlin 刻本 (20 leaves in 3 volumes, 2,548 characters, hidden), read for this measure by Opus on a CLI, so its "read" here is **not OCR**;
+  - the Taisho vol. 9 leaf from archive.org, not in our library and used only as arbiter, located by CBETA's own page text (55 of 59 items on a page holding the span).
+
+  A difference counts as an error only when it departs from that witness's own leaf.
+- **Readers.** Opus (`claude -p`) and Gemini 3.8 Flash high (`agy -p`), blind to which witness is which, with the crop open. A no-image Opus arm measures what can be solved from sense alone. Opus referees splits. By-eye readings override them. Gemini read a subset on B and C (the packets richest in controls).
+- **Normalisation.** Han only, glyph folding as in `lib.mjs`.
+- **Intervals.** Per 1,000 compared characters, resampled by work. Failed reads are counted, not scored.
+
+**Result 1: per collection** (per 1,000 characters [95 % interval by work]).
+
+| | pages | chars | keying | editorial | charged to the reference | our read: error | our read: variant form | cannot tell | structure (count) |
+|---|---:|---:|---|---|---|---|---|---|---:|
+| A Kanripo WYG × Siku ms | 30 | 4,745 | **1.69** [0.44, 3.15], n=8 | 6.11 [3.74, 8.68], n=29 | 8.43 [5.14, 11.82], n=40 | 1.05 [0, 2.30], n=5 | 4.21 [2.47, 6.21], n=20 | 1.69 [0.64, 2.92], n=8 | 13 |
+| B CBETA × Taisho | 30 | 39,094 | **0**, n=0 (upper 0.10) | 0.79 [0.33, 1.40], n=31 | 0.82 [0.37, 1.42], n=32 | 12.20 [10.20, 14.71], n=477 | 0.43 [0.21, 0.70], n=17 | 3.53 [2.76, 4.28], n=138 | 21 |
+
+- **"Charged to the reference"** = keying + displaced-character second halves + neither + editorial: everything a reference-scored engine would be charged for while reading the leaf correctly. A's 40 is 8 keying, 3 second halves, 29 editorial. B's 32 is 0 keying, 1 neither (a span not located), 31 editorial.
+- **A.** Three of the 8 keying events are one shape: the last character of a double-line note column displaced across the two small columns. One near-glyph pair occurs twice. Three of the 8 are in one work, which the by-work interval carries. The hand does not separate 已/巳 or 汩/汨; Opus judged those inconsistently and the eye says CANNOT TELL. Of the 29 editorial changes, 19 are normalisations and 10 are undeclared corrections of the scribe.
+- **B.** After the referee, the machine had 14 KEYING and 5 NEITHER calls. All 14 KEYING and 4 of the NEITHER were opened and **none held**: KEYING became 7 structure, 5 OCR error, 1 editorial and 1 cannot tell; NEITHER became 3 OCR error and 1 editorial. The causes were running heads, footnotes, cross-register reads aligned against text, OCR doubling at a column break, repeated formulas and a wrong crop. The fifth NEITHER (`b1-0029`, referee only, span not located) was not opened and stays charged to the reference. Two more KEYING calls fell on positions CBETA itself declares. The machine alone would have reported 0.36 keying errors per 1,000 on a text with none found, more than the 0.10 upper bound. **Never report a machine KEYING on this kind of page without the eye.**
+  - Upper bound on keying: 3/39,094 = 0.077 per 1,000 (rule of three), or 0.104 after dividing by the lower bound on plant catch (74 %).
+  - Corrections that CBETA declares (`<lem wit=cbeta>`): 29. Undeclared, where the leaf slips and the typed text gives the sense: 5 = 0.13 per 1,000, on a 1-bit scan, so weak.
+  - **The unresolved part is CANNOT TELL, 138 spans.** Of the 7 opened, 3 were OCR error and 4 stayed cannot tell because the crop missed the span; none was keying. 0 of 7 gives an upper bound of 35 %, or about 1.25 per 1,000. The worst case is all of it, 3.53 (upper 4.28).
+- **Threat, A:** Dice ≥ 0.9 selects easy pages, so 1.69 and 8.43 are minimums for WYG in general.
+- **Threat, B:** one volume.
+- **Not checked:** 4 of the first draw's 21 picks were 摛藻堂薈要 leaves, a different manuscript, in books titled Siku. They were dropped and refilled here. Earlier WYG CER may include such leaves.
+
+**Result 2: the three-way on T262.**
+
+| against its own leaf | chars | leaf differs from CBETA | read error | read variant | cannot tell | structure |
+|---|---:|---|---|---|---|---:|
+| modern print, Paddle | 4,450 | 10.11 [5.90, 15.76], n=45 (keying-class 20, editorial 25) | **0.45** [0, 1.14], n=2 | 2.25 [0.87, 3.85], n=10 | 1.12 [0.42, 2.07], n=5 | 29 |
+| old print, Opus CLI read | 2,548 | 29.83 [21.85, 38.61], n=76 (keying-class 8, editorial 68) | 0.39 [0, 1.25], n=1 | 3.14 [0.78, 6.23], n=8 | 6.67 [2.31, 12.45], n=17 | 14 |
+
+- **The "leaf differs" column is not error.** These are edition differences (the old print mostly short forms), and they are what a typed text charges an engine reading another edition.
+- **CBETA at its own leaf.** 59 items were put to Taisho vol. 9 (the differences from the two prints, leaving out the old print's short forms): **0 departures, 2 cannot tell**, 10 opened by eye, all agreeing. Several sit on Taisho's own apparatus note numbers: the edition records the variant. Upper bound over the 6,998 characters those comparisons cover: 0.43 per 1,000. The c-t row's 23,772 in `results.json` is not a denominator for a rate. By eye, 3 positions show both prints agreeing against CBETA: edition family, not error.
+- **Structure.** The modern print's 29 are running heads merged into the body, on all 20 pages. 12 of the old print's 14 are on one leaf (`O-3376909687-215`), where the fit took a repeated formula from a different direction in the same chapter. That leaf is the wrong passage and its characters stayed in the denominator.
+- **Is a clean modern print read by OCR good enough to serve as a reference?** For **that print only**, after stripping running heads and folding the variant pair (9 of the 10 variants are one pair, normalised systematically): 0.45 error per 1,000 (upper 1.14), plus 1.12 cannot tell, on 20 pages of one book. That is in the range of the typed references here. As a reference for another edition it charges about 10 per 1,000 against that print and about 30 against the old one. It stays private.
+
+**Result 3: controls** (right / n, pooled over A, B and C; `results.json` has each collection).
+
+| reader | plants caught | lower 95 | decoys rejected | false alarm (decoy called a keying error) | wrong crop → cannot tell | neither |
+|---|---|---|---|---|---|---|
+| Opus | 31/35 = 88.6 % | 74 % | 30/34 = 88.2 % | **0/34** (misses are cannot-tell) | 15/15 | 12/15 |
+| Gemini 3.8 Flash high | 27/32 = 84.4 % | 68 % | 22/33 = 66.7 % | **6/33 = 18 %** | 15/15 | 10/15 |
+| Opus, no image | 24/24 | 86 % | 26/26 | 0/26 | 0/13 | 7/13 |
+
+- **Plants are solvable from sense.** The no-image arm caught all of them, so the catch rate is an **upper bound** on catching a real error that reads plausibly. On real items the no-image arm agrees with the imaged verdict only 34.9 % (A), 62.5 % (B), 38 % (modern print) and 22.2 % (old print), so real verdicts did use the image. Wrong crops show the same: the blind arm answers anyway, the imaged readers refuse.
+- **Old print.** Plants 3/5 for Opus on the hard hand, 5/5 with no image. The sutra is memorisable, a named risk; slips kept by the reader count against pure memory.
+- **By eye:** 82 verdicts opened (KEYING 16, second halves 2, EDITORIAL 18, OCR_ERROR 26, OCR_VARIANT 3, CANNOT_TELL 9, STRUCTURE 8, agreed 2). The machine's class held on **49/82**, Opus alone on 51/82, Gemini on 21/42. By collection: A 16/22, B 10/31, modern print 10/11, old print 7/8, Taisho 6/10; B is where the eye mattered. Of the 6 three-way splits, 5 were opened, and `f1-0062` was settled from the alignment (a running head), not opened.
+- **Does Gemini Flash add anything? No on keying.** Across 44 Opus/Gemini splits: Gemini right 7, Opus right 20, neither 17. Keying errors found only by Gemini: 0. This is biased toward Opus, which is the arbiter. Same class as Opus: 65.1 % A, 78.6 % B, 71.4 % modern print, 67.7 % old print, 77.8 % Taisho. It adds false alarms (18 %), matching the standing feedback; the eye, not a second model, changed verdicts.
+
+**What it cannot see.**
+- **Both wrong.** Where typed and read agree, no difference arises. Opus read agreed spans against the crop, half of them near-confusable characters: A 0/98, B 0/92, modern print 0/48, old print 0/30. Pooled **0/268, upper 14.1 per 1,000**. This arm has no control (no plants among agreed spans) and a reader without a candidate is weaker than one with two. It is a weak bound and does not establish absence. If typist and engine were independent, the expected number of shared-wrong sites in the sample would be 0.008 (A), 0.009 (modern print), 0.003 (old print).
+- **Capture-recapture.** Chapman's estimator, the two witnesses as occasions, typed errors n1 and read errors n2. Overlap m = 0 throughout, so Lincoln-Petersen is undefined:
+
+  | | n1 | n2 | m | N [95 %] |
+  |---|---:|---:|---:|---|
+  | A | 8 | 5 | 0 | 53 [13, 117] |
+  | modern print | 20 | 2 | 0 | 62 [22, 132] |
+  | old print | 8 | 1 | 0 | 17 [9, 34] |
+
+  B is not meaningful (keying 0). **Assumption:** a typist's and an engine's errors are independent given the position. That is false, because they share hard glyphs, which makes N a **lower bound** in principle; and with m = 0 it says mainly that the two lists do not overlap, not how many errors exist. The C rows also count edition differences as "typed errors", so read those two as illustration only.
+- **Chao over the two readers, before the eye,** on A: f1 6, f2 5, Chao1 14.6 against 11 observed (ratio 1.33). Applied to 8 keying events: about 10.6, or 2.2 per 1,000. On B, f1 7, f2 3, but the calls opened did not hold, so it is not meaningful.
+
+**The floor: the smallest engine gap on Chinese we may report.** Reference error moves a paired gap by at most the charged rate, and only where the two engines differ at those positions, so these floors are conservative. Each is the upper interval of the charged rate.
+
+| reference, against | floor (points of CER) | note |
+|---|---|---|
+| CBETA, on the edition it keyed | **0.14** | 0 keying; excludes CANNOT TELL. About 0.27 if CANNOT TELL carries what the opened ones allow; 0.57 if all of it goes against CBETA. The 0.28 % CBETA × SAT agreement (#5762) is a different quantity that happens to land nearby |
+| Kanripo WYG, against the Siku ms, uncorrected | **1.2** | easy pages, so a minimum |
+| any typed text, against another edition | **1 to 3** | 10.11 and 29.83 per 1,000 on this one sutra; n = 2 print witnesses |
+
+**What this means for #6101.** Its 1.6-point median gap between Flash and Flash-Lite clears the CBETA floor only on pages where the leaf is the edition CBETA keyed. Its write-up calls them "the same editions". 47 of its 54 print books are woodblock, and this entry did not check their base per book. On any where the leaf is another edition, the gap sits inside the 1-to-3 band. This entry does not re-derive #6101; its paired interval and page wins are its own evidence.
+
+**Which references stay.** CBETA stays a CER reference, without a correction, on the edition it keyed. Kanripo WYG stays with the 1.2-point floor. Patching keying alone would leave about three quarters of its charge, because the editorial changes are the larger part.
+
+**#6562 (correction set).** Do not start as scoped.
+- **CBETA:** nothing to correct (0 keying in 39,094; 0 of 59 at Taisho).
+- **Kanripo WYG:** 1.69 keying against 6.11 editorial.
+- **Its acceptance rule fails here.** Two machine readers agreeing does not make a keying error: every machine KEYING on B failed on opening, so every fix needs the eye.
+- A WYG pilot is worth it only if a decision needs a gap under about 1.2 points.
+
+**Library note, no write made.** BDRC book `6a37d881…`, titled "Taishō Tripitaka", is a woodblock canon, not the Taisho.
+
+**Replicated?** No. Single draws (seeds 6552, 65522), one Taisho volume, one sutra for the three-way. A second Taisho volume is the cheapest replication of the 0 keying.
+
+**Cost and gate.** The brief's gate ran first: A's first 5 works, plants and spend checked, passed, then the rest. $0 cash, on subscriptions. Notional Opus (imaged, no-image, referee): A 4.26, B 20.47, modern print 4.50, old print 4.99, Taisho 1.04, about $35, excluding the old-print reads and the sessions themselves.
 
 ## 2026-11-04 · Opus is not the production translator for the five hardest languages (#6553)
 

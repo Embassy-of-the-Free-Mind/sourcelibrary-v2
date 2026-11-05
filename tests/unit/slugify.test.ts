@@ -128,6 +128,11 @@ describe('authorSlug', () => {
 });
 
 describe('authorUrl', () => {
+  it('gives a Han byline with no doc no link, not the /author/ index (#8035)', () => {
+    expect(authorUrl('蔡元定')).toBeNull();
+    expect(authorUrl('蔡元定', 'cai-yuanding')).toBe('/author/cai-yuanding');
+  });
+
   it('returns URL for known author', () => {
     expect(authorUrl('Michael Maier')).toBe('/author/michael-maier');
   });

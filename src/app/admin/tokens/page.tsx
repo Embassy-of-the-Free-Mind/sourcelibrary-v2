@@ -128,7 +128,7 @@ export default async function TokensPage() {
         <JobTable jobs={jobs} perPoint={perPoint} />
       </Section>
 
-      <Section title="What this can and cannot see" intro={<>Calls made with <code>--no-session-persistence</code> leave no transcript, so they move the meter without showing here. A low $-eq per point on an account suggests how much is missing. agy reports no token counts and is not on this page.</>}>
+      <Section title="What this can and cannot see" intro={<>Calls made with <code>--no-session-persistence</code> leave no transcript, so they move the meter without showing here. A low $-eq per point on an account suggests how much is missing. agy reports no token counts and is not on this page. The laptop moves between accounts, and transcripts do not say which: before 5 Nov its use is assigned to the account whose meter rose, an estimate, and since then to the recorded login.</>}>
         <div className="overflow-x-auto rounded border border-stone-200 bg-white">
           <table className="w-full text-xs border-collapse">
             <thead className="bg-stone-50 border-b border-stone-200 text-stone-600">
