@@ -66,3 +66,7 @@ F02, F03, W01, W03, W07, C03, C06, C10, U22, V01 (10; personal 2, work 3, civic 
 ## Addendum after the instrument's Opus read: transport only
 
 `agy --mode plan` printed a complete SUCCESS reply and then did not exit on packet p6, reproducibly, and `run()` discarded the reply at 340 s. `agy-exit-shim.mjs` (`0938a373cbcbb4667bd6cbc5f046fd86c6d53879b99de65a1b16fa838e89801d`) goes first on PATH as `agy` and returns once the reply is complete. Prompts, models, args and replies are unchanged, and every file hashed above is byte-identical. It changes no design choice. It was added before any arm answer on the test dilemmas existed.
+
+## Addendum before any test-dilemma answer was judged: blocked writer replies
+
+Gemini's safety filter can return its own error text as the reply (C10 arm A: "This request was blocked by Gemini's filters…"). That is a failed call, not advice. Rule, written before any test score exists and applied to every arm alike: a reply carrying that text is moved to `answers-blocked.jsonl` and the call is retried, at most 3 attempts per cell. A cell still blocked after 3 attempts has no answer: its dilemma's pairs that need that cell are excluded, and the exclusion is reported by arm. A count of blocked replies by arm is reported, since the filter could fall unevenly on arms.
