@@ -52,9 +52,17 @@ export default function HomeWall({ tone = 'dark' }: { tone?: 'dark' | 'light' })
       const clear = (b: DOMRect) => !tb || b.right < tb.left - 16 || b.left > tb.right + 16 || b.bottom < tb.top - 24 || b.top > tb.bottom + 16;
       const pool = onScreen.filter(({ b }) => b.left >= minX && b.right <= vw - 24 && b.top >= top && b.bottom <= bottom && clear(b));
       const n = Math.max(1, Math.round(onScreen.length * SHARE));
-      // Spread out: take every so-many from the pool rather than neighbours.
-      const step = Math.max(1, Math.floor(pool.length / n));
-      const chosen = pool.filter((_, i) => i % step === Math.floor(step / 2)).slice(0, n);
+      // Nearest the middle of the free space: centred above the text on phones,
+      // centred in the space right of the text on wider screens.
+      const narrow = vw < 768;
+      const fx = narrow ? vw / 2 : (Math.max(minX, tb ? tb.right : 0) + vw) / 2;
+      const fy = narrow && tb ? (top + tb.top) / 2 : (top + bottom) / 2;
+      const dist = (b: DOMRect) => Math.hypot(b.left + b.width / 2 - fx, b.top + b.height / 2 - fy);
+      const chosen: typeof pool = [];
+      for (const c of [...pool].sort((p, q) => dist(p.b) - dist(q.b))) {
+        if (chosen.length >= n) break;
+        if (chosen.every((d) => Math.hypot(d.b.left - c.b.left, d.b.top - c.b.top) > 240)) chosen.push(c);
+      }
       setLit(new Set(chosen.map((c) => c.k)));
       setLifted(chosen.map(({ k, b }) => {
         const el = sec.querySelector<HTMLElement>(`i[data-k="${k}"]`)!;
