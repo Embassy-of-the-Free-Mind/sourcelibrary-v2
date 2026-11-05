@@ -19,7 +19,7 @@ PRIOR ART: `scripts/eval/mcp-trigger-8154/` (does a model call the connector, wi
 
 | Engine | How | Runs on |
 |---|---|---|
-| `claude` | `claude -p`, Sonnet, WebSearch and WebFetch only | gex45, under the `dereklomas@gmail.com` login |
+| `claude` | `claude -p`, Sonnet, WebSearch and WebFetch only | gex45, whose login has no `sourcelibrary` in its address |
 | `agy` | `agy -p`, `gemini-3.8-flash-low` | gex45 |
 
 **Run it where the account name is clean.** A Claude Code session is told its account email. On an `@sourcelibrary.org` login that puts our domain in the model's context, which `canary.mjs` caught on the first try. `--bare` would remove it, but it authenticates by API key only, and Claude runs on the subscription here. Run `canary.mjs` first and read its output.
@@ -46,6 +46,8 @@ Read per question over `topic` + `work`, Claude and Gemini separately. The surfa
 | Linked on at least half of those surfaced | The path works | Discovery volume is the lever, and this number is what to watch |
 | `pointed` links a book or page of ours, with a URL that opens, on under 8 of 10, either engine. The bare homepage does not count | The no-install promise fails even when told where to go | Fix the first failing step before anything else. No paste-this sentence on /connect until it passes |
 | `modern` links us on more than 0 | The detector or the isolation is broken | Discard the run and find out why |
+
+**Added after the first run, for later runs.** The `pointed` row counts a link, and a link does not show the assistant read the text. On the baseline Claude linked a book or page on 10 of 10, and at least 7 of those answers open by saying it could read only catalogue summaries. So the row passed on an answer that failed the acceptance test. The first run is reported under the rule as written; later runs also count answers that quote or report the source's own text, read by eye.
 
 **What a later run can show.** With 50 questions, 0 linked has a 95% upper bound of about 6%, so the baseline cannot separate zero from a few percent. A change counts only if it is larger than the A-vs-A disagreement.
 
