@@ -154,7 +154,7 @@ export const WAYS: Way[] = [
 ];
 
 /**
- * The reader-facing page grade (#5984). The rule behind each grade, the severities, and the
+ * The reader-facing page grade (#5984; the middle two split by count, #7263). The rule behind each grade, the severities, and the
  * standards it is built from are in .claude/docs/quality-rubric-and-sampling.md §5; keep the two
  * in step. Computed once (#7933): scripts/eval/confidence-7866/regrade.mjs grades #7866's 800
  * drawn pages on this ladder, and /quality leads with that distribution. Still not run: the
@@ -162,24 +162,29 @@ export const WAYS: Way[] = [
  */
 export const GRADES: { name: string; means: string; rule: string }[] = [
   {
-    name: 'Fit to quote',
-    means: 'You can cite these words, in the original and in English, without opening the scan.',
+    name: 'No serious error found',
+    means: 'Reviewers found no error that changes the sense. They miss some.',
     rule: 'The right page, and no serious error in the transcription or the English. At most two small slips in the transcription, none in a sentence you would quote.',
   },
   {
-    name: 'Fit to read',
-    means: 'The page says what the scan says. Check the scan before you quote it.',
+    name: 'Small slips only',
+    means: 'The page says what the scan says, with slips that do not change the sense.',
     rule: 'The right page, and no serious error. Small slips are allowed.',
   },
   {
-    name: 'Fit for search only',
-    means: 'It will help you find the page, but do not trust the reading.',
-    rule: 'The right page and the right script, with mostly the right words, but at least one error that changes the meaning.',
+    name: 'Some errors that may change the meaning',
+    means: 'Mostly right, with 1 or 2 errors that may change the meaning: a misread word, a wrong number, a word or phrase dropped.',
+    rule: 'The right page and the right script, with mostly the right words, and 1 or 2 errors on the page that change the sense or are not on the page.',
   },
   {
-    name: 'Not usable',
-    means: 'Do not rely on this page.',
-    rule: 'The text belongs to another page, contains words that are not on the page, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
+    name: 'Many errors that may change the meaning',
+    means: 'Mostly the right words, with 3 or more errors that may change the meaning.',
+    rule: 'The right page and the right script, with 3 or more errors on the page that change the sense or are not on the page.',
+  },
+  {
+    name: 'Not the page’s text',
+    means: 'Another page’s text, words invented or recited from elsewhere, or most of the page wrong or missing.',
+    rule: 'The text belongs to another page, contains words invented or recited from another text, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
   },
 ];
 

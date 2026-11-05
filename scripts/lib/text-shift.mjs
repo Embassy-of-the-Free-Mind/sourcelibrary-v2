@@ -20,6 +20,7 @@
  * that verdict in. Anything other than 'shift+1' produces zero moves — fail
  * closed, so a miswired caller cannot shift an aligned book.
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 /**
  * The fields that travel with a page's text. Mirrors
@@ -135,4 +136,42 @@ export function parseSegments(spec) {
     if (!m) throw new Error(`bad segment "${part}" (want FROM-TO:+DELTA)`);
     return { from: Number(m[1]), to: Number(m[2]), delta: Number(m[3]) };
   });
+}
+
+/**
+ * Re-point `books.chapters` after a segment move (#5803). A chapter derived while the text sat
+ * on the wrong slot points where its heading USED to be: after `t ← t+delta`, a chapter that
+ * started on n = t+delta now has its heading on t. A chapter moves only when the heading is on
+ * the new slot and NOT on the old one (`headingOn(pageNumber, title)` decides, over the CURRENT
+ * text); the rest are returned untouched. `endPage` follows its successor's start.
+ *
+ * @param {Array<{title:string, pageNumber:number, pageId?:string, endPage?:number}>} chapters
+ * @param {Array<{from:number, to:number, delta:number}>} segments
+ * @param {(pageNumber:number, title:string) => boolean} headingOn
+ * @param {(pageNumber:number) => string|undefined} idOf page id at a page number
+ */
+export function repointChapters(chapters, segments, headingOn, idOf) {
+  const moved = [];
+  const out = chapters.map((c) => ({ ...c }));
+  for (const c of out) {
+    const seg = segments.find((s) => c.pageNumber - s.delta >= s.from && c.pageNumber - s.delta <= s.to);
+    if (!seg) continue;
+    const to = c.pageNumber - seg.delta;
+    if (!headingOn(to, c.title) || headingOn(c.pageNumber, c.title)) continue;
+    moved.push({ title: c.title, from: c.pageNumber, to });
+    c.pageNumber = to;
+    const id = idOf(to);
+    if (id && c.pageId !== undefined) c.pageId = id;
+  }
+  const starts = new Map(moved.map((m) => [m.from, m.to]));
+  for (const c of out) if (Number.isInteger(c.endPage) && starts.has(c.endPage + 1)) c.endPage = starts.get(c.endPage + 1) - 1;
+  return { chapters: out, moved };
+}
+
+/** Heading test for repointChapters: the title's first four long words all occur in the text. */
+export function headingInText(title, text) {
+  const norm = (s) => stripMarkupTags(String(s || '')).toLowerCase().replace(/[^\p{L}\p{N} ]/gu, ' ').replace(/\s+/g, ' ');
+  const words = norm(title).split(' ').filter((w) => w.length > 3).slice(0, 4);
+  const t = norm(text);
+  return words.length > 0 && words.every((w) => t.includes(w));
 }

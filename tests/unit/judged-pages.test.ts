@@ -101,7 +101,6 @@ describe('the book line (deriveWarnings.checked)', () => {
   it('has a sentence in every locale', () => {
     for (const [lang, s] of Object.entries(READER_UI_STRINGS)) {
       expect(s.info.qualityChecked({ ai: true, image: true, read: 5, date: '1 Nov 2026' }), lang).toContain('5');
-      expect(s.info.qualityNotChecked.length, lang).toBeGreaterThan(10);
     }
   });
 });

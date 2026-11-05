@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: writes paths.full and paths.thumb only; display-backfill makes the marked variant (#4406).
 /**
  * Bulk BPH/EFM image import — uploads directly to R2, inserts MongoDB records.
  *

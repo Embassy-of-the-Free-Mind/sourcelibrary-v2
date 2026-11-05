@@ -173,6 +173,10 @@ export function strandedByImageRepair(page, repairedAt) {
   const o = new Date(ocrAt).getTime(), a = new Date(archAt).getTime(), r = new Date(repairedAt).getTime();
   if ([o, a, r].some(Number.isNaN)) return 'unknown';
   if (o >= r) return 'resolved';
+  // Text moved onto its own leaf after the image repair (repair-text-offset-segments.mjs, #5803): the ocr
+  // keeps its original date, so without this the page would still read as stranded.
+  const moved = new Date(page.text_shift_repaired_at || 0).getTime();
+  if (moved >= r) return 'resolved';
   if (o < a) return 'pre_archival';
   return 'stranded';
 }

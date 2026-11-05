@@ -12,6 +12,7 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
 import { getEffectiveByline } from '@/lib/byline';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { displayPublished } from '@/lib/publication-date';
 import { resolveHoldingLibrary } from '@/lib/library-partners';
 
 const FIELD_LABELS: Record<string, string> = {
@@ -158,7 +159,8 @@ export default function BibliographicInfo({
     const citePlace = resolveImprintPlace(book)?.display;
     if (citePlace) pubParts.push(citePlace);
     if (book.publisher) pubParts.push(book.publisher);
-    if (book.published) pubParts.push(book.published);
+    const citePublished = displayPublished(book.published);
+    if (citePublished) pubParts.push(citePublished);
     if (pubParts.length > 0) {
       parts.push(pubParts.join(': '));
     }
@@ -188,6 +190,7 @@ export default function BibliographicInfo({
   };
 
   const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  const shownPublished = displayPublished(book.published); // "Unknown" / n.d. never reach the reader (#8184)
   const hasExtraInfo = imprintPlace || book.publisher || book.format || book.ustc_id;
 
   return (
@@ -323,10 +326,10 @@ export default function BibliographicInfo({
               </div>
             )}
 
-            {book.published && (
+            {shownPublished && (
               <div className="flex gap-2">
                 <span className="text-stone-500 w-24 flex-shrink-0">Published:</span>
-                <span className="text-stone-200">{book.published}</span>
+                <span className="text-stone-200">{shownPublished}</span>
               </div>
             )}
 
@@ -448,7 +451,7 @@ export default function BibliographicInfo({
                               <p className="text-stone-400">{book.translation_verification.reasoning}</p>
                             )}
                             <p className="text-stone-600 text-[10px]">
-                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via {book.translation_verification.model || 'AI'}
+                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} by an AI search of library catalogues
                               {showExternalLinks && <>{' '}&middot;{' '}<a href="/articles/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>}
                             </p>
                           </div>
@@ -691,9 +694,6 @@ export default function BibliographicInfo({
                           )}
                         </div>
                         <div className="flex flex-col gap-0.5 pl-0.5">
-                          {prov.model && (
-                            <span className="text-xs text-stone-500 font-mono">{prov.model}</span>
-                          )}
                           {prov.provider_name && (
                             <span className="text-xs text-stone-500">{prov.provider_name}</span>
                           )}

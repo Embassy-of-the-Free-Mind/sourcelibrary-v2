@@ -26,6 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, pageExposure, readMethod } from '../lib/book-checks.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
+import { verdictQuery } from '../eval/lib/judge-rows.mjs';
 
 const METHOD = 'judged-pages';
 const SERIOUS_FIDELITY = 3;   // judged-pages.md: fidelity ≤ 3 is a serious page
@@ -72,16 +73,24 @@ export function checkFields(verdicts) {
   return { pages_read: pages.map((v) => v.page_number), page_findings, page_notes, verdict, classes };
 }
 
+/**
+ * The verdicts that may reach a reader's book page: route-judge OCR items, live rows only. A test row (#7263) never
+ * reaches book_checks from here, with or without --lane / --run.
+ */
+export function bookCheckVerdictQuery({ lane, run } = {}) {
+  const q = { kind: 'item', task: { $ne: 'translation' }, 'judge.instrument': 'route-judge-6740 judgePrompt', 'verdict.fidelity': { $type: 'number' } };
+  if (lane) q.lane = lane;
+  if (run) q.run_id = run;
+  return verdictQuery(q);
+}
+
 async function main() {
   const method = readMethod(METHOD);
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('bookstore');
   try {
     // The route-judge instrument only: it is the one that reads the page image (judged-pages.md, reader and input).
-    const q = { kind: 'item', task: { $ne: 'translation' }, 'judge.instrument': 'route-judge-6740 judgePrompt', 'verdict.fidelity': { $type: 'number' } };
-    if (arg('lane')) q.lane = arg('lane');
-    if (arg('run')) q.run_id = arg('run');
-    const verdicts = await db.collection('lane_judge_verdicts').find(q).toArray();
+    const verdicts = await db.collection('lane_judge_verdicts').find(bookCheckVerdictQuery({ lane: arg('lane'), run: arg('run') })).toArray();
     console.log(`${verdicts.length} item verdicts${arg('lane') ? ` in lane ${arg('lane')}` : ''}${arg('run') ? ` in run ${arg('run')}` : ''}`);
 
     // Live text of every judged page, by page id (one query per 500 ids).

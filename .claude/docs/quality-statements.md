@@ -10,6 +10,7 @@
 - **Direct.** Say what was measured or seen, in plain words. "About 38 statements per 100 pages are reversed or attributed to the wrong speaker", not "some passages may benefit from review".
 - **Not harsh.** Describe the errors, not the work. Leave out verdict adjectives such as weakest, poor, unreliable, garbled or hazard, unless the measure is literally a ranking. If it is, say the ranking: "the highest error rates of any section".
 - **Not sugarcoated.** No reassurance words such as readable, rewards, pays off, closer look or worth checking standing in for an error count. No "may contain errors" when we know which errors and how often.
+- **Describe, do not instruct.** Derek, 2026-11-04: "we cant trust any translation, honestly. is it useful? even if they cite, it can still be useful." Say what was found and how often. Do not tell readers what they may do with a page: no "fit to quote", "do not rely on", "check before quoting". No text, human or machine, is beyond error, and the reader decides what is useful. That a page is withheld is a fact and can be stated.
 - **Value where it was measured.** State the positive finding with the same standing as the negative one, for example "75% of pages need only light edits" or "the transcription matches every leaf sampled". Never state a positive that was not measured.
 
 ## The shape (in this order; drop what does not apply)

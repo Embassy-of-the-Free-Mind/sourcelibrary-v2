@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { displayPublished, citationYear, citationYearOrNd, assertableYear } from '@/lib/publication-date';
+import { displayPublished, citationYear, citationYearOrNd, assertableYear, historicalTimelineDate } from '@/lib/publication-date';
 
 // Values below are REAL `books.published` strings from the production corpus
 // (counts as of 2026-07-21, visible books only) — see #3310.
@@ -105,5 +105,32 @@ describe('assertableYear', () => {
   it('returns undefined when there is no numeric year', () => {
     expect(assertableYear({})).toBeUndefined();
     expect(assertableYear({ year: null })).toBeUndefined();
+  });
+});
+
+// #8184: the book-history timeline's first entry. /zh/book/vol-1-51 labelled the
+// composition range "1657–1711，作者成年时期" as 出版 (published).
+describe('historicalTimelineDate', () => {
+  it('marks a composition date as composition, not publication', () => {
+    expect(historicalTimelineDate('1657–1711，作者成年时期', 'Unknown'))
+      .toEqual({ text: '1657–1711，作者成年时期', kind: 'composition' });
+    expect(historicalTimelineDate('c. 6th century CE', '1573'))
+      .toEqual({ text: 'c. 6th century CE', kind: 'composition' });
+  });
+
+  it('falls back to the printed date, labelled as a publication', () => {
+    expect(historicalTimelineDate(undefined, '1573')).toEqual({ text: '1573', kind: 'publication' });
+    expect(historicalTimelineDate('', '1624date QS:P571,+1624-00-00T00:00:00Z/9'))
+      .toEqual({ text: '1624', kind: 'publication' });
+  });
+
+  it('keeps 出版 on a printing date when the composition value is a non-answer', () => {
+    expect(historicalTimelineDate('Unknown', '1700')).toEqual({ text: '1700', kind: 'publication' });
+  });
+
+  it('shows nothing when neither date says anything', () => {
+    expect(historicalTimelineDate(undefined, 'Unknown')).toBeNull();
+    expect(historicalTimelineDate('n.d.', '')).toBeNull();
+    expect(historicalTimelineDate(null, null)).toBeNull();
   });
 });

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
@@ -53,6 +54,11 @@ export async function POST(
       { id: { $in: limitedIds }, tenantId: tenantFilter },
       { projection: PAGE_API_LAYER_PROJECTION }
     ).toArray();
+
+    // A partner's book can have untagged page rows: the embed's prefetch needs them too.
+    const found = new Set(pages.map(p => p.id));
+    const missing = limitedIds.filter(id => !found.has(id));
+    pages = pages.concat(await findUntaggedPagesOfTenantBooks(db, missing, tenantId, PAGE_API_LAYER_PROJECTION));
 
     // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.
     const taken = await takeReaderTextLayers(db, pages);

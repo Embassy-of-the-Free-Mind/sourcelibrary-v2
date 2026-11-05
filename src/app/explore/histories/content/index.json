@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-28",
+ "generated": "2026-11-04",
  "audit": {
   "all": {
    "n": 175,
@@ -8,6 +8,12 @@
    "lo": 21,
    "hi": 34,
    "date": "2026-10-28"
+  },
+  "kinds": {
+   "overstates": 36,
+   "misattributed": 8,
+   "notOnPage": 3,
+   "noneContradicted": true
   },
   "judge": {
    "caught": 46,
@@ -2320,7 +2326,7 @@
     "islamic"
    ],
    "counts": {
-    "verified": 138,
+    "verified": 159,
     "partial": 23,
     "dropped": 2,
     "essays": 2

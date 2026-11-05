@@ -39,6 +39,7 @@
  * markdownToHtml is reused rather than a second text pipeline.
  */
 import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { headers } from 'next/headers';
@@ -302,6 +303,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     }
     return runs;
   };
+  await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
   const flowPage = (p: (typeof open)[number]): FlowPage => {
     const n = p.page_number;
     const pageHref = `/book/${bookPath}/page/${p.id}`;

@@ -301,7 +301,7 @@ export default function FrakturPage() {
             case, accents, u and v, i and j, and punctuation. A figure of 1% therefore counts wrong and missing words and
             letters; it does not count a long s printed as s, or an e-umlaut printed as ö. Character error and the
             reviewer can also disagree: PERO&rsquo;s median page was 1.9% wrong, yet the reviewer accepted only 6 of its 40
-            pages, because a few wrong words in the wrong place make a page unfit to quote.
+            pages, because a few wrong words in the wrong place are enough for it to turn a page down.
           </p>
         </Section>
 

@@ -7,14 +7,16 @@ canons: []
 n_books: 173
 n_pages: 1069
 verdict: "On the 1,069 pages in 173 books that the near-blank-leaf predicate flags (≤ 15 Han characters of OCR body text, ≥ 150 English words), an image-grounded Opus screen calls 530 invented (49.6% [46.6–52.6]), 406 fine (38.0%), 65 commentary (6.1%) and 68 ocr_dropped (6.4%). On the 20 by-eye controls, run blind, it called 12/12 invented controls invented and 0/8 of the others. A by-eye check of 15 more pages agrees on 9/10 invented and 5/5 fine. Invention is a 3 Flash failure: 64% [61–68] of its 791 flagged pages, against 9% [6–13] on 3.1 Flash Lite preview and 2% [0–11] on 3.1 Flash Lite. By family: 植物名實圖考 90%, 武備志 71%, 三才圖會 67%, 道德經 and Legge 3%."
-status: undecided
+status: superseded
 decision: "Owed: withhold the 518 Opus-confirmed invented pages not already withheld (137 books; withhold-candidates.tsv) through withhold-stale-translations.mjs by book, with reason by-eye-invented-english-5274? Nothing has been withheld by this run. The 68 ocr_dropped pages (reocr-candidates.tsv) are a re-OCR work list, not priced here."
-superseded_by: null
+superseded_by: "2026-11-04-context-bleed-5274.md"
 issue: [5274]
 router_evidence: "none — a screen of stored pages that one predicate flagged; translation models were not assigned at random, so no route k/n is added"
 defect_rates: "none — the verdict is a per-page invented/fine/commentary/ocr_dropped class, not a minor/major defect grade; counts by model and family are in scripts/eval/results/zh-near-blank-screen-5274/summary.json"
 ---
 ## 2026-11-03 · Near-blank Chinese leaves: which of the 1,069 flagged pages carry English that is not on the leaf? (#5274)
+
+> **Retracted in part (2026-11-04, `2026-11-04-context-bleed-5274.md`).** "Invented" here means "not this leaf's text". It does not mean "composed by the model". Most of these pages are not composed. They carry the previous leaf's English, which the Feb–Mar 2026 single-page lanes put in the prompt "for continuity". Of the 518 pages this screen confirmed, a $0 neighbour-overlap screen puts 338 (65%) on n-1's English, 26 on n+1 or n±2, 66 on no neighbour (composed) and 58 on the leaf's own text with padding. 30 it could not classify. The reading "invention is a 3 Flash failure" is also wrong: 3 Flash was the model of the lanes that sent the context, and a replay without the context carries n-1 on 0/20 leaves. The per-page verdicts and the withhold of the 518 stand. They were re-translated from their own leaf under #5274.
 
 PRIOR ART:
 - `2026-11-03-chinese-translation-strata-5274.md` (PR #8006): found the pattern, defined the predicate and wrote `near-blank-candidates.jsonl.gz`. A by-eye sample there (20 books, one page each) gave 12 invented, 5 fine, 2 commentary and 1 ocr_dropped. That is 60% precision, which makes the predicate a work list, not a withhold list.

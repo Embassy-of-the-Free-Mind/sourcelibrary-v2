@@ -218,7 +218,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 </h3>
                 <p className="text-muted mt-2">
                   {t.bySubjectLead}{' '}
-                  <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
+                  <Link href="/library" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
                   {' '}&middot;{' '}
                   <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.readableInEnglish)} {t.translationsLabel}</Link>
                   {' '}&middot;{' '}
@@ -238,7 +238,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 </p>
               </div>
               <Link
-                href="/catalog"
+                href="/library"
                 className="hidden md:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
@@ -295,7 +295,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <Link
                 // On /es the band holds Spanish editions, so "see all" is the
                 // Spanish list, not the English catalog (#7496).
-                href={spanishCollection ? lp(`/collections/${spanishCollection.slug}`) : '/catalog?sort=last_translated'}
+                href={spanishCollection ? lp(`/collections/${spanishCollection.slug}`) : '/library?sort=last_translated'}
                 className="hidden sm:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}

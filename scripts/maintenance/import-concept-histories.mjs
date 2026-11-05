@@ -112,6 +112,12 @@ function audits() {
   // "Rejected claims were corrected or set `disputed` (not in markets)"
   const nc = txt.match(/corrected or set `disputed` \(not in ([a-z, ]+)\)/);
   out.uncorrected = nc ? nc[1].split(/,\s*|\s+and\s+/).map((s) => s.trim()).filter(Boolean) : [];
+  // what the rejections were, from the audit's own report (quality-statements.md: name the kinds, as counts)
+  const reportFile = path.join(SRC, 'audits', out.ALL.date, 'report.md');
+  const report = fs.readFileSync(reportFile, 'utf8');
+  const kinds = report.match(/^\| ALL \|.*\| misattributed (\d+), not-on-page (\d+), overstates (\d+) \|$/m);
+  if (!kinds) throw new Error(`${reportFile}: no ALL row with kinds — the table format changed`);
+  out.kinds = { overstates: +kinds[3], misattributed: +kinds[1], notOnPage: +kinds[2], noneContradicted: /No sampled claim was flatly contradicted by its page/.test(report) };
   return out;
 }
 
@@ -286,7 +292,7 @@ for (const [c, { reg, claims }] of Object.entries(raw)) {
 }
 
 const essaySlugs = new Map(Object.entries(raw).map(([c, v]) => [c, new Set(v.ideas.map((f) => f.replace(/\.md$/, '')))]));
-const index = { generated: report.generated, audit: { all: AUD.ALL, judge: AUD.judge }, concepts: [] };
+const index = { generated: report.generated, audit: { all: AUD.ALL, kinds: AUD.kinds, judge: AUD.judge }, concepts: [] };
 if (!DRY) fs.mkdirSync(OUT, { recursive: true });
 let total = 0;
 for (const [c, { dir, ideas }] of Object.entries(raw)) {

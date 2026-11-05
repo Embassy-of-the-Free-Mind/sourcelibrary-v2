@@ -8,11 +8,29 @@
  */
 import { describe, it, expect } from 'vitest';
 // @ts-ignore -- plain .mjs
-import { printedNumber, labelNumber, slotOffsets, bookVerdict, offsetRuns } from '../../scripts/lib/canvas-label-alignment.mjs';
+import { printedNumber, labelNumber, ordinalLabels, slotOffsets, bookVerdict, offsetRuns } from '../../scripts/lib/canvas-label-alignment.mjs';
 // @ts-ignore -- plain .mjs
 import { computeSegmentMoves, parseSegments } from '../../scripts/lib/text-shift.mjs';
 
 const ocr = (n: number | null, body = 'text') => ({ data: `<page-type>text</page-type>\n${n == null ? '' : `<page-num>${n}</page-num>\n`}${body}` });
+
+describe('ordinalLabels (#5803: IA manifests label every canvas with its index)', () => {
+  it('reads 0-based and 1-based index labels as ordinals', () => {
+    expect(ordinalLabels(Array.from({ length: 51 }, (_, i) => i))).toBe(true);
+    expect(ordinalLabels(Array.from({ length: 764 }, (_, i) => i + 1))).toBe(true);
+  });
+  it('keeps real printed numbering: unnumbered front matter, then pages offset from the slot', () => {
+    const printed = Array.from({ length: 300 }, (_, i) => (i < 6 ? null : i - 5));
+    expect(ordinalLabels(printed)).toBe(false);
+    expect(ordinalLabels([])).toBe(false);
+  });
+  it('an ordinal manifest scores nothing once nulled, so a shift cannot be faked', () => {
+    const labels = Array.from({ length: 40 }, (_, i) => i + 1);
+    const pages = Array.from({ length: 40 }, (_, i) => ({ page_number: i + 1, ocr: ocr(i > 4 ? i - 4 : null) }));
+    expect(bookVerdict(slotOffsets(pages, labels)).verdict).toBe('shifted');
+    expect(bookVerdict(slotOffsets(pages, labels.map(() => null))).verdict).toBe('unscored');
+  });
+});
 
 describe('printedNumber / labelNumber', () => {
   it('reads a plain printed number and refuses anything else', () => {

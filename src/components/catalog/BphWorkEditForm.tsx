@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEmbedHref } from '@/lib/EmbedContext';
 import AuthorAuthorityPicker, { type AuthorAuthoritySelection } from '@/components/catalog/AuthorAuthorityPicker';
 import ContributorsEditor from '@/components/catalog/ContributorsEditor';
 import type { BphContributor } from '@/lib/bph-contributors';
@@ -246,6 +247,7 @@ function isUnchanged(orig: unknown, next: unknown): boolean {
 
 export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _editorEmail, mode, suggestedUbn }: Props) {
   const router = useRouter();
+  const embedHref = useEmbedHref();
   const isCreate = mode === 'create';
 
   // Form state — one entry per editable field, all strings (number-typed
@@ -413,7 +415,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         // addressable id — the UBN for printed books, the minted uuid for
         // manuscripts and photographs, which have no UBN to navigate by.
         const newKey = body.key || body.ubn || createUbn.trim();
-        router.push(`/catalog/${encodeURIComponent(newKey)}`);
+        router.push(embedHref(`/catalog/${encodeURIComponent(newKey)}`));
         router.refresh();
         return;
       }
@@ -429,7 +431,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
       // Editor flow: changes are live. Bounce back to the detail page so the
       // updated values are visible immediately (router.refresh forces a
       // fresh server-side fetch).
-      router.push(`/catalog/${encodeURIComponent(ubn)}`);
+      router.push(embedHref(`/catalog/${encodeURIComponent(ubn)}`));
       router.refresh();
     } catch (err) {
       setError((err as Error).message || 'Save failed');
@@ -447,13 +449,13 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         <p className="text-xs text-muted mb-4 font-mono">Submission ID: {submittedPendingId}</p>
         <div className="flex flex-wrap gap-2">
           <a
-            href={`/catalog/${encodeURIComponent(ubn)}`}
+            href={embedHref(`/catalog/${encodeURIComponent(ubn)}`)}
             className="px-3 py-1.5 text-sm rounded-md bg-accent-rust text-white hover:bg-accent-rust/90 transition-colors"
           >
             Back to catalogue entry
           </a>
           <a
-            href={`/catalog/${encodeURIComponent(ubn)}/edit`}
+            href={embedHref(`/catalog/${encodeURIComponent(ubn)}/edit`)}
             className="px-3 py-1.5 text-sm rounded-md border border-border-light text-secondary hover:bg-warm hover:text-primary transition-colors"
           >
             Propose another change
@@ -706,7 +708,7 @@ export default function BphWorkEditForm({ ubn, tenant, initial, editorEmail: _ed
         </div>
         <div className="flex items-center gap-2">
           <a
-            href={isCreate ? '/catalog' : `/catalog/${encodeURIComponent(ubn)}`}
+            href={embedHref(isCreate ? '/catalog' : `/catalog/${encodeURIComponent(ubn)}`)}
             className="px-3 py-1.5 text-sm text-muted hover:text-primary transition-colors"
           >
             Cancel

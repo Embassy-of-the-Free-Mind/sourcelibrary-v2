@@ -21,6 +21,7 @@ import { OUT, ROOT, RESULTS, J, W, jsonl, SEED, makeRng, arg, imageFor, agyFace,
 import { LITE_MODELS, IDLE_STATUSES, isInterior, lastPageNumber, CORRECT_LANGUAGES } from '../../batch/cli-ocr-lane.mjs';
 import { VISIBLE_PAGE_MATCH } from '../../lib/page-counts.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 /** Pages drawn per language (experiment file §Sample size). */
 export const N = Object.freeze({ de: 150, fr: 60 });
@@ -71,7 +72,8 @@ async function census() {
   const ledger = new Set(jsonl(LEDGER).map((r) => r.page_id));
   const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
   await withDb(async (db) => {
-    const judged = new Set((await db.collection('lane_judge_verdicts').find({}, { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
+    // all origins: an exclusion set, not evidence.
+    const judged = new Set((await db.collection('lane_judge_verdicts').find(verdictQuery({}, { tests: true }), { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
     const books = (await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, language: { $regex: CORRECT_LANGUAGES }, 'pipeline_auto.status': { $in: IDLE_STATUSES }, 'pipeline_auto.hold': { $exists: false }, 'pipeline_auto.held': { $ne: true } },
       { projection: { id: 1, title: 1, language: 1, year: 1, published: 1, pages_count: 1, processing_priority: 1, 'scan_quality.score': 1, 'scan_quality.classification': 1 } }).toArray())
       .sort((a, b) => (b.processing_priority ?? 0) - (a.processing_priority ?? 0) || a.id.localeCompare(b.id));

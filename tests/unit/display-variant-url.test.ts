@@ -1,6 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { toDisplayVariantUrl, getBookThumbnailUrl } from '@/lib/utils';
 
+describe('getBookThumbnailUrl: Munich IIIF covers', () => {
+  const base = 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11426583_00005';
+  it('asks for a card-sized image, not the whole scan', () => {
+    expect(getBookThumbnailUrl({ thumbnail: `${base}/full/full/0/default.jpg` })).toBe(`${base}/full/400,/0/default.jpg`);
+  });
+  it('leaves a size that is already set', () => {
+    expect(getBookThumbnailUrl({ thumbnail: `${base}/full/200,/0/default.jpg` })).toBe(`${base}/full/200,/0/default.jpg`);
+  });
+});
+
 const R2 = 'https://images.sourcelibrary.org';
 
 describe('toDisplayVariantUrl (#6092)', () => {

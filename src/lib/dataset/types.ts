@@ -89,6 +89,9 @@ export interface ApiKeyDoc {
   };
   status: 'active' | 'revoked' | 'expired';
   stripe_subscription_id?: string;
+  /** The terms version the holder agreed to (src/lib/partner-terms-version.ts). Absent on keys issued before 2026-11-04 and on admin-issued keys. */
+  terms_version?: string;
+  terms_accepted_at?: Date;
   created_at: Date;
   last_used_at: Date | null;
   expires_at: Date | null;

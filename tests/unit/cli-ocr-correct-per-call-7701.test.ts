@@ -110,17 +110,18 @@ describe('cli-ocr-lane.mjs armc --frame=first-read (#7701: Latin arm c on unread
   it('stamps its own lane, Latin only', () => {
     expect(lane.ARMC_FIRST_READ_LANE).toBe('pero-agy-first-read-7701');
     expect(lane.ARMC_FIRST_READ_LANGS).toEqual(['la']);
-    expect(run).toContain("LANE_ID = FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
+    expect(run).toContain("LANE_ID = CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
     expect(run).toContain('`--lane=${LANE_ID}`');
   });
 
   it('reads on the unread GPU-draft path and writes with the put-back against the draft, printed only, no stale mark', () => {
-    expect(run).toContain("...(FR ? [] : ['--over-stored'])");
-    expect(run).toContain("...(FR ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`])");
+    expect(run).toContain("FIRST = FR || CF");
+    expect(run).toContain("...(FIRST ? [] : ['--over-stored'])");
+    expect(run).toContain("...(FIRST ? ['--diff-guard=gpu-draft', '--print-only'] : [`--mark-stale=${ARMC_LANE}`])");
   });
 
   it('re-checks the first-read frame (book and page still unread) at run time, never the correct frame', () => {
-    expect(run).toMatch(/const bookOk = FR \? !firstReadSkip\(book/);
+    expect(run).toMatch(/const bookOk = CF \? armcCampaignBookOk\(book[^\n]*\n\s*: FR \? !firstReadSkip\(book/);
     expect(run).toContain('FR ? await armcFirstReadPages(db, book, take.map((p) => p.id))');
     const pages = src.slice(src.indexOf('async function armcFirstReadPages'), src.indexOf('async function armcFirstReadPages') + 600);
     expect(pages).toContain('...UNREAD');
@@ -134,5 +135,46 @@ describe('the first-read lane reads French 4 pages a call (#7701 cheap routes)',
     expect(lane.FIRST_READ_PER_CALL_LANGUAGES).toEqual(['lat', 'deu', 'fra']);
     const b = (id: string, language: string) => ({ id, language, pages_ocr: 3, processing_priority: 0 });
     expect([b('fr', 'French'), b('de', 'German')].sort(lane.byFirstReadOrder).map((x) => x.id)).toEqual(['de', 'fr']);
+  });
+});
+
+
+describe('cli-ocr-lane.mjs armc --frame=campaign (#8049: hidden campaign books, the languages that passed their cell test)', async () => {
+  const lane = await import('../../scripts/batch/cli-ocr-lane.mjs');
+  const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr-lane.mjs'), 'utf8');
+  const C = 'jcb-1600-8049';
+  const book = (over = {}) => ({ acquisition_campaign: C, language: 'Latin', pipeline_auto: { status: 'held', hold: { reason: C } }, ...over });
+
+  it('admits only the languages that passed, each with its draft engine', () => {
+    expect(Object.keys(lane.ARMC_CAMPAIGNS[C].langs)).toEqual(['la', 'fr']);
+    expect(lane.ARMC_CAMPAIGNS[C].langs.la.engine).toBe('pero');
+    expect(lane.ARMC_CAMPAIGNS[C].langs.fr.engine).toBe('lightonocr');
+    for (const l of ['Spanish', 'Italian', 'German', 'English', 'Dutch', 'Portuguese']) expect(lane.campaignLang(C, l)).toBeNull();
+    expect(lane.campaignLang(C, 'French')).toBe('fr');
+  });
+
+  it('takes a book in tier A or B under the campaign hold, never tier C, a released book or another hold', () => {
+    expect(lane.armcCampaignBookOk(book(), C, { tier: 'A' })).toBeTruthy();
+    expect(lane.armcCampaignBookOk(book(), C, { tier: 'B' })).toBeTruthy();
+    expect(lane.armcCampaignBookOk(book(), C, { tier: 'C' })).toBeFalsy();
+    expect(lane.armcCampaignBookOk(book(), C, undefined)).toBeFalsy();
+    expect(lane.armcCampaignBookOk(book({ pipeline_auto: { status: 'queued' } }), C, { tier: 'A' })).toBeFalsy();
+    expect(lane.armcCampaignBookOk(book({ pipeline_auto: { status: 'held', hold: { reason: 'other' } } }), C, { tier: 'A' })).toBeFalsy();
+    expect(lane.armcCampaignBookOk(book({ needs_splitting: true }), C, { tier: 'A' })).toBeFalsy();
+    expect(lane.armcCampaignBookOk(book({ language: 'Spanish' }), C, { tier: 'A' })).toBeFalsy();
+  });
+
+  it('plans archived books only, and the frameless draft task still fetches every planned language', () => {
+    expect(src).toContain("'pipeline_auto.hold.reason': CAMPAIGN, archive_status: 'archive_complete' }");
+    const fetchFn = src.slice(src.indexOf('async function armcFetch'), src.indexOf('async function armcFetch') + 700);
+    expect(fetchFn).toContain("(!arg('langs') || LANGS.includes(p.lang))");
+    const task = fs.readFileSync(path.join(__dirname, '../../scripts/gpu/euro-draft-task.sh'), 'utf8');
+    expect(task).toMatch(/lane armc-fetch --max-pages="\$MAX"/);
+  });
+
+  it('never reaches the Claude fallback, which belongs to the correct lane', () => {
+    const run = src.slice(src.indexOf('async function armcRun'), src.indexOf('// ── run --cohort=visible-unread'));
+    expect(run).not.toMatch(/agyClaudeGate|correctMode|FALLBACK\b/);
+    expect(run).toContain("'--stop-on-quota'");
   });
 });

@@ -531,7 +531,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
   zh: {
     backToCollection: '中文书籍',
     read: '阅读',
-    readInSpanish: '阅读中文原文',
+    readInSpanish: '阅读原文',
     readThisBook: '阅读本书',
     originalTitle: '原书名',
     originalLanguage: '原文语言',

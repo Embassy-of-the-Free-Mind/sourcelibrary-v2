@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
@@ -171,14 +172,17 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     // until #4366. The success response sets X-Pages-Served so the wrapper
     // logs the page into the pool.
     const budget = await checkPageBudget({ identity, request });
+    const { id: bookId } = await context.params;
     if (!budget.allowed) {
-      return NextResponse.json(bulkBudgetExceededBody(budget), {
+      // /book/<id>/page/<n> redirects to the reader page for that printed page.
+      const asked = parseInt(new URL(request.url).searchParams.get('page') || '1');
+      const readOnSite = `https://sourcelibrary.org/book/${encodeURIComponent(bookId)}/page/${Number.isFinite(asked) && asked > 0 ? asked : 1}`;
+      return NextResponse.json(bulkBudgetExceededBody(budget, readOnSite), {
         status: 429,
         headers: { 'Retry-After': '3600' },
       });
     }
 
-    const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const pageNumber = parseInt(searchParams.get('page') || '1');
     const includeOriginal = searchParams.get('include_original') !== 'false';
@@ -244,6 +248,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
 
     // Translation when we have one; the OCR transcription when the leaf is
     // already English and therefore is itself the citable text (#3939).
+    await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
     const quotable = resolveQuoteText(page, book.id, requestedLang, { book });
 
     // A caller that explicitly said include_original=false wants English we

@@ -165,7 +165,7 @@ export default function SchemaOrgMetadata({
         }),
       })),
     }),
-    // Translations/OCR default to the site-wide CC BY-SA license; a published
+    // Translations/OCR default to the site-wide CC BY-NC-SA license; a published
     // edition's own license (which may differ, e.g. CC0 on Zenodo) wins.
     license:
       (currentEdition?.license && getLicenseUrl(currentEdition.license)) ||
