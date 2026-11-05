@@ -30,7 +30,7 @@ export function WonderFigure() {
       aside={(lit) => (
         <div>
           <p className="text-lg text-secondary">Socrates to the young Theaetetus, in Ficino&apos;s Latin:</p>
-          <blockquote className="mt-4 font-serif text-2xl md:text-3xl text-primary leading-snug mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>
+          <blockquote className="mt-4 font-serif text-xl md:text-3xl text-primary leading-snug mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>
             &ldquo;This affection is most characteristic of a philosopher, which is called wonder; for there is no other principle of philosophy than this.&rdquo;
           </blockquote>
           <style>{`.mp-q { transition: opacity .6s ease; }`}</style>

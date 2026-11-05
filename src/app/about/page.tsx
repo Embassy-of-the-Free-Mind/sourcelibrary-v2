@@ -35,9 +35,10 @@ export const metadata: Metadata = {
 const WIDE = 'mx-auto w-full max-w-[var(--container-wide)] px-6 md:px-12';
 const SCENE = 'min-h-[100svh] flex flex-col justify-center py-24 md:py-32';
 const h2 = 'font-serif text-4xl md:text-6xl text-primary leading-[1.05] tracking-tight';
-const h3 = 'font-serif text-3xl md:text-5xl text-primary leading-[1.08] tracking-tight';
-const lead = 'text-xl md:text-2xl text-secondary leading-snug';
+const h3 = 'font-serif text-[26px] md:text-5xl text-primary leading-[1.08] tracking-tight';
+const lead = 'text-lg md:text-xl text-secondary leading-relaxed';
 const body = 'text-lg text-secondary leading-relaxed';
+const cardBody = 'text-base md:text-lg text-secondary leading-relaxed';
 
 // Links as in the articles (.claude/docs/article-rules.md): body colour, thin
 // gold underline that darkens on hover. No red text.
@@ -149,8 +150,8 @@ function BookPair({ first, second }: { first: ReactNode; second: ReactNode }) {
 function Second({ title }: { title: string }) {
   return (
     <>
-      <h2 className="font-serif text-5xl md:text-7xl text-white leading-[1.02] tracking-tight">{title}</h2>
-      <p className="mt-6 text-xl md:text-2xl text-stone-200 leading-snug max-w-xl">
+      <h2 className="font-serif text-4xl md:text-6xl text-white leading-[1.05] tracking-tight">{title}</h2>
+      <p className="mt-6 text-lg md:text-xl text-stone-200 leading-relaxed max-w-xl">
         Of everything anyone has counted, from Latin to Tibetan, less than 1% has been translated into English. On this wall, they are the few that stay lit.
       </p>
     </>
@@ -239,18 +240,18 @@ export default async function AboutPage() {
       <section className="py-28 md:py-40">
         <div className={WIDE}>
           <Reveal className="max-w-5xl">
-            <h2 className={`${h2} md:text-7xl`}>We think it is time for another Renaissance, and we want to help start it</h2>
+            <h2 className={h2}>We think it is time for another Renaissance, and we want to help start it</h2>
           </Reveal>
           <div className="mt-16 md:mt-24 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-6">
-            <Reveal className="bg-[var(--bg-warm)] border border-border-light p-8 md:p-10">
+            <Reveal className="bg-[var(--bg-warm)] border border-border-light p-6 md:p-10">
               <p className="text-sm font-semibold text-muted">Then</p>
-              <p className="mt-4 font-serif text-3xl md:text-4xl text-primary leading-tight">One translator, one patron, a lifetime of work.</p>
-              <p className={`mt-5 ${body}`}>Ficino spent much of his life putting Plato and Plotinus into Latin, and his translations helped shape the Renaissance.</p>
+              <p className="mt-4 font-serif text-xl md:text-4xl text-primary leading-snug md:leading-tight">One translator, one patron, a lifetime of work.</p>
+              <p className={`mt-3 md:mt-5 ${cardBody}`}>Ficino spent much of his life putting Plato and Plotinus into Latin, and his translations helped shape the Renaissance.</p>
             </Reveal>
-            <Reveal delay={150} className="bg-[var(--bg-warm)] border border-border-light p-8 md:p-10">
+            <Reveal delay={150} className="bg-[var(--bg-warm)] border border-border-light p-6 md:p-10">
               <p className="text-sm font-semibold text-muted">Now</p>
-              <p className="mt-4 font-serif text-3xl md:text-4xl text-primary leading-tight">Whole libraries, open to anyone who wants to read them.</p>
-              <p className={`mt-5 ${body}`}>With help from AI, every page from every tradition can get a careful first translation, in a fraction of the time.</p>
+              <p className="mt-4 font-serif text-xl md:text-4xl text-primary leading-snug md:leading-tight">Whole libraries, open to anyone who wants to read them.</p>
+              <p className={`mt-3 md:mt-5 ${cardBody}`}>With help from AI, every page from every tradition can get a careful first translation, in a fraction of the time.</p>
             </Reveal>
           </div>
           <Reveal className="mt-20 md:mt-28 max-w-4xl">
@@ -259,9 +260,9 @@ export default async function AboutPage() {
           <ul className="mt-12 grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {AUDIENCES.map(([t, d], i) => (
               <li key={t} className="grid">
-                <Reveal delay={i * 100} className="bg-[var(--bg-warm)] border border-border-light p-8 md:p-10">
-                  <h4 className="font-serif text-2xl text-primary">{t}</h4>
-                  <p className={`mt-3 ${body}`}>{d}</p>
+                <Reveal delay={i * 100} className="bg-[var(--bg-warm)] border border-border-light p-6 md:p-10">
+                  <h4 className="font-serif text-xl md:text-2xl text-primary">{t}</h4>
+                  <p className={`mt-2 md:mt-3 ${cardBody}`}>{d}</p>
                 </Reveal>
               </li>
             ))}
@@ -284,9 +285,9 @@ export default async function AboutPage() {
                   <h3 className="text-lg font-semibold text-primary">First complete English translations, all by Source Library</h3>
                 </Reveal>
                 {/* Two-row subgrid: every page sits on the same bottom line, captions hang below it. */}
-                <ul className="mt-8 grid grid-flow-col grid-rows-[auto_auto] auto-cols-[10rem] md:auto-cols-[12rem] lg:auto-cols-fr gap-x-5 md:gap-x-6 overflow-x-auto pb-4 -mx-6 px-6 md:-mx-12 md:px-12 lg:mx-0 lg:px-0 snap-x scroll-px-6 md:scroll-px-12 lg:scroll-px-0">
+                <ul className="mt-8 grid grid-flow-col grid-rows-[auto_auto] auto-cols-[10rem] md:auto-cols-[12rem] lg:auto-cols-fr gap-x-5 md:gap-x-6 overflow-x-auto overflow-y-hidden overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-4 -mx-6 px-6 md:-mx-12 md:px-12 lg:mx-0 lg:px-0">
                   {FREETHINKERS.map((p, i) => (
-                    <Reveal as="li" key={p.src} delay={i * 80} className="row-span-2 grid grid-rows-subgrid snap-start">
+                    <Reveal as="li" key={p.src} delay={i * 80} className="row-span-2 grid grid-rows-subgrid">
                       <Link href={p.href} className="group self-end block">
                         <Pic src={p.src} alt={p.alt} width={p.w} height={p.h} className="block w-full h-auto shadow-[0_1px_0_rgba(0,0,0,.08),0_8px_24px_-12px_rgba(0,0,0,.35)] transition-transform duration-500 group-hover:-translate-y-1" />
                       </Link>
@@ -385,7 +386,7 @@ export default async function AboutPage() {
       <section className="py-24 md:py-36 bg-cream border-t border-border-light">
         <div className={`${WIDE} grid grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] gap-14 md:gap-20`}>
           <div>
-            <StatementReveal text="Help fund the next first translation." className={`${h2} md:text-7xl max-w-3xl`} />
+            <StatementReveal text="Help fund the next first translation." className={`${h2} max-w-3xl`} />
             <Reveal className="mt-8 max-w-xl">
               <p className={lead}>The translations are free to read. Gifts pay for scanning fragile books, translating them and keeping the library online.</p>
               <div className="mt-10 flex flex-wrap gap-3">

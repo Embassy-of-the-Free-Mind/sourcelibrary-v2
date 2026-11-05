@@ -254,7 +254,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
               role="tab"
               onClick={() => go(i)}
               aria-selected={i === step}
-              className={`group relative text-left pb-2.5 text-sm sm:text-lg font-medium cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${i === step ? 'text-primary' : 'text-muted hover:text-primary'}`}
+              className={`group relative text-left pb-2.5 text-[13px] sm:text-lg font-medium cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${i === step ? 'text-primary' : 'text-muted hover:text-primary'}`}
             >
               {st.name}
               <i className="absolute left-0 right-0 bottom-0 h-px bg-border-medium group-hover:h-[2px] group-hover:bg-stone-400" />
@@ -269,7 +269,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
           type="button"
           onClick={toggle}
           aria-label={playing ? 'Pause' : step === last && progress >= 1 ? 'Play again from Latin' : 'Play'}
-          className="shrink-0 mb-1.5 w-9 h-9 rounded-full border border-border-medium text-primary hover:bg-black/[0.05] cursor-pointer flex items-center justify-center"
+          className="shrink-0 mb-1.5 w-9 h-9 rounded-full bg-[#1a1612] text-white hover:bg-black cursor-pointer flex items-center justify-center"
         >
           {playing ? (
             <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1" width="3" height="10" fill="currentColor" /><rect x="7" y="1" width="3" height="10" fill="currentColor" /></svg>
