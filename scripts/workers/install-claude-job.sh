@@ -9,7 +9,7 @@
 # The wrapper is copied, not symlinked into the checkout: a checkout can be dirty or mid-rebase.
 #
 #   install-claude-job.sh [target]     default target /root/bin/claude-job.sh
-# Also installs box-rpc.sh and box.sh beside it (the box mesh, #6360).
+# Also installs box-rpc.sh and box.sh beside it (the box mesh, #6360), and the pace guard where it is installed.
 # Keeps <target>.bak-6358 (the last hand-maintained wrapper, written once) and <target>.prev (the one before this install).
 set -u
 here=$(cd "$(dirname "$0")" && pwd)
@@ -39,5 +39,9 @@ dst="${1:-/root/bin/claude-job.sh}"; bin=$(dirname "$dst"); rc=0
 install_one claude-job.sh "$dst" || rc=1
 install_one box-rpc.sh "$bin/box-rpc.sh" || rc=1
 install_one box.sh "$bin/box.sh" || rc=1
+# The Claude pace guard (#7869), only where it is already the box's `claude` (claude-pace-guard.sh --install made
+# the link): it was hand-copied once on 2026-10-27 and never updated, so a fix to it reached no box.
+[ "$(readlink /usr/local/bin/claude 2>/dev/null)" = /root/claude-pace/claude-pace-guard.sh ] && \
+  { install_one claude-pace-guard.sh /root/claude-pace/claude-pace-guard.sh || rc=1; }
 [ "$(hostname)" = gex45-1 ] && { install_one gpu-queue.sh "$bin/gpu-queue.sh" || rc=1; }  # GPU task queue, gex45 only (#6871)
 exit $rc

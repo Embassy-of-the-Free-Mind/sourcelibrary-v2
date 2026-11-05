@@ -102,6 +102,8 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/admin/quality',
   // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
   '/admin/work',
+  // Token use (#8201): our accounts, machines and job names. Same reasoning as /admin/work.
+  '/admin/tokens',
   // Pipeline now (#7759): our boxes' cron lanes, quota pools and account meters. Same reasoning as /admin/work.
   '/admin/pipeline/now',
   // Router board (#7913): our router table, cron lanes and pages waiting. Same reasoning as /admin/work.
@@ -124,6 +126,17 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // assistant over its own shelf needs a different feature, not this one on
   // its domain. The header and footer filter on this list, so the link goes too.
   '/librarian',
+  // The whole catalogue with search and Ask the librarian (moved from
+  // /catalog, 2026-10-18). On a partner host /catalog is rewritten to that
+  // partner's own catalogue; /library is the global one and must not answer
+  // there. Links shared by both hosts pick their target with catalogueHref.
+  '/library',
+  // The hidden-mark decoder (#8150). It names the book a mark belongs to, from
+  // the whole library, and the riddles built on it lead into other books. A
+  // Source Library feature, not a partner's.
+  '/decode',
+  // The hunt built on those marks (#8150 slice 3): its riddles lead through global books.
+  '/hunt',
 ] as const;
 
 /**
@@ -172,6 +185,19 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // Blocking only the page would leave the whole-library agent callable from
   // the partner host.
   '/api/embassy',
+  // The /library page's list and counts: whole-catalogue queries.
+  '/api/catalog/results',
+  '/api/catalog/stats',
+  '/api/decode',
+  '/api/hunt',
+  // Not under /api, but a route handler with no page, like its twin /api/search.
+  // It searches the whole library, while a partner's /search stays scoped (#8161).
+  '/search/text',
+  // Also a route handler with no page: the page list above is pinned to page.tsx
+  // files and filters the nav. From an Internet Archive item to our copy of it
+  // (#8161). It resolves against the whole library and redirects to
+  // sourcelibrary.org, so it has no place on a partner's host.
+  '/ia',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
@@ -181,6 +207,11 @@ const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
 
 /** Exact match or a path segment beneath it — `/explore` and `/explore/map`,
  *  but never `/exploration`. */
+/** The catalogue a shared link should open: a partner's own, or the whole library. */
+export function catalogueHref(isTenantHost: boolean): string {
+  return isTenantHost ? '/catalog' : '/library';
+}
+
 export function isGlobalOnlyTenantPath(pathname: string): boolean {
   return ALL_GLOBAL_ONLY_PATHS.some(
     p => pathname === p || pathname.startsWith(`${p}/`)

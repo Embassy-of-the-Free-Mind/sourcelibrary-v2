@@ -6,6 +6,7 @@ import { pages as pagesApi, readingHistory } from '@/lib/api-client';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl } from '@/lib/utils';
+import { pageHasNoTextToShow } from '@/lib/reader-panes';
 import { localeFromPathname, readsOriginal } from '@/lib/locale-path';
 import { isEnglishBook } from '@/lib/translation-pane-state';
 
@@ -27,7 +28,7 @@ export interface ReaderSettings {
   lineHeight: number;
   glosses: boolean;
   /** Which translation to read, when a page carries more than one. */
-  translationLang: 'en' | 'es';
+  translationLang: 'en' | 'es' | 'zh';
   /**
    * True once the reader has picked a text size themselves. The default went
    * up a step (1 → 1.15, #7189), and a stored 1 written before that is far
@@ -96,6 +97,7 @@ export function useReaderV2(
   // first. Only as an initial default: once they choose in the pane, the
   // stored preference wins, because the choice is theirs to keep.
   const spanishSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
+  const chineseSite = typeof window !== 'undefined' && window.location.pathname.startsWith('/zh');
   const [currentPageId, setCurrentPageId] = useState(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const [pageLoading, setPageLoading] = useState(false);
@@ -360,7 +362,20 @@ export function useReaderV2(
   // to OCR" (#4385). The ref is resolved client-side in the effect below;
   // toggleView only runs on interaction, well after that.
   const viewsKeyRef = useRef(viewsKeyBase);
-  const [views, setViews] = useState<ViewState>(defaultViews);
+  const [storedViews, setViews] = useState<ViewState>(defaultViews);
+  // A page with a scan and no text opens on the image alone: the text panes
+  // could only say "not transcribed yet". The reader's stored choice is left
+  // alone and returns on the next page that has text. Tapping OCR or English
+  // here is an explicit ask, and it holds for the rest of the visit, so someone
+  // working through untranscribed pages taps once. Computed from the page, so
+  // the server render is already right and nothing jumps on load.
+  const [textPanesAsked, setTextPanesAsked] = useState(false);
+  const imageOnly = !textPanesAsked
+    && !!getPageDisplayUrl(currentPage as unknown as Record<string, unknown>)
+    && pageHasNoTextToShow(currentPage);
+  const views: ViewState = imageOnly
+    ? { scan: true, ocr: false, en: false, translit: false }
+    : storedViews;
   useEffect(() => {
     // <lg — the same line where the stacked mobile layout begins.
     const isPhone = window.matchMedia('(max-width: 1023px)').matches;
@@ -413,6 +428,7 @@ export function useReaderV2(
       const qs = sp.toString();
       window.history.replaceState(window.history.state, '', `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`);
       if (next.scan || next.ocr || next.en) {
+        setTextPanesAsked(true);
         setViews(next);
         return;
       }
@@ -438,6 +454,15 @@ export function useReaderV2(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const toggleView = useCallback((key: keyof ViewState) => {
+    if (imageOnly) {
+      // The scan is the only pane up, and the last pane stays on.
+      if (key === 'scan') return;
+      setTextPanesAsked(true);
+      // Just the pane they tapped. Not persisted: their stored choice was not
+      // what was on screen here, so this tap says nothing about it.
+      setViews({ scan: true, ocr: false, en: false, translit: false, [key]: true });
+      return;
+    }
     setViews(prev => {
       const next = { ...prev, [key]: !prev[key] };
       // At least one pane must stay on — clicking the last active pane is a no-op
@@ -445,7 +470,7 @@ export function useReaderV2(
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, []);
+  }, [imageOnly]);
   /**
    * The phone's pane picker is a jump, not a filter (#5219). It used to show
    * the tapped pane and nothing else (#5062), so a reader on the translation
@@ -457,12 +482,17 @@ export function useReaderV2(
    * transcription stored as their choice (#7189).
    */
   const revealView = useCallback((key: keyof ViewState, hasScan: boolean) => {
+    if (imageOnly) {
+      // Tapping Scan while the scan is all there is asks for nothing new.
+      if (key === 'scan') return;
+      setTextPanesAsked(true);
+    }
     setViews(prev => {
       const next: ViewState = { scan: hasScan, ocr: prev.ocr, en: true, translit: prev.translit, [key]: true };
       try { window.localStorage.setItem(viewsKeyRef.current, JSON.stringify(next)); } catch { /* private mode */ }
       return next;
     });
-  }, []);
+  }, [imageOnly]);
 
   // ── settings ───────────────────────────────────────────────────────────
   const [settings, setSettings] = useState<ReaderSettings>(DEFAULT_SETTINGS);
@@ -476,8 +506,11 @@ export function useReaderV2(
     // On the Spanish site, open in Spanish — but only for a reader who has
     // never chosen. Once they have picked a language in the pane their stored
     // choice wins, because the choice is theirs to keep.
-    setSettings(spanishSite && !stored ? { ...base, translationLang: 'es' } : base);
-  }, [spanishSite]);
+    // The same on /zh for the few books with a Chinese edition (#7537); on a page
+    // without one the pane simply shows English.
+    const siteLang = spanishSite ? 'es' : chineseSite ? 'zh' : null;
+    setSettings(siteLang && !stored ? { ...base, translationLang: siteLang } : base);
+  }, [spanishSite, chineseSite]);
   const updateSettings = useCallback((patch: Partial<ReaderSettings>) => {
     const chosen = patch.textScale !== undefined ? { textScaleChosen: true } : null;
     setSettings(prev => persistSettings({ ...prev, ...patch, ...chosen }));

@@ -269,6 +269,22 @@ export async function performOCR(
   }
 }
 
+/**
+ * A nearly empty source leaf: translate-core's `sourceWeight(ocr) < RECITED_SOURCE_MAX` (300), kept in step with it
+ * (tests/unit/detected-images-not-source.test.ts checks the two agree). The picture detector's `<detected-images>`
+ * JSON is not source; every other block's words count; a Han, kana or Hangul character counts 16.
+ */
+export function isNearlyEmptySource(ocr: string | null | undefined): boolean {
+  const t = String(ocr || '')
+    .replace(/<detected-images\b[^>]*>[\s\S]*?<\/detected-images>/gi, ' ')
+    .replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
+    .replace(/&(?:nbsp|ensp|emsp|thinsp|hairsp|#0*160|#[xX]0*a0|#8194|#8195|#8201);/g, ' ')
+    .replace(/([.\u00b7\u2022\u2024\u2027_\-–—=~*])\1{3,}/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+  const cjk = (t.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu) || []).length;
+  return t.length + 15 * cjk < 300;
+}
+
 export async function performTranslation(
   ocrText: string,
   sourceLanguage: string,
@@ -300,7 +316,9 @@ export async function performTranslation(
     ? `\n\n**Text to modernize:**\n${ocrText}`
     : `\n\n**Text to translate:**\n${ocrText}`;
 
-  if (previousPageTranslation) {
+  // #5274: a nearly empty leaf (plate, caption, title) gets no previous English: with it the model wrote n-1's
+  // text as this leaf's (470 of 695 Feb-Mar 2026 leaves written 0-10 min after n-1). Twin of translate-core.
+  if (previousPageTranslation && !isNearlyEmptySource(ocrText)) {
     // Head AND tail, plus the page's <summary>/<keywords> — the head carries
     // the page's conventions and names, the tail carries the seam the model
     // is told to continue (#4968; twin of continuityContext in

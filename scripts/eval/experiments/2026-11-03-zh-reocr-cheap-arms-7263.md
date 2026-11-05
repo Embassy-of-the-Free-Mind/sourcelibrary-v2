@@ -7,7 +7,7 @@ canons: []
 n_books: 60
 n_pages: 60
 verdict: "No cheaper corrector is non-inferior to Opus on the Gemini-read Chinese pages, on either stratum. Every arm fails the 0.08 margin: the best are Paddle > agy Flash-medium on print (21/30 against Opus 26/30, d -0.17, CI -0.37 to +0.03, wrong-text pages 6 against 2) and Paddle > Sonnet on Siku (22/30 against 26/30, d -0.13, CI -0.27 to -0.03, wrong-text pages 5 against 1). Paddle > agy Flash-low reaches 18/30 and 19/30, wrong-text pages 9 and 8. The draft matters as much as the model: from the stored text Sonnet reaches 12/30 and 17/30 and agy Flash-low 8/30 and 10/30. All Paddle-draft arms beat stored (lower bounds +0.17 or better). Opus judged again in the same queue: 26/30 and 28/30, accept verdicts agreeing on 58 of 60 pages; wrong-page controls 8 of 8 rejected."
-status: undecided
+status: rejected
 decision: "No write and no routing change: current.json and rules.json are untouched. No DECISION to route a stratum through a cheaper arm, since none is non-inferior. #8008's open question stands: Opus correction for the frame at about $340-620. Paddle > Sonnet costs about 40% of that and leaves about 18% wrong-text pages against 4% (frame-weighted); that trade was not asked for and is not recommended here."
 superseded_by: null
 issue: [7263]

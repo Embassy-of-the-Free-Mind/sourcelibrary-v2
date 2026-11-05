@@ -55,12 +55,16 @@ export const READER_PAGE_PROJECTION = {
   photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1,
   display_photo: 1, image_thumb: 1, thumbnail_blob: 1, thumbnail: 1,
   split_from_spread: 1, crop: 1,
+  // A restored plate's display copy, used only while it is a resize of the shown image (#8042).
+  'plate_whole.display': 1,
   // Where the page sits inside the scan, shown cropped to it (#5876).
   page_frame: 1,
   columns: 1, display_brightness: 1, image_width: 1, image_height: 1, deepzoom: 1,
   ocr: 1, translation: 1, translations: 1, translation_es: 1, translation_withheld: 1,
   summary: 1, modernized: 1, transliteration: 1,
   read_count: 1, edit_count: 1, created_at: 1, updated_at: 1,
+  // The page part of the citation the reader prints in its HTML (#8161, #4291).
+  printed_page: 1,
 } as const;
 
 /**

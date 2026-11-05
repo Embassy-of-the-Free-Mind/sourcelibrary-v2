@@ -36,6 +36,12 @@
  * reads what was opened from the gate's log. `--max-calls=N` stops the run after N calls. --draft-dir needs
  * CANDIDATE_READS=off: the reuse key names the stored draft, so a kept read would not match the draft sent.
  * Such a read carries `draft.source: 'file'`, which `cli-ocr.mjs apply` refuses.
+ *
+ * A DEFECT INSTRUCTION (#5274, the 丨 ditto marks of 佩文韻府-type dictionaries): `--instruction-file=FILE` appends FILE's
+ * text after the correction block, as scripts/eval/zh-ditto-restore-5274/run-arms.mjs did (its DITTO block). It is part
+ * of the prompt sent (hashed, kept in prompts/) and of the reuse key's variant, so a kept plain correction is never
+ * reused for it. `--language=Chinese` fills the live prompt's language slot as claude-ocr.mjs languageInstruction()
+ * does (the eval's prompt); without it the slot stays auto-detect, as before.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -48,7 +54,7 @@ import { ocrReadProblem } from '../../lib/cli-chatter.mjs';
 import { checkWrittenText } from '../../lib/write-text-guard.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
 import { liveOcrPrompt } from '../../lib/live-ocr-prompt.mjs';
-import { splitPages } from '../claude-ocr.mjs';
+import { splitPages, languageInstruction } from '../claude-ocr.mjs';
 import { agyCall, agyUsage, installToolGate, gateReads, CLI_SAFE_ARGS } from '../../lib/agy-cli.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh, hasKeptReads } from '../../lib/candidate-reads.mjs';
 
@@ -63,6 +69,9 @@ const MODEL = arg('model', 'opus');
 const PER_CALL = Math.max(1, Math.min(10, Number(arg('per-call', 10))));
 const CONCURRENCY = Math.max(1, Math.min(8, Number(arg('concurrency', 4))));
 const JOB = arg('job', 'opus-correct-6694');
+const INSTRUCTION_FILE = arg('instruction-file') && path.resolve(arg('instruction-file'));
+const EXTRA = INSTRUCTION_FILE ? fs.readFileSync(INSTRUCTION_FILE, 'utf8') : '';
+const LANGUAGE = arg('language');
 const pageName = (i) => `p${String(i + 1).padStart(2, '0')}`;
 const draftName = (i) => `d${String(i + 1).padStart(2, '0')}`;
 
@@ -82,7 +91,7 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 
 /** One sealed call with a stream-json transcript, so the files the model opened can be checked. */
-function claudeCall(prompt, cwd, transcript) {
+export function claudeCall(prompt, cwd, transcript) {
   return new Promise((resolve) => {
     const t0 = Date.now();
     const fd = fs.openSync(transcript, 'w');
@@ -152,7 +161,7 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const pages = await db.collection('pages').find({ id: { $in: manifest.map((m) => m.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1, 'ocr.updated_at': 1, 'ocr.model': 1 } }).sort({ book_id: 1, page_number: 1 }).toArray();
-  const { base, ref } = await liveOcrPrompt(db);
+  const { base, ref } = await (LANGUAGE ? liveOcrPrompt(db, languageInstruction(LANGUAGE)) : liveOcrPrompt(db));
   await client.close();
   fs.mkdirSync(path.join(OUT, 'prompts'), { recursive: true });
   fs.mkdirSync(path.join(SETDIR, 'stored'), { recursive: true });
@@ -161,7 +170,7 @@ async function main() {
   const todo = pages.filter((p) => !done(p));
   const calls = [];
   for (const p of todo) { const last = calls[calls.length - 1]; if (last && last[0].book_id === p.book_id && last.length < PER_CALL) last.push(p); else calls.push([p]); }
-  console.log(`${pages.length} pages; ${todo.length} to correct in ${calls.length} calls; ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time; prompt ${ref.name} v${ref.version}`);
+  console.log(`${pages.length} pages; ${todo.length} to correct in ${calls.length} calls; ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time; prompt ${ref.name} v${ref.version}${EXTRA ? ` + ${path.basename(INSTRUCTION_FILE)}` : ''}${LANGUAGE ? `, language ${LANGUAGE}` : ''}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'ocr-correct-sealed', path.basename(SETDIR));
   const callLog = path.join(SETDIR, 'calls.jsonl');
@@ -182,10 +191,10 @@ async function main() {
   };
   // The reuse key (#7075): the live prompt, the instruction's template, the image bytes and the draft corrected.
   const FRESH = wantsFresh();
-  const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(base), input: JSON.stringify([imageSha, contentHash(p.ocr?.data || '')]), variant: contentHash(correctInstruction(1)) });
+  const reuseKeyOf = (p, imageSha) => reuseHash({ field: 'ocr', prompt: contentHash(base), input: JSON.stringify([imageSha, contentHash(p.ocr?.data || '')]), variant: contentHash(correctInstruction(1) + EXTRA) });
   const writePage = (p, ans, meta) => {
     fs.writeFileSync(path.join(OUT, `${p.id}.txt`), ans.outcome === 'corrected' ? ans.text : '');
-    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(DRAFT_DIR && { draft: { source: 'file', dir: DRAFT_DIR } }), ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(draftOf(p)) }, null, 1));
+    fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, ...(DRAFT_DIR && { draft: { source: 'file', dir: DRAFT_DIR } }), ...(EXTRA && { instruction_file: path.basename(INSTRUCTION_FILE), instruction_hash: contentHash(EXTRA) }), ...(LANGUAGE && { language_slot: LANGUAGE }), ...meta, outcome: ans.outcome, reason: ans.reason ?? null, exit: ans.outcome === 'corrected' ? 0 : 1, error_class: ans.outcome === 'corrected' ? null : ans.outcome, chars: ans.text?.length ?? 0, stored_model: p.ocr?.model ?? null, stored_updated_at: p.ocr?.updated_at ?? null, stored_sha256: contentHash(draftOf(p)) }, null, 1));
   };
 
   /** One call over a group. Returns the pages left unanswered. */
@@ -200,7 +209,7 @@ async function main() {
       fs.writeFileSync(path.join(dir, `${draftName(i)}.txt`), draftOf(p));
       fs.writeFileSync(path.join(SETDIR, 'stored', `${p.id}.txt`), draftOf(p));
     });
-    const sent = base + correctInstruction(group.length);
+    const sent = base + correctInstruction(group.length) + EXTRA;
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);

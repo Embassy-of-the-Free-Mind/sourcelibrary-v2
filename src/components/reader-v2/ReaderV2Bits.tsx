@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
+import { displayPublished } from '@/lib/publication-date';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '@/lib/page-frame';
@@ -15,6 +16,7 @@ import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality
 import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
+import { printedDisplay, printedInputMode, resolvePageBox, type PageBoxMatch, type PrintedNumbers } from '@/lib/printed-numbers';
 import { issueUrl } from '@/lib/check-methods';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
@@ -239,6 +241,82 @@ export function MissingPagesLine({ gaps, pageNumber }: { gaps: ScanGaps | undefi
     <p role="note" data-missing-pages="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
       {here.map((g) => t.missingPages(g.first, g.last)).join(' ')}
     </p>
+  );
+}
+
+/**
+ * The page box on a book with confirmed printed numbers (#8041): takes a frame or a printed number, and where the text
+ * could mean more than one page it lists them and lets the reader say which. A book with no rows never mounts this.
+ */
+export function PrintedPageBox({ pages, printed, placeholder, className, style, opens, onGo, onClose }: {
+  pages: { id: string; page_number: number }[];
+  printed: PrintedNumbers;
+  placeholder: string;
+  className: string;
+  style: React.CSSProperties;
+  /** Which way the choices open: below the desktop toolbar, above the phone's foot-of-page pager. */
+  opens: 'down' | 'up';
+  onGo: (pageId: string) => void;
+  onClose: () => void;
+}) {
+  const t = getReaderStrings(useLocale()).toolbar;
+  const [value, setValue] = useState('');
+  const [choices, setChoices] = useState<PageBoxMatch[] | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => { inputRef.current?.focus(); }, []);
+  const go = (pageId: string) => { onGo(pageId); onClose(); };
+  const choiceLabel = (m: PageBoxMatch) => {
+    const scan = t.scanPage(m.pageNumber);
+    const label = m.printed ? t.printedPage(printedDisplay(m.printed).text) : null;
+    if (!label) return scan;
+    return m.via === 'printed' ? `${label} · ${scan}` : `${scan} · ${label}`;
+  };
+  return (
+    <div
+      className="relative flex items-stretch"
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) onClose(); }}
+      onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}
+    >
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={(e) => { setValue(e.target.value); setChoices(null); }}
+        onKeyDown={(e) => {
+          if (e.key !== 'Enter') return;
+          const matches = resolvePageBox(value, pages, printed);
+          if (matches.length === 1) go(matches[0].pageId);
+          else if (matches.length > 1) setChoices(matches);
+          else onClose();
+        }}
+        placeholder={placeholder}
+        className={className}
+        style={style}
+        inputMode={printedInputMode(printed)}
+        aria-label={t.jumpToPage}
+      />
+      {choices && (
+        <div
+          role="group"
+          aria-label={t.whichPage}
+          // Keeps focus in the input on a press, so its blur cannot close the list before the click lands.
+          onMouseDown={(e) => e.preventDefault()}
+          className={`absolute z-[70] right-0 flex flex-col border font-sans text-[13px] tabular-nums ${opens === 'down' ? 'top-full mt-1' : 'bottom-full mb-1'}`}
+          style={{ background: 'var(--bg-dark)', borderColor: onInk(0.32), color: '#fdfcf9' }}
+        >
+          <p className="px-3 pt-2 pb-1 text-[11.5px] whitespace-nowrap" style={{ color: onInk(0.62) }}>{t.whichPage}</p>
+          {choices.map((m) => (
+            <button
+              key={m.pageId}
+              type="button"
+              onClick={() => go(m.pageId)}
+              className="min-h-[44px] lg:min-h-[32px] px-3 text-left whitespace-nowrap hover:bg-[rgba(253,252,249,0.13)] focus-visible:outline-none focus-visible:bg-[rgba(253,252,249,0.13)]"
+            >
+              {choiceLabel(m)}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -1161,6 +1239,6 @@ export function themeAttr(theme: ReaderSettings['theme']): string | undefined {
 
 /** Book byline under the title in the top bars. */
 export function bookByline(book: Book): string {
-  const parts = [book.author, book.published].filter(Boolean);
+  const parts = [book.author, displayPublished(book.published)].filter(Boolean);
   return parts.join(' · ');
 }

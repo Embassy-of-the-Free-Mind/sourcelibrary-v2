@@ -1,0 +1,53 @@
+<scan-quality>good</scan-quality>
+<language>English, Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>71</page-num>
+<header>APPENDIX I.] COMMENTARIES OF KUNG-YANG AND KUH-LEANG. [PROLEGOMENA.</header>
+
+his own territories, the place was not mentioned;—why is it mentioned here?
+To conceal the fact.
+To conceal what fact?
+His murder.
+Who murdered him?
+His great officers.
+Why does not the text say so?
+The thing is concealed on account of the Middle States?
+Why so?
+When the earl of Ch‘ing was about to go to the meeting of the States in Wei, his great officers remonstrated with him, saying, “The Middle States are not worth adhering to; you had better join with Ts‘oo.” When the earl objected to this counsel, they said, “If you think that the Middle States are righteous, they [notwithstanding] invaded us when we were mourning [for the last earl]; if you say that they are strong, yet they are not so strong as Ts‘oo.” With this they murdered him.
+Why is he named—“the earl of Ch‘ing, K‘wăn-yuen?”
+[To express sorrow] that having been wounded, and being on his return [to his capital], he died before he reached his halting place.
+As he did not see the [other] princes, why is it said that he went to the meeting?
+To express fully his purpose.’
+
+<column-break/>
+
+To show that he died through going to the meeting.
+How does it show that he died through going to the meeting?
+The earl of Ch‘ing was going to meet [the princes of] the Middle States, and his ministers wished him to follow Ts‘oo. Not succeeding, they murdered him, and he died.
+Why is it not mentioned that he was murdered?
+Not to allow it to appear that barbarous people (*i. e.*, the ministers who wished to follow the barbarous Ts‘oo) had dealt so with a prince of the Middle States.
+The place was outside [the capital]; on the day he had not crossed the borders [of the State]; the day of his death and the time of his burial [are given, as if all] had been correct.’
+
+---
+
+# 二十有五年, 十章。十有二月, 吳子遏伐楚, 門于巢卒。
+
+->*The twenty-fifth year, tenth par.*<-
+
+In the 12th month, Goh, viscount of Woo, invaded Ts‘oo, and died in an attack on one of the gates of Ch‘aou.
+
+<column-break/>
+
+公羊傳曰, 門于巢卒者, 何. 入門乎巢而卒也.
+入門乎巢而卒者, 何. 入巢之門而卒也.
+吳子謁何以名. 傷而未反至乎舍而卒也.
+
+<column-break/>
+
+穀梁傳曰, 以伐楚之事, 門于巢卒也.
+于巢者, 外乎楚也. 門于巢乃伐楚也.
+諸侯不生名, 取卒之名, 加之伐楚之上者, 見以伐
+
+<vocab>Kung-yang, Kuh-leang, Ch'ing, Ts'oo, Woo, Ch'aou, Middle States, Earl of Ch'ing, Viscount of Woo</vocab>

@@ -1,13 +1,13 @@
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// Shown the moment someone taps Library. The page reads its `collection`
-// filter from the URL, so it renders on request; without this the click sat
+// Shown the moment someone taps Library (#6942). The page reads its filters
+// from the URL, so it renders on request; without this the click sat
 // on the old page for the whole render (~5s measured 2026-10-18).
-export default function CatalogLoading() {
+export default function LibraryLoading() {
   return (
     <>
-      <SiteHeader variant="light" />
-      <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-20" aria-busy="true">
+      <SiteHeader variant="dark" />
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 md:px-12 pt-6 md:pt-11 pb-12" aria-busy="true">
         <div className="h-10 w-40 bg-stone-200 animate-pulse mb-3" />
         <div className="h-5 w-64 bg-stone-100 animate-pulse mb-10" />
         <div className="h-11 w-full max-w-xl bg-stone-100 animate-pulse mb-8" />

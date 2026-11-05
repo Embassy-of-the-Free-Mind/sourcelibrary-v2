@@ -7,7 +7,9 @@ canons: []
 n_books: 40
 n_pages: 40
 verdict: "Below an old-vs-new CER of 0.1, the new Paddle reading is usually right (2 of 16 pages have a material OCR error), and a fresh 3.8 Flash translation beats the stored English on every judged page where they differ, under both judges (Opus 1.68 → 0.00 material errors per page, Gemini 3.1 Pro 4.16 → 1.05, n = 19). At CER ≥ 0.1 the Paddle reading itself has a material error on 19 of 24 pages, so retranslating from it would carry those errors into the English. Diff-scoped correction fixed much less than retranslation (Opus 0.95, Pro 2.74), because most errors in the stored English come from the translation, not from the old reading. Both judges caught 16 of 16 planted errors."
-status: undecided
+status: adopted
+supersedes: [2026-10-11-paddle-stale-english-retranslate-6388.md]
+landed: "scripts/batch/stale-retranslate-6567.mjs"
 decision: null
 superseded_by: null
 issue: [6567, 6388, 6553]

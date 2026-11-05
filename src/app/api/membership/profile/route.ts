@@ -19,7 +19,7 @@ export async function GET() {
     { projection: { 'membership.profile': 1 } }
   );
 
-  return NextResponse.json(user?.membership?.profile || { displayName: '', bio: '', visible: true });
+  return NextResponse.json(user?.membership?.profile || { displayName: '', bio: '', visible: false });
 }
 
 export async function PATCH(request: NextRequest) {
@@ -31,7 +31,7 @@ export async function PATCH(request: NextRequest) {
   const body = await request.json();
   const displayName = (body.displayName || '').trim().slice(0, 100);
   const bio = (body.bio || '').trim().slice(0, 200);
-  const visible = body.visible !== false; // default to visible
+  const visible = body.visible === true; // a name goes on the public list only by choice
 
   const db = await getDb();
   await db.collection('users').updateOne(

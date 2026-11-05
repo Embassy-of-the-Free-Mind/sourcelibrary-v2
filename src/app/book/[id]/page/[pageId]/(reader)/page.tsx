@@ -1,4 +1,5 @@
 import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -10,6 +11,7 @@ import { isHiddenBook } from '@/lib/book-access';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
 import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
@@ -22,6 +24,7 @@ import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-proj
 import { loadReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { getQualityWarnings } from '@/lib/book-warnings';
 import { getScanGaps } from '@/lib/scan-gaps';
+import { getPrintedNumbers } from '@/lib/printed-numbers';
 import { ocrMeasure } from '@/lib/ocr-measure';
 import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
 import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChapterPageIds, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
@@ -56,7 +59,7 @@ function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: strin
       ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
       ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
     },
-    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
     isAccessibleForFree: true,
     ...(excerpt ? { text: excerpt } : {}),
   };
@@ -94,6 +97,8 @@ const BOOK_NAV_PROJECTION = {
   // Gates whether this book may have a localized reader URL at all — see the
   // redirect below. Always read from Atlas here, so it can never be absent.
   pages_translated_es: 1,
+  // Opens the 中文 pane on /zh for a book with a Chinese edition (#7537).
+  pages_translated_zh: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   // English edition? Then an English leaf serves its transcription, not the
   // stored English-to-English rewording (#7100).
@@ -204,14 +209,16 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   // page turn needs no second request. Never throws; most books have no rows. Partner rooms get them too: the
   // embed reads the same reader, warnings included (2026-10-29).
   // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
+  // The numbers printed on the leaves, where confirmed on the images (#8041): same shape again; no rows reads as today.
   // A chapter whose stored pageId is a hidden repeat capture (#5056) opens the
   // kept capture instead: one batched lookup per book, stored chapters untouched.
   // The reader's contents panel turns pages client-side, so no redirect would
   // catch it.
   const chapters = (book.chapters ?? []) as { pageId?: string; pageNumber?: number }[];
-  const [qualityWarnings, scanGaps, chapterKeepers] = await Promise.all([
+  const [qualityWarnings, scanGaps, printedNumbers, chapterKeepers] = await Promise.all([
     getQualityWarnings(db, [scopedBookId]),
     getScanGaps(db, scopedBookId),
+    getPrintedNumbers(db, scopedBookId),
     resolveRepeatKeepers(
       (ids) => db.collection('pages').find({ book_id: scopedBookId, id: { $in: ids } }, { projection: REPEAT_KEEPER_PROJECTION, maxTimeMS: 3000 }).toArray(),
       chapters.map((ch) => ch.pageId).filter((id): id is string => typeof id === 'string'),
@@ -265,6 +272,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   //
   // The notes layer (#7965) goes in first: a page with a current translation.text and a page_annotations doc
   // for it is read from the layer; any other page is served exactly as before.
+  await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
   const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
   return (
@@ -300,6 +308,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
           initialPageList={serializedNavPages}
           qualityWarnings={qualityWarnings}
           scanGaps={scanGaps}
+          printedNumbers={printedNumbers}
           ocrMeasure={lang === 'la' && book.language === 'Latin' ? ocrMeasure('latin') : null}
         />
       </div>
@@ -326,14 +335,30 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
         // the real pager, shoving the toolbar up the screen. It stays in the
         // DOM and in the accessibility tree, which is all #2266 needed; sighted
         // readers have the pager, the filmstrip and Contents for the same job.
+        // The citation an assistant repeats (#8161). Text fetchers usually drop
+        // <head>, so the meta tags alone do not reach it, and the Cite button is
+        // client-side. Same builder as the quote API, same sr-only reasoning as
+        // the nav below. Not in a partner's room: its links are its own.
+        const citation = ctx?.id ? null : generateCitations(
+          book, serializedPage.page_number, scopedBookId, pageId, 'https://sourcelibrary.org',
+          undefined, undefined, serializedPage.printed_page,
+          { transcription: !serializedPage.translation?.data },
+        );
         return (
+          <>
+          {citation && (
+            <p className="sr-only">
+              Cite this page: {citation.footnote} <a href={citation.short_url}>{citation.short_url}</a>
+            </p>
+          )}
           <nav aria-label={rs.pageNavigation} className="sr-only">
-            {prev && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
+            {prev &&<a href={hrefPrefix + localePath(`/book/${bookPath}/page/${prev.id}`, lang)}>{rs.prevPageLink(prev.page_number)}</a>}
             <a href={hrefPrefix + localePath(`/book/${bookPath}`, lang)}>{localizedTitle(book, lang)}</a>
             {/* No /overview twin exists under an embed or room prefix (embedPolicy.showBookOverviewLink). */}
             {!hrefPrefix && <a href={`/book/${bookPath}/overview`}>{rs.allPagesLink(serializedNavPages.length)}</a>}
             {next && <a href={hrefPrefix + localePath(`/book/${bookPath}/page/${next.id}`, lang)}>{rs.nextPageLink(next.page_number)}</a>}
           </nav>
+          </>
         );
       })()}
     </>

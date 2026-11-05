@@ -8,6 +8,7 @@ n_books: null
 n_pages: 685
 verdict: "Estimator v1 (ordinal, round spread per instrument class, four chains) covers held-out experiments at 0.92 (v0 0.90; 330 cells) and held-out packet instruments at 0.85 (v0 0.74; 62 cells). In the preregistered #6545 test it covered 9 of 12 panel means (v0 8) and 7 of 8 differences between arms; the two best-measured cells came in 0.4 below the prediction."
 status: undecided
+supersedes: [2026-10-12-estimator-core-translation-6557.md]
 decision: "Ready for the planner on differences between arms inside one judging round. Not ready on levels across judging rounds, and not for the router (#6557)"
 superseded_by: null
 issue: [6557, 6545, 6553]

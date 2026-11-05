@@ -24,6 +24,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
 import { NOT_HELD } from './lib/pipeline-hold.mjs';
@@ -34,6 +35,7 @@ import { leavesForFrame, cutSpreadText, stagedPageNumber, stagedLeavesQuery, fra
 import { contentHash } from './lib/write-provenance.mjs';
 import { recordSweepAction } from './lib/sweep-log.mjs';
 import { voteSpreadOrder } from './lib/split-page-order.mjs';
+import { plateSpanVerdict } from './lib/plate-spread.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -121,7 +123,7 @@ function spPath(bookId, pageNum, suffix) {
 async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
   const full = await sharp(buf).extract({ left, top: 0, width, height }).jpeg({ quality: 90, progressive: true }).toBuffer();
   const fullDim = { width, height };
-  const display = await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
+  const display = await markDisplay(await sharp(full).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer(), { bookId, pageNumber: pageNum });
   const thumb = await sharp(full).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), full),
@@ -133,7 +135,7 @@ async function cropAndUpload(buf, left, width, height, bookId, pageNum) {
 
 async function uploadFullImage(buf, bookId, pageNum) {
   const fm = await sharp(buf).metadata();
-  const display = await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer();
+  const display = await markDisplay(await sharp(buf).resize(1200, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85, progressive: true }).toBuffer(), { bookId, pageNumber: pageNum });
   const thumb = await sharp(buf).resize(150, null, { fit: 'inside' }).jpeg({ quality: 60 }).toBuffer();
   const [fullUrl, dispUrl, thumbUrl] = await Promise.all([
     upload(spPath(bookId, pageNum, '-full.jpg'), buf),
@@ -496,7 +498,7 @@ console.log('\n--- Step 2: Load existing page OCR ---');
 const allExistingPages = await db.collection('pages')
   .find({ book_id: book.id, page_number: { $gte: 0 }, page_type: { $ne: 'archived-spread' } }) // live pages only — skip spreads archived by a prior run (idempotency)
   .sort({ page_number: 1 })
-  .project({ id: 1, page_number: 1, photo: 1, page_type: 1, ocr: 1 })
+  .project({ id: 1, page_number: 1, photo: 1, page_type: 1, ocr: 1, detected_images: 1 })
   .toArray();
 
 // Only use the first N pages matching the source image count (the original spreads).
@@ -817,6 +819,29 @@ if (GUTTER_ONLY) {
   console.log();
 } else {
   console.log('\n--- Step 3: Using existing spread OCR ---');
+}
+
+// --- Step 3.9: A plate across the fold stays whole (#8042) ---
+// The book-level imgFrac gate above keeps a PLATE BOOK whole, but a plate bound into a text book was cut at the
+// gutter like the text around it (Khunrath's Emerald Table, BPH 69ef33e2 frame -127). Each frame's own read decides:
+// plate-typed + single-page split position, or a detected image across the cut → keep whole and flag it. Applies to
+// reviewed positions too (the #7605 lane): a reviewed cut through one image is flagged, not written. A <page-break/>
+// always splits. --cut-plates overrides for a book a person has checked.
+const plateFlags = [];
+if ((GUTTER_ONLY || TEXT_CUT) && !args.includes('--cut-plates')) {
+  for (const page of existingPages) {
+    if (page._error || typeof page._gutter !== 'number') continue;
+    const v = plateSpanVerdict({ ocrText: page.ocr?.data, pageType: page.page_type, detectedImages: page.detected_images }, page._gutter);
+    if (!v.keepWhole) continue;
+    plateFlags.push({ page_number: page.page_number, cut: page._gutter, method: page._splitMethod, reason: v.reason });
+    page._gutter = 'single';
+    page._splitMethod = `plate-whole(${v.reason})`;
+    page._uncertain = false;
+  }
+  if (plateFlags.length) {
+    console.log(`  PLATE FLAG: ${plateFlags.length} frame(s) hold one image across the fold — kept whole, not cut (#8042):`);
+    for (const f of plateFlags) console.log(`    p.${f.page_number} cut ${f.cut}/1000 (${f.method}): ${f.reason}`);
+  }
 }
 
 // --- Step 4: Build the new page list ---

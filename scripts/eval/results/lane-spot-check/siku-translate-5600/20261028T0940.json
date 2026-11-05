@@ -1,0 +1,102 @@
+[
+ {
+  "page_id": "6a3c619a40c88a541d8f0388",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches all 8 columns (矣 … 兩京新記含元殿); only slip is OCR 賈黃巾 for image 賈黃中, which the English already corrects to Jia Huangzhong; Wang Jian, Daming Gong Tu, Chang'an Zhi, Yonglu and Tanlu quotes are rendered faithfully."
+ },
+ {
+  "page_id": "6a3c688faf3c49b59c5da3ba",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Text matches image (南唐後主 … 青黑相雜其); Qian Xianzhi stream-diversion story correct; the header title 金石萃編 in OCR/English is not visible on the leaf (only 卷六十二), so the attribution is unsupported but not a passage."
+ },
+ {
+  "page_id": "6a3c6b8faf3c49b59c5ed565",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR and English match all columns (曰天自賁以上 … 以四象而分); divisions 96/64/48/24/32 and remainder 24 for sixty jiazi are correct; small-note 不為日用 is rendered as a margin note."
+ },
+ {
+  "page_id": "6a3c6c4839b4508b04e48282",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Matches image (而食之 … 炭可取); slips: the fanqie 方吹反 is read as a pronunciation 'fāng chuǐ fǎn', OCR 説丈 should be 説文, and the small note 彰德志作烸 (the gazetteer writes the character as 烸) is misplaced as 'also written as 烸' after the title."
+ },
+ {
+  "page_id": "6a3c6f2901fe4f593c1c98ad",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "Mis-parse of 若取郠經亦當見｜用人于社之說魯三家…未至是也: the English says the Classic should record the human sacrifice, but the argument is that the Classic would record the capture and that the sacrifice story is implausible. Smaller OCR-driven slips: 郠 is read as 郜 ('Gao'), 鄫子 as 郜子, 訖 as 記, and the header 金氏春秋考 is not on the leaf."
+ },
+ {
+  "page_id": "6a3c78ea01fe4f593c20bf67",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "All 9 columns match the OCR (韣弓衣取男子之象 / 三署郎 ... 皆是三署也). The English renders the Qin 郎令, the three 署 and the Han examples (Feng Tang, Zhi Buyi, Yan Si, Yang Xiong, Deng Tong) correctly."
+ },
+ {
+  "page_id": "6a3cb54757c1f37219c485e0",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "The image columns (之後長子傳國 ... 進則必有所至) match the OCR exactly. The English for Zhen to Gen to Jian to Guimei and both Yichuan comments is accurate."
+ },
+ {
+  "page_id": "6a3cb88c3dce6cfad748e55b",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "OCR matches the image. 違大夫之諸侯不反服 means 'one who left a grand master to serve a feudal lord does not return to mourn', but the English has 'a feudal lord left by a grand master', which reverses who left whom. The 妾祖姑 opening is clumsy (minor)."
+ },
+ {
+  "page_id": "6a3ceb6f4701a906f10d9851",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Ingredients and doses match the image (筋 is a manuscript form of 斤, correctly read as jin). Minor issues: 嚼生薑下 is rendered as if the pill is chewed rather than the ginger, the gram conversions disagree with each other (4 liang≈148 g but 1 jin≈500 g), and the gloss tags are badly nested."
+ },
+ {
+  "page_id": "6a3cec458642f0445b15b182",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "The table-of-contents entries match the image (律呂月明 ... 卷十四 州郡地理統屬 上下, 星辰分野). 州郡地理統屬 as 'Administrative Governance of Prefectures and Commanderies' drops 'geography/affiliation' (nuance only)."
+ }
+]

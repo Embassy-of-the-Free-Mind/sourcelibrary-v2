@@ -13,7 +13,7 @@ import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId } from 'mongodb';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorSchema from '@/components/seo/AuthorSchema';
-import { authorThesaurusReadpathEnabled, resolveAuthorSlugByName, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
+import { authorThesaurusReadpathEnabled, findAuthorByReorderedSlug, resolveAuthorSlugByName, resolveCanonicalAuthor } from '@/lib/author-thesaurus';
 import { classifyNonPersonAuthor, type NonPersonAuthor } from '@/lib/non-person-author';
 import { isPublishedEntity, type EntityPublishFields } from '@/lib/entity-publish';
 import { isArtworkRecord } from '@/lib/artwork-record';
@@ -340,7 +340,11 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     }
   }
   if (!data) data = await loadAuthorData(db, name);
-  if (!data) notFound();
+  if (!data) {
+    const reordered = await findAuthorByReorderedSlug(db, name);
+    if (reordered) redirect(`/author/${reordered}`);
+    notFound();
+  }
 
   const { authorName, entity, works, artworks } = data;
 

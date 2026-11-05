@@ -25,6 +25,7 @@ import { isInterior, lastPageNumber } from '../../batch/cli-ocr-lane.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { bodyCharCount } from '../../lib/paddle-print-lane.mjs';
 import { evidenceSources } from '../router-confirm/confirm.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const EVAL = path.resolve(HERE, '..');
@@ -39,6 +40,12 @@ const MIN_HAN = 100;
 const SIKU_HOLDS = /^(paddle-zh-5600-ocr-only|paddle-zh-6388-ocr-only|paddle-zh-6388-excluded|gpu-backlog-5660)$/;
 const isSiku = (b) => SIKU_HOLDS.test(String(b.hold?.reason ?? '')) || /·卷|\(vol \d+\)/.test(String(b.title || ''));
 const STRATUM = arg('stratum', 'print');
+// zh-siku-route-matrix-7263 set B: --not-held drops every book with a hold or status held; --exclude-plan=PLAN drops its books;
+// --exclude-title=REGEX drops titles (the 佩文韻府 family); --kanripo=CACHEDIR keeps only pages whose stored text aligns to the
+// book's Kanripo WYG leaf at the #5568 rule (Dice >= 0.6) until --kr-min pages are drawn, then takes any.
+const NOT_HELD_ONLY = process.argv.includes('--not-held'), EX_TITLE = arg('exclude-title') && new RegExp(arg('exclude-title'));
+const EX_BOOKS = new Set(arg('exclude-plan') ? JSON.parse(fs.readFileSync(arg('exclude-plan'), 'utf8')).selected.map((x) => x.book_id) : []);
+const KR_DIR = arg('kanripo') && path.resolve(arg('kanripo')), KR_MIN = Number(arg('kr-min', N));
 const sha = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 
 // The judged evidence on Chinese: every source a Chinese cell of rules.json cites, the #7866 draw, the router's evidence
@@ -59,7 +66,8 @@ function evidenceIds() {
 
 const frame = JSON.parse(fs.readFileSync(arg('frame'), 'utf8'));
 const printPages = (b) => b.counts.filter((x) => x.cls !== 'handwritten' && !x.human).reduce((t, x) => t + x.n, 0);
-const elig = frame.rows.filter((b) => printPages(b) > 0 && !REPAIR_HOLD.test(String(b.hold?.reason ?? '')) && isSiku(b) === (STRATUM === 'siku')).sort((a, b) => a.book_id.localeCompare(b.book_id));
+const elig = frame.rows.filter((b) => printPages(b) > 0 && !REPAIR_HOLD.test(String(b.hold?.reason ?? '')) && isSiku(b) === (STRATUM === 'siku')
+  && !(NOT_HELD_ONLY && (b.hold || b.held || b.status === 'held')) && !(EX_TITLE && EX_TITLE.test(String(b.title || ''))) && !EX_BOOKS.has(b.book_id)).sort((a, b) => a.book_id.localeCompare(b.book_id));
 const rnd = makeRng(SEED);
 const order = elig.map((b) => ({ b, key: -Math.log(1 - rnd()) / printPages(b) })).sort((x, y) => x.key - y.key).map((x) => x.b);
 const ev = evidenceIds();
@@ -67,10 +75,23 @@ console.log(`frame books ${frame.rows.length}; print-eligible ${elig.length}; ${
 
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const db = c.db('bookstore');
-for (const b of await db.collection('lane_judge_verdicts').distinct('book_id')) ev.add(b);
+// all origins: books to keep out of the draw; a test's books count as seen.
+for (const b of await db.collection('lane_judge_verdicts').distinct('book_id', verdictQuery({}, { tests: true }))) ev.add(b);
 const { SKIP_TRANSLATION_PAGE_TYPES } = await import('../../lib/translate-core.mjs');
 fs.mkdirSync(path.join(OUT, 'texts'), { recursive: true });
 const sel = [], skipped = {}; let tried = 0;
+let kr = null;
+if (KR_DIR) { process.env.KR_DIR = KR_DIR; process.argv.push(`--dir=${KR_DIR}`); kr = await import('../zh-skqs-5568-kanripo.mjs'); }
+async function krLeaf(bookId, text) {
+  const info = await db.collection('books').findOne({ id: bookId }, { projection: { work_id: 1 } });
+  const id = String(info?.work_id || '').replace(/^kr:/, '');
+  if (!/^KR/.test(id)) return { why: 'no kanripo work_id' };
+  const w = await kr.workInfo(id);
+  if (w.witness !== 'WYG') return { why: 'no WYG branch' };
+  const pages = await kr.pbPages(id, 'WYG', w.juan_files), m = kr.best(kr.fold(text), pages);
+  if (!m || m.dice < 0.6) return { why: 'no leaf at Dice 0.6', kr: id, dice: m?.dice ?? null };
+  return { kr: id, pb: pages[m.i].pb, dice: +m.dice.toFixed(3), runner_up: +m.second.toFixed(3), sha: w.witness_sha };
+}
 const skip = (w) => { skipped[w] = (skipped[w] ?? 0) + 1; };
 for (const b of order) {
   if (sel.length >= N) break;
@@ -90,12 +111,14 @@ for (const b of order) {
   const pick = owed[Math.floor(makeRng(SEED + parseInt(b.book_id.slice(-6), 16))() * owed.length)];
   const image = getPageSource(pick)?.replace(/\s+/g, '');
   if (!image) { skip('no image source'); continue; }
+  const leaf = kr ? await krLeaf(b.book_id, pick.ocr.data) : null;
+  if (leaf?.why && sel.length < KR_MIN) { skip(leaf.why); continue; }
   try { const r = await fetch(image); const nb = (await r.arrayBuffer()).byteLength; if (!r.ok || nb < 2000) { skip(`image ${r.ok ? 'under 2 KB' : `HTTP ${r.status}`}`); continue; } } catch { skip('image fetch failed'); continue; }
   const stored = pick.ocr.data, key = `V4-${pick.id}`;
   const info = await db.collection('books').findOne({ id: b.book_id }, { projection: { needs_splitting: 1, split_completed: 1, 'image_source.provider': 1 } });
   fs.writeFileSync(path.join(OUT, 'texts', `${key}.lite.txt`), stored);
   sel.push({ key, book_id: b.book_id, title: String(b.title || '').slice(0, 80), language: b.language, year: b.year, page_id: pick.id, page_number: pick.page_number, image, block: [pick.id], stored_model: pick.ocr.model, stored_sha: sha(stored).slice(0, 16), words: bodyCharCount(stored), han: bodyCharCount(stored),
-    script: scriptClass(stored, pick.script_type, null), owed: owed.length, hold: b.hold?.reason ?? null, status: b.status, provider: info?.image_source?.provider ?? null, needs_splitting: !!info?.needs_splitting, split_completed: !!info?.split_completed });
+    script: scriptClass(stored, pick.script_type, null), owed: owed.length, hold: b.hold?.reason ?? null, status: b.status, provider: info?.image_source?.provider ?? null, needs_splitting: !!info?.needs_splitting, split_completed: !!info?.split_completed, ...(leaf?.pb ? { kanripo: leaf } : {}) });
   console.log(`  ${sel.length}/${N} ${b.book_id} p.${pick.page_number} ${pick.ocr.model.slice(7, 20)} han=${sel.at(-1).han} hold=${b.hold?.reason ?? '-'} ${String(b.title || '').slice(0, 40)}`);
 }
 await c.close();

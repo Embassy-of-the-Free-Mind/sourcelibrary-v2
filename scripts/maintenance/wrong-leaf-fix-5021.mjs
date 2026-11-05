@@ -78,9 +78,16 @@ const ROOT = path.resolve(HERE, '..', '..');
 // leaves the #5274 screen found carrying invented English (a captioned woodcut given the entry the model expected).
 // Its queue, gate pick, judge and hold differ; the readers, the writer, the pools and the ledger are this file's.
 const PROFILE = String(process.argv.find((a) => a.startsWith('--issue='))?.split('=')[1] ?? '5021');
-const P5274 = PROFILE === '5274';
+// --issue=5274cb (context-bleed-find-fix-5274, Derek 2026-11-04 "find it and fix/redo"): the library-wide screen's
+// pages (a nearly empty leaf carrying a neighbour's English, scripts/eval/context-bleed-5274/) and the #5274 near-blank
+// list, queued with `enqueue --from=` and read --own-leaf: the page's own transcription only, no previous page's English,
+// no neighbour OCR (the continuity English is what the Feb–Mar lanes' model translated on these leaves), caption leaves
+// let past the no-body floor, and the caption line on leaves whose source is nearly empty. Judged by
+// scripts/eval/context-bleed-5274/judge.mjs (blind, scans of n-1, n, n+1). It shares 5274's withheld markers; no hold.
+const P5274CB = PROFILE === '5274cb';
+const P5274 = PROFILE === '5274' || P5274CB;
 const ISSUE = P5274 ? 5274 : 5021;
-const HOLD_REASON = P5274 ? 'near-blank-invented-5274' : 'leaf-shift-5021';
+const HOLD_REASON = P5274CB ? null : P5274 ? 'near-blank-invented-5274' : 'leaf-shift-5021';
 const NB_DIR = path.join(ROOT, 'scripts/eval/results/zh-near-blank-screen-5274');
 // The one prompt line the 5274 gate may add (--prompt-line), appended to each page's prompt via --instructions-file.
 const NB_PROMPT_LINE = 'This leaf may carry only a title, a caption or a few labels beside a picture. In the translation, the notes, the summary and the keywords alike, say only what is printed on this leaf or plainly visible in its picture: translate the printed words, describe the picture if there is one, and add no entry text, use, date, dynasty, source work, author or background that the leaf itself does not give.';
@@ -96,7 +103,7 @@ const VERDICT_FILES = [
 // Named by eye on #5021 / #5274 (2026-11-03): 農政全書 p.490-492 withheld, p.489's English stops halfway down the
 // leaf; 皇極經世書 p.63's OCR and English add four table columns (its OCR is Flash-Lite, so it is re-read first).
 const NAMED = [['6992cbd8018b80967354ba40', [489, 490, 491, 492]], ['6a0a4e9f7cd8e1e3d0f496d7', [63]]];
-const FINAL = new Set(['retranslated', 'ocr-refused', 'apply-refused', 'read-failed', 'not-translatable', 'skip-human', 'skip-changed', 'skip-gone', 'gate-refused']);
+const FINAL = new Set(['retranslated', 'ocr-refused', 'apply-refused', 'read-failed', 'not-translatable', 'skip-human', 'skip-changed', 'skip-gone', 'gate-refused', 'skip-opus-context', 'skip-ocr-neighbour']);
 /** The reader's own skip lines in a book's run.log ("  63 skipped: english-book") → Map(page_number → reason). */
 export function readerSkips(logText) {
   const m = new Map();
@@ -117,7 +124,7 @@ if (!OUT || !['build', 'enqueue', 'gate-pick', 'run', 'judge', 'gate-verdict', '
 }
 fs.mkdirSync(OUT, { recursive: true });
 const ENV_FILE = process.env.SL_ENV_FILE || path.join(ROOT, '.env.production.local');
-const JOB = process.env.JOB_NAME || (P5274 ? 'near-blank-fix-5274' : 'wrong-leaf-fix-5021');
+const JOB = process.env.JOB_NAME || (P5274CB ? 'context-bleed-find-fix-5274' : P5274 ? 'near-blank-fix-5274' : 'wrong-leaf-fix-5021');
 const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const gz = (f) => (f.endsWith('.gz') ? zlib.gunzipSync(fs.readFileSync(f)).toString() : fs.readFileSync(f, 'utf8'));
 const LEDGER = path.join(OUT, 'ledger.jsonl');
@@ -182,6 +189,13 @@ const WITHHELD_SRC = ['withheld-5021', 'named', 'near-blank-invented', 'ocr-drop
 // ocr_dropped pages the stale marker a re-OCR left (the English was withheld because its OCR changed under it).
 const OWN_MARKERS = P5274 ? ['invented_by_eye', 'stale_after_reocr'] : ['invented_by_eye'];
 const NB_SCREENED = '2026-11-03T13:00:00Z';
+// #5274cb: no page translated twice in a week — a page whose English is younger than this is left out (`since`)
+let ocrDupSet = null;
+const ocrDup = () => (ocrDupSet ??= new Set(readJsonl(path.join(OUT, 'ocr-overlap.jsonl')).filter((o) => o.ocr_dup).map((o) => o.page_id)));
+const CB_WEEK_AGO = new Date(Date.now() - 7 * 86400e3).toISOString();
+// #5274cb: the caption line, on leaves whose source is nearly empty (near_blank in the queue row). Stricter than
+// NB_PROMPT_LINE on the summary and keywords, where gate 2 of near-blank-fix-5274 found its four misses.
+const CB_CAPTION_LINE = 'This leaf carries little or no text: a title, a caption or a few labels, perhaps beside a picture. Translate only the words printed on this leaf. If there is a picture, describe only what is visible, in one short note. Add nothing else: no entry text, explanation, use, date, dynasty, source work, author or background, in the translation, the notes, the summary or the keywords. The summary is one sentence saying what is printed and shown on this leaf.';
 
 async function makeRows(want) {
   const byBook = new Map();
@@ -208,7 +222,7 @@ async function makeRows(want) {
       if (p.tw && !withheld) { left.other_withheld++; continue; }
       if (!withheld && !p.has_tr) { left.no_english++; continue; }
       const trAt = p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null;
-      if (!withheld && trAt && trAt >= FLAG_CUTOFF) { left.since++; continue; }
+      if (!withheld && trAt && trAt >= (P5274CB ? CB_WEEK_AGO : FLAG_CUTOFF)) { left.since++; continue; }
       const ocr = { ...p.ocr, data: p.no_text ? '<page-type>blank' : '' };
       // #5274 ocr_dropped: the OCR the screen saw left the leaf's text out, so it is re-read first whatever its model,
       // unless it was rewritten after the screen.
@@ -219,7 +233,7 @@ async function makeRows(want) {
         ocr_model: p.ocr?.model ?? null, ocr_first: ocrForce || uncheckedLite({ ocr }), ...(ocrForce && { ocr_force: true }), ...(w.family && { family: w.family }),
         language: bk.language, title: String(bk.title || '').slice(0, 90),
         lane_row: lane.row?.id ?? 'default', engine: lane.engine, channel: lane.channel ?? 'batch', reader: translateReader(lane),
-        reads: bk.human_read_count || 0, hold: bk.pipeline_auto?.hold?.reason ?? null,
+        reads: bk.human_read_count || 0, hold: bk.pipeline_auto?.hold?.reason ?? null, ...(w.near_blank && { near_blank: true }),
       });
     }
   }
@@ -257,7 +271,7 @@ async function enqueue() {
   for (const p of src.pages || src) {
     const k = `${p.book_id}:${p.page ?? p.page_number}`;
     if (have.has(k)) { already++; continue; }
-    want.set(k, { book_id: p.book_id, page: Number(p.page ?? p.page_number), src: ['confirmed'] });
+    want.set(k, { book_id: p.book_id, page: Number(p.page ?? p.page_number), src: ['confirmed', ...(p.src ? [].concat(p.src) : [])], ...(p.near_blank && { near_blank: true }) });
   }
   const { rows, left } = await makeRows(want);
   rankRows(rows);
@@ -397,6 +411,11 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
     if (!p) { out.push({ ...r, state: 'skip-gone' }); continue; }
     if (p.translation?.edited_by || p.translation?.source === 'manual') { out.push({ ...r, state: 'skip-human' }); continue; }
     const trAt = p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null;
+    // #5274cb: claude-translate.mjs (the Opus route, Pali) still sends the previous page's English; not read here, listed
+    // #5274cb: the page's OWN OCR is a neighbour's text (show-through, a wrong-leaf read; ocr-overlap.mjs): re-translating
+    // it gives the same wrong English, so it is listed for an OCR repair instead of read
+    if (P5274CB && ocrDup().has(r.page_id)) { out.push({ ...r, state: 'skip-ocr-neighbour', why: 'its OCR is a neighbour leaf\'s text (ocr-overlap.jsonl): needs an OCR re-read from the image, not a re-translation' }); continue; }
+    if (P5274CB && r.reader === 'opus') { out.push({ ...r, state: 'skip-opus-context', why: 'the Opus route sends neighbour context; not read by the own-leaf repair' }); continue; }
     if (r.state === 'served' && trAt !== r.tr_at) { out.push({ ...r, state: 'skip-changed', why: `English rewritten ${trAt} since the queue was built` }); continue; }
     if (r.state === 'withheld' && !p.translation_withheld) { out.push({ ...r, state: 'skip-changed', why: 'no longer withheld' }); continue; }
     work.push({ ...r, _p: p });
@@ -448,14 +467,21 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   if (opus && claudeBlocked()) return { quota: true, out, why: 'claude blocked' };
   // --prompt-line (#5274 gate, round 2): one line appended to each page's prompt, recorded in the read's meta.
   let instr = [];
-  if (has('prompt-line') && P5274) {
+  if (P5274CB) {
+    const nb = work.filter((r) => r.near_blank);
+    if (nb.length) {
+      const f = path.join(dir, 'instructions.json');
+      fs.writeFileSync(f, JSON.stringify(Object.fromEntries(nb.map((r) => [r.page_id, CB_CAPTION_LINE]))));
+      instr = [`--instructions-file=${f}`];
+    }
+  } else if (has('prompt-line') && P5274) {
     const f = path.join(dir, 'instructions.json');
     fs.writeFileSync(f, JSON.stringify(Object.fromEntries(work.map((r) => [r.page_id, NB_PROMPT_LINE]))));
     instr = [`--instructions-file=${f}`];
   }
   const readArgs = opus
     ? [path.join(ROOT, 'scripts/batch/claude-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, '--model=opus', '--per-call=1', `--job=${JOB}`]
-    : [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, `--model=${AGY_MODEL}`, ...instr, ...(retried.length ? ['--fresh'] : [])];
+    : [path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'read', `--page-ids-file=${ids}`, `--out=${trDir}`, `--model=${AGY_MODEL}`, ...instr, ...(P5274CB ? ['--own-leaf', '--caption-leaves'] : []), ...(retried.length ? ['--fresh'] : [])];
   const rc = await spawnP(readArgs, { env, log });
   if (rc === 3) return { quota: true, out };
   if (rc === 2) { for (const r of work) out.push({ ...r, _p: undefined, state: 'gate-refused' }); return { out }; }
@@ -467,7 +493,9 @@ async function doBook(rows, { applyOcr, apply, home, retryIds = new Set() }) {
   // 3. Write through translate-core's door, then lift the withheld marker on what it wrote.
   const t0 = new Date();
   const reader = opus ? 'Opus, claude -p' : `agy ${AGY_MODEL}`;
-  const why = P5274
+  const why = P5274CB
+    ? `#5274 context-bleed repair: this leaf's English was another leaf's text (the previous page's English was sent as context and translated in its place) or composed for the leaf; re-translated one page a call from its own transcription only, no neighbouring text (${reader}${instr.length ? ', with the caption line' : ''})`
+    : P5274
     ? `#5274 near-blank repair: this leaf's English carried text that is not on the leaf (Opus screen with the image; withheld by eye) or its OCR dropped the leaf's text; re-translated one page a call from its own transcription (${reader}${instr.length ? ', with the caption-only prompt line' : ''})`
     : `#5021 wrong-leaf repair: this page served another leaf's English (Flash-Lite screen flag or Opus with the scans); re-translated one page a call from its own transcription (${reader})`;
   await spawnP([path.join(ROOT, 'scripts/batch/cli-translate.mjs'), 'apply', `--out=${trDir}`, `--reason=${why}`, '--apply'], { env, log });
@@ -558,7 +586,7 @@ async function run() {
   if (['all', 'ids'].includes(frame) && apply && has('notify')) {
     const msg = `${JOB} run finished: ${JSON.stringify(p.by_state)}${rel ? `; holds released ${rel.released.length} of ${rel.held}` : ''}. Progress: ${path.join(OUT, 'progress.json')}`;
     spawnSync('curl', ['-s', '-H', `Title: #${ISSUE} ${P5274 ? 'near-blank' : 'wrong-leaf'} re-translation done`, '-d', msg, 'https://ntfy.sh/sourcelibrary-uptime']);
-    spawnSync('gh', ['issue', 'comment', String(ISSUE), '--body', `**${JOB} runner finished** (${p.finished_at}, \`--issue=${ISSUE}\`).\n\n\`\`\`\n${JSON.stringify(p.by_state, null, 1)}\n\`\`\`\nState key: \`withheld|served : retranslated | ocr-refused (the Flash-Lite OCR could not be re-read under the guards; English kept or still withheld) | apply-refused | read-failed | skip-*\`. ${rel ? `\n\nHolds \`${HOLD_REASON}\`: ${rel.released.length} of ${rel.held} released; ${rel.kept_queue} kept with queued pages, ${rel.kept_withheld} kept with a withheld page.` : ''}\nLedger: \`${LEDGER}\`. Progress: \`node --env-file=.env.production.local scripts/maintenance/wrong-leaf-fix-5021.mjs status --issue=${ISSUE} --out=${OUT}\``], { cwd: ROOT });
+    spawnSync('gh', ['issue', 'comment', String(ISSUE), '--body', `**${JOB} runner finished** (${p.finished_at}, \`--issue=${ISSUE}\`).\n\n\`\`\`\n${JSON.stringify(p.by_state, null, 1)}\n\`\`\`\nState key: \`withheld|served : retranslated | ocr-refused (the Flash-Lite OCR could not be re-read under the guards; English kept or still withheld) | apply-refused | read-failed | skip-*\`. ${rel ? `\n\nHolds \`${HOLD_REASON}\`: ${rel.released.length} of ${rel.held} released; ${rel.kept_queue} kept with queued pages, ${rel.kept_withheld} kept with a withheld page.` : ''}\nLedger: \`${LEDGER}\`. Progress: \`node --env-file=.env.production.local scripts/maintenance/wrong-leaf-fix-5021.mjs status --issue=${PROFILE} --out=${OUT}\``], { cwd: ROOT });
   }
 }
 
@@ -708,6 +736,7 @@ async function release() {
   // (a served ocr_dropped page the OCR re-read refused keeps its English and does not hold the book; a withheld page
   // that is not re-translated is caught by the withheld count below).
   const open = new Set(q.filter((r) => { const s = led.get(r.page_id)?.state; return P5274 ? !FINAL.has(s) : s !== 'retranslated' && !String(s || '').startsWith('skip-'); }).map((r) => r.book_id));
+  if (!HOLD_REASON) { console.log('this profile holds no book: nothing to release'); return null; }
   const held = await db.collection('books').find({ 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1, title: 1 } }).toArray();
   const out = { held: held.length, released: [], kept_queue: 0, kept_withheld: 0 };
   for (const b of held) {

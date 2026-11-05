@@ -5,34 +5,22 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Search, Image as ImageIcon, BookOpen, X,
-  SlidersHorizontal, Loader2, ImagePlus, AlertCircle, Camera
+  Image as ImageIcon, BookOpen, X, Loader2, ImagePlus, AlertCircle,
 } from 'lucide-react';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import LikeButton from '@/components/ui/LikeButton';
-import { canLoadMore } from '@/lib/gallery-pagination';
+import CatalogPagination from '@/components/collections/CatalogPagination';
 import { BookLoader } from '@/components/ui/BookLoader';
-import FeaturedCollections from '@/components/gallery/FeaturedCollections';
+import GalleryControls, { type GalleryUrlState } from '@/components/gallery/GalleryControls';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
-import { SUBJECT_CATEGORIES, topicLabel } from '@/lib/image-subjects';
-import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
-import { RANDOM_SEEDS } from '@/lib/gallery-sort';
 import {
   gallery,
-  books,
   type GalleryResponse,
   type GalleryItem,
   type BookInfo,
   type BBox,
 } from '@/lib/api-client';
-
-interface BookSearchResult {
-  id: string;
-  title: string;
-  display_title?: string;
-  author?: string;
-}
 
 interface BookCollectionOption {
   slug: string;
@@ -43,15 +31,6 @@ interface BookCollectionOption {
 
 interface GalleryClientProps {
   initialData: GalleryResponse;
-  initialCollections?: Array<{
-    id: string;
-    slug: string;
-    title: string;
-    description: string;
-    imageCount: number;
-    featured: boolean;
-    coverImage: { url: string; description: string } | null;
-  }>;
   bookCollections?: BookCollectionOption[];
   /** bookId the SSR payload was pre-filtered on (if any). Used to skip the initial client refetch when the URL filter already matches the SSR result. */
   initialBookId?: string;
@@ -87,7 +66,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export default function GalleryClient({ initialData, initialCollections, bookCollections = [], initialBookId = '' }: GalleryClientProps) {
+export default function GalleryClient({ initialData, bookCollections = [], initialBookId = '' }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -121,24 +100,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentOffset, setCurrentOffset] = useState(initialData.items.length);
-  const [showFilters, setShowFilters] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   // Monotonic id of the newest filter fetch — see the fetch effect below.
   const fetchSeqRef = useRef(0);
-
-  // Search state
-  const [bookSearchQuery, setBookSearchQuery] = useState('');
-  const [bookSearchResults, setBookSearchResults] = useState<BookSearchResult[]>([]);
-  const [bookSearchLoading, setBookSearchLoading] = useState(false);
-  const [showBookDropdown, setShowBookDropdown] = useState(false);
-  const bookSearchRef = useRef<HTMLDivElement>(null);
-
-  // Image search: `searchInput` is the typed text; the committed query lives in
-  // the URL (`q`) and only updates on Enter / the search button — no live search.
-  const [searchInput, setSearchInput] = useState(searchParams.get('q') || '');
 
   // Quality toggle state
   const qualityParam = searchParams.get('minQuality');
@@ -173,7 +138,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const seedParam = searchParams.get('seed');
   const seed = seedParam !== null ? parseInt(seedParam, 10) : undefined;
 
-  const limit = 48;
+  // Pages of 100 (about twenty rows of five), turned with the catalogue's own
+  // pagination; ?page= keeps a page shareable and the back button working.
+  const limit = 100;
+  const pageParam = parseInt(searchParams.get('page') || '1', 10);
+  const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
 
   // Update URL params
   const updateParams = useCallback((updates: Record<string, string>) => {
@@ -185,9 +154,26 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         params.delete(key);
       }
     });
+    // Any change but a page turn goes back to page 1.
     params.delete('offset');
+    params.delete('page');
     router.push(`${tenantPrefix}/gallery?${params.toString()}`);
   }, [searchParams, router, tenantPrefix]);
+
+  // Everything the controls read, from the URL.
+  const urlState: GalleryUrlState = {
+    q: imageSearchQuery, topic: topicFilter, subject: subjectFilter, type: typeFilter, library: libraryFilter,
+    collection: collectionFilter, bookId, yearStart, yearEnd, quality: currentQualityLevel as GalleryUrlState['quality'],
+    source: sourceFilter, sort: sortParam,
+  };
+  // A fresh search or ask replaces every gallery parameter with its own.
+  const replaceParams = useCallback((next: Record<string, string>) => {
+    const params = new URLSearchParams();
+    for (const [k, v] of Object.entries(next)) if (v) params.set(k, v);
+    if (next.sort === 'random' && seedParam) params.set('seed', seedParam);
+    const qs = params.toString();
+    router.push(`${tenantPrefix}/gallery${qs ? `?${qs}` : ''}`);
+  }, [router, tenantPrefix, seedParam]);
 
   // Fetch gallery data when filters change (resets items).
   // Skip on initial load when the SSR payload already matches the URL: no URL
@@ -198,7 +184,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     // The SSR payload is illustration-only; for the merged default ('all') or
     // artwork-only we must fetch on mount to pull artworks in. Only skip when the
     // request matches what the server already rendered (illustration-only, no filters).
-    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration') {
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration' && page === 1) {
       setIsInitialLoad(false);
       return;
     }
@@ -209,7 +195,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     // alongside leftover items and a live "Load more" from the old query
     // (#3605) — two inconsistent pieces of state in one view.
     setAllItems([]);
-    setCurrentOffset(0);
 
     // Only the newest request may write state. Two fetches can overlap when
     // filters change quickly, and an older one resolving last used to restore
@@ -224,7 +209,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
       try {
         const json = await gallery.list({
           limit,
-          offset: 0,
+          offset: (page - 1) * limit,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
           maxPerBook,
@@ -246,14 +231,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         const firstPage = !sortParam && !imageSearchQuery ? shuffle([...json.items]) : json.items;
         setData({ ...json, items: firstPage });
         setAllItems(firstPage);
-        // Paginate by page boundary, NOT cumulative item count. The merged
-        // browse derives its page from `floor(offset / limit)`, so the next
-        // offset must be a clean multiple of `limit`. Tracking the running
-        // item count desynced whenever a page returned < limit items (e.g. a
-        // type filter where artworks don't contribute → 36/page), which made
-        // `floor(36/limit)` re-fetch page 0 → Load More showed duplicates or
-        // appeared to do nothing.
-        setCurrentOffset(limit);
       } catch (e) {
         if (requestId !== fetchSeqRef.current) return;
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
@@ -264,140 +241,24 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter, sortParam, seed]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter, sortParam, seed, page]);
 
-  // Load more handler — appends next batch to accumulated items
-  const handleLoadMore = useCallback(async () => {
-    // Guard on the in-flight flag only. The old `|| !data` early-out returned
-    // silently and issued no request at all, which the reader experiences as a
-    // dead button (#3605); `data` is not an input to the request anyway.
-    if (loadingMore) return;
-    setLoadingMore(true);
-    try {
-      const json = await gallery.list({
-        limit,
-        offset: currentOffset,
-        bookId: bookId || undefined,
-        collection: collectionFilter || undefined,
-        maxPerBook,
-        library: libraryFilter || undefined,
-        query: imageSearchQuery || undefined,
-        type: typeFilter || undefined,
-        subject: subjectFilter || undefined,
-        topic: topicFilter || undefined,
-        yearFrom: yearStart ? parseInt(yearStart) : undefined,
-        yearTo: yearEnd ? parseInt(yearEnd) : undefined,
-        minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
-        source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
-        sort: sortParam || undefined,
-        seed,
-      });
-      // Advance by a full page (see initial-fetch note). Dedup on append is a
-      // belt-and-suspenders guard against any residual overlap (e.g. the
-      // search path prepends one-off "lead" artworks on page 0).
-      setAllItems(prev => {
-        const seen = new Set(prev.map(it => `${it.pageId}-${it.detectionIndex}`));
-        const fresh = json.items.filter((it: GalleryItem) => !seen.has(`${it.pageId}-${it.detectionIndex}`));
-        return [...prev, ...fresh];
-      });
-      setCurrentOffset(prev => prev + limit);
-      // Carry the response's own total AND hasMore forward. Trusting only the
-      // stale total left the button live after a page that returned nothing,
-      // so it kept fetching empty pages and appearing dead.
-      setData(prev => prev
-        ? { ...prev, total: json.total ?? prev.total, hasMore: json.hasMore }
-        : json);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load more images');
-    } finally {
-      setLoadingMore(false);
-    }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, limit, sourceFilter, sortParam, seed]);
-
-  // Book search with debounce
-  useEffect(() => {
-    if (!bookSearchQuery.trim()) {
-      setBookSearchResults([]);
-      return;
-    }
-
-    const timer = setTimeout(async () => {
-      setBookSearchLoading(true);
-      try {
-        const data = await books.search(bookSearchQuery, { limit: '10' });
-        setBookSearchResults(data.books.map(book => ({
-          id: book.id,
-          title: book.title,
-          display_title: book.display_title,
-          author: book.author
-        })));
-      } catch {
-        // Ignore search errors
-      } finally {
-        setBookSearchLoading(false);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [bookSearchQuery]);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (bookSearchRef.current && !bookSearchRef.current.contains(e.target as Node)) {
-        setShowBookDropdown(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Prefer the server's reliable hasMore flag; fall back to total-vs-offset,
-  // and never offer to extend an empty result set — a "Load more" button
-  // rendered next to "No images found" is never right (#3605).
-  const hasMore = canLoadMore(data, allItems.length, currentOffset);
-
-  const handleBookSelect = (book: BookSearchResult) => {
-    setBookSearchQuery('');
-    setShowBookDropdown(false);
-    updateParams({ bookId: book.id });
-  };
-
-  const clearBookFilter = () => {
-    updateParams({ bookId: '' });
-  };
-
-  const handleImageSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateParams({ q: searchInput.trim() });
-  };
-
-  // Keep the input in sync with the committed query (back/forward, clearing a
-  // chip, etc.) — only when `q` actually changes, never while typing.
-  useEffect(() => {
-    setSearchInput(imageSearchQuery);
-  }, [imageSearchQuery]);
-
-  const handleQualityChange = (level: string) => {
-    if (level === 'archive') {
-      updateParams({ includeArchive: 'true', minQuality: '' });
-    } else if (level === 'exhibition') {
-      updateParams({ minQuality: '0.9', includeArchive: '' });
-    } else {
-      updateParams({ minQuality: '', includeArchive: '' });
-    }
-  };
+  // Pages from the response: the server's hasMore is authoritative (the plates-only
+  // browse reports an estimated total), so the last page is the one that says no more.
+  const totalPages = data?.hasMore === false
+    ? page
+    : Math.max(page + (data?.hasMore ? 1 : 0), Math.ceil((data?.total ?? 0) / limit));
+  const goToPage = useCallback((n: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (n > 1) params.set('page', String(n)); else params.delete('page');
+    const qs = params.toString();
+    router.push(`${tenantPrefix}/gallery${qs ? `?${qs}` : ''}`, { scroll: false });
+    // A jump, not a smooth scroll: Safari stops a smooth scroll when the grid swaps
+    // to the next page underneath it, and left the reader mid-page (2026-10-18).
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [searchParams, router, tenantPrefix]);
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery;
-  // Mirrors /api/gallery's isPlainBrowse: standalone artworks are only mixed in
-  // when no book/collection/library/subject/search scope is set. A scoped view
-  // is book plates only, so saying "plates & standalone artworks" there was wrong.
-  const artworksIncluded = !bookId && !collectionFilter && !libraryFilter && !subjectFilter && !topicFilter && !imageSearchQuery
-    && sourceFilter !== 'illustration';
-  const resultsKind = !artworksIncluded ? 'book plates'
-    : sourceFilter === 'artwork' ? 'standalone artworks'
-    : 'plates & standalone artworks';
-  const showCollections = !hasFilters;
 
   // Every filter that narrows the query — including the ones `hasFilters`
   // ignores, since any of them can be the reason a view came back empty
@@ -412,350 +273,17 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6 overflow-x-hidden animate-fade-in-up">
-        {/* Search & Filter Bar */}
-        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
-          {/* Image Search */}
-          <form onSubmit={handleImageSearch} className="flex-1 min-w-0 sm:min-w-[200px] max-w-md relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-            <input
-              type="text"
-              placeholder="Search images…"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full pl-9 pr-[5.25rem] py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
-            />
-            <button
-              type="submit"
-              className="absolute right-0 top-0 bottom-0 px-4 text-sm font-medium bg-accent-rust text-white rounded-r-lg hover:bg-accent-rust/90 transition-colors"
-            >
-              Search
-            </button>
-          </form>
-
-          {/* Book Search */}
-          <div ref={bookSearchRef} className="relative min-w-0 sm:min-w-[200px] max-w-sm flex-1">
-            <BookOpen className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-            <input
-              type="text"
-              placeholder="Filter by book..."
-              value={bookSearchQuery}
-              onChange={(e) => {
-                setBookSearchQuery(e.target.value);
-                setShowBookDropdown(true);
-              }}
-              onFocus={() => bookSearchResults.length > 0 && setShowBookDropdown(true)}
-              className="w-full pl-9 pr-3 py-2 text-sm border border-stone-300 rounded-lg bg-white focus:ring-1 focus:ring-accent-rust focus:border-accent-rust"
-            />
-            {showBookDropdown && bookSearchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-stone-200 z-30 max-h-64 overflow-y-auto">
-                {bookSearchResults.map((book) => (
-                  <button
-                    key={book.id}
-                    onClick={() => handleBookSelect(book)}
-                    className="w-full text-left px-3 py-2 hover:bg-stone-50 text-sm border-b border-stone-100 last:border-0"
-                  >
-                    <span className="font-medium text-stone-800">{book.display_title || book.title}</span>
-                    {book.author && <span className="text-stone-500 ml-1">· <AuthorName author={book.author} /></span>}
-                  </button>
-                ))}
-              </div>
-            )}
-            {bookSearchLoading && (
-              <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
-            )}
-          </div>
-
-          {/* Sort. 16px text so iOS doesn't zoom on focus. */}
-          <label className="sr-only" htmlFor="gallery-sort">Sort</label>
-          <select
-            id="gallery-sort"
-            value={sortParam}
-            onChange={(e) => {
-              const next = e.target.value;
-              // A fresh shuffle each time Random is chosen; the seed stays in the
-              // URL so the same shuffle survives paging and can be shared.
-              updateParams({
-                sort: next,
-                seed: next === 'random' ? String(Math.floor(Math.random() * RANDOM_SEEDS)) : '',
-              });
-            }}
-            className="px-3 py-2 text-base rounded-lg border bg-white text-stone-600 border-stone-300 hover:bg-stone-50"
-          >
-            <option value="">{imageSearchQuery ? 'Best match' : 'Best quality'}</option>
-            <option value="oldest">Oldest first</option>
-            <option value="newest">Newest first</option>
-            <option value="book">By book</option>
-            <option value="recent">Recently added</option>
-            <option value="random">Random</option>
-          </select>
-
-          {/* Filters Toggle */}
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${showFilters ? 'bg-accent-rust text-white border-accent-rust' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
-              }`}
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-            Filters
-          </button>
-
-          {/* Entry point to /identify — the gallery is where someone who has
-              just seen one of these images in the wild lands first (#4232).
-              Hidden on tenant hosts: /identify searches the whole corpus and
-              is on the global-only list (tenant-global-paths.ts). */}
-          {!isTenantHost && (
-            <Link
-              href="/identify"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border bg-white text-stone-600 border-stone-300 hover:bg-stone-50 transition-colors whitespace-nowrap"
-              title="Photograph an artwork to find it in the library"
-            >
-              <Camera className="w-4 h-4" />
-              <span className="hidden sm:inline">Seen it somewhere?</span>
-              <span className="sm:hidden">Identify a photo</span>
-            </Link>
-          )}
-        </div>
-
-        {/* Active Filters / Book Info */}
-        {(data?.bookInfo || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            {data?.bookInfo && (
-              <>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-gold/15 text-accent-gold-dark rounded-full">
-                  <BookOpen className="w-4 h-4" />
-                  <span className="text-sm font-medium">{data.bookInfo.title}</span>
-                  {data.bookInfo.year && <span className="text-xs">({data.bookInfo.year})</span>}
-                  <button onClick={clearBookFilter} className="ml-1 hover:text-accent-rust" title="Clear filter">
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-                <button
-                  onClick={clearBookFilter}
-                  className="text-sm text-stone-500 hover:text-stone-700 underline underline-offset-2 transition-colors"
-                >
-                  View all images
-                </button>
-              </>
-            )}
-            {collectionFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-gold/15 text-accent-gold-dark rounded-full text-sm">
-                Collection: {collectionFilter.replace(/-/g, ' ')}
-                <button onClick={() => updateParams({ collection: '' })} className="hover:text-accent-gold-dark">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {libraryFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Library: {getPartnerByProvider(libraryFilter)?.name || libraryFilter}
-                <button onClick={() => updateParams({ library: '' })} className="hover:text-stone-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {typeFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Type: {typeFilter}
-                <button onClick={() => updateParams({ type: '' })} className="hover:text-stone-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {topicFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Topic: {topicLabel(topicFilter) ?? topicFilter}
-                <button onClick={() => updateParams({ topic: '' })} className="hover:text-stone-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {subjectFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Subject: {subjectFilter}
-                <button onClick={() => updateParams({ subject: '' })} className="hover:text-stone-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {imageSearchQuery && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm">
-                Search: &quot;{imageSearchQuery}&quot;
-                <button onClick={() => { setSearchInput(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {currentQualityLevel !== 'gallery' && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-100 text-purple-800 rounded-full text-sm">
-                {currentQualityLevel === 'exhibition' ? 'Best only' : 'All images'}
-                <button onClick={() => handleQualityChange('gallery')} className="hover:text-purple-600">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Filter Panel */}
-        {showFilters && data?.filters && (
-          <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border border-stone-200">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {/* Source: book plates vs standalone artworks */}
-              <div>
-                <label className="block text-xs font-medium text-stone-500 mb-2">Show</label>
-                <div className="flex flex-wrap gap-1">
-                  {[
-                    { key: 'all', label: 'Everything' },
-                    { key: 'illustration', label: 'Plates' },
-                    { key: 'artwork', label: 'Artworks' },
-                  ].map(({ key, label }) => (
-                    <button
-                      key={key}
-                      onClick={() => updateParams({ source: key === 'all' ? '' : key })}
-                      className={`px-2 py-1 text-xs rounded-full transition-colors ${sourceFilter === key
-                          ? 'bg-accent-rust text-white'
-                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                        }`}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quality Toggle */}
-              <div>
-                <label className="block text-xs font-medium text-stone-500 mb-2">Image Quality</label>
-                <div className="flex flex-wrap gap-1">
-                  {[
-                    { key: 'gallery', label: 'Gallery quality' },
-                    { key: 'exhibition', label: 'Best only' },
-                    { key: 'archive', label: 'Show all' },
-                  ].map(({ key, label }) => (
-                    <button
-                      key={key}
-                      onClick={() => handleQualityChange(key)}
-                      className={`px-2 py-1 text-xs rounded-full transition-colors ${currentQualityLevel === key
-                          ? 'bg-accent-rust text-white'
-                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                        }`}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Library */}
-              <div>
-                <label className="block text-xs font-medium text-stone-500 mb-2">Library</label>
-                <select
-                  value={libraryFilter}
-                  onChange={(e) => updateParams({ library: e.target.value })}
-                  className="w-full px-2 py-1 text-base border border-stone-300 rounded"
-                >
-                  <option value="">All libraries</option>
-                  {/* Full names: acronyms like BPH or NDL mean nothing to most readers. */}
-                  {Object.values(LIBRARY_PARTNERS)
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((p) => (
-                      <option key={p.providerKey} value={p.providerKey}>{p.name}</option>
-                    ))}
-                </select>
-              </div>
-
-              {/* Collection */}
-              {bookCollections.length > 0 && (
-                <div>
-                  <label className="block text-xs font-medium text-stone-500 mb-2">Collection</label>
-                  <select
-                    value={collectionFilter}
-                    onChange={(e) => updateParams({ collection: e.target.value })}
-                    className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
-                  >
-                    <option value="">All collections</option>
-                    {bookCollections.filter(c => !c.parent).map((c) => (
-                      <option key={c.slug} value={c.slug}>
-                        {c.name} ({c.book_count})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              {/* Image Type */}
-              <div>
-                <label className="block text-xs font-medium text-stone-500 mb-2">Image Type</label>
-                <select
-                  value={typeFilter}
-                  onChange={(e) => updateParams({ type: e.target.value })}
-                  className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
-                >
-                  <option value="">All types</option>
-                  {data.filters.types.map((type) => (
-                    <option key={type} value={type}>
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Subject — the browse vocabulary (#4856), not the raw extractor strings,
-                  which listed thousands of near-duplicates alphabetically. Choosing a
-                  topic clears any raw ?subject= so the two filters never stack. */}
-              <div>
-                <label className="block text-xs font-medium text-stone-500 mb-2">Subject</label>
-                <select
-                  value={topicFilter}
-                  onChange={(e) => updateParams({ topic: e.target.value, subject: '' })}
-                  className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
-                >
-                  <option value="">All subjects</option>
-                  {SUBJECT_CATEGORIES.map((cat) => (
-                    <optgroup key={cat.id} label={cat.label}>
-                      <option value={cat.id}>All {cat.label.toLowerCase()}</option>
-                      {cat.terms.map((t) => (
-                        <option key={t.id} value={t.id}>{t.label}</option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </select>
-              </div>
-
-              {/* Year Range */}
-              {data.filters.yearRange.minYear && (
-                <div>
-                  <label className="block text-xs font-medium text-stone-500 mb-2">
-                    Year Range ({data.filters.yearRange.minYear} - {data.filters.yearRange.maxYear})
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      placeholder="From"
-                      value={yearStart}
-                      onChange={(e) => updateParams({ yearStart: e.target.value })}
-                      className="w-20 px-2 py-1 text-sm border border-stone-300 rounded"
-                    />
-                    <span className="text-stone-400">-</span>
-                    <input
-                      type="number"
-                      placeholder="To"
-                      value={yearEnd}
-                      onChange={(e) => updateParams({ yearEnd: e.target.value })}
-                      className="w-20 px-2 py-1 text-sm border border-stone-300 rounded"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Featured Collections */}
-        {showCollections && (
-          <FeaturedCollections initialCollections={initialCollections} />
-        )}
+      <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-4 md:pt-[26px] pb-6 overflow-x-hidden animate-fade-in-up">
+        <GalleryControls
+          state={urlState}
+          replace={replaceParams}
+          update={updateParams}
+          data={data}
+          loading={loading}
+          bookCollections={bookCollections}
+          isTenantHost={isTenantHost}
+        />
+        <div className="mt-6" />
 
         {/* Loading State */}
         {loading && (
@@ -802,37 +330,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         {/* Image Grid */}
         {!loading && data && allItems.length > 0 && (
           <>
-            <div className="mb-4">
-              <h2 className="text-2xl font-serif text-stone-800 mb-1">{hasFilters ? 'Results' : 'Browse Images'}</h2>
-              <p className="text-stone-500 text-base">
-                {data.total > 0
-                  ? `${data.total.toLocaleString('en-US')} ${hasFilters ? 'results' : 'images'} · ${resultsKind}`
-                  : resultsKind.charAt(0).toUpperCase() + resultsKind.slice(1)}
-              </p>
-            </div>
             {/* Uneven masonry cropped by a fixed-height container + fade mask (handled inside). */}
-            <GalleryMasonry items={allItems} hasMore={hasMore} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
-            <div className="mt-2" />
-
-            {/* Load More */}
-            {hasMore && (
-              <div className="mt-8 text-center">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={loadingMore}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full text-sm font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors shadow-sm disabled:opacity-50"
-                >
-                  {loadingMore ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )}
-                  {loadingMore ? 'Loading…' : 'Load more'}
-                </button>
-              </div>
-            )}
+            {/* Every image on the page is shown: no crop and fade, since the next page starts after the last one. */}
+            <GalleryMasonry items={allItems} hasMore={false} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
+            <CatalogPagination currentPage={page} totalPages={totalPages} onPageChange={goToPage} variant="search" />
           </>
         )}
       </div>
@@ -860,10 +361,19 @@ function GalleryMasonry({ items, hasMore, tenantPrefix, collectionScope }: { ite
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Natural round-robin — deliberately NOT height-balanced.
+  // Each tile goes to the shortest column so far (heights from aspect ratios,
+  // no DOM measurement), so a page ends nearly level. Round-robin used to be
+  // deliberate, for the old Load more's crop-and-fade; with pages, every tile is
+  // shown and a ragged bottom left one column hanging far below the rest.
   const columns = useMemo(() => {
     const colArr: GalleryItem[][] = Array.from({ length: cols }, () => []);
-    items.forEach((item, i) => colArr[i % cols].push(item));
+    const heights = Array.from({ length: cols }, () => 0);
+    for (const item of items) {
+      let c = 0;
+      for (let i = 1; i < cols; i++) if (heights[i] < heights[c] - 0.01) c = i;
+      colArr[c].push(item);
+      heights[c] += 1 / (item.aspect && item.aspect > 0 ? item.aspect : 0.75) + 0.06;
+    }
     return colArr;
   }, [items, cols]);
 

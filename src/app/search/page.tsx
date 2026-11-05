@@ -15,10 +15,12 @@ import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { SEARCH_STRINGS, EXAMPLE_QUERIES, type SearchStrings } from '@/lib/search-i18n';
 import { artworkTypeLabel } from '@/lib/artwork-record';
-import { localizedCollection } from '@/lib/localized';
+import { displayPublished } from '@/lib/publication-date';
+import { hasLocalizedCollectionName, localizedCollection, localizedTitle } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed, useRoomResultHref } from '@/lib/EmbedContext';
 import { useIsEmbedded, useIsTenantHost } from '@/hooks/useEmbedContext';
+import { catalogueHref } from '@/lib/tenant-global-paths';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -350,10 +352,14 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
     collectionsApi.list().then((colData) => {
       if (colData.collections) {
-        setCollectionsList(colData.collections);
+        // An original-text site lists a shelf once it has a name in that language
+        // (#8035), so a reader of /zh never gets a pill in English.
+        setCollectionsList(readsOriginal(lang)
+          ? colData.collections.filter((c: Collection) => hasLocalizedCollectionName(c, lang))
+          : colData.collections);
       }
     }).catch(() => { });
-  }, [t]);
+  }, [t, lang]);
 
   // Track current narration/terms in refs so startAiStream doesn't need them as deps
   const aiNarrationRef = useRef(aiNarration);
@@ -1582,9 +1588,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                     </select>
                     <span>{t.perPage}</span>
                   </div>
-                  {/* /catalog has no localized twin; localePath returns it
+                  {/* The catalogue has no localized twin; localePath returns it
                       untouched, which is the honest outcome (i18n.md rule 5). */}
-                  <Link href={lp('/catalog')} className="text-sm text-accent-rust hover:underline">
+                  <Link href={lp(catalogueHref(isTenantSurface))} className="text-sm text-accent-rust hover:underline">
                     {t.browseFullCatalog}
                   </Link>
                 </div>
@@ -1840,7 +1846,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </>
           );
 
-          const bookSection = (
+          const conceptualSection = (
             <>
               {semanticDegraded && !semanticLoading && (
                 <p className="text-xs text-muted italic mt-2">{t.semanticDegraded}</p>
@@ -1854,6 +1860,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               {uniqueSemantic.map((sem: any) => (
                 <SemanticResultCard key={sem.book_id} result={sem} query={query} />
               ))}
+            </>
+          );
+
+          const textMatchSection = (
+            <>
               {hasBoth && (
                 <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
@@ -1982,7 +1993,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                   ))}
                   {catalogTotal > 5 && (
                     <Link
-                      href={`${lp('/catalog')}?cq=${encodeURIComponent(query)}`}
+                      href={`${lp(catalogueHref(isTenantSurface))}?${isTenantSurface ? 'cq' : 'q'}=${encodeURIComponent(query)}`}
                       className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1"
                     >
                       {t.openAllCatalogueMatches(nf(catalogTotal))} <ChevronRight className="w-3.5 h-3.5" />
@@ -2013,33 +2024,29 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             </div>
           );
 
+          // The query names what a keyword result IS (every word in its title or
+          // author, or an author page by that name): the reader came for that book,
+          // so it leads, ahead of essays about the subject and books like it.
+          const namesAKeywordResult = bookResults.length > 0 && (
+            namedLinks.some(r => r.page_type === 'author')
+            || assessMatchQuality(query, bookResults.map(b => [b.title, b.display_title, b.author].filter(Boolean).join(' '))) === 'strong'
+          );
+          const leadWithTextMatches = namesAKeywordResult && displayHint !== 'images_first';
+
           return (
             <div className="space-y-3">
               {weakMatchBanner}
               {namedSection}
+              {leadWithTextMatches && textMatchSection}
               {passageSection}
               {collectionCards}
               {siteSection}
               {narrationBlock}
-              {displayHint === 'images_first' ? (
-                <>
-                  {imageStrip}
-                  {bookSection}
-                  {catalogSection}
-                </>
-              ) : displayHint === 'not_in_collection' ? (
-                <>
-                  {bookSection}
-                  {catalogSection}
-                  {imageStrip}
-                </>
-              ) : (
-                <>
-                  {bookSection}
-                  {catalogSection}
-                  {imageStrip}
-                </>
-              )}
+              {displayHint === 'images_first' && imageStrip}
+              {conceptualSection}
+              {!leadWithTextMatches && textMatchSection}
+              {catalogSection}
+              {displayHint !== 'images_first' && imageStrip}
             </div>
           );
         })()}
@@ -2245,6 +2252,14 @@ function TranslatedEditionLink({ edition }: { edition: NonNullable<SearchResult[
   );
 }
 
+/**
+ * The title on a result card. An original-text site shows the book's own title,
+ * as its book pages do; everywhere else keeps the English gloss.
+ */
+function searchCardTitle(result: Pick<SearchResult, 'title' | 'display_title'>, lang: Locale): string {
+  return readsOriginal(lang) ? localizedTitle(result, lang) : (result.display_title || result.title);
+}
+
 function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: { result: SearchResult; query: string; tenant?: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
@@ -2343,7 +2358,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <h3 className="text-lg font-medium text-primary line-clamp-2 font-serif leading-snug">
-                  <HighlightedText text={result.display_title || result.title} query={query} />
+                  <HighlightedText text={searchCardTitle(result, lang)} query={query} />
                   {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">{t.pageAbbrev(result.page_number as number)}</span>}
                 </h3>
                 <p className="text-sm text-secondary mt-0.5">
@@ -2353,7 +2368,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
                       return <>{t.editedByAbbrev} <HighlightedText text={byline.editor} query={query} /></>;
                     }
                     return <HighlightedText text={result.author} query={query} />;
-                  })()} · {result.published}
+                  })()}{displayPublished(result.published) ? ` · ${displayPublished(result.published)}` : ''}
                 </p>
               </div>
               {result.has_doi && result.doi && (
@@ -2500,7 +2515,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <h3 className="font-serif text-primary font-medium leading-snug">{result.title}</h3>
+            <h3 className="font-serif text-primary font-medium leading-snug">{readsOriginal(lang) ? localizedTitle(result, lang) : result.title}</h3>
             <p className="text-sm text-muted mt-0.5">
               {(() => {
                 const byline = getEffectiveByline({ author: result.author, editor: (result as { editor?: string }).editor });
@@ -2545,14 +2560,14 @@ function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: 
       )}
       <div className="min-w-0 flex-1">
         <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
-          {result.display_title || result.title}
+          {searchCardTitle(result, lang)}
         </h3>
         <p className="text-xs text-muted mt-0.5">
           {(() => {
             const byline = getEffectiveByline(result);
             if (byline.role === 'editor') return `${t.editedByAbbrev} ${byline.editor}`;
             return result.author || '';
-          })()}{result.published ? `, ${result.published}` : ''}
+          })()}{displayPublished(result.published) ? `, ${displayPublished(result.published)}` : ''}
           {result.type === 'page' && result.page_number && <span> &middot; {t.pageAbbrev(result.page_number)}</span>}
         </p>
         {text && (

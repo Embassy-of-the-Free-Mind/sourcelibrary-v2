@@ -1,0 +1,457 @@
+{
+ "config": {
+  "frozen_at": "2026-11-04",
+  "rule": "prereg \u00a74: B plus every family whose addition lowers dev out-of-fold log loss; logit unless HGB beats it by >= 0.02 log loss",
+  "families": [
+   "B",
+   "T",
+   "M",
+   "R"
+  ],
+  "kind": "logit",
+  "dev_oof": {
+   "auc": 0.826,
+   "logloss": 0.4861,
+   "slope": 1.051,
+   "hgb_logloss": 0.5247
+  },
+  "secondary": [
+   [
+    "B",
+    "T",
+    "M"
+   ]
+  ],
+  "secondary_why": "B+T+M needs no fresh agy read (R's strongest terms are the agy ones), so it is the variant that could score all 71,228 books; labelled, never the bar model"
+ },
+ "lockbox_books": 44,
+ "final": {
+  "five_page_books": {
+   "n": 34,
+   "bad": 17,
+   "auc": 0.824,
+   "auc_ci": [
+    0.671,
+    0.952
+   ],
+   "logloss": 0.5712,
+   "logloss_ci": [
+    0.316,
+    0.867
+   ],
+   "slope": 0.578,
+   "slope_ci": [
+    0.293,
+    1.579
+   ],
+   "brier": 0.1876
+  },
+  "one_page_books": {
+   "n": 10,
+   "bad": 9,
+   "auc": 0.556
+  },
+  "false_reassurance": [
+   {
+    "t": 0.1,
+    "called_good": 6,
+    "share_called_good": 0.176,
+    "false_reassurance": 0.0,
+    "fr_ci": [
+     0.0,
+     0.0
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.15,
+    "called_good": 8,
+    "share_called_good": 0.235,
+    "false_reassurance": 0.125,
+    "fr_ci": [
+     0.0,
+     0.375
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.2,
+    "called_good": 8,
+    "share_called_good": 0.235,
+    "false_reassurance": 0.125,
+    "fr_ci": [
+     0.0,
+     0.375
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.25,
+    "called_good": 9,
+    "share_called_good": 0.265,
+    "false_reassurance": 0.111,
+    "fr_ci": [
+     0.0,
+     0.333
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.3,
+    "called_good": 10,
+    "share_called_good": 0.294,
+    "false_reassurance": 0.2,
+    "fr_ci": [
+     0.0,
+     0.5
+    ],
+    "D_among_called_good": 1
+   },
+   {
+    "t": 0.35,
+    "called_good": 11,
+    "share_called_good": 0.324,
+    "false_reassurance": 0.273,
+    "fr_ci": [
+     0.0,
+     0.545
+    ],
+    "D_among_called_good": 1
+   },
+   {
+    "t": 0.4,
+    "called_good": 11,
+    "share_called_good": 0.324,
+    "false_reassurance": 0.273,
+    "fr_ci": [
+     0.0,
+     0.545
+    ],
+    "D_among_called_good": 1
+   },
+   {
+    "t": 0.5,
+    "called_good": 15,
+    "share_called_good": 0.441,
+    "false_reassurance": 0.267,
+    "fr_ci": [
+     0.067,
+     0.467
+    ],
+    "D_among_called_good": 1
+   }
+  ],
+  "coverage": {
+   "n": 34,
+   "coverage_90": 0.971,
+   "coverage_ci": [
+    0.912,
+    1.0
+   ],
+   "median_width": 20.5,
+   "lower_bound_zero_share": 0.853
+  },
+  "within_cell": {
+   "zh Paddle manuscripts (7866 low/middle cell)": {
+    "books": 12,
+    "bad": 7,
+    "auc": 0.914,
+    "auc_ci": [
+     0.665,
+     1.0
+    ]
+   },
+   "Chinese": {
+    "books": 12,
+    "bad": 7,
+    "auc": 0.914,
+    "auc_ci": [
+     0.665,
+     1.0
+    ]
+   },
+   "Sanskrit": {
+    "books": 1,
+    "bad": 1,
+    "auc": null,
+    "auc_ci": null
+   },
+   "Latin": {
+    "books": 4,
+    "bad": 2,
+    "auc": 1.0,
+    "auc_ci": [
+     1.0,
+     1.0
+    ]
+   }
+  }
+ },
+ "baseline": {
+  "five_page_books": {
+   "n": 34,
+   "bad": 17,
+   "auc": 0.754,
+   "auc_ci": [
+    0.572,
+    0.903
+   ],
+   "logloss": 0.5905,
+   "logloss_ci": [
+    0.479,
+    0.705
+   ],
+   "slope": 1.163,
+   "slope_ci": [
+    0.434,
+    2.727
+   ],
+   "brier": 0.2061
+  },
+  "one_page_books": {
+   "n": 10,
+   "bad": 9,
+   "auc": 0.556
+  },
+  "false_reassurance": [
+   {
+    "t": 0.1,
+    "called_good": 2,
+    "share_called_good": 0.059,
+    "false_reassurance": 0.0,
+    "fr_ci": null,
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.15,
+    "called_good": 2,
+    "share_called_good": 0.059,
+    "false_reassurance": 0.0,
+    "fr_ci": null,
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.2,
+    "called_good": 2,
+    "share_called_good": 0.059,
+    "false_reassurance": 0.0,
+    "fr_ci": null,
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.25,
+    "called_good": 2,
+    "share_called_good": 0.059,
+    "false_reassurance": 0.0,
+    "fr_ci": null,
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.3,
+    "called_good": 9,
+    "share_called_good": 0.265,
+    "false_reassurance": 0.111,
+    "fr_ci": [
+     0.0,
+     0.333
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.35,
+    "called_good": 13,
+    "share_called_good": 0.382,
+    "false_reassurance": 0.231,
+    "fr_ci": [
+     0.0,
+     0.462
+    ],
+    "D_among_called_good": 1
+   },
+   {
+    "t": 0.4,
+    "called_good": 15,
+    "share_called_good": 0.441,
+    "false_reassurance": 0.267,
+    "fr_ci": [
+     0.067,
+     0.467
+    ],
+    "D_among_called_good": 2
+   },
+   {
+    "t": 0.5,
+    "called_good": 19,
+    "share_called_good": 0.559,
+    "false_reassurance": 0.368,
+    "fr_ci": [
+     0.158,
+     0.579
+    ],
+    "D_among_called_good": 2
+   }
+  ]
+ },
+ "secondary:B+T+M": {
+  "five_page_books": {
+   "n": 34,
+   "bad": 17,
+   "auc": 0.862,
+   "auc_ci": [
+    0.705,
+    0.978
+   ],
+   "logloss": 0.4434,
+   "logloss_ci": [
+    0.27,
+    0.662
+   ],
+   "slope": 0.96,
+   "slope_ci": [
+    0.496,
+    4.042
+   ],
+   "brier": 0.1425
+  },
+  "one_page_books": {
+   "n": 10,
+   "bad": 9,
+   "auc": 0.556
+  },
+  "false_reassurance": [
+   {
+    "t": 0.1,
+    "called_good": 7,
+    "share_called_good": 0.206,
+    "false_reassurance": 0.143,
+    "fr_ci": [
+     0.0,
+     0.429
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.15,
+    "called_good": 8,
+    "share_called_good": 0.235,
+    "false_reassurance": 0.125,
+    "fr_ci": [
+     0.0,
+     0.375
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.2,
+    "called_good": 10,
+    "share_called_good": 0.294,
+    "false_reassurance": 0.1,
+    "fr_ci": [
+     0.0,
+     0.3
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.25,
+    "called_good": 10,
+    "share_called_good": 0.294,
+    "false_reassurance": 0.1,
+    "fr_ci": [
+     0.0,
+     0.3
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.3,
+    "called_good": 10,
+    "share_called_good": 0.294,
+    "false_reassurance": 0.1,
+    "fr_ci": [
+     0.0,
+     0.3
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.35,
+    "called_good": 12,
+    "share_called_good": 0.353,
+    "false_reassurance": 0.167,
+    "fr_ci": [
+     0.0,
+     0.417
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.4,
+    "called_good": 12,
+    "share_called_good": 0.353,
+    "false_reassurance": 0.167,
+    "fr_ci": [
+     0.0,
+     0.417
+    ],
+    "D_among_called_good": 0
+   },
+   {
+    "t": 0.5,
+    "called_good": 15,
+    "share_called_good": 0.441,
+    "false_reassurance": 0.2,
+    "fr_ci": [
+     0.0,
+     0.4
+    ],
+    "D_among_called_good": 1
+   }
+  ],
+  "coverage": {
+   "n": 34,
+   "coverage_90": 0.971,
+   "coverage_ci": [
+    0.912,
+    1.0
+   ],
+   "median_width": 19.5,
+   "lower_bound_zero_share": 0.941
+  },
+  "within_cell": {
+   "zh Paddle manuscripts (7866 low/middle cell)": {
+    "books": 12,
+    "bad": 7,
+    "auc": 0.914,
+    "auc_ci": [
+     0.665,
+     1.0
+    ]
+   },
+   "Chinese": {
+    "books": 12,
+    "bad": 7,
+    "auc": 0.914,
+    "auc_ci": [
+     0.665,
+     1.0
+    ]
+   },
+   "Sanskrit": {
+    "books": 1,
+    "bad": 1,
+    "auc": null,
+    "auc_ci": null
+   },
+   "Latin": {
+    "books": 4,
+    "bad": 2,
+    "auc": 1.0,
+    "auc_ci": [
+     1.0,
+     1.0
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,43 @@
+<language>Classical Chinese</language>
+<page-type>text</page-type>
+<columns>2</columns>
+<header>軍營雜氣占</header>
+
+<image-desc>A detailed color illustration of a military encampment set against a backdrop of jagged, blue-tinted mountains. The camp features several structures, including a prominent building with a tiled roof and various red banners or pennants on poles. In the sky above the camp, a long, horizontal, greyish-white cloud formation stretches across, tapering at both ends.</image-desc>
+
+朱文公曰
+
+新出軍行師占雲逆可也而
+順可擊
+
+宋志曰
+
+新出軍行師有雲從後來謂
+如東行日雲從西來因隨而擊
+之勝若赤雲從東來則我軍者
+敵軍已行我軍當敗宜也兵固
+守餘方倣此以類而推之
+
+<column-break/>
+
+<header>吉凶氣占</header>
+
+<image-desc>A color illustration of a fortified city gate or palace structure with multi-tiered roofs and red walls, surrounded by trees and mountains. Above the fortification, a distinct red, crescent or boat-shaped cloud floats, with a thinner grey cloud formation appearing above it.</image-desc>
+
+朱文公曰
+
+五色氤氳方蕭索輪囷是謂
+慶世太平之應
+
+宋志曰
+
+凡雲紫赤色及若烟非烟若雲
+非雲郁、紛、蕭索輪囷是謂
+慶亦曰景雲喜氣太平之應見
+則國有慶又曰雲含五色潤澤和
+緩見於城上為景雲非氣非烟
+五色氤氳為慶 卿雲又五色
+為慶雲三色為矞雲外赤内青
+亦為矞太平之應
+
+<vocab>軍營 (military camp), 雜氣 (miscellaneous qi/vapors), 占 (divination/augury), 朱文公 (Zhu Xi), 宋志 (Song Annals/Treatises), 太平 (Great Peace), 慶雲 (Auspicious cloud), 景雲 (Propitious cloud), 氤氳 (Enshrouding mist/Atmosphere), 矞雲 (Propitious multicolored cloud)</vocab>

@@ -267,6 +267,15 @@ const nextConfig: NextConfig = {
         source: '/admin/work',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Token use (#8201): same belt and braces as the spend page.
+      {
+        source: '/admin/tokens/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/tokens',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       // Self-hosted Google Fonts (#7537). File names carry Google's version id, so a
       // changed face is a new URL and the old one can be cached for good.
       {
@@ -280,6 +289,13 @@ const nextConfig: NextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=300, stale-while-revalidate=3600' },
         ],
+      },
+      {
+        // A hit at Cloudflare never reaches the proxy, so the Embassy's room would
+        // be served past the gate that guards it (#8098). Only Cloudflare reads this
+        // header; Vercel's own page cache still holds these pages.
+        source: '/embed/bph/:path*',
+        headers: [{ key: 'Cloudflare-CDN-Cache-Control', value: 'no-store' }],
       },
       // CDN-Cache-Control for Cloudflare edge caching.
       // Cloudflare strips this header before sending to browsers —
@@ -322,6 +338,12 @@ const nextConfig: NextConfig = {
       // path only — /catalog/scholar and /catalog/complete are not covered.
       {
         source: '/catalog',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      // The main-site catalogue moved to /library; /catalog above stays for partner hosts.
+      {
+        source: '/library',
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
@@ -517,11 +539,6 @@ const nextConfig: NextConfig = {
       {
         source: '/browse/subjects/:code+',
         destination: '/browse/subjects',
-        permanent: true,
-      },
-      {
-        source: '/library',
-        destination: '/search',
         permanent: true,
       },
       {

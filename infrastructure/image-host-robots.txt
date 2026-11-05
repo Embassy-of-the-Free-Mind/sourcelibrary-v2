@@ -1,0 +1,32 @@
+# images.sourcelibrary.org, a copy of what the bucket serves at /robots.txt (#8098).
+# Page images are for reading on sourcelibrary.org and in partner reading rooms.
+# Bulk or programmatic access: https://sourcelibrary.org/developers
+
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Bingbot
+User-agent: msnbot-media
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: YandexBot
+User-agent: YandexImages
+User-agent: Baiduspider
+User-agent: Sogou
+User-agent: Claude-SearchBot
+User-agent: OAI-SearchBot
+User-agent: Claude-User
+User-agent: ChatGPT-User
+User-agent: Perplexity-User
+User-agent: facebookexternalhit
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: Slackbot
+User-agent: Discordbot
+User-agent: TelegramBot
+User-agent: WhatsApp
+Allow: /
+
+User-agent: *
+Disallow: /archived/
+Disallow: /deepzoom/
+Disallow: /*-full.jpg$
