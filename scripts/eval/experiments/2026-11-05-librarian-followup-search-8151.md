@@ -1,6 +1,7 @@
 ---
 stage: pipeline
 measure: [none]
+feeds: prompt
 languages: []
 scripts: []
 canons: []
