@@ -12,10 +12,11 @@ import fs from 'node:fs';
 import zlib from 'node:zlib';
 const OUT = process.env.JOB_SCRATCH || '/tmp';
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+// all origins: the census reports every origin (test and live) side by side and splits them itself
 const col = c.db('bookstore').collection('lane_judge_verdicts');
 const proj = { origin: 1, selection: 1, kind: 1, page_id: 1, book_id: 1, page_number: 1, cell: 1, route: 1, lane: 1, lang: 1, task: 1, script_type: 1, draw: 1, 'test.id': 1, 'test.arm': 1, 'test.stratum': 1, 'verdict.accept': 1, 'verdict.fidelity': 1, 'verdict.defects': 1, 'judge.instrument': 1, 'judge.model_reported': 1, 'write.model': 1, draft_model: 1, image_url: 1, judged_at: 1, 'test.judged_at': 1 };
 const rows = []; const kinds = {};
-for await (const r of col.find({}, { projection: proj })) {
+for await (const r of col.find({}, { projection: proj }).batchSize(1000)) {
   const k = r.kind ?? 'item'; kinds[k] = (kinds[k] ?? 0) + 1;
   if (k === 'wrong_page' || k === 'planted') continue;
   rows.push({ id: String(r._id), origin: r.origin ?? 'live', selection: r.selection ?? (r.origin === 'test' ? 'unknown' : 'live-sample'), kind: k,
