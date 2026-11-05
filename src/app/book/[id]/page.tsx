@@ -12,7 +12,7 @@ import { Book, Page, TranslationEdition, imageAccessFor } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
-import { displayPublished, citationYear, assertableYear } from '@/lib/publication-date';
+import { displayPublished, citationYear, assertableYear, historicalTimelineDate } from '@/lib/publication-date';
 import { localizeDateDisplay, localizePublished, translatedAbbr } from '@/lib/book-labels';
 import { bylineDynasty, sibuClass, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
@@ -1450,17 +1450,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       return isNaN(dt.getTime()) ? '' : dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
     };
     const rawTimeline: Array<TimelineEvent & { ts: number }> = [];
-    // Original (historical) publication / composition — always first. Prefer the
+    // Original (historical) composition / publication — always first. Prefer the
     // composition date_display (e.g. "c. 6th century CE") over the printed
     // `published` field, and skip non-informative values ("Unknown", n.d., …).
+    // The label follows the date actually shown: 成书/Written for a composition
+    // date, 出版/Published only for a printing (#8184).
     const compDate = book.source_work_dates?.find((l) => l.type === 'composition')?.date_display;
-    const histDate = ((compDate && localizeDateDisplay(compDate, lang)) || (shownPublished ?? '')).trim();
-    const histInformative = histDate && !/^(unknown|undated|n\.?\s?d\.?|\?+|[-—]+)$/i.test(histDate);
-    if (histInformative) {
+    const hist = historicalTimelineDate(compDate && localizeDateDisplay(compDate, lang), shownPublished);
+    if (hist) {
+      const isPrinting = hist.kind === 'publication';
       // Publisher/place only make sense for a printed impressum, not an ancient
       // composition date.
-      const detail = compDate ? undefined : ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined);
-      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: histDate, label: t.published, detail });
+      const detail = isPrinting ? ([resolveImprintPlace(book)?.display, book.publisher].filter(Boolean).join(' · ') || undefined) : undefined;
+      rawTimeline.push({ ts: Number.NEGATIVE_INFINITY, key: 'published', dateText: hist.text, label: isPrinting ? t.published : t.written, detail });
     }
     // An earlier English translation published elsewhere (credit the scholar).
     // A verified `prior_translation` credit carries the richest info; otherwise
