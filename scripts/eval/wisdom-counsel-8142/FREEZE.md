@@ -52,3 +52,13 @@ F02, F03, W01, W03, W07, C03, C06, C10, U22, V01 (10; personal 2, work 3, civic 
 - `c5318058ec7696014d0c3eb6674792257da41e64a34d7a53d726b9c99880f250` analyze.mjs
 - `f878267a973b9d7a4f50fe6d25b6b8f70d95bf145ec90c6c288a5ff644de440f` detector.mjs
 - `d0d0630acf10f8e1adb7c0315be6bbaa8b73be6c3a7f5ab585a2c1bfb872e0a7` ../PREREGISTRATION-wisdom-counsel.md
+
+## Passages drawn (before any arm ran)
+
+600 passages, 5 each of B, C, D on all 40 dilemmas. No scores existed when these were drawn.
+
+- `a6a3820e725355356ba41c1c121c7edf956d5d1af5084a1a84b2a81f002c9f77` passages-test.jsonl (raw)
+- `dc929bc7394159dae9655655476dba100a4e472fb987a5f97c19f951fb7538d8` passages-test.jsonl.gz
+- `62a0b3f7e1344b841f2619479ca9c5ecaf67dc564f5fafa2e8d2b8bb299b6792` passages-test-log.jsonl.gz
+
+**Known deviation, kept:** one passage (V03, arm B) is 92 words as joined, under the 100-word floor. `passageWindow` sums per-sentence counts, and punctuation inside a token counts it twice. Kept as drawn: a hand redraw of one control passage would break the seeded rule for no gain, and the code stays frozen.
