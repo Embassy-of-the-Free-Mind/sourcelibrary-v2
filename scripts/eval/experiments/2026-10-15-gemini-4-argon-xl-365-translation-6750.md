@@ -7,7 +7,7 @@ canons: []
 n_books: 361
 n_pages: 361
 verdict: "Gemini 4 Argon low (CLI) scores better than 3.8 Flash CLI (+0.23 [+0.16, +0.29]) and production (+0.51) on 361 reference pages, with 11 reversal pages against 32 and 46; better than 3.8 in Latin, Greek, Persian, Sanskrit, T4 and T5, the same in German, Hebrew, Arabic, Chinese, Pali and T3. It adds about 3.5× as many unsourced editorial facts."
-status: undecided
+status: informational
 decision: null
 superseded_by: null
 issue: [6750, 6182]

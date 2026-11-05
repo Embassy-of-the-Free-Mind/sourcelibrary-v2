@@ -7,7 +7,8 @@ canons: []
 n_books: null
 n_pages: 11334
 verdict: "Yes, it can share strength. A partially pooled logit model of acceptance (engine + draft + language + writing system + print/manuscript) predicts routes in cells it has not seen. Leaving one base cell out, it scores -528.5 held-out log density against -622.8 for the flat Beta(1,1), -581.6 for one grand Beta and -614.6 for the table's prior. Calibration error is 0.014 against 0.126 (grand mean) and 0.249 (table prior). It also holds leaving a whole language out (-539.7; ECE 0.031). The engine x script interactions shrink to zero and add nothing. Held out, the hierarchical mean is worth 5.2 pages [4.3, 6.4] for an unseen language, 5.5 [4.5, 6.7] for an unseen base cell and 6.4 [5.2, 7.8] for an unseen script split. The v1/v2 means the table uses today are worth 5.5 [3.3, 9.0] on the 24 routes they cover. On those same routes the hierarchical mean is worth 12.8 [6.1, 28.5]."
-status: undecided
+status: adopted
+landed: "PR #7888"
 decision: "Recommended, not applied (rules.json moves cells and is Derek's): set the prior's worth to 5 book-scaled pages (rules.json has 7, not the 5 the brief quoted), and take its MEAN from the hierarchical fit for every route, not v1/v2 for 24 of them and flat for the rest. Drop the engine x script interaction. Code and results: scripts/eval/estimator/heldout/."
 superseded_by: null
 issue: [7263, 7393, 6740]

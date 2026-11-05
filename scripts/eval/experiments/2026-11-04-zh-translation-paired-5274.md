@@ -7,7 +7,8 @@ canons: []
 n_books: 100
 n_pages: 100
 verdict: "Re-translating the stored 3 Flash English on Paddle-read Chinese with agy 3.8 Flash low beats it on the same 60 pages (one per book), and 4 pages a call does at least as well as 1. Accepted: stored 13/60, one page a call with the previous page's English (F) 27/60, without it (N) 30/60, 4 a call (F4) 33/58 (wrong-text pages 37, 25, 20, 17). Reference works stay weak: 12/30 (N) and 15/30 (F4) against 21/30 needed. 45% of N's major defects come from the transcription. Test 2, on 40 佩文韻府-family pages: English from the Opus-corrected source is accepted on 24/38 pages, from the Flash-corrected source on 8/38 (+18 −2, p=.0004). The Kanripo trace puts the gap on the source (80 vs 27 source-caused major defects; translator-caused 49 vs 47)."
-status: undecided
+status: adopted
+landed: "PR #8174"
 decision: "DECISION on #5274: re-translate the 47,150-page frame with 3.8 Flash low at 4 a call (prose first; reference works after an Opus OCR correction), and use Opus, not Flash, for the ditto/Siku OCR correction of reference works. 36 judged-better pages were written through the translate door; nothing at scale."
 feeds: [route, cost]
 superseded_by: null

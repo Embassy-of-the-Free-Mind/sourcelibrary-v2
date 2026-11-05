@@ -8,6 +8,7 @@ n_books: 200
 n_pages: 200
 verdict: "notes-step/v1 FAILS the pre-registered gate on both engines: anchor resolution 80.7% (3.8 Flash) and 70.9% (flash-lite) against 98%, mostly because a term repeats on the page. On truthfulness it is within the margin on both: false or unsupported claims per 100 notes, step minus inline v21, Flash +0.8 [-3.0, +4.2] (margin 6.2), lite +6.0 [+2.8, +9.2] (margin 14.5). It writes 1.6x as many notes, so lite readers would see about twice as many wrong notes per page."
 status: rejected
+supersedes: [2026-10-15-plain-vs-notes-translation-6728.md]
 decision: "Do not switch new pages to PLAIN + notes step yet (#7965 step 4). Fix the anchor rule and lite's context notes in notes-step/v2, then re-measure on the same pages."
 superseded_by: null
 issue: [7965, 7499, 5942, 5647]
