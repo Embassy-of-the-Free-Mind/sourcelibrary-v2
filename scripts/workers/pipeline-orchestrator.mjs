@@ -2822,10 +2822,16 @@ async function run() {
             },
             updated_at: new Date(),
           };
-          await db.collection('books').updateOne(
-            { id: book.id },
+          // The filter repeats `pipeline_auto: {$exists:false}`: this replaces the WHOLE
+          // object, and an importer's holdBook() can land between the find above and this
+          // write. Filtered on id alone, it erased `pipeline_auto.hold` from 5 of 17,907
+          // hidden Siku volumes imported under a hold on 2026-11-04, and one was routed to
+          // OCR (#8053). A book that gained pipeline_auto meanwhile is not ours to enrol.
+          const r = await db.collection('books').updateOne(
+            { id: book.id, pipeline_auto: { $exists: false } },
             { $set: updates }
           );
+          if (r.modifiedCount !== 1) continue;
           log.enrolled++;
           if (likelyFT) ftFlagged++;
         }
@@ -2854,8 +2860,8 @@ async function run() {
         const ENGLISH_VARIANTS_STRAY = ['english', 'eng', 'en'];
         for (const book of strays) {
           const lang = (book.language || '').toLowerCase();
-          await db.collection('books').updateOne(
-            { id: book.id },
+          const r = await db.collection('books').updateOne(
+            { id: book.id, pipeline_auto: { $exists: false } }, // same race as Phase 0 above (#8053)
             { $set: {
               pipeline_auto: {
                 status: 'queued', source: 'cron-convergence', queued_at: new Date(),
@@ -2865,7 +2871,7 @@ async function run() {
               updated_at: new Date(),
             } }
           );
-          log.enrolled++;
+          if (r.modifiedCount === 1) log.enrolled++;
         }
         if (strays.length) console.log(`  Convergence-enrolled (oldest-first, pre-window): ${strays.length}`);
       }
