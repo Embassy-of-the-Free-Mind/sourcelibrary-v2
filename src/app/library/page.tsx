@@ -14,10 +14,27 @@ import { getReadDb } from '@/lib/mongodb';
 export const revalidate = 86400;
 export const maxDuration = 30;
 
+const LIBRARY_TITLE = 'The Library | Source Library';
+const LIBRARY_DESCRIPTION = 'Search and browse the complete Source Library catalogue: thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions. Ask the librarian in your own words.';
+
 export const metadata: Metadata = {
-  title: 'Catalogue - Source Library',
-  description: 'Search and browse the complete Source Library catalogue: thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions. Ask the librarian in your own words.',
+  title: LIBRARY_TITLE,
+  description: LIBRARY_DESCRIPTION,
   alternates: { canonical: '/library' },
+  openGraph: {
+    images: [{ url: 'https://sourcelibrary.org/og-image-library.jpg', width: 1600, height: 840, alt: 'Title pages of rare books in Source Library' }],
+    title: LIBRARY_TITLE,
+    description: LIBRARY_DESCRIPTION,
+    type: 'website',
+    siteName: 'Source Library',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://sourcelibrary.org/og-image-library.jpg'],
+    title: LIBRARY_TITLE,
+    description: LIBRARY_DESCRIPTION,
+  },
 };
 
 async function getCollections(): Promise<{ value: string; label: string }[]> {
