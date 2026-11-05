@@ -62,3 +62,7 @@ F02, F03, W01, W03, W07, C03, C06, C10, U22, V01 (10; personal 2, work 3, civic 
 - `62a0b3f7e1344b841f2619479ca9c5ecaf67dc564f5fafa2e8d2b8bb299b6792` passages-test-log.jsonl.gz
 
 **Known deviation, kept:** one passage (V03, arm B) is 92 words as joined, under the 100-word floor. `passageWindow` sums per-sentence counts, and punctuation inside a token counts it twice. Kept as drawn: a hand redraw of one control passage would break the seeded rule for no gain, and the code stays frozen.
+
+## Addendum after the instrument's Opus read: transport only
+
+`agy --mode plan` printed a complete SUCCESS reply and then did not exit on packet p6, reproducibly, and `run()` discarded the reply at 340 s. `agy-exit-shim.mjs` (`0938a373cbcbb4667bd6cbc5f046fd86c6d53879b99de65a1b16fa838e89801d`) goes first on PATH as `agy` and returns once the reply is complete. Prompts, models, args and replies are unchanged, and every file hashed above is byte-identical. It changes no design choice. It was added before any arm answer on the test dilemmas existed.
