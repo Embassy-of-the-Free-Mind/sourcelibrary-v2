@@ -3,6 +3,7 @@ import { ExternalLink } from 'lucide-react';
 import type { Book, SourceWorkDateLayer } from '@/lib/types/book';
 import { cleanOriginalTitle, isNonLatinScript } from '@/lib/original-title';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { displayPublished } from '@/lib/publication-date';
 import { resolveHoldingLibrary } from '@/lib/library-partners';
 import type { Locale } from '@/lib/locale-path';
 
@@ -76,6 +77,8 @@ export default function BookBiblioPanel({
   const place = resolveImprintPlace(book)?.display; // family resolver, #4043
   const publisher = book.publisher?.trim();
   const impressum = [place, publisher].filter(Boolean).join(', ');
+  // `published` is free text: "Unknown", n.d. and Wikidata QuickStatements noise are dropped, not shown (#8184).
+  const published = displayPublished(book.published);
 
   // #6721: say what each date rests on. A date the opening leaves print shows their words; a scholarly estimate
   // (every schema-1 layer, written by enrichment, is one) says so.
@@ -135,7 +138,7 @@ export default function BookBiblioPanel({
         {book.author && <Row label={t.author}>{book.author}</Row>}
         {book.language && <Row label={t.language}>{book.language}</Row>}
         {impressum && <Row label={t.publisher}>{impressum}</Row>}
-        {book.published && <Row label={t.published}>{String(book.published)}</Row>}
+        {published && <Row label={t.published}>{published}</Row>}
         {book.format && <Row label={t.format}>{book.format}</Row>}
         {pagesCount > 0 && <Row label={t.pages}>{pagesCount}</Row>}
         {book.doi && (
