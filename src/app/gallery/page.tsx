@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { unstable_cache } from 'next/cache';
 import { getReadDb } from '@/lib/mongodb';
 import { mergedGalleryBrowse } from '@/lib/gallery-merge';
@@ -16,13 +17,6 @@ const getGalleryInitial = (tenantId: string | null, bookId?: string) =>
   unstable_cache(
     () => fetchInitialGalleryData(tenantId, bookId),
     ['gallery-initial-v2', tenantId || 'main', bookId || 'all'],
-    { revalidate: 3600 },
-  )();
-
-const getGalleryFeatured = (tenantId: string | null) =>
-  unstable_cache(
-    () => fetchFeaturedCollections(tenantId),
-    ['gallery-featured-v2', tenantId || 'main'],
     { revalidate: 3600 },
   )();
 
@@ -78,8 +72,14 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header renders instantly; the data-heavy grid streams in below. */}
-      <ConditionalSiteHeader variant="light" />
-      <h1 className="sr-only">Image Gallery: Illustrations from Rare Historical Texts</h1>
+      <ConditionalSiteHeader variant="dark" />
+      <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-6 md:pt-11 flex items-baseline justify-between gap-4">
+        <h1 className="text-2xl md:text-4xl font-display text-primary">The Gallery</h1>
+        {/* The curated image collections have their own page, as the book collections do. */}
+        <Link href="/gallery/collections" className="text-[13px] sm:text-sm text-secondary underline decoration-border-medium underline-offset-[3px] hover:text-primary whitespace-nowrap">
+          Image collections
+        </Link>
+      </div>
       <Suspense fallback={<GalleryShell />}>
         <GalleryData searchParams={searchParams} />
       </Suspense>
@@ -96,16 +96,14 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
   const bookIdParam = params.bookId ?? params.book;
   const bookId = typeof bookIdParam === 'string' ? bookIdParam : undefined;
 
-  const [initialData, initialCollections, bookCollections] = await Promise.all([
+  const [initialData, bookCollections] = await Promise.all([
     getGalleryInitial(tenantId, bookId),
-    getGalleryFeatured(tenantId),
     getGalleryBookCollections(tenantId),
   ]);
 
   return (
     <GalleryClient
       initialData={initialData}
-      initialCollections={initialCollections}
       bookCollections={bookCollections}
       initialBookId={bookId}
     />
@@ -113,16 +111,23 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
 }
 
 function GalleryShell() {
+  // The controls' shape (two bars, a numbers line, the tools row) so nothing jumps when they arrive.
   return (
-    <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6">
-      <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
-        <div className="flex-1 min-w-0 sm:min-w-[200px] max-w-md h-9 bg-stone-200/70 rounded-lg animate-pulse" />
-        <div className="min-w-0 sm:min-w-[200px] max-w-sm flex-1 h-9 bg-stone-200/70 rounded-lg animate-pulse" />
-        <div className="h-9 w-24 bg-stone-200/70 rounded-lg animate-pulse" />
+    <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-4 md:pt-[26px] pb-6" aria-hidden>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-7">
+        {[0, 1].map((i) => (
+          <div key={i}>
+            <div className="h-3.5 w-32 bg-stone-200/70 mb-2" />
+            <div className="h-10 sm:h-[52px] bg-white border border-border-light" />
+            <div className="h-3 w-56 bg-stone-200/60 mt-2.5" />
+          </div>
+        ))}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {Array.from({ length: 18 }).map((_, i) => (
-          <div key={i} className="aspect-square bg-stone-200/70 rounded-lg animate-pulse" />
+      <div className="h-4 w-64 bg-stone-200/60 mt-6" />
+      <div className="h-9 w-40 bg-white border border-border-light mt-4" />
+      <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div key={i} className="bg-stone-200/70 animate-pulse" style={{ aspectRatio: i % 3 === 0 ? '3 / 4' : i % 3 === 1 ? '1 / 1' : '4 / 5' }} />
         ))}
       </div>
     </div>
@@ -327,81 +332,5 @@ async function fetchBookCollections(tenantId: string | null) {
   } catch (error) {
     console.error('Failed to fetch book collections:', error);
     return [];
-  }
-}
-
-/**
- * Fetch all collections for SSR (shown on gallery landing page).
- */
-async function fetchFeaturedCollections(tenantId: string | null) {
-  try {
-    const db = await getReadDb();
-    const query: Record<string, unknown> = {};
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-
-    const collections = await db.collection('gallery_collections')
-      .find(query)
-      .sort({ featured: -1, sort_order: 1 })
-      .toArray();
-
-    if (collections.length === 0) return undefined;
-
-    // Resolve cover images from gallery_images. Fetch the explicit cover plus a
-    // few of each collection's own images, so collections without a (resolvable)
-    // cover_image_id fall back to their first available image instead of showing
-    // an empty placeholder.
-    const FALLBACK_DEPTH = 4;
-    const idsToFetch = new Set<string>();
-    for (const c of collections) {
-      if (c.cover_image_id) idsToFetch.add(c.cover_image_id as string);
-      for (const imgId of ((c.image_ids as string[]) || []).slice(0, FALLBACK_DEPTH)) {
-        if (imgId) idsToFetch.add(imgId);
-      }
-    }
-    const galleryDocs = idsToFetch.size > 0
-      ? await db.collection('gallery_images')
-        .find({ id: { $in: [...idsToFetch] } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
-        .toArray()
-      : [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const galleryMap = new Map(galleryDocs.map((d: any) => [d.id, d]));
-    const coverFrom = (id: string | undefined, fallbackTitle: string) => {
-      if (!id) return null;
-      const gImg = galleryMap.get(id) as { thumbnail_url?: string; extracted_url?: string; description?: string } | undefined;
-      if (!gImg) return null;
-      const url = gImg.thumbnail_url || gImg.extracted_url;
-      if (!url) return null;
-      return { url, description: gImg.description || fallbackTitle };
-    };
-
-    const result = await Promise.all(
-      collections.map(async (col) => {
-        const title = col.title as string;
-        // Prefer the explicit cover; otherwise use the collection's own images.
-        let coverImage = coverFrom(col.cover_image_id as string | undefined, title);
-        if (!coverImage) {
-          for (const imgId of ((col.image_ids as string[]) || []).slice(0, FALLBACK_DEPTH)) {
-            coverImage = coverFrom(imgId, title);
-            if (coverImage) break;
-          }
-        }
-        return {
-          id: col.id as string,
-          slug: col.slug as string,
-          title: col.title as string,
-          description: (col.description || '') as string,
-          imageCount: (col.image_ids as string[])?.length || 0,
-          featured: col.featured as boolean,
-          coverImage,
-        };
-      })
-    );
-
-    return result;
-  } catch (error) {
-    console.error('Failed to fetch featured collections:', error);
-    return undefined;
   }
 }
