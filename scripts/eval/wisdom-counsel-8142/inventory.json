@@ -1,0 +1,1431 @@
+{
+ "source": "JDerekLomas/conceptual-histories concepts/wisdom/research/wisdom-texts.md",
+ "source_sha256": "5e79a603787c50363ca1f43087fc7611b29884f0db18827728f0e3b4ab08be60",
+ "rows": [
+  {
+   "work": "Instructions of Šuruppag",
+   "tradition": "Sumerian",
+   "date": "Ur III / OB copies, c. 2100-1600 BCE",
+   "native_genre": "*na de5* (instruction)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69aff0a157adc49dbfc429d7"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Sumerian proverb collections 1-28",
+   "tradition": "Sumerian",
+   "date": "OB, c. 1800 BCE",
+   "native_genre": "proverb collections",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69aff0a357adc49dbfc42a7f",
+    "69aff0a457adc49dbfc42c09"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Instruction of Ptahhotep",
+   "tradition": "Egyptian",
+   "date": "MK copies (P. Prisse), c. 1900 BCE",
+   "native_genre": "*sbꜣyt* (*sebayt*)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e15824ec0a328a49d0a248",
+    "69af55a3ec9e6c278212d649",
+    "69a5530e0aade5c1d01fec31"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Instruction for Merikare",
+   "tradition": "Egyptian",
+   "date": "composed MK; P. Petersburg 1116A (18th Dyn.)",
+   "native_genre": "*sebayt*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e1582fec0a328a49d0a24e"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Instruction of Amenemope",
+   "tradition": "Egyptian",
+   "date": "c. 1200-1000 BCE (BM 10474)",
+   "native_genre": "*sebayt*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e6372df6b7b7d53ad38872",
+    "69af559fec9e6c278212d51b"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Eloquent Peasant",
+   "tradition": "Egyptian",
+   "date": "MK, c. 1850 BCE",
+   "native_genre": "petition / complaint",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e63634f6b7b7d53ad38842"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Admonitions of Ipuwer",
+   "tradition": "Egyptian",
+   "date": "MK/NK",
+   "native_genre": "lament",
+   "about_teaches": "about",
+   "book_ids": [
+    "69e15817ec0a328a49d0a244"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Prophecies of Neferti",
+   "tradition": "Egyptian",
+   "date": "MK",
+   "native_genre": "prophecy",
+   "about_teaches": "about",
+   "book_ids": [
+    "69e15849ec0a328a49d0a25a"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Instruction of Any",
+   "tradition": "Egyptian",
+   "date": "NK",
+   "native_genre": "*sebayt*",
+   "about_teaches": "teaches",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Satire of the Trades (Instruction of Dua-Khety)",
+   "tradition": "Egyptian",
+   "date": "MK",
+   "native_genre": "*sebayt*",
+   "about_teaches": "teaches",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Ludlul bēl nēmeqi*",
+   "tradition": "Babylonian",
+   "date": "MB, c. 1300-1100 BCE",
+   "native_genre": "none native (title = incipit)",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a1d4f23e63d24731006b51e",
+    "6a9528234bbdc1e88d73717d"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Dialogue of Pessimism",
+   "tradition": "Babylonian",
+   "date": "1st mill. BCE",
+   "native_genre": "dialogue",
+   "about_teaches": "both",
+   "book_ids": [
+    "6a9528234bbdc1e88d73717d"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Babylonian Theodicy",
+   "tradition": "Babylonian",
+   "date": "c. 1000 BCE",
+   "native_genre": "acrostic dialogue",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Counsels of Wisdom",
+   "tradition": "Babylonian",
+   "date": "late 2nd mill. BCE",
+   "native_genre": "instruction",
+   "about_teaches": "teaches",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Advice to a Prince",
+   "tradition": "Babylonian",
+   "date": "1st mill. BCE",
+   "native_genre": "instruction",
+   "about_teaches": "teaches",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Proverbs (1:7, 8, 9:10, 22:17-24:22)",
+   "tradition": "Hebrew",
+   "date": "Persian-Hellenistic redaction",
+   "native_genre": "*mashal* משל; *musar* מוסר, *ḥokhmah* חכמה",
+   "about_teaches": "both",
+   "book_ids": [
+    "699209ffa0b3f4095802ef6b",
+    "6952e4c677f38f6761bc882d",
+    "6a3f02b497e91e1768f67fa9",
+    "69d5ad004dc55b8478dde8b5"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Job (esp. ch. 28)",
+   "tradition": "Hebrew",
+   "date": "c. 6th-4th c. BCE",
+   "native_genre": "-",
+   "about_teaches": "about",
+   "book_ids": [
+    "699209ffa0b3f4095802ef6b",
+    "69b653e418b87551bfcc2986"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Qohelet / Ecclesiastes",
+   "tradition": "Hebrew",
+   "date": "c. 3rd c. BCE",
+   "native_genre": "-",
+   "about_teaches": "about",
+   "book_ids": [
+    "69d5ad004dc55b8478dde8b5"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Ben Sira / Sirach (ch. 24)",
+   "tradition": "Hebrew / Greek",
+   "date": "c. 180 BCE",
+   "native_genre": "Greek *sophia*; Hebrew *mashal*",
+   "about_teaches": "both",
+   "book_ids": [
+    "6952e4e277f38f6761bc9298",
+    "6952e4c677f38f6761bc882d",
+    "69924727d263adc1aa7b0c35",
+    "69f32d16eab2561110b5b1c1"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Wisdom of Solomon",
+   "tradition": "Hellenistic Jewish",
+   "date": "1st c. BCE",
+   "native_genre": "protreptic (*logos*)",
+   "about_teaches": "both",
+   "book_ids": [
+    "6952e4e277f38f6761bc9298",
+    "6952e4c677f38f6761bc882d",
+    "69b6479218b87551bfc4d444"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Philo, *Legum allegoriae*, *De fuga* (Sophia and Logos)",
+   "tradition": "Hellenistic Jewish",
+   "date": "c. 20-50 CE",
+   "native_genre": "allegorical commentary",
+   "about_teaches": "about",
+   "book_ids": [
+    "69944b932aa4c20217a33f12",
+    "69944b881ba835137790718e",
+    "69aebb8e6e076d07213e913c"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Homer, *Iliad* 15.410-412 (the carpenter's *sophiē*)",
+   "tradition": "Greek",
+   "date": "c. 700 BCE",
+   "native_genre": "epic",
+   "about_teaches": "about",
+   "book_ids": [
+    "699382dd84cf5845c644b377",
+    "69b222db56715b0e324757a1"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Hesiod, *Works and Days*",
+   "tradition": "Greek",
+   "date": "c. 700 BCE",
+   "native_genre": "*hypothēkai* (instruction to Perses)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69924f1aa1a76e4d5e5ed9e2",
+    "69e72c47a409200ea79f4311",
+    "69b30116e5d6d64d8e19a7ba",
+    "699389f11075be7d320559a0"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Heraclitus, B40, B41",
+   "tradition": "Greek",
+   "date": "c. 500 BCE",
+   "native_genre": "fragments",
+   "about_teaches": "about",
+   "book_ids": [
+    "694a8046458d70b8c6439c5f",
+    "69e8b21f2ff2a8dc09e768ea"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Diogenes Laertius, *Lives* (I Seven Sages; VII Zeno and the Stoic sage)",
+   "tradition": "Greek doxography",
+   "date": "3rd c. CE",
+   "native_genre": "*bioi*; *apophthegmata*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69dbc9ba1040d1d5e20a5b4e",
+    "695594447bd6d2cd1d61d3c5",
+    "69ad76c165c3071e0169b707"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Plato, *Protagoras* 343a-b",
+   "tradition": "Greek",
+   "date": "c. 390 BCE",
+   "native_genre": "dialogue",
+   "about_teaches": "about",
+   "book_ids": [
+    "69ad654f75811c30866e1182",
+    "69b21d36ddb4fa7c305b4440",
+    "6953ce9877f38f6761be55c7"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Plato, *Apology* 20e-23b",
+   "tradition": "Greek",
+   "date": "c. 399-390 BCE",
+   "native_genre": "*apologia*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6953cee877f38f6761be5dd8",
+    "69937e41d85e1d5bbdf3295a",
+    "69d14a2c1c2a66dc094b3a11"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Plato, *Republic* IV 427e-429a, 441e",
+   "tradition": "Greek",
+   "date": "c. 375 BCE",
+   "native_genre": "dialogue",
+   "about_teaches": "about",
+   "book_ids": [
+    "699376d2b0a84a5763961a97",
+    "69937706b0a84a57639627bb"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Plato, *Laws* III 689",
+   "tradition": "Greek",
+   "date": "c. 350 BCE",
+   "native_genre": "dialogue",
+   "about_teaches": "about",
+   "book_ids": [
+    "69ad656c75811c30866e1810"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Aristotle, *Nicomachean Ethics* VI",
+   "tradition": "Greek",
+   "date": "c. 335-322 BCE",
+   "native_genre": "treatise",
+   "about_teaches": "about",
+   "book_ids": [
+    "69937973b0a84a5763964d43",
+    "69937727b0a84a5763962fe7",
+    "6991e1aa339ebc850994a92a"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Aristotle, *Metaphysics* I.1-2",
+   "tradition": "Greek",
+   "date": "c. 340 BCE",
+   "native_genre": "treatise",
+   "about_teaches": "about",
+   "book_ids": [
+    "69937973b0a84a5763964d43",
+    "69b3f794a107e55a0ee1e15e"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Cicero, *De officiis* (I.153; II.5)",
+   "tradition": "Latin, Stoic-Academic",
+   "date": "44 BCE",
+   "native_genre": "*praecepta* on *officia*",
+   "about_teaches": "both",
+   "book_ids": [
+    "69dbc95c1040d1d5e20a2b27"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Cicero, *Tusculanae disputationes* III, V",
+   "tradition": "Latin, Stoic",
+   "date": "45 BCE",
+   "native_genre": "*disputatio*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69dbc97a1040d1d5e20a3681"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Seneca, *Epistulae morales* (Ep. 89)",
+   "tradition": "Latin, Stoic",
+   "date": "c. 64 CE",
+   "native_genre": "*epistula*",
+   "about_teaches": "both",
+   "book_ids": [
+    "6953ce7b77f38f6761be43fe",
+    "69dbcbc31040d1d5e20ba88c",
+    "6adeb9dca765b2fd7a09bf05"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Strabo, *Geography* 15.1.63-65 (Mandanis)",
+   "tradition": "Greek report of Indian sages",
+   "date": "c. 20 CE, after Onesicritus c. 325 BCE",
+   "native_genre": "*geographia*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69aff43045364012cf4219c7"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "John 1:1-14; 1 Cor 1:24 (Christ as Logos and Wisdom)",
+   "tradition": "early Christian",
+   "date": "c. 55-100 CE",
+   "native_genre": "gospel; epistle",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Irenaeus, *Adversus haereses* I (Valentinian Sophia)",
+   "tradition": "early Christian heresiology",
+   "date": "c. 180 CE",
+   "native_genre": "*elenchos*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69920bf777b798aa12121afc",
+    "69c7e5c5fb10016c3f389ba4"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Pistis Sophia*",
+   "tradition": "gnostic (Coptic)",
+   "date": "3rd-4th c. CE",
+   "native_genre": "dialogue gospel",
+   "about_teaches": "about",
+   "book_ids": [
+    "69bd9b8b46b01553e33be8d3",
+    "6952f71777f38f6761bc997a",
+    "69c884a06c6f3cc53c8599e5"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Augustine, *De Trinitate* XII-XV (*sapientia* / *scientia*)",
+   "tradition": "Latin patristic",
+   "date": "c. 400-420",
+   "native_genre": "*tractatus*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a357f405307b013ee584667",
+    "69b632ea1c1c21a37381487c",
+    "69b6331b1c1c21a3738164a9",
+    "6adec2d6a765b2fd7a0a4aff"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Boethius, *Consolatio Philosophiae*",
+   "tradition": "late antique Latin",
+   "date": "c. 524",
+   "native_genre": "*consolatio* (prosimetrum)",
+   "about_teaches": "both",
+   "book_ids": [
+    "69b52cb28a30f8bb136614f0"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Gregory the Great, *Moralia in Job*",
+   "tradition": "Latin patristic",
+   "date": "c. 590",
+   "native_genre": "*moralia*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69f32a9f51f43374f4c17ce4"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Peraldus, *Summa de virtutibus et vitiis* (gift of wisdom)",
+   "tradition": "Latin pastoral",
+   "date": "c. 1250 (ed. 1479)",
+   "native_genre": "*summa*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69dbcb031040d1d5e20b0a80"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Aquinas, *Summa theologiae* (I q.1 a.6; I-II q.57; II-II qq.45, 47)",
+   "tradition": "Latin scholastic",
+   "date": "1266-73",
+   "native_genre": "*summa*, *quaestio*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6991e1b0339ebc850994ab9e",
+    "69dbcc470f8c5edf20f48e32",
+    "69dbcc3e0f8c5edf20f484a0"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Bonaventure, *Collationes in Hexaemeron*",
+   "tradition": "Latin scholastic",
+   "date": "1273",
+   "native_genre": "*collationes*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6ae0d89f16de29adc66fd80a"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Pseudo-Cyril, *Speculum sapientiae*",
+   "tradition": "Latin fable",
+   "date": "13th c.? (ed. 1480)",
+   "native_genre": "*speculum*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69dbc9b01040d1d5e20a5515"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Nicholas of Cusa, *Idiota de sapientia* I",
+   "tradition": "Latin",
+   "date": "1450 (ed. 1488)",
+   "native_genre": "*dialogus* (layman vs orator)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "2948183e-2c47-43dc-b7b9-a466f93a869c"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Herp, *Theologia mystica* (gift of wisdom)",
+   "tradition": "Latin mystical",
+   "date": "15th c. (ed. 1538)",
+   "native_genre": "*theologia mystica*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69c7d03525ec2ba5ccd8031e"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Qur'an (31 Luqman; 2:269)",
+   "tradition": "Islamic scripture",
+   "date": "7th c. (ed. Hinckelmann 1694)",
+   "native_genre": "*sūra*",
+   "about_teaches": "both",
+   "book_ids": [
+    "6970e35d9b09d309d780a25e"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "*Mēnōg ī Xrad* (Spirit of Wisdom)",
+   "tradition": "Middle Persian *andarz*",
+   "date": "6th c.",
+   "native_genre": "*mēnōg* dialogue",
+   "about_teaches": "teaches",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Ferdowsi, *Shahnama* (prelude in praise of *khirad*)",
+   "tradition": "Persian epic",
+   "date": "c. 1010 (Warner tr. 1905)",
+   "native_genre": "*nāma*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e5346ad48480a386966003"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Avicenna, *al-Shifāʾ* (Ilāhiyyāt I, X)",
+   "tradition": "Arabic *falsafa*",
+   "date": "c. 1020-27",
+   "native_genre": "*ḥikma* encyclopaedia",
+   "about_teaches": "about",
+   "book_ids": [
+    "69c1b7acfe4b8f25b9200ccf"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Avicenna, *Manṭiq al-mashriqiyyīn* (prologue)",
+   "tradition": "Arabic *falsafa*",
+   "date": "c. 1030",
+   "native_genre": "logic, 'Eastern' prologue",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Ibn Rushd, *Faṣl al-maqāl*",
+   "tradition": "Arabic *falsafa* / *fiqh*",
+   "date": "c. 1179",
+   "native_genre": "*fatwā*-style treatise",
+   "about_teaches": "about",
+   "book_ids": [
+    "6953dd4277f38f6761be739a",
+    "69e8b2ac2ff2a8dc09e7883c"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Suhrawardī, *Ḥikmat al-ishrāq*",
+   "tradition": "Arabic / Persian *ishrāqī*",
+   "date": "1186",
+   "native_genre": "*ḥikma*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69b635962831a80d67f3a90b",
+    "69f32897aeeee0fa38c64b0d",
+    "69f3288faeeee0fa38c64a0d"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Kalīla wa-Dimna* (BnF Arabe 3465)",
+   "tradition": "Arabic mirror / fable",
+   "date": "c. 1220 (MS)",
+   "native_genre": "*adab* fable",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e41138f41cc469d6880160"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Saʿdī, *Gulistān*",
+   "tradition": "Persian counsel",
+   "date": "1258 (ed. 1722)",
+   "native_genre": "*ḥikāyāt* + *pand*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69f33c97876dd827cbc5a94f"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "ʿAṭṭār, *Pand-nāma*",
+   "tradition": "Persian *andarz*",
+   "date": "13th c.",
+   "native_genre": "*pand-nāma* (book of counsel)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6aa35f57a74235ce27726edc"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Miskawayh, *Jāvidān khirad* (*al-Ḥikma al-khālida*)",
+   "tradition": "Arabic lineage anthology",
+   "date": "10th-11th c.",
+   "native_genre": "*ḥikma* anthology",
+   "about_teaches": "teaches",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Kınalızade, *Ahlâk-ı Alâî*",
+   "tradition": "Ottoman ethics (Ṭūsī line)",
+   "date": "1564",
+   "native_genre": "*akhlāq* (*ḥikmat-i ʿamaliyya*)",
+   "about_teaches": "both",
+   "book_ids": [
+    "69f328a1aeeee0fa38c64bae"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Pirqe Avot* (4:1)",
+   "tradition": "Rabbinic (Mishnah)",
+   "date": "c. 200 CE",
+   "native_genre": "*mishnah*, maxims",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69c843136c6f3cc53c850e95",
+    "6adfb2c916aaa80a976aefaa",
+    "6adf66e4bf12d2ef2059a658"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Ibn Gabirol (attr.), *Mivḥar ha-peninim*",
+   "tradition": "Jewish gnomic",
+   "date": "11th c. (ed. 1920)",
+   "native_genre": "*mivḥar* (anthology of maxims)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6aa3323f0583d2ccd3f1422b"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Maimonides, *Guide of the Perplexed* (III.54)",
+   "tradition": "Jewish philosophy",
+   "date": "c. 1190 (Buxtorf Latin 1629)",
+   "native_genre": "*moreh*",
+   "about_teaches": "about",
+   "book_ids": [
+    "697a8670e680cef7cedae3aa"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Gikatilla, *Shaʿarei Orah* (Ricius, *Portae lucis*)",
+   "tradition": "Kabbalah / Christian Kabbalah",
+   "date": "c. 1290 (Latin 1516)",
+   "native_genre": "*shaʿarim* (gates)",
+   "about_teaches": "about",
+   "book_ids": [
+    "6985ca6c9d0a51f652882357",
+    "69c79fed92b884e4f817374f"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Muṇḍaka Upaniṣad*",
+   "tradition": "Upaniṣad",
+   "date": "c. 5th-1st c. BCE",
+   "native_genre": "*upaniṣad*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6993571d83378b7aed7ce92b"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Kauṣītaki Upaniṣad* (*prajñātman*)",
+   "tradition": "Upaniṣad",
+   "date": "c. 6th-5th c. BCE",
+   "native_genre": "*upaniṣad*",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Bhagavad Gītā* (II.54-72, *sthitaprajña*)",
+   "tradition": "Brahmanical / Vaiṣṇava",
+   "date": "c. 2nd c. BCE-2nd c. CE",
+   "native_genre": "*gītā*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69e13a120dae29249d20b73f"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Dhammapada*",
+   "tradition": "Pali Buddhist",
+   "date": "c. 3rd c. BCE",
+   "native_genre": "*gāthā*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6ab2453887d2180b7f5e6dbc",
+    "6a31c8b74400787ae5a9d7a7",
+    "699209dda0b3f4095802eb92"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Milindapañha*",
+   "tradition": "Pali Buddhist",
+   "date": "c. 1st c. BCE-1st c. CE",
+   "native_genre": "*pañha* (questions)",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Aṣṭasāhasrikā Prajñāpāramitā* ('Mother of the Buddhas')",
+   "tradition": "Prajñāpāramitā",
+   "date": "c. 1st c. BCE-1st c. CE",
+   "native_genre": "*sūtra*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69b99f786ed9e0490990abcf",
+    "69e76142cc48e59ad74ee8bd",
+    "69e7ac385f1a22ab19aa5a27"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Vajracchedikā* (Diamond Sutra)",
+   "tradition": "Prajñāpāramitā",
+   "date": "c. 2nd-5th c.",
+   "native_genre": "*sūtra*",
+   "about_teaches": "about",
+   "book_ids": [
+    "699258bd8812793469fdd0e1",
+    "69e014d347b76785d4ec8145",
+    "6adf6169bf12d2ef205975bc"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Prajñāpāramitāhṛdaya* (Heart Sutra)",
+   "tradition": "Prajñāpāramitā",
+   "date": "c. 4th-7th c.",
+   "native_genre": "*sūtra*",
+   "about_teaches": "about",
+   "book_ids": [
+    "699356bc8e28d8f4c5d3b879",
+    "69dfee87ce6bb8619e07f806"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "Nāgārjuna, *Mūlamadhyamakakārikā*",
+   "tradition": "Madhyamaka",
+   "date": "c. 2nd c.",
+   "native_genre": "*kārikā*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69e8b28a2ff2a8dc09e77ff4",
+    "6a3067d0c4fd77fb5b9f8378"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "Śāntideva, *Bodhicaryāvatāra* IX (with Tengyur commentaries)",
+   "tradition": "Madhyamaka",
+   "date": "c. 700; comms 10th-11th c.",
+   "native_genre": "*śāstra*; *dka' 'grel*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69b99f4376b9bab2de21a891",
+    "6abeb39f896ea18127c83db1",
+    "69e788474a6785cfd60d0362"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Pañcatantra*",
+   "tradition": "Sanskrit *nīti*",
+   "date": "c. 3rd c. BCE-3rd c. CE",
+   "native_genre": "*nīti-śāstra* / *kathā*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e72674a409200ea79ef3ae",
+    "69bf6903dd5a136c308e1dab",
+    "6a087ef1b2a99026ccf706c0",
+    "69ef3d4872c1376fdf2affbc"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Hitopadeśa*",
+   "tradition": "Sanskrit *nīti*",
+   "date": "c. 12th c. or earlier",
+   "native_genre": "*nīti-kathā*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e7267ca409200ea79ef51d",
+    "69de98fc1b234a773e439adb",
+    "6a91e215bb7a47bd0f19e338",
+    "6a91e1a8516e6f550430543d"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Arthaśāstra*",
+   "tradition": "Sanskrit polity",
+   "date": "c. 2nd c. BCE-3rd c. CE",
+   "native_genre": "*śāstra*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69ea3e63300d991d0f1d3186",
+    "699258978812793469fdc49f"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Cāṇakya-rājanītiśāstra* (Toh 4334)",
+   "tradition": "Sanskrit *nīti*, held in Tibetan",
+   "date": "Skt. n.d.; Tib. c. 1000",
+   "native_genre": "*nīti* / *rgyal po'i lugs*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6abee1cca43718d234bf15db"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Tirukkuṟaḷ* ch. 43 (*aṟivuṭaimai*)",
+   "tradition": "Tamil",
+   "date": "c. 5th c. CE (disputed)",
+   "native_genre": "*kuṟaḷ*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69946ec1f6f3426e298f0309",
+    "69946ebaf6f3426e298f00c0",
+    "69946ec5f6f3426e298f05bc"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Nālaṭiyār* ch. 25",
+   "tradition": "Tamil (Jain)",
+   "date": "c. 6th-8th c.",
+   "native_genre": "*veṇpā* quatrains",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6992584c723cad8be263bf8d"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Dhammanīti*",
+   "tradition": "Pali-Burmese *nīti*",
+   "date": "n.d.",
+   "native_genre": "*nīti*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69e00add846d79f28d5680de"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Hymn to the Prajñāpāramitā as Mother",
+   "tradition": "Tibetan Kanjur (tantra section)",
+   "date": "n.d.",
+   "native_genre": "*bstod pa* (praise)",
+   "about_teaches": "about",
+   "book_ids": [
+    "69e7aacd5f1a22ab19a8d9de"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "Unidentified *prajñā* treatise (synonyms; *lakṣaṇa*, *rasa*, *pratyupasthāna*)",
+   "tradition": "Indian Buddhist in Tibetan",
+   "date": "n.d.",
+   "native_genre": "*bstan bcos*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6abeb404896ea18127c84235"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*dbu ma rtsa ba shes rab kyi 'grel pa 'thad pa'i rgyan* (MMK commentary)",
+   "tradition": "Tibetan Madhyamaka",
+   "date": "12th c.",
+   "native_genre": "*'grel pa*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a37da4bd07939943b26688a"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Tsongkhapa, *Lam rim chen mo*",
+   "tradition": "dGe lugs",
+   "date": "1402",
+   "native_genre": "*lam rim*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6a37d775d07939943b246b30"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "*Lunyu* (Analects 2.17, 6.21, 9.28)",
+   "tradition": "Confucian",
+   "date": "c. 5th-4th c. BCE",
+   "native_genre": "*yu* (sayings)",
+   "about_teaches": "both",
+   "book_ids": [
+    "69e8b24d2ff2a8dc09e77295",
+    "6953e27b77f38f6761be90fa"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "*Mengzi* 2A6, with Zhu Xi's *Sishu jizhu*",
+   "tradition": "Confucian / Neo-Confucian",
+   "date": "4th c. BCE; c. 1190",
+   "native_genre": "*jizhu* (collected commentary)",
+   "about_teaches": "about",
+   "book_ids": [
+    "69aebb3439a4307877772f55",
+    "69e8b2562ff2a8dc09e774b0"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "*Daodejing* ch. 18-19 (with commentary)",
+   "tradition": "Daoist",
+   "date": "c. 4th c. BCE; comm. by 1576",
+   "native_genre": "*jing*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69bd0a11b01b17638a0978c6",
+    "69935b6f2c63944063134103"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "*Zhuangzi* ch. 2 *Qiwulun*",
+   "tradition": "Daoist",
+   "date": "c. 4th-3rd c. BCE",
+   "native_genre": "-",
+   "about_teaches": "about",
+   "book_ids": [
+    "6993569a83378b7aed7ce5b7",
+    "69935b6c2c6394406313403a"
+   ],
+   "genre_class": "insight"
+  },
+  {
+   "work": "Zhen Dexiu, *Xishan dushu ji*",
+   "tradition": "Neo-Confucian",
+   "date": "c. 1230",
+   "native_genre": "*dushu ji* (reading notes)",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a3c790901fe4f593c20cb24"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Rijiang Sishu jieyi* (Kangxi lectures)",
+   "tradition": "Qing court Neo-Confucian",
+   "date": "1677",
+   "native_genre": "*jiangyi*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a3c6aceaf3c49b59c5ea481"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Sishu bianyi*",
+   "tradition": "Neo-Confucian",
+   "date": "Ming-Qing",
+   "native_genre": "commentary",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a3cbd22ec254ff6cadf65f4"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Sishu tongyi*",
+   "tradition": "Neo-Confucian",
+   "date": "Yuan-Ming",
+   "native_genre": "commentary",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a3cbd36ec254ff6cadf7073"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Sishu jishu*",
+   "tradition": "Neo-Confucian",
+   "date": "n.d.",
+   "native_genre": "commentary",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a3c6a49af3c49b59c5e5708"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Four Books study guide (*ruxue*)",
+   "tradition": "Neo-Confucian",
+   "date": "n.d.",
+   "native_genre": "primer",
+   "about_teaches": "about",
+   "book_ids": [
+    "6a3c6aa8af3c49b59c5e8c26"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Sahagún, *Florentine Codex* Book X (the *tlamatini*)",
+   "tradition": "Nahua (colonial)",
+   "date": "1575-77",
+   "native_genre": "Book X: of the people",
+   "about_teaches": "about",
+   "book_ids": [
+    "69dfebab090ad7d5c33b1512"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "*Huehuetlahtolli* (elders' admonitions)",
+   "tradition": "Nahua (colonial)",
+   "date": "1600 (Bautista ed.)",
+   "native_genre": "*huehuetlahtolli* ('old word')",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6acc35db1ed1cb52b01efefd"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Ficino, Argumentum to the *Pimander*",
+   "tradition": "Florentine Platonism / Hermetica",
+   "date": "tr. 1463, pr. 1471",
+   "native_genre": "*argumentum*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69b51e0c768235dc6598b8b8",
+    "69b51e0dcf111105c4296201",
+    "69b51eb99a81ef7feb3da32a"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Ficino, *Theologia Platonica*",
+   "tradition": "Florentine Platonism",
+   "date": "1482",
+   "native_genre": "*theologia*",
+   "about_teaches": "about",
+   "book_ids": [
+    "696926a04fa3b04c6de8762e",
+    "69592b207c072c27f686dd71"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Pico, *Oratio*",
+   "tradition": "Renaissance syncretism",
+   "date": "1486",
+   "native_genre": "*oratio*",
+   "about_teaches": "about",
+   "book_ids": [
+    "adad5f6d-4f68-4009-9406-d0e083cf0acc",
+    "69525f53ab34727b1f046173"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Pico, *Disputationes adversus astrologiam*",
+   "tradition": "Renaissance critique",
+   "date": "1494",
+   "native_genre": "*disputatio*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69aeac132834f3a3bf99ff66"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Erasmus, *Moriae encomium*",
+   "tradition": "humanist satire",
+   "date": "1511",
+   "native_genre": "*declamatio*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69b2ff19a1a4246ddb45ae6a",
+    "69b63b791c1c21a37384ce12"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Agrippa, *De incertitudine et vanitate scientiarum*",
+   "tradition": "sceptical declamation",
+   "date": "1530",
+   "native_genre": "*declamatio*",
+   "about_teaches": "both",
+   "book_ids": [
+    "6a205634bf38605d952c54b1"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Agrippa, *De occulta philosophia*",
+   "tradition": "Christian magic",
+   "date": "1533 (wr. 1510)",
+   "native_genre": "*philosophia occulta*",
+   "about_teaches": "about",
+   "book_ids": [
+    "0c19cab9-00d4-49b1-ace1-9122b5a45cc9"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Steuco, *De perenni philosophia*",
+   "tradition": "Catholic perennialism",
+   "date": "1540",
+   "native_genre": "treatise",
+   "about_teaches": "about",
+   "book_ids": [
+    "69c79da6732b9d1f2b38170b",
+    "69c81f706c6f3cc53c84a56d",
+    "6990527e8d19cbc90d9d6456"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Montaigne, *Essais*",
+   "tradition": "French moralist",
+   "date": "1580-95",
+   "native_genre": "*essai*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69aea42bf7e8488296c57291"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Charron, *De la sagesse*",
+   "tradition": "French moralist",
+   "date": "1601",
+   "native_genre": "*traité de sagesse*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69b2ffd55545150b61b49fc9"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "*Fama Fraternitatis*",
+   "tradition": "Rosicrucian",
+   "date": "1614",
+   "native_genre": "*Fama* (manifesto)",
+   "about_teaches": "about",
+   "book_ids": [
+    "6da19aeb-aec0-411c-b890-73035c92273d"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Casaubon, *De rebus sacris et ecclesiasticis exercitationes XVI*",
+   "tradition": "Protestant philology",
+   "date": "1614",
+   "native_genre": "*exercitationes*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6adf7176bf12d2ef205a042c"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Comenius, *Pansophiae prodromus*",
+   "tradition": "*pansophia*",
+   "date": "1639",
+   "native_genre": "*prodromus*",
+   "about_teaches": "about",
+   "book_ids": [
+    "e3662257-8cfb-4a4a-a4aa-5293e0d10ea0"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Gracián, *Oráculo manual y arte de prudencia*",
+   "tradition": "Spanish Baroque moralist",
+   "date": "1647",
+   "native_genre": "*arte de prudencia* (aphorisms)",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "6aa35ce4e213def30d6c7516"
+   ],
+   "genre_class": "instruction"
+  },
+  {
+   "work": "Conring, *De hermetica Aegyptiorum vetere ... medicina*",
+   "tradition": "anti-Paracelsian philology",
+   "date": "1648",
+   "native_genre": "treatise",
+   "about_teaches": "about",
+   "book_ids": [
+    "6909a2e7cf28baa1b4caec93"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Ursinus, *De Zoroastre ... Hermete Trismegisto*",
+   "tradition": "Lutheran philology",
+   "date": "1661",
+   "native_genre": "*spicilegium*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69c891596c6f3cc53c85b967"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Cudworth, *True Intellectual System*",
+   "tradition": "Cambridge Platonism",
+   "date": "1678",
+   "native_genre": "system",
+   "about_teaches": "about",
+   "book_ids": [
+    "69525874ab34727b1f045110"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Pordage, *Sophia* (German)",
+   "tradition": "Behmenist sophiology",
+   "date": "1699",
+   "native_genre": "*Offenbarungen*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69c88a5d6c6f3cc53c85a611"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Arnold, *Das Geheimniß der göttlichen Sophia*",
+   "tradition": "Pietist sophiology",
+   "date": "1700",
+   "native_genre": "treatise",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Koch, *Programma de theologia naturali barbarica*",
+   "tradition": "Lutheran philology",
+   "date": "1709",
+   "native_genre": "*programma*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69b51e24261c58d6366501fc"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Brucker, *Historia critica philosophiae*",
+   "tradition": "Enlightenment history of philosophy",
+   "date": "1742",
+   "native_genre": "*historia critica*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69ae9bcff3bd47924cacc93e"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Kant, *Grundlegung zur Metaphysik der Sitten*",
+   "tradition": "critical philosophy",
+   "date": "1785",
+   "native_genre": "*Grundlegung*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69ade6d6bb15476a4a47b767"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Kant, *Kritik der praktischen Vernunft*",
+   "tradition": "critical philosophy",
+   "date": "1788",
+   "native_genre": "*Kritik*",
+   "about_teaches": "about",
+   "book_ids": [
+    "6954346f1479a63c11089855"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "F. Schlegel, *Über die Sprache und Weisheit der Indier*",
+   "tradition": "Romantic orientalism",
+   "date": "1808",
+   "native_genre": "*Abhandlung*",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "other"
+  },
+  {
+   "work": "Hegel, *Vorlesungen über die Geschichte der Philosophie*",
+   "tradition": "idealism",
+   "date": "lect. 1820s, pr. 1833",
+   "native_genre": "*Vorlesungen*",
+   "about_teaches": "about",
+   "book_ids": [
+    "69aff7d558428e939a5144b5"
+   ],
+   "genre_class": "revealed"
+  },
+  {
+   "work": "Schopenhauer, *Aphorismen zur Lebensweisheit* (*Parerga* I)",
+   "tradition": "post-Kantian",
+   "date": "1851",
+   "native_genre": "*Aphorismen*",
+   "about_teaches": "teaches",
+   "book_ids": [
+    "69ade7aa6a6b945bbdfa2e6d"
+   ],
+   "genre_class": "weighing"
+  },
+  {
+   "work": "Monier-Williams, *Indian Wisdom*",
+   "tradition": "Victorian Indology",
+   "date": "1875",
+   "native_genre": "anthology",
+   "about_teaches": "about",
+   "book_ids": [
+    "699258868812793469fdb894"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "Besant, *The Ancient Wisdom*",
+   "tradition": "Theosophy",
+   "date": "1897",
+   "native_genre": "outline",
+   "about_teaches": "about",
+   "book_ids": [
+    "69dc23c539623978967d7994",
+    "69c863316c6f3cc53c855ca6"
+   ],
+   "genre_class": "other"
+  },
+  {
+   "work": "G. S. Hall, *Senescence* (1922; the precursor of the psychology)",
+   "tradition": "American psychology",
+   "date": "1922",
+   "native_genre": "monograph",
+   "about_teaches": "about",
+   "book_ids": [],
+   "genre_class": "other"
+  }
+ ]
+}
