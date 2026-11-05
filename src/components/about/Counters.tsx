@@ -11,7 +11,7 @@ export type Counter = { value: number; label: string; href?: string };
 
 const MS = 1800;
 
-export default function Counters({ items }: { items: Counter[] }) {
+export default function Counters({ items, lead = false }: { items: Counter[]; lead?: boolean }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.5);
   const still = useReducedMotion();
   const [t, setT] = useState(0);
@@ -33,6 +33,36 @@ export default function Counters({ items }: { items: Counter[] }) {
   }, [inView, still]);
 
   const p = still ? 1 : t;
+  if (lead) {
+    // The first item is the achievement: one very large number, the rest beneath it.
+    const [first, ...rest] = items;
+    const big = (
+      <>
+        <p className="font-serif text-[clamp(5.5rem,15vw,15rem)] text-primary tabular-nums leading-[0.9] tracking-[-0.04em]">{Math.round(first.value * p).toLocaleString('en-GB')}</p>
+        <p className="mt-4 md:mt-6 text-xl md:text-2xl text-primary max-w-xl">{first.label}</p>
+      </>
+    );
+    return (
+      <div ref={ref}>
+        {first.href ? <Link href={first.href} className="block hover:opacity-80 transition-opacity">{big}</Link> : big}
+        <div className="mt-14 md:mt-20 grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-8">
+          {rest.map((c) => {
+            const body = (
+              <>
+                <p className="font-serif text-5xl md:text-6xl text-primary tabular-nums leading-none tracking-tight">{Math.round(c.value * p).toLocaleString('en-GB')}</p>
+                <p className="mt-3 text-lg text-secondary">{c.label}</p>
+              </>
+            );
+            return (
+              <div key={c.label} className="border-t border-primary pt-5">
+                {c.href ? <Link href={c.href} className="block hover:opacity-80 transition-opacity">{body}</Link> : body}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
   return (
     <div ref={ref} className="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-3 gap-10 sm:gap-8">
       {items.map((c) => {

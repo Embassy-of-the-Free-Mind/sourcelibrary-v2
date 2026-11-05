@@ -25,7 +25,8 @@ export type HeroStat = { value: string; label: string; href?: string; color: str
 // are measured in units of their own height: ux = where a cover starts,
 // uw = its width, len = where the row repeats.
 type Item = { r: number[]; ux: number; uw: number; delay: number; lit: number };
-type Row = { k: number; items: Item[]; len: number; start: number };
+// v = the row's own speed, a little either side of 1, so rows flow like streams.
+type Row = { k: number; items: Item[]; len: number; start: number; v: number };
 type Wall = {
   rows: Row[];
   // Whole rows only, top to bottom, in both views: R1 rows fill the hero's
@@ -80,7 +81,9 @@ export default function HeroWall({
   const still = useReducedMotion();
   const lockedRef = useRef(false);
   const darkRef = useRef(secondTone === 'dark');
-  darkRef.current = secondTone === 'dark';
+  useEffect(() => {
+    darkRef.current = secondTone === 'dark';
+  }, [secondTone]);
 
   // Hero and second panel are two stops, not a scroll range: any scroll in
   // between glides to one of them, and the momentum of a trackpad flick is
@@ -284,7 +287,7 @@ export default function HeroWall({
           items.push({ r, ux, uw, delay: 0, lit: -1 });
           ux += uw + GAP;
         }
-        const row: Row = { k, items, len: ux, start: rnd() * ux };
+        const row: Row = { k, items, len: ux, start: rnd() * ux, v: 1 + (((k * 5) % 7) - 3) * 0.04 };
         const hr = k - r0;
         const inHeroRow = hr >= 0 && hr < R1;
         for (const q of items) {
@@ -302,7 +305,7 @@ export default function HeroWall({
     // A cover's start, in row units, relative to the screen's centre line,
     // wrapped so the row repeats forever. d = drift in row units.
     const rel = (q: Item, row: Row, d: number) => {
-      let u = (q.ux - row.start - d) % row.len;
+      let u = (q.ux - row.start - d * row.v) % row.len;
       if (u < -row.len / 2) u += row.len;
       if (u >= row.len / 2) u -= row.len;
       return u;

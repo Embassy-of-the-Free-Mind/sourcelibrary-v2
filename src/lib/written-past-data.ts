@@ -49,8 +49,8 @@ export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
   { key: 'it', dates: 'to 1700', name: 'Italian', n: 101335, translated: 576, unit: PRINTED, step: 1, color: '#c0851f' },
   { key: 'es', dates: 'to 1700', name: 'Spanish', n: 76472, translated: 340, unit: PRINTED, step: 1, color: '#008478' },
   { key: 'tib', dates: 'all periods', name: 'Tibetan', n: 30437, translated: 822, unit: 'works in the BDRC catalogue', step: 2, color: '#6a499b' },
-  { key: 'ara', dates: 'all periods', name: 'Arabic script', n: 3500000, translated: null, unit: 'surviving manuscripts (estimate); the works themselves are uncounted', step: 2, estimate: true, color: '#cc5e6b' },
-  { key: 'ind', dates: 'all periods', name: 'India', n: 10000000, translated: null, unit: 'manuscripts (national estimate)', step: 3, estimate: true, color: '#006d95' },
+  { key: 'ara', dates: 'all periods', name: 'Arabic', n: 3500000, translated: null, unit: 'surviving manuscripts in Arabic script, including Persian and Ottoman Turkish (estimate); the works themselves are uncounted', step: 2, estimate: true, color: '#cc5e6b' },
+  { key: 'ind', dates: 'all periods', name: 'Indian languages', n: 10000000, translated: null, unit: 'manuscripts (national estimate)', step: 3, estimate: true, color: '#006d95' },
   { key: 'chi', dates: 'to 1912', name: 'Chinese', n: 10000000, translated: null, unit: '200,000 titles and 500,000 editions catalogued to 1912, before manuscripts and local printing. The true size is uncounted.', step: 4, open: true, color: '#5e9f50' },
   { key: 'rest', name: 'Not yet counted', n: 10000000, translated: null, unit: 'Japanese, Korean, Persian, Hebrew, Armenian, Ethiopian, Byzantine Greek, medieval Latin…', step: 4, none: true },
 ];
@@ -59,8 +59,8 @@ export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
 // the chart's columns); `caption` is kept for other uses of the chart.
 export const WRITTEN_PAST_STEPS: { name: string; title: string; caption: string; whole?: boolean }[] = [
   { name: 'Latin', title: 'Latin was the language of Renaissance science, medicine and philosophy. Most of it has never been translated.', caption: '444,120 works were printed in Latin before 1700. 1.95% have an English translation.' },
-  { name: 'Europe', title: 'In every other language of early printed Europe, even less can be read in English.', caption: 'Across Europe, 1.39 million works were printed before 1700. About 0.9% can be read in English.' },
-  { name: 'Arabic', title: 'Arabic script carried Islamic science and philosophy, and millions of its manuscripts survive, from every century.', caption: '3 to 4 million Arabic-script manuscripts survive. Europe’s print is now a thin strip.' },
-  { name: 'India', title: 'India’s manuscripts, in Sanskrit and many other languages, are estimated at nearly three times that again.', caption: 'India estimates 10 million manuscripts.' },
-  { name: 'China', title: 'China’s written past is believed to be the largest of all, and it has never even been counted.', caption: 'China is likely larger still, and nobody has counted it.' },
+  { name: 'European', title: 'In every other language of early printed Europe, even less can be read in English.', caption: 'Across Europe, 1.39 million works were printed before 1700. About 0.9% can be read in English.' },
+  { name: 'Arabic', title: 'Arabic carried Islamic science and philosophy. Millions of handwritten copies survive, and nobody has counted how many works they hold.', caption: '3 to 4 million Arabic-script manuscripts survive. Europe’s print is now a thin strip.' },
+  { name: 'Indian', title: 'India’s handwritten copies, in Sanskrit and many other languages, are estimated at nearly three times that again.', caption: 'India estimates 10 million manuscripts.' },
+  { name: 'Chinese', title: 'China’s written past is believed to be the largest of all, and it has never even been counted.', caption: 'China is likely larger still, and nobody has counted it.' },
 ];

@@ -1,7 +1,19 @@
 // The six pages shown in the 'AI has read Reddit' section (claims in FreethinkersFan.tsx).
-export type Page = { year: string; who: string; what: string; src: string; w: number; h: number; href: string; alt: string };
+export type Page = { year: string; who: string; what: string; title?: string; lang?: string; src: string; w: number; h: number; href: string; alt: string };
 
+// 2026-11-04: books with no earlier English translation (first_translation_status
+// first_no_prior or first_complete in the books collection), so the section's
+// claim holds. The famous six it replaced are kept below as FAMOUS.
 export const PAGES: Page[] = [
+  { year: 'c. 1500', lang: 'Ottoman Turkish', who: 'Anonymous', title: 'Wonders of Creatures', what: 'A painted manuscript of the stars, the zodiac and divination, from the Islamic tradition.', src: '/about/unread/wonders.jpg', w: 631, h: 1000, href: '/book/acaib-ul-mahlukat-wonders-of-creatures-anonymous?page=30', alt: 'Painted miniature of a figure riding a white bull, the sign of Taurus' },
+  { year: '1588', lang: 'Latin', who: 'Giambattista della Porta', title: 'Phytognomonica', what: 'Argues that a plant’s looks reveal its powers: flowers like animal heads, seeds like a child in the womb.', src: '/about/unread/porta.jpg', w: 703, h: 1000, href: '/book/phytognomonica-porta?page=179', alt: 'Woodcut of flowering plants beside the animal heads they resemble' },
+  { year: '1617', lang: 'Latin', who: 'Robert Fludd', title: 'The History of the Two Worlds', what: 'An English physician’s map of the universe, in which the cosmos and the human body mirror each other.', src: '/about/unread/fludd.jpg', w: 987, h: 1000, href: '/book/history-of-both-worlds-macrocosm-fludd?page=13', alt: 'Engraving of the cosmos in rings, with a woman standing at its centre' },
+  { year: '1646', lang: 'Latin', who: 'Athanasius Kircher', title: 'The Great Art of Light and Shadow', what: 'A Jesuit scholar’s ten books on light, optics, shadows and sundials.', src: '/about/unread/kircher.jpg', w: 792, h: 1000, href: '/book/kircher-ars-magna-lucis-et-umbrae-1646-kircher?page=7', alt: 'Frontispiece with rays of light passing between sun, moon and earth' },
+  { year: '1658', lang: 'Sanskrit', who: 'Kamalakara Bhatta', title: 'Discernment of the Principles of Astronomy', what: 'An astronomer in Varanasi questions older Indian methods for calculating the planets and eclipses.', src: '/about/unread/kamalakara.jpg', w: 707, h: 1000, href: '/book/siddhanta-tattva-viveka-bhatta?page=429', alt: "Diagram of the earth's shadow cone in a lunar eclipse, labelled in Sanskrit" },
+  { year: '1848', lang: 'Chinese', who: 'Wu Qijun', title: 'Illustrated Investigation of the Names and Realities of Plants', what: 'A Qing official’s survey of plants, each drawn and named, with how it was grown and used.', src: '/about/unread/wu.jpg', w: 633, h: 1000, href: '/book/illustrated-investigation-of-the-names-and-realities-of?page=76', alt: 'Woodcut of water spinach in flower' },
+];
+
+export const FAMOUS: Page[] = [
   { year: '1525', who: 'Dürer', what: 'Art: drawing in true perspective', src: '/about/renaissance/durer.jpg', w: 900, h: 1266, href: '/book/instruction-in-measurement-durer/page/695004b4f426a210d10975f4', alt: 'Two men using a frame and string to draw a lute in perspective' },
   { year: '1543', who: 'Copernicus', what: 'The sky: the sun at the centre', src: '/about/renaissance/copernicus.jpg', w: 900, h: 1252, href: '/book/de-revolutionibus-1543-first-edition-copernicus/page/695004fcf426a210d109b9b2', alt: "Copernicus's diagram of the planets circling the sun" },
   { year: '1543', who: 'Vesalius', what: 'The body: anatomy from dissection', src: '/about/renaissance/vesalius.jpg', w: 900, h: 1274, href: '/book/de-humani-corporis-fabrica-1543-first-edition-vesalius/page/6953e55777f38f6761bf0698', alt: 'The first muscle man, a flayed figure standing in a landscape' },

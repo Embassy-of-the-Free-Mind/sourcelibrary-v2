@@ -46,7 +46,10 @@ export default function MarkedPage({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.45 });
+    // Plays once: scrolling back up leaves the marks and text lit.
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setInView(true); io.disconnect(); }
+    }, { threshold: 0.45 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -54,17 +57,14 @@ export default function MarkedPage({
   useEffect(() => {
     if (!inView || still) return;
     const timers = marks.map((_, k) => setTimeout(() => setLit(k + 1), START_MS + k * STEP_MS));
-    return () => {
-      timers.forEach(clearTimeout);
-      setLit(0);
-    };
+    return () => timers.forEach(clearTimeout);
   }, [inView, still, marks]);
 
   const shown = still ? marks.length : lit;
 
   return (
-    <figure ref={ref} className="mp grid grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-8 md:gap-14 items-center">
-      <Link href={href} className="relative block max-w-[460px] w-full mx-auto md:mx-0 hover:opacity-95 transition-opacity">
+    <figure ref={ref} className="mp grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)] gap-8 lg:gap-16 items-center">
+      <Link href={href} className="relative block max-w-[460px] w-full lg:mx-0 hover:opacity-95 transition-opacity">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={src} alt={alt} width={w} height={h} className="block w-full h-auto" loading="lazy" />
         {marks.map((m, k) => (
@@ -83,7 +83,7 @@ export default function MarkedPage({
           />
         ))}
       </Link>
-      <figcaption>
+      <figcaption className="max-w-2xl">
         {aside(shown)}
         <p className="mt-6 text-sm text-muted leading-relaxed">{caption}</p>
       </figcaption>

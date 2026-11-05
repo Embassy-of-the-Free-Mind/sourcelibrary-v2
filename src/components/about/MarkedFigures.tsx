@@ -407,7 +407,7 @@ export function LightFigure() {
       marks={LIGHT_MARKS}
       aside={(lit) => (
         <div>
-          <p className="text-lg text-secondary">The first book Ficino translated for Cosimo opens with a vision:</p>
+          <p className="text-lg text-secondary">The first book Ficino translated for Cosimo was by Hermes Trismegistus, and it opens with Hermes’ vision:</p>
           <blockquote className="mt-4 font-serif text-2xl md:text-3xl text-primary leading-snug mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>
             &ldquo;For I was beholding an immense spectacle: all things, namely, turned into a light that was exceedingly sweet and pleasant, which wondrously delighted me as I looked upon it.&rdquo;
           </blockquote>
@@ -416,7 +416,7 @@ export function LightFigure() {
       )}
       caption={
         <>
-          Ficino&apos;s Latin <em>Pimander</em>, made for Cosimo de&apos; Medici, in a fifteenth-century Florentine manuscript.{' '}
+          Hermes’ <em>Pimander</em> in Ficino&apos;s Latin, headed &ldquo;Mercurius&rdquo; (Hermes&apos; Latin name), in a fifteenth-century Florentine manuscript.{' '}
           <Link href={LIGHT_PAGE} className={link}>Read the page in English</Link>
         </>
       }
@@ -466,7 +466,6 @@ export function LibraryFigure() {
 
 const SOUL_PAGE = '/book/ficino-on-the-immortality-of-souls-ficino/page/69b52bf33dd6d9423027cd9b';
 const SOUL_MARKS: Mark[] = [
-  { x: 18, y: 34.3, w: 50, h: 1.8 },
   { x: 49.5, y: 59.3, w: 21.5, h: 1.8 },
   { x: 17.8, y: 61.3, w: 53, h: 1.8 },
   { x: 17.8, y: 63.3, w: 53, h: 1.8 },
@@ -487,10 +486,7 @@ export function SoulFigure() {
         <div>
           <p className="text-lg text-secondary">Ficino opens his great book on the soul:</p>
           <blockquote className="mt-4 font-serif text-xl md:text-2xl text-primary leading-snug">
-            <span className="mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>&ldquo;If the soul were not immortal, no animal would be more unhappy than man.&rdquo;</span>
-          </blockquote>
-          <blockquote className="mt-5 font-serif text-xl md:text-2xl text-primary leading-snug">
-            <span className="mp-q" style={{ opacity: lit > 1 ? 1 : 0.2 }}>&ldquo;Let us loosen, I beseech you, oh celestial souls, desiring our celestial homeland, let us loosen as soon as possible the chains of earthly shackles, so that, lifted up on wings, we may fly more freely under the guidance of Plato and God into our ethereal home, where we shall happily contemplate the excellence of the status of our kind.&rdquo;</span>
+            <span className="mp-q" style={{ opacity: lit > 0 ? 1 : 0.2 }}>&ldquo;Let us loosen, I beseech you, oh celestial souls, desiring our celestial homeland, let us loosen as soon as possible the chains of earthly shackles, so that, lifted up on wings, we may fly more freely under the guidance of Plato and God into our ethereal home, where we shall happily contemplate the excellence of the status of our kind.&rdquo;</span>
           </blockquote>
           <style>{`.mp-q { transition: opacity .6s ease; }`}</style>
         </div>

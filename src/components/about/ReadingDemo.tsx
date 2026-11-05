@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { READINGS, type Box } from './readings';
+import { READINGS, type Box, type Reading } from './readings';
 
 /**
  * "What we do", shown rather than listed, after the folium-studio.com hero: one
@@ -31,9 +31,23 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
   const [hi, setHi] = useState(false);
   const visible = useRef(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const cur = READINGS[idx % READINGS.length];
+  // Box editor: /about?edit in local dev. Animation stops on the finished state;
+  // drag a box to move it, drag its corner to resize, then Save.
+  const [edit, setEdit] = useState(false);
+  const [data, setData] = useState<Reading[]>(READINGS);
+  const [saved, setSaved] = useState('');
+  const pageRef = useRef<HTMLDivElement>(null);
+  const cur = (edit ? data : READINGS)[idx % READINGS.length];
 
   useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && new URLSearchParams(location.search).has('edit')) {
+      setEdit(true);
+      setPhase(5);
+      setOrig(READINGS[0].orig);
+      setEn(READINGS[0].en);
+      setHi(true);
+      return;
+    }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const later = (ms: number, f: () => void) => timers.current.push(setTimeout(f, ms));
     const clear = () => {
@@ -108,13 +122,64 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
   }, []);
 
   const active = phase === 0 ? -1 : phase - 1;
-  const box = (b: Box, cls: string, label?: string, key?: string | number) => (
+  const r1 = (n: number) => Math.round(n * 10) / 10;
+  const update = (which: string, f: (b: Box) => Box) =>
+    setData((all) =>
+      all.map((rd, k) => {
+        if (k !== idx % READINGS.length) return rd;
+        if (which === 'line') return { ...rd, line: f(rd.line) };
+        if (which === 'plate') return { ...rd, plate: { ...rd.plate, ...f(rd.plate) } };
+        const n = Number(which.split(':')[1]);
+        return { ...rd, ents: rd.ents.map((e, j) => (j === n ? { ...e, ...f(e) } : e)) };
+      }),
+    );
+  const drag = (which: string, mode: 'move' | 'size') => (ev: React.PointerEvent) => {
+    if (!edit || !pageRef.current) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    const rect = pageRef.current.getBoundingClientRect();
+    const x0 = ev.clientX;
+    const y0 = ev.clientY;
+    let last = { dx: 0, dy: 0 };
+    const move = (e: PointerEvent) => {
+      const dx = ((e.clientX - x0) / rect.width) * 100;
+      const dy = ((e.clientY - y0) / rect.height) * 100;
+      const ddx = dx - last.dx;
+      const ddy = dy - last.dy;
+      last = { dx, dy };
+      update(which, (b) =>
+        mode === 'move'
+          ? { ...b, l: r1(b.l + ddx), t: r1(b.t + ddy) }
+          : { ...b, w: r1(Math.max(1, b.w + ddx)), h: r1(Math.max(1, b.h + ddy)) },
+      );
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  const go = (step: number) => {
+    const n = (idx + step + READINGS.length) % READINGS.length;
+    setIdx(n);
+    setOrig(data[n].orig);
+    setEn(data[n].en);
+  };
+  const save = async () => {
+    setSaved('Saving…');
+    const res = await fetch('/api/dev/about-readings', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
+    setSaved(res.ok ? 'Saved' : 'Save failed');
+  };
+  const box = (b: Box, cls: string, label?: string, key?: string | number, which = cls) => (
     <div
       key={key}
-      className={`rd-box ${cls} ${b.side ? `side-${b.side}` : ''}`}
+      className={`rd-box ${cls} ${b.side ? `side-${b.side}` : ''} ${edit ? 'rd-edit' : ''}`}
       style={{ left: `${b.l}%`, top: `${b.t}%`, width: `${b.w}%`, height: `${b.h}%` }}
+      onPointerDown={drag(which, 'move')}
     >
       {label && <span className="rd-lab">{label}</span>}
+      {edit && <i className="rd-handle" onPointerDown={drag(which, 'size')} />}
     </div>
   );
   const tags: [string, string][] = [
@@ -126,7 +191,16 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
   return (
     <div ref={rootRef} data-active={active} className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 lg:gap-14 items-start">
       <div className={`rd p${phase}`} aria-label={`A page from ${cur.title} being transcribed, translated and tagged`}>
-        <div className="rd-page relative border border-border-light bg-[#1a1612]" style={{ aspectRatio: String(cur.ar) }}>
+        {edit && (
+          <div className="mb-3 flex items-center gap-2 text-sm">
+            <button type="button" onClick={() => go(-1)} className="px-3 py-1.5 border border-border-medium">Previous</button>
+            <span className="tabular-nums text-muted">{(idx % READINGS.length) + 1} of {READINGS.length}</span>
+            <button type="button" onClick={() => go(1)} className="px-3 py-1.5 border border-border-medium">Next</button>
+            <button type="button" onClick={save} className="ml-auto px-4 py-1.5 bg-[#1a1612] text-white">Save boxes</button>
+            <span className="text-muted">{saved}</span>
+          </div>
+        )}
+        <div ref={pageRef} className="rd-page relative bg-[#1a1612]" style={{ aspectRatio: String(cur.ar) }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`/about/readings/${cur.img}-${hi ? 'l' : 'm'}.jpg`}
@@ -137,12 +211,12 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
           <div className="rd-scan" />
           <div className="absolute inset-0">
             {box(cur.line, 'line')}
-            {cur.ents.map((e, i) => box(e, 'ent', e.k, i))}
+            {cur.ents.map((e, i) => box(e, 'ent', e.k, i, `ent:${i}`))}
             {box(cur.plate, 'plate', cur.plate.k.replace('Figure · ', ''))}
           </div>
         </div>
 
-        <div className="rd-card border border-t-0 border-border-medium bg-cream px-4 sm:px-5 py-4">
+        <div className="rd-card pt-5">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
             <span className="text-secondary min-w-0 truncate">
               <b className="font-semibold text-primary">{cur.title}</b> · {cur.meta}
@@ -181,6 +255,8 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
         .rd.p1 .rd-scan { animation: rd-scan 1.4s cubic-bezier(.4,0,.2,1) forwards; }
         @keyframes rd-scan { 0% { top: -14%; opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
         .rd-box { position: absolute; opacity: 0; transform: scale(1.04); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+        .rd-box.rd-edit { transition: none; pointer-events: auto; cursor: move; touch-action: none; outline: 1px dashed rgba(255,255,255,.7); }
+        .rd-handle { position: absolute; right: -6px; bottom: -6px; width: 12px; height: 12px; background: #fff; border: 1.5px solid #1a1612; cursor: nwse-resize; }
         .rd-box.line { border: 1.5px solid ${BLUE}; background: rgba(37,99,235,.14); }
         .rd-box.ent { border-bottom: 2px solid #facc15; background: rgba(250,204,21,.24); }
         .rd-box.plate { border: 1.5px solid #4ade80; }
@@ -199,9 +275,9 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
         .rd-st.on::before { opacity: 1; }
         .rd-tag { opacity: 0; animation: rd-in .4s ease forwards; animation-delay: calc(var(--i) * 90ms); }
         @keyframes rd-in { to { opacity: 1; } }
-        .rd-step { transition: opacity .4s ease; opacity: .55; }
-        .rd-step .rd-num { color: var(--text-muted); transition: color .4s; }
-        ${[0, 1, 2, 3, 4].map((a) => `[data-active="${a}"] .rd-step[data-i="${a}"] .rd-num { color: var(--text-primary); } ${[0, 1, 2, 3, 4].filter((i) => i <= a).map((i) => `[data-active="${a}"] .rd-step[data-i="${i}"]`).join(', ')} { opacity: 1; }`).join('\n')}
+        .rd-step { transition: border-color .4s ease; }
+        .rd-mark .rd-step { border-left: 2px solid var(--border-light, #e7e1d8); padding-left: 1rem; }
+        ${[0, 1, 2, 3, 4].map((a) => `[data-active="${a}"] .rd-mark .rd-step[data-i="${a}"] { border-left-color: var(--text-primary); }`).join('\n')}
         @media (max-width: 560px) {
           .rd-lab { font-size: 9.5px; padding: 0 4px; }
           .rd-box.plate .rd-lab, .rd-box.side-l .rd-lab, .rd-box.side-r .rd-lab { display: none; }

@@ -311,7 +311,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
       <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary">
         <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: palette === 'hues' ? INK : PAL[palette].done }} />translated into English</span>
         <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: palette === 'hues' ? tint(INK, 24) : PAL[palette].rest }} />never translated</span>
-        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3 wp-hatch border" style={{ ['--c' as string]: palette === 'hues' ? INK : PAL[palette].hatch, borderColor: palette === 'hues' ? tint(INK, 40) : PAL[palette].hatch }} />estimated, in manuscripts</span>
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3 wp-hatch border" style={{ ['--c' as string]: palette === 'hues' ? INK : PAL[palette].hatch, borderColor: palette === 'hues' ? tint(INK, 40) : PAL[palette].hatch }} />estimated, in handwritten copies rather than works</span>
       </p>
 
       <style>{`

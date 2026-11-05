@@ -18,14 +18,17 @@ export function VariantProvider({ children }: { children: ReactNode }) {
   const [reg, setReg] = useState<Registry>({});
   const [show, setShow] = useState(false);
 
+  // Reads the URL once after mount (it isn't available during server render).
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
+    /* eslint-disable react-hooks/set-state-in-effect */
     setShow(process.env.NODE_ENV !== 'production' || q.has('variants'));
     const p: Record<string, string> = {};
     q.forEach((v, k) => {
       if (k.startsWith('v-')) p[k.slice(2)] = v;
     });
     setPick(p);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const choose = (id: string, key: string) => {
