@@ -18,11 +18,12 @@
 
 import crypto from 'crypto';
 import { imprimatur, verifyProvenance } from './steganographia';
+import { currentTraceRef } from './trace-ref';
 
 const PROVENANCE_KEY = process.env.PROVENANCE_SECRET_KEY;
 
 const TAGLINE = 'from humanists to all the newest minds';
-const LICENSE = 'CC BY-SA 4.0';
+const LICENSE = 'CC BY-NC-SA 4.0';
 
 // Two-tier by design (mirrors the image layer: every page carries the invisible
 // watermark; ~1/10 also gets the visible logo). EVERY export carries a *light*
@@ -33,12 +34,50 @@ const LICENSE = 'CC BY-SA 4.0';
 // zero-width bulk — rides along only occasionally.
 const COLOPHON_RATE = 6;
 
+// Riddle payloads (#8150 slice 2). A few books carry a short riddle in their
+// readable colophon instead of the stock note: the answer is a passage in
+// another book. The riddle text is NOT in this repo (it is public, and the
+// riddles would be spoiled): it lives in the `hunt_clues` collection and is
+// handed to this registry by src/lib/hunt-payloads.ts, which the reader and
+// quote routes prime before they mark. This module stays free of any database
+// import so every export path can keep calling markForExport synchronously.
+//
+// What does NOT change, by construction: the light id-only mark (rate and
+// size), the readable-colophon rate (still ~1 in COLOPHON_RATE, same keyed
+// gate), and determinism. The payload is chosen by BOOK, so every viewer of a
+// passage gets the same bytes and ISR/CDN caching is unaffected. A campaign
+// ref still wins over a riddle: attribution of bulk egress comes first.
+export const MAX_HUNT_PAYLOAD_BYTES = 320;
+const MAX_COLOPHON_BYTES = 512; // steganographia.ts MAX_MSG_BYTES
+// Keyed by books.id (what pages.book_id holds), never a re-minted _id.
+let huntPayloads: ReadonlyMap<string, string> = new Map();
+
+/** Replace the book → riddle registry. Oversized or empty payloads are dropped. */
+export function setHuntPayloads(entries: Iterable<readonly [string, string]>): number {
+  const next = new Map<string, string>();
+  for (const [bookId, payload] of entries) {
+    if (!bookId || typeof payload !== 'string') continue;
+    const p = payload.trim();
+    if (!p || Buffer.byteLength(p, 'utf-8') > MAX_HUNT_PAYLOAD_BYTES) continue;
+    next.set(bookId, p);
+  }
+  huntPayloads = next;
+  return next.size;
+}
+
 /**
  * The readable colophon woven into the mark. Compact by default; an
  * occasional fuller note addressed directly to whoever found it.
  */
 function colophon(bookId: string, full: boolean, ref?: string): string {
   const url = `sourcelibrary.org/book/${bookId}`;
+  const riddle = ref ? undefined : huntPayloads.get(bookId);
+  if (riddle) {
+    const withRiddle = `Source Library · ${url} · ${riddle}`;
+    // Over the ceiling imprimatur throws and markForExport would serve the text
+    // UNMARKED; a riddle must never cost the mark, so fall back to the stock note.
+    if (Buffer.byteLength(withRiddle, 'utf-8') <= MAX_COLOPHON_BYTES) return withRiddle;
+  }
   // An extraction ref is present only on bulk egress to unidentified bulk
   // consumers. It makes a recovered passage attributable to a campaign, not
   // just to Source Library — see bot-attribution.ts for how it is derived.
@@ -92,14 +131,18 @@ export function markForExport(text: string, bookId: string, opts?: { ref?: strin
   if (!PROVENANCE_KEY || !text) return text;
 
   try {
+    // An explicit ref (bot campaign, key, pool) wins; otherwise the traced-copy
+    // scope of a download or bulk-text request (#8150 slice 8, dark by default:
+    // trace-ref.ts). Reader pages and quotes never run inside that scope.
+    const ref = opts?.ref || currentTraceRef();
     // Use first 8 chars of bookId as the structured edition identifier.
     const editionId = bookId.slice(0, 8);
     // Every export gets the light id-only mark (always attributable). Only the
     // ~1-in-COLOPHON_RATE subset also carries the heavier readable colophon
     // with the full, resolvable book link — unless a ref pins this export to a
     // campaign, in which case every passage carries it.
-    const message = opts?.ref || wantsReadableColophon(text)
-      ? colophon(bookId, wantsFullColophon(text), opts?.ref)
+    const message = ref || wantsReadableColophon(text)
+      ? colophon(bookId, wantsFullColophon(text), ref)
       : undefined;
     return imprimatur(text, editionId, PROVENANCE_KEY, { message });
   } catch {

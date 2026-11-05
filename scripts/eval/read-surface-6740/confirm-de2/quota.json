@@ -1,0 +1,29 @@
+{
+ "rule": "floor 4 per cell, the remaining 28 by largest remainder on the frame share (era share of books x within-era face share)",
+ "antiqua_share_assumed": {
+  "pre-1600": 0.02,
+  "1600s": 0.02,
+  "1700s": 0.03,
+  "1800+": 0.3
+ },
+ "shares": {
+  "pre-1600|fraktur": 0.5321892447840141,
+  "pre-1600|antiqua": 0.010861004995592125,
+  "1600s|fraktur": 0.13275933000293857,
+  "1600s|antiqua": 0.0027093740816926245,
+  "1700s|fraktur": 0.264519541580958,
+  "1700s|antiqua": 0.008181016749926535,
+  "1800+|fraktur": 0.03414634146341463,
+  "1800+|antiqua": 0.014634146341463414
+ },
+ "cells": {
+  "pre-1600|fraktur": 19,
+  "pre-1600|antiqua": 4,
+  "1600s|fraktur": 8,
+  "1600s|antiqua": 4,
+  "1700s|fraktur": 11,
+  "1700s|antiqua": 4,
+  "1800+|fraktur": 5,
+  "1800+|antiqua": 5
+ }
+}

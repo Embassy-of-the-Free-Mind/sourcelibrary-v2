@@ -6,7 +6,7 @@
 # Disk steward for the job hosts (#6223). Hourly from cron; safe to run by hand at any time.
 #   disk-steward.sh                  # dry run: lists every candidate and what it would do
 #   disk-steward.sh --apply          # does it
-#   disk-steward.sh --apply --agy-only   # only the Antigravity CLI steps (1b, 1c)
+#   disk-steward.sh --apply --agy-only   # only the Antigravity CLI steps (1b, 1c, 1d)
 #   disk-steward.sh restore <dir>.IN-R2.txt   # bring an archived folder back from R2
 #
 # Why: every box sat between 80% and 95% with alarms (Derek 2026-10-29: "There must be a better way to manage
@@ -15,7 +15,7 @@
 # between boxes by hand (2026-10-27), which only shuffled them. So storage now has a LIFETIME instead:
 #
 #   1. Reaps job worktrees whose PR is merged or closed (reap-worktrees.mjs --merged-only; branches kept).
-#   1b/1c. Antigravity CLI: checkpoint its SQLite WAL, remove orphaned .tmp files.
+#   1b/1c/1d. Antigravity CLI: checkpoint its SQLite WAL, remove orphaned .tmp files, trim debug logs to 2 days.
 #   2. CACHE: trims the Hugging Face hub cache to HF_CACHE_CAP_GB, least recently accessed revision first
 #      (huggingface_hub's scan-cache / delete-revisions). Models are re-downloadable. A revision with a blob
 #      open by any process, or read in the last HF_KEEP_RECENT_H hours, is never touched. Runs every time.
@@ -142,6 +142,17 @@ for T in "$ROOT"/.gemini/antigravity-cli/*.tmp "$ROOT"/.agy-*/.gemini/antigravit
   [ -n "$APPLY" ] && rm -f "$T"
 done
 [ "$n" -gt 0 ] && echo "  $([ -n "$APPLY" ] && echo removed || echo would remove) $n orphaned agy .tmp files ($((kb / 1048576)) GB)"
+
+# 1d. Trim the Antigravity CLI's debug logs. agy writes one log/cli-<timestamp>.log per call and never removes
+#     them; on 2026-10-31 main's two agy homes held 128K of them, 4.2 GB, about 0.5 GB a day each, and that
+#     growth alone kept the root disk over the 85% alarm. They are debug output nothing reads; keep two days.
+n=0; kb=0
+for L in "$ROOT"/.gemini/antigravity-cli/log "$ROOT"/.agy-*/.gemini/antigravity-cli/log; do
+  [ -d "$L" ] || continue
+  while IFS=' ' read -r k _; do n=$((n + 1)); kb=$((kb + k)); done < <(find "$L" -maxdepth 1 -type f -name 'cli-*.log' -mtime +1 -printf '%k %p\n')
+  [ -n "$APPLY" ] && find "$L" -maxdepth 1 -type f -name 'cli-*.log' -mtime +1 -delete
+done
+[ "$n" -gt 0 ] && echo "  $([ -n "$APPLY" ] && echo removed || echo would remove) $n agy debug logs ($((kb / 1024)) MB)"
 [ -n "$AGY_ONLY" ] && { echo "$(now) done (agy only). root: $(df -h --output=used,avail,pcent / | tail -1)"; exit 0; }
 
 # Every open file and working directory on the box, once (steps 2 and 3 test against it).

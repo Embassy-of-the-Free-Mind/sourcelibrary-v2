@@ -32,6 +32,12 @@ export default function SearchLayout({
   return (
     <Suspense>
       <h1 className="sr-only">Search Source Library</h1>
+      {/* A tool that runs no JavaScript sees an empty page here. Plain text rather
+          than a link: this layout is static and also serves partner hosts, where
+          that address is refused (#8161). */}
+      <noscript>
+        <p>This page needs JavaScript. Without it, results are at /search/text?q=YOUR+WORDS on sourcelibrary.org.</p>
+      </noscript>
       {children}
     </Suspense>
   );

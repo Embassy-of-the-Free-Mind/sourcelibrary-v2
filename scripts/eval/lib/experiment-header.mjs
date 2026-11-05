@@ -43,7 +43,9 @@ export const STAGES = ['ocr', 'translation', 'metadata', 'image', 'pipeline'];
 // `none` is for an entry that measured nothing: a plan, a census, a repair log.
 export const MEASURES = ['accuracy', 'agreement', 'stability', 'preference', 'judged', 'judged_vs_reference', 'none'];
 export const STATUSES = ['adopted', 'rejected', 'undecided', 'superseded', 'informational'];
-export const FIELDS = ['stage', 'measure', 'languages', 'scripts', 'canons', 'n_books', 'n_pages', 'verdict', 'status', 'decision', 'superseded_by', 'issue', 'router_evidence'];
+// What the result should change, if taken (#6553): the consumer a later reader checks for it.
+export const FEEDS = ['route', 'prompt', 'detector', 'judge', 'reference', 'figure', 'cost', 'guard', 'surface', 'repair', 'none'];
+export const FIELDS = ['stage', 'measure', 'languages', 'scripts', 'canons', 'n_books', 'n_pages', 'verdict', 'status', 'decision', 'feeds', 'landed', 'supersedes', 'superseded_by', 'issue', 'router_evidence', 'defect_rates'];
 const REQUIRED = ['stage', 'measure', 'verdict', 'status'];
 const LISTS = ['languages', 'scripts', 'canons'];
 
@@ -70,6 +72,44 @@ export function routerCellIds() {
  */
 export function needsRouterEvidence(h) {
   return ['ocr', 'translation'].includes(h.stage) && asList(h.measure).some((m) => m === 'judged' || m === 'judged_vs_reference');
+}
+
+/**
+ * From 2026-10-30 (#6740, Derek's steer): an OCR or translation result is decided on severity-weighted defect rates
+ * against the live route, so a NEW entry dated 2026-10-30 or later with stage ocr|translation and a measure names the
+ * file that carries, per route, misleads and wrong_text per 1,000 words and the mean fidelity
+ * (scripts/eval/route-judge-6740/defect-rate.py writes one), or says why it has none.
+ */
+export const DEFECT_RATES_FROM = '2026-10-30';
+export function needsDefectRates(h, name = '') {
+  const d = String(name).slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= DEFECT_RATES_FROM && ['ocr', 'translation'].includes(h.stage) && asList(h.measure).some((m) => m && m !== 'none');
+}
+
+/** The shape a defect_rates file must have: some route entry with misleads, wrong_text per 1,000 words and fidelity. */
+export function defectRatesShapeOk(j) {
+  const ok = (e) => e && typeof e === 'object' && 'fidelity_mean' in e && (('misleads_per_1k' in e && 'wrong_text_per_1k' in e) || (e.misleads && 'per_1k_words' in e.misleads && e.wrong_text && 'per_1k_words' in e.wrong_text));
+  const groups = [j?.router_cells, j?.study_cells, ...Object.values(j?.cells || {})].filter((g) => g && typeof g === 'object');
+  return groups.some((g) => Object.values(g).some(ok));
+}
+
+/**
+ * #6553: a NEW entry says what it feeds, and an adopted one that feeds something says where it landed. Of 75 sampled
+ * write-ups that asked for a change, 12 claimed one the repo could not show and 1 never happened; `landed:` is the
+ * pointer a reader (and the lint) can check.
+ */
+export const FEEDS_FROM = '2026-11-05';
+export function needsFeeds(name = '') {
+  const d = String(name).slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= FEEDS_FROM;
+}
+export function needsLanded(h) {
+  return h.status === 'adopted' && asList(h.feeds).some((f) => f !== 'none');
+}
+
+/** `landed:` values that name a PR: "PR #7874" → 7874. The rest are repo paths. */
+export function landedPrs(h) {
+  return asList(h.landed).flatMap((v) => { const m = typeof v === 'string' && v.match(/^PR #(\d+)$/); return m ? [Number(m[1])] : []; });
 }
 
 /** Split a file into { header (raw text or null), body }. The body is everything after the closing `---`. */
@@ -157,6 +197,34 @@ export function validateHeader(h, ctx = {}) {
       if (!/^none\s+[—-]+\s*\S/.test(h.router_evidence)) p.push('router_evidence must be a list of router-table cell ids, or "none — <why>"');
     } else if (!Array.isArray(h.router_evidence) || !h.router_evidence.length) p.push('router_evidence must be a list of router-table cell ids, or "none — <why>"');
     else if (ctx.routerCells) for (const c of h.router_evidence) if (!ctx.routerCells.has(c)) p.push(`router_evidence cell '${c}' is not a cell in scripts/eval/estimator/router-table/rules.json`);
+  }
+  if (h.defect_rates != null) {
+    if (typeof h.defect_rates !== 'string') p.push('defect_rates must be a repo path to a defect-rates JSON, or "none — <why>"');
+    else if (!/^none\s+[—-]+\s*\S/.test(h.defect_rates)) {
+      const f = path.join(ctx.repoRoot ?? path.join(HERE, '..', '..', '..'), h.defect_rates);
+      let j = null; try { j = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* reported below */ }
+      if (!j) p.push(`defect_rates ${h.defect_rates} is not a readable JSON file in the repo`);
+      else if (!defectRatesShapeOk(j)) p.push(`defect_rates ${h.defect_rates} carries no route with misleads / wrong_text per 1,000 words and fidelity_mean (defect-rate.py's score.json or router-table defect-rates.json shape)`);
+    }
+  }
+  for (const f of asList(h.feeds)) if (!FEEDS.includes(f)) p.push(`feeds '${f}' is not one of ${FEEDS.join(' | ')}`);
+  if (h.landed != null) {
+    const vals = asList(h.landed);
+    if (!vals.length) p.push('landed must be a repo path or "PR #<n>", or a list of them');
+    for (const v of vals) {
+      if (typeof v !== 'string' || /^PR #\d+$/.test(v)) continue;
+      const rel = v.replace(/#.*$/, '');
+      if (!rel || /^(\/|\.\.)/.test(rel)) { p.push(`landed '${v}' must be a repo path (no leading / or ..) or "PR #<n>"`); continue; }
+      if (!fs.existsSync(path.join(ctx.repoRoot ?? path.join(HERE, '..', '..', '..'), rel))) p.push(`landed ${rel} does not exist in the repo`);
+    }
+  }
+  if (h.supersedes != null) {
+    if (!Array.isArray(h.supersedes)) p.push('supersedes must be a list of earlier file names, [a.md, b.md] or []');
+    else for (const s of h.supersedes) {
+      if (typeof s !== 'string' || !/^[\w.-]+\.md$/.test(s)) p.push(`supersedes '${s}' must be a file name in experiments/`);
+      else if (s === ctx.name) p.push('supersedes names the file itself');
+      else if (ctx.exists && !ctx.exists(s)) p.push(`supersedes ${s} does not exist`);
+    }
   }
   if (h.status === 'superseded' && !h.superseded_by) p.push("status 'superseded' needs superseded_by: <file>");
   if (h.superseded_by != null) {

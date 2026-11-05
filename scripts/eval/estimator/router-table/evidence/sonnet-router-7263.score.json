@@ -1,0 +1,104 @@
+{
+ "source": "#7263 sonnet-router",
+ "generated_at": "2026-11-03T13:20:37.920Z",
+ "cells": {
+  "latin-flash3": {
+   "routes": {
+    "sonnet-read": {
+     "n": 30,
+     "books": 30,
+     "accept": "25/30",
+     "wrong_text_pages": "2/30",
+     "classes_k_of_n": {
+      "O11": "10/30",
+      "O12": "3/30",
+      "O8": "10/30",
+      "O6": "15/30",
+      "O17": "1/30",
+      "O16": "2/30",
+      "T6": "1/30",
+      "O9": "1/30",
+      "O10": "1/30",
+      "E2": "1/30",
+      "O4": "1/30",
+      "O5": "1/30"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "sonnet-read|3flash": {
+     "n": 30,
+     "books": 30,
+     "both": 19,
+     "a_only": 6,
+     "b_only": 2,
+     "neither": 3
+    }
+   }
+  },
+  "chinese-flash3": {
+   "routes": {
+    "sonnet-read": {
+     "n": 20,
+     "books": 20,
+     "accept": "7/20",
+     "wrong_text_pages": "11/20",
+     "classes_k_of_n": {
+      "O11": "8/20",
+      "E2": "9/20",
+      "O6": "13/20",
+      "O5": "6/20",
+      "O16": "7/20",
+      "O8": "3/20",
+      "O12": "3/20",
+      "O4": "1/20",
+      "O1": "1/20",
+      "O15": "1/20"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "sonnet-read|3flash": {
+     "n": 20,
+     "books": 20,
+     "both": 1,
+     "a_only": 6,
+     "b_only": 1,
+     "neither": 12
+    }
+   }
+  },
+  "latin-lite": {
+   "routes": {
+    "lite>sonnet": {
+     "n": 20,
+     "books": 20,
+     "accept": "11/20",
+     "wrong_text_pages": "5/20",
+     "classes_k_of_n": {
+      "O6": "11/20",
+      "O8": "4/20",
+      "O7": "2/20",
+      "O12": "3/20",
+      "E2": "5/20",
+      "O5": "1/20",
+      "O10": "1/20"
+     },
+     "not_delivered": 0
+    }
+   },
+   "paired": {
+    "lite>sonnet|lite": {
+     "n": 20,
+     "books": 20,
+     "both": 4,
+     "a_only": 7,
+     "b_only": 1,
+     "neither": 8
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "seed": 7991,
+ "alloc": {
+  "Sanskrit": {
+   "print": 15,
+   "manuscript": 15
+  },
+  "Greek": {
+   "print|before 1600": 10,
+   "print|1600 and later": 10,
+   "manuscript|before 1600": 10,
+   "manuscript|1600 and later": 10
+  }
+ },
+ "excluded_7866_books": 160,
+ "languages": {
+  "Sanskrit": {
+   "books": 331,
+   "in_7866": 3,
+   "undated": {
+    "books": 0,
+    "pages_translated": 0
+   },
+   "strata": {
+    "manuscript": {
+     "books": 83,
+     "pages_translated": 4706,
+     "want": 15,
+     "drawn": 15,
+     "skipped": []
+    },
+    "print": {
+     "books": 245,
+     "pages_translated": 76450,
+     "want": 15,
+     "drawn": 15,
+     "skipped": []
+    }
+   }
+  },
+  "Greek": {
+   "books": 1119,
+   "in_7866": 6,
+   "undated": {
+    "books": 18,
+    "pages_translated": 2389
+   },
+   "strata": {
+    "manuscript|1600 and later": {
+     "books": 12,
+     "pages_translated": 4249,
+     "want": 10,
+     "drawn": 10,
+     "skipped": []
+    },
+    "manuscript|before 1600": {
+     "books": 273,
+     "pages_translated": 103376,
+     "want": 10,
+     "drawn": 10,
+     "skipped": []
+    },
+    "print|1600 and later": {
+     "books": 559,
+     "pages_translated": 229106,
+     "want": 10,
+     "drawn": 10,
+     "skipped": []
+    },
+    "print|before 1600": {
+     "books": 251,
+     "pages_translated": 101425,
+     "want": 10,
+     "drawn": 10,
+     "skipped": []
+    }
+   }
+  }
+ }
+}

@@ -43,7 +43,7 @@ Every score row (§5) carries `measure`, one of:
 | `agreement` | **another engine's** output on the same leaf | "agreement with X" only | errors both engines share; **recitation** (engines agree on memorised text, #5093) |
 | `stability` | the **same engine's** repeat read | "repeat stability" only | anything systematic (a model that always misreads ſ as f is perfectly stable) |
 | `preference` | a **blind judge's** pairwise verdict (translation, §8) | "preferred by judge J on task T" | fidelity to source unless the judge packet is source-grounded (#5104) |
-| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`) |
+| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`). **judge@2** (`translation-corpus-audit/IMAGE-ADDENDUM.md`, from wave 2, #5274) is also shown the page image and records an OCR misreading as its own field, so a wrong leaf or a misread is no longer invisible to it; its score is still fidelity to the transcription, and a misread it misses is still missed. Quote which version a number comes from |
 | `judged_vs_reference` | **two blind judges'** rating of a candidate against the source text, with a **published human translation** of the same passage as a guide to meaning (`scripts/eval/translation-vs-reference/`, #5695) | "fidelity judged against a human reference (judge J)" | the page image, unless the source text was corrected by eye: scored against the OCR the same output reads 3.05, against the corrected text 2.53 (T4). The reference's own choices: where ours and the reference differ, the judge sided with ours 75 times and the reference 72 (Latin). Works nobody translated: every track expects a lower corpus mean. Its ceiling: a published translation judged against its own page scores 4.33, not 5 (#5762) |
 
 Rules:
@@ -357,6 +357,32 @@ Encoded as `DECISION_CARDS` and `cardVerdict()` in `scripts/eval/lib/routing-rul
 | Signs | Derek (reader-facing) | Derek (reader-facing) |
 
 The 10-book floor, the "under 4" line and the 0.65 bound are **judgement calls**. A hold is cheap to be wrong about (pages wait), so it may start below directional; a flag changes what readers see, so it may not.
+
+### 10.3 Decide a route on defects per 1,000 words, against the live route (2026-10-30, #6740)
+
+A page counted accept/reject treats one misleading numeral and ten as the same, and ignores how long the page is. On 2026-10-27 a Tibetan corrector raised page identity while it turned "seventh" into "nine". So:
+
+1. **The rule is severity-weighted defect rates; accept k/n is a summary.**
+   - Count every defect the judge tags, per 1,000 words of the text it read: cosmetic, misleads, wrong_text.
+   - Compare within a script only: a Han character or a Tibetan syllable counts as one word.
+   - Tools: `scripts/eval/route-judge-6740/defect-rate.mjs` → `defect-rate.py`. The router table shows the rates beside k/n (`router-table/defect-rates.json`).
+   - A new OCR or translation record names its rates file in `defect_rates:` (enforced by `experiments-lint.mjs`).
+2. **Weights:**
+   - **Cosmetic = 0.**
+   - **Misleads is a cost, not a gate.** One slip on a page is not a failed page.
+   - **Wrong text is a gate.**
+3. **The bar is the live route.** That is the route the table runs now, or the stored text readers already see. It is not perfection, and it is not Opus. A candidate passes when its wrong text is no worse than the live route's, within a stated margin (0.15 per 1,000 words in #6740). A cell with no text yet (scans only) needs an absolute ceiling instead.
+4. **Calibrate the labels before weighting.** Re-read a sample of the tagged defects with a fresh call that sees only the quote and the leaf.
+   - In #6740, 80 were re-read: 32 of 40 wrong_text and 25 of 40 misleads held up as real errors.
+   - Severity moved both ways at the misleads/wrong_text line: 17 of the 40 misleads were called wrong_text.
+   - So deflate the counts by the confirmed share, and never treat one tag as exact.
+5. **Every judge run has a positive control.** Planted errors must come back quoted in a defect. In #6740:
+   - Latin, German and French: 158 of 160 planted errors were quoted.
+   - Tibetan: 16 of 20 were quoted, half of them as only cosmetic. There the judge's severities are a floor, and the Derge reference decides.
+6. **QA a correction pass as span diffs, not page scores.** A defect on the corrected text whose quote is not in the draft was introduced by the correction. Report introduced and removed per 1,000 words beside the page-level verdict. In #6740:
+   - agy Flash-low introduced 1.2 per 1,000 words on Latin print, most of them O6 word swaps.
+   - Opus introduced none on Latin print and 0.7 per 1,000 words on German Flash-Lite drafts.
+7. **Report quality the `quality-statements.md` way:** the measured rate and the measured errors, with n in books and the date. Neither harsh nor sugarcoated.
 
 ## 11. Gap table (measured 2026-09-25)
 

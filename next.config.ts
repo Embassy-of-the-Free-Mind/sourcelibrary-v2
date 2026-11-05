@@ -4,6 +4,8 @@ import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
 import { pageStatusSources } from './src/lib/page-status';
+import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
+import { waitForTurbopackRelease } from './src/lib/wait-for-turbopack-release';
 import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
 
 const nextConfig: NextConfig = {
@@ -52,8 +54,9 @@ const nextConfig: NextConfig = {
   // /api/image serves files from public/ by path (route.ts reads process.cwd()/public),
   // so it traces the whole folder and sits at the 220 MB size guard. The AI-partners
   // page's images are served statically and never through it: keep them out (#7710).
+  // Article heroes are pre-sized AVIFs, served statically too (26 MB; #7956).
   outputFileTracingExcludes: {
-    '/api/image': ['./public/ai-partners/img/**'],
+    '/api/image': ['./public/ai-partners/img/**', './public/articles/heroes/**'],
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -264,6 +267,15 @@ const nextConfig: NextConfig = {
         source: '/admin/work',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Token use (#8201): same belt and braces as the spend page.
+      {
+        source: '/admin/tokens/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/tokens',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       // Self-hosted Google Fonts (#7537). File names carry Google's version id, so a
       // changed face is a new URL and the old one can be cached for good.
       {
@@ -277,6 +289,13 @@ const nextConfig: NextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=300, stale-while-revalidate=3600' },
         ],
+      },
+      {
+        // A hit at Cloudflare never reaches the proxy, so the Embassy's room would
+        // be served past the gate that guards it (#8098). Only Cloudflare reads this
+        // header; Vercel's own page cache still holds these pages.
+        source: '/embed/bph/:path*',
+        headers: [{ key: 'Cloudflare-CDN-Cache-Control', value: 'no-store' }],
       },
       // CDN-Cache-Control for Cloudflare edge caching.
       // Cloudflare strips this header before sending to browsers —
@@ -319,6 +338,12 @@ const nextConfig: NextConfig = {
       // path only — /catalog/scholar and /catalog/complete are not covered.
       {
         source: '/catalog',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      // The main-site catalogue moved to /library; /catalog above stays for partner hosts.
+      {
+        source: '/library',
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
@@ -517,11 +542,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/library',
-        destination: '/search',
-        permanent: true,
-      },
-      {
         source: '/prototype',
         destination: '/',
         permanent: true,
@@ -649,6 +669,15 @@ const nextConfig: NextConfig = {
         destination: '/gallery/:path*',
         permanent: true,
       },
+      // The BPH catalogue on /libraries/<bph> linked each record to
+      // /libraries/<slug>/catalog/<ubn>, which has no route (~150 404s a
+      // month in not_found_reports, Oct 2026). Catalogue records live at
+      // /embed/bph/catalog/<ubn|uuid>; send old and indexed links there.
+      {
+        source: '/libraries/:slug(bibliotheca-philosophica-hermetica|bph)/catalog/:key*',
+        destination: '/embed/bph/catalog/:key*',
+        permanent: true,
+      },
       // Short, sayable aliases for the MCP setup guide ("sourcelibrary.org/mcp").
       // The guide's canonical URL is /connect; these exist to be typed and read aloud.
       ...['/mcp', '/claude', '/chatgpt'].map((source) => ({
@@ -683,7 +712,16 @@ const nextConfig: NextConfig = {
 // concern, so only wrap when the PostHog credentials are actually present.
 const withAnalytics = (config: typeof nextConfig) =>
   process.env.POSTHOG_API_KEY && process.env.POSTHOG_PROJECT_ID
-    ? withPostHogConfig(config, {
+    ? withPostHogConfig({
+        ...config,
+        // Next and then the wrapper await this hook: the upload and page data start only once Turbopack has let go
+        // of its memory, and only the browser's maps go up (#7731).
+        compiler: { ...config.compiler, runAfterProductionCompile: async ({ distDir }) => {
+          const { released, waitedMs, rssBytes } = await waitForTurbopackRelease();
+          console.log(`Turbopack ${released ? 'released' : 'still holding'} memory after ${(waitedMs / 1000).toFixed(1)}s (next build RSS ${(rssBytes / 2 ** 30).toFixed(2)} GB)`);
+          console.log(`Dropped ${await dropServerSourcemaps(distDir)} server source maps before the PostHog upload`);
+        } },
+      }, {
         personalApiKey: process.env.POSTHOG_API_KEY,
         projectId: process.env.POSTHOG_PROJECT_ID,
         host: process.env.NEXT_PUBLIC_POSTHOG_HOST,

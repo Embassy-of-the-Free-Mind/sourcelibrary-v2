@@ -171,7 +171,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
 
   const basePath = `/${tenant}`;
 
-  // Tenant doc copy wins over partner-derived copy (see /embed/[tenant]/page.tsx
+  // Tenant doc copy wins over partner-derived copy (see /embed/[tenant]/(library)/page.tsx
   // for the rationale — Bhutan etc. would otherwise show "British Library").
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const tenantDescription = typeof (tenantDoc as any).description === 'string' ? (tenantDoc as any).description : '';

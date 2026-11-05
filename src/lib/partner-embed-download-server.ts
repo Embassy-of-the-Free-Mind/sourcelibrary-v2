@@ -1,6 +1,7 @@
 import { createHash } from 'crypto';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { trustedClientIp } from '@/lib/client-ip';
+import { isBrowserShaped, partnerGateEnforced } from '@/lib/partner-access';
 import {
   ANON_EMBED_DAILY_BOOK_CAP,
   isPartnerEmbedDownloadFor,
@@ -27,6 +28,8 @@ export async function isPartnerEmbedDownload(
   book: { tenantId?: string | null } | null | undefined,
 ): Promise<boolean> {
   if (!book?.tenantId) return false;
+  // The embed's download link is a click in a browser; nothing else needs this door (#8098).
+  if (partnerGateEnforced() && !isBrowserShaped(request.headers)) return false;
   const host = request.headers.get('host');
   const referer = request.headers.get('referer');
   const slug = partnerEmbedTenantFromRequest(host, referer);

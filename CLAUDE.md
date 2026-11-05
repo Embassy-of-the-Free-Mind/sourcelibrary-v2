@@ -173,12 +173,13 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Deploy verification, purges, the `/explore` build interlock → `deploy-and-caching.md` (also routed above)
 
 **Handing something to a model**
+- **The router: its purpose, how we validate it (V1–V7), the paper** → `../router-optimization-paper.md`
 - Choosing a Gemini model, a `generateContent` call site, `thinkingConfig`, grounding, or metering a model's cost → `ai-models.md` (**thinking is ON by default in 3.x and billed at the output rate — go through `getGeminiClient()` / `gemini-script-client.mjs`, never around them**; the OCR/translation routing split is deliberate, do not "fix" it)
 - **Which OCR engine or lane** for a book, a script, or a page that came back empty or refused; picking `--model` by hand → `../ocr-lane-decision-tree.md` (**a lane without provenance does not run**; the ladder is lite → flash → MinerU (GAP) → the Archive's leaf under a by-eye verdict → by eye; `OCR_LITE_ONLY` collapses tier 2)
 - Adding or changing a Librarian / MCP tool, or the text one returns → `agent-tool-results.md` (**a ranker cannot answer "how many"**, and a URL you leave out is one the model will invent — two 404s came out of the first live turn)
 
 **Writing a sweep, an import, or a new field**
-- A BULK import/sweep, or choosing `/api/import/*` vs a `*-direct.mjs` script → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
+- A BULK import/sweep, choosing `/api/import/*` vs a `*-direct.mjs` script, **or a recurring Hetzner job that reads Mongo** → `import-cost-and-egress.md` (**bulk never goes through a Vercel function** — invocations are a measured line item on a ~$1,750/mo bill; run it on Hetzner, not the laptop).
 - **Renting a GPU (Scaleway)** → lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease … --progress mongo:<ocr.source>`) and run the job under `scripts/gpu/idle-poweroff.sh run --`; the Hetzner watchdog stops expired leases AND idle ones (no new output for 30 min) via the provider API (a guest `poweroff` still bills).
 - Anything that calls Gemini from a worker or cron, a new `hetzner-crontab`/`vercel.json` line, or "why didn't the daily budget hold?" → `spend-controls.md` (**a queue is stored spend**; the dial has failed four distinct ways, and they look identical from outside)
 - Running any script/worker under `secret-lover run`, or running one **from a worktree**, or a job that reports a store as empty → `credential-injection.md` (**secret-lover reports an unreadable secret as a missing one and runs anyway**; a worktree resolves to the wrong project and gets zero secrets)

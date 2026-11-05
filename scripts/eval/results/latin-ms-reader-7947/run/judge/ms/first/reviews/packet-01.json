@@ -1,0 +1,754 @@
+[
+ {
+  "book_id": "b01-k",
+  "slot": 1,
+  "title": "Origenes Adamantius: Tractatus super Leviticum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "filii mist. hoc est laici. non enim alienigene. nisi si alteri iam fuerunt",
+      "image": "filij isrl· hoc e(st) laici· non t(ame)n alienigene· nisi si asscri|pti iam fuerint",
+      "problem": "'israel' read as 'mist'; 'asscripti' as 'alteri'; 'tamen' as 'enim'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur. et pars",
+      "image": "licet ccedant(ur) sacerdotib(us) ad edendum· n(on) tam(en) omnia conceduntur· s(ed) pars",
+      "problem": "'non tamen omnia' read as 'etiam omnia' — reverses the sense (not all of the offering is conceded)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et altari signum traditur",
+      "image": "et altaris ignib(us) traditur",
+      "problem": "'altaris ignibus' (to the altar fires) read as 'altari signum'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "que cum malam intelligentiam superant",
+      "image": "que cu(m) n(ost)ram intelligentiam superent",
+      "problem": "'nostram' read as 'malam'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ne forte alii anobui quia se habe uerunt offerant. meliorem igitur servamus et io",
+      "image": "ne forte alit(er) a nobis q(uam) se habe(t) ueritas p(ro)ferant(ur)· meli(us) igni ista seruam(us)· et io",
+      "problem": "clause garbled into nonsense ('anobui', 'habeuerunt'); 'melius igni ista' read as 'meliorem igitur'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ad edendum pur potum in tabernaculum domini sumpsimus",
+      "image": "ad edendu(m) p(ro)ut potuim(us) int(ra) tabernaculum d(omi)ni c(on)sumpsim(us)",
+      "problem": "'prout potuimus intra' garbled to 'pur potum in'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "lupi in hostia peccato uui sacrificii atque ordine tradidisset ne",
+      "image": "sup(er)i(us) in hostia p(ro) peccato ritu(m) sacrificij atq(ue) ordine(m) tradidisset· n(un)c",
+      "problem": "'superius' read as 'lupi'; 'ritum' as 'uui'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "committe mus. idcirco generalem affirmare non possum",
+      "image": "committe|re· S(ed) hec q(uonia)m n(on) semp(er) in scripturis diuinis sub ista distinctione inuenim|mus· idcirco generalem affirmare n(on) possum(us)",
+      "problem": "a full line ('Sed hec quoniam non semper in scripturis divinis sub ista distinctione invenimus') silently dropped",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "cum domino et est",
+      "image": "coram d(omi)no et c(etera)",
+      "problem": "'coram domino et cetera' read as 'cum domino et est'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quidem comulum esse leui ... diffiam que in multis sapientibus",
+      "image": "quide(m) co(m)ulsum ee leui(us) ... diff(er)entiam que n(on)nullis sapientum",
+      "problem": "'nonnullis' read as 'in multis'; 'differentiam' left as 'diffiam'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "adipe arieti hi qui circa renes sunt ... opunt super altare ... crassi est ... offerre uigulan tari",
+      "image": "adipe(s) [margin] arietis hi qui circa renes sunt ... operiunt [margin: impo(ni)] super altare ... [margin: in te] crassu(m) est ... offerre igni al|[margin: taris]",
+      "problem": "the bracketed marginal line-starts (adipes, imponi, in te, altaris, dicebat) are dropped or mangled ('uigulan tari')",
+      "severity": "moderate",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<image-desc> of a 'manicula pointing to the text' in the margin; the margins hold only paragraph marks, no manicula",
+      "severity": "minor"
+     },
+     {
+      "note": "<warning> calls the hand 'Gothic book hand (textualis)'; it is a 12th-c. late Caroline/protogothic minuscule",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 92,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "et uulneris tui dolore",
+      "image": "et a uulneris tui dolore",
+      "problem": "'a' dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "et simul cum eos",
+      "image": "et simul cura(bo) eos",
+      "problem": "'curabo' read as 'cum'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ad anime uulnera et curat",
+      "image": "ad anime uulnera et curas",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Si ergo sufficienter appha didici",
+      "image": "Si ergo sufficient(er) a p(ro)pha didicim(us)",
+      "problem": "'didicimus' truncated to 'didici'; 'a propheta' left unexpanded",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pacis et fidei quam prius suscepimus. rursum in uita cicatrice",
+      "image": "pacis et fidei quam p(er) xp(istu)m suscepim(us)· rursum in ista cicatrice",
+      "problem": "'per Christum' read as 'prius' — Christ dropped from the sentence; 'ista' as 'uita'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "contagio lepre inspicienda et pontificem sedem ea que legis lator exposuit. Sed et uero spe lepre",
+      "image": "contagio lepre· inspicienda p(er) pontificem sec(un)d(u)m ea que legis lator exposuit· Sec(un)da uero sp(eci)es lepre",
+      "problem": "'per' as 'et', 'secundum' as 'sedem', 'Secunda vero species' as 'Sed et uero spe' — sentence broken",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "pomma queque",
+      "image": "p(er) omnia quecumq(ue)",
+      "problem": "garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Si in quacunque die",
+      "image": "S(ed) in quacumq(ue) die",
+      "problem": "'Sed' read as 'Si'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta> gives the catchword as 'qua'; it reads 'equa' (or 'et qua')",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 136,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<margin> et de magno sacerdote et de eius officio et de eius vestibus ... et de eius morte et de eius sacerdotio et de eius filiis et de eius morte </margin>",
+      "image": "nothing — the outer margin beside the initial O is blank",
+      "problem": "a 33-line marginal list is invented, with its last items repeating — text that is not on the page",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "<margin> deponere non potest. </margin>",
+      "image": "these words belong to the facing leaf visible at the right edge",
+      "problem": "neighbour-leaf strip read as this page's marginal note",
+      "severity": "moderate",
+      "class": "I4"
+     },
+     {
+      "ocr": "<insert>Explicit liber VI. Incipit VII.</insert> de",
+      "image": "Explicit lib(er) xi· Incip(it) xii· De [red rubric]",
+      "problem": "book numbers wrong (xi/xii read as VI/VII) — misstates which homily begins here",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "cum gloria et impii uita sanctorum amen",
+      "image": "cui gloria et imperiu(m) in s(e)c(u)la s(e)c(u)lor(um) a(men)",
+      "problem": "doxology garbled",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ut neque ipsi enti utta sed in legem obnoxii simul mori. nec sed in spirituale legem humana nos pena",
+      "image": "ut neq(ue) i(n) p(re)senti uita sec(un)d(u)m legem obnoxij simus morti· neq(ue) sec(un)d(u)m sp(irit)uale legem· futura nos pena",
+      "problem": "clause garbled into nonsense ('ipsi enti utta', 'humana' for 'futura')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "de quo dicit deus magno sacerdote et sacerdos in eternum sed in ordinem",
+      "image": "de quo dixit d(eu)s [rubric: magno sacerdote] tu es sacerdos in eternu(m) sec(un)d(u)m ordinem",
+      "problem": "rubric run into the text; 'tu es' read as 'et', 'secundum' as 'sed in'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "paruum est et exiguum ... domi num patre",
+      "image": "paruus est et exiguus ... d(eu)m et patre(m)",
+      "problem": "'deum et patrem' read as 'dominum patre'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "introibat quidem in sancta manufacta illa inibi exstructa. non ascendebat in celum nec altare poterat ad patre luminum et qua non umbra implebat",
+      "image": "introibat quide(m) i(n) s(an)c(t)a· s(ed) manufacta· s(ed) lapidib(us) extructa· Non ascendebat in celu(m)· nec astare poterat ap(ud) patre(m) luminu(m)· s(ed) quia hor(um) umbra(m) implebat",
+      "problem": "'sed lapidibus' read as 'illa inibi'; 'sed quia horum' as 'et qua non' (inverts)",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Vii et uidet ... dii typol ueritate putant ... tamque mendatio respuere. Nol au qui",
+      "image": "Vn(de) et iudei ... du(m) typos ueritate(m) putant ... tamq(uam) mendatiu(m) respuer(un)t· Nos au(tem) qui",
+      "problem": "garbled words ('Vii et uidet', 'dii typol', 'Nol au')",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "non per sanguine tauro et hyrco et per sanguine suum",
+      "image": "n(on) p(er) sanguine(m) tauror(um) et hyrcor(um)· s(ed) p(er) sanguine(m) suu(m)",
+      "problem": "'sed' read as 'et' — the contrast (not by bulls' blood BUT by his own) is lost",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ex filiis suis cum i fusum est ... pfestat haba-",
+      "image": "ex f(rat)rib(us) suis· cum i|fusum e(st) ... p(er)fectas habe(n)s",
+      "problem": "'fratribus' read as 'filiis'; 'perfectas habens' garbled",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "invented marginal list (33 lines, repeating) shown to the reader as margin text",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Not readable as this manuscript: p.47 and p.136 are heavily garbled with meaning-reversing misreadings and a dropped line, and p.136 carries a 33-line invented marginal list and wrong homily numbers; p.92 is fair."
+ },
+ {
+  "book_id": "b01-m",
+  "slot": 2,
+  "title": "Origenes Adamantius: Tractatus super Leviticum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "et vel nos in audiendo vel nos superant",
+      "image": "et uel uos in audiendo · ł nos superant",
+      "problem": "first 'uos' (you, in hearing) likely read as 'nos'; the hand is ambiguous here",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<warning> says the scribe set the first word of the last six lines in the margin; there are five such words",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 92,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "et curam in eos",
+      "image": "et cura|ui(t) eos (line break)",
+      "problem": "probably 'curavit eos'; 'curam in' is a plausible but likely wrong reading",
+      "severity": "minor"
+     },
+     {
+      "ocr": "et magnificabo eis",
+      "image": "et magni[fe]stabo eis (scribal correction toward manifestabo)",
+      "problem": "scribe's corrected 'manifestabo' given as 'magnificabo'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 136,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ad conditionem terre uel alicuius urbis",
+      "image": "ad conditione(m) terre|ne alicui(us) urbis",
+      "problem": "'terrene' (split across the line) read as 'terre uel'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "cuius infusum est",
+      "image": "cum i|fusum e(st)",
+      "problem": "'cum' read as 'cuius'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "castitatemque commendat",
+      "image": "castitateq(ue) comendat",
+      "problem": "case slip",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Near-diplomatic quality on all three pages: abbreviations expanded correctly, the rubric (Explicit xi / Incipit xii) and the marginal line-starts are right; only a handful of minor slips."
+ },
+ {
+  "book_id": "b01-r",
+  "slot": 3,
+  "title": "Origenes Adamantius: Tractatus super Leviticum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "nisi si assump<margin><unclear>[...]</unclear>ti</margin>ti iam fuerint ... in<margin><unclear>[...]</unclear></margin>trabunt",
+      "image": "nisi si asscri|pti iam fuerint ... in|trabit — no marginal text at these points",
+      "problem": "'asscripti' read as 'assumpti'; invented <margin>[...]</margin> fragments spliced into the middle of words (also after 'audiendo' and 'legimus')",
+      "severity": "moderate",
+      "class": "O12"
+     },
+     {
+      "ocr": "ne forte alter anobis quasi se habeant vertat perferant. melius igni ista servari. et idcirco in hoc loco",
+      "image": "ne forte alit(er) a nobis q(uam) se habe(t) ueritas p(ro)ferant(ur)· meli(us) igni ista seruam(us)· et io etiam in hoc loco",
+      "problem": "clause garbled ('quasi se habeant vertat'); 'servamus' as 'servari'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ad edendum puto potius in istis tabernaculum domini consumpsimus",
+      "image": "ad edendu(m) p(ro)ut potuim(us) int(ra) tabernaculum d(omi)ni c(on)sumpsim(us)",
+      "problem": "'prout potuimus intra' read as 'puto potius in istis' — makes the speaker voice an opinion that is not there",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "in quo iugulant holocaustum ara",
+      "image": "in quo iugulant(ur) holocautomata",
+      "problem": "'holocautomata' split into 'holocaustum ara'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "nec separatim mandat",
+      "image": "n(un)c separatim mandat",
+      "problem": "'nunc' read as 'nec' — negates the clause",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "et addat in omissis simul. hoc id quod pro peccato est",
+      "image": "et addat i(n) nouis|simis· sic(ut) id quod p(ro) peccato est",
+      "problem": "'in novissimis sicut' read as 'in omissis simul. hoc'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "que in nullius sapientum visa est",
+      "image": "que n(on)nullis sapientu(m) uisa est",
+      "problem": "'nonnullis' (some) read as 'in nullius' (none) — reverses who held the distinction",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "super altare. ut et tu scias ... omne quod crassum est",
+      "image": "[margin: impo(ni)] sup(er) altare ... omne quod [margin: in te] crassu(m) est",
+      "problem": "marginal line-starts 'imponi' and 'in te' dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<margin><unclear>[...]</unclear></margin> tags inside words show to the reader as broken markup",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 92,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "et a vulneribus tui dolore",
+      "image": "et a uulneris tui dolore",
+      "problem": "case misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pacis et fidei quam per ipsum suscepimus",
+      "image": "pacis et fidei quam p(er) xp(istu)m suscepim(us)",
+      "problem": "'per Christum' given as 'per ipsum'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Si ergo sufficienter a propheta didicisti",
+      "image": "didicim(us)",
+      "problem": "'didicimus' as 'didicisti'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Si qua post cognitionem ... tunc sit in cute ... inquiens ... sed si in quacunque",
+      "image": "Si ig(itur) post co|gnitionem ... tunc fit in cute ... inquid ... S(ed) in quacumq(ue)",
+      "problem": "small misreadings ('Si qua', 'sit', 'inquiens', inserted 'si')",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Addemus tamen ad hec",
+      "image": "Addemus tamen ad huc",
+      "problem": "misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 136,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<note>Rubric: Explicit liber vi. Incipit vii. De sacerdotibus et ad illum sacerdotem de quo dixit deus magno sacerdoti tu es sacerdos in eternum secundum ordinem melchisedech.</note>",
+      "image": "red: 'Explicit lib(er) xi· Incip(it) xii· De' ... 'magno sacerdote'; black text: 'sacerdos e(st)· ad illu(m) sacerdote(m) de quo dixit d(eu)s ... tu es sacerdos in eternu(m) sec(un)d(u)m ordinem melchisedech'",
+      "problem": "book numbers wrong (xi/xii → vi/vii); and the black text 'sacerdos est ad illum sacerdotem … melchisedech' is pulled out of the sentence into a rubric note, so the body reads 'Omnis qui inter homines paruus est'",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "introibat quidem in sancta sanctorum manufacta· et lapidibus exstructa",
+      "image": "introibat quide(m) i(n) s(an)c(t)a· s(ed) manufacta· s(ed) lapidib(us) extructa",
+      "problem": "'sanctorum' invented ('the holy of holies'); 'sed ... sed' lost",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "nec altare poterat ad patre luminum",
+      "image": "nec astare poterat ap(ud) patre(m) luminu(m)",
+      "problem": "'astare apud' read as 'altare ad'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "intelligere debemus quoniam uere",
+      "image": "intelligere debemus q(uo)m(odo) uere",
+      "problem": "'quomodo' read as 'quoniam'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "cum infusus est super capud",
+      "image": "cum i|fusum e(st) sup(er) cap(ut)",
+      "problem": "minor slip",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<lb/> tags left in the running text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Mostly the right text but with frequent meaning-changing slips, invented <margin>[...]</margin> fragments inside words on p.47, and a rubric on p.136 with the wrong homily numbers that swallows a line of body text."
+ },
+ {
+  "book_id": "b01-t",
+  "slot": 4,
+  "title": "Origenes Adamantius: Tractatus super Leviticum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 47,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "filii mist. hoc est laici. non enim alienigene. nisi si alteri iam fuerunt",
+      "image": "filij isrl· hoc e(st) laici· non t(ame)n alienigene· nisi si asscri|pti iam fuerint",
+      "problem": "'israel' read as 'mist'; 'asscripti' as 'alteri'; 'tamen' as 'enim'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur. et pars",
+      "image": "licet ccedant(ur) sacerdotib(us) ad edendum· n(on) tam(en) omnia conceduntur· s(ed) pars",
+      "problem": "'non tamen omnia' read as 'etiam omnia' — reverses the sense (not all of the offering is conceded)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et altari signum traditur",
+      "image": "et altaris ignib(us) traditur",
+      "problem": "'altaris ignibus' (to the altar fires) read as 'altari signum'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "que cum malam intelligentiam superant",
+      "image": "que cu(m) n(ost)ram intelligentiam superent",
+      "problem": "'nostram' read as 'malam'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ne forte alii anobui quia se habe uerunt offerant. meliorem igitur servamus et io",
+      "image": "ne forte alit(er) a nobis q(uam) se habe(t) ueritas p(ro)ferant(ur)· meli(us) igni ista seruam(us)· et io",
+      "problem": "clause garbled into nonsense ('anobui', 'habeuerunt'); 'melius igni ista' read as 'meliorem igitur'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ad edendum pur potum in tabernaculum domini sumpsimus",
+      "image": "ad edendu(m) p(ro)ut potuim(us) int(ra) tabernaculum d(omi)ni c(on)sumpsim(us)",
+      "problem": "'prout potuimus intra' garbled to 'pur potum in'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "lupi in hostia peccato uui sacrificii atque ordine tradidisset ne",
+      "image": "sup(er)i(us) in hostia p(ro) peccato ritu(m) sacrificij atq(ue) ordine(m) tradidisset· n(un)c",
+      "problem": "'superius' read as 'lupi'; 'ritum' as 'uui'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "committe mus. idcirco generalem affirmare non possum",
+      "image": "committe|re· S(ed) hec q(uonia)m n(on) semp(er) in scripturis diuinis sub ista distinctione inuenim|mus· idcirco generalem affirmare n(on) possum(us)",
+      "problem": "a full line ('Sed hec quoniam non semper in scripturis divinis sub ista distinctione invenimus') silently dropped",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "cum domino et est",
+      "image": "coram d(omi)no et c(etera)",
+      "problem": "'coram domino et cetera' read as 'cum domino et est'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quidem comulum esse leui ... diffiam que in multis sapientibus",
+      "image": "quide(m) co(m)ulsum ee leui(us) ... diff(er)entiam que n(on)nullis sapientum",
+      "problem": "'nonnullis' read as 'in multis'; 'differentiam' left as 'diffiam'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "adipe arieti hi qui circa renes sunt ... opunt super altare ... crassi est ... offerre uigulan tari",
+      "image": "adipe(s) [margin] arietis hi qui circa renes sunt ... operiunt [margin: impo(ni)] super altare ... [margin: in te] crassu(m) est ... offerre igni al|[margin: taris]",
+      "problem": "the bracketed marginal line-starts (adipes, imponi, in te, altaris, dicebat) are dropped or mangled ('uigulan tari')",
+      "severity": "moderate",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<image-desc> of a 'manicula pointing to the text' in the margin; the margins hold only paragraph marks, no manicula",
+      "severity": "minor"
+     },
+     {
+      "note": "<warning> calls the hand 'Gothic book hand (textualis)'; it is a 12th-c. late Caroline/protogothic minuscule",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 92,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Propter multitudinem iniquitatis tuae,",
+      "image": "P(ro)pter multitudinem iniquitatu(m) tuaru(m)",
+      "problem": "normalised toward a different form",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "pacis et fidei quam partim suscepit",
+      "image": "pacis et fidei quam p(er) xp(istu)m suscepim(us)",
+      "problem": "'per Christum suscepimus' read as 'partim suscepit' — Christ dropped and the subject changed",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Si ergo sufficienter a propheta didicisti ... Si ergo post cognitionem",
+      "image": "didicim(us) ... Si ig(itur) post co|gnitionem",
+      "problem": "small misreadings",
+      "severity": "minor"
+     },
+     {
+      "ocr": "et curavit eos ... Si in quacumque die",
+      "image": "S(ed) in quacumq(ue) die",
+      "problem": "'Sed' read as 'Si'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 136,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<margin> et de magno sacerdote et de eius officio et de eius vestibus ... et de eius morte et de eius sacerdotio et de eius filiis et de eius morte </margin>",
+      "image": "nothing — the outer margin beside the initial O is blank",
+      "problem": "a 33-line marginal list is invented, with its last items repeating — text that is not on the page",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "<margin> deponere non potest. </margin>",
+      "image": "these words belong to the facing leaf visible at the right edge",
+      "problem": "neighbour-leaf strip read as this page's marginal note",
+      "severity": "moderate",
+      "class": "I4"
+     },
+     {
+      "ocr": "<insert>Explicit liber VI. Incipit VII.</insert> de",
+      "image": "Explicit lib(er) xi· Incip(it) xii· De [red rubric]",
+      "problem": "book numbers wrong (xi/xii read as VI/VII) — misstates which homily begins here",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "cum gloria et impii uita sanctorum amen",
+      "image": "cui gloria et imperiu(m) in s(e)c(u)la s(e)c(u)lor(um) a(men)",
+      "problem": "doxology garbled",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ut neque ipsi enti utta sed in legem obnoxii simul mori. nec sed in spirituale legem humana nos pena",
+      "image": "ut neq(ue) i(n) p(re)senti uita sec(un)d(u)m legem obnoxij simus morti· neq(ue) sec(un)d(u)m sp(irit)uale legem· futura nos pena",
+      "problem": "clause garbled into nonsense ('ipsi enti utta', 'humana' for 'futura')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "de quo dicit deus magno sacerdote et sacerdos in eternum sed in ordinem",
+      "image": "de quo dixit d(eu)s [rubric: magno sacerdote] tu es sacerdos in eternu(m) sec(un)d(u)m ordinem",
+      "problem": "rubric run into the text; 'tu es' read as 'et', 'secundum' as 'sed in'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "paruum est et exiguum ... domi num patre",
+      "image": "paruus est et exiguus ... d(eu)m et patre(m)",
+      "problem": "'deum et patrem' read as 'dominum patre'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "introibat quidem in sancta manufacta illa inibi exstructa. non ascendebat in celum nec altare poterat ad patre luminum et qua non umbra implebat",
+      "image": "introibat quide(m) i(n) s(an)c(t)a· s(ed) manufacta· s(ed) lapidib(us) extructa· Non ascendebat in celu(m)· nec astare poterat ap(ud) patre(m) luminu(m)· s(ed) quia hor(um) umbra(m) implebat",
+      "problem": "'sed lapidibus' read as 'illa inibi'; 'sed quia horum' as 'et qua non' (inverts)",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Vii et uidet ... dii typol ueritate putant ... tamque mendatio respuere. Nol au qui",
+      "image": "Vn(de) et iudei ... du(m) typos ueritate(m) putant ... tamq(uam) mendatiu(m) respuer(un)t· Nos au(tem) qui",
+      "problem": "garbled words ('Vii et uidet', 'dii typol', 'Nol au')",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "non per sanguine tauro et hyrco et per sanguine suum",
+      "image": "n(on) p(er) sanguine(m) tauror(um) et hyrcor(um)· s(ed) p(er) sanguine(m) suu(m)",
+      "problem": "'sed' read as 'et' — the contrast (not by bulls' blood BUT by his own) is lost",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ex filiis suis cum i fusum est ... pfestat haba-",
+      "image": "ex f(rat)rib(us) suis· cum i|fusum e(st) ... p(er)fectas habe(n)s",
+      "problem": "'fratribus' read as 'filiis'; 'perfectas habens' garbled",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "invented marginal list (33 lines, repeating) shown to the reader as margin text",
+      "severity": "serious",
+      "class": "O1"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Pages 47 and 136 are the same garbled reading as b01-k (meaning reversals, a dropped line, an invented 33-line margin, wrong homily numbers); p.92 alone is a good reading."
+ }
+]

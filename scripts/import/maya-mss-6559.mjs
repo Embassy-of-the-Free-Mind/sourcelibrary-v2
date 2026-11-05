@@ -54,6 +54,7 @@ const HOLD = {
   reason: CAMPAIGN,
   issue: ISSUE,
   release: 'Opus OCR of the book is done (claude-ocr.mjs, maya-ref-opus-6559 recipe, #6559) and Derek has chosen its translation lane; release with --to ocr_complete only then',
+  release_when: { kind: 'issue', ref: ISSUE },
 };
 const COLLECTIONS = ['maya', 'mesoamerican', 'americas'];
 const GATES_PROVENANCE = 'Previously owned by William Gates; sold to Robert Garrett in 1930; donated to Princeton University Library in 1949.';

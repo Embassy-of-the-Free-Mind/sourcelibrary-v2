@@ -21,7 +21,8 @@
  *                                          or per-book cap; window from 2026-10-27 unless --since; never moves the nightly window
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
  *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post]
- *                                                      build.py on origin/main + this export; publish; post flips
+ *                                                      build.py on origin/main + this export; publish; post flips,
+ *                                                      and the router binding (audit/router-table-drift.mjs) when it changes
  *   ... lane-judge-sampler.mjs annotate                    give older store records their script type (print / manuscript)
  *   ... lane-judge-sampler.mjs nightly --out=DIR           run, annotate, export, rebuild (the cron line)
  *   ... lane-judge-sampler.mjs weekly-pr --out=DIR         the repo copy: a PR with the export + rules.json entries
@@ -63,6 +64,8 @@
  * never judged twice): page, book, cell, route, lane, the lane's write (revision id, run id, time, text hash), judge
  * model, prompt template hash and prompt hash, seed, run id, date, verdict, and the page's script type (scriptClass). `lane_judge_runs`: one per run (window,
  * seed, draw log, meter, calls, retry queue). Not `pages` or `books` (field-sprawl.md): nothing on a page changes.
+ * The store also holds TEST rows (`origin: 'test'`, lib/judge-rows.mjs, #7263); every read here is live-only
+ * (verdictQuery), so a test never moves this draw, its cap or its export.
  *
  * FEED. `export` writes every counted verdict as one score.json in the route-judge format, cells and routes named as
  * rules.json names them (german-lite / lite>agy-flash-low), so build.py pools it as one more source, scaled by its
@@ -93,6 +96,7 @@ import { bookHand } from '../lib/ocr-trust-gate.mjs';
 import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
 import { wilson } from './lib/agreement-stats.mjs';
 import { REASON as SIKU_REASON, MODEL as SIKU_MODEL } from '../batch/siku-translate-lane.mjs';
+import { verdictQuery, isLive } from './lib/judge-rows.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -404,6 +408,8 @@ function byScript(rs) {
 
 /** The store as one route-judge score.json. records: every document of lane_judge_verdicts. */
 export function exportScore(records, { generatedAt = new Date().toISOString() } = {}) {
+  // Test rows (#7263) are never live-lane evidence, even when a caller hands the whole store in.
+  records = records.filter(isLive);
   const ok = records.filter(validRecord), bad = records.length - ok.length;
   const judged = ok.filter(opusJudged);
   const report = { generated_at: generatedAt, source: 'lane-judge-sampler (#7611)', file: EVIDENCE_PATH,
@@ -595,7 +601,8 @@ async function findWrites(db, since, until, only = null) {
 }
 
 async function history(db) {
-  const rows = await db.collection(VERDICTS).find({}, { projection: { kind: 1, page_id: 1, book_id: 1, cell: 1, route: 1, judged_at: 1, called: 1, week: 1, judge: 1, lane: 1, run_id: 1, _id: 1 } }).toArray();
+  // Live rows only (#7263): a test's pages and calls never move this draw's per-book cap, rate switch or weekly cap.
+  const rows = await db.collection(VERDICTS).find(verdictQuery({}), { projection: { kind: 1, page_id: 1, book_id: 1, cell: 1, route: 1, judged_at: 1, called: 1, week: 1, judge: 1, lane: 1, run_id: 1, _id: 1 } }).toArray();
   const pagesJudged = new Set(), bookPagesSet = new Map(), routeBooks = new Map();
   for (const r of rows.filter((x) => x.kind !== 'wrong_page' && x.kind !== 'planted' && validRecordLoose(x))) {
     pagesJudged.add(r.page_id);
@@ -678,10 +685,10 @@ async function run() {
         const lang = drawn.find((d) => `${d.cell}|${d.route}` === g)?.lang;
         if (drawn.find((d) => `${d.cell}|${d.route}` === g)?.task === 'translation') { console.log(`  planted: the planter plants OCR errors, not translation errors (${g}); none owed`); continue; }
         if (!langCode(lang)) { console.log(`  planted: no planter for ${lang} (${g}); none owed`); continue; }
-        const prior = await db.collection(VERDICTS).find({ kind: 'planted', cell, route }, { projection: { planted_from: 1, week: 1 } }).toArray();
+        const prior = await db.collection(VERDICTS).find(verdictQuery({ kind: 'planted', cell, route }), { projection: { planted_from: 1, week: 1 } }).toArray();
         const owed = PER_WEEK - prior.filter((r) => r.week === week).length;
         if (owed <= 0) continue;
-        const accepted = await db.collection(VERDICTS).find({ kind: 'item', cell, route, 'verdict.accept': true, 'draw.stratum': { $ne: 'flagged' } }).toArray();
+        const accepted = await db.collection(VERDICTS).find(verdictQuery({ kind: 'item', cell, route, 'verdict.accept': true, 'draw.stratum': { $ne: 'flagged' } })).toArray();
         const ok = accepted.filter((r) => validRecord(r) && inEvidence(r));
         const texts = new Map((await db.collection('pages').find({ id: { $in: ok.map((r) => r.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data]));
         const sources = ok.map((rec) => ({ rec, text: texts.get(rec.page_id) })).filter((x) => typeof x.text === 'string' && h(x.text.trim()).slice(0, 16) === x.rec.text_hash);
@@ -727,6 +734,7 @@ async function run() {
       if (!text?.trim() || !imageUrl || (task === 'translation' && !source?.trim())) { console.log(`  skip ${q.kind} ${q.d.page_id}: ${!imageUrl ? 'no image' : !text?.trim() ? 'no text' : 'no source OCR'}`); continue; }
       if (q.kind === 'item' && (await import('../lib/page-text-writer.mjs')).textHash(p[field]) !== q.d.write.text_hash) { console.log(`  skip ${q.d.page_id}: rewritten since the draw`); continue; }
       const _id = `lj${h(`${q.kind}:${q.d.cell}:${q.route}:${q.d.page_id}:${q.other?.page_id ?? ''}:${h(text.trim())}`).slice(0, 16)}`;
+      // all origins: an _id dedupe before insert (test ids are prefixed ljt), not a read of evidence.
       if (await db.collection(VERDICTS).findOne({ _id }, { projection: { _id: 1 } })) continue;
       const it = { id: _id, task, lang: q.d.lang, image_url: imageUrl, text, ...(source != null && { source }) };
       const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'lj-opus-'));
@@ -768,7 +776,7 @@ async function run() {
 async function annotate() {
   const { c, db } = await mongo();
   try {
-    const todo = await db.collection(VERDICTS).find({ script_type: { $exists: false } }, { projection: { _id: 1, page_id: 1, book_id: 1, lane: 1 } }).toArray();
+    const todo = await db.collection(VERDICTS).find(verdictQuery({ script_type: { $exists: false } }), { projection: { _id: 1, page_id: 1, book_id: 1, lane: 1 } }).toArray();
     if (!todo.length) { console.log('annotate: nothing to do'); return 0; }
     const pages = new Map((await db.collection('pages').find({ id: { $in: [...new Set(todo.map((r) => r.page_id))] } }, { projection: { id: 1, script_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
     const prof = await bookProfiles(db, [...new Set(todo.map((r) => r.book_id))]);
@@ -783,7 +791,7 @@ async function annotate() {
 
 async function readStore() {
   const { c, db } = await mongo();
-  try { return { records: await db.collection(VERDICTS).find({}).toArray(), runs: await db.collection(RUNS).find({ dry_run: false }).sort({ at: 1 }).toArray() }; } finally { await c.close(); }
+  try { return { records: await db.collection(VERDICTS).find(verdictQuery({})).toArray(), runs: await db.collection(RUNS).find({ dry_run: false }).sort({ at: 1 }).toArray() }; } finally { await c.close(); }
 }
 
 async function doExport(file, root) {
@@ -850,12 +858,25 @@ async function rebuild() {
   fs.writeFileSync(prevFile, JSON.stringify(pub, null, 1));
   if (!flag('no-publish')) { const { c, db } = await mongo(); try { await db.collection('ops_reports').replaceOne({ _id: pub._id }, pub, { upsert: true }); } finally { await c.close(); } }
   console.log(`rebuilt on ${ref} ${sha}: evidence added ${added.join(', ') || 'none'}; flips ${flips.length}`);
-  if (flips.length && !flag('no-post')) {
-    const body = [`**Router table, lane-judge sampler nightly (#7611)**: ${flips.length} cell decision(s) changed with the judged lane output (build.py on main ${sha}).`, '',
+  // Router binding (#7263, router-optimization-paper.md build step 5): has each decided cell of current.json shipped?
+  // Posted when its drift changes (a cell newly unshipped, mismatched, waived or fixed), with the flips or alone.
+  let binding = null;
+  const bindingFile = path.join(pubDir, 'binding-posted.json');
+  try {
+    const d = await import('../audit/router-table-drift.mjs');
+    const r = d.driftFromRepo();
+    const last = fs.existsSync(bindingFile) ? JSON.parse(fs.readFileSync(bindingFile, 'utf8')).signature : null;
+    if (r.signature !== last) binding = { md: d.driftMarkdown(r), signature: r.signature };
+    console.log(`router binding: ${JSON.stringify(r.tally)}${binding ? ' (changed)' : ''}`);
+  } catch (e) { console.log(`router binding: not run (${e.message})`); }
+  if ((flips.length || binding) && !flag('no-post')) {
+    const body = [...(flips.length ? [`**Router table, lane-judge sampler nightly (#7611)**: ${flips.length} cell decision(s) changed with the judged lane output (build.py on main ${sha}).`, '',
       '| cell | before | after | lane evidence |', '|---|---|---|---|',
       ...flips.map((f) => `| ${f.cell} | ${f.before} | ${f.after} | ${Object.entries(pub.lane_evidence[f.cell] ?? {}).map(([r, x]) => `${r} ${x.accept} (wrong text ${x.wrong_text}, ${x.books} books)`).join('; ') || 'none (other evidence moved)'} |`), '',
-      'Published: ops_reports `router-table:lane-judge`. The routing tables do not change from this (hold list).'].join('\n');
+      'Published: ops_reports `router-table:lane-judge`. The routing tables do not change from this (hold list).'] : []),
+    ...(binding ? [...(flips.length ? ['', '---', ''] : []), binding.md] : [])].join('\n');
     sh('gh', ['issue', 'comment', '7263', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', body]);
+    if (binding) fs.writeFileSync(bindingFile, JSON.stringify({ at: new Date().toISOString(), signature: binding.signature }));
   }
   // New containment candidates go on #7611, once each.
   const seenFile = path.join(OUT, 'contain-posted.json'), seen = new Set(fs.existsSync(seenFile) ? JSON.parse(fs.readFileSync(seenFile, 'utf8')) : []);

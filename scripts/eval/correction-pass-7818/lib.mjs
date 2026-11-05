@@ -382,3 +382,15 @@ export function servedArmc(read, lite, { languages = [], language = '' } = {}) {
   if (back.text.trim() === lite.trim()) return stand('other', 'every change was put back by the diff guard');
   return { outcome: 'written', why: 'written', served: back.text, put_back: back.reverted, flags: flags.length };
 }
+
+// ═══ AMENDMENT 2 (2026-10-30 23:45Z): the severity unit is #7824's ═══
+/**
+ * Words as PR #7824 counts them (scripts/eval/route-judge-6740/defect-rate.mjs `words`, job defect-rate-6740): tags
+ * that are not page content dropped with their content, other tags dropped and their text kept, a word = a whitespace
+ * token with a letter or digit (Latin script). Restated here because #7824 is not on main yet; replace with the import
+ * once it lands, so the router and this paper count one unit.
+ */
+const NONCONTENT_7824 = /<(scan-quality|language|script|page-type|page-num|meta|note|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi;
+export const words7824 = (t) => String(t || '').replace(NONCONTENT_7824, ' ').replace(/<[^>]*>/g, ' ').replace(/^\s*#+\s*/gm, ' ').replace(/\|/g, ' ').split(/\s+/).filter((x) => /[\p{L}\p{N}]/u.test(x)).length;
+/** Defects per 1,000 words of one verdict, by severity class (#7824's measure). */
+export const defectCounts = (v) => ({ misleads: (v?.defects || []).filter((d) => d.severity === 'misleads').length, wrong_text: (v?.defects || []).filter((d) => d.severity === 'wrong_text').length });

@@ -82,7 +82,8 @@
  * note}) lifts the 40% shared-words floor for exactly the pages a person or session opened against the image, when a
  * book has too few refused pages for a lane gate (it needs 10). `verdict` must be 'read-matches-image'; a row whose
  * read_sha256 is not the read in the directory lifts nothing. Every other guard stays, and the row is written into
- * `engine.input.by_eye`.
+ * `engine.input.by_eye`. A row may add `scripts_seen: ["Greek"]`: the scripts the checker saw printed on the leaf, which
+ * the foreign-script guard then accepts for this read only (#8189).
  *
  * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ the
  * moment it is made. Before calling, `read` asks for a kept read of the same page by the same model on the same prompt
@@ -106,6 +107,17 @@
  * (mode, lane, draft) pointing at the whole prompt sent, so `apply` runs every correct-mode guard page by page,
  * unchanged. A page with no draft is not sent and breaks the run.
  *
+ * EVAL KNOBS (#6740 read-surface, Box-Behnken tuning of the first read; production passes none of them):
+ * `read --long-edge=N` sends each image with its long edge fitted to N px (scripts/lib/image-long-edge.mjs; never
+ * enlarged, so an image already ≤ N goes as served); the meta records `image_fit` {long_edge, resized, native, sent}.
+ * `read --image-cache=DIR` takes DIR/<page_id>.jpg when present and saves a fetched image there otherwise, so every run
+ * of a design sends the same served bytes (the host can serve one URL as two JPEGs, #7567) and a rate-limited host
+ * (BSB) is fetched once. `read --no-alone` (with --per-call) does not read a refused block's pages one per call: each
+ * page that would have gone alone is listed in DIR/not-read.jsonl {page_id, from, call_id} and left unread, so a design
+ * run costs one block (and its one retry) per call; the analysis prices those pages at the one-per-call rate.
+ * `read --image-prep=gnu` (Amendment 6) sends each image, after the long-edge fit, as grayscale + normalise + unsharp
+ * (scripts/lib/image-long-edge.mjs prepImage, #5250's arms); the meta's `image_fit` records `prep`.
+ *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
  * (#6560: Kannada in a Tibetan correction) is refused.
@@ -124,18 +136,20 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
 import { checkWrittenText, writeGuardReason, correctionHeaderProblem } from '../lib/write-text-guard.mjs';
+import { ocrBlockRefusals } from '../lib/block-page-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
 import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
 import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
 import { changeShare, CHECK_FLAG_SHARE } from '../lib/draft-change-share.mjs';
+import { fitLongEdge, prepImage } from '../lib/image-long-edge.mjs';
 import { correctionDiffs, applyDiffVerdicts, longSPass, LANG_OF } from '../lib/correction-diff-guard.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
@@ -166,6 +180,15 @@ const OVER_STORED = process.argv.includes('--over-stored');
 if (STAGE === 'read' && OVER_STORED && !GPU_DRAFT) { console.error('--over-stored is for --gpu-draft'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 const PER_CALL = Number(arg('per-call') || 1);
+// Eval knobs (#6740, see EVAL KNOBS in the header): image long edge, a per-page image cache, no one-per-call fallback.
+const LONG_EDGE = arg('long-edge') ? Number(arg('long-edge')) : null;
+if (STAGE === 'read' && LONG_EDGE !== null && !(Number.isInteger(LONG_EDGE) && LONG_EDGE >= 256 && LONG_EDGE <= 8000)) { console.error('--long-edge must be 256 to 8000 px'); process.exit(2); }
+const IMAGE_CACHE = arg('image-cache') && path.resolve(arg('image-cache'));
+const NO_ALONE = process.argv.includes('--no-alone');
+const IMAGE_PREP = arg('image-prep') || null;
+if (STAGE === 'read' && IMAGE_PREP && IMAGE_PREP !== 'gnu') { console.error('--image-prep must be gnu'); process.exit(2); }
+if (STAGE === 'read' && NO_ALONE && PER_CALL < 2) { console.error('--no-alone is for --per-call >= 2'); process.exit(2); }
+if (STAGE === 'read' && (LONG_EDGE || IMAGE_CACHE || IMAGE_PREP) && (CORRECT_PROMPT || GPU_DRAFT)) { console.error('--long-edge / --image-cache / --image-prep are for a plain read'); process.exit(2); }
 // up to 8 (#7701 german-cheaper: the read@8 arm); the lanes still cap themselves at 4 (cli-ocr-lane.mjs --per-call 1-4)
 if (STAGE === 'read' && !(Number.isInteger(PER_CALL) && PER_CALL >= 1 && PER_CALL <= 8)) { console.error('--per-call must be 1 to 8'); process.exit(2); }
 // --per-call with --correct-prompt (#7701 arm C): N drafts and their images in one call (agy-cli.mjs correctBlockPrompt);
@@ -276,6 +299,23 @@ if (STAGE === 'read') {
   let quotaUntil = 0, reused = 0;
   // What a correction read records of the draft it was sent (apply checks it against the stored OCR / the GPU draft file).
   const draftMeta = (p) => ({ ...(p.ocr.source === 'file' && { source: 'file' }), ...(p.ocr.source === 'gpu' && { source: 'gpu', file: `${p.id}.draft.txt`, ...p.ocr.gpu }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at });
+  // The served image (or the --image-cache copy of it), fitted to --long-edge. Returns { buf, fit } or { error }.
+  const servedImage = async (p, src) => {
+    const cached = IMAGE_CACHE && path.join(IMAGE_CACHE, `${p.id}.jpg`);
+    let buf;
+    if (cached && fs.existsSync(cached)) buf = fs.readFileSync(cached);
+    else {
+      const res = await fetch(src);
+      if (!res.ok) return { error: `image HTTP ${res.status}` };
+      buf = Buffer.from(await res.arrayBuffer());
+      if (cached) { fs.mkdirSync(IMAGE_CACHE, { recursive: true }); fs.writeFileSync(cached, buf); }
+    }
+    if (!LONG_EDGE && !IMAGE_PREP) return { buf, fit: null };
+    const f = await fitLongEdge(buf, LONG_EDGE);
+    if (IMAGE_PREP) return { buf: await prepImage(f.buf, IMAGE_PREP), fit: { long_edge: LONG_EDGE, resized: f.resized, native: f.native, sent: f.sent, prep: IMAGE_PREP } };
+    return { buf: f.buf, fit: { long_edge: LONG_EDGE, resized: f.resized, native: f.native, sent: f.sent } };
+  };
+  const notRead = (p, from, callId = null) => fs.appendFileSync(path.join(OUT, 'not-read.jsonl'), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, from, call_id: callId }) + '\n');
   // `from`: the block call (#7522) whose refusal or guard sent this page to be read alone, recorded in its meta.
   const readOne = async (p, from = null) => {
     const key = p.id;
@@ -287,9 +327,13 @@ if (STAGE === 'read') {
     if (!src) { console.log(`  ${p.page_number} has no usable image; skipped`); return; }
     const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
     if (local && !fs.existsSync(local)) { console.log(`  ${p.page_number} not in --image-dir; skipped`); return; }
-    const res = local ? null : await fetch(src);
-    if (res && !res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
-    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
+    let buf, fit = null;
+    if (local) buf = fs.readFileSync(local);
+    else {
+      const im = await servedImage(p, src);
+      if (im.error) { console.log(`  ${p.page_number} ${im.error}; skipped`); return; }
+      ({ buf, fit } = im);
+    }
     if (p.ocr?.source === 'gpu') {
       // The corrector must see the image the draft was made from, or its "the image is the authority" is about another scan.
       if (createHash('sha256').update(buf).digest('hex') !== p.ocr.gpu.image_sha256) { console.log(`  ${p.page_number} the GPU draft was made from other image bytes; skipped`); return; }
@@ -348,7 +392,7 @@ if (STAGE === 'read') {
       chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
-      image_url: src, image_bytes: buf.length, image_sha256: imageSha,
+      image_url: src, image_bytes: buf.length, image_sha256: imageSha, ...(fit && { image_fit: fit }),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: draftMeta(p) }),
@@ -365,12 +409,16 @@ if (STAGE === 'read') {
     // A GPU draft is corrected against the image it was made from (--image-dir), as readOne does.
     const local = IMAGE_DIR && p.ocr?.source === 'gpu' ? path.join(IMAGE_DIR, `${p.id}.jpg`) : null;
     if (local && !fs.existsSync(local)) return { error: 'not in --image-dir' };
-    const res = local ? null : await fetch(src);
-    if (res && !res.ok) return { error: `image HTTP ${res.status}` };
-    const buf = local ? fs.readFileSync(local) : Buffer.from(await res.arrayBuffer());
+    let buf, fit = null;
+    if (local) buf = fs.readFileSync(local);
+    else {
+      const im = await servedImage(p, src);
+      if (im.error) return { error: im.error };
+      ({ buf, fit } = im);
+    }
     const sha = createHash('sha256').update(buf).digest('hex');
     if (p.ocr?.source === 'gpu' && sha !== p.ocr.gpu.image_sha256) return { error: 'the GPU draft was made from other image bytes' };
-    return { src, buf, sha };
+    return { src, buf, sha, fit };
   };
   // Correct mode (#7701 arm C): the block carries each page's draft, so the prompt is the group's, not the count's.
   const blockPrompt = (n, group) => (CORRECT_PROMPT ? correctBlockPrompt(base, group.map((q) => q.ocr.data)) : base + extra + ocrBlockInstruction(n, { variant: PROMPT_VARIANT }));
@@ -416,8 +464,19 @@ if (STAGE === 'read') {
     fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), model: MODEL, secs: Math.round((Date.now() - t0) / 1000), cls: r.cls || (texts ? null : 'page_markers_mismatch'), calls, nudged, usage, tool_calls: tools }) + '\n');
     if (!texts) { console.log(`  p.${first.page_number}-${last.page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round((Date.now() - t0) / 1000)}s)`); return null; }
     const redo = [];
+    // #5021 (block-page-guard.mjs ocrBlockRefusals): a page whose read holds its neighbour's leaf, against the page's
+    // stored text where it has one (the draft, or the text a re-read replaces), or that prints the same page number as
+    // another read of the call, is read again alone. A correction's UNCHANGED / CONTAIN answer is not a transcription.
+    const asRead = texts.map((t) => (CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(t) ? '' : t));
+    const stored = new Map(group.map((q) => [q.id, q.ocr?.data || storedText.get(q.id) || '']));
+    const wrongLeaf = new Set();
+    for (const g of ocrBlockRefusals(group, asRead, { stored })) {
+      wrongLeaf.add(g.page_number);
+      fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: g }) + '\n');
+    }
     for (const [i, p] of group.entries()) {
       const text = texts[i];
+      if (wrongLeaf.has(p.page_number)) { redo.push(p); continue; }
       // A correction's UNCHANGED / CONTAIN answer is not a transcription: no chatter or cut-text check (readOne: the same).
       const answer = CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(text);
       const chatter = answer ? null : ocrReadProblem(text, { header: !CORRECT_PROMPT || p.ocr?.source === 'gpu' });
@@ -432,7 +491,7 @@ if (STAGE === 'read') {
         started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null,
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
         prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
-        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)),
+        wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
         prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
         ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
       };
@@ -467,13 +526,20 @@ if (STAGE === 'read') {
     if (redo === null) redo = await readBlock(group, imgs, 1);
     // Still refused: each page alone, so one hard page does not cost its neighbours.
     const from = redo === null ? 'refused' : 'guard';
+    if (NO_ALONE) { for (const p of redo ?? group) notRead(p, from, `${JOB}-${group[0].book_id}-${group[0].page_number}-${group.length}`); return; }
     for (const p of redo ?? group) await readOne(p, from);
   };
   let groups = pages.map((p) => [p]);
+  // The stored transcription of each page, for the block guard (#5021); read apart from the page, so a first read is
+  // not mistaken for a correction anywhere else in this script.
+  const storedText = new Map();
+  if (PER_CALL > 1) for (const r of await db.collection('pages').find({ id: { $in: pages.map((p) => p.id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()) if (r.ocr?.data) storedText.set(r.id, r.ocr.data);
   if (PER_CALL > 1) {
     // Runs of consecutive pages of one book in the page-ids file's order (a gap or a new book starts a run), cut into calls.
     const order = new Map(ids.map((id, i) => [id, i]));
-    const isRead = (p) => { try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
+    // --no-alone: a page its block left unread (not-read.jsonl) is done too, so a resumed design run does not call it again.
+    const leftUnread = new Set(NO_ALONE && fs.existsSync(path.join(OUT, 'not-read.jsonl')) ? fs.readFileSync(path.join(OUT, 'not-read.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : []);
+    const isRead = (p) => { if (leftUnread.has(p.id)) return true; try { return fs.existsSync(path.join(OUT, `${p.id}.meta.json`)) && fs.readFileSync(path.join(OUT, `${p.id}.txt`), 'utf8').length > 5; } catch { return false; } };
     const runs = [];
     for (const p of [...pages].sort((a, b) => order.get(a.id) - order.get(b.id))) {
       if (isRead(p)) { console.log(`  ${p.page_number} already read`); continue; }
@@ -576,12 +642,16 @@ const books = {};
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   const correct = m.mode === 'correct';
+  // correct.mjs --draft-dir reads have no `mode`, so this comes before the correct branch.
+  if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file or --draft-dir (an eval read), not the stored OCR'); continue; }
   // Route C (#7263): a correction of a GPU engine's draft of a page with no OCR. Its reply carries the full header.
   const gpu = correct && m.draft?.source === 'gpu';
   if (m.exit !== 0) { failed(m, `cli exit ${m.exit}`, 'exit'); continue; }
   // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
   // written even when the text inside looks like a transcription: it is usually a partial page.
   if (m.wrapper) { failed(m, `reply wrapper: ${m.wrapper}`, 'wrapper'); continue; }
+  // #5274: the gate denied every image read, so the reply is not a reading of this leaf (blank stub or invented page).
+  if (imageNeverOpened(m)) { skip(m, 'the model never opened the page image (every read_file/view_file denied): not a read of this leaf'); continue; }
   if (text.length < 5) { failed(m, 'empty read (refusal or blank)', 'empty'); continue; }
   // A corrector answers UNCHANGED (the draft stands) or `CONTAIN: <why>` (not this leaf's text) instead of a text: the
   // #5924 template's two non-text answers, parsed as correct.mjs parseAnswer does. Neither is ever written as OCR. A
@@ -606,14 +676,21 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const guard = checkWrittenText(text, { kind: 'ocr' });
   if (guard.verdict === 'truncated') { skip(m, writeGuardReason(guard)); tally.write_guard_refused.push({ page_id: m.page_id ?? m.key, page_number: m.page_number, reasons: guard.reasons }); continue; }
   if (guard.verdict === 'repaired_mid') { text = guard.repaired; tally.write_guard_repaired++; }
-  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1 } });
+  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, split_from_pecha: 1, crop: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1, 'staged_split.frame_id': 1 } });
   if (!page) { skip(m, 'page not found'); continue; }
   const unsplit = unsplitReadRefusal(await bookOf(page.book_id), page);
   if (unsplit) { skip(m, 'unsplit spread book (#7605)'); continue; }
   if (page.ocr?.edited_by || page.ocr?.source === 'manual') { skip(m, 'human-edited page'); continue; }
   const fitted = fittedTextReason(page.ocr);
   if (fitted) { skip(m, fitted); continue; }
-  const foreign = foreignScriptReason(text, { languages: bookLanguages(await bookOf(page.book_id)), served: page.ocr?.data });
+  // A staged split leaf (#7605) has no text of its own yet: the scripts its frame's text carries are the ones it may.
+  const served = page.ocr?.data || (page.staged_split?.frame_id
+    ? (await db.collection('pages').findOne({ id: page.staged_split.frame_id }, { projection: { 'ocr.data': 1 } }))?.ocr?.data : '');
+  // A by-eye row on exactly this read may name scripts the checker saw printed on the leaf (#8189: Greek quotations in a
+  // Latin book whose stored read was garbage, so the stored text could not vouch for them). Only those scripts are lifted.
+  const seenRow = BY_EYE.get(page.id);
+  const scriptsSeen = seenRow?.read_sha256 === sha256(text) && seenRow?.verdict === 'read-matches-image' && Array.isArray(seenRow?.scripts_seen) ? seenRow.scripts_seen : [];
+  const foreign = foreignScriptReason(text, { languages: [...bookLanguages(await bookOf(page.book_id)), ...scriptsSeen], served });
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
@@ -678,7 +755,6 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       if (text.trim() === ref.trim()) { skip(m, 'every change was put back by the diff guard: ' + stands); continue; }
     }
   } else if (correct) {
-    if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
@@ -720,6 +796,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
     }
   }
+  if (scriptsSeen.length) byEye = { verdict: seenRow.verdict, checked_by: seenRow.checked_by ?? null, at: seenRow.at ?? null, note: seenRow.note ?? null, read_sha256: seenRow.read_sha256, ...byEye, scripts_seen: scriptsSeen };
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
   if (m.prompt_extra_hash && contentHash(EXTRA) !== m.prompt_extra_hash) { skip(m, 'prompt-extra.txt is not the instruction this read was sent'); continue; }

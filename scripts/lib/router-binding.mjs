@@ -11,8 +11,11 @@
 // current.json in the router-table directory names the table whose decisions are live. Moving that pointer IS the
 // decision; the other tables (scenarios such as -unsplit, -router-tests) stay what-ifs. It also holds waivers: a cell
 // may run another route than the decided one until a date at most 14 days after the waiver was set, with a reason.
+// `cells` (#7853) moves the pointer for named cells only: {"<cell>": {table, set, why}} takes that cell's row from a
+// newer build while every other cell stays on `table`, so a decision about two cells does not carry along every other
+// change a rebuild makes.
 //
-// A lane derives the routes it runs from its own flags (servedByFirstRead, servedByCorrect) and calls checkBinding.
+// A lane derives the routes it runs from its own flags (servedByFirstRead, servedByCorrect, servedByReread) and calls checkBinding.
 // Each served cell gets one status:
 //   ok         the lane runs the decided route (keep or switch)
 //   mismatch   the decision is keep/switch and the lane runs something else, with no live waiver
@@ -29,23 +32,34 @@ export const WAIVER_MAX_DAYS = 14;
 // ISO 639-3 → the router's cell prefix. Only languages the router table has cells for.
 const CELL_LANGUAGE = Object.freeze({ lat: 'latin', deu: 'german', fra: 'french', ita: 'italian', eng: 'english' });
 
-/** The current table: { name, rows: Map(cell id → row), waivers, pointer }. Throws when the pointer or table is missing. */
+/**
+ * The current table: { name, rows: Map(cell id → row), waivers, pointer }. A cell named in pointer.cells takes its row
+ * from that entry's table (the row carries `table`). Throws when the pointer, a table, or a moved cell's row is missing.
+ */
 export function loadCurrentTable(dir = ROUTER_DIR) {
   const pointer = JSON.parse(fs.readFileSync(path.join(dir, 'current.json'), 'utf8'));
-  const table = JSON.parse(fs.readFileSync(path.join(dir, `${pointer.table}.json`), 'utf8'));
-  return { name: pointer.table, rows: new Map(table.rows.map((r) => [r.id, r])), waivers: pointer.waivers || [], pointer };
+  const read = (name) => JSON.parse(fs.readFileSync(path.join(dir, `${name}.json`), 'utf8'));
+  const rows = new Map(read(pointer.table).rows.map((r) => [r.id, r]));
+  for (const [cell, c] of Object.entries(pointer.cells || {})) {
+    const row = read(c.table).rows.find((r) => r.id === cell);
+    if (!row) throw new Error(`current.json cells: ${c.table} has no cell ${cell}`);
+    rows.set(cell, { ...row, table: c.table });
+  }
+  return { name: pointer.table, rows, waivers: pointer.waivers || [], pointer };
 }
 
 /**
  * Cells and routes the first-read lane (`run --cohort=visible-unread`) runs, from its own flags. The route id is the
  * router's: agy-flash-low, `@N` when N pages go in a call (only for perCallLanguages), `>agy-flash-low` when the
  * correction pass runs, `-written` because the lane scores what it writes. Print only: the lane skips manuscripts.
+ * `perCallByLanguage` (the lane's FIRST_READ_PER_CALL_BY_LANGUAGE) raises N for a language when perCall > 1.
  */
-export function servedByFirstRead({ languages, correct = [], perCall = 1, perCallLanguages }) {
+export function servedByFirstRead({ languages, correct = [], perCall = 1, perCallLanguages, perCallByLanguage = {} }) {
   if (!Array.isArray(perCallLanguages)) throw new Error('servedByFirstRead: pass the lane\'s FIRST_READ_PER_CALL_LANGUAGES');
   const langs = languages && languages.length ? languages : Object.keys(CELL_LANGUAGE);
   return langs.map((lang) => {
-    let route = perCall > 1 && perCallLanguages.includes(lang) ? `agy-flash-low@${perCall}` : 'agy-flash-low';
+    const n = perCall > 1 && perCallLanguages.includes(lang) ? Math.max(perCall, perCallByLanguage[lang] ?? perCall) : 1;
+    let route = n > 1 ? `agy-flash-low@${n}` : 'agy-flash-low';
     if (correct.includes(lang)) route += '>agy-flash-low';
     route += '-written';
     return { lane: 'first-read', cell: CELL_LANGUAGE[lang] ? `${CELL_LANGUAGE[lang]}-blank/print` : `${lang}-blank/print`, route };
@@ -59,6 +73,16 @@ export function servedByFirstRead({ languages, correct = [], perCall = 1, perCal
 export function servedByCorrect({ languages = ['German', 'French'] } = {}) {
   return languages.flatMap((name) => ['print', 'unknown', 'manuscript'].map((script) => (
     { lane: 'correct', cell: `${name.toLowerCase()}-lite/${script}`, route: 'lite>agy-flash-low' })));
+}
+
+/**
+ * Cells the re-read mode (`correct --reread-per-call=N`, #7853) runs: the correction lane's books and pages, read fresh
+ * by agy Flash-low, N pages a call. Print only: the writer runs --print-only, so a page the reader does not tag printed
+ * keeps its stored text, and no manuscript or unknown-script page is written.
+ */
+export function servedByReread({ languages = ['German', 'French'], perCall = 4 } = {}) {
+  const route = perCall > 1 ? `agy-flash-low@${perCall}-read` : 'agy-flash-low-read';
+  return languages.map((name) => ({ lane: 'reread', cell: `${name.toLowerCase()}-lite/print`, route }));
 }
 
 /**
@@ -87,7 +111,7 @@ const kn = (row, route) => {
 export function checkBinding(table, served, { today = new Date().toISOString().slice(0, 10) } = {}) {
   return served.map(({ lane, cell, route }) => {
     const row = table.rows.get(cell);
-    const base = { lane, cell, runs: route, runs_kn: kn(row, route), table: table.name };
+    const base = { lane, cell, runs: route, runs_kn: kn(row, route), table: row?.table || table.name };
     if (!row) return { ...base, status: 'no-cell' };
     const decision = String(row.decision || '');
     const f = { ...base, decision, decided: row.route, decided_kn: kn(row, row.route), pages_waiting: row.pages_waiting ?? null };
@@ -107,10 +131,22 @@ export function describeFinding(f) {
 }
 
 /**
- * A lane's start-up check. mode: off | warn (print, page once a day per cell) | refuse (also exit 9 on a mismatch).
+ * #7913: ROUTER_BINDING_REFUSE=1 turns a lane's `warn` into `refuse`: a lane that runs a route contradicting its cell's
+ * decision, with no live waiver, exits 9 instead of paging and running. OFF by default until Derek's go is recorded on
+ * #7913 (the router paper's build step 5: refuse once V1-V3 pass); then the env is set in the lane crontabs. An
+ * explicit --route-check=off still skips the check; `refuse` stays `refuse`.
+ */
+export function effectiveMode(mode, env = process.env) {
+  return mode === 'warn' && env.ROUTER_BINDING_REFUSE === '1' ? 'refuse' : mode;
+}
+
+/**
+ * A lane's start-up check. mode: off | warn (print, page once a day per cell) | refuse (also exit 9 on a mismatch;
+ * effectiveMode: warn becomes refuse under ROUTER_BINDING_REFUSE=1).
  * `page` is called with (title, body) for mismatches not yet paged today; a page failure never stops the lane.
  */
-export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '/tmp', log = console.log, today } = {}) {
+export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '/tmp', log = console.log, today, env = process.env } = {}) {
+  mode = effectiveMode(mode, env);
   if (mode === 'off') return [];
   let table;
   try { table = loadCurrentTable(); } catch (e) {
@@ -134,7 +170,7 @@ export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '
     } catch { /* never stop a lane for a page */ }
   }
   if (bad.length && mode === 'refuse') {
-    log(`route-check: REFUSED (--route-check=refuse): ${bad.length} cell(s) not on their decided route`);
+    log(`route-check: REFUSED (${env.ROUTER_BINDING_REFUSE === '1' ? 'ROUTER_BINDING_REFUSE=1' : '--route-check=refuse'}): ${bad.length} cell(s) not on their decided route`);
     process.exit(9);
   }
   return findings;

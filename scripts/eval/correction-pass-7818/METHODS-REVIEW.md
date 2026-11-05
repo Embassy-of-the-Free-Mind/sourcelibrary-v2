@@ -62,3 +62,12 @@ Full catalogue with every path and number: `review-internal` (session scratch; t
 | Accuracy is excluded from the router | rules.json | Arm W gives accuracy and judged acceptance on the same pages; the paper reports whether they agree |
 | No external benchmark | ICDAR 2019 post-OCR (has de/fr) | Optional arm if time allows (step 4b); otherwise listed as future work |
 | Detectors never validated (embeddings, MCR) | measurement-validity.md | Out of scope; the qa-eval skill still calls them "research-grade" and needs a fix (separate PR) |
+
+## 5. Internal prior art the first draft of this review missed (added 2026-10-30, Derek's note)
+
+- **`.claude/docs/quality-rubric-and-sampling.md` (#5984, PR #6002)** is our MQM + OCR-D rubric. It adopts MQM's severity levels and default weights 0-1-5-25 (Lommel et al. 2024, App. A.3.2; Freitag et al. 2021 dropped Critical for WMT and weight a Non-translation 25). It maps each taxonomy class to a default severity. It fixes the transcription level: serve OCR-D Level 2, and score at Level 2 and Level 1.
+  - #7818 takes its severity mapping (cosmetic → minor 1, misleads → major 5, wrong_text → critical 25) and its level names from there.
+  - #7818's fold is "Level 1 + case/punctuation + diacritics", not Level 1.
+- **PR #7824 (job defect-rate-6740)** re-scores every stored judge verdict as defects per 1,000 words by class (misleads, wrong_text), with by-book intervals and a gamma-Poisson model. That is #7818's severity unit (Amendment 2). The MQM-weighted score is the sensitivity analysis.
+- **PR #7807 (judge-compare-7611)** is the preregistered Gemini-vs-Opus judge comparison on the same items. It is the cross-family agreement measure; #7818 reports its own Opus-vs-agy κ/α only beside it.
+- **#7269 / #5924** is the prior paired result for this kind of pass: Flash-low correction of Latin lite drafts took misleading pages from 100 to 30, with 11 pages worse.

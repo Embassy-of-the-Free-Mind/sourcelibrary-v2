@@ -1,0 +1,1111 @@
+[
+  {
+    "book_id": "6a3ced944701a906f10e1919",
+    "slot": 41,
+    "title": "數度衍·卷六~卷七 (vol 3)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Fang Zhongtong's Shudu yan (Qing mathematics) in the Siku Quanshu manuscript; a sound control volume.",
+    "rights_flag": null,
+    "structure_note": "The pages show 卷六 (p29, margin) and 卷七 (p89, margin), matching the title 卷六~卷七, but display_title says 'prefatory juan–juan 1' — the English catalogue title is wrong (I7). The 3 printed backsteps are expected: Siku folio numbering restarts at the juan 6/7 boundary.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "金",
+            "image": "frame title 欽定四庫全書 at the upper right",
+            "problem": "stray character from the frame title put at the head of the text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "translator's <note> working the walled-town problem as x(x+34)=71,000 shows in the reader text; the arithmetic is correct, but it is commentary, not source",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "幸丙小破勾",
+            "image": "辛丙小破勾",
+            "problem": "point label 辛 misread as 幸 (the translation correctly reads Xin)",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean. The transcription follows the manuscript, and the English reproduces the gougu procedures, with every figure checking arithmetically. The only fault is the English display title, which names the wrong juan.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      56,
+      89,
+      104,
+      29
+    ],
+    "reader_summary": "This is juan 6–7 of Fang Zhongtong's Shudu yan, worked right-triangle (gougu) problems with diagrams, in the Siku manuscript. The transcription is of the right text and nearly letter-perfect, and the English can be trusted, numbers included. The caveat is that the English title gives the wrong juan range."
+  },
+  {
+    "book_id": "6a3c618a879008ba7e15ee76",
+    "slot": 42,
+    "title": "經濟文衡前集·卷一~卷五 (vol 1)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Jingji wenheng, an anthology of Zhu Xi's discussions, in the Siku Quanshu (子部 儒家類).",
+    "rights_flag": null,
+    "structure_note": "130 of 139 pages translated (9 missing). Pages show 卷二 (p42) and 卷四 (p104), consistent with juan 1–5. The 5 backsteps and 14 repeats fit Siku folio numbering restarting at each juan.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "則載是書為焉",
+            "image": "則載是書為馬",
+            "problem": "the surname 馬 (the compiler named in the Qianqing tang catalogue) misread as the particle 焉; the English ends 'records this book as being...' and loses the name",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "子部一",
+            "english": "Sub-category of Masters, Volume One",
+            "problem": "'Masters section, 1' — not 'Volume One'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 42,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "釣定四庫全書",
+            "image": "欽定四庫全書",
+            "problem": "frame title misread",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "glosses such as 'Great Yang <note>the sun or supreme yang</note>' are padding in the reader text",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\\n尖\\n口\\n辰\\n金\\n書",
+            "image": "frame title 欽定四庫全書",
+            "problem": "six stray characters from the frame title put at the head of the transcription",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Sound. The transcription is accurate and the English renders Zhu Xi's arguments faithfully. The faults are a misread surname in the tiyao and stray characters from the frame title.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      42,
+      95,
+      104
+    ],
+    "reader_summary": "This is the first collection of Jingji wenheng, Zhu Xi's letters and discussions on Taiji, the River Chart and the Luo Writing, with the Siku editors' tiyao. The transcription is of the right text, and the English is a faithful, readable rendering. Nine pages have no English yet."
+  },
+  {
+    "book_id": "6a3c632f879008ba7e166b1e",
+    "slot": 43,
+    "title": "御定佩文韻府·卷九十一之四~卷九十二之一 (vol 228)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Peiwen yunfu, the Kangxi rhyme-phrase thesaurus, in the Siku Quanshu.",
+    "rights_flag": null,
+    "structure_note": "Pages show 卷九十一之四 (p18, p58), and p216 is the end leaf with the 乾隆御覽之寶 seal. The 8 backsteps fit the folio numbering restarting at the juan 92 boundary. 212 of 217 pages translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "頗延之陶徵士誄",
+            "image": "顔延之陶徵士誄",
+            "problem": "Yan Yanzhi's name misread; the English calls him 'Xie Yanzhi'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "承嚴節之繁促",
+            "english": "following the strict rhythm of the\\n\\n# Numerous and Hurried <note>Original: Fancu</note>",
+            "problem": "the last two characters of Fu Xuan's quotation are made into a top-level heading, as if 繁促 were a headword; the quotation is left cut off",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "頗延之陶徵士誄",
+            "english": "Xie Yanzhi, in his Eulogy for the Recluse Tao",
+            "problem": "author misnamed (Yan Yanzhi)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 58,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金六巴",
+            "image": "frame title 欽定四庫全書",
+            "problem": "frame-title garbage at the head of the text",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "寧恐執之乎",
+            "image": "寧忍執之乎",
+            "problem": "忍 'bear to' misread as 恐 'fear'; the English becomes 'would you not fear the consequences of seizing him?'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "遂伯玉",
+            "image": "蘧伯玉",
+            "problem": "Qu Boyu misread; the English says 'Su Boyu'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "縱儉可得寧忍執之乎",
+            "english": "Even if Jian could be captured, would you not fear the consequences of seizing him?",
+            "problem": "Li Du's appeal is 'could you bear to seize him?'; the fear reading comes from the misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with a line 'Page 68', which is not on the leaf (the folio is not 68)",
+            "severity": "moderate",
+            "class": "other:invented page number"
+          },
+          {
+            "note": "a <note>original: \"…\"</note> echoes the whole first sentence of Chinese inside the English",
+            "severity": "minor",
+            "class": "T2"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 150,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "鄭攺傳",
+            "image": "鄭畋傳",
+            "problem": "Zheng Tian misread; the English says 'Zheng Gai'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "慕容德虬之少子",
+            "image": "慕容德皝之少子",
+            "problem": "Murong Huang misread; the English says 'the youngest son of Qiu'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "知丨丨之掾",
+            "image": "知丨丨之操",
+            "problem": "操 'tune' misread as 掾 'clerk'; the English gives 'knew the Clear Note assistant'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "易林蹇牛丨丨不能載粟 / 秋麋丨丨 / 牛羊丨丨入朝餉",
+            "english": "a lame cow <unclear>on the ridge</unclear> … The autumn elk <unclear>in the pen</unclear> … cows and sheep <unclear>enter the pen</unclear>",
+            "problem": "the headword marks (here a 角 compound) are filled with invented guesses, flagged unclear, but wrong",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 216,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(none)",
+            "image": "large seal 乾隆御覽之寶 occupying the blank half",
+            "problem": "seal not recorded",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "唐書李華傳華文辭緜麗著吊古戰場文極思丨丨",
+            "english": "…expressing his thoughts to the utmost degree. <note>From Zhao Kuang.</note>",
+            "problem": "an attribution 'From Zhao Kuang' is invented, twice; no Zhao Kuang is on the page",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "劉克莊跋陳敎授杜詩補注果欲律以經典…",
+            "english": "<note>From Liu Kezhuang's postscript to the writings of Professor Chen.</note> The Supplementary Annotations to Du Fu's Poetry: If one truly wishes…",
+            "problem": "the citation (Liu Kezhuang's colophon to Chen's Supplementary Notes on Du Fu) is split. Its first half becomes a note attached to Han Yu's line, and the quotation is credited to the book title",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription is mostly right, but a misread character becomes a wrong name on every page: Xie Yanzhi, Su Boyu, Zheng Gai, 'son of Qiu'. The English also invents a source ('From Zhao Kuang'), a page number ('Page 68') and a heading.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is a volume of the Peiwen yunfu, a rhyme-ordered thesaurus of two-character phrases, each followed by quotations from classics, histories and poems. The transcription is the right text, with recurring misreads in proper names. The English cannot be trusted for who said what: authors are misnamed, guesses fill the headword marks, and one page invents an attribution."
+  },
+  {
+    "book_id": "6a3c60e640c88a541d8ebc54",
+    "slot": 44,
+    "title": "御定駢字類編·卷七十四: Imperial Parallel Characters (vol 256)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Pianzi leibian, the Kangxi thesaurus of paired characters, in the Siku Quanshu (the 銀/鐵 entries of juan 74).",
+    "rights_flag": null,
+    "structure_note": "Margins show 卷七十四 throughout, and p127 carries folio 六十三. Backsteps and repeats are within what misread folio numerals produce. 160 of 161 pages translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "是毛魏書崔浩專\\n金金見金鋌下\\n銀\\n繭\\n霞馬\\n巳祖\\n積常\\n翠贈\\n幢客\\n柏詩\\n方\\n遮",
+            "image": "銀鋌 魏書崔浩傳 見金鋌下 / 銀繭 馬祖常贈客詩丨丨霞巳積翠幢柏方遮",
+            "problem": "two entries with small double-column notes are shredded into single characters and interleaved; the 銀繭 entry (Ma Zuchang's poem) is unreadable",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "鮮\\n卿",
+            "image": "鮮鯽丨丨鱠",
+            "problem": "Du Fu's line 'fresh crucian carp, silver-thread mince' lost",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "印已并字页扁",
+            "image": "margin title 御定駢字類編",
+            "problem": "margin title garbage at the end of the text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "銀\\n繭\\n霞馬\\n巳祖\\n積常…",
+            "english": "Silver <unclear>text missing</unclear> / Cocoon … / Rosy Clouds and Horses … / Ancestral Sacrifice … / Accumulated Emerald Banners … / Cypress Square … / Shielding …",
+            "problem": "seven headwords are invented from the shredded characters; the real entry (silver cocoon, Ma Zuchang) is gone",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "銀鋌 魏書崔浩傳",
+            "english": "Mao <unclear>Weishu</unclear> … states that Cui Hao specialized in <unclear>text missing</unclear>. Gold Ingot … see under the entry for Gold Ingot.",
+            "problem": "the 銀鋌 headword is lost, and the cross-reference reads as gold referring to gold",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "杜甫遊何將軍山林詩鮮鯽銀絲鱠",
+            "english": "writes of fresh silver threads gifted for a soup",
+            "problem": "the fish is lost, and 'gifted' comes from the interleaved 贈",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 52,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "艮筍",
+            "image": "銀筍",
+            "problem": "headword misread",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "退\\n望",
+            "image": "銀筐 (large headword)",
+            "problem": "headword 銀筐 read as garbage",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "梁簡文帝江南行紫荷擎釣鯉丨丨插短蓮 (headword 銀筐)",
+            "english": "Silver Hook … Silver Hooks (Yin gou) are inserted into the short lotuses",
+            "problem": "headword invented: the image has 銀筐 'silver basket', not 'silver hook'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "帝七勵金船漾寶丨丨呈甘 …",
+            "english": "Silver Shells (Yin qiao) present sweetness … The mountains are like Silver Shells",
+            "problem": "the headword for the continued entry is guessed as 'Silver Shells (Yin qiao)'; Du Fu's line (復道諸山得銀甕) shows it is 銀甕 'silver urn'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the frame title 欽定四庫全書 is rendered as 'Imperial Ordered Compendium of Parallel Phrases', followed by a note 'original: Imperial Ordered Siku Quanshu'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "又星經一三星",
+            "image": "又星經丨丨三星",
+            "problem": "headword marks dropped; one read as 一",
+            "severity": "minor",
+            "class": "O16"
+          },
+          {
+            "ocr": "鐵\\n椹\\n見急\\n鐵就\\n鉄篇\\n鉄下",
+            "image": "鐵椹 見急就篇鐵鈇下",
+            "problem": "headword and double-column note interleaved",
+            "severity": "minor",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "古今注鍠秦改丨丨作鍠始皇制也",
+            "english": "The Huang (a type of bell or musical stone) was renamed by the Qin dynasty as the Tie Yue",
+            "problem": "reversed: Qin changed the iron battle-axe into the huang (a weapon), not the reverse, and the gloss 'bell or musical stone' is wrong here",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "星經丨丨三星在八魁西北",
+            "english": "one star is located to the northwest of the Eight Leaders",
+            "problem": "three stars, not one",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "於是悉復蕃等爵位",
+            "english": "the noble titles … of the various Fan (non-Han ethnic groups) were all restored",
+            "problem": "蕃等 is most likely Chen Fan and his associates, not non-Han peoples (context is on the previous page)",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 127,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "大巳日真令書",
+            "image": "frame title 欽定四庫全書",
+            "problem": "frame-title garbage at the end",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "敗其南道元帥論莽熱没籠乞悉篦",
+            "english": "defeated the Southern Route Marshals Lun Mangre, Meilongqi, and Xinülu",
+            "problem": "one Tibetan commander's name split into three people; the same happens with 論乞髯湯没藏悉諾硉",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the frame-title garbage is translated as 'A True Record of the Great Si Day'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Where the layout is plain (p127, p82) the transcription is fair. Where headwords sit beside double-column notes, it shreds them, and the English then invents seven headwords on p29 and misnames others on p52.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is juan 74 of the Pianzi leibian, a thesaurus of phrases built on 銀 'silver' and 鐵 'iron', each with quotations. The transcription is the right text but breaks down at the headwords and their small-print notes. The English fills the gaps with invented headwords and split names, so it cannot be trusted entry by entry."
+  },
+  {
+    "book_id": "6a3c6d4301fe4f593c1b9568",
+    "slot": 45,
+    "title": "黃氏日抄·卷九十七 (vol 49)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Huang Zhen's Huangshi richao, juan 97 (funerary inscriptions), in the Siku Quanshu.",
+    "rights_flag": null,
+    "structure_note": "Margins carry 黃氏日抄 and 卷九十七 with folio numbers 六 (p13) and 十一 (p23). Two engines were used: Gemini on p13/p23, Paddle on p46/p62. 71 of 72 pages translated. Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<meta>… The far left edge contains partially visible index information: 款三十二 [...]</meta>",
+            "image": "left margin 欽定四庫全書 (cut)",
+            "problem": "the OCR meta invents an 'index' reading of the cut-off frame title",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "嘗剟股",
+            "image": "嘗刲股",
+            "problem": "刲 misread as 剟 (same sense)",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "<meta>Title: 檇李日抄 (Ju Li Ri Chao)</meta>",
+            "image": "margin 黃氏日抄",
+            "problem": "the OCR meta names the wrong work",
+            "severity": "moderate",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 46,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 62,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good. Both engines transcribe the epitaphs accurately, and the English is faithful and well judged. The only blemish is a wrong title in one OCR meta line.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      46,
+      62,
+      23,
+      13
+    ],
+    "reader_summary": "This is juan 97 of Huang Zhen's Huangshi richao, Song epitaphs and funerary records written for local gentry and their widows. The transcription is of the right text and accurate, and the English is a faithful, readable translation that can be quoted."
+  },
+  {
+    "book_id": "6a3c63b339b4508b04e2285e",
+    "slot": 46,
+    "title": "御定佩文韻府·卷十六之三 (vol 359)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Peiwen yunfu juan 16/3 (the 先 rhyme: 煙, 蓮, 田), Siku Quanshu.",
+    "rights_flag": null,
+    "structure_note": "Margins show 卷十六之三 (p74). 21 printed repeats in 132 pages is high, likely misread folio numerals in the dense margin. Worth a look, but not shown to be a splice. 128 of 132 pages translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "李白望廬山瀑布詩日照香爐生\\n遙看瀑布挂前川",
+            "image": "李白望廬山瀑布詩日照香爐生丨丨遙看瀑布挂前川",
+            "problem": "the headword marks 丨丨 are dropped throughout the page, so every quotation loses its key word",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "馬皇見迎操煙\\n晏子五尺童子\\n寸之\\n天下不能足以\\n新\\n諱龍\\n於謨龍\\n斬",
+            "image": "…馬皇見迎於護龍 / 操煙 晏子五尺童子丨寸之丨天下不能足以… / 新論",
+            "problem": "the 操煙 entry and the 新論 citation are shredded into fragments",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "新\\n諱龍\\n於謨龍\\n斬",
+            "english": "New <unclear>...</unclear> taboo name Long <unclear>...</unclear> Yu Mo Long <unclear>...</unclear> Behead.",
+            "problem": "OCR fragments translated as if text; a reader sees gibberish",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "㑹見獸\\n飛入",
+            "english": "then one will see the beast smoke fly into the cloud smoke",
+            "problem": "'beast smoke' rests on a misread of 雙 and on the dropped headword",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 48,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "浸一\\n海空智藏經",
+            "image": "浸一丨丨 海空智藏經",
+            "problem": "headword marks dropped across the page (as on p5)",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "疎翠葉",
+            "english": "Sparse Emerald Leaves",
+            "problem": "the tail of a quotation is turned into a heading",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "宋无雙陸詩",
+            "english": "Song Wushuang's Backgammon poem",
+            "problem": "the poet is Song Wu and the poem is on shuanglu; the name is invented by merging",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "冒寒猶助丨丨光 / 秋蓮",
+            "english": "braving the cold, it still assists the autumn lotus",
+            "problem": "the next headword 秋蓮 is absorbed into Zhang Bin's line",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the margin title becomes '# Imperial Authorized Puiwen Yunfu ## Page Twenty-Three' headings",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 74,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "一一",
+            "image": "丨丨",
+            "problem": "headword marks transcribed as the numeral 一一 throughout",
+            "severity": "moderate",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "能爲一一一晦三甽",
+            "english": "Can be made one by one",
+            "problem": "the misread 一一 is translated as 'one by one'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "宜春傳信錄丨丨郎中李公衢明道中通判筠州",
+            "english": "the Director of Military Colonies, Mr. Li Quming, served as the Vice Prefect of Junzhou during the Mingdao era",
+            "problem": "Li Gongqu; the reign name Mingdao is folded into his name",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 110,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "破鉏\\n復田\\n易林進士為官不\\n失餐",
+            "image": "破鉏 / 失餐 (end of previous quote) / 復田 易林進士為官不若丨丨獲壽保年",
+            "problem": "the column order is mixed, so 失餐 lands inside the Yilin quotation",
+            "severity": "moderate",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "進士為官不若復田獲壽保年",
+            "english": "When a scholar becomes an official, he does not lose his meals. It is like returning to the field to gain long life",
+            "problem": "'office is not as good as returning to the fields' becomes 'it is like returning'; the comparison is lost",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "破鉏",
+            "english": "Broken Hoe <note>original: 破鉏</note>",
+            "problem": "the tail of the previous quotation is made a heading",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The Paddle transcription drops or alters the 丨丨 headword marks, and on p5 shreds an entry. The English then invents headings and on p5 prints gibberish. The 田 pages (p74, p110) are usable.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [
+      74
+    ],
+    "reader_summary": "This is a Peiwen yunfu volume of phrases ending in 煙 'smoke', 蓮 'lotus' and 田 'field', each with quotations. The transcription is the right text, but it loses the headword marks that hold each quotation together. The English is unreliable on those pages, and on one it prints nonsense."
+  },
+  {
+    "book_id": "6a3c64ea39b4508b04e2b1ff",
+    "slot": 47,
+    "title": "御定佩文韻府·卷九十五之四 (vol 673)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Peiwen yunfu juan 95/4 (伐, 罰, 卒, 竭), Siku Quanshu.",
+    "rights_flag": null,
+    "structure_note": "Margins show 卷九十五之四 throughout. 101 of 107 pages translated. Nothing structural stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金穴正座今",
+            "image": "frame title 欽定四庫全書",
+            "problem": "frame-title garbage at the head",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "金穴正座今",
+            "english": "Gold Pit, Official Seat, Now.",
+            "problem": "frame-title garbage translated as text",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "又孟子天子討而丨丨 … 不壞其基丨丨其樹 … 藪林丨丨",
+            "english": "The Emperor punishes and <unclear>...</unclear> … not to destroy his tomb or <unclear>...</unclear> his trees",
+            "problem": "the headword (不伐, inferable from the quotations) is left as <unclear> about ten times, so the entry is unreadable as a gloss of its phrase",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 46,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "書承汝俾汝惟喜康共非汝有咎比于罰",
+            "english": "If you are not respectful, you will have faults which will be compared to punishment",
+            "problem": "inverted: Pangeng says it is NOT that the people have faults deserving punishment",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "楚辭忠何辜以遇罰兮",
+            "english": "In the Songs of Chu, section on Loyalty: What crime have I committed",
+            "problem": "'what crime is there in loyalty' is misparsed into a section title 'Loyalty'",
+            "severity": "minor",
+            "class": "T7"
+          },
+          {
+            "source": "侈及嬴劉",
+            "english": "extravagance reached the Qin and Liu-Song dynasties",
+            "problem": "嬴劉 is Qin and Han",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 66,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\\n贝\\n口\\n店\\n今",
+            "image": "frame title 欽定四庫全書",
+            "problem": "frame-title garbage",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "者有蜀水旁者",
+            "image": "者有芻水旁者",
+            "problem": "芻 (a grass-cutter) read as 蜀; the English says 'a man from Shu'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "the frame-title garbage is rendered as five <margin> tags reading 'Gold', 'Shell', 'Mouth', 'Shop', 'Present'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "李陵丨丨不免請降于禁水漲猶且生獲",
+            "english": "Like Li Ling whose arrows were exhausted, he could not avoid surrendering to Yu Jin. Even though the waters rose, he was captured alive.",
+            "problem": "two parallel examples (Li Ling surrendered; Yu Jin was captured when the waters rose) are fused into Li Ling surrendering to Yu Jin",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "本源盛矣",
+            "english": "### Source Abundance",
+            "problem": "the tail of the Lunheng quotation is made a heading",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "何諷夢渴賦俄丨丨于浩渺",
+            "english": "He's dream of thirst was suddenly fulfilled in the vast waters",
+            "problem": "He Feng's 'Rhapsody on Dreaming of Thirst' is lost; the citation is read as narrative",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription is good apart from frame-title garbage. The English is mostly right on the long anecdotes but carries a meaning-changing slip on most pages: fused examples, an inverted Shangshu line, invented headings, and an unresolved headword.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      66
+    ],
+    "reader_summary": "This is a Peiwen yunfu volume of phrases ending in 伐, 罰, 卒 and 竭, each with quotations from histories and classics. The transcription is the right text and largely accurate. The English is readable but makes a meaning-changing slip on most pages, so check it against the Chinese before quoting."
+  },
+  {
+    "book_id": "6a3c6010879008ba7e159fde",
+    "slot": 48,
+    "title": "御定駢字類編·卷五十三: Imperial Parallel Characters (vol 50)",
+    "tradition": "control-live-siku",
+    "shelf_fit": "fits",
+    "shelf_note": "Pianzi leibian juan 53 (湖, 澤, 浦/川, 渠 compounds), Siku Quanshu.",
+    "rights_flag": null,
+    "structure_note": "Margins show 卷五十三 throughout. Only 133 of 158 pages are translated (25 missing), the largest gap in this packet.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 48,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金只口應今言",
+            "image": "frame title 欽定四庫全書",
+            "problem": "frame-title garbage",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "徙丨丨道宣慰司治潭州 … 道在丨丨為屬州 … 萬里丨丨月 (headword 湖南, paired with the next headword 湖北)",
+            "english": "moved to the Xiang River Circuit … Daozhou is a subordinate prefecture within the Xiang River region … Ten thousand miles beneath the Xiang River moon",
+            "problem": "the headword is 湖南 (Hunan), as the following 湖北 entry and the Yuan 湖南道宣慰司 show. The English renders it 'Xiang River' throughout, and a note asserts the placeholder stands for 'Xiang-jiang'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "丨丨楊公又賢也",
+            "english": "Master Yang <note>referring to Yang Jingshi</note>",
+            "problem": "the identification is invented (Han Yu's Hunan Yang is Yang Ping), and it conflates the two Yangs (陽城, 楊憑)",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 69,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "澤\\n火\\n周易卦歌\\n草\\n澤\\n野\\n周禮澤虞若大田獵則菜\\n一\\n及獘田",
+            "image": "澤火 周易卦歌丨丨革 / 澤野 周禮澤虞若大田獵則萊丨丨及獘田",
+            "problem": "headwords and small notes interleaved; 革 read as 草, 萊 as 菜",
+            "severity": "moderate",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "元謂反輮為泥之黏",
+            "english": "Master Yuan says",
+            "problem": "元 is the Qing taboo substitute for 玄: 'Xuan says' is Zheng Xuan, the commentator",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 106,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "川\\n劉長卿赤沙湖詩沙鷗\\n川\\n曰\\n劉\\n少\\n湖\\n詩\\n沙\\n鷗\\n尺\\n暉",
+            "image": "川日 劉長卿赤沙湖詩沙鷗丨丨積暮雪丨丨動寒暉",
+            "problem": "one citation is read twice, the second time as shredded single characters",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "劉\\n少\\n湖\\n詩 / 尺\\n暉",
+            "english": "Liu Shaohu, in a poem: The sand gulls reflect the river sun. <note>The text repeats a similar line attributed to different poets.</note> Chi Hui, in a poem: …",
+            "problem": "two poets, 'Liu Shaohu' and 'Chi Hui', are invented from OCR fragments, with a note claiming the source repeats the line",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "李端詩城閣烟草遍丨丨雪林分",
+            "english": "Xue Lin, in a poem: Dividing the river shore",
+            "problem": "'snowy woods divide' (Li Duan's line) is turned into a poet 'Xue Lin'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "浦迥 / 浦隔 (headwords)",
+            "english": "Chuan Pu (River Shore)",
+            "problem": "two 浦 headwords are replaced by an invented 'Chuan Pu'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 150,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>金定四庫全書</header>\\n金",
+            "image": "欽定四庫全書",
+            "problem": "frame title misread plus a stray 金",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "兩渠溉田凡四萬四千五百頃",
+            "english": "The two canal dams once irrigated a total of 4,450,000 qing",
+            "problem": "44,500 qing, inflated a hundredfold",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "金",
+            "english": "### Gold <note>The heading indicates the broader category of the entries following</note>",
+            "problem": "a stray OCR character is made a heading with an invented explanation",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "為虜毀",
+            "english": "destroyed by the barbarians <note>referring to the Khitans or local nomadic forces</note>",
+            "problem": "at Guazhou the enemy was Tibetan; the note is invented",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Not fit to show. The English gives the wrong headword for a whole entry (Hunan as 'Xiang River'), invents three poets from OCR fragments, and inflates an irrigation figure a hundredfold. A sixth of the volume has no English.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is juan 53 of the Pianzi leibian, phrases built on 湖, 澤, 浦, 川 and 渠, each with quotations. The transcription is the right text but shreds the headwords and small notes on dense pages. The English invents poets and headings and misstates a key figure, so it cannot be trusted."
+  }
+]

@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { findUntaggedPagesOfTenantBooks } from '@/lib/tenant-page-scope';
 import { serveEnglishOriginalPages } from '@/lib/english-original-text';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
-import { PAGE_API_PROJECTION } from '@/lib/reader-page-projection'; // detected_images + the #5942 text layer stay out
+import { PAGE_API_LAYER_PROJECTION } from '@/lib/reader-page-projection'; // detected_images stays out
+import { takeReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer'; // #7965: the notes layer; text/text_from stripped here
 
 export const preferredRegion = 'fra1';
 
@@ -50,8 +52,17 @@ export async function POST(
     const db = await getDb();
     let pages = await db.collection('pages').find(
       { id: { $in: limitedIds }, tenantId: tenantFilter },
-      { projection: PAGE_API_PROJECTION }
+      { projection: PAGE_API_LAYER_PROJECTION }
     ).toArray();
+
+    // A partner's book can have untagged page rows: the embed's prefetch needs them too.
+    const found = new Set(pages.map(p => p.id));
+    const missing = limitedIds.filter(id => !found.has(id));
+    pages = pages.concat(await findUntaggedPagesOfTenantBooks(db, missing, tenantId, PAGE_API_LAYER_PROJECTION));
+
+    // The notes layer (#7965): read while the pages still carry translation.text, which goes no further.
+    const taken = await takeReaderTextLayers(db, pages);
+    pages = taken.pages;
 
     // Metered reader (#4357): 'default' tenant = the main library, metered
     // like the global twin; named tenants are exempt partner reading rooms.
@@ -64,7 +75,7 @@ export async function POST(
 
     // Strip MongoDB _id; weave the reader-path provenance mark into each
     // translation (deterministic, cache-safe — mirrors the global twin).
-    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest));
+    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(applyReaderTextLayer(rest, taken.layers)));
 
     // With metering on, the body depends on who asked — keep it out of any
     // shared cache (POSTs aren't CDN-cached today; belt and braces).

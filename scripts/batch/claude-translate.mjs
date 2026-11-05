@@ -49,6 +49,16 @@
  * and uses it instead of calling (meta `reused_from`); the page-before context is not part of that key. `--fresh`
  * always calls: a repeat-noise eval needs fresh reads.
  *
+ * WRONG-LEAF GUARD (#5021, scripts/lib/block-page-guard.mjs). A call of 2+ pages asks each page's section to open on an
+ * anchor: the first and last 12 characters of THAT page's source, copied. --reply=json (the default for --cli=agy):
+ * one JSON array, one {page, anchor_first, anchor_last, translation} per page in the order sent (splitJsonReply);
+ * --reply=tags (the default for --cli=claude): <anchor-first>/<anchor-last> at the head of each <translation> tag. A
+ * count, order or page-number mismatch refuses the call. Then each page is checked: its anchor against its own source
+ * and its neighbours', the call's absorption test (k from the book's stored English when the call is short) and the
+ * single-page number vote; a refused page is read again alone and the refusal is logged in calls.jsonl (`guard`).
+ * Measured 2026-11-03 on 200 agy blocks of 4 (Latin, German, Italian, French, Chinese): 0 of 804 pages refused by the
+ * anchor; 4 pages (one block) refused by absorption, a real overlap (p.4's English carries p.5's opening).
+ *
  * HOW IT FAILS. A usage-limit reply stops the run (exit 3) with the pages done so far saved; re-running skips them.
  * Any other failed page gets an empty .txt and a non-zero `exit` in its meta, which `apply` skips and counts.
  */
@@ -61,8 +71,10 @@ import { createHash } from 'node:crypto';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, dropLeafSeamBreaches, contentHash } from '../lib/translate-core.mjs';
+import { leafNumberOf } from '../lib/split-stage.mjs';
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
+import { anchorRule, takeAnchors, lengthRatioK } from '../lib/block-page-guard.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { claudeBlocked, noteLimitHit } from '../lib/model-limits.mjs';
@@ -126,6 +138,35 @@ export function splitBlockReply(reply, pageNumbers) {
   return out;
 }
 
+/**
+ * --reply=json (#5021, Derek 2026-11-03: "require structured output", for agy "a strict JSON block the parser
+ * validates"). A call of 2+ pages answers with ONE JSON array, one object per page in the order sent:
+ * {"page": N, "anchor_first": "...", "anchor_last": "...", "translation": "..."}. Part of the prompt SENT.
+ */
+export function jsonReplySuffix(pageNumbers) {
+  return `\n\nWhere the source marks a word <unclear>, translate your best reading of it into English and keep the <unclear> tag around the English; never copy the source word through untranslated.\n\nTHE REPLY FORMAT. Instead of <translation> tags, answer with ONE JSON array and nothing before or after it: exactly ${pageNumbers.length} objects, one per page, in the order ${pageNumbers.join(', ')}:\n[{"page": ${pageNumbers[0]}, "anchor_first": "FIRST", "anchor_last": "LAST", "translation": "..."}, ...]\n"page" is the page number. "anchor_first" is a copy of the first ${12} characters and "anchor_last" a copy of the last ${12} characters of THAT page's source text as printed under its "--- Page N ---" heading (not counting spaces or tags), in the original script, untranslated: copy them from the page before you translate it. "translation" is that page's translation and only that page's, in the format the instructions above ask for (its own <summary> and <keywords> included), as a JSON string. Never carry text over from the page before or after. Do not use any tool: the text is above.\n`;
+}
+
+/**
+ * Split a --reply=json block reply. Returns { texts: Map<page_number, text>, anchors: Map<page_number, {first,last}> },
+ * or null — the whole call refused — unless the reply is one JSON array (a code fence around it is allowed) of
+ * exactly one object per page, in the order sent, each with a non-empty string translation.
+ */
+export function splitJsonReply(reply, pageNumbers) {
+  const s = String(reply || '').trim().replace(/^```[a-z]*\s*\n/i, '').replace(/\n\s*```\s*$/, '').trim();
+  let arr;
+  try { arr = JSON.parse(s); } catch { return null; }
+  if (!Array.isArray(arr) || arr.length !== pageNumbers.length) return null;
+  const texts = new Map(), anchors = new Map();
+  for (let i = 0; i < arr.length; i++) {
+    const o = arr[i];
+    if (!o || typeof o !== 'object' || Number(o.page) !== Number(pageNumbers[i]) || typeof o.translation !== 'string' || !o.translation.trim()) return null;
+    texts.set(Number(o.page), o.translation.trim());
+    anchors.set(Number(o.page), { first: typeof o.anchor_first === 'string' ? o.anchor_first : null, last: typeof o.anchor_last === 'string' ? o.anchor_last : null });
+  }
+  return { texts, anchors };
+}
+
 const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 
 // `claude -p` prefers an API key over the subscription login, and node --env-file loads one: strip it (#6553).
@@ -177,7 +218,11 @@ async function main() {
   if (!(CLI in PROMPT_VARIANTS)) { console.error(`--cli must be one of ${Object.keys(PROMPT_VARIANTS).join(', ')}`); process.exit(2); }
   const IMAGES = arg('images-dir') && path.resolve(arg('images-dir'));
   if (IMAGES && CLI !== 'claude') { console.error('--images-dir is for --cli=claude only'); process.exit(2); }
-  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI] + (IMAGES ? '-image' : '');
+  // agy blocks answer in the validated JSON array by default (#5021, Derek 2026-11-03; measured 2026-11-03 on 50 blocks:
+  // 49 parsed, 1 refused and re-read, translations within 1% of the tag reply's length); Opus keeps the tags.
+  const REPLY = arg('reply') || (CLI === 'agy' && !IMAGES ? 'json' : 'tags');
+  if (!['tags', 'json'].includes(REPLY) || (REPLY === 'json' && IMAGES)) { console.error('--reply is tags or json (json: text-only reads)'); process.exit(2); }
+  const PROMPT_VARIANT = PROMPT_VARIANTS[CLI] + (IMAGES ? '-image' : '') + (REPLY === 'json' ? '-json' : '');
   /** A page's prepared images, in reading order, or [] (#6948). */
   const imagesOf = (p) => { const d = IMAGES && path.join(IMAGES, p.id); return d && fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /^t\d+\.jpg$/.test(f)).sort((a, b) => Number(a.slice(1, -4)) - Number(b.slice(1, -4))) : []; };
   const MODEL = arg('model') || (CLI === 'agy' ? 'gemini-3.8-flash-low' : 'opus');
@@ -193,7 +238,7 @@ async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();
   const db = client.db('bookstore');
-  const PROJ = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 };
+  const PROJ = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, staged_split: 1 };
   const ids = readPageIdsFile(arg('page-ids-file'));
   const prompts = await loadTranslationPrompts(db);
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PROJ }).toArray()).map((p) => [p.id, p]));
@@ -261,6 +306,12 @@ async function main() {
     fs.writeFileSync(path.join(OUT, `${p.id}.meta.json`), JSON.stringify({ page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, read_site: READ_SITE, prompt_variant: PROMPT_VARIANT, ...meta, chars: text.length, wrapper: null, chatter: text ? cliChatterReason(text) : null }, null, 1));
   };
 
+  // The book's median log(EN/SRC) over its stored translations, for a call too short to measure its own (#5021).
+  const kOf = new Map();
+  const bookK = (bookId) => {
+    if (!kOf.has(bookId)) kOf.set(bookId, lengthRatioK([...byNum.entries()].filter(([key]) => key.startsWith(`${bookId}:`)).map(([, p]) => ({ src: p.ocr?.data, en: p.translation?.data, type: p.page_type })), { min: 5 }));
+    return kOf.get(bookId);
+  };
   /** Translate one group of consecutive pages in one sealed call. Returns the pages to read again alone, or null on a refused call. */
   const readGroup = async (group, attempt) => {
     const book = books.get(group[0].book_id);
@@ -268,10 +319,15 @@ async function main() {
     const prev = byNum.get(`${first.book_id}:${first.page_number - 1}`), next = byNum.get(`${lastP.book_id}:${lastP.page_number + 1}`);
     const prevRead = prev ? readOf(prev.id) : '';
     const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
-    const built = buildBlockTranslationPrompt({ prompts, book, pages: group, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
+    // A staged split leaf (#7605) is shown, and split back, by the number it will have once swapped in, not "-999983".
+    const built = buildBlockTranslationPrompt({ prompts, book, pages: group.map((p) => ({ ...p, page_number: leafNumberOf(p) })), previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
     const instruction = [...new Set(group.map((p) => INSTRUCTIONS[p.id]).filter(Boolean))].join('\n\n') || null;
     const imgFiles = IMAGES ? group.map((p) => [p, imagesOf(p)]) : null;
-    const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + (imgFiles ? imageCallSuffix(imgFiles.map(([p, fs_]) => [p.page_number, fs_.map((f) => `p${p.page_number}-${f}`)])) : CALL_SUFFIX);
+    // #5021: a call of 2+ pages asks each page's section to open on an anchor copied from its own source.
+    const anchored = group.length > 1;
+    const json = anchored && REPLY === 'json';
+    const sent = json ? built.prompt + (instruction ? `\n\n${instruction}` : '') + jsonReplySuffix(group.map((p) => leafNumberOf(p)))
+      : built.prompt + (instruction ? `\n\n${instruction}` : '') + (anchored ? anchorRule(group.map((p) => leafNumberOf(p))) : '') + (imgFiles ? imageCallSuffix(imgFiles.map(([p, fs_]) => [p.page_number, fs_.map((f) => `p${p.page_number}-${f}`)])) : CALL_SUFFIX);
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);
@@ -286,7 +342,13 @@ async function main() {
     const t0 = new Date();
     const r = CLI === 'agy' ? await agyBlockCall(sent, MODEL, dir) : await claudeCall(sent, MODEL, dir, { readImages: !!imgFiles });
     fs.rmSync(dir, { recursive: true, force: true });
-    const texts = r.cls ? null : splitBlockReply(r.text, group.map((p) => p.page_number));
+    const jsonShown = json && !r.cls ? splitJsonReply(r.text, group.map((p) => leafNumberOf(p))) : null;
+    const shown = r.cls ? null : json ? jsonShown?.texts ?? null : splitBlockReply(r.text, group.map((p) => leafNumberOf(p)));
+    const texts = shown && new Map(group.map((p) => [p.page_number, shown.get(leafNumberOf(p))]));
+    // The anchors come off every section before anything else reads it (a one-page reply has none to give); a JSON
+    // reply carries them as fields.
+    const tagAnchors = texts ? takeAnchors(texts) : null;
+    const anchors = jsonShown ? new Map(group.map((p) => [p.page_number, jsonShown.anchors.get(leafNumberOf(p))])) : tagAnchors;
     fs.mkdirSync(path.join(OUT, 'raw'), { recursive: true });
     fs.writeFileSync(path.join(OUT, 'raw', `${callId}.txt`), r.text);   // the whole reply, so a refused call can be read
     fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (texts ? null : 'page_tags_mismatch'), usage: r.usage }) + '\n');
@@ -318,7 +380,11 @@ async function main() {
     if (group.length > 1) for (const n of cut.keys()) again.add(n);
     if (group.length > 1) {
       // caseless: the Han test (#7503) runs here, on the subscription; the paid block lanes have not opted in.
-      for (const d of dropDriftedPages(group, texts, { caseless: true }).drifted) { again.add(d.prev); again.add(d.next); }
+      // #5021 (block-page-guard.mjs): the anchors, the call's absorption check (k from the book's stored English
+      // when the call has too few text pages) and the single-page number vote, each refused page read alone.
+      const guard = dropDriftedPages(group, texts, { caseless: true, anchors: anchored ? anchors : null, prevOcr: prev?.ocr?.data ?? null, nextOcr: next?.ocr?.data ?? null, k: bookK(first.book_id) }).drifted;
+      for (const d of guard) { again.add(d.prev); again.add(d.next); }
+      if (guard.length) fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: guard.map((d) => ({ prev: d.prev, next: d.next, kind: d.kind, fragment: String(d.fragment || '').slice(0, 160) })) }) + '\n');
       for (const b of dropLeafSeamBreaches(group, texts).breached) again.add(b.page);
     }
     const redo = [], kept = [];

@@ -472,7 +472,7 @@ export function writePdfPageHeading(doc: PDFKit.PDFDocument, fonts: PdfFontNames
 /**
  * Colophon page shared by pdf-translation and pdf-facsimile — mirrors the
  * TXT generator's front-matter/colophon wording (Trithemian imprimatur
- * paragraph, CC BY-SA 4.0, "Produced by SourceLibrary.org in Amsterdam, 2026").
+ * paragraph, CC BY-NC-SA 4.0, "Source Library, created by Derek Lomas. Amsterdam, 2026.").
  */
 export function writePdfColophon(
   doc: PDFKit.PDFDocument,
@@ -498,8 +498,8 @@ export function writePdfColophon(
     '',
     `Source: ${opts.baseUrl}/book/${book.id}`,
     'Downloaded: ' + opts.now,
-    'License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)',
-    'https://creativecommons.org/licenses/by-sa/4.0/',
+    'License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)',
+    'https://creativecommons.org/licenses/by-nc-sa/4.0/',
     AI_TRAINING_NOTICE,
     '',
     'This edition carries a Trithemian imprimatur, an invisible provenance',
@@ -507,7 +507,7 @@ export function writePdfColophon(
     'translation was produced by Source Library. It does not identify you',
     'or track your usage.',
     '',
-    'Produced by SourceLibrary.org in Amsterdam, 2026.',
+    'Source Library, created by Derek Lomas. Amsterdam, 2026.',
     'Source Library is a project of the Embassy of the Free Mind.',
     "Preserving humanity's wisdom for the digital age.",
   ];

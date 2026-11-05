@@ -1,0 +1,33 @@
+{
+ "issue": 7947,
+ "seed": 20261102,
+ "per_cell": 8,
+ "quantiles": [
+  0.25,
+  0.5,
+  0.75
+ ],
+ "min_words": 40,
+ "live_latin": 31959,
+ "frame": 9174,
+ "hand_profiled_books": 15733,
+ "frame_by_cell": {
+  "pre-1450|manuscript": 235,
+  "pre-1450|print": 5,
+  "1450-1500|manuscript": 120,
+  "1450-1500|print": 1080,
+  "1501-1550|manuscript": 28,
+  "1501-1550|print": 999,
+  "1551-1600|manuscript": 27,
+  "1551-1600|print": 1557,
+  "1601-1700|manuscript": 24,
+  "1601-1700|print": 2938,
+  "1701+|manuscript": 15,
+  "1701+|print": 951,
+  "unknown|manuscript": 85,
+  "unknown|print": 1110
+ },
+ "rejected": {},
+ "n_books": 109,
+ "n_pages": 327
+}

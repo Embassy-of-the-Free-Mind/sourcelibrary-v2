@@ -46,7 +46,8 @@ function judge(counts, extra) {
   }
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   const ok = problems.length === 0 && extra.ok;
-  console.log(JSON.stringify({ ok, mode, names: Object.keys(counts).length, total, ...extra, problems, counts }));
+  // `ok` goes after ...extra: extra.ok covers the stream alone and must not overwrite the verdict.
+  console.log(JSON.stringify({ mode, names: Object.keys(counts).length, total, ...extra, ok, problems, counts }));
   process.exit(ok ? 0 : 1);
 }
 

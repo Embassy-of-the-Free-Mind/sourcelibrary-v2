@@ -1,0 +1,17 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>十七</page-num>
+
+下之主使天下學士不反其本妄作孝悌而
+僥倖於封侯富貴者也子之罪大極重疾走
+歸不然我將以子肝益晝脯之膳孔子復通
+<margin>言不敢望面但以履結</margin>
+日丘得幸於季願望履幕下謁者復通盜跖
+<margin>小却行</margin>
+日使來前孔子趨而進避席反走再拜盜跖
+盜跖大怒兩展其足案劍瞋目聲如乳虎
+<margin>莊子外篇盜跖</margin>
+
+<vocab>孔子, 盜跖, 孝悌, 封侯, 季</vocab>

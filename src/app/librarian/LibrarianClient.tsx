@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { tenantBookUrl } from '@/lib/slugify';
 import { isTenantSubdomain } from '@/hooks/useEmbedContext';
-import { applyCitationFixes, applyGroundingEdits, applyImageRemovals } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, applyLinkRemovals } from '@/lib/embassy/citation-fixes';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 import LibrarianMessageBody from './_components/MessageBody';
@@ -716,6 +716,15 @@ export default function LibrarianClient({ featuredPassage, bookCount, lang = 'en
                   updateLastAssistant(m => ({
                     ...m,
                     content: applyImageRemovals(m.content, event.removeUrls || []),
+                  }));
+                  break;
+
+                case 'link_removals':
+                  // A dead author, artwork or collection link: keep the words,
+                  // drop the link, as in the saved message.
+                  updateLastAssistant(m => ({
+                    ...m,
+                    content: applyLinkRemovals(m.content, event.removeLinks || []),
                   }));
                   break;
 

@@ -1,0 +1,6337 @@
+{
+ "generated_at": "2026-10-31T21:40:47.988Z",
+ "source": "confidence-validation-7866 (#7866)",
+ "file": "scripts/eval/estimator/router-table/evidence/confidence-validation-7866.score.json",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
+ "prompt_template_sha": [
+  null
+ ],
+ "frame": "Live OCR'd books stratified by a confidence score (high 30 / middle 30 / low 50 / unmeasured 50 books, low and unmeasured oversampled), 5 pages a book, one from each fifth; the STORED text judged. Not a random draw of any cell: weights in draw.json. Preregistered: 2026-10-31-confidence-validation-7866.md. Not named in rules.json.",
+ "calls": {
+  "records": 1552,
+  "malformed_not_counted": 0,
+  "judged": 1552,
+  "unparsed": 0,
+  "list_usd_equiv": 94.66
+ },
+ "cells": {
+  "arabic-flash3": {
+   "task": "ocr",
+   "lang": "Arabic",
+   "controls": {
+    "3flash": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "0/5",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_pages": "3/5",
+     "wrong_text_ci": {
+      "ci95": [
+       0.2,
+       1
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_classes": {
+      "O6": "2/5",
+      "I3": "1/5"
+     },
+     "classes_k_of_n": {
+      "O6": "5/5",
+      "I3": "3/5",
+      "O12": "3/5",
+      "O5": "2/5",
+      "O8": "1/5",
+      "O16": "1/5"
+     },
+     "fidelity_mean": 3.2,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "manuscript": {
+       "accept": "0/5",
+       "wrong_text_pages": "3/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "arabic-lite": {
+   "task": "ocr",
+   "lang": "Arabic",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 1,
+     "accept": "0/5",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_pages": "5/5",
+     "wrong_text_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_classes": {
+      "O6": "5/5",
+      "I4": "3/5",
+      "O5": "1/5",
+      "O12": "1/5"
+     },
+     "classes_k_of_n": {
+      "O6": "5/5",
+      "O5": "4/5",
+      "I4": "3/5",
+      "E2": "2/5",
+      "O11": "2/5",
+      "O16": "1/5",
+      "O12": "1/5",
+      "O8": "1/5"
+     },
+     "fidelity_mean": 2.8,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "manuscript": {
+       "accept": "0/5",
+       "wrong_text_pages": "5/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "chinese-flash3": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "controls": {
+    "3flash": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 12,
+     "books": 8,
+     "accept": "0/12",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_pages": "8/12",
+     "wrong_text_ci": {
+      "ci95": [
+       0.375,
+       0.875
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_classes": {
+      "O6": "8/12",
+      "O5": "5/12",
+      "O7": "1/12",
+      "O17": "1/12",
+      "O1": "1/12",
+      "O4": "1/12",
+      "O3": "1/12"
+     },
+     "classes_k_of_n": {
+      "O6": "9/12",
+      "O5": "8/12",
+      "O12": "4/12",
+      "O11": "4/12",
+      "O7": "2/12",
+      "O8": "2/12",
+      "O16": "2/12",
+      "O17": "1/12",
+      "E2": "1/12",
+      "O1": "1/12",
+      "O10": "1/12",
+      "D1": "1/12",
+      "O4": "1/12",
+      "O3": "1/12"
+     },
+     "fidelity_mean": 2.92,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "0/6",
+       "wrong_text_pages": "4/6",
+       "books": 6
+      },
+      "unknown": {
+       "accept": "0/6",
+       "wrong_text_pages": "4/6",
+       "books": 2
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "danish-lite": {
+   "task": "ocr",
+   "lang": "Danish",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 1,
+     "accept": "4/5",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.4,
+       1
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_pages": "0/5",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O5": "3/5",
+      "O8": "2/5",
+      "O6": "2/5",
+      "O16": "2/5",
+      "E2": "1/5"
+     },
+     "fidelity_mean": 4,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "4/5",
+       "wrong_text_pages": "0/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "english-blank-pre1800": {
+   "task": "ocr",
+   "lang": "English",
+   "controls": {
+    "lighton-written": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lighton-written": {
+     "n": 10,
+     "books": 3,
+     "accept": "10/10",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_pages": "0/10",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O12": "1/10",
+      "O8": "1/10",
+      "E2": "1/10",
+      "O17": "1/10",
+      "O16": "1/10",
+      "O13": "1/10"
+     },
+     "fidelity_mean": 4.9,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "unknown": {
+       "accept": "10/10",
+       "wrong_text_pages": "0/10",
+       "books": 3
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "english-flash3": {
+   "task": "ocr",
+   "lang": "English",
+   "controls": {
+    "3flash": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 36,
+     "books": 10,
+     "accept": "33/36",
+     "accept_rate": 0.917,
+     "accept_ci": {
+      "ci95": [
+       0.75,
+       1
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_pages": "1/36",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.086
+      ],
+      "unit": "book",
+      "units": 10
+     },
+     "wrong_text_classes": {
+      "O6": "1/36"
+     },
+     "classes_k_of_n": {
+      "O8": "11/36",
+      "E2": "7/36",
+      "O12": "5/36",
+      "O6": "4/36",
+      "O16": "4/36",
+      "O11": "3/36",
+      "T6": "1/36",
+      "D1": "1/36",
+      "O13": "1/36"
+     },
+     "fidelity_mean": 4.69,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "4/7",
+       "wrong_text_pages": "1/7",
+       "books": 3
+      },
+      "unknown": {
+       "accept": "29/29",
+       "wrong_text_pages": "0/29",
+       "books": 8
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "english-lite": {
+   "task": "ocr",
+   "lang": "English",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 29,
+     "books": 8,
+     "accept": "25/29",
+     "accept_rate": 0.862,
+     "accept_ci": {
+      "ci95": [
+       0.615,
+       1
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_pages": "1/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.115
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_classes": {
+      "O6": "1/29"
+     },
+     "classes_k_of_n": {
+      "E2": "8/29",
+      "O8": "5/29",
+      "O16": "5/29",
+      "O6": "3/29",
+      "O11": "3/29",
+      "T6": "2/29",
+      "O12": "2/29",
+      "O5": "1/29"
+     },
+     "fidelity_mean": 4.79,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "25/29",
+       "wrong_text_pages": "1/29",
+       "books": 8
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "french-flash3": {
+   "task": "ocr",
+   "lang": "French",
+   "controls": {
+    "3flash": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "2/5",
+     "accept_rate": 0.4,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0.8
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_pages": "1/5",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.6
+      ],
+      "unit": "page",
+      "units": 5
+     },
+     "wrong_text_classes": {
+      "O7": "1/5"
+     },
+     "classes_k_of_n": {
+      "D1": "2/5",
+      "O6": "2/5",
+      "E2": "2/5",
+      "O8": "2/5",
+      "O7": "1/5",
+      "O17": "1/5"
+     },
+     "fidelity_mean": 4,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "unknown": {
+       "accept": "2/5",
+       "wrong_text_pages": "1/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "french-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 9,
+     "books": 2,
+     "accept": "8/9",
+     "accept_rate": 0.889,
+     "accept_ci": {
+      "ci95": [
+       0.667,
+       1
+      ],
+      "unit": "page",
+      "units": 9
+     },
+     "wrong_text_pages": "0/9",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 9
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "6/9",
+      "E2": "2/9",
+      "O16": "1/9",
+      "O5": "1/9",
+      "O6": "1/9"
+     },
+     "fidelity_mean": 4.67,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "8/9",
+       "wrong_text_pages": "0/9",
+       "books": 2
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "german-flash3": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "3flash": {
+     "n": 24,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 36,
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "named": "36/36",
+      "by_kind": {
+       "B": "12/12",
+       "C": "12/12",
+       "D": "12/12"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 36,
+       "caught": "36/36",
+       "rate": 1,
+       "ci95": [
+        0.904,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 42,
+     "books": 11,
+     "accept": "36/42",
+     "accept_rate": 0.857,
+     "accept_ci": {
+      "ci95": [
+       0.677,
+       0.977
+      ],
+      "unit": "book",
+      "units": 11
+     },
+     "wrong_text_pages": "5/42",
+     "wrong_text_ci": {
+      "ci95": [
+       0.024,
+       0.25
+      ],
+      "unit": "book",
+      "units": 11
+     },
+     "wrong_text_classes": {
+      "O6": "2/42",
+      "O10": "1/42",
+      "O1": "1/42",
+      "O5": "1/42"
+     },
+     "classes_k_of_n": {
+      "O8": "27/42",
+      "O6": "16/42",
+      "E2": "13/42",
+      "T6": "5/42",
+      "O16": "4/42",
+      "O12": "3/42",
+      "O13": "3/42",
+      "O7": "2/42",
+      "O5": "2/42",
+      "O10": "1/42",
+      "O14": "1/42",
+      "D1": "1/42",
+      "O1": "1/42",
+      "O11": "1/42"
+     },
+     "fidelity_mean": 4.19,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "validated": true,
+      "all": "36/36"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "manuscript": {
+       "accept": "1/2",
+       "wrong_text_pages": "1/2",
+       "books": 2
+      },
+      "print": {
+       "accept": "24/28",
+       "wrong_text_pages": "3/28",
+       "books": 7
+      },
+      "unknown": {
+       "accept": "11/12",
+       "wrong_text_pages": "1/12",
+       "books": 4
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "german-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 32,
+     "books": 8,
+     "accept": "21/32",
+     "accept_rate": 0.656,
+     "accept_ci": {
+      "ci95": [
+       0.438,
+       0.871
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_pages": "7/32",
+     "wrong_text_ci": {
+      "ci95": [
+       0.056,
+       0.419
+      ],
+      "unit": "book",
+      "units": 8
+     },
+     "wrong_text_classes": {
+      "O6": "5/32",
+      "O7": "1/32",
+      "O5": "1/32"
+     },
+     "classes_k_of_n": {
+      "O8": "22/32",
+      "O6": "22/32",
+      "E2": "9/32",
+      "O16": "8/32",
+      "O5": "7/32",
+      "O11": "7/32",
+      "T6": "6/32",
+      "O12": "3/32",
+      "O7": "2/32",
+      "O4": "1/32",
+      "D1": "1/32",
+      "I4": "1/32"
+     },
+     "fidelity_mean": 3.78,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "21/32",
+       "wrong_text_pages": "7/32",
+       "books": 8
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "greek-flash3": {
+   "task": "ocr",
+   "lang": "Greek",
+   "controls": {
+    "3flash": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 29,
+     "books": 6,
+     "accept": "8/29",
+     "accept_rate": 0.276,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0.593
+      ],
+      "unit": "book",
+      "units": 6
+     },
+     "wrong_text_pages": "20/29",
+     "wrong_text_ci": {
+      "ci95": [
+       0.37,
+       0.967
+      ],
+      "unit": "book",
+      "units": 6
+     },
+     "wrong_text_classes": {
+      "O6": "19/29",
+      "O1": "7/29",
+      "O4": "2/29",
+      "O5": "2/29",
+      "O7": "2/29",
+      "O12": "1/29"
+     },
+     "classes_k_of_n": {
+      "O6": "21/29",
+      "O12": "9/29",
+      "O1": "7/29",
+      "O8": "6/29",
+      "I3": "5/29",
+      "O5": "4/29",
+      "O7": "4/29",
+      "O4": "3/29",
+      "O11": "3/29",
+      "E2": "3/29",
+      "O17": "1/29",
+      "T10": "1/29",
+      "O10": "1/29",
+      "O14": "1/29",
+      "O16": "1/29",
+      "I4": "1/29",
+      "D1": "1/29"
+     },
+     "fidelity_mean": 3.31,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "0/2",
+       "wrong_text_pages": "2/2",
+       "books": 1
+      },
+      "unknown": {
+       "accept": "8/27",
+       "wrong_text_pages": "18/27",
+       "books": 6
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "greek-lite": {
+   "task": "ocr",
+   "lang": "Greek",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 1
+     },
+     "wrong_text_pages": "0/1",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 1
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "1/1",
+      "O5": "1/1",
+      "O11": "1/1",
+      "I4": "1/1"
+     },
+     "fidelity_mean": 4,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "1/1",
+       "wrong_text_pages": "0/1",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "italian-flash3": {
+   "task": "ocr",
+   "lang": "Italian",
+   "controls": {
+    "3flash": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 10,
+     "books": 2,
+     "accept": "6/10",
+     "accept_rate": 0.6,
+     "accept_ci": {
+      "ci95": [
+       0.3,
+       0.9
+      ],
+      "unit": "page",
+      "units": 10
+     },
+     "wrong_text_pages": "3/10",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.6
+      ],
+      "unit": "page",
+      "units": 10
+     },
+     "wrong_text_classes": {
+      "O6": "3/10",
+      "O5": "1/10",
+      "O7": "1/10"
+     },
+     "classes_k_of_n": {
+      "O6": "7/10",
+      "O8": "6/10",
+      "O5": "3/10",
+      "O11": "3/10",
+      "E2": "3/10",
+      "O16": "2/10",
+      "O7": "1/10"
+     },
+     "fidelity_mean": 3.7,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "2/5",
+       "wrong_text_pages": "3/5",
+       "books": 1
+      },
+      "unknown": {
+       "accept": "4/5",
+       "wrong_text_pages": "0/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "korean-lite": {
+   "task": "ocr",
+   "lang": "Korean",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 15,
+     "books": 3,
+     "accept": "0/15",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_pages": "13/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0.6,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_classes": {
+      "O1": "7/15",
+      "O6": "7/15",
+      "O5": "5/15",
+      "O4": "4/15",
+      "O7": "3/15"
+     },
+     "classes_k_of_n": {
+      "O6": "10/15",
+      "O1": "7/15",
+      "O5": "7/15",
+      "O8": "6/15",
+      "O4": "4/15",
+      "O16": "4/15",
+      "T10": "4/15",
+      "O7": "3/15",
+      "E2": "1/15",
+      "O15": "1/15"
+     },
+     "fidelity_mean": 2.4,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "manuscript": {
+       "accept": "0/15",
+       "wrong_text_pages": "13/15",
+       "books": 3
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "latin-flash3": {
+   "task": "ocr",
+   "lang": "Latin",
+   "controls": {
+    "3flash": {
+     "n": 24,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 36,
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "named": "36/36",
+      "by_kind": {
+       "B": "12/12",
+       "C": "12/12",
+       "D": "12/12"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 36,
+       "caught": "36/36",
+       "rate": 1,
+       "ci95": [
+        0.904,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 113,
+     "books": 24,
+     "accept": "76/113",
+     "accept_rate": 0.673,
+     "accept_ci": {
+      "ci95": [
+       0.538,
+       0.795
+      ],
+      "unit": "book",
+      "units": 24
+     },
+     "wrong_text_pages": "27/113",
+     "wrong_text_ci": {
+      "ci95": [
+       0.123,
+       0.369
+      ],
+      "unit": "book",
+      "units": 24
+     },
+     "wrong_text_classes": {
+      "O6": "15/113",
+      "I1": "6/113",
+      "O5": "4/113",
+      "O7": "2/113",
+      "O1": "2/113",
+      "O3": "2/113",
+      "T6": "1/113",
+      "O12": "1/113",
+      "O8": "1/113",
+      "O2": "1/113",
+      "O14": "1/113",
+      "O10": "1/113",
+      "O4": "1/113"
+     },
+     "classes_k_of_n": {
+      "O6": "55/113",
+      "O8": "46/113",
+      "E2": "31/113",
+      "O16": "22/113",
+      "O5": "13/113",
+      "O11": "13/113",
+      "T6": "11/113",
+      "O12": "9/113",
+      "O7": "8/113",
+      "I1": "6/113",
+      "O10": "5/113",
+      "D1": "2/113",
+      "O1": "2/113",
+      "O3": "2/113",
+      "O9": "1/113",
+      "O2": "1/113",
+      "O15": "1/113",
+      "O14": "1/113",
+      "O4": "1/113"
+     },
+     "fidelity_mean": 3.87,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "validated": true,
+      "all": "36/36"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "manuscript": {
+       "accept": "0/3",
+       "wrong_text_pages": "2/3",
+       "books": 2
+      },
+      "print": {
+       "accept": "38/55",
+       "wrong_text_pages": "13/55",
+       "books": 13
+      },
+      "unknown": {
+       "accept": "38/55",
+       "wrong_text_pages": "12/55",
+       "books": 12
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "latin-lite": {
+   "task": "ocr",
+   "lang": "Latin",
+   "controls": {
+    "lite": {
+     "n": 24,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 36,
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "named": "36/36",
+      "by_kind": {
+       "B": "12/12",
+       "C": "12/12",
+       "D": "12/12"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 36,
+       "caught": "36/36",
+       "rate": 1,
+       "ci95": [
+        0.904,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "pero>agy-flash-low": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 27,
+     "books": 7,
+     "accept": "10/27",
+     "accept_rate": 0.37,
+     "accept_ci": {
+      "ci95": [
+       0.25,
+       0.524
+      ],
+      "unit": "book",
+      "units": 7
+     },
+     "wrong_text_pages": "12/27",
+     "wrong_text_ci": {
+      "ci95": [
+       0.25,
+       0.613
+      ],
+      "unit": "book",
+      "units": 7
+     },
+     "wrong_text_classes": {
+      "O6": "7/27",
+      "O5": "5/27",
+      "O7": "2/27",
+      "O17": "1/27"
+     },
+     "classes_k_of_n": {
+      "O6": "23/27",
+      "E2": "11/27",
+      "O5": "9/27",
+      "O8": "8/27",
+      "O16": "6/27",
+      "O12": "5/27",
+      "O11": "4/27",
+      "O7": "3/27",
+      "T6": "2/27",
+      "O14": "2/27",
+      "O13": "1/27",
+      "O17": "1/27"
+     },
+     "fidelity_mean": 3.44,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "validated": true,
+      "all": "36/36"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "manuscript": {
+       "accept": "1/5",
+       "wrong_text_pages": "4/5",
+       "books": 1
+      },
+      "print": {
+       "accept": "9/21",
+       "wrong_text_pages": "8/21",
+       "books": 6
+      },
+      "unknown": {
+       "accept": "0/1",
+       "wrong_text_pages": "0/1",
+       "books": 1
+      }
+     }
+    },
+    "pero>agy-flash-low": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 1
+     },
+     "wrong_text_pages": "0/1",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 1
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O6": "1/1"
+     },
+     "fidelity_mean": 5,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "1/1",
+       "wrong_text_pages": "0/1",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "russian-flash3": {
+   "task": "ocr",
+   "lang": "Russian",
+   "controls": {
+    "3flash": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 15,
+     "books": 3,
+     "accept": "14/15",
+     "accept_rate": 0.933,
+     "accept_ci": {
+      "ci95": [
+       0.8,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_pages": "0/15",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "E2": "3/15",
+      "O8": "3/15",
+      "O11": "3/15",
+      "O16": "1/15"
+     },
+     "fidelity_mean": 4.93,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "9/10",
+       "wrong_text_pages": "0/10",
+       "books": 2
+      },
+      "unknown": {
+       "accept": "5/5",
+       "wrong_text_pages": "0/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "sanskrit-flash3": {
+   "task": "ocr",
+   "lang": "Sanskrit",
+   "controls": {
+    "3flash": {
+     "n": 24,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 36,
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "named": "36/36",
+      "by_kind": {
+       "B": "12/12",
+       "C": "12/12",
+       "D": "12/12"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 36,
+       "caught": "36/36",
+       "rate": 1,
+       "ci95": [
+        0.904,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "3flash": {
+     "n": 12,
+     "books": 3,
+     "accept": "4/12",
+     "accept_rate": 0.333,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0.6
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_pages": "7/12",
+     "wrong_text_ci": {
+      "ci95": [
+       0.2,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_classes": {
+      "O6": "6/12",
+      "O8": "1/12",
+      "O7": "1/12"
+     },
+     "classes_k_of_n": {
+      "O6": "10/12",
+      "O8": "6/12",
+      "E2": "3/12",
+      "O16": "3/12",
+      "O5": "3/12",
+      "O12": "2/12",
+      "O7": "2/12",
+      "O10": "1/12"
+     },
+     "fidelity_mean": 3.42,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "36/36",
+      "rate": 1,
+      "ci95": [
+       0.904,
+       1
+      ],
+      "validated": true,
+      "all": "36/36"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "manuscript": {
+       "accept": "0/2",
+       "wrong_text_pages": "2/2",
+       "books": 1
+      },
+      "print": {
+       "accept": "1/5",
+       "wrong_text_pages": "4/5",
+       "books": 1
+      },
+      "unknown": {
+       "accept": "3/5",
+       "wrong_text_pages": "1/5",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "sanskrit-lite": {
+   "task": "ocr",
+   "lang": "Sanskrit",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 1,
+     "accept": "0/3",
+     "accept_rate": 0,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 3
+     },
+     "wrong_text_pages": "3/3",
+     "wrong_text_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 3
+     },
+     "wrong_text_classes": {
+      "O6": "3/3",
+      "O5": "2/3"
+     },
+     "classes_k_of_n": {
+      "O6": "3/3",
+      "O5": "2/3",
+      "O7": "2/3",
+      "O12": "1/3",
+      "O11": "1/3",
+      "O16": "1/3"
+     },
+     "fidelity_mean": 2,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "0/3",
+       "wrong_text_pages": "3/3",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "tibetan-yigdzin": {
+   "task": "ocr",
+   "lang": "Tibetan",
+   "controls": {
+    "yigdzin": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "yigdzin": {
+     "n": 31,
+     "books": 7,
+     "accept": "20/31",
+     "accept_rate": 0.645,
+     "accept_ci": {
+      "ci95": [
+       0.419,
+       0.903
+      ],
+      "unit": "book",
+      "units": 7
+     },
+     "wrong_text_pages": "10/31",
+     "wrong_text_ci": {
+      "ci95": [
+       0.111,
+       0.556
+      ],
+      "unit": "book",
+      "units": 7
+     },
+     "wrong_text_classes": {
+      "O6": "6/31",
+      "O4": "5/31",
+      "T5": "2/31",
+      "O12": "2/31",
+      "O5": "1/31",
+      "O7": "1/31",
+      "I5": "1/31",
+      "O10": "1/31"
+     },
+     "classes_k_of_n": {
+      "O12": "18/31",
+      "O6": "15/31",
+      "E2": "12/31",
+      "O4": "5/31",
+      "O9": "3/31",
+      "O7": "3/31",
+      "O8": "2/31",
+      "O10": "2/31",
+      "T5": "2/31",
+      "O5": "2/31",
+      "I5": "1/31",
+      "D1": "1/31"
+     },
+     "fidelity_mean": 3.61,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "manuscript": {
+       "accept": "9/16",
+       "wrong_text_pages": "6/16",
+       "books": 5
+      },
+      "unknown": {
+       "accept": "11/15",
+       "wrong_text_pages": "4/15",
+       "books": 5
+      }
+     }
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 4,
+     "books": 1,
+     "accept": "4/4",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "page",
+      "units": 4
+     },
+     "wrong_text_pages": "0/4",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "page",
+      "units": 4
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O6": "2/4",
+      "E2": "2/4",
+      "O12": "2/4"
+     },
+     "fidelity_mean": 4,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "all pages",
+     "by_script": {
+      "manuscript": {
+       "accept": "1/1",
+       "wrong_text_pages": "0/1",
+       "books": 1
+      },
+      "unknown": {
+       "accept": "3/3",
+       "wrong_text_pages": "0/3",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "zh-lite": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "controls": {
+    "lite": {
+     "n": 8,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 12,
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "named": "12/12",
+      "by_kind": {
+       "B": "4/4",
+       "C": "4/4",
+       "D": "4/4"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 12,
+       "caught": "12/12",
+       "rate": 1,
+       "ci95": [
+        0.758,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "1/3",
+     "accept_rate": 0.333,
+     "accept_ci": {
+      "ci95": [
+       0,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_pages": "2/3",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       1
+      ],
+      "unit": "book",
+      "units": 3
+     },
+     "wrong_text_classes": {
+      "O5": "2/3",
+      "O4": "2/3",
+      "O6": "1/3"
+     },
+     "classes_k_of_n": {
+      "O5": "3/3",
+      "O6": "2/3",
+      "O4": "2/3",
+      "E2": "1/3",
+      "O11": "1/3",
+      "O12": "1/3"
+     },
+     "fidelity_mean": 2.67,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "12/12",
+      "rate": 1,
+      "ci95": [
+       0.758,
+       1
+      ],
+      "validated": true,
+      "all": "12/12"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "1/3",
+       "wrong_text_pages": "2/3",
+       "books": 3
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "zh-paddle-dice-lt090": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "controls": {
+    "paddle": {
+     "n": 16,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 24,
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "named": "24/24",
+      "by_kind": {
+       "B": "8/8",
+       "C": "8/8",
+       "D": "8/8"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 24,
+       "caught": "24/24",
+       "rate": 1,
+       "ci95": [
+        0.862,
+        1
+       ]
+      },
+      "validated": true,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "paddle": {
+     "n": 278,
+     "books": 58,
+     "accept": "181/278",
+     "accept_rate": 0.651,
+     "accept_ci": {
+      "ci95": [
+       0.568,
+       0.736
+      ],
+      "unit": "book",
+      "units": 58
+     },
+     "wrong_text_pages": "64/278",
+     "wrong_text_ci": {
+      "ci95": [
+       0.162,
+       0.302
+      ],
+      "unit": "book",
+      "units": 58
+     },
+     "wrong_text_classes": {
+      "O6": "42/278",
+      "O5": "15/278",
+      "O1": "10/278",
+      "O11": "7/278",
+      "O7": "6/278",
+      "O4": "6/278",
+      "O10": "2/278",
+      "O17": "1/278",
+      "I4": "1/278",
+      "O8": "1/278"
+     },
+     "classes_k_of_n": {
+      "O11": "136/278",
+      "O6": "119/278",
+      "O12": "61/278",
+      "O16": "48/278",
+      "O5": "36/278",
+      "E2": "29/278",
+      "O7": "19/278",
+      "O8": "18/278",
+      "O1": "10/278",
+      "O4": "7/278",
+      "O17": "6/278",
+      "O10": "2/278",
+      "T4": "1/278",
+      "I4": "1/278",
+      "O14": "1/278"
+     },
+     "fidelity_mean": 4.18,
+     "lane": [
+      "confidence-7866"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "24/24",
+      "rate": 1,
+      "ci95": [
+       0.862,
+       1
+      ],
+      "validated": true,
+      "all": "24/24"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "manuscript": {
+       "accept": "181/277",
+       "wrong_text_pages": "63/277",
+       "books": 58
+      },
+      "print": {
+       "accept": "0/1",
+       "wrong_text_pages": "1/1",
+       "books": 1
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cc00af9474f825c16d664",
+   "book_id": "6a3cc00af9474f825c16d659",
+   "page_number": 11,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "始得。如何？\n如今小有利害、便生計較、便說道恁地死、非正命。",
+     "severity": "wrong_text",
+     "what": "Small-character column 如何得 at the end of the passage was moved up to sit after 始得, which re-punctuates the sentence; on the page 得 begins the second column and the passage ends 非正命如何得"
+    },
+    {
+     "class": "O5",
+     "quote": "非正命。",
+     "severity": "wrong_text",
+     "what": "Final 得 of 如何得 (last small column) dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "為正。以此。比干",
+     "severity": "wrong_text",
+     "what": "以此 is not on the page, which reads 為正比干雖殺身"
+    }
+   ],
+   "note": "The closing small-character 如何得 is moved earlier and loses its 得, and the 潛室陳氏 commentary picks up words that aren't on the page (以此, 以)."
+  },
+  {
+   "cell": "chinese-flash3",
+   "route": "3flash",
+   "page_id": "6a3cc269ec254ff6cae10f65",
+   "book_id": "6a3cc269ec254ff6cae10e55",
+   "page_number": 13,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "海島之夷，還服其皮。",
+     "severity": "wrong_text",
+     "what": "The page's main text reads 海島之夷以皮服來貢也. The candidate puts a phrase taken from the commentary in its place."
+    },
+    {
+     "class": "O6",
+     "quote": "還服其皮。不明夷以皮服來貢也。水害除。",
+     "severity": "wrong_text",
+     "what": "The page reads 還服其皮明水害除. The words 不明夷以皮服來貢也 are added and are not on the page."
+    },
+    {
+     "class": "O6",
+     "quote": "衣皮，夷性不明，必水平乃得其皮",
+     "severity": "wrong_text",
+     "what": "The page reads 衣皮夷性不必水平乃得其皮. The candidate adds 明 and reverses the sense."
+    },
+    {
+     "class": "O6",
+     "quote": "南地暖，故服皮",
+     "severity": "wrong_text",
+     "what": "The page reads 故服卉, not 故服皮. This misread destroys the north/south contrast."
+    },
+    {
+     "class": "O6",
+     "quote": "聖人亦因而不由耳",
+     "severity": "wrong_text",
+     "what": "The page reads 不革耳, not 不由耳."
+    }
+   ],
+   "note": "The first half of the page is unreliable. The main text is replaced with a phrase from the commentary, a sentence is invented, and several words are misread in ways that change the meaning (不必→不明, 服卉→服皮, 不革→不由, 篚→筐). The heading's 夾 is also split off."
+  },
+  {
+   "cell": "german-flash3",
+   "route": "3flash",
+   "page_id": "6a49137aac0c339f5533796a",
+   "book_id": "6a49137aac0c339f55337966",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "The main body of the page contains approximately 40 lines of extremely faded, nearly illegible historical script (likely 17th century)",
+     "severity": "wrong_text",
+     "what": "the leaf is blank fibrous endpaper with no text; the faded script is invented"
+    }
+   ],
+   "note": "The page is a blank endpaper with only 'Path. 182', '4°' and 'Jung' in pencil. The candidate claims about 40 lines of faded historical script that aren't there."
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "699383b350654cbbe29182ea",
+   "book_id": "699383b350654cbbe29181eb",
+   "page_number": 255,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "μετάθεντο αὐτὰς ἀπὸ τῆς θείας ἐνεργείας καὶ δυνάμεως, ὃν οἱ πιστεύον-",
+     "severity": "wrong_text",
+     "what": "The page has roughly 'ἐντεῦθεν καὶ τὰ ὀνόματα τῆς θείας ἐνεργείας καὶ δυνάμεως, ἰδιωτικῶς ἀν-'; the start and end of the line are invented."
+    },
+    {
+     "class": "O1",
+     "quote": "τες ἀπὸ τῆς αἰσθητικῆς ἐννοίας ὠνομάσαμεν. αὐτὴ δὲ ἐπὶ κατάλημμα",
+     "severity": "wrong_text",
+     "what": "This line does not match the page, which reads roughly '…ἡ θεατικὴ τῆς θείας δυνάμεως· αὕτη δὲ ἐστὶ κατὰ τὸ γνῶμα'."
+    },
+    {
+     "class": "O6",
+     "quote": "τῶ ὁρατῶ ἐμφέ-\nρει τὴν σημασίαν ἔχει",
+     "severity": "wrong_text",
+     "what": "The page reads 'τῆς ὁρατικῆς ἐνερ-γείας τὴν σημασίαν ἔχει'."
+    }
+   ]
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "69a5e3d7006a40984221663d",
+   "book_id": "69a5e3d7006a4098422165d4",
+   "page_number": 105,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "ὅτι ἡ πατρὶς εὖ χ᾽ ᾧ Κυνὶ ταχύ.",
+     "severity": "wrong_text",
+     "what": "page reads ὅτι ἡ τριήρης ἐστὶ χὠ κύων ταχύ"
+    },
+    {
+     "class": "O1",
+     "quote": "ταῦτ᾽ οὐκ Ἀπόλλων ἦ; προσέτεθη",
+     "severity": "wrong_text",
+     "what": "page reads πῶς οὖν ἀλώπηξ προσετέθη"
+    },
+    {
+     "class": "O6",
+     "quote": "τοῦτο δ᾽ ἐμὸς ὁ θεὸς τοὺς Ἀλωπεκιδας ποῦ",
+     "severity": "wrong_text",
+     "what": "page reads τουτοισὶ μισθὸς τοῖς ἀλωπεκίοισι ποῦ"
+    },
+    {
+     "class": "O6",
+     "quote": "ἐγὼ ποριῶ Κλεωνύμῳ ἡμέρᾳ τριῶν",
+     "severity": "wrong_text",
+     "what": "page reads ποριῶ καὶ τοῦτον ἡμερῶν τριῶν"
+    },
+    {
+     "class": "O1",
+     "quote": "ἀλλ᾽ ἔτι τὸν λαβόντ᾽ οὐκ ἔφασκεν οὐδὲ βουλεύσασθαι",
+     "severity": "wrong_text",
+     "what": "page reads τόνδ᾽ ἐπάκουσον ὅν σοι φράζει ἐξαλέασθαι"
+    },
+    {
+     "class": "O6",
+     "quote": "χρησμὸν Λικυμνίης",
+     "severity": "wrong_text",
+     "what": "page reads Λητοΐδης"
+    },
+    {
+     "class": "O6",
+     "quote": "ἀλλὰ τὴν τούτου χάριν ἐποίησεν",
+     "severity": "wrong_text",
+     "what": "page reads τὴν τούτου χεῖρ᾽ ἐποίησεν"
+    },
+    {
+     "class": "O6",
+     "quote": "ὀρθῶς ἡμῖν λέγει τὴν Διοπείθους",
+     "severity": "wrong_text",
+     "what": "page reads ᾐνίξατο"
+    },
+    {
+     "class": "O6",
+     "quote": "χ᾽ ὑπ᾽ ἐν ἐκ Ματάνοις δικάσῃς, λάχων σιπύην γα",
+     "severity": "wrong_text",
+     "what": "page reads χὤτι γ᾽ ἐν Ἐκβατάνοις δικάσεις, λείχων ἐπίπαστα"
+    },
+    {
+     "class": "O6",
+     "quote": "ἀλλ᾽ ἀλλ᾽ ἐγὼ δώσεις ποριῶ σ᾽ ἐσκευασμένα",
+     "severity": "wrong_text",
+     "what": "page reads ἀλλ᾽ ἀλφιτήδη σοι ποριῶ"
+    },
+    {
+     "class": "O1",
+     "quote": "ἐπὶ δέ αἴ γε δὴ σ᾽ ἔλαστ᾽ εὖ μεδεῖν μέ γέ μοι",
+     "severity": "wrong_text",
+     "what": "page reads ἐγὼ δὲ μαζίσκας γε διαμεμαγμένας"
+    },
+    {
+     "class": "O6",
+     "quote": "Καὶ τοῦ ψωμ᾽ ὁπότ᾽ ἐσθίεις ἀλλ᾽ ἐμοῦ θές",
+     "severity": "wrong_text",
+     "what": "page reads καὶ τοὖψον ὀπτὸν μηδὲν ἀλλ᾽ ἐμοῦ θέτε"
+    },
+    {
+     "class": "O6",
+     "quote": "ὀμόσατέ μοι ὅτι περ ποιήσετ᾽ εὖ σέθεν",
+     "severity": "wrong_text",
+     "what": "page reads ἀνύσατέ νυν ὅ τι περ ποιήσετ᾽ ὡς ἐγώ"
+    },
+    {
+     "class": "O4",
+     "quote": "<margin>Χο.</margin> ἀρχὴν ὅτε πάντες ἄν-",
+     "severity": "wrong_text",
+     "what": "lyric line duplicated"
+    },
+    {
+     "class": "O1",
+     "quote": "<margin>περ ὅπως οἷον στρόβιλος</margin>",
+     "severity": "wrong_text",
+     "what": "page reads περ δημοσίους τρέφεις; αὐτοὺς ἐπίτηδες ὥσ- dropped"
+    },
+    {
+     "class": "O6",
+     "quote": "αὐτοῦ σ᾽ ἐνῆν πυκί.",
+     "severity": "wrong_text",
+     "what": "page reads ἐν τῇ πνυκί"
+    },
+    {
+     "class": "O6",
+     "quote": "θύσας ἐπιβλητής",
+     "severity": "wrong_text",
+     "what": "page reads θύσας ἐπιδειπνεῖς"
+    },
+    {
+     "class": "O6",
+     "quote": "τούς· ὃν δ᾽ ἂν δοκῶ βεβαρ-",
+     "severity": "wrong_text",
+     "what": "page reads τοὺς οὐδὲ δοκῶν ὁρᾶν"
+    },
+    {
+     "class": "O6",
+     "quote": "κάζω πάλιν ἐξ εδρῶν",
+     "severity": "wrong_text",
+     "what": "page reads ἐξεμεῖν"
+    },
+    {
+     "class": "O6",
+     "quote": "καὶ δ᾽ πᾶσ᾽ ἔσ᾽ μακαρίαν <margin>ἀλλ᾽ οὐκ ἂν ὁ φθόρε</margin>",
+     "severity": "wrong_text",
+     "what": "page reads Κλε. ἄπαγ᾽ ἐς μακαρίαν ἐκποδών. Ἀλ. σύ γ᾽ ὦ φθόρε"
+    }
+   ],
+   "note": "Much of the Greek is garbled or made up: many lines don't match the manuscript, speakers are mislabelled, and the lyric section is scrambled and has a repeated line."
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "699383b350654cbbe2918227",
+   "book_id": "699383b350654cbbe29181eb",
+   "page_number": 60,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "μνησθησόμεθα δὲ τῶν ἑξῆς καὶ τὸν λόγον\nδιεξέλθωμεν",
+     "severity": "wrong_text",
+     "what": "The second line is made-up smooth prose. The page reads roughly 'μνήσθητι προσοῖς γ' … τὸν λόγον', and 'διεξέλθωμεν' does not appear."
+    },
+    {
+     "class": "O6",
+     "quote": "ἀναδοχὰς οὐ μὴ δὲ τῶν στερεωμάτων",
+     "severity": "wrong_text",
+     "what": "The page has 'φροιμίοις' (preludes) here, not 'στερεωμάτων' (firmaments)."
+    },
+    {
+     "class": "O1",
+     "quote": "ἡ δὴ τί μοι ζῆν καὶ τὸ ζῆν οὐκ ἐν τύχη.",
+     "severity": "wrong_text",
+     "what": "The second half of the line does not match the page, which reads roughly 'ἢ … ἀλλοῦ …'."
+    },
+    {
+     "class": "O6",
+     "quote": "ὅπως πεσὼν κἀγὼ <gloss>ἀπὸ</gloss> <gloss>τῆς</gloss> <gloss>πέτρας</gloss> πάνυ",
+     "severity": "wrong_text",
+     "what": "The page has 'τῶν πάντων πόνων'. The candidate gives 'πάνυ' and mixes in glosses that are not at that spot."
+    }
+   ],
+   "note": "Several main-text lines (2, 4, the 'ζῆν' line and the 'πεσὼν' line) contain words that are not on the page, and the red glosses are scattered and incomplete, so this cannot be published as the transcription."
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "69942a43045dfc482ad76319",
+   "book_id": "69942a43045dfc482ad76202",
+   "page_number": 279,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ἐπὶ τῇ πέτρᾳ τῇ λυπήρᾳ δείκνυσθαι",
+     "severity": "wrong_text",
+     "what": "The page reads παρὰ τὸ βουλευτήριον (by the council-house, matching 'in curia' in the Latin). The candidate's phrase is not on the page."
+    },
+    {
+     "class": "O6",
+     "quote": "ἐμφανίζειν τὰ σπλάγχνα τοῖς ἀνθρώποις σαφαίνειν τὰ μέλλοντα δηλοῦντα",
+     "severity": "wrong_text",
+     "what": "Garbled. The page has ἀκριβῆ τὴν διὰ τῶν σπλάγχνων τοῖς ἀνθρώποις προφαίνειν τῶν μελλόντων δήλωσιν γράφει. Phrases are dropped and replaced."
+    }
+   ],
+   "note": "The Latin column is faithful, but the Greek about the Sibyl's rock and the entrails prophecy has invented and garbled phrasing that does not match the page."
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "69a5e3d7006a4098422165ea",
+   "book_id": "69a5e3d7006a4098422165d4",
+   "page_number": 22,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "τοιαῦτ’ ἀκούειν σε δεσπόσειν εὖ φρονῶ.",
+     "severity": "wrong_text",
+     "what": "page reads τοιαῦτ' ἀκούειν. πε. ὅς ποτ' ἐστὶν εὖ φρονῶν; the speaker change is lost and the words are invented"
+    },
+    {
+     "class": "O1",
+     "quote": "ἢ τί δῆτα σοὶ τίν’ ἂν πράξαιμι τῇ δίκῃ;",
+     "severity": "wrong_text",
+     "what": "page reads χρ. τί δῆτα σοι τίμημ' ἐπιγράψω τῇ δίκῃ; the χρ. speaker mark is also dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "ἐπεὶ ἔλαθες· πρ. ὅτι σοι δοκῶ καλῶς λέγειν.",
+     "severity": "wrong_text",
+     "what": "page reads ἐὰν ἁλῷς; πε. ὅ τι σοι δοκεῖ … λέγεις"
+    },
+    {
+     "class": "O1",
+     "quote": "τὸ γὰρ ἀπολομένην ἀπιέναι, καὶ σφῷ διὰ παντὸς",
+     "severity": "wrong_text",
+     "what": "garbled line not matching the page"
+    },
+    {
+     "class": "O1",
+     "quote": "ἴκ’ ἐμοῦ δέ· νοεῖς ὡς οὗτος θατέρου γ’ ἥκιστ.",
+     "severity": "wrong_text",
+     "what": "page reads βλ. ἱκανοὺς νομίζεις δῆτα θανάτους εἴκοσιν; the speaker is tagged πλ."
+    },
+    {
+     "class": "O1",
+     "quote": "δικὰ γὰρ φθέγγεσθε τοῦτο πράττοντ’ ἠπίαν",
+     "severity": "wrong_text",
+     "what": "page reads οὐκ ἂν φθάνοιτον τοῦτο πράττοντ'· ἤ τι γὰρ"
+    },
+    {
+     "class": "O1",
+     "quote": "ὦ μισοτέκνω δί’",
+     "severity": "wrong_text",
+     "what": "page reads ᾧ νικήσετε τηνδὶ"
+    },
+    {
+     "class": "O1",
+     "quote": "λήμ’ ἐλέγχοντες· ἀλλ’ ἐκφεύξεται πλ’ μηδὲν",
+     "severity": "wrong_text",
+     "what": "page reads ἀντιλέγοντες, μαλακὸν δ' ἐνδώσετε μηδέν"
+    },
+    {
+     "class": "O1",
+     "quote": "ὥστ’ οὐ δ’ ἐλθὼν τ’ ὢν αὑτοῦ κακῶν ῥᾷστ’ ἔσται· κ’ οὐκ ἀπολείψει·",
+     "severity": "wrong_text",
+     "what": "page reads ὡς τοὺς ἀγαθοὺς τῶν ἀνθρώπων βαδιεῖται κοὐκ ἀπολείψει"
+    },
+    {
+     "class": "O6",
+     "quote": "τὰ πρὸς τὸ θεῖον σέβεσθαι",
+     "severity": "wrong_text",
+     "what": "page reads δήπου τά τε θεῖα σέβοντας"
+    },
+    {
+     "class": "O1",
+     "quote": "οὔτις· ἐγώ σοι τούτου μάρτυς, καὶ πάνυ πάνυ γ’ ἀμετρίατα.",
+     "severity": "wrong_text",
+     "what": "page reads οὐδείς· … μηδὲν ταύτην γ' ἀνερώτα"
+    },
+    {
+     "class": "O1",
+     "quote": "δοκοῦμ’ οὖν φημὶ παῦσαι ταῦτ’",
+     "severity": "wrong_text",
+     "what": "page reads οὔκουν φημὶ … παύσει"
+    },
+    {
+     "class": "O1",
+     "quote": "ὁ δ’ οὖν, ἤν τ’ ἰὼν τοῖς ἀνθρώποις ἀγαθὸν μεῖζον",
+     "severity": "wrong_text",
+     "what": "page reads ὁδὸν ἥντιν' ἰὼν … ἀγάθ' ἂν μείζω"
+    },
+    {
+     "class": "O6",
+     "quote": "ἢ σκυτελεύειν",
+     "severity": "wrong_text",
+     "what": "page reads ἢ σκυτοδεψεῖν"
+    },
+    {
+     "class": "O6",
+     "quote": "θρίξας δάπεδον",
+     "severity": "wrong_text",
+     "what": "page reads ῥήξας"
+    },
+    {
+     "class": "O1",
+     "quote": "τοῦτ’ αὐτὸ ποιεῖν; <margin>χρ.</margin> <gloss>εὖ οἶδ' ὅτι</gloss>",
+     "severity": "wrong_text",
+     "what": "page reads τῆς αὑτοῦ τοῦτο ποιῆσαι; there is no gloss or speaker change here"
+    },
+    {
+     "class": "O6",
+     "quote": "ἐπάναγκας ἀναγκασθήσῃ, καὶ σπείρειν καὶ τἄλλ’",
+     "severity": "wrong_text",
+     "what": "page reads ἐπαναγκασθείς, καὶ σκάπτειν τἄλλα τε μοχθεῖν"
+    },
+    {
+     "class": "O6",
+     "quote": "ὧν δεόμενον αὐτὸν",
+     "severity": "wrong_text",
+     "what": "page reads ὧν δεῖσθον· ἐγὼ γὰρ"
+    },
+    {
+     "class": "O6",
+     "quote": "ἐγὼ μετ’ ἀνάγκης καθίσας",
+     "severity": "wrong_text",
+     "what": "page reads ἐπαναγκάζουσα κάθημαι"
+    }
+   ],
+   "note": "The right-hand page is mostly sound, but much of the left-hand page is garbled or invented, with wrong words and speaker marks (πε. becomes πρ., χο. becomes χρ.). Several right-hand lines are also misread."
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "69a5e3d7006a409842216695",
+   "book_id": "69a5e3d7006a4098422165d4",
+   "page_number": 193,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "αὐτοὶ Λακωνικοί; σαφ᾽ ἴσως· ὦ λιπαρώτατε",
+     "severity": "wrong_text",
+     "what": "the line does not match the hand on the page"
+    },
+    {
+     "class": "O6",
+     "quote": "μὴ ληφθῇ βοώτων, μηδέν᾽ αἰσθανοίατο;",
+     "severity": "wrong_text",
+     "what": "garbled: the leaf reads μὴ δὲ λαμπ... λούντων μηδὲν"
+    },
+    {
+     "class": "O1",
+     "quote": "ὅτι πολεμῆσαι ῥᾴδιόν ἐστιν <unclear>ἀντιλέγειν</unclear> πολλάκις",
+     "severity": "wrong_text",
+     "what": "invented wording; the leaf has ὅτι πολεμ... ῥᾷστ᾽ ἐκείνων πολλάκις"
+    },
+    {
+     "class": "O6",
+     "quote": "ναὶ τὼ σιὼ μὰ λἀττικίον δώσει δίκην",
+     "severity": "wrong_text",
+     "what": "the leaf reads νῦν ὡττικίων"
+    },
+    {
+     "class": "O6",
+     "quote": "εἰ δ᾽ αὖ τι πρᾶγμα <unclear>ὑμῖν</unclear> ἀγαθὸν λἀττικωνικοὶ",
+     "severity": "wrong_text",
+     "what": "the leaf reads πράξαιντ᾽ ἀγαθὸν ἀττικωνικοὶ; πρᾶγμα ὑμῖν is not there"
+    },
+    {
+     "class": "O6",
+     "quote": "οἱ λάκωνες εἶρηκας πέρι",
+     "severity": "wrong_text",
+     "what": "the leaf reads εἰρήνης πέρι"
+    },
+    {
+     "class": "O6",
+     "quote": "ὧν οὐκ οὐκ οἱ Δί᾽ ἡπατ᾽ ἂν ῥώμην ἔτι",
+     "severity": "wrong_text",
+     "what": "the leaf reads οἱ δὴ ποτ᾽ ἄρ᾽ ἤμην ἔτι"
+    },
+    {
+     "class": "O6",
+     "quote": "κλώνου θυείας φθέγμα",
+     "severity": "wrong_text",
+     "what": "the leaf reads καὐτὸς θυείας"
+    },
+    {
+     "class": "O6",
+     "quote": "τουτὶ μὲν ὑμῖν τὸ κακόν· οὐδέν πω πρᾶγμα πω.",
+     "severity": "wrong_text",
+     "what": "the leaf reads οὐδὲν ἡμῖν πρᾶγμα πω"
+    },
+    {
+     "class": "O6",
+     "quote": "<margin>κυ</margin> ἀλλ᾽ οὐκ ἔστι",
+     "severity": "wrong_text",
+     "what": "the leaf reads ἀλλ᾽ ὦ μέλε; οὐκ ἔστι is pulled forward from the next line"
+    }
+   ],
+   "note": "This photo is a two-page spread foliated 188, not page 148. Many lines on the left page and several on the right are garbled or invented, and the speaker labels in the margins are often wrong."
+  },
+  {
+   "cell": "greek-flash3",
+   "route": "3flash",
+   "page_id": "699383b350654cbbe2918339",
+   "book_id": "699383b350654cbbe29181eb",
+   "page_number": 334,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ἡμῖν γὰρ οὐχὶ μεθ’ ἡμῶν.",
+     "severity": "wrong_text",
+     "what": "The final line is not what the page says. The leaf reads roughly ἥκιστα δ’ ἄρα … χαρίσασθαι."
+    },
+    {
+     "class": "O6",
+     "quote": "οἰκτρὰ. καὶ πρὸς τὰς συμφορὰς, οὐδενὸς ἐν ἀρχῇ",
+     "severity": "wrong_text",
+     "what": "The page has οἱ ἱερεῖς, not οἰκτρά, and the end of the line is misread too."
+    },
+    {
+     "class": "O6",
+     "quote": "ἐπτοημένον πᾶσι ὡς ἔ-",
+     "severity": "wrong_text",
+     "what": "The page reads ἐπιθυμοῦντα (or similar), not ἐπτοημένον πᾶσι."
+    }
+   ],
+   "note": "The text follows the page line by line, but it has several real misreads, including οἰκτρά for οἱ ἱερεῖς, and the last line is made up rather than read from the leaf."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3296eaeeee0fa38c6590e",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 36,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "안귀브가 뎡가 됴히 아라 졈귀",
+     "severity": "wrong_text",
+     "what": "Even the opening lines are mostly made up. Only a few syllables match the page's first two columns."
+    },
+    {
+     "class": "O1",
+     "quote": "에 됴히 받외 됴히 졈귀 슿히 됴히 븨",
+     "severity": "wrong_text",
+     "what": "Lines 3–9 are made-up syllable strings that don't match the page's columns."
+    },
+    {
+     "class": "O4",
+     "quote": "순 됴히 됴히 됴히 됴히 됴히 됴히",
+     "severity": "wrong_text",
+     "what": "The tail turns into thousands of repeats of '됴히' and then cuts off mid-token."
+    },
+    {
+     "class": "O5",
+     "quote": "븨가 몯 됴히 싀 됴히 됴히 됴히 됴히 됴히 됴히",
+     "severity": "wrong_text",
+     "what": "The real text of the later columns is lost, including '비가 못다 이ᄉᆞᆸ시ᄂᆞ니 밧게 나와 ᄭᆡ어 ᄂᆞ니 오늘은' and the last column ending '이ᄅᆞᆯ이 업ᄉᆞᄂᆡ 내 홍'."
+    }
+   ],
+   "note": "The page has 10 columns of cursive vernacular Hangul. The candidate matches only a few syllables at the start, then makes up text and collapses into thousands of repeats of '됴히'."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3273552a77bb28fdb6fc7",
+   "book_id": "69f3273552a77bb28fdb6f93",
+   "page_number": 52,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "상사가 잇의 멸하여 비로소 향을",
+     "severity": "wrong_text",
+     "what": "column 4 opens with something like 남시가, not 상사가; the 첩이 before 비로소 is dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "상접하여 억울하게",
+     "severity": "wrong_text",
+     "what": "the end of column 2 doesn't match the leaf; 억울하게 looks invented"
+    },
+    {
+     "class": "O6",
+     "quote": "짓하여 복을 지는 억울",
+     "severity": "wrong_text",
+     "what": "the leaf reads roughly 즈장ᄒᆞ여 … 몸을; 억울 is not on the page"
+    },
+    {
+     "class": "O6",
+     "quote": "일어할 으의 집",
+     "severity": "wrong_text",
+     "what": "the end of the last column reads roughly 일 너월 우리 집; garbled here"
+    }
+   ],
+   "note": "All seven columns are there in the right order, but the old spelling has been quietly modernised, and several phrases (억울하게, 억울, 일어할 으의) are misread or invented, so the text doesn't reliably match the leaf."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3296eaeeee0fa38c65919",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 47,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "츳 츳 츳 츳 츳 츳 츳 츳 츳 츳 츳",
+     "severity": "wrong_text",
+     "what": "The last line (옷시라 ᄒᆞᆫᄃᆡ 쉬 상을…) is replaced by a repeated placeholder syllable. That syllable is not on the page."
+    },
+    {
+     "class": "O4",
+     "quote": "씅 츅 왈 비 츳 츳 츳 츳 츳 츳 츳 츳 츳",
+     "severity": "wrong_text",
+     "what": "From line 4 on, the same syllable 츳 repeats in place of the actual words. Lines 7–9 are mostly filler."
+    },
+    {
+     "class": "O5",
+     "quote": "츳 왈 이 츳 츳 츳 츳 의 츳 진 생 츳",
+     "severity": "wrong_text",
+     "what": "Line 9 (뎨왈 이옷슨 …의 ᄌᆡ진 생ᄒᆞᆫ) is mostly lost. Its opening word 뎨 is missing."
+    },
+    {
+     "class": "O6",
+     "quote": "입어 숭 츳 츳 벗 벗 노라 츳 츳 츳",
+     "severity": "wrong_text",
+     "what": "Line 4 is garbled. Words such as 까ᄆᆞᆺ, ᄒᆞ노라 and ᄒᆞ시니 are replaced by filler."
+    },
+    {
+     "class": "O6",
+     "quote": "입 츳 츳 가 쳔 츳 의 입 츳 츳 츳 비 츳 츳",
+     "severity": "wrong_text",
+     "what": "Line 8 (입어 벗논가 ᄎᆡᆫᄌᆞ의 입으시니 버티ᄒᆞ니) is reduced to fragments."
+    }
+   ],
+   "note": "Only the first five or six of the ten vertical lines are roughly transcribed, with misreadings. The rest of the page turns into the repeated syllable '츳', which is not on the page, so the closing lines are effectively missing."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3296eaeeee0fa38c6592d",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 67,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "주어 중기 조선을 다스리니 나랏",
+     "severity": "wrong_text",
+     "what": "end of line 1 misread; the page has roughly 나시 츙의/츙이, not 나랏"
+    },
+    {
+     "class": "O6",
+     "quote": "날을 평정하고 죽전 주원",
+     "severity": "wrong_text",
+     "what": "the page reads roughly 평졍ᄒᆞᆫ 죠션ᄌᆞ 원슈를; 죽전 주원 is a garbled reading"
+    },
+    {
+     "class": "O6",
+     "quote": "히 하므로 안치 칭이 층이 신종에게 적이",
+     "severity": "wrong_text",
+     "what": "line 3 is a garbled guess; the page has roughly ᄒᆞ울 안ᄌᆡ 칭ᄎᆞᆼ 츙이 신죵에 ᄌᆡ셕이"
+    },
+    {
+     "class": "O1",
+     "quote": "와 죽은 진 십조 팔이 어두운 것은 ",
+     "severity": "wrong_text",
+     "what": "어두운 것은 is not on the page; the leaf has roughly 팔ᄂᆡ에 츙은 ᄃᆞ고 도"
+    },
+    {
+     "class": "O5",
+     "quote": "러와 전후 가희권 즐기듯 장기 ",
+     "severity": "wrong_text",
+     "what": "the end of column 9 (roughly 장과 루ᄒᆞ…) is dropped or misread"
+    },
+    {
+     "class": "O6",
+     "quote": "를 들이",
+     "severity": "wrong_text",
+     "what": "the last column reads roughly 불ᄉᆞ리, not 를 들이"
+    }
+   ],
+   "note": "All ten columns are there in the right order and the general sense (loyal subject, the Japanese enemy, the people) comes through, but many words are garbled or guessed, the archaic spelling is modernised, and the ends of the last two columns are wrong."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3273552a77bb28fdb6fc6",
+   "book_id": "69f3273552a77bb28fdb6f93",
+   "page_number": 51,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "글 잡아 죽이며 희생의 의식을 왕청",
+     "severity": "wrong_text",
+     "what": "'희생의 의식' (sacrificial ritual) is not on the page, which reads roughly 를 잡아 죽이니 …희가 그 어비의 … 상왕 청"
+    },
+    {
+     "class": "O6",
+     "quote": "나려 일어날 그 사의의 편성을 의지",
+     "severity": "wrong_text",
+     "what": "page reads roughly 나려 일너 왈 그ᄃᆡ가 우리 천ᄒᆞᆼ을 도의지; the speech formula and its content are lost"
+    },
+    {
+     "class": "O4",
+     "quote": "의의 부학 흉서 시의 종의 의의 의의",
+     "severity": "wrong_text",
+     "what": "filler 의의 is repeated; page reads roughly 의뢰 부탁ᄒᆞ노니 시의 종ᄉᆞᆼ은 즈의 그 잇"
+    },
+    {
+     "class": "O6",
+     "quote": "보시다 시어 서 섬을 보 천 쳐 허 조병",
+     "severity": "wrong_text",
+     "what": "page reads roughly 보시라 ᄒᆞ고 이어 쳡을 보젼ᄒᆞ여 ᄒᆞᄂᆞᆫ 도성; the line is garbled"
+    }
+   ],
+   "note": "All 7 columns are there in the right order, but most words are misread into near-gibberish, and the opening invents a 'sacrificial ritual' that the handwritten narrative never mentions."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3296eaeeee0fa38c65905",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 27,
+   "defects": [
+    {
+     "class": "O4",
+     "quote": "긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇",
+     "severity": "wrong_text",
+     "what": "Lines 6-9 are the same filler syllable repeated in place of the page's text."
+    },
+    {
+     "class": "O1",
+     "quote": "하나 헌휘 도로 븨기 긇어 긇고 왈 됴 흠",
+     "severity": "wrong_text",
+     "what": "Lines 2-5 are invented. Only small pieces (헌, 왈, 앗거든, 샹일) loosely match the page."
+    },
+    {
+     "class": "O1",
+     "quote": "엇지 잇는 겻을 몯 듇고 비록 엇지",
+     "severity": "wrong_text",
+     "what": "Line 1 goes wrong after 건니와. The page reads roughly 엇지 낫…오리 …을 듯고 비로소 …"
+    },
+    {
+     "class": "O5",
+     "quote": "긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇 긇",
+     "severity": "wrong_text",
+     "what": "The page has 10 columns but the candidate has 9 lines. The last column (…흔 뒤에 …) is dropped."
+    }
+   ],
+   "note": "Apart from the first word, nothing matches the 10 columns of clear cursive Hangul on the page. The lower half is the filler syllable '긇' repeated over and over."
+  },
+  {
+   "cell": "korean-lite",
+   "route": "lite",
+   "page_id": "69f3296eaeeee0fa38c658f7",
+   "book_id": "69f3296eaeeee0fa38c658ea",
+   "page_number": 13,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "부귀와 신선의 일을 하시고 만인의",
+     "severity": "wrong_text",
+     "what": "Column 1 reads roughly '…텬지 신ᄌᆞ의 일을…ᄒᆞ시ᄆᆡ 텬ᄒᆞ 만인의'. It says nothing about 부귀 or 신선; the meaning was guessed."
+    },
+    {
+     "class": "O1",
+     "quote": "적의 의처 조선과 좌를 보시고 악한",
+     "severity": "wrong_text",
+     "what": "There is no 조선 in this column. The words were made up to fill a column the reader couldn't make out."
+    },
+    {
+     "class": "O1",
+     "quote": "불도와 침강에 즈음하여서도 불신을 되사",
+     "severity": "wrong_text",
+     "what": "A paraphrase that doesn't follow the strokes in column 4."
+    },
+    {
+     "class": "O6",
+     "quote": "정의를 호리라 령 뒤 뜻을 우리라 되살으",
+     "severity": "wrong_text",
+     "what": "A garbled reading of column 8. The output itself makes no sense."
+    },
+    {
+     "class": "O6",
+     "quote": "리 그릇된 안게 조이셔서 비로소 일신을",
+     "severity": "wrong_text",
+     "what": "A garbled reading of column 9."
+    }
+   ],
+   "note": "The page has ten columns of old-style cursive Hangul. The candidate gives ten lines of modernised Korean, but only a few words actually match the page (만인의, 백성, 친히, 만승 천자께서, 원통, 계책). Much of the rest is guessed or garbled."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "69af48642a821385be062805",
+   "book_id": "69af48642a821385be062737",
+   "page_number": 206,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Nam quæ per bis sex signorum labier orbe",
+     "severity": "wrong_text",
+     "what": "The whole candidate is a different passage of the poem: planets, the Milky Way and Perseus. The page has 38 lines on Orion, the hare, the dog, Argo, the sea-monster and Eridanus, starting 'Hic ubi se pariter cum solem lumina coeli'. Probably another leaf's text, but it could also be invented."
+    },
+    {
+     "class": "O5",
+     "quote": "Hunc orionis sub læua cernere planta",
+     "severity": "wrong_text",
+     "what": "None of the page's real lines are transcribed. They run from 'Hic ubi se pariter' to 'Hunc orionis sub læua cernere planta', and the quoted line is the page's last, which the candidate doesn't contain."
+    }
+   ]
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "69af48642a821385be0627b6",
+   "book_id": "69af48642a821385be062737",
+   "page_number": 127,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Serpentis decliue caput: quæ proxima signa / Occasus ortusq; uno tenguntur ab ore",
+     "severity": "wrong_text",
+     "what": "The whole transcription comes from a different leaf. The page actually has 24 lines of prose ending 'connexio uero piscium communem habet stellam', then the heading 'Germanici cæsaris arati phænomina' and 14 verse lines ('Ab ioue principium magno deduxit aratus ... Syderaq; & uarios cognoscere motus'). None of this text appears in the candidate."
+    },
+    {
+     "class": "I1",
+     "quote": "A woodcut illustration depicting the constellations Draco (the Dragon), Ursa Major, and Ursa Minor",
+     "severity": "wrong_text",
+     "what": "There is no woodcut on this page. It is text only."
+    },
+    {
+     "class": "I1",
+     "quote": "<margin>Poli</margin>",
+     "severity": "wrong_text",
+     "what": "The margin notes 'Poli' and 'Arcturi duo' are not on this page. What it does have is printed guide letters ('f', 'a') and later handwritten notes in red ink ('aries & libra', 'cæli')."
+    }
+   ],
+   "note": "The transcription doesn't match the page at all: it describes a Draco and bears woodcut and gives 'Poli/Arcturi' prose, but the page is text only (end of a constellation description, then the opening of Germanicus's Aratea, 'Ab ioue principium magno deduxit aratus')."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6a4cb63519ae103166961cf2",
+   "book_id": "6a4cb63519ae103166961ce4",
+   "page_number": 10,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "[...scriptam], operae fore pretium, existimamus: Deum castigandis foederatis Belgiis misisse maximum LUDOVICUM",
+     "severity": "wrong_text",
+     "what": "The candidate is the closing page of the same Gera program (Peace of Ryswick, the two student orators, the 'Proposuit publice Gerae' colophon and notes a–e). The image is the opening page, which begins with the woodcut initial and 'Tanta hujus, quod suam proxime metam constitutum videmus, seculi rerum…', covers church history, Jaeger of Tübingen and the century's inventions, and ends with the catchword 'nem'. None of the page's text appears."
+    }
+   ],
+   "note": "The transcription doesn't match the image. The page shows the program's opening ('Tanta hujus… seculi'), with church history and inventions like the camera obscura and microscopes, but the text beside it is the closing page about the Peace of Ryswick and the two student orators."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "69af48642a821385be0627f3",
+   "book_id": "69af48642a821385be062737",
+   "page_number": 188,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Matutina ferens solitos per sydere cursus … Flatus at geminis miscet tranquilla serenis",
+     "severity": "wrong_text",
+     "what": "The candidate is 38 lines of weather-sign verse that this page does not contain. The page has a woodcut of Hydra, the Crater and the raven, then 13 lines of prose beginning 'Ydra sup cui caudā coruū sedere dicūt'. The verse probably comes from a neighbouring leaf, since faint verse shows through from the other side."
+    },
+    {
+     "class": "O5",
+     "quote": "Matutina ferens solitos per sydere cursus",
+     "severity": "wrong_text",
+     "what": "None of the page's own text is transcribed: the Hydra prose about the raven sent by Apollo for water, the signature 'h' in the margin and the catchword 'm' are all missing."
+    }
+   ],
+   "note": "The text beside the image is a long verse passage on weather signs, while the page shows the Hydra/raven woodcut and a short prose passage about Hydra and Apollo's raven. The transcription belongs to a different page."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6a4b6cf066f4462393d6f8b8",
+   "book_id": "6a4b6cf066f4462393d6f8a6",
+   "page_number": 18,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Sexta canit vitia <unclear>cupit</unclear>",
+     "severity": "wrong_text",
+     "what": "the page reads 'Sed iam certa tibi cogatur synodus…'; this line is invented"
+    },
+    {
+     "class": "O1",
+     "quote": "Syncera <unclear>fuit</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Synodus … tempore'; this text is invented"
+    },
+    {
+     "class": "O1",
+     "quote": "Quo patria <unclear>virtutis</unclear> vacat",
+     "severity": "wrong_text",
+     "what": "the page reads 'Quo proferre suum valeat pietas sincera'"
+    },
+    {
+     "class": "O6",
+     "quote": "Dogmata de <unclear>Christi</unclear>",
+     "severity": "wrong_text",
+     "what": "only the first words are right; the rest of the line is dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "Denuo <unclear>pater</unclear> vacat",
+     "severity": "wrong_text",
+     "what": "the page has 'Denuo …areo nunc revocata …'"
+    },
+    {
+     "class": "O1",
+     "quote": "Hunc tamen <unclear>hic</unclear> sacrum <unclear>scriptum</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Hunc tamen esse locum (Regna … pellere) …'"
+    },
+    {
+     "class": "O1",
+     "quote": "Abstrusa <unclear>legat</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Arbiter, et magnos iudicare …'"
+    },
+    {
+     "class": "O1",
+     "quote": "Cum decora <unclear>suae</unclear> facit",
+     "severity": "wrong_text",
+     "what": "the page has 'Quam dextera prius flammis … aquis'"
+    },
+    {
+     "class": "O1",
+     "quote": "Pernitiosum <unclear>datur</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Pontificumque sacrum …'"
+    },
+    {
+     "class": "O1",
+     "quote": "At vestra tollit <unclear>miseras</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'A vestra salus possit ut esse nova'"
+    },
+    {
+     "class": "O1",
+     "quote": "Lis propria <unclear>tanta</unclear> iacet",
+     "severity": "wrong_text",
+     "what": "the page has 'Ex propriosque … Minerva …'"
+    },
+    {
+     "class": "O1",
+     "quote": "In vestris <unclear>aliis</unclear> <unclear>partem</unclear> iacet",
+     "severity": "wrong_text",
+     "what": "the page has 'Nam restat nisi …'"
+    },
+    {
+     "class": "O1",
+     "quote": "Sed quae <unclear>ibi</unclear> <unclear>terra</unclear> <unclear>manet</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Sed quia opem tibi iam ferre o Germania Regina'"
+    },
+    {
+     "class": "O1",
+     "quote": "Temperet ut <unclear>perituris</unclear> <unclear>tempora</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Tantaque libertas pertingat pectora numquam'"
+    },
+    {
+     "class": "O1",
+     "quote": "Vade Charite <unclear>prospera</unclear> <unclear>bene</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Unde Caesareo poteris procedere …'"
+    },
+    {
+     "class": "O6",
+     "quote": "Hoc dare sic <unclear>pacem</unclear> <unclear>dicere</unclear> <unclear>scis</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Hec dare sic placuit tibi nunc responsa Philippe'"
+    },
+    {
+     "class": "O6",
+     "quote": "Nil Germanos te magis amat.",
+     "severity": "wrong_text",
+     "what": "the page has 'Illi, Germanos te mage quisquis amat'"
+    },
+    {
+     "class": "O6",
+     "quote": "Hunc etenim melius barbara cura <unclear>cave</unclear>",
+     "severity": "wrong_text",
+     "what": "the page has 'Inde eventum melius perpendere cura.'"
+    },
+    {
+     "class": "O3",
+     "quote": "Vive, vale, sospes atque vale.",
+     "severity": "wrong_text",
+     "what": "a stock farewell put in place of 'Utque alios optas ipse valere, Vale.'"
+    }
+   ],
+   "note": "The page has 26 mirrored lines of Latin verse addressed to Germania and Philip, followed by 'Soli deo Gloria. M.D.XXXI.' Only a few opening words and the colophon match the page; the rest of the transcription is invented or cut short."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6a4b13117622bb5aba1291e0",
+   "book_id": "6a4b13117622bb5aba1291de",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "The left shield displays the Chigi family arms (six mountains surmounted by a star), representing Pope Alexander VII",
+     "severity": "wrong_text",
+     "what": "The arms are show-through from the other side of the leaf, not printed on this page. The Chigi and Pamphili identifications are invented: the left shield is crowned with fleurs-de-lis (French royal arms)."
+    },
+    {
+     "class": "O1",
+     "quote": "representing Pope Innocent X, surmounted by the papal tiara",
+     "severity": "wrong_text",
+     "what": "The right shield is identified as Pamphili / Innocent X with no basis in the image. The faint text behind it names Clement VIII."
+    }
+   ],
+   "note": "The two imprimaturs are right, but abbreviations are silently expanded, and the coats of arms (really show-through) are wrongly said to be Alexander VII and Innocent X when the reverse text names Clement VIII."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6a4cdd6959e2a5b6929d8575",
+   "book_id": "6a4cdd6959e2a5b6929d856a",
+   "page_number": 10,
+   "defects": [
+    {
+     "class": "O2",
+     "quote": "Syriacè ܩܢܝ, Arabicè قنى",
+     "severity": "wrong_text",
+     "what": "page prints both forms in Hebrew type (קְנָא); candidate made up Syriac and Arabic script"
+    },
+    {
+     "class": "O2",
+     "quote": "voce رزق",
+     "severity": "wrong_text",
+     "what": "page prints רזק in Hebrew type; candidate swapped in Arabic script"
+    }
+   ],
+   "note": "The Latin follows the page, but it says 'solidoque' where the page has 'solidove', it expands the abbreviations without marking them, and it puts the Chaldaic, Syriac and Arabic words in made-up native scripts when the page prints them all in Hebrew type."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "69af48642a821385be062784",
+   "book_id": "69af48642a821385be062737",
+   "page_number": 77,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Iugera producunt spatiis precincta duobus ... Axenotridas subter rupes aracinthi",
+     "severity": "wrong_text",
+     "what": "Entire text is from another page of the same poem (Greece and the Peloponnese). The leaf reads 'Quinq; uomunt amnem quam se procul insula teuce ... Oceani uicina salo qua glauca recumbit' (Scythia, Danube, Thrace)."
+    },
+    {
+     "class": "O5",
+     "quote": "Iugera producunt spatiis precincta duobus",
+     "severity": "wrong_text",
+     "what": "None of the page's 39 lines are transcribed."
+    }
+   ],
+   "note": "The transcription has nothing to do with the image. The page describes the Black Sea, the Danube peoples and Thrace, but the text beside it describes the Peloponnese and Attica."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6a4cb63519ae103166961cea",
+   "book_id": "6a4cb63519ae103166961ce4",
+   "page_number": 2,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "Tanta hujus, quod suam proxime metam constitutum videmus, seculi rerum notatu dignissimarum reperitur copia",
+     "severity": "wrong_text",
+     "what": "The image is a blank white leaf with no text, initial or catchword. The whole transcription belongs to another leaf, or is not on this page at all."
+    },
+    {
+     "class": "O14",
+     "quote": "A large decorative woodcut initial 'T' that begins the first word 'Tanta'",
+     "severity": "wrong_text",
+     "what": "Describes a decorated initial with a grapevine and a sun face, but no image appears on this blank leaf."
+    }
+   ],
+   "note": "The scan shows a completely blank page, but a full page of Latin preface text is printed beside it, so the transcription does not match this image."
+  },
+  {
+   "cell": "latin-flash3",
+   "route": "3flash",
+   "page_id": "6974f764c22e98c6568c0546",
+   "book_id": "6970e3759b09d309d780a2a8",
+   "page_number": 11,
+   "defects": [
+    {
+     "class": "O3",
+     "quote": "ἐν κρυπτῷ",
+     "severity": "wrong_text",
+     "what": "The page has a different Greek phrase that looks like ἐν σκοτεινῷ (\"in darkness\"). The candidate put in the wording of the Greek New Testament at John 18:20 instead."
+    },
+    {
+     "class": "O10",
+     "quote": "ἀπροκαλύπτως",
+     "severity": "wrong_text",
+     "what": "The page prints ἀκροαματικὰ (\"esoteric teachings\", the opposite of ἐξωτερικὰ). The candidate's word means \"openly\", so the contrast the author is drawing is lost."
+    }
+   ],
+   "note": "The Latin is accurate throughout, but two of the three small Greek glosses are wrong: one has been replaced with the Gospel's own wording and the other with a word that means something different."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3cbc19ec254ff6caded8d1",
+   "book_id": "6a3cbc19ec254ff6caded88e",
+   "page_number": 67,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "次之曰事公焉",
+     "severity": "wrong_text",
+     "what": "an extra line appended at the end; the page stops at 言君尸 and this text is not on the leaf"
+    }
+   ],
+   "note": "Every column on the page is transcribed correctly up to 言君尸, but the candidate then adds a line, 次之曰事公焉, that does not appear on the page."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3c7b0701fe4f593c21b93c",
+   "book_id": "6a3c7b0701fe4f593c21b92f",
+   "page_number": 13,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "全国人口会",
+     "severity": "wrong_text",
+     "what": "The running title in the margin is 欽定四庫全書. The candidate replaces it with an invented modern simplified-Chinese phrase and leaves it untagged, so it reads as part of the main text."
+    }
+   ],
+   "note": "All eight lines of the main text about the city gates, water gates, watchtowers and guard posts match the page. But the top line '全国人口会' is not on the leaf; the margin there reads 欽定四庫全書."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3cbc42ec254ff6cadef0d7",
+   "book_id": "6a3cbc42ec254ff6cadef090",
+   "page_number": 71,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "凡賔客之治令訶訶治之",
+     "severity": "wrong_text",
+     "what": "The page has 訝 (訝士, the Zhouli office) here, not 訶. The same misread repeats in 以告訶, 訶為如朝, 訶士也 and 掌訶, so the official's title is wrong throughout."
+    },
+    {
+     "class": "O1",
+     "quote": "関係",
+     "severity": "wrong_text",
+     "what": "These two characters are not on the page. The leaf ends at 所給旨得以自辦."
+    }
+   ],
+   "note": "The title 訝士 is printed as 訶 every time it appears, so the office being described is misnamed, and the page ends with two characters (関係) that the leaf doesn't have."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3c6964af3c49b59c5df09c",
+   "book_id": "6a3c6964af3c49b59c5df098",
+   "page_number": 4,
+   "defects": [
+    {
+     "class": "O11",
+     "quote": "金星以九全",
+     "severity": "wrong_text",
+     "what": "The marginal title 欽定四庫全書 is garbled into nonsense and left untagged, so it reads as body text."
+    },
+    {
+     "class": "O1",
+     "quote": "两半",
+     "severity": "wrong_text",
+     "what": "The words 两半 after 食前溫服 do not appear on the page."
+    }
+   ],
+   "note": "The main recipe text is mostly correct, but the marginal title is garbled into nonsense, 两半 is added where the page has nothing, and the 'chopped' note in the last column is misread as 荆."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3cbbbc87ee3d48c89d0c1d",
+   "book_id": "6a3cbbbb87ee3d48c89d0bbc",
+   "page_number": 97,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "次宅曰事全焉",
+     "severity": "wrong_text",
+     "what": "invented line: the last column ends at 無恩興 and nothing follows it on the leaf"
+    }
+   ],
+   "note": "The text follows the leaf closely until the last line, but it adds a phrase that is not on the page (次宅曰事全焉) and changes 奔邾 to 奔邪 in the 正義."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3c622a879008ba7e1611dc",
+   "book_id": "6a3c622a879008ba7e1611b9",
+   "page_number": 34,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "禁止閣幫\n覆倒箋本\n是足形閣",
+     "severity": "wrong_text",
+     "what": "The first seal-script inscription rubbing has been made into invented regular-script text that is not on the page."
+    },
+    {
+     "class": "O1",
+     "quote": "草止獨斷我\n莫不畏君相",
+     "severity": "wrong_text",
+     "what": "The second seal-script rubbing has also been made into invented text."
+    },
+    {
+     "class": "O6",
+     "quote": "龍",
+     "severity": "wrong_text",
+     "what": "The vessel label above the second rubbing reads 鼎 (or a variant), not 龍."
+    }
+   ],
+   "note": "Most of the text is invented: the two seal-script rubbings are given as made-up regular-script lines and a vessel label is wrong. Only the transcription column (with 寶/彝 misreadings) and 音釋同前 match the page."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3cbfadf9474f825c16a34d",
+   "book_id": "6a3cbfadf9474f825c16a32a",
+   "page_number": 35,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "膠",
+     "severity": "wrong_text",
+     "what": "first headword is a 縢/滕-type form, not 膠"
+    },
+    {
+     "class": "O6",
+     "quote": "靛",
+     "severity": "wrong_text",
+     "what": "second headword is 競, not 靛"
+    },
+    {
+     "class": "O6",
+     "quote": "與",
+     "severity": "wrong_text",
+     "what": "page has 興, not 與"
+    },
+    {
+     "class": "O1",
+     "quote": "土",
+     "severity": "wrong_text",
+     "what": "inserted character; the note runs 九丨之華益 with nothing between 之 and 華"
+    },
+    {
+     "class": "O4",
+     "quote": "劉\n劉\n劉\n劉",
+     "severity": "wrong_text",
+     "what": "four 劉; the page shows three (one ends column 5, two open column 6)"
+    }
+   ]
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3c60d540c88a541d8eb1cc",
+   "book_id": "6a3c60d540c88a541d8eb14f",
+   "page_number": 125,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "卞關漢書地理志常山郡高",
+     "severity": "wrong_text",
+     "what": "the headword on the page is 井關 (Jingguan), not 卞關; the new entry is mislabelled"
+    },
+    {
+     "class": "O1",
+     "quote": "孝悌帝置莽曰丨丨屬冀州",
+     "severity": "wrong_text",
+     "what": "'孝悌' is not on the page; the page continues straight from 高 to 帝置 (Gaodi set it up)"
+    }
+   ],
+   "note": "The poem quotations match the page, but the last entry has the wrong headword (卞關 instead of 井關) and adds '孝悌', which is not on the page, so 'Gaodi set it up' now reads as nonsense."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3c64ab39b4508b04e28f5e",
+   "book_id": "6a3c64ab39b4508b04e28ee7",
+   "page_number": 118,
+   "defects": [
+    {
+     "class": "O11",
+     "quote": "金\n灾\n四\n属\n金",
+     "severity": "wrong_text",
+     "what": "the margin title 欽定四庫全書 is garbled into five stray lines of body text"
+    },
+    {
+     "class": "O1",
+     "quote": "2023年1月1日",
+     "severity": "wrong_text",
+     "what": "a modern date that is not on the page was added"
+    }
+   ],
+   "note": "Most of the entries are right, but the margin title 欽定四庫全書 shows up as junk lines, a 2023 date has been added that is not on the page, and some characters are misread (儵蟰, 玃如)."
+  },
+  {
+   "cell": "zh-paddle-dice-lt090",
+   "route": "paddle",
+   "page_id": "6a3c5e7840c88a541d8e2651",
+   "book_id": "6a3c5e7840c88a541d8e2644",
+   "page_number": 13,
+   "defects": [
+    {
+     "class": "O6",
+     "quote": "集韻本作第",
+     "severity": "wrong_text",
+     "what": "the variant character cited on the page is not 第; it is a rare form misread as a common character"
+    },
+    {
+     "class": "O1",
+     "quote": "書法",
+     "severity": "wrong_text",
+     "what": "trailing 書法 is not on the page; the leaf ends 古只用升"
+    }
+   ],
+   "note": "All columns are present and in order, but a reader would hit several wrong characters (談 for 謨, 運 for 連, 褒 for 衮, 第 for the cited variant form) and a stray '書法' added at the end that is not on the page."
+  }
+ ],
+ "by_script_cells": {
+  "arabic-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "0/5",
+     "wrong_text_pages": "3/5",
+     "classes_k_of_n": {
+      "O6": "5/5",
+      "I3": "3/5",
+      "O12": "3/5",
+      "O5": "2/5",
+      "O8": "1/5",
+      "O16": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "arabic-lite|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 1,
+     "accept": "0/5",
+     "wrong_text_pages": "5/5",
+     "classes_k_of_n": {
+      "O6": "5/5",
+      "O5": "4/5",
+      "I4": "3/5",
+      "E2": "2/5",
+      "O11": "2/5",
+      "O16": "1/5",
+      "O12": "1/5",
+      "O8": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "chinese-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 6,
+     "books": 6,
+     "accept": "0/6",
+     "wrong_text_pages": "4/6",
+     "classes_k_of_n": {
+      "O6": "4/6",
+      "O5": "3/6",
+      "O8": "2/6",
+      "O16": "2/6",
+      "O1": "1/6",
+      "O12": "1/6",
+      "O11": "1/6",
+      "O10": "1/6",
+      "O7": "1/6",
+      "D1": "1/6",
+      "O4": "1/6",
+      "O3": "1/6"
+     },
+     "script_basis": {
+      "page": 6
+     }
+    }
+   }
+  },
+  "chinese-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 6,
+     "books": 2,
+     "accept": "0/6",
+     "wrong_text_pages": "4/6",
+     "classes_k_of_n": {
+      "O5": "5/6",
+      "O6": "5/6",
+      "O12": "3/6",
+      "O11": "3/6",
+      "O7": "1/6",
+      "O17": "1/6",
+      "E2": "1/6"
+     },
+     "script_basis": {
+      "page": 6
+     }
+    }
+   }
+  },
+  "danish-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 1,
+     "accept": "4/5",
+     "wrong_text_pages": "0/5",
+     "classes_k_of_n": {
+      "O5": "3/5",
+      "O8": "2/5",
+      "O6": "2/5",
+      "O16": "2/5",
+      "E2": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "english-blank-pre1800|unknown": {
+   "routes": {
+    "lighton-written": {
+     "n": 10,
+     "books": 3,
+     "accept": "10/10",
+     "wrong_text_pages": "0/10",
+     "classes_k_of_n": {
+      "O12": "1/10",
+      "O8": "1/10",
+      "E2": "1/10",
+      "O17": "1/10",
+      "O16": "1/10",
+      "O13": "1/10"
+     },
+     "script_basis": {
+      "page": 10
+     }
+    }
+   }
+  },
+  "english-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 7,
+     "books": 3,
+     "accept": "4/7",
+     "wrong_text_pages": "1/7",
+     "classes_k_of_n": {
+      "O6": "3/7",
+      "O8": "2/7",
+      "O11": "2/7",
+      "E2": "2/7",
+      "T6": "1/7",
+      "O12": "1/7"
+     },
+     "script_basis": {
+      "page": 7
+     }
+    }
+   }
+  },
+  "english-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 29,
+     "books": 8,
+     "accept": "29/29",
+     "wrong_text_pages": "0/29",
+     "classes_k_of_n": {
+      "O8": "9/29",
+      "E2": "5/29",
+      "O12": "4/29",
+      "O16": "4/29",
+      "O6": "1/29",
+      "O11": "1/29",
+      "D1": "1/29",
+      "O13": "1/29"
+     },
+     "script_basis": {
+      "page": 29
+     }
+    }
+   }
+  },
+  "english-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 29,
+     "books": 8,
+     "accept": "25/29",
+     "wrong_text_pages": "1/29",
+     "classes_k_of_n": {
+      "E2": "8/29",
+      "O8": "5/29",
+      "O16": "5/29",
+      "O6": "3/29",
+      "O11": "3/29",
+      "T6": "2/29",
+      "O12": "2/29",
+      "O5": "1/29"
+     },
+     "script_basis": {
+      "page": 29
+     }
+    }
+   }
+  },
+  "french-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "2/5",
+     "wrong_text_pages": "1/5",
+     "classes_k_of_n": {
+      "D1": "2/5",
+      "O6": "2/5",
+      "E2": "2/5",
+      "O8": "2/5",
+      "O7": "1/5",
+      "O17": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "french-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 9,
+     "books": 2,
+     "accept": "8/9",
+     "wrong_text_pages": "0/9",
+     "classes_k_of_n": {
+      "O8": "6/9",
+      "E2": "2/9",
+      "O16": "1/9",
+      "O5": "1/9",
+      "O6": "1/9"
+     },
+     "script_basis": {
+      "page": 9
+     }
+    }
+   }
+  },
+  "german-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 28,
+     "books": 7,
+     "accept": "24/28",
+     "wrong_text_pages": "3/28",
+     "classes_k_of_n": {
+      "O8": "18/28",
+      "O6": "12/28",
+      "E2": "10/28",
+      "O12": "3/28",
+      "O7": "2/28",
+      "O16": "2/28",
+      "O10": "1/28",
+      "T6": "1/28",
+      "O14": "1/28",
+      "D1": "1/28"
+     },
+     "script_basis": {
+      "page": 28
+     }
+    }
+   }
+  },
+  "german-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 2,
+     "books": 2,
+     "accept": "1/2",
+     "wrong_text_pages": "1/2",
+     "classes_k_of_n": {
+      "E2": "1/2",
+      "O6": "1/2",
+      "O1": "1/2",
+      "O8": "1/2",
+      "O16": "1/2"
+     },
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "german-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 12,
+     "books": 4,
+     "accept": "11/12",
+     "wrong_text_pages": "1/12",
+     "classes_k_of_n": {
+      "O8": "8/12",
+      "T6": "4/12",
+      "O6": "3/12",
+      "O13": "3/12",
+      "E2": "2/12",
+      "O5": "2/12",
+      "O16": "1/12",
+      "O11": "1/12"
+     },
+     "script_basis": {
+      "page": 12
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 32,
+     "books": 8,
+     "accept": "21/32",
+     "wrong_text_pages": "7/32",
+     "classes_k_of_n": {
+      "O8": "22/32",
+      "O6": "22/32",
+      "E2": "9/32",
+      "O16": "8/32",
+      "O5": "7/32",
+      "O11": "7/32",
+      "T6": "6/32",
+      "O12": "3/32",
+      "O7": "2/32",
+      "O4": "1/32",
+      "D1": "1/32",
+      "I4": "1/32"
+     },
+     "script_basis": {
+      "page": 32
+     }
+    }
+   }
+  },
+  "greek-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 2,
+     "books": 1,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {
+      "O5": "2/2",
+      "O6": "2/2",
+      "O7": "1/2",
+      "O4": "1/2",
+      "O16": "1/2"
+     },
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "greek-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 27,
+     "books": 6,
+     "accept": "8/27",
+     "wrong_text_pages": "18/27",
+     "classes_k_of_n": {
+      "O6": "19/27",
+      "O12": "9/27",
+      "O1": "7/27",
+      "O8": "6/27",
+      "I3": "5/27",
+      "O11": "3/27",
+      "O7": "3/27",
+      "E2": "3/27",
+      "O4": "2/27",
+      "O5": "2/27",
+      "O17": "1/27",
+      "T10": "1/27",
+      "O10": "1/27",
+      "O14": "1/27",
+      "I4": "1/27",
+      "D1": "1/27"
+     },
+     "script_basis": {
+      "page": 27
+     }
+    }
+   }
+  },
+  "greek-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O8": "1/1",
+      "O5": "1/1",
+      "O11": "1/1",
+      "I4": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "italian-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "2/5",
+     "wrong_text_pages": "3/5",
+     "classes_k_of_n": {
+      "O6": "5/5",
+      "O8": "4/5",
+      "O11": "3/5",
+      "O16": "2/5",
+      "O5": "1/5",
+      "O7": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "italian-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "4/5",
+     "wrong_text_pages": "0/5",
+     "classes_k_of_n": {
+      "E2": "3/5",
+      "O5": "2/5",
+      "O8": "2/5",
+      "O6": "2/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "korean-lite|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 15,
+     "books": 3,
+     "accept": "0/15",
+     "wrong_text_pages": "13/15",
+     "classes_k_of_n": {
+      "O6": "10/15",
+      "O1": "7/15",
+      "O5": "7/15",
+      "O8": "6/15",
+      "O4": "4/15",
+      "O16": "4/15",
+      "T10": "4/15",
+      "O7": "3/15",
+      "E2": "1/15",
+      "O15": "1/15"
+     },
+     "script_basis": {
+      "page": 15
+     }
+    }
+   }
+  },
+  "latin-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 55,
+     "books": 13,
+     "accept": "38/55",
+     "wrong_text_pages": "13/55",
+     "classes_k_of_n": {
+      "O6": "29/55",
+      "O8": "27/55",
+      "E2": "19/55",
+      "O16": "10/55",
+      "O5": "8/55",
+      "O11": "6/55",
+      "T6": "6/55",
+      "O7": "5/55",
+      "O10": "4/55",
+      "O12": "3/55",
+      "I1": "2/55",
+      "O1": "2/55",
+      "O3": "1/55",
+      "O9": "1/55",
+      "O2": "1/55",
+      "O15": "1/55",
+      "O14": "1/55",
+      "D1": "1/55",
+      "O4": "1/55"
+     },
+     "script_basis": {
+      "page": 55
+     }
+    }
+   }
+  },
+  "latin-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 3,
+     "books": 2,
+     "accept": "0/3",
+     "wrong_text_pages": "2/3",
+     "classes_k_of_n": {
+      "O6": "2/3",
+      "O8": "2/3",
+      "O16": "2/3",
+      "O12": "1/3",
+      "O5": "1/3",
+      "E2": "1/3",
+      "O11": "1/3"
+     },
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "latin-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 55,
+     "books": 12,
+     "accept": "38/55",
+     "wrong_text_pages": "12/55",
+     "classes_k_of_n": {
+      "O6": "24/55",
+      "O8": "17/55",
+      "E2": "11/55",
+      "O16": "10/55",
+      "O11": "6/55",
+      "T6": "5/55",
+      "O12": "5/55",
+      "I1": "4/55",
+      "O5": "4/55",
+      "O7": "3/55",
+      "D1": "1/55",
+      "O3": "1/55",
+      "O10": "1/55"
+     },
+     "script_basis": {
+      "page": 55
+     }
+    }
+   }
+  },
+  "latin-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 21,
+     "books": 6,
+     "accept": "9/21",
+     "wrong_text_pages": "8/21",
+     "classes_k_of_n": {
+      "O6": "18/21",
+      "E2": "9/21",
+      "O5": "8/21",
+      "O8": "5/21",
+      "O11": "4/21",
+      "O16": "4/21",
+      "O7": "3/21",
+      "O12": "2/21",
+      "O14": "2/21",
+      "O17": "1/21"
+     },
+     "script_basis": {
+      "page": 21
+     }
+    },
+    "pero>agy-flash-low": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O6": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "latin-lite|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 1,
+     "accept": "1/5",
+     "wrong_text_pages": "4/5",
+     "classes_k_of_n": {
+      "O6": "4/5",
+      "O12": "2/5",
+      "O16": "2/5",
+      "O8": "2/5",
+      "T6": "1/5",
+      "O13": "1/5",
+      "O5": "1/5",
+      "E2": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "latin-lite|unknown": {
+   "routes": {
+    "lite": {
+     "n": 1,
+     "books": 1,
+     "accept": "0/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O6": "1/1",
+      "E2": "1/1",
+      "O8": "1/1",
+      "O12": "1/1",
+      "T6": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "russian-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 10,
+     "books": 2,
+     "accept": "9/10",
+     "wrong_text_pages": "0/10",
+     "classes_k_of_n": {
+      "O11": "2/10",
+      "O8": "2/10",
+      "E2": "2/10",
+      "O16": "1/10"
+     },
+     "script_basis": {
+      "page": 10
+     }
+    }
+   }
+  },
+  "russian-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "5/5",
+     "wrong_text_pages": "0/5",
+     "classes_k_of_n": {
+      "E2": "1/5",
+      "O8": "1/5",
+      "O11": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "sanskrit-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "1/5",
+     "wrong_text_pages": "4/5",
+     "classes_k_of_n": {
+      "O6": "5/5",
+      "O8": "4/5",
+      "O5": "2/5",
+      "E2": "1/5",
+      "O12": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "sanskrit-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 2,
+     "books": 1,
+     "accept": "0/2",
+     "wrong_text_pages": "2/2",
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "O16": "2/2",
+      "O8": "1/2",
+      "O12": "1/2"
+     },
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "sanskrit-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "3/5",
+     "wrong_text_pages": "1/5",
+     "classes_k_of_n": {
+      "O6": "3/5",
+      "E2": "2/5",
+      "O7": "2/5",
+      "O8": "1/5",
+      "O16": "1/5",
+      "O10": "1/5",
+      "O5": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "sanskrit-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 1,
+     "accept": "0/3",
+     "wrong_text_pages": "3/3",
+     "classes_k_of_n": {
+      "O6": "3/3",
+      "O5": "2/3",
+      "O7": "2/3",
+      "O12": "1/3",
+      "O11": "1/3",
+      "O16": "1/3"
+     },
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "tibetan-yigdzin|manuscript": {
+   "routes": {
+    "yigdzin": {
+     "n": 16,
+     "books": 5,
+     "accept": "9/16",
+     "wrong_text_pages": "6/16",
+     "classes_k_of_n": {
+      "O12": "11/16",
+      "E2": "7/16",
+      "O6": "7/16",
+      "O4": "4/16",
+      "O9": "3/16",
+      "O7": "2/16",
+      "O8": "1/16",
+      "O10": "1/16",
+      "I5": "1/16",
+      "D1": "1/16"
+     },
+     "script_basis": {
+      "page": 16
+     }
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 1,
+     "books": 1,
+     "accept": "1/1",
+     "wrong_text_pages": "0/1",
+     "classes_k_of_n": {
+      "O12": "1/1",
+      "E2": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "tibetan-yigdzin|unknown": {
+   "routes": {
+    "yigdzin": {
+     "n": 15,
+     "books": 5,
+     "accept": "11/15",
+     "wrong_text_pages": "4/15",
+     "classes_k_of_n": {
+      "O6": "8/15",
+      "O12": "7/15",
+      "E2": "5/15",
+      "T5": "2/15",
+      "O5": "2/15",
+      "O4": "1/15",
+      "O8": "1/15",
+      "O10": "1/15",
+      "O7": "1/15"
+     },
+     "script_basis": {
+      "page": 15
+     }
+    },
+    "yigdzin>agy-flash-low": {
+     "n": 3,
+     "books": 1,
+     "accept": "3/3",
+     "wrong_text_pages": "0/3",
+     "classes_k_of_n": {
+      "O6": "2/3",
+      "E2": "1/3",
+      "O12": "1/3"
+     },
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "zh-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 3,
+     "books": 3,
+     "accept": "1/3",
+     "wrong_text_pages": "2/3",
+     "classes_k_of_n": {
+      "O5": "3/3",
+      "O6": "2/3",
+      "O4": "2/3",
+      "E2": "1/3",
+      "O11": "1/3",
+      "O12": "1/3"
+     },
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "zh-paddle-dice-lt090|print": {
+   "routes": {
+    "paddle": {
+     "n": 1,
+     "books": 1,
+     "accept": "0/1",
+     "wrong_text_pages": "1/1",
+     "classes_k_of_n": {
+      "O16": "1/1",
+      "O6": "1/1",
+      "O7": "1/1",
+      "O5": "1/1",
+      "O10": "1/1"
+     },
+     "script_basis": {
+      "page": 1
+     }
+    }
+   }
+  },
+  "zh-paddle-dice-lt090|manuscript": {
+   "routes": {
+    "paddle": {
+     "n": 277,
+     "books": 58,
+     "accept": "181/277",
+     "wrong_text_pages": "63/277",
+     "classes_k_of_n": {
+      "O11": "136/277",
+      "O6": "118/277",
+      "O12": "61/277",
+      "O16": "47/277",
+      "O5": "35/277",
+      "E2": "29/277",
+      "O8": "18/277",
+      "O7": "18/277",
+      "O1": "10/277",
+      "O4": "7/277",
+      "O17": "6/277",
+      "T4": "1/277",
+      "O10": "1/277",
+      "I4": "1/277",
+      "O14": "1/277"
+     },
+     "script_basis": {
+      "page": 277
+     }
+    }
+   }
+  }
+ }
+}

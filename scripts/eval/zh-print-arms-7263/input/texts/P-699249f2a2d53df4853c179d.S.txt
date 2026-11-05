@@ -1,0 +1,39 @@
+<language>French</language>
+<page-type>text</page-type>
+<page-num>292</page-num>
+<header>LI KI</header>
+<columns>2</columns>
+
+黍以豚，稻以鴈。
+黍冬，薦稻韭。
+以卵，麥以魚，
+(10) 祭天地之
+牛角繭栗，宗
+廟之牛角握，
+賓客之牛角
+尺。諸侯無故
+不殺牛，大夫
+無故不殺羊，
+士無故不殺
+犬豕，庶人無
+故不殺。
+
+tsién kiòu, hiá tsién mě, ts'iōu tsién chòu, tōung tsién taó. Kiòu ì louàn, mě ì iû, chòu ì t'ouên, taó ì ién.
+
+10. Tsí t'iēn tí tchēu iôu kiǒ kièn lǐ; tsōung miaó tchēu iôu kiǒ ouǒ; pīn k'ǒ tchēu iôu kiǒ tch'ěu. Tchōu heôu ôu kóu pǒu chǎ iôu. Tái fōu ôu kóu pǒu chǎ
+
+chair des animaux, quand ils avaient un domaine (concédé par le prince); ils offraient les fruits de la terre, quand ils n'avaient pas de domaine. Les simples particuliers offraient aux mânes de leurs pères au printemps des poireaux, en été du blé, en automne du millet à panicules, en hiver du riz. Avec les poireaux ils offraient des œufs, avec le blé du poisson, avec le millet un jeune porc, avec le riz une oie sauvage.
+
+10. Les cornes des jeunes taureaux offerts au Ciel et à la Terre étaient de la grosseur et de la forme d'un cocon ou d'une châtaigne. Celles des jeunes taureaux offerts dans le temple des ancêtres pouvaient être tenues dans la main. Celles des taureaux tués pour traiter les hôtes et les étrangers étaient longues d'un palme (20 centimètres). A moins d'une raison spéciale, les princes ne tuaient pas de bœufs, les grands préfets ne tuaient pas de brebis, les simples officiers ne tuaient ni chiens ni porcs; les particuliers ne mangeaient pas de mets délicats. Les viandes que les princes et les officiers mangeaient à leurs repas ordinaires devaient n'être pas meilleures que celles des victimes qu'ils immolaient. Leurs vêtements ordinaires devaient n'être pas plus beaux que ceux
+
+大牢 T'ái laô, offrande d'un bœuf, d'un agneau et d'un jeune porc.
+
+少牢 Chaó laô, offrande d'un agneau et d'un jeune porc.
+
+10. Offerendi Cælo Tellurive bovis cornua bombycis nidi castaneæve (instar). (Offerendi) coram avorum tabellis bovis cornua manu capi poterant. Hospitibus et advenis (apponendi) bovis cornua palmo (longa). Reguli
+
+<column-break/>
+
+sine causa gravi non occidebant boves. Majores præfecti absque gravi causa non occidebant oves. Præpositi inferiores absque gravi causa non occidebant canes porcosve. Privati homines absque gravi causa non comedebant exquisita. Consuetæ carnes non superabant victimarum (carnes); consuetæ vestes non superabant offerentium vestes; cubicula non superabant majorum delubra.
+
+<vocab>Li Ki, Book of Rites, sacrifice, ritual offerings, T'ái laô, Chaó laô, Chinese classics, Latin translation</vocab>

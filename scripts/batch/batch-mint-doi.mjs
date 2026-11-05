@@ -30,7 +30,7 @@ import { screenBookPages } from '../lib/modern-intrusion.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const LICENSE = 'CC-BY-SA-4.0';
+const LICENSE = 'CC-BY-NC-SA-4.0';
 const GEMINI_MODEL = 'gemini-3-flash-preview';
 const DELAY_BETWEEN_MINTS_MS = 3000;
 const DELAY_BETWEEN_FRONT_MATTER_MS = 1000;
@@ -75,7 +75,7 @@ const LANG_MAP = {
 const LICENSE_MAP = {
   'CC0-1.0': 'cc-zero',
   'CC-BY-4.0': 'cc-by-4.0',
-  'CC-BY-SA-4.0': 'cc-by-sa-4.0',
+  'CC-BY-NC-SA-4.0': 'cc-by-sa-4.0',
   'CC-BY-NC-4.0': 'cc-by-nc-4.0',
   'CC-BY-NC-SA-4.0': 'cc-by-nc-sa-4.0',
 };

@@ -20,6 +20,7 @@ import { storedHeroCollageUrl } from '@/lib/collection-hero-collage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import LibrarianSearch from '@/components/LibrarianSearch';
 import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
+import CatalogueLink from '@/components/catalog/CatalogueLink';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import CuratorLauncher from '@/components/collections/CuratorLauncher';
 import { applyCuration, curationId, surfaceCuration } from '@/lib/collection-image-curation';
@@ -656,7 +657,7 @@ export default async function SlimeMouldsCollectionPage() {
                 <p className="text-primary font-medium font-body"><Link href={`/collections/${SLUG}/catalog`} className="hover:underline">{worksMore.toLocaleString('en-US')} more work{worksMore === 1 ? '' : 's'} in this collection</Link></p>
                 <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
               </div>
-              <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
+              <CatalogueLink query={`?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></CatalogueLink>
             </div>
           )}
         </div>

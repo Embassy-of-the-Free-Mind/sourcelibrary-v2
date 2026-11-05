@@ -1,0 +1,19 @@
+{
+ "engine": {
+  "name": "pero-ocr",
+  "version": "git 4301bdffe9205dff11579dae27b3f80458c27e89",
+  "model": "pero_eu_cz_print_newspapers_2022-09-26",
+  "config": "config_cpu.ini",
+  "config_sha256": "c385bf7032832d1ca1dd55465fc22dc6892c4f02e04a395abe12dd0a2c094a84",
+  "ocr_weights_sha256": "0ae48c6577a99cc1482aa90b3030d6e827b333e267c52e32e999bd7010d7f432",
+  "device": "cpu (8 threads)",
+  "exit": 0,
+  "pages": 78,
+  "wall_secs": 326.4,
+  "secs_per_page": 4.18,
+  "collect": "pero-collect.py (#7567): regions in document order"
+ },
+ "drafts": 77,
+ "under_30_word_chars": 1,
+ "image_mismatch": 0
+}

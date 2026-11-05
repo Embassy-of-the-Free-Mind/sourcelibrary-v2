@@ -23,6 +23,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 import { gatedImageCall, firstJson } from './lib/agy-cli.mjs';
 
@@ -134,7 +135,7 @@ async function processLeaf(buf, rect, bookId) {
   const lm = await sharp(leafBuf).metadata();
   const fullUrl = await uploadToR2(`cropped/${bookId}/${id}.jpg`, leafBuf);
   const displayBuf = lm.width > 2000 ? await sharp(leafBuf).resize({ width: 2000, withoutEnlargement: true }).jpeg({ quality: 88, progressive: true }).toBuffer() : leafBuf;
-  const displayUrl = await uploadToR2(`pages/${bookId}/lf${id}.jpg`, displayBuf);
+  const displayUrl = await uploadToR2(`pages/${bookId}/lf${id}.jpg`, await markDisplay(displayBuf, { bookId, pageNumber: id }));
   const thumbUrl = await uploadToR2(`pages/${bookId}/lf${id}-thumb.jpg`, await sharp(leafBuf).resize({ width: 150 }).jpeg({ quality: 60 }).toBuffer());
   return { id, photo: displayUrl, display_photo: displayUrl, archived_photo: fullUrl, thumbnail: thumbUrl, image_width: lm.width, image_height: lm.height };
 }

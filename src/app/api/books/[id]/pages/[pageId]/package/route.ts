@@ -1,3 +1,4 @@
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import archiver from 'archiver';
@@ -18,6 +19,8 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { pageExportImageUrl, fetchAndCompressImage } from '@/lib/export-page-images';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import { AI_TRAINING_NOTICE } from '@/lib/license-info';
+import { transcriptProvenance, transcriptProvenanceLabel, translationCorpus } from '@/lib/text-provenance';
+import { getReaderStrings } from '@/lib/reader-strings';
 
 /**
  * GET /api/books/[id]/pages/[pageId]/package
@@ -115,17 +118,29 @@ function buildReadme(opts: {
   }
   lines.push('');
 
-  // Provenance — who/what produced the text, named plainly.
+  // Provenance — what kind of text each file is, named plainly. The same helper as the
+  // reader's drawer, so the package and the page say the same thing; the model is not
+  // named (#7263) — it stays in the record and in /api/books/[id]/text?include_metadata.
+  const info = getReaderStrings('en').info;
+  const prov = transcriptProvenance(page);
+  const trCorpus = translationCorpus(page);
   lines.push('PROVENANCE');
   lines.push(
-    page.ocr?.model
-      ? `Transcription produced by: ${page.ocr.model}`
-      : 'Transcription: not yet produced.'
+    prov
+      ? `Transcription: ${transcriptProvenanceLabel(prov, info, 'full')}`
+      : page.ocr?.data ? 'Transcription: included.' : 'Transcription: not yet produced.'
   );
   lines.push(
-    page.translation?.model
-      ? `Translation produced by: ${page.translation.model}`
-      : 'Translation: not yet produced.'
+    !page.translation?.data
+      ? 'Translation: not yet produced.'
+      : trCorpus
+        ? `Translation: ${info.corpusTranslation(trCorpus.name)}`
+        // No model means not ours to call AI (e.g. Sefaria's own English, `source: 'manual'`).
+        : !page.translation.model
+          ? 'Translation: included.'
+          : page.translation.edited_by || page.translation.edited_at
+          ? `Translation: ${info.machineTranslationEdited}`
+          : `Translation: ${info.machineTranslation}`
   );
   lines.push('');
 
@@ -138,7 +153,7 @@ function buildReadme(opts: {
 
   lines.push('-'.repeat(60));
   lines.push(`Downloaded: ${now}`);
-  lines.push('License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)');
+  lines.push('License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)');
   lines.push(AI_TRAINING_NOTICE);
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
@@ -198,7 +213,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
         return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
       }
     }
-    const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+    const isMember = sessionHasMemberBenefits(session?.user);
     const isExemptEditor = userId ? await isInnerCircle() : false;
     const isPurchased = !userId || isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', bookId);
     if (userId && !isMember && !isExemptEditor && !isPurchased) {

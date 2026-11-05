@@ -1,0 +1,730 @@
+[
+ {
+  "slot": 41,
+  "stratum": "control-live-siku",
+  "book_id": "6a3ced944701a906f10e1919",
+  "book_url": "https://sourcelibrary.org/book/6a3ced944701a906f10e1919",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3ced944701a906f10e1919",
+   "title": "數度衍·卷六~卷七 (vol 3)",
+   "display_title": "Development of Numbers and Measures: prefatory juan–juan 1 (vol 3)",
+   "author": "方中通",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 123,
+   "pages_ocr": 122,
+   "pages_translated": 122,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 123,
+   "distinct_page_numbers": 123,
+   "duplicate_records": 0,
+   "pages_with_ocr": 122,
+   "pages_translated": 122,
+   "with_printed_number": 9,
+   "printed_backsteps": 3,
+   "printed_repeats": 2,
+   "pages_count_field": 123,
+   "pages_translated_field": 122
+  },
+  "run": [
+   29,
+   56,
+   89,
+   104
+  ],
+  "pages": [
+   {
+    "page_number": 29,
+    "page_id": "6a3ced944701a906f10e1936",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ced944701a906f10e1919/29.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n通曰第二術較羃為甲辛直角方形\n半之為甲戊直角形與甲庚直角形\n等弦羃為甲壬直角方形減較羃半\n甲庚形得癸庚丙磬折形半之得癸\n午未磬折形與辰子丙磬折形等而子未直角方形與\n甲午直角方形等也癸午未磬折形開方得丑寅直角\n方形與辰子丙磬折形開方得卯乙直角方形等也即\n得丑乙線與巳乙線等而丑丙線與甲巳線等即半較\n線也乙丑線內減等半較之丑丙線得乙丙勾巳乙線",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page. A single character 金 \"metal\" appears at the top of the page, probably a fragment of the printed frame or header.</meta>\nTong says: in the second method, the difference-square is the square 甲辛. Half of it is the rectangle 甲戊, which equals the rectangle 甲庚. The hypotenuse-square is the square 甲壬. Subtracting 甲庚, half the difference-square, gives the gnomon 癸庚丙. Half of this is the gnomon 癸午未, which equals the gnomon 辰子丙; and the square 子未 equals the square 甲午. Extracting the root of the gnomon 癸午未 gives the square 丑寅, which equals the square 卯乙 obtained by extracting the root of the gnomon 辰子丙. Thus the line 丑乙 equals the line 巳乙, and the line 丑丙 equals the line 甲巳, which is the half-difference line. From the line 乙丑 subtract the line 丑丙, equal to the half-difference, to get the base 乙丙. To the line 巳乙",
+    "translation_model": "claude-opus-5-5",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 56,
+    "page_id": "6a3ced944701a906f10e1951",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ced944701a906f10e1919/56.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n式弦四十五勾與股弦和較五十四問勾股各幾何曰勾二\n十七股三十六術通曰弦自乗得二千零二十五倍之得四千\n零五十為實弦減較餘九為勾股較又自乗得八十一與實相\n減餘三千九百六十九開平方得六十三為勾股和加勾股較\n得七十二半之得股勾股和減勾股較餘五十四半之得勾\n弦與股和較求勾股法\n股和較者股與\n勾弦和較也\n式弦四十五股與勾弦和較三十六問勾股各幾何曰勾二\n十七股三十六術通曰同弦與勾和較法蓋以弦減勾與股弦\n和較五十四餘九以弦減股與勾弦較三十六餘亦九也",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page: the heading \"Method for finding the base and height from the hypotenuse and the base-sum difference\" ended the previous page; this problem belongs to it.</meta>\nProblem: the hypotenuse is forty-five, and the difference between the base and the height-hypotenuse sum is fifty-four. What are the base and the height? Answer: the base is twenty-seven, the height thirty-six. Method: I, Tong, say: square the hypotenuse to get two thousand and twenty-five; double it to get four thousand and fifty, as the dividend. Take the difference between the hypotenuse and the given difference, leaving nine, which is the base-height difference. Square it to get eighty-one, and subtract it from the dividend, leaving three thousand nine hundred sixty-nine. Extract the square root to get sixty-three, which is the base-height sum. Add the base-height difference to get seventy-two; halve it to get the height. Subtract the base-height difference from the base-height sum, leaving fifty-four; halve it to get the base.\n\nMethod for finding the base and height from the hypotenuse and the height-sum difference\n<note>small-character gloss in the original:</note> The height-sum difference is the difference between the height and the sum of base and hypotenuse.\n\nProblem: the hypotenuse is forty-five, and the difference between the height and the base-hypotenuse sum is thirty-six. What are the base and the height? Answer: the base is twenty-seven, the height thirty-six. Method: I, Tong, say: this is the same as the method for the hypotenuse and the base-sum difference. For the hypotenuse differs from fifty-four, the difference between the base and the height-hypotenuse sum, by nine; and the hypotenuse differs from thirty-six, the difference between the height and the base-hypotenuse sum, also by nine.\n\n<summary>Base and height are found from the hypotenuse and the base-sum difference, using the doubled square of the hypotenuse to recover the base-height sum. The height-sum difference case is shown to reduce to the same method, since both yield a base-height difference of 9.</summary>\n<keywords>Fang Zhongtong, Shu du yan, gougu, right triangle, base, height, hypotenuse, base-sum difference, height-sum difference, base-height sum, base-height difference, square root extraction, Chinese mathematics</keywords>",
+    "translation_model": "claude-opus-5-5",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 89,
+    "page_id": "6a3ced944701a906f10e1972",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ced944701a906f10e1919/89.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n南門十四步折而西行一千七百七十五步斜見木問\n邑方幾何曰二百五十步術通曰北門外二十步一餘\n勾也南門外十四步一餘勾也西行股也邑方容方徑\n也\n小勾股與大勾求大股法\n式丙丁小股一百丁戊小勾二十五乙丙大勾三百一\n十二五問甲乙大股幾何曰一千二百五\n十術以大勾為實以小勾為法除實得大\n股",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page: the problem of the walled town with a tree outside the north gate</meta>the south gate 14 bu, then turning and walking west 1,775 bu, one just catches sight of the tree along a diagonal line. Question: how long is the side of the town? Answer: 250 bu. Method: Zhongtong comments: the 20 bu outside the north gate is one remaining short leg; the 14 bu outside the south gate is the other remaining short leg; the westward walk is the long leg; and the side of the town is the side of the inscribed square. <note>This is the same configuration as the previous example. Solving x(x + 34) = 2 × 20 × 1,775 = 71,000 gives x = 250 bu, the side of the town. \"Zhongtong comments\" refers to the author, Fang Zhongtong, adding his own explanation.</note>\nMethod for Finding the Large Long Leg from a Small Right Triangle and the Large Short Leg\nExample: The small long leg Bing–Ding is 100, the small short leg Ding–Wu is 25, and the large short leg Yi–Bing is 312.5. Question: how long is Jia–Yi, the large long leg? Answer: 1,250. Method: take the large short leg as the dividend and the small short leg as the divisor; dividing gives the large long leg. <note>The two triangles are similar, so the large long leg equals the large short leg multiplied by the small long leg and divided by the small short leg: 312.5 × 100 ÷ 25 = 1,250. The text states only the division; the multiplication by the small long leg, 100, is understood.</note>\n\n<summary>This page finishes a walled-town problem in which a tree seen from outside the gates fixes the side of a square town at 250 bu. It then opens a new method that uses similar right triangles to find a large long leg from a small triangle and a large short leg.</summary>\n<keywords>Fang Zhongtong, Shu du yan, gougu, right triangles, similar triangles, inscribed square, walled town problem, remaining short leg, quadratic equation, Nine Chapters on the Mathematical Art, Chinese mathematics</keywords>",
+    "translation_model": "claude-opus-5-5",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 104,
+    "page_id": "6a3ced944701a906f10e1981",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ced944701a906f10e1919/104.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n式丙丁測勾九百丙戊小測股六百丙庚大測股一千\n三百五十已丙大破勾四百零二\n幸丙小破勾一百二十問大勾幾\n何曰甲乙大勾三萬術通曰以大\n測股一千三百五十乗大破勾四百零二得五十四萬\n二千七百以測勾九百除之得六百零三為景差以與\n小測股六百相減餘三為法以小測股與大測股相減\n餘七百五十又乗小破勾一百二十得九萬為實以法\n除實得三萬為甲乙大勾",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Example: Bing-Ding, the measuring gou, is 900. Bing-Wu, the small measuring gu, is 600. Bing-Geng, the large measuring gu, is 1,350. Ji-Bing, the large broken gou, is 402. Xin-Bing, the small broken gou, is 120. How long is the large gou? Answer: Jia-Yi, the large gou, is 30,000. Method, by Tong: multiply the large measuring gu of 1,350 by the large broken gou of 402 to get 542,700. Divide this by the measuring gou of 900 to get 603 as the shadow difference. Subtract the small measuring gu of 600 from it, leaving 3 as the divisor. Subtract the small measuring gu from the large measuring gu, leaving 750. Multiply this by the small broken gou of 120 to get 90,000 as the dividend. Dividing the dividend by the divisor gives 30,000, Jia-Yi, the large gou.",
+    "translation_model": "claude-opus-5-5",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 42,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c618a879008ba7e15ee76",
+  "book_url": "https://sourcelibrary.org/book/6a3c618a879008ba7e15ee76",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c618a879008ba7e15ee76",
+   "title": "經濟文衡前集·卷一~卷五 (vol 1)",
+   "display_title": "Jingji Wenheng: First Collection, juan 1–5 (vol 1)",
+   "author": "朱熹",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 139,
+   "pages_ocr": 139,
+   "pages_translated": 130,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 139,
+   "distinct_page_numbers": 139,
+   "duplicate_records": 0,
+   "pages_with_ocr": 139,
+   "pages_translated": 130,
+   "with_printed_number": 21,
+   "printed_backsteps": 5,
+   "printed_repeats": 14,
+   "pages_count_field": 139,
+   "pages_translated_field": 130
+  },
+  "run": [
+   3,
+   42,
+   95,
+   104
+  ],
+  "pages": [
+   {
+    "page_number": 3,
+    "page_id": "6a3c618a879008ba7e15ee79",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c618a879008ba7e15ee76/3.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n子部一\n<header>經濟文衡</header>\n提要\n儒家類\n臣等謹案經濟文衡前集二十五卷後集二\n十五卷續集二十二卷原本不著編輯人名\n氏初刻于正德辛巳有楊一清序再刻于萬\n厯丙午有朱吾弼序皆但稱先儒所輯而不\n能指其人黃虞稷千頃堂目則載是書為焉\n<header>經濟文衡</header>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Imperially Commissioned Complete Library of the Four Treasuries</header>\nSub-category of Masters, Volume One\n<header>The Measure of Statecraft</header>\nAbstract\nConfucian Category\nThe officials <note>Your Majesty's servants</note> respectfully state that The Measure of Statecraft consists of twenty-five volumes in the First Collection, twenty-five volumes in the Second Collection, and twenty-two volumes in the Supplemental Collection. The original manuscript does not record the name of the editor. It was first printed in the year of <term>Zhengde Xinsi</term> <gloss>1521</gloss> with a preface by Yang Yiqing. It was printed a second time in the year of <term>Wanli Bingwu</term> <gloss>1606</gloss> with a preface by Zhu Wubi. Both prefaces refer to the work as a compilation by a former Confucian scholar but are unable to identify the specific individual. However, the catalog of the <term>Qianqing Tang</term> <gloss>Thousand-Acre Hall</gloss> by Huang Yuji records this book as being...\n<header>The Measure of Statecraft</header>\n\n<summary>This page contains the official abstract for the imperially commissioned edition of The Measure of Statecraft, noting its volume structure and publication history. The editors discuss the mystery of the original compiler's identity and cite previous prefaces and library catalogs.</summary>\n<keywords>Four Treasuries, Statecraft, Confucianism, Yang Yiqing, Zhu Wubi, bibliography, publishing history</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 42,
+    "page_id": "6a3c618a879008ba7e15eea0",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c618a879008ba7e15ee76/42.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>釣定四庫全書</header>\n<header>卷二</header>\n說底道理令後之學者曉然見得太極之妙不屬有無\n不落方體若於此看得破方見得此老真得千聖以來\n不傳之秘非但架屋上之屋疊牀上之牀而巳也今必\n以為未然是又理有未明而不能盡人言之意者三也\n至於大傳既曰形而上者謂之道矣而又曰一隂一陽\n之謂道此豈真以隂陽為形而上者哉正所以見一隂\n一陽雖屬形器然其所以一隂而一陽者是乃道體之\n所為也故語道體之至極則謂之太極語太極之流行",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Imperial Edition of the Complete Library of the Four Treasuries</header>\n<header>Volume Two</header>\n\nThe principles explained here allow later scholars to clearly see that the mystery of the <term>Taiji</term> <gloss>Great Ultimate</gloss> does not belong to the categories of being or non-being, nor is it confined to any physical form or spatial dimension. If one can see through to this truth, one will realize that this elder <note>referring to Zhou Dunyi</note> truly attained the secret that has remained untransmitted since the time of the thousand sages. It is not merely a matter of building a house on top of a house or stacking a bed upon a bed <note>an idiom for redundant or unnecessary repetition</note>. To insist currently that this is not the case is because the principle is not yet understood, leading to an inability to fully grasp the meaning of his words; this is the third point.\n\nAs for the <term>Great Commentary</term> <gloss>Dazhuan, a section of the I Ching</gloss>, it already states that \"that which is above form is called the <term>Dao</term> <gloss>Way</gloss>.\" Yet it also says, \"the succession of one <term>Yin</term> and one <term>Yang</term> is called the Way.\" Could this truly mean that Yin and Yang are themselves above form? In fact, it is precisely to show that although one Yin and one Yang belong to the realm of physical vessels <note>concrete, formed things</note>, the reason behind the alternating sequence of Yin and Yang is the activity of the substance of the Way itself. Therefore, when speaking of the ultimate extremity of the Way's substance, we call it the <term>Taiji</term> <gloss>Great Ultimate</gloss>. When speaking of the flowing manifestation of the Great Ultimate...\n\n<summary>Zhu Xi explains that the Great Ultimate transcends the physical realm and existence itself, clarifying that while Yin and Yang have form, the principle governing them is the formless Way.</summary>\n<keywords>Taiji, Great Ultimate, Yin and Yang, Dao, Way, Zhou Dunyi, I Ching, metaphysics</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 95,
+    "page_id": "6a3c618a879008ba7e15eed5",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c618a879008ba7e15ee76/95.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n論河圗相錯之數\n答董叔重\n此叚謂河圖一奇一偶相錯而成洛書之數亦\n無以異\n董問曰河圖之數不過一奇一偶相錯而已故太陽之\n位即太隂之數少隂之位即少陽之數少陽之位即少\n隂之數太隂之位即太陽之數見其迭隂迭陽隂陽相\n錯所以為生成也天五地十居中者地十亦天五之成",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "On the Numerical Interweaving of the River Map <note>original: \"River Map\" or \"He Tu,\" an ancient cosmological diagram</note>\nIn Response to Dong Shuzhong\n\nThis section states that the numerical values of the River Map <note>He Tu</note> are formed by the alternating sequence of odd and even numbers, and thus do not differ from the numbers of the Luo Scroll <note>Luo Shu</note>.\n\nDong asked: The numbers of the River Map are nothing more than the interweaving of one odd and one even number. Therefore, the position of Great Yang <note>the sun or supreme yang</note> is the number of Great Yin <note>the moon or supreme yin</note>; the position of Lesser Yin is the number of Lesser Yang; the position of Lesser Yang is the number of Lesser Yin; and the position of Great Yin is the number of Great Yang. One sees how Yin and Yang alternate and interweave, which is the process of generation and completion. As for the numbers Five of Heaven and Ten of Earth residing in the center, the Ten of Earth is simply the completion of the Five of Heaven.\n\n<summary>Zhu Xi discusses the mathematical relationship between the River Map and the Luo Scroll, explaining how the alternating positions of Yin and Yang numbers represent the natural process of creation.</summary>\n<keywords>River Map, He Tu, Luo Scroll, Luo Shu, Yin and Yang, numerology, Cosmology, Zhu Xi, Dong Shuzhong</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 104,
+    "page_id": "6a3c618a879008ba7e15eede",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c618a879008ba7e15ee76/104.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n尖\n口\n辰\n金\n書\n<header>卷四</header>\n此段謂數之參伍錯綜無所不通自然契合不\n假安排\n來喻又謂不當以大衍之數參乎河圖洛書之數此亦\n有說矣數之為數雖各主於一義然其參伍錯綜無所\n不通則有非人之所能為者其所不合固不容以强合\n其所必合則縱橫反覆如合符契亦非人所能强離也\n若於此見得自然契合不假安排底道理方知造化工\n夫神妙巧密直是好笑說不得也若論易文則自大衍",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Volume Four</header>\n\nThis section explains that the numbers are <term>canwu cuozong</term> <gloss>intermingled and complexly interwoven</gloss> such that they are universally connected. They harmonize naturally without needing any artificial arrangement.\n\nYour previous letter also stated that one should not intermingle the numbers of the <term>Dayan</term> <gloss>Great Expansion, referring to the fifty yarrow stalks used in divination</gloss> with the numbers of the <term>Hetu</term> <gloss>Yellow River Chart</gloss> and the <term>Luoshu</term> <gloss>Inscriptions of the River Luo</gloss>. There is an explanation for this as well. While numbers each represent a specific principle, their intermingling and universal connection is something beyond human capability to create. Where they do not fit, one certainly cannot force them together; however, where they must fit, they align perfectly like two halves of a tally, no matter how they are turned or flipped. Man cannot forcibly separate them. If you can perceive this principle of natural harmony that requires no deliberate arrangement, only then will you realize that the workings of nature are so divine, subtle, and ingenious that they are almost amusing. It is truly beyond words. If we discuss the text of the <term>Yi</term> <gloss>Book of Changes</gloss>, starting from the Great Expansion <note>The text cuts off here, referring to the mathematical and cosmological systems used to interpret the hexagrams.</note>\n\n<summary>Zhu Xi discusses the inherent mathematical harmony between different cosmological systems, arguing that the numerical patterns of the universe align naturally rather than through human design.</summary>\n<keywords>Zhu Xi, Dayan numbers, Hetu, Luoshu, cosmology, mathematics, Book of Changes, natural philosophy</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 43,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c632f879008ba7e166b1e",
+  "book_url": "https://sourcelibrary.org/book/6a3c632f879008ba7e166b1e",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c632f879008ba7e166b1e",
+   "title": "御定佩文韻府·卷九十一之四~卷九十二之一 (vol 228)",
+   "display_title": "Imperially Commissioned Peiwen Rhyme Treasury, juan 91, part 4–juan 92, part 1 (vol 228)",
+   "author": "張玉書",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 217,
+   "pages_ocr": 215,
+   "pages_translated": 212,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 217,
+   "distinct_page_numbers": 217,
+   "duplicate_records": 0,
+   "pages_with_ocr": 215,
+   "pages_translated": 212,
+   "with_printed_number": 17,
+   "printed_backsteps": 8,
+   "printed_repeats": 9,
+   "pages_count_field": 217,
+   "pages_translated_field": 212
+  },
+  "run": [
+   18,
+   58,
+   150,
+   216
+  ],
+  "pages": [
+   {
+    "page_number": 18,
+    "page_id": "6a3c632f879008ba7e166b30",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c632f879008ba7e166b1e/18.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n<header>卷九十一之四</header>\n反正常神氣丨丨趨翕去張張華荅何邵詩恬曠苦不足丨丨每\n有餘頗延之陶徵士誄簡棄丨丨就成省曠杜甫詩爾曹輕執熱\n為我忍丨丨亦作繁嵇康琴賦或參譚丨丨複叠攢仄縱橫絡繹\n奔遁相逼傳休奕正都賦虬縈龍蛇委隨紓曲杪竿首而腹旋承\n嚴節之\n繁促\n柱促\n古詩音響一何悲絃急知\n丨丨蘇軾詩短瑟絃丨丨\n戚促\n李白詩嗷嗷空倉\n雀身計何丨丨\n日月促\n禮記大夫士庶人三日而殯三月而葬疏大夫及士禮數\n既卑送終之物其數簡少又職唯促遽義許奪情故丨丨\n丨也唐書柳宗元傳宗元雅善蕭俛貽書曰長\n來覺丨丨益丨歲歲更甚大都不過數十寒暑\n膝屢促\n蘇軾詩亭\n小丨丨\n増賒促\n書乃不畏戎毒于逺邇疏逺近謂丨丨言害至有早晚\n也太和眞人傳或論天地日月星辰運度丨丨之方\n迫\n促\n春秋公及宋公遇于清注遇者草次之期疏草次猶造次丨丨\n不暇之意漢書梁恭王買傳買孫立殺人天子遣廷尉即訊立\n惶恐對曰立數蒙聖恩得見貫赦今自知賊殺中郎曹將冬月丨\n丨貪生畏死即詐僵仆陽病徼幸得踰於須臾謹以實對伏須重",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Returning to normalcy, the divine spirit and vital energy <term>shenqi</term> <gloss>spirit and breath</gloss> are <term>fancu</term> <gloss>numerous and hurried</gloss>, tending toward contraction and departing from expansion. Zhang Hua, in his poem Responding to He Shao, wrote: In quiet detachment, I suffer from a lack; yet in the midst of <term>fancu</term> <gloss>multiplicity and haste</gloss>, there is always a surplus. Xie Yanzhi, in his Eulogy for the Recluse Tao, wrote: He abandoned <term>fancu</term> <gloss>the complex and hurried world</gloss> to achieve simplicity and leisure. Du Fu wrote in a poem: You youngsters lightly endure the heat; for my sake, you bear with the <term>fancu</term> <gloss>bustle and pressure</gloss>. It is also written as <term>fancu</term> <note>using a different character for cu</note>. Ji Kang, in his Rhapsody on the Zither, wrote: Sometimes sparse and echoing, sometimes <term>fancu</term> <gloss>numerous and rapid</gloss>, overlapping and crowding, vertical and horizontal, interlacing and pursuing one another in a swift retreat. Fu Xiuyi, in his Rhapsody on the Capital, wrote: Coiling like dragons and snakes, winding and bending, rotating at the tip of the pole and circling at the center, following the strict rhythm of the\n\n# Numerous and Hurried <note>Original: Fancu</note>\n\n### Tightened Bridge <note>Original: Zhucu</note>\nIn an ancient poem: How sad the sound is; when the strings are tight, one knows the bridge is <term>zhucu</term> <gloss>pushed close/tightened</gloss>. Su Shi wrote in a poem: The short zither's strings are <term>zhucu</term> <gloss>pressed tight</gloss>.\n\n### Distressed and Hurried <note>Original: Qicu</note>\nLi Bai wrote: The sparrows cry out in the empty granary; for their own lives, how <term>qicu</term> <gloss>distressed and hurried</gloss> their plans are.\n\n### The Days and Months are Hurried <note>Original: Riyue Cu</note>\nIn the Record of Rituals <note>Liji</note>: For Great Officers, Officers, and commoners, the encoffining occurs after three days and the burial after three months. The Commentary states: The rituals for Great Officers and Officers are lower in rank, so the funerary goods are fewer. Furthermore, their duties are <term>cuju</term> <gloss>urgent and hurried</gloss>, and righteousness allows for the curtailment of mourning; thus the <term>riyue cu</term> <gloss>days and months are hurried</gloss>. In the Book of Tang, Biography of Liu Zongyuan: Zongyuan was a close friend of Xiao Mian. In a letter to him, he said: Since coming here, I feel the <term>riyue</term> <gloss>days and months</gloss> are increasingly <term>cu</term> <gloss>hurried</gloss>, becoming more so every year. In total, life is no more than a few dozen winters and summers.\n\n### Knees Frequently Pressed <note>Original: Xi Lü Cu</note>\nSu Shi wrote in a poem: The pavilion is small, and our <term>xi lü cu</term> <gloss>knees are frequently pressed together</gloss>.\n\n### Expanded: Distant or Hurried <note>Original: Shecu</note>\nIn the Book of Documents: One does not fear the poison of war whether it is far or near. The Commentary states: Far and near refers to <term>shecu</term> <gloss>distant or hurried</gloss>, speaking of whether the harm arrives late or early. In the Traditions of the Perfected Ones of Great Harmony: Some discuss the methods of the <term>shecu</term> <gloss>long or short</gloss> cycles of the movements of Heaven, Earth, the Sun, the Moon, and the Stars.\n\n### Urgency <note>Original: Pocu</note>\nIn the Spring and Autumn Annals: The Duke and the Duke of Song met at Qing. The Annotation states: \"Meeting\" refers to a schedule made in haste. The Commentary states: Haste implies an intention of <term>pocu</term> <gloss>urgency</gloss> and lack of leisure. In the Book of Han, Biography of Liu Mai, King Gong of Liang: Mai's grandson Liu Li killed someone. The Emperor sent the Minister of Justice to interrogate him. Li, in fear, replied: I have often received imperial grace and been granted pardons. Now I know I have murdered Palace Attendant Cao. As the winter months are <term>pocu</term> <gloss>pressing and short</gloss> <note>referring to the season for executions</note>, I cling to life and fear death. Thus I feigned collapse and pretended to be ill, hoping by luck to survive for a moment. I now answer with the truth and await my punishment.\n\n<summary>This page catalogs classical Chinese phrases related to the concept of haste, urgency, and the compression of time or space, drawing from poetry, ritual texts, and historical biographies.</summary>\n<keywords>fancu, haste, time, funerary ritual, Su Shi, Li Bai, Zhang Hua, Spring and Autumn Annals, Book of Han</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 58,
+    "page_id": "6a3c632f879008ba7e166b58",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c632f879008ba7e166b1e/58.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金六巴\n<header>卷九十一之四</header>\n樂而巳得與之同憂饗天下以豐利而我\n得與之共害利博則丨丨樂逺則憂深\n衰篤\n陸雲與楊彦明書\n彦先相說疾患行\n向丨丨疾來應百年之望雖未必此\n為疑然親親所以相卹之一感耳\n欵篤\n陸雲弔陳伯華書昔與\n大君分義丨丨彌隆之\n愛恩加\n兄弟\n神篤\n陸雲詩規天有光矩地無\n疆丨丨斯祐本顯克昌\n敬篤\n潘岳楊仲武誄丨\n亦既丨愛亦既深\n天\n篤\n梁簡文帝啟伏惟陛下\n愛睦恩深常棣丨丨\n醇篤\n朱子跋趙中丞行賓中丞趙公之\n孫舉示予此書一編趙公之孝謹\n丨丨雖古\n人猶難之\n杜篤\n後漢書馬防傳防兄弟貴盛資產巨億賓客奔湊\n四方畢至京兆丨丨之徒數百人常為食客居門\n下又文苑傳丨丨少博學不修小節居美陽與美陽令遊數從請\n託不諧頗相恨令怨收篤送京師㑹大司馬吳漢薨光武詔諸儒\n誄之篤于獄中為誄辭最高帝\n美之賜帛免刑仕至郡文學\n李篤\n後漢書張儉傳儉亡命流轉\n東萊止丨丨家外黃令毛欽\n操兵到門篤引欽謂曰張儉知名天下而亡非其罪縱儉可得寧\n恐執之乎欽因起撫篤曰遂伯玉恥獨為君子足下如何自專仁",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>The text is from the Peiwen Yunfu, a major Qing dynasty rime dictionary and encyclopedia of literary allusions. This section compiles historical and literary phrases ending in the character \"du\" (篤), which signifies sincerity, depth, or seriousness.</meta>\n\nPage 68\n\n<header>Volume 91, Part 4</header>\n\n<note>original: \"樂而巳得與之同憂饗天下以豐利而我得與之共害利博則丨丨樂逺則憂深\"</note>\n...happiness, and I only gain from sharing their worries. When the world is provided with abundant profit, I share in the harm. If the profit is vast, then the **joy is deep** <note>original: \"樂篤\" (ledu)</note>; if happiness is distant, then the worry is profound.\n\n**Declining health is deep** <note>original: \"衰篤\" (shuaidu)</note>\nLu Yun, in a letter to Yang Yanming:\nYanxian spoke of your illness. As one moves toward **declining health being deep**, the arrival of sickness should meet the expectations of a hundred years. Although this is not necessarily a cause for doubt, the mutual compassion between relatives is a shared feeling.\n\n**Sincerity is deep** <note>original: \"欵篤\" (kuandu)</note>\nLu Yun, in a funeral oration for Chen Bohua:\nIn the past, my shared duties with the Great Lord were **deeply sincere**. The growing love and grace were added as if toward brothers.\n\n**Spirit is deep** <note>original: \"神篤\" (shendu)</note>\nLu Yun, in a poem:\nThe sky is gauged with light; the earth is measured without limit. When the **spirit is deep**, there is such blessing. The foundation is manifest and can flourish.\n\n**Respect is deep** <note>original: \"敬篤\" (jingdu)</note>\nPan Yue, in a eulogy for Yang Zhongwu:\nOnce **respect was deep**, then love was also deep.\n\n**Heaven is deep** <note>original: \"天篤\" (tiandu)</note>\nEmperor Jianwen of Liang, in a memorial:\nI humbly consider that Your Majesty’s love and harmony are profound in grace. The cherry-birch <note>a metaphor for brotherly affection</note> is **deeply heavenly**.\n\n**Pure and deep** <note>original: \"醇篤\" (chundu)</note>\nZhu Xi, in a postscript for Vice Censor-in-Chief Zhao’s deeds:\nThe grandson of Vice Censor-in-Chief Lord Zhao showed me this volume of writings. Lord Zhao’s filial piety, prudence, and **pure depth** of character were such that even the ancients would find them difficult to match.\n\n**Du Du** <note>proper name of a Han dynasty scholar</note>\nBook of the Later Han, Biography of Ma Fang:\nThe Ma brothers were noble and prosperous, with assets worth hundreds of millions. Guests rushed to them from all four directions. Several hundred people of the circle of **Du Du** from the capital region were constantly dining guests at their gate.\nAlso, in the Biographies of the Garden of Literature:\n**Du Du** was widely learned in his youth but did not cultivate minor etiquette. He lived in Meiyang and befriended the Magistrate of Meiyang. He frequently made requests of the Magistrate, which were not granted, leading to mutual resentment. The Magistrate, out of spite, arrested Du and sent him to the capital. It happened that the Grand Marshal Wu Han passed away. Emperor Guangwu ordered the scholars to write a eulogy. Du composed a eulogy while in prison, which was deemed the finest. The Emperor admired it, granted him silk, pardoned his punishment, and he eventually served as a Commandery Scholar.\n\n**Li Du** <note>proper name of a Han dynasty figure known for righteousness</note>\nBook of the Later Han, Biography of Zhang Jian:\nZhang Jian became a fugitive and wandered about. In Donglai, he stayed at the home of **Li Du**. Mao Qin, the Magistrate of Waihuang, arrived at the gate leading armed soldiers. Du led Qin inside and said to him: Zhang Jian is famous throughout the world. His flight is not due to a crime. Even if Jian could be captured, would you not fear the consequences of seizing him? Qin then stood up, patted Du, and said: Su Boyu felt ashamed to be the only gentleman; how could you, sir, monopolize all the benevolence?\n\n<summary>This page lists literary and historical phrases ending in the character \"du,\" signifying depth or sincerity, including biographical accounts of the scholars Du Du and Li Du from the Han dynasty.</summary>\n<keywords>Peiwen Yunfu, Lu Yun, Du Du, Li Du, Han dynasty history, Chinese literary allusions, philology</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 150,
+    "page_id": "6a3c632f879008ba7e166bb4",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c632f879008ba7e166b1e/150.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n野有牛閫衆畏奔踐讜直前兩持其角牛不能動久而引觸竟丨\n其丨里人駭異屠牛以飯讜易林蹇牛丨丨不能載粟晁中之答\n僧法一詩秋麋丨丨膠與力春麝入臍煤生香黃庭堅覺範師種\n竹頌聽風聽雨看成龍牛羊丨丨入朝餉周邦彦汴都賦注河之\n辨丨丨\n之口\n日角\n後漢書光武帝紀光武隆準丨丨鄭康成注丨丨謂\n庭中骨起壯如日南史梁武帝紀生而有異光狀貌\n竒特丨丨龍顏又陳髙祖紀丨丨龍顏埀手過膝舊唐書鄭攺傳\n攺瑞應星精祥開丨丨建洪鑪于聖代成庶績于明時唐書唐儉\n傳髙祖嘗召訪之儉曰公丨丨龍庭姓恊圖識係天下望久矣又\n李珏傳甫冠舉明經李絳為華州剌史見之曰丨丨珠廷非庸人\n相明經碌碌非子所宜孝經援神契伏羲大目山準丨丨而連珠\n衡南燕錄慕容德虬之少子年十八長八尺二寸額上有丨丨偃\n月重文劉峻辨命論龍準丨丨帝王之表河目龜文公侯之相\n沈約梁武帝集序丨丨之主出自諸生銳頂之君少明古學\n清\n角\n後漢書劉昆傳昆少習容禮平帝時受施氏易于沛人戴賓能\n彈雅琴知丨丨之掾列子鄭師文從師襄游鼓琴雖師曠之丨",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Field cows are numerous, and the crowd fears being trampled or run over. <note>He</note> went straight forward with integrity, grabbing the bull by its two horns. The bull could not move, and after a long time, it tried to gore him but ultimately <unclear>failed</unclear>. The villagers were amazed, and they slaughtered the cow to feed <note>Dang</note>.\n\nIn the Forest of Changes <note>Yilin</note>, it says: a lame cow <unclear>on the ridge</unclear> cannot carry grain.\n\nIn Chao Zhongzhi's poem responding to the monk Fa Yi: The autumn elk <unclear>in the pen</unclear> gains strength from the glue <note>likely referring to deer-horn glue</note>; the spring musk enters the navel, and the soot produces fragrance.\n\nIn Huang Tingjian's Eulogy for Master Juefan Planting Bamboo: Listen to the wind, listen to the rain, watch them become dragons; even if the cows and sheep <unclear>enter the pen</unclear>, they become the morning meal.\n\nIn Zhou Bangyan's Rhapsody on the Capital Bian <note>Biandu Fu</note>, the commentary says: The distinction of the river <unclear>at the pen</unclear>'s mouth.\n\n### Sun Horns <note>Rijiao: a protrusion on the forehead considered a sign of future emperorship in physiognomy</note>\n\nIn the Book of the Later Han, Annals of Emperor Guangwu: Guangwu had a prominent nose and <term>Sun Horns</term>. Zheng Kangcheng's commentary states: Sun Horns refer to the bone in the center of the forehead rising up, shaped like the sun.\n\nIn the History of the Southern Dynasties, Annals of Emperor Wu of Liang: At birth, there was an extraordinary light; his appearance was unique, with <term>Sun Horns</term> and a dragon's face. Also, in the Annals of Emperor Gaozu of Chen: He had <term>Sun Horns</term> and a dragon's face, and his hands reached below his knees.\n\nIn the Old Book of Tang, Biography of Zheng Gai: Gai's auspicious omens matched the star spirits, and the signs opened with <term>Sun Horns</term>. He built a great furnace in a sacred era and achieved many successes in enlightened times.\n\nIn the Book of Tang, Biography of Tang Jian: Gaozu once summoned him for advice. Jian said: You, sir, have <term>Sun Horns</term> and a dragon-like court <note>forehead</note>. Your surname accords with the prophecies, and the eyes of the world have been fixed upon you for a long time.\n\nAlso, in the Biography of Li Jue: Just as he reached adulthood, he sat for the examination on the classics. Li Jiang, the Prefect of Huazhou, saw him and said: With <term>Sun Horns</term> and a pearl-like court <note>forehead</note>, you are no ordinary man. The status of a classicist is too mediocre for you.\n\nIn the Classic of Filial Piety, Divine Accordance: Fuxi had large eyes, a nose like a mountain, <term>Sun Horns</term>, and a brow like a string of pearls.\n\nIn the Records of Southern Yan: Murong De was the youngest son of Qiu. At eighteen, he was eight feet and two inches tall. On his forehead, he had <term>Sun Horns</term> and a crescent moon pattern.\n\nIn Liu Jun's Essay on Discerning Fate: A dragon's nose and <term>Sun Horns</term> are the signs of emperors. River-like eyes and tortoise-shell patterns are the appearance of dukes and marquises.\n\nIn Shen Yue's Preface to the Collected Works of Emperor Wu of Liang: A lord with <term>Sun Horns</term> emerges from among the scholars; a ruler with a sharp crown mastered ancient learning in his youth.\n\n### Clear Note <note>Qingjiao: a high-pitched or pure musical note</note>\n\nIn the Book of the Later Han, Biography of Liu Kun: In his youth, Kun practiced etiquette and rites. During the reign of Emperor Ping, he studied the Shi version of the Book of Changes under Dai Bin of Pei. He was skilled at playing the elegant lute <note>qin</note> and knew the <term>Clear Note</term> assistant.\n\nIn the Liezi: Shi Wen of Zheng followed Shi Xiang to play the lute. Although he had Master Kuang's <unclear>Clear Note</unclear>...\n\n<summary>This page contains literary and historical references involving the term horns, specifically focusing on physical cow horns and the physiognomic sign of Sun Horns, which indicates imperial destiny. It also begins a section on musical terminology related to the Clear Note.</summary>\n<keywords>physiognomy, Sun Horns, Emperor Guangwu, Emperor Wu of Liang, Zheng Gai, Tang Jian, musical notes, lute, Book of the Later Han, Book of Tang</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 216,
+    "page_id": "6a3c632f879008ba7e166bf6",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c632f879008ba7e166b1e/216.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n貞實韓愈納涼聯句儒庠恣游息聖籍飽——劉克莊跋陳敎授\n杜詩補注果欲律以經典裁以義理雖杜語意未安亦盡——况\n趙\n乎\n研搉\n唐書李華傳華文辭緜麗\n著吊古戰場文極思——\n明搉\n程琳子奇賦天載\n悠藐無容——",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Loyal and solid. Han Yu, in the Poem Composed Jointly While Seeking Relief from the Heat: In the Confucian school, one may roam and rest at will, and become saturated with the sacred texts. <note>From Liu Kezhuang’s postscript to the writings of Professor Chen.</note>\nThe Supplementary Annotations to Du Fu’s Poetry: If one truly wishes to regulate poetry through the Classics and judge it by moral principles, then even if Du Fu’s phrasing and intent are not entirely settled, it still suffices. <note>From Zhao Kuang.</note>\nAs for\nResearch and Deliberation.\nThe Biography of Li Hua in the New Book of Tang: Hua’s literary style was refined and elegant.\nHe wrote the Lament for the Ancient Battlefield, expressing his thoughts to the utmost degree. <note>From Zhao Kuang.</note>\nClear Deliberation.\nCheng Lin’s Rhapsody on the Remarkable: The heavens carry all things.\nVast and remote, it leaves no room for anything else.\n\n<summary>This page contains literary excerpts and commentaries regarding the scholarly standards of the Tang dynasty, focusing on the works of Han Yu, Du Fu, and Li Hua. It emphasizes the relationship between poetic expression and the moral authority of the Confucian Classics.</summary>\n<keywords>Han Yu, Du Fu, Li Hua, Confucian Classics, Tang poetry, literary criticism, Lament for the Ancient Battlefield, New Book of Tang</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 44,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c60e640c88a541d8ebc54",
+  "book_url": "https://sourcelibrary.org/book/6a3c60e640c88a541d8ebc54",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c60e640c88a541d8ebc54",
+   "title": "御定駢字類編·卷七十四: Imperial Parallel Characters (vol 256)",
+   "display_title": "Imperially Commissioned Categorized Collection of Parallel Characters, juan 74 (vol 256)",
+   "author": "吳士玉",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 161,
+   "pages_ocr": 161,
+   "pages_translated": 160,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 161,
+   "distinct_page_numbers": 161,
+   "duplicate_records": 0,
+   "pages_with_ocr": 161,
+   "pages_translated": 160,
+   "with_printed_number": 15,
+   "printed_backsteps": 3,
+   "printed_repeats": 9,
+   "pages_count_field": 161,
+   "pages_translated_field": 160
+  },
+  "run": [
+   29,
+   52,
+   82,
+   127
+  ],
+  "pages": [
+   {
+    "page_number": 29,
+    "page_id": "6a3c60e640c88a541d8ebc71",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c60e640c88a541d8ebc54/29.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n銀錠\n洞天清錄太宗朝搜訪古人墨跡令王著銓次用\n棗木板摹刻於秘閣故時有丨丨紋 愼蒙莆田\n縣木蘭陂記故老相傳陂基下有石盤據水底橫亘於\n北山陂凡兩石相甃處各為函如丨丨狀而範鐵汁於\n其中故能與洪流敵雖經久不壞有由也 豐\n道生真賞齋賦廷珪墨色之古丨丨棗木之紋\n是毛魏書崔浩專\n金金見金鋌下\n銀\n繭\n霞馬\n巳祖\n積常\n翠贈\n幢客\n柏詩\n方\n遮\n銀絲\n杜甫遊何將軍山林詩鮮\n卿\n贈香芹碧澗羹\n銀縷\n宋史輿服志獬豸冠制削竹為榦裹以緋羅以\n絲為毫拓以一一葉插於冠後鮑溶贈逺詩\n泥舞虎精神暗一一交龍氣色寒虞集張仲華\n進秩南來舊治歌此以為一笑之懽詩見玉漿下\n印已并字页扁",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Silver Ingot <note>original: \"銀錠\" (Yín Dìng)</note>\nThe *Pure Records of the Grotto Heaven* <note>original: \"洞天清錄\" (Dòngtiān Qīnglù)</note> states that during the reign of Emperor Taizong <note>reigned 976 to 997 CE</note>, a search was ordered for the ink calligraphy of the ancients. Wang Zhu was commissioned to arrange them in order and have them engraved into jujube wood blocks within the Secret Pavilion. Consequently, these prints occasionally exhibit **silver ingot** patterns <note>referring to the shape of the joints or repairs in the woodblocks</note>. Shen Meng, in his *Record of the Mulan Embankment in Putian County*, notes that according to local elders, the foundation of the embankment sits upon stone outcroppings at the riverbed which stretch across to the northern mountains. Wherever two stones were joined, a socket was carved in the shape of a **silver ingot**, and molten iron was poured into these joints. This is why the structure can withstand the powerful currents; its durability over time is well-founded. Feng Daosheng, in his *Rhapsody on the Studio of True Appreciation*, mentions the ancient color of Tinggui ink and the **silver ingot** patterns found in jujube wood. Mao <unclear>Weishu</unclear> <note>refers to the Book of Wei</note> states that Cui Hao specialized in <unclear>text missing</unclear>.\n\nGold Ingot <note>original: \"金鋌\" (Jīn Dǐng)</note> see under the entry for Gold Ingot.\n\nSilver <unclear>text missing</unclear>\n\nCocoon <unclear>text missing</unclear>\n\nRosy Clouds and Horses <unclear>text missing</unclear>\n\nAncestral Sacrifice <unclear>text missing</unclear>\n\nAccumulated Emerald Banners <unclear>text missing</unclear>\n\nCypress Square <unclear>text missing</unclear>\n\nShielding <unclear>text missing</unclear>\n\nSilver Thread <note>original: \"銀絲\" (Yín Sī)</note>\nDu Fu, in his poem *Visiting General He's Mountain Forest*, writes of fresh **silver threads** <note>referring to thin white noodles or shredded vegetables</note> gifted for a soup of fragrant celery and green mountain herbs.\n\nSilver Embroidery <note>original: \"銀縷\" (Yín Lǚ)</note>\nThe *History of Song: Treatise on Chariots and Apparel* describes the construction of the Xiezhi Crown <note>a crown featuring a mythical creature symbolizing justice</note>. It was made with bamboo for the frame, wrapped in crimson silk, and used **silver embroidery** for the fine details. A leaf of <unclear>text missing</unclear> was inserted at the back of the crown. Bao Rong, in his poem *Gift for One Traveling Far*, writes that the mud-dance tiger spirit is hidden, and the **silver embroidery** of the crossing dragons appears cold. Yu Ji, in his poem *Song for Zhang Zhonghua’s Promotion and Return South to His Old Post*, offers this for the joy of a smile; the poem can be found under the entry for Jade Nectar.\n\n<summary>This page defines and provides literary examples for terms related to silver, specifically silver ingot patterns in woodblock printing and masonry, and silver threads or embroidery used in culinary and ceremonial contexts.</summary>\n<keywords>silver ingot, woodblock printing, Mulan Embankment, Du Fu, Song Dynasty apparel, silver thread, calligraphy preservation</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 52,
+    "page_id": "6a3c60e640c88a541d8ebc88",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c60e640c88a541d8ebc54/52.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金定匹庫全書</header>\n<header>卷七十四</header>\n帝七勵金船漾寶丨丨呈甘\n又南郊頌珠樹素禽越\n火枝之地丨丨邛杖踰沉羽之涘\n張說雪詩山如丨\n作丨宮見璧成臺\n杜甫洗兵馬行\n不知何國致白環復道諸山出——\n銀盎\n問奇錄陸龜蒙居吳中時有內官經長洲於水濱\n見一花鴨彈之而斃守者告之乃乗小舟修表章\n告內官曰某養此鴨能人言方欲上進君何殺之乃將\n表示之內官驚而且慙酬之——臨行詢之竟解何言\n語陸曰教來數載能自呼名耳 蘇轍飲酒\n過量肺疾復作詩雕盤貯霜實——薦秋糯\n艮筍梁昭明太子昭眞\n信寺碑見玉匣下\n退\n望\n梁簡文帝江南行紫荷\n擎釣鯉——插短蓮\n銀\n器\n南史蕭頴胄傳預曲宴——滿席頴胄曰陛下前\n欲壞酒鎗恐宜移在此器也唐書郭子儀傳帝",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Imperial Ordered Compendium of Parallel Phrases and Literary Allusions</header>\n<header>Volume 74</header>\n\n<note>original: \"Imperial Ordered Siku Quanshu\"</note>\n<note>original: \"Volume 74\"</note>\n\nThe Emperor’s Seventh Exhortation: Gold ships ripple with treasures, <term>Silver Shells</term> <gloss>Yin qiao</gloss> present sweetness.\nAlso, the Ode to the Southern Suburbs: The Pearl Tree and the Plain Bird surpass the land of fire-branches; the <term>Silver Shells</term> <gloss>Yin qiao</gloss> and the Qiong-wood staff cross the shore of sunken feathers.\nZhang Yue’s Poem on Snow: The mountains are like <term>Silver Shells</term> <gloss>Yin qiao</gloss> <note>describing the appearance of snow-covered peaks</note>.\nCreated as a <term>Silver Shell</term> <gloss>Yin qiao</gloss> Palace, appearing as a terrace made of jade.\n\nDu Fu’s Ballad on Washing the Weapons and Horses:\nI know not from what country the white jade rings were sent, but again the various mountains produce <term>Silver Vessels</term> <gloss>Yin ang</gloss>.\n\nSilver Basin\n\nRecords of Inquiring after the Strange: When Lu Guimeng resided in Wu, an inner official passed through Changzhou. By the water's edge, he saw a flower-duck and shot it dead with a pellet. The caretaker informed Lu Guimeng, who then took a small boat and prepared a formal petition to inform the official, saying: \"I was raising this duck, and it was able to speak human language. I was just about to present it to the Emperor. Why did you kill it?\" He then showed him the petition. The official was shocked and ashamed, and compensated him with a <term>Silver Basin</term> <gloss>Yin ang</gloss>. Before departing, the official asked what the duck could actually say. Lu replied: \"I taught it for several years, and it could call out its own name.\"\nSu Zhe’s poem on his lung ailment returning after excessive drinking: The carved tray holds frosted fruit, and the <term>Silver Basin</term> <gloss>Yin ang</gloss> is presented with autumn glutinous rice.\n\nSilver Bamboo-Shoots\n\nLiang Dynasty Crown Prince Zhaoming’s Stele for the Zhaozhenxin Temple: See below the Jade Casket <note>referring to silver ornaments or architectural features</note>.\n\nSilver Hook\n\nEmperor Jianwen of Liang’s Song of Jiangnan: Purple lotus leaves support the fishing carp, and <term>Silver Hooks</term> <gloss>Yin gou</gloss> are inserted into the short lotuses.\n\nSilver Vessels\n\nHistory of the Southern Dynasties, Biography of Xiao Yingzhou: He participated in a private banquet where <term>Silver Vessels</term> <gloss>Yin qi</gloss> filled the tables. Yingzhou said: \"Your Majesty previously wished to destroy the wine flask; perhaps it would be appropriate to move the contents into these vessels.\"\nBook of Tang, Biography of Guo Ziyi: The Emperor <note>text cuts off</note>\n\n<summary>This page catalogs literary allusions and historical anecdotes involving precious silver objects such as shells, basins, and hooks in Chinese poetry and official histories. It includes a humorous story about the poet Lu Guimeng tricking an official into paying for a common duck by claiming it could speak.</summary>\n<keywords>Silver Shells, Silver Basin, Lu Guimeng, Du Fu, literary allusions, Chinese poetry, Southern Dynasties, material culture</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 82,
+    "page_id": "6a3c60e640c88a541d8ebca6",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c60e640c88a541d8ebc54/82.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金定匹庫全書</header>\n<header>卷七十四</header>\n於是悉復蕃等爵位擢用子孫\n又星經一三星在八魁西北\n鐵鈇\n急就篇丨丨鑚錐釜鍑鍪注丨丨\n以鐵為莖刀也一曰以鐵為椹也\n鐵鉞\n古今注鍠秦改丨\n丨作鍠始芼制也\n鐵\n椹\n見急\n鐵就\n鉄篇\n鉄下\n鐵兵\n越絕書當此之時作丨丨威服三軍天下聞之莫\n敢不服此亦丨丨之神\n江淹銅劒贊序鑄銅既\n難求鐵甚易是故銅\n兵轉少丨丨轉多\n鐵物\n姍嬛記郭撫鑿池得一空棺中有丨丨洗而視之\n乃琴也雷斆炮炙論序折劒遇鸞血而如初注\n以鸞血燒作膠粘\n折處丨丨永不斷",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Imperial Authorized Encyclopedia of Parallel Phrases</header>\n<header>Volume 74</header>\n\nThereupon, the noble titles and positions of the various <term>Fan</term> <gloss>non-Han ethnic groups or subjects</gloss> were all restored, and their children and grandchildren were promoted and employed. \nAdditionally, according to the Classic of Stars <note>original: \"Xing Jing\"</note>, one star is located to the northwest of the Eight Leaders <note>original: \"Ba Kui,\" a star pattern in the Dipper</note>.\n\n# Iron Axe\n<term>Tie Fu</term> <gloss>Iron Axe</gloss>\n\nFrom the Primer for Quick Mastery <note>original: \"Ji Jiu Pian\"</note>: <term>Tie Fu</term>, drills, awls, cauldrons, pots, and helmets. \n<margin>Annotation</margin> An axe made with iron for the handle and blade. Another definition states it is an iron anvil.\n\n# Iron Battle-Axe\n<term>Tie Yue</term> <gloss>Iron Battle-Axe</gloss>\n\nFrom the Notes on Ancient and Modern Matters <note>original: \"Gu Jin Zhu\"</note>: The <term>Huang</term> <gloss>a type of bell or musical stone</gloss> was renamed by the Qin dynasty as the <term>Tie Yue</term>. This was a practice started during the reign of the First Emperor.\n\n# Iron Anvil\n<term>Tie Zhen</term> <gloss>Iron Anvil</gloss>\n\nRefer to the entry under <term>Tie Fu</term> in the Primer for Quick Mastery.\n\n# Iron Weapons\n<term>Tie Bing</term> <gloss>Iron Weapons</gloss>\n\nFrom the Records of the State of Yue <note>original: \"Yue Jue Shu\"</note>: At this time, iron weapons were manufactured, and their power subdued the three armies. When the world heard of this, none dared to disobey. This demonstrates the divine power of iron weapons.\n\nFrom Jiang Yan's Preface to the Eulogy for the Copper Sword: Since casting copper is difficult and obtaining iron is very easy, copper weapons have become fewer while iron weapons have become more numerous.\n\n# Iron Objects\n<term>Tie Wu</term> <gloss>Iron Objects</gloss>\n\nFrom the Records of Shanhuan <note>original: \"Shanhuan Ji\"</note>: Guo Fu was digging a pond when he found an empty coffin. Inside was an iron object. After washing it and looking closely, he saw it was a <term>Qin</term> <gloss>seven-stringed zither</gloss>.\n\nFrom the Preface to Lei Xiao’s Treatise on the Preparation of Herbal Medicines <note>original: \"Pao Zhi Lun\"</note>: A broken sword that encounters the blood of a <term>Luan</term> <gloss>mythological phoenix-like bird</gloss> will become as it was originally.\n<margin>Annotation</margin> Using the blood of a <term>Luan</term> bird to make a glue by burning it; when applied to the break, the iron object will never snap again.\n\n<summary>This page catalogs historical and literary references to iron tools and weapons, including axes, anvils, and mystical iron objects like a buried zither or a sword repaired with mythical blood.</summary>\n<keywords>iron, weapons, tools, technology history, metallurgy, Qin dynasty, Yue Jue Shu, mythology</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 127,
+    "page_id": "6a3c60e640c88a541d8ebcd3",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c60e640c88a541d8ebc54/127.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n鐵寨\n明一統志銅關丨丨山在黎平府潭溪長官司西\n南其山高峻上頗平廣可容千人三面據險惟南\n可\n登\n鐵市\n漢書百官公卿表治粟內史屬官有太倉均輸平\n準都內籍田五令丞幹官——兩長丞 徐陵長\n干寺衆食碑其外——銅街青樓紫陌辛家黑白之里\n甲第王侯之門莫不供施相髙資儲轉衆 庾信周冠\n軍公夫人烏石蘭氏墓誌銘扶風舊\n城猶存——河南故墅尚餘金谷\n鐵橋\n唐書吐蕃傳當是時韋臯功最多破堡壁五十餘\n所敗其南道元帥論莽熱没籠乞悉篦又與南詔\n破之於神川於丨丨臯俘馘三萬降首領論乞髯湯没\n藏悉諾硉 曹唐送羽人王錫歸羅浮詩石磴倚天行\n帶月丨丨通海入無塵 蘇軾次韻定慧\n欽長老見寄詩丨丨本無柱石樓豈有門\n<header>御定駢字類編</header>\n大巳日真令書\n<page-num>六十三</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "# Iron Fortress <note>Chinese: Tiezhai</note>\n\nThe Comprehensive Gazetteer of the Ming Dynasty <note>Ming Yitong Zhi</note> states: Tongguan and the **Iron Fortress** Mountain are located southwest of the Tanxi Chiefdom in Liping Prefecture. The mountain is high and steep, but the summit is quite flat and wide, capable of holding a thousand people. It is protected by natural hazards on three sides, and can only be ascended from the south.\n\n# Iron Market <note>Chinese: Tieshi</note>\n\nThe Book of Han, Table of Official Posts and Ceremonies <note>Hanshu Baiguan Gongqing Biao</note> records: The Superintendent of Grain and Agriculture had subordinate officials, including five Directors and Assistants for the Grand Granary, Balanced Transportation, Price Stabilization, the Treasury, and the Imperial Field. There were also two Directors and Assistants for the **Iron Market**. <note>original: Tieshi liang zhangcheng</note>\n\nXu Ling, Inscription for the Food for the Monks of Changgan Temple <note>Changgan Si Zhongshi Bei</note>: Outside the temple is the **Iron Market** and Copper Street, the brothels and purple paths, the neighborhoods of the Xin family and various clans, and the gates of the noble palaces. There is no one who does not compete in high offerings, and the accumulated supplies grow increasingly numerous.\n\nYu Xin, Epitaph for Lady Wushilan, Wife of the Duke and General of the Zhou Dynasty: The old city of Fufung still remains, and the **Iron Market** and the old villas of Henan still linger, like the Golden Valley Garden.\n\n# Iron Bridge <note>Chinese: Tieqiao</note>\n\nThe Old Book of Tang, Account of Tibet <note>Tangshu Tubo Zhuan</note>: At that time, Wei Gao achieved the greatest merit. He destroyed over fifty fortresses and defeated the Southern Route Marshals Lun Mangre, Meilongqi, and Xinülu. He also joined forces with Nanzhao to defeat them at Shenchuan and at the **Iron Bridge**. Wei Gao captured and beheaded thirty thousand enemies, and accepted the surrender of leaders such as Lun Qiran, Tang Mozang, and Xinülu.\n\nCao Tang, Poem on Sending the Daoist Wang Xi Back to Mount Luofu: The stone steps lean against the sky, walking with the moon; the **Iron Bridge** leads to the sea, entering without dust.\n\nSu Shi, Poem Following the Rhymes of Elder Qin of Dinghui: The **Iron Bridge** originally has no pillars; how can the Stone Mansion have a door?\n\n<header>Imperial Parallel Characters</header>\nA True Record of the Great Si Day\n<page-num>63</page-num>\n\n<summary>This page catalogs historical and geographical terms beginning with the word Iron, including the Iron Fortress mountain, the Iron Market administrative office and district, and the Iron Bridge military site and poetic landmark.</summary>\n<keywords>Iron Fortress, Iron Market, Iron Bridge, Ming Yitong Zhi, Book of Han, Wei Gao, Tang Dynasty, Su Shi, geography, administrative titles</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 45,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c6d4301fe4f593c1b9568",
+  "book_url": "https://sourcelibrary.org/book/6a3c6d4301fe4f593c1b9568",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c6d4301fe4f593c1b9568",
+   "title": "黃氏日抄·卷九十七 (vol 49)",
+   "display_title": "Huang's Daily Notes, juan 97 (vol 49)",
+   "author": "黃震",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 72,
+   "pages_ocr": 72,
+   "pages_translated": 71,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 72,
+   "distinct_page_numbers": 72,
+   "duplicate_records": 0,
+   "pages_with_ocr": 72,
+   "pages_translated": 71,
+   "with_printed_number": 7,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 72,
+   "pages_translated_field": 71
+  },
+  "run": [
+   13,
+   23,
+   46,
+   62
+  ],
+  "pages": [
+   {
+    "page_number": 13,
+    "page_id": "6a3c6d4301fe4f593c1b9575",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6d4301fe4f593c1b9568/13.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>六</page-num>\n<meta>Title on the fold (left edge): 黄氏日抄. Folio number: 六. The far left edge contains partially visible index information: 款三十二 [...]</meta>\n\n太常公方登科餘皆方讀書晝夜聲相聞余謂此如巨\n木春回芽英戢戢華實而蕃大也將孰禦已皆果然因\n每默念其淵源之所自未嘗不三歎三詠於君也俄一\n日以訃聞余既悲之其孤復走介乞銘於余余又重悲\n之曰其何忍銘君然知君深不得辭也君諱一元字季\n良曾祖諱某祖諱某父諱某即學諭所命為之後者君\n年甫十有五即執其喪哀毀如親生經紀墳域老於世\n事者不能及事母以孝聞母惟二女鍾愛之皆產歸之\n\n<vocab>太常公, 登科, 戢戢, 訃, 銘, 諱, 字, 學諭, 孝, 墳域, 黄氏日抄</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>continues from previous page</meta>\nMinister of the Court of Imperial Sacrifices <term>Taichang Gong</term> <gloss>the honorable official of ancestral rites and ceremonial protocol</gloss> had just passed the imperial examinations <note>original: \"登科\"</note>, while all the others were just beginning their studies. Day and night, the sounds of their recitation echoed back and forth. I thought to myself: this is like a mighty tree in the return of spring, its buds and blossoms clustering thickly, blossoming and bearing fruit in great abundance. Who could possibly resist it? Later, everything turned out precisely as expected. Whenever I silently reflected on where their family tradition originated, I never failed to sigh and sing praises repeatedly for the gentleman.\n\nSuddenly, one day, news of his death arrived. I was already grieving deeply for him when his orphaned son sent an intermediary to travel to me and request an epitaph <note>original: \"銘\"</note>. My grief deepened further, and I said: \"How can I bear to write an epitaph for the gentleman? Yet knowing him so deeply, I cannot refuse.\"\n\nThe gentleman's taboo name <note>the formal personal name avoided out of respect</note> was Yiyuan, and his courtesy name was Jiliang. His great-grandfather was named [omitted], his grandfather was named [omitted], and his father was named [omitted], who was appointed by the District School Instructor <term>Xueyu</term> <gloss>an official overseeing local Confucian studies and schools</gloss> to be his heir. When the gentleman was barely fifteen years of age, he conducted his father's funeral rites. His grief and emaciation were as profound as if mourning his own birth father. In managing the burial grounds and family tombs, even those seasoned in worldly affairs could not equal him. He served his mother with celebrated filial devotion. His mother had only two daughters whom she cherished dearly, and the gentleman provided them both with their full inheritance shares when they married.\n\n<summary>Huang Zhen recalls the flourishing scholarly atmosphere of the Sun family school, mourns the death of Sun Yiyuan (Jiliang), and agrees to compose his epitaph, recounting his filial conduct and dutiful family management from youth.</summary>\n<keywords>Huang Zhen, Sun Yiyuan, Jiliang, Taichang Gong, imperial examinations, epitaph, funeral rites, filial piety, family inheritance, Xueyu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 23,
+    "page_id": "6a3c6d4301fe4f593c1b957f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6d4301fe4f593c1b9568/23.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>十一</page-num>\n<header>欽定四庫全書</header>\n<meta>Title: 檇李日抄 (Ju Li Ri Chao); Sub-header in gutter: 卷[?]</meta>\n\n於鄉鄉民所賴以全活者也已心悦之欲紀其事未暇\n爾明年春教授君之官訪余言別忽出顯文閣學士趙\n公汝暨所為朝奉公壙記屬余為墓銘余謂墓銘本非\n余敢僭若舉積德之報以勸則正長民者責此不容不\n書也因取趙公所記閱之朝奉公性至孝嘗剟股以愈\n母疾嘗卜居得地改以葬其父曰寧吾無家毋寧吾父\n無吉兆鄉鄰有訟者以理諭之即止有遇祟躓於路者\n提耳呼之即甦是孝弟之行不惟人所敬亦鬼神所敬\n\n<vocab>趙汝暨, 朝奉公, 剟股, 孝弟, 壙記, 墓銘</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>continues from previous page</meta>in the township, and the township residents relied upon him for their very survival. In my heart I admired him greatly and intended to record his deeds, but had not yet found the leisure to do so. In the spring of the following year, the Prefectural Professor <term>Jiaoshou</term> <gloss>prefectural education official</gloss> was departing to assume his official post, and he visited me to say farewell. Suddenly he brought out a subterranean tomb record <term>kuangji</term> <gloss>biographical stone tablet placed inside a burial vault</gloss> composed by Academician of the Xianwen Pavilion <note>court title</note> Master Zhao Ruji <note>Song dynasty official and scholar</note> for the Court Gentleman for Consultation <term>Chaofeng</term> <gloss>honorific court title</gloss>, and requested that I compose a tomb inscription <term>muming</term> <gloss>funerary biographical inscription carved on stone</gloss>. I replied that a tomb inscription was originally not something I would dare to presume to write. Yet, if it served to bring forward the recompense of accumulated virtue to encourage others, then this was precisely the duty of one who governs the people, and it could not be left unrecorded. I therefore took Master Zhao's record and examined it. The Court Gentleman for Consultation was by nature exceedingly filial. He once cut flesh from his own thigh <term>duogu</term> <gloss>cutting thigh flesh to brew medicinal broth for an ailing parent, an extreme act of filial devotion</gloss> to heal his mother's illness. He once divined an auspicious site for a dwelling, but instead used it to bury his father, declaring: \"Better that I have no home, than that my father lack an auspicious resting place.\" When neighbors in the village had lawsuits or disputes, he reasoned with them using principle, and the disputes immediately ceased. When someone encountered an evil spirit and fell prostrate upon the road, he lifted their ears and called out to them, and they immediately revived. Such deeds of filial piety and fraternal respect were not only revered by human beings, but were revered even by the ghosts and spirits.\n\n<summary>Huang Zhen recounts how Gentleman Zhang's son presented a vault record by Zhao Ruji and requested a funerary inscription, which Huang accepted as a duty to encourage virtue. Zhao's record reveals Zhang's extraordinary filial piety, including cutting his own thigh flesh to cure his mother, dedicating an auspicious site to his father's grave, and commanding reverence from neighbors and spirits alike.</summary>\n<keywords>Huang Zhen, Zhang, Jiaoshou, Zhao Ruji, Chaofeng, kuangji, muming, filial piety, duogu, burial divination, dispute resolution, spirits</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 46,
+    "page_id": "6a3c6d4301fe4f593c1b9596",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6d4301fe4f593c1b9568/46.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n吳門與語夜參半君袞袞談古今析義理如傾河漢不\n可休知其學必有自來而未能悉也自是每見閩之士\n必問君家世皆言君艾隱先生之子艾隱古學古心超\n然不與世接君亦刻厲先志坐是偃蹇於世余於是益\n敬之慕之又十年余歸自江西君適從事沿海制司之\n幕因得請問艾隱先生詳委君乃愀然言曰宦遊日久\n先君墓猶未銘正欲以屬之子余謝不能再三明日以\n其狀來又辭至再三皆不獲乃敬為敘其事而次之先",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>at Wumen <note>Suzhou</note>. We conversed into the middle of the night. The gentleman spoke copiously of ancient and modern times, analyzing moral principles as if a torrential river could not be checked. I knew that his learning surely came from a profound heritage, though I was not yet able to learn all the details.\n\nFrom then on, whenever I met scholars from Min <note>Fujian</note>, I invariably inquired about the gentleman's family background. All said that he was the son of Master Aiyin. Master Aiyin possessed ancient learning and an ancient heart, rising aloft and detached without associating with worldly affairs. The gentleman also diligently maintained his late father's ideals; on account of this, he remained unappreciated and thwarted in the world. Because of this, I respected and admired him all the more.\n\nTen years later, I returned from Jiangxi. The gentleman happened to be serving on the staff of the Coastal Control Commission, and thus I was able to inquire into the detailed life of Master Aiyin. The gentleman looked sorrowful and said: \"I have wandered long in official service, and my late father's tomb has not yet been inscribed. I was just wishing to entrust this task to you.\" I declined, pleading incompetence, two and three times. The next day, he brought his father's biographical account, and I again declined repeatedly, but could not obtain his permission to withdraw. Thereupon, I respectfully narrate his deeds and arrange them in order, beginning with his ancestors\n<summary>Huang Zhen recounts meeting Master Aiyin's son, praising his learning and character, and accepts the son's repeated requests to compose an epitaph for Master Aiyin.</summary>\n<keywords>Huang Zhen, Master Aiyin, Lin Guifa, Wumen, Suzhou, Min, Fujian, Coastal Control Commission, funerary inscription, family lineage</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 62,
+    "page_id": "6a3c6d4301fe4f593c1b95a6",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6d4301fe4f593c1b9568/62.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n夫人獨食貧誓死者五十有五年其節何如也不更二\n夫者有矣夫人以其夫不得官不忍改適他人之有官\n其識何如也母冀其子之貴宜矣夫人不悅其子以他\n途進必欲其以儒學進其志又何如也是皆可銘也而\n豈容不銘也耶銘曰\n少壯婺居操冰雪兮教子詩書志金鐵兮嗚呼茲其\n為名父之女歟庶幾乎烈兮\n孫承節墓誌銘",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Yet the Lady endured poverty alone and swore herself to faithfulness unto death for fifty-five years. How great was her integrity! There are indeed women who do not remarry, yet when the Lady's husband could not attain official rank, she could not bear to remarry someone who held office. How great was her discernment! It is only natural for a mother to hope for her son to attain nobility, yet the Lady was displeased when her son advanced through alternative paths, insisting that he advance through Confucian learning. How great, again, was her aspiration! All of these qualities deserve an inscription, so how could we permit them to go uninscribed? The inscription reads:\n\nIn the prime of youth she dwelt in widowhood, her conduct pure as ice and snow;\nShe instructed her son in the Odes and Documents, her resolve firm as metal and iron.\nAlas! Was she not truly the daughter of an illustrious father?\nShe came near indeed to heroic perfection!\n\n### Epitaph of Sun Chengjie\n\n<summary>Huang Zhen praises Lady Yu's fifty-five years of devoted widowhood, moral discernment, and insistence on Confucian scholarship for her son, concluding with a poetic inscription and the heading for the subsequent epitaph.</summary>\n<keywords>Lady Yu, widowhood, fidelity, moral discernment, Confucian scholarship, poetic inscription, epitaph, Sun Chengjie, Huang Zhen</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 46,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c63b339b4508b04e2285e",
+  "book_url": "https://sourcelibrary.org/book/6a3c63b339b4508b04e2285e",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c63b339b4508b04e2285e",
+   "title": "御定佩文韻府·卷十六之三 (vol 359)",
+   "display_title": "Imperially Commissioned Peiwen Rhyme Treasury, juan 16 part 3 (vol 359)",
+   "author": "張玉書",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 132,
+   "pages_ocr": 130,
+   "pages_translated": 128,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 132,
+   "distinct_page_numbers": 132,
+   "duplicate_records": 0,
+   "pages_with_ocr": 130,
+   "pages_translated": 128,
+   "with_printed_number": 29,
+   "printed_backsteps": 8,
+   "printed_repeats": 21,
+   "pages_count_field": 132,
+   "pages_translated_field": 128
+  },
+  "run": [
+   5,
+   48,
+   74,
+   110
+  ],
+  "pages": [
+   {
+    "page_number": 5,
+    "page_id": "6a3c63b339b4508b04e22863",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63b339b4508b04e2285e/5.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n玉葉散秋影金風飄\n李白望廬山瀑布詩日照香爐生\n遙看瀑布挂前川閻德隱薛王花燭行祇應早得淮南術㑹見獸\n飛入\n雲煙\n梁書張宏策傳恒隨高祖遊處每入室常覺有\n氣\n體輒肅然由此特敬高祖陸機詩秋草漫長柯寒水入\n謝靈運詩遂登羣峯首邈若升\n宋之問登禪定寺閣詩\n開襟坐霄漢揮手拂\n杜甫飲中八仙歌張旭三盃草聖傳揮\n毫落紙凌煙\n唐書太宗紀貞觀十七年二月圖功臣於\n閣又\n代宗紀廣德元年給功臣鐵券藏名於太廟圖形\n如\n閣杜甫丹青引\n功臣少顏色將軍下筆開生面又虞世南\n詩飛來雙白鶴奮翼逺\n凌又作陵神仙傳甯子入火而陵煙\n馬皇見迎操煙\n晏子五尺童子\n寸之\n天下不能足以\n新\n諱龍\n於謨龍\n斬今君之左右皆\n之徒而君終不知\n輕煙\n新\n論\n天之始旭則目察\n歲之將暮則蓬卷雲中梁元帝詩乍若\n散時如佳氣新李百藥詩水光浮落照霞彩淡\n李德裕詩\n幽翠生松栝\n翠煙\n本草龍涎惟入諸香焚之則\n浮空魏徵詩\n起薜蘿\n淑景輝雕輦高旌揚\n權德輿詩輕策逗蘿",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Jade leaves scatter autumn shadows, the golden wind flutters.\n<note>Reference to the changing seasons and the movement of the wind.</note>\n\nLi Bai, in his poem *Gazing at the Waterfall at Mount Lu*: The sun shines on Incense Burner Peak, generating <term>purple smoke</term> <gloss>a misty haze appearing purple in the sunlight</gloss>. Looking from afar, the waterfall hangs before the river.\n<note>Li Bai is one of China’s most famous Tang dynasty poets; this is one of his most celebrated landscape poems.</note>\n\nYan Deyin, in the poem *Song of the Flower Candles for Prince Xue*: One should only hope to quickly acquire the arts of Huainan <note>referring to alchemy or immortality</note>, then one will see the <term>beast smoke</term> <gloss>smoke from animal-shaped incense burners</gloss> fly into the <term>cloud smoke</term>.\n\n*Book of Liang*, Biography of Zhang Hongce: He constantly followed the High Ancestor <note>Emperor Wu of Liang</note> in his travels and dwellings. Every time he entered the room, he always sensed a <term>cloudy smoke-like vapor</term> <gloss>an auspicious aura or spiritual energy</gloss>; his body would immediately become solemn. Because of this, he especially revered the High Ancestor.\n\nLu Ji, in a poem: Autumn grass overflows the long branches, cold water enters the <term>cloud smoke</term>.\n\nXie Lingyun, in a poem: Then climbing to the head of the various peaks, appearing distant as if ascending into the <term>cloud smoke</term>.\n<note>Xie Lingyun was a pioneer of Chinese landscape poetry.</note>\n\nSong Zhiwen, in the poem *Climbing the Pavilion of Chanding Temple*: Opening my robe, I sit amidst the high heavens; waving my hand, I brush away the <term>cloud smoke</term>.\n\nDu Fu, in the *Song of the Eight Immortals of the Winecup*: Zhang Xu, after three cups, is the master of cursive script; waving his brush, it falls on the paper, surpassing the <term>cloud smoke</term>.\n<note>Zhang Xu was a famous Tang calligrapher known for his wild cursive style.</note>\n\n*Book of Tang*, Annals of Taizong: In the seventeenth year of the Zhenguan era, in the second month, portraits of the meritorious officials were painted in the <term>Lingyan Pavilion</term> <gloss>literally \"Pavilion Surpassing the Smoke\"</gloss>. \n\nAlso, the Annals of Daizong: In the first year of the Guangde era, iron certificates were given to meritorious officials and stored in the Imperial Ancestral Temple; their likenesses were painted in the <term>Lingyan Pavilion</term>. \n\nDu Fu, in *An Introduction to Painting*: The meritorious officials in the <term>Lingyan Pavilion</term> have faded in color; the General <note>referring to the painter Cao Ba</note> puts down his brush and gives them new life.\n\nAlso, a poem by Yu Shinan: Two white cranes come flying, spreading their wings to travel far into the <term>cloud smoke</term> <note>original: \"Lingyan\"</note>.\n\n<term>Lingyan</term> <gloss>Surpassing the Smoke</gloss> is also written as <term>Lingyan</term> <gloss>Ascending the Smoke</gloss>. *Biographies of the Immortals*: Ningzi entered the fire and ascended into the smoke.\n\n*Master Yan*: A five-foot child <unclear>three</unclear> inches of <unclear>cloud smoke</unclear>. The whole world cannot be sufficient to <unclear>...</unclear>\n\nNew <unclear>...</unclear> taboo name Long <unclear>...</unclear> Yu Mo Long <unclear>...</unclear> Behead. Now those surrounding you are all <unclear>cloud smoke</unclear> followers, yet you ultimately do not know it.\n\n<term>Light Smoke</term> <gloss>Qingyan</gloss>\n<note>Refers to thin mist or subtle vapors.</note>\n\nNew <unclear>...</unclear>\n*Discourses*: At the beginning of the day, when the sun rises, the eye observes <unclear>...</unclear>. When the year is ending, the mugwort rolls in the clouds.\n\nEmperor Yuan of Liang, in a poem: Suddenly like <unclear>...</unclear> scattering, at times like a new auspicious vapor.\n\nLi Baiyao, in a poem: The light on the water floats in the setting sun; the colors of the clouds are faint in the <term>light smoke</term>.\n\nLi Deyu, in a poem: <unclear>...</unclear> deep emerald green arises from the pines and junipers, <term>emerald smoke</term>.\n\n*Compendium of Materia Medica*: Ambergris is only used in various fragrances; when burned, the <term>smoke</term> floats in the air.\n\nWei Zheng, in a poem: <unclear>...</unclear> arising from the wild vines. The fair scenery shines on the carved carriage; the high banners flutter in the <term>light smoke</term>.\n\nQuan Deyu, in a poem: A light staff lingers among the vines in the <term>light smoke</term>.\n\n<summary>This page contains a collection of poetic and historical references to various types of smoke and vapors, particularly cloud smoke and light smoke, as used in classical Chinese literature and official histories. It cites famous poets like Li Bai and Du Fu and refers to the Lingyan Pavilion where portraits of Tang dynasty heroes were kept.</summary>\n<keywords>Li Bai, Du Fu, Lingyan Pavilion, cloud smoke, light smoke, Tang Dynasty poetry, landscape imagery, meritorious officials</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 48,
+    "page_id": "6a3c63b339b4508b04e2288e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63b339b4508b04e2285e/48.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n疎翠葉\n過雨落紅衣宋無雙陸詩金縷紋桑斷局堅紅雲倒\n浸一\n海空智藏經譬如秋月\n中\n花一切衆人所樂見\n嶽蓮\n李嶠詩回識平陵樹低看華\n杜甫詩雲斷\n臨大路\n天晴宮柳暗長春張蠙華山孤松詩石罅引根非土力冒寒\n猶助\n秋蓮\n李白樂府流星白羽腰間挿劍花\n光出匣孟郊\n詩經文開貝葉衣製垂\n韋莊三堂東湖詩蟾投\n夜魄當湖落嶽\n愛蓮\n周子\n説子獨\n出汙泥而不染濯清\n倒\n入浪生\n連而不妖亭亭淨植可逺觀而不可褻玩焉\n花之君\n臉蓮\n歐陽修詩燈花弄\n粉色酒紅生\n子者也\n鉢中蓮\n晉書佛圗澄傳石勒召澄試道術澄取\n鉢盛水須臾丨丨生青丨花光色曜曰\n合懽蓮\n宋史興國\n九年出玉\n津園瑞蓮一盆示輔臣花與葉悉合懽而生柳宗元表伏見今月\n曰内出西内定禮池中青蓮花并神龍寺前丨丨丨子示百寮\n相府蓮\n國史補司空于頔以樂曲有想夫憐其名不雅將改之客\n曰南朝相府曽有瑞蓮故歌丨丨丨自是後人語訛相承\n<header>御定佩文韻府</header>\n<page-num>二十三</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Sparse Emerald Leaves\n<note>Reference to a poetic description of foliage.</note>\nAs the rain passes, the red garments <note>petals</note> fall. Song Wushuang’s Backgammon poem: The golden threads mark the mulberry grain where the game ended; firm red clouds dip into the water.\n<column-break/>\nThe vast sea of the Treasury of Wisdom Sutra <note>original: \"智藏經\" (Zhizhang Jing)</note>: Like the flower in the autumn moon, it is something all people delight to see.\nMountain Lotus\nLi Qiao’s poem: Looking back, I recognize the trees of Pingling; looking down, I see the mountain lotus.\nDu Fu’s poem: The clouds break above the great road.\nThe sky clears and the palace willows darken in the Eternal Spring. Zhang Bin’s poem on the solitary pine of Mount Hua: Its roots draw from the stone crevices, not from the strength of the soil; braving the cold, it still assists the autumn lotus.\nLi Bai’s Music Bureau poem: Falling stars and white feathers tucked at the waist; the sword flower’s <note>the pattern or glint of the blade</note> light emerges from the scabbard. Meng Jiao’s poem: Scriptural texts open upon cowry leaves; garments are fashioned with hanging lotus.\nWei Zhuang’s poem on the East Lake of the Three Halls: The toad <note>the moon</note> casts its nocturnal soul as it falls into the lake; the mountain lotus falls.\nLove for the Lotus\nMaster Zhou <note>Zhou Dunyi</note>’s treatise: I alone love the lotus for emerging from the mud yet remaining unstained, for being washed by clear ripples yet not appearing seductive. It stands tall and pure, planted upright; it can be viewed from a distance but not handled profanely. It is the gentleman among flowers.\nFace-like Lotus\nOuyang Xiu’s poem: The lamp flower plays upon the powdered colors; the wine’s redness rises in the lotus-like face.\nLotus in a Bowl\nThe Book of Jin, Biography of Fotudeng: Shi Le summoned Fotudeng to test his spiritual arts. Deng took a bowl filled with water, and in a moment, a blue lotus flower grew within it, its colors radiant and shining.\nJoined-Joy Lotus <note>original: \"合懽蓮\" (Hehuan Lian), referring to two lotus flowers sharing a single stem</note>\nHistory of Song: In the ninth year of the Xingguo era, a pot of auspicious lotuses from the Yujin Garden was shown to the ministers; the flowers and leaves were all joined in joy as they grew. Liu Zongyuan’s memorial: I humbly observe that this month, the blue lotus from the Dingli Pond in the Western Palace and the joined-joy lotus from before the Shenlong Temple were shown to the officials.\nPrime Minister’s Lotus\nSupplement to the National History: The Minister of State, Yu Di, thought the name of the musical piece \"Thinking of My Husband\" <note>original: \"想夫憐\" (Xiang Fu Lian)</note> was not elegant and wished to change it. A guest said: In the Southern Dynasties, there was an auspicious lotus in the Prime Minister’s residence, thus it was called the \"Prime Minister’s Lotus\" <note>original: \"相府蓮\" (Xiang Fu Lian)</note>. Since then, people’s speech became corrupted, and the error was passed down.\n\n# Imperial Authorized Puiwen Yunfu\n## Page Twenty-Three\n\n<summary>This page compiles poetic and historical references to various types of lotuses, including their symbolic associations with purity, Buddhist miracles, and auspicious omens in the imperial court.</summary>\n<keywords>lotus, Zhou Dunyi, Fotudeng, Buddhist imagery, auspicious omens, Chinese poetry, botanical symbolism</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 74,
+    "page_id": "6a3c63b339b4508b04e228a8",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63b339b4508b04e2285e/74.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n能爲一一一晦三甽歲代處故曰一一古法也后稷始甽田以二\n耜爲耦廣尺深尺曰甽長終晦一畝三甽一夫三百甽注甽壟也\n代易\n也\n甽田\n見\n上\n力田\n漢書惠帝紀舉民孝弟一一者復其身又文帝\n紀置三老孝弟一一常員又詔曰孝弟天下之\n大順也一一爲生之本也北史閻元明傳奉養其母孝著鄉邑一\n一積粟博施不已杜甫東西兩川說流冗之輩漂寓諸州縣秖與\n兼并豪家\n一一耳\n籍田\n漢書文帝紀詔曰夫農天下之本也其開一一朕\n親率耕以給宗廟粢盛應劭注籍者帝王典籍之\n常也韋昭注籍借也借民力以治之又百官表大司農屬官有\n一令丞唐書禮樂志一一祭先農唐初為帝社亦曰一一壇又岑\n文本傳貞觀元年太宗既一一又元曰朝羣臣文本奏一一三元\n頌二篇文致華贍呂氏春秋孟春之月天子率三公九卿諸侯大\n夫躬耕\n帝一一\n屯田\n漢書昭帝紀二年秋八月調故吏將一一張掖郡又\n趙充國傳留一一得十二便出兵失十二利又却掃\n編柳永以歌詞顯名于仁宗朝官爲一一員外郎故世號柳一一\n宜春傳信錄一一郎中李公衢明道中通判筠州前官受秋租吏\n御定風文韻府\n主\n<header>欽定四庫全書</header>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>The text is from the Peiwen Yunfu, a Qing dynasty encyclopedia of literary phrases and rhymes. This section covers terms related to agriculture and fields.</meta>\n\n# Imperial Edition of the Peiwen Yunfu: Volume 16, Part 3\n\nCan be made one by one <note>referring to the layout of fields</note>. Three furrows per year are rotated, therefore it is called an ancient method. Houji <note>the legendary Lord of Millet, patron of agriculture</note> first began the furrowed field system. Using two plows as a pair, a space one foot wide and one foot deep is called a <term>quan</term> <gloss>furrow</gloss>. The length reaches the end of the plot. One <term>mu</term> <gloss>unit of land area</gloss> contains three furrows. One laborer manages three hundred furrows. The commentary states that furrows are the ridges between fields. They are rotated and exchanged.\n\n### Furrowed Fields\n<term>Quan tian</term> <gloss>Furrowed fields</gloss>. See above.\n\n### Diligent Farming\n<term>Li tian</term> <gloss>Diligent farming</gloss>. The Book of Han, Annals of Emperor Hui, states that those among the people who are filial, brotherly, and <unclear>diligent in farming</unclear> shall be exempt from labor service. Also, in the Annals of Emperor Wen, it states that the positions of the Three Elders, the Filial, the Brotherly, and the <unclear>diligent farmers</unclear> were established as permanent staff. Further, an imperial decree stated that filial piety and fraternal duty are the great virtues of the world, and <unclear>diligent farming</unclear> is the foundation of life. In the History of the Northern Dynasties, Biography of Yan Yuanming, it is recorded that he supported his mother with notable filial piety in his village, and through <unclear>diligent farming</unclear>, he accumulated grain and gave it away to others without ceasing. Du Fu, in his writings on the East and West Sichuan regions, mentioned that displaced people drifting through various prefectures and counties are only serving the interests of powerful families through <unclear>diligent farming</unclear>.\n\n### Sacred Field\n<term>Ji tian</term> <gloss>Sacred field or plowing field</gloss>. The Book of Han, Annals of Emperor Wen, contains a decree stating that agriculture is the foundation of the world. Therefore, the <unclear>Sacred Field</unclear> should be opened, and I, the Emperor, will personally lead the plowing to provide the grain offerings for the ancestral temples. Ying Shao's commentary notes that <term>ji</term> refers to the constant records and rituals of emperors and kings. Wei Zhao's commentary notes that <term>ji</term> means to borrow, specifically borrowing the labor of the people to manage it. Furthermore, the Table of Official Ranks states that the Grand Minister of Agriculture has a subordinate official called the Director of the <unclear>Sacred Field</unclear>. The Old Book of Tang, Treatise on Ritual and Music, mentions that in the <unclear>Sacred Field</unclear>, sacrifices are made to the First Farmer. In the early Tang, this was also the Altar of the Imperial Earth, also called the Altar of the <unclear>Sacred Field</unclear>. In the Biography of Cen Wenben, it is noted that in the first year of the Zhenguan era, after Emperor Taizong had performed the <unclear>Sacred Field</unclear> ritual and met with the officials, Cen Wenben presented two odes on the <unclear>Sacred Field</unclear> and the Three Primaries. The writing was elegant and ornate. The Springs and Autumns of Master Lü states that in the first month of spring, the Son of Heaven leads the Three Ducal Ministers, the Nine Ministers, the Feudal Lords, and the Grandees to personally plow the Imperial <unclear>Sacred Field</unclear>.\n\n### Military Colony\n<term>Tun tian</term> <gloss>Military agricultural colony</gloss>. The Book of Han, Annals of Emperor Zhao, states that in the autumn of the second year, former officials were transferred to lead the <unclear>military colonies</unclear> in Zhangye Commandery. In the Biography of Zhao Chongguo, it says that maintaining the <unclear>military colonies</unclear> yielded twelve advantages, while withdrawing the troops would result in twelve losses. In the Que Sao Bian, it is mentioned that Liu Yong became famous for his song lyrics during the reign of Emperor Renzong. He served as the Vice Director of <unclear>Military Colonies</unclear>, hence the world called him Liu <unclear>Tun-tian</unclear>. The Record of Transmitting Information from Yichun states that the Director of <unclear>Military Colonies</unclear>, Mr. Li Quming, served as the Vice Prefect of Junzhou during the Mingdao era. Former officials received the autumn tax from the clerks.\n\nImperial Edition of the Peiwen Yunfu.\nCommissioned for the Siku Quanshu.\n\n<summary>This page defines and provides literary citations for agricultural terms including furrowed fields, diligent farming, the emperor's sacred ritual field, and military agricultural colonies.</summary>\n<keywords>Houji, agriculture, Book of Han, Sacred Field, Military Colony, Liu Yong, farming rituals, Siku Quanshu</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 110,
+    "page_id": "6a3c63b339b4508b04e228cc",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c63b339b4508b04e2285e/110.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n破鉏\n復田\n易林進士為官不\n失餐\n若丨丨獲壽保年\n臯田\n易林丨丨禾\n黍堆壤麻阜\n罷田\n說苑楚莊王\n好獵大夫諫\n王曰吾獵將以求士也其榛藂剌虎豹者吾是以知其勇也其攫\n犀搏兕者吾是以知其勁有力也丨丨而分所得吾是以知其仁\n也因是道也而得\n舊田\n新序晉文公丨丨\n半稅新田不稅\n瓊田\n十洲記祖洲有不\n死之草生丨丨中\n三士焉楚國以安\n或名為養神芝其葉似菰苗叢生一株可活一人張正見雪詩睢\n陽生玉樹雲夢起丨丨庚信謝趙王資絲布啟霰似丨丨凌如鹽\n浦顧况朝上清歌丨丨瑤草壽無涯些歐陽修滄浪亭詩風髙月\n白最宜夜一片瑩淨鋪丨丨朱子詠芹詩丨丨何日種玉本一時\n生壇田\n漢官儀天子丨丨公\n卿耕訖嗇夫下種\n先田\n論衡夫人之有宅猶有田也以\n田飲食以宅居處人民所重莫\n食最急丨丨後\n宅田重于宅也\n宕田\n漢中志涪縣水通于\n巴有丨丨平稻田\n雒田\n水經注交阯昔未\n有郡縣之時土地\n有丨丨其田從潮水上下\n民墾食其田因名爲雒民\n赤田\n水經注九真太守任延始教耕犁\n俗化交土風行象林知耕以來六\n<header>御定佩文韻府</header>\n<page-num>五</page-num>\n<header>欽定四庫全書</header>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Broken Hoe <note>original: 破鉏</note>\n\nReturning to the Field <note>original: 復田</note>\nThe Book of Changes Oracle <note>original: 易林</note> says: When a scholar becomes an official, he does not lose his meals. It is like <term>returning to the field</term> <gloss>returning to farming</gloss> to gain long life and preserve one's years.\n\nMarshes and Fields <note>original: 臯田</note>\nThe Book of Changes Oracle <note>original: 易林</note> says: In the <term>marshes and fields</term>, the grain and millet are piled high like soil, and the hemp grows in abundance.\n\nCeasing the Hunt <note>original: 罷田</note>\nThe Garden of Stories <note>original: 說苑</note> records: King Zhuang of Chu loved hunting. When his ministers remonstrated with him, the King replied: I hunt in order to seek out talented men. Those who face the thickets to stab tigers and leopards, I know to be brave. Those who seize rhinoceroses and fight wild bulls, I know to be strong and powerful. When we <term>cease the hunt</term> and divide the catch, I know who is benevolent. By this way, I obtained three worthy men, and thus the State of Chu was at peace.\n\nOld Fields <note>original: 舊田</note>\nThe New Preface <note>original: 新序</note> records: Duke Wen of Jin taxed <term>old fields</term> at half the rate, while new fields were not taxed at all.\n\nJade Fields <note>original: 瓊田</note>\nThe Records of the Ten Islands <note>original: 十洲記</note> states: On Ancestor Island <note>original: 祖洲</note> grows the herb of immortality, which grows within <term>jade fields</term>. It is sometimes called the \"Spirit-Nourishing Mushroom.\" Its leaves resemble wild rice and grow in clusters; a single stalk can revive a person. Zhang Zhengjian wrote in a poem on snow: At Suiyang, jade trees are born; at Yunmeng, <term>jade fields</term> arise. Yu Xin wrote in his letter of thanks to the King of Zhao for gifts of silk and cloth: The sleet is like <term>jade fields</term>, and the ice is like the salt banks. Gu Kuang wrote in his Song of the Higher Purity: In <term>jade fields</term> the immortal grass lives forever. Ouyang Xiu wrote in his poem on the Canglang Pavilion: When the wind is high and the moon white, it is most suitable at night; a single stretch of pure luster spreads across the <term>jade fields</term>. Zhu Xi wrote in his poem on celery: When will the <term>jade fields</term> be planted? The jade roots are born all at once.\n\nAltar Fields <note>original: 壇田</note>\nThe Rituals of the Han Officials <note>original: 漢官儀</note> states: The Emperor has <term>altar fields</term>. After the high officials finish plowing, the agricultural officer sows the seeds.\n\nPrioritizing Fields <note>original: 先田</note>\nThe Balanced Discourses <note>original: 論衡</note> states: A man having a house is like having a field. One uses the field for food and drink, and the house for living. Among the things people value, food is the most urgent. Therefore, one <term>prioritizes the fields</term> and places the house second, as fields are more important than houses.\n\nStony Fields <note>original: 宕田</note>\nThe Records of Hanzhong <note>original: 漢中志</note> states: In Fu County, the waters connect to Ba; there are <term>stony fields</term> and flat rice fields.\n\nLuo Fields <note>original: 雒田</note>\nThe Commentary on the Water Classic <note>original: 水經注</note> states: In Jiaozhi <note>Annam/Northern Vietnam</note>, before there were commanderies or counties, the land had <term>Luo fields</term>. These fields followed the rise and fall of the tide. The people who cleared and ate from these fields were thus named the Luo people.\n\nRed Fields <note>original: 赤田</note>\nThe Commentary on the Water Classic <note>original: 水經注</note> states: Ren Yan, the Governor of Jiuzhen, first taught the use of the plow. The local customs were transformed, and the practices of the land spread to Xianglin. Since the knowledge of plowing reached there, six... <note>text continues to next page</note>\n\n<header>Imperial Edition of the Peiwen Yunfu</header>\n<page-num>5</page-num>\n<header>Imperially Commissioned for the Siku Quanshu</header>\n\n<summary>This page lists various classical Chinese phrases ending in the word \"field\" (tian), providing literary and historical citations for each. It covers agricultural terminology, mythical locations like Jade Fields, and regional historical notes on land use and taxation.</summary>\n<keywords>agriculture, Jade Fields, King Zhuang of Chu, land tax, Luo fields, Chinese dictionary, Peiwen Yunfu, Han rituals</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 47,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c64ea39b4508b04e2b1ff",
+  "book_url": "https://sourcelibrary.org/book/6a3c64ea39b4508b04e2b1ff",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c64ea39b4508b04e2b1ff",
+   "title": "御定佩文韻府·卷九十五之四 (vol 673)",
+   "display_title": "Imperially Commissioned Peiwen Rhyme Treasury, juan 95, part 4 (vol 673)",
+   "author": "張玉書",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 107,
+   "pages_ocr": 106,
+   "pages_translated": 101,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 107,
+   "distinct_page_numbers": 107,
+   "duplicate_records": 0,
+   "pages_with_ocr": 106,
+   "pages_translated": 101,
+   "with_printed_number": 10,
+   "printed_backsteps": 2,
+   "printed_repeats": 3,
+   "pages_count_field": 107,
+   "pages_translated_field": 101
+  },
+  "run": [
+   6,
+   46,
+   66,
+   82
+  ],
+  "pages": [
+   {
+    "page_number": 6,
+    "page_id": "6a3c64ea39b4508b04e2b205",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64ea39b4508b04e2b1ff/6.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金穴正座今\n<header>卷九十五之四</header>\n老之丨丨龔遂之雅對將何以過之北史陸邛傳不說人短丨丨\n巳長言論清逺有人倫鑒管子天之道虛地之道靜虛則不屈靜\n則不變不變則無過故曰丨丨荀子所謂君子者言忠信而心不\n德仁義在身而色丨丨新序吳入郢申包胥以秦師至大敗吳師\n昭王復國賞始於包胥包胥逃賞君子曰申子之赴秦忠矣七日\n夜不絕聲厚矣不受賞丨丨矣新論丨丨在于有功不矜在于有\n德馮衍顯志賦率妻子而耕耘兮委厥美而丨丨又孟子天子討\n而丨丨又魏志母丘儉傳正始中儉以高句驪數侵叛督諸軍討\n之句驪王宮進軍沸流水上大戰梁口宮連破走句驪沛者名得\n來數諫宮宮不從得來歎曰立見此地將生蓬蒿遂不食死舉國\n賢之儉令諸軍不壞其基丨丨其樹得其妻子皆放遣\n之汲冢周書生穡省用不濫其度津不行火藪林丨丨\n四伐\n書不\n愆於\n丨丨五伐六伐七伐乃止齊焉朂哉夫子左思魏都賦畢出征而\n中律執竒正以丨丨四亦作駟禮記夾振之而丨丨盛威于中國\n也注駟當為四疏丨丨謂擊剌作武樂之時每\n一奏之中而四度擊剌象武王伐紂丨丨也\n五伐\n見上詩侵阮\n徂共疏按書",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Gold Pit, Official Seat, Now.\n# Volume 95, Part 4\n<note>This volume continues the encyclopedic compilation of literary phrases organized by rhyme.</note>\nThe elderly <note>refers to an elder or master</note> <unclear>...</unclear>. How could the elegant response of Gong Sui <note>a Han dynasty official known for his honest counsel</note> surpass this? The History of the Northern Dynasties, in the Biography of Lu Qiong, states that he did not speak of others' shortcomings and <unclear>...</unclear> his own strengths. His speech and theories were clear and far-reaching, and he possessed a keen judgment of human character. Guanzi states: The Way of Heaven is emptiness; the Way of Earth is stillness. Being empty, it does not bend; being still, it does not change. Because it does not change, it is without fault. Therefore, it is said <unclear>...</unclear>. Xunzi says: That which is called a gentleman is one whose speech is loyal and trustworthy, whose heart does not claim virtue for itself, and who embodies benevolence and righteousness with a countenance that is <unclear>...</unclear>. The New Preface <note>Xin Xu, by Liu Xiang</note> records that when the State of Wu entered Ying, Shen Baoxu arrived with the Qin army and greatly defeated the Wu forces. When King Zhao reclaimed his kingdom, he began awarding honors with Baoxu. Baoxu fled to avoid the reward. A gentleman said: Shen’s journey to Qin was loyal; his seven days and nights of continuous crying were profound; his refusal of the reward was <unclear>...</unclear>. The New Treatise <note>Xin Lun</note> says: <unclear>...</unclear> lies in having merit but not being conceited, and in having virtue. Feng Yan, in the Rhapsody on Manifesting My Will, wrote: Leading my wife and children to plow and weed, leaving behind beauty and <unclear>...</unclear>. Furthermore, Mencius states: The Emperor punishes and <unclear>...</unclear>. Also, the Records of the Three Kingdoms, in the Biography of Guanqiu Jian, notes: During the Zhengshi era, because the Goguryeo kingdom repeatedly invaded and rebelled, Jian led the armies to punish them. Gong, the King of Goguryeo, advanced his army to the Feiliu River. A great battle occurred at Liangkou, and Gong was defeated and fled. A high official of Goguryeo named Delai had frequently advised Gong, but Gong did not follow his counsel. Delai sighed and said, \"I will soon see this land overgrown with weeds,\" then he starved himself to death. The whole country considered him virtuous. Jian ordered the armies not to destroy his tomb or <unclear>...</unclear> his trees; when his wife and children were captured, they were all released. The Zhoushu from the Ji Tomb states: Promote harvest and conserve resources, do not exceed the proper measure; do not allow fires to spread, and <unclear>...</unclear> the marshes and forests.\n\n### Four Strikes\nThe Book of Documents says: Do not err in the <unclear>...</unclear>. Five strikes, six strikes, seven strikes, then stop. Align them! Exert yourselves, gentlemen! Zuo Si, in the Rhapsody on the Capital of Wei, wrote: To complete the expedition in accordance with the rules, holding the direct and the indirect to <unclear>...</unclear>. \"Four\" is also written as \"Four-horse chariot.\" The Book of Rites says: Strike together to vibrate it, and <unclear>...</unclear>; display majesty throughout the central kingdoms. The commentary says: \"Four-horse chariot\" should be read as \"Four.\" The sub-commentary says: <unclear>...</unclear> refers to the four strikes and stabs performed during the martial music; in every performance, there are four strikes and stabs, symbolizing King Wu's <unclear>...</unclear> during the conquest of Zhou.\n\n### Five Strikes\nSee above. The Book of Songs, in the section on invading Ruan and marching to Gong, includes a sub-commentary citing the Book of Documents <unclear>...</unclear>.\n\n<summary>This page compiles literary and historical references for specific phrases, focusing on the virtues of humility, the refusal of rewards, and the ritual movements of martial music and military expeditions.</summary>\n<keywords>Gong Sui, Lu Qiong, Guanzi, Xunzi, Shen Baoxu, Guanqiu Jian, Delai, Four Strikes, King Wu of Zhou, martial music</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 46,
+    "page_id": "6a3c64ea39b4508b04e2b22d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64ea39b4508b04e2b1ff/46.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n不潔淨小過也以至尊之身\n丨丨小過非尊者之宜也\n屢罰\n心書數賞者窘\n也丨丨者困也\n顯罰\n劉鰓新論\n明賞有德\n所以勸善人也丨丨\n有過所以禁下姧也\n一罰\n劉鰓新論一賞不可以不\n信也丨丨不可以不明也\n遇罰\n楚辭忠\n何辜以\n丨丨兮亦非\n余之所志也\n深罰\n崔寔政論今既不能純法入世故宜參以霸\n政則宜重賞丨丨以御之明著法術以檢之\n招\n罰\n嵇康攝生論必積善而後福應信著而後祐來猶罪之\n丨丨功之致賞也傅咸荅楊濟書違距上命稽停丨丨\n積罰\n王\n沉\n釋時論人薄位\n尊丨丨難任\n觥罰\n韋應物詩放神遺\n所拘丨丨屢見酬\n惠罰\n韓愈祭竹林神文神\n于丨丨無差施罪瘠\n于尹愈身\n是甘是宜\n逞罰\n李玄成策自道逺聖逝侈及\n嬴劉薦幣興利視金丨丨\n唱罰\n黃滔詩一字連\n鑣巡甲族千般\n丨丨賞\n皇都\n比于罰\n書承汝俾汝惟喜康\n共非汝有咎\n自上罰\n書先后丕降與汝罪疾曰曷\n不暨朕幼孫有比故有爽德",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Improper or unclean; a minor transgression. Regarding the person of the highest honor, <note>the Emperor</note>, committing a minor transgression <note>original: 小過</note> is not appropriate for one of such status.\n\n### Frequent Punishment\nIn the *Book of the Heart* <note>original: 心書</note> it says: One who rewards frequently is in distress; one who gives **frequent punishment** <note>original: 屢罰</note> is in difficulty.\n\n### Manifest Punishment\nIn the *New Treatise* <note>original: 新論</note> by Liu Xie: Clearly rewarding the virtuous is the means to encourage good people. **Manifest punishment** <note>original: 顯罰</note> for those who have transgressed is the means to prohibit villainy among the subordinates.\n\n### Single Punishment\nIn the *New Treatise* by Liu Xie: A single reward cannot be given without being trusted; a **single punishment** <note>original: 一罰</note> cannot be administered without being clear.\n\n### Encountering Punishment\nIn the *Songs of Chu* <note>original: 楚辭</note>, section on Loyalty: What crime have I committed to **encounter punishment** <note>original: 遇罰</note>? This was truly not my intention.\n\n### Severe Punishment\nIn the *Discourse on Government* <note>original: 政論</note> by Cui Shi: Now, since we cannot purely follow the methods of the ancient world, we should incorporate elements of the Hegemon’s rule. We should use heavy rewards and **severe punishment** <note>original: 深罰</note> to govern them, and clearly manifest laws and political arts to examine them.\n\n### Inviting Punishment\nIn the *Treatise on Nourishing Life* <note>original: 攝生論</note> by Xi Kang: One must accumulate goodness before a blessing responds; trust must be established before protection arrives. This is like a crime **inviting punishment** <note>original: 招罰</note> or merit resulting in reward. In Fu Xian’s *Letter in Reply to Yang Ji*: To defy the orders of superiors or cause delays is to **invite punishment**.\n\n### Accumulated Punishment\nIn the *Discourse on Interpreting the Times* <note>original: 釋時論</note> by Wang Chen: If a man’s character is thin but his position is high, his **accumulated punishment** <note>original: 積罰</note> will make the responsibility difficult to bear.\n\n### Drinking-Cup Punishment\nIn a poem by Wei Yingwu: Letting the spirit go and leaving behind what constrains it; the **drinking-cup punishment** <note>original: 觥罰</note> is frequently seen during the exchange of toasts <note>note: a penalty involving drinking wine during a game or banquet</note>.\n\n### Kindness and Punishment\nIn Han Yu’s *Prayer to the Spirits of the Bamboo Grove*: The spirits make no error in their distribution of **kindness and punishment** <note>original: 惠罰</note>. If the punishment for my sins falls upon the body of me, Han Yu, making me thin and ill, I shall find it sweet and appropriate.\n\n### Arbitrary Punishment\nIn the *Policy Documents* by Li Xuancheng: Since the Way is distant and the Sages have passed, extravagance reached the Qin and Liu-Song dynasties. They offered silks to stir up profit, and viewed gold as a means for **arbitrary punishment** <note>original: 逞罰</note>.\n\n### Calling for Punishment\nIn a poem by Huang Tao: With every word, the horses ride together to visit the prominent families; a thousand types of **calling for punishment** <note>original: 唱罰</note> or rewards happen within the Imperial Capital.\n\n### Comparison to Punishment\nIn the *Book of Documents* <note>original: 書經</note>: I have supported you and caused you to be happy and healthy. If you are not respectful, you will have faults which will be **compared to punishment** <note>original: 比于罰</note>.\n\n### Punishment from Above\nIn the *Book of Documents*: The former sovereigns will send down great suffering and illness upon you, saying, \"Why did you not support our young grandson?\" Because you have strayed in virtue, there is **punishment from above** <note>original: 自上罰</note>.\n\n<summary>This page lists various classical Chinese phrases containing the word punishment, categorized by their preceding modifiers. It includes citations from historical texts, political treatises, and poetry to illustrate different contexts of justice, discipline, and social order.</summary>\n<keywords>punishment, justice, legalism, Liu Xie, Cui Shi, Book of Documents, Songs of Chu, classical Chinese law, rewards and punishments</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 66,
+    "page_id": "6a3c64ea39b4508b04e2b241",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64ea39b4508b04e2b1ff/66.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n贝\n口\n店\n今\n<header>卷九十五之四</header>\n去竟不知\n其所之\n蜀卒\n五代史王環傳世宗再征淮使環將水戰卒數千\n自蔡河以入淮環居軍中未嘗有戰功丨丨與環\n俱擒者世宗不\n殺悉以從軍\n積卒\n宋史天文志丨丨十二星在房西南五營軍\n士之象星經前下丨丨星十二在氐東南星\n微小\n吉\n工卒\n宋史食貨志汴船既不至江外江外船不得至京\n師失商販之利而汴船丨丨訖各坐食恒苦不足\n漕卒\n宋史食貨志嘉祐五年論者初欲丨丨得歸息而汴船多傭\n丁夫每船卒不過一二人至冬當留守船實無得歸息者\n廐卒\n宋史食貨志大中祥符五年段惟幾發中牟縣夫二\n百修馬監倉羣收制置使代以丨丨因下詔禁之\n視卒\n隂符經\n孫武曰\n丨丨如愛子可以俱死丨\n丨如嬰兒可與之赴深溪\n人卒\n莊子天地雖大其化均也萬物雖\n多其治一也丨丨雖衆其主君也\n韓愈平淮西碑愬自文城因天大雪疾馳\n夜半到蔡取元濟以獻盡得其屬丨丨\n成卒\n荀子仁人之兵聚\n則丨丨散則成列\n官卒\n韓非子郭偃之始\n治也文公有丨丨\n練卒\n呂氏春秋章子攻荆令人視水可絶\n者有蜀水旁者曰水淺深易知荆人",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>The text is a dictionary or encyclopedia of phrases categorized by the character \"Soldier\" or \"Troops\" (卒) from the Peiwen Yunfu, a major Qing dynasty rime dictionary.</meta>\n\n# Volume 95, Part 4\n\n<margin>Gold</margin>\n<margin>Shell</margin>\n<margin>Mouth</margin>\n<margin>Shop</margin>\n<margin>Present</margin>\n\nDeparted and ultimately no one knew where he had gone.\n\n### Soldiers of Shu\n<note>original: 蜀卒</note>\nHistory of the Five Dynasties, Biography of Wang Huan: When Emperor Shizong <note>Chai Rong, second emperor of the Later Zhou</note> campaigned against the Huai region for the second time, he sent Wang Huan to lead several thousand <term>Soldiers of Shu</term> in naval warfare, entering the Huai River via the Cai River. While Huan was in the army, he never achieved any military merit. The <term>Soldiers of Shu</term> who were captured along with Huan were not killed by Shizong, but were all drafted into his own military service.\n\n### Accumulated Soldiers\n<note>original: 積卒</note>\nHistory of the Song Dynasty, Treatise on Astronomy: The <term>Accumulated Soldiers</term> are twelve stars located southwest of the Fang <note>Room</note> constellation; they represent the imagery of five military camps. The Classic of Stars states: Below the front of the Fang constellation, the twelve stars of the <term>Accumulated Soldiers</term> are located southeast of the Di <note>Root</note> constellation; these stars are faint and small.\n\n### Laboring Soldiers\n<note>original: 工卒</note>\nHistory of the Song Dynasty, Treatise on Food and Money: Since the Bian River boats did not reach the lands beyond the Yangtze, and the boats from beyond the Yangtze could not reach the capital, the profits of merchant trade were lost. When the <term>Laboring Soldiers</term> of the Bian boats finished their work, they each sat and ate their rations, constantly suffering from insufficiency.\n\n### Transport Soldiers\n<note>original: 漕卒</note>\nHistory of the Song Dynasty, Treatise on Food and Money: In the fifth year of the Jiayou era <note>1060 AD</note>, commentators initially wanted the <term>Transport Soldiers</term> to be able to return home to rest. However, many Bian boats hired laborers, and each boat had no more than one or two actual soldiers. When winter came and they had to stay to guard the boats, in reality, none of them were able to return home to rest.\n\n### Stable Soldiers\n<note>original: 廐卒</note>\nHistory of the Song Dynasty, Treatise on Food and Money: In the fifth year of the Dazhong Xiangfu era <note>1012 AD</note>, Duan Weiji dispatched two hundred laborers from Zhongmu County to repair the Imperial Horse Bureau granaries. The Supervisory Commissioner replaced them with <term>Stable Soldiers</term>, whereupon an imperial edict was issued to forbid this practice.\n\n### Regard the Soldiers\n<note>original: 視卒</note>\nThe Classic of the Hidden Accord <note>original: Yin Fu Jing</note>.\nSun Wu <note>Sun Tzu</note> said: If you <term>Regard the Soldiers</term> as your beloved sons, they can die with you. If you <term>Regard the Soldiers</term> as infants, they can go with you into deep valleys.\n\n### Human Soldiers\n<note>original: 人卒</note>\nZhuangzi: Although Heaven and Earth are great, their transformation is uniform. Although the myriad things are numerous, their governance is one. Although <term>Human Soldiers</term> are many, their master is the Ruler.\nHan Yu, Stele on the Pacification of Huaixi: Li Su set out from Wencheng. Taking advantage of a great snowstorm, he galloped swiftly and reached Caizhou at midnight. He captured Wu Yuanji to present him to the Emperor, and seized all his subordinates and <term>Human Soldiers</term>.\n\n### Formed Soldiers\n<note>original: 成卒</note>\nXunzi: When the troops of a benevolent man gather, they act as <term>Formed Soldiers</term>; when they disperse, they form orderly ranks.\n\n### Official Soldiers\n<note>original: 官卒</note>\nHan Fei Zi: When Guo Yan first began to govern, Duke Wen of Jin provided him with <term>Official Soldiers</term>.\n\n### Trained Soldiers\n<note>original: 練卒</note>\nLüshi Chunqiu: When Zhang Zi attacked the State of Jing <note>Chu</note>, he sent men to observe the water to see where it could be crossed. There was a man from Shu by the water who said: The shallow and deep parts of the water are easy to know. The people of Jing...\n\n<summary>This page compiles historical and literary references to various types of soldiers and military labor, including astronomical associations and philosophical maxims on leadership.</summary>\n<keywords>Wang Huan, Five Dynasties, Song Dynasty history, Astronomy, Sun Tzu, Han Yu, military labor, transportation, logistics</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 82,
+    "page_id": "6a3c64ea39b4508b04e2b251",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c64ea39b4508b04e2b1ff/82.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n齋財寶訪道江湖至吳門知周隱堯出世修鍊徑徃洞庭詣之所\n挈金帛——以資香火何諷夢渴賦俄——于浩渺奄涓滴而無\n漬\n枯竭\n南史孫法宗傳法宗父隨孫恩入海澨被害屍骸不收法\n宗乃入海尋求聞世間論是至親以血瀝骨當悉漬浸乃\n操刀沿海見枯皺則刻肉灌血如此十餘年臂脛無完皮血脉\n——終不能逢遂衰絰終身論衡江河之水馳涌滑漏席地長逺無\n——之流\n本源盛矣\n矢竭\n陳書吳明徹傳李陵——不免請降于禁\n水漲猶且生獲按李陵荅蘇武書作矢窮\n勞竭\n北\n史\n隋高祖紀筋力精神一時\n莊子精用而不巳則勞\n——則\n備竭\n唐書張廵傳賊攻城士病不\n能戰巡西向拜曰孤城\n弗能全臣生不報陛\n下死為鬼以癘賊\n國竭\n五代史周臣王朴傳世宗即位朴遷比\n部郎中獻平邊䇿曰攻取之道從易者\n始當今惟吳易圖但以輕兵撓之彼必大發以來應數大發則民\n困而——一不大發則我獲其利彼竭我利則江北諸州乃國家\n之所\n有也\n圍竭\n汲冢周書開望曰土廣無守可襲伐土\n狹無食可\n——二禍之來不稱之災\n遺竭\n汲冢周書\n土多人少",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Pursuing the Way across rivers and lakes with wealth and treasures, he arrived at Wumen <note>modern Suzhou</note>. Knowing that Zhou Yinyao had left the world to practice cultivation, he went directly to Mount Dongting to visit him. He brought gold and silk to fund the incense and candles. He’s dream of thirst was suddenly fulfilled in the vast waters; not even a tiny drop remained <term>unsoaked</term> <gloss>un-absorbed or not moistened</gloss>.\n### Dried Up\nThe History of the Southern Dynasties, Biography of Sun Fazong: Fazong's father followed Sun En into the seaside and was killed, but his remains were not recovered. Fazong went into the sea to search for them. He heard a worldly saying that if one is a close relative, their blood will soak into the bones <note>a traditional belief used to identify kinship</note>. He took a knife and went along the coast; whenever he saw withered bones, he cut his flesh to pour blood upon them. He did this for over ten years until there was no whole skin left on his arms or legs and his blood vessels were <term>completely exhausted</term>. In the end, he could not find the remains and wore mourning clothes for the rest of his life. The Philosophical Disputations <note>Lunheng</note>: The waters of the rivers and streams surge and leak away; flowing across the vast earth, there is no stream that is <term>dried up</term>.\n### Source Abundance\n### Arrows Exhausted\nThe History of the Chen Dynasty, Biography of Wu Mingche: Like Li Ling whose <term>arrows were exhausted</term>, he could not avoid surrendering to Yu Jin. Even though the waters rose, he was captured alive. Note: Li Ling's Letter to Su Wu writes this as \"arrows depleted.\"\n### Labor Exhausted\nHistory of the Northern Dynasties, Annals of Emperor Gaozu of Sui: His physical strength and spirit were <term>temporarily exhausted</term>. Zhuangzi: If the spirit is used without ceasing, it becomes labored; if labored, it is <term>fully exhausted</term>.\nThe History of Tang, Biography of Zhang Xun: When the rebels attacked the city, the soldiers were ill and could not fight. Xun bowed toward the West and said: \"This isolated city cannot be preserved. Your servant cannot repay Your Majesty in life; I shall become a ghost in death to strike the rebels.\"\n### State Exhausted\nHistory of the Five Dynasties, Biographies of Zhou Officials, Wang Pu: When Shizong ascended the throne, Pu was promoted to Bureau Director in the Ministry of Justice and presented a strategy for pacifying the borders. He said: \"The way of conquest begins with what is easy. Currently, only the Wu region is easy to plot against. We should harass them with light troops. They will surely mobilize in great numbers to respond. Repeated mobilizations will distress the people and the <term>state will be exhausted</term>. If they do not mobilize, we gain the advantage. When they are exhausted and we have the advantage, the prefectures north of the Yangtze River will belong to our nation.\"\n### Siege Exhaustion\nThe Lost Book of Zhou, Kaiwang chapter: If the land is broad but undefended, it can be raided. If the land is narrow and lacks food, it will suffer <term>exhaustion under siege</term>. These two calamities are disasters of disproportion.\n### Left Exhausted\nThe Lost Book of Zhou: Much land but few people.\n\n<summary>This page catalogs historical and literary usages of terms related to exhaustion and depletion, specifically regarding physical strength, military resources, and state finances. It includes anecdotes of filial piety and strategic military counsel from the Southern Dynasties through the Five Dynasties period.</summary>\n<keywords>Sun Fazong, blood on bones, Li Ling, Zhang Xun, Wang Pu, military strategy, filial piety, Lost Book of Zhou, linguistics, historical records</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 48,
+  "stratum": "control-live-siku",
+  "book_id": "6a3c6010879008ba7e159fde",
+  "book_url": "https://sourcelibrary.org/book/6a3c6010879008ba7e159fde",
+  "tradition": "control-live-siku",
+  "book": {
+   "id": "6a3c6010879008ba7e159fde",
+   "title": "御定駢字類編·卷五十三: Imperial Parallel Characters (vol 50)",
+   "display_title": "Imperially Commissioned Categorized Collection of Parallel Characters, juan 53 (vol 50)",
+   "author": "吳士玉",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 158,
+   "pages_ocr": 158,
+   "pages_translated": 133,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 158,
+   "distinct_page_numbers": 158,
+   "duplicate_records": 0,
+   "pages_with_ocr": 158,
+   "pages_translated": 133,
+   "with_printed_number": 14,
+   "printed_backsteps": 4,
+   "printed_repeats": 4,
+   "pages_count_field": 158,
+   "pages_translated_field": 133
+  },
+  "run": [
+   48,
+   69,
+   106,
+   150
+  ],
+  "pages": [
+   {
+    "page_number": 48,
+    "page_id": "6a3c6010879008ba7e15a00e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6010879008ba7e159fde/48.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金只口應今言\n<header>卷五十三</header>\n行省於鄂州徙丨丨道宣慰司治潭州天厯二年以潛\n邸所幸改天臨路韓愈送何堅序堅道州人道之守\n陽公賢也道在丨丨為屬州丨丨楊公又賢也堅為民\n堅又賢也丨丨得道為屬道得堅為民堅歸唱其州之\n父老子弟服揚公之令道亦唱其縣與其比州服楊公\n之令李嘉祐送嚴員外詩見江上下元稹送王十\n一南行詩萬里丨丨月三聲山上猿皎然舟行懷閻\n士和詩二月丨丨春草徧橫山渡口花如霰楊維楨\n送費夢臣北上并簡十八丈詩為\n問丨丨名奉使綠衣驄馬正風流\n湖北\n齊書裴皇后傳車駕數幸琅邪城宮人常從早發\n至丨丨埭雞始鳴 宋史食貨志皇祐五年詔曰\n比者丨丨歲儉發常平以濟饑者如聞司農寺復督取\n豈朝廷振恤意哉其悉除之 元史百官志江南諸道\n行御史臺設官品秩同內臺至元十四年始置江南行\n御史臺於揚州尋徙杭州又徙江州二十三年遷於建",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>The text contains excerpts from the Imperial Parallel Characters (Pianzi Leibian), an encyclopedic dictionary of literary phrases. This section focuses on phrases related to geographical locations, specifically involving the character Xiang (referring to the Xiang River region or Hunan) and Hubei.</meta>\n\n# Volume 53\n\n<note>The following entries discuss the administrative history and literary mentions of the Xiang River region.</note>\n\nThe Provincial Government was located in Ezhou but was moved to the **Xiang River** <note>The original text uses a placeholder 丨丨 to represent the headword Xiang-jiang</note> Circuit; the Pacification Commission was governed from Tanzhou. In the second year of the Tianli era <note>1329 CE</note>, because it was the favored residence of the Emperor before his accession, it was renamed Tianlin Circuit. \n\nHan Yu, in his *Preface for the Departure of He Jian*: Jian is a man of Daozhou. The Governor of Dao, Master Yang, is a man of virtue. Daozhou is a subordinate prefecture within the **Xiang River** region. The Governor of the **Xiang River** region, Master Yang <note>referring to Yang Jingshi</note>, is also a man of virtue. Jian is a commoner, and Jian is also a man of virtue. The **Xiang River** region gained Daozhou as its subordinate; Daozhou gained Jian as its citizen. When Jian returns, he will lead the elders and youth of his prefecture to obey Master Yang’s commands; Daozhou will also lead its counties and neighboring prefectures to obey Master Yang’s commands. \n\nLi Jiayou, in his poem *Sending off Administrator Yan*: Seen above and below the **Xiang River**. \n\nYuan Zhen, in his poem *Sending off Wang Eleven on his Journey South*: Ten thousand miles beneath the **Xiang River** moon; three cries of the apes upon the mountains. \n\nJiaoran, in his poem *Thoughts of Yan Shihe while Traveling by Boat*: In the second month, the **Xiang River** spring grass spreads everywhere; at the Hengshan ferry, flowers fall like sleet. \n\nYang Weizhen, in his poem *Sending off Fei Mengchen North and for the Attention of the Eighteenth Gentleman*: I ask you, man of **Xiang River** fame, serving as an envoy; on your green-clothed dapple-gray horse, you truly ride with elegance.\n\n## Hubei\n\n*Book of Qi*, *Biography of Empress Pei*: The imperial carriage frequently visited Langya Castle. The palace attendants always followed, setting out early; by the time they reached the **Hubei** embankment, the roosters would just begin to crow. \n\n*History of Song*, *Treatise on Food and Money*: In the fifth year of the Huangyou era <note>1053 CE</note>, an imperial edict stated: Recently, **Hubei** suffered a year of scarcity, and the Ever-Normal Granaries were opened to relieve the hungry. We have heard that the Court of Agricultural Affairs is again demanding repayment; how can this be the Court's intention for relief? Let these debts be entirely abolished. \n\n*History of Yuan*, *Treatise on Official Posts*: The Branch Censorates for the various circuits of Jiangnan had officials of the same rank as the Palace Censorate. In the fourteenth year of the Zhiyuan era <note>1277 CE</note>, the Jiangnan Branch Censorate was first established in Yangzhou; it was soon moved to Hangzhou, then to Jiangzhou. In the twenty-third year <note>1286 CE</note>, it was moved to Jian <note>Jiankang, modern Nanjing</note>.\n\n<summary>This page records historical administrative changes and poetic references concerning the Xiang River region and Hubei province, citing sources from the Tang, Song, and Yuan dynasties.</summary>\n<keywords>Xiang River, Hubei, Han Yu, administrative history, Yuan Dynasty, Song Dynasty, classical poetry, famine relief</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 69,
+    "page_id": "6a3c6010879008ba7e15a023",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6010879008ba7e159fde/69.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n澤地\n周易卦歌丨丨萃周禮稻人凡稼澤夏以水殄\n草而芟夷之注將以丨丨為稼者必於夏六月之\n時大雨時行以水病絕草之後生者至秋水涸芟之明\n年乃稼澤者反輮疏丨丨多泥柔也元謂反輮為泥之\n黏欲得心\n在外滑\n澤\n火\n周易卦歌\n草\n澤\n野\n周禮澤虞若大田獵則菜\n一\n及獘田植虞旌以屬禽\n澤田\n詩菁菁者莪在彼中阿陸璣疏云莪蒿也生\n丨丨漸洳之處葉似邪蒿而細科生三月中\n澤國\n宋史樂志上游荆楚要丨丨洞庭深自識同文世\n皆迴拱極心 梁肅送崔副使歸洪州幕府序丨\n丨多雨芳華久困 李德裕退身論余前之在鼎司謝\n病辭免尋即逺就丨丨自謂在外而安豈知天高不聞",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Marsh and Land\n<note>the characters Ze Di</note>\n\nThe Song of the Hexagrams in the Book of Changes <note>original: Zhou Yi Gua Ge</note> mentions Lake over Earth, which is the Gathering hexagram <note>original: Cui</note>. In the Rites of Zhou <note>original: Zhou Li</note>, the Officer of Rice says that for all crops in the marshes, one should use water in the summer to destroy the weeds and then mow them down. The commentary states that those who intend to use <term>Ze Di</term> <gloss>marshy land</gloss> for crops must wait until the sixth month of summer when the heavy rains fall. This water is used to sicken and cut off any late-growing weeds. By autumn, the water dries up, and the area is mown. The following year, the land can be farmed. Marshes are prone to turning over and becoming soft. The sub-commentary explains that <term>Ze Di</term> <gloss>marshy land</gloss> has much mud and is soft. Master Yuan says that turning over means the mud is sticky and one desires the center <unclear>to be within while the outside is slick</unclear>.\n\nMarsh and Fire\n<note>the characters Ze Huo</note>\n\nThe Song of the Hexagrams in the Book of Changes <note>refers to the Ge or Revolution hexagram</note>.\n\nMarsh and Field\n<note>the characters Ze Ye</note>\n\nThe Rites of Zhou, under the Officer of Marshes <note>original: Ze Yu</note>, states that during great hunts, the weeds are cleared from the <term>Ze Ye</term> <gloss>marshy fields</gloss>. When the hunting is finished, the Officer of Marshes plants his banners to gather the captured game.\n\nMarsh and Farmland\n<note>the characters Ze Tian</note>\n\nIn the Classic of Poetry <note>original: Shi Jing</note>, the section Luxuriant is the Mugwort <note>original: Jing Jing Zhe E</note> says it grows in the middle of the riverbank. Lu Ji's sub-commentary states that the <term>E</term> <gloss>mugwort</gloss> is a type of wormwood. It grows in <term>Ze Tian</term> <gloss>marshy farmland</gloss> and muddy places. Its leaves resemble slant-wormwood but are finer, and the stalks grow in the third month.\n\nMarshy Country\n<note>the characters Ze Guo</note>\n\nThe History of the Song Dynasty, Treatise on Music <note>original: Song Shi Yue Zhi</note>, says that the upper reaches of the Jing and Chu regions are essential <term>Ze Guo</term> <gloss>marshy country</gloss>, where the Dongting Lake is deep. One recognizes that in this era of unified writing, all hearts turn toward the North Star. Liang Su, in the Preface to Sending Vice-Envoy Cui Back to the Hongzhou Government Office, notes that <term>Ze Guo</term> <gloss>marshy country</gloss> has much rain, and the fragrant flowers are long distressed. Li Deyu, in his Treatise on Retirement <note>original: Tui Shen Lun</note>, writes that when I previously served in the Prime Minister's office and resigned due to illness, I soon sought a distant place in <term>Ze Guo</term> <gloss>marshy country</gloss>. I told myself I would be safe being away from court, not knowing that Heaven is high and does not hear.\n\n<summary>This page catalogs classical literary and ritual references to various terms combining marsh or lake with land, fields, and country. It draws from the Book of Changes, the Rites of Zhou, and Tang dynasty essays to explain agricultural practices and geographical descriptions.</summary>\n<keywords>marshland, agriculture, Book of Changes, Rites of Zhou, mugwort, Song Dynasty, Li Deyu</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 106,
+    "page_id": "6a3c6010879008ba7e15a048",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6010879008ba7e159fde/106.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金反匹人今\n<header>卷五十三</header>\n浦\n迥\n李端詩城閣烟草\n遍\n雪林分\n浦隔錢起送王諫議詩暫以青——還看紫禁同\n何中除夕詩——雁聲落蓬孤燈影寒\n川\n劉長卿赤沙湖詩沙鷗\n川\n曰\n劉\n少\n湖\n詩\n沙\n鷗\n尺\n暉\n川日積暮雪——動寒暉\n川霧\n祖詠田家即事詩餘霽蕩\n新秋仍晝昏\n蕭\n頴士舟中遇陸棣兄西歸數日得廣陵二三子書\n知遲晚次沙墊西\n岸詩見水氣下\n川\n露\n賀知章曉發\n詩見海潮下\n川雲\n杜甫遊修覺寺詩徑石\n相縈帶——自去留",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>This page contains poetic excerpts organized by the phrase \"River Shore\" or \"Riverbank\" (Chuan Pu) and related imagery involving rivers, mists, and clouds.</meta>\n\n<header>Volume Fifty-Three</header>\n\n<term>Chuan Pu</term> <gloss>River Shore</gloss>\n<note>This section catalogs poetic usages of the characters for \"river\" and \"shore\" in various literary contexts.</note>\n\nLi Duan, in a poem: The city towers are covered in mist and grass, spread across the **river shore**.\n\nXue Lin, in a poem: Dividing the **river shore**, distant and separated. \n\nQian Qi, in a poem sent to Imperial Consultant Wang: Temporarily take the blue **river shore** <note>original: qing pu</note> and return to look upon the purple forbidden city together.\n\nHe Zhong, in a poem for New Year's Eve: At the **river shore**, the sound of geese falls; by the lonely lamp, the shadow is cold.\n\n<term>Chuan Ri</term> <gloss>River Sun</gloss>\n\nLiu Changqing, in a poem on Chisha Lake: The sand gulls reflect the **river sun**.\n\nLiu Shaohu, in a poem: The sand gulls reflect the **river sun**. <note>The text repeats a similar line attributed to different poets.</note>\n\nChi Hui, in a poem: The evening snow accumulates on the **river sun**; the cold light moves across the water.\n\n<term>Chuan Wu</term> <gloss>River Mist</gloss>\n\nZu Yong, in a poem on Rural Affairs: The remaining clearing clears the **river mist**; the new autumn is still dark at midday.\n\nXiao Yingshi, in a poem titled \"Encountering Brother Lu Di Returning West While on a Boat, Receiving a Letter from Two or Three Gentlemen of Guangling a Few Days Later, Knowing They Are Delayed, Staying at the West Bank of Shadian\": See the water vapor beneath the **river mist**.\n\n<term>Chuan Lu</term> <gloss>River Dew</gloss>\n\nHe Zhizhang, in the poem \"Setting Out at Dawn\": See under the sea tide. <note>This entry refers the reader to a different section regarding the term \"sea tide\".</note>\n\n<term>Chuan Yun</term> <gloss>River Clouds</gloss>\n\nDu Fu, in the poem \"Visiting Xiu Jue Temple\": The path stones entwine one another; the **river clouds** naturally come and go.\n\n<summary>This page catalogs classical poetic phrases related to river landscapes, specifically focusing on combinations with shore, sun, mist, and clouds. It cites notable Tang Dynasty poets including Du Fu, Qian Qi, and Liu Changqing.</summary>\n<keywords>Chinese poetry, Tang Dynasty, Du Fu, Li Duan, landscape imagery, river bank, river mist, river clouds, literary encyclopedia</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 150,
+    "page_id": "6a3c6010879008ba7e15a074",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6010879008ba7e159fde/150.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金定四庫全書</header>\n金\n渠竇\n唐書五行志上元二年\n秋霖雨連月丨丨生魚\n渠塘\n宋史范仲淹傳每歲預下諸路風吏民言農田利\n害堤堰——州縣選官治之定勸課之法以興農\n利減漕運江南之圩田浙\n西之河塘隳廢者可興矣\n渠堨\n唐書張守珪傳詔以瓜州為都督府即詔守珪為\n都督州地沙塉不可藝常瀦雪水溉田是時\n為虜毀材木無所出守珪密禱於神一昔水暴至大木\n數千章塞流下因取之修復堰防耕者如舊州人神之\n刻石\n紀事\n渠堰\n唐書百官志都水監使者二人掌川澤津梁\n陂池之政\n宋史河渠志兩渠溉田凡四萬四千\n五百頃今所存者不及二皆近代改修\n浸隳舊防\n繇是灌溉之利絕少於古矣\n荀子與時遷徙與世偃",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Imperially Commissioned Complete Library of the Four Treasuries</header>\n\n### Gold <note>The heading indicates the broader category of the entries following</note>\n\n#### Canal Sluices <note>original: 渠竇 qúdòu</note>\nIn the Book of Tang, Records of the Five Elements: In the second year of the Shangyuan era <note>761 CE</note>, there were continuous autumn rains for months. Fish were born within the **canal sluices**.\n\n#### Canal Embankments <note>original: 渠塘 qútáng</note>\nIn the History of Song, Biography of Fan Zhongyan: Every year, orders were sent in advance to the various circuits for officials and citizens to report on the benefits and harms concerning agricultural lands. Regarding the dikes, weirs, **canal embankments**, and ponds, the prefectures and counties selected officials to manage them. Laws for encouraging and supervising labor were established to promote agricultural interests and reduce water transport costs. The polder fields of Jiangnan and the river embankments of western Zhejiang that had fallen into ruin could thus be restored.\n\n#### Canal Weirs <note>original: 渠堨 qúè</note>\nIn the Book of Tang, Biography of Zhang Shougui: An imperial edict designated Gua Prefecture as a Governor-Generalship and appointed Shougui as the Governor-General. The land of the prefecture was sandy and barren, unsuitable for cultivation. They usually stored snow water to irrigate the fields. At that time, the **canal weirs** were destroyed by the barbarians <note>referring to the Khitans or local nomadic forces</note>. There was no timber available to repair them. Shougui prayed secretly to the spirits. One night, the water rose violently, and thousands of large logs blocked the flow and floated down. He took them to repair the weirs and defenses. The farmers returned to their previous work. The people of the prefecture considered it divine and carved an account of the event in stone.\n\n#### Canal Dams <note>original: 渠堰 qúyàn</note>\nIn the Book of Tang, Records of State Offices: The Directorate of Waterways has two Commissioners. They oversee the administration of rivers, marshes, ferries, bridges, embankments, and ponds.\nIn the History of Song, Records of Rivers and Canals: The two **canal dams** once irrigated a total of 4,450,000 <term>qing</term> <gloss>a unit of area equal to 100 mu</gloss> of land. Today, less than two-tenths of that remains. Recent repairs have gradually ruined the old defenses. Consequently, the benefits of irrigation are far fewer than in ancient times.\nXunzi: One shifts with the seasons and reclines <note>or adapts</note> with the world.\n\n<summary>This page catalogs historical references to water management infrastructure such as sluices, embankments, and weirs. It highlights the importance of irrigation maintenance and the administrative roles responsible for hydraulic engineering in the Tang and Song dynasties.</summary>\n<keywords>irrigation, water management, Fan Zhongyan, Zhang Shougui, Tang Dynasty, Song Dynasty, agriculture, hydraulic engineering</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

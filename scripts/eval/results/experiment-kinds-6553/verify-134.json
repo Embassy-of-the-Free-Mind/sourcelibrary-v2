@@ -1,0 +1,1074 @@
+[
+ {
+  "file": "2026-10-27-tibetan-corrector-profiles-diff-qa-6560.md",
+  "kind": "prompt-test",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Header: nothing adopted; lane keeps prompt"
+ },
+ {
+  "file": "2026-10-01-does-a-long-s-prompt-line-fix-early-english-ocr-5488.md",
+  "kind": "prompt-test",
+  "change": "Long-s line on RECITATION retry only; collector folds to s",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5526 merged; scripts/lib/ocr-long-s-retry.mjs on main"
+ },
+ {
+  "file": "2026-09-30-does-a-stop-where-the-page-stops-instruction-cut-5305.md",
+  "kind": "prompt-test",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected; restraint block left out of v16, DECISIONS.md row 2026-09-30"
+ },
+ {
+  "file": "2026-09-26-page-break-fix-scoped-and-in-production-s-block-5103.md",
+  "kind": "prompt-test",
+  "change": "Flip PAGE_BREAK_SCOPED ON with adjacent-page OCR in translate paths",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5170 merged; PAGE_BREAK_SCOPED used in translate-core/cli scripts"
+ },
+ {
+  "file": "2026-09-30-duplicate-run-guard-grounded-in-the-source-the-57-5275.md",
+  "kind": "detector-calibration",
+  "change": "Add sourceRepeatsAcrossBoundary to leaf-drift guard",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5306 merged; function in scripts/lib/block-drift.mjs"
+ },
+ {
+  "file": "2026-10-15-paddle-table-detector-precision-6561.md",
+  "kind": "detector-calibration",
+  "change": "Opt-in ditto term T_V2 in paddleTableRisk; default unchanged",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6747 commit d7cbccab7; paddle-table-detect.mjs on main; not wired by default"
+ },
+ {
+  "file": "2026-10-27-tibetan-duplicate-lines-6740.md",
+  "kind": "detector-calibration",
+  "change": "Detector lands as worklist; no Flash correction written",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/audit/tibetan-duplicate-lines.mjs exists on main"
+ },
+ {
+  "file": "2026-09-30-mineru-on-the-english-reference-pages-peer-engine-tier-5182.md",
+  "kind": "route-choice",
+  "change": "Keep MinerU as refusal fallback only after footnote fix",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5299 merged; ocr-routing-table.json RECITATION ladder lists MinerU"
+ },
+ {
+  "file": "2026-09-12-can-flash-lite-text-only-cleanup-rescue-rejected-internet.md",
+  "kind": "route-choice",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected: not a lane for rejected IA OCR"
+ },
+ {
+  "file": "2026-10-07-chinese-print-against-cbeta-6101.md",
+  "kind": "route-choice",
+  "change": "Chinese print routed to Paddle lane, Flash via agy for refusals",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #7456 and #7466 cite #6101 routing; informational write-up"
+ },
+ {
+  "file": "2026-09-05-how-wrong-is-the-ground-truth-track-b-item-4523.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational reference-quality measurement"
+ },
+ {
+  "file": "2026-10-18-mongol-imu-dataset-gate-5664.md",
+  "kind": "reference-build",
+  "change": "Decide whether to apply to IMU or commission Kanjur line ground truth",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "Header: Derek's call (#5664, #6871 row 6); status undecided"
+ },
+ {
+  "file": "2026-10-07-bl-tibetan-terma-biography-printed-reference-4523.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational reference build"
+ },
+ {
+  "file": "2026-10-06-typed-editions-ground-truth-chinese-pali-5935.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational reference build"
+ },
+ {
+  "file": "2026-10-18-mongol-synth-score-5664.md",
+  "kind": "capability-probe",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected: no second synthetic round"
+ },
+ {
+  "file": "2026-10-16-mongol-kanjur-argon-opus-probe-5664.md",
+  "kind": "capability-probe",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected: no CLI reader for Mongolian pages"
+ },
+ {
+  "file": "2026-10-04-mongol-kanjur-ocr-probe-5664.md",
+  "kind": "capability-probe",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected: no reference commissioned; recogniser is separate decision"
+ },
+ {
+  "file": "2026-10-27-siku-pilot-kanripo-check-7503.md",
+  "kind": "quality-audit",
+  "change": "Strip model-reply sentence from 137 Paddle pages; retranslate 14 English pages",
+  "verdict": "not-happened",
+  "recorded_in": "header-only",
+  "evidence": "Header says none taken, read-only; no repair script or PR found"
+ },
+ {
+  "file": "2026-10-06-eternity-shelf-review.md",
+  "kind": "quality-audit",
+  "change": "Hide 3 books, relabel 4 records, add translationReasoningLeak detector",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "translationReasoningLeak in scripts/lib/page-integrity.mjs; audit script on main"
+ },
+ {
+  "file": "2026-10-28-correction-lane-production-accept-de-fr-7263.md",
+  "kind": "quality-audit",
+  "change": "Add german-lite and french-lite lite>agy-flash-low routes to rules.json",
+  "verdict": "happened",
+  "recorded_in": "rules.json",
+  "evidence": "rules.json german-lite lists lite>agy-flash-low with lane-accept-7263 evidence"
+ },
+ {
+  "file": "2026-10-15-planner-v0-expected-loss-6740.md",
+  "kind": "plan-prereg",
+  "change": "Three draft briefs, not dispatched",
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Plan; briefs left for next session"
+ },
+ {
+  "file": "2026-10-29-rescued-eval-artifacts.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Rescue branches kept unmerged by design"
+ },
+ {
+  "file": "2026-10-19-mongol-real-pilot-prereg-5664.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Superseded prereg"
+ },
+ {
+  "file": "2026-10-18-zh-guarded-paddle-prereg-6871.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Superseded prereg"
+ },
+ {
+  "file": "2026-11-01-router-validated-build-7263.md",
+  "kind": "judge-validity",
+  "change": "Enable pooled prior, judge_validity, max-bonferroni alpha 0.03 in rules.json",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #7888 merged; rules.json pooled in_force, multiplicity max-bonferroni 0.03"
+ },
+ {
+  "file": "2026-10-02-ocr-benchmark-refusals-scored-apart-5581.md",
+  "kind": "judge-validity",
+  "change": "Benchmark scorer and dashboard score refusals apart",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5605 merged"
+ },
+ {
+  "file": "2026-10-22-latin-gpu25-predicts-gpu-ok-5924.md",
+  "kind": "judge-validity",
+  "change": "Decide GPU eligibility from 25 spread pages; no Latin GPU lane",
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Informational guidance; no Latin GPU lane exists, nothing to change"
+ },
+ {
+  "file": "2026-10-07-embedding-models-qwen3-dual.md",
+  "kind": "search-retrieval",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected: no new embedding model; repair rows instead (#6175)"
+ },
+ {
+  "file": "2026-10-17-keyword-known-item-2049.md",
+  "kind": "search-retrieval",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational known-item comparison"
+ },
+ {
+  "file": "2026-10-18-vector-ef-on-reader-queries-6821.md",
+  "kind": "search-retrieval",
+  "change": "Page-vector service runs ef 1024 on l7a",
+  "verdict": "claimed-unverified",
+  "recorded_in": "header-only",
+  "evidence": "Verdict says l7a runs ef 1024 since 2026-10-18; no repo evidence found"
+ },
+ {
+  "file": "2026-09-25-retraction-of-the-arm-label-on-both-4681-seam-4681.md",
+  "kind": "retraction",
+  "change": "Harness imports SEAM_SOURCE_REPAIR and throws when no substitution",
+  "verdict": "claimed-unverified",
+  "recorded_in": "code",
+  "evidence": "SEAM_SOURCE_REPAIR referenced only in write-ups on main; harness not located"
+ },
+ {
+  "file": "2026-09-30-chained-batch-lane-at-scale-154-books-at-once-4681.md",
+  "kind": "cost-throughput",
+  "change": "Shared jobs, one fallback round, auto-enrol in chained cron",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #5375, #5381, #5385, #5391, #5392 all merged"
+ },
+ {
+  "file": "2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md",
+  "kind": "cost-throughput",
+  "change": "Lane runs read-file-7558 prompt; correction lane for German/French",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "hetzner-crontab cli-ocr-lane read-file-7558; rules.json correction routes"
+ },
+ {
+  "file": "2026-09-30-cursive-census-of-pre-1868-japanese-the-router-checked-5100.md",
+  "kind": "census",
+  "change": "Census classifier is NDL koten lane per-book router",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/lib/ndl-koten-lane.mjs exists on main, router described in header"
+ },
+ {
+  "file": "2026-10-30-translation-share-by-language.md",
+  "kind": "census",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "No write; follow-ups listed for #7751"
+ },
+ {
+  "file": "2026-10-28-ft-untranslated-sample-7651.md",
+  "kind": "census",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational sample estimate"
+ },
+ {
+  "file": "2026-10-17-search-probe-2049.md",
+  "kind": "pipeline-diagnosis",
+  "change": "Install synthetic search probe on Hetzner crontab",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "infrastructure/hetzner-crontab line 233 runs scripts/audit/search-probe.mjs"
+ },
+ {
+  "file": "2026-10-17-vector-serve-fault-injection-2049.md",
+  "kind": "pipeline-diagnosis",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational fault-injection result"
+ },
+ {
+  "file": "2026-10-03-folio-positional-parse-5678.md",
+  "kind": "pipeline-diagnosis",
+  "change": "Positional folio parser merged; flag stays off",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5719 merged; DECISIONS.md says flag off"
+ },
+ {
+  "file": "2026-10-29-notes-legacy-syntaxes-5942.md",
+  "kind": "pipeline-diagnosis",
+  "change": "annotation-layer/3 replaces /2; backfill pages brought to /3",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "PARSER_VERSION annotation-layer/3 in scripts/lib/translation-text.mjs"
+ },
+ {
+  "file": "2026-10-27-applied-under-derek-s-23-15z-rule-then-diff.md",
+  "kind": "repair-log",
+  "change": "Write 7,287 Tibetan pages under pass gate; diff-QA",
+  "verdict": "claimed-unverified",
+  "recorded_in": "none",
+  "evidence": "Write-up has no header; pass/diffqa.mjs and runs.json not in repo"
+ },
+ {
+  "file": "2026-10-06-term-definition-cleanup-applied-5901.md",
+  "kind": "repair-log",
+  "change": "Apply d_termdef cleanup with undo rows; reader uses same rule",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "Reader PR #5908 merged; d_termdef in translation-cleanup-a2-5700.mjs"
+ },
+ {
+  "file": "2026-10-06-bacon-reattribution-applied-5950.md",
+  "kind": "repair-log",
+  "change": "Move 340 Bacon mentions; by-eye verdicts outrank tiers",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6024 merged; clear-bare-surname-claims.mjs cites #5950"
+ },
+ {
+  "file": "2026-10-18-librarian-citation-pages-6946.md",
+  "kind": "product-test",
+  "change": "Quote re-pointing ON in groundTurn; router OFF",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "src/lib/embassy/librarian.ts groundTurn; LIBRARIAN_CITATION_ROUTER flag in code"
+ },
+ {
+  "file": "2026-10-06-librarian-grounding-5904.md",
+  "kind": "product-test",
+  "change": "Grounding pass and neighbour pages live in Librarian",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "src/lib/embassy/grounding.ts exists on main"
+ },
+ {
+  "file": "2026-10-24-notes-as-anchored-layer-5942.md",
+  "kind": "prompt-test",
+  "change": "Adopt notes-as-layer prompt on Opus CLI lane once storage exists",
+  "verdict": "pending",
+  "recorded_in": "none",
+  "evidence": "Storage landed (#7652) but no prompt-adoption PR found; default unchanged"
+ },
+ {
+  "file": "2026-10-15-plain-vs-notes-translation-6728.md",
+  "kind": "prompt-test",
+  "change": "Recommend PLAIN translation plus separate notes pass",
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Header says default prompt unchanged; recommendation only (#6759 eval PR)"
+ },
+ {
+  "file": "2026-10-18-librarian-speed-6904.md",
+  "kind": "prompt-test",
+  "change": "Fast tool rounds on by default in librarian.ts",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6909 merged 2026-10-18; LIBRARIAN_FAST_TOOL_ROUNDS in src/lib/embassy/librarian.ts"
+ },
+ {
+  "file": "2026-09-24-can-jev-typesafe-s-typed-decision-model-screen-pages.md",
+  "kind": "detector-calibration",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational screen; no threshold change asked"
+ },
+ {
+  "file": "2026-10-14-paddle-table-gemini-review-gate-6561.md",
+  "kind": "detector-calibration",
+  "change": "Serve nothing; re-gate by-eye check is Derek's call",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "Header rejected; re-gate decision owed to Derek (#6561)"
+ },
+ {
+  "file": "2026-11-03-zh-near-blank-screen-5274.md",
+  "kind": "detector-calibration",
+  "change": "Withhold 518 Opus-confirmed invented pages via withhold-stale-translations.mjs",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "Header: nothing withheld; #8010 only records screen; script exists"
+ },
+ {
+  "file": "2026-10-01-ia-candidate-dates-which-internet-archive-items-are-actually-old-5458.md",
+  "kind": "detector-calibration",
+  "change": "Write classification.date_check on IA candidates via v3 rules",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/lib/ia-date-check.mjs, scripts/maintenance/write-ia-date-check.mjs, PR #5475"
+ },
+ {
+  "file": "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md",
+  "kind": "route-choice",
+  "change": "Keep Lite for Chinese ritual-dance books",
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected switch; no change asked"
+ },
+ {
+  "file": "2026-10-04-reocr-hires-distressed-3186.md",
+  "kind": "route-choice",
+  "change": "No blanket Flash re-OCR of palm-leaf Pali",
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Rejected; nothing written, nothing to verify"
+ },
+ {
+  "file": "2026-09-28-for-which-english-ia-books-may-the-archive-s-5124.md",
+  "kind": "route-choice",
+  "change": "Admit Archive text only for number-free 1880-1930 Latin pages",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/lib/ia-ocr-cohort.mjs, ia-ocr-ingest.mjs; PRs #6666, #7215 (#5186 is issue)"
+ },
+ {
+  "file": "2026-10-06-typed-references-dta-camena-eebo-6012.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Reference build, informational"
+ },
+ {
+  "file": "2026-10-04-human-ceiling-transcription-5762.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational ceiling measurement"
+ },
+ {
+  "file": "2026-10-11-praetorius-syntagma-ref-page-repin.md",
+  "kind": "reference-build",
+  "change": "Re-pin Praetorius reference from page 131 to 130",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6473 merged (#4732); pointers.jsonl lists p120 ref"
+ },
+ {
+  "file": "2026-10-04-coptic-ocr-and-english-vs-scriptorium-5778.md",
+  "kind": "capability-probe",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Capability probe, nothing fed"
+ },
+ {
+  "file": "2026-09-11-music-can-a-vlm-read-shaker-letteral-notation-first.md",
+  "kind": "capability-probe",
+  "change": "Do not use VLMs on score pages",
+  "verdict": "no-change-asked",
+  "recorded_in": "code",
+  "evidence": "music-notation.md rule; rejected probe"
+ },
+ {
+  "file": "2026-10-06-greek-manuscripts-full-kraken-fit-5619.md",
+  "kind": "capability-probe",
+  "change": "Do not write Proclus codices from fitted edition (default)",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "Header: for Derek on #6688; manuscripts routing row not yet routed"
+ },
+ {
+  "file": "2026-10-18-maya-glyph-round2-6903.md",
+  "kind": "capability-probe",
+  "change": "No AI glyph readings on codex pages",
+  "verdict": "no-change-asked",
+  "recorded_in": "header-only",
+  "evidence": "Rejected; nothing to implement"
+ },
+ {
+  "file": "2026-10-04-tengyur-stored-draft-vs-84000-5797.md",
+  "kind": "quality-audit",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational audit"
+ },
+ {
+  "file": "2026-10-07-bl-tibetan-other-stratum-by-eye-4523.md",
+  "kind": "quality-audit",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational audit"
+ },
+ {
+  "file": "2026-10-01-can-the-nyingma-tantra-manuscripts-get-an-accuracy-number-4523.md",
+  "kind": "quality-audit",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational audit"
+ },
+ {
+  "file": "2026-10-18-zh-residue-bakeoff-prereg-6871.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Superseded prereg"
+ },
+ {
+  "file": "2026-10-27-correct-vs-reread-wave1-prereg-7568.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Superseded prereg; results in later write-ups (#7571, #7606)"
+ },
+ {
+  "file": "2026-10-05-decision-cards-audit-5873.md",
+  "kind": "plan-prereg",
+  "change": "Reference top-up and human calibration set proposed",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "2026-10-06-reference-topup-flash-translation-5873.md exists on main"
+ },
+ {
+  "file": "2026-10-12-cer-digits-kept-6203.md",
+  "kind": "judge-validity",
+  "change": "normalizeForScript v4 keeps digits; dashboard failures/median/digits channel",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6632 merged: eval(#6203) CER keeps digits"
+ },
+ {
+  "file": "2026-10-30-defect-rate-router-6740.md",
+  "kind": "judge-validity",
+  "change": "Switch router to defect rule; nothing switched",
+  "verdict": "pending",
+  "recorded_in": "issue",
+  "evidence": "Header: proposal posted on #6740; defect-rates.json shown beside k/n only"
+ },
+ {
+  "file": "2026-10-12-estimator-v1-ordinal-instrument-rounds-6557.md",
+  "kind": "judge-validity",
+  "change": "Use for within-round arm differences, not router",
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Planner readiness note; no change made"
+ },
+ {
+  "file": "2026-10-04-routing-eval-tool-replay-5828.md",
+  "kind": "judge-validity",
+  "change": "margin-v1 default rule file for routing evals; supports Persian override",
+  "verdict": "no-change-asked",
+  "recorded_in": "code",
+  "evidence": "margin-v1 in scripts/eval; header informational"
+ },
+ {
+  "file": "2026-10-18-untranslated-grace-2049.md",
+  "kind": "search-retrieval",
+  "change": "UNTRANSLATED_GRACE_MS=550 from lane start",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "concept-search.ts:76; PR #6975 merged (#2049)"
+ },
+ {
+  "file": "2026-10-13-jev-as-topic-ranker-animism-6652.md",
+  "kind": "search-retrieval",
+  "change": "Use Jev as cheap topic ranker before two-pass judge",
+  "verdict": "claimed-unverified",
+  "recorded_in": "header-only",
+  "evidence": "No code/PR found using Jev ranker; header adopted"
+ },
+ {
+  "file": "2026-10-17-vector-service-filtered-recall-6821.md",
+  "kind": "search-retrieval",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Informational recall measurement"
+ },
+ {
+  "file": "2026-10-07-ai-exposure-run2-6038.md",
+  "kind": "retraction",
+  "change": "Public wording: about half of works, a third of volumes",
+  "verdict": "claimed-unverified",
+  "recorded_in": "code",
+  "evidence": "#6089 retracted 'a third' in eval; blog wording not verified"
+ },
+ {
+  "file": "2026-10-18-within-book-keyword-service-2049.md",
+  "kind": "cost-throughput",
+  "change": "Keyword service for live-book within-book search",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6963 merged (#2049): search_within_book in-process + keyword service"
+ },
+ {
+  "file": "2026-10-18-gex45-capability-card-6871.md",
+  "kind": "cost-throughput",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Prices queue; asks nothing"
+ },
+ {
+  "file": "2026-10-22-harmony-census-7117.md",
+  "kind": "census",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Census only"
+ },
+ {
+  "file": "2026-10-02-corpus-page-profile-5643.md",
+  "kind": "census",
+  "change": "Typeface pass for every book",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "2026-10-02-corpus-typeface-every-book-5643.md, typeface jsonl output on main"
+ },
+ {
+  "file": "2026-11-02-english-translations-ever-estimate.md",
+  "kind": "census",
+  "change": "Publish article how-many-translated-into-english",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #7956 merged 2026-11-03"
+ },
+ {
+  "file": "2026-10-17-finding-the-updated-at-delta-misses-most-new-rows.md",
+  "kind": "pipeline-diagnosis",
+  "change": "Run --reconcile every 2h; drift 4,055 to 0",
+  "verdict": "claimed-unverified",
+  "recorded_in": "none",
+  "evidence": "sync-delta.mjs has reconcile; cron line not in crontab.production"
+ },
+ {
+  "file": "2026-10-07-embedding-vector-truth.md",
+  "kind": "pipeline-diagnosis",
+  "change": "Write-time e5 guard and summary-prefix fix",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #6189 and #6194 merged 2026-10-07"
+ },
+ {
+  "file": "2026-10-01-does-the-yigdzin-leaf-cut-drop-the-lower-leaf-s-first-line-4523.md",
+  "kind": "pipeline-diagnosis",
+  "change": "Overlapping leaf crops not built",
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Rejected; nothing built"
+ },
+ {
+  "file": "2026-10-06-edition-key-role-words-4444.md",
+  "kind": "repair-log",
+  "change": "editionSurname drops role words; edition keys re-stamped",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6069 merged; materialize-edition-keys.ts exists (re-stamp data unverified)"
+ },
+ {
+  "file": "2026-10-27-opus-retranslate-flash-corrected-tibetan-6948.md",
+  "kind": "repair-log",
+  "change": "738 pages written via cli-translate; leaf 128 contained",
+  "verdict": "claimed-unverified",
+  "recorded_in": "header-only",
+  "evidence": "Data write not repo-visible; #7572 later says gate failed, nothing written"
+ },
+ {
+  "file": "2026-10-04-relabel-4884.md",
+  "kind": "repair-log",
+  "change": "683 books relabelled via sweep relabel-4884",
+  "verdict": "claimed-unverified",
+  "recorded_in": "code",
+  "evidence": "scripts/maintenance/relabel-language-4884.mjs exists; production write unverifiable"
+ },
+ {
+  "file": "2026-10-28-notes-layer-storage-pilot-5942.md",
+  "kind": "repair-log",
+  "change": "Full backfill awaiting Derek go; strip text from reader payload",
+  "verdict": "pending",
+  "recorded_in": "pr",
+  "evidence": "Storage PR #7652 and payload strip #7665 merged; backfill go owed (#7985 script)"
+ },
+ {
+  "file": "2026-11-03-reader-on-notes-layer-7965.md",
+  "kind": "product-test",
+  "change": "Reader reads notes layer where page has one",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #7995 merged: reader(#7965) renders notes layer, fallback"
+ },
+ {
+  "file": "2026-10-27-librarian-fixer-week-review-6946.md",
+  "kind": "product-test",
+  "change": "Do not apply citation fixes; fix three failure shapes",
+  "verdict": "no-change-asked",
+  "recorded_in": "code",
+  "evidence": "Rejected; dry-run worker only writes librarian_citation_fixes"
+ },
+ {
+  "file": "2026-10-03-translation-seam-confirm-5305.md",
+  "kind": "prompt-test",
+  "change": "none",
+  "verdict": "no-change-asked",
+  "recorded_in": "pr",
+  "evidence": "PR #5675 merged; FAIL, seam lines not flipped"
+ },
+ {
+  "file": "2026-10-06-notes-layer-phase1-2-5942.md",
+  "kind": "prompt-test",
+  "change": "switch Lite to notes layer after #5942 phase 5",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "#5942 open; phase-3 data model awaits Derek"
+ },
+ {
+  "file": "2026-10-22-can-a-prompt-make-flash-lite-read-long-s-on-latin-5924.md",
+  "kind": "prompt-test",
+  "change": "run CPU long-s pass first; keep default prompt",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/maintenance/longs-pass-5924.mjs exists; default prompt unchanged"
+ },
+ {
+  "file": "2026-10-16-ocr-leaf-screen-before-opus-writes-6694.md",
+  "kind": "detector-calibration",
+  "change": "apply Opus leaf screen and q300 audit rule on writes",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6827 (#6694) screen Opus correct-in-place reads before writing"
+ },
+ {
+  "file": "2026-10-26-planetary-hours-order-detector-7274.md",
+  "kind": "detector-calibration",
+  "change": "use 71 as by-eye list; artifact fixes in detector",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/lib/table-sequence-check.mjs on main"
+ },
+ {
+  "file": "2026-10-04-clef-vs-jev-instruction-page-screen.md",
+  "kind": "detector-calibration",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "Jev stays default; rejected Clef, no change"
+ },
+ {
+  "file": "2026-09-30-which-engine-reads-printed-numbers-correctly-engine-disagreements-adjudicated-5224.md",
+  "kind": "route-choice",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "issue",
+  "evidence": "rejected; closed in #6688 (open tracker issue)"
+ },
+ {
+  "file": "2026-10-16-seam-repair-lean-6742.md",
+  "kind": "route-choice",
+  "change": "seam repair lean option",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "No decision in header; #6742 closed, local screener not adopted PR #6886"
+ },
+ {
+  "file": "2026-10-07-clef-jev-token-readers-6184.md",
+  "kind": "route-choice",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "issue",
+  "evidence": "rejected; #6203 tie-break stays person/transcribing reader"
+ },
+ {
+  "file": "2026-10-01-chinese-skqs-followup-5568.md",
+  "kind": "route-choice",
+  "change": "route Chinese Siku cohort to PaddleOCR-VL",
+  "verdict": "claimed-unverified",
+  "recorded_in": "issue",
+  "evidence": "planner results show paddle; rules.json lacks chinese-siku row; #5600 open"
+ },
+ {
+  "file": "2026-09-26-by-eye-reference-for-the-free-ia-text-lane.md",
+  "kind": "reference-build",
+  "change": "ia-ocr-ingest --by-eye fills held books",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #5190 and #5197 merged"
+ },
+ {
+  "file": "2026-10-17-zh-residue-reference-set-6871.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational reference set"
+ },
+ {
+  "file": "2026-10-04-human-ceiling-translation-5762.md",
+  "kind": "reference-build",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational"
+ },
+ {
+  "file": "2026-10-21-whish147-malayalam-palm-leaf-opus.md",
+  "kind": "capability-probe",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational probe"
+ },
+ {
+  "file": "2026-10-19-mongol-real-pilot-score-5664.md",
+  "kind": "capability-probe",
+  "change": "score Mongol pilot; decision owed",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "header undecided; no landed change found"
+ },
+ {
+  "file": "2026-10-22-whish147-best-attempt-locate-collate.md",
+  "kind": "capability-probe",
+  "change": "159 pages written with per-page warnings",
+  "verdict": "claimed-unverified",
+  "recorded_in": "issue",
+  "evidence": "#7119 open; best-of-N judge PR #7227 only related"
+ },
+ {
+  "file": "2026-10-01-hidden-meta-full-mirror-repair-plan-5376.md",
+  "kind": "quality-audit",
+  "change": "write guard, v16 marker, tier A-F repair",
+  "verdict": "claimed-unverified",
+  "recorded_in": "pr",
+  "evidence": "PRs #5432, #5433 merged; repair plan not run"
+ },
+ {
+  "file": "2026-10-06-untagged-additions-5982.md",
+  "kind": "quality-audit",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational"
+ },
+ {
+  "file": "2026-10-02-quality-by-date-chars-resolution-5615.md",
+  "kind": "quality-audit",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational"
+ },
+ {
+  "file": "2026-10-06-random-book-spot-check-canon-shelves-5914.md",
+  "kind": "quality-audit",
+  "change": "hide 55 books; add monthly audit arm; file issues",
+  "verdict": "claimed-unverified",
+  "recorded_in": "issue",
+  "evidence": "#5914 open; PR #6637 touches draw; hide not confirmed"
+ },
+ {
+  "file": "2026-10-22-greek-ms-lora-prereg-5730.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "superseded plan"
+ },
+ {
+  "file": "2026-10-17-local-seam-screener-prereg-6742.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "superseded plan"
+ },
+ {
+  "file": "2026-10-18-mongol-synth-prereg-5664.md",
+  "kind": "plan-prereg",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "superseded plan"
+ },
+ {
+  "file": "2026-10-12-cross-family-review-reliability-6203.md",
+  "kind": "judge-validity",
+  "change": "finish gemini run, read kappa, then set judge rule",
+  "verdict": "pending",
+  "recorded_in": "header-only",
+  "evidence": "header says none yet; #6203 open"
+ },
+ {
+  "file": "2026-10-30-agreement-vs-reference-error-4916.md",
+  "kind": "judge-validity",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "paper results section; no lane changed"
+ },
+ {
+  "file": "2026-10-27-tibetan-severity-recheck-6560.md",
+  "kind": "judge-validity",
+  "change": "pause Tibetan volumes; remove confirmed severe spans",
+  "verdict": "pending",
+  "recorded_in": "issue",
+  "evidence": "#6560 open; decision owed to Derek"
+ },
+ {
+  "file": "2026-10-06-site-nav-search-5945.md",
+  "kind": "search-retrieval",
+  "change": "site index and name match in unified search",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #5959, #5974; src/lib/search/site-nav.ts on main"
+ },
+ {
+  "file": "2026-10-17-vector-service-text-latency-6843.md",
+  "kind": "search-retrieval",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational"
+ },
+ {
+  "file": "2026-09-24-what-is-the-efficient-pattern-for-finding-body-instruction.md",
+  "kind": "search-retrieval",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "informational"
+ },
+ {
+  "file": "2026-10-18-within-book-vector-books-2049.md",
+  "kind": "search-retrieval",
+  "change": "vector service scoped search for within-book",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "semanticPageSearchScoped in src/lib/semantic-search; PR #6963"
+ },
+ {
+  "file": "2026-10-27-agy-quota-pool-6740.md",
+  "kind": "cost-throughput",
+  "change": "agy_share_per_call 4.3632e-6 to 2.25e-6",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "route-costs.json agy_share_per_call 2.25e-06 on main"
+ },
+ {
+  "file": "2026-09-29-chained-batch-api-translation-lane-pilot-on-5-stalled-4681.md",
+  "kind": "cost-throughput",
+  "change": "chained Batch API translation lane",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #5267 merged"
+ },
+ {
+  "file": "2026-10-06-dedupe-review-6019.md",
+  "kind": "census",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "census"
+ },
+ {
+  "file": "2026-10-04-langid-no-language-books-5777.md",
+  "kind": "census",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "census"
+ },
+ {
+  "file": "2026-10-03-quality-census-backfill-sizes-5700.md",
+  "kind": "census",
+  "change": "A2 cleanup applied",
+  "verdict": "happened",
+  "recorded_in": "header-only",
+  "evidence": "follow-up write-up a2-cleanup-applied-5700.md exists on main"
+ },
+ {
+  "file": "2026-11-03-german-translation-share-n1000.md",
+  "kind": "census",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "published figure; no write"
+ },
+ {
+  "file": "2026-10-18-search-book-lane-speed-2049.md",
+  "kind": "pipeline-diagnosis",
+  "change": "in-memory fallback for search; GIN indexes proposed",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #6963, #6974 (#2049) merged; indexes not applied"
+ },
+ {
+  "file": "2026-10-17-search-services-burst-isolation-2049.md",
+  "kind": "pipeline-diagnosis",
+  "change": null,
+  "verdict": "no-change-asked",
+  "recorded_in": "none",
+  "evidence": "diagnosis only"
+ },
+ {
+  "file": "2026-11-03-wrong-leaf-cause-and-find-5021.md",
+  "kind": "pipeline-diagnosis",
+  "change": "contain/re-translate wrong-leaf pages; Sonnet screen",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PRs #8019, #8020, #8012; wrong-leaf-fix-5021.mjs"
+ },
+ {
+  "file": "2026-10-03-hidden-meta-move-pilot-5376.md",
+  "kind": "repair-log",
+  "change": "full apply of 9,582 pages awaits decision",
+  "verdict": "pending",
+  "recorded_in": "issue",
+  "evidence": "#5376 open; pilot PR #5763, full apply held"
+ },
+ {
+  "file": "2026-10-23-longs-apply-gate-5924.md",
+  "kind": "repair-log",
+  "change": "restore long s in stored Latin OCR",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "scripts/maintenance/longs-pass-5924.mjs on main; apply not checked"
+ },
+ {
+  "file": "2026-10-14-yigdzin-hidden-tibetan-books-4523.md",
+  "kind": "repair-log",
+  "change": "Yigdzin read hidden Tibetan books, 5,145 pages",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #6734 merged"
+ },
+ {
+  "file": "2026-10-19-librarian-cite-ids-6946.md",
+  "kind": "product-test",
+  "change": "flags off; default Librarian unchanged",
+  "verdict": "happened",
+  "recorded_in": "code",
+  "evidence": "librarian.ts env flags default off (LIBRARIAN_CITE_IDS, LIBRARIAN_MODEL)"
+ },
+ {
+  "file": "2026-10-20-librarian-citation-fixer-6946.md",
+  "kind": "product-test",
+  "change": "dry-run citation fixer worker",
+  "verdict": "happened",
+  "recorded_in": "pr",
+  "evidence": "PR #7024 merged; stage 2 no-go PR #7501"
+ }
+]

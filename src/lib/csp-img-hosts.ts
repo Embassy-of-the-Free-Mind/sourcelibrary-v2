@@ -44,6 +44,7 @@ export const CSP_IMG_HOSTS = [
   'https://bl.digirati.io',
   'https://images.lib.cam.ac.uk',
   'https://www.e-codices.unifr.ch',
+  'https://image.library.jhu.edu',     // JHU Christine de Pizan Digital Scriptorium (BnF MSS, #7908)
   'https://stacks.stanford.edu',       // Parker Library (Corpus Christi College, Cambridge)
   'https://cdm21059.contentdm.oclc.org',
   'https://iiif.universiteitleiden.nl',

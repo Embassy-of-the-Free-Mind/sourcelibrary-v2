@@ -1,0 +1,89 @@
+{
+ "note": "exploratory (#7818 H4); the router tests drew from all Flash-Lite pages of visible idle books, the lane from the same frame (cli-ocr-lane.mjs correctablePages); the test pages were drawn for the test, the lane pages are what it served.",
+ "de-lite": {
+  "router_test": {
+   "pages": 30,
+   "draft_accept": "21/30",
+   "corrected_accept": "28/30",
+   "centuries": {
+    "17th": 7,
+    "18th": 17,
+    "16th": 2,
+    "15th": 1,
+    "19th": 3
+   }
+  },
+  "lane": {
+   "pages": 60,
+   "draft_accept": "37/60",
+   "centuries": {
+    "19th": 5,
+    "17th": 24,
+    "18th": 24,
+    "16th": 6,
+    "20th": 1
+   },
+   "draft_chars_median": 1796,
+   "outcomes": {
+    "written": 47,
+    "other": 12,
+    "contain": 1
+   }
+  },
+  "typeface_field": "not recorded on books (Fraktur / Antiqua not measured)"
+ },
+ "fr-lite": {
+  "router_test": {
+   "pages": 30,
+   "draft_accept": "22/30",
+   "corrected_accept": "27/29",
+   "centuries": {
+    "20th": 3,
+    "17th": 2,
+    "19th": 9,
+    "18th": 11,
+    "16th": 3,
+    "unknown": 2
+   }
+  },
+  "lane": {
+   "pages": 43,
+   "draft_accept": "27/43",
+   "centuries": {
+    "19th": 14,
+    "17th": 8,
+    "18th": 15,
+    "20th": 2,
+    "unknown": 1,
+    "16th": 3
+   },
+   "draft_chars_median": 1873,
+   "outcomes": {
+    "written": 28,
+    "other": 10,
+    "unchanged": 5
+   }
+  },
+  "typeface_field": "not recorded on books (Fraktur / Antiqua not measured)"
+ },
+ "lane_reads": {
+  "n": 399,
+  "models": {
+   "gemini-3.8-flash-low": 399
+  },
+  "cli_versions": {
+   "1.4.9": 147,
+   "1.4.10": 252
+  },
+  "modes": {
+   "correct": 399
+  },
+  "lanes": {
+   "agy-correct-lite-7558": 399
+  },
+  "per_call": {
+   "1": 399
+  },
+  "template_sha_by_prompt": "see results/h4-templates.json (stage reads)"
+ }
+}
