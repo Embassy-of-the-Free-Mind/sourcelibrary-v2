@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { useDebouncedCallback } from 'use-debounce';
 import { bphSeeAlsoQueries } from '@/lib/bph-catalog-see-also';
+import { authorSearchTerms } from '@/lib/bph-catalog-author-headings';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked, SlidersHorizontal, Download } from 'lucide-react';
 import { useEmbed } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
@@ -355,6 +356,7 @@ export default function BphCatalogBrowser({
   const [loading, setLoading] = useState(true);
   const [didYouMean, setDidYouMean] = useState<string | null>(null);
   const [seeAlso, setSeeAlso] = useState<Array<{ query: string; total: number }>>([]);
+  const [authorHeadings, setAuthorHeadings] = useState<Array<{ author: string; total: number }>>([]);
   const [searchQuery, setSearchQuery] = useState(initialQ);
   const [sort, setSort] = useState(initialSort);
   const [keyword, setKeyword] = useState(initialKeyword);
@@ -447,7 +449,10 @@ export default function BphCatalogBrowser({
     setLoading(true);
     setDidYouMean(null);
     // Paging through one search keeps its see-also line.
-    if (off === 0) setSeeAlso([]);
+    if (off === 0) {
+      setSeeAlso([]);
+      setAuthorHeadings([]);
+    }
     try {
       const params = buildParams(q, s, kw, off, a);
       const res = await fetch(`/api/catalog/bph?${params}`, { signal: controller.signal });
@@ -479,6 +484,14 @@ export default function BphCatalogBrowser({
           .then((r) => r.json())
           .then((s: { seeAlso?: Array<{ query: string; total: number }> }) => {
             if (abortRef.current === controller) setSeeAlso(s.seeAlso ?? []);
+          })
+          .catch(() => {});
+      }
+      if (off === 0 && !a.author && authorSearchTerms(q).length > 0) {
+        fetch(`/api/catalog/bph/author-headings?${params}`, { signal: controller.signal })
+          .then((r) => r.json())
+          .then((s: { headings?: Array<{ author: string; total: number }> }) => {
+            if (abortRef.current === controller) setAuthorHeadings(s.headings ?? []);
           })
           .catch(() => {});
       }
@@ -550,6 +563,19 @@ export default function BphCatalogBrowser({
     setOffset(0);
     fetchWorks(value, sort, keyword, 0, adv);
     updateUrl(value, sort, keyword, 0, adv);
+  };
+
+  // The search becomes the author filter, and the panel opens so the reader can
+  // see what is now applied and take it off.
+  const showAuthor = (author: string) => {
+    debouncedSearch.cancel();
+    const next = { ...adv, author };
+    setAdv(next);
+    setShowAdvanced(true);
+    setSearchQuery('');
+    setOffset(0);
+    fetchWorks('', sort, keyword, 0, next);
+    updateUrl('', sort, keyword, 0, next);
   };
 
   const noWorksFound = (
@@ -803,6 +829,25 @@ export default function BphCatalogBrowser({
             {resultsHeaderSlot}
           </div>
         </div>
+      )}
+
+      {authorHeadings.length > 0 && (
+        <p className="mb-2 text-sm text-muted">
+          Author:{' '}
+          {authorHeadings.map((item, i) => (
+            <span key={item.author}>
+              {i > 0 && ' · '}
+              <button
+                type="button"
+                onClick={() => showAuthor(item.author)}
+                className="text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
+              >
+                {item.author}
+              </button>{' '}
+              ({item.total.toLocaleString('en-US')})
+            </span>
+          ))}
+        </p>
       )}
 
       {seeAlso.length > 0 && (
