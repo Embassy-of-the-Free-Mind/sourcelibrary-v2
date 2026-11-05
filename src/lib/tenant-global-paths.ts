@@ -126,6 +126,11 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // assistant over its own shelf needs a different feature, not this one on
   // its domain. The header and footer filter on this list, so the link goes too.
   '/librarian',
+  // The whole catalogue with search and Ask the librarian (moved from
+  // /catalog, 2026-10-18). On a partner host /catalog is rewritten to that
+  // partner's own catalogue; /library is the global one and must not answer
+  // there. The nav keeps linking /catalog, which is right on both hosts.
+  '/library',
   // The hidden-mark decoder (#8150). It names the book a mark belongs to, from
   // the whole library, and the riddles built on it lead into other books. A
   // Source Library feature, not a partner's.
@@ -180,6 +185,9 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // Blocking only the page would leave the whole-library agent callable from
   // the partner host.
   '/api/embassy',
+  // The /library page's list and counts: whole-catalogue queries.
+  '/api/catalog/results',
+  '/api/catalog/stats',
   '/api/decode',
   '/api/hunt',
   // Not under /api, but a route handler with no page, like its twin /api/search.

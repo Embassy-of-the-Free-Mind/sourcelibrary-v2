@@ -34,14 +34,14 @@ export default function CatalogPagination({
   }
 
   return (
-    <nav className="flex items-center justify-center gap-1 mt-10" aria-label="Pagination">
+    <nav className="flex flex-wrap items-center justify-center gap-1 mt-10" aria-label="Pagination">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
-        className="px-3 py-1.5 text-sm rounded-lg border border-border-light hover:bg-warm transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+        className="px-2.5 sm:px-3 py-1.5 text-sm rounded-lg border border-border-light hover:bg-warm transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
         aria-label="Previous page"
       >
-        Prev
+        <span className="sm:hidden" aria-hidden>‹</span><span className="hidden sm:inline">Prev</span>
       </button>
 
       {pages.map((page, i) =>
@@ -53,7 +53,7 @@ export default function CatalogPagination({
           <button
             key={page}
             onClick={() => onPageChange(page)}
-            className={`min-w-[36px] px-2 py-1.5 text-sm rounded-lg border transition-colors cursor-pointer ${
+            className={`min-w-[32px] sm:min-w-[36px] px-1.5 sm:px-2 py-1.5 text-sm rounded-lg border transition-colors cursor-pointer ${
               page === currentPage
                 ? 'border-accent-rust bg-accent-rust/8 text-accent-rust font-medium'
                 : 'border-border-light hover:bg-warm text-secondary'
@@ -68,10 +68,10 @@ export default function CatalogPagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
-        className="px-3 py-1.5 text-sm rounded-lg border border-border-light hover:bg-warm transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+        className="px-2.5 sm:px-3 py-1.5 text-sm rounded-lg border border-border-light hover:bg-warm transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
         aria-label="Next page"
       >
-        Next
+        <span className="sm:hidden" aria-hidden>›</span><span className="hidden sm:inline">Next</span>
       </button>
     </nav>
   );
