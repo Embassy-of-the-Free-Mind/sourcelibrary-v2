@@ -33,6 +33,7 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id>            # dry run
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id> --apply
+ *   … --book <id> --text-matches-source-by-eye S1,S2   finish a half-done text repair (#8266)
  */
 
 import { MongoClient } from 'mongodb';
@@ -42,7 +43,7 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { uploadPageVariants } from '../workers/lib/display-image.mjs';
 import { preserveObjectVersion } from '../lib/r2-version.mjs';
-import { checkAlignment, hashBuffer, readerVisibleShift } from '../lib/page-alignment.mjs';
+import { checkAlignment, halfRepairWitness, hashBuffer, readerVisibleShift } from '../lib/page-alignment.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../..');
@@ -55,6 +56,9 @@ const VERIFY_ONLY = args.includes('--verify-only');
 const FROM_AUDIT = flag('from-audit');       // JSONL from scripts/audit/bulk-archive-alignment.mjs
 const REOCR_ISSUE = flag('reocr-issue');    // issue that owns re-OCR of pages this repair strands (#5309)
 const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a), []);
+// Finish a book repair-bulkjp2-text-shift.mjs left half done (#8266): the slots whose source leaf
+// was opened and showed the stored text. See halfRepairWitness() in page-alignment.mjs.
+const BY_EYE = flag('text-matches-source-by-eye')?.split(',').map(Number) ?? null;
 // Page fetches per book, against archive.org. Kept modest deliberately: this
 // sweep pulls a quarter-million full-res images and a 429 storm helps nobody.
 const CONCURRENCY = Math.max(1, parseInt(flag('concurrency', '6'), 10));
@@ -158,7 +162,7 @@ async function repairBook(db, bookId) {
   const book = await db.collection('books').findOne(
     // id OR _id: books with a re-minted _id are invisible to an _id-only lookup (book-deletion-and-identity.md)
     { $or: [{ id: bookId }, { $expr: { $eq: [{ $toString: '$_id' }, bookId] } }] },
-    { projection: { title: 1, id: 1, visible: 1 } },
+    { projection: { title: 1, id: 1, visible: 1, archive_metadata: 1 } },
   );
   if (!book) return console.log(`[SKIP] ${bookId}: book not found`);
 
@@ -194,10 +198,19 @@ async function repairBook(db, bookId) {
   }
 
   // Gate 2 — the independent witness must exist (see header).
-  const split = readerVisibleShift(bulk);
-  console.log(`  pages: ${split.visible} pre-archival (text agrees with IIIF), ${split.consistent} post-archival (text agrees with the shifted image)`);
-  if (split.visible === 0) {
-    return console.log('  [REFUSE] no pre-archival pages — cannot establish which side is correct; repairing would CREATE a misalignment');
+  let split = readerVisibleShift(bulk);
+  const awaitingImages = book.archive_metadata?.jp2_text_shift_awaiting_image_rearchive === true;
+  if (awaitingImages || BY_EYE) {
+    // The text was moved after OCR, so OCR timing says nothing about this book (#8266).
+    const witness = halfRepairWitness(book, BY_EYE, bulk.map(p => p.page_number));
+    if (!witness.ok) return console.log(`  [REFUSE] half-done text repair: ${witness.reason} (--text-matches-source-by-eye S1,S2)`);
+    console.log(`  half-done text repair; text checked against the source leaf by eye at ${BY_EYE.join(',')}`);
+    split = { ...split, visible: bulk.length, consistent: 0 };
+  } else {
+    console.log(`  pages: ${split.visible} pre-archival (text agrees with IIIF), ${split.consistent} post-archival (text agrees with the shifted image)`);
+    if (split.visible === 0) {
+      return console.log('  [REFUSE] no pre-archival pages — cannot establish which side is correct; repairing would CREATE a misalignment');
+    }
   }
 
   const targets = bulk.filter(p => IA_LEAF_RE.test(String(p.photo_original || p.photo)));
@@ -261,8 +274,11 @@ async function recordOutcome(db, book, bulk, after, split, failed) {
       'archive_metadata.jp2_offset_post_verdict': after.verdict,
       'archive_metadata.jp2_offset_needs_reocr': split.consistent,
       ...(REOCR_ISSUE ? { 'archive_metadata.jp2_offset_reocr_issue': Number(REOCR_ISSUE) } : {}),
+      ...(BY_EYE ? { 'archive_metadata.jp2_offset_text_by_eye_slots': BY_EYE } : {}),
       updated_at: new Date(),
     },
+    // Only a verified repair ends the half-done state; the integrity watch reports it until then.
+    ...(ok && BY_EYE ? { $unset: { 'archive_metadata.jp2_text_shift_awaiting_image_rearchive': '' } } : {}),
   });
   // Flag the pages whose text now disagrees with the corrected image. These are
   // the pages that looked fine BEFORE the repair — their OCR was transcribed
