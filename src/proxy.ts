@@ -1025,17 +1025,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // The same for one book: /book/<slug>/search is a client page too, and the
-  // assistant gets that book's passages as HTML instead (#8161).
-  const bookSearch = !tenant && request.nextUrl.searchParams.get('q')
-    ? pathname.match(/^\/book\/([^/]+)\/search\/?$/)
-    : null;
-  if (bookSearch && namesUserFetchAgent(request.headers.get('user-agent'))) {
-    const url = request.nextUrl.clone();
-    url.pathname = `/book/${bookSearch[1]}/search/text`;
-    return NextResponse.rewrite(url);
-  }
-
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
   // Checked before the rewrite block, which skips /api/* — the listed API twins
   // are the unscoped data sources behind these pages and must be refused too.

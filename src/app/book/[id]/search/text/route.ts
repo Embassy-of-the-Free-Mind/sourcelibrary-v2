@@ -12,7 +12,8 @@
  * this copies it: an in-process call to the API handler, so the API's own checks (a
  * hidden book is a 404) and search log apply, through the gate /api/search uses.
  * /book/<slug>/search is the person's version, a client page that is empty without
- * JavaScript; the proxy sends named assistant fetchers from it to here.
+ * JavaScript. Unlike /search, the proxy does not send fetchers from it to here yet:
+ * that is a src/proxy.ts change, which waits for a human merge, so it is its own PR.
  *
  * A discovery surface, not a reading one: the top passages /api/books/<id>/search
  * already returns, with no paging, short snippets, never the book's text (that is

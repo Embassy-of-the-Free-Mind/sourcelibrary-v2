@@ -53,7 +53,6 @@ import { proxy } from '@/proxy';
 import { isGlobalOnlyTenantPath } from '@/lib/tenant-global-paths';
 
 const CLAUDE = 'Mozilla/5.0 (compatible; Claude-User/1.0; +Claude-User@anthropic.com)';
-const CHROME = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 
 const call = (q: string | null, { ua = CLAUDE, book = 'de-secretis', headers = {} as Record<string, string>, extra = '' } = {}) => GET(
   new NextRequest(
@@ -79,27 +78,10 @@ describe('who reaches it', () => {
   const req = (url: string, ua: string) => new NextRequest(url, {
     headers: { host: new URL(url).host, 'user-agent': ua, 'accept-language': 'en', 'sec-fetch-mode': 'navigate' },
   });
-  const rewrite = (res: Response | undefined) => res?.headers.get('x-middleware-rewrite') ?? '';
 
-  it('sends a named assistant fetcher from the book search page to the readable passages', async () => {
-    const res = await proxy(req('https://sourcelibrary.org/book/de-secretis/search?q=archeus', CLAUDE));
-    expect(rewrite(res)).toContain('/book/de-secretis/search/text?q=archeus');
-  });
-
-  it('leaves a person on the book search page', async () => {
-    const res = await proxy(req('https://sourcelibrary.org/book/de-secretis/search?q=archeus', CHROME));
-    expect(rewrite(res)).not.toContain('/search/text');
-  });
-
-  it('leaves an empty book search alone', async () => {
-    expect(rewrite(await proxy(req('https://sourcelibrary.org/book/de-secretis/search', CLAUDE)))).not.toContain('/search/text');
-  });
-
-  it('is refused on a partner subdomain, and the book search there is not rewritten', async () => {
+  it('is refused on a partner subdomain', async () => {
     const res = await proxy(req('https://bph.sourcelibrary.org/book/de-secretis/search/text?q=archeus', CLAUDE));
     expect(res?.status).toBe(404);
-    const scoped = await proxy(req('https://bph.sourcelibrary.org/book/de-secretis/search?q=archeus', CLAUDE));
-    expect(rewrite(scoped)).not.toContain('/search/text');
   });
 
   it('is a global-only path, and only that exact shape', () => {
