@@ -122,6 +122,11 @@
     "min_pages": 1,
     "draws": 4000
   },
+  "menu": {
+    "_about": "Derek 2026-11-06 (#8283): 'basically we choose between agy alone, agy correcting ocr gpu, and opus alone and opus correcting.' A route is agy or Opus, alone or over a draft (a stored read costs nothing; a GPU draft is a named engine). off_menu_stages are never picked and never the gate's reference. default: a cell the evidence has not decided (UNTESTED, HOLD for too few pages, or a keep whose only measured route is the one it serves) takes the plainest agy route, never the incumbent. build.py on_menu / menu_default.",
+    "in_force": true,
+    "off_menu_stages": ["sonnet-read@1", "sonnet-img@1", "lite-text"]
+  },
   "no_served_privilege": {
     "_about": "Rule 3. No privilege for an unmeasured served route: when no candidate passes the gate, the cell does not fall back to its current route (italian-gpu-7263/print kept an untested `lite` over four routes judged 30/30-39/40). The fallback is the lowest-loss measured agy / GPU route that clears the hard floor; only when none does, the lowest-loss Opus route that does; else HOLD (hard floor). The k/n fallback is not re-decided by the defect rule.",
     "in_force": true
@@ -232,6 +237,7 @@
     { "id": "german-tr-flash3", "title": "German translation, 3 Flash English (#7263)", "pages_waiting": 306784, "pages_source": "pilot frame: visible German books 1500-1800, English newer than the OCR", "pilot": "german", "current": "flash3",
       "caveat": "Each German route was judged on its own 30 pages (15 pairs overlap), not paired.",
       "routes": [
+        { "id": "agy-flash-low@4", "stage": "agy-text@4", "evidence": [] },
         { "id": "flash3", "stage": "none", "pilot": "flash3", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "german", "route": "flash3"}] },
         { "id": "opus-cli", "stage": "opus-text", "pilot": "opus-cli", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "german", "route": "opus-cli"}] } ],
       "fallback_routes": [
@@ -239,6 +245,7 @@
     { "id": "german-tr-lite", "title": "German translation, Flash-Lite English (#7263)", "pages_waiting": 151361, "pages_source": "pilot frame, as above", "pilot": "german", "current": "flash-lite",
       "caveat": "Each German route was judged on its own 30 pages, not paired.",
       "routes": [
+        { "id": "agy-flash-low@4", "stage": "agy-text@4", "evidence": [] },
         { "id": "flash-lite", "stage": "none", "pilot": "flash-lite", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "german", "route": "flash-lite"}] },
         { "id": "opus-cli", "stage": "opus-text", "pilot": "opus-cli", "evidence": [{"score": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json", "cell": "german", "route": "opus-cli"}] } ],
       "fallback_routes": [
@@ -343,10 +350,12 @@
     { "id": "italian-lite", "title": "Italian OCR, Flash-Lite (#6553)", "pages_waiting": 46950, "pages_source": "scripts/eval/estimator/chain/results/census-by-draft-2026-10-25.json Italian|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Italian", "route": "lite", "weight": 0.5}] } ] },
     { "id": "spanish-lite", "title": "Spanish OCR, Flash-Lite (#6553)", "pages_waiting": 16866, "pages_source": "volumes-by-draft.mjs --langs=Spanish, run 2026-10-28 (job router-backfill-all-7263), Spanish|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Spanish", "route": "lite", "weight": 0.5}] } ] },
     { "id": "korean-lite", "title": "Korean OCR, Flash-Lite (#6553)", "pages_waiting": 16580, "pages_source": "volumes-by-draft.mjs --langs=Korean, run 2026-10-28 (job router-backfill-all-7263), Korean|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
@@ -361,10 +370,12 @@
     { "id": "portuguese-lite", "title": "Portuguese OCR, Flash-Lite (#6553)", "pages_waiting": 2130, "pages_source": "volumes-by-draft.mjs --langs=Portuguese, run 2026-10-28 (job router-backfill-all-7263), Portuguese|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Portuguese", "route": "lite", "weight": 0.5}] } ] },
     { "id": "danish-lite", "title": "Danish OCR, Flash-Lite (#6553)", "pages_waiting": 5620, "pages_source": "volumes-by-draft.mjs --langs=Danish, run 2026-10-28 (job router-backfill-all-7263), Danish|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Danish", "route": "lite", "weight": 0.5}] } ] },
     { "id": "hindi-lite", "title": "Hindi OCR, Flash-Lite (#6553)", "pages_waiting": 65, "pages_source": "volumes-by-draft.mjs --langs=Hindi, run 2026-10-28 (job router-backfill-all-7263), Hindi|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
@@ -374,14 +385,17 @@
     { "id": "middle-english-lite", "title": "Middle English OCR, Flash-Lite (#6553)", "pages_waiting": 4773, "pages_source": "volumes-by-draft.mjs --langs=Middle_English, run 2026-10-28 (job router-backfill-all-7263), Middle English|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Middle English", "route": "lite", "weight": 0.5}] } ] },
     { "id": "mhg-lite", "title": "Middle High German OCR, Flash-Lite (#6553)", "pages_waiting": 1049, "pages_source": "volumes-by-draft.mjs --langs=Middle_High_German, run 2026-10-28 (job router-backfill-all-7263), Middle High German|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Middle High German", "route": "lite", "weight": 0.5}] } ] },
     { "id": "old-french-lite", "title": "Old French OCR, Flash-Lite (#6553)", "pages_waiting": 2307, "pages_source": "volumes-by-draft.mjs --langs=Old_French, run 2026-10-28 (job router-backfill-all-7263), Old French|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Old French", "route": "lite", "weight": 0.5}] } ] },
     { "id": "ottoman-lite", "title": "Ottoman Turkish OCR, Flash-Lite (#6553)", "pages_waiting": 131, "pages_source": "volumes-by-draft.mjs --langs=Ottoman_Turkish, run 2026-10-28 (job router-backfill-all-7263), Ottoman Turkish|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
@@ -396,6 +410,7 @@
     { "id": "turkish-lite", "title": "Turkish OCR, Flash-Lite (#6553)", "pages_waiting": 50, "pages_source": "volumes-by-draft.mjs --langs=Turkish, run 2026-10-28 (job router-backfill-all-7263), Turkish|lite", "current": "lite",
       "caveat": "#6553 untested cells (2026-10-25, backfill-all): one interior page per live book, read fresh, judged by a sealed Opus judge with the image open; wrong text = serious or invented, accept = text and not serious; pages the judge could not read are not counted. The lite read is a FRESH Flash-Lite read (v19.1) standing in for the stored lite drafts, so it enters at weight 0.5 (evidence_rules). No corrector was measured here.",
       "routes": [
+        { "id": "agy-flash-low-read", "stage": "agy-read", "evidence": [] },
         { "id": "lite", "stage": "none", "evidence": [{"score": "scripts/eval/estimator/router-table/evidence/cells-6553.score.json", "cell": "Turkish", "route": "lite", "weight": 0.5}] } ] },
     { "id": "latin-gpu-7263", "title": "Latin, GPU draft (PERO-OCR; second draft Surya 2) — #7567 panel, #7263", "current": "lite", "pages_waiting": 0, "_pages_waiting": "not measured here: the panel is one page per book across the corpus; the unread backlog per language is not split by this cell", "_evidence": "one page per book (books = n). TEST verdicts (#7263) where present, else #7567 E2 on the same panel; no route counts both. GPU card time (about 1-5 s a page beside another tenant, #7567 E1) is not priced by stage none.",
       "routes": [
