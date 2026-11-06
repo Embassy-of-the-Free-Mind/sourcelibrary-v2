@@ -28,7 +28,7 @@
       "stored": "Mixed. Latin, 7,874,792 pages: 1,315,741 (17%) read by Gemini 3 Flash, 859,556 (11%) by Flash-Lite, 5,693,910 (72%) with no text yet. In the same order, German, 2,114,118 pages: 353,152 (17%), 418,010 (20%), 1,334,450 (63%). English, 1,705,755 pages: 503,256 (30%), 414,079 (24%), 502,398 (29%), and 271,203 (16%) with the Internet Archive's own text. French, 782,150 pages: 189,468 (24%), 151,451 (19%), 437,119 (56%). Italian, 310,814 pages: 118,056 (38%), 46,950 (15%), 143,959 (46%). Most of the pages with no text are in books first shown on 23 and 24 October 2026, most of them as page images only, for readers who read the original (#7176, #7270): 4,923,283 of the Latin ones, 1,207,466 German, 379,829 English, 406,892 French and 117,241 Italian. Of the Latin pages that have text, 60% were read by Gemini 3 Flash and 39% by Flash-Lite.",
       "status": "settled",
       "routed": "yes",
-      "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Batch API.",
+      "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Since 2026-11-06 the label lite no longer names a channel: no model runs on the paid API for OCR (API_OCR_MODELS is empty, Derek \"everything on agy\"), so the orchestrator holds the book with CLI_FLASH_OCR_HOLD and cli-ocr-lane.mjs reads it on gemini-3.8-flash-low, 4 pages a call (CLI_MODEL_FOR).",
       "route": {
         "engine": "gemini-3.1-flash-lite",
         "default": true

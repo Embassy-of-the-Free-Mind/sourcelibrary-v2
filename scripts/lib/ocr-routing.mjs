@@ -231,7 +231,14 @@ export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
  *
  * When the CLI lane has no quota the book WAITS. Nothing here falls through to the API.
  */
-export const API_OCR_MODELS = Object.freeze(new Set([OCR_MODEL_LITE]));
+//
+// NO MODEL RUNS ON THE PAID API FOR OCR (Derek, 2026-11-06: "no one should use lite", "everything on agy", "its just
+// better and cheaper"). The set is empty, so every book reads on the agy CLI lane, a book routed to flash-lite
+// included (scripts/batch/cli-ocr-lane.mjs CLI_MODEL_FOR maps it to gemini-3.8-flash-low), and assertApiOcrModel
+// refuses every paid OCR submission. getOcrModelForBook still names lite for Latin-script print: it is the routing
+// label of that tier, not a channel. That day a session released seven imports to the queue and they were headed for
+// the paid lane because this set still held lite; a rule a session must remember had failed, so the default changed.
+export const API_OCR_MODELS = Object.freeze(new Set());
 
 /** May this model be sent to the paid Gemini API (Batch or realtime) for OCR? */
 export function isApiOcrModel(model) {
