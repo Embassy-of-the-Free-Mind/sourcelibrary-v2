@@ -98,7 +98,7 @@ describe('translate-held frame (#7263): the books the CLI translation lane waits
     expect(armcTranslateBookOk(book({ needs_splitting: true }))).toBe(false);
     expect(armcTranslateBookOk(book({ pipeline_auto: { status: 'ocr_complete', held: true } }))).toBe(false);
   });
-  it('refuses a book the routing table does not send to a cli row (BPH stays on its Batch row)', () => {
-    expect(armcTranslateBookOk(book({ image_source: { provider: 'bph' } }))).toBe(false);
+  it('takes BPH books too: everything translates on agy (Derek 2026-11-06, #8283)', () => {
+    expect(armcTranslateBookOk(book({ image_source: { provider: 'bph' } }))).toBe(true);
   });
 });
