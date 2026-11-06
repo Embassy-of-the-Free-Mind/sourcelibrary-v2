@@ -25,8 +25,8 @@ vi.mock('@/app/api/books/[id]/search/route', () => ({
     return NextResponse.json({ total: state.total, returned: state.results.length, results: state.results });
   },
 }));
-vi.mock('@/lib/api-auth', async (orig) => ({
-  ...(await orig<typeof import('@/lib/api-auth')>()),
+// No importOriginal: the real module loads next-auth, which vitest cannot resolve.
+vi.mock('@/lib/api-auth', () => ({
   withApiAuth: (handler: (...a: unknown[]) => unknown, opts: { route: string }) => {
     state.gated.push(opts.route);
     return handler;
