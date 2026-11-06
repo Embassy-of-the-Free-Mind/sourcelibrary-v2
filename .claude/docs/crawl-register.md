@@ -40,6 +40,8 @@ PRIOR ART: .claude/docs/invariants/crawler-access-gate.md — holds the LESSONS 
 
 ## What stops the next one (as of 2026-11-04)
 
+**Terms step on cold deep-page arrivals (#8286).** Custom rule `reader_terms_deep_page`, managed by `scripts/maintenance/reader-terms-rule.mjs` (`--status`, `--off` is the rollback; `src/lib/reader-terms.ts` is the app half). A GET of a deep book page on the apex with no Referer, no terms or citation cookie and no session gets a 403 page with the agreement form. It records agreement and can be forged, so it is not proof that a client stopped. Our own `curl` of a deep page will see this page too: send a Referer, or the `sourcelibrary-` user agent prefix.
+
 **Every path scoped to `/book` also has to name the translated forms** (`/es/book/`, `/la/book/`, `/nl/book/`, `/zh/book/`). Items 1, 2 and 5 below do, since 2026-11-04. Rules `204695c8` and `d52712d1` (version-string challenges) do not; the client-hint rule covers the first of those on translated URLs.
 
 1. **Crawl brake** (Cloudflare `http_ratelimit` rule): more than 60 full `/book/` page loads a minute from one address gets a managed challenge for 10 minutes. Excludes `_rsc=` requests (a real browser's in-app navigation) and verified bots. Tested 2026-10-10: requests 1–60 answered, request 61 challenged. Every crawl in the table above exceeded this rate. Our Pro plan cannot exempt by user agent in rate-limit rules.
