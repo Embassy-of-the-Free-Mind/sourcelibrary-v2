@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { HISTORIES, PICKS, cardQuote, pickFor, authorYear } from './histories';
+import { HISTORIES, PICKS, SPOT_CHECK, cardQuote, pickFor, authorYear } from './histories';
 
 // Static (#7623): every figure comes from content/index.json, written by
 // scripts/maintenance/import-concept-histories.mjs; the pictures and quotes from
@@ -87,7 +87,9 @@ export default function HistoriesIndexPage() {
           can open the book and read the passage yourself. Only claims marked as verified or partly supported when they
           were written are shown, and the partly supported ones are marked. When AI reviewers later re-read a random
           sample of {HISTORIES.audit.all.n} verified claims against their pages, they rejected {HISTORIES.audit.all.rejected} ({HISTORIES.audit.all.pct}%),
-          mostly as overstated. Each history says at its foot how far it was checked.
+          mostly as overstated. Another AI reader then graded those rejections: {SPOT_CHECK.rejected.misleading} would give a false impression of the
+          source, {SPOT_CHECK.rejected.stretch} say somewhat more than it does, {SPOT_CHECK.rejected.minor} lost only a nuance or carry a clause the quote leaves out,
+          and {SPOT_CHECK.rejected.none} showed no problem. Each history says at its foot how far it was checked.
         </p>
       </section>
     </ContentPageLayout>

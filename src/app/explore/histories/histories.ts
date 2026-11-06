@@ -7,6 +7,7 @@ import index from './content/index.json';
 import picks from './content/picks.json';
 import figures from './content/figures.json';
 import lanes from './content/lanes.json';
+import spotCheck from './content/spot-check.json';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 
 export type ClaimSource = { l: string; loc?: string; q?: string; qo?: string; u?: string; np?: 1 };
@@ -41,6 +42,14 @@ export const domainLabel = (d: string) => d.replace(/-/g, ' ').replace(/^./, (c)
 /** An essay's title without the number it carries in the private repository ("2. Like and unlike"). */
 export const plainTitle = (t: string) => t.replace(/^\d+\.\s*/, '').replace(/^./, (x) => x.toUpperCase());
 
+export const SPOT_CHECK = spotCheck;
+
+/** How serious the rejections were, across all audited histories (quality-statements.md: the distribution, the bar named, error in both directions). */
+function gradedLine(): string {
+  const { date, rejected: r, accepted: a, sawVerdict, outsideLibrary: o, insideLibrary: i } = SPOT_CHECK;
+  return `On ${day(date)}, another AI reader (Claude Sonnet, which saw the earlier verdict on ${sawVerdict} of these claims) graded how serious the problems were. Of the ${r.read} rejected claims it could read, ${r.misleading} would give a false impression of what a source says or who said it, ${r.stretch} say somewhat more than the source, ${r.minor} lost only a nuance or carry a clause the quote leaves out, and for ${r.none} it found no problem. Of the ${a.read} accepted claims it read, it graded ${a.minor} as minor and none as more serious. This reader was more lenient than the judge, so these counts may be low. Claims resting on sources outside the library were rejected more often (${o.rejected} of ${o.of}, against ${i.rejected} of ${i.of}), in part because the judge sees only a quote from them.`;
+}
+
 /** The quality statement for one concept (quality-statements.md: what was measured, by whom, when, on how much): the result first, then how it was reached. */
 export function qualityStatement(c: Concept): { lead: string; paragraphs: string[] } {
   const { all, kinds, judge } = HISTORIES.audit;
@@ -50,8 +59,9 @@ export function qualityStatement(c: Concept): { lead: string; paragraphs: string
   const allLine = `Across the ${audited} audited histories, ${all.rejected} of ${all.n} were rejected (${all.pct}%, ${all.lo}–${all.hi}%): ${byKind}. In a test, the reviewer caught ${judge.caught} of ${judge.planted} deliberately planted errors.`;
   const notChecked = `Partly verified claims and the essays themselves were not audited, and no scholar has reviewed them yet.`;
   const a = c.audit;
-  if (!a) return { lead: 'This history has not been audited yet.', paragraphs: [made, allLine, notChecked] };
-  const outside = 'Claims outside the sample were not individually reviewed, so expect errors of these kinds at about this rate.';
+  const graded = gradedLine();
+  if (!a) return { lead: 'This history has not been audited yet.', paragraphs: [made, allLine, graded, notChecked] };
+  const outside = 'Claims outside the sample were not individually reviewed.';
   const fixed = a.corrected === false
     ? `The rejected claims have not yet been corrected. ${outside}`
     : `The rejected claims in the sample were corrected or withdrawn before publication. ${outside}`;
@@ -61,6 +71,7 @@ export function qualityStatement(c: Concept): { lead: string; paragraphs: string
       `${made} On ${day(a.date)}, AI reviewers (Claude Opus as judge, each rejection confirmed by a second Opus reading after a Gemini read) checked the sample against the pages it cites, and rejected claims as overstated, misattributed or not on the cited page (${a.pct}%; 95% interval ${a.lo}–${a.hi}%). A sample of ${a.n} gives a wide interval.`,
       fixed,
       allLine,
+      graded,
       notChecked,
     ],
   };
