@@ -3,6 +3,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type React from 'react';
 import { WRITTEN_PAST_ROWS, WRITTEN_PAST_STEPS } from '@/lib/written-past-data';
+import { ABOUT_NUMBER_LOCALE, type AboutChartStrings } from '@/lib/about-i18n';
+import type { Locale } from '@/lib/locale-path';
 
 /**
  * A bar chart whose scale keeps growing. Step 1 is Latin print alone, the language of the Renaissance; each
@@ -34,8 +36,6 @@ const WHOLE = (() => {
   return { done: done * f, rest: (works - done) * f, mss: (total - works) * f };
 })();
 const tint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, transparent)`;
-const fmt = (n: number) => n.toLocaleString('en-GB');
-const compact = (n: number) => (n >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : fmt(n));
 const GRID = 'grid grid-cols-[4.75rem_minmax(0,1fr)_4.5rem_3.75rem] sm:grid-cols-[7rem_6.5rem_minmax(0,1fr)_6.5rem_6rem] items-center gap-x-3 sm:gap-x-4';
 
 // Three palettes under review (the /about variant picker):
@@ -53,7 +53,15 @@ const DARK_VARS = {
   '--text-muted': '#a49b8f',
 } as React.CSSProperties;
 
-export default function WrittenPastChart({ palette = 'hues', titleClass }: { palette?: ChartPalette; titleClass?: string }) {
+export default function WrittenPastChart({ palette = 'hues', titleClass, t: tr, lang = 'en' }: { palette?: ChartPalette; titleClass?: string; t: AboutChartStrings; lang?: Locale }) {
+  const tag = ABOUT_NUMBER_LOCALE[lang];
+  const fmt = (n: number) => new Intl.NumberFormat(tag, { useGrouping: 'always' }).format(n);
+  const compact = (n: number) => {
+    if (n < 1e6) return fmt(n);
+    if (lang === 'zh') return `${new Intl.NumberFormat(tag).format(n / 1e4)}万`;
+    return `${new Intl.NumberFormat(tag, { maximumFractionDigits: 1 }).format(n / 1e6)}M`;
+  };
+  const period = (d?: string) => (d === 'to 1700' ? tr.to1700 : d === 'all periods' ? tr.allPeriods : d === 'to 1912' ? tr.to1912 : d);
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -177,7 +185,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
           const on = r.step <= step;
           const w = on ? (r.open ? 100 : (r.n / max) * 100) : 0;
           const t = on && r.translated != null ? Math.max(0.15, (r.translated / max) * 100) : 0;
-          const pct = r.translated != null ? ((r.translated / r.n) * 100).toFixed(2) : null;
+          const pct = r.translated != null ? new Intl.NumberFormat(tag, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((r.translated / r.n) * 100) : null;
           const pal = palette === 'hues' ? null : PAL[palette];
           const c = pal ? pal.done : r.color ?? RUST;
           const hatchC = pal ? pal.hatch : c;
@@ -185,7 +193,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
           const edge = pal ? (palette === 'dark' ? '#6b6157' : '#a59b8e') : tint(c, 45);
           // How many: works for printed Europe and Tibet, surviving manuscripts
           // (estimated, hatched) for Arabic script and India, nothing where nobody has counted.
-          const size = r.open || r.none ? 'not counted' : r.estimate ? compact(r.n) : fmt(r.n);
+          const size = r.open || r.none ? tr.notCounted : r.estimate ? compact(r.n) : fmt(r.n);
           return (
             <div
               key={r.key}
@@ -193,15 +201,15 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
               className={`wp-row ${GRID} overflow-hidden`}
               style={{ height: on && !lensOn ? (solo ? 64 : 28) : 0, opacity: on && !lensOn ? 1 : 0 }}
               aria-hidden={!on}
-              title={r.unit}
+              title={lang === 'en' ? r.unit : undefined}
             >
               <span className={`truncate ${r.step === step ? 'font-semibold text-primary' : 'text-secondary'} ${solo ? 'text-xl' : 'text-sm'}`}>
-                {r.name}
+                {tr.rows[r.key]}
               </span>
-              <span className={`hidden sm:block truncate text-muted tabular-nums ${solo ? 'text-base' : 'text-[13px]'}`}>{r.dates}</span>
+              <span className={`hidden sm:block truncate text-muted tabular-nums ${solo ? 'text-base' : 'text-[13px]'}`}>{period(r.dates)}</span>
               <div className="wp-track relative" style={{ height: solo ? 36 : 12 }}>
                 {r.none ? (
-                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 truncate text-[13px] leading-4 text-muted">{r.unit}</div>
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 truncate text-[13px] leading-4 text-muted">{tr.restUnit}</div>
                 ) : (
                   <>
                     <div
@@ -222,7 +230,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
               </div>
               <span className={`text-right tabular-nums whitespace-nowrap text-secondary ${solo ? 'text-lg' : 'text-[12px] sm:text-sm'}`}>{size}</span>
               <span className={`text-right tabular-nums whitespace-nowrap ${solo ? 'text-xl' : 'text-sm sm:text-base'}`}>
-                {pct ? <b className="font-semibold text-primary">{pct}%</b> : <span className="text-muted text-[12px] sm:text-sm">{r.none ? '' : 'unknown'}</span>}
+                {pct ? <b className="font-semibold text-primary">{pct}%</b> : <span className="text-muted text-[12px] sm:text-sm">{r.none ? '' : tr.unknown}</span>}
               </span>
             </div>
           );
@@ -240,14 +248,14 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
         // Every title sits in the same grid cell, so the heading is always as tall
         // as the longest one and nothing below it moves when the step changes.
         <h2 className={`${titleClass} grid mb-10 md:mb-14`} aria-live="polite">
-          {WRITTEN_PAST_STEPS.map((st, i) => (
+          {tr.steps.map((st, i) => (
             <span key={i === step ? `on-${step}` : i} aria-hidden={i !== step} className={`[grid-area:1/1] block ${i === step ? 'wp-title' : 'invisible'}`}>{st.title}</span>
           ))}
         </h2>
       )}
       <div className="flex items-end gap-3 sm:gap-6">
-        <div className="flex-1 grid grid-cols-5 gap-2 sm:gap-6" role="tablist" aria-label="Zoom out">
-          {WRITTEN_PAST_STEPS.map((st, i) => (
+        <div className="flex-1 grid grid-cols-5 gap-2 sm:gap-6" role="tablist" aria-label={tr.tabsLabel}>
+          {tr.steps.map((st, i) => (
             <button
               key={st.name}
               type="button"
@@ -268,7 +276,7 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
         <button
           type="button"
           onClick={toggle}
-          aria-label={playing ? 'Pause' : step === last && progress >= 1 ? 'Play again from Latin' : 'Play'}
+          aria-label={playing ? tr.pause : step === last && progress >= 1 ? tr.replay : tr.play}
           className="shrink-0 mb-1.5 w-9 h-9 rounded-full bg-[#1a1612] text-white hover:bg-black cursor-pointer flex items-center justify-center"
         >
           {playing ? (
@@ -289,10 +297,10 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
 
       <div style={lensOn ? { display: 'none' } : undefined} className={`${GRID} mt-10 text-xs text-muted pb-2 mb-2 border-b border-border-light`}>
         <span />
-        <span className="hidden sm:block">dates</span>
+        <span className="hidden sm:block">{tr.dates}</span>
         <span />
-        <span className="text-right">counted</span>
-        <span className="text-right text-primary font-semibold">in English</span>
+        <span className="text-right">{tr.counted}</span>
+        <span className="text-right text-primary font-semibold">{tr.inEnglish}</span>
       </div>
 
       {/* Room for every row from the start: new rows grow downwards into it and
@@ -315,9 +323,9 @@ export default function WrittenPastChart({ palette = 'hues', titleClass }: { pal
       )}
 
       <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary">
-        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: palette === 'hues' ? INK : PAL[palette].done }} />translated into English</span>
-        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: palette === 'hues' ? tint(INK, 24) : PAL[palette].rest }} />never translated</span>
-        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3 wp-hatch border" style={{ ['--c' as string]: palette === 'hues' ? INK : PAL[palette].hatch, borderColor: palette === 'hues' ? tint(INK, 40) : PAL[palette].hatch }} />estimated, in handwritten copies rather than works</span>
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: palette === 'hues' ? INK : PAL[palette].done }} />{tr.legendDone}</span>
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3" style={{ background: palette === 'hues' ? tint(INK, 24) : PAL[palette].rest }} />{tr.legendRest}</span>
+        <span className="inline-flex items-center gap-2"><i className="inline-block w-3 h-3 wp-hatch border" style={{ ['--c' as string]: palette === 'hues' ? INK : PAL[palette].hatch, borderColor: palette === 'hues' ? tint(INK, 40) : PAL[palette].hatch }} />{tr.legendEstimate}</span>
       </p>
 
       <style>{`
