@@ -121,7 +121,7 @@ def sim_cell(job):
 
 def main():
     path = next(a for a in sys.argv[1:] if a.endswith('.json') and a != arg('--out'))
-    T = json.load(open(path)); P = K_RULE.legacy(json.load(open(B.D + 'rules.json')))
+    T = json.load(open(path)); P = json.load(open(B.D + 'rules.json'))   # retired sections off: the margin rule V3 measured (the sim's routes carry no p_abs / pw)
     reps, N, procs = int(arg('--reps', 1000)), int(arg('--draws', 2000)), int(arg('--procs', 8))
     inforce = P['switch'].get('multiplicity') or {'method': 'none'}
     variants = VARIANTS if arg('--variants', 'all') == 'all' else {'in force': inforce}

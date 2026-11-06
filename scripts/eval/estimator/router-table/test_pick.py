@@ -315,11 +315,10 @@ class FrozenKn(unittest.TestCase):
         self.assertGreater(r['rates']['none']['boundary'], 0.10)          # the rule before: one of six passes often
         self.assertLessEqual(r['rates']['max-bonferroni']['boundary'], 0.05)
 
-    def test_legacy_puts_the_retired_sections_back(self):
+    def test_retired_sections_stay_off(self):
         R = json.load(open(os.path.join(HERE, 'rules.json')))
         for k in ('loss', 'absolute_bar', 'no_absolute_gate', 'no_served_privilege'):
             self.assertFalse(R[k]['in_force'], k)
-            self.assertTrue(K.legacy(R)[k]['in_force'], k)
         self.assertEqual(R['loss']['lambda_sensitivity'], [5, 20, 100])   # sonnet_plan.py reads it
 
 

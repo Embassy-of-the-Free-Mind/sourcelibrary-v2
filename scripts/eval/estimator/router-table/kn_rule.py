@@ -6,11 +6,6 @@ simulation of the defect rule itself is still to be written: V3 says nothing abo
 from build import floor_ok, in_force, is_bar, within_p  # noqa: F401  (the helpers the frozen code calls)
 
 
-def legacy(P):
-    """rules.json with the retired sections back in force, as the old rule read them."""
-    return dict(P, **{k: dict(P[k], in_force=True) for k in ('loss', 'absolute_bar', 'no_absolute_gate', 'no_served_privilege')})
-
-
 def within_ind(r, best, within):
     """Per draw: is acc_r >= acc_best - within (paired draws where r and best share pages, else the two posteriors)."""
     pd = r.get('_pd', {}).get(best['id'])
