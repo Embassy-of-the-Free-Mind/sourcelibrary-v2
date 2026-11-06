@@ -31,6 +31,8 @@ import copy, importlib.util, json, math, os, random, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 spec = importlib.util.spec_from_file_location('build', os.path.join(HERE, 'build.py'))
 B = importlib.util.module_from_spec(spec); spec.loader.exec_module(B)
+sys.path.insert(0, HERE)
+import kn_rule as K_RULE   # the frozen k/n decision (#8283): what V3 measured. It says nothing about build.py decide_defects
 arg = lambda f, d=None: sys.argv[sys.argv.index(f) + 1] if f in sys.argv else d
 
 VARIANTS = {
@@ -53,7 +55,7 @@ def cells_of(T, P):
     rates, _ = B.fee_rates(P, None)
     out = []
     for row in T['rows']:
-        if cls(row['decision']) in ('held', 'planned', 'UNTESTED') or cls(row['decision_kn']) in ('held', 'planned'): continue
+        if cls(row['decision']) in ('held', 'planned', 'UNTESTED') or cls(row.get('decision_kn', row['decision'])) in ('held', 'planned'): continue
         few = lambda r: row.get('script') in ('manuscript', 'unknown') and r['n'] < P['script_split']['min_manuscript_pages']
         M = []
         for r in row['routes']:
@@ -100,10 +102,10 @@ def sim_cell(job):
                               p80=sum(x >= P['hold']['acc'] for x in d) / N, _usd_acc=r['usd'] / med if med > 0 else float('inf')))
             cur = next((r for r in M if r['id'] == c['current']), None) or M[0]
             for v, Pv in Ps.items():
-                dec, pk = B.decide({}, M, cur, Pv, cost, WT)
+                dec, pk = K_RULE.decide({}, M, cur, Pv, cost, WT)
                 o = res[v][conf]
                 if dec == 'HOLD': o['hold'] += 1; continue
-                ok = B.gate(M, Pv, WT, W)[1]
+                ok = K_RULE.gate(M, Pv, WT, W)[1]
                 if not any(pk is r for r in ok): continue
                 o['picks'] += 1
                 gap = top - tr[pk['id']]
@@ -119,7 +121,7 @@ def sim_cell(job):
 
 def main():
     path = next(a for a in sys.argv[1:] if a.endswith('.json') and a != arg('--out'))
-    T = json.load(open(path)); P = json.load(open(B.D + 'rules.json'))
+    T = json.load(open(path)); P = K_RULE.legacy(json.load(open(B.D + 'rules.json')))
     reps, N, procs = int(arg('--reps', 1000)), int(arg('--draws', 2000)), int(arg('--procs', 8))
     inforce = P['switch'].get('multiplicity') or {'method': 'none'}
     variants = VARIANTS if arg('--variants', 'all') == 'all' else {'in force': inforce}

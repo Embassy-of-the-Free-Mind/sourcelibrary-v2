@@ -815,7 +815,8 @@ const REPO = () => process.env.SL_REPO || '/data/scratch/sl/sourcelibrary';
 /** The repo paths build.py opens: the table's own folder, its inputs, the script split's, and every evidence source but ours. */
 export function rebuildInputs(rules, RT = 'scripts/eval/estimator/router-table') {
   const ss = rules.script_split?.on ? [rules.script_split.waiting].filter(Boolean) : [];
-  return [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', ...Object.values(rules.inputs), ...ss,
+  // defect-rate.py and the 2026-10-30 inventory: route-evidence.mjs export rebuilds defect-rates.json in this copy
+  return [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', 'scripts/eval/route-judge-6740/defect-rate.py', 'scripts/eval/route-judge-6740/results/defect-rate-2026-10-30', ...Object.values(rules.inputs), ...ss,
     ...rules.cells.flatMap((c) => c.routes.flatMap((r) => (r.evidence || []).map((e) => e.score)))])]
     .filter((p) => p !== EVIDENCE_PATH && p !== BY_SCRIPT_PATH);
 }
@@ -836,6 +837,10 @@ async function rebuild() {
   // --export=FILE: a given score.json instead of the store (a replay, or a test of the feed)
   const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(null, dir);
   if (arg('export')) writeEvidence(dir, score);
+  // #8283: the one decision input. QA verdicts into the store (additive), the store into this copy's defect-rates.json
+  const evidence = path.join(REPO(), 'scripts/eval/route-evidence.mjs');
+  sh('node', [evidence, 'ingest', '--apply'], { cwd: REPO() });
+  sh('node', [evidence, 'export', `--out=${path.join(dir, 'route-evidence')}`], { cwd: REPO(), env: { ...process.env, ROUTE_EVIDENCE_CWD: dir } });
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');
   let text = rulesText; const added = [];
