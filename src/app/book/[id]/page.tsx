@@ -19,6 +19,7 @@ import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
+import { bookAssistantGuide } from '@/lib/assistant-guide';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush, Eye } from 'lucide-react';
@@ -3009,8 +3010,17 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     }
   }
 
+  // Main site in English only: a reading room must not link to the whole library.
+  const assistantGuide = !ctx && lang === 'en'
+    ? bookAssistantGuide(
+        earlyBook as unknown as { id?: string; slug?: string; pages_count?: number },
+        (earlyBook as { _id?: { toString(): string } })._id?.toString() ?? id,
+      )
+    : null;
+
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"} lang={lang === 'en' ? undefined : lang}>
+      {assistantGuide && <p className="sr-only">{assistantGuide}</p>}
       {/* Sends a carried `?lang=xx` on to the `/xx` edition when this book has
           one, and sweeps the retired reading-language localStorage key. The
           language of a page is in its URL; nothing is recorded. See
