@@ -408,6 +408,30 @@ def decide(cell, M, cur, P, cost, wt_max, within=None, c0=None):
     return ('keep' if p is cur else 'switch'), p
 
 
+
+def on_menu(r, P):
+    """Derek 2026-11-06 (#8283): a route is agy or Opus, alone or over a draft (a stored read, or a GPU draft). rules.json
+    menu.off_menu_stages names the stages that are not (Sonnet, a new flash-lite translation); they are never picked."""
+    return not in_force(P, 'menu') or r.get('stage') not in P['menu']['off_menu_stages']
+
+
+def menu_default(cell, fdec, fpk, M, cur, rs, P):
+    """No default to the status quo (rules.json menu.default, #8283: "an untested cell gets agy, never the incumbent").
+    Only a cell the evidence has not decided: UNTESTED, a HOLD for too few pages, or a keep whose only measured route is
+    the one it serves (compared with nothing). It takes the plainest agy route: measured first, then fewest stages, then
+    posterior mean. Held, planned, hard-floor, judge-gate and measured decisions are untouched. (decision, route) or None."""
+    if not in_force(P, 'menu') or cell.get('held') or cell.get('planned'): return None
+    label, agy = fdec.split(' (')[0], (lambda r: r.get('channel') == 'agy')
+    undecided = 'UNTESTED' in fdec or (label == 'HOLD' and 'pages a route' in fdec) or (
+        label == 'keep' and len(M) == 1 and fpk is cur and not agy(fpk))
+    if not undecided: return None
+    cand = [r for r in rs if agy(r) and on_menu(r, P) and floor_ok(r, P)]
+    if not cand: return None
+    d = min(cand, key=lambda r: (r not in M, r['id'].count('>') + r['id'].count('+'), -r['mean']))
+    ev = 'measured here' if d in M else 'too few pages here' if d.get('tested') else 'unmeasured here'
+    return f"switch (default: agy, {ev}; was {label})", d
+
+
 def judge_stratum(cell):
     """The judge-calibration stratum of a cell (#7880): task (ocr / translate) / script type."""
     base = cell.get('base') or cell['id'].split('/')[0]
@@ -637,7 +661,7 @@ def main():
             pd = paired_draws(c, N, random.Random(f"{P['seed']}:{cell['id']}:{ra['id']}|{rb['id']}"), sc)
             ra.setdefault('_pd', {})[rb['id']] = pd; rb.setdefault('_pd', {})[ra['id']] = [-d for d in pd]
             ra.setdefault('paired', {})[rb['id']] = rb.setdefault('paired', {})[ra['id']] = f"{c['a_only']} vs {c['b_only']} of {c['n']} paired"
-        cur = next(r for r in rs if r['id'] == cell['current']); M = [r for r in rs if r['tested'] and not few(r)]
+        cur = next(r for r in rs if r['id'] == cell['current']); M = [r for r in rs if r['tested'] and not few(r) and on_menu(r, P)]
         c0 = good_read_usd(M, P)   # the loss's lambda = lambda_multiple x c0 (dollars: stdout only)
         # Derek 11:54Z: too little manuscript evidence says so, never inherits print numbers; an unknown-script cell
         # likewise (its prior is print's, and a handful of pages would let it decide hundreds of thousands)
@@ -664,6 +688,8 @@ def main():
             dinfo_label = f"{dec} (k/n: {dinfo['why']})" if not ddec and dinfo else dec
             fdec, fpk = (ddec, dpk) if RULE == 'defects' and ddec else ((dinfo_label, pk) if RULE == 'defects' else (dec, pk))
             fdec, jinfo = judge_gate(cell, fdec, fpk, Px, S)
+            md = menu_default(cell, fdec, fpk, M, cur, rs, Px)
+            if md: fdec, fpk = md
             return dec, pk, ddec, dpk, dinfo, rule, fdec, fpk, jinfo
 
         dec, pk, ddec, dpk, dinfo, rule, fdec, fpk, jinfo = final(P)

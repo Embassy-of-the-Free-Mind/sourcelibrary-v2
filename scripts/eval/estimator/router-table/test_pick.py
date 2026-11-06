@@ -454,5 +454,35 @@ class Policy1102(unittest.TestCase):
         self.assertEqual(R['loss']['lambda_sensitivity'], [5, 20, 100])
 
 
+class Menu(unittest.TestCase):
+    """#8283: the route menu (agy or Opus, alone or over a draft) and the default for an undecided cell."""
+    PM = {'menu': {'in_force': True, 'off_menu_stages': ['sonnet-read@1', 'lite-text']}}
+
+    def r(self, rid, channel, stage, mean=0.8, tested=True):
+        return dict(id=rid, channel=channel, stage=stage, mean=mean, tested=tested)
+
+    def test_off_menu_stages_are_not_routes(self):
+        self.assertFalse(B.on_menu(self.r('sonnet-read', 'claude', 'sonnet-read@1'), self.PM))
+        self.assertTrue(B.on_menu(self.r('lite>opus', 'claude', 'opus-img@10'), self.PM))
+        self.assertTrue(B.on_menu(self.r('sonnet-read', 'claude', 'sonnet-read@1'), {}))   # menu off: the rule before
+
+    def test_untested_cell_gets_the_plainest_agy_route_not_the_incumbent(self):
+        lite = self.r('lite', None, 'none')
+        chain = self.r('pero>agy-flash-low@4-written', 'agy', 'agy@4', mean=0.95, tested=False)
+        plain = self.r('agy-flash-low-read', 'agy', 'agy-read', mean=0.85, tested=False)
+        dec, pk = B.menu_default({}, 'keep (UNTESTED)', lite, [], lite, [lite, chain, plain], self.PM)
+        self.assertEqual(pk['id'], 'agy-flash-low-read')     # fewer stages beats a higher prior
+        self.assertTrue(dec.startswith('switch (default: agy, unmeasured here'))
+
+    def test_lone_incumbent_keep_is_undecided_but_a_measured_decision_stands(self):
+        lite, agy = self.r('lite', None, 'none'), self.r('agy-flash-low-read', 'agy', 'agy-read', tested=False)
+        self.assertEqual(B.menu_default({}, 'keep', lite, [lite], lite, [lite, agy], self.PM)[1]['id'], 'agy-flash-low-read')
+        opus = self.r('lite>opus', 'claude', 'opus-img@10')
+        self.assertIsNone(B.menu_default({}, 'keep', lite, [lite, opus], lite, [lite, opus, agy], self.PM))
+        self.assertIsNone(B.menu_default({}, 'HOLD (hard floor: no measured route clears it)', lite, [lite], lite, [lite, agy], self.PM))
+        self.assertIsNone(B.menu_default({}, 'HOLD (judge not valid: self-preference)', lite, [lite], lite, [lite, agy], self.PM))
+        self.assertIsNone(B.menu_default({'planned': {'route': 'lite>opus'}}, 'UNTESTED', lite, [], lite, [lite, agy], self.PM))
+
+
 if __name__ == '__main__':
     unittest.main()
