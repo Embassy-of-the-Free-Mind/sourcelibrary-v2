@@ -135,6 +135,11 @@ const PER_PAGE = 60;
     in reverse). Used by the clickable column headers in the list view. */
 type SortColumn = 'author' | 'title' | 'year' | 'shelfmark';
 
+/** Best match while searching, Author A–Z while browsing. */
+function defaultSortFor(q: string): string {
+  return q.trim().length >= 2 ? 'relevance' : 'author';
+}
+
 function nextSort(column: SortColumn, current: string): string {
   if (column === 'shelfmark') return 'shelfmark';
   if (column === 'year') return current === 'year_asc' ? 'year_desc' : 'year_asc';
@@ -320,7 +325,9 @@ export default function BphCatalogBrowser({
   const embed = useEmbed();
 
   const initialQ = searchParams.get('cq') || '';
-  const initialSort = searchParams.get('csort') || 'author';
+  const initialSort = searchParams.get('csort') || defaultSortFor(initialQ);
+  // A sort in the URL was picked by a reader; otherwise the default follows the search.
+  const sortChosenRef = useRef(!!searchParams.get('csort'));
   const initialKeyword = searchParams.get('ckeyword') || '';
   const initialOffset = parseInt(searchParams.get('coffset') || '0') || 0;
   const initialAdv: AdvancedFilters = {
@@ -522,7 +529,8 @@ export default function BphCatalogBrowser({
       else params.delete(key);
     };
     setOrDel('cq', q);
-    setOrDel('csort', s !== 'author' ? s : '');
+    // Only a sort the reader picked goes in the URL; the default follows the search.
+    setOrDel('csort', sortChosenRef.current ? s : '');
     setOrDel('ckeyword', kw);
     setOrDel('coffset', off ? String(off) : '');
     setOrDel('cauthor', a.author);
@@ -546,10 +554,16 @@ export default function BphCatalogBrowser({
     fetchWorks(initialQ, initialSort, initialKeyword, initialOffset, initialAdv);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Until the reader picks a sort, a search is in Best match and browsing is in
+  // Author A–Z. Once they pick one, it stays, search or not.
+  const sortFor = (q: string) => (sortChosenRef.current ? sort : defaultSortFor(q));
+
   const debouncedSearch = useDebouncedCallback((value: string) => {
+    const s = sortFor(value);
+    setSort(s);
     setOffset(0);
-    fetchWorks(value, sort, keyword, 0, adv);
-    updateUrl(value, sort, keyword, 0, adv);
+    fetchWorks(value, s, keyword, 0, adv);
+    updateUrl(value, s, keyword, 0, adv);
   }, 300);
 
   const handleSearchChange = (value: string) => {
@@ -559,10 +573,12 @@ export default function BphCatalogBrowser({
 
   const searchFor = (value: string) => {
     debouncedSearch.cancel();
+    const s = sortFor(value);
+    setSort(s);
     setSearchQuery(value);
     setOffset(0);
-    fetchWorks(value, sort, keyword, 0, adv);
-    updateUrl(value, sort, keyword, 0, adv);
+    fetchWorks(value, s, keyword, 0, adv);
+    updateUrl(value, s, keyword, 0, adv);
   };
 
   // The search becomes the author filter, and the panel opens so the reader can
@@ -598,6 +614,7 @@ export default function BphCatalogBrowser({
   );
 
   const handleSortChange = (newSort: string) => {
+    sortChosenRef.current = true;
     setSort(newSort);
     setOffset(0);
     fetchWorks(searchQuery, newSort, keyword, 0, adv);
@@ -647,8 +664,10 @@ export default function BphCatalogBrowser({
     setKeyword('');
     setAdv(cleared);
     setOffset(0);
-    fetchWorks('', sort, '', 0, cleared);
-    updateUrl('', sort, '', 0, cleared);
+    const s = sortFor('');
+    setSort(s);
+    fetchWorks('', s, '', 0, cleared);
+    updateUrl('', s, '', 0, cleared);
   };
 
   // When the digitised filter is locked by the parent (Show digitised list view),
@@ -819,6 +838,7 @@ export default function BphCatalogBrowser({
               aria-label="Sort catalogue"
               className="h-9 text-sm border border-border-light rounded-md pl-2.5 pr-7 bg-white text-secondary hover:bg-warm transition-colors cursor-pointer"
             >
+              {searchQuery.trim().length >= 2 && <option value="relevance">Best match</option>}
               <option value="author">Author A–Z</option>
               <option value="author_desc">Author Z–A</option>
               <option value="title">Title A–Z</option>
