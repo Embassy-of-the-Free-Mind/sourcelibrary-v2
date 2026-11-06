@@ -212,7 +212,9 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
   const ilikeFilter = (col: string, val: string) => {
     if (!val) return;
     const safe = sanitizeFilterValue(val);
-    const normVal = sanitizeFilterValue(normalizeBphSearchText(val));
+    // Not sanitised: `.ilike()` is a single filter rather than an `.or()` string, so
+    // a comma is safe here, and the catalogue files every author as "Surname, Name".
+    const normVal = normalizeBphSearchText(val);
     if (mode === 'new') {
       if (useNormCols && normVal.length > 0) {
         query = query.ilike(col === 'shelf_mark' ? 'shelf_mark_norm' : `${col}_norm`, `%${normVal}%`);

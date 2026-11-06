@@ -171,6 +171,14 @@ describe('applyBphFilters — the lanes that were reported as broken', () => {
     expect(calls.filter((c) => c.startsWith('or(') || c.startsWith('textSearch('))).toHaveLength(0);
   });
 
+  // The catalogue files every author this way. With the comma stripped,
+  // "Steiner, Rudolf" found 1 work and "Steiner" found 599.
+  it('keeps the comma in an author filter, as the catalogue files names', () => {
+    const { q, calls } = recorder();
+    applyBphFilters(q as never, parse('author=Steiner%2C+Rudolf'), NEW_SCHEMA);
+    expect(calls).toContain('ilike("author_norm","%steiner, rudolf%")');
+  });
+
   it('rolls an author search up with its variants via the _norm column', () => {
     const { q, calls } = recorder();
     applyBphFilters(q as never, parse('author=Fludd'), NEW_SCHEMA);
