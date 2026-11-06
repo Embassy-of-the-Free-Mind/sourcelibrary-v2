@@ -1,0 +1,112 @@
+[
+ {
+  "bid": "6a8ee2e090f5a0e4155eb868",
+  "pn": 64,
+  "pid": "6a8ee2e090f5a0e4155eb8a8",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 2069,
+  "url": "https://images.sourcelibrary.org/archived/6a8ee2e090f5a0e4155eb868/64.jpg",
+  "title": "Éléments d'économie politique pure, ou Théorie de la richesse sociale",
+  "year": 1874
+ },
+ {
+  "bid": "6a8ee2d790f5a0e4155eb614",
+  "pn": 56,
+  "pid": "6a8ee2d790f5a0e4155eb64c",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 2229,
+  "url": "https://images.sourcelibrary.org/archived/6a8ee2d790f5a0e4155eb614/56.jpg",
+  "title": "Harmonies économiques (2e édition, augmentée des manuscrits laissés par l'auteur",
+  "year": 1851
+ },
+ {
+  "bid": "69e961652beefe2f6f72b4a8",
+  "pn": 105,
+  "pid": "69e961652beefe2f6f72b511",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 1507,
+  "url": "https://images.sourcelibrary.org/archived/69e961652beefe2f6f72b4a8/105.jpg",
+  "title": "大唐西域記 (Da Tang Xiyu Ji / Records of Western Regions)",
+  "year": 1853
+ },
+ {
+  "bid": "69bd95d8d9007d72ade0cc8b",
+  "pn": 639,
+  "pid": "69bd95d8d9007d72ade0cf0a",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 1472,
+  "url": "https://images.sourcelibrary.org/archived/69bd95d8d9007d72ade0cc8b/639.jpg",
+  "title": "Le Zend-Avesta: Traduction nouvelle, Tome I",
+  "year": 1892
+ },
+ {
+  "bid": "69ef3e3a72c1376fdf2b0d3d",
+  "pn": 602,
+  "pid": "69ef3e3a72c1376fdf2b0f97",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 2170,
+  "url": "https://images.sourcelibrary.org/archived/69ef3e3a72c1376fdf2b0d3d/602.jpg",
+  "title": "Les Prolégomènes d'Ibn Khaldoun (Muqaddimah)",
+  "year": 1863
+ },
+ {
+  "bid": "6a3f031e97e91e1768f69575",
+  "pn": 68,
+  "pid": "6a3f031e97e91e1768f695b9",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 965,
+  "url": "https://images.sourcelibrary.org/archived/6a3f031e97e91e1768f69575/68.jpg",
+  "title": "Le livre du préfet, ou, L'édit de l'empereur Léon, le Sage, sur les corporations",
+  "year": 1894
+ },
+ {
+  "bid": "6ac3af063b2f03f7e59cbf1c",
+  "pn": 865,
+  "pid": "6ac3af073b2f03f7e59cc27f",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 718,
+  "url": "https://images.sourcelibrary.org/archived/6ac3af063b2f03f7e59cbf1c/865.jpg",
+  "title": "Lettres de Peiresc, tome sixième: lettres de Peiresc à sa famille et principalem",
+  "year": 1896
+ },
+ {
+  "bid": "69b9a2fc69930cad41a76199",
+  "pn": 435,
+  "pid": "69b9a2fc69930cad41a7634c",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 1283,
+  "url": "https://images.sourcelibrary.org/archived/69b9a2fc69930cad41a76199/435.jpg",
+  "title": "Le Tibet révolté: Vers Népémakö, la terre promise des Tibétains",
+  "year": 1912
+ },
+ {
+  "bid": "69c117607398e38c603c6939",
+  "pn": 487,
+  "pid": "69c117607398e38c603c6b20",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 1336,
+  "url": "https://images.sourcelibrary.org/archived/69c117607398e38c603c6939/487.jpg",
+  "title": "Correspondance Inédite avec Frédéric II et al.",
+  "year": 1836
+ },
+ {
+  "bid": "69bf6108065df5d87d778cd2",
+  "pn": 375,
+  "pid": "69bf6108065df5d87d778e49",
+  "verdict": "write",
+  "reason": "ok",
+  "chars": 2220,
+  "url": "https://images.sourcelibrary.org/archived/69bf6108065df5d87d778cd2/375.jpg",
+  "title": "Histoire de l'Église Vaudoise depuis son Origine",
+  "year": 1847
+ }
+]
