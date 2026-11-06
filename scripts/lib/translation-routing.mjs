@@ -93,6 +93,7 @@ function firstFit(table, book, channel) {
   for (const { row, re, unlessTitle, unlessPublisher, unlessProviders } of compile(table)) {
     if (channelOf(row) !== channel) continue;
     if (unlessTitle?.test(title) || unlessPublisher?.test(publisher) || (provider && unlessProviders?.has(provider))) continue;
+    if (row.match?.any === true) return row;
     if (row.match?.provider && provider === row.match.provider) return row;
     if (re && re.test(language)) return row;
   }
@@ -124,9 +125,11 @@ export function translateLaneForBook(table, book) {
  */
 export function cliBookFilter(table) {
   const clauses = compile(table).filter(({ row }) => channelOf(row) === 'cli').map(({ row, re, unlessTitle, unlessPublisher, unlessProviders }) => ({
-    ...(re
-      ? { language: re, ...(unlessProviders ? { 'image_source.provider': { $nin: [...unlessProviders] } } : {}) }
-      : { 'image_source.provider': row.match.provider }),
+    ...(row.match?.any === true
+      ? (unlessProviders ? { 'image_source.provider': { $nin: [...unlessProviders] } } : {})
+      : re
+        ? { language: re, ...(unlessProviders ? { 'image_source.provider': { $nin: [...unlessProviders] } } : {}) }
+        : { 'image_source.provider': row.match.provider }),
     ...(unlessTitle ? { title: { $not: unlessTitle } } : {}),
     ...(unlessPublisher ? { publisher: { $not: unlessPublisher } } : {}),
   }));
@@ -157,8 +160,15 @@ export function validateTranslationTable(table, engines) {
       if (!row.adoption?.sample || !row.adoption?.replaces) throw new Error(`translation-routing-table: cli row ${row.id} needs adoption.sample and adoption.replaces (the blind sample against the old reader)`);
     }
     if (row.per_call != null && (channel !== 'cli' || row.engine !== 'gemini-3.8-flash+agy-cli' || !Number.isInteger(row.per_call) || row.per_call < 1 || row.per_call > 4)) throw new Error(`translation-routing-table: row ${row.id} has per_call ${row.per_call}; per_call is an integer 1-4 on a cli row naming gemini-3.8-flash+agy-cli (claude-translate.mjs --cli=agy caps a call at 4 pages)`);
-    const kinds = ['provider', 'language_prefix'].filter((k) => row.match?.[k] != null);
-    if (kinds.length !== 1) throw new Error(`translation-routing-table: row ${row.id} needs exactly one of match.provider / match.language_prefix`);
+    const kinds = ['provider', 'language_prefix', 'any'].filter((k) => row.match?.[k] != null);
+    if (kinds.length !== 1) throw new Error(`translation-routing-table: row ${row.id} needs exactly one of match.provider / match.language_prefix / match.any`);
+    // match.any (2026-11-06, Derek "everything on agy"): a catch-all, so only a cli row may carry it, and it must be the
+    // last cli row (a cli row after it would never be reached).
+    if (row.match.any != null) {
+      if (row.match.any !== true || channel !== 'cli') throw new Error(`translation-routing-table: row ${row.id}: match.any is true and only on a cli row`);
+      const later = (table.rows ?? []).slice(table.rows.indexOf(row) + 1).filter((r) => channelOf(r) === 'cli');
+      if (later.length) throw new Error(`translation-routing-table: row ${row.id} matches every book, so cli row ${later[0].id} after it is unreachable`);
+    }
     if (row.match.language_prefix && (!Array.isArray(row.match.language_prefix) || !row.match.language_prefix.length)) throw new Error(`translation-routing-table: row ${row.id} has an empty language_prefix`);
     if (row.unless != null) {
       const lists = ['title_words', 'publisher_words', 'providers'].filter((k) => row.unless[k] != null);
