@@ -1,5 +1,6 @@
 import { ABOUT_STRINGS } from '@/lib/about-i18n';
 import { aboutOgImage, aboutPath } from '@/lib/about-meta';
+import { jsonLdHtml } from '@/lib/json-ld';
 import type { Locale } from '@/lib/locale-path';
 
 const SITE = 'https://sourcelibrary.org';
@@ -19,5 +20,5 @@ export default function AboutSchema({ lang }: { lang: Locale }) {
     isPartOf: { '@id': `${SITE}/#website` },
     about: { '@id': `${SITE}/#organization` },
   };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />;
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(schema) }} />;
 }
