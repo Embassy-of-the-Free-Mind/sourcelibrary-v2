@@ -5,6 +5,9 @@
   { "family": "arc", "name": "Aramaic" }
  ],
  "rows": {
+  "ocr/all-ocr-every-language-new-and-backlog--may-anything-still-read-on-the-paid-api": {
+   "not_routing": "The decision is about the CHANNEL, not the model: getOcrModelForBook still names lite or flash, and API_OCR_MODELS (empty) decides that neither goes to the paid API. Pinned by tests/unit/ocr-api-channel-guard.test.ts, not by a model probe."
+  },
   "ocr/english-print-1800-1930--lite-adequate-or-flash": {
    "probes": [{ "fn": "ocr", "language": "English", "expect": "lite" }]
   },

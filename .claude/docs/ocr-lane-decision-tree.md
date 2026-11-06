@@ -26,7 +26,10 @@ you are about to pick `--model`, an engine, or a free lane by hand.
    that is in the **writer registry below as GAP** is not run until the gap is closed, however
    cheap the text is (the 47 Keely/Tesla residue pages stayed empty on 2026-09-30 until the
    MinerU gap closed the same day).
-2. **The model fixes the channel (#7075).** gemini-3.1-flash-lite is the only Gemini model sent
+2. **No OCR runs on the paid API (Derek 2026-11-06: "no one should use lite", "everything on agy").**
+   `API_OCR_MODELS` is empty: a book the router labels lite is read on agy 3.8 Flash-low like every other
+   (`cli-ocr-lane.mjs` `CLI_MODEL_FOR`), and `assertApiOcrModel` refuses every paid submission. The text
+   below this line describes the rule before that day, kept for the mechanism. **The model fixed the channel (#7075).** gemini-3.1-flash-lite was the only Gemini model sent
    to the paid API, Batch by default (`bulk-reocr-local.mjs`; #5244; realtime is for a reader
    waiting or a handful of pages, and needs `--realtime`). Every other Gemini model (3 Flash,
    3.x Flash, Pro) reads through the **agy CLI** on the subscription (`cli-ocr.mjs`), never the
@@ -50,14 +53,14 @@ you are about to pick `--model`, an engine, or a free lane by hand.
 
 | model | channel | cost |
 |---|---|---|
-| gemini-3.1-flash-lite | paid Gemini **Batch** API | ~$1/1K pp measured (#6968) |
+| gemini-3.1-flash-lite (a routing label since 2026-11-06) | **agy CLI**, read by 3.8 Flash-low; never the API | $0, quota-bound |
 | any other Gemini model (3 Flash, 3.x Flash, Pro) | **agy CLI** on the subscription (`cli-ocr.mjs`), never the API | $0, quota-bound |
 | Claude Opus | `claude -p` on the subscription (`claude-ocr.mjs`), never via agy | $0, quota-bound |
 | Kraken / Yigdzin / Paddle / MinerU | Hetzner or GPU lanes | $0 marginal |
 
 | script / material | OCR reader | evidence | in code |
 |---|---|---|---|
-| Latin-script print (la, fr, de, it, nl, en …) | flash-lite, Batch | default since 2026-09-11 (`OCR_LITE_ONLY`) | `getOcrModelForBook` → lite |
+| Latin-script print (la, fr, de, it, nl, en …) | **agy 3.8 Flash-low, 4 pages a call** (labelled lite; held `ocr-flash-cli-7075`, read by `cli-ocr-lane.mjs run`) | Derek 2026-11-06 "everything on agy"; #7701 first-read cells, #7522 4 a call | `getOcrModelForBook` → lite → `ocrLaneForBook` cli |
 | Greek | 3 Flash via agy | CER 6.6% flash vs 11% lite, 176 referenced books (#5575) | `FLASH_OCR_FROM.grc` |
 | Persian, Sanskrit, Pali, Arabic | 3 Flash via agy | flash re-read lifts judged translation fidelity +1.00 / +0.75 / +0.58 / +0.39 (#5700, PR #5760) | `FLASH_OCR_FROM` |
 | Ge'ez | in the Flash list on agreement only; the issue marks it "not Flash" — open | #4729 agreement 0.47, 9/20 catastrophic | `FLASH_OCR_FROM.gez` |

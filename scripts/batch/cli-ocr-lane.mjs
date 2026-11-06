@@ -243,7 +243,12 @@ export function spreadReason(book, pages) {
 }
 
 /** The CLI model that reads in place of each routed model agy does not offer (see WHICH MODEL above). */
-export const CLI_MODEL_FOR = Object.freeze({ 'gemini-3-flash-preview': 'gemini-3.8-flash-low' });
+// flash-lite: since 2026-11-06 no OCR model runs on the paid API (API_OCR_MODELS is empty, Derek "everything on agy"),
+// so a book the router labels lite is held for this lane and read by 3.8 Flash-low, 4 pages a call (#7522, #7701).
+export const CLI_MODEL_FOR = Object.freeze({
+  'gemini-3-flash-preview': 'gemini-3.8-flash-low',
+  'gemini-3.1-flash-lite': 'gemini-3.8-flash-low',
+});
 
 /** The pages this lane reads: the orchestrator's Phase 2 filter (submitOcrForBook), without the per-model block. */
 export const UNREAD = Object.freeze({
