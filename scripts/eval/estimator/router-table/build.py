@@ -254,21 +254,21 @@ def on_menu(r, P):
     return not in_force(P, 'menu') or r.get('stage') not in P['menu']['off_menu_stages']
 
 
-def menu_default(cell, fdec, M, rs, P):
+def menu_default(cell, fdec, M, rs, P, failed=()):
     """No default to the status quo (rules.json menu.default, #8283: "an untested cell gets agy, never the incumbent").
     Only a cell the evidence has not decided: UNTESTED, too few pages, or nothing rated to compare or passing. It takes
     the plainest agy route: measured first, then fewest stages, then posterior mean, and a measured one must pass the k/n floor
-    against the best measured route. Held, planned, hard-floor, judge-gate and rated decisions are untouched. (decision,
+    against the best measured route, and a route the rule just failed (`failed`) is not a default. Held, planned, hard-floor, judge-gate and rated decisions are untouched. (decision,
     route) or None."""
     if not in_force(P, 'menu') or cell.get('held') or cell.get('planned'): return None
     if not ('UNTESTED' in fdec or 'pages a route' in fdec or 'no defect verdicts' in fdec or 'no rated route passes' in fdec): return None
     A, best = P['decision_rule']['accept_floor'], max(M, key=lambda r: r['mean'], default=None)
     near = lambda r: r not in M or r is best or within_p(r, best, A['within']) >= A['p']
-    cand = [r for r in rs if r.get('channel') == 'agy' and on_menu(r, P) and floor_ok(r, P) and near(r)]
+    cand = [r for r in rs if r.get('channel') == 'agy' and on_menu(r, P) and floor_ok(r, P) and near(r) and r['id'] not in failed]
     if not cand: return None
     d = min(cand, key=lambda r: (r not in M, r['id'].count('>') + r['id'].count('+'), -r['mean']))
     ev = 'measured here' if d in M else 'too few pages here' if d.get('tested') else 'unmeasured here'
-    return f"{'keep' if d['id'] == cell['current'] else 'switch'} (default: agy, {ev}; was {fdec.split(' (')[0]})", d
+    return f"{'keep' if d['id'] == cell['current'] else 'switch'} (default: agy, {ev}; was {fdec.split(' (')[0].replace('UNTESTED', 'untested')})", d   # the default decided it: readers match /UNTESTED/ as undecided
 
 
 def judge_stratum(cell):
@@ -320,14 +320,15 @@ def decide_defects(cell, rs, M, cur, live_id, P, cal):
     live, no_text = next((r for r in rs if r['id'] == live_id), None), live_id == 'scans-only'
     # Opus only where agy fails the hard floor (#8283 plan): every agy route on the menu blocked, tested or not
     agy_left = any(r.get('channel') == 'agy' and on_menu(r, P) and floor_ok(r, P) for r in rs)
-    cand = [r for r in pool if not is_bar(r, P) or r is live or not agy_left] or pool
+    cand = [r for r in pool if not is_bar(r, P) or r is live or not agy_left]
     if rated and not pool:
         clear = [r for r in M if floor_ok(r, P)]
         return f"HOLD (hard floor: no {'rated' if clear else 'measured'} route clears it)", max(clear or rated, key=lambda r: r['mean']), dict(why='every rated route is blocked', rated=[r['id'] for r in rated])
-    if not cand: return None, None, dict(why=f"no route with verdicts from {R['min_books']} books")
-    if live in rated and live not in pool and not any(r.get('channel') == 'agy' for r in M) and len(cand) == 1:
+    if live in rated and live not in pool and not any(r.get('channel') == 'agy' for r in M) and len(cand) <= 1:
         # the live route fails the floor and agy was never measured here: an open test (#8283 plan, question 2), not a default
-        return f"HOLD (hard floor: only {cand[0]['id']} clears it)", cand[0], dict(why=f"the live {live_id} is blocked; agy is unmeasured", rated=[r['id'] for r in rated])
+        b = (cand or pool)[0]
+        return f"HOLD (hard floor: only {b['id']} clears it)", b, dict(why=f"the live {live_id} is blocked; agy is unmeasured", rated=[r['id'] for r in rated])
+    if not cand: return None, None, dict(why="only Opus is rated, and agy clears the floor" if pool else f"no route with verdicts from {R['min_books']} books")
     if not no_text and len(cand) == 1 and cand[0].get('channel') != 'agy':
         return None, None, dict(why=f"only {cand[0]['id']} is rated: compared with nothing")
     mean = lambda r, s: r['defects'][f'{s}_per_1k_posterior'][1]
@@ -495,7 +496,7 @@ def main():
         live_id = LIVE.get(cell['id'], cur['id'])
         dec, pk, dinfo = decide(cell, rs, M, cur, live_id, P, CAL)
         fdec, jinfo = judge_gate(cell, dec, pk, P, S)
-        md = menu_default(cell, fdec, M, rs, P)
+        md = menu_default(cell, fdec, M, rs, P, [i for i, g in (dinfo or {}).get('gates', {}).items() if not all(v for k, v in g.items() if k in ('wrong_text', 'accept'))])
         fdec, fpk = md or (fdec, pk)
         pages = cell.get('pages_waiting', v2.get(cell.get('v2'), {}).get('pages_waiting', 0))
         alone = decide_defects(cell, rs, M, cur, live_id, P, CAL) if (cell.get('planned') or {}).get('decision') else None

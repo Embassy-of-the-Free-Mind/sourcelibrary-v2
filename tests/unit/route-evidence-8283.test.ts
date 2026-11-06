@@ -56,6 +56,7 @@ describe('excludedBecause', () => {
     expect(excludedBecause(item({ origin: 'test', selection: 'hand-picked' }), I)).toBe('not a random draw');
     expect(excludedBecause(item({ test: { rep: 1 } }), I)).toBe('a repeat');
     expect(excludedBecause(item({ draw: { stratum: 'flagged' } }), I)).toBe('flagged stratum');
+    expect(excludedBecause(item({ verdict: { accept: false, defects: [{ class: 'O6' }] } }), I)).toBe('a defect with no severity');
   });
 });
 

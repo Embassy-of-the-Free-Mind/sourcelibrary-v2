@@ -839,7 +839,7 @@ async function rebuild() {
   if (arg('export')) writeEvidence(dir, score);
   // #8283: the one decision input. QA verdicts into the store (additive), the store into this copy's defect-rates.json
   const evidence = path.join(REPO(), 'scripts/eval/route-evidence.mjs');
-  sh('node', [evidence, 'ingest', '--apply'], { cwd: REPO() });
+  if (!flag('no-publish') && !arg('export')) sh('node', [evidence, 'ingest', '--apply'], { cwd: REPO() });   // a replay or a test writes nothing
   sh('node', [evidence, 'export', `--out=${path.join(dir, 'route-evidence')}`], { cwd: REPO(), env: { ...process.env, ROUTE_EVIDENCE_CWD: dir } });
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');

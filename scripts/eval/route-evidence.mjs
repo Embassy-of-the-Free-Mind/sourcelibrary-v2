@@ -128,6 +128,7 @@ export function excludedBecause(r, I) {
   if (r.kind !== 'item') return 'not an item';
   const v = r.verdict;
   if (typeof v?.accept !== 'boolean' || !Array.isArray(v?.defects)) return 'not the route judge scale';
+  if (v.defects.some((d) => !SEV.includes(d?.severity))) return 'a defect with no severity';
   if (r.origin === 'test' && r.selection !== 'random') return 'not a random draw';
   if ((r.test?.rep ?? 0) > 0) return 'a repeat';
   if (r.draw?.stratum === 'flagged') return 'flagged stratum';

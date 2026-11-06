@@ -91,6 +91,22 @@ class DefectRule(unittest.TestCase):
         self.assertEqual((dec, pk['id']), ('switch', 'alt'))
         self.assertEqual(info['picks'], {'0.001': 'alt', '0.01': 'alt', '0.1': 'alt'})
 
+    def test_opus_alone_rated_while_agy_clears_the_floor_is_undecided(self):
+        # print, two rated Opus routes, live unrated, an agy route with no verdicts yet: Opus does not win by being all that is rated
+        live = self.r('live', 0.8, 0.0, wt=None, ml=None)
+        o1, o2 = [self.r(i, 0.95, 0.002, wt=0.2, ml=0.5, channel='claude') for i in ('opus1', 'opus2')]
+        agy = self.r('agy', 0.8, 0.0003, wt=None, ml=None, tested=False)
+        dec, pk, info = B.decide_defects({'id': 'c'}, [live, o1, o2, agy], [live, o1, o2], live, 'live', self.Q, self.CAL)
+        self.assertIsNone(dec)
+        self.assertIn('only Opus', info['why'])
+
+    def test_blocked_live_with_agy_untried_holds_on_opus_not_a_default(self):
+        live = self.r('live', 0.7, 0.0, wt=2.0, ml=3.0, channel='api', hard_floor_block=True)
+        opus = self.r('opus', 0.95, 0.002, wt=0.2, ml=0.5, channel='claude')
+        agy = self.r('agy', 0.8, 0.0003, wt=None, ml=None, tested=False)
+        dec, pk, _ = B.decide_defects({'id': 'c'}, [live, opus, agy], [live, opus], live, 'live', self.Q, self.CAL)
+        self.assertEqual((dec, pk['id']), ('HOLD (hard floor: only opus clears it)', 'opus'))
+
     def test_wrong_text_gate_refuses(self):
         live = self.r('live', 0.92, 0.0008, wt=0.2, ml=1.0)
         cheap = self.r('cheap', 0.95, 0.0, wt=0.6, ml=0.1)        # 0.8 x 0.6 > 0.8 x 0.2 + 0.15: fails, though free
@@ -342,6 +358,15 @@ class Menu(unittest.TestCase):
         dec, pk = B.menu_default(self.C, 'keep (UNTESTED)', [], [lite, chain, plain], self.PM)
         self.assertEqual(pk['id'], 'agy-flash-low-read')     # fewer stages beats a higher prior
         self.assertTrue(dec.startswith('switch (default: agy, unmeasured here'))
+
+    def test_a_route_the_rule_just_failed_is_not_the_default(self):
+        lite, bad = self.r('lite', None, 'none'), self.r('agy-bad', 'agy', 'agy-read')
+        self.assertIsNone(B.menu_default(self.C, 'HOLD (defects: no rated route passes)', [lite, bad], [lite, bad], self.PM, ['agy-bad']))
+
+    def test_the_default_does_not_read_as_undecided(self):
+        # router-binding.mjs and the audits read /UNTESTED/ as undecided; the default has decided the cell
+        dec = B.menu_default(self.C, 'UNTESTED (manuscript)', [], [self.r('lite', None, 'none'), self.r('agy', 'agy', 'agy-read', tested=False)], self.PM)[0]
+        self.assertNotIn('UNTESTED', dec)
 
     def test_nothing_to_compare_is_undecided_but_a_rule_decision_stands(self):
         lite, agy = self.r('lite', None, 'none'), self.r('agy-flash-low-read', 'agy', 'agy-read', tested=False)
