@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { READINGS, type Box } from './readings';
+import type { AboutDemoStrings } from '@/lib/about-i18n';
 
 /**
  * "What we do", shown rather than listed, after the folium-studio.com hero: one
@@ -22,7 +23,8 @@ type Phase = 0 | 1 | 2 | 3 | 4 | 5; // 0 hidden, 1 scan, 2 read, 3 translate, 4 
 
 /** `children` is the step list, rendered by the page; each step carries `rd-step` and
  *  `data-i`, and is lit from the `data-active` attribute set here. */
-export default function ReadingDemo({ children }: { children: ReactNode }) {
+export default function ReadingDemo({ children, t: tr }: { children: ReactNode; t: AboutDemoStrings }) {
+  const kind = (k: string) => tr.kinds[k] ?? k;
   const rootRef = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);
   const [phase, setPhase] = useState<Phase>(0);
@@ -118,14 +120,14 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
     </div>
   );
   const tags: [string, string][] = [
-    ...cur.ents.map((e) => [e.k, e.v] as [string, string]),
-    ...cur.terms.map((v) => ['Subject', v] as [string, string]),
-    ...cur.plate.tags.map((v) => ['Illustration', v] as [string, string]),
+    ...cur.ents.map((e) => [kind(e.k), e.v] as [string, string]),
+    ...cur.terms.map((v) => [tr.subject, v] as [string, string]),
+    ...cur.plate.tags.map((v) => [tr.illustration, v] as [string, string]),
   ];
 
   return (
     <div ref={rootRef} data-active={active} className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 lg:gap-14 items-start">
-      <div className={`rd p${phase}`} aria-label={`A page from ${cur.title} being transcribed, translated and tagged`}>
+      <div className={`rd p${phase}`} aria-label={tr.aria.replace('{title}', cur.title)}>
         <div className="rd-page relative bg-[#1a1612]" style={{ aspectRatio: String(cur.ar) }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -137,9 +139,9 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
           <div className="rd-scan" />
           <div className="absolute inset-0">
             {box(cur.line, 'line')}
-            {cur.ents.map((e, i) => box(e, 'ent', e.k, i))}
+            {cur.ents.map((e, i) => box(e, 'ent', kind(e.k), i))}
             {cur.ents.map((e, i) => e.also?.map((b, q) => box(b, 'ent', undefined, `also-${i}-${q}`)))}
-            {box(cur.plate, 'plate', cur.plate.k.replace('Figure · ', ''))}
+            {box(cur.plate, 'plate', kind(cur.plate.k.replace('Figure · ', '')))}
           </div>
         </div>
 
@@ -149,17 +151,17 @@ export default function ReadingDemo({ children }: { children: ReactNode }) {
               <b className="font-semibold text-primary">{cur.title}</b> · {cur.meta}
             </span>
             <span className="flex gap-3 text-[13px] text-muted shrink-0">
-              <i className={`rd-st ${phase >= 2 ? 'on' : ''}`} style={{ ['--c' as string]: BLUE }}>Transcribed</i>
-              <i className={`rd-st ${phase >= 3 ? 'on' : ''}`} style={{ ['--c' as string]: GREEN }}>Translated</i>
-              <i className={`rd-st ${phase >= 4 ? 'on' : ''}`} style={{ ['--c' as string]: YELLOW }}>Tagged</i>
+              <i className={`rd-st ${phase >= 2 ? 'on' : ''}`} style={{ ['--c' as string]: BLUE }}>{tr.transcribed}</i>
+              <i className={`rd-st ${phase >= 3 ? 'on' : ''}`} style={{ ['--c' as string]: GREEN }}>{tr.translated}</i>
+              <i className={`rd-st ${phase >= 4 ? 'on' : ''}`} style={{ ['--c' as string]: YELLOW }}>{tr.tagged}</i>
             </span>
           </div>
           <dl className="mt-3 grid grid-cols-[5.5rem_minmax(0,1fr)] sm:grid-cols-[7rem_minmax(0,1fr)] gap-x-3 gap-y-2 text-[15px] leading-snug">
-            <dt className="text-[13px] font-medium pt-0.5" style={{ color: BLUE }}>{cur.lang}</dt>
+            <dt className="text-[13px] font-medium pt-0.5" style={{ color: BLUE }}>{kind(cur.lang)}</dt>
             <dd className="text-primary italic min-h-[2.75em]">{orig}</dd>
-            <dt className="text-[13px] font-medium pt-0.5" style={{ color: phase >= 3 ? GREEN : undefined }}>English</dt>
+            <dt className="text-[13px] font-medium pt-0.5" style={{ color: phase >= 3 ? GREEN : undefined }}>{tr.english}</dt>
             <dd className="text-primary min-h-[2.75em]">{en}</dd>
-            <dt className="text-[13px] font-medium pt-0.5" style={{ color: phase >= 4 ? YELLOW : undefined }}>Tags</dt>
+            <dt className="text-[13px] font-medium pt-0.5" style={{ color: phase >= 4 ? YELLOW : undefined }}>{tr.tags}</dt>
             <dd className="flex flex-wrap gap-x-3 gap-y-1 min-h-[1.5em] text-[13px]">
               {phase >= 4 &&
                 tags.map(([k, v], i) => (
