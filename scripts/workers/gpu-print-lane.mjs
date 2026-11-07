@@ -47,7 +47,7 @@
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/gpu-print-lane.mjs frame
  * Options: --dir <lane dir> (default $LANE_DIR or /root/jobs/gpu-print-6871)  --book <id>  --books <file>  --limit N
  *   --lang en|en19|fr (default $LANE_LANG, else the lane dir's `lang` file, else en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
-  *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
+ *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
  *   --max-pages N (plan: N pages spread through each book, for a pilot)
  * French (#6871, Derek 2026-11-07): the French 1800+ pages Flash-Lite refused, read by the GPU steward, written bare:
  *   LANE_DIR=/root/jobs/gpu-print-fr19r-6871 (manifest.tsv, out/ and runs/ from the steward's reads)
