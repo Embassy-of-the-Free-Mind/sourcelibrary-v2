@@ -286,6 +286,24 @@ export interface ReaderStrings {
     marksHiddenByNotes: string;
   };
 
+  /**
+   * A facing-page edition (a Loeb, #8321): the published English printed
+   * opposite the original, shown in the translation pane in place of ours.
+   */
+  facing: {
+    /** The pane label, before " · <translator>, <year>". */
+    loebTranslation: string;
+    /** Our AI translation, one click away. */
+    sourceLibraryTranslation: string;
+    showSourceLibraryTranslation: string;
+    showLoebTranslation: string;
+    /** Under our translation, so nobody mistakes it for the Loeb's. */
+    sourceLibraryTranslationNote: string;
+    /** On the English leaf itself: it is the translation of the page opposite. */
+    englishLeafNote: (printedPage: string) => string;
+    goToOriginal: string;
+  };
+
   /** Contents panel. */
   contents: {
     noContentsTranscribed: string;
@@ -921,6 +939,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Added here by an editor, not on the original.',
       marksHiddenByNotes: 'Notes hides all of them.',
     },
+    facing: {
+      loebTranslation: 'Loeb translation',
+      sourceLibraryTranslation: 'Source Library translation',
+      showSourceLibraryTranslation: 'Show the Source Library translation',
+      showLoebTranslation: 'Show the Loeb translation',
+      sourceLibraryTranslationNote: 'Our AI translation of the original on this page, not the published one.',
+      englishLeafNote: (p: string) => `This page is the published English translation of p. ${p}, printed facing it.`,
+      goToOriginal: 'Go to the original',
+    },
     contents: {
       noContentsTranscribed: 'This edition’s table of contents has not been transcribed yet. Use the reading guide or the page strip to move around.',
       noContentsAtAll: 'This book has no table of contents.',
@@ -1418,6 +1445,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: 'Nota nuestra',
       markOurNoteDesc: 'Añadida aquí por un editor; no está en el original.',
       marksHiddenByNotes: 'El botón «Notas» las oculta todas.',
+    },
+    facing: {
+      loebTranslation: 'Traducción Loeb',
+      sourceLibraryTranslation: 'Traducción de Source Library',
+      showSourceLibraryTranslation: 'Ver la traducción de Source Library',
+      showLoebTranslation: 'Ver la traducción Loeb',
+      sourceLibraryTranslationNote: 'Nuestra traducción automática del original de esta página, no la publicada.',
+      englishLeafNote: (p: string) => `Esta página es la traducción inglesa publicada de la p. ${p}, impresa enfrente.`,
+      goToOriginal: 'Ir al original',
     },
     contents: {
       noContentsTranscribed: 'El índice de esta edición aún no se ha transcrito. Usa la guía de lectura o la tira de páginas para moverte.',
@@ -1942,6 +1978,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Hic ab editore addita; in exemplari non est.',
       marksHiddenByNotes: 'Notis celatis omnia celantur.',
     },
+    facing: {
+      loebTranslation: 'Versio Loebiana',
+      sourceLibraryTranslation: 'Versio Source Library',
+      showSourceLibraryTranslation: 'Versionem Source Library ostende',
+      showLoebTranslation: 'Versionem Loebianam ostende',
+      sourceLibraryTranslationNote: 'Versio nostra machinalis huius paginae, non edita.',
+      englishLeafNote: (p: string) => `Haec pagina est versio Anglica edita paginae ${p}, ex adverso impressa.`,
+      goToOriginal: 'Ad textum primigenium',
+    },
     contents: {
       noContentsTranscribed: 'Index capitum huius editionis nondum transcriptus est. Duce legendi vel serie paginarum utere, ut per librum eas.',
       noContentsAtAll: 'Hic liber indicem capitum non habet.',
@@ -2448,6 +2493,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNoteDesc: 'Hier toegevoegd door een redacteur, niet in het origineel.',
       marksHiddenByNotes: 'Met Noten uit zijn ze allemaal verborgen.',
     },
+    facing: {
+      loebTranslation: 'Loeb-vertaling',
+      sourceLibraryTranslation: 'Vertaling van Source Library',
+      showSourceLibraryTranslation: 'Toon de vertaling van Source Library',
+      showLoebTranslation: 'Toon de Loeb-vertaling',
+      sourceLibraryTranslationNote: 'Onze AI-vertaling van het origineel op deze pagina, niet de gepubliceerde.',
+      englishLeafNote: (p: string) => `Deze pagina is de gepubliceerde Engelse vertaling van p. ${p}, er tegenover gedrukt.`,
+      goToOriginal: 'Naar het origineel',
+    },
     contents: {
       noContentsTranscribed: 'De inhoudsopgave van deze editie is nog niet getranscribeerd. Gebruik de leeswijzer of de paginastrook om door het boek te gaan.',
       noContentsAtAll: 'Dit boek heeft geen inhoudsopgave.',
@@ -2948,6 +3002,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       markOurNote: '我们的注释',
       markOurNoteDesc: '由编者在此添加，原书上没有。',
       marksHiddenByNotes: '关闭“注释”会隐藏全部标记。',
+    },
+    facing: {
+      loebTranslation: '洛布译文',
+      sourceLibraryTranslation: 'Source Library 译文',
+      showSourceLibraryTranslation: '显示 Source Library 译文',
+      showLoebTranslation: '显示洛布译文',
+      sourceLibraryTranslationNote: '这是我们对本页原文的 AI 译文，并非出版译本。',
+      englishLeafNote: (p: string) => `本页是第 ${p} 页的出版英译，印在其对页。`,
+      goToOriginal: '前往原文',
     },
     contents: {
       noContentsTranscribed: '本版本的目录尚未转录。可以通过阅读指南或页面缩略条在书中跳转。',

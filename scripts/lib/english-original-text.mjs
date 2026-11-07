@@ -63,14 +63,16 @@ export function isEnglishOriginalBook(book) {
 }
 
 /**
- * True when this page's stored `translation` must not be used: English book,
- * English leaf, and a transcription to use instead.
+ * True when this page's stored `translation` must not be used: English book
+ * (or a book flagged `facing_translation`), English leaf, and a transcription
+ * to use instead.
  */
 export function servesTranscriptionInsteadOfTranslation(page, book) {
   const ocr = typeof page?.ocr?.data === 'string' ? page.ocr.data : '';
   const tr = typeof page?.translation?.data === 'string' ? page.translation.data : '';
   if (!tr || !ocr.trim()) return false;
-  if (!isEnglishOriginalBook(book)) return false;
+  // A facing-page edition (a Loeb, #8321): its English leaves are the published translation.
+  if (!isEnglishOriginalBook(book) && book?.facing_translation?.source !== 'published') return false;
   return isEnglishOriginalPage(ocr);
 }
 

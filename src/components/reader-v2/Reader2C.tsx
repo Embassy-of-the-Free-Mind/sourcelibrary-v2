@@ -64,6 +64,8 @@ import { printedDisplay, type PrintedNumbers } from '@/lib/printed-numbers';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
+import { useFacingPartner } from './useFacingPartner';
+import { FacingPaneHeader, FacingEnglishLeafNote, SourceLibraryTranslationNote, withFacingEnglish } from './FacingTranslation';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -196,6 +198,8 @@ interface Reader2CProps {
   /** The measured accuracy of the engine we use on this book's script, for the line beside the page-report
    *  control (#6278); the server passes it on `/la` Latin books only. */
   ocrMeasure?: OcrMeasure | null;
+  /** A facing-page edition (#8321): the leaf opposite the first page, served the same way, for the first paint. */
+  initialFacingPage?: Page | null;
 }
 
 /** Desktop tool rail button (the rail is the desktop navigation). */
@@ -2590,7 +2594,7 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, printedNumbers, ocrMeasure }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps, printedNumbers, ocrMeasure, initialFacingPage }: Reader2CProps) {
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
@@ -2700,8 +2704,15 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // silently serving the live translation under a pinned URL is the reader
   // lying about what it is showing.
   const [pinnedTranslation, setPinnedTranslation] = useState<string | null>(null);
+  // A facing-page edition (a Loeb, #8321): on the original leaf the pane shows
+  // the published English printed opposite; ours stays one click away.
+  const facing = useFacingPartner(r.book, r.currentPage, r.pageList, r.fetchPage, initialFacingPage);
+  const [showOurTranslation, setShowOurTranslation] = useState(false);
+  const loebShown = facing?.role === 'original' && !showOurTranslation && pinnedTranslation == null;
   const displayPage = pinnedTranslation != null
     ? { ...r.currentPage, translation: { ...(r.currentPage.translation ?? {}), data: pinnedTranslation } } as Page
+    : loebShown && facing
+    ? withFacingEnglish(r.currentPage, facing)
     : r.currentPage;
 
   // page_read feeds analytics_events, which the admin book-insights and
@@ -4123,11 +4134,13 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   {r.settings.glosses && <MarksKey />}
                   {showingSpanish
                     ? <CopySpanishButton page={r.currentPage} lang={showingEdition ?? 'es'} />
-                    : <CopyTextButton page={r.currentPage} kind="translation" />}
+                    : <CopyTextButton page={displayPage} kind="translation" />}
                 </div>
               ) : undefined}>
                 {paired ? (
                   <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>English · Berthelot</CapsLabel>
+                ) : facing?.role === 'original' && !showingSpanish ? (
+                  <FacingPaneHeader book={r.book} showingOurs={!loebShown} onToggle={() => setShowOurTranslation((v) => !v)} />
                 ) : (
                   <TranslationLanguageHeader
                     lang={r.settings.translationLang}
@@ -4153,7 +4166,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPage.id} className="rv2-page-in" data-page-pending={pagePending ? '' : undefined}>
-                    {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
+                    {!paired && !showingSpanish && !loebShown && <MachineDraftLine page={displayPage} book={r.book} />}
+                    {!paired && !showingSpanish && facing?.role === 'original' && !loebShown && <SourceLibraryTranslationNote />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     <MissingPagesLine gaps={scanGaps} pageNumber={r.currentPage.page_number} />
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
@@ -4162,6 +4176,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
                       ? <SpanishProse page={r.currentPage} lang={showingEdition ?? 'es'} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
+                      : facing?.role === 'translation'
+                      ? <FacingEnglishLeafNote facing={facing} onGo={() => r.goToPage(facing.page.id)} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
                     <PageProblemReport page={r.currentPage} book={r.book} measure={ocrMeasure} />
                   </div>
@@ -4504,12 +4520,16 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             <section data-reader-section="translation" className="relative border-t" style={{ background: SURFACE.translation, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <div className="flex items-center gap-2">
+                  {facing?.role === 'original' && !showingSpanish ? (
+                    <FacingPaneHeader book={r.book} showingOurs={!loebShown} onToggle={() => setShowOurTranslation((v) => !v)} />
+                  ) : (
                   <TranslationLanguageHeader
                     lang={r.settings.translationLang}
                     onChange={(l) => r.updateSettings({ translationLang: l })}
                     available={editionLangs}
                     editing={editing}
                   />
+                  )}
                   {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
                 </div>
                 <div className="flex items-center gap-1">
@@ -4520,7 +4540,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   {r.settings.glosses && <MarksKey />}
                   {showingSpanish
                     ? <CopySpanishButton page={r.currentPage} lang={showingEdition ?? 'es'} />
-                    : <CopyTextButton page={r.currentPage} kind="translation" />}
+                    : <CopyTextButton page={displayPage} kind="translation" />}
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
@@ -4547,7 +4567,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                     )}
                   </p>
                 )}
-                {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
+                {!paired && !showingSpanish && !loebShown && <MachineDraftLine page={displayPage} book={r.book} />}
+                {!paired && !showingSpanish && facing?.role === 'original' && !loebShown && <SourceLibraryTranslationNote />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     <MissingPagesLine gaps={scanGaps} pageNumber={r.currentPage.page_number} />
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
@@ -4556,6 +4577,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
                   ? <SpanishProse page={r.currentPage} lang={showingEdition ?? 'es'} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
+                  : facing?.role === 'translation'
+                  ? <FacingEnglishLeafNote facing={facing} onGo={() => r.goToPage(facing.page.id)} />
                   : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
                 <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} measure={ocrMeasure} />
               </div>

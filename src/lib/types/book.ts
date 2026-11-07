@@ -32,6 +32,10 @@ export interface Book {
   // resolved image + link + caption (re-pickable if a URL ever goes stale).
   about_visual?: { src: string; href: string; caption?: string } | null;
 
+  // A facing-page edition whose English leaves are the PUBLISHED translation (a Loeb, #8321).
+  // Read through src/lib/facing-translation.ts; written by scripts/maintenance/loeb-facing-census.mjs.
+  facing_translation?: import('@/lib/facing-translation').FacingTranslation | null;
+
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)

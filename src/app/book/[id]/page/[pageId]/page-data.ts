@@ -27,7 +27,7 @@ export const BOOK_META_PROJECTION = {
   pages_translated_zh: 1,
   // English edition? Its English leaves describe themselves by their own
   // words, not a stored rewording (#7100).
-  'translation_state.english_original': 1,
+  'translation_state.english_original': 1, facing_translation: 1,
 };
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
