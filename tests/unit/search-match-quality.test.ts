@@ -1,5 +1,41 @@
 import { describe, it, expect } from 'vitest';
-import { assessMatchQuality, coversEveryToken, namedAuthorGallery, termIsNamedPerson } from '@/lib/search/match-quality';
+import { assessMatchQuality, coversEveryToken, namedAuthorGallery, termIsNamedPerson, wordStartHits } from '@/lib/search/match-quality';
+
+describe('wordStartHits (#8309)', () => {
+  it('tells a title word from a word inside a longer word', () => {
+    expect(wordStartHits('Getica', 'Iordanis Romana et Getica')).toBe(1);
+    expect(wordStartHits('Getica', 'Disputatio exegetica in cap. I. et II.')).toBe(0);
+    expect(wordStartHits('Getica', 'Petri Aerodii Epistola Apologetica')).toBe(0);
+    expect(wordStartHits('optic', 'Coptic Gospels')).toBe(0);
+  });
+
+  it('gives an inflected form the same credit as the form typed', () => {
+    // A whole-word test put De magia disputatio above Porta for "Magia".
+    expect(wordStartHits('Magia', 'Magiae naturalis libri XX')).toBe(wordStartHits('Magia', 'De magia disputatio'));
+  });
+
+  it('counts each word of the query, in the author as well as the title', () => {
+    expect(wordStartHits('Romana Getica', 'Romana et Getica')).toBe(2);
+    expect(wordStartHits('Romana Getica', 'Romana et exegetica')).toBe(1);
+    expect(wordStartHits('Aristotle Metaphysics', 'Metaphysics and Ethics Aristotle')).toBe(2);
+  });
+
+  it('compares folded text in spaced scripts', () => {
+    expect(wordStartHits('getica', 'Gética')).toBe(1);
+    expect(wordStartHits('ἠθικά', 'Ἠθικὰ Νικομάχεια')).toBe(1);
+    expect(wordStartHits('تاريخ', 'كتاب تاريخ الرسل')).toBe(1);
+  });
+
+  it('abstains in a script with no word boundaries, whatever the title', () => {
+    expect(wordStartHits('本草綱目', '本草綱目')).toBe(0);
+    expect(wordStartHits('本草綱目', '重修本草綱目序')).toBe(0);
+  });
+
+  it('abstains on short words and on empty text', () => {
+    expect(wordStartHits('Yi I', 'Yi I collected works')).toBe(0);
+    expect(wordStartHits('Getica', '')).toBe(0);
+  });
+});
 
 describe('namedAuthorGallery', () => {
   const img = (id: string, description: string, bookTitle = '') => ({ id, description, bookTitle });
