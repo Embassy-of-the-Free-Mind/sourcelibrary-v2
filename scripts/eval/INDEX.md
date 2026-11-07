@@ -940,7 +940,7 @@ Read these for the house conventions before designing a new study.
 | `route-judge-6740/fresh-gate-7517.mjs` | #7517: may a FRESH 3.8 Flash-low read (agy, second account) replace Flash-Lite Batch on the German, French and Latin lite cells? Reads a route-judge DIR (judge.mjs score has run) and, for the cells… |
 | `route-judge-6740/german-cheaper-7701/run.mjs` | #7701 german-cheaper (job german-cheaper-7701): German print with no OCR, the live read@4 against three cheaper routes on the SAME pages: R8 = read@8; G = a GPU draft alone (LightOnOCR-3-1B; PERO-O… |
 | `route-judge-6740/jcb-1600-8049/defect-rates.mjs` | py (the per-1,000-words measure the experiments header asks for). |
-| `route-judge-6740/jcb-1600-8049/run.mjs` | #8049 cell test: first reads of pre-1600 print (the JCB scans) by GPU draft > agy Flash-low, per language, before the language's pages are queued. |
+| `route-judge-6740/jcb-1600-8049/run.mjs` | mjs (#7701's cell tests: one unread page per book, the written set from cli-ocr.mjs apply's own GPU-draft guards in a dry run, blind packet with wrong-page and planted controls, Beta(1+k,1+n-k) rul… |
 | `route-judge-6740/judge.mjs` | mjs — its draw (one page per book, seeded by page id), blind packet with a key, wrong-page control and two-family judge loop are reused here (claudeCall's env scrub, parseJson, agy-cli's gated call). |
 | `route-judge-6740/lane-accept-7263.mjs` | Production acceptance of the live lite>agy-flash-low route (#7263). |
 | `route-judge-6740/paired-arm.mjs` | mjs — the instrument this is the recipe for: its draw (one page per book), its blind packet and key (key.json: kind item \| wrong_page \| planted, judged_as an opaque id), its verdict files (verdicts… |
