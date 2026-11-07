@@ -4,11 +4,11 @@ measure: [judged]
 languages: [es, fr]
 scripts: [Latn]
 canons: []
-n_books: null
-n_pages: null
-verdict: "PENDING: the gate on new pages runs after this rule is committed."
-status: undecided
-decision: "PENDING"
+n_books: 44
+n_pages: 60
+verdict: "Both cells pass on new pages: Spanish 28/30 accepted, 1 wrong text (3.3%), P 0.962; French 29/30, 0 wrong text, P 0.992, plants 2/2. 0 marker residue."
+status: decided
+decision: "Spanish route on (cron :45); French route on, ranked after Spanish (cron :15). One pool, .agy-milo."
 feeds: route
 superseded_by: null
 issue: [6871]
@@ -62,5 +62,41 @@ block is refused). One agy pool for both cells.
    (both draws' sample files). French passes: its route turns on, ranked after Spanish (`--after-lane`). French fails:
    it stays off. If most unwritten French pages are ones agy tags handwritten, a few are opened by eye.
 
-### Results
-PENDING.
+### Results (2026-11-07, pilot through the real lane, `armc --apply`, pilot checkout with #8296)
+
+| | Spanish 1800-1929 (es19) | French 1800-1929 (fr19) |
+|---|---|---|
+| pilot pages tried | 290 (15 books, ~22 a book) | 210 (70 books, 3 a book; the 60 cell-test books skipped, `--skip-books`) |
+| written | 201 (69%) | 86 (41%) |
+| gate draw | 30 pages, **14 books: same books as the cell test, new pages** | 30 pages, 30 books, none judged before |
+| accepted (Opus, blind, vs image) | 28/30 | 29/30 |
+| wrong text | 1 (3.3%): old-style 1 read as 4 (`4503` for 1503, `47` for 17) | 0 |
+| other rejection | 1 misleads: a people's name misspelt (`itzceaqueños`) | 1 misleads: an index page number `28*` for `287*` (faint 7) |
+| P(acc ≥ 0.8), Beta(1+k, 1+n−k) | 0.962 | 0.992 |
+| wrong-page controls rejected | 2/2 | 2/2 |
+| planted errors caught | none (no Spanish planter) | 2/2 |
+| **gate** | **PASS** | **PASS** |
+| marker residue in written text | 0 | 0 |
+| agy calls / written page | 1.43 (288/201); 1.10 without the 67 calls lost to exit -9 | 2.24 (193/86) |
+| GPU drafts | 290 in 8 min incl. vLLM start (~2,200 pages/h) | 210 in 10 min incl. image fetch (~1,260 pages/h) |
+| correction throughput | ~165 pages/h (1 book at a time, 2 reads) | ~400 pages/h (3 books at a time) |
+
+**Spanish unwritten (89 of 290).** 67 `cli exit -9`: agy printed a whole SUCCESS reply and hung, and the pilot checkout
+predated #8110 (`cliExitCode`), so apply refused them; main's own comment keeps pre-#8110 metas refused, so they stay
+unwritten (ledgered; not re-read by this lane). Model-side refusals 22 of 223 not killed = **9.9%**, against ~11% in the
+cell test: never opened the image 6, UNCHANGED 5, GPU draft under 30 characters 4, diff-guard splice 3, wrapper 2,
+handwritten 1, exit 1.
+
+**French unwritten (124 of 210).** Handwritten 41 + mixed 6 (22%); GPU draft under 30 characters 26 (blank / plate
+pages); letters outside the book's scripts 19; never opened the image 10; wrapper cut or second marker 8; diff-guard
+splice 6; UNCHANGED 5; exit 3 2; CONTAIN 1. Of the printable pages (no hand tag, a draft), 86/137 = 63% were written,
+against ~53% overall in the cell test. **The handwritten tag is right**: 6 of the 41, drawn at random, opened by eye
+are all manuscripts (Masonic rituals and catechisms, a manuscript notebook, a framed charter: cmc_kloss and similar
+books catalogued as French print). 14 of the 70 books had 2-3 of their 3 pages tagged and none written. So the lane now
+probes a book it has not read with 4 pages and skips it when half or more are tagged handwritten or mixed
+(`armcHandSkip`, `<lane>/armc-books-skipped.jsonl`), and the 14 pilot books are seeded into that file.
+
+**Not counted by the rule:** the two misleads defects are digit / name misreads the #7695 put-back does not touch
+(it guards numbers the corrector *changed* against the draft; here the draft had them wrong too).
+
+Results files: `scripts/eval/route-judge-6740/results/euro-route-gate-6871/{es19,fr19}/` (sample, key, score, verdicts).
