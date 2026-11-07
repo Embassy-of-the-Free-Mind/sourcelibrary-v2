@@ -300,6 +300,11 @@ if (STAGE === 'read') {
   // The job's book list, recorded with the job for the lane registry (#7301 item 5): no page or book is written.
   await recordLaneBooks(db, { lane: laneForWrite('ocr', { call_site: CALL_SITE, name: engineNameForCli(CLI) }), ...laneJob(arg('job')), pages });
   let quotaUntil = 0, reused = 0;
+  // #8330: --effort low where it was judged as good and cost less: corrections, and Arabic books, each at 1 a call
+  // (correction index 34.4K -> 28.5K a page, Arabic 23.7K -> 21.0K, judged usable unchanged). Print at 4 a call and
+  // translation cost more at low effort, and no block call was tested, so they keep agy's default. AGY_EFFORT overrides.
+  const arabicBooks = new Set((await db.collection('books').find({ id: { $in: [...new Set(pages.map((p) => p.book_id))] }, language: 'Arabic' }, { projection: { id: 1 } }).toArray()).map((b) => b.id));
+  const laneEffort = (bookId) => (PER_CALL === 1 && (CORRECT_PROMPT || arabicBooks.has(bookId)) ? 'low' : null);
   // What a correction read records of the draft it was sent (apply checks it against the stored OCR / the GPU draft file).
   const draftMeta = (p) => ({ ...(p.ocr.source === 'file' && { source: 'file' }), ...(p.ocr.source === 'gpu' && { source: 'gpu', file: `${p.id}.draft.txt`, ...p.ocr.gpu }), model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at });
   // The served image (or the --image-cache copy of it), fitted to --long-edge. Returns { buf, fit } or { error }.
@@ -358,7 +363,7 @@ if (STAGE === 'read') {
     // --reuse-only (#7075): a paid lane hands its pages here first; a page with no kept read is left to that lane.
     if (REUSE_ONLY) { noKept++; return; }
     const gateLog = installToolGate(path.dirname(img));
-    const agentArgs = NARROW_TOOLS ? installNarrowAgent(path.dirname(img)) : [];
+    const agentArgs = NARROW_TOOLS ? installNarrowAgent(path.dirname(img), 'ocr', { effort: laneEffort(p.book_id) }) : [];
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
     // (plan note, refusal, restarted or duplicated read) is read once more from scratch (#6420 rule 4). A quota error
@@ -442,7 +447,7 @@ if (STAGE === 'read') {
     fs.mkdirSync(ws, { recursive: true });
     imgs.forEach((im, i) => fs.writeFileSync(path.join(ws, pageBlockFile(i)), im.buf));
     const gateLog = installToolGate(ws);
-    const agentArgs = NARROW_TOOLS ? installNarrowAgent(ws) : [];
+    const agentArgs = NARROW_TOOLS ? installNarrowAgent(ws, 'ocr', { effort: laneEffort(first.book_id) }) : [];
     const t0 = new Date();
     let r, nudged = false, calls = 0;
     const usage = [];

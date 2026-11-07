@@ -103,20 +103,22 @@ const NARROW_AGENTS = {
   translate: { name: 'page-translator', tools: [], does: 'Works on the text in the prompt. No tools.', body: 'Follow the instructions in the request exactly.' },
 };
 /**
- * #8330: AGY_EFFORT=low adds `--effort low` to a narrowed call; unset sends no flag (agy's default). Narrowed calls
- * think at length more often than full-tool ones, and low effort was the candidate fix. `medium` returned 0 tokens on
- * gemini-3.8-flash-low twice, so it is refused. A read records the value it ran with (`effort`).
+ * #8330: AGY_EFFORT=low adds `--effort low` to a narrowed call; `default` (or unset) sends no flag, agy's default.
+ * Narrowed calls think at length more often than full-tool ones, and low effort was the candidate fix. `medium`
+ * returned 0 tokens on gemini-3.8-flash-low twice, so it is refused. A read records the value it ran with (`effort`).
+ * `laneEffort` is a lane's own choice (cli-ocr.mjs: low for corrections and Arabic, both at 1 a call); AGY_EFFORT,
+ * when set, overrides it either way, so an A/B can run the other arm.
  */
-const AGY_EFFORTS = ['low', 'high'];
-export function agyEffort() {
-  const e = process.env.AGY_EFFORT || null;
+const AGY_EFFORTS = ['low', 'high', 'default'];
+export function agyEffort(laneEffort = null) {
+  const e = process.env.AGY_EFFORT || laneEffort || null;
   if (e && !AGY_EFFORTS.includes(e)) throw new Error(`AGY_EFFORT=${e}: use one of ${AGY_EFFORTS.join(', ')} or leave it unset`);
-  return e;
+  return e === 'default' ? null : e;
 }
-export function installNarrowAgent(dir, task = 'ocr') {
+export function installNarrowAgent(dir, task = 'ocr', { effort: laneEffort = null } = {}) {
   const a = NARROW_AGENTS[task];
   if (!a) throw new Error(`no narrow agent for task ${task}`);
-  const effort = agyEffort();
+  const effort = agyEffort(laneEffort);
   fs.mkdirSync(path.join(dir, '.agents', 'agents'), { recursive: true });
   fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\n${a.body}\n`);
   return ['--agent', a.name, ...(effort ? ['--effort', effort] : [])];

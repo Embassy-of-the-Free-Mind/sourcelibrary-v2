@@ -89,6 +89,13 @@ describe('installNarrowAgent', () => {
       expect(inTmp('ocr').args).toEqual(['--agent', 'page-reader', '--effort', 'low']);
       process.env.AGY_EFFORT = 'medium';
       expect(() => inTmp('translate')).toThrow(/AGY_EFFORT=medium/);
+      // A lane's own choice holds when AGY_EFFORT is unset; AGY_EFFORT=default sends no flag over it (the A/B's other arm).
+      const lane = () => installNarrowAgent(fs.mkdtempSync(path.join(os.tmpdir(), 'narrow-')), 'ocr', { effort: 'low' });
+      delete process.env.AGY_EFFORT;
+      expect(lane()).toEqual(['--agent', 'page-reader', '--effort', 'low']);
+      expect(inTmp('ocr').args).toEqual(['--agent', 'page-reader']);
+      process.env.AGY_EFFORT = 'default';
+      expect(lane()).toEqual(['--agent', 'page-reader']);
     } finally {
       if (before === undefined) delete process.env.AGY_EFFORT; else process.env.AGY_EFFORT = before;
     }
