@@ -204,9 +204,14 @@
  *        (ARMC_CAMPAIGNS: the languages whose cell test passed, their draft engines, the tiers file); UNREAD pages of
  *        tier A books (whole) then tier B (the content screen's hit pages); written as the first-read frame writes
  *        (unread only, --diff-guard=gpu-draft, printed only), stamped ARMC_CAMPAIGN_LANE; the campaign hold stays.
- *   `--frame=euro --cell=es19|fr19` (#6871): 1800-1929 Spanish or French print with page records, unheld or held
- *        scans-only only (ARMC_EURO_CELLS, armcEuroSkip); UNREAD pages; written as the first-read frame writes, stamped
- *        ARMC_EURO_LANE; holds stay. One lane dir a cell (/root/jobs/euro-<cell>-6871).
+ *   `--frame=euro --cell=es19|fr19|en19|fr19r` (#6871): 1800-1929 Spanish, French or English print with page records,
+ *        unheld or held scans-only only (ARMC_EURO_CELLS, armcEuroSkip); UNREAD pages; written as the first-read frame
+ *        writes, stamped ARMC_EURO_LANE or the cell's own `lane`; holds stay. One lane dir a cell (/root/jobs/euro-<cell>-6871;
+ *        en19 /root/jobs/en19-6871). en19 leaves out the books gpu-print-en planned. fr19r is planned only by
+ *   ... armc-import --frame=euro --cell=fr19r --lane-dir=L --from=DIR [--min-free-g=G]
+ *        GPU reads already on disk in the gpu-print format (DIR/manifest.tsv, DIR/out/<bid>/<pn>.json): a read the gpu-print
+ *        guards pass (pageVerdict 'write'), whose book and page are in the cell's frame now, and whose image still hashes to
+ *        the sha the GPU read (fetched to drafts/<bid>/img) becomes a plan row and a draft; armc then corrects and writes it.
  *   Disk guards (#6871; any frame, on the cron lines of the euro frame): --min-free-g=G (plan, fetch and armc refuse to
  *        start under G GB free on the root disk), armc-fetch --max-lane-gb=G (stage no more images than keep the lane dir
  *        under G GB), and the euro frame drops a book's img/ once every page planned for it is ledgered.
@@ -1126,12 +1131,23 @@ export const ARMC_EURO_CELLS = Object.freeze({
   // the cell test (scripts/eval/experiments/2026-11-07-euro-gpu-agy-cells-6871.md), with the #8296 marker refusal
   es19: { lang: 'es', language: 'Spanish', code: 'spa', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test: 23/23 written accepted with #8296, 0 wrong text, P 0.995' },
   fr19: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test, two draws: 28/30 written accepted with #8296, 0 wrong text, P 0.962', skipFirstRead: true },
+  // English 1800-1929 beyond the gpu-print-en frame (#6871, Derek 2026-11-07): GPU draft > agy, not a bare GPU read. The
+  // books gpu-print-en planned are its own (their unread pages are its rejects): skipPlannedIn keeps them out. statuses:
+  // only books the pipeline has finished with (a free book `archiving` or `archive_complete` is about to be read by the
+  // pipeline's own OCR, and this lane places no hold), or held scans-only.
+  en19: { lang: 'en', language: 'English', code: 'eng', years: [1800, 1929], route: LO_ROUTE, lane: 'gpu-agy-first-read-en-6871', skipPlannedIn: '/root/jobs/gpu-print-6871/plan', statuses: ['complete', 'ocr_complete', 'needs_attention', 'parked', 'failed', HOLD_STATUS], evidence: '#6871 2026-10-29 print1800 engine lanes (LightOnOCR drafts for agy Flash, use c) and the en19 pilot gate (scripts/eval/experiments/2026-11-07-en1800-gpu-agy-widen-6871.md)' },
+  // The French 1800+ pages Flash-Lite refused, already read on the GPU (job gpu-steward-20261106, gpu-print-read.py):
+  // planned only by armc-import from those reads (importOnly), corrected and written as the other cells are. The
+  // visible-unread lane is the one that refused them, so no skipFirstRead.
+  fr19r: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, lane: 'gpu-agy-first-read-fr-refusal-6871', importOnly: true, evidence: '#6871 2026-11-06 French lite refusals: 770 GPU reads, 627 past the guards, 10/10 usable by eye; fr19 cell test 28/30 with #8296' },
 });
+/** The ocr.pipeline stamp a cell writes under. */
+export const armcEuroLane = (cell) => ARMC_EURO_CELLS[cell]?.lane ?? ARMC_EURO_LANE;
 const ARMC_EURO_PROJECTION = { id: 1, title: 1, language: 1, year: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, human_read_count: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pages_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
 const armcEuroBookFilter = (C) => ({ language: { $regex: `^${C.language}` }, year: { $gte: C.years[0], $lte: C.years[1] }, pages_count: { $gt: 0 }, 'pages_state.state': { $nin: ['manifest_only', 'materializing'] },
   'pipeline_auto.held': { $ne: true }, ...NOT_UNSPLIT_SPREAD, $or: [{ 'pipeline_auto.hold': { $exists: false } }, { 'pipeline_auto.hold.reason': { $in: ARMC_EURO_HOLDS } }], $expr: { $lt: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] } });
 /** Why this book is not in the euro cell's book rule (a short key), or null. */
-export function armcEuroSkip(book, cell) {
+export function armcEuroSkip(book, cell, { skipPlannedIn = null } = {}) {
   const C = ARMC_EURO_CELLS[cell];
   if (!C) return 'no such cell';
   if (!book || !(book.pages_count > 0)) return 'no pages';
@@ -1144,10 +1160,13 @@ export function armcEuroSkip(book, cell) {
   if (isUnsplitSpread(book)) return 'unsplit spread (needs_splitting)';
   if (manuscriptReason(book)) return 'manuscript';
   if (C.skipFirstRead && !firstReadSkip(book, { languages: [C.code] })) return 'read by the visible-unread first-read lane';
+  if (C.statuses && !C.statuses.includes(book.pipeline_auto?.status)) return `pipeline status ${book.pipeline_auto?.status ?? 'none'} (the pipeline reads it)`;
+  const planned = skipPlannedIn ?? C.skipPlannedIn;
+  if (planned && fs.existsSync(path.join(planned, `${book.id}.json`))) return 'planned by gpu-print-en';
   return null;
 }
 /** The euro frame's pages of a book: UNREAD, no human edit, in page order; [] for a possible unsplit spread. */
-async function armcEuroPages(db, book, ids = null) {
+export async function armcEuroPages(db, book, ids = null) {
   const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false }, 'ocr.source': { $ne: 'manual' }, ...(ids && { id: { $in: ids } }) }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
   return ids || !spreadReason(book, pages) ? pages : [];
 }
@@ -1182,9 +1201,10 @@ async function armcMain(mode, arg) {
   if (FRAME === 'campaign' && !ARMC_CAMPAIGNS[CAMPAIGN]) { console.error(`--frame=campaign needs --campaign=${Object.keys(ARMC_CAMPAIGNS).join('|')}`); process.exit(2); }
   const CELL = FRAME === 'euro' ? arg('cell') : null;
   if (FRAME === 'euro' && !ARMC_EURO_CELLS[CELL]) { console.error(`--frame=euro needs --cell=${Object.keys(ARMC_EURO_CELLS).join('|')}`); process.exit(2); }
+  if (mode === 'armc-import' && !ARMC_EURO_CELLS[CELL]?.importOnly) { console.error(`armc-import needs --frame=euro and an import cell (${Object.keys(ARMC_EURO_CELLS).filter((c) => ARMC_EURO_CELLS[c].importOnly).join('|')})`); process.exit(2); }
   // --min-free-g=G (#6871 disk guard): plan, fetch and correct refuse to start while the root disk has under G GB free
   const MIN_FREE = Number(arg('min-free-g') || 0);
-  if (MIN_FREE && ['armc-plan', 'armc-fetch', 'armc'].includes(mode)) {
+  if (MIN_FREE && ['armc-plan', 'armc-fetch', 'armc', 'armc-import'].includes(mode)) {
     const free = rootFreeGb();
     if (free < MIN_FREE) { console.log(`${mode}: root disk ${free.toFixed(1)} GB free < --min-free-g=${MIN_FREE}: not starting`); if (mode === 'armc') fs.appendFileSync(P.runs, JSON.stringify({ at: new Date().toISOString(), stop: `root disk ${free.toFixed(1)} GB free < ${MIN_FREE}`, taken: 0 }) + '\n'); return; }
   }
@@ -1237,7 +1257,9 @@ async function armcMain(mode, arg) {
   const db = client.db('bookstore');
   const { SKIP_TRANSLATION_PAGE_TYPES: SKIP } = await import('../lib/translate-core.mjs');
   try {
+    if (mode === 'armc-plan' && CELL && ARMC_EURO_CELLS[CELL].importOnly) { console.log(`armc-plan: cell ${CELL} is planned by armc-import only`); return; }
     if (mode === 'armc-plan') return await armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME, CAMPAIGN, CELL);
+    if (mode === 'armc-import') return await armcImport(db, P, arg, ledger, CELL);
     if (mode === 'armc-fetch') return await armcFetch(db, P, arg, LANGS, ledger);
     if (mode === 'armc-count') {
       const u = armcUndrafted(L).filter((p) => !ledger.has(p.id));
@@ -1337,10 +1359,65 @@ async function armcFetch(db, P, arg, LANGS, ledger) {
   console.log(`armc-fetch: ${JSON.stringify(t)} staged, ${failed} with no image`);
 }
 
+/**
+ * armc-import (#6871): GPU reads already on disk in the gpu-print lane's format (--from=DIR: manifest.tsv rows
+ * <bid>\t<pn>\t<pid>\t<url>, out/<bid>/<pn>.json from scripts/gpu/gpu-print-read.py) into this lane's plan and drafts,
+ * so armc corrects them instead of reading the page again. A read is imported only when the gpu-print guards pass
+ * (pageVerdict 'write': no loop, other script, engine note or transliteration-dense text, 30+ word characters), the
+ * book is in the cell's book rule and the page in its page rule NOW (unread, no human edit), and the image fetched today
+ * hashes to the image_sha256 the GPU read (the draft and the image the corrector sees are one leaf). Tally → import.json.
+ */
+async function armcImport(db, P, arg, ledger, CELL) {
+  const { pageVerdict } = await import('../lib/gpu-print-lane.mjs');
+  const FROM = arg('from') && path.resolve(arg('from'));
+  if (!FROM || !fs.existsSync(path.join(FROM, 'manifest.tsv'))) { console.error('armc-import needs --from=DIR with manifest.tsv and out/'); process.exit(2); }
+  const C = ARMC_EURO_CELLS[CELL];
+  const rows = fs.readFileSync(path.join(FROM, 'manifest.tsv'), 'utf8').split('\n').filter(Boolean).map((l) => { const [bid, pn, pid, url] = l.split('\t'); return { bid, pn: Number(pn), pid, url }; });
+  const runFile = fs.existsSync(path.join(FROM, 'runs')) ? fs.readdirSync(path.join(FROM, 'runs')).filter((f) => /^lo-.*\.json$/.test(f)).sort().pop() : null;
+  const engine = { name: 'lightonocr', model: 'lightonai/LightOnOCR-3-1B', read: 'scripts/gpu/gpu-print-read.py (the gpu-print-en reader, fp8 vLLM)', from: FROM, ...(runFile && { run: readJson(path.join(FROM, 'runs', runFile)) }) };
+  const byBook = new Map();
+  for (const r of rows) { if (!byBook.has(r.bid)) byBook.set(r.bid, []); byBook.get(r.bid).push(r); }
+  const books = new Map((await db.collection('books').find({ id: { $in: [...byBook.keys()] } }, { projection: ARMC_EURO_PROJECTION }).toArray()).map((b) => [b.id, b]));
+  const t = { reads: rows.length, imported: 0, already: 0, no_read: 0, guard: {}, book: {}, page_left_frame: 0, image_changed: 0, no_image: 0 };
+  const sha = (b) => createHash('sha256').update(b).digest('hex');
+  for (const [bid, list] of byBook) {
+    const book = books.get(bid);
+    const skip = book ? armcEuroSkip(book, CELL) : 'book not found';
+    if (skip) { t.book[skip] = (t.book[skip] ?? 0) + list.length; continue; }
+    const inFrame = new Set((await armcEuroPages(db, book, list.map((r) => r.pid))).map((p) => p.id));
+    const planFile = path.join(P.plan, `${bid}.json`), prev = readJson(planFile, null);
+    const have = new Set(prev?.pages.map((pg) => pg.id) ?? []);
+    const add = [];
+    for (const r of list) {
+      if (have.has(r.pid) || ledger.has(r.pid)) { t.already++; continue; }
+      const read = readJson(path.join(FROM, 'out', bid, `${r.pn}.json`), null);
+      if (!read || read.page_id !== r.pid) { t.no_read++; continue; }
+      const v = pageVerdict(read.text, { finish: read.finish ?? null });
+      if (v.verdict !== 'write') { const k = `${v.verdict}:${v.reason}`; t.guard[k] = (t.guard[k] ?? 0) + 1; continue; }
+      if (!inFrame.has(r.pid)) { t.page_left_frame++; continue; }
+      let buf = null;
+      for (let a = 0; a < 2 && !buf; a++) { try { const res = await fetch(r.url); if (res.ok) { const b = Buffer.from(await res.arrayBuffer()); if (b.length > 2000) buf = b; } } catch { /* retry once */ } }
+      if (!buf) { t.no_image++; continue; }
+      if (read.image_sha256 && sha(buf) !== read.image_sha256) { t.image_changed++; continue; }
+      fs.mkdirSync(path.join(P.drafts, bid, 'img'), { recursive: true });
+      fs.writeFileSync(path.join(P.drafts, bid, 'img', `${r.pid}.jpg`), buf);
+      fs.writeFileSync(path.join(P.drafts, bid, `${r.pid}.json`), JSON.stringify({ text: armcDraftText(v.body), image_sha256: read.image_sha256 ?? sha(buf), engine, ...(read.finish && { finish: read.finish }), imported_from: path.join(FROM, 'out', bid, `${r.pn}.json`), at: new Date().toISOString() }));
+      add.push({ id: r.pid, pn: r.pn });
+    }
+    if (!add.length) continue;
+    const pages = [...(prev?.pages ?? []), ...add].sort((a, b) => a.pn - b.pn);
+    fs.writeFileSync(planFile, JSON.stringify({ bid, lang: C.lang, title: book.title, year: book.year, language: book.language, cell: CELL, whole: false, imported: true, planned_at: prev?.planned_at ?? new Date().toISOString(), pages }));
+    t.imported += add.length;
+    console.log(`  ${bid} ${String(book.title || '').slice(0, 50)} (${book.year}${book.pipeline_auto?.hold ? `, held ${book.pipeline_auto.hold.reason}` : ''}): ${add.length} drafts`);
+  }
+  fs.writeFileSync(path.join(path.dirname(P.plan), 'import.json'), JSON.stringify({ at: new Date().toISOString(), from: FROM, cell: CELL, tally: t }, null, 1));
+  console.log(`armc-import ${CELL}: ${JSON.stringify(t)}`);
+}
+
 /** armc: the agy correction of drafted pages, guarded, written; every page tried ledgered. */
 async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct', CAMPAIGN = null, CELL = null) {
   // the campaign and euro frames read and write as the first-read frame does (unread pages, no --over-stored, the draft put-back)
-  const CF = FRAME === 'campaign', FR = FRAME === 'first-read', EU = FRAME === 'euro', FIRST = FR || CF || EU, LANE_ID = EU ? ARMC_EURO_LANE : CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE;
+  const CF = FRAME === 'campaign', FR = FRAME === 'first-read', EU = FRAME === 'euro', FIRST = FR || CF || EU, LANE_ID = EU ? armcEuroLane(CELL) : CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE;
   const tiers = CF ? campaignTiers(arg('tiers') || path.join(path.dirname(P.plan), 'tiers.jsonl')) : null;
   const APPLY = process.argv.includes('--apply');
   const OUT = arg('out') && path.resolve(arg('out'));
@@ -1761,7 +1838,7 @@ async function main() {
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (mode === 'correct' || mode === 'correct-count') return correctMain(mode, arg);
   if (mode === 'gpu-correct' || mode === 'gpu-count') return gpuMain(mode, arg);
-  if (/^armc(-(plan|fetch|collect|count|left))?$/.test(mode)) return armcMain(mode, arg);
+  if (/^armc(-(plan|fetch|collect|count|left|import))?$/.test(mode)) return armcMain(mode, arg);
   if ((mode === 'run' || mode === 'count') && arg('cohort')) {
     if (arg('cohort') !== FIRST_READ_COHORT) { console.error(`--cohort: the only cohort is ${FIRST_READ_COHORT}`); process.exit(2); }
     return firstReadMain(mode, arg);
