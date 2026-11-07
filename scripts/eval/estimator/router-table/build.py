@@ -25,7 +25,7 @@ drawn / written, refusals not accepted; an entry without one is refused (over_dr
 VALIDATION (#7263; .claude/docs/router-optimization-paper.md). V1: the prior mean of every route is the partially pooled
 logit of #7878 (rules.json prior.pooled; pooled_prior.py writes the means). V2: in a stratum where the judge prefers its
 own family's text (rules.json judge_validity), an Opus-written route cannot win keep or switch on it alone (judge_gate).
---off v1,v2,hard-floor,menu turns a step off for attribution builds (decision_diff.py); --out-dir writes them outside the repo.
+BINDING (#8283): every row carries `bound_route`, what the cell runs, by bind(). --off v1,v2,hard-floor,menu turns a step off for attribution builds (decision_diff.py); --out-dir writes them outside the repo.
 
 A route's price: a subscription stage costs its Claude points (or agy calls) per page x the plan's dollars per point (or
 call); a paid API stage its list dollars per page; a draft already made costs 0. Fees come from --fees (the private fee
@@ -281,13 +281,33 @@ def menu_default(cell, fdec, M, rs, P, failed=()):
     route) or None."""
     if not in_force(P, 'menu') or cell.get('held') or cell.get('planned'): return None
     if not ('UNTESTED' in fdec or 'pages a route' in fdec or 'no defect verdicts' in fdec or 'no rated route passes' in fdec): return None
+    d = agy_default(cell, M, rs, P, failed)
+    if not d: return None
+    ev = 'measured here' if d in M else 'too few pages here' if d.get('tested') else 'unmeasured here'
+    return f"{'keep' if d['id'] == cell['current'] else 'switch'} (default: agy, {ev}; was {fdec.split(' (')[0].replace('UNTESTED', 'untested')})", d   # the default decided it: readers match /UNTESTED/ as undecided
+
+
+def agy_default(cell, M, rs, P, failed=()):
+    """The plainest agy route the cell may take: measured first, then fewest stages, then posterior mean. On the menu, clear
+    of the hard floor, not a route the rule just failed; a measured one passes the k/n floor against the best measured route."""
     A, best = P['decision_rule']['accept_floor'], max(M, key=lambda r: r['mean'], default=None)
     near = lambda r: r not in M or r is best or within_p(r, best, A['within']) >= A['p']
     cand = [r for r in rs if r.get('channel') == 'agy' and on_menu(r, P) and floor_ok(r, P) and near(r) and r['id'] not in failed]
-    if not cand: return None
-    d = min(cand, key=lambda r: (r not in M, r['id'].count('>') + r['id'].count('+'), -r['mean']))
-    ev = 'measured here' if d in M else 'too few pages here' if d.get('tested') else 'unmeasured here'
-    return f"{'keep' if d['id'] == cell['current'] else 'switch'} (default: agy, {ev}; was {fdec.split(' (')[0].replace('UNTESTED', 'untested')})", d   # the default decided it: readers match /UNTESTED/ as undecided
+    return min(cand, key=lambda r: (r not in M, r['id'].count('>') + r['id'].count('+'), -r['mean'])) if cand else None
+
+
+def bind(cell, fdec, fpk, live_id, M, rs, P, failed=()):
+    """What the cell runs (#8283; Derek took the default, 2026-11-07): (bound route, why). A keep or switch binds its route. A HOLD
+    or UNTESTED cell keeps its live route only if that route is on the menu and clears the hard floor; otherwise it takes
+    agy_default. menu.keep_live names a cell that keeps its live route whatever the rule says. A held cell or a plain `planned`
+    binds nothing: a person owns it, and None makes the routers fall to their default."""
+    if cell.get('held') or (cell.get('planned') and not cell['planned'].get('decision')): return None, 'held or planned: a person owns it'
+    if cell['id'] in P.get('menu', {}).get('keep_live', {}): return live_id, 'menu.keep_live'
+    if fdec.startswith(('keep', 'switch')) and 'UNTESTED' not in fdec: return fpk['id'], 'decided'
+    live = next((r for r in rs if r['id'] == live_id), None)
+    if live and on_menu(live, P) and floor_ok(live, P): return live_id, 'undecided: the live route is on the menu and clears the floor'
+    d = agy_default(cell, M, rs, P, failed)
+    return (d['id'], 'undecided: the live route is off the menu or blocked, the plainest agy route') if d else (None, 'undecided: no live route or agy route may run')
 
 
 def judge_stratum(cell):
@@ -410,8 +430,10 @@ def main():
     # current.json `cells` (#7853): a cell moved to a newer build alone takes its live row from that build
     live_rows = {r['id']: r for r in LIVE_T['rows']}
     for cid, c in CUR.get('cells', {}).items():
+        if not c['table']: live_rows.pop(cid, None); continue   # a new cell not bound yet (planBind)
         live_rows[cid] = next(r for r in json.load(open(D + c['table'] + '.json'))['rows'] if r['id'] == cid)
-    LIVE = {r['id']: (r['route'] if r['decision'].startswith('switch') else r['current']) for r in live_rows.values()}
+    # a build with bound_route says what the cell runs; an older one says it by switch or current; nothing bound: the current route
+    LIVE = {r['id']: r.get('bound_route') or (r['route'] if r['decision'].startswith('switch') else r['current']) for r in live_rows.values()}
     if P.get('script_split', {}).get('on') and '--no-script-split' not in sys.argv: P['cells'] = expand_by_script(P)
     L = lambda k: json.load(open(arg('--' + k) or P['inputs'][k]))  # --pilot <path> until #7376 is on main
     pilot, v1, v2, cap = L('pilot')['cells'], L('v1')['cells'], {c['id']: c for c in L('v2')['cells']}, L('capacity')['channels']
@@ -525,11 +547,13 @@ def main():
         live_id = LIVE.get(cell['id'], cur['id'])
         dec, pk, dinfo = decide(cell, rs, M, cur, live_id, P, CAL)
         fdec, jinfo = judge_gate(cell, dec, pk, P, S)
-        md = menu_default(cell, fdec, M, rs, P, [i for i, g in (dinfo or {}).get('gates', {}).items() if not all(v for k, v in g.items() if k in ('wrong_text', 'accept'))])
+        failed = [i for i, g in (dinfo or {}).get('gates', {}).items() if not all(v for k, v in g.items() if k in ('wrong_text', 'accept'))]
+        md = menu_default(cell, fdec, M, rs, P, failed)
         fdec, fpk = md or (fdec, pk)
+        bound, bound_why = bind(cell, fdec, fpk, live_id, M, rs, P, failed)
         pages = cell.get('pages_waiting', v2.get(cell.get('v2'), {}).get('pages_waiting', 0))
         alone = decide_defects(cell, rs, M, cur, live_id, P, CAL) if (cell.get('planned') or {}).get('decision') else None
-        rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=fdec, route=fpk['id'], rule='defects', live=live_id,
+        rows.append(dict(id=cell['id'], base=cell.get('base'), script=cell.get('script'), title=cell['title'], pages_waiting=pages, current=cur['id'], decision=fdec, route=fpk['id'], rule='defects', live=live_id, bound_route=bound, bound_why=bound_why,
                          # what the rule alone picks under a person's planned decision, so the table shows both
                          **({'rule_alone': f"{alone[0]} {alone[1]['id']}" if alone[0] else f"undecided: {alone[2]['why']}"} if alone else {}),
                          hard_floor_blocked=[r['id'] for r in rs if r.get('hard_floor_block') and in_force(P, 'hard_floor')], defects_rule=dinfo, judge_validity=jinfo,
@@ -618,6 +642,8 @@ def main():
         held = [r for r in rows if (r.get('judge_validity') or {}).get('held')]
         out += ['', f"Cells held by the judge gate: {len(held)}" + (': ' + '; '.join(f"{r['id']} (was {r['judge_validity']['held']})" for r in held) if held else '') + '.']
     out += ['', f"Blocked by the hard floor: {sum(len(r['hard_floor_blocked']) for r in hf)} routes in {len(hf)} cells" + (': ' + '; '.join(f"{r['id']} ({', '.join(r['hard_floor_blocked'])})" for r in hf) if hf else '') + '.']
+    undec = [r for r in rows if r['bound_route'] != r['route']]
+    out += ['', f"**What runs where the decision does not bind** (#8283, `bound_route`): {len(undec)} cells" + (': ' + '; '.join(f"{r['id']} runs {r['bound_route'] or 'its router default'} ({r['bound_why']})" for r in undec) if undec else '') + '.']
     out += ['', '**The rule, cell by cell**', '', '| cell | bar | words / page | passing | weighted defects a page | pick at ' + ' / '.join(f'${w:g}' for w in wms) + ' | decision |', '|' + '---|' * 7]
     for row in rows:
         di = row['defects_rule']

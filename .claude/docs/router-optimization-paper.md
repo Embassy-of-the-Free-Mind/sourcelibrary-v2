@@ -100,7 +100,7 @@ The router serves three readers:
 - **Gates:** wrong text no more than the bar's + 0.15 per 1,000 words, and acceptance not more than 5 points below the live route (posterior median). k/n survives only as that floor: a Beta-binomial on accepted k of n, n scaled to books.
 - **Pick:** the lowest price + weight × defects per page. A switch has to hold at every weight in `misleads_usd_sensitivity`, or the cell is HOLD.
 - **Stays:** the hard floor, the menu, `menu_default` (an undecided cell gets agy) and the judge-validity gate.
-- **Not validated yet:** V3 (`v3_sim.py`) still simulates the retired k/n rule (`kn_rule.py`, frozen for that). Nothing has simulated `decide_defects`, so its false-switch rate is unmeasured. V3 has to be re-run for this rule before binding.
+- **V3 on this rule (2026-11-07, #8283):** `v3_sim.py` runs `decide_defects` at each cell's real n. 11 of the 13 cells it compares are over the 5% bar at the boundary (18–47%), so a rule pick there is not auto-bound: `planBind` pins the cell where it runs. Record: `scripts/eval/experiments/2026-11-07-router-v3-defect-rule-8283.md`.
 
 **Planned.**
 - **Prior mean from a partially pooled logit:** engine + draft + language + writing system + print/manuscript, no interaction. It is worth about 5 pages: V1 measured 5.2–6.4 held out (PR #7878).

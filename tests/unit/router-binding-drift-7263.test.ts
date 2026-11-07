@@ -4,7 +4,7 @@
 import { describe, it, expect } from 'vitest';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { driftReport, driftMarkdown } from '../../scripts/audit/router-table-drift.mjs';
+import { driftReport, driftMarkdown } from '../../scripts/maintenance/router-board-push.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { v4Verdict, routeRunner, currentRoute, frameFor } from '../../scripts/eval/router-confirm/confirm.mjs';

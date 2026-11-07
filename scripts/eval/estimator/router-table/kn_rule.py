@@ -2,7 +2,7 @@
 # PRIOR ART: build.py before #8283 — this IS its k/n decision path (git 0cc5d4e0f), moved, not rewritten. v3_sim.py replays
 # the V3 multiplicity simulation through it; the table no longer decides with it (build.py decide_defects does).
 """The retired k/n decision (#8283). Only v3_sim.py reads it, so that V3's published error rates can be reproduced. A
-simulation of the defect rule itself is still to be written: V3 says nothing about decide_defects."""
+simulation of the defect rule itself is v3_sim.py's default (--rule defects); this one runs under --rule kn."""
 from build import floor_ok, in_force, is_bar, within_p  # noqa: F401  (the helpers the frozen code calls)
 
 

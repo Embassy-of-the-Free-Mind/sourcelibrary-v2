@@ -4,7 +4,7 @@
 // all restated here because that study fixes OUT, its seeds and its selected.json at module level and cannot be pointed
 // at another draw. scripts/eval/correction-pass-7818/lib.mjs judgeAbsolute / paceCheck / wrongText — imported
 // unchanged (route-judge-6740/judge.mjs judgePrompt + opusCall + parseVerdict, the router's own judge).
-// scripts/lib/router-binding.mjs loadCurrentTable — the live decisions; scripts/audit/router-binding.mjs
+// scripts/lib/router-binding.mjs loadCurrentTable — the live decisions; scripts/maintenance/router-board-push.mjs
 // servedByCrontab — the route production runs. None of them is a confirmation run: each study drew its own frame for
 // its own question, and nothing re-tests a decision on books outside the evidence that made it (paper V4).
 /**
@@ -48,8 +48,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
 import { loadCurrentTable } from '../../lib/router-binding.mjs';
-import { servedByCrontab } from '../../audit/router-binding.mjs';
-import { defaultCrontabs } from '../../audit/router-table-drift.mjs';
+import { servedByCrontab, defaultCrontabs } from '../../maintenance/router-board-push.mjs';
 import { CORRECT_LANE, LITE_MODELS, IDLE_STATUSES, isInterior, lastPageNumber, rereadReadArgs, rereadApplyArgs } from '../../batch/cli-ocr-lane.mjs';
 import { VISIBLE_PAGE_MATCH } from '../../lib/page-counts.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';

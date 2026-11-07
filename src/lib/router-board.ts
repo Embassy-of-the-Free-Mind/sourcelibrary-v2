@@ -4,7 +4,7 @@
  *
  * Router board (/admin/router, #7913): per router cell, the route production runs against the route the router
  * decided, with the evidence behind the decision. The one document is written hourly by
- * scripts/maintenance/router-board-push.mjs (router-table-drift.mjs's data plus each cell's evidence). Read-only:
+ * scripts/maintenance/router-board-push.mjs (its drift report plus each cell's evidence). Read-only:
  * nothing but the page consumes it.
  */
 import { getDb } from '@/lib/mongodb';

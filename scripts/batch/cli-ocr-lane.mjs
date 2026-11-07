@@ -221,7 +221,7 @@ import { createHash } from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { MongoClient } from 'mongodb';
-import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH } from '../lib/ocr-routing.mjs';
+import { ocrLaneForBook, CLI_FLASH_OCR_HOLD, OCR_MODEL_LITE, OCR_MODEL_FLASH, OCR_MODEL_AGY } from '../lib/ocr-routing.mjs';
 import { releaseBook, HOLD_STATUS, NOT_UNSPLIT_SPREAD, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { CLI_TRANSLATE_HOLD } from '../lib/translation-routing.mjs';
 import { translateLaneForBook } from '../lib/translate-core.mjs';
@@ -248,6 +248,7 @@ export function spreadReason(book, pages) {
 export const CLI_MODEL_FOR = Object.freeze({
   'gemini-3-flash-preview': 'gemini-3.8-flash-low',
   'gemini-3.1-flash-lite': 'gemini-3.8-flash-low',
+  [OCR_MODEL_AGY]: OCR_MODEL_AGY,   // the router table names the reader itself (#8283)
 });
 
 /** The pages this lane reads: the orchestrator's Phase 2 filter (submitOcrForBook), without the per-model block. */
@@ -1405,7 +1406,7 @@ export const PREVIEW_STUB_FIRST_READ_HOLD = 'preview-stub-first-read-8181';
 /** The holds that mean "published as scans, OCR not read yet" (the brief's four, less the wave-b hold, plus the stubs above). */
 export const FIRST_READ_HOLDS = Object.freeze(['scans-only-publish-7176', 'acquisition-wave-2026-10-images-only', 'warehouse-promotion-5470', 'scans-only-publish-7270', PREVIEW_STUB_FIRST_READ_HOLD]);
 /** The routed models that mean a print route: flash-lite (Latin-script print) and Flash (print in the flash families). */
-export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH]);
+export const PRINT_ROUTE_MODELS = Object.freeze([OCR_MODEL_LITE, OCR_MODEL_FLASH, OCR_MODEL_AGY]);
 /** Languages read 4 pages a call (#7522 held quality on German and Latin print; French by the #7701 cheap-routes cell test,
  * 2026-10-29: read@4 24/24 written, 0 wrong text, against read@1's 20/21, 1 wrong text); every other language reads 1. */
 export const FIRST_READ_PER_CALL_LANGUAGES = Object.freeze(['lat', 'deu', 'fra']);

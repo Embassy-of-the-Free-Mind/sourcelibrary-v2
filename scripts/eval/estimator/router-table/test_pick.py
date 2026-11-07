@@ -388,6 +388,49 @@ class Menu(unittest.TestCase):
         self.assertTrue(B.menu_default({'current': 'agy'}, 'keep (UNTESTED)', [], [agy], self.PM)[0].startswith('keep (default'))
 
 
+class Bind(unittest.TestCase):
+    """#8283: what a cell runs. A decision binds its route; HOLD keeps the live route only if on the menu and clear of the floor."""
+    PM = dict(Menu.PM, hard_floor={'in_force': True}, menu=dict(Menu.PM['menu'], keep_live={'c/unknown': 'why'}))
+    C = {'id': 'c/print', 'current': 'lite'}
+    r = Menu.r
+
+    def rs(self):
+        return [self.r('lite', None, 'none'), self.r('tr-lite', None, 'lite-text'), self.r('agy-read', 'agy', 'agy-read', tested=False), self.r('agy-chain', 'agy', 'agy@4', tested=False)]
+
+    def bound(self, dec, live, rs=None, cell=None, pk=None):
+        rs = rs or self.rs()
+        return B.bind(cell or self.C, dec, pk or rs[0], live, [], rs, self.PM)[0]
+
+    def test_a_decision_binds_its_route(self):
+        rs = self.rs()
+        self.assertEqual(self.bound('switch', 'lite', rs, pk=rs[3]), 'agy-chain')
+        self.assertEqual(self.bound('switch (default: agy, unmeasured here; was untested)', 'lite', rs, pk=rs[2]), 'agy-read')
+
+    def test_hold_keeps_a_live_route_on_the_menu(self):
+        self.assertEqual(self.bound('HOLD (defects: no rated route passes)', 'lite'), 'lite')
+        self.assertEqual(self.bound('keep (UNTESTED)', 'lite'), 'lite')
+
+    def test_hold_on_an_off_menu_live_route_takes_the_agy_default(self):
+        self.assertEqual(self.bound('HOLD (x)', 'tr-lite'), 'agy-read')
+
+    def test_hold_on_a_floor_blocked_live_route_takes_the_agy_default(self):
+        rs = self.rs(); rs[0]['hard_floor_block'] = True
+        self.assertEqual(self.bound('HOLD (x)', 'lite', rs), 'agy-read')
+
+    def test_hold_with_nothing_allowed_binds_nothing(self):
+        rs = [dict(self.r('lite', None, 'none'), hard_floor_block=True)]
+        self.assertIsNone(self.bound('HOLD (x)', 'lite', rs))
+
+    def test_keep_live_beats_everything_but_a_person(self):
+        self.assertEqual(self.bound('HOLD (x)', 'tr-lite', cell={'id': 'c/unknown', 'current': 'lite'}), 'tr-lite')
+
+    def test_held_and_plain_planned_bind_nothing_but_a_planned_decision_binds(self):
+        rs = self.rs()
+        self.assertIsNone(self.bound('held', 'lite', rs, cell=dict(self.C, held='x')))
+        self.assertIsNone(self.bound('planned', 'lite', rs, cell=dict(self.C, planned={'route': 'lite'})))
+        self.assertEqual(self.bound('switch (Derek)', 'lite', rs, cell=dict(self.C, planned={'route': 'agy-read', 'decision': 'switch (Derek)'}), pk=rs[2]), 'agy-read')
+
+
 class OverDrawn(unittest.TestCase):
     """#8111: a '-written' source is scored over the pages drawn; a refused page is not accepted and not wrong text."""
     y = dict(accept='18/18', wrong_text_pages='0/18', books=18, classes_k_of_n={'O8': '5/18'})

@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import { testWriteShare, ledgerYield, checkYield, betaQuantile } from '../../scripts/lib/router-binding.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { ledgersByCrontab, yieldFindings } from '../../scripts/audit/router-binding.mjs';
+import { ledgersByCrontab, yieldFindings } from '../../scripts/maintenance/router-board-push.mjs';
 
 const RULES = JSON.parse(fs.readFileSync('scripts/eval/estimator/router-table/rules.json', 'utf8'));
 const ledger = (written: number, refused: number, lang = 'la') => [
