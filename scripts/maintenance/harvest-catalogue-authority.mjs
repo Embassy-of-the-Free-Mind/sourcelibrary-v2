@@ -40,7 +40,7 @@ const BSB_ALL = flag('--bsb-all');
 const LIMIT = Number(val('limit', 0));
 const ONLY = val('provider');
 const PROVIDERS = ['bsb', 'mdz', 'erara', 'e-rara', 'sbb', 'goettingen'].filter((p) => !ONLY || ONLY.split(',').includes(p));
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; catalogue authority harvest #7660)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 /** Minimum ms between requests per host, and workers per host. BSB is held to 1 req/s (Derek, 2026-10-28). */
 const HOST_RULES = { 'api.digitale-sammlungen.de': [1000, 1], 'www.e-rara.ch': [250, 3], 'content.staatsbibliothek-berlin.de': [250, 3], 'gdz.sub.uni-goettingen.de': [250, 3] };
 const PLACEHOLDER = /^\s*(?:unknown|\[?s\.\s?n\.?\]?|not known|not traceable|n\/?a|not available|anonym\w*(?: \w+)?|anon\.?|none|-+)?\s*$/i;

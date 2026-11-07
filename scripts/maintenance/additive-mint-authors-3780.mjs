@@ -273,7 +273,7 @@ async function wikidataLife(qid) {
   if (wdLife.has(qid)) return wdLife.get(qid);
   let life = null;
   for (let a = 0; a < 4 && !life; a++) {
-    const r = await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${qid}&props=claims&format=json`, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) additive-mint' } }).catch(() => null);
+    const r = await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${qid}&props=claims&format=json`, { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }).catch(() => null);
     if (r?.ok) {
       const e = (await r.json().catch(() => ({})))?.entities?.[qid];
       const y = (p) => Number(String(e?.claims?.[p]?.[0]?.mainsnak?.datavalue?.value?.time || '').match(/^[+-](\d{1,4})/)?.[1]) || null;

@@ -72,7 +72,7 @@ const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
 const RUN = 'catalogue-authority-gnd-7660';
 const SCRIPT = 'scripts/maintenance/authors-from-catalogue-authority.mjs';
-const LOBID_UA = { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; #7660)' };
+const LOBID_UA = { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' };
 async function lobidSearch(q, size = 100) {
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
@@ -345,7 +345,7 @@ if (STAGE === 'verdicts') {
     const q = `gndIdentifier:(${chunk.map((g) => `"${g}"`).join(' OR ')})`;
     for (let attempt = 0; attempt < 4; attempt++) {
       try {
-        const r = await fetch(`https://lobid.org/gnd/search?q=${encodeURIComponent(q)}&format=json&size=100`, { signal: AbortSignal.timeout(60_000), headers: { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; #7660)' } });
+        const r = await fetch(`https://lobid.org/gnd/search?q=${encodeURIComponent(q)}&format=json&size=100`, { signal: AbortSignal.timeout(60_000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         for (const m of (await r.json()).member || []) lobid.set(m.gndIdentifier, m);
         break;

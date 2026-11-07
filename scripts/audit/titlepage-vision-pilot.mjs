@@ -48,7 +48,7 @@ const PROMPT_VERSION = 'titlepage-vision-v2';
 const LEAVES = 4;
 if (!OUT) { console.error('--out=<reads.jsonl>'); process.exit(2); }
 const PLACEHOLDER = /^\s*(?:unknown|\[?s\.\s?n\.?\]?|not known|not traceable|n\/?a|not available|anonym\w*(?: \w+)?|anon\.?|none|-+)?\s*$/i;
-const UA = { 'User-Agent': 'SourceLibrary/1.0 (+https://sourcelibrary.org; title-page pilot #7660)' };
+const UA = { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // Seeded shuffle, so the draw is reproducible. The 2026-10-28 pilot was drawn with this generator.
 const rnd = makeLegacyLcg(SEED);
