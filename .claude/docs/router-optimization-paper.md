@@ -230,7 +230,7 @@ Each check below has a pass bar set before the data. A failing check stops the r
 2. **Judge correction.** Prediction-powered intervals that use the V2 calibration.
 3. **A best-arm planner.** Top-two Thompson sampling, weighted by pages waiting, with a Bayesian stopping rule. It replaces hand-picked tests and the fixed n floors.
 4. **Paired designs.** Every candidate in a test reads the same books.
-5. **Binding.** A decision that passes V4 opens the routing-row PR, which is on the hold list. `routing-drift.mjs` audits `current.json`. `routeCheck` is set to refuse once V1–V3 pass.
+5. **Binding.** A decision that passes V4 opens the routing-row PR, which is on the hold list. The binding test holds the routers to `current.json`. `routeCheck` is set to refuse once V1–V3 pass.
 6. **Widen the space.** Add prompt, thinking level and pages per call.
 
 ## Prior art (searched 2026-11-01)

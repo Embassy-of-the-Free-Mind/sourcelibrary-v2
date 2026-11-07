@@ -5,8 +5,7 @@
  *
  * PRIOR ART: scripts/eval/benchmark-dashboard-data.mjs — grades every engine cell and pairs it
  * against the production engine, but carries no cost and never puts three engines on the SAME
- * pages. scripts/eval/build-routing-table.mjs — one routing row per language, from the same
- * evidence, without cost. scripts/eval/bench2-escalation-report.mjs — a blended-cost table for
+ * pages. scripts/eval/bench2-escalation-report.mjs — a blended-cost table for
  * one 11-page bench with its prices typed into the script. None draws a frontier.
  *
  * Run by benchmark-dashboard-data.mjs after every re-score, so the charts move with the evidence
