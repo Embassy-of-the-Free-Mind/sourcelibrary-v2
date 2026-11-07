@@ -40,7 +40,6 @@ export const EXPRESSION = [
   // Cloudflare: a test on an absent header never matches, so test the names, in lower case.
   'not any(http.request.headers.names[*] eq "referer")',
   'not http.cookie contains "sl_terms="',
-  'not http.cookie contains "sl_cite="',
   'not http.cookie contains "authjs.session-token"',
   'not http.user_agent contains "sourcelibrary-"',
 ].join(' and ');
