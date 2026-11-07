@@ -98,14 +98,15 @@ export function installToolGate(dir, { task = 'ocr' } = {}) {
  * decides what is offered. Returns the arguments that select it.
  */
 const NARROW_AGENTS = {
-  ocr: { name: 'page-reader', tools: ['read_file'], does: 'Reads the page images it is pointed at.' },
-  translate: { name: 'page-translator', tools: [], does: 'Works on the text in the prompt. No tools.' },
+  // The open-once line matters: without it 6 of 14 calls opened their images twice, a whole extra turn each (#8330).
+  ocr: { name: 'page-reader', tools: ['read_file'], does: 'Reads the page images it is pointed at.', body: 'Open each named file once with read_file, in one step if you can. Do not open a file twice. Then answer.' },
+  translate: { name: 'page-translator', tools: [], does: 'Works on the text in the prompt. No tools.', body: 'Follow the instructions in the request exactly.' },
 };
 export function installNarrowAgent(dir, task = 'ocr') {
   const a = NARROW_AGENTS[task];
   if (!a) throw new Error(`no narrow agent for task ${task}`);
   fs.mkdirSync(path.join(dir, '.agents', 'agents'), { recursive: true });
-  fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\nOpen each named file once with read_file, in one step if you can. Do not open a file twice. Then answer.\n`);
+  fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\n${a.body}\n`);
   return ['--agent', a.name];
 }
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
@@ -382,7 +383,11 @@ export function agyCall(args, cwd, { killAfterMs = 360_000, exitGraceMs = EXIT_G
   });
 }
 
-/** agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none. */
+/**
+ * agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none.
+ * On agy 1.5.3 `input` leaves out `cache_read`: a page's tokens are the two added (#8330; the same prompt read 6.5K + 4K
+ * cached and 10.7K + 0). Comparing `input` alone flatters an arm that hits the cache.
+ */
 export function agyUsage(u) {
   if (!u) return null;
   return { input: u.input_tokens ?? null, output: u.output_tokens ?? null, thinking: u.thinking_tokens ?? null, cache_read: u.cache_read_tokens ?? null, total: u.total_tokens ?? null };
@@ -404,10 +409,12 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
   while (calls < attempts) {
     const ws = fs.mkdtempSync(path.join(tmp, `agy-${task}-`));
     const log = installToolGate(ws, { task });
+    // #8330: a translation needs no tool at all. AGY_ALL_TOOLS=1 sends the full list (the A/B's control arm).
+    const agentArgs = task === 'translate' && !process.env.AGY_ALL_TOOLS ? installNarrowAgent(ws, task) : [];
     // stdin: the prompt goes in as a stream-json message (stdinArgs), for a prompt past the 128 KB argv cap.
     r = stdin
-      ? await agyCall([...stdinArgs(printTimeoutS), '--model', model], ws, { input: messages.map(stdinMessage).join(''), turns: messages.length, killAfterMs: (printTimeoutS + 60) * 1000 })
-      : await agyCall(['-p', sent, '--model', model, ...CLI_SAFE_ARGS], ws); calls++;
+      ? await agyCall([...stdinArgs(printTimeoutS), '--model', model, ...agentArgs], ws, { input: messages.map(stdinMessage).join(''), turns: messages.length, killAfterMs: (printTimeoutS + 60) * 1000 })
+      : await agyCall(['-p', sent, '--model', model, ...agentArgs, ...CLI_SAFE_ARGS], ws); calls++;
     requests += stdin ? messages.length : 1;
     tools = tools.concat(gateCalls(log));
     fs.rmSync(ws, { recursive: true, force: true });
@@ -415,7 +422,7 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
     if (!r.cls || r.cls === 'quota') break;
   }
   const { text: answer, problem } = unwrapRead(r.text);
-  return { ...r, calls, requests, tool_calls: tools, answer, problem };
+  return { ...r, calls, requests, tool_calls: tools, answer, problem, ...(process.env.AGY_ALL_TOOLS || task !== 'translate' ? {} : { agent: NARROW_AGENTS.translate.name }) };
 }
 
 /**
