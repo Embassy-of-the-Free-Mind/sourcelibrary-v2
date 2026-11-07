@@ -127,6 +127,17 @@ export default function ParetoPage() {
             marked &dagger; and &ldquo;$0 billed&rdquo;. An engine with no price on record is listed under the chart instead.
           </p>
           <p>
+            <strong className="text-stone-900">Corrections.</strong> A correction is a two-step route: one engine reads the
+            page, then a second model is given the page image and that reading and fixes what the image contradicts. Each
+            correction was run again on the same pages as the dots beside it, from that panel&rsquo;s own reading by the first
+            engine, and scored by the same scorer against the same reference; an arrow runs from the first engine&rsquo;s dot
+            to the corrected result. Its price is the first engine&rsquo;s plus the second model&rsquo;s request at the API
+            price ($0 billed on the subscription), and its row counts the pages the correction made worse than its draft. A
+            page the correcting model declined (it judged the reading not to be this page&rsquo;s text) counts as not read.
+            Gemini 3.1 Flash-Lite is not used as a corrector: tested as one, it failed at the task
+            (<a href={`${GH}pull/7275`} className={LINK}>#7275</a>).
+          </p>
+          <p>
             <strong className="text-stone-900">Available today.</strong> Judged per model, by the route we can run it on,
             not the route it was measured on: Claude measured through the API runs on the Claude subscription, and a Gemini
             model measured on the paid API runs on the Antigravity command-line tool when the tool still offers it. The rules

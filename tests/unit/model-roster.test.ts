@@ -79,10 +79,14 @@ describe('the drawn dots match the roster (#6776)', async () => {
     for (const svg of svgs) {
       const seen: { state: string; at: string }[] = [];
       for (const g of svg.matchAll(/<g data-engine="([^"]+)" data-state="([^"]+)">(?:<title>[^<]*<\/title>)?(?:<circle[^>]*fill="none"[^>]*\/>)?<(?:circle cx="([\d.-]+)" cy="([\d.-]+)"[^>]*fill="([^"]+)"|path d="M([\d.-]+) ([\d.-]+)[^"]*"[^>]*fill="([^"]+)")/g)) {
-        const [, engine, state] = g;
+        const [, raw, state] = g;
+        const engine = raw.replace(/&gt;/g, '>');   // a chained route's name, escaped in the markup
         const fill = g[5] ?? g[8];
         const row = by.get(engine.split('|')[0]);
-        const expected = inUse.has(engine) && state === 'in_use' ? 'in_use' : row?.available ? 'available' : 'not_available';
+        // a chained route (#6740) is runnable when its corrector is, and its draft is runnable or what production runs
+        const parts = engine.includes('>') ? engine.split('>').map(e => by.get(e)) : null;
+        const chainOk = parts && !!parts[1]?.available && (!!parts[0]?.available || !!(parts[0] as { in_use_route?: string } | undefined)?.in_use_route);
+        const expected = inUse.has(engine) && state === 'in_use' ? 'in_use' : (parts ? chainOk : row?.available) ? 'available' : 'not_available';
         expect(state, engine).toBe(expected);
         expect(fill === '#ffffff', `${engine} drawn ${fill === '#ffffff' ? 'hollow' : 'filled'} in state ${state}`).toBe(state === 'not_available');
         // paint order: once a filled dot is drawn, no hollow one follows it in the same plot

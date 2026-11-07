@@ -80,7 +80,7 @@ describe('ocr-pareto.json', () => {
   it('places only engines with a billed or quota price from an existing source', () => {
     for (const [id, p] of panels) {
       for (const a of p.placed) {
-        expect(['billed', 'quota'], `${id}/${a.engine}`).toContain(a.cost!.basis);
+        expect(a.engine.includes('>') ? ['chain'] : ['billed', 'quota'], `${id}/${a.engine}`).toContain(a.cost!.basis);
         expect(fs.existsSync(path.join(process.cwd(), a.cost!.source)), a.cost!.source).toBe(true);
       }
       for (const a of p.no_cost) expect(a.cost).toBeNull();
@@ -103,6 +103,27 @@ describe('ocr-pareto.json', () => {
       if (p.grade.level !== 'decide') expect(p.verdict, id).not.toMatch(/\b(better|worse) than\b/);
       // a repeat that is not like-for-like, or identical on every page, never sets a band
       if (p.noise && p.noise.kind !== 'spread') expect(p.noise.band, id).toBeNull();
+    }
+  });
+});
+
+// #6740: a chained route (draft → corrector) is a point on the same pages as its draft, priced at its draft plus more.
+describe('chained routes', () => {
+  type ChainPoint = Point & { chain?: { draft: string; corrector: string; n: number; worse: number; better: number }; cost: Point['cost'] & { billed_usd_per_1k?: number } };
+  const chains = panels.flatMap(([id, p]) => ([...p.placed, ...p.no_cost] as ChainPoint[]).filter(x => x.engine.includes('>')).map(x => [id, p, x] as const));
+  it('draws each chain from a draft on the same panel, with the pages it made worse counted', () => {
+    for (const [id, p, x] of chains) {
+      const at = `${id}/${p.kind}/${x.engine}`;
+      expect(x.chain, at).toBeTruthy();
+      const draft = [...p.placed, ...p.no_cost].find(d => d.engine === x.chain!.draft);
+      expect(draft, at).toBeTruthy();
+      expect(x.engine, at).toBe(`${x.chain!.draft}>${x.chain!.corrector}`);
+      expect(x.label.startsWith(`${draft!.label} → `), at).toBe(true);
+      expect(x.chain!.worse + x.chain!.better, at).toBeLessThanOrEqual(x.chain!.n);
+      expect(x.chain!.n, at).toBeLessThanOrEqual(p.n_pages);
+      // never Flash-Lite as a corrector (#7275), never a heavy agy model
+      expect(x.chain!.corrector, at).not.toMatch(/flash-lite|argon|-pro|-high/);
+      if (x.cost && draft!.cost) expect(x.cost.usd_per_1k, at).toBeGreaterThan(draft!.cost.usd_per_1k);
     }
   });
 });
