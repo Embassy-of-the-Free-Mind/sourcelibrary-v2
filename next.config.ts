@@ -370,7 +370,9 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/gallery/:path*',
-        missing: [{ type: 'header', key: 'rsc' }],
+        // Not with `q`: the proxy sends assistant fetchers from /gallery?q= to a pictures
+        // view, and a person's cached copy would answer them first for a day (#8161).
+        missing: [{ type: 'header', key: 'rsc' }, { type: 'query', key: 'q' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
