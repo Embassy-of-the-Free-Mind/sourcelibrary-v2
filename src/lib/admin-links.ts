@@ -57,6 +57,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin/shared-findings', label: 'Shared findings' },
       { href: '/admin/users', label: 'Users' },
       { href: '/admin/members', label: 'Members' },
+      { href: '/admin/laura', label: "Laura's work" },
     ],
   },
   {
