@@ -75,6 +75,12 @@ export interface ReaderStrings {
     next: string;
     close: string;
     jumpToPage: string;
+    /** The number printed on the leaf, beside the frame position, where a run was confirmed on the images (#8041). */
+    printedPage: (printed: string) => string;
+    /** The frame position, named where it has to be told from a printed number. */
+    scanPage: (n: number) => string;
+    /** Heading of the choice when the page box matches more than one page. */
+    whichPage: string;
     backToTheBook: string;
     backToTheBookPage: string;
     backToTheReader: string;
@@ -342,32 +348,40 @@ export interface ReaderStrings {
     fieldTranscript: string;
     /** "Photographed from the printed edition, p. N" */
     scannedFrom: (pageNumber?: number) => string;
-    /** "Read from the scan by {model}" */
-    transcribedBy: (model: string) => string;
-    /** "Translated from the transcript by {model}" */
-    translatedBy: (model: string) => string;
+    /**
+     * What kind of text it is, never which model made it (#7263, Derek 2026-11-04: a vendor's
+     * model name tells a reader nothing and invites a judgement about the tool). The stored
+     * `ocr.model` / `translation.model` stay in the record and the API.
+     */
+    machineTranscript: string;
+    machineTranslation: string;
+    /** A machine translation a person has since edited (`translation.edited_by` / `edited_at`). */
+    machineTranslationEdited: string;
+    /** The drawer's quiet notice (Derek, 2026-11-04): every text carries errors, the scan is the source. The
+     *  machine-made kind is said by machineTranscript / machineTranslation, so this need not repeat it. */
     machineNotice: string;
     /** Corpus editions (#4350): no scan exists, and the text (for ETCSL, the
      *  translation too) is the corpus editors' scholarly work, not AI's. */
     corpusNoScan: (witnessCount: number) => string;
     corpusTranscript: (name: string, org?: string) => string;
     /** Syriac pages read by a specialist Kraken model (#4883), by route: Sophro Mhiro for
-     *  manuscripts, omnisyr for print. Replaces transcribedBy + machineNotice on those pages. */
+     *  manuscripts, omnisyr for print. Replaces machineTranscript + machineNotice on those pages. */
     krakenTranscript: (route: 'manuscript' | 'print') => string;
     krakenNotice: (route: 'manuscript' | 'print') => string;
     /** Label for the link under krakenNotice to the by-eye check it cites (KRAKEN_EVIDENCE_URL). */
     krakenEvidenceLink: string;
     /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
-    iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
-    /** Written or corrected by a person; `model` is the display name of what they started from, if known. */
-    manualTranscript: (model: string | null) => string;
+    iaTranscript: (year: string | null, agreement: number | null) => string;
+    /** Written or corrected by a person; `fromMachine` when they started from a machine transcription. */
+    manualTranscript: (fromMachine: boolean) => string;
     /**
      * Short forms for the transcription pane-header chip (#5186). Derived by
      * `transcriptProvenanceLabel()` from the SAME provenance as the drawer
-     * sentences above, so header and drawer can never disagree. The model
-     * case has no string here: the chip is the model's display name itself.
+     * sentences above, so header and drawer can never disagree.
      */
-    transcriptChipIa: (engine: string | null) => string;
+    transcriptChipIa: string;
+    /** Chip for a machine transcription, Kraken's Syriac included (its drawer sentence names the model). */
+    transcriptChipMachine: string;
     /** Tooltip on the Archive chip: the known failure mode, plus the sample agreement when measured. */
     transcriptChipIaTitle: (agreement: number | null) => string;
     transcriptChipManual: string;
@@ -395,10 +409,10 @@ export interface ReaderStrings {
     /** `serious` is null when the check kept no per-page record. */
     qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
     /** Follows qualityBook: the kinds of serious error that check found most often, commonest first (at most two). */
-    qualityBookKinds: (clauses: string[]) => string;
-    /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means, and to check the scan. */
-    qualitySeriousMeans: string;
+    /** Ends the book line (#7082, a reader asked "how serious really?"): what "serious" means. */
     qualitySeeReview: string;
+    /** The book line when the newest review found no serious error on the pages it read (#7896). */
+    qualityChecked: (o: { ai: boolean; image: boolean; read: number; date: string }) => string;
     qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
@@ -745,6 +759,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Next',
       close: 'Close',
       jumpToPage: 'Jump to page',
+      printedPage: (x) => `printed ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Which page?',
       backToTheBook: 'Back to the book',
       backToTheBookPage: 'Back to the book page',
       backToTheReader: 'Back to the reader',
@@ -955,9 +972,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Scan',
       fieldTranscript: 'Transcript',
       scannedFrom: (pageNumber) => `Photographed from the printed edition${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Read from the scan by ${model}`,
-      translatedBy: (model) => `Translated from the transcript by ${model}`,
-      machineNotice: 'Machine transcription and translation carry errors. The scan is the source, so read it alongside the text wherever a reading matters.',
+      machineTranscript: 'Machine transcription of the scan',
+      machineTranslation: 'AI translation of the transcript',
+      machineTranslationEdited: 'AI translation of the transcript, corrected by hand',
+      machineNotice: 'All transcription and translation carry errors. The scan is the source.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `None. This is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None. This is a digital text edition; no page images exist.',
@@ -969,14 +987,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Machine transcription, not checked by a person. ' +
         (route === 'print'
           ? 'We read five printed pages against their scans (September 2026): the words were right on all five, and on two of them lines from separate columns ran together.'
-          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.') +
-        ' Check the scan wherever a reading matters.',
+          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.'),
       krakenEvidenceLink: 'How we checked',
-      iaTranscript: (engine, year, agreement) =>
-        `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Read from the scan by the Internet Archive's OCR${year ? ` (${year})` : ''}` +
         (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
-      manualTranscript: (model) => model ? `Read from the scan by ${model}, corrected by hand` : 'Transcribed by hand',
-      transcriptChipIa: (engine) => `Internet Archive OCR${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Machine transcription, corrected by hand' : 'Transcribed by hand',
+      transcriptChipIa: 'Internet Archive OCR',
+      transcriptChipMachine: 'Machine transcription',
       transcriptChipIaTitle: (agreement) =>
         'Archive OCR — numbers may be misread (see #5186)' +
         (agreement != null ? ` · agrees with our sample reading on ${Math.round(agreement * 100)}% of words` : ''),
@@ -1015,9 +1033,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (read === 1) return `${start} and found serious errors on it.`;
         return `${start} and found serious errors on ${serious} of them${read > serious ? (read - serious === 1 ? '; the other page had none' : `; the other ${read - serious} had none`) : ''}.`;
       },
-      qualityBookKinds: (clauses) => `Most often, ${clauses.join('; next, ')}.`,
-      qualitySeriousMeans: 'Serious means an error that changes what the text says, such as a wrong word, name or number, or a missing or invented passage, not a spelling slip. Before you quote a passage, compare it with the scan, which is the original.',
       qualitySeeReview: 'See the review',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'An AI reviewer' : 'A reviewer'} checked ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date} and found no serious errors.`,
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
@@ -1233,6 +1250,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Siguiente',
       close: 'Cerrar',
       jumpToPage: 'Ir a una página',
+      printedPage: (x) => `impresa ${x}`,
+      scanPage: (n) => `imagen ${n}`,
+      whichPage: '¿Qué página?',
       backToTheBook: 'Volver al libro',
       backToTheBookPage: 'Volver a la página del libro',
       backToTheReader: 'Volver al lector',
@@ -1450,9 +1470,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Escaneo',
       fieldTranscript: 'Transcripción',
       scannedFrom: (pageNumber) => `Fotografiada a partir de la edición impresa${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Leída del escaneo por ${model}`,
-      translatedBy: (model) => `Traducida de la transcripción por ${model}`,
-      machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente, así que léelo junto al texto siempre que una lectura sea importante.',
+      machineTranscript: 'Transcripción automática del escaneo',
+      machineTranslation: 'Traducción por IA de la transcripción',
+      machineTranslationEdited: 'Traducción por IA de la transcripción, corregida a mano',
+      machineNotice: 'Toda transcripción y toda traducción contienen errores. El escaneo es la fuente.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Ninguno. Es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno. Es una edición digital de texto; no existen imágenes de página.',
@@ -1464,14 +1485,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Transcripción automática, no revisada por una persona. ' +
         (route === 'print'
           ? 'Leímos cinco páginas impresas junto a sus escaneos (septiembre de 2026): las palabras eran correctas en las cinco, y en dos se mezclaron líneas de columnas distintas.'
-          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.') +
-        ' Consulta el escaneo siempre que una lectura sea importante.',
+          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.'),
       krakenEvidenceLink: 'Cómo lo comprobamos',
-      iaTranscript: (engine, year, agreement) =>
-        `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Leída del escaneo por el OCR del Internet Archive${year ? ` (${year})` : ''}` +
         (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
-      manualTranscript: (model) => model ? `Leída del escaneo por ${model}, corregida a mano` : 'Transcrita a mano',
-      transcriptChipIa: (engine) => `OCR del Internet Archive${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Transcripción automática, corregida a mano' : 'Transcrita a mano',
+      transcriptChipIa: 'OCR del Internet Archive',
+      transcriptChipMachine: 'Transcripción automática',
       transcriptChipIaTitle: (agreement) =>
         'OCR del Archive: los números pueden estar mal leídos (véase #5186)' +
         (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
@@ -1510,9 +1531,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (read === 1) return `${start} y encontró errores graves en ella.`;
         return `${start} y encontró errores graves en ${serious} de ellas${read > serious ? (read - serious === 1 ? '; la otra no tenía ninguno' : `; las otras ${read - serious} no tenían ninguno`) : ''}.`;
       },
-      qualityBookKinds: (clauses) => `Lo más frecuente: ${clauses.join('; después, ')}.`,
-      qualitySeriousMeans: 'Grave significa un error que cambia lo que dice el texto, como una palabra, un nombre o un número equivocados, o un pasaje que falta o que se ha inventado, no una simple errata. Antes de citar un pasaje, compárelo con la imagen, que es el original.',
       qualitySeeReview: 'Ver la revisión',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Un revisor de IA' : 'Un revisor'} revisó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date} y no encontró errores graves.`,
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
@@ -1758,6 +1778,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Sequens',
       close: 'Claude',
       jumpToPage: 'Paginam pete',
+      printedPage: (x) => `impressa ${x}`,
+      scanPage: (n) => `imago ${n}`,
+      whichPage: 'Quam paginam?',
       backToTheBook: 'Ad librum redi',
       backToTheBookPage: 'Ad paginam libri redi',
       backToTheReader: 'Ad lectionem redi',
@@ -1970,9 +1993,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Imago',
       fieldTranscript: 'Transcriptio',
       scannedFrom: (pageNumber) => `Ex editione impressa photographice descripta${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Ex imagine lecta a ${model}`,
-      translatedBy: (model) => `Ex transcriptione conversa a ${model}`,
-      machineNotice: 'Transcriptio et conversio machina factae menda habent. Imago fons est: eam iuxta textum lege, ubicumque lectio alicuius momenti est.',
+      machineTranscript: 'Transcriptio ex imagine machina facta',
+      machineTranslation: 'Conversio ex transcriptione ab intellegentia artificiali facta',
+      machineTranslationEdited: 'Conversio ex transcriptione ab intellegentia artificiali facta, manu emendata',
+      machineNotice: 'Omnis transcriptio omnisque conversio menda habent. Imago fons est.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Nulla: haec est editio textus digitalis. Opus in ${witnessCount} ${witnessCount === 1 ? 'tabula fictili' : 'tabulis fictilibus'} apud CDLI relatis servatur.`
         : 'Nulla: haec est editio textus digitalis; imagines paginarum nullae exstant.',
@@ -1984,14 +2008,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Transcriptio machina facta, ab homine non recognita. ' +
         (route === 'print'
           ? 'Quinque paginas typis impressas cum imaginibus contulimus (mense Septembri 2026): verba in omnibus quinque recte lecta sunt, in duabus autem versus e columnis diversis confusi sunt.'
-          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.') +
-        ' Imaginem inspice, ubicumque lectio alicuius momenti est.',
+          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.'),
       krakenEvidenceLink: 'Quomodo exploraverimus',
-      iaTranscript: (engine, year, agreement) =>
-        `Ex imagine lecta ab OCR Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Ex imagine lecta ab OCR Internet Archive${year ? ` (${year})` : ''}` +
         (agreement != null ? `, recepta quia cum nostra lectione paginarum huius libri delectarum consentit (${Math.round(agreement * 100)}% verborum)` : ''),
-      manualTranscript: (model) => model ? `Ex imagine lecta a ${model}, manu emendata` : 'Manu transcripta',
-      transcriptChipIa: (engine) => `OCR Internet Archive${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Transcriptio machina facta, manu emendata' : 'Manu transcripta',
+      transcriptChipIa: 'OCR Internet Archive',
+      transcriptChipMachine: 'Transcriptio machinalis',
       transcriptChipIaTitle: (agreement) =>
         'OCR Internet Archive: numeri perperam legi possunt (vide #5186)' +
         (agreement != null ? ` · cum lectione nostra in ${Math.round(agreement * 100)}% verborum consentit` : ''),
@@ -2032,9 +2056,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (read === 1) return `${start} et menda gravia in ea invenit.`;
         return `${start} et menda gravia in ${serious} earum invenit${read > serious ? (read - serious === 1 ? '; reliqua nullum habet' : `; reliquae ${read - serious} nulla habent`) : ''}.`;
       },
-      qualityBookKinds: (clauses) => `Saepissime: ${clauses.join('; deinde: ')}.`,
-      qualitySeriousMeans: 'Grave dicitur mendum quod sensum textus mutat, ut verbum, nomen vel numerus falsus, aut locus omissus vel fictus, non levis error scribendi. Antequam locum citas, cum imagine confer, quae archetypum est.',
       qualitySeeReview: 'Recensionem vide',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date}) nec menda gravia invenit.`,
       qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
       sourceLink: 'fons',
@@ -2261,6 +2284,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: 'Volgende',
       close: 'Sluiten',
       jumpToPage: 'Naar pagina',
+      printedPage: (x) => `gedrukt ${x}`,
+      scanPage: (n) => `scan ${n}`,
+      whichPage: 'Welke pagina?',
       backToTheBook: 'Terug naar het boek',
       backToTheBookPage: 'Terug naar de boekpagina',
       backToTheReader: 'Terug naar de lezer',
@@ -2473,9 +2499,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: 'Scan',
       fieldTranscript: 'Transcriptie',
       scannedFrom: (pageNumber) => `Gefotografeerd uit de gedrukte editie${pageNumber != null ? `, p. ${pageNumber}` : ''}`,
-      transcribedBy: (model) => `Van de scan gelezen door ${model}`,
-      translatedBy: (model) => `Uit de transcriptie vertaald door ${model}`,
-      machineNotice: 'Machinale transcriptie en vertaling bevatten fouten. De scan is de bron: lees die naast de tekst waar het op een lezing aankomt.',
+      machineTranscript: 'Machinale transcriptie van de scan',
+      machineTranslation: 'AI-vertaling van de transcriptie',
+      machineTranslationEdited: 'AI-vertaling van de transcriptie, met de hand gecorrigeerd',
+      machineNotice: 'Elke transcriptie en elke vertaling bevat fouten. De scan is de bron.',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `Geen. Dit is een digitale tekstuitgave. De tekst is bewaard gebleven op ${witnessCount} ${witnessCount === 1 ? 'kleitablet' : 'kleitabletten'}, gecatalogiseerd bij CDLI.`
         : 'Geen. Dit is een digitale tekstuitgave; er bestaan geen pagina-afbeeldingen.',
@@ -2487,14 +2514,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         'Machinale transcriptie, niet door een mens gecontroleerd. ' +
         (route === 'print'
           ? 'We hebben vijf gedrukte pagina’s naast hun scans gelezen (september 2026): op alle vijf klopten de woorden, en op twee ervan liepen regels uit verschillende kolommen door elkaar.'
-          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.') +
-        ' Bekijk de scan waar het op een lezing aankomt.',
+          : 'We hebben vijf handgeschreven pagina’s naast hun scans gelezen (september 2026): drie werden correct gelezen, en twee beschadigde pagina’s kwamen er in fragmenten uit.'),
       krakenEvidenceLink: 'Hoe we het hebben gecontroleerd',
-      iaTranscript: (engine, year, agreement) =>
-        `Van de scan gelezen door de OCR van het Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `Van de scan gelezen door de OCR van het Internet Archive${year ? ` (${year})` : ''}` +
         (agreement != null ? `, overgenomen omdat die overeenkomt met onze eigen lezing van de proefpagina’s van dit boek (${Math.round(agreement * 100)}% van de woorden)` : ''),
-      manualTranscript: (model) => model ? `Van de scan gelezen door ${model}, met de hand gecorrigeerd` : 'Met de hand getranscribeerd',
-      transcriptChipIa: (engine) => `OCR van het Internet Archive${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? 'Machinale transcriptie, met de hand gecorrigeerd' : 'Met de hand getranscribeerd',
+      transcriptChipIa: 'OCR van het Internet Archive',
+      transcriptChipMachine: 'Machinale transcriptie',
       transcriptChipIaTitle: (agreement) =>
         'OCR van het Internet Archive: getallen kunnen verkeerd gelezen zijn (zie #5186)' +
         (agreement != null ? ` · komt voor ${Math.round(agreement * 100)}% van de woorden overeen met onze proeflezing` : ''),
@@ -2534,9 +2561,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (read === 1) return `${start} en vond ernstige fouten op die pagina.`;
         return `${start} en vond ernstige fouten op ${serious} daarvan${read > serious ? (read - serious === 1 ? '; de andere had er geen' : `; de andere ${read - serious} hadden er geen`) : ''}.`;
       },
-      qualityBookKinds: (clauses) => `Het vaakst: ${clauses.join('; daarna: ')}.`,
-      qualitySeriousMeans: 'Ernstig betekent een fout die verandert wat de tekst zegt, zoals een verkeerd woord, een verkeerde naam of een verkeerd getal, of een ontbrekende of verzonnen passage, geen spelfout. Vergelijk een passage met de scan voordat u haar citeert: de scan is het origineel.',
       qualitySeeReview: 'Bekijk de beoordeling',
+      qualityChecked: ({ ai, image, read, date }) => `Bij een controle op ${date} las ${ai ? 'een AI-beoordelaar' : 'een beoordelaar'} ${read} ${read === 1 ? 'pagina' : 'pagina’s'} van dit boek${image ? (read === 1 ? ' naast de scan' : ' naast de scans') : ''} en vond geen ernstige fouten.`,
       qualityDetectorLink: 'Waar de controle op let',
       licenceLink: 'licentie',
       sourceLink: 'bron',
@@ -2758,6 +2784,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       next: '下一个',
       close: '关闭',
       jumpToPage: '跳转到页',
+      printedPage: (x) => `印本第 ${x} 页`,
+      scanPage: (n) => `扫描第 ${n} 张`,
+      whichPage: '哪一页？',
       backToTheBook: '返回本书',
       backToTheBookPage: '返回本书页面',
       backToTheReader: '返回阅读器',
@@ -2830,18 +2859,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: '扫描图',
       // The transcription IS the reading text on `/zh`, so the pane is named for
-      // what it holds rather than for how it was made.
-      viewOcr: '中文',
-      ocrPaneHeader: () => '中文原文',
+      // what it holds rather than for how it was made. 原文, never 中文: /zh also
+      // opens Latin and French books (中学西传), and the pane holds their own language.
+      viewOcr: '原文',
+      ocrPaneHeader: () => '原文',
       viewRoman: '罗马字',
       viewEnglish: '英文',
       visiblePanesAria: '当前显示的窗格',
       showPane: (label) => `显示${label}`,
       lastPaneShowing: '这是最后一个显示的窗格',
       pickPaneAria: '扫描图、原文或译文',
-      translatedFrom: () => '译自中文',
+      translatedFrom: () => '译自原文',
       viewTheScan: '查看扫描图',
-      viewTheText: () => '查看中文原文',
+      viewTheText: () => '查看原文',
 
       originalFallback: '原文',
       romanisedHeader: '罗马字转写',
@@ -2862,7 +2892,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
 
       originalScan: '原书扫描图',
       originalScanHint: '页面拍摄时的原貌',
-      transcriptionOf: () => '中文原文',
+      transcriptionOf: () => '原文',
       transcriptionHint: '印刷文字，由机器识读',
       englishTranslation: '英文译文',
       englishTranslationHint: '借助 AI 翻译',
@@ -2882,7 +2912,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       trace: '对照',
       turnTracingOff: '关闭对照',
       traceFallbackLanguage: '原文',
-      traceHint: () => '对照：点击任意短语，查看它在中文原文中的位置',
+      traceHint: () => '对照：点击任意短语，查看它在原文中的位置',
       traceAligning: '正在将本页与译文对齐…',
       traceUnavailable: '本页无法使用对照功能。',
       traceEnglishOnly: '对照功能比较原文与英文译文。请切换回英文后使用。',
@@ -2970,9 +3000,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       fieldScan: '扫描图',
       fieldTranscript: '转录',
       scannedFrom: (pageNumber) => `拍摄自印本${pageNumber != null ? `，第 ${pageNumber} 页` : ''}`,
-      transcribedBy: (model) => `由 ${model} 从扫描图识读`,
-      translatedBy: (model) => `由 ${model} 根据转录文本翻译`,
-      machineNotice: '机器转录和翻译都会有错误。扫描图才是依据，凡是关键的读法，请对照扫描图阅读。',
+      machineTranscript: '扫描图的机器转录',
+      machineTranslation: '根据转录文本的 AI 译文',
+      machineTranslationEdited: '根据转录文本的 AI 译文，经人工校正',
+      machineNotice: '任何转录和翻译都会有错误。扫描图才是依据。',
       corpusNoScan: (witnessCount) => witnessCount > 0
         ? `无。这是数字文本版。该作品保存在 CDLI 著录的 ${witnessCount} 块泥板上。`
         : '无。这是数字文本版，没有页面图像。',
@@ -2984,14 +3015,14 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         '机器转录，未经人工核对。' +
         (route === 'print'
           ? '我们对照扫描图审读了五页印本（2026 年 9 月）：五页的字词全部正确，其中两页把不同栏的行混在了一起。'
-          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。') +
-        '凡是关键的读法，请核对扫描图。',
+          : '我们对照扫描图审读了五页手稿（2026 年 9 月）：三页识读正确，两页受损的页面只得到了片段。'),
       krakenEvidenceLink: '我们如何核对',
-      iaTranscript: (engine, year, agreement) =>
-        `由 Internet Archive 的 OCR 从扫描图识读${engine ? `（${engine}${year ? `，${year}` : ''}）` : year ? `（${year}）` : ''}` +
+      iaTranscript: (year, agreement) =>
+        `由 Internet Archive 的 OCR 从扫描图识读${year ? `（${year}）` : ''}` +
         (agreement != null ? `；之所以采用，是因为它与我们对本书样本页的识读一致（${Math.round(agreement * 100)}% 的字词）` : ''),
-      manualTranscript: (model) => model ? `由 ${model} 从扫描图识读，经人工校正` : '人工转录',
-      transcriptChipIa: (engine) => `Internet Archive OCR${engine ? ` · ${engine}` : ''}`,
+      manualTranscript: (fromMachine) => fromMachine ? '机器转录，经人工校正' : '人工转录',
+      transcriptChipIa: 'Internet Archive OCR',
+      transcriptChipMachine: '机器转录',
       transcriptChipIaTitle: (agreement) =>
         'Archive OCR：数字可能识读有误（见 #5186）' +
         (agreement != null ? ` · 与我们的样本识读在 ${Math.round(agreement * 100)}% 的字词上一致` : ''),
@@ -3030,9 +3061,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         if (read === 1) return `${start}，发现该页有严重错误。`;
         return `${start}，发现其中 ${serious} 页有严重错误${read > serious ? `，其余 ${read - serious} 页没有` : ''}。`;
       },
-      qualityBookKinds: (clauses) => `最常见的是：${clauses.join('；其次是：')}。`,
-      qualitySeriousMeans: '“严重错误”指改变文本意思的错误，例如字词、人名或数字有误，或段落缺失、凭空捏造，而不是一般的笔误。引用某段文字前，请对照扫描图核对，扫描图才是原件。',
       qualitySeeReview: '查看审校记录',
+      qualityChecked: ({ ai, image, read, date }) => `${ai ? 'AI 审校员' : '审校员'}于 ${date} ${image ? '对照扫描图' : ''}审读了本书 ${read} 页，未发现严重错误。`,
       qualityDetectorLink: '这项检查查什么',
       licenceLink: '许可',
       sourceLink: '来源',

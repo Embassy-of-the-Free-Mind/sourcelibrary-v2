@@ -36,14 +36,31 @@ const VALIDATED = {
   crossModelKappa: 0.82,
 };
 
-// ── Data ─────────────────────────────────────────────────────────────
+// Work-level census (#7751, October 2026): USTC editions printed 1400-1700 in each
+// language, grouped into WORKS by scripts/translation-layer/11-work-graph.mjs
+// (leader clustering within an author). Replaces the get_translation_census
+// per-language counts, which used ustc_editions.work_cluster_id, a surname +
+// first-six-title-words key that split much-printed works (Imitatio Christi:
+// 252 editions in 69 "works"). Study results, not live counts: re-run phase 11
+// to refresh. catalogued = works with a catalogued external English
+// translation (a floor; outside Latin the catalogues are too thin to read as
+// a rate, #7769). readable = works readable in English on Source Library.
+const WORK_LEVEL = {
+  date: 'October 2026',
+  languages: [
+    { language: 'Latin', editions: 499604, works: 306352, catalogued: 4249, held: 49458, readable: 5243 },
+    { language: 'German', editions: 340205, works: 221931, catalogued: 34, held: 22745, readable: 651 },
+    { language: 'French', editions: 233563, works: 124168, catalogued: 155, held: 1521, readable: 202 },
+    { language: 'Dutch', editions: 113839, works: 74378, catalogued: 8, held: 339, readable: 223 },
+    { language: 'Italian', editions: 110331, works: 68819, catalogued: 108, held: 861, readable: 193 },
+    { language: 'Spanish', editions: 83510, works: 59582, catalogued: 75, held: 176, readable: 28 },
+  ],
+};
+const WL_WORKS = WORK_LEVEL.languages.reduce((s, l) => s + l.works, 0);
+const WL_EDITIONS = WORK_LEVEL.languages.reduce((s, l) => s + l.editions, 0);
+const WL_READABLE = WORK_LEVEL.languages.reduce((s, l) => s + l.readable, 0);
 
-interface CensusLanguage {
-  language: string;
-  works: number;
-  translated: number;
-  pct: number;
-}
+// ── Data ─────────────────────────────────────────────────────────────
 
 interface CensusData {
   total_editions: number;
@@ -51,7 +68,6 @@ interface CensusData {
   total_translated: number;
   raw_pct_translated: number;
   catalog_records: number;
-  languages: CensusLanguage[];
   // Site-wide canonical counts (system_config.homepage_stats — same source as
   // the homepage; never re-derive these from a parallel query, see #3015)
   sl_first_translations: number;
@@ -78,7 +94,7 @@ async function getCensusData(): Promise<CensusData> {
   // Let a failed load throw: with revalidate=3600, ISR keeps serving the last
   // good page on refresh failure. Rendering a fallback here would cache the
   // fallback instead (the #2974 pattern — don't reintroduce it).
-  if (!census?.totals || !census?.by_language) {
+  if (!census?.totals) {
     throw new Error(`Translation census RPC unavailable: ${censusResult.error?.message || 'no totals returned'}`);
   }
   if (!homepageStats?.firstTranslationCount) {
@@ -86,16 +102,6 @@ async function getCensusData(): Promise<CensusData> {
   }
 
   const t = census.totals;
-  const languages: CensusLanguage[] = (census.by_language as any[])
-    .filter((l: any) => Number(l.total_works) >= 500 && l.language)
-    .map((l: any) => ({
-      language: l.language,
-      works: Number(l.total_works),
-      translated: Number(l.works_with_translation),
-      pct: Number(l.pct_works_translated),
-    }))
-    .sort((a, b) => b.works - a.works)
-    .slice(0, 12);
 
   const vc = homepageStats.verification_coverage || {};
   return {
@@ -104,7 +110,6 @@ async function getCensusData(): Promise<CensusData> {
     total_translated: Number(t.works_with_translation),
     raw_pct_translated: Number(t.pct_works_translated),
     catalog_records: catalogResult.count ?? 0,
-    languages,
     sl_first_translations: Number(homepageStats.firstTranslationCount),
     sl_books_readable: Number(homepageStats.readableInEnglish ?? homepageStats.translatedToEnglish ?? 0),
     corpus_readable: Number(vc.readable || 0),
@@ -154,7 +159,6 @@ function Callout({ label, children }: { label: string; children: ReactNode }) {
 
 export default async function CensusPage() {
   const data = await getCensusData();
-  const maxPct = Math.max(...data.languages.map(l => l.pct), 0.1);
   const asOf = data.stats_updated_at
     ? data.stats_updated_at.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     : null;
@@ -172,14 +176,13 @@ export default async function CensusPage() {
         {/* stat band */}
         <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-sm bg-stone-50 my-8">
           <Stat
-            n={(data.total_works / 1_000_000).toFixed(2)}
-            unit="M"
-            label="distinct early-modern works recorded in the USTC"
+            n={`${Math.round(WL_WORKS / 1000)}K`}
+            label={`distinct works printed 1400 to 1700 in Latin and five vernaculars (${WORK_LEVEL.date})`}
           />
           <Stat
             n={`~${Math.round(100 - VALIDATED.allPrintGapPct)}`}
             unit="%"
-            label={`of all early-modern print translated (validated estimate, ${VALIDATED.evalDate})`}
+            label={`of all early-modern Latin print translated (validated estimate, ${VALIDATED.evalDate})`}
           />
           <Stat
             n={`~${Math.round(100 - VALIDATED.renaissanceGapPct)}`}
@@ -196,13 +199,14 @@ export default async function CensusPage() {
         <Section kicker="The finding" title="Most of early-modern thought has never been Englished">
           <p className="mb-4">
             Between the invention of the printing press and 1700, European presses produced{' '}
-            {fmt(data.total_editions)} recorded editions (roughly {fmt(data.total_works)} distinct
-            works) in Latin, German, French, Italian, Dutch, Spanish, and other languages. The
+            {fmt(data.total_editions)} recorded editions in Latin, German, French, Italian, Dutch,
+            Spanish, and other languages. In Latin and the five largest vernaculars alone, the{' '}
+            {fmt(WL_EDITIONS)} editions hold about {fmt(WL_WORKS)} distinct works. The
             intellectual output of the Renaissance, the Reformation, and the Scientific Revolution.
           </p>
           <p className="mb-4">
             How much of it can an English reader actually read? Our validated estimate ({VALIDATED.evalDate}): across{' '}
-            <strong>all</strong> early-modern print, <strong>{VALIDATED.allPrintGapPct}%</strong>{' '}
+            <strong>all</strong> early-modern Latin print, <strong>{VALIDATED.allPrintGapPct}%</strong>{' '}
             <span className="text-stone-500">[{VALIDATED.allPrintCI}]</span> has no known English
             translation. Restricted to works actually <em>composed</em> in the Renaissance, not
             reprints of ancient classics, the Latin gap rises to{' '}
@@ -227,7 +231,9 @@ export default async function CensusPage() {
           </p>
           <Callout label="Why not quote the raw catalog number?">
             A naive join of the USTC against our {fmt(data.catalog_records)} federated translation
-            records finds a match for only {data.raw_pct_translated}% of works. That raw figure{' '}
+            records finds a catalogued English translation for only{' '}
+            {(100 * WORK_LEVEL.languages[0].catalogued / WORK_LEVEL.languages[0].works).toFixed(1)}% of
+            Latin works. That raw figure{' '}
             <strong>overstates the gap</strong>: translated ancient and medieval classics hide in
             it under divergent titles, and author-level matches inflate the translated side where
             it matters least. The validation run measured both errors and corrected for them,
@@ -251,33 +257,60 @@ export default async function CensusPage() {
         </Section>
 
         {/* ── By language ─────────────────────────────────────── */}
-        <Section kicker="The map of the gap" title="Documented translations by language">
+        <Section kicker="The map of the gap" title="Editions, works and translations by language">
           <p className="mb-6 text-stone-600">
-            Each bar shows the share of distinct works in that original language with a translation
-            documented in our federated catalogs. These are <strong>raw catalog floors, not the
-            debiased estimates</strong>: they count only translations we could locate and match,
-            so every bar understates the true rate. They are shown for their <em>shape</em>: the
-            relative neglect of German, Dutch, and Spanish print is real however you count.
+            Editions are printings; works are the texts, however often they were printed.
+            Translation happens to works, so every share on this page is a share of works.
+            &ldquo;Catalogued&rdquo; counts works with an English translation we could find and
+            match in the federated catalogs: a floor. For Latin the validated sample above shows the
+            catalogs see well under half of real translations; for the vernaculars the catalogs are
+            still too thin to read as a rate, and we are building that side now. Figures as of{' '}
+            {WORK_LEVEL.date}.
           </p>
-          <div className="space-y-2.5">
-            {data.languages.map(d => (
-              <div key={d.language} className="grid grid-cols-[7rem_1fr_6.5rem] items-center gap-3">
-                <div className="text-right font-body text-sm text-stone-800">
-                  {d.language}
-                  <span className="block text-[11px] text-stone-400">{fmt(d.works)} works</span>
-                </div>
-                <div className="h-5 bg-stone-200 rounded-sm overflow-hidden">
-                  <div
-                    className="h-full rounded-sm bg-gradient-to-r from-amber-800 to-amber-900"
-                    style={{ width: `${Math.max((d.pct / maxPct) * 100, 1.5)}%` }}
-                  />
-                </div>
-                <div className="font-body text-sm font-semibold text-amber-800">
-                  {d.pct.toFixed(2)}% <span className="text-stone-400 font-normal">· {fmt(d.translated)}</span>
-                </div>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm font-body">
+              <thead>
+                <tr className="text-left text-stone-800 border-b border-stone-300">
+                  <th className="py-2 pr-4 font-medium">Language</th>
+                  <th className="py-2 pr-4 font-medium text-right">Editions</th>
+                  <th className="py-2 pr-4 font-medium text-right">Works</th>
+                  <th className="py-2 pr-4 font-medium text-right">Catalogued in English</th>
+                  <th className="py-2 pr-4 font-medium text-right">Held here</th>
+                  <th className="py-2 pr-4 font-medium text-right">Readable here</th>
+                </tr>
+              </thead>
+              <tbody>
+                {WORK_LEVEL.languages.map(l => (
+                  <tr key={l.language} className="border-b border-stone-200 text-stone-700">
+                    <td className="py-2 pr-4 text-stone-900">{l.language}</td>
+                    <td className="py-2 pr-4 text-right">{fmt(l.editions)}</td>
+                    <td className="py-2 pr-4 text-right">{fmt(l.works)}</td>
+                    <td className="py-2 pr-4 text-right">{fmt(l.catalogued)}</td>
+                    <td className="py-2 pr-4 text-right">{fmt(l.held)}</td>
+                    <td className="py-2 pr-4 text-right">
+                      {fmt(l.readable)}{' '}
+                      <span className="text-stone-400">({(100 * l.readable / l.works).toFixed(2)}%)</span>
+                    </td>
+                  </tr>
+                ))}
+                <tr className="text-stone-900 font-semibold">
+                  <td className="py-2 pr-4">Six languages</td>
+                  <td className="py-2 pr-4 text-right">{fmt(WL_EDITIONS)}</td>
+                  <td className="py-2 pr-4 text-right">{fmt(WL_WORKS)}</td>
+                  <td className="py-2 pr-4 text-right">{fmt(WORK_LEVEL.languages.reduce((t, l) => t + l.catalogued, 0))}</td>
+                  <td className="py-2 pr-4 text-right">{fmt(WORK_LEVEL.languages.reduce((t, l) => t + l.held, 0))}</td>
+                  <td className="py-2 pr-4 text-right">{fmt(WL_READABLE)} <span className="text-stone-400 font-normal">({(100 * WL_READABLE / WL_WORKS).toFixed(2)}%)</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <p className="mt-4 text-sm text-stone-500">
+            For every tradition beyond European print, from Hebrew manuscripts to the Tibetan canon,
+            see{' '}
+            <Link href="/articles/how-much-in-english" className="text-amber-800 underline hover:text-amber-900">
+              How much of the written past can you read in English?
+            </Link>
+          </p>
         </Section>
 
         {/* ── State of our census (#2933) ─────────────────────── */}
@@ -339,15 +372,20 @@ export default async function CensusPage() {
               <strong>Two kinds of figures.</strong> The headline gap estimates (
               {VALIDATED.allPrintGapPct}% all-print, {VALIDATED.renaissanceGapPct}%
               Renaissance-composed Latin) are debiased measurements with confidence intervals,
-              validated in {VALIDATED.evalDate} and unchanged until the study is re-run. The per-language bars and the raw {data.raw_pct_translated}% join rate
+              validated in {VALIDATED.evalDate} and unchanged until the study is re-run. The per-language catalogued counts and the raw Latin join rate
               are catalog floors: lower bounds from record matching, useful for shape, not for
               headlines.
             </li>
             <li>
               <strong>&ldquo;Works,&rdquo; not editions.</strong> The USTC records{' '}
-              {fmt(data.total_editions)} editions; we deduplicate to ~{fmt(data.total_works)}{' '}
-              distinct works so that fourteen printings of the same text count once. A translation
-              of any edition covers the work.
+              {fmt(data.total_editions)} editions. We group them into works, so that every printing
+              of the same text counts once: within each author, an edition joins a work when the
+              rare words of its title match that work&rsquo;s own title ({WORK_LEVEL.date}). In
+              Latin and the five largest vernaculars that turns {fmt(WL_EDITIONS)} editions into
+              about {fmt(WL_WORKS)} works. An earlier key, built from the first six words of each
+              title, split much-printed works into dozens of pieces (252 editions of the{' '}
+              <em>Imitation of Christ</em> became 69 &ldquo;works&rdquo;), which inflated the count
+              of works and, above all, of translated ones. A translation of any edition covers the work.
             </li>
             <li>
               <strong>The catalogs are a floor.</strong> Our {fmt(data.catalog_records)} federated

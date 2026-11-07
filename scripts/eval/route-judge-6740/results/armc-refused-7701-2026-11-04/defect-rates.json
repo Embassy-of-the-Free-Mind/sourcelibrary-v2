@@ -1,0 +1,45 @@
+{
+ "_about": "Defects per 1,000 words of the kept reads arm c refused (#7701), from the stored Opus verdicts, without the recheck calibration or by-book intervals of defect-rate.py (n = 15 a stratum). The decision is the k/n rule of RULE.md.",
+ "study_cells": {
+  "la-armc-refused-share": {
+   "route": "pero>agy-flash-low-kept",
+   "pages": 15,
+   "books": 15,
+   "words": 10334,
+   "fidelity_mean": 3.6,
+   "cosmetic_per_1k": 4.161,
+   "misleads_per_1k": 4.935,
+   "wrong_text_per_1k": 2.806
+  },
+  "la-armc-refused-putback": {
+   "route": "pero>agy-flash-low-kept",
+   "pages": 15,
+   "books": 15,
+   "words": 7020,
+   "fidelity_mean": 3.53,
+   "cosmetic_per_1k": 4.416,
+   "misleads_per_1k": 3.846,
+   "wrong_text_per_1k": 0.855
+  }
+ },
+ "router_table_latin_blank": {
+  "pero>agy-flash-low-written": {
+   "pages": 90,
+   "books": 22,
+   "words": 23507,
+   "fidelity_mean": 3.83,
+   "cosmetic_per_1k": 7.147,
+   "misleads_per_1k": 4.212,
+   "wrong_text_per_1k": 2.34
+  },
+  "agy-flash-low@4-written": {
+   "pages": 26,
+   "books": 26,
+   "words": 5896,
+   "fidelity_mean": 4.46,
+   "cosmetic_per_1k": 4.749,
+   "misleads_per_1k": 1.526,
+   "wrong_text_per_1k": 0.17
+  }
+ }
+}

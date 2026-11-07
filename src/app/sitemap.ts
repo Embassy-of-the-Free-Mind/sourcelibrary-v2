@@ -5,8 +5,10 @@ import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
 import { isLivePath } from '@/lib/page-status';
+import { isRepeatCapture } from '@/lib/page-counts';
 import { HISTORIES } from '@/app/explore/histories/histories';
 import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
+import { sibuCodes } from '@/lib/sibu-catalogue';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -174,6 +176,7 @@ export default async function sitemap({
       ...blogPosts(),
       ...categoryPages(),
       ...historyPages(),
+      ...sibuPages(),
     ]);
   }
 
@@ -226,8 +229,6 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/encyclopedia`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-    // Proxied from a static deployment (next.config.ts rewrites), so no page.tsx makes
-    // embed-site-pages find it; listing it here puts it in sitemap chunk 0, which it crawls.
     { url: `${BASE_URL}/ai-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
@@ -245,6 +246,10 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/support`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/es/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/la/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/nl/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/zh/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/es/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   ];
 }
@@ -277,6 +282,17 @@ function blogPosts(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   return [...posts, ...kinds];
+}
+
+// The 四部 catalogue (#8035), in both languages: empty classes included, since the page says plainly what we lack.
+function sibuPages(): MetadataRoute.Sitemap {
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/sibu', 0.6),
+    at('/zh/sibu', 0.7),
+    at('/zh/collections', 0.7),
+    ...sibuCodes().flatMap((code) => [at(`/sibu/${code}`, 0.5), at(`/zh/sibu/${code}`, 0.6)]),
+  ];
 }
 
 // The conceptual histories (#7623): index, each concept, its essays, its
@@ -392,7 +408,7 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const pages = await pagesColl.find(
       { seo_indexable: true, _id: { $gte: start._id } },
       {
-        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1 },
+        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1, repeat_of: 1 },
         sort: { _id: 1 },
         limit: PAGES_PER_CHUNK,
         hint: 'seo_indexable_id_partial',
@@ -412,7 +428,8 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const liveBookIds = new Set(liveBooks.map((b) => b.id as string));
 
     return pages
-      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id))
+      // A hidden repeat capture (#5056) 307s to its kept page: not a URL to list.
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id) && !isRepeatCapture(p))
       .map((p) => {
         let lastModified: Date;
         try {

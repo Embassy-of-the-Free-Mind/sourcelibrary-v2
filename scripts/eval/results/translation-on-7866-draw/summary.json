@@ -1,0 +1,3171 @@
+{
+ "generated_at": "2026-11-02T22:48:12.939Z",
+ "issue": 7968,
+ "judge": "opus (claude -p --model opus), JUDGE-PROMPT.md + IMAGE-ADDENDUM.md, 15-item packets",
+ "joined_to": {
+  "lane": "confidence-7866",
+  "run_id": "confidence-validation-7866",
+  "grade": "regrade.mjs gradeOf"
+ },
+ "gate": {
+  "pass": true,
+  "checks": {
+   "swap": {
+    "n": 15,
+    "rate": 1,
+    "need": 0.9333333333333333,
+    "pass": true
+   },
+   "drop": {
+    "n": 15,
+    "rate": 1,
+    "need": 0.8666666666666667,
+    "pass": true
+   },
+   "repeat": {
+    "n": 15,
+    "rate": 1,
+    "need": 0.9333333333333333,
+    "pass": true
+   }
+  }
+ },
+ "controls": {
+  "swap": {
+   "n": 15,
+   "caught": 15
+  },
+  "drop": {
+   "n": 15,
+   "flagged": 15
+  },
+  "repeat": {
+   "n": 15,
+   "within1": 15,
+   "exact": 13
+  }
+ },
+ "n": {
+  "pages": 481,
+  "books": 102,
+  "english_words": 182241,
+  "missing_verdicts": 0,
+  "image_not_seen": 0
+ },
+ "definitions": {
+  "major": "English verdict carries a defect with severity \"major\"",
+  "ocr_bad": "the translation judge, with the image, set ocr_misread or ocr_wrong_leaf",
+  "e2e_wrong": "major OR ocr_bad",
+  "bad_7866": "#7866 grade search_only or worse (a reading that changes the sense, or worse)",
+  "inherited": "major English defect on a page whose #7866 grade is bad_7866"
+ },
+ "translator": {
+  "fidelity_dist_unweighted": {
+   "1": 2,
+   "2": 21,
+   "3": 55,
+   "4": 220,
+   "5": 183
+  },
+  "fidelity_ge4_weighted": {
+   "share": 0.848,
+   "ci95": [
+    0.8027,
+    0.8896
+   ],
+   "pages": 481,
+   "books": 102,
+   "k": 403
+  },
+  "fidelity_le2_weighted": {
+   "share": 0.0448,
+   "ci95": [
+    0.0263,
+    0.0661
+   ],
+   "pages": 481,
+   "books": 102,
+   "k": 23
+  },
+  "major_page_share_weighted": {
+   "share": 0.1532,
+   "ci95": [
+    0.1109,
+    0.198
+   ],
+   "pages": 481,
+   "books": 102,
+   "k": 77
+  },
+  "major_per_1k_english_words_weighted": {
+   "value": 0.52,
+   "ci95": [
+    0.37,
+    0.69
+   ]
+  },
+  "major_per_1k_english_words_unweighted": 0.56,
+  "major_defects": 102
+ },
+ "end_to_end": {
+  "e2e_wrong_weighted": {
+   "share": 0.3438,
+   "ci95": [
+    0.2885,
+    0.4008
+   ],
+   "pages": 481,
+   "books": 102,
+   "k": 174
+  },
+  "ocr_bad_weighted": {
+   "share": 0.2532,
+   "ci95": [
+    0.2008,
+    0.3115
+   ],
+   "pages": 481,
+   "books": 102,
+   "k": 130
+  },
+  "major_or_bad_7866_weighted": {
+   "share": 0.5946,
+   "ci95": [
+    0.5352,
+    0.6558
+   ],
+   "pages": 481,
+   "books": 102,
+   "k": 288
+  }
+ },
+ "agreement": {
+  "ocr_misread_vs_bad_7866": {
+   "both": 126,
+   "only_a": 4,
+   "only_b": 141,
+   "neither": 210,
+   "n": 481,
+   "observed_agreement": 0.6985,
+   "cohen_kappa": 0.4261,
+   "a_positive": 130,
+   "b_positive": 267,
+   "p_b_given_a": 0.9692,
+   "p_a_given_b": 0.4719
+  },
+  "ocr_bad_vs_bad_7866": {
+   "both": 126,
+   "only_a": 4,
+   "only_b": 141,
+   "neither": 210,
+   "n": 481,
+   "observed_agreement": 0.6985,
+   "cohen_kappa": 0.4261,
+   "a_positive": 130,
+   "b_positive": 267,
+   "p_b_given_a": 0.9692,
+   "p_a_given_b": 0.4719
+  },
+  "ocr_bad_vs_wrong_text_7866": {
+   "both": 97,
+   "only_a": 33,
+   "only_b": 41,
+   "neither": 310,
+   "n": 481,
+   "observed_agreement": 0.8462,
+   "cohen_kappa": 0.6174,
+   "a_positive": 130,
+   "b_positive": 138,
+   "p_b_given_a": 0.7462,
+   "p_a_given_b": 0.7029
+  },
+  "note": "a = this judge (translation audit, image addendum); b = #7866 transcription grade. Two different instruments with different bars: #7866 tags any sense-changing reading (misleads) on a full read of the page; the addendum asks only for a misreading visible at this resolution, and to leave it false when unsure."
+ },
+ "inherited": {
+  "of_major_pages": 77,
+  "bad_7866": 56,
+  "share_weighted": {
+   "share": 0.7176,
+   "ci95": [
+    0.5991,
+    0.8267
+   ],
+   "pages": 77,
+   "books": 43,
+   "k": 56,
+   "of_pages": 77
+  },
+  "bad_7866_share_on_clean_english_weighted": {
+   "share": 0.5212,
+   "ci95": [
+    0.4545,
+    0.5923
+   ],
+   "pages": 404,
+   "books": 99,
+   "k": 211,
+   "of_pages": 404
+  },
+  "share_using_this_judges_ocr_flag_weighted": {
+   "share": 0.4085,
+   "ci95": [
+    0.28,
+    0.55
+   ],
+   "pages": 77,
+   "books": 43,
+   "k": 33,
+   "of_pages": 77
+  },
+  "major_given_bad_7866_weighted": {
+   "value": 0.1995,
+   "ci95": [
+    0.1408,
+    0.264
+   ]
+  },
+  "major_given_not_bad_7866_weighted": {
+   "value": 0.0964,
+   "ci95": [
+    0.0522,
+    0.1447
+   ]
+  },
+  "risk_ratio_weighted": {
+   "value": 2.0686,
+   "ci95": [
+    1.2917,
+    3.7582
+   ]
+  },
+  "attributable_fraction_of_major_pages_weighted": {
+   "value": 0.3707,
+   "ci95": [
+    0.1305,
+    0.6076
+   ]
+  },
+  "attributable_note": "AF = P(bad_7866 | major) x (1 - P(major | not bad_7866) / P(major | bad_7866)): the share of major-defect pages the bad transcription accounts for, once the rate at which the English fails on a good transcription is subtracted. Observational: books with bad transcriptions also differ in language and hand.",
+  "sensitivity_excluding_translation_older_than_ocr": {
+   "share": 0.7686,
+   "ci95": [
+    0.6627,
+    0.8708
+   ],
+   "pages": 71,
+   "books": 39,
+   "k": 55,
+   "of_pages": 71
+  }
+ },
+ "by_language": {
+  "Latin": {
+   "books": 27,
+   "pages": 125,
+   "english_words": 53456,
+   "major_pages": 12,
+   "e2e_wrong_pages": 37,
+   "inherited_pages": 8,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    4,
+    6,
+    64,
+    50
+   ],
+   "fidelity_ge4": 0.912,
+   "major_share": 0.096,
+   "major_per_1k_words": 0.28,
+   "ocr_bad_share": 0.232,
+   "e2e_wrong_share": 0.296,
+   "bad_7866_share": 0.576,
+   "inherited_share": 0.6667
+  },
+  "Chinese": {
+   "books": 14,
+   "pages": 66,
+   "english_words": 29114,
+   "major_pages": 19,
+   "e2e_wrong_pages": 38,
+   "inherited_pages": 16,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    5,
+    14,
+    28,
+    19
+   ],
+   "fidelity_ge4": 0.7121,
+   "major_share": 0.2879,
+   "major_per_1k_words": 0.89,
+   "ocr_bad_share": 0.4697,
+   "e2e_wrong_share": 0.5758,
+   "bad_7866_share": 0.7727,
+   "inherited_share": 0.8421
+  },
+  "German": {
+   "books": 13,
+   "pages": 64,
+   "english_words": 18222,
+   "major_pages": 8,
+   "e2e_wrong_pages": 18,
+   "inherited_pages": 5,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    1,
+    5,
+    22,
+    35
+   ],
+   "fidelity_ge4": 0.8906,
+   "major_share": 0.125,
+   "major_per_1k_words": 0.49,
+   "ocr_bad_share": 0.1875,
+   "e2e_wrong_share": 0.2813,
+   "bad_7866_share": 0.5,
+   "inherited_share": 0.625
+  },
+  "English": {
+   "books": 10,
+   "pages": 46,
+   "english_words": 10468,
+   "major_pages": 2,
+   "e2e_wrong_pages": 6,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    1,
+    1,
+    12,
+    32
+   ],
+   "fidelity_ge4": 0.9565,
+   "major_share": 0.0435,
+   "major_per_1k_words": 0.29,
+   "ocr_bad_share": 0.087,
+   "e2e_wrong_share": 0.1304,
+   "bad_7866_share": 0.1957,
+   "inherited_share": 0
+  },
+  "Tibetan": {
+   "books": 9,
+   "pages": 37,
+   "english_words": 14378,
+   "major_pages": 2,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    2,
+    24,
+    11
+   ],
+   "fidelity_ge4": 0.9459,
+   "major_share": 0.0541,
+   "major_per_1k_words": 0.14,
+   "ocr_bad_share": 0.0541,
+   "e2e_wrong_share": 0.0811,
+   "bad_7866_share": 0.2432,
+   "inherited_share": 0.5
+  },
+  "Greek": {
+   "books": 6,
+   "pages": 30,
+   "english_words": 11974,
+   "major_pages": 5,
+   "e2e_wrong_pages": 17,
+   "inherited_pages": 4,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    6,
+    17,
+    7
+   ],
+   "fidelity_ge4": 0.8,
+   "major_share": 0.1667,
+   "major_per_1k_words": 0.58,
+   "ocr_bad_share": 0.5,
+   "e2e_wrong_share": 0.5667,
+   "bad_7866_share": 0.8,
+   "inherited_share": 0.8
+  },
+  "Sanskrit": {
+   "books": 3,
+   "pages": 15,
+   "english_words": 8226,
+   "major_pages": 11,
+   "e2e_wrong_pages": 14,
+   "inherited_pages": 11,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    4,
+    7,
+    4,
+    0
+   ],
+   "fidelity_ge4": 0.2667,
+   "major_share": 0.7333,
+   "major_per_1k_words": 1.95,
+   "ocr_bad_share": 0.4,
+   "e2e_wrong_share": 0.9333,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "French": {
+   "books": 3,
+   "pages": 15,
+   "english_words": 4346,
+   "major_pages": 0,
+   "e2e_wrong_pages": 2,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    0,
+    4,
+    11
+   ],
+   "fidelity_ge4": 1,
+   "major_share": 0,
+   "major_per_1k_words": 0,
+   "ocr_bad_share": 0.1333,
+   "e2e_wrong_share": 0.1333,
+   "bad_7866_share": 0.3333,
+   "inherited_share": null
+  },
+  "Russian": {
+   "books": 3,
+   "pages": 15,
+   "english_words": 7588,
+   "major_pages": 4,
+   "e2e_wrong_pages": 4,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    1,
+    1,
+    6,
+    7
+   ],
+   "fidelity_ge4": 0.8667,
+   "major_share": 0.2667,
+   "major_per_1k_words": 0.53,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0.2667,
+   "bad_7866_share": 0.0667,
+   "inherited_share": 0
+  },
+  "Korean": {
+   "books": 3,
+   "pages": 13,
+   "english_words": 1690,
+   "major_pages": 8,
+   "e2e_wrong_pages": 11,
+   "inherited_pages": 8,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    5,
+    3,
+    4,
+    1
+   ],
+   "fidelity_ge4": 0.3846,
+   "major_share": 0.6154,
+   "major_per_1k_words": 8.28,
+   "ocr_bad_share": 0.7692,
+   "e2e_wrong_share": 0.8462,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "Arabic": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 3636,
+   "major_pages": 1,
+   "e2e_wrong_pages": 7,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "Armenian": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 1868,
+   "major_pages": 4,
+   "e2e_wrong_pages": 5,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "Italian": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 9147,
+   "major_pages": 0,
+   "e2e_wrong_pages": 6,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Danish": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1919,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Demotic": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1138,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Yucatec Maya": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1419,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "Latin-English": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1610,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Dutch": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 2042,
+   "major_pages": 0,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 0,
+   "rated": false
+  }
+ },
+ "by_translation_model": {
+  "gemini-3-flash-preview": {
+   "books": 47,
+   "pages": 218,
+   "english_words": 88870,
+   "major_pages": 40,
+   "e2e_wrong_pages": 74,
+   "inherited_pages": 35,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    11,
+    31,
+    91,
+    85
+   ],
+   "fidelity_ge4": 0.8073,
+   "major_share": 0.1835,
+   "major_per_1k_words": 0.61,
+   "ocr_bad_share": 0.2706,
+   "e2e_wrong_share": 0.3394,
+   "bad_7866_share": 0.5183,
+   "inherited_share": 0.875
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "books": 29,
+   "pages": 128,
+   "english_words": 42908,
+   "major_pages": 22,
+   "e2e_wrong_pages": 49,
+   "inherited_pages": 11,
+   "rated": true,
+   "fidelity_dist": [
+    2,
+    7,
+    11,
+    61,
+    47
+   ],
+   "fidelity_ge4": 0.8438,
+   "major_share": 0.1719,
+   "major_per_1k_words": 0.72,
+   "ocr_bad_share": 0.25,
+   "e2e_wrong_share": 0.3828,
+   "bad_7866_share": 0.5625,
+   "inherited_share": 0.5
+  },
+  "gemini-3.1-flash-lite": {
+   "books": 22,
+   "pages": 100,
+   "english_words": 40655,
+   "major_pages": 13,
+   "e2e_wrong_pages": 38,
+   "inherited_pages": 9,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    3,
+    8,
+    56,
+    33
+   ],
+   "fidelity_ge4": 0.89,
+   "major_share": 0.13,
+   "major_per_1k_words": 0.37,
+   "ocr_bad_share": 0.28,
+   "e2e_wrong_share": 0.38,
+   "bad_7866_share": 0.61,
+   "inherited_share": 0.6923
+  },
+  "gemini-3.8-flash-low": {
+   "books": 8,
+   "pages": 25,
+   "english_words": 7771,
+   "major_pages": 1,
+   "e2e_wrong_pages": 9,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    10,
+    14
+   ],
+   "fidelity_ge4": 0.96,
+   "major_share": 0.04,
+   "major_per_1k_words": 0.13,
+   "ocr_bad_share": 0.32,
+   "e2e_wrong_share": 0.36,
+   "bad_7866_share": 0.6,
+   "inherited_share": 0
+  },
+  "claude-opus-5-5": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 618,
+   "major_pages": 0,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "gemini-4-argon-low": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1419,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 1,
+   "rated": false
+  }
+ },
+ "by_ocr_route": {
+  "3flash": {
+   "books": 63,
+   "pages": 261,
+   "english_words": 111834,
+   "major_pages": 33,
+   "e2e_wrong_pages": 83,
+   "inherited_pages": 21,
+   "rated": true,
+   "fidelity_dist": [
+    2,
+    5,
+    24,
+    120,
+    110
+   ],
+   "fidelity_ge4": 0.8812,
+   "major_share": 0.1264,
+   "major_per_1k_words": 0.35,
+   "ocr_bad_share": 0.2261,
+   "e2e_wrong_share": 0.318,
+   "bad_7866_share": 0.5172,
+   "inherited_share": 0.6364
+  },
+  "lite": {
+   "books": 30,
+   "pages": 117,
+   "english_words": 28799,
+   "major_pages": 22,
+   "e2e_wrong_pages": 51,
+   "inherited_pages": 18,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    10,
+    12,
+    50,
+    45
+   ],
+   "fidelity_ge4": 0.812,
+   "major_share": 0.188,
+   "major_per_1k_words": 1.15,
+   "ocr_bad_share": 0.3504,
+   "e2e_wrong_share": 0.4359,
+   "bad_7866_share": 0.6496,
+   "inherited_share": 0.8182
+  },
+  "paddle": {
+   "books": 13,
+   "pages": 58,
+   "english_words": 24320,
+   "major_pages": 18,
+   "e2e_wrong_pages": 34,
+   "inherited_pages": 15,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    5,
+    13,
+    23,
+    17
+   ],
+   "fidelity_ge4": 0.6897,
+   "major_share": 0.3103,
+   "major_per_1k_words": 1.03,
+   "ocr_bad_share": 0.4655,
+   "e2e_wrong_share": 0.5862,
+   "bad_7866_share": 0.7586,
+   "inherited_share": 0.8333
+  },
+  "yigdzin": {
+   "books": 6,
+   "pages": 18,
+   "english_words": 6605,
+   "major_pages": 1,
+   "e2e_wrong_pages": 2,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    13,
+    4
+   ],
+   "fidelity_ge4": 0.9444,
+   "major_share": 0.0556,
+   "major_per_1k_words": 0.15,
+   "ocr_bad_share": 0.0556,
+   "e2e_wrong_share": 0.1111,
+   "bad_7866_share": 0.3333,
+   "inherited_share": 1
+  },
+  "pipeline:derge-tengyur-import-5497": {
+   "books": 3,
+   "pages": 15,
+   "english_words": 6260,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    0,
+    8,
+    7
+   ],
+   "fidelity_ge4": 1,
+   "major_share": 0,
+   "major_per_1k_words": 0,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0,
+   "bad_7866_share": 0.2,
+   "inherited_share": null
+  },
+  "model:claude-opus-5-5": {
+   "books": 2,
+   "pages": 6,
+   "english_words": 1743,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "yigdzin>agy-flash-low": {
+   "books": 1,
+   "pages": 4,
+   "english_words": 1513,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "model:gemini-2.5-flash": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 627,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "pero>agy-flash-low": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 540,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  }
+ },
+ "by_age_band": {
+  "1501–1700": {
+   "books": 29,
+   "pages": 144,
+   "english_words": 57054,
+   "major_pages": 10,
+   "e2e_wrong_pages": 38,
+   "inherited_pages": 8,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    2,
+    10,
+    61,
+    71
+   ],
+   "fidelity_ge4": 0.9167,
+   "major_share": 0.0694,
+   "major_per_1k_words": 0.18,
+   "ocr_bad_share": 0.2222,
+   "e2e_wrong_share": 0.2639,
+   "bad_7866_share": 0.5556,
+   "inherited_share": 0.8
+  },
+  "no date": {
+   "books": 29,
+   "pages": 129,
+   "english_words": 48743,
+   "major_pages": 32,
+   "e2e_wrong_pages": 62,
+   "inherited_pages": 29,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    10,
+    23,
+    69,
+    27
+   ],
+   "fidelity_ge4": 0.7442,
+   "major_share": 0.2481,
+   "major_per_1k_words": 0.92,
+   "ocr_bad_share": 0.3953,
+   "e2e_wrong_share": 0.4806,
+   "bad_7866_share": 0.6822,
+   "inherited_share": 0.9063
+  },
+  "1701–1900": {
+   "books": 21,
+   "pages": 101,
+   "english_words": 31752,
+   "major_pages": 23,
+   "e2e_wrong_pages": 31,
+   "inherited_pages": 13,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    6,
+    13,
+    31,
+    50
+   ],
+   "fidelity_ge4": 0.802,
+   "major_share": 0.2277,
+   "major_per_1k_words": 0.94,
+   "ocr_bad_share": 0.099,
+   "e2e_wrong_share": 0.3069,
+   "bad_7866_share": 0.3465,
+   "inherited_share": 0.5652
+  },
+  "after 1900": {
+   "books": 11,
+   "pages": 55,
+   "english_words": 22657,
+   "major_pages": 7,
+   "e2e_wrong_pages": 14,
+   "inherited_pages": 2,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    1,
+    4,
+    25,
+    24
+   ],
+   "fidelity_ge4": 0.8909,
+   "major_share": 0.1273,
+   "major_per_1k_words": 0.44,
+   "ocr_bad_share": 0.1636,
+   "e2e_wrong_share": 0.2545,
+   "bad_7866_share": 0.3818,
+   "inherited_share": 0.2857
+  },
+  "before 1501": {
+   "books": 12,
+   "pages": 52,
+   "english_words": 22035,
+   "major_pages": 5,
+   "e2e_wrong_pages": 29,
+   "inherited_pages": 4,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    2,
+    5,
+    34,
+    11
+   ],
+   "fidelity_ge4": 0.8654,
+   "major_share": 0.0962,
+   "major_per_1k_words": 0.32,
+   "ocr_bad_share": 0.5385,
+   "e2e_wrong_share": 0.5577,
+   "bad_7866_share": 0.8269,
+   "inherited_share": 0.8
+  }
+ },
+ "by_hand_tag": {
+  "print": {
+   "books": 48,
+   "pages": 220,
+   "english_words": 88381,
+   "major_pages": 32,
+   "e2e_wrong_pages": 74,
+   "inherited_pages": 18,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    9,
+    17,
+    98,
+    95
+   ],
+   "fidelity_ge4": 0.8773,
+   "major_share": 0.1455,
+   "major_per_1k_words": 0.45,
+   "ocr_bad_share": 0.2273,
+   "e2e_wrong_share": 0.3364,
+   "bad_7866_share": 0.5273,
+   "inherited_share": 0.5625
+  },
+  "unknown": {
+   "books": 28,
+   "pages": 136,
+   "english_words": 51241,
+   "major_pages": 13,
+   "e2e_wrong_pages": 37,
+   "inherited_pages": 10,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    0,
+    12,
+    63,
+    60
+   ],
+   "fidelity_ge4": 0.9044,
+   "major_share": 0.0956,
+   "major_per_1k_words": 0.31,
+   "ocr_bad_share": 0.2206,
+   "e2e_wrong_share": 0.2721,
+   "bad_7866_share": 0.4706,
+   "inherited_share": 0.7692
+  },
+  "manuscript": {
+   "books": 30,
+   "pages": 119,
+   "english_words": 41419,
+   "major_pages": 31,
+   "e2e_wrong_pages": 62,
+   "inherited_pages": 27,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    12,
+    25,
+    57,
+    25
+   ],
+   "fidelity_ge4": 0.6891,
+   "major_share": 0.2605,
+   "major_per_1k_words": 1.09,
+   "ocr_bad_share": 0.4202,
+   "e2e_wrong_share": 0.521,
+   "bad_7866_share": 0.7059,
+   "inherited_share": 0.871
+  },
+  "mixed": {
+   "books": 5,
+   "pages": 6,
+   "english_words": 1200,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    2,
+    3
+   ],
+   "fidelity_ge4": 0.8333,
+   "major_share": 0.1667,
+   "major_per_1k_words": 0.83,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0.1667,
+   "bad_7866_share": 0.5,
+   "inherited_share": 1
+  }
+ },
+ "by_hand_tag_x_age": {
+  "manuscript · no date": {
+   "books": 23,
+   "pages": 99,
+   "english_words": 37044,
+   "major_pages": 28,
+   "e2e_wrong_pages": 53,
+   "inherited_pages": 25,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    10,
+    20,
+    50,
+    19
+   ],
+   "fidelity_ge4": 0.697,
+   "major_share": 0.2828,
+   "major_per_1k_words": 1.11,
+   "ocr_bad_share": 0.4444,
+   "e2e_wrong_share": 0.5354,
+   "bad_7866_share": 0.7172,
+   "inherited_share": 0.8929
+  },
+  "print · 1501–1700": {
+   "books": 19,
+   "pages": 89,
+   "english_words": 39553,
+   "major_pages": 8,
+   "e2e_wrong_pages": 26,
+   "inherited_pages": 6,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    2,
+    5,
+    39,
+    43
+   ],
+   "fidelity_ge4": 0.9213,
+   "major_share": 0.0899,
+   "major_per_1k_words": 0.2,
+   "ocr_bad_share": 0.236,
+   "e2e_wrong_share": 0.2921,
+   "bad_7866_share": 0.6292,
+   "inherited_share": 0.75
+  },
+  "print · 1701–1900": {
+   "books": 12,
+   "pages": 58,
+   "english_words": 18959,
+   "major_pages": 13,
+   "e2e_wrong_pages": 19,
+   "inherited_pages": 6,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    4,
+    6,
+    20,
+    27
+   ],
+   "fidelity_ge4": 0.8103,
+   "major_share": 0.2241,
+   "major_per_1k_words": 0.9,
+   "ocr_bad_share": 0.1207,
+   "e2e_wrong_share": 0.3276,
+   "bad_7866_share": 0.3448,
+   "inherited_share": 0.4615
+  },
+  "unknown · 1501–1700": {
+   "books": 9,
+   "pages": 45,
+   "english_words": 14921,
+   "major_pages": 1,
+   "e2e_wrong_pages": 11,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    18,
+    26
+   ],
+   "fidelity_ge4": 0.9778,
+   "major_share": 0.0222,
+   "major_per_1k_words": 0.07,
+   "ocr_bad_share": 0.2444,
+   "e2e_wrong_share": 0.2444,
+   "bad_7866_share": 0.4222,
+   "inherited_share": 1
+  },
+  "unknown · 1701–1900": {
+   "books": 7,
+   "pages": 35,
+   "english_words": 11472,
+   "major_pages": 7,
+   "e2e_wrong_pages": 8,
+   "inherited_pages": 5,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    6,
+    10,
+    19
+   ],
+   "fidelity_ge4": 0.8286,
+   "major_share": 0.2,
+   "major_per_1k_words": 0.78,
+   "ocr_bad_share": 0.0571,
+   "e2e_wrong_share": 0.2286,
+   "bad_7866_share": 0.2857,
+   "inherited_share": 0.7143
+  },
+  "unknown · after 1900": {
+   "books": 6,
+   "pages": 30,
+   "english_words": 12697,
+   "major_pages": 1,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    0,
+    0,
+    18,
+    11
+   ],
+   "fidelity_ge4": 0.9667,
+   "major_share": 0.0333,
+   "major_per_1k_words": 0.16,
+   "ocr_bad_share": 0.0667,
+   "e2e_wrong_share": 0.1,
+   "bad_7866_share": 0.4333,
+   "inherited_share": 0
+  },
+  "print · before 1501": {
+   "books": 6,
+   "pages": 30,
+   "english_words": 12660,
+   "major_pages": 3,
+   "e2e_wrong_pages": 14,
+   "inherited_pages": 2,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    2,
+    1,
+    18,
+    9
+   ],
+   "fidelity_ge4": 0.9,
+   "major_share": 0.1,
+   "major_per_1k_words": 0.39,
+   "ocr_bad_share": 0.4333,
+   "e2e_wrong_share": 0.4667,
+   "bad_7866_share": 0.7333,
+   "inherited_share": 0.6667
+  },
+  "print · after 1900": {
+   "books": 5,
+   "pages": 25,
+   "english_words": 9960,
+   "major_pages": 6,
+   "e2e_wrong_pages": 11,
+   "inherited_pages": 2,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    1,
+    4,
+    7,
+    13
+   ],
+   "fidelity_ge4": 0.8,
+   "major_share": 0.24,
+   "major_per_1k_words": 0.8,
+   "ocr_bad_share": 0.28,
+   "e2e_wrong_share": 0.44,
+   "bad_7866_share": 0.32,
+   "inherited_share": 0.3333
+  },
+  "print · no date": {
+   "books": 6,
+   "pages": 18,
+   "english_words": 7249,
+   "major_pages": 2,
+   "e2e_wrong_pages": 4,
+   "inherited_pages": 2,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    14,
+    3
+   ],
+   "fidelity_ge4": 0.9444,
+   "major_share": 0.1111,
+   "major_per_1k_words": 0.28,
+   "ocr_bad_share": 0.1111,
+   "e2e_wrong_share": 0.2222,
+   "bad_7866_share": 0.5556,
+   "inherited_share": 1
+  },
+  "unknown · before 1501": {
+   "books": 4,
+   "pages": 16,
+   "english_words": 7718,
+   "major_pages": 2,
+   "e2e_wrong_pages": 10,
+   "inherited_pages": 2,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    3,
+    12,
+    1
+   ],
+   "fidelity_ge4": 0.8125,
+   "major_share": 0.125,
+   "major_per_1k_words": 0.26,
+   "ocr_bad_share": 0.625,
+   "e2e_wrong_share": 0.625,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "unknown · no date": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 4433,
+   "major_pages": 2,
+   "e2e_wrong_pages": 5,
+   "inherited_pages": 2,
+   "rated": false
+  },
+  "manuscript · 1501–1700": {
+   "books": 3,
+   "pages": 7,
+   "english_words": 1441,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    3,
+    2,
+    2
+   ],
+   "fidelity_ge4": 0.5714,
+   "major_share": 0,
+   "major_per_1k_words": 0,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0,
+   "bad_7866_share": 0.4286,
+   "inherited_share": null
+  },
+  "manuscript · 1701–1900": {
+   "books": 2,
+   "pages": 7,
+   "english_words": 1277,
+   "major_pages": 3,
+   "e2e_wrong_pages": 4,
+   "inherited_pages": 2,
+   "rated": false
+  },
+  "manuscript · before 1501": {
+   "books": 2,
+   "pages": 6,
+   "english_words": 1657,
+   "major_pages": 0,
+   "e2e_wrong_pages": 5,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "mixed · 1501–1700": {
+   "books": 3,
+   "pages": 3,
+   "english_words": 1139,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    2,
+    0
+   ],
+   "fidelity_ge4": 0.6667,
+   "major_share": 0.3333,
+   "major_per_1k_words": 0.88,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0.3333,
+   "bad_7866_share": 0.6667,
+   "inherited_share": 1
+  },
+  "mixed · no date": {
+   "books": 1,
+   "pages": 2,
+   "english_words": 17,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "mixed · 1701–1900": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 44,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  }
+ },
+ "by_language_x_hand_tag": {
+  "Latin · print": {
+   "books": 17,
+   "pages": 78,
+   "english_words": 35521,
+   "major_pages": 10,
+   "e2e_wrong_pages": 25,
+   "inherited_pages": 7,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    4,
+    4,
+    44,
+    26
+   ],
+   "fidelity_ge4": 0.8974,
+   "major_share": 0.1282,
+   "major_per_1k_words": 0.34,
+   "ocr_bad_share": 0.2308,
+   "e2e_wrong_share": 0.3205,
+   "bad_7866_share": 0.6026,
+   "inherited_share": 0.7
+  },
+  "German · print": {
+   "books": 13,
+   "pages": 62,
+   "english_words": 17859,
+   "major_pages": 8,
+   "e2e_wrong_pages": 18,
+   "inherited_pages": 5,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    1,
+    5,
+    21,
+    34
+   ],
+   "fidelity_ge4": 0.8871,
+   "major_share": 0.129,
+   "major_per_1k_words": 0.5,
+   "ocr_bad_share": 0.1935,
+   "e2e_wrong_share": 0.2903,
+   "bad_7866_share": 0.5161,
+   "inherited_share": 0.625
+  },
+  "Chinese · manuscript": {
+   "books": 13,
+   "pages": 59,
+   "english_words": 24368,
+   "major_pages": 18,
+   "e2e_wrong_pages": 34,
+   "inherited_pages": 15,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    5,
+    13,
+    24,
+    17
+   ],
+   "fidelity_ge4": 0.6949,
+   "major_share": 0.3051,
+   "major_per_1k_words": 1.03,
+   "ocr_bad_share": 0.4576,
+   "e2e_wrong_share": 0.5763,
+   "bad_7866_share": 0.7627,
+   "inherited_share": 0.8333
+  },
+  "Latin · unknown": {
+   "books": 8,
+   "pages": 36,
+   "english_words": 15463,
+   "major_pages": 2,
+   "e2e_wrong_pages": 7,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    0,
+    1,
+    14,
+    20
+   ],
+   "fidelity_ge4": 0.9444,
+   "major_share": 0.0556,
+   "major_per_1k_words": 0.19,
+   "ocr_bad_share": 0.1667,
+   "e2e_wrong_share": 0.1944,
+   "bad_7866_share": 0.4444,
+   "inherited_share": 0.5
+  },
+  "English · unknown": {
+   "books": 5,
+   "pages": 25,
+   "english_words": 5719,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    0,
+    7,
+    18
+   ],
+   "fidelity_ge4": 1,
+   "major_share": 0,
+   "major_per_1k_words": 0,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0,
+   "bad_7866_share": 0.12,
+   "inherited_share": null
+  },
+  "Tibetan · manuscript": {
+   "books": 6,
+   "pages": 22,
+   "english_words": 8118,
+   "major_pages": 2,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    2,
+    16,
+    4
+   ],
+   "fidelity_ge4": 0.9091,
+   "major_share": 0.0909,
+   "major_per_1k_words": 0.25,
+   "ocr_bad_share": 0.0909,
+   "e2e_wrong_share": 0.1364,
+   "bad_7866_share": 0.2727,
+   "inherited_share": 0.5
+  },
+  "English · print": {
+   "books": 4,
+   "pages": 20,
+   "english_words": 4705,
+   "major_pages": 2,
+   "e2e_wrong_pages": 6,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    1,
+    1,
+    5,
+    13
+   ],
+   "fidelity_ge4": 0.9,
+   "major_share": 0.1,
+   "major_per_1k_words": 0.64,
+   "ocr_bad_share": 0.2,
+   "e2e_wrong_share": 0.3,
+   "bad_7866_share": 0.3,
+   "inherited_share": 0
+  },
+  "Greek · unknown": {
+   "books": 4,
+   "pages": 20,
+   "english_words": 6749,
+   "major_pages": 5,
+   "e2e_wrong_pages": 14,
+   "inherited_pages": 4,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    6,
+    12,
+    2
+   ],
+   "fidelity_ge4": 0.7,
+   "major_share": 0.25,
+   "major_per_1k_words": 1.04,
+   "ocr_bad_share": 0.6,
+   "e2e_wrong_share": 0.7,
+   "bad_7866_share": 0.85,
+   "inherited_share": 0.8
+  },
+  "Tibetan · unknown": {
+   "books": 3,
+   "pages": 15,
+   "english_words": 6260,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    0,
+    8,
+    7
+   ],
+   "fidelity_ge4": 1,
+   "major_share": 0,
+   "major_per_1k_words": 0,
+   "ocr_bad_share": 0,
+   "e2e_wrong_share": 0,
+   "bad_7866_share": 0.2,
+   "inherited_share": null
+  },
+  "Korean · manuscript": {
+   "books": 3,
+   "pages": 13,
+   "english_words": 1690,
+   "major_pages": 8,
+   "e2e_wrong_pages": 11,
+   "inherited_pages": 8,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    5,
+    3,
+    4,
+    1
+   ],
+   "fidelity_ge4": 0.3846,
+   "major_share": 0.6154,
+   "major_per_1k_words": 8.28,
+   "ocr_bad_share": 0.7692,
+   "e2e_wrong_share": 0.8462,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "Arabic · manuscript": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 3636,
+   "major_pages": 1,
+   "e2e_wrong_pages": 7,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "Russian · print": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 5577,
+   "major_pages": 3,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Greek · print": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 5225,
+   "major_pages": 0,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Armenian · print": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 1868,
+   "major_pages": 4,
+   "e2e_wrong_pages": 5,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "French · print": {
+   "books": 2,
+   "pages": 10,
+   "english_words": 2729,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Latin · manuscript": {
+   "books": 3,
+   "pages": 8,
+   "english_words": 2053,
+   "major_pages": 0,
+   "e2e_wrong_pages": 5,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    0,
+    1,
+    5,
+    2
+   ],
+   "fidelity_ge4": 0.875,
+   "major_share": 0,
+   "major_per_1k_words": 0,
+   "ocr_bad_share": 0.625,
+   "e2e_wrong_share": 0.625,
+   "bad_7866_share": 0.875,
+   "inherited_share": null
+  },
+  "Sanskrit · print": {
+   "books": 2,
+   "pages": 8,
+   "english_words": 5899,
+   "major_pages": 5,
+   "e2e_wrong_pages": 8,
+   "inherited_pages": 5,
+   "rated": false
+  },
+  "French · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1617,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Sanskrit · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1818,
+   "major_pages": 4,
+   "e2e_wrong_pages": 4,
+   "inherited_pages": 4,
+   "rated": false
+  },
+  "Danish · print": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1919,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Demotic · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1138,
+   "major_pages": 0,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Russian · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 2011,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Italian · print": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 6828,
+   "major_pages": 0,
+   "e2e_wrong_pages": 4,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Chinese · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 4495,
+   "major_pages": 1,
+   "e2e_wrong_pages": 4,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "Latin-English · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 1610,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Dutch · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 2042,
+   "major_pages": 0,
+   "e2e_wrong_pages": 3,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Italian · unknown": {
+   "books": 1,
+   "pages": 5,
+   "english_words": 2319,
+   "major_pages": 0,
+   "e2e_wrong_pages": 2,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Yucatec Maya · manuscript": {
+   "books": 1,
+   "pages": 4,
+   "english_words": 1006,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Latin · mixed": {
+   "books": 2,
+   "pages": 3,
+   "english_words": 419,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Sanskrit · manuscript": {
+   "books": 1,
+   "pages": 2,
+   "english_words": 509,
+   "major_pages": 2,
+   "e2e_wrong_pages": 2,
+   "inherited_pages": 2,
+   "rated": false
+  },
+  "Chinese · print": {
+   "books": 2,
+   "pages": 2,
+   "english_words": 251,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "Yucatec Maya · mixed": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 413,
+   "major_pages": 1,
+   "e2e_wrong_pages": 1,
+   "inherited_pages": 1,
+   "rated": false
+  },
+  "English · mixed": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 44,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "German · mixed": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 324,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  },
+  "German · manuscript": {
+   "books": 1,
+   "pages": 1,
+   "english_words": 39,
+   "major_pages": 0,
+   "e2e_wrong_pages": 0,
+   "inherited_pages": 0,
+   "rated": false
+  }
+ },
+ "by_7866_grade": {
+  "fit_to_quote": {
+   "books": 67,
+   "pages": 175,
+   "english_words": 58961,
+   "major_pages": 16,
+   "e2e_wrong_pages": 16,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    4,
+    10,
+    63,
+    97
+   ],
+   "fidelity_ge4": 0.9143,
+   "major_share": 0.0914,
+   "major_per_1k_words": 0.36,
+   "ocr_bad_share": 0.0057,
+   "e2e_wrong_share": 0.0914,
+   "bad_7866_share": 0,
+   "inherited_share": 0
+  },
+  "search_only": {
+   "books": 71,
+   "pages": 129,
+   "english_words": 52344,
+   "major_pages": 20,
+   "e2e_wrong_pages": 42,
+   "inherited_pages": 20,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    5,
+    15,
+    60,
+    49
+   ],
+   "fidelity_ge4": 0.845,
+   "major_share": 0.155,
+   "major_per_1k_words": 0.48,
+   "ocr_bad_share": 0.2248,
+   "e2e_wrong_share": 0.3256,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "wrong_span": {
+   "books": 53,
+   "pages": 108,
+   "english_words": 45487,
+   "major_pages": 24,
+   "e2e_wrong_pages": 81,
+   "inherited_pages": 24,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    3,
+    22,
+    68,
+    15
+   ],
+   "fidelity_ge4": 0.7685,
+   "major_share": 0.2222,
+   "major_per_1k_words": 0.64,
+   "ocr_bad_share": 0.6852,
+   "e2e_wrong_share": 0.75,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "fit_to_read": {
+   "books": 30,
+   "pages": 39,
+   "english_words": 12711,
+   "major_pages": 5,
+   "e2e_wrong_pages": 8,
+   "inherited_pages": 0,
+   "rated": true,
+   "fidelity_dist": [
+    1,
+    0,
+    4,
+    14,
+    20
+   ],
+   "fidelity_ge4": 0.8718,
+   "major_share": 0.1282,
+   "major_per_1k_words": 0.39,
+   "ocr_bad_share": 0.0769,
+   "e2e_wrong_share": 0.2051,
+   "bad_7866_share": 0,
+   "inherited_share": 0
+  },
+  "mostly_wrong": {
+   "books": 12,
+   "pages": 22,
+   "english_words": 9776,
+   "major_pages": 11,
+   "e2e_wrong_pages": 21,
+   "inherited_pages": 11,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    8,
+    3,
+    11,
+    0
+   ],
+   "fidelity_ge4": 0.5,
+   "major_share": 0.5,
+   "major_per_1k_words": 2.05,
+   "ocr_bad_share": 0.7727,
+   "e2e_wrong_share": 0.9545,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  },
+  "from_elsewhere": {
+   "books": 7,
+   "pages": 8,
+   "english_words": 2962,
+   "major_pages": 1,
+   "e2e_wrong_pages": 6,
+   "inherited_pages": 1,
+   "rated": true,
+   "fidelity_dist": [
+    0,
+    1,
+    1,
+    4,
+    2
+   ],
+   "fidelity_ge4": 0.75,
+   "major_share": 0.125,
+   "major_per_1k_words": 0.68,
+   "ocr_bad_share": 0.75,
+   "e2e_wrong_share": 0.75,
+   "bad_7866_share": 1,
+   "inherited_share": 1
+  }
+ },
+ "major_pages": [
+  {
+   "id": "19b5fa56d5",
+   "url": "https://sourcelibrary.org/book/69b99d166ed9e04909908b37?page=107",
+   "lang": "English",
+   "model": "gemini-3.1-flash-lite",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "English-to-English; imports a clause from the previous page and drops a sentence, otherwise verbatim.",
+   "image_note": ""
+  },
+  {
+   "id": "5395f6aa50",
+   "url": "https://sourcelibrary.org/book/6a3c628e40c88a541d8f46a5?page=75",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [],
+   "reason": "Most compound entries are right (毗騫 kingdom, 騰騫, 低騫, 縶騫, 陳騫), but the whole 無騫 entry is misread as 'increase/decrease'.",
+   "image_note": "transcription scrambles the vertical-column order of the first entry, but the characters are present"
+  },
+  {
+   "id": "1819be3068",
+   "url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=11",
+   "lang": "Sanskrit",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 2,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "verses 10–15 rendered faithfully apart from 'jitāsuḥ' as 'conquered his senses'; the commentary above and below the verses, roughly half the page, is dropped entirely; Sanskrit read moderately",
+   "image_note": "minor, unsure at this resolution: lower commentary image 'ध्यायेत् शुद्ध्यति तस्मिन्निश्चला' vs transcription 'ध्यायेत् युक्त्या ततस्मान् निश्चला'; v.10 image 'योगेश्वरास्थापित' vs 'योगेश्वरस्थापित'"
+  },
+  {
+   "id": "c640c631f2",
+   "url": "https://sourcelibrary.org/book/69f3296eaeeee0fa38c658ea?page=13",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Follows the garbled OCR line by line but smooths it into fluent prose and adds an unsupported identification in a note; handwritten Korean read weakly.",
+   "image_note": "image begins roughly '셩쥬…신ᄌᆞ의 일을 ᄒᆞ시ᄆᆡ' vs OCR '부귀와 신선의 일을 하시고'; OCR appears to normalise and guess much of the cursive; unsure of my own reading"
+  },
+  {
+   "id": "69c523df65",
+   "url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=58",
+   "lang": "Sanskrit",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "garble_passthrough"
+   ],
+   "reason": "first commentary and verses 9–11 rendered reasonably; final commentary summarised rather than translated; v.11–12 sense slips",
+   "image_note": "some Devanagari OCR garble (e.g. image 'पुरुषोऽन्नरसमय' vs OCR 'अनर्समय') but unsure at this resolution"
+  },
+  {
+   "id": "ec14c2db7f",
+   "url": "https://sourcelibrary.org/book/6a3c628e40c88a541d8f46a5?page=17",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "Whip anecdotes (Su Po, Qian Chu, Majianchou hide, Li Bai, Agate, Xinling) mostly right, but the gift count of 200,000 is cut to 20,000, a 'Sea-Commanding' gloss is invented, and a volume number is added.",
+   "image_note": "image '繞朝鞭' vs transcription '統朝鞭'; ditto marks '丨丨丨' after '沈瑀必', '捍撥' and '勒馬' dropped or read as '一'"
+  },
+  {
+   "id": "fdef1d187d",
+   "url": "https://sourcelibrary.org/book/69a5e3d7006a4098422165d4?page=126",
+   "lang": "Greek",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Bulk of the Boeotian/Nicarchus scene is accurate (eel apostrophe, sycophant export, wick and water-beetle), but the garbled opening line becomes invented fluent dialogue, and the bird list is muddled.",
+   "image_note": "image 'τί φέρεις; ΒΟΙ. ὅσ᾽ ἐστὶν ἀγαθὰ Βοιωτοῖς ἁπλῶς' transcribed 'τί φέρεσ βοῦ; οὐκέτι λησθῆ βοιωτοῖσι καλῶς'"
+  },
+  {
+   "id": "9b0fcacf28",
+   "url": "https://sourcelibrary.org/book/6a060d36e16c60cb2a8946c7?page=268",
+   "lang": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission"
+   ],
+   "reason": "The mūla verses 300–320 are rendered well, but the commentary is repeatedly abridged and the Jejjaṭa/Gayī note is replaced by something it does not say",
+   "image_note": "image reads 'सूक्ष्मत्वसामान्यान्नातिप्रशमनमित्यर्थः' but OCR has 'प्रतिशमनम्'; 'ऊषरप्रसवादीनि' read as 'ऊप्रप्रसादादीनि'; 'मार्गावृतवातस्य' read as 'मार्गश्रितवातस्य' (moderately sure)"
+  },
+  {
+   "id": "dc80f62b5f",
+   "url": "https://sourcelibrary.org/book/69af11dba03f6f3663ba9133?page=58",
+   "lang": "Russian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 4,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "Accurate from 'Зимою' onward; drops the opening fragment and the sentence about the broken gun",
+   "image_note": ""
+  },
+  {
+   "id": "3995e55569",
+   "url": "https://sourcelibrary.org/book/69f3263852a77bb28fdb6738?page=3",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "ledger structure (actual rice, firewood-exemption rice, stipend soybeans, monthly/daily) right, but two quantities are altered or invented against the source",
+   "image_note": "image daily line reads '每日六斗五升四合…' (OCR '奔'); soybean line reads '十石七斗四升五合內' (OCR '十石半四升五合')"
+  },
+  {
+   "id": "3373e62516",
+   "url": "https://sourcelibrary.org/book/6a3c648f39b4508b04e2814a?page=62",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "invents a 'Golden Shore' entry from header garbage and drops headword 險岸, so Liu Ti's entry is misfiled; later entries (照岸, 雲岸, 別岸, 橫岸, 沿岸, 接岸) are rendered faithfully",
+   "image_note": "running title 欽定四庫全書 transcribed as '金 只 已 不'; Bai Juyi's title 汎小艑 transcribed 沉小艙"
+  },
+  {
+   "id": "d98a90dd21",
+   "url": "https://sourcelibrary.org/book/6a060d36e16c60cb2a8946c7?page=671",
+   "lang": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Verses rendered adequately, but the commentary is condensed with several passages dropped, and the closing kuṭaja recipe runs past the end of the page into invented steps; my Sanskrit reading is moderate",
+   "image_note": "verse 87: image 'मध्वाक्तं पाययेच्चैतत्', transcription 'मध्वार्कं पाययेच्चैतत्'"
+  },
+  {
+   "id": "21643adec2",
+   "url": "https://sourcelibrary.org/book/6990795bb621b177c1af684d?page=65",
+   "lang": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "genealogy, chronogram Śaka 1535, Nabhasya, Brahmapura and the commentary's list of arts are right, but ज्यायान् (eldest) becomes a wife named Jaya in three places",
+   "image_note": "commentary may read 'तेषुज्यायानू' in image vs OCR 'तेषुजयायानू'; unsure at this resolution"
+  },
+  {
+   "id": "70ab849b05",
+   "url": "https://sourcelibrary.org/book/6a243d6f0f0e4f405e630221?page=12",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 4,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "main text faithful throughout (Heiligenschein, Kezer, Minderjährigkeit, Reformationen all = source); the two footnotes (Neratius quotation and Critik note) are omitted",
+   "image_note": ""
+  },
+  {
+   "id": "acc7a44e1a",
+   "url": "https://sourcelibrary.org/book/6a3c628e40c88a541d8f46a5?page=167",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "garble_passthrough"
+   ],
+   "reason": "Peiwen yunfu-style entries for 悁/𤸎 are mostly recognisable, but the Han Shi waizhuan punchline (勇若悁 'as brave as Yuan') is mistranslated, and the Lu Guimeng / 虎豹 entries are run together into fluent nonsense.",
+   "image_note": "Column order is scrambled in the transcription and the 丨丨 repeat marks appear as '11', but the characters match the leaf."
+  },
+  {
+   "id": "22d29de6c7",
+   "url": "https://sourcelibrary.org/book/6a3ceede8642f0445b15fae8?page=30",
+   "lang": "Chinese",
+   "model": "gemini-3.8-flash-low",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "inversion"
+   ],
+   "reason": "Yu Xin's letter is mostly accurate, but the flowers-and-laughter clause is reversed and the 'does not think / when will remember' couplet is distorted.",
+   "image_note": ""
+  },
+  {
+   "id": "370ac78b9d",
+   "url": "https://sourcelibrary.org/book/6a3c648f39b4508b04e2814a?page=114",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 2,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "garble_passthrough"
+   ],
+   "reason": "repeat marks rendered literally as 'each and every one' make the first entry and many quotations nonsense; Feng Yi quotation garbled; later entries (五十難, 迫難) roughly right",
+   "image_note": "the image's vertical repeat marks 丨丨 are transcribed as 一一 in most places"
+  },
+  {
+   "id": "074172eed6",
+   "url": "https://sourcelibrary.org/book/6a3c64ab39b4508b04e28ee7?page=34",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Entry citations broadly follow the source, but 代相 is misread as 'generations', the OCR gaps are papered over with invented content, and '車' becomes a carriage crime.",
+   "image_note": "Image has the 丨丨 repeat marks (e.g. '為立丨丨祠', '官帥將子為丨丨', '公孫弘以丨丨'); the transcription drops them, which loses the headword in each citation."
+  },
+  {
+   "id": "43c479addc",
+   "url": "https://sourcelibrary.org/book/69af11743bf2d972adad82be?page=251",
+   "lang": "Russian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 4,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "Drops the first paragraph, about Peter's steam engine. The rest — the Khmelnitsky critique and the Dal excerpt — is faithful.",
+   "image_note": ""
+  },
+  {
+   "id": "a15400e988",
+   "url": "https://sourcelibrary.org/book/69e72b65a409200ea79f24ac?page=7",
+   "lang": "Armenian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "Title, verse and opening prose rendered faithfully, but the footnote is extended by two-three sentences with no counterpart in the source (likely imported from the next page).",
+   "image_note": ""
+  },
+  {
+   "id": "b3703428ed",
+   "url": "https://sourcelibrary.org/book/69c4ec33a3a4a7c546ee6113?page=108",
+   "lang": "Latin",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "fit_to_read",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "dialogue otherwise faithful (2190 days, 1095 revolutions, 312 days, necromantia capitalis); but the key question about talent vs art and a two-line exchange are merged/dropped",
+   "image_note": ""
+  },
+  {
+   "id": "da7fc3aef6",
+   "url": "https://sourcelibrary.org/book/69af13c4f837644f29a496d3?page=499",
+   "lang": "Greek",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "The arithmetic step is garbled (5;55 is the result, not an addend); 203;0 becomes '203°70′'; the opening clause is dropped. The conclusion and the solar-eclipse proposition are correct.",
+   "image_note": ""
+  },
+  {
+   "id": "717acb4ed5",
+   "url": "https://sourcelibrary.org/book/6a3c634a4daf85677d170c3e?page=123",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 2,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission"
+   ],
+   "reason": "Each quoted line is roughly rendered, but from 雲咽 onward the headwords shift one entry against their citations, and four headwords are lost, so a reader learns the wrong compound for nearly every quotation.",
+   "image_note": "after 王泰巫山高詩谷深 the image has '||峽近猿聲悲', dropped in transcription; image 盧照鄰 transcribed 盧照鄱; 迴 split from 湍咽"
+  },
+  {
+   "id": "8e804f2c10",
+   "url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=33",
+   "lang": "Sanskrit",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "inversion"
+   ],
+   "reason": "translates only the Bhagavata verses 25–33, loosely, and drops the whole commentary; v.33 'did not comprehend' inverted to 'attained this knowledge'; v.30 Hara clause and v.28 list dropped",
+   "image_note": "dense Devanagari; transcription follows the image broadly, small variants not judged at this resolution"
+  },
+  {
+   "id": "1797dc1d94",
+   "url": "https://sourcelibrary.org/book/69af202426ba85fcaeca5f8d?page=86",
+   "lang": "Russian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 2,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "truncated"
+   ],
+   "reason": "First column rendered accurately, but the whole second column (about half the page) is absent",
+   "image_note": ""
+  },
+  {
+   "id": "17d84e239b",
+   "url": "https://sourcelibrary.org/book/6ad191c342debc962692561e?page=10",
+   "lang": "Yucatec Maya",
+   "model": "gemini-4-argon-low",
+   "route": "model:claude-opus-5-5",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Stamp text and the sale formula (Gregorio Pat, two pesos, seven tumin each) are rendered plausibly, but the uncertain Maya of the boundary description is turned into fluent, specific directions; I read colonial Yucatec weakly.",
+   "image_note": "Hand reads 'glegolio' where the transcription normalises to 'gregorio' in the first line; the stamp's year words are hard to read at this resolution."
+  },
+  {
+   "id": "68a1702440",
+   "url": "https://sourcelibrary.org/book/69f3273552a77bb28fdb6f93?page=27",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "builds a fluent narrative (Choi clan woman, funeral, procession, 'Hyeon-ha' title) on a garbled transcription the source cannot support; only the Yeong dismissal and Nang-wang's arrogance track the source",
+   "image_note": "image '잔치의 ... 잔의 술을 따라' (banquet ... poured wine in the cup) vs transcription '산최의 ... 잔의 출을'; '텬하' read as '현하' throughout"
+  },
+  {
+   "id": "10b1d23de3",
+   "url": "https://sourcelibrary.org/book/695924fa1cac2ce31a4a8a33?page=287",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "the closing prose on the efficacy of reciting the hidden language is faithful, but the four Eight-Heavens verse blocks (phonetic syllables) are turned into invented English imagery",
+   "image_note": "image '以調正三元爲洞真之宗' transcribed '萬'; image '字皆廣長一丈' transcribed '宁'; image '天無氛穢地無祅塵' transcribed '無數衆穢地無秋塵'"
+  },
+  {
+   "id": "ffd735085c",
+   "url": "https://sourcelibrary.org/book/6a243d6f0f0e4f405e630221?page=8",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "From 'Dieser gerade Blick' onward, including the Zimmermann quotation and both footnotes, it is faithful, but the page-opening clauses on articles of faith and contradictory opinions are missing.",
+   "image_note": ""
+  },
+  {
+   "id": "23bb8f0efd",
+   "url": "https://sourcelibrary.org/book/69af13c4f837644f29a496d3?page=354",
+   "lang": "Greek",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [],
+   "reason": "Two fractional quantities are wrong: Hipparchus's error becomes 6 1/3 hours instead of half an hour, and 1 2/3 h becomes 1 3/4. The Alexandria eclipse narrative is otherwise faithful.",
+   "image_note": ""
+  },
+  {
+   "id": "8c8bdb219d",
+   "url": "https://sourcelibrary.org/book/69af11dba03f6f3663ba9133?page=265",
+   "lang": "Russian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "Body text and both footnotes are rendered accurately, but a full clause is completed from beyond the page break.",
+   "image_note": ""
+  },
+  {
+   "id": "5275e7c3cd",
+   "url": "https://sourcelibrary.org/book/6a3c60d540c88a541d8eb14f?page=21",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "Individual poem lines are mostly right, but the entry/headword structure is misparsed (a fragment made a heading, 池榭 conflated with 池閣 and dropped from its own quotation).",
+   "image_note": "image last column '劉禹錫酬' transcribed '劉烏錫剛'; folio '十一' transcribed '十'"
+  },
+  {
+   "id": "0279f34661",
+   "url": "https://sourcelibrary.org/book/69e72b65a409200ea79f24ac?page=214",
+   "lang": "Armenian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 4,
+   "grade_7866": "fit_to_read",
+   "ocr_bad": false,
+   "flags": [
+    "inversion"
+   ],
+   "reason": "Faithful throughout except the gallows scene, where the son's request and his feigned embrace are given to the mother, which muddles who tricked whom",
+   "image_note": ""
+  },
+  {
+   "id": "c9bac14882",
+   "url": "https://sourcelibrary.org/book/6990795bb621b177c1af684d?page=32",
+   "lang": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "omission"
+   ],
+   "reason": "Aries–Virgo and the 12th-lord verses are right, but the verse for the five signs Libra–Aquarius is dropped and the 2nd/3rd-house results are merged.",
+   "image_note": "image 'तत्रान्यत्र' vs OCR 'तंत्राण्यत्र' (tantras); minor"
+  },
+  {
+   "id": "6d0953d5af",
+   "url": "https://sourcelibrary.org/book/69af48642a821385be062737?page=19",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "inversion",
+    "garble_passthrough"
+   ],
+   "reason": "The Virgo invocation and Golden Age passage are mostly right, but 'sponte sua' is inverted and the garbled lines 22–25 are smoothed into confident prose.",
+   "image_note": "Image 'circūflagratibus astris' vs transcription 'circūfusa grādibus astris'; image 'Fluxat pilae' vs 'pepli'; image 'ob res at mobile' vs 'ac'."
+  },
+  {
+   "id": "c26d516c26",
+   "url": "https://sourcelibrary.org/book/6a4ae0a29a3f4fa983d99ff6?page=15",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 4,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "inversion"
+   ],
+   "reason": "councils V–VI, Ibas' letter, Theodoret, the 128/107-year datings, 189 fathers and the presidents all = source, but the Constantine–Justinian relation is reversed",
+   "image_note": "image reads 'πάσης ἀσεβείας συμμέτοχον' (partaker in all impiety), transcription 'σύμμετρον'; the year figure 'ρκη'' may read 'ρκθ'' in the image (uncertain)"
+  },
+  {
+   "id": "9c1ee8f870",
+   "url": "https://sourcelibrary.org/book/6a243d6f0f0e4f405e630221?page=13",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 2,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "§9's opening is faithful, but the footnote is dropped and replaced by invented continuation text.",
+   "image_note": ""
+  },
+  {
+   "id": "a976398c79",
+   "url": "https://sourcelibrary.org/book/69b99d166ed9e04909908b37?page=28",
+   "lang": "English",
+   "model": "gemini-3.1-flash-lite",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "Opening sentence and footnotes are dropped, and the second triad is completed from text that is not on this page.",
+   "image_note": ""
+  },
+  {
+   "id": "3aca072b92",
+   "url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=16",
+   "lang": "Sanskrit",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 2,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "only the mūla verses 35–38 and ch.3 vv.1–2 are translated; roughly half the page (Śrīdhara commentary) is missing",
+   "image_note": ""
+  },
+  {
+   "id": "4d2d101f76",
+   "url": "https://sourcelibrary.org/book/6a26beb30e247ebad6de873c?page=20",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "inversion"
+   ],
+   "reason": "Recipes and regimen are otherwise rendered correctly, but the dietary warning against vegetables is reversed into a recommendation.",
+   "image_note": "image reads 'jung Kitzfleisch' (young kid); transcription has 'jung Rindfleisch'"
+  },
+  {
+   "id": "b37830d4bd",
+   "url": "https://sourcelibrary.org/book/6a4b6cf066f4462393d6f8a6?page=14",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "inversion"
+   ],
+   "reason": "Inverts 'Vicimus' to 'We are conquered' and misconstrues the final couplet's relative clause; rest of the elegiacs follows the source line by line",
+   "image_note": ""
+  },
+  {
+   "id": "8d6b3695b1",
+   "url": "https://sourcelibrary.org/book/6990795bb621b177c1af684d?page=-109",
+   "lang": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "The catalogue fields (title with tika, Sanskrit, printed, 1787 saka, folio 33, size, complete) are kept, but the leading name is turned into an invented title and publisher",
+   "image_note": "handwritten folio count could be read '83' rather than '33'; uncertain"
+  },
+  {
+   "id": "0178f87f51",
+   "url": "https://sourcelibrary.org/book/69a5f088b29703bc86eb5b9f?page=64",
+   "lang": "Armenian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "fit_to_read",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "Blasphemy/curses passage and the 1 Cor 3 gold-silver-stubble image are faithful, but the final sentence is completed with an invented doctrinal conclusion.",
+   "image_note": ""
+  },
+  {
+   "id": "971a968dff",
+   "url": "https://sourcelibrary.org/book/69c4ec33a3a4a7c546ee6113?page=100",
+   "lang": "Latin",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 2,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "pp. 188-189 rendered accurately, but about as much again of text from later pages is added after 'How wise'; that is imported content.",
+   "image_note": ""
+  },
+  {
+   "id": "2b87232f91",
+   "url": "https://sourcelibrary.org/book/6a4cb63519ae103166961ce4?page=18",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 4,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "Long body (century's changes, wars, treaties to Ryswick and Karlowitz, Gera programme) rendered closely; footnotes (a)-(e) dropped, Poland-Sweden truce mis-parsed, Olaviensis named Oels",
+   "image_note": "day of month reads XXI in transcription; image could be XVI at this resolution, left unflagged"
+  },
+  {
+   "id": "948fbda8ca",
+   "url": "https://sourcelibrary.org/book/6a43999ec3ccb765a984106b?page=40",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "omission"
+   ],
+   "reason": "What is translated (Clermont theses on infallibility, §24 on the Catechismus Gratiae 1650) is accurate, but the papal condemnation of Jansen's Augustinus and the 1661 Jesuit context that open the page are missing entirely.",
+   "image_note": "minor: image 'de Incarnatione', transcription 'in Incarnatione'; 'HABEBAT' typed 'HABEBT'"
+  },
+  {
+   "id": "e463f53ab9",
+   "url": "https://sourcelibrary.org/book/6a3c64ab39b4508b04e28ee7?page=101",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 2,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "invention"
+   ],
+   "reason": "The 熊虎狀, 毅狀 and 風雲狀 quotations are right, but the main headword 萬狀 is misunderstood across seven quotations and headings are invented.",
+   "image_note": "image '孔稚圭', OCR '孔雅圭' (name); running head '欽定四庫全書' read as '次定习事全書'"
+  },
+  {
+   "id": "650425dae9",
+   "url": "https://sourcelibrary.org/book/6a267ed26c1f37c9c4f3cc35?page=12",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "Everything that has a counterpart in the source (the particular union, Saturn's party, the Fourth Question, the church/chapel proverb) is faithful, but a full paragraph about Mars, the twelfth house and bathing horses in blood is appended past the page's last words.",
+   "image_note": "minor: image '(oder vielmehr seine Clienten etliche)' — OCR drops 'etliche'; image 'Vnarth' vs OCR 'Vnrath'"
+  },
+  {
+   "id": "a41c805792",
+   "url": "https://sourcelibrary.org/book/69b222ed56715b0e32475a8c?page=356",
+   "lang": "Greek",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "garble_passthrough"
+   ],
+   "reason": "Athletic epigrams (Macedonius, Philippus) are mostly right, but the Metrodorus distich misconstrues θεσμός and the Thessalonica epigram papers over OCR garble; my reading of the Greek is moderate",
+   "image_note": "image 'ἀντεσείρασε δέ μοι τὴν ὄρεξιν ἡ τέχνη' transcribed 'ἀνεσείρασε δέ με τὴν πρὶν ἡ τέχνη'; 'τρόπους' read as 'βόπους'; 'λεύσσῃς' likely read as 'λούσῃς'"
+  },
+  {
+   "id": "7f43b58409",
+   "url": "https://sourcelibrary.org/book/6a3c634a4daf85677d170c3e?page=85",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Every 說 = 悅 compound is rendered as 'explanation', which garbles each quotation's sense. The margin title is turned into an invented recommendation note. The citations are otherwise traced correctly.",
+   "image_note": ""
+  },
+  {
+   "id": "1aafd3f559",
+   "url": "https://sourcelibrary.org/book/69c4ec33a3a4a7c546ee6113?page=22",
+   "lang": "Latin",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "misreads the source's ἀποθέωσιν as 'godlessness', which garbles the turn on which the dialogue rests; the rest of both pages is faithful",
+   "image_note": ""
+  },
+  {
+   "id": "0501a795b0",
+   "url": "https://sourcelibrary.org/book/69a5e3d7006a4098422165d4?page=105",
+   "lang": "Greek",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "inversion",
+    "garble_passthrough"
+   ],
+   "reason": "follows a badly corrupted transcription of Knights 1070–1150; much is reasonable, but garbled lines are papered over (partly from knowledge of the play) and one me/you reversal",
+   "image_note": "image 'ὅτι ἡ τριήρης ἐστὶ' vs transcription 'ὅτι ἡ πατρὶς εὖ'; image 'πῶς οὖν ἀλώπηξ προσετέθη' vs 'ταῦτ᾽ οὐκ Ἀπόλλων ἦ'; 'καὶ τοῦτον ἡμερῶν τριῶν' vs 'Κλεωνύμῳ ἡμέρᾳ τριῶν'; 'Λητοΐδης' vs 'Λικυμνίης'"
+  },
+  {
+   "id": "a671129ecf",
+   "url": "https://sourcelibrary.org/book/6a3c60d540c88a541d8eb14f?page=125",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 2,
+   "grade_7866": "from_elsewhere",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "The poets and titles are correct, but the lexicon's headword, which is the subject of the entry, is replaced throughout by an invented 'shanshan / field and mountain', so every quotation says something the source does not.",
+   "image_note": "new headword printed large '井關' at the start of the last column; OCR reads it as '卞關'"
+  },
+  {
+   "id": "77878dd8a5",
+   "url": "https://sourcelibrary.org/book/69e787a74a6785cfd60ccb4b?page=8",
+   "lang": "Tibetan",
+   "model": "gemini-3-flash-preview",
+   "route": "yigdzin",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "garble_passthrough"
+   ],
+   "reason": "cosmology of Trāyastriṃśa parks, Sudharma hall, sky-dwelling gods, Pure Abodes and heights mostly tracks; the four-park list is garbled ('if one can master it' for the west) and some names guessed; script hard to read",
+   "image_note": "three leaves in a cursive script not legible to me at this resolution; cannot check OCR"
+  },
+  {
+   "id": "b545aab3c8",
+   "url": "https://sourcelibrary.org/book/69f3273552a77bb28fdb6f93?page=52",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "garble_passthrough"
+   ],
+   "reason": "The source transcription is largely garble; the translation turns it into fluent but unsupported narrative (Dodang meeting wives, house of righteousness). My reading of the handwritten Korean is moderate.",
+   "image_note": "line 4 image 'ᄒᆞ미 쳡이 비로소 향을', transcription '멸하여 비로소 향을' (drops 쳡이); last line image 'ᄉᆡᆨ리 너다 은희가 쳡 나려 일너 왈 우리 집', transcription '색리 너다 으희 가섭 나려 일어할 으의 집'"
+  },
+  {
+   "id": "bc0c817840",
+   "url": "https://sourcelibrary.org/book/69dbc99f1040d1d5e20a4e4f?page=17",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "omission"
+   ],
+   "reason": "Cicero Partitiones on witnesses and peroration rendered word-for-word; the torture sentence is garbled ('delete the false', 'mori' lost), opening clause garbled; rest broadly right",
+   "image_note": "speaker mark before 'Facilis est explicatio' reads 'M.' in the image; transcription has 'D.'"
+  },
+  {
+   "id": "ede1e25010",
+   "url": "https://sourcelibrary.org/book/6a3c64ab39b4508b04e28ee7?page=75",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "Peiwen yunfu entries rendered in order with citations correct, but the repeated headword (border general) is turned into an invented 'brave general' with a made-up gloss",
+   "image_note": "'于下坐曰此是也' placed at the end of the transcription rather than after 乃指明宗 (layout only); 叚頲 for 段熲"
+  },
+  {
+   "id": "d376e20af0",
+   "url": "https://sourcelibrary.org/book/69b51e05768235dc6598b5c1?page=16",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 1,
+   "grade_7866": "fit_to_read",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "invention",
+    "wrong_page"
+   ],
+   "reason": "translation renders a different passage (the next page of the speech); none of the source's content (learned institutes, 'Karl der Geliebte', star of the first magnitude) appears",
+   "image_note": ""
+  },
+  {
+   "id": "512f19948b",
+   "url": "https://sourcelibrary.org/book/6a3c5e7840c88a541d8e2644?page=73",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "garble_passthrough"
+   ],
+   "reason": "The 會 senses (rites, Zuo zhuan, accounts, Kuaiji, surname) are rendered acceptably, but the fanqie readings are mis-explained, the second 朄 entry is given the wrong character, and a garbled margin is turned into content.",
+   "image_note": "margin '欽定四庫全書' transcribed '欠定曰一車人二士'; '並古外切'/'並羊進切' transcribed '於古外切'/'竺羊進切'"
+  },
+  {
+   "id": "516928b4b6",
+   "url": "https://sourcelibrary.org/book/69e7aac45f1a22ab19a8d12c?page=116",
+   "lang": "Tibetan",
+   "model": "gemini-3-flash-preview",
+   "route": "yigdzin>agy-flash-low",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "leaf 1 (bell oath, blindfold, samādhis of wrathful ones and assemblies) = source; leaf 2 adds a mantra tail not in source, drops one goddess name and alters several mantras; my Tibetan is moderate",
+   "image_note": "leaf 2 appears to open with a mantra tail ending 'ཧཱུྃ་ཕཊ' in the image vs OCR 'དཀྲིལ་བཀྲོལ་བས་ཆུག་ཅིག'; tentative at this resolution"
+  },
+  {
+   "id": "8ac447c825",
+   "url": "https://sourcelibrary.org/book/69af49c4d6be7ec9cc3246fd?page=83",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "3flash",
+   "fidelity": 1,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "invention",
+    "wrong_page"
+   ],
+   "reason": "Translation is of a different passage (head lice and Chapter V catarrh remedies); the source's ulcer remedies are entirely absent.",
+   "image_note": ""
+  },
+  {
+   "id": "84974a49f1",
+   "url": "https://sourcelibrary.org/book/69dbca3a1040d1d5e20aa385?page=21",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Nutmeg and pepper are roughly right, but the rhaponticum/rhubarb chapter is misidentified with invented degrees, the pepper degrees and 'third class' are invented, and several clauses are misread. Abbreviated incunable Latin, so moderate confidence.",
+   "image_note": "image 'intestiorum' transcribed 'mtelion'; image 'serpētū' transcribed 'ꝓpe:tū'; image 'Nux' transcribed 'Nur'"
+  },
+  {
+   "id": "4ec669d7e7",
+   "url": "https://sourcelibrary.org/book/6992cf0e284cdd19fef46f38?page=25",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "fit_to_read",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "The two text sentences are rendered correctly, but the translator invents a 'Leeks' heading, misnumbers the juan, and misquotes 胷 as 胃",
+   "image_note": "margin page number reads 十 in the image, transcribed 士; trivial"
+  },
+  {
+   "id": "abfa126faf",
+   "url": "https://sourcelibrary.org/book/6a3c628e40c88a541d8f46a5?page=220",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Yang Xuan biography and the rhapsody quotations are faithful, but the garbled 猭 headword lines are papered over with an invented 'prisoners' gloss and the fanqie notes are misread",
+   "image_note": "headword is '猭' (丑緣切) in image, OCR '豫'; '韻藻增獥猭' vs OCR '獄象'; '書衣爲章' vs OCR '烏章'"
+  },
+  {
+   "id": "be967aaf91",
+   "url": "https://sourcelibrary.org/book/6990795bb621b177c1af684d?page=-136",
+   "lang": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "the tag fields (title, Sanskrit, printed on paper, 1787 Saka, folio 33, 10.8\"x4\", complete) are all rendered, but notes invent a publishing-house identity and other facts not carried by the tag",
+   "image_note": ""
+  },
+  {
+   "id": "21a55590a5",
+   "url": "https://sourcelibrary.org/book/6a49137aac0c339f55337966?page=31",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "The plague-carer advice is rendered faithfully, but the burdock recipe is completed with a clause imported from beyond the page.",
+   "image_note": "image 'Reüch machen' (fumigate) transcribed 'keüch'"
+  },
+  {
+   "id": "41bd8a34d4",
+   "url": "https://sourcelibrary.org/book/69f3296eaeeee0fa38c658ea?page=47",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "The source is largely garble (repeated 츳). The translation turns it into fluent dialogue and adds a named speaker and a plot. Little of this is supportable. I read cursive Hangul weakly.",
+   "image_note": "Image has full, legible cursive lines (e.g. '벽진쥬와 어리온 쌍용포를 입어거날'); the transcription collapses most of them into repeated '츳' placeholders."
+  },
+  {
+   "id": "0edabc6b48",
+   "url": "https://sourcelibrary.org/book/6a3c634a4daf85677d170c3e?page=41",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 3,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "inversion"
+   ],
+   "reason": "most entries (陵折, 身折, 說折, 右折, 排折, 摧折) correct, but the Zhang Tang citation reverses who humiliated whom and the crossbow simile is lost",
+   "image_note": "'鍾絲' likely 鍾繇 in the print; unsure at this resolution"
+  },
+  {
+   "id": "5c640e2313",
+   "url": "https://sourcelibrary.org/book/69dea5f84d19ec2e9ba77e07?page=46",
+   "lang": "Sanskrit",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": false,
+   "flags": [
+    "omission",
+    "invention"
+   ],
+   "reason": "This is a loose summary of the opening commentary that drops verse 7's substance and all of the later commentary; I read the Sanskrit only moderately well",
+   "image_note": ""
+  },
+  {
+   "id": "67bdbca954",
+   "url": "https://sourcelibrary.org/book/6a2032e218654bf8e1903a74?page=183",
+   "lang": "Arabic",
+   "model": "gemini-3-flash-preview",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "garble_passthrough"
+   ],
+   "reason": "the abandoned-property rule (distance in carpenter's cubits, hadith on blood/property/honour, guardian with permission or wage, consensus) is carried, but several garbled spans are smoothed into confident legal prose, esp. the second column; I read this manuscript Arabic only moderately",
+   "image_note": "cursive manuscript at this resolution; could not verify word-level readings"
+  },
+  {
+   "id": "6de8acba78",
+   "url": "https://sourcelibrary.org/book/69f3273552a77bb28fdb6f93?page=51",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "the source is a near-meaningless OCR string; the translation builds a coherent narrative of sacrifice, prosperity and wine that the source cannot support; my reading of this archaic hangul is weak",
+   "image_note": "image line 1 reads roughly '골잡아 죽이니 은희가 그 아비의 ...' and line 2 '나려 일너 왈 그디가 우리 ...' vs OCR '글 잡아 죽이며 희생의 의식을' / '나려 일어날 그 사의의 편성을'; whole transcription is unreliable"
+  },
+  {
+   "id": "0b2b8092fd",
+   "url": "https://sourcelibrary.org/book/69f3273552a77bb28fdb6f93?page=24",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "wrong_span",
+   "ocr_bad": true,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Gets the gist of the petition (father an official praised for integrity, facing punishment), but fills in garbled OCR with the remembered Tiying story and completes the final sentence; my reading of the handwritten Korean is only moderate.",
+   "image_note": "line 1 image reads roughly 'ᄒᆞᆫ나ᄃᆞ라 그 어린 ᄯᆞᆯ 제영이 나ᄒᆡ시ᄋᆞᆸ셔다', transcription '호남으로 어긴 셜 제영이나 하시옵세다'; last line image 'ᄌᆞ는 다시 ᄉᆞ디 못ᄒᆞ고', transcription '조로 사려 못하고'"
+  },
+  {
+   "id": "a022968b82",
+   "url": "https://sourcelibrary.org/book/69a5f088b29703bc86eb5b9f?page=315",
+   "lang": "Armenian",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "lite",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": true,
+   "flags": [
+    "invention"
+   ],
+   "reason": "The body to 'one catholic apostolic church' is faithful (commandment to love one another, help turned from your sword, handed to the pagans), but it then invents a whole closing sentence that is not on this page.",
+   "image_note": "image appears to read 'դարձեալ զխրատ, զատելութիւն' vs transcription 'դարձեալ զսրտա' (counsel vs heart); low certainty at this resolution"
+  },
+  {
+   "id": "ada46edec2",
+   "url": "https://sourcelibrary.org/book/69f3296eaeeee0fa38c658ea?page=67",
+   "lang": "Korean",
+   "model": "gemini-3-flash-preview",
+   "route": "lite",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": false,
+   "flags": [
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "The source is a garbled transcription of Korean cursive, and the translation turns it into fluent but unsupported sentences plus an invented summary. I read this handwritten script weakly.",
+   "image_note": "cursive is hard to read at this resolution; the image seems to use archaic spellings (쥬, 죠션) that the OCR modernised, so the misreadings could not be confirmed"
+  },
+  {
+   "id": "f709e87b1f",
+   "url": "https://sourcelibrary.org/book/6a243d6f0f0e4f405e630221?page=17",
+   "lang": "German",
+   "model": "gemini-3.1-flash-lite",
+   "route": "3flash",
+   "fidelity": 3,
+   "grade_7866": "search_only",
+   "ocr_bad": false,
+   "flags": [
+    "invention"
+   ],
+   "reason": "§11 otherwise = source, but a whole closing sentence is invented past the page's mid-sentence end",
+   "image_note": ""
+  },
+  {
+   "id": "b8a131be95",
+   "url": "https://sourcelibrary.org/book/6a3c60d540c88a541d8eb14f?page=72",
+   "lang": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "route": "paddle",
+   "fidelity": 2,
+   "grade_7866": "mostly_wrong",
+   "ocr_bad": true,
+   "flags": [
+    "omission",
+    "invention",
+    "garble_passthrough"
+   ],
+   "reason": "Only the 淵浩 and 淵曠 entries (Song shu, Qi shu, Wei shu Xu Zunming, Shen Yue) are rendered properly; a non-existent 'Yuan Chong' headword is invented and three entries are dropped.",
+   "image_note": "Headwords read 淵弘 淵博 淵富 淵浩 淵曠; the transcription reads 淵 as 開/消 ('開江', '開富', '消富') and scatters the 淵博 column into single characters."
+  },
+  {
+   "id": "5857801818",
+   "url": "https://sourcelibrary.org/book/69dbc7d71040d1d5e2094b24?page=39",
+   "lang": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "route": "pero>agy-flash-low",
+   "fidelity": 2,
+   "grade_7866": "fit_to_quote",
+   "ocr_bad": false,
+   "flags": [],
+   "reason": "Systematically renders ☋ (cauda draconis) as the zodiac sign in all four entries; also 'interfectionem' becomes 'intersection'. The ☊ and comet clauses are otherwise faithful.",
+   "image_note": ""
+  }
+ ],
+ "missing_verdicts": []
+}

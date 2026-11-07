@@ -9,7 +9,6 @@
 # append-mostly.
 #
 # A row both sides EDITED is kept twice, adjacent — re-read the hunk after a rebase.
-scripts/eval/DECISIONS.md               merge=union
 scripts/eval/experiments/_series-*.md   merge=union
 # Invariant docs that sessions append incidents to; flagged by
 # scripts/audit/append-only-ledgers.mjs on 2026-10-01 (88% and 82% insertion-only).

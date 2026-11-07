@@ -18,7 +18,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '0') || 999999;
 const CONCURRENCY = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--concurrency') || '0') || 8;
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 
 const client = new MongoClient(process.env.MONGODB_URI);

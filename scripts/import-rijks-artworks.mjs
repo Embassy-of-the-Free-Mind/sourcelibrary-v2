@@ -21,7 +21,7 @@ import { makeBookDoc } from './lib/book-docs.mjs';
 
 const SEARCH_BASE = 'https://data.rijksmuseum.nl/search/collection';
 const RESOLVER = 'https://id.rijksmuseum.nl';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const DISPLAY_MAX = 99999; // Store original resolution — no downscaling
 const THUMB_WIDTH = 600;

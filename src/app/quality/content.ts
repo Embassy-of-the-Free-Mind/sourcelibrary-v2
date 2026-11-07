@@ -5,7 +5,39 @@
 // experiment write-up in scripts/eval/experiments/.
 
 /** ISO date the prose on /quality was last checked against the data. */
-export const PROSE_AS_OF = '2026-10-26';
+export const PROSE_AS_OF = '2026-11-02';
+
+export type Finding = { title: string; text: string; n: string; date: string; record: { label: string; href: string } };
+
+const RECORD = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/';
+
+/**
+ * "What we have learned" (#7263): numbered findings, each with its n, interval and date. Every figure is
+ * copied from the record it links to; change them only together with it. Newest finding last.
+ */
+export const LEARNED: Finding[] = [
+  {
+    title: 'What we already store about a book does not tell us whether its text is good.',
+    text: 'We built a score for each book from what we keep anyway: how well its reading method did in our tests, and the warnings written on its pages when they were read. We then compared the score with the AI reviewer’s verdict on five pages of each book. Shown one weak and one sound book, the score ranked the weak one lower 66% of the time (95% interval 55–76%). Chance is 50%, and before the test we had set 75% as the level at which we would rely on it. Correcting only the books it scores lowest, together with the books it cannot score, would miss about 9,500 of the 20,600 weak books we estimate. For now, finding the weak books means reading their pages.',
+    n: '110 books that have a score, 5 pages each, read against the page images by Claude Opus',
+    date: '2026-10-31',
+    record: { label: 'the record (#7866)', href: `${RECORD}2026-10-31-confidence-validation-7866.md` },
+  },
+  {
+    title: 'Our AI reviewer agrees with people on printed pages, much less on manuscripts, and there it favours its own model’s readings.',
+    text: 'We checked the reviewer, Claude Opus, against transcriptions made by people: 140 pages, one per document, from CHURRO-DS, a published research set of historical pages in seven groups of language and script. Each page was shown with the people’s transcription, a copy of it with errors we planted, and a machine reading. On printed pages the reviewer accepted 82% of the texts with fewer than 1 wrong character in 100 (95% interval 74–87%), and turned down 85% of those with more (75–92%). On the machine readings alone it was lenient: of the printed-page readings above that line it turned down only 38% (18–61%). On manuscripts it agreed with the people far less (kappa 0.29, where 0 is chance and 1 is full agreement), and it accepted manuscript readings made by Claude Opus more readily than the people’s transcriptions justify: 43 points more than readings made by Gemini (95% interval 20–66 points). On print it showed no such preference (−2 points, −18 to +12). So a manuscript reading made by Opus now needs a second reviewer or a typed text before we act on it.',
+    n: '140 pages, 384 verdicts',
+    date: '2026-11-01',
+    record: { label: 'the record (PR #7880)', href: `${RECORD}2026-11-01-judge-calibration-churro-7263.md` },
+  },
+  {
+    title: 'A test on one kind of page tells us something about similar kinds.',
+    text: 'We fitted one statistical model to 254 tested ways of reading pages, which separates what belongs to the engine, the language, the writing system, and print or manuscript. Asked about kinds of page it had not been shown, it predicted their test results much better than the method we use now (average calibration error 0.014, against 0.249). For a kind of page we have never tested, its prediction is worth about as much as 5.5 tested pages (95% interval 4.5–6.7). The writing system matters for every engine in much the same way. So a new kind of page does not start from nothing, and our tests can go where they decide the most.',
+    n: '254 tested ways of reading, 11,334 judged pages',
+    date: '2026-11-01',
+    record: { label: 'the record (PR #7878)', href: `${RECORD}2026-11-01-hierarchical-heldout-7263.md` },
+  },
+];
 
 /**
  * "What changed this month" (#5939): a short dated note written by a person, shown at the top of
@@ -122,30 +154,37 @@ export const WAYS: Way[] = [
 ];
 
 /**
- * The reader-facing page grade (#5984). The rule behind each grade, the severities, and the
+ * The reader-facing page grade (#5984; the middle two split by count, #7263). The rule behind each grade, the severities, and the
  * standards it is built from are in .claude/docs/quality-rubric-and-sampling.md §5; keep the two
- * in step. Defined, not yet measured: no page has been graded under this rubric.
+ * in step. Computed once (#7933): scripts/eval/confidence-7866/regrade.mjs grades #7866's 800
+ * drawn pages on this ladder, and /quality leads with that distribution. Still not run: the
+ * standing monthly draw with its own strata, and the human calibration of §5.3.
  */
 export const GRADES: { name: string; means: string; rule: string }[] = [
   {
-    name: 'Fit to quote',
-    means: 'You can cite these words, in the original and in English, without opening the scan.',
+    name: 'No serious error found',
+    means: 'Reviewers found no error that changes the sense. They miss some.',
     rule: 'The right page, and no serious error in the transcription or the English. At most two small slips in the transcription, none in a sentence you would quote.',
   },
   {
-    name: 'Fit to read',
-    means: 'The page says what the scan says. Check the scan before you quote it.',
+    name: 'Small slips only',
+    means: 'The page says what the scan says, with slips that do not change the sense.',
     rule: 'The right page, and no serious error. Small slips are allowed.',
   },
   {
-    name: 'Fit for search only',
-    means: 'It will help you find the page, but do not trust the reading.',
-    rule: 'The right page and the right script, with mostly the right words, but at least one error that changes the meaning.',
+    name: 'Some errors that may change the meaning',
+    means: 'Mostly right, with 1 or 2 errors that may change the meaning: a misread word, a wrong number, a word or phrase dropped.',
+    rule: 'The right page and the right script, with mostly the right words, and 1 or 2 errors on the page that change the sense or are not on the page.',
   },
   {
-    name: 'Not usable',
-    means: 'Do not rely on this page.',
-    rule: 'The text belongs to another page, contains words that are not on the page, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
+    name: 'Many errors that may change the meaning',
+    means: 'Mostly the right words, with 3 or more errors that may change the meaning.',
+    rule: 'The right page and the right script, with 3 or more errors on the page that change the sense or are not on the page.',
+  },
+  {
+    name: 'Not the page’s text',
+    means: 'Another page’s text, words invented or recited from elsewhere, or most of the page wrong or missing.',
+    rule: 'The text belongs to another page, contains words invented or recited from another text, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
   },
 ];
 

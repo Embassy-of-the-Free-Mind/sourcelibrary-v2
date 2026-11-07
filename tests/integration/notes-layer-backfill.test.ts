@@ -1,7 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { BSON } from 'mongodb';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { getTestDb, cleanDb } from '../setup';
-import { processBatch, newTotals } from '../../scripts/maintenance/notes-layer-backfill-5942/backfill.mjs';
+import { processBatch, newTotals, fullIds, runScan, readCheckpoint, writeCheckpoint, EXIT_INTERLOCK } from '../../scripts/maintenance/notes-layer-backfill-5942/backfill.mjs';
+import { beat } from '../../scripts/lib/sweep-heartbeat.mjs';
 import { undoRun } from '../../scripts/maintenance/notes-layer-backfill-5942/undo.mjs';
 import { rewritePage } from '../../scripts/maintenance/notes-layer-backfill-5942/rewrite-stale.mjs';
 import { getTranslationText, translationTextIsCurrent, translationLayers, writePageAnnotations, getPageAnnotations, PARSER_VERSION } from '../../scripts/lib/translation-text.mjs';
@@ -207,5 +212,91 @@ describe('rewrite-stale: pages written by an older parser', () => {
     await db.collection('pages').insertOne(asV2('legacy', LEGACY, LEGACY));
     await db.collection('pages').updateOne({ id: 'legacy' }, { $set: { 'translation.data': 'A new translation.' } });
     expect(await rewritePage(db, (await db.collection('pages').findOne({ id: 'legacy' }))!, { apply: true, runId: 'rw' })).toBe('moved_on');
+  });
+});
+
+
+// #5942 restarts: a resumed --full run starts after its checkpoint, a pure-skip stretch never asks the
+// interlock, and an interlock stop is a non-zero exit (a wrapper must not read it as "done").
+describe('backfill --full: resume, checkpoint and the interlock', () => {
+  beforeEach(cleanDb);
+  const ids = ['p01', 'p02', 'p03', 'p04', 'p05', 'p06', 'p07'];
+  const collect = async (it: AsyncIterable<string[]>) => { const all: string[][] = []; for await (const b of it) all.push(b); return all; };
+
+  it('the full walk is in id order and a resume skips everything up to the checkpoint', async () => {
+    const db = getTestDb();
+    await db.collection('pages').insertMany([...ids].reverse().map((id) => page(id)));
+    await db.collection('pages').insertOne({ id: 'p00', book_id: 'b1' }); // untranslated: never listed
+    expect((await collect(fullIds(db, { batch: 3, chunk: 2 }))).flat()).toEqual(ids);
+    const dir = mkdtempSync(join(tmpdir(), 'cp-'));
+    const file = join(dir, 'run.checkpoint.json');
+    expect(readCheckpoint(file)).toBeNull();
+    // A first attempt over p01..p04 writes its checkpoint after each batch.
+    const totals = newTotals();
+    await runScan(db, (async function* () { yield ['p01', 'p02']; yield ['p03', 'p04']; })(), totals, null, {
+      apply: true, runId: RUN, throttleMs: 0, interlock: async () => true,
+      onBatch: (lastId: string, done: number) => writeCheckpoint(file, { last_id: lastId, done }),
+    });
+    expect(readCheckpoint(file)).toMatchObject({ last_id: 'p04', done: 4 });
+    const resumed = (await collect(fullIds(db, { from: readCheckpoint(file).last_id, batch: 2, chunk: 2 }))).flat();
+    expect(resumed).toEqual(['p05', 'p06', 'p07']);
+  });
+
+  it('a stretch of pages already done does not ask the interlock; the first page to write does', async () => {
+    const db = getTestDb();
+    await db.collection('pages').insertMany(ids.map((id) => page(id)));
+    await run(['p01', 'p02', 'p03', 'p04']);
+    const asked: number[] = [];
+    let calls = 0;
+    const r = await runScan(db, fullIds(db, { batch: 2 }), newTotals(), null, {
+      apply: true, runId: RUN + '-2', throttleMs: 0, checkEvery: 1000,
+      interlock: async () => { calls++; return true; },
+      onBatch: (_l: string, done: number) => { asked.push(calls); void done; },
+    });
+    // batches: [p01,p02] [p03,p04] skip-only; [p05,p06] writes → asks once; [p07] within check-every.
+    expect(asked).toEqual([0, 0, 1, 1]);
+    expect(r).toMatchObject({ stopped: null, done: 7, lastId: 'p07' });
+  });
+
+  it('an interlock that never clears stops before the first write and reports it', async () => {
+    const db = getTestDb();
+    await db.collection('pages').insertMany(ids.map((id) => page(id)));
+    await run(['p01', 'p02']);
+    const totals = newTotals();
+    const r = await runScan(db, fullIds(db, { batch: 2 }), totals, null, { apply: true, runId: RUN + '-2', throttleMs: 0, interlock: async () => false });
+    expect(r).toMatchObject({ stopped: 'interlock', done: 2, lastId: 'p02' });
+    expect(totals.written).toBe(0);
+    expect(await db.collection('pages').countDocuments({ 'translation.text': { $exists: true } })).toBe(2);
+  });
+
+  it('the script exits non-zero on an interlock stop, with the checkpoint at the last finished batch', async () => {
+    // The script works in `bookstore` on whatever MONGODB_URI names: seed that db on the test server.
+    const db = getTestDb().client.db('bookstore');
+    await db.collection('pages').deleteMany({});
+    await db.collection('sweep_heartbeats').deleteMany({});
+    await db.collection('pages').insertMany(ids.map((id) => page(id)));
+    await processBatch(db, ['p01', 'p02'], newTotals(), null, { apply: true, runId: RUN });
+    await beat(db, 'test-entities-sweep', {}, { force: true }); // an entities writer is "alive"
+    const dir = mkdtempSync(join(tmpdir(), 'cp-'));
+    const cp = join(dir, 'cp.json');
+    const script = join(__dirname, '../../scripts/maintenance/notes-layer-backfill-5942/backfill.mjs');
+    const r = spawnSync(process.execPath, [script, '--full', '--go-5942', '--apply', '--batch', '2', '--throttle-ms', '0',
+      '--interlock-tries', '1', '--interlock-wait-ms', '0', '--checkpoint', cp, '--run-id', RUN + '-cli'],
+    { encoding: 'utf8', env: { ...process.env, JOB_SCRATCH: dir }, timeout: 60000 });
+    expect(r.status).toBe(EXIT_INTERLOCK);
+    expect(r.stderr).toMatch(/interlock never cleared/);
+    expect(JSON.parse(readFileSync(cp, 'utf8'))).toMatchObject({ last_id: 'p02', done: 2 });
+    expect(await db.collection('pages').countDocuments({ 'translation.text': { $exists: true } })).toBe(2);
+    // Quiet again: --resume starts after p02 and the scan ends with exit 0.
+    await db.collection('sweep_heartbeats').deleteMany({});
+    const r2 = spawnSync(process.execPath, [script, '--full', '--go-5942', '--apply', '--batch', '2', '--throttle-ms', '0',
+      '--resume', '--checkpoint', cp, '--run-id', RUN + '-cli'],
+    { encoding: 'utf8', env: process.env, timeout: 60000 });
+    expect(r2.status, r2.stderr).toBe(0);
+    expect(r2.stdout).toMatch(/after p02/);
+    expect(r2.stdout).toMatch(/"written": 5/);
+    expect(existsSync(cp)).toBe(true);
+    expect(JSON.parse(readFileSync(cp, 'utf8')).last_id).toBe('p07');
+    await db.dropDatabase();
   });
 });

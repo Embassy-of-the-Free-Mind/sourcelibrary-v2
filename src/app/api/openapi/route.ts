@@ -43,7 +43,7 @@ const SPEC = {
     description:
       'Open API over the Source Library corpus of historical primary sources: search, browse, read, quote, and browse illustrations. No authentication required for read access; API keys lift rate limits and attribute your traffic (get one at https://sourcelibrary.org/developers). Text responses carry an invisible provenance colophon; keyed responses include your key reference (attribution, not tracking).',
     contact: { url: 'https://sourcelibrary.org/developers' },
-    license: { name: 'CC BY-SA 4.0 (content)', url: 'https://sourcelibrary.org/licensing' },
+    license: { name: 'CC BY-NC-SA 4.0 (content)', url: 'https://sourcelibrary.org/licensing' },
   },
   servers: [{ url: 'https://sourcelibrary.org/api' }],
   paths: {

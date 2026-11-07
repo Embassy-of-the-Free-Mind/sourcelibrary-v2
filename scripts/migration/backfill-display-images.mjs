@@ -57,7 +57,7 @@
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
 import { createClient } from '@supabase/supabase-js';
-import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
+import { generateDisplayVariants, displayKeyFor } from '../workers/lib/display-image.mjs';
 import { getPageSource, isUsableImageUrl } from '../lib/page-image-url.mjs';
 import { repairIiifV3Size } from '../lib/iiif-utils.mjs';
 
@@ -130,6 +130,8 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+const isR2Url = (url) => typeof url === 'string' && url.startsWith(`${R2_PUBLIC_URL}/`);
+
 async function r2Exists(key) {
   try {
     await s3.send(new HeadObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key }));
@@ -197,12 +199,18 @@ async function processPage(page, db) {
     const pageId = page.id || page._id;
     const mongoFilter = { $or: [{ id: pageId }, { _id: pageId }] };
 
-    // Cheap insurance: if the display file already exists (field/file drift),
-    // just persist the fields — don't re-download/resize/upload.
-    const fileAlready = await r2Exists(keys.display);
+    // Field/file drift: a display file exists but the field does not. Persist the field only when
+    // no R2 master could regenerate it. Pointing display_photo at whatever sat at the key is how
+    // unmarked masters reached readers (#4406): the archive lanes wrote the master there. A page
+    // whose master is at the canonical key gets its variant at a sibling key, and the master is
+    // left alone.
+    const { key: displayKey, canonicalHoldsMaster } = displayKeyFor(page);
+    keys.display = displayKey;
+    const fileAlready = !canonicalHoldsMaster && !isR2Url(source) && await r2Exists(keys.display);
     let displayUrl = `${R2_PUBLIC_URL}/${keys.display}`;
     let thumbUrl = `${R2_PUBLIC_URL}/${keys.thumb}`;
 
+    const displayDims = {};
     if (!fileAlready) {
       const fullResBuffer = await downloadFromR2(source);
       // A 200-with-empty-body slips past downloadFromR2's !res.ok check; an
@@ -210,9 +218,11 @@ async function processPage(page, db) {
       if (!fullResBuffer || fullResBuffer.length === 0) {
         throw new Error(`empty source download: ${source.slice(0, 100)}`);
       }
-      const { display, thumb } = await generateDisplayVariants(fullResBuffer, {
+      const { display, thumb, displayWidth, displayHeight } = await generateDisplayVariants(fullResBuffer, {
         bookId: page.book_id, pageNumber: page.page_number,
       });
+      if (displayWidth) displayDims.display_width = displayWidth;
+      if (displayHeight) displayDims.display_height = displayHeight;
       displayUrl = await uploadToR2(keys.display, display);
       thumbUrl = await uploadToR2(keys.thumb, thumb);
       stats.bytesUploaded += display.length + thumb.length;
@@ -222,7 +232,7 @@ async function processPage(page, db) {
 
     // Mongo (read-side source of truth): canonical image_thumb, not thumbnail_blob.
     await db.collection('pages').updateOne(mongoFilter, {
-      $set: { display_photo: displayUrl, image_thumb: thumbUrl, updated_at: new Date() },
+      $set: { display_photo: displayUrl, image_thumb: thumbUrl, ...displayDims, updated_at: new Date() },
     });
 
     // Best-effort Supabase mirror UPDATE (existing rows only) so browse/cover

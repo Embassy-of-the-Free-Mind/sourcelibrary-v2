@@ -40,7 +40,7 @@ const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('
 const DRY_RUN = 'dry-run' in args;
 const MAX_RECORDS = parseInt(args['max-records']) || Infinity;
 const DELAY = parseInt(args.delay) || 1100;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library; OAI-PMH harvest)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) oai-pmh-harvest';
 
 const REPOS = {
   bvpb: {
@@ -76,7 +76,7 @@ const REPOS = {
     rights: () => null,
     // Measured 2026-10-24: any User-Agent containing "OAI-PMH harvest" gets HTTP 502
     // here; the same request naming us without that phrase gets 200.
-    ua: 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+    ua: 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
   },
 };
 

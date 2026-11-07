@@ -59,7 +59,7 @@ const r2 = DRY_RUN ? null : new S3Client({
   },
 });
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 /**
  * Thompson's 1930 edition page layout (approximate — to be refined after OCR):

@@ -35,6 +35,7 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/spread-confirm.mjs --control
  *   node --env-file=.env.production.local scripts/audit/spread-confirm.mjs --out DIR [--limit N] [--concurrency 3]
+ *   ... [--books-file FILE]   census these books instead of the flagged ones
  * Output: DIR/spread-confirm.jsonl (one row per book, resumable: books already in it are skipped), summary on stdout.
  */
 import fs from 'node:fs';
@@ -120,7 +121,10 @@ await withMongo(async (db) => {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const outFile = path.join(OUT_DIR, 'spread-confirm.jsonl');
   const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).book_id) : []);
-  let books = await db.collection('books').find(UNSPLIT_SPREAD, { projection: { id: 1, title: 1, language: 1, visible: 1, pages_count: 1, 'pipeline_auto.status': 1 } }).sort({ id: 1 }).toArray();
+  // --books-file FILE (one id per line): census any list, e.g. spread-screen.mjs's unflagged candidates, not the flagged set.
+  const booksFile = arg('--books-file', null);
+  const sel = booksFile ? { id: { $in: fs.readFileSync(booksFile, 'utf8').split(/\s+/).filter(Boolean) } } : UNSPLIT_SPREAD;
+  let books = await db.collection('books').find(sel, { projection: { id: 1, title: 1, language: 1, visible: 1, pages_count: 1, 'pipeline_auto.status': 1 } }).sort({ id: 1 }).toArray();
   books = books.filter((b) => !done.has(b.id));
   if (LIMIT) books = books.slice(0, LIMIT);
   console.log(`${done.size} done, ${books.length} to ask (${CONCURRENCY} at a time)`);

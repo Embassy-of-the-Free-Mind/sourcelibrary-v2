@@ -1,0 +1,424 @@
+{
+ "all": {
+  "drawn": 300,
+  "judged": 300,
+  "real": 235,
+  "precision": 0.783,
+  "ci": [
+   73,
+   83
+  ],
+  "verdicts": {
+   "own": 30,
+   "cannot_tell": 1,
+   "next": 231,
+   "prev": 4,
+   "other": 29,
+   "mixed": 5
+  }
+ },
+ "by_arm": {
+  "top": {
+   "drawn": 266,
+   "judged": 266,
+   "real": 228,
+   "precision": 0.857,
+   "ci": [
+    81,
+    89
+   ],
+   "verdicts": {
+    "next": 226,
+    "mixed": 5,
+    "other": 26,
+    "own": 7,
+    "prev": 2
+   }
+  },
+  "random-below": {
+   "drawn": 34,
+   "judged": 34,
+   "real": 7,
+   "precision": 0.206,
+   "ci": [
+    10,
+    37
+   ],
+   "verdicts": {
+    "own": 23,
+    "cannot_tell": 1,
+    "next": 5,
+    "prev": 2,
+    "other": 3
+   }
+  }
+ },
+ "by_bucket": {
+  ".9-.95": {
+   "drawn": 100,
+   "judged": 100,
+   "real": 91,
+   "precision": 0.91,
+   "ci": [
+    84,
+    95
+   ],
+   "verdicts": {
+    "next": 91,
+    "other": 6,
+    "own": 2,
+    "mixed": 1
+   }
+  },
+  ".76-.8": {
+   "drawn": 69,
+   "judged": 69,
+   "real": 56,
+   "precision": 0.812,
+   "ci": [
+    70,
+    89
+   ],
+   "verdicts": {
+    "mixed": 2,
+    "next": 55,
+    "other": 9,
+    "own": 2,
+    "prev": 1
+   }
+  },
+  ">.95": {
+   "drawn": 57,
+   "judged": 57,
+   "real": 46,
+   "precision": 0.807,
+   "ci": [
+    69,
+    89
+   ],
+   "verdicts": {
+    "next": 45,
+    "other": 8,
+    "own": 3,
+    "prev": 1
+   }
+  },
+  ".8-.9": {
+   "drawn": 40,
+   "judged": 40,
+   "real": 35,
+   "precision": 0.875,
+   "ci": [
+    74,
+    95
+   ],
+   "verdicts": {
+    "next": 35,
+    "other": 3,
+    "mixed": 2
+   }
+  },
+  "<cut": {
+   "drawn": 34,
+   "judged": 34,
+   "real": 7,
+   "precision": 0.206,
+   "ci": [
+    10,
+    37
+   ],
+   "verdicts": {
+    "own": 23,
+    "cannot_tell": 1,
+    "next": 5,
+    "prev": 2,
+    "other": 3
+   }
+  }
+ },
+ "by_screen_role": {
+  "next": {
+   "drawn": 252,
+   "judged": 252,
+   "real": 230,
+   "precision": 0.913,
+   "ci": [
+    87,
+    94
+   ],
+   "verdicts": {
+    "own": 10,
+    "cannot_tell": 1,
+    "next": 230,
+    "mixed": 4,
+    "other": 7
+   }
+  },
+  "none": {
+   "drawn": 34,
+   "judged": 34,
+   "real": 4,
+   "precision": 0.118,
+   "ci": [
+    5,
+    27
+   ],
+   "verdicts": {
+    "own": 9,
+    "prev": 3,
+    "other": 21,
+    "next": 1
+   }
+  },
+  "prev": {
+   "drawn": 14,
+   "judged": 14,
+   "real": 1,
+   "precision": 0.071,
+   "ci": [
+    1,
+    31
+   ],
+   "verdicts": {
+    "own": 11,
+    "prev": 1,
+    "mixed": 1,
+    "other": 1
+   }
+  }
+ },
+ "by_language": {
+  "Latin": {
+   "drawn": 157,
+   "judged": 157,
+   "real": 132,
+   "precision": 0.841,
+   "ci": [
+    78,
+    89
+   ],
+   "verdicts": {
+    "own": 11,
+    "cannot_tell": 1,
+    "next": 129,
+    "prev": 3,
+    "other": 11,
+    "mixed": 2
+   }
+  },
+  "German": {
+   "drawn": 48,
+   "judged": 48,
+   "real": 39,
+   "precision": 0.813,
+   "ci": [
+    68,
+    90
+   ],
+   "verdicts": {
+    "next": 39,
+    "mixed": 2,
+    "other": 6,
+    "own": 1
+   }
+  },
+  "Greek": {
+   "drawn": 24,
+   "judged": 24,
+   "real": 12,
+   "precision": 0.5,
+   "ci": [
+    31,
+    69
+   ],
+   "verdicts": {
+    "own": 11,
+    "next": 12,
+    "other": 1
+   }
+  },
+  "Russian": {
+   "drawn": 22,
+   "judged": 22,
+   "real": 18,
+   "precision": 0.818,
+   "ci": [
+    61,
+    93
+   ],
+   "verdicts": {
+    "next": 18,
+    "other": 4
+   }
+  },
+  "French": {
+   "drawn": 14,
+   "judged": 14,
+   "real": 11,
+   "precision": 0.786,
+   "ci": [
+    52,
+    92
+   ],
+   "verdicts": {
+    "next": 11,
+    "own": 1,
+    "other": 2
+   }
+  },
+  "Italian": {
+   "drawn": 11,
+   "judged": 11,
+   "real": 10,
+   "precision": 0.909,
+   "ci": [
+    62,
+    98
+   ],
+   "verdicts": {
+    "next": 10,
+    "other": 1
+   }
+  },
+  "English": {
+   "drawn": 7,
+   "judged": 7,
+   "real": 4,
+   "precision": 0.571,
+   "ci": [
+    25,
+    84
+   ],
+   "verdicts": {
+    "own": 1,
+    "other": 2,
+    "prev": 1,
+    "next": 3
+   }
+  },
+  "Korean": {
+   "drawn": 4,
+   "judged": 4,
+   "real": 3,
+   "precision": 0.75,
+   "ci": [
+    30,
+    95
+   ],
+   "verdicts": {
+    "next": 3,
+    "own": 1
+   }
+  },
+  "Japanese": {
+   "drawn": 3,
+   "judged": 3,
+   "real": 2,
+   "precision": 0.667,
+   "ci": [
+    21,
+    94
+   ],
+   "verdicts": {
+    "other": 1,
+    "next": 2
+   }
+  },
+  "Coptic": {
+   "drawn": 2,
+   "judged": 2,
+   "real": 0,
+   "precision": 0,
+   "ci": [
+    0,
+    66
+   ],
+   "verdicts": {
+    "own": 1,
+    "other": 1
+   }
+  },
+  "Chinese": {
+   "drawn": 2,
+   "judged": 2,
+   "real": 0,
+   "precision": 0,
+   "ci": [
+    0,
+    66
+   ],
+   "verdicts": {
+    "own": 1,
+    "mixed": 1
+   }
+  },
+  "Sanskrit": {
+   "drawn": 2,
+   "judged": 2,
+   "real": 2,
+   "precision": 1,
+   "ci": [
+    34,
+    100
+   ],
+   "verdicts": {
+    "next": 2
+   }
+  },
+  "Danish": {
+   "drawn": 1,
+   "judged": 1,
+   "real": 0,
+   "precision": 0,
+   "ci": [
+    0,
+    79
+   ],
+   "verdicts": {
+    "own": 1
+   }
+  },
+  "Dutch": {
+   "drawn": 1,
+   "judged": 1,
+   "real": 0,
+   "precision": 0,
+   "ci": [
+    0,
+    79
+   ],
+   "verdicts": {
+    "own": 1
+   }
+  },
+  "Spanish": {
+   "drawn": 1,
+   "judged": 1,
+   "real": 1,
+   "precision": 1,
+   "ci": [
+    21,
+    100
+   ],
+   "verdicts": {
+    "next": 1
+   }
+  },
+  "Classical Armenian": {
+   "drawn": 1,
+   "judged": 1,
+   "real": 1,
+   "precision": 1,
+   "ci": [
+    21,
+    100
+   ],
+   "verdicts": {
+    "next": 1
+   }
+  }
+ },
+ "confirmed_pages": 665,
+ "confirmed_books": 224,
+ "human_pages_skipped": 0
+}

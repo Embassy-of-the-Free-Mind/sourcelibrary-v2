@@ -1,0 +1,672 @@
+{
+ "generated_at": "2026-10-29T15:28:44.018Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 138,
+  "unparsed": 0,
+  "list_usd_equiv": 8.06
+ },
+ "meter": null,
+ "cells": {
+  "la-blank": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books_in_frame": 15356,
+    "books_walked": 39,
+    "spread_wait": 9,
+    "no_interior_unread": 0,
+    "no_ocr_books": 15334,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4",
+    "pages_from": "/root/jobs/ocr-first-7701/rt/sample-armA.json"
+   },
+   "controls": {
+    "agy-flash-low@4": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 26,
+     "books": 26,
+     "accept": "24/26",
+     "accept_rate": 0.92,
+     "accept_ci": {
+      "ci95": [
+       0.808,
+       1
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_pages": "1/26",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.115
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_classes": {
+      "O6": "1/26"
+     },
+     "classes_k_of_n": {
+      "O8": "10/26",
+      "O6": "6/26",
+      "E2": "4/26",
+      "O11": "2/26",
+      "T6": "2/26",
+      "O16": "1/26",
+      "O9": "1/26",
+      "O7": "1/26",
+      "O15": "1/26",
+      "O13": "1/26",
+      "O12": "1/26"
+     },
+     "fidelity_mean": 4.46,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b676a3b3f4fc04415c3164:43",
+       "quote": "Tuttlingischen Closed Flecken",
+       "severity": "wrong_text",
+       "what": "page reads 'ampts Flecken'; an English word 'Closed' has been substituted"
+      },
+      {
+       "page": "69b659ca18b87551bfcfe243:52",
+       "quote": "& per omnia.",
+       "severity": "misleads",
+       "what": "the page has '&ꝙ omnia' (an abbreviation for quod or quasi), not 'per'"
+      },
+      {
+       "page": "69b6c0738566c8381464d775:6",
+       "quote": "sariuſque læduntur",
+       "severity": "misleads",
+       "what": "the page reads 'rariuſque' (more rarely); the candidate has 'sariuſque', which is not a word"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000244
+     },
+     "counts": true,
+     "contain_answers": "0/26",
+     "contain_reasons": [],
+     "unchanged": "0/26",
+     "skipped": 4
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 26,
+     "books": 26,
+     "accept": "24/26",
+     "accept_rate": 0.92,
+     "accept_ci": {
+      "ci95": [
+       0.808,
+       1
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_pages": "1/26",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.115
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_classes": {
+      "O6": "1/26"
+     },
+     "classes_k_of_n": {
+      "O8": "11/26",
+      "E2": "7/26",
+      "T6": "3/26",
+      "O6": "3/26",
+      "O11": "2/26",
+      "O12": "1/26",
+      "O16": "1/26",
+      "O7": "1/26",
+      "O15": "1/26",
+      "O13": "1/26"
+     },
+     "fidelity_mean": 4.58,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69b676a3b3f4fc04415c3164:43",
+       "quote": "Tuttlingischen Closed Flecken",
+       "severity": "wrong_text",
+       "what": "page reads 'ampts Flecken'; 'Closed' is an invented English word"
+      },
+      {
+       "page": "69b659ca18b87551bfcfe243:52",
+       "quote": "& per omnia.",
+       "severity": "misleads",
+       "what": "the page has '&ꝙ omnia' (an abbreviation for quod or quasi), not 'per'"
+      },
+      {
+       "page": "69b676a3b3f4fc04415c3164:43",
+       "quote": "Tuttlingischen Closed Flecken",
+       "severity": "wrong_text",
+       "what": "page reads 'ampts Flecken'; 'Closed' is an invented English word"
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "agy_share": 0.00000244
+     },
+     "counts": true,
+     "contain_answers": "0/26",
+     "contain_reasons": [],
+     "unchanged": "4/26",
+     "skipped": 4
+    }
+   },
+   "made_worse": {
+    "agy-flash-low@4 -> agy-flash-low@4>agy-flash-low": {
+     "pairs": 26,
+     "identical_text": 5,
+     "fidelity_diff": 0.12,
+     "fidelity_diff_ci": [
+      -0.038,
+      0.308
+     ],
+     "worse": "1/26",
+     "better": "4/26",
+     "accept_lost": "1/26",
+     "accept_gained": "1/26",
+     "wrong_text_added": "0/26",
+     "worse_pages": [
+      {
+       "page": "69b6fd913c7947b468d8e335:15",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The words match the page, but two of the ±/∓ signs in the passage on telling the two electricities apart are swapped, so the sign logic does not match the printed page."
+      }
+     ]
+    }
+   }
+  },
+  "de-blank": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books_in_frame": 3142,
+    "books_walked": 75,
+    "spread_wait": 45,
+    "no_interior_unread": 0,
+    "no_ocr_books": 1586,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4",
+    "pages_from": "/root/jobs/ocr-first-7701/rt/sample-armA.json"
+   },
+   "controls": {
+    "agy-flash-low@4": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 28,
+     "books": 28,
+     "accept": "26/28",
+     "accept_rate": 0.93,
+     "accept_ci": {
+      "ci95": [
+       0.821,
+       1
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_pages": "1/28",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.107
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_classes": {
+      "O7": "1/28"
+     },
+     "classes_k_of_n": {
+      "O8": "12/28",
+      "O6": "6/28",
+      "E2": "5/28",
+      "O11": "3/28",
+      "T6": "1/28",
+      "O7": "1/28",
+      "O5": "1/28",
+      "O10": "1/28",
+      "O16": "1/28",
+      "O17": "1/28"
+     },
+     "fidelity_mean": 4.46,
+     "commonest": "O7",
+     "examples": [
+      {
+       "page": "6a940511a4ad12cb35ec7954:284",
+       "quote": "24\n       ---\n         4\n       ---\n         6",
+       "severity": "wrong_text",
+       "what": "The page has 8 under the 24, not 4. The sum 8+6=14 and 24−14=10 only works with 8."
+      },
+      {
+       "page": "6a940511a4ad12cb35ec7954:284",
+       "quote": "24\n       ---\n         4\n       ---\n         6",
+       "severity": "wrong_text",
+       "what": "The page has 8 under the 24, not 4. The sum 8+6=14 and 24−14=10 only works with 8."
+      },
+      {
+       "page": "6a940511a4ad12cb35ec7954:284",
+       "quote": "710 | 21 R.",
+       "severity": "misleads",
+       "what": "In the scratch division the first figure is a struck-out 2 (210 ÷ 10 = 21). It is not a 7."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000242
+     },
+     "counts": true,
+     "contain_answers": "0/28",
+     "contain_reasons": [],
+     "unchanged": "0/28",
+     "skipped": 2
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 27,
+     "books": 27,
+     "accept": "26/27",
+     "accept_rate": 0.96,
+     "accept_ci": {
+      "ci95": [
+       0.889,
+       1
+      ],
+      "unit": "book",
+      "units": 27
+     },
+     "wrong_text_pages": "0/27",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 27
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "10/27",
+      "E2": "4/27",
+      "O6": "2/27",
+      "T6": "1/27",
+      "O5": "1/27",
+      "O16": "1/27",
+      "O11": "1/27",
+      "O7": "1/27",
+      "O17": "1/27"
+     },
+     "fidelity_mean": 4.56,
+     "commonest": "O8",
+     "examples": [
+      {
+       "page": "6a495e985b984676adb2186a:44",
+       "quote": "Fürſtenthümern",
+       "severity": "cosmetic",
+       "what": "page prints 'Fürſtenthümen'; silently corrected"
+      },
+      {
+       "page": "6a495e985b984676adb2186a:44",
+       "quote": "Das 11. Von Kranckheiten.",
+       "severity": "cosmetic",
+       "what": "page has the misprint 'Vor'; silently corrected to 'Von'"
+      },
+      {
+       "page": "6a495e985b984676adb2186a:44",
+       "quote": "Vom Handel/ Gewerb und Handthierung",
+       "severity": "cosmetic",
+       "what": "dropped the printed hyphen in 'Gewerb-'"
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "agy_share": 0.00000234
+     },
+     "counts": true,
+     "contain_answers": "0/27",
+     "contain_reasons": [],
+     "unchanged": "9/27",
+     "skipped": 3
+    }
+   },
+   "made_worse": {
+    "agy-flash-low@4 -> agy-flash-low@4>agy-flash-low": {
+     "pairs": 27,
+     "identical_text": 9,
+     "fidelity_diff": 0.04,
+     "fidelity_diff_ci": [
+      -0.111,
+      0.185
+     ],
+     "worse": "2/27",
+     "better": "3/27",
+     "accept_lost": "1/27",
+     "accept_gained": "1/27",
+     "wrong_text_added": "0/27",
+     "worse_pages": [
+      {
+       "page": "6a26d285f5273a8d907a551f:26",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "A complete and faithful page. The only visible slip is 'Kaßenkrautes' where the page has 'Katzenkrautes', plus two small silent normalisations."
+      },
+      {
+       "page": "6a9405621cd9a117d30899d3:43",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The page text and numerals are almost all right, but the tetrahedron's cubic content in the Anhang table has a wrong leading digit in its denominator (7 for 1)."
+      }
+     ]
+    }
+   }
+  },
+  "fr-blank": {
+   "task": "ocr",
+   "lang": "French",
+   "frame": {
+    "books_in_frame": 912,
+    "books_walked": 230,
+    "spread_wait": 200,
+    "no_interior_unread": 0,
+    "no_ocr_books": 740,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=fra, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 1",
+    "pages_from": "/root/jobs/ocr-first-7701/rt/sample-armA.json"
+   },
+   "controls": {
+    "agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "agy-flash-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 26,
+     "books": 26,
+     "accept": "24/26",
+     "accept_rate": 0.92,
+     "accept_ci": {
+      "ci95": [
+       0.808,
+       1
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_pages": "1/26",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.115
+      ],
+      "unit": "book",
+      "units": 26
+     },
+     "wrong_text_classes": {
+      "O4": "1/26",
+      "O5": "1/26",
+      "O18": "1/26"
+     },
+     "classes_k_of_n": {
+      "E2": "7/26",
+      "O8": "7/26",
+      "O6": "4/26",
+      "O16": "3/26",
+      "O11": "2/26",
+      "O7": "1/26",
+      "O4": "1/26",
+      "D1": "1/26",
+      "O5": "1/26",
+      "O15": "1/26",
+      "O18": "1/26",
+      "O12": "1/26",
+      "I4": "1/26",
+      "O10": "1/26"
+     },
+     "fidelity_mean": 4.62,
+     "commonest": "O4",
+     "examples": [
+      {
+       "page": "69bc855d173577a3374206d5:97",
+       "quote": "l'on nous vante enfin *les raisins* de Zeuxis, *le rideau* de Parrhasius, les *chefs-d'œuvre* d'Appelle et de Phidias, tous ces miracles de l'art vieillissent",
+       "severity": "wrong_text",
+       "what": "The same opening passage and metadata block appear twice, one after the other."
+      },
+      {
+       "page": "69bc855d173577a3374206d5:97",
+       "quote": "l'on nous vante enfin *les raisins* de Zeuxis, *le rideau* de Parrhasius, les *chefs-d'œuvre* d'Appelle et de Phidias, tous ces miracles de l'art vieillissent",
+       "severity": "wrong_text",
+       "what": "The same opening passage and metadata block appear twice, one after the other."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000244
+     },
+     "counts": true,
+     "contain_answers": "0/26",
+     "contain_reasons": [],
+     "unchanged": "0/26",
+     "skipped": 4
+    },
+    "agy-flash-low>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 25,
+     "books": 25,
+     "accept": "25/25",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 25
+     },
+     "wrong_text_pages": "0/25",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 25
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "E2": "7/25",
+      "O8": "7/25",
+      "O6": "3/25",
+      "O11": "2/25",
+      "O7": "1/25",
+      "O17": "1/25",
+      "O12": "1/25",
+      "O10": "1/25",
+      "O16": "1/25"
+     },
+     "fidelity_mean": 4.72,
+     "commonest": "E2",
+     "examples": [
+      {
+       "page": "6a26db7405d7c1d9b108d1b7:61",
+       "quote": "ſi le *ſoleil ſortoit*",
+       "severity": "cosmetic",
+       "what": "italics extended: only 'ſoleil' is italic on the page, 'ſortoit' is roman"
+      },
+      {
+       "page": "6a26db7405d7c1d9b108d1b7:61",
+       "quote": "de l'urne ;",
+       "severity": "cosmetic",
+       "what": "italics dropped: 'urne' is italic on the page in the first instance"
+      },
+      {
+       "page": "6aa1d10a77169abff1618076:196",
+       "quote": "RECVElL DES ROYS DE FRANCE,",
+       "severity": "cosmetic",
+       "what": "OCR typo in the running header; the page reads RECVEIL"
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "agy_share": 0.00000225
+     },
+     "counts": true,
+     "contain_answers": "0/25",
+     "contain_reasons": [],
+     "unchanged": "16/25",
+     "skipped": 5
+    }
+   },
+   "made_worse": {
+    "agy-flash-low -> agy-flash-low>agy-flash-low": {
+     "pairs": 25,
+     "identical_text": 18,
+     "fidelity_diff": 0,
+     "fidelity_diff_ci": [
+      -0.12,
+      0.12
+     ],
+     "worse": "1/25",
+     "better": "1/25",
+     "accept_lost": "0/25",
+     "accept_gained": "1/25",
+     "wrong_text_added": "0/25",
+     "worse_pages": [
+      {
+       "page": "6a26db7405d7c1d9b108d1b7:61",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "All 28 lines are complete, in order and correctly read. The only differences are two small italic slips and a catchword tag on what is really the hyphenated end of the last line."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "contain_candidates": []
+}

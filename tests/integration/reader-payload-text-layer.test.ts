@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { getTestDb, cleanDb } from '../setup';
-import { PAGE_API_PROJECTION, READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
+import { PAGE_API_PROJECTION, PAGE_API_LAYER_PROJECTION, READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
+import { takeReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { translationLayers } from '../../scripts/lib/translation-text.mjs';
 
 // #5942 pre-go test (Derek, 2026-10-28): a page the notes-layer backfill has written must reach the
@@ -49,11 +50,38 @@ describe('reader payload without the stored text layer (#5942)', () => {
 
   it('every reader door uses them', () => {
     const uses = (f: string, s: string) => expect(readFileSync(f, 'utf8')).toContain(s);
-    uses('src/app/book/[id]/page/[pageId]/(reader)/page.tsx', 'withoutTextLayer(');
-    uses('src/app/book/[id]/page/[pageId]/reader-v2-data.ts', 'withoutTextLayer(');
+    // The RSC route strips with withoutTextLayer and reads the notes layer from the unstripped page (#7965).
+    for (const f of ['src/app/book/[id]/page/[pageId]/(reader)/page.tsx', 'src/app/book/[id]/page/[pageId]/reader-v2-data.ts']) {
+      uses(f, 'withoutTextLayer(');
+      uses(f, 'loadReaderTextLayers(');
+      uses(f, 'applyReaderTextLayer(');
+    }
+    // The API doors fetch the layer fields only through takeReaderTextLayers, which strips them (#7965).
     for (const f of ['src/app/api/pages/[id]/route.ts', 'src/app/api/[tenant]/pages/[id]/route.ts', 'src/app/api/pages/batch/route.ts', 'src/app/api/[tenant]/pages/batch/route.ts']) {
-      uses(f, 'PAGE_API_PROJECTION');
+      uses(f, 'PAGE_API_LAYER_PROJECTION');
+      uses(f, 'takeReaderTextLayers(');
+      uses(f, 'applyReaderTextLayer(');
       expect(readFileSync(f, 'utf8')).not.toContain('{ detected_images: 0 }');
     }
+  });
+
+  it('API doors (#7965): text/text_from never leave, a page with a current doc is served from the layer', async () => {
+    const db = getTestDb();
+    await db.collection('pages').insertMany([base('plain'), backfilled('filled')]);
+    const l = translationLayers(DATA, { promptVersion: 13 });
+    await db.collection('page_annotations').insertOne({ page_id: 'filled', book_id: 'b1', source: l.source, run_id: 't', anchor_kind: 'inferred', data_hash: l.data_hash, annotations: l.annotations, created_at: new Date() });
+    const fetched = await db.collection('pages').find({ id: { $in: ['plain', 'filled'] } }, { projection: { _id: 0, ...PAGE_API_LAYER_PROJECTION } }).toArray();
+    const { pages, layers } = await takeReaderTextLayers(db, fetched);
+    for (const p of pages) expect(JSON.stringify(p)).not.toContain('text_from');
+    const served = pages.map((p) => applyReaderTextLayer(p, layers)) as any[];
+    const plain = served.find((p) => p.id === 'plain'), filled = served.find((p) => p.id === 'filled');
+    expect(plain.translation.layer).toBeUndefined();
+    expect(filled.translation.layer).toEqual({ source: 'inline-v13', run_id: 't' });
+    expect(filled.translation.data).toBe(DATA); // this page's layer composes back to its stored markup
+    // Without a doc, a backfilled page is still served exactly as an untouched one.
+    await db.collection('page_annotations').deleteMany({});
+    const again = await takeReaderTextLayers(db, await db.collection('pages').find({ id: { $in: ['plain', 'filled'] } }, { projection: { _id: 0, ...PAGE_API_LAYER_PROJECTION } }).toArray());
+    const [a, b] = ['plain', 'filled'].map((id) => applyReaderTextLayer(again.pages.find((p: any) => p.id === id), again.layers));
+    sameButId(a, b);
   });
 });

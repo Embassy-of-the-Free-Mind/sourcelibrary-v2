@@ -20,7 +20,7 @@ import sharp from 'sharp';
 import { makeBookDoc } from './lib/book-docs.mjs';
 
 const CMA_API = 'https://openaccess-api.clevelandart.org/api/artworks';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const DISPLAY_MAX = 3840;
 const THUMB_WIDTH = 600;

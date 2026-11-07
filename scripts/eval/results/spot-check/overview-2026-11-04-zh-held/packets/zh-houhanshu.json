@@ -1,0 +1,722 @@
+[
+ {
+  "slot": 17,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c4394adf2ffb52f75327",
+  "book_url": "https://sourcelibrary.org/book/6ae0c4394adf2ffb52f75327",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c4394adf2ffb52f75327",
+   "title": "後漢書[范煜…等撰]·卷六十上~卷六十一 (Hou Hanshu, Siku Quanshu, vol. 21 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 136,
+   "pages_ocr": 134,
+   "pages_translated": 129,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 136,
+   "distinct_page_numbers": 136,
+   "duplicate_records": 0,
+   "pages_with_ocr": 134,
+   "pages_translated": 129,
+   "with_printed_number": 32,
+   "printed_backsteps": 10,
+   "printed_repeats": 23,
+   "pages_count_field": 136,
+   "pages_translated_field": 129
+  },
+  "run": [
+   27,
+   39,
+   85,
+   112
+  ],
+  "pages": [
+   {
+    "page_number": 27,
+    "page_id": "6ae0c4394adf2ffb52f75344",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4394adf2ffb52f75327/27.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金定巳尾全書</header>\n<header>卷六十下</header>\n之慶也仁之本也儉之要也焉有應天養人為仁為儉\n而不降福者哉土者地祇陰性澄靜宜以施化之時敬\n而勿擾竊見正月以來陰闇連日易內傳曰久陰不雨\n亂氣也蒙之比也蒙者君臣上下相冒亂也\n易稽覽圗\n曰日食之\n比陰得陽蒙之比也陰冒陽也鄭玄注云蒙氣也比非\n一也邪臣謀覆冒其君先霧從夜昏起或從夜半或平\n旦君不覺悟日中不解遂成蒙君復不覺悟下為霧也\n比音庇○劉攽曰注云陰得陽案得當作復又陽字下\n合有\n也字\n又曰賢德不用厥異常陰夫賢者化之本雲者雨\n之具也得賢而不用猶久陰而不雨也又頃前數日寒",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\nconduct yields celebration, benevolence serves as the foundation, and frugality stands as the essential key. How could one who responds to Heaven, nurtures the people, practices benevolence, and exercises frugality fail to receive descending blessings? \n\nEarth represents the earthly deity, whose yin nature is tranquil and still. During the season when transformation should unfold, one ought to revere it and refrain from disturbing it. I observe that since the first month, cloudy darkness has continued day after day. The Yi Neizhuan <gloss>Inner Commentary on the Book of Changes</gloss> states: \"Protracted overcast skies without rain signify disordered qi; this corresponds to the portent of Meng <gloss>Obscurity</gloss>.\" \"Meng\" indicates that sovereign and minister, superior and subordinate, encroach upon and obscure one another in disorder.\n\n<note>Prince Zhanghuai's commentary: The Yi Jilan Tu <gloss>Chart for Examining the Book of Changes</gloss> states: \"The portent of a solar eclipse is when yin overtops yang; this corresponds to the portent of Meng. Yin encroaches upon yang.\" Zheng Xuan's commentary notes: \"Meng is obscuring vapor. The portent is not singular. Treacherous ministers plot to cover and obscure their ruler. First, mist arises from dusk at night, or from midnight, or at dawn. If the sovereign does not awaken to it, and by midday it does not dissipate, it turns into Meng. If the sovereign still does not awaken, mist descends below.\" The pronunciation of \"bi\" <gloss>portent/comparison</gloss> is indicated here. Liu Ban observes: The commentary notes that \"yin overtops yang\"; examining this, the character \"de\" <gloss>obtain/overtop</gloss> should properly be written as \"fu\" <gloss>cover</gloss>, and following the character \"yang\", the character \"ye\" should appropriately appear.</note>\n\nIt also states: \"When virtuous worthies are left unemployed, its anomaly is persistent overcast skies.\" Worthy individuals are the foundation of transformation, while clouds are the instrument of rain. To obtain worthy men and leave them unemployed is like persistent overcast skies without rain. Furthermore, in recent days, cold\n\n<summary>Lang Yi interprets continuous overcast weather and anomalous cold as cosmic portents, warning Emperor Shun that obscuring mist signifies deceptive ministers encroaching upon the sovereign and that persistent clouds without rain reflect the neglect of worthy scholars.</summary>\n<keywords>Later Han dynasty, Lang Yi, Emperor Shun, Hou Hanshu, Prince Zhanghuai, Zheng Xuan, Liu Ban, Yi Neizhuan, Yi Jilan Tu, portents, Meng hexagram, yin and yang, overcast skies, neglected worthies</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 39,
+    "page_id": "6ae0c4394adf2ffb52f75350",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4394adf2ffb52f75327/39.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n人\n下\n厂\n仁\n<page-num>三</page-num>\n<page-num>七</page-num>\n<header>卷六十下</header>\n出入軒轅繞還往來易曰天垂象見吉凶其意昭然可\n見矣禮天子一娶九女嫡媵畢具今宮人侍御動以千\n計或生而幽隅人道不通鬱積之氣上感皇天故遣熒\n惑入軒轅理人倫垂象見異以悟主上昔武王下車出\n傾宮之女表商容之閭\n尚書大傳曰武王入殷表\n商容之閭歸傾宮之女\n以理\n人倫以表賢德故天授以聖子成王是也今陛下多積\n宮人以違天意故皇胤多夭嗣體莫寄詩云敬天之怒\n不敢戲豫\n詩大雅板篇之文也\n注云戲豫逸豫也\n方今之福莫若廣嗣廣",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>entering and exiting the Xuanyuan constellation, circling, returning, coming, and going. The *Classic of Changes* states: \"Heaven suspends signs to reveal good fortune and bad fortune.\" Its meaning is clear and plain to see. \n\nAccording to ritual propriety, when the Son of Heaven takes a wife, he marries nine women at once, with principal wives and accompanying brides fully provided for. Now the palace ladies and attendants are numbered by the thousands. Some spend their lives in secluded corners, their natural human relations blocked. This accumulation of suppressed resentment ascends and moves August Heaven. For this reason, Heaven dispatched Mars to enter Xuanyuan, to regulate human relationships and suspend celestial signs revealing anomalies, so as to awaken the sovereign above.\n\nIn ancient times, when King Wu of Zhou stepped down from his carriage, he released the women of the Qing Palace and marked with honors the village gate of Shang Rong,\n\n<note>The *Great Commentary to the Classic of Documents* states: \"When King Wu entered Yin, he honored the village gate of Shang Rong and returned the women of the Qing Palace.\"</note>\n\nthereby ordering human relationships and honoring worthy virtue. Therefore Heaven bestowed upon him a sagely son, King Cheng. Today, Your Majesty amasses palace women in great numbers, thereby defying Heaven's will. Consequently, imperial offspring mostly die young, and there is no bodily successor upon whom to rely. The *Classic of Poetry* says: \"Revere the wrath of Heaven; dare not indulge in sport and pleasure.\"\n\n<note>These lines are from the \"Ban\" hymn in the \"Greater Odes\" of the *Classic of Poetry*. The commentary states: \"Sport and pleasure means idle indulgence.\"</note>\n\nIn the present day, of all blessings, none is greater than broadening the succession. To broaden\n\n<summary>Xiang Kai argues that Mars lingering in Xuanyuan warns Emperor Huan against filling his harem with thousands of neglected women while neglecting the imperial succession. He urges the emperor to emulate King Wu of Zhou by releasing palace women, revering Heaven's signs, and securing a sagely heir.</summary>\n<keywords>Xiang Kai, Book of the Later Han, Emperor Huan, Mars, Xuanyuan constellation, imperial harem, King Wu of Zhou, Shang Rong, King Cheng, succession, celestial portents</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 85,
+    "page_id": "6ae0c4394adf2ffb52f7537e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4394adf2ffb52f75327/85.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n後漢書卷六十一\n小宣城\n唐章懷大\n守范\n煜撰\n郭杜孔張廉王蘇羊賈陸列傳第二十一\n子\n賢\n注\n郭伋傳\n郭伋字細侯扶風茂陵人也髙祖父解\n前書曰解字翁\n伯河内軹人徙\n武帝時以任俠聞父梵為蜀郡太守伋少有志行\n也\n後漢書",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>By Imperial Order: Complete Library of the Four Treasuries <note>Siku Quanshu</note></header>\n\n# *Book of the Later Han* <note>Hou Hanshu</note>, Volume 61\n\nWritten by Fan Ye <note>transcribed in the text as Fan Yu (范煜), Grand Administrator of Xuanxing under the Song dynasty of the Southern dynasties</note>\nAnnotated by Li Xian, Crown Prince Zhanghuai of the Tang dynasty\n\n## Biographies 21: Guo, Du, Kong, Zhang, Lian, Wang, Su, Yang, Jia, and Lu\n\n### Biography of Guo Ji\n\nGuo Ji, whose style name was Xihou, was a native of Maoling in Fufeng commandery. His great-great-grandfather was Guo Jie.\n<gloss>The *Book of the Former Han* states: Guo Jie, whose style name was Wengbo, was a native of Zhi in Henei commandery. He relocated during Emperor Wu's reign and was widely known as an errant knight.</gloss>\nHis father, Guo Fan, served as Grand Administrator of Shu Commandery. In his youth, Guo Ji already possessed ambitious purpose and upright conduct.\n\n*Book of the Later Han*\n\n<summary>This page contains the opening title and initial biographical lines for Volume 61 of the Book of the Later Han, beginning the biography of Guo Ji with his ancestry, lineage, and character in youth.</summary>\n<keywords>Hou Hanshu, Book of the Later Han, Volume 61, Fan Ye, Li Xian, Crown Prince Zhanghuai, Guo Ji, Guo Jie, Fufeng, Maoling, Han dynasty biography</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 112,
+    "page_id": "6ae0c4394adf2ffb52f75399",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4394adf2ffb52f75327/112.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金文巨座人三\n<header>卷六十</header>\n於感言髙祖明帝初怒欒\n布廉范後感其義而赦之\n王堂傳\n王堂字敬伯廣漢郪人也初舉光祿茂才\n光祿舉之\n為茂才也\n遷\n穀城令治有名迹\n穀城縣屬東郡故城\n在今齊州東阿縣東\n永初中西羌寇\n巴郡為民患詔書遣中郎將尹就攻討連年不剋三府\n舉堂治劇拜巴郡太守堂馳兵赴賊斬虜千餘級巴庸\n清靜吏民生為立祠\n庸即上庸縣也故城在\n今房州清水縣西也\n剌史張喬\n表其治能遷右扶風安帝西巡阿母王聖中常侍江京",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\nin words of gratitude. Emperor Gaozu and Emperor Ming were initially enraged at Luan Bu and Lian Fan, yet later were moved by their integrity and pardoned them.\n\n# Biography of Wang Tang\n\nWang Tang, courtesy name Jingbo, was a native of Qi in Guanghan commandery. He was initially recommended as an Outstanding Talent <term>maocai</term> by the Minister of the Household <term>guanglu</term> <gloss>Guanglu Xun</gloss>. <note>interlinear commentary: The Minister of the Household recommended him as an Outstanding Talent.</note>\n\nHe was transferred to become Magistrate of Gucheng, where his administrative governance achieved distinguished renown. <note>interlinear commentary: Gucheng county belonged to Dong commandery. Its former city was situated east of present-day Dong'e county in Qi prefecture.</note>\n\nDuring the Yongchu era <note>107–113 CE</note>, the Western Qiang invaded and raided Ba commandery, causing severe distress to the people. An imperial edict was issued dispatching General of the Household <term>zhonglangjiang</term> Yin Jiu to lead a punitive campaign against them, but for successive years he could not overcome them. The Three Ducal Ministries <term>sanfu</term> <gloss>the offices of the Grand Commandant, Minister over the Masses, and Minister of Works</gloss> recommended Tang as capable of managing difficult crises. He was appointed Grand Administrator of Ba Commandery. Tang galloped with his troops to confront the brigands, beheading and capturing more than one thousand of them. The regions of Ba and Yong were restored to peace and tranquility, and the officials and common folk erected a shrine in his honor during his lifetime. <note>interlinear commentary: Yong refers to Shangyong county. Its former city is situated west of present-day Qingshui county in Fang prefecture.</note>\n\nInspector <term>cishi</term> Zhang Qiao submitted a memorial commending his administrative abilities, and Tang was promoted to Colonel-Director of Retainers of the Right <term>youfufeng</term>. When Emperor An made an imperial tour to the west, his wet nurse Wang Sheng and the Regular Palace Attendant <term>zhongchangshi</term> Jiang Jing\n\n<summary>This page concludes Fan Ye's appraisal of Lian Fan and Luan Bu, then begins the biography of Wang Tang, detailing his successful military suppression of the Qiang in Ba commandery and subsequent promotions.</summary>\n<keywords>Fan Ye, Hou Hanshu, Wang Tang, Ba commandery, Western Qiang, Yin Jiu, Gucheng, Youfufeng, Emperor An</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 18,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c5b74adf2ffb52f75c45",
+  "book_url": "https://sourcelibrary.org/book/6ae0c5b74adf2ffb52f75c45",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c5b74adf2ffb52f75c45",
+   "title": "後漢書[范煜…等撰]·卷一百二~卷一百四上 (Hou Hanshu, Siku Quanshu, vol. 36 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 162,
+   "pages_ocr": 160,
+   "pages_translated": 158,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 162,
+   "distinct_page_numbers": 162,
+   "duplicate_records": 0,
+   "pages_with_ocr": 160,
+   "pages_translated": 158,
+   "with_printed_number": 43,
+   "printed_backsteps": 15,
+   "printed_repeats": 35,
+   "pages_count_field": 162,
+   "pages_translated_field": 158
+  },
+  "run": [
+   31,
+   51,
+   103,
+   146
+  ],
+  "pages": [
+   {
+    "page_number": 31,
+    "page_id": "6ae0c5b74adf2ffb52f75c66",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5b74adf2ffb52f75c45/31.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n全\n人\n巳\n人\n<page-num>三</page-num>\n巨\n<header>卷一百二</header>\n者男女數百人皆誅殺之牛輔既敗衆無所依欲各散\n去傕等恐乃先遣使詣長安求乞赦免王允以為一歲\n不可再赦不許之傕等益懷憂懼不知所為武威人賈\n詡時在傕軍說之\n魏志曰卓之入洛陽詡以太尉掾為\n平津尉遷討虜校尉牛輔屯陝詡在\n輔軍輔既死\n故詡在傕軍\n曰聞長安中議欲盡誅涼州人諸君若棄\n軍單行則一亭長能束君矣不如相率而西以攻長安\n為董公報仇事濟奉國家以正天下若其不合走未後\n也傕等然之各相謂曰京師不赦我我當以死決之若",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>...several hundred men and women, they executed them all. \n\nWhen Niu Fu had met his defeat, his multitude had no one upon whom they could rely, and they wished to scatter and return home. Li Jue and his associates became fearful. Thereupon, they sent envoys in advance to Chang'an to beg and sue for imperial amnesty. Wang Yun considered that two amnesties could not be granted within a single year, and therefore did not grant it. \n\nJue and the others grew increasingly fraught with apprehension and dread, not knowing what to do. Jia Xu, a native of Wuwei, was serving in Jue's army at that time and persuaded them:\n\n<note>original: \"魏志曰：卓之入洛陽，詡以太尉掾為平津尉，遷討虜校尉。牛輔屯陝，詡在輔軍。輔既死，故詡在傕軍。\"</note><note>Records of Wei states: When Dong Zhuo entered Luoyang, Jia Xu served as an assistant to the Grand Commandant and was appointed Commandant of Pingjin, later being promoted to Colonel Who Subdues Bandits. While Niu Fu was stationed at Shan, Xu served in Fu's army. After Fu died, Xu consequently remained in Li Jue's army.</note>\n\nXu said: \"I hear that people in Chang'an are discussing an intention to exterminate all natives of Liang Province. If you gentlemen abandon your army and travel alone, even a mere <term>tingzhang</term> <gloss>village constable</gloss> will be able to bind you. It is better to lead one another westward to attack Chang'an, avenging <term>Dong gong</term> <gloss>Lord Dong</gloss>. If the affair succeeds, we shall uphold the state to bring righteousness to all under heaven. If it turns out unpromising, it will not yet be too late to flee.\"\n\nLi Jue and the others agreed with him. Speaking to one another, they said: \"The capital refuses to pardon us; we must resolve this by risking our lives. If...\"\n\n<summary>Following Niu Fu's death, Li Jue and his commanders panic when their plea for amnesty is denied by Wang Yun, but Jia Xu persuades them to unite their forces and march west to assault Chang'an.</summary>\n<keywords>Li Jue, Niu Fu, Wang Yun, Jia Xu, Chang'an, Liang Province, Dong Zhuo, Wuwei, Hou Hanshu, Han dynasty</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 51,
+    "page_id": "6ae0c5b74adf2ffb52f75c7a",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5b74adf2ffb52f75c45/51.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n宍\n巳\n辰\n人\n<page-num>三</page-num>\n<header>卷一百二</header>\n餓出至南陽攻穰戰死郭汜為其將伍習所殺三年使\n謁者僕射裴茂詔關中諸將段煨等討李傕夷三族\n典\n略\n曰傕頭至有\n詔高縣之\n以段煨為安南將軍封閺鄉侯\n閺鄉今號\n州縣也說\n文閺今作閻\n流俗誤也\n四年張楊為將楊醜所殺\n魏志曰楊素與\n呂布善曹公之\n圍布楊欲救之不能乃出兵東市遙\n為之埶其將楊醜殺楊以應曹公\n以董承為車騎將\n軍開府自都許之後權歸曹氏天子總已百官備員而\n巳帝忌操專偪乃密詔董承使結天下義士共誅之承\n遂與劉備同謀未發會備出征承更與偏將軍王子服長",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and starved. He went out toward Nanyang, attacked Rang, and died in battle. Guo Si was killed by his subordinate commander Wu Xi. In the third year <note>198 CE</note>, the court dispatched Ye Zhe Pu She <gloss>Supervisor of Internuncios</gloss> Pei Mao to issue an imperial decree ordering Duan Wei and other commanders in Guanzhong to punish Li Jue, exterminating his clan to the third degree.\n\n<note>Dianlüe states: \"When Li Jue's severed head arrived, an imperial decree ordered it hung high on display.\"</note>\n\nDuan Wei was appointed General Who Pacifies the South and enfeoffed as the Marquis of Minxiang.\n\n<note>Minxiang is now located in Guozhou county. The Shuowen Jiezi notes that Min is now written as Yan, which is a popular clerical error.</note>\n\nIn the fourth year <note>199 CE</note>, Zhang Yang was killed by his subordinate commander Yang Chou.\n\n<note>The Records of Wei states: \"Yang had always maintained friendly relations with Lü Bu. When Lord Cao besieged Bu, Yang wished to rescue him but was unable to do so. Consequently, he moved his troops to Dongshi, demonstrating support for Bu from afar. His commander Yang Chou killed Yang in order to respond to and ally with Lord Cao.\"</note>\n\nDong Cheng was appointed General of Chariots and Cavalry and granted permission to open an office. From the time the capital was moved to Xu, actual power reverted to the Cao clan. The Son of Heaven merely presided passively, while the civil and military officials merely filled their posts. The Emperor resented Cao Cao's monopoly and coercion. He therefore issued a secret decree to Dong Cheng, instructing him to unite the righteous men of the realm to execute him together. Cheng thereupon conspired with Liu Bei. Before the plot could be launched, it happened that Bei was sent on a military campaign. Cheng instead plotted with Minor General Wang Zifu and Chang\n<summary>Warlords Zhang Ji, Guo Si, and Li Jue meet their deaths, while Emperor Xian chafes under Cao Cao's dominance and issues a secret decree to Dong Cheng to plot Cao Cao's assassination.</summary>\n<keywords>Hou Hanshu, Fan Ye, Zhang Ji, Guo Si, Wu Xi, Pei Mao, Duan Wei, Li Jue, Zhang Yang, Yang Chou, Cao Cao, Lü Bu, Dong Cheng, Emperor Xian, Liu Bei, Wang Zifu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 103,
+    "page_id": "6ae0c5b74adf2ffb52f75cae",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5b74adf2ffb52f75c45/103.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n足復遺紹勃然曰天下健者豈惟董公橫刀長揖徑出\n英雄記曰紹揖卓去坐中驚愕\n卓新至見紹大家故不敢害\n懸節於上東門\n洛陽城\n東北靣\n頭門也山陽公載記曰卓以\n袁紹棄節改第一葆為赤旄\n而奔冀州董卓購募求紹\n時侍中周珌城門校尉伍瓊為卓所信待瓊等隂為紹\n說卓曰夫廢立大事非常人所及袁紹不達大體恐懼\n出奔非有它志今急購之埶必為變袁氏樹恩四世門\n生故吏徧於天下若收豪傑以聚徒衆英雄因之而起\n則山東非公之有也不如赦之拜一郡守紹喜於免罪",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>remain?\"\n\nShao was furious and said: \"Are there no valiant men under Heaven besides Lord Dong?!\" Drawing his blade, he made a deep bow, and walked straight out.\n\n<gloss>The Records of Heroes <note>original: \"英雄記\"</note> states: When Shao bowed to Zhuo and departed, everyone seated was struck with terror. Zhuo was newly arrived, and seeing that Shao came from a prominent family, he dared not harm him.</gloss>\n\nHe hung up his tally of authority at the Shangdong Gate\n\n<gloss>Shangdong Gate is the first gate on the northeastern side of the city wall of Luoyang. The Records of the Duke of Shanyang <note>original: \"山陽公載記\"</note> states: Because Yuan Shao abandoned his tally, Zhuo changed the chief imperial carriage banner to a red pennant.</gloss>\n\nand fled to Ji Province. Dong Zhuo offered a bounty to search for Shao.\n\nAt that time, Attendant Within the Palace Zhou Bi and Gate Colonel Wu Qiong were trusted and treated well by Zhuo. Qiong and the others secretly persuaded Zhuo on Shao's behalf, saying: \"Deposing and enthroning is a great matter, beyond the capacity of ordinary men. Yuan Shao does not grasp the larger picture. Out of terror, he fled; he has no other intention. If you now place a bounty on him with great urgency, circumstances will certainly provoke rebellion. The Yuan lineage has built up favor for four generations, and their disciples and former subordinates are spread across All under Heaven. If he rallies outstanding heroes and gathers multitudes, and other heroes rise up alongside him, then the lands east of the mountains will no longer belong to you, My Lord. It would be better to pardon him and appoint him governor of a commandery. Shao will be glad to escape punishment,\n\n<summary>Yuan Shao defies Dong Zhuo, brandishes his sword, and flees Luoyang for Ji Province, prompting Dong Zhuo's advisers to urge a pardon and commandery post rather than a hunt that could spark rebellion.</summary>\n<keywords>Hou Hanshu, Fan Ye, Yuan Shao, Dong Zhuo, Shangdong Gate, Ji Province, Zhou Bi, Wu Qiong, warlords, Later Han</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 146,
+    "page_id": "6ae0c5b74adf2ffb52f75cd9",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5b74adf2ffb52f75c45/146.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金定巴瓜人三\n<header>卷一百四上</header>\n渠廉\n反\n尚書記期㑹公卿充員品而巳\n前書賈誼曰大臣\n特以簿書不報期\n㑹之間以\n為大故\n故太尉楊彪歴典二司元綱極位\n續漢書曰\n彪代董卓\n為司空又代黃琬為司徒時袁術僭亂操託彪\n與術婚姻誣以欲圖廢置奏收下獄劾以大逆\n操因睚\n眦被以非罪篣楚幷兼五毒俱至\n獻帝春秋曰收彪下\n獄考實遂以策罷\n觸情放慝不顧憲章又議郎趙彥忠諫直言議有可納\n故聖朝含聽改容加錫操欲迷奪時明杜絕言路擅收\n立殺不俟報聞又梁孝王先帝母弟墳陵尊顯松柏桑\n梓猶宜恭肅操率將吏士親臨發掘破棺裸尸掠取金",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<unclear>金定巴瓜人三</unclear>\n# Volume 104, Part One\n\n<unclear>渠廉</unclear>\n<note>phonetic gloss: <term>fan</term></note>\n\nSecretaries in the Masters of Writing merely recorded schedules and meetings, while the Nine Ministers and Three Excellencies merely filled out the roster of offices and nothing more.\n\n<note>Historical commentary: The Previous Book of Han records that Jia Yi said: \"High officials were treated with severity merely over failure to report paperwork or schedules during meetings, which was regarded as a grave transgression.\"</note>\n\nFormer Grand Commandant Yang Biao had successively overseen two departments of state, holding the highest rank of the supreme governance.\n\n<note>Historical commentary: The Continuation of the Book of Han states: 'Biao replaced Dong Zhuo as Minister of Works, and again replaced Huang Wan as Minister of Education. When Yuan Shu arrogated titles in rebellion, Cao Cao alleged that Biao was related to Shu by marriage, falsely accusing him of plotting to depose and establish an emperor. Cao Cao memorialized that he be arrested and cast into prison, charging him with high treason.'</note>\n\nMerely out of personal spite, Cao Cao framed him on baseless charges. Whipping and torture were inflicted together, and all five cruel punishments were brought to bear upon him at once.\n\n<note>Historical commentary: The Spring and Autumn Annals of Emperor Xian states: 'They arrested Biao, cast him into prison, and interrogated him. Subsequently, by imperial decree, he was dismissed from office.'</note>\n\nGiving rein to his passions and unleashing his villainy, Cao Cao completely disregarded the statutory code. Furthermore, Court Gentleman Zhao Yan offered loyal admonitions and straightforward speech, submitting proposals worthy of adoption. For this reason, the sacred court listened with receptive favor, changed countenance, and bestowed honors upon him. Cao Cao, seeking to blind and usurp the discernment of the times and sever the avenue of speech, arbitrarily arrested and immediately executed him without waiting to report to the throne. \n\nFurthermore, King Xiao of Liang was the uterine younger brother of the previous emperor. His sepulcher was lofty and distinguished, and the pines, cypresses, mulberries, and catalpas around it ought to have been treated with reverence and solemnity. Yet Cao Cao led generals, officers, and soldiers in person to excavate the tomb, breaking open the coffin, exposing the corpse, and plundering gold\n\n<summary>Yuan Shao's proclamation indicts Cao Cao for reducing state ministers to mere ciphers, torturing former Grand Commandant Yang Biao on fabricated charges, executing the loyal remonstrator Zhao Yan, and personally despoiling the imperial tomb of King Xiao of Liang.</summary>\n<keywords>Hou Hanshu, Fan Ye, Chen Lin, Yuan Shao, Cao Cao, Yang Biao, Zhao Yan, King Xiao of Liang, tomb desecration, imperial court</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 19,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c2834adf2ffb52f747e5",
+  "book_url": "https://sourcelibrary.org/book/6ae0c2834adf2ffb52f747e5",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c2834adf2ffb52f747e5",
+   "title": "後漢書[范煜…等撰]·卷一上~卷一下 (Hou Hanshu, Siku Quanshu, vol. 1 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 257,
+   "pages_ocr": 251,
+   "pages_translated": 247,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 257,
+   "distinct_page_numbers": 257,
+   "duplicate_records": 0,
+   "pages_with_ocr": 251,
+   "pages_translated": 247,
+   "with_printed_number": 40,
+   "printed_backsteps": 11,
+   "printed_repeats": 31,
+   "pages_count_field": 257,
+   "pages_translated_field": 247
+  },
+  "run": [
+   7,
+   71,
+   132,
+   202
+  ],
+  "pages": [
+   {
+    "page_number": 7,
+    "page_id": "6ae0c2834adf2ffb52f747ee",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2834adf2ffb52f747e5/7.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n得謂之節儉乎外家車如流水馬如遊龍后固自言之\n其家微時亦能早如是乎孟子曰盡信書則不如無書\n周已然而况人心日漓寖淫而至於兩漢六朝乎\n<header>欽定四庫全書</header>\n<header>卷一</header>\n<header>卷二</header>\n<header>卷三</header>\n文之曰豆\n御製文\n<page-num>二</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>being entitled to be called frugal? \"The carriages of my maternal family were like flowing water, and the horses like swimming dragons\": the Empress herself acknowledged this. When her clan was obscure, could they already have been like this so early on? Mencius said: \"To believe everything in the Book of Documents is worse than having no Book of Documents at all.\" If this was already true in the Zhou era, how much more so as the hearts of people grew daily more superficial and corrupted, gradually deteriorating through the Two Han and the Six Dynasties?\n\n<header>Imperially Commissioned Complete Library of the Four Treasuries</header>\n<header>Volume 1</header>\n<header>Volume 2</header>\n<header>Volume 3</header>\nRecorded as Dou\nImperial Composition\n<page-num>2</page-num>\n\n<summary>The author concludes that Empress Ma cannot truly be regarded as frugal given her maternal clan's conspicuous extravagance, citing Mencius to caution against uncritically trusting historical records from periods of moral decline like the Han and Six Dynasties.</summary>\n<keywords>Empress Ma, frugality, Mencius, Book of Documents, Han dynasty, Six Dynasties, Siku Quanshu, imperial commentary</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 71,
+    "page_id": "6ae0c2834adf2ffb52f7482e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2834adf2ffb52f747e5/71.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n度尚\n後漢書卷六十九\n楊琁\n列傳第二十九\n劉平\n趙孝\n淳于恭\n劉般子愷\n江草\n周磐\n趙咨\n後漢書卷七十上\n火\n三\n勾\n主\n人\n三\n寸\n司\n後漢書\n主",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Du Shang <note>Du Shang (度尚), Eastern Han general and Grand Administrator known for suppressing rebellions in Jingzhou and southern regions.</note>\nBook of the Later Han, Volume 69 <note>original: \"後漢書卷六十九\"</note>\nYang Xuan <note>Yang Xuan (楊琁), military commander and Grand Administrator of Lingling who innovated tactical chemical warfare with lime carts to defeat major uprisings.</note>\nBiographies, 29 <note>original: \"列傳第二十九\"</note>\nLiu Ping <note>Liu Ping (劉平), celebrated filial and righteous official of the early Eastern Han.</note>\nZhao Xiao <note>Zhao Xiao (趙孝), official renowned for filial devotion, offering himself in place of his younger brother to bandits.</note>\nChunyu Gong <note>Chunyu Gong (淳于恭), hermit scholar and recluse known for extreme filial piety and integrity, later summoned to court.</note>\nLiu Ban, son Kai <note>Liu Ban (劉般), imperial clan member and upright official; his son Liu Kai (劉愷) was renowned for yielding his inheritance to his younger brother and serving as Grand Minister of Works.</note>\nJiang Ge <note>Jiang Ge (江革), recognized as one of the Twenty-Four Filial Exemplars for rescuing his mother through bandit territory, later serving with distinction.</note>\nZhou Pan <note>Zhou Pan (周磐), virtuous Confucian scholar and hermit who rejected high office to care for his mother.</note>\nZhao Zi <note>Zhao Zi (趙咨), official celebrated for extreme frugality, modest living, and requesting a simple ground burial upon death.</note>\nBook of the Later Han, Volume 70, Part 1 <note>original: \"後漢書卷七十上\"</note>\n<unclear>火</unclear>\n<unclear>三</unclear>\n<unclear>勾</unclear>\n<unclear>主</unclear>\n<unclear>人</unclear>\n<unclear>三</unclear>\n<unclear>寸</unclear>\n<unclear>司</unclear>\nBook of the Later Han <note>original: \"後漢書\"</note>\n<unclear>主</unclear>\n\n<summary>This page continues the table of contents of the Book of the Later Han, listing biographical entries for Volumes 68, 69, and 70 (including Biographies 28 and 29). It catalogues commanders such as Du Shang and Yang Xuan, along with celebrated paragons of filial piety, virtue, and scholarship including Liu Ping, Zhao Xiao, Chunyu Gong, Liu Ban, Liu Kai, Jiang Ge, Zhou Pan, and Zhao Zi, followed by damaged or fragmentary volume notations.</summary>\n<keywords>Book of the Later Han, Hou Hanshu, table of contents, Volume 68, Volume 69, Volume 70, Du Shang, Yang Xuan, Liu Ping, Zhao Xiao, Chunyu Gong, Liu Ban, Liu Kai, Jiang Ge, Zhou Pan, Zhao Zi</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 132,
+    "page_id": "6ae0c2834adf2ffb52f7486b",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2834adf2ffb52f747e5/132.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n鋭自輔故\n曰中堅也\n尋邑陳亂乗鋭崩之遂殺王尋城中亦鼓譟\n而出中外合埶震呼動天地莽兵大潰走者相騰踐奔\n殪百餘里間\n殪仆也音於\n計反或作噎\n㑹大雷風屋瓦皆飛雨下如\n注滍川盛溢\n水經曰滍水出南陽魯陽縣西堯山東\n南經昆陽城北東入汝滍音直理反\n虎\n豹皆股戰士卒争赴溺死者以萬數水為不流\n數過於\n萬故以\n萬為\n數\n王邑嚴尤陳茂輕騎乗死人度水逃去盡獲其軍\n實輜重車甲珍寳不可勝筭舉之連月不盡或燔燒其\n餘光武因復徇下潁陽\n縣名屬潁川郡\n故城在今許州\n㑹伯升為更始\n<header>欽定四庫全書</header>\n<header>後漢書</header>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta> troops to guard his own flanks, which is why it was called the \"central core.\"\n\nXun and Yi's battle formation fell into chaos. Guangwu took advantage of the vanguard's collapse and pressed in, finally killing Wang Xun. The defenders within the city also beat their drums, shouting as they surged forth. Forces from inside and outside joined together, their earth-shaking battle cries shaking heaven and earth. Wang Mang's army suffered a catastrophic rout. The fleeing soldiers trampled one another in their rush; those killed in their headlong flight lay strewn across more than a hundred li. <note>Interlinear commentary: \"Yi <gloss>殪</gloss> means to fall down dead. It is pronounced with the initial of yu and the final of ji, or sometimes written as ye <gloss>噎</gloss>.\"</note>\n\nThen came a violent gale with thunder; roof tiles went flying, and rain poured down like a deluge. The Zhi River rose dramatically. <note>Interlinear commentary: \"The Classic of Waterways states that the Zhi River originates at Mount Yao, west of Luyang County in Nanyang, flows southeast past the north side of Kunyang city, and enters the Ru River to the east. Zhi <gloss>滍</gloss> is pronounced with the initial of zhi and the final of li.\"</note> Even tigers and leopards trembled in fear. The soldiers scrambled to cross, and those who drowned numbered in the tens of thousands, so many that the waters ceased to flow. <note>Interlinear commentary: \"Because the count exceeded ten thousand, it is described as numbering by the ten-thousands.\"</note>\n\nWang Yi, Yan You, and Chen Mao escaped on light cavalry by riding across the corpses in the water. Guangwu's forces captured all their military provisions, baggage wagons, armor, and precious treasures, in quantities beyond reckoning. For months on end, they were carted away without exhausting the spoils, and what remained was set on fire. Guangwu then moved to subdue Yingyang. <note>Interlinear commentary: \"Yingyang was the name of a county belonging to Yingchuan Commandery; its ancient walled city was located in what is present-day Xuzhou.\"</note>\n\nIt was at this time that Bosheng was appointed by Gengshi...\n\n<summary>Guangwu kills Wang Xun as the inner and outer forces unite to utterly crush Wang Mang's massive army at the Battle of Kunyang, while a sudden violent storm causes tens of thousands to drown in the Zhi River.</summary>\n<keywords>Guangwu, Liu Xiu, Battle of Kunyang, Wang Xun, Wang Yi, Yan You, Chen Mao, Zhi River, route, storm, Yingyang, Bosheng</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 202,
+    "page_id": "6ae0c2834adf2ffb52f748b1",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2834adf2ffb52f747e5/202.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n轘轅\n緱氏縣有緱氏山轘轅山有\n轘轅坂並在洛陽之東南\n遣大司馬吳漢率四\n將軍擊盧芳將賈覽於髙柳戰不利秋八月遣中郎將\n來歙監征西大將軍馮異等五將軍討隗純於天水驃\n騎大將軍杜茂與賈覽戰於繁畤\n縣名屬鴈門\n郡今代州縣\n茂軍敗\n績是嵗省關都尉\n前書曰秦官\n也武帝置\n復置護羌校尉官\n漢官\n儀曰\n武帝置秩比二千石持節以護西羌王莽亂遂罷時班\n彪議宜復其官以理𡨚結帝從之以牛邯為護羌校尉\n都於隴西\n令居縣\n十年春正月大司馬吳漢率捕虜將軍王霸等五將軍\n火\n三\n日\n<page-num>三</page-num>\n<page-num>三</page-num>\n日\n<header>後漢書</header>\n<page-num>七</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Mount Huanyuan.\n\n<note>Commentary: Goushi County contains Mount Goushi. Mount Huanyuan has the Huanyuan Slope. Both lie southeast of Luoyang.</note>\n\nThe Emperor dispatched Grand Minister of War Wu Han leading four generals to attack Lu Fang's general Jia Lan at Gaoliu, but the battle was unfavorable. In autumn, in the eighth month, he dispatched General of the Household Gentlemen Lai She to supervise General Who Conquers the West Feng Yi and four other generals, five generals in all, to launch a punitive expedition against Wei Chun in Tianshui. General of the Agile Cavalry Du Mao fought with Jia Lan at Fanshi.\n\n<note>Commentary: Fanshi is the name of a county belonging to Yanmen Commandery, now a county of Dai Prefecture.</note>\n\nMao's army suffered a defeat. In this year, the Pass Commandants were abolished.\n\n<note>Commentary: The Book of the Former Han states: It was an official post of Qin, established by Emperor Wu.</note>\n\nThe office of Colonel Protector of the Qiang was re-established.\n\n<note>Commentary: The Etiquette of Han Officials states: Emperor Wu established it with a rank equivalent to Two Thousand Bushels, holding the imperial tally to oversee the Western Qiang. It was subsequently abolished during the upheavals of Wang Mang. At this time, Ban Biao submitted an opinion that it was appropriate to restore this post in order to resolve grievances and entanglements. The Emperor followed his counsel and appointed Niu Han as Colonel Protector of the Qiang, stationed at Lingju County in Longxi.</note>\n\nIn the tenth year, in spring, in the first month, Grand Minister of War Wu Han led General Who Captures Captives Wang Ba and four other generals, five generals in all,\n\n<summary>Emperor Guangwu mounts military campaigns against rebel generals in the north and west, suffers setbacks at Gaoliu and Fanshi, abolishes Pass Commandants, and restores the post of Colonel Protector of the Qiang under Niu Han.</summary>\n<keywords>Huanyuan, Wu Han, Lu Fang, Jia Lan, Gaoliu, Lai She, Feng Yi, Wei Chun, Tianshui, Du Mao, Fanshi, Yanmen Commandery, Pass Commandants, Colonel Protector of the Qiang, Book of the Former Han, Etiquette of Han Officials, Ban Biao, Niu Han, Longxi, Lingju County, Wang Ba</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 20,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c5bc4adf2ffb52f75cea",
+  "book_url": "https://sourcelibrary.org/book/6ae0c5bc4adf2ffb52f75cea",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c5bc4adf2ffb52f75cea",
+   "title": "後漢書[范煜…等撰]·卷一百四下~卷一百六 (Hou Hanshu, Siku Quanshu, vol. 37 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 143,
+   "pages_ocr": 142,
+   "pages_translated": 139,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 143,
+   "distinct_page_numbers": 143,
+   "duplicate_records": 0,
+   "pages_with_ocr": 142,
+   "pages_translated": 139,
+   "with_printed_number": 43,
+   "printed_backsteps": 15,
+   "printed_repeats": 32,
+   "pages_count_field": 143,
+   "pages_translated_field": 139
+  },
+  "run": [
+   15,
+   61,
+   72,
+   112
+  ],
+  "pages": [
+   {
+    "page_number": 15,
+    "page_id": "6ae0c5bc4adf2ffb52f75cfb",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5bc4adf2ffb52f75cea/15.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金定四庫全書</header>\n<header>卷一百四下</header>\n言非常也獻帝春秋曰譚尚遂尋干戈以相征討譚軍\n不利保于平原尚乃軍于館陶譚擊之敗尚走保險譚\n追攻之尚設竒伏大破譚軍僵\n屍流血不可勝計譚走還平原\n伏惟將軍至孝蒸蒸發\n於岐嶷友于之性生於自然章之以聰明行之以敏達\n覽古今之舉措覩興敗之徵符輕榮財於糞土貴名位\n於丘岳何意奄然迷沈墮賢哲之操\n墮音許\n規反\n積怨肆忿\n取破家之禍翹企延頸待望讎敵委慈親於虎狼之牙\n以逞一朝之志豈不痛哉若乃天啓尊心革圖易慮則\n我將軍匍匐悲號於將軍股掌之上配等亦當敷躬布",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\ndeclaring that this is extraordinary.\n\nThe *Spring and Autumn Annals of Emperor Xian* <note>original: \"獻帝春秋\"</note> states: Tan and Shang then took up weapons to attack one another. Tan's army met with disadvantage and held Pingyuan. Shang then encamped his army at Guantao. Tan attacked him but was defeated. Shang retreated to hold defensible terrain, and Tan pursued and assaulted him. Shang set an ingenious ambush and decisively crushed Tan's army. Rigid corpses and flowing blood could not be counted. Tan fled back to Pingyuan.\n\nI humbly reflect that you, General, have utmost filial piety that flourishes brightly, arising from early childhood. Your brotherly nature is born of your natural disposition, displayed through your keen intelligence, and practiced through your agile discernment. You observe the undertakings of past and present, and perceive the omens and signs of rise and fall. You hold glory and wealth as light as dung and dirt, and esteem reputation and position as high as hills and mountains. Why would you unexpectedly fall into confusion and lose the moral conduct of the worthy and wise?\n\n<gloss>The character duo (墮, fall/ruin) has the sound of xu and gui combined.</gloss>\n\nYou store up resentments and indulge your fury, inviting the disaster of destroying your own clan. You crane your neck in eager expectation, waiting for help from your deadly foes, and abandon your loving mother to the teeth of tigers and wolves, all to indulge the passion of a single morning. Is this not deeply lamentable? If Heaven opens your honorable mind to change your plans and alter your thoughts, then our General will crawl on hands and knees, weeping and wailing before your feet and hands; we, Pei and the others, shall also prostrate ourselves,\n\n<summary>Citing the Spring and Autumn Annals of Emperor Xian, the text recounts Yuan Shang crushing Yuan Tan's army at Guantao, followed by Shen Pei's impassioned letter urging Yuan Tan to end the fratricidal war, protect their mother, and reconcile with Yuan Shang.</summary>\n<keywords>Hou Hanshu, Yuan Tan, Yuan Shang, Shen Pei, Guantao, Pingyuan, Spring and Autumn Annals of Emperor Xian, filial piety, fratricide</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 61,
+    "page_id": "6ae0c5bc4adf2ffb52f75d29",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5bc4adf2ffb52f75cea/61.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>全書口匠全書</header>\n<header>卷一百五</header>\n刺史劉繇破之策因據江東策聞術將欲僭號與書諫\n曰董卓無道陵虐王室禍加太后暴及弘農天子播越\n左傳王子朝云玆不穀震蕩播\n越播遷也越逸也言失其所居\n宮廟焚毀是以豪桀發\n憤沛然俱起\n沛然自恣縱貌\n也沛音片害反\n元惡既斃幼主東顧乃使\n王人奉命宣明朝恩偃武修文與之更始然而河北異\n謀於黑山\n謂袁紹為冀州牧\n與黑山賊相連\n曹操毒被於東徐劉表僭\n亂於南荊公孫叛逆於朔北正禮阻兵\n劉繇\n也\n元德爭盟\n劉備\n也\n是以未獲從命櫜弓戢戈嘗謂使君與國同規而",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Inspector Liu Yao defeated him. Ce then took possession of Jiangdong. Hearing that Yuan Shu intended to usurp the imperial title, Ce sent a letter admonishing him:\n\n\"Dong Zhuo acted without regard to the proper Way, mistreating and abusing the royal house. Misfortune fell upon the Empress Dowager, violence reached the Prince of Hongnong, and the Son of Heaven was driven into wandering exile.\n\n<note>The Zuo Tradition records Prince Chao as saying: 'I, unworthy as I am, was shaken and cast into wandering exile.' Here, 'wandering' means migrating abroad, and 'exile' means fleeing into wandering. This refers to losing one's rightful residence.</note>\n\nThe palaces and ancestral temples were burned to ashes. Therefore, heroic and valiant men were stirred to indignation, and rising together like an overflowing torrent,\n\n<note>Commentary: 'Peiran' describes unrestrained and surging abandon. The character 'pei' is pronounced here as a fanqie of pian and hai.</note>\n\nthey struck down the chief evil. Once that chief malefactor was slain, the youthful sovereign looked toward the east, dispatching royal messengers under mandate to proclaim the imperial grace, to lay down weapons, cultivate the civil arts, and make a renewed beginning with the realm.\n\nYet north of the Yellow River, treacherous designs arose in league with the Black Mountain bandits;\n\n<note>This refers to Yuan Shao serving as Shepherd of Ji Province while allying himself with the Black Mountain bandits.</note>\n\nCao Cao spread toxic afflictions across eastern Xu; Liu Biao usurped authority and stirred rebellion in southern Jing; Gongsun Zan rebelled against obedience in the northern wastes; Zhengli\n\n<note>Zhengli was the style name of Liu Yao.</note>\n\nmarshaled arms to resist imperial command; and Yuande\n\n<note>Yuande was the style name of Liu Bei.</note>\n\ncontended for alliance.\n\nFor these reasons, the lords have not yet been able to submit to the sovereign's commands, encase their bows, and sheathe their weapons. I had always believed that you, Envoy, shared the same guiding principles as the dynasty, yet...\"\n\n<summary>Sun Ce seizes Jiangdong and writes an urgent admonition to Yuan Shu against usurping the imperial title, cataloging Dong Zhuo's atrocities and the warlords who continue to disrupt the empire instead of restoring order.</summary>\n<keywords>Sun Ce, Yuan Shu, Liu Yao, Jiangdong, Dong Zhuo, Prince of Hongnong, Black Mountain bandits, Yuan Shao, Cao Cao, Liu Biao, Gongsun Zan, Liu Bei, Hou Hanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 72,
+    "page_id": "6ae0c5bc4adf2ffb52f75d34",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5bc4adf2ffb52f75cea/72.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n安興平元年曹操東擊陶謙令其將武陽人陳宮屯東\n郡\n典略曰陳宮字公臺東郡人也剛直烈壯少與海內\n知名之士皆連結及天下亂始隨太祖後自疑乃從\n呂布為布畫\n策布每不從\n宮因說邈曰今天下分崩雄桀並起君擁\n十萬之衆當四戰之地\n陳留地平四面受敵\n故謂之四戰之地也\n撫劒顧眄\n亦足以為人豪而反受制不以鄙乎今州軍東征其處\n空虛呂布壯士善戰無前迎之共據兗州觀天下形埶\n俟時事變通此亦從橫一時也邈從之遂與弟超及宮\n等迎布為兗州牧據濮陽郡縣皆應之曹操聞而引軍\n<header>後漢書</header>\n<page-num>十六</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "In the first year of the Xingping era <note>194 CE</note>, Cao Cao launched an eastern campaign against Tao Qian, ordering his general Chen Gong, a native of Wuyang, to garrison Dong Commandery.\n\n<gloss>The *Dianlüe* states: Chen Gong, courtesy name Gongtai, was a native of Dong Commandery. He was upright, resolute, bold, and vigorous. In his youth, he formed ties with renowned men throughout the realm. When the empire fell into chaos, he initially followed Cao Cao <note>referred to here by his posthumous title Taizu</note>, but later grew suspicious and uneasy, whereupon he turned to follow Lü Bu. Chen Gong devised strategies for Lü Bu, yet Lü Bu consistently failed to heed them.</gloss>\n\nChen Gong consequently persuaded Zhang Miao, saying: \"Today the empire is fractured and collapsing, and heroes arise on every side. You command an army of one hundred thousand, occupying territory open to assault from all four directions.\n\n<gloss>Chenliu is flat terrain subject to enemy attack from all four sides; therefore it is called territory open to assault from all four directions.</gloss>\n\nWith hand on your sword and a watchful glance, you have more than enough stature to be a leader of men, yet instead you find yourself subject to another. Is this not deeply humiliating? Now the provincial army has marched east on campaign, leaving the local territory completely undefended. Lü Bu is a valiant warrior, peerless and unstoppable in battle. If you welcome him and join forces to seize Yan Province, observe the shifts in the balance of power across the realm, and wait for changing circumstances, you can bestride the age as a dominant power.\"\n\nZhang Miao agreed with his counsel. He then joined with his younger brother Zhang Chao, Chen Gong, and others to welcome Lü Bu as the Governor of Yan Province and occupy Puyang. The surrounding commanderies and counties all rallied in support. When Cao Cao heard the news, he led his army back.\n\n<summary>Chen Gong convinces Zhang Miao to rebel against Cao Cao while his forces are campaigning in the east, seizing Yan Province and welcoming Lü Bu as its new governor at Puyang.</summary>\n<keywords>Xingping era, Cao Cao, Tao Qian, Chen Gong, Gongtai, Dong Commandery, Dianlüe, Lü Bu, Zhang Miao, Zhang Chao, Yan Province, Puyang, Hou Hanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 112,
+    "page_id": "6ae0c5bc4adf2ffb52f75d5c",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c5bc4adf2ffb52f75cea/112.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n王\n渙\n傳\n王渙字稚子廣漢郪人也\n郪縣故城在今梓\n州郪縣西南也\n父順安定\n太守渙少好俠尚氣力數通剽輕少年\n剽劫\n奪也\n晚而改節\n敦儒學習尚書讀律令略舉大義為太守陳寵功曹當\n職割斷不避豪右寵風聲大行入為大司農和帝問曰\n在郡何以為理寵頓首謝曰臣任功曹王渙以簡賢選\n能主簿鐔顯拾遺補闕臣奉宣詔書而已帝大悅渙由\n此顯名州舉茂才除溫令縣多姦猾積為人患渙以方\n二、二、二、二、二\n後美書\n十二",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "# Biography of Wang Huan\n\nWang Huan, whose courtesy name was Zhizi, was a native of Qi County in Guanghan Commandery. <gloss>The ancient city of Qi County was located southwest of present-day Qi County in Zizhou.</gloss>\n\nHis father, Shun, served as Grand Administrator of Anding. In his youth, Huan was fond of chivalric knight-errantry and valued martial vigor. He frequently associated with reckless, frivolous youths. <gloss><term>Piao</term> means to plunder and seize.</gloss> Later in life, he reformed his conduct, devoting himself to Confucian scholarship. He studied the *Classic of Documents* <note>original: \"Shangshu\"</note> and read the statutes and ordinances, grasping their essential principles.\n\nHe served as Officer of Merit <note>senior administrative official responsible for personnel assessment and appointments in the commandery</note> under Grand Administrator Chen Chong. In discharging his official duties, he was decisive and resolute, showing no favor or leniency toward powerful and influential families. Because of this, Chong's renown and reputation spread widely, and he was summoned to the capital to serve as Grand Minister of Agriculture <note>one of the Nine Ministers of the central government, responsible for state revenues and treasury</note>.\n\nEmperor He asked him: \"What methods did you use to govern your commandery so effectively?\"\n\nChong bowed his head to the ground and humbly replied: \"Your servant entrusted matters to Officer of Merit Wang Huan to select the worthy and promote the capable, and to Chief Clerk Tan Xian to make good on omissions and rectify errors. Your servant merely proclaimed and promulgated Your Majesty's imperial edicts.\"\n\nThe Emperor was greatly pleased. From this, Huan's reputation became renowned. The provincial authorities recommended him as an Eminent Talent <note>a prestigious civil recommendation category, originally called Flourishing Talent</note>, and he was appointed Prefect of Wen County. The county harbored many deceitful and cunning villains who had long caused distress and suffering to the people. Huan used calculated strategies\n\n<summary>Wang Huan reforms his youthful chivalric ways to master the Confucian classics and law, serving with fearless impartiality under Chen Chong, whose praise before Emperor He leads to Huan's appointment as Prefect of Wen County.</summary>\n<keywords>Wang Huan, Chen Chong, Emperor He, Officer of Merit, Grand Administrator, Qi County, Guanghan, Classic of Documents, Wen County, Eminent Talent</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 21,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c52b4adf2ffb52f759a6",
+  "book_url": "https://sourcelibrary.org/book/6ae0c52b4adf2ffb52f759a6",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c52b4adf2ffb52f759a6",
+   "title": "後漢書[范煜…等撰]·卷九十上~卷九十二 (Hou Hanshu, Siku Quanshu, vol. 32 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 214,
+   "pages_ocr": 211,
+   "pages_translated": 207,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 214,
+   "distinct_page_numbers": 214,
+   "duplicate_records": 0,
+   "pages_with_ocr": 211,
+   "pages_translated": 207,
+   "with_printed_number": 69,
+   "printed_backsteps": 22,
+   "printed_repeats": 59,
+   "pages_count_field": 214,
+   "pages_translated_field": 207
+  },
+  "run": [
+   2,
+   67,
+   139,
+   184
+  ],
+  "pages": [
+   {
+    "page_number": 2,
+    "page_id": "6ae0c52c4adf2ffb52f759aa",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c52b4adf2ffb52f759a6/2.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n後漢書卷九十上\n宋宣城太守范煜撰\n唐章懷太子賢注\n馬融列傳第五十上\n馬融傳\n馬融字季長扶風茂陵人也\n融集云茂陵\n成懽里人也\n將作大匠嚴\n之子\n嚴援兄\n余之子\n為人美辭貌有俊才初京兆摯恂以儒術\n<header>後漢書</header>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>By Imperial Order, Complete Library of the Four Treasuries</header>\n\n# *Book of the Later Han* <note>original: \"後漢書\" (*Hou Hanshu*)</note>, Volume 90, Part 1\nCompiled by Fan Ye <note>original: \"范煜\", error for 范曄</note>, Grand Administrator of Xuancheng during the Song dynasty <note>referring to the Liu Song dynasty (420–479 CE)</note>\nCommentary by Li Xian, Crown Prince Zhanghuai of the Tang dynasty\nBiographies, Number 50, Part 1: Biography of Ma Rong\n## Biography of Ma Rong\n\nMa Rong, courtesy name Jichang, was a native of Maoling in Fufeng commandery.\n<gloss>The *Collected Works of Ma Rong* states that he was a native of Chenghuan Hamlet in Maoling.</gloss>\nHe was the son of Yan, Court Architect.\n<gloss>Yan was the son of Yu, elder brother of Ma Yuan.</gloss>\nBy nature, he possessed handsome bearing and appearance along with extraordinary talent. In his early years, Zhi Xun of Jingzhao, through classical Confucian scholarship,\n<header>*Book of the Later Han*</header>\n\n<summary>This opening page introduces the biography of the renowned Han dynasty scholar Ma Rong, detailing his lineage, hometown, and early reputation for intellect and handsome demeanor.</summary>\n<keywords>Ma Rong, Book of Later Han, Hou Hanshu, Fan Ye, Li Xian, Fufeng, Maoling, Ma Yuan, Zhi Xun, Confucian scholar</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 67,
+    "page_id": "6ae0c52c4adf2ffb52f759eb",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c52b4adf2ffb52f759a6/67.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n全六八正座全言\n<header>卷九十下</header>\n事\n表\n左\n表左謂陳之於表左\n也猶今云如左如右\n一事明堂月令天子以四立及季夏之節迎五帝於郊\n天子居明堂各依其月布政故云明堂月令四立謂立\n春立夏立秋立冬各以其日天子親迎氣於其方幷祭\n其方之帝季夏之\n末祭中央帝也\n所以導致神氣祈福豐年清廟祭祀\n追往孝敬養老辟雍示人禮化皆帝者之大業祖宗所\n祗奉也而有司數以蕃國疎喪宮內產生及吏卒小污\n屢生忌故\n小污謂病\n及死也\n竊見南郊齊戒未嘗有廢至於它\n祀輙興異議豈南郊卑而它祀尊哉孝元皇帝策書曰",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Volume 90, Part 2</header>\n\nMatter\nMemorial\nTo the Left <note>commentary: 'To the left of the memorial' means to set it forth to the left side of the memorial document, similar to present-day phrasing such as 'as stated to the left' or 'as stated to the right.'</note>\n\nItem One: The Monthly Ordinances of the Hall of Distinction <note>commentary: The Son of Heaven resides in the Hall of Distinction and promulgates administrative policies in accordance with each month; hence it is called the 'Monthly Ordinances of the Hall of Distinction.' The 'Four Commencements' refer to the Beginning of Spring, Beginning of Summer, Beginning of Autumn, and Beginning of Winter. On each of these days, the Son of Heaven personally welcomes the seasonal atmospheric influences in their corresponding directional quarter, and simultaneously sacrifices to the thearch of that quarter. At the end of the final month of summer, he sacrifices to the Central Thearch.</note> provide that the Son of Heaven, at the Four Commencements and at the nodal period of late summer, welcomes the Five Thearchs in the suburban altars.\n\nThese rites serve to summon and conduct the spiritual energies, pray for blessings and an abundant harvest, perform sacrifices in the Pure Ancestral Temple, show filial reverence toward ancestors who have passed away, nourish the elderly in the Biyong Academy, and manifest ritual education to the people. All of these constitute the grand undertakings of sovereign rulers, reverently upheld by ancestral predecessors.\n\nYet the official functionaries, repeatedly citing distant mournings from tributary states, births within the palace apartments, and minor contaminations among clerks and soldiers, constantly invent taboos and pretexts for omission. <note>commentary: 'Minor contaminations' refers to illness and death.</note>\n\nI observe in private that fasting and purification for the sacrifices at the Southern Suburb have never once been abandoned. Yet when it comes to other sacrificial rites, discordant arguments are raised at every turn. Could it be that the Southern Suburb is base while other sacrifices are noble? The charter edict of Emperor Xiaoyuan declared:\n\n<summary>Cai Yong submits the first of seven policy memorials, condemning court officials for repeatedly using trivial ritual taboos, palace births, and minor deaths to neglect solemn imperial sacrifices and suburban ancestral rites.</summary>\n<keywords>Hou Hanshu, Cai Yong, Hall of Distinction, Mingtang, Monthly Ordinances, Five Thearchs, imperial sacrifices, ritual neglect</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 139,
+    "page_id": "6ae0c52c4adf2ffb52f75a33",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c52b4adf2ffb52f759a6/139.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n苑傳瓊初以父任為太子舍人辭病不就遭父憂服闋\n五府俱辟連年不應永建中公卿多薦瓊者於是會稽\n賀純廣漢楊厚俱公車徵瓊至綸氏稱疾不進\n綸氏即\n夏之綸\n國少康之邑也竹書紀年云楚及秦\n伐鄭綸氏今洛州故嵩陽縣城是也\n有司劾不敬詔下\n縣以禮慰遣遂不得巳先是徵聘處士多不稱望李固\n素慕於瓊乃以書逆遺之曰聞巳度伊洛近在萬歲亭\n豈即事有漸將順王命乎\n萬歲亭在今洛州故嵩陽縣\n西北武帝元封元年幸緱氏\n登太室聞山上呼萬\n歲聲者三因以名焉\n蓋君子謂伯夷隘柳下惠不恭故\n笈莫書\n1几",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and scholarship. In his youth, Qiong was appointed as a cadet in the household of the Crown Prince <note>original: \"太子舍人\"</note> on account of his father's official privilege. He declined on grounds of illness and did not take up the post. When he encountered mourning for his father, he completed the full period of mourning rites. All five ducal offices simultaneously summoned him to their staff, yet year after year he did not answer.\n\nDuring the Yongjian reign period <note>126–132 CE</note>, many dukes and ministers recommended Qiong. Thereupon, along with He Chun of Kuaiji and Yang Hou of Guanghan, he was summoned by official carriage. When Qiong arrived at Lunshi, he pleaded illness and refused to advance further.\n\n<note>Lunshi was formerly the state of Lun in the Xia dynasty, the fief of Shaokang. The Bamboo Annals </note><note>original: \"竹書紀年\"</note> states: \"Chu and Qin attacked Zheng at Lunshi.\" It is now situated at the old city wall of Songyang County in modern Luozhou.\n\nThe authorities indicted him for irreverence. An imperial edict was sent down ordering the county magistrate to console and dispatch him with ritual courtesy. He had no choice but to comply. Prior to this, many of the retired scholars who had been summoned failed to live up to public expectation. Li Gu, who had long admired Qiong, sent a letter ahead to greet him, stating:\n\n\"I hear you have already crossed the Yi and Luo rivers and are close by at the Wansui Pavilion <note>Pavilion of Ten Thousand Years</note>. Does this mean your entry into service is gradually unfolding, and that you will comply with the royal command?\n\n<note>The Wansui Pavilion is located northwest of the old Songyang County seat in modern Luozhou. In the first year of the Yuanfeng reign </note><note>110 BCE</note>, Emperor Wu visited Goushi and ascended Mount Taishi. It was heard that from the mountain voices shouted 'Ten thousand years!' three times; hence it was named accordingly.\n\nFor a gentleman considers Boyi narrow-minded and Liuxia Hui irreverent; therefore\n\n<unclear>笈莫書 1几</unclear>\n\n<summary>Huang Qiong repeatedly declines official positions before being summoned by imperial carriage during the Yongjian era. Halting at Lunshi under pretext of illness, he is persuaded to continue through an imperial edict and an urging letter from Li Gu.</summary>\n<keywords>Huang Qiong, Yongjian reign, He Chun, Yang Hou, Lunshi, Shaokang, Bamboo Annals, Li Gu, Wansui Pavilion, Boyi, Liuxia Hui</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 184,
+    "page_id": "6ae0c52c4adf2ffb52f75a60",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c52b4adf2ffb52f759a6/184.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金定巳辰金言\n<header>卷九十二</header>\n改\n喪服曰夫為妻齊衰杖期禮記曰曾子問三年之喪\n弔乎孔子曰禮以飾情三年之喪而弔哭不亦虛乎\n後公車徵為大將軍何進從事中郎進恐其不至迎薦\n為侍中及進敗而詔命中絕獻帝即位董卓輔政復徵\n之爽欲遁命吏持之急不得去因復就拜平原相行至\n宛陵復追為光祿勲視事三日進拜司空爽自被徵命\n及登台司九十五日因從遷都長安爽見董卓忍暴滋\n甚必危社稷其所辟舉皆取才略之士將共圗之亦與\n司徒王允及卓長史何顒等為内謀㑹病薨年六十三",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<unclear>欽定四庫全書</unclear>\n# Volume 92\n\n<note>commentary: The \"Mourning Garments\" </note><note>a section of the *Yili* (Etiquette and Ceremonial)</note> states: \"A husband wears the one-year mourning attire of unhemmed coarse hemp with a staff for his wife.\" The *Liji* (Book of Rites) states: \"Zengzi asked: 'When one is in three-year mourning, may one pay condolences?' Confucius answered: 'Rites serve to regulate emotional expression. When observing three-year mourning, to go pay condolences and weep, is that not hollow?'\"\n\nLater, he was summoned by official carriage to serve as Senior Clerk to General-in-Chief He Jin. He Jin feared he would not come, so he immediately recommended him to be an Imperial Attendant. When He Jin was defeated, the imperial mandates were cut off. After Emperor Xian ascended the throne, Dong Zhuo assisted in government affairs and summoned Xun Shuang once again. Xun Shuang wished to flee, but the officials in charge kept close watch over him, so he could not leave. Consequently, he accepted appointment as Chancellor of Pingyuan. When he reached Wanling, he was pursued and appointed Minister of the Imperial Household. After three days in office, he was promoted to Minister of Works. From his initial summons to ascending to the Three Excellencies, it took only ninety-five days. He then followed the court in moving the capital to Chang'an. \n\nXun Shuang saw that Dong Zhuo was growing increasingly cruel and tyrannical, and would certainly endanger the state. Therefore, all those he recruited and recommended were men of talent and strategy, intending to conspire together against Dong Zhuo. He also plotted secretly with Minister over the Masses Wang Yun, Dong Zhuo's Chief Clerk He Yong, and others. Just at that time, he fell ill and died, at the age of sixty-three.\n\n<summary>Xun Shuang cites ancient ritual canons regarding mourning, is rapidly promoted under He Jin and Dong Zhuo to Minister of Works within ninety-five days, and secretly plots with Wang Yun against Dong Zhuo before falling ill and dying at sixty-three.</summary>\n<keywords>Hou Hanshu, Fan Ye, Xun Shuang, He Jin, Emperor Xian, Dong Zhuo, Wang Yun, He Yong, Minister of Works, Three Excellencies, Chang'an, mourning rites</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 22,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c4544adf2ffb52f754d4",
+  "book_url": "https://sourcelibrary.org/book/6ae0c4544adf2ffb52f754d4",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c4544adf2ffb52f754d4",
+   "title": "後漢書[范煜…等撰]·卷六十八~卷七十下 (Hou Hanshu, Siku Quanshu, vol. 24 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 204,
+   "pages_ocr": 201,
+   "pages_translated": 199,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 204,
+   "distinct_page_numbers": 204,
+   "duplicate_records": 0,
+   "pages_with_ocr": 201,
+   "pages_translated": 199,
+   "with_printed_number": 43,
+   "printed_backsteps": 15,
+   "printed_repeats": 34,
+   "pages_count_field": 204,
+   "pages_translated_field": 199
+  },
+  "run": [
+   23,
+   56,
+   131,
+   199
+  ],
+  "pages": [
+   {
+    "page_number": 23,
+    "page_id": "6ae0c4544adf2ffb52f754ed",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4544adf2ffb52f754d4/23.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n欠\n匹\n压\n人\n<page-num>三</page-num>\n言\n<header>卷六十八</header>\n不得賞直怨恚遂反焚燒長沙郡縣寇益陽\n益陽縣名\n在益水之\n陽故城在今潭\n州益陽縣東\n殺縣令衆漸盛又遣謁者馬睦督荊州\n刺史劉度擊之軍敗睦度奔走桓帝詔公卿舉任代劉\n度者尚書朱穆舉尚自右校令擢為荊州刺史尚躬率\n部曲與同勞逸廣募雜種諸蠻夷明設購賞進擊大破\n之降者數萬人桂陽宿賊渠帥卜陽潘鴻等畏尚威烈\n徙入山谷尚窮追數百里遂入南海破其三屯多獲珍\n寳而陽鴻等黨衆猶盛尚欲擊之而士卒驕富莫有鬬",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>did not receive the promised rewards. In their resentment and anger, they revolted, burning commanderies and counties across Changsha and raiding Yiyang.\n\n<gloss>Yiyang is the name of a county, situated north of the Yi River. Its ancient fortified city lies east of modern Yiyang County in Tan Prefecture.</gloss>\n\nThey killed the county magistrate, and their multitude grew steadily larger. The court again dispatched Imperial Internuncio Ma Mu to supervise Liu Du, the Inspector of Jing Province, in attacking them. The imperial army was defeated, and Mu and Du fled. Emperor Huan issued an edict commanding the high ministers to recommend someone qualified to replace Liu Du. Minister Zhu Mu recommended Du Shang. Shang was elevated from Commander of the Right Construction Corps to become Inspector of Jing Province. Shang personally led his troops, sharing hardship and rest with them. He extensively recruited various southern tribesmen, clearly established bounties and rewards, and advanced to attack, heavily defeating the rebels. Those who surrendered numbered in the tens of thousands. The veteran rebel chieftains of Guiyang, Bu Yang and Pan Hong, feared Shang's fierce prowess and retreated into the mountain valleys. Shang pursued them relentlessly for several hundred li, entering Nanhai and destroying three of their encampments, capturing vast quantities of rare treasures. However, the faction of Yang and Hong remained formidable. Shang wished to attack them, but his soldiers had grown arrogant and wealthy, and none had any will to fight.\n\n<page-num>3</page-num>\n<header>Scroll Sixty-Eight</header>\n<summary>After unpaid recruits rebel and rout provincial forces, Du Shang is appointed Inspector of Jing Province, mobilizes tribal auxiliaries to crush the uprising, and pursues rebel chieftains into Nanhai until his troops become too enriched with loot to fight.</summary>\n<keywords>Jing Province, Yiyang, Ma Mu, Liu Du, Emperor Huan, Zhu Mu, Du Shang, Bu Yang, Pan Hong, Guiyang, Nanhai, military rebellion</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 56,
+    "page_id": "6ae0c4544adf2ffb52f7550e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4544adf2ffb52f754d4/56.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n搖動自在轅中輓車不用牛馬由是鄉里稱之曰江巨\n孝\n巨大也華嶠書曰臨淄令楊音髙之設特席顯\n異巨孝於稠人廣衆中親奉錢以助供養也\n太守\n嘗備禮召革以母老不應及母終至性殆滅嘗寢伏冢\n廬服竟不忍除郡守遣丞掾釋服因請以為吏永平初\n舉孝廉為郎補楚太僕月餘自劾去楚王英馳遣官屬\n追之遂不肯還復使中傅贈送辭不受後數應三公命\n輒去建初初太尉牟融舉賢良方正再遷司空長史肅\n宗甚崇禮之遷五官中郎將每朝㑹帝常使虎賁扶侍",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page: to subject her to the jarring motion of a cart,</meta> so he personally pulled the cart himself between the shafts, dispensing with oxen or horses. For this reason, the local villagers called him \"Jiang the Greatly Filial\" <gloss>Ju means great. Hua Qiao's book states: \"Yang Yin, Magistrate of Linzi, esteemed him highly. He arranged a special place of honor to distinguish the Greatly Filial one among the assembled crowds, and personally offered money to assist in providing for his mother.\"</gloss>. \n\nThe commandery grand administrator once prepared ceremonial gifts to summon Ge, but Ge declined on account of his mother's advanced age. When his mother passed away, his grief was so extreme that his vital spirit was nearly extinguished. He lay mourning inside a hut by her grave, and even when the mourning period concluded, he could not bear to remove his mourning robes. The commandery governor dispatched assistant officials to remove his mourning garments and invited him to become an official. \n\nIn the early years of the Yongping era <note>58–75 CE</note>, he was nominated as Filial and Incorruptible and appointed as a Gentleman, and then assigned as Grand Servant to the Kingdom of Chu. After a little over a month, he impeached himself and resigned. Liu Ying, King of Chu, sent subordinate officials riding in haste to pursue him, but Ge refused to return. The King further dispatched the Grand Tutor of the Kingdom to present gifts, yet Ge declined and would not accept them. Later, though summoned repeatedly by the Three Excellencies, he promptly resigned each time. \n\nAt the beginning of the Jianchu era <note>76–84 CE</note>, Grand Commandant Mou Rong recommended him as Worthy, Good, Square, and Upright. He was twice promoted, becoming Chief Clerk to the Minister of Works. Emperor Suzong <gloss>Emperor Zhang of Han</gloss> held him in immense reverence and esteem, promoting him to Commander of the Five Officers of the Rapid Tiger Cadets. At every court assembly, the Emperor would always order the imperial tiger-guards to assist and support him.\n\n<summary>Jiang Ge earned the title Jiang the Greatly Filial by pulling his mother in a cart to spare her distress, mourned her death with life-threatening devotion, and later received high court honors under Emperor Zhang despite repeatedly resigning public posts.</summary>\n<keywords>Jiang Ge, Jiang the Greatly Filial, Yang Yin, Linzi, funeral hut, filial mourning, Yongping era, Kingdom of Chu, King Liu Ying, Mou Rong, Jianchu era, Emperor Suzong, Commander of the Five Officers</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 131,
+    "page_id": "6ae0c4544adf2ffb52f75559",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4544adf2ffb52f754d4/131.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n有攸司\n虎賁宿衛之臣贅衣主衣之官贅綴也音之銳\n反尚書曰綴衣虎賁閽尹閽寺並宦官周禮有\n閽人寺人陛戟執戟于陛也百重\n言多也攸所也司主也協韻音伺\n周廬千列徼道綺錯\n廬謂宿衛之廬周於宮也千列言多也史記衛令曰周\n廬設卒甚謹徼道徼廵之道綺錯交錯也前書曰中尉\n掌徼廵\n京師也\n輦路經營脩涂飛閣\n前書音義曰輦道閣道\n也涂亦塗也古字通用\n自\n未央而連桂宮北彌眀光而絙長樂陵墱道而超西墉\n混建章而外屬設璧門之鳳闕上柧棱而棲金雀\n未央\n宮在\n西長樂宮在東桂宮眀光宮在北言飛閣相連也墱陛\n級也音丁鄧反墉城也混同也建章宮在城西屬連也\n前書曰建章宮其東則鳳闕門髙二十餘丈其南有璧\n門之屬說文曰柧棱殿堂上最高之處也柧音孤棱音\n欠三句半之旨",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>had their assigned duties.\n\n<gloss>Brave imperial palace guards <note>original: \"huben\"</note> were ministers who maintained the night watch and garrisoned the palace. Attendants of robes <note>original: \"zhuiyi\"</note> were officials in charge of imperial attire; *zhui* <note>original: \"贅\"</note> means to stitch or attach <note>original: \"綴\"</note>, pronounced with the initial and final of *zhi* and *rui*. The *Classic of Documents* states: \"Attendants of imperial robes and brave imperial palace guards.\" Gatekeepers and eunuch chamberlains <note>original: \"hunyin\"</note> as well as private apartment eunuchs <note>original: \"hunsi\"</note> were both eunuch officials. The *Rites of Zhou* includes gatekeepers and chamberlain eunuchs. \"With halberds arrayed on the palace steps\" means clutching halberds while standing upon the palace steps. \"A hundred ranks\" indicates great numbers. *You* means place or that which; *si* means to take charge of. For rhyme, it is pronounced like *si* <note>meaning to watch over or wait upon</note>.</gloss>\n\nRound guard lodges in a thousand ranks, patrol lanes interlaced like patterned silk.\n\n<gloss>Guard lodges refer to the lodging quarters of the imperial night guard stationed around the palace perimeter. \"A thousand ranks\" signifies great abundance. The \"Statutes for the Palace Guard\" in the *Records of the Grand Historian* state: \"Round guard lodges were established with troops under exceedingly strict discipline.\" Patrol lanes were paths for making surveillance rounds. \"Interlaced like patterned silk\" means crisscrossing. The *History of the Former Han* states: \"The Commander of the Capital Guards held charge over patrols and inspections in the capital city.\"</gloss>\n\nImperial carriage thoroughfares wind and turn; extended roadways and soaring pavilions rise aloft.\n\n<gloss>The *Phonetic Meanings of the History of the Former Han* says: \"Carriage thoroughfares refer to raised corridors and elevated walkways.\" *Tu* <note>original: \"涂\"</note> also means road <note>original: \"塗\"</note>; these ancient characters were interchangeable.</gloss>\n\nReaching out from the Weiyang Palace to connect with the Gui Palace, extending northward past the Mingguang Palace and linking across to the Changle Palace; crossing over stepped pathways and rising above the western city wall; joined together with the Jianzhang Palace as an outer annex; erecting the Phoenix Watchtowers of the Jade Gate, where high upon the ridge beams roost golden sparrows.\n\n<gloss>The Weiyang Palace lay in the west, while the Changle Palace lay in the east. The Gui Palace and Mingguang Palace lay in the north. This describes elevated walkways interconnecting them. *Deng* refers to the flight of steps, pronounced with the initial and final of *ding* and *deng*. *Yong* means the city wall. *Hun* means unified together. The Jianzhang Palace was situated west of the walled city; *shu* means connected. The *History of the Former Han* states: \"To the east of the Jianzhang Palace stood the Phoenix Watchtower Gate, over twenty *zhang* high; to its south stood the Jade Gate and its annexes.\" The *Shuowen Jiezi* states: \"*Guling* refers to the highest vantage point atop a palace hall.\" *Gu* is pronounced like *gu*; *ling* is pronounced like... <note>original: \"欠三句半之旨\", the commentary text breaks off here with three and a half sentences missing</note></gloss>\n\n<summary>This page continues the Ban Gu commentary on the capital palaces and guard system, detailing the royal bodyguards, eunuch officers, night watchposts, and elevated covered corridors connecting the Weiyang, Changle, Gui, Mingguang, and Jianzhang palaces.</summary>\n<keywords>imperial guards, huben, zhuiyi, eunuchs, palace lodges, Weiyang Palace, Changle Palace, Gui Palace, Mingguang Palace, Jianzhang Palace, Phoenix Watchtowers, elevated walkways</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 199,
+    "page_id": "6ae0c4544adf2ffb52f7559d",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4544adf2ffb52f754d4/199.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n四人有不俾而假素罔光度而遺章今其如台而獨闕\n也\n伊維也邃古猶逺古也楚詞曰邃古之初戾至也言\n自逺古以來至於此也作者謂封禪者史記管仲曰\n自古封禪七十二君并武帝及光武為七十四君俾使\n也有天下不使其封禪而假為竹素之文者無有光揚\n法度而棄其文章不封禪者也\n台我也今其如我何獨闕也\n是時聖上固巳垂精游\n神包舉蓺文屢訪羣儒諭咨故老與之乎斟酌道德之\n淵源肴覈仁義之林藪以望元符之臻焉\n聖上謂章帝\n也諭告咨謨\n也道德仁義人所常行故以酒食為喻焉淵源林藪喻\n深邃也元天也符瑞也詩曰肴核惟旅覈亦核也謂果\n實之\n屬\n既成羣后之讜辭又悉經五繇之碩慮矣將絣萬\n次定曰三十三司\n<header>後漢書</header>\n<page-num>二十五</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>four persons. Has anyone ever not been enabled <note>to perform the sacrifices</note>, relying merely on bamboo and silk writings without magnifying laws and standards, or leaving behind texts without performing the Feng and Shan? How could it be only with regard to me that this alone is omitted?\n\n*Yi* means *wei* <note>an initial particle, \"now\" or \"contemplating\"</note>. *Suigu* is like *yuangu* <gloss>profound antiquity</gloss>. The *Songs of Chu* <note>original: \"Chuci\"</note> states: \"At the beginning of profound antiquity...\" *Li* means to arrive. This means: from profound antiquity down to the present. \"Those who have undertaken\" refers to those who performed the Feng and Shan sacrifices. The *Records of the Grand Historian* <note>original: \"Shiji\"</note> states that Guan Zhong said: \"From ancient times, seventy-two rulers performed the Feng and Shan.\" Adding Emperor Wu and Emperor Guangwu, they make seventy-four rulers. *Bi* means to cause or enable. Possessing the realm under Heaven without being enabled to perform the Feng and Shan, while relying merely on writings upon bamboo and silk: there has never been one who magnified laws and standards, or left behind literary compositions, who omitted the Feng and Shan sacrifices.\n\n*Tai* means me or myself. \"How could it be with regard to me that this alone is omitted?\"\n\nAt this time, the Sage Sovereign had already concentrated his refined spirit and wandered in contemplation, gathering all literary arts. Repeatedly he consulted the gathered scholars and took counsel with venerable elders, deliberating with them upon the deep source of the Way and Virtue, and examining the vast thicket of benevolence and righteousness, in hope that the primal auspicious tokens would arrive.\n\n\"Sage Sovereign\" refers to Emperor Zhang. *Yu* means to inform; *zi* means to deliberate and counsel. Because the Way, Virtue, benevolence, and righteousness are what people constantly practice, they are compared here to drink and food. \"Deep source\" and \"vast thicket\" are metaphors for profound depth. *Yuan* means Heaven. *Fu* means auspicious omen. The *Classic of Poetry* states: \"The meats and dried fruits are set out in order.\" *He* <note>覈</note> also means dried fruits and seeds <note>核</note>, referring to the category of fruits.\n\nHaving already achieved the upright words of the feudal lords, he thoroughly examined the profound reflections of the Five Divinations. About to weave together myriad...\n\n<note>marginal note at bottom:</note> <margin>the sequence was fixed as thirty-three officers</margin>\n\n<summary>This page continues the imperial commentary on the Feng and Shan sacrifices, noting that seventy-four sovereign rulers throughout history performed the rites, and describes Emperor Zhang consulting scholars and elders on moral governance in anticipation of auspicious heavenly tokens.</summary>\n<keywords>Hou Hanshu, Fan Ye, Feng and Shan sacrifices, Guan Zhong, Emperor Wu, Emperor Guangwu, Emperor Zhang, Songs of Chu, Classic of Poetry, auspicious tokens</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 23,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c4ea4adf2ffb52f75886",
+  "book_url": "https://sourcelibrary.org/book/6ae0c4ea4adf2ffb52f75886",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c4ea4adf2ffb52f75886",
+   "title": "後漢書[范煜…等撰]·卷八十五~卷八十七 (Hou Hanshu, Siku Quanshu, vol. 30 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 140,
+   "pages_ocr": 135,
+   "pages_translated": 130,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 140,
+   "distinct_page_numbers": 140,
+   "duplicate_records": 0,
+   "pages_with_ocr": 135,
+   "pages_translated": 130,
+   "with_printed_number": 48,
+   "printed_backsteps": 17,
+   "printed_repeats": 38,
+   "pages_count_field": 140,
+   "pages_translated_field": 130
+  },
+  "run": [
+   11,
+   37,
+   82,
+   123
+  ],
+  "pages": [
+   {
+    "page_number": 11,
+    "page_id": "6ae0c4ea4adf2ffb52f75893",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4ea4adf2ffb52f75886/11.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n慶出居邸賜奴婢三百人輿馬錢帛帷帳珍寳玩好充\n牣其第又賜中傅以下至左右錢帛各有差\n前書音義\n曰中傅官\n名\n也\n慶多被病或時不安帝朝夕問訊進膳藥所以垂意\n甚備慶小心恭孝自以廢黜尤畏事慎法每朝謁陵廟\n常夜分嚴裝衣冠待明\n分半\n也\n約勑官屬不得與諸王車\n騎競驅常以貴人葬禮有闕每竊感恨至四節伏臘輙\n祭於私室竇氏誅後始使乳母於城北遙祠及竇太后\n崩慶求上冢致哀帝許之詔太官四時給祭具慶垂涕\n父\n三\n曰\n<page-num>八</page-num>\n<page-num>二</page-num>\n与\n<header>後漢書</header>\n<page-num>五</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Qing moved out to reside in his own mansion. The Emperor bestowed upon him three hundred male and female slaves, carriages and horses, money and silk fabrics, bedcurtains and canopies, precious treasures, and luxury curios, completely filling his residence. He also granted money and silk fabrics, graded according to rank, to everyone from the junior tutor <gloss>zhongfu</gloss> down to the personal attendants.\n\n<note>The Sound and Meaning of the Book of Han states that \"junior tutor\" <term>zhongfu</term> is the name of an official post.</note>\n\nQing suffered frequently from illnesses and was at times in poor health. Morning and evening, the Emperor inquired after his condition and sent meals and medicines, caring for his needs with the utmost thoroughness. Qing was exceedingly cautious, respectful, and filial. Because he had previously been deposed as crown prince, he was especially fearful of overstepping and strictly adhered to the laws. Whenever he attended court or paid visits to the imperial mausoleums and ancestral temples, he would regularly rise at midnight, dress meticulously in his formal robes and cap, and await the break of dawn.\n\n<note>\"Midnight\" <term>yefen</term> means half of the night.</note>\n\nHe strictly instructed his subordinate officials that they must not race their carriages and horses against those of the other imperial princes. He constantly felt secret grief and resentment over the deficiencies in the funeral rites accorded to his mother, the Imperial Noble Consort. Whenever the four seasonal sacrifices, the summer sacrifice, and the winter ancestral sacrifice came, he always conducted sacrifice in his private chambers. Only after the Dou clan was purged did he send his wet nurse to perform distant sacrifices to her north of the city wall. When Grand Empress Dowager Dou passed away, Qing petitioned to visit his mother's tomb to express his mourning. The Emperor granted permission and decreed that the imperial grand providore should provide sacrificial utensils for the four seasons. Qing wept with tears streaming down his face,\n\n<unclear>father three said eight two with Book of the Later Han five</unclear>\n\n<summary>Prince Qing establishes his independent residence with lavish imperial gifts and attends diligently to court duties despite poor health. Always cautious due to his past demotion, he privately mourns his disgraced mother until the fall of the Dou clan allows him to openly seek imperial permission to conduct sacrifices at her tomb.</summary>\n<keywords>Prince Qing, Emperor He of Han, Lady Song, imperial gifts, filial piety, sacrifices, funeral rites, Dou clan, Empress Dowager Dou</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 37,
+    "page_id": "6ae0c4ea4adf2ffb52f758ad",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4ea4adf2ffb52f75886/37.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n仁皇祀康薨子斌貝嗣建安十二年為黃巾賊所害子開\n嗣立十三年魏受禪以為崇德侯\n城陽懷王淑傳\n城陽懷王淑以永元二年分濟隂為國立五年薨葬於\n京師無子國除還并濟隂\n廣宗殤王萬歲傳\n廣宗殤王萬歲以永元五年封分鉅鹿為國其年薨葬\n於京師無子國除還并鉅鹿\n欠\n二\n匀\n車\n入\n<page-num>二</page-num>\n<page-num>二</page-num>\n司\n<header>後漢書</header>\n古",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>sacrifices to Emperor Ren. Kang died, and his son Bin succeeded him. In the twelfth year of the Jian'an reign <note>207 CE</note>, he was murdered by the Yellow Turban rebels. His son Kai succeeded to the title. He reigned for thirteen years. When the Wei dynasty received the abdication, he was made the Marquis of Chongde.\n\n### Biography of Shu, the Mourned King of Chengyang\n\nShu, the Mourned King of Chengyang, was enfeoffed in the second year of the Yongyuan reign <note>90 CE</note>, when a portion of Jiyin was separated to form his kingdom. He reigned for five years and died. He was buried in the capital city. Having no sons, his princedom was eliminated, and its territory was reunited with Jiyin.\n\n### Biography of Wansui, the Youthful King of Guangzong\n\nWansui, the Youthful King of Guangzong, was enfeoffed in the fifth year of the Yongyuan reign <note>93 CE</note>, when a portion of Julu was separated to form his kingdom. In that same year he died, and was buried in the capital city. Having no sons, his princedom was eliminated, and its territory was reunited with Julu.\n\n<unclear>欠 二 匀 車 入 二 二 司 後漢書 古</unclear>\n\n<summary>This page concludes the lineage of Emperor Zhang's branch by recording the succession and demise of Prince Kang's heirs, followed by concise biographical entries for King Shu of Chengyang and King Wansui of Guangzong, both of whom died without heirs.</summary>\n<keywords>Emperor Ren, Yellow Turban rebellion, Wei dynasty, Marquis of Chongde, King Shu of Chengyang, King Wansui of Guangzong, Eastern Han, Hou Hanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 82,
+    "page_id": "6ae0c4ea4adf2ffb52f758da",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4ea4adf2ffb52f75886/82.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<page-num>三</page-num>\n全上曰人正\n<header>卷八十六</header>\n曰皇太后自在椒房有聰明母儀之德遭時不造援立\n聖明承繼宗廟功烈至重先帝晏駕因遇大獄遷居空\n宫不幸早世家雖獲罪事非太后今若别葬誠失天下\n之望且馮貴人冢墓被發骸骨暴露與賊併尸魂靈汙\n染\n段熲為河南尹坐盜發馮\n貴人冢左遷諫議大夫\n且無功於國何宜上配至\n尊忠省球議作色俛仰蚩球曰陳廷尉建此議甚健球\n曰陳竇既𡨚皇太后無故幽閉臣常痛心天下憤歎今\n日言之退而受罪宿昔之願公卿以下皆從球議李咸",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<page-num>Three</page-num>\n<unclear>全上曰人正</unclear>\n<header>Scroll 86</header>\nIt stated: \"From the time the Empress Dowager resided in the pepper chambers <note>the quarters of the empress</note>, she possessed the virtues of intelligence and maternal model for the realm. Encountering an unpropitious time, she assisted in establishing our sagacious sovereign to succeed to and carry forward the ancestral temples. Her merit and achievements are exceedingly weighty. When the late Emperor passed away, because she met with the great political trials, she was relocated to live in an empty palace. Sadly, she met an untimely death. Although her family incurred guilt, the fault was not the Empress Dowager's. If she were now to be buried separately, it would truly forfeit the hopes of All Under Heaven. Moreover, the tomb of Noble Consort Feng was violated and robbed; her bones were left exposed and mingled with the corpses of bandits, polluting her spiritual soul. <margin>When Duan Jiong served as Intendant of Henan, he was demoted to Remonstrance Grand Master for failing to prevent the grave-robbing of Noble Consort Feng's tomb.</margin> Furthermore, she performed no meritorious service for the state. How could she be fittingly paired with the Supreme Sovereign?\"\n\nZhao Zhong inspected Qiu's written deliberation. Changing countenance, looking up and down with sneering disdain, Zhong mocked Qiu, saying: \"Commandant of Justice Chen, you present a remarkably forceful deliberation!\"\n\nQiu said: \"Chen Fan and Dou Wu were unjustly wronged, and the Empress Dowager was confined without cause. My heart has always ached over this, and All Under Heaven has sighed in indignation. To speak of it today and afterwards suffer punishment has long been my cherished wish.\"\n\nThe ministers and high officials from the Nine Ministers down all followed Qiu's deliberation. Li Xian\n\n<summary>Chen Qiu submits a written memorial defending Empress Dowager Dou's right to imperial enshrinement with Emperor Huan while rejecting Noble Consort Feng due to desecration and lack of merit. Facing eunuch Zhao Zhong's mockery, Chen Qiu affirms his willingness to face death, winning unanimous support from the assembly.</summary>\n<keywords>Hou Hanshu, Chen Qiu, Empress Dowager Dou, Zhao Zhong, Noble Consort Feng, Emperor Huan, Li Xian, Duan Jiong, ancestral enshrinement, Siku Quanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 123,
+    "page_id": "6ae0c4ea4adf2ffb52f75903",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c4ea4adf2ffb52f75886/123.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n茂郎中上官資並上疏請雲帝恚甚有司奏以為大不\n敬詔切責蕃秉免歸田里茂資貶秩二等時帝在濯龍\n池管霸奏雲等事霸詭言曰李雲野澤愚儒杜衆郡中\n小吏出於狂戇不足加罪帝謂霸曰帝欲不諦是何等\n語而常侍欲原之邪顧使小黃門可其奏雲衆皆死獄\n中後冀州刺史賈琮使行部過祠雲墓刻石表之\n論曰禮有五諫諷為上\n五諫謂諷諫順諫闚諫指諫陷\n諫也諷諫者知患禍之萌而諷\n告也順諫者出辭遜順不逆君心也闚諫者視人君顏\n色而諫也指諫者質指其事而諫也陷諫者言國之害\n後奚書\n共",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>...rong, together with Gentleman Cadet Shangguan Zi, likewise submitted memorials pleading for Li Yun. The Emperor was exceedingly enraged. The judicial officials submitted a memorial stating that their acts constituted high disrespect. An imperial edict was issued sharply reprimanding Fan and Bing, dismissing them from office to return to their agricultural lands and villages. Mu Rong and Shangguan Zi were demoted by two administrative ranks.\n\nAt that time, the Emperor was at Zhuolong Pond. Attendant Guan Ba submitted a report regarding the affairs of Li Yun and his fellow accused. Ba deceitfully remarked: \"Li Yun is an ignorant scholar from the marshes and wilds. Du Zhong is merely a petty county functionary. Their conduct stems from reckless foolishness and does not merit capital punishment.\"\n\nThe Emperor said to Ba: \"The words 'The Emperor wishes not to be clear and discerning,' what manner of speech are they? Yet you, Regular Attendant, desire to pardon him?\" Turning to a Junior Yellow Gate attendant, the Emperor approved the memorial condemning them. Li Yun and Du Zhong both died in prison.\n\nLater, Jia Cong, Inspector of Jizhou, when touring his administrative circuit, passed by the tomb of Li Yun, performed sacrifices there, and carved a stone monument to mark his honor.\n\nThe historian's appraisal states: The Book of Rites records five forms of remonstrance, among which indirect admonition <note>original: \"fengjian\"</note> ranks highest.\n\n<note>Commentary notes: The five forms of remonstrance are indirect admonition, compliant admonition, watchful admonition, direct pointing admonition, and peril admonition. Indirect admonition means perceiving the sprout of misfortune and disaster, and conveying warning through subtle analogy. Compliant admonition means offering words that are humble and yielding, not defying the ruler's inner sentiment. Watchful admonition means observing the sovereign's facial expression before presenting admonition. Direct pointing admonition means pointing straightforwardly at the matter itself when remonstrating. Peril admonition means speaking out on that which brings peril to the state.</note>\n\n後奚書 <note>editorial note: corrupted character in woodblock line catch, likely Hou Han Shu</note>\n共\n\n<summary>Emperor Huan severely punishes officials defending Li Yun and executes Li Yun and Du Zhong despite internal pleas, followed by a historical appraisal on the five classical modes of remonstrance.</summary>\n<keywords>Emperor Huan, Li Yun, Du Zhong, Chen Fan, Yang Bing, Guan Ba, Jia Cong, five remonstrances, Hou Hanshu, ancient Chinese bureaucracy</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 24,
+  "stratum": "zh-houhanshu",
+  "book_id": "6ae0c2ce4adf2ffb52f74a6e",
+  "book_url": "https://sourcelibrary.org/book/6ae0c2ce4adf2ffb52f74a6e",
+  "tradition": "zh-houhanshu",
+  "book": {
+   "id": "6ae0c2ce4adf2ffb52f74a6e",
+   "title": "後漢書[范煜…等撰]·卷九~卷十下 (Hou Hanshu, Siku Quanshu, vol. 5 of 43)",
+   "author": "范曄 (Fan Ye)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 162,
+   "pages_ocr": 159,
+   "pages_translated": 159,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 162,
+   "distinct_page_numbers": 162,
+   "duplicate_records": 0,
+   "pages_with_ocr": 159,
+   "pages_translated": 159,
+   "with_printed_number": 35,
+   "printed_backsteps": 13,
+   "printed_repeats": 25,
+   "pages_count_field": 162,
+   "pages_translated_field": 159
+  },
+  "run": [
+   19,
+   76,
+   90,
+   123
+  ],
+  "pages": [
+   {
+    "page_number": 19,
+    "page_id": "6ae0c2ce4adf2ffb52f74a83",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2ce4adf2ffb52f74a6e/19.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金定巳辰人三\n<header>卷九</header>\n華隂露次道南是夜有赤氣貫紫宮\n獻帝春秋曰赤氣\n廣六七尺東至寅\n西至\n戌也\n張濟復反與李傕郭汜合十一月庚午李傕郭汜\n等追乗輿戰於東澗王師敗績殺光祿勳鄧泉衛尉士\n孫瑞廷尉宣播大長秋苗祀\n獻帝春秋\n播作璠也\n步兵校尉魏桀\n侍中朱展射聲校尉沮儁\n風俗通曰沮姓也黃帝時\n史官沮誦之後音俱余反\n壬\n申幸曹陽露次田中\n曹陽澗名在今陝州西南七里俗\n謂之七里澗崔浩云自南山北通\n於\n河\n楊奉董承引白波帥胡才李樂韓暹及匈奴左賢王\n去卑率師奉迎與李傕等戰破之十二月庚辰車駕乃",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Huayin, encamping in the open south of the road. That night, a red vapor pierced the Purple Palace <note>the circumpolar stars representing the celestial residence of the emperor</note>.\n<note>The Spring and Autumn Annals of Emperor Xian states: \"The red vapor was six to seven feet wide, extending east to the direction of yin and west to the direction of xu.\"</note>\n\nZhang Ji rebelled again and joined forces with Li Jue and Guo Si. In the eleventh month, on the day <term>gengwu</term>, Li Jue, Guo Si, and their allies pursued the imperial carriage and fought at Dongjian <note>Eastern Ravine</note>. The royal army suffered a crushing defeat. The rebels killed Minister of the Imperial Household Deng Quan, Commandant of the Palace Guard Shisun Rui, Commandant of Justice Xuan Bo, Chief Director of Palace Affairs Miao Si,\n<note>The Spring and Autumn Annals of Emperor Xian records Bo as Fan.</note>\nInfantry Colonel Wei Jie, Attendant Zhu Zhan, and Archer Colonel Ju Jun.\n<note>Customs and Traditions states: \"Ju is a surname, descended from Ju Song, who was the official historian in the time of the Yellow Emperor. The character is pronounced with the fanqie phonetic spelling ju-yu.\"</note>\n\nOn the day <term>renshen</term>, the Emperor visited Caoyang, encamping in the open among the fields.\n<note>Caoyang is the name of a ravine located seven li southwest of modern-day Shanzhou, commonly called the Seven-Li Ravine. Cui Hao says it runs from the southern mountains north into the Yellow River.</note>\n\nYang Feng and Dong Cheng led the White Wave bandit chieftains Hu Cai, Li Yue, and Han Xian, as well as Qubei, the Worthy Prince of the Left of the Xiongnu, to lead their forces to welcome the Emperor. They engaged Li Jue and his confederates in battle, routing them. In the twelfth month, on the day <term>gengchen</term>, the imperial carriage finally\n\n<summary>In late 195 CE, Zhang Ji reunited with Li Jue and Guo Si to ambush the fleeing imperial entourage at Dongjian, killing several high-ranking ministers. Yang Feng and Dong Cheng subsequently formed an alliance with White Wave bandits and Xiongnu cavalry, successfully repelling the warlords.</summary>\n<keywords>Emperor Xian, Zhang Ji, Li Jue, Guo Si, Dongjian, Shisun Rui, Caoyang, Yang Feng, Dong Cheng, White Wave bandits, Qubei, Xiongnu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 76,
+    "page_id": "6ae0c2ce4adf2ffb52f74abc",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2ce4adf2ffb52f74a6e/76.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n固後宮初宋貴人生皇太子慶梁貴人生和帝后既無\n子並疾忌之數間於帝漸至疎嫌因誣宋貴人挾邪媚\n道遂自殺廢慶為清河王語在慶傳梁貴人者梁竦之\n女也少失母為伯母舞隂長公主所養\n長公主光武\n女梁松尚焉\n年\n十六建初二年亦與中姊俱選入掖庭為貴人四年生\n和帝后養為巳子欲專名外家而忌梁氏八年乃作飛\n書以陷竦\n飛書若令\n匿名書也\n竦坐誅貴人姊妹以憂卒自是宫\n房惵息\n惵懼也音牒周書曰臨\n捕以威而氣惵懼也\n后愛曰隆及帝崩和帝\n<page-num>七</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and held sway over the imperial harem.\n\nAt first, Honorable Lady Song gave birth to Imperial Crown Prince Qing, and Honorable Lady Liang gave birth to Emperor He. Since the Empress had no son of her own, she was jealous and resentful of both of them, and repeatedly sowed discord between them and the Emperor. Gradually, estrangement and suspicion arose. She then falsely accused Honorable Lady Song of practicing sorcery and seductive black magic. Honorable Lady Song subsequently committed suicide, and Qing was deposed as the Prince of Qinghe. The account is found in Qing's biography.\n\nHonorable Lady Liang was the daughter of Liang Song. She lost her mother at an early age and was raised by her paternal aunt, the Senior Princess of Wuyin.\n\n<gloss>The Senior Princess was the daughter of Emperor Guangwu; Liang Song married her.</gloss>\n\nAt the age of sixteen, in the second year of Jianchu <note>77 CE</note>, she and her elder sister were both selected to enter the <term>yeting</term> <gloss>women's quarters of the imperial palace</gloss> as Honorable Ladies. In the fourth year <note>79 CE</note>, she gave birth to Emperor He. The Empress raised him as her own child. Wishing to keep the honor and prestige of being the imperial maternal family exclusively for herself, she resented and feared the Liang clan. In the eighth year <note>83 CE</note>, she fabricated an anonymous slanderous letter to frame Liang Song.\n\n<gloss>An anonymous slanderous letter is equivalent to what is now called an anonymous letter.</gloss>\n\nLiang Song was implicated and executed, while the Honorable Lady and her sister died of grief and sorrow. From this time on, the concubines and palace women held their breath in terror.\n\n<gloss>\"Die\" means fear; pronounced like \"die\". The Book of Zhou states: \"Confronting and seizing them with awe so that their spirits were terror-stricken.\"</gloss>\n\nThe imperial affection bestowed upon the Empress grew increasingly abundant day by day. When the Emperor died, Emperor He\n<summary>Empress Dou schemes against Honorable Ladies Song and Liang to eliminate rivals and claim Emperor He as her own child, causing the death of both consorts and the destruction of the Liang clan. Her machinations secure her supreme position and favor in the imperial palace up to the Emperor's death.</summary>\n<keywords>Empress Dou, Honorable Lady Song, Crown Prince Qing, Prince of Qinghe, Emperor He, Honorable Lady Liang, Liang Song, Senior Princess of Wuyin, Emperor Guangwu, Jianchu era, yeting, anonymous letter, Book of Zhou, Han dynasty</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 90,
+    "page_id": "6ae0c2ce4adf2ffb52f74aca",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2ce4adf2ffb52f74a6e/90.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n皆減其過半悉斥賣上林鷹犬其蜀漠釦器九帶佩刀\n並不復調\n蜀蜀郡也漠廣漠郡也二郡主作供進之器\n元帝時貢禹上書蜀廣漠主金銀器各用五\n百萬是也釦音口\n以金銀緣器也\n止畫工三十九種又御府尚方織室\n錦繡冰紈綺縠金銀珠玉犀象瑇瑁雕鏤翫弄之物皆\n絶不作離宮别館儲峙米精薪炭悉令省之\n儲峙猶蓄\n積也精乾\n飯\n也\n又詔諸園貴人其宮人有宗室同族若羸老不任使\n者令園監實覈上名自御北宮增喜觀閱問之恣其去\n留即日免遣者五六百人及殤帝崩太后定䇿立安帝\n次三口車之与",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>all were reduced by more than half. The falcons and hunting dogs of Shanglin Park were all sold off. The gold-rimmed and silver-rimmed vessels, nine-ring belts, and ornamental daggers from Shu Commandery and Guanghan Commandery were no longer requisitioned.\n\n<note>commentary: Shu refers to Shu Commandery. Han refers to Guanghan Commandery. These two commanderies were primarily responsible for manufacturing tribute vessels. In the time of Emperor Yuan, Gong Yu submitted a memorial noting that Shu and Guanghan each spent five million copper cash on gold and silver wares. That refers to this. The character kou </note><note>original: \"釦\"</note> is pronounced kou, meaning to rim or inlay a vessel with gold or silver.\n\nThirty-nine varieties of painting artisans were dismissed. Furthermore, the brocades, embroideries, sheer white silks, gossamers, as well as gold, silver, pearls, jade, rhinoceros horn, ivory, tortoiseshell, carvings, and playthings produced by the Imperial Storeroom, the Directorate of Imperial Manufactures, and the Weaving Rooms were completely discontinued. The provisions of grain, dried cooked rice, firewood, and charcoal stored in the detached palaces and separate villas were ordered to be abolished.\n\n<note>commentary: Chu-zhi </note><note>original: \"儲峙\"</note> means to stockpile and accumulate. Jing <note>original: \"精\"</note> means dried cooked rice rations.\n\nShe also issued an edict to the honored consorts residing at the imperial mausoleum parks: if any of their palace women belonged to the imperial lineage or were frail, elderly, and unfit for service, the mausoleum park directors were to verify and submit their names. The Empress Dowager personally went to the Zengxi Belvedere in the Northern Palace to inspect and question them, allowing them to depart or remain as they pleased. On that very day, five to six hundred women were released and sent home.\n\nWhen Emperor Shang passed away, the Empress Dowager determined the succession strategy and enthroned Emperor An.\n\n<unclear>次三口車之与</unclear>\n<summary>Empress Dowager Deng drastically curtails court manufacturing of luxury goods, downsizes imperial provisions across secondary residences, and releases hundreds of aging palace women, before arranging the succession of Emperor An.</summary>\n<keywords>Empress Dowager Deng, Emperor Shang, Emperor An, sumptuary reforms, palace women release, Book of the Later Han, tribute reductions</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 123,
+    "page_id": "6ae0c2ce4adf2ffb52f74aeb",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c2ce4adf2ffb52f74a6e/123.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n一\n二\n三\n四\n持節大長秋奉弔祠賻錢四千萬\n公羊傳曰\n貨財曰賻\n布四萬匹\n中謁者僕射典護喪事侍御史護大駕鹵簿\n漢官儀曰\n天子車駕\n次第謂之鹵簿有大駕法駕小駕大駕公卿奉引大將\n軍參乘太僕御屬車八十一乘備千乘萬騎侍御史在\n左駕馬詢問不法者今儀比\n車駕故以侍御史監護焉\n詔安平王豹河間王建渤\n海王悝\n悝音\n恢\n長社益陽二長公主\n長社公主桓帝姊耿\n弇弟霸玄孫援尚焉\n益陽公主桓帝妹侍\n中寇榮從兄子尚焉\n與諸國侯三百里內者及中二千\n石二千石令長相皆㑹葬將作大匠復土繕廟合葬博\n陵",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and the Grand Palace Grandee, bearing imperial credentials, to offer condolences, sacrifices, and funerary contributions of forty million cash\n\n<gloss>The <term>Gongyang Zhuan</term> <gloss>Gongyang Commentary</gloss> states: Gifts of goods and wealth for a funeral are called <term>fu</term> <gloss>funerary contributions</gloss>.</gloss>\n\nand forty thousand bolts of cloth. The Palace Attendant Supervisor of the Palace Writers oversaw the funeral arrangements, and an Imperial Clerk managed the Imperial Entourage and Procession.\n\n<gloss>The <term>Han Guan Yi</term> <gloss>Protocols of the Han Officials</gloss> states: The order and sequence of the Emperor's carriage and horses is called the <term>lubu</term> <gloss>imperial procession</gloss>. There are the Grand Procession, the Standard Procession, and the Lesser Procession. In the Grand Procession, the ministers and grandees lead in front; the General-in-Chief serves as chariot companion; the Grand Groom drives; there are eighty-one trailing attendant carriages, with an escort of a thousand carriages and ten thousand horsemen. The Imperial Clerk rides a horse on the left, investigating those who break the laws. Because the ceremonial protocol here was modeled upon the imperial procession, an Imperial Clerk was assigned to supervise it.</gloss>\n\nAn imperial decree ordered King Bao of Anping, King Jian of Hejian, King Kui of Bohai\n\n<gloss>Kui is pronounced like <term>hui</term> <gloss>hui</gloss>.</gloss>\n\nand the two Grand Princesses of Changshe and Yiyang\n\n<gloss>The Grand Princess of Changshe was the elder sister of Emperor Huan. Geng Yuan, the great-great-grandson of Geng Ba, the younger brother of Geng Yan, took her as wife.</gloss>\n\n<gloss>The Grand Princess of Yiyang was the younger sister of Emperor Huan. A son of the first cousin of Palace Attendant Kou Rong took her as wife.</gloss>\n\ntogether with the marquises of various fiefs within three hundred li, as well as officials of Fully Two Thousand Bushels, Two Thousand Bushels, and the prefects and chancellors, to all assemble for the funeral. The Court Architect covered the tomb with earth and restored the ancestral temple, conducting the joint burial at Boling.\n\n<summary>Emperor Huan sends senior officials with massive monetary gifts to conduct the funerary rites for his mother, modeling the burial procession on the imperial cortege under official supervision. Royal family members, regional rulers, and high-ranking officials within three hundred li are decreed to attend the joint burial at Boling Tomb.</summary>\n<keywords>Grand Palace Grandee, funerary contributions, Gongyang Zhuan, Palace Attendant Supervisor, Imperial Clerk, imperial procession, Han Guan Yi, King of Anping, King of Hejian, King of Bohai, Grand Princess of Changshe, Grand Princess of Yiyang, Court Architect, Boling</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

@@ -1,0 +1,33 @@
+{
+ "method": "Opus verdict defects (blind, against the image) per 1,000 words of the written text, item pages only (wrong-page controls and plants excluded). Words = whitespace tokens after removing <tag>…</tag> metadata lines. The live route for these pages is no text (unread pages), so there is no live-route rate to compare; the decision is the brief k/n rule in score.json.",
+ "study_cells": {
+  "es19": {
+   "route": "lighton>agy-flash-low",
+   "pages": 30,
+   "words": 8579,
+   "defects": {
+    "cosmetic": 14,
+    "misleads": 5,
+    "wrong_text": 2
+   },
+   "misleads_per_1k": 0.583,
+   "wrong_text_per_1k": 0.233,
+   "cosmetic_per_1k": 1.632,
+   "fidelity_mean": 4.77
+  },
+  "fr19": {
+   "route": "lighton>agy-flash-low",
+   "pages": 30,
+   "words": 10022,
+   "defects": {
+    "cosmetic": 22,
+    "misleads": 1,
+    "wrong_text": 0
+   },
+   "misleads_per_1k": 0.1,
+   "wrong_text_per_1k": 0,
+   "cosmetic_per_1k": 2.195,
+   "fidelity_mean": 4.87
+  }
+ }
+}

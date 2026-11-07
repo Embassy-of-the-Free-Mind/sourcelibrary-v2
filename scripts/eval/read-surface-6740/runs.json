@@ -1,0 +1,445 @@
+{
+ "planned_at": "2026-10-30T20:14:56.661Z",
+ "seed": 6740,
+ "levels": {
+  "ppc": [
+   1,
+   4,
+   8
+  ],
+  "edge": [
+   1024,
+   1600,
+   2400
+  ],
+  "think": [
+   "low",
+   "medium",
+   "high"
+  ]
+ },
+ "runs": {
+  "de": [
+   {
+    "id": "B10",
+    "x1": 0,
+    "x2": 1,
+    "x3": -1,
+    "ppc": 4,
+    "edge": 2400,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "L1",
+    "x1": 0,
+    "x2": null,
+    "x3": -1,
+    "ppc": 4,
+    "edge": null,
+    "think": "low",
+    "live": true,
+    "phase": "A"
+   },
+   {
+    "id": "B09",
+    "x1": 0,
+    "x2": -1,
+    "x3": -1,
+    "ppc": 4,
+    "edge": 1024,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "B05",
+    "x1": -1,
+    "x2": 0,
+    "x3": -1,
+    "ppc": 1,
+    "edge": 1600,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "B06",
+    "x1": 1,
+    "x2": 0,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 1600,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "B02",
+    "x1": 1,
+    "x2": -1,
+    "x3": 0,
+    "ppc": 8,
+    "edge": 1024,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "L2",
+    "x1": 0,
+    "x2": null,
+    "x3": -1,
+    "ppc": 4,
+    "edge": null,
+    "think": "low",
+    "live": true,
+    "phase": "B"
+   },
+   {
+    "id": "C2",
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "ppc": 4,
+    "edge": 1600,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B07",
+    "x1": -1,
+    "x2": 0,
+    "x3": 1,
+    "ppc": 1,
+    "edge": 1600,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B08",
+    "x1": 1,
+    "x2": 0,
+    "x3": 1,
+    "ppc": 8,
+    "edge": 1600,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B03",
+    "x1": -1,
+    "x2": 1,
+    "x3": 0,
+    "ppc": 1,
+    "edge": 2400,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B12",
+    "x1": 0,
+    "x2": 1,
+    "x3": 1,
+    "ppc": 4,
+    "edge": 2400,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "C3",
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "ppc": 4,
+    "edge": 1600,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B01",
+    "x1": -1,
+    "x2": -1,
+    "x3": 0,
+    "ppc": 1,
+    "edge": 1024,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B11",
+    "x1": 0,
+    "x2": -1,
+    "x3": 1,
+    "ppc": 4,
+    "edge": 1024,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "C1",
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "ppc": 4,
+    "edge": 1600,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B04",
+    "x1": 1,
+    "x2": 1,
+    "x3": 0,
+    "ppc": 8,
+    "edge": 2400,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "X01",
+    "x1": 1,
+    "x2": -1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 1024,
+    "think": "low",
+    "live": false,
+    "phase": "S"
+   },
+   {
+    "id": "X02",
+    "x1": 1,
+    "x2": 1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 2400,
+    "think": "low",
+    "live": false,
+    "phase": "S"
+   }
+  ],
+  "la": [
+   {
+    "id": "B09",
+    "x1": 0,
+    "x2": -1,
+    "x3": -1,
+    "ppc": 4,
+    "edge": 1024,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "B06",
+    "x1": 1,
+    "x2": 0,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 1600,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "B05",
+    "x1": -1,
+    "x2": 0,
+    "x3": -1,
+    "ppc": 1,
+    "edge": 1600,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "B10",
+    "x1": 0,
+    "x2": 1,
+    "x3": -1,
+    "ppc": 4,
+    "edge": 2400,
+    "think": "low",
+    "live": false,
+    "phase": "A"
+   },
+   {
+    "id": "L1",
+    "x1": 0,
+    "x2": null,
+    "x3": -1,
+    "ppc": 4,
+    "edge": null,
+    "think": "low",
+    "live": true,
+    "phase": "A"
+   },
+   {
+    "id": "C1",
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "ppc": 4,
+    "edge": 1600,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B12",
+    "x1": 0,
+    "x2": 1,
+    "x3": 1,
+    "ppc": 4,
+    "edge": 2400,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B04",
+    "x1": 1,
+    "x2": 1,
+    "x3": 0,
+    "ppc": 8,
+    "edge": 2400,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B11",
+    "x1": 0,
+    "x2": -1,
+    "x3": 1,
+    "ppc": 4,
+    "edge": 1024,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B03",
+    "x1": -1,
+    "x2": 1,
+    "x3": 0,
+    "ppc": 1,
+    "edge": 2400,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "L2",
+    "x1": 0,
+    "x2": null,
+    "x3": -1,
+    "ppc": 4,
+    "edge": null,
+    "think": "low",
+    "live": true,
+    "phase": "B"
+   },
+   {
+    "id": "B02",
+    "x1": 1,
+    "x2": -1,
+    "x3": 0,
+    "ppc": 8,
+    "edge": 1024,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B07",
+    "x1": -1,
+    "x2": 0,
+    "x3": 1,
+    "ppc": 1,
+    "edge": 1600,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "C2",
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "ppc": 4,
+    "edge": 1600,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B01",
+    "x1": -1,
+    "x2": -1,
+    "x3": 0,
+    "ppc": 1,
+    "edge": 1024,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "C3",
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "ppc": 4,
+    "edge": 1600,
+    "think": "medium",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "B08",
+    "x1": 1,
+    "x2": 0,
+    "x3": 1,
+    "ppc": 8,
+    "edge": 1600,
+    "think": "high",
+    "live": false,
+    "phase": "B"
+   },
+   {
+    "id": "X01",
+    "x1": 1,
+    "x2": -1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 1024,
+    "think": "low",
+    "live": false,
+    "phase": "S"
+   },
+   {
+    "id": "X02",
+    "x1": 1,
+    "x2": 1,
+    "x3": -1,
+    "ppc": 8,
+    "edge": 2400,
+    "think": "low",
+    "live": false,
+    "phase": "S"
+   }
+  ]
+ }
+}

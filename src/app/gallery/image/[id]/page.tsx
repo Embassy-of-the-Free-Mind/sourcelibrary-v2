@@ -7,6 +7,7 @@
 
 'use client';
 
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -584,7 +585,7 @@ export default function ImageDetailPage({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const isMember = (session?.user as any)?.membership != null;
+  const isMember = sessionHasMemberBenefits(session?.user);
   const [imagePurchased, setImagePurchased] = useState(false);
   const [paymentsEnabled, setPaymentsEnabled] = useState(false);
 

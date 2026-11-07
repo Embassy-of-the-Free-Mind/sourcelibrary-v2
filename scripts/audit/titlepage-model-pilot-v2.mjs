@@ -315,7 +315,7 @@ if (process.argv.includes('--imprint')) {
   }
 
   const fetchJpeg = async (url) => {
-    const res = await fetch(boundedImageUrl(url), { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org) titlepage-imprint-7201' }, signal: AbortSignal.timeout(45000) });
+    const res = await fetch(boundedImageUrl(url), { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) titlepage-imprint-7201' }, signal: AbortSignal.timeout(45000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const buf = Buffer.from(await res.arrayBuffer());
     return sharp(buf).rotate().resize({ width: 1400, height: 1400, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 82 }).toBuffer();

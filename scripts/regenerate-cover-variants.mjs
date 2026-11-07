@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: cover variants, not page images (#4406).
 /**
  * Regenerate the missing `{NNNN}.jpg` (1200px display) and `{NNNN}-thumb.jpg`
  * (150px thumbnail) variants from the existing `{NNNN}-full.jpg` (cropped

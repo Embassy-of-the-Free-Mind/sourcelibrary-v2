@@ -220,10 +220,11 @@ export async function writePageText(db, pageId, field, next, opts) {
  *
  * Returns { rows, targets, restorable, changed: [...], missing: [...], tally, book_ids }.
  */
-export async function revertRun(db, runId, { apply = false, by = 'scripts/maintenance/revert-run.mjs', now } = {}) {
+export async function revertRun(db, runId, { apply = false, by = 'scripts/maintenance/revert-run.mjs', now, pageIds = null } = {}) {
   if (typeof runId !== 'string' || runId === '') throw new Error('revertRun: runId is required');
+  // pageIds (optional): undo only these pages of the run (#7567: the pilot pages a later guard would have refused)
   const rows = await db.collection('page_revisions')
-    .find({ run_id: runId, writer: WRITER_ID, aborted: { $exists: false } })
+    .find({ run_id: runId, writer: WRITER_ID, aborted: { $exists: false }, ...(pageIds && { page_id: { $in: [...pageIds] } }) })
     .sort({ created_at: 1 }).toArray();
   const groups = new Map();
   for (const r of rows) {

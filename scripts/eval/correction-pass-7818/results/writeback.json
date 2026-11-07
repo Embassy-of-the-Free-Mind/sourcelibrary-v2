@@ -1,0 +1,4 @@
+{
+ "rule": "Arm P page the lane wrote; judge accepted the draft AND rejected the correction AND tagged wrong_text in it -> restore the draft (revert-run.mjs on the lane run, this page only)",
+ "pages": []
+}

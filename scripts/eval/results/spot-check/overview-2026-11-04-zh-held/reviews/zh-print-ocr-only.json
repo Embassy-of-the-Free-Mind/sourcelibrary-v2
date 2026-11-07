@@ -1,0 +1,904 @@
+[
+  {
+    "book_id": "69aebb5e39a4307877774064",
+    "slot": 33,
+    "title": "楚辭集註 (Songs of Chu with Collected Annotations)",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Ming woodblock 楚辭集註 with 後語 and 辯證 bound in, as the edition normally is; pages 229 (後語) and 311 (辯證) belong to it.",
+    "rights_flag": null,
+    "structure_note": "331 records, 324 with OCR, none translated. The copy carries handwritten marginal comments (蔣云, 洪云, 劉云, 金云, 陳深曰) in the upper margin. The OCR transcribes them on some half-leaves and drops them on the facing half of the same spread, so the reader gets an arbitrary half of the annotation layer.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 46,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "上四句與下二句也",
+            "image": "上四句興下二句也",
+            "problem": "興 (evocation, a term of exegesis) read as 與; the gloss's technical claim is lost (the later 此亦上二句興下二句也 is read correctly)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "蔣云於衆芳中獨取蘭以興於衆美中獨取余也 / 洪云樂府有生別離出於此 (handwritten, top margin of left half)",
+            "problem": "handwritten marginalia on the left half dropped, though the one on the right half (蔣云筆是風人調度) is transcribed",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "尢幸其有意",
+            "image": "尤幸其有意",
+            "problem": "character slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 146,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "室家遂宗食 / 行些肥牛之腱臑若芳些",
+            "image": "室家遂宗食多方些稻粢穱麥挐黃粱些大苦醎酸辛甘行些肥牛之腱",
+            "problem": "a whole line of main text (多方些稻粢穱麥挐黃粱些大苦醎酸辛甘) is missing; the commentary that follows glosses words the reader never sees",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "稱音捉",
+            "image": "穱音捉",
+            "problem": "head character of the phonetic note misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "稻釋也稻麥稻處種麥面擇取",
+            "image": "穱擇也擇麥稻處種麥面擇取",
+            "problem": "gloss on 穱 garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "陳深曰有以羽觴爲項羽所製而得名此可以正其誤 (handwritten, left upper margin)",
+            "problem": "handwritten marginalia on the left half dropped; right-half marginalia transcribed",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 229,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 311,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "緗瑟交鼓",
+            "image": "緪瑟交鼓",
+            "problem": "character slip (read correctly two lines later)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "登州見曰初出時",
+            "image": "登州見日初出時",
+            "problem": "日/曰 slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      229,
+      311
+    ],
+    "reader_summary": "This is Zhu Xi's collected commentary on the Chu ci, with the 後語 and 辯證, in a Ming print carrying a reader's handwritten notes. The transcription is of the right text, and the large main text is mostly accurate. But at least one line of main text is dropped, and the handwritten notes are transcribed on one half of a spread and silently left out on the other. There is no English.",
+    "book_verdict": "Good woodblock OCR with a dropped main-text line on p.146 and inconsistent handling of the manuscript annotations; usable for reading, not for quoting without the image."
+  },
+  {
+    "book_id": "69aebb3a39a43078777732aa",
+    "slot": 34,
+    "title": "尚書韻 (Book of Documents)",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "A late-Ming exposition of the Shangshu by sections (惟口節, 訪箕節, 安危節); the English gloss 'Book of Documents' names the classic, not this commentary.",
+    "rights_flag": null,
+    "structure_note": "292 records, 287 with OCR. The preface (p.10) is cut in cursive script and its OCR is largely wrong; the commentary pages are printed in regular script and read well. The single backstep and repeat probably come from misread leaf numerals.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "故予謂人非翼世定法出",
+            "image": "於予謂人明翼世定法出",
+            "problem": "明 read as 非: the preface's claim is negated",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "言者湛生趣於",
+            "image": "經生經生者湛生趣於 (ditto marks ニ)",
+            "problem": "ditto marks not expanded; 經生 replaced by 言",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "人不得易不可為宰",
+            "image": "人不讀易不可為宰",
+            "problem": "讀 read as 得",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "用尚書。言中帝造世",
+            "image": "用尚書尚書中帝造世",
+            "problem": "ditto mark dropped and replaced by 言",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "請不耳觀之。沈淡開不經觀之",
+            "image": "請不再覯覯沈災開不經覯覯",
+            "problem": "several characters misread in the last column",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "OCR stores a <meta> page description ('The right page is a blank frame...') and a <warning> calling the cursive woodblock 'handwritten'",
+            "severity": "minor",
+            "class": "O15"
+          },
+          {
+            "note": "<script>handwritten</script>: this is printed cursive (行書 cut in wood), not a manuscript",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 138,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "誰知變生于有時即我之所起",
+            "image": "誰知變生于有恃即戎之所起",
+            "problem": "恃→時 and 戎→我: the allusion to 惟甲胄起戎 is lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 157,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "洪範\\n洪範",
+            "image": "洪範 (once)",
+            "problem": "chapter heading duplicated",
+            "severity": "minor",
+            "class": "O4"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 267,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "克愼節\\n克愼節",
+            "image": "克愼節 (once)",
+            "problem": "section heading duplicated",
+            "severity": "minor",
+            "class": "O4"
+          },
+          {
+            "ocr": "故日允修",
+            "image": "故曰允修",
+            "problem": "曰/日 slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      138,
+      267
+    ],
+    "reader_summary": "This is a 1630 sectional exposition of the Book of Documents, not the classic itself. The commentary pages are transcribed accurately enough to read. The cursive preface is badly misread, with one negation reversed. There is no English.",
+    "book_verdict": "Commentary body is reliable OCR; the cursive preface transcription should not be trusted or quoted."
+  },
+  {
+    "book_id": "6a3c6bdfc4e8626320db2395",
+    "slot": 35,
+    "title": "春秋屬辭比事記",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Mao Qiling's classified Chunqiu entries (朝, 聘, 平, 伐 categories); a Qing print.",
+    "rights_flag": null,
+    "structure_note": "63 records, 61 with OCR; the pages run in order from 卷一 to 卷四. The book is hidden (visible: false), and the publication date field is empty.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "前衙伯北稱子",
+            "image": "前稱伯此稱子",
+            "problem": "interlinear note garbled: the point is 'earlier called 伯, here called 子'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 43,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "齊人郷人伐郯",
+            "image": "齊人邾人伐郯",
+            "problem": "state name 邾 misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "春秋屬辭此事記",
+            "image": "春秋屬辭比事記",
+            "problem": "footer title slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      21,
+      43
+    ],
+    "reader_summary": "This is Mao Qiling's topical arrangement of Spring and Autumn entries by rite (court visits, embassies, peace-making, campaigns). The transcription is of the right text and is close to exact, with a misread state name and one garbled note in 4 pages. There is no English.",
+    "book_verdict": "Clean, well-printed Qing book with accurate OCR; fit to show."
+  },
+  {
+    "book_id": "6a3c6cf8c4e8626320dbdace",
+    "slot": 36,
+    "title": "雲仙雜記",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Feng Zhi's Tang anecdote miscellany, in a Ming print.",
+    "rights_flag": null,
+    "structure_note": "83 records, 81 with OCR; the sampled pages run in order from 卷一 to 卷九. The backstep is probably a misread leaf numeral.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "木潛麴稟膚工",
+            "image": "(not on the page)",
+            "problem": "a garbled second copy of the line 木濯麴棗膓耳 added after it",
+            "severity": "moderate",
+            "class": "O4"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<header>卷四</header> tag left in the text for the 卷四 footer at the end of the juan",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "人好食蝦蟆仍重乾菌",
+            "image": "桂人好食蝦蟆仍重乾菌",
+            "problem": "first character of the entry dropped",
+            "severity": "minor",
+            "class": "O5"
+          },
+          {
+            "ocr": "雲仙雜言",
+            "image": "雲仙雜記",
+            "problem": "running title slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 80,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "曾稽人張然",
+            "image": "會稽人張然",
+            "problem": "place name 會稽 misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      39,
+      56
+    ],
+    "reader_summary": "This is the Yunxian zaji, short anecdotes each followed by its cited source. The transcription is of the right text and reads well, apart from a misread place name and one garbled duplicated line. There is no English.",
+    "book_verdict": "Sound OCR of a clean print; minor slips only."
+  },
+  {
+    "book_id": "6a3c6bf4c4e8626320db3a11",
+    "slot": 37,
+    "title": "穆天子傳",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Chinese woodblock print; it belongs to the shelf. The problem is the title (see structure_note).",
+    "rights_flag": null,
+    "structure_note": "The record is catalogued as 穆天子傳 (Guo Pu), but none of the 4 sampled pages is from that work. p.19 opens 同昌公主傳 (唐 蘇鶚). p.22 continues it. p.45 is 魏夫人傳 and p.66 is 柳毅傳, each named in its own running title. This is a congshu volume of several tales catalogued under its first item, so a reader searching for these tales will not find them and a reader opening '穆天子傳' meets Tang tales from p.19 on. Catalogue identity class I7.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "以金銀為井閼藥日食饌水槽鑄金盆甕",
+            "image": "以金銀爲井闌藥臼食櫃水槽鐺釜盆甕",
+            "problem": "several of the listed objects misread (闌, 臼, 櫃, 鐺釜)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "鏤金為花籠寶筐",
+            "image": "鏤金爲笊籬箕筐",
+            "problem": "objects misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "為 / 眾 / 真",
+            "image": "爲 / 衆 / 眞",
+            "problem": "print forms normalised to other variants on this page only (the Paddle pages keep the print forms)",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<page-num>1</page-num> and a <warning> saying the right column is blank: the right half-leaf is blank, so the warning is true but is model commentary",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "邪烈之氣",
+            "image": "郁烈之氣",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "麒麟\\n麟各高數尺",
+            "image": "麒 / 麟各高數尺",
+            "problem": "麟 duplicated across a column break",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "授夫入玉扎金文",
+            "image": "授夫人玉札金文",
+            "problem": "slips",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 66,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "晨久腹謂殺曰",
+            "image": "長久復謂毅曰",
+            "problem": "three characters misread, including the hero's name 毅 as 殺",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "飽張韓繼卒君十居於玆",
+            "image": "洎張韓繼卒君卜居於茲",
+            "problem": "slips",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      45,
+      66
+    ],
+    "reader_summary": "Under the title 穆天子傳 a reader finds a Ming collection of Tang tales: the Princess Tongchang, Lady Wei, Liu Yi. The transcription of those tales is mostly accurate. But the record does not say what is in it, and none of the sampled pages is the Mu Tianzi zhuan. There is no English.",
+    "book_verdict": "OCR is good, but the catalogue identity is wrong for most of the volume; fix the title or describe the contents before showing it."
+  },
+  {
+    "book_id": "6a3c6be9c4e8626320db2f13",
+    "slot": 38,
+    "title": "井觀瑣言 (vol 1)",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Ming biji notes, in a Ming congshu print.",
+    "rights_flag": null,
+    "structure_note": "The volume holds several works. p.27 shows the blank end leaf of 井觀瑣言 facing the opening of 林泉隨筆 (淮浦張綸). p.33 is 林泉隨筆, p.63 is 震澤長語 (王鏊, by running title), and p.95 is another biji with a different running title. The book is catalogued only as 井觀瑣言, so 3 of the 4 sampled pages are other works under its title (I7). The 5 printed repeats and 3 backsteps are what restarting foliation per work produces, not a scan fault.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "### 泉隨筆",
+            "image": "林泉隨筆",
+            "problem": "first character of the work's title dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "若干史若詩文辭賦",
+            "image": "若子史若詩文辭賦",
+            "problem": "子史 (masters and histories) read as 干史",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "author line rendered as '->淮浦張綸<-': centring arrows leak into the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "<image-desc> describing the page layout and a <warning> about show-through stored in the OCR; modern punctuation (，。！) added that is not on the page",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 33,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "以水良月皆陰類",
+            "image": "以水與月皆陰類",
+            "problem": "與 misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "以爲\\n耳\\n耳",
+            "image": "以爲 / 耳 (once)",
+            "problem": "final 耳 duplicated",
+            "severity": "minor",
+            "class": "O4"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 63,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "隨任魯養玩之",
+            "image": "隨任曾養玩之",
+            "problem": "slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      63,
+      33
+    ],
+    "reader_summary": "This is a Ming collection of scholars' notes: 井觀瑣言 followed by 林泉隨筆, 震澤長語 and at least one more work, all filed under the first title. The transcription is accurate and readable. Readers are not told which work they are in, and one page leaks layout arrows. There is no English.",
+    "book_verdict": "Good OCR; the record needs its contents listed, because most of the volume is not 井觀瑣言."
+  },
+  {
+    "book_id": "6a3c6cdac4e8626320dbc955",
+    "slot": 39,
+    "title": "新編金匱要略方論",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Zhang Zhongjing's Jingui yaolue (edited by Lin Yi and others); a classical medical text.",
+    "rights_flag": null,
+    "structure_note": "241 records, 236 with OCR, no printed numbers captured. Author is given as '未詳 (Unknown)'. The work is Zhang Zhongjing's (張仲景), compiled by Wang Shuhe and re-edited by Lin Yi and others, so a reader looking for it by author will miss it (I7).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "烏頭\\n烏頭",
+            "image": "○烏頭煎方 / 烏頭",
+            "problem": "recipe heading 烏頭煎方 reduced to 烏頭",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "大者五故熬去皮不敗咀",
+            "image": "大者五枚熬去皮不㕮咀",
+            "problem": "the count unit 枚 misread as 故 (five aconite roots), and 㕮咀 garbled",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 169,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "桂枝\\n大棗\\n十二\\n枚",
+            "image": "桂枝 一兩 / 大棗 十二枚",
+            "problem": "the dose of 桂枝 (一兩) in the 外臺黃芩湯 recipe is dropped",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "治大便不通踧數謳語",
+            "image": "治大便不通噦數譫語",
+            "problem": "symptom terms (噦 hiccup, 譫語 delirious speech) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "反酒淅惡寒",
+            "image": "反洒淅惡寒",
+            "problem": "slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 187,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "服方寸七",
+            "image": "服方寸匕",
+            "problem": "the dose unit 方寸匕 (square-inch spoon) transcribed as 七 (seven)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "腹中疔痛",
+            "image": "腹中疞痛",
+            "problem": "slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      23
+    ],
+    "reader_summary": "This is the Jingui yaolue, the Han formulary of Zhang Zhongjing, in a 1598 print, catalogued here with no author. The transcription is of the right text and mostly accurate. But doses and their units are where it slips: one dose is dropped, and 方寸匕 is turned into 'seven'. There is no English.",
+    "book_verdict": "Readable, but a recipe text whose OCR drops and misreads doses must not be quoted for dosage without the image; the author field should be fixed."
+  },
+  {
+    "book_id": "69af121cf78a272df25b564a",
+    "slot": 40,
+    "title": "遠鏡說 (On the Telescope)",
+    "tradition": "zh-print-ocr-only",
+    "shelf_fit": "fits",
+    "shelf_note": "Schall von Bell's treatise on the telescope; early modern science in Chinese.",
+    "rights_flag": null,
+    "structure_note": "The scan is the 藝海珠塵 congshu reprint, with 藝海珠塵 in the block margin of every leaf. That collection is Qing (Jiaqing era), but the record gives published 1626, the date of the first edition (I7). 17 records, all with OCR. Show-through from the facing leaf is heavy, and the OCR reads text that is not on the printed face (p.3).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "由歐邏天學大士西泰利氏西洋鏡說",
+            "image": "(not printed on this leaf; only faint show-through)",
+            "problem": "an invented line attributing the work to 西泰利氏 (Matteo Ricci). It is not on the page, and the work is Schall von Bell's",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "遠鏡圖并說",
+            "problem": "the plate title on the left half-leaf is dropped; only an <image-desc> is given",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<page-num>111</page-num> is wrong (the leaf shows 二 and 三); 藝海珠塵 from the block margin is set as a text line",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "其用之利勝言哉",
+            "image": "其用之利可勝言哉",
+            "problem": "可 dropped, which turns the rhetorical question into nonsense",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "引長而至已庚已庚大乎已此意視者用高鏡物必大之故也",
+            "image": "引長之則至己庚己庚大乎甲乙此近視者用中高鏡視物必大之故也",
+            "problem": "diagram caption garbled: 甲乙, 近視 and 中 (convex) are dropped, so the optical claim is wrong",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "乙形入目 / 丙射鏡面",
+            "image": "三角形入目 / 平行射鏡面",
+            "problem": "diagram labels 乙 and 丙 invented; the figure carries only 甲",
+            "severity": "moderate",
+            "class": "O14"
+          },
+          {
+            "ocr": "之所能與力也乃有目精至強 (twice)",
+            "image": "once",
+            "problem": "line duplicated",
+            "severity": "minor",
+            "class": "O4"
+          },
+          {
+            "ocr": "物象從鏡三角形入 (twice)",
+            "image": "once",
+            "problem": "line duplicated",
+            "severity": "minor",
+            "class": "O4"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "後鏡頓有前鏡",
+            "image": "後鏡賴有前鏡",
+            "problem": "賴 misread (read correctly in the parallel clause)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      5,
+      14
+    ],
+    "reader_summary": "This is Schall von Bell's On the Telescope, in the Qing 藝海珠塵 reprint, not the 1626 first edition the record claims. The running text is transcribed accurately. The pages with diagrams are not: captions are garbled, labels invented, and on p.3 a line naming Ricci as author is invented. There is no English.",
+    "book_verdict": "Body text is reliable; the plate and diagram pages carry invented text, and the edition date is wrong."
+  }
+]

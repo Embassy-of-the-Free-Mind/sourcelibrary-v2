@@ -16,6 +16,18 @@
     "de-praestigiis-daemonum-et-incantationibus-ac-veneficiis-weyer",
     "de-la-demonomanie-des-sorciers-bodin"
   ],
+  "alchemical-process": [
+    "atalanta-fleeing-maier",
+    "summa-perfectionis-magisterii-add-liber-trium-verborum-alexa-geber",
+    "alchemia-libavius",
+    "amphitheater-of-eternal-wisdom-the-only-true-christian-kabba-khunrath-80a2a0",
+    "the-secret-tradition-in-alchemy-its-development-and-records-arthur-edw",
+    "theatrum-chemicum-britannicum-containing-severall-poeticall-ashmole-2",
+    "the-works-of-geber-1678-hayyan",
+    "collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot",
+    "the-sceptical-chymist-1661-first-edition-boyle",
+    "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3"
+  ],
   "aldine-roman": [
     "69b220f356715b0e32473bd0"
   ],
@@ -148,6 +160,7 @@
   "beeckman-on-drebbel": [
     "69af0dab9f13b61d0a6c6105",
     "69aebe60c0472fef6455a8f3",
+    "6a44359d0235c9147000dd12",
     "6adfd7cf16aaa80a976bbf45"
   ],
   "cannabis-bangue": [
@@ -486,10 +499,14 @@
     "apuleius-metamorphoses-the-golden-ass-with-asclepius-apuleius",
     "cabalistic-disputation-on-the-soul-moses"
   ],
+  "how-many-translated-into-english": [
+    "the-divine-pymander-of-hermes-mercurius-trismegistus-in-everard",
+    "the-historie-of-the-world-commonly-called-the-naturall-trans"
+  ],
   "how-we-measure-ocr-quality": [
     "vol-64-24",
     "golden-mirror-of-medicine-vol-2-ed",
-    "untitled-27",
+    "records-of-miraculous-retribution",
     "vol-81-19"
   ],
   "hyperborea": [
@@ -663,6 +680,16 @@
     "le-commerce-et-le-gouvernement-condillac",
     "a-treatise-on-political-economy-say",
     "harmonies-economiques-bastiat"
+  ],
+  "kircher-hieroglyphs": [
+    "obeliscus-pamphilius-kircher",
+    "oedipus-aegyptiacus-tomus-iii-kircher",
+    "oedipus-aegyptiacus-volume-i-1652-kircher",
+    "oedipus-aegyptiacus-volume-ii-1653-kircher",
+    "obeliscus-aegyptiacus-kircher",
+    "coptic-forerunner-on-the-egyptian-language-kircher",
+    "lingua-aegyptiaca-restituta-kircher",
+    "sphinx-mystagoga-kircher"
   ],
   "man-his-own-maker": [
     "pico-della-mirandola-opera-1496-mirandola",

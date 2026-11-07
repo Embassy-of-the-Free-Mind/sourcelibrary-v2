@@ -24,8 +24,7 @@
 45 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-uptime.lock bash -c "set -a; source .env.production.local; set +a; node scripts/uptime-monitor.mjs" >> /var/log/sourcelibrary/uptime-monitor.log 2>&1
 */15 * * * * f=/root/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] || f=/root/disk-alarm.sh; $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1 # root-disk alarm, ntfy on each level change (85%, 95%), repeat every 2 h at >= 95% (#5534, #6223)
-40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # move idle /root folders to the volume + reap merged worktrees (#6223)
-10 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply --agy-only >> /var/log/sourcelibrary/disk-steward.log 2>&1 # agy WAL + orphaned .tmp cleanup (#6223, PR #7507)
+25 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /root/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # hourly: HF cache trim to 50 GB + idle folders archived to R2 while a disk is above 75% + merged worktrees reaped + agy WAL (#6223)
 */5 * * * * echo "$(date -u +'\%Y-\%m-\%dT\%H:\%M:\%SZ') $(uptime | sed 's/.*load average: //')" >> /var/log/sourcelibrary/cpu-load.log
 # All pipeline workers managed by unified scheduler (issue #646)
 # ── Daily maintenance (early morning, staggered) ──
@@ -43,6 +42,10 @@
 
 # Weekly: clear image_thumb fields on books whose /pages/-thumb URL 404s (#1945)
 0 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-thumb-sweep.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/fix-broken-image-thumb.mjs --apply" >> /var/log/sourcelibrary/thumb-sweep.log 2>&1
+# Weekly: point covers stored on hosts browsers cannot load (gallica, SBB, Harvard) at our R2 copy of the same page (#5448, Derek 2026-11-01)
+15 6 * * 0 cd /root/sourcelibrary && [ -f scripts/maintenance/rehost-walled-covers.mjs ] && flock -n /tmp/sl-rehost-covers.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/rehost-walled-covers.mjs --apply" >> /var/log/sourcelibrary/rehost-walled-covers.log 2>&1
+# Daily: readers' broken-image reports from the last day, re-fetched; pages ntfy when any still fail (#5448, Derek 2026-11-01)
+50 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/broken-image-reports.mjs ] && flock -n /tmp/sl-broken-images.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/broken-image-reports.mjs --days=1 --alert" >> /var/log/sourcelibrary/broken-image-reports.log 2>&1
 
 # R2 coverage snapshot (daily — was 6h; the HEAD sweep was ~27% of all site traffic, 2026-06-11)
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-r2-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/r2-coverage-snapshot.mjs" >> /var/log/sourcelibrary/r2-snapshot.log 2>&1
@@ -150,6 +153,8 @@
 10 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-author-links.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-author-canonical-links.mjs --include-backlog --apply" >> /var/log/sourcelibrary/author-links.log 2>&1
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
+# Text hash snapshot + OpenTimestamps root, built from Sunday's corpus-text dump (#8150 slice 10; hashes only, no Atlas read)
+30 1 * * 1 flock -n /tmp/sl-hash-snapshot.lock /root/sourcelibrary/scripts/workers/hash-snapshot-weekly.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
 # RETIRED 2026-10-17 (#5660/#4534): every run since 2026-09-10 measured guttered=0 repaired=0; it re-scanned ~117K pages on 3 cores, around the clock. Re-enable only for a new damage cohort.
 # */30 * * * * bash /root/tibetan-eval/launch_repair.sh >> /root/tibetan-eval/repair-relaunch.log 2>&1 # gutter-repair-4534 (remove when repair done)
@@ -312,16 +317,10 @@
 # DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
 # GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
 30 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/daily-digest.mjs ] && flock -n /tmp/sl-daily-digest.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/daily-digest.mjs" >> /var/log/sourcelibrary/daily-digest.log 2>&1
-# Nightly disk steward: move idle /root folders to the volume, reap merged work
-40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1 # move idle /root folders to the volume + reap merged worktrees (#6223)
 # Printed-page backfill
 50 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-printed-page.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-printed-page-4291.mjs --apply --ocr-since=26h" >> /var/log/sourcelibrary/printed-page.log 2>&1
 # Vercel prod build watcher (#5708)
 7,22,37,52 * * * * cd /root/sourcelibrary && [ -f scripts/audit/vercel-prod-watch.mjs ] && flock -n /tmp/sl-vercel-prod-watch.lock bash -c "set -a; source .env.production.local; set +a; VERCEL_TOKEN=\$VERCEL_API_TOKEN node scripts/audit/vercel-prod-watch.mjs" >> /var/log/sourcelibrary/vercel-prod-watch.log 2>&1  # #5708
-# routing drift audit (#5871): DECISIONS.md against the live routers (OCR model, translation model, the OCR-trust table)
-# and the generated table in .claude/docs/ocr-engine-routing.md. No model call, no database. --apply files, rewrites or closes ONE
-# GitHub issue per finding class (label routing-drift); nothing automated reads those issues. Guarded on the script so the line is inert until it is on main.
-40 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/routing-drift.mjs ] && flock -n /tmp/sl-routing-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/routing-drift.mjs --apply" >> /var/log/sourcelibrary/routing-drift.log 2>&1
 # Spare lane (#6395): when this box's Claude account is under its fair share of the week (or in the last 48 h before
 # the reset), start a claude-job on the next small bug / user-feedback / data-quality issue; stop lane jobs at weekly 92% /
 # session 85%. Subscription only, $0. Guarded on the script so the line is inert until it is on main.
@@ -371,4 +370,18 @@
 # low, 1 page per call, 3 books at a time; the books STAY HELD. Runs only while the agy pool it picks (most Gemini weekly
 # left, `agy -p /quota`) is above 0.35 weekly remaining, or 0.05 in the last 24 h before its reset; stops mid-wave below.
 # Opus spot check per 5,000 pages written. Pause: touch /mnt/HC_Volume_105839809/siku-lane-5600/STOP (rm to resume).
-25 */2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600
+*/15 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/batch/siku-translate-lane.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/siku-lane.lock timeout 4h node --no-warnings --env-file=.env.production.local $f run --apply --max-minutes=180 --max-pages=100000 --parallel=6 >> /var/log/sourcelibrary/siku-lane.log 2>&1  # #5600  (2026-10-29: waves read for 180 min (room under the 4 h timeout for the drain and a spot check), then drain; cron every 15 min under flock starts the next. Was hourly, 4,000 pages a wave: ~1,300 pages/h against ~1,800 the 6 readers can do)
+
+# Pipeline now (#7759): this box's cron lanes, agy pools and lane switches -> ops_reports, rendered at /admin/pipeline/now.
+7 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now.lock timeout 10m node --no-warnings --env-file=.env.production.local $f --box hetzner >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
+50 2 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/pipeline-now-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-pipeline-now-corpus.lock timeout 20m node --no-warnings --env-file=.env.production.local $f --corpus >> /var/log/sourcelibrary/pipeline-now.log 2>&1  # /admin/pipeline/now (#7759)
+
+# Router board (#7913): the router table's decisions against the repo crontabs' lanes -> ops_reports, rendered at /admin/router.
+17 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/router-board-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-router-board.lock timeout 5m node --no-warnings --env-file=.env.production.local $f >> /var/log/sourcelibrary/router-board.log 2>&1  # /admin/router (#7913)
+# Monthly page integrity draw (#8040; Derek agreed monthly 2026-11-04): 200 random pages, Opus on the subscription, one row on the series file through a PR. Live on gex45 (its login has the week; the hostname test keeps this same line idle anywhere else). Pages ntfy once when done or stopped by a limit.
+0 5 1 * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; [ "$(hostname)" = gex45-1 ] || exit 0; f=/root/sourcelibrary/scripts/audit/page-integrity-draw.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-page-integrity.lock timeout 12h node --no-warnings --env-file=.env.production.local $f --seed $(date +\%Y\%m\%d) --out /root/jobs/page-integrity-monthly/$(date +\%F) --land >> /var/log/sourcelibrary/page-integrity.log 2>&1  # #8040
+
+# Partner frame check (#8054): book pages on the Embassy's real page must fit their frame. Pages ntfy on a failure or if it cannot run; silent when clean.
+20 6 * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; cd /root/sourcelibrary && flock -n /tmp/sl-embed-frame.lock timeout 20m node scripts/audit/embed-frame-height.mjs --alert --shots /var/log/sourcelibrary/embed-frame >> /var/log/sourcelibrary/embed-frame-height.log 2>&1
+# Token use for /admin/tokens (#8201): reads local transcripts, calls no model.
+42 * * * * flock -n /tmp/sl-token-usage.lock nice -n 19 bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/token-usage-push.mjs --box main --meter' >> /var/log/sourcelibrary/token-usage-push.log 2>&1

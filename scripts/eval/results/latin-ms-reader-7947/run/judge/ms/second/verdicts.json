@@ -1,0 +1,1623 @@
+[
+ {
+  "claim_id": "b23-k:84:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image line 3 of para 2: 'cal-/cinetur per \u017fe\u00e6 horas' \u2014 the final glyph is the same \u00e6-like x as in 'deinceps e\u00e6-/\u017ficcetur' (exsiccetur) and '\u017fi qui e\u00e6 fulmine' (ex), so the word is 'sex'; OCR: 'calcinetur per sese horas'. The six-hour calcination time of the recipe becomes a meaningless reflexive; no translation stored.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-t:95:ocr:1",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'ita si ne-/gligatur \u05d0, et initium fias a \u05d1 occurrit tibi in summy [Hebrew word] 1. Sam. 14. 4.' \u2014 Hebrew letters written plainly in the line; OCR: 'si ne=gligatur 22. et initium fias a 2 occurrit tibi in summy 42.' The aleph, beth and the Hebrew word are replaced by Arabic numbers that are not on the leaf, so the gematria argument is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-t:95:ocr:2",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'si incipias a \u05d2 halebis summas similes Numeri 189; si a \u05d3. 196. Si a \u05d4. 203. et hic ascendunt septenario' (sums rising by 7, as the next clause says); OCR: 'si incipias a 7 halebis summas similes Numen 169; si a 7. post. 11 a 7. 213.' Letters become '7', sums 189/196/203 become 169/'post. 11'/213. The series no longer rises by seven. Hebrew-letter loss (O10) and numeral misreads (O7) together; serious either way.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-t:95:ocr:3",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'disponas numeros \u05d0, et \u05d3, et \u05d7, et \u05d6, et \u05d8, et ...' and 'Item \u05d0, et \u05d6, et \u05d2 ... item \u05d0, et \u05d7, et \u05d8, et ...' \u2014 every term is a Hebrew letter; OCR: 'disponas numeros 22, et 7, et 17, et 27, et 8, et 6 ... Item 22, et 7, et 13, et 27 et 6 item 22, et 17, et 27, et 7'. Invented numerals stand for the letters throughout.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-t:140:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image header table: '21. ad 7. Tripla' and the sum line 'summa est 336. ad 28. scil. duodecupla | summa 30. ad 8. scil. Tripla supersextupartiens octavas' (16\u00d721=336, 4\u00d77=28 \u2192 12:1; 6\u00d75=30, 4\u00d72=8); OCR: '11. ad 7. Tripla' and 'Summa 36. ad 15. scilicet Duodecupla. Summa 30. ad 6'. 36:15 is not duodecupla and 30:6 is not the named ratio, so the worked example fails.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-t:140:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Ejus examen erit sequens 24. ad 18. scil. Sesquitertia' and in the paragraph 'productus 24 ad 18 ... 4 ad 3 = 24 ad 18 ... sicuti est 24 ad 18' \u2014 second digit is the same 8 as in '28' above, not the 6 of '16'; OCR has '24 ad 16' four times, and so asserts '4 ad 3 = 24 ad 16', which is false (24:18 = 4:3, from 8:9 + 3:2).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-t:45:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 3: 'pone in decipulo vrina \ua751pata' (in a vessel of prepared urine); OCR: 'pone in duplum vini fortis'. The solvent becomes 'strong wine' \u2014 a different ingredient, stated fluently.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-t:45:ocr:2",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'iterum funde calida sup easd\u0113 feces. 3\u00b0 calefac eand\u0113 aq\u0304\u0101 et funde sup easd\u0113 feces colando'; OCR: 'iterum funde calida super saepius faecem 3. calefac sanguinis aquae et funde super saepius faecem'. The error is real and meaning-changing ('heat the water of BLOOD' for 'heat the same water'), but it is a misread of abbreviated easdem/eandem with the surrounding words anchored to the leaf, not confabulation (O1).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-t:45:ocr:3",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'tunc abice feces et pone 2\u00aa pte cinerum in eand\u0113 q\u0304 fecisti lixivi\u016b' \u2014 the numeral is the flat z-form 2 (the hand's 3 has a descender, as in 'divide in 3 ptes' and '3\u00b0 calefac'); OCR: 'pone 3. partes cineris in sanguinis faecis lixivio'. The second portion becomes three parts and 'the same lye you made' becomes 'lye of the blood's dregs'.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b13-t:45:ocr:8",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'permitte infri[gida]ri et q\u0304n fri[gidum] fuit distilla i[stu]d p filtr\u016b ad hoc opus \ua751atum'; OCR: 'permitte infundi et quando fuerit finit distillare per silentium ad hoc opus paratum'. Cooling and filtering are lost ('per silentium' is nonsense) \u2014 serious \u2014 but the clause is a misread with most tokens anchored (permitte, quando, fuit, distill-, per, ad hoc opus paratum), O6 not O1.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-r:4:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. 2: 'Sic aut\u0113 non \u0113 dict\u016b nc\u0304 significata \u0113 clarificatio filii hominis. sed dict\u016b \u0113 nc\u0304 clarificatus \u0113 filius hominis' \u2014 'nc' with a macron is nunc (Augustine, Tr. in Ioh. 63); OCR has 'nec' in both places: '\u2026nec significata est \u2026 sed dictum est nec clarificatus est filius hominis', which makes Augustine deny the verse he is expounding.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b22-r:212:ocr:0",
+  "verdict": "real_not_serious",
+  "class": "O3",
+  "evidence": "image: the right edge cuts every long line ('certum' / 'est sic' / 'est super' / 'ad perpe' / 'fuerunt ab vno,' / 'Nutrix eius' / 'totius mudi' / 'fortitudo for'); OCR completes each from the standard Emerald Tablet ('certum et', 'est sicut', 'perpetran-/da', 'medi-/tatione', 'ter-/ra est', 'est hic', 'fortis', 'omnemque', 'quarum modus') with no mark of conjecture. The supply is unmarked (a real fault), but it is the standard text this copy follows word for word where visible, so a reader is very unlikely to be misled about what the page says. Withdraw if variant readings in this copy can be shown.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-t:17:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image top lines: 'p[ro] concurrente \u00b7 n\u014d intellige p[ro] concurrente eiusdem anni s[ed] sequentis anni'; body 'debet habere 1 p[ro] \ua76fcurrente' etc. OCR: 'praecedentem. non intelliges praesentem eidem anni sed sequentem annum' and 'praesentem', 'epactarum', 'recurrentium' wherever the leaf has concurrentes. The computus term that the chapter explains vanishes.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-t:17:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'annus bissextilis ante vicesimum octavum habet de diebus \ua76fcurrentibus tantum \u039b' \u2014 \u039b is this hand's 7 (cf. '\u039b' for 7 in the series 'septembris \u039b \u2026 decembris \u039b'); OCR: 'habet de diebus epactarum tantum \u00b7 A \u00b7'. Concurrents become epacts (a different quantity) and the 7 becomes a letter A throughout. Meaning-changing misread more than normalisation, but serious as claimed.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-t:17:ocr:5",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'et regularis maij \u0113 3 \u00b7 q[ui]a ei[us] littera p[ri]ma \u0113 \u00b7 b \u00b7' (after April 1, g); OCR: 'regularis martii est 3 \u00b7 quia eius littera prima est \u00b7 b \u00b7'. May is read as March, so the stored text gives a wrong regular for March.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-t:30:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: '19 annis \u2026 compleri 23\u0447 lunationes \u2026 per 23\u0447' \u2014 the hand writes 4 as a loop (\ua757) and 5 as \u0447, proven on this page by '19 annos in quibus sunt \ua757 anni bissextiles' (6939 days) vs 'habentes \u0447 annos bissextiles' (6940 days); OCR '.234. lunationes' throughout. The Metonic 235 becomes 234.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-t:30:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: '6939 dies et insuper \ua757\ua757 minuta et 49 secunda \u2026' = 44;49,49\u2026, rounded later to '\ua757\u0447 minuta' = 45, and 'quantitate 1\u0447 minutorum' = 15 (60\u221245); OCR: '.24. minuta', '.24.', '.14.'. Every fraction in the argument is wrong.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-t:30:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'cum omnino ter 19 h[ab]entes \u00b7 \u0447 annos bissextiles et ita quilibet 19 anni talles habent 6940 dies' \u2014 5 leap years (19\u00d7365+5 = 6940); OCR: 'ter. 19. haberent .4. annos bissextiles \u2026 .6940. dies', internally contradictory.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-t:30:ocr:3",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Igitur \u039bG anni \u2026 adequantur 9\ua7570 lunationibus \u2026 in \u039bG annis \u2026 accidat 9\ua7570 lune' = 76 years and 940 lunations (4\u00d7235; the Callippic period); OCR: '.16. anni \u2026 920. lunationibus \u2026 .40. lune \u2026 .16. annorum \u2026 .920. lune'. The chapter's conclusion is wrong.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b14-k:42:ocr:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "image: the right fifth of the photograph is the facing recto, whose line openings ('divinitas \u00e6', 'nostro, qui est', 'Spiritus noste', \u2026 'visus sum ipsi') run down the right side; page 38 itself has no marginal note. OCR inserts all 25 fragments as a '<margin>' block between the two paragraphs of this page. The fragments are marked unclear, but the block asserts a marginal note this leaf does not have.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b04-m:16:ocr:0",
+  "verdict": "confirmed",
+  "class": "O5",
+  "evidence": "image col. 1, under the staves: '[N]e reminiscaris do-/mine delicta nostra vel pa-/rentum nostrorum neque vindi-/ctam sumas de peccatis nostris'; OCR passes from 'impla-' straight to <column-break/> with nothing but an image-desc. The whole chant text is silently missing.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b04-m:16:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'supra in suo loco \ua751dicto per error\u0113 sine notis impssa' (printed above \u2026 by error without notes); OCR: 'supra in suo loco dicto per crucem sine notis impla-'. The scribe's note that the chant was set without music by error becomes 'by the cross'.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b04-m:16:ocr:3",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. 2: illuminated N + 'Emo ec-/cliam e-/dificet: p[r]i-/usq[ue] po[n]-/tificis iu-/dicio lo-/cus et atriu[m] designetur'; OCR: 'Domine cliam e- dificet: p- usque po- tificis in- diao lo- cus atrui de dignetur'. The initial is read as 'Domine' and the prohibition 'let no one build a church before the bishop has marked out the site' is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1\u20132: '\u2026eiusdem ponderis, qu\u00e6 simul distemperata commisce cum vino bi-/bes, potenter excitat vim coeundi' (b = v, r = c in this hand); OCR: 'qua simul distemperata remissio ad bino bibes, potenter ueritatem uirilem roborandi' (and tagged as <margin>). Sense of the recipe is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'virgam excitat', 'virgam eius', 'caput virg\u00e6', 'virgam erigere', 'in utroque sexu' \u2014 written 'brega' with the hand's b-shaped v and r/e forms; OCR 'brega' five times, a non-word. The organ the recipes act on is unrecoverable for a reader without the image.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Radix quoque herb\u00e6 testiculi canis sumpta lacte caprearum'; OCR: 'Radice quoque sicca testionibus sumpta certe uapeant'. The herb and the goat's-milk vehicle are both gone.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:4",
+  "verdict": "cannot_tell",
+  "class": "O7",
+  "evidence": "image: 'Cariophilli \u0292)1', 'Zinziberis \u0292)1', 'galang\u00e6 \u0292)1' \u2014 a flat-topped \u0292 followed by a curved stroke; at this resolution I cannot tell whether that is the drachm sign with a j-stroke or the ounce sign \u2125, so ounce vs drachm is undecidable. Separately, 'piperis albi g\u0303 8' carries a different sign (a g with a tilde, probably gr.), which the OCR also renders '\u2125 viii' \u2014 that part does look wrong, but it is not the drachm/ounce confusion claimed.",
+  "confidence": "low"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:5",
+  "verdict": "cannot_tell",
+  "class": "O7",
+  "evidence": "image: 'quantitate \u0292) tantum' \u2014 same ambiguous sign as above (\u0292 with a curved stroke); OCR '\u2125 i.'. Whether the sign is drachm or ounce cannot be settled from this image.",
+  "confidence": "low"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Est herba qu\u00e6dam Iris gr\u00e6ce, de qua si maleficiatus acce-/perit radices tres et pistata sumpserit'; OCR: 'Est herba quaedam guis graere, de quasi maleficiatus ante sit radicibus tribus et gustata'. The herb name 'Iris' is lost, so the remedy cannot be identified.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:7",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Oleum sesamini et cerebrum Columbi ana \u0292 ij'; OCR: 'Oleo balsamum et roreum Columbiana \u2125 ii.' Sesame oil becomes balsam, the dove's brain becomes 'roreum', and 'ana' is fused into a word.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:37:ocr:8",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'toties quoties circumlineas pr\u00e6putium cum isto ung[uen]to, coxasque move cum ea'; OCR: 'toties quoties uirilia tua teras cum unguento rosae more ea'. The instruction is changed (and 'rosae' substitutes a rose ointment for the one just prepared), which is serious, but it is a fluent misread of one clause on a legible page with neighbouring tokens anchored, not O1 confabulation.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-k:73:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Ut exeas de ista vulva matris tu\u00e6 quan-/tocius' (written 'bulba' with this hand's b = v); OCR: 'Ut exeas de ista pulchra matre tua'. The words of the birth charm are changed.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-k:73:ocr:3",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image: 'quo nato, mox schedula deponatur ab ipsa' ('\u017fchedula' clearly); OCR: 'mox secundam deponat ab ipsa'. The charm slip that must be removed after the birth becomes the afterbirth \u2014 a plausible obstetric reading substituted for what is written.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:73:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image \u00a7194: 'bibat \u2026 de felle verris ad pondus unius fab\u00e6; si filiam, tunc sit fel verr\u00e6' and 'Si mul[ier] in hora coitus portaverit coagulum leporis masculi aut testiculos eius et coierit'; OCR: 'bibat vitrea de folli-besi \u2026 si filia, tunc sit fil bera' and 'Si mulier in coxa voluerit portaverit magnum leporem masculi'. Boar's gall and hare's rennet are both lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:108:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1: 'arbor ille non \ua753ducet fruct\u016b' (producet fructum); OCR: 'arbor illa non durat fenestra.' The recipe's outcome (the tree will not bear fruit) becomes nonsense about a window.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:108:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "red heading: 'Exp. mirab. p. quod arescunt o\u012ba incisa deors\u016b funditus, arbores, frutela, arundines, gramina'; OCR: 'Experimentum quod nascuntur omnia meisa deorsum'. 'arescunt' (wither) is clear; 'nascuntur' (are born) reverses what the experiment does.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:108:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'quae vanissimis etiam inventis miracul[or]um concedit effectum?' (written 'ronredit' = concedit); OCR: 'qua bam[?] id est inventio mixarum non redit effectus?'. A negation is introduced and the clause is garbled; the rhetorical frame of the experiment is inverted.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-k:108:ocr:3",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'et cum ea quodcumque incisorium sarcastrum, falx, gladius vel quodcumque aliud instrumentum sive volubile acuatur eodem die'; OCR: 'et rura quodam et in iisdem salrasten salis, gladibus bolgondis aliud in fermentu[m] se[m]el homibilo arnote eodem die'. The loss is real and serious (the whetting of blades in the bath water is gone), but the OCR tracks the leaf's letter shapes word by word ('salrasten'~sarcastrum, 'gladibus'~gladius, 'aliud', 'arnote'~acuatur, 'eodem die'): a bad misread of text that is there, not confabulation (O1 is page-level invention).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-k:108:ocr:5",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'impleveris cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus arg[en]ti vivi, clauserisque foramen'; OCR: 'imploberis sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi tibi clanbrises'. Serious: sulphur and quicksilver are lost, so the recipe cannot be followed. But the numerals survive in garbled form ('una', 'turbus'~tribus); what fails is the reading of the ingredient words, which is O6 rather than O7.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-k:108:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'pone 8. lot. sulphuris pulverizati, et fumus inde ascendens poma facit cadere'; OCR: 'pone 8. lot. pulveris pulverizati, et summus in se ascendendo'. 'sulphuris' is plainly written; the ingredient is lost, and so is the smoke that is the mechanism.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-m:45:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 3: 'pone in decip(u)lo vrina p[re]pata' (urinae praeparatae); OCR: 'pone in duplum vini fortis'. The ingredient changes from prepared urine to strong wine.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-m:45:ocr:2",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: 'iterum funde calida[m] sup easd\u0113 feces. 2o/3o calefac eand[em] aq[uam] & funde sup easd\u0113 feces'; OCR: 'funde calida super saepius faecem 3. calefac sanguinis aquae et funde super saepius faecem'. 'easdem' is misread as 'saepius' and 'eandem' as 'sanguinis'. These are misreads, not invention, and the action (heat the water again and pour it over the dregs) survives; the 'water of blood' is close to what is meant on a page about blood-ash lye. Moderate.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b13-m:45:ocr:3",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image line 8: 'tunc abice i[llas] feces & pos. z^am pte cinium in eand[em] q[ua] fecisti lixiviu[m]'. The ash was divided into three parts, the first is used in line 2 and 'accipe z^am' (the third) in line 10, so this is the second part; OCR: 'pone 3. partes cineris in sanguinis faecis lixivio'. The quantity is wrong (three parts rather than the second part) and the vessel is changed. Caveat: in this hand the digits 2 and 3 are both written z-like.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b13-m:45:ocr:8",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'coadunent[ur] & p[er]mitte infri[gida]ri & q[ua]n[do] fri[gidum] fuit distilla i[d] p[er] filtrum ad h[oc] op[us] p[ar]atum'; OCR: 'permitte infundi et quando fuerit finit distillare per silentium'. Serious: the cooling and filtering steps are lost. But it is a misread of present text ('infri'\u2192'infundi', 'filtrum'\u2192'silentium'), not confabulation.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-m:4:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "right column: 'Sic aut[em] non \u0113 dict\u016b nc\u0304 significata \u0113 clarificatio filii hominis. sed dict\u016b \u0113 nc\u0304 clarificatus \u0113 filius hominis'; OCR: 'non est dictum nec significata est \u2026 sed dictum est nec clarificatus est filius hominis'. 'nc\u0304' = nunc is read as 'nec' both times, which reverses Augustine's distinction ('now is glorified', not 'now is signified').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-m:4:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'non \u0113 dict\u016b petra significabat xp\u0304m. sed petra erat xp\u0304s.'; OCR: 'non est dictum petra significabat Christum. sed petra significabat.' The point the passage exists to make ('petra erat Christus') is replaced by the phrase it rejects.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-m:5:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "left column: 'uiror\u016b quippe n\u014die solent inscripturis pfectiores quinq; figurari'; OCR: 'uirorum quippe non solent inseripturis pfectiones'. 'n\u014die' (nomine) is read as 'non', which negates the claim that the perfect are figured by the name of men.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-m:5:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, bottom of the left column: 'uirtut\u0113 inimici eor\u016b que n\u014da scripta indicasse incelis'; OCR: 'eorum que non scripta indicaffe incelus'. 'n\u014da' = nomina (Lk 10:20, names written in heaven) becomes 'not written'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-r:11:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image top left: 'q[uod] unq[uam] ab orthodoxa n[ost]ra fide ac religio-/ne velim deficere'; OCR: 'p que ad ort fadoque uua fide ac religio, ue uelim dicere'. 'unquam' and 'orthodoxa' are lost and 'deficere' becomes 'dicere', so the vow never to abandon the faith disappears.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-r:19:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, left page line 10: 'do (quod & sua bonitas n\u014d exigit) sed habendo'; the macron on 'n\u014d' is clear. OCR: 'quod et sua bonitas me exegit sed habendo'. The negation is lost, so the bishop's goodness 'exacted' repayment: reversed.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-r:19:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, right page near the foot: 'Tertio aut[em] quod a vetori orthodoxa ecc[lesi]a n\u016bq[uam] defecturus eius sancta fide ac Christiana religione'; OCR: 'Tertio aut[em] quod a vetori orthodoxa extra me[?] defectura'. With 'ecclesia nunquam' lost, the vow reads as a promise to defect.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-r:28:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, foot of the left page: 'recognosco me nunq[uam] horum beneficiorum im-/memorem fore'; OCR: 'testor me minus horum benefactorum / memore fore'. 'never unmindful' becomes 'less mindful', which reverses the oath.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b26-k:98:ocr:5",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image line 11: 'sic ca[usa] infinita e[st] p[ri]ncipiu[m] efficiens q[ui]a facit de p[ar]tib\ua770 angeli / ip[su]m angelum'; OCR: 'facit de nihilo angelum ipsum angelum'. 'de ptib\ua770 angeli' is plainly written; the expected 'de nihilo' is substituted, a statement that is not on the page. (It could equally be filed as O6; serious either way.)",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b26-k:147:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'vtz bonitas sit dr\u012bs quid \u0113 bonitas dr\u012bs \u2026 magnitudo sit dr\u012bs \u2026 \ua76fcordantia dr\u012bs'; OCR: 'utrum bonitas sit deus \u2026 magnitudo sit deus \u2026 concordantia deus'. 'dr\u012bs' is the adjectival predicate in the matrix (differens or durans), never 'deus' (which would be 'ds\u0304'), so the matrix now asks whether each principle is God. Narrower than claimed: 'dr\u0101' may well be duratio, as the OCR has it (the same page has 'dra infinita causat finitam \u2026 dra est causata', which reads as duratio), so the 'differentia\u2192duratio' half is not established. The deus misreading alone is serious.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b08-m:11:ocr:0",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'et maxime Nouu[m] suum collegiu[m] iu-/uare, tueri ac defendere velim'; OCR: 'et magno Reipublicae usui collegii uiros, tueri ac defendere velim'. Serious: the vow to support the New College becomes a vow about the commonwealth. But it is a local fluent misread of text that is there ('magno'~maxime, 'collegii'~collegium, 'uiros'~iuuare), not page-level confabulation.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b08-m:11:ocr:1",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image, right page: 'suo collegio nouo. saltem musis et earu[m] cultorib[us] conservato, et extructo / enutriuit. Atq[ue]'; OCR: 'saltem mensis et uariis cultoribus conservato, et Christo penitus dicato. Atque'. Serious: a pious dedication 'to Christ' replaces 'built and nourished', and 'musis' becomes 'mensis'. But it is a fluent misread of the ligatured 'extructo enutriuit' (O6), not O1 invention.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b08-m:19:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'quod & sua bonitas n\u014d exigit sed habendo' (macron on n\u014d clear); OCR: 'quod et sua bonitas me exegit sed habendo'. Reversed: the goodness 'demanded' repayment.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-m:19:ocr:5",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Tertio aut[em] quod a vetori orthodoxa ecc[lesi]a n\u016bq[uam] defecturus'; OCR: 'Tertio aut[em] quod a vetori orthodoxa extra me[?] defectura'. 'ecclesia nunquam' is lost, so the vow not to defect is gone.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:78:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 4: 'no\u0113r etenim purificatus Regulus unicum est in terris reperibile solvens'; OCR: 'non enim purificatus Regulus unicum est'. 'noster' with its suspension mark is read as a negation, so the text now denies that our regulus is the one solvent.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:78:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'hinc merito Regulo no\u014d Solventis / Vrslis nomen tribuitur'; OCR: 'huic merito Regulo non solventis / Ursi nomen tribuitur'. 'no\u014d' (nostro) becomes 'non', and 'Vrslis' (Universalis, abbreviated) becomes 'Ursi'. The key definition, 'universal solvent', is negated and given a meaningless name.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:78:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1-2: 'quam hi[c] sub \u263fii dissolventis nomine / \u2641um novum antimonialem'; OCR: 'quam si sub spiritu dissolventis nomine sum novum antimonialem'. The Mercury sign is rendered 'spiritu' and the antimony/regulus sign 'sum', so the named substance (the dissolving mercury, a new antimonial regulus) is lost. 'antimonialem' survives, which softens the loss, but a reader is told 'spirit', not 'mercury'.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b19-k:78:ocr:7",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: '\u211e partem i finissime et copellatae C.// ut ante docuimus :/ rectificati no\u0113i [sign]i [\u263f]ii m[a/o]rtialis partes duas'; OCR: 'Recipe partem i finissimo et copulato et ut ante docuimus spiritu rectificati non spiritu spiritu martialis partes duas'. Serious: the cupelled metal's sign is dropped, 'nostri' becomes 'non', and both alchemical signs become 'spiritu', so the ingredients cannot be identified. But the numerals (partem 1, partes duas) are correct, so this is not O7. Whether 'martialis' is wrong cannot be settled: the hand reads 'm?rtialis' and could be martialis.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b19-k:154:ocr:0",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image l.1: '\u2296em v\u014d rubeum'; l.3: 'hunc \u2641um et rubeum \u2296em'; l.9: 'hunc \u2641um et \u2296em supra repertum'. OCR: 'Gem vero rubeum', 'hunc gum et rubeum gem'. The alchemical signs (antimony with cross, salt-type circle) are turned into Latin-looking 'gem'/'gum' with no bracket or flag, so the reader cannot tell which substances the recipe uses.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:154:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image l.5: 'iterum 5 aut 6 lot \u2295i et paucam quantitat\u0113 \u2296 fusi' (cf. l.10 'ut ante 5 v[el] 6 lot'). OCR: 'iterum et ad 6 lot[iones] O[lei] et paucam quantitatem O[lei] fusi'. The '5 aut' alternative is gone, the weight unit 'lot' becomes 'lotiones' (washings), and two different signs both become 'Olei' (oil), an ingredient the page does not name. The dose and the ingredient are both wrong.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:154:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: '\u2641us hic ad augmentationem \u2295i et \u263eae | fixationemque \u263fii magno cum emolumento servit'. OCR: 'Et hic ad augmentationem O[lei] et Co-gitationem [?] magno cum emolumento servit'. 'fixationemque' plus the mercury sign becomes 'Cogitationem', the subject sign becomes 'Et', and the sign after 'augmentationem' becomes 'Olei'. The sentence that says what the regulus is good for is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:232:ocr:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "The image is a single text block. The right edge of the photograph shows the facing leaf's line beginnings: 'Suis\u2026', '=iiua', 'puri', '=sta', 'bene', 'abso', 'puri', 'aure', 'ille', '=bed', 'vivo', 'vul', 'mag', 'eum', 'quod', 'mini', 'Sube', 'vivo', 'arec'. OCR: '<columns>2</columns> \u2026 <column-break/> suis =nua puris =Aa bene abso \u2026 Sabe vivo arec'. That strip is transcribed as this page's second column.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:232:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: '\u211e \u2642is electi uncias 4: ignitis in tigillo, adde iniice \u2641ii electi ut sit uncias 8: id est duplex pondus'. OCR: 'Recipe et electi uncias 4: \u2026 adde inue et electi ut suus uncias 8'. Both metal signs become 'et', so the recipe no longer says what is weighed. One correction to the claim: by eye, the first sign is iron (\u2642) and the second, the 8 oz at double weight, is antimony (\u2641), the usual 1:2 ratio for regulus martialis. The claim has them the other way round, but the defect is as stated.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-k:232:ocr:2",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: 'non quidem eentialiter, sed accidentaliter' (abbreviated essentialiter/accidentaliter). OCR: 'non quidem centraliter, sed auidenter'. The misread is real. But 'centraliter' is close in sense to 'essentialiter' in this alchemical register, and 'auidenter' is a non-word, so it reads as a garble rather than a false statement. The essential/accidental contrast is lost, but nothing false is asserted, so I rate it moderate.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b22-k:141:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image, running head across the opening: '[Basilii Val]entini Ordi- | nis sti P. Benedicti \u2013 In testam\u0113to 70.' with '70' as the leaf or page number. OCR: '<margin>Lentini Ordinis sancti Benedicti - In festo 1570.</margin>'. 'In testamento' (the work's title) becomes 'In festo', and the number 70 becomes a date '1570' that is not on the page. A reader would take 1570 as a date in the source. It is also furniture mis-tagged as a margin note (O11), but the invented date is the serious part.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b18-t:229:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: '1541 Luc\u00e6 Osiandri contra 34 articulos pa- | pisticos. T\u00fcbing\u00e6.' The 'pi' of 'papisticos' is plain. OCR: 'contra 34 articulos pacificos'. The title's sense is reversed ('papist' becomes 'peaceful').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b18-t:229:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image, right-hand column: '1390:', '1391', '1392:', '1393:', '1394:'. The second digit is a 3, written unlike the 5 in the year column ('1542', '1545'). OCR: '1590: \u2026 1591: \u2026 1592: \u2026 1593: \u2026 1594:'. Every finding number on this index page is wrong, and they now look like publication years.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-m:78:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.4: 'intelligas. no\u1ebdr etenim purificatus Regulus unicum est in terris reperibile solvens'. OCR: 'non enim purificatus Regulus unicum est in terris reperibile solvens'. 'noster etenim' becomes 'non enim', which negates the claim that our purified regulus is the one solvent.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-m:78:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'hinc merito Regulo no\u00f5 solventis | U\u00f1slis nomen tribuitur' (nostro \u2026 universalis). OCR: 'huic merito Regulo non solventis Ursi nomen tribuitur'. This adds a negation and a nonsense name ('the bear') to the definition of the universal solvent.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-m:78:ocr:2",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image l.1\u20132: 'quam hic sub \u263fii dissolventis nomine | \u2641um novum antimonialem'. OCR: 'quam si sub spiritu dissolventis nomine sum novum antimonialem'. The mercury sign becomes 'spiritu' and the antimony/regulus sign becomes 'sum', so the substance named is lost. Better described as an O10 sign garble than O6, but serious either way.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-m:78:ocr:7",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: '\u211e partem 1 finissime et copellat\u00e6 \u263d:/ ut ante | documimus:/ rectificati no\u1ebdi \u2641i \u2641ii martialis partes duas'. OCR: 'Recipe partem i finissimo et copulato et ut ante docuimus spiritu rectificati non spiritu spiritu martialis partes duas'. The cupelled metal's sign is dropped, 'nostri' becomes 'non', and both signs become 'spiritu', so the two ingredients of the recipe cannot be recovered. One correction to the claim: by eye the last word reads 'martialis' (this hand writes a like o), consistent with regulus martialis, so 'iron invented' does not hold. The garbled ingredient list does.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b19-m:232:ocr:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "Same image URL as b19-k p.232 (identical photograph). The image is a single text block. The right edge of the photograph shows the facing leaf's line beginnings: 'Suis\u2026', '=iiua', 'puri', '=sta', 'bene', 'abso', 'puri', 'aure', 'ille', '=bed', 'vivo', 'vul', 'mag', 'eum', 'quod', 'mini', 'Sube', 'vivo', 'arec'. OCR: '<columns>2</columns> \u2026 <column-break/> suis =nua puris =Aa bene abso \u2026 Sabe vivo arec'. That strip is transcribed as this page's second column.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-m:232:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "Same image URL as b19-k p.232 (identical photograph). image: '\u211e \u2642is electi uncias 4: ignitis in tigillo, adde iniice \u2641ii electi ut sit uncias 8: id est duplex pondus'. OCR: 'Recipe et electi uncias 4: \u2026 adde inue et electi ut suus uncias 8'. Both metal signs become 'et', so the recipe no longer says what is weighed. One correction to the claim: by eye, the first sign is iron (\u2642) and the second, the 8 oz at double weight, is antimony (\u2641), the usual 1:2 ratio for regulus martialis. The claim has them the other way round, but the defect is as stated.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-m:232:ocr:2",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "Same image URL as b19-k p.232 (identical photograph). image: 'non quidem eentialiter, sed accidentaliter' (abbreviated essentialiter/accidentaliter). OCR: 'non quidem centraliter, sed auidenter'. The misread is real. But 'centraliter' is close in sense to 'essentialiter' in this alchemical register, and 'auidenter' is a non-word, so it reads as a garble rather than a false statement. The essential/accidental contrast is lost, but nothing false is asserted, so I rate it moderate.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b14-t:42:ocr:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "The image shows the full left page (p. 38) and, at the right, the left edge of the facing page: 'divinitas \u00e6q\u2026', 'nostro, qui est', 'Spiritus noster', 'ta, licet varia', 'dicuntur i.e. m', 'ab hac sentent', \u2026 'visus sum ipsi'. OCR has a second <column-break/> block 'divinitas agnostro, qui est Spiritus noster ta, licet varie dicuntur i.e. m ab hac sententia \u2026 visus sum ipsi'. That is the neighbour's strip presented as this page's text.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b14-t:42:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'at de Spiritu sancto non fit mentio, nisi vbi est sermo de ag- | do, quasi per quandam accidentalem pr\u00e6dicationem'. OCR: 'nisi ubi est sermo de Deo, quasi per\u2026'. 'agendo' becomes 'Deo', which changes Servetus's point (the Spirit is mentioned only where acting is spoken of).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b14-t:122:ocr:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "The image shows p. 116 in full plus the left part of facing p. 117, whose lines begin 'quam in Novo Scriptura tal\u2026', 'es legas, manus, digitos, ocu\u2026', 'Per Angelum igitur Christi vult\u2026', 'Nam ut Cyprianus inquit, iden\u2026', 'Tanta enim est Christi gloria', 'In qua sententia tot sunt errores'. The OCR interleaves these into p. 116's lines ('Dei \u05d9\u05d4\u05d5\u05d4 sed quam in Novo Scriptura talis ad imaginem inquit\u2026', 'ad imaginem es legas, manus, digitos, oculos\u2026'), which produces nonsense sentences throughout the page.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-k:50:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.1\u20132: 'a iudeis a crudelissimis uenatorib' occis' & \u012bde resurg\u0113s \u012b ascensione tanq\u0304 | \u012b palacio regis p[at]ris & omib' s[an]c[t]is \ua76fspiciend' \u0113 collocatus'. OCR: 'aliud est accedentibus uenatoribus occisus et de resurges tascensione tanquam palacio regis prius et omnibus suis aspiciendo est collocatus'. 'by the Jews, most cruel hunters' is gone, and 'patris' and 'sanctis' are misread.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-k:50:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'cocte carnes ursi crescere uidentur ut d[icit] plynius q[uod] \u0113 \ua76f mor\u0113 omi\u016b carni\u016b'. The \ua76f (contra) mark sits between '\u0113' and 'more'. OCR: 'quod est more omnium carnium'. Dropping 'contra' reverses the claim: boiled bear-meat growing becomes ordinary instead of against the nature of all meat.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-k:50:ocr:7",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Si amigdalas wlpes comedit mori d[icitu]r. Calef[a]c[ti]\u014dnem epatis patit[ur] t[em]p[or]e | estiuale.' OCR: 'Si amigdalas uulpes comedit mouet et calefactionem epatis pane et tpe et uale'. 'it is said to die' becomes 'mouet', and the summer liver-heat clause is garbled.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-k:98:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.4\u20135: 'Hic forma egregior \u0113 & | duplo ceteris maior. penne breuiores. crura recta(?). ingressu [celsior]'. OCR: 'hic forma egregiore e 7 duplo eius maior peme breuiores. arva et arva mgrellu collior m fronte mada ndem'. 'ceteris' becomes 'eius', and the legs, gait and forehead mark become non-words, so the king bee's description cannot be read. The whole page is transcribed at this level of garble (unexpanded abbreviations, non-words), so this clause is typical of the page, not an isolated misread.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b25-k:145:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Magnes ul' magnates lap[is] \u0113 coloris ferruginei ferr\u016b mir\u016b attr[a]hit. Ab | s\u0113te adam\u0101te q[uod] n[on] p[otes]t aliq[uid] in adam\u0101te p[re]sente'. OCR: 'Magnes uel magnates lapis colore frugineo et manu attingit. Et scire adamante'. The magnet's defining property (it draws iron wonderfully) becomes 'touches with the hand', and 'Absente' becomes 'Et scire'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-k:145:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Illa u[er]o q[ue] adult[er]a \u0113 de lecto | q[uas]i manu repulsa subito fetore coacta cadit'. OCR: 'Illa uero que adultera est diligit qui manu repulsa siro feroce cocta cadit'. 'de lecto \u2026 cadit' (falls from the bed) becomes 'diligit' (loves), which inverts the adultery test.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-k:145:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, Medo entry: '\u2026uis\u016b reddit. podagric\u016b sanat. freneticos c[ur]at.' The c carries a superscript abbreviation, and the word sits in a run of cures. OCR: 'Freneticos facit'. 'cures the frenzied' becomes 'makes frenzied', a reversed medical claim.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-k:17:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, top added note: 'p[er] \ua76fcurrentes. n\u014d intelligit p[er] \ua76fcurrentes eiusdem anni s[ed] sequentis anni'. OCR: 'poenitentes. no intellige paschales eidem anni et sequentes anni'. The technical term (concurrentes) becomes 'poenitentes'/'paschales', and 'sed' becomes 'et', so the note's distinction (the following year's, not the same year's) is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-k:17:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.1\u20132: 'habet de dieb[us] excrescentib[us] | tm\u0304 .\u039b. finitus est cyclus istius excrementi \u012b anno illo'. OCR: 'habet dies epactas tm. A. finitur est cyclus et quaxmeri'. 'epactas' brings in a different computistical quantity (the lunar epacts), and \u039b, the medieval numeral 7, is left as the letter 'A'. One correction to the claim: the term on this line reads by eye as 'excrescentes/excrementi' (excess days), not literally 'concurrentes', but the substitution with epacts is real and misleading.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-k:17:ocr:3",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image l.2\u20133: '\u012b anno illo. s[ed] q[uia] 28. est | minim[us] nu[merus] que[m] \ua76ftinent [4] & 7'. The second digit is the medieval 8, and context requires 28 (the least number containing 4 and 7, the solar cycle). OCR: 'G. q\u0303. 29.' The cycle length is given as 29.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-k:30:ocr:1",
+  "verdict": "misclassified",
+  "class": "O7",
+  "evidence": "image l.1-3: 'fm arza|chelem i[n]q[uan]titate uni[us] sc[un]di . \u204a 3 . t[er]ciis . \u204a 29 q[ua]rtis . \u204a \ua757\u039b (47) q[ui]ntis . \u204a 14 sex[tis] \u204a 2 sept[imis]'; OCR: 'fin autem dielem ignota est uni sedi et 3. diebus et 29. horis et 14. scrupulis et 33. secundis'. The leaf's numbers 3, 29, 14 are in the stored text, so this is not confabulation: it is a misread in which the fractional units (tertiae, quartae, sextae, septimae of a second) became days/hours/scruples and 'secundum Arzachelem' became 'fin autem dielem'. The quantity is wrong by orders of magnitude and the authority is lost, so it is serious, but it is a numeral/unit misread (O7, with O6), not invented text.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-k:30:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "image: '6939 dies \u204a insup[er] \ua757\ua757 minuta' and again 'pue[n]it 6939 dies \u204a insup \ua7574 minuta'. \ua757 is this hand's 4, so 44 both times; OCR: '6939 dies et insuper 16. minuta' (twice). The surplus over 6939 days is the quantity the argument rests on.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-k:30:ocr:3",
+  "verdict": "confirmed",
+  "evidence": "image: 'Igit[ur] \u039bG anni q[ui] [com]plent quat[er] 19 annos p[re]cise adeq[ua]nt[ur] 9\ua7570 lunac[i]onib[us] ... in \u039bG annis ... accidat 9\ua7570 lunes ... \u039bG annoru[m]' (\u039b = 7, \ua757 = 4: 76 years, 940 lunations); OCR: 'remanet 16. anni ... adequate. 234. lunationibus ... 20. luner ... in 16. annos'. The conclusion (76 years = 940 lunations, the Calippic cycle) is gone.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-k:43:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image l.1-4: '8 anno cicli \u204a continuat[ur] illi 8 i[m]mediate 16 \u204a h[ec] e[st] r[ati]o q[uo]d cu[m] 8 ... vnde 8 anni inchoati ... vnde 96 lunac[i]o[n]es ... 99 lunac[i]onib[us] p[er]tinentib[us] ad illos 8 annos'. The glyph is this hand's 8 (the 9 is the closed-loop form in '99', '29'), and the arithmetic needs 8: 8 x 12 = 96, + 3 embolisms = 99. OCR: '9. anno cycli 7. continuat illi 9.', '9. anni inchoati', '9. priores annos', while elsewhere keeping 'illos 8. annos'. The ogdoad argument becomes incoherent.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-m:17:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image (top added note): 'p[er] \ua76fcurrentes . no[n] intellige p[er] \ua76fcurrent[es] eiusdem anni s[ed] sequentis anni . quia dico ...'; OCR: 'poenitentes. no intellige paschales eidem anni et sequentes anni'. The key computistical term (concurrents) is replaced by 'poenitentes'/'paschales' and 'sed' becomes 'et', so the gloss's point (not this year's concurrent but the next year's) is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-m:17:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image: 'habet de dieb[us] excrescentib[us] | t[antu]m \u039b . finitus est cyclus ist[orum] excrementi i[n] anno illo'; OCR: 'habet dies epactas tm. A. finitur est cyclus et quaxmeri'. The term on the leaf is the excrescent (concurrent) days, not 'concurrentibus' as the claim quotes, but the substance holds: it is rendered as 'epactas' (a different, lunar quantity), and the 7 (written \u039b, as in '76' = \u039bG on p.30) is left as the letter 'A'. The solar-cycle explanation is turned into one about epacts.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-m:17:ocr:3",
+  "verdict": "real_not_serious",
+  "evidence": "image: 's[ed] q[ui]a 28 e[st] mi[ni]m[us] n[umeru]s' ('2g', the 8 glyph as on p.43); OCR: 'G. q\u0303. 29.'. The misread is real, but the same page states the cycle correctly a few lines on ('cyclus igit[ur] ... in 28. annis apletur', stored correctly as '28'), so a reader can recover the number from context.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-m:30:ocr:1",
+  "verdict": "misclassified",
+  "class": "O7",
+  "evidence": "Same image and the same stored OCR as b02-k:30. image: 'fm arzachelem i[n]q[uan]titate uni[us] sc[un]di \u204a 3 t[er]ciis \u204a 29 q[ua]rtis \u204a \ua757\u039b q[ui]ntis \u204a 14 sex[tis] \u204a 2 sept[imis]'; OCR: '... uni sedi et 3. diebus et 29. horis et 14. scrupulis et 33. secundis'. The numbers are from the leaf; the units and Arzachel are misread. Serious, but a unit/numeral misread (O7/O6), not O1.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-m:30:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "Same image as b02-k:30: '6939 dies \u204a insup \ua757\ua757 minuta' / '\ua7574 minuta' = 44; OCR: '16. minuta' twice.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-m:30:ocr:3",
+  "verdict": "confirmed",
+  "evidence": "Same image as b02-k:30: '\u039bG anni' (76) and '9\ua7570 lunacionibus' (940) three times; OCR: '16. anni', '234. lunationibus', '20. luner'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-m:43:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "Same image and the same stored OCR as b02-k:43. image: '8 anno cicli ... illi 8 immediate 16 ... vnde 8 anni inchoati ... 96 ... 99 ... ad illos 8 annos'; OCR alternates '9.' and '8.', which breaks the 8 x 12 + 3 = 99 argument.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b05-k:5:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image: the left edge of the photograph shows the facing verso's text column, cut off ('dicat. O[mn]s | o nobis qui | ... sacramen | touis' in red/black), outside this leaf's gold border. This leaf carries only the procession miniature and 'Domine labia mea aperies...'. OCR: a 25-line <margin> block ('dicat. O / nobis qui / abrenunci / ... cramen / tous.') presented as this page's marginalia. A reader is told the page carries marginal Latin that is not on it.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b05-k:10:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image: left edge shows the facing leaf's line ends ('gne patre nos / omnes adips / ... me liberemur / omnium'), outside this leaf's border; this page is the St Catherine miniature plus 'Domine labia mea...'. OCR wraps them in <margin> as this page's marginalia ('ne patre nos / omnes atque / ... me liberem / mum.').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b05-k:14:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image: left edge shows the facing Latin leaf's line ends ('h deum. et pa[tr]i / possim ab omni / ... n dnm. amen'); this page has only the Virgin miniature and the French verse 'Tout a par moy affin quon ne me voye...'. OCR puts the strip in <margin> and tags the page '<language>Latin, Middle French</language>' and '<script>mixed</script>' on the strength of it.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b04-k:16:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image col.1, under the staves: '[N]e reminiscaris do|mine delicta nostra vel pa|rentum nostrorum neque vindi|ctas sumas de peccatis nostris'; OCR col.1 ends at 'sine notis impla-' and nothing of the chant text is stored, with no marker. The whole antiphon is silently gone.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b04-k:16:ocr:3",
+  "verdict": "confirmed",
+  "evidence": "image (zoomed): 'supra in suo loco p[re]dicto per | error\u0113 sine notis i[m]p[re]ssa' (the antiphon was printed above in error without notes, hence repeated here with notation); OCR: 'dicto per crucem sine notis impla-'. 'by the cross' replaces 'in error' and 'impressa' is lost, so the rubric's reason for the repeated chant disappears and a false liturgical instruction appears.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b04-k:16:ocr:4",
+  "verdict": "confirmed",
+  "evidence": "image col.2: illuminated N + 'emo ecc|liam e|dificet: p[ri]|usq[ue] po[n]|tificis iu|dicio lo|cus et atrium designetur'; OCR: 'Domine cliam e- dificet: p- usque po- tificis in- diao lo- cus atrui de dignetur'. 'Nemo' read as 'Domine' turns the canon's prohibition (no one shall build a church before the bishop has marked out the site) into an address to God.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-r:2:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image l.6: 'In vigilia b[ea]ti \u0180chari . Missa . c . xx' (b with a crossed ascender = ber-: Berchari, St Berchar, founder of Montier-en-Der); OCR: 'In vigilia beati bernardi'. A table of contents in the abbey's own pontifical now lists St Bernard's vigil instead of its founder's.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:78:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image l.4: 'no[ste]r etenim purificatus Regulus unicum | est in terris reperibile solvens' (no\u0113r with superscript); OCR: 'non enim purificatus Regulus unicum est in terris reperibile solvens'. 'Our purified regulus is the one solvent' becomes a negation of it.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:78:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image: 'hinc merito Regulo no[str]o Solventis | \u016arslis (universalis) nomen tribuitur'; OCR: 'huic merito Regulo non solventis Ursi nomen tribuitur'. It becomes 'the name of not dissolving' with an invented name 'Ursi', in place of 'our regulus is rightly called the universal solvent'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:78:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "image l.1-2: 'quam h[i]c sub \u263fii dissolventis nomine | \u2641um novum antimonialem' (mercury sign; cross-over-circle sign + 'um'); OCR: 'quam si sub spiritu dissolventis nomine sum novum antimonialem'. The two named substances are lost ('spiritu', 'sum'), so the reader cannot tell what is being named. Serious as stated. The mechanism is signs read as letters, which fits O10 (secondary script garbled) as well as O6.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b19-r:78:ocr:7",
+  "verdict": "confirmed",
+  "evidence": "image: '\u211e partem i finissime et copelato C.// ut ante | docuimus :/ rectificati no[st]ri \u2641i \u2641ii mortificalis partes | duas' (under the heading 'Mercurii mediante Arsenico nostro preparatio'); OCR: 'Recipe partem i finissimo et copulato et ut ante docuimus spiritu rectificati non spiritu spiritu martialis partes duas'. The cupelled metal sign 'C.' is dropped, 'nostri' becomes 'non', both signs become 'spiritu', and 'mortificalis' becomes 'martialis' (iron, not on the leaf). The recipe's ingredients are wrong.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b19-r:154:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image: '\u2296em vo rubeum' (l.1), 'R iterum hunc \u2641um et rubeum \u2296em' (l.3), 'hunc \u2641un et \u2296m supra repertum' (l.8); OCR: 'Gem vero rubeum', 'hunc gum et rubeum gem', 'hunc gum et gem'. Salt and antimony/regulus signs become the non-words 'gem'/'gum' throughout, so the reader cannot know what is being melted.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:154:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image l.5: 'iterum 5 aut 6 lot \ua74ai et paucam quantitate[m] \u2296 fusi' (cf. l.9 'ut ante 5 v[el] 6 lot'); OCR: 'iterum et ad 6 lot[iones] O[lei] et paucam quantitatem O[lei] fusi'. The quantity range is lost, the weight unit 'lot' is expanded as 'lotiones', and the two salt signs are expanded as 'Olei', putting an oil into the recipe that is not on the leaf. The same expansion recurs at l.9-10.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:154:ocr:4",
+  "verdict": "confirmed",
+  "evidence": "image l.17-18: '\u2641us hic ad augmentationem \u2296i et Co | fixationemq[ue] \u263fii magno cum emolumento servit'; OCR: 'Et hic ad augmentationem O[lei] et Co-gitationem [?] magno cum emolumento servit'. The OCR marks its doubt with '[?]', but the regulus sign becomes 'Et', 'fixationemque \u263fii' (fixing mercury) is lost, and 'Olei' is invented again, so what the regulus is good for is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:232:ocr:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "image: the page is one column; at the right edge a strip of the facing leaf shows only line-beginnings ('Suia', '=iua', 'puri', '=Aa', 'bene', 'abso', 'aurea', 'ille', 'vivo', 'magi', 'arec'). OCR declares <columns>2</columns> and after <column-break/> prints 'suis =nua / puris =Aa bene abso / pure aurea. ille a pe / et =bed vivo pure Aurea / vul magi et. fail / eum quod minr Sabe vivo arec' as a second column of this page. Text from the neighbouring leaf presented as this page's content.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:232:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image (Reguli ... purificatio): '\u211e [planet sign]is electi uncias 4: ignantur in tigillo, adde iniice [\u2641-type sign with cross above]^z electi ut sui uncias 8: id est duplex pondus'. Two alchemical signs (iron/Mars and antimony; the packet may have them in the opposite order, but both are signs) stand before 'electi'. OCR: 'Recipe et electi uncias 4: ... adde inue et electi ut suus uncias 8'. Both substances are reduced to 'et', so the recipe no longer says what is weighed at 4 and 8 ounces.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b19-r:232:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 4: 'non quidem e[ss]ntialiter, Sed accidentaliter' (abbreviation stroke over the e, 'audentaliter'-like ci ligature). OCR: 'non quidem centraliter, sed auidenter'. The essential/accidental contrast the sentence turns on (Regulus is poisoned by its arsenic accidentally, not essentially, so it can be purified) is lost: one half becomes a different word, the other a non-word.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b01-r:136:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: red rubric 'Explicit lib. xi \u00b7 Incip. xii \u00b7 De' ... 'magno sacerdote' (red, at the end of line 2 and running to line 3), set into the black sentence 'Omnis qui inter homines sacerdos est \u00b7 ad illum sacerdotem de quo dixit deus \u00b7 tu es sacerdos in eternum secundum ordinem melchisedech \u00b7 paruus est et exiguus'. OCR: <note>Rubric: Explicit liber vi. Incipit vii. De sacerdotibus et ad illum sacerdotem ... melchisedech.</note> and then body 'Omnis qui inter homines paruus est et exiguus'. Book numbers wrong (xi/xii \u2192 vi/vii) and the black text is lifted out of the sentence into the rubric, so both the homily number and Origen's sentence are misstated.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b26-m:51:ocr:3",
+  "verdict": "confirmed",
+  "class": "O4",
+  "evidence": "image line 12: 'e\u0113 \u012bu\u0101le aut \u0113 simplex p simplificare Et \u0113 \ua76fpositum de are alio\ua75d pncipio\ua75d Sic bonificare bonitatis hois'. OCR: 'essentia manuale aut est simplex per simplificare simplicitatis anime et corporis et oppositum de arte omnium principiorum Sicut' \u2014 the next lines' 'simplicitatis anime et corporis ... omnium principiorum' is pulled up (and repeated two lines later), and 'Et est compositum de arte aliorum principiorum' disappears. The simplex/compositum distinction of the definition is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-k:45:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 3: 'pone in decuplo vrine p[re]pat[e]' (decuplo urinae praeparatae). OCR: 'pone in duplum vini fortis'. Ingredient (prepared urine \u2192 strong wine) and proportion (tenfold \u2192 double) both changed in a recipe.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b13-k:45:ocr:2",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image line 6\u20137: 'funde calida sup easd\u0113 feces. 3\u00ba calefac | eand\u0113 aquam & funde sup easd\u0113 feces'. OCR: 'funde calida super saepius faecem 3. calefac sanguinis aquae et funde super saepius faecem'. The leaf's words are there and misread (easdem\u2192saepius, eandem\u2192sanguinis), not invented; still serious because 'sanguinis aquae' introduces a blood-water reagent that the step does not have (it reheats the same lye).",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b13-k:45:ocr:3",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image line 8: 'tunc abice i[n] feces & pos[t] z^am p[ar]te[m] ciniu[m] in eand' aq[ua]m q[uam] fecisti | lixiviu[m]' \u2014 singular ordinal with superscript, following 'accipe una[m] 1^am parte[m]' on line 2 and preceding '3^am' on line 10: the second of three parts of the ash. OCR: 'pone 3. partes cineris in sanguinis faecis lixivio'. Quantity (one part \u2192 three parts), the stage order, and the liquid (the same lye \u2192 'blood-dregs lye') all wrong.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b13-k:45:ocr:8",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image lines 17\u201318: 'coadunent[ur] & p[er]mitte infri[gidari] & q[uando] fri[gidum] fuit distilla i[stud] | p[er] filtru[m] ad h[oc] op[us] p[re]patu[m]' ('filtzu' with the f-like long s). OCR: 'permitte infundi et quando fuerit finit distillare per silentium ad hoc opus paratum'. The steps (let cool; filter through a filter) are misread into 'infundi' and 'per silentium' \u2014 a misread of visible words, not text invented over an illegible leaf. Serious: the procedure's cooling and filtering are gone.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b14-m:82:ocr:0",
+  "verdict": "real_not_serious",
+  "class": "O3",
+  "evidence": "image: the right end of every line is lost in the gutter/edge ('omnes enim d', 'filius Dei vo', 'hodie a generatio', 'incorruptibilem. In', 'potestate quas', 'dixit Christ', 'genui te', ...). OCR fills each gap with no gap/unclear mark \u2014 a real defect. But the fills dovetail with the next visible line-start every time ('d|esperaverant', 'vo|catur', 'generatio|ne mortali', 'Christ|us in regno Pa' \u2192 next line 'tris sui Matth. 26', 'genui te| in Regem' \u2192 next line 'Paulus'), and they read as the known text of Servetus' De Trinitatis Erroribus (Matt 26:29 'in regno Patris'). Nothing visible contradicts them; the defect is unmarked completion of known text, not a misstatement of what the source says.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b14-m:82:ocr:1",
+  "verdict": "real_not_serious",
+  "class": "O3",
+  "evidence": "image: 'quando Principes Judaeorum cum' | 'juraverunt contra Davidem sicut et factum est contra Ch' | 'Fremuerunt enim illi et cum Ahitophel meditati sunt in' ... 'Vbi de eodem d'. 'Absalon', 'Christum Act. 4', 'ania', 'dicere possu' are indeed in the cut-off margin and unmarked. But they are not 'invented' in the sense of contradicting the source: 'cum [Absalon con]juraverunt' is required by the visible 'juraverunt' and fits the visible 'cum Ahitophel' (Absalom's counsellor); Acts 4:25\u201327 is exactly where Psalm 2's 'fremuerunt ... meditati sunt inania ... adversus Christum eius' is applied to Christ; 'meditati sunt in[ania]' is Ps 2:1. A plausible-correct completion presented without a mark; real, but not a reader-misleading invention.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b01-k:47:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1: 'accedere eti\u0101 filij isrl\u00b7 hoc \u0113 laici\u00b7 non t\u00f1 alienigene\u00b7 nisi si asscri|pti iam fuerint in ecclia d\u00f1i'. OCR: 'filii mist. hoc est laici. non enim alienigene. nisi si alteri iam fuerunt'. 'Israel' becomes a non-word and 'asscripti' (enrolled) becomes 'alteri', so the condition under which foreigners may enter is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:47:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 5\u20136: 'licet ccedant[ur] | sacerdotib' ad edend\u016b\u00b7 \u00f1 tam\u0304 o\u012ba conceduntur\u00b7 s; pars ex ipsis aliqua deo offert[ur]'. OCR: 'liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur. et pars'. 'non tamen omnia' \u2192 'etiam omnia' reverses the sense (not all is conceded to the priests; part goes to God).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:47:ocr:3",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 9: 'que c\u016b nr\u0304am \u012btelligentiam | supent\u00b7 sensusq; eo\ua75d sup nos sit'. OCR: 'que cum malam intelligentiam superant'. 'which surpass our understanding' becomes 'which surpass an evil understanding' \u2014 changes the reason given for reserving these things to God.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b01-k:47:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 10\u201311: 'ne forte alit' a nobis qu\u0101 se habet | ueritas pferant[ur]\u00b7 meli' igni ista seruam'\u00b7 et i\u014d eti\u0101 in hoc loco'. OCR: 'ne forte alii anobui quia se habe uerunt offerant. meliorem igitur servamus et io'. 'lest they be uttered by us otherwise than the truth has it; we keep them better for the fire' is reduced to non-words, and 'igni' (fire \u2014 the point of the exegesis: what is not understood is given to the altar fire) becomes 'igitur'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:47:ocr:7",
+  "verdict": "confirmed",
+  "class": "O5",
+  "evidence": "image lines 30\u201332: 'debem' peccat\u016b u' sit\u00b7 c\u016b comittim' ea que \u00f1 debem' comitte|re\u00b7 S; hec qm\u0304 \u00f1 semp in scriptis diuinis sub ista distinctio\u0113 inuenim|mus\u00b7 idcirco g\u00f1alem affirmare \u00f1 possum''. OCR: 'cum committimus ea que non debemus committe / mus. idcirco generalem affirmare non possum'. The whole line 'Sed hec quoniam non semper in scripturis divinis sub ista distinctione invenimus' is dropped and 'committe-re' fused with '-mus', removing the reason Origen gives for not generalising.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:136:ocr:0",
+  "verdict": "confirmed",
+  "class": "O1",
+  "evidence": "image: the outer (left) margin beside the red initial O and the whole column is blank parchment; no marginal text anywhere on the leaf except the facing-leaf strip at the right edge (whose words, e.g. 'deponere ... potest', are a different text). OCR prints a 33-line <margin> 'et de / magno / sacerdote / et de / eius / officio ... et de eius morte' whose last items repeat. Invented margin text.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:136:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: red 'Explicit lib. xi \u00b7 Incip. xii \u00b7 De' (and 'magno sacerdote' in red). OCR: '<insert>Explicit liber VI. Incipit VII.</insert> de'. Wrong homily numbers.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:136:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 7\u20139: 'ut neq; \u012b p\u0304senti uita sedm | legem obnoxij simus morti\u00b7 neq; sedm spuale legem\u00b7 futura nos | pena maneat ignis eterni'. OCR: 'ut neque ipsi enti utta sed in legem obnoxii simul mori. nec sed in spirituale legem humana nos pena maneat'. 'in the present life' is lost to non-words and 'futura' (the future punishment) becomes 'humana'.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b01-k:136:other:0",
+  "verdict": "confirmed",
+  "class": "O1",
+  "evidence": "same as b01-k:136:ocr:0: the margins of this leaf are blank; the 33-line repeating 'et de eius ...' list shown as margin text is not on the page.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-t:50:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1\u20132: 'a iudeis acdelissimis uenatorib' occis' & \u012bde resurges \u012b as\u0113sione tanq\u0304 | \u012b palacio regis p\u0304ris\u00b7 & omib' sc\u0304is \ua76fspiciend' \u0113 collocatus'. OCR: 'aliud est accedentibus uenatoribus occisus et de resurges tascensione tanquam palacio regis prius et omnibus suis aspiciendo'. 'by the Jews, most cruel hunters' becomes 'other ... approaching hunters'; 'patris' \u2192 'prius', 'sanctis' \u2192 'suis'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-t:50:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 12: 'ut dr plyni' q \u0113 \ua76f mor\u0113 om\u012b\u016b carni\u016b' (\ua76f with the contra form). OCR: 'quod est more omnium carnium'. Dropping 'contra' turns 'cooked bear meat seems to grow, which is against the nature of all meat' into 'which is the way of all meat'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-t:50:ocr:7",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 30\u201331: 'Si amigdalas wlpes comedit mori dr\u0304\u00b7 Calefc\u014dnem epatis patit' tp\u0304e | estiuale'. OCR: 'Si amigdalas uulpes comedit mouet et calefactionem epatis pane et tpe et uale'. 'it is said to die' becomes 'it moves', and 'suffers heating of the liver in summer' becomes non-words.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-t:98:ocr:1",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image lines 4\u20136: 'hic forma egregior \u0113 & | duplo ceteris maior penne breuiores\u00b7 crura ei recta\u00b7 ingressu | celsior in fronte macula qdam'. OCR: 'hic forma egregiore e 7 duplo eius maior peme breuiores. arva et arva mgrellu collior m fronte mada ndem'. The middle is visibly broken non-words \u2014 the reader sees garbage, not a false fluent statement \u2014 and the surrounding OCR on this page is a semi-diplomatic mess throughout. Meaning-changing residue is narrow ('eius' for 'ceteris'). A real error, but a loss rather than a misleading claim.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b25-t:145:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 3\u20134: 'Magnes ul' magnates lap \u0113 coloris ffuginei ff\u016b mir\u016b attrahit. Ab|s\u0113te adam\u0101te'. OCR: 'Magnes uel magnates lapis colore frugineo et manu attingit. Et scire adamante'. The defining property (draws iron wonderfully) becomes 'touches with the hand', and 'in the absence of the diamond' becomes 'et scire'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-t:145:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 7\u20138: 'Illa u' q adulta \u0113 d' lecto | qi manu repulsa sbito fetore coacta cadit'. OCR: 'Illa uero que adultera est diligit qui manu repulsa siro feroce cocta cadit'. 'falls from the bed as if pushed by a hand, compelled by a sudden stench' becomes 'loves ...' plus non-words \u2014 the adultery test is unrecoverable and points the wrong way.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-t:145:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 22 (De Medo): 'podag\u2071n sanat. freneticos c\u0304at.' \u2014 c with the -ur abbreviation, i.e. 'curat'. OCR: 'Freneticos facit'. 'cures the frenzied' becomes 'makes (people) frenzied' \u2014 a reversed medical virtue.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b08-t:11:ocr:0",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image right page lines 5\u20137: 'suo collegio nouo. Saltem musis et | earu[m] cultorib[us] conseruato, et extructo | enutriuit. Atq; ad presens'. OCR: 'suo collegio nouo: saltem mensis et raro uictoribus conseruato, et Christo seruierint'. The leaf's words are there and misread (musis\u2192mensis, earum cultoribus\u2192raro uictoribus, extructo enutriuit\u2192Christo seruierint), not confabulated over an illegible stretch. Still serious: the writer says Fabri 'nourished' him in the college he built for the Muses, not that anyone 'served Christ'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-t:19:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image left page lines 9\u201310: 'N\u014d quid\u0113 gratia[m] refer\u0113|do (quod & sua bonitas n\u014d exigit) sed habendo'. OCR: 'Illo quidem gratia referen- / do (quod et sua bonitas me exegisset sed habendo'. 'Not by repaying the favour (which his goodness does not demand)' becomes 'his goodness had demanded of me' \u2014 the sense is reversed.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-t:19:ocr:1",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image left page lines 22\u201323: 'Sclt locum Fabri | Antistitem Vien[nensem] vn\u016b extitisse cui fortuna | mea'. OCR: 'Scilicet locum fabri / Aristotelem, Vtemini vnum exstitisse', and <vocab> lists 'Aristotelem'. The error is real and serious (the Bishop of Vienna becomes Aristotle as the one to whom the writer owes his fortune), but it is a meaning-changing misread of 'Antistitem', not O8 spelling normalisation.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-t:28:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.7-9: 'non poss\u016b non gratitudinis studi\u016b suspi-/cere et demirari, et e contrario ingratitu-/din\u0113 omnibus modis detestari' ('gratidudinis' and 'Demirari' are clear); OCR: 'non possum non praestitutis studiis prospicere, et detestari, et e contrario ingratitudine omnibus modis detestari'. The admire-gratitude / detest-ingratitude antithesis becomes 'detest \u2026 and on the contrary detest', which misstates the writer's point.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-k:95:ocr:1",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'si ne-/gligatur \u05d0, et initium fiat a \u05d1 occurrit tibi in summa [three Hebrew letters]' \u2014 the letters are Hebrew glyphs, distinct from the hand's Arabic '22' (written \ua75b\ua75b in 'ordo supremus 22' two lines above); OCR: 'si ne=gligatur 22. et initium fias a 2 occurrit tibi in summy 42.' The Hebrew numerals the cabalistic argument depends on are replaced by digits that are not on the page.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-k:95:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'si incipias a \u05d2 habebis summas similes Numeri 189; si a \u05d3. 196. / si a \u05d4. 2?3' (189 clear; 196 then the next sum, rising by seven as the text says: 'ascendunt septenarii'); OCR: 'a 7 \u2026 Numen 169; si a 7. post. 11 a 7. 213'. 169 for 189 and 'post. 11' for 196 break the series by seven that the sentence asserts. I can't settle the last number (203 or 213) by eye.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-k:95:ocr:3",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'disponas numeros \u05d0, \u05d2(?), \u05d4, \u05d6, \u05d8, \u05d9\u05d0 \u2026 Item \u05d0, \u05d3, \u05d6, \u05d9, \u05d9\u05d2 item \u05d0, \u05d4, \u05d8, \u05d9\u05d2' \u2014 every term is a Hebrew letter; OCR: '22, et 7, et 17, et 27, et 8, et 6 \u2026 22, et 7, et 13, et 27 et 6 \u2026 22, et 17, et 27, et 7'. None of the step sequences can be recovered.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-k:140:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image (sum row of the table): 'summa est 336. ad 28. scil. duodecupla | summa 30. ad 8. scil. Tripla supersextupartiens octavas'; OCR: 'Summa 36. ad 15. scilicet Duodecupla. Summa 30. ad 6'. 336:28 = 12 (duodecupla) and 30:8 = 3 6/8 fit their labels. 36:15 and 30:6 don't, so the worked example contradicts itself.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-k:140:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Ejus examen erit sequens 24. ad 18. scil. Sesquitertia' and in the note '\u2026productus 24 ad 18 \u2026 4 ad 3 = 24 ad 18 \u2026 sicuti est 24 ad 18' (the 8 has the same form as the '8 ad 9' and 'ad 8' on the page); OCR has '24 ad 16' all four times. 24:16 = 3:2, so the stored text claims 4:3 = 3:2, which is false.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:0",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image ll.1-2: 'eiusdem ponderis, quae simul distemperata commisce cum vino bibe, potenter excitat vim coeundi'; OCR (placed in a <margin> tag): 'qua simul distemperata remissio ad bino bibes, potenter ueritatem uirilem roborandi'. The words are misread, but the gist still comes through: mix it with wine, drink it, and it powerfully strengthens virility. The reader is not misled about what the recipe does, so the claim that the sense is lost overstates it.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:1",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: 'birga'/'birgam' (b for v throughout this hand: 'bino'=vino, 'bim'=vim), i.e. virga; OCR 'brega' every time. The misread is real and repeated, but it is a non-word that flags itself rather than a plausible wrong word, and context ('brega eius mansit fortiter erecta') makes the referent clear.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.8: 'Radix quoque herbae testiculi canis sumpta lacte caprearum.' ('testirnli ranib', 'larte rapear\u016b' legible); OCR: 'Radice quoque sicca testionibus sumpta certe uapeant.' Both ingredients (the herb testiculus canis, goat's milk) are gone and replaced by nonsense.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:4",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Cariophilli \u0292/1', 'Zinziberis \u0292/1 \u2026 galangae \u0292/1' \u2014 the single-loop drachm sign \u2014 and 'piperis albi g 8' (grains); OCR: 'Caryophylli \u2125 i', 'zinziberis \u2125 i \u2026 galgangae \u2125 i', 'piperis albi \u2125 viii'. Drachm becomes ounce (\u00d78), and 8 grains becomes 8 ounces, so the doses a reader would take from the text are wrong.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:5",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image l.11: 'quantitatem \u0292/1 tantum, et per 20 dies'; OCR: 'quantitate \u2125 i. tantum, et \u2125 xx. diebus'. Drachm becomes ounce, and the 'per' sign before 20 is also read as an ounce sign.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Est herba quaedam Iris graece, de qua si maleficiatus acce-/perit radices tres et pistata sumpserit' ('Iris gr\u00e6ce' clear); OCR: 'Est herba quaedam guis graere, de quasi maleficiatus ante sit radicibus tribus et gustata'. The herb is not named, so the remedy can't be identified.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:7",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: '\u211e Oleum sesamini et cerebrum Columbi ana \u0292 ij'; OCR: 'Oleo balsamum et roreum Columbiana \u2125 ii.' Sesame oil becomes balsam, 'cerebrum Columbi ana' collapses into one non-word, and the unit is again read as an ounce.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:37:ocr:8",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: 'toties quoties circumlinias praeputium tuum cum isto ungto. coxasque move cum ea'; OCR: 'toties quoties uirilia tua teras cum unguento rosae more ea'. This is not O1 confabulation: the substitutions follow the letter shapes ('coxasque move' \u2192 'rosae more'). The instruction's gist (anoint your member with the ointment each time) survives; the hip movement is lost and 'rosae' is spurious.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-t:73:ocr:1",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image l.3: 'ut exeas de ista bulva matris tuae quantotius' (b=v: vulva); OCR: 'Ut exeas de ista pulchra matre tua quam-totind'. The word is wrong, but the charm's meaning (child, come out of your mother) survives, so this misleads less than claimed.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-t:73:ocr:3",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image l.6: 'quo nato, mox schedula deponatur ab ipsa' ('Schedula' clear); OCR: 'mox secundam deponat ab ipsa'. The instruction to take the charm slip off the mother becomes one about the afterbirth: a plausible obstetric word put in place of what is on the page. A reader would misunderstand the procedure.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:73:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image \u00a7194: 'bibat [?]itrina de felle verris ad pondus unius fabae' ('de fell- verri') and 'Si mul. in hora coitus portaverit coagulum leporis masculi aut testiculos eius'; OCR: 'bibat vitrea de folli-besi \u2026' and 'portaverit magnum leporem masculi'. Boar's gall and hare's rennet are lost; 'carry a big male hare' is a wrong instruction that reads plausibly.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:108:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.1: 'arbor ille non producet fructum.'; OCR: 'arbor illa non durat fenestra.' The result (the tree bears no fruit) becomes nonsense.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:108:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (rubric): 'Exp. mirab. p. quod arescunt omnia incisa deorsum funditus, arbores, frutecta, arundines, gramina'; OCR: 'Experimentum quod nascuntur omnia meisa deorsum'. 'Wither' becomes 'are born', which reverses the experiment's claim.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:108:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'quae vanissimis etiam inventis miraculorum concedit effectum?' ('ronredit' = concedit); OCR: 'qua bam[?] id est inventio mixarum non redit effectus?'. The rhetorical question now says the effect does NOT happen, which inverts it.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:108:ocr:3",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'et cum ea quodcumque incisorium, sarcastrum, falx, gladius vel quodcumque aliud instrumentum sive volubile acuatur eodem die'; OCR: 'et rura quodam et in iisdem salrasten salis, gladibus bolgondis aliud in fermentu[m] se[m]el homibilo arnote eodem die'. The error is serious (the whetting of the blades can't be recovered), but it is a letter-by-letter misread of text that is on the leaf ('salrasten'<'sarcastrum', 'gladibus'<'gladius', 'fermentum'<'instrumentum'), not invented text.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-t:108:ocr:5",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'impleveris cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus arg.ti vivi, clauserisque foramen'; OCR: 'imploberis sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi tibi clanbrises foramen'. Sulphur, quicksilver and the parts are lost, which is serious. But the proportions are written as words ('una parte', 'tribus partibus'), not figures, so this is a garbled misread of the cursive (O6), not a numeral misread.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-t:108:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image \u00a7269: 'pone 8. lot. sulphuris pulverizati, et fumus inde ascendens poma facit cadere'; OCR: 'pone 8. lot. pulveris pulverizati, et summus in se ascendendo'. The only ingredient (sulphur) and the mechanism (smoke) are both lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b04-t:16:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: a large decorated initial N followed by 'E reminiscaris do-/mine delicta nostra vel pa-/rentum nostrorum neque vindi-/ctas sumas de peccatis nostris' = 'Ne reminiscaris'; OCR: 'Reminiscaris domine delicta nostra'. Dropping the decorated initial turns the petition 'remember not our sins' into 'remember our sins'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-r:107:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image l.2: 'partes tres: Sol uer\u00f2 quasi totus in mercurium resoluetur.' (written 'Soluer\u00f2 \u2026 totus'); OCR: 'solvetur quasi totum in mercurium resolvetur.' After the yields from Mars, Venus and Jupiter, the stored text drops the subject Sol (gold), so the reader doesn't learn that gold resolves almost wholly into mercury.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-r:207:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: '\u211e Mercurij optimi, et bene purgati un-/cias tres, et lun\u0119 cupellat\u0119, et uulgariter calcinat\u0119, aut foliat\u0119 \u2013 aut solis purissimi'; OCR: 'et sunc cupellatis, et uulgari ter calcinatis, aut foliatis aut solis purissimi'. Silver disappears from the Secunda Minera recipe, and the participles no longer agree with anything.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-r:308:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'et una illius pars cadet supra 3o. partes lun\u0119 fin\u0119' \u2014 the same open '3' + 'o' as in 'per 3o aut 40 dies' on p.193 of this book (which the stored OCR there reads as 30); OCR: 'cadet supra 80. partes lunae fine'. The projection ratio is overstated by more than two and a half times.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b18-m:229:ocr:0",
+  "verdict": "not_an_error",
+  "evidence": "image: years written '15?1, 15?2, 15?6, 1565, 15?5, 15?2, 15?3, 15?0'. The third digit is an open-topped form that looks like a 4 but is this hand's 7 (it is not the hand's 4 in '34 articulos'). The authors' dates settle it: Lucas Osiander (b. 1534) could not publish against 34 papist articles in 1541, Joannes Garcaeus (b. 1530) 'De morte' fits 1573 and not 1543, and Basilius Faber and Christoph Fischer are active in the 1570s, not the 1540s. The stored 1571/1572/1576/1575/1572/1573/1570 are right; the claimed 154x readings would be the error.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b24-r:347:ocr:3",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'et cui ad bibendum dederis diliget te' (written 'diliget te', with te detached); OCR: 'et cui ad bibendum dederis diligenter.' The charm's effect ('will love you') is lost, and the sentence now says only that you give it diligently.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b24-r:347:ocr:4",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'quando \u263d est / cum \u2609 et alia via quando \u263d est cum \u2640 et datus / quando \u263d est \u260c \u2609' (sun drawn as a dotted circle, Venus as \u2640, conjunction as \u260c); OCR: 'quando D est cum O \u2026 quando D est cum Q \u2026 quando D est O O'. The planetary conditions, which are the timing of the experiment, can't be recovered from the letters.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b23-r:84:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, last line: 'Ut autem fiant \u263flis Aqua ignitiones' \u2014 the sign is a circle with a crescent/horns on top over a cross (Mercury), with superscript 'lis' (Mercurialis); the Sulphur sign on this same page (lines 6, 13-17) is a triangle on a cross, a different glyph. OCR: '<image-desc>Alchemical symbol for Sulfur</image-desc> Aqua ignitiones'. Mercurial water is stored as sulphur water: a different substance.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b23-r:122:ocr:0",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image, last line: 'aureum \u2641r Martiale' \u2014 the sign is the same triangle-on-cross with superscript 'r' used for Sulphur on p.84 of this book (Sulphur). OCR: '<image-desc>alchemical symbol for iron / Mars / vitriol / antimony</image-desc> Martiale'. The identification is wrong, but the stored text hedges across four candidates and does not commit to a wrong one. Eight lines above, the same passage says 'Matred \u2026 intelligendum est aureum Sulphur Ferri, aurificum Agens', and here 'Artifex, nempe aureum [X] Martiale'. A reader can recover 'golden Martial Sulphur' from that.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b22-t:141:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image, running head of the right-hand leaf: 'nis sti P. Benedicti \u2013 In testa[m\u1ebd]to 70.' ('\u2026entini Ordi-' sits on the facing leaf). There is no '15' and no 'festo'. OCR: '<margin>Lentini Ordinis sancti Benedicti - In festo 1570.</margin>'. 'In Testamento' (the title of Basil Valentine's Testament) becomes a feast, and the leaf number 70 becomes a year 1570 that is not on the page. That puts a false date on an 18th-century manuscript. It is page furniture (it overlaps O11), but the invented year is the serious part.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b22-t:212:ocr:0",
+  "verdict": "real_not_serious",
+  "class": "O3",
+  "evidence": "image: the photograph cuts every line at the right edge ('certum' | 'est sic' | 'est super' | 'ad perpe' | 'Trismeg' | 'non i' | 'fuer' | 'Nutrix eiu' | 'a sp'). OCR: these line ends are completed from the standard Tabula Smaragdina ('certum et', 'est sicut', 'perpetran-', 'Trismegisti', 'immerito', 'spisso') with no lacuna mark. The defect is real: unseen text is presented as read. But every visible line start agrees with the supplied endings (e.g. the next line begins 'verissimum', 'da miracula', 'merito'), and the completions are the canonical words, so a reader is not misled about what the leaf says. Moderate, not serious.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b07-k:2:ocr:0",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image line 5: 'Invigilia bti \u0180chari \u00b7 Missa \u00b7 c\u00b7xx' \u2014 a b with a crossed ascender (ber-) + 'chari' = Berchari. OCR: 'In vigilia beati bernardi'. The calendar order supports Bercharius: the entry falls after the Dedication and before All Saints, which fits Bercharius (16 Oct). St Bernard (20 Aug) would fall before the Nativity of the BVM (8 Sep), which comes earlier in this list. The abbey founder's feast is replaced by a different saint.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1-2: '\u2026quae simul distemperata commisce cum vino bibes, potenter excitat vim coeundi.' (this hand's c/r look alike: 'roeundi' = coeundi). OCR: 'qua simul distemperata remissio ad bino bibes, potenter ueritatem uirilem roborandi'. The instruction to mix with wine is lost, and the effect is reworded into non-text.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:1",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: 'virga eius', 'Caput virgae', 'virgam erectam' (v written like b/r). OCR: 'brega' each time. The misread is real and repeated, but 'brega' is a non-word. A reader sees an unknown word rather than a false meaning, so the defect is information lost, not a misleading reading. The surrounding stored text ('coitum', 'sperma') keeps the subject recoverable.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Radix quoque herbae testiculi canis sumpta lacte caprearum.' OCR: 'Radice quoque sicca testionibus sumpta certe uapeant.' The herb (testiculus canis) and the vehicle (goat's milk) are gone, and 'certe uapeant' is not on the leaf.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:4",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Cariophilli \u0292 j', 'Zinziberis \u0292 j \u2026 galangae \u0292 j' \u2014 the plain drachm sign with no ounce bar; 'piperis albi g 8' (grains/gr. 8). OCR: 'Caryophylli \u2125 i', 'zinziberis \u2125 i', 'galgangae \u2125 i', 'piperis albi \u2125 viii'. Each dose becomes ounces: \u00d78 for the drachms, and far more for the 8 grains of pepper.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:5",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: '\u2026potabit quantitatem 1\u0292 tantum, et 20 dies continuos\u2026' \u2014 drachm sign. OCR: 'quantitate \u2125 i. tantum, et \u2125 xx. diebus' \u2014 the drachm becomes an ounce, and an ounce sign is also inserted before the '20' of the days.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Est herba quaedam Iris graece, de qua si maleficiatus acceperit radices tres et pistata sumpserit solvet maleficium'. OCR: 'Est herba quaedam guis graere, de quasi maleficiatus ante sit radicibus tribus et gustata sumpserit soluet maleficum'. The plant's name is lost, so the remedy cannot be identified.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:7",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Oleum sesamini et cerebrum Columbi ana \u0292 ij'. OCR: 'Oleo balsamum et roreum Columbiana \u2125 ii'. Sesame oil becomes balsam, 'cerebrum Columbi ana' becomes a non-word 'roreum Columbiana', and the drachm becomes an ounce.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:37:ocr:8",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: 'toties quoties circumlinias praeputium cum isto unguento, coxasque move cum ea'. OCR: 'toties quoties uirilia tua teras cum unguento rosae more ea'. The stored words partly track the letter shapes ('cum \u2026 unguento \u2026 mo[v]e \u2026 ea'), so this is a misread, not confabulation (not O1). 'rosae' is spurious and 'coxasque move' is lost. But the instruction a reader takes away, to apply the ointment to the member before intercourse, is the source's sense. Narrower than claimed.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-m:73:ocr:1",
+  "verdict": "real_not_serious",
+  "class": "O6",
+  "evidence": "image: '+ Ut exeas de ista vulva matris tuae quantocius.' OCR: 'Ut exeas de ista pulchra matre tua'. The misread is real ('vulva matris' \u2192 'pulchra matre'). But the charm's sense, 'come out of your mother' addressed to the infant in childbirth, survives in the stored text. A reader gets the function right and only loses the anatomical word.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b15-m:73:ocr:3",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image: 'quo nato, mox schedulam deponat ab ipsa.' ('schedula' is clear). OCR: 'quo nato, mox secundam deponat ab ipsa.' The instruction to remove the charm-slip once the child is born becomes an instruction about delivering the afterbirth: a different act.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:73:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'bibat [c]itrina de felle verri ad pondus unius fabae; si filiam, tunc sit fel verrae' and 'Si mul. in hora coitus portaverit coagulum leporis masculi aut testiculos eius'. OCR: 'bibat vitrea de folli-besi \u2026 sit fil bera' and 'Si mulier in coxa voluerit portaverit magnum leporem masculi'. The boar's/sow's gall and the hare's rennet are lost, and 'in hora coitus' becomes 'in coxa'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:108:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1: 'arbor ille non producet fructum.' OCR: 'arbor illa non durat fenestra.' 'Will bear no fruit' becomes 'does not last, window'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:108:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, rubric: 'Exp. mirab. p. quod arescunt omnia incisa deorsum funditus, arbores, frutela, arundines, gramina'. OCR: 'Experimentum quod nascuntur omnia meisa deorsum'. 'Wither' becomes 'are born': the heading says the opposite of the source.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:108:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Quid non permittit tibi vel sibi credula turba, quae vanissimis etiam inventis miraculorum concedit effectum?' OCR: 'qua bam[?] id est inventio mixarum non redit effectus?' 'Concedit' (grants) becomes 'non redit' (does not return): the sense is negated.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:108:ocr:3",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'et cum ea quodcumque incisorium, sarcastrum, falx, gladius vel quodcumque aliud instrumentum sive volubile acuatur eodem die'. OCR: 'et rura quodam et in iisdem salrasten salis, gladibus bolgondis aliud in fermentu[m] se[m]el homibilo arnote eodem die'. The error is serious (the whetting of the blades is lost), but the stored words are letter-by-letter misreads anchored on the leaf ('quodam'~quodcumque, 'salrasten'~sarcastrum, 'gladibus'~gladius, 'aliud', 'eodem die'). That is O6 misreading, not O1 confabulation of text that is not there.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:108:ocr:5",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Si globum aut annulum interius concavum impleveris cum bona parte salis petrae, et una parte sulphuris vivi, et tribus partibus argenti vivi, clauserisque foramen'. OCR: 'imploberis sub bona spe salis petrae, et una et pulvereis sibi; et turbus libi-bus longi tibi clanbrises'. Sulphur and quicksilver, and the parts that give the 1:1:3 proportion, are lost. (The garbling is O6 in mechanism; the lost proportions are the O7 consequence.)",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b15-m:108:ocr:6",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'et in quolibet pone 8. lot. sulphuris pulverizati, et fumus inde ascendens poma facit cadere'. OCR: 'et magnolibet pone 8. lot. pulveris pulverizati, et summus in se ascendendo'. The ingredient (sulphur) becomes a generic 'powder', and the smoke is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-t:207:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (Secunda Minera): 'R. Mercurij optimi, et bene purgati uncias tres, et Lun\u0119 cupellat\u0119, et uulgariter calcinat\u0119, aut foliat\u0119 aut solis purissimi\u2026'. OCR: 'et sunc cupellatis, et uulgari ter calcinatis, aut foliatis'. Silver (Luna) is lost, so the recipe reads as if mercury alone is cupelled and calcined. The calcination 'uulgariter' (in the common way) also becomes 'uulgari ter' (three times).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-t:308:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'cadet supra Bo. partes Lun\u0119 fin\u0119' \u2014 the figure is the open 'B'-shaped 3 followed by o. The same scribe writes 'per Bo: aut 40 dies' on p.193 (this packet's b16-t:207), which the OCR there correctly reads as 30. OCR here: 'supra 80. partes lunae fine'. The projection ratio becomes 80 for 30.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b10-m:95:ocr:1",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'si negligatur \u05d0, et initium fiat a \u05d1 occurrit tibi in summa [three Hebrew letters, a letter-numeral] 1. Lam. 14.4.' OCR: 'si ne=gligatur 22. et initium fias a 2 occurrit tibi in summy 42.' Aleph becomes '22' and the Hebrew sum becomes '42'. These numbers are not on the leaf. ('2' for bet happens to equal its value.)",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-m:95:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'si incipias a \u05d2 habebis summas similes Numeri 189; si a \u05d3. 196. si a \u05d4. 2[0]3. et hic ascendunt septenario sese invicem superantes'. OCR: 'si incipias a 7 halebis summas similes Numen 169; si a 7. post. 11 a 7. 213.' The letters become 7s, 189 becomes 169, 196 becomes 'post. 11', and the rise by sevens that the sentence asserts is no longer in the numbers.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-m:95:ocr:3",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image: 'disponas numeros \u05d0, et \u05d6, et \u05d7, et \u05d3(?), et \u05e1, et \u05e3 \u2026  Item \u05d0, et \u05d3, et \u05d2, et \u05d9, et \u05d6; item \u05d0, et \u05d7, et \u05d8, et \u05d6' \u2014 Hebrew letters throughout. OCR: 'disponas numeros 22, et 7, et 17, et 27, et 8, et 6 \u2026 Item 22, et 7, et 13, et 27 et 6 item 22, et 17, et 27, et 7'. Every letter is replaced by an Arabic number that is not on the leaf, so the magic-square steps cannot be followed.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b10-m:140:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'Ejus examen erit sequens \u2014 24. ad 18. scil. Sesquitertia'; the next paragraph explains that the check yields '24 ad 18' in place of '4 ad 3', both sesquitertia (24/18 = 4/3). OCR: '24. ad 25. scilicet sesquivigesima'. The number and the ratio name do not match the leaf and contradict the text's own explanation. (The OCR also reads '24 ad 16' in that paragraph; not claimed here.)",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-m:2:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Adv\u0304s\u00b7f\u00b7c\u00b7li', 'Adv\u0304s\u00b7c\u00b7lii', 'Adv\u0304s\u00b7f\u00b7c\u00b7liii' etc., one per feast, each paired with a 'Missa\u00b7f\u00b7c\u2026' entry: the standard abbreviation for 'Ad vesperas'. OCR expands every one as 'Adventus' (9 occurrences on this page, not 12), so the table points to Advent where the leaf points to Vespers. The count is overstated; the error itself is real and runs through the whole table.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-m:2:ocr:2",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image (enlarged): 'Invigilia bt\u0304i b\u0304chari' with a stroke through the b, i.e. B(er)chari, Berchar, founder of Montier-en-Der. OCR: 'In vigilia beati Eucharii', which swaps in a different, better-known saint.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:47:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1-2: 'filij isrl\u00b7 hoc \u0113 laici\u00b7 non tn\u0304 alienigene\u00b7 nisi si asscri|pti iam fuerint'. OCR: 'filii mist\u2026 non enim alienigene. nisi si alteri iam fuerunt'. 'isrl'\u2192'mist' is nonsense, and 'asscripti'\u2192'alteri' loses the condition (unless already enrolled in the church). 'tamen'\u2192'enim' is minor.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b01-t:47:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 5-6: 'licet ccedant\u0304 | sacerdotib' ad edend\u016b\u00b7 n\u0304 tam\u0304 o\u012ba conceduntur\u00b7 s; pars ex ipsis a|liqua deo offert''. OCR: 'liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur. et pars'. 'non tamen' becomes 'etiam', which reverses the restriction.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:47:ocr:3",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (enlarged): 'que c\u016b nr\u0304\u0101m intelligentiam | supent' (nostram with a suspension stroke). OCR: 'que cum malam intelligentiam superant'. 'things that surpass our understanding' becomes 'bad understanding'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:47:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (enlarged): 'ne forte alit' a nobis qu\u0101 se habe|ueritas pferant'\u00b7 meli' igni ista seruam'\u00b7 et i\u014d'. OCR: 'ne forte alii anobui quia se habe uerunt offerant. meliorem igitur servamus'. The clause becomes nonsense, and 'melius igni ista' (better to keep these for the fire) is lost.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:47:ocr:7",
+  "verdict": "confirmed",
+  "class": "O5",
+  "evidence": "image: '\u2026ea que n\u0304 debem' c\u014dmitte\u00b7| S; hec qm\u0304 n\u0304 semp in scriptis diuinis sub ista distinctioe inuen\u012b|mus\u00b7 idcirco gn\u0304alem affirmare n\u0304 possum''. OCR: 'committe mus. idcirco generalem affirmare non possum'. The whole 'Sed hec quoniam\u2026invenimus' line is dropped, and 'committe' is fused with the 'mus' of 'invenimus'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:136:ocr:0",
+  "verdict": "confirmed",
+  "class": "O1",
+  "evidence": "image: the outer margin beside and below the red initial O is blank parchment, with no marginal writing anywhere near it. OCR inserts a <margin> list ('et de magno sacerdote / et de eius officio \u2026 et de eius morte') whose last items repeat. The list is not on the leaf. (The other margin block, 'deponere non potest', comes from the facing leaf at the right edge; that is a separate I4 that was not claimed.)",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:136:ocr:2",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image (enlarged red rubric): 'Explicit lib\u00b7 xi\u00b7 Incip\u00b7 xii\u00b7 De'. OCR: 'Explicit liber VI. Incipit VII.' This is the wrong homily: XII is the one on the high priest, which matches the text that follows.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:136:ocr:4",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'ut neq; \u012b p\u0304senti uita sc\u0304dm | legem obnoxij simus morti\u00b7 neq; sc\u0304dm spuale legem\u00b7 futura nos | pena maneat'. OCR: 'ut neque ipsi enti utta sed in legem obnoxii simul mori. nec sed in spirituale legem humana nos pena'. The clause is garbled, and 'futura'\u2192'humana' changes the punishment from future to human.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-t:136:other:0",
+  "verdict": "confirmed",
+  "class": "O1",
+  "evidence": "This is the same finding as b01-t:136:ocr:0, seen from the reader's side: the margin is blank on the image, and the stored repeating list is shown as margin text.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b23-m:84:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image last line (enlarged): 'Ut autem fiant \u263flis Aqu\u00e6 ignitiones' (Mercury sign: circle, cross below, horns on top, with superscript 'lis' = Mercurialis). OCR renders it as an <image-desc> 'Alchemical symbol for Sulfur'. The substance is wrong, and it is hidden in an image description.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b24-k:117:other:0",
+  "verdict": "confirmed",
+  "class": "I4",
+  "evidence": "image: a strip of the facing verso at the left edge shows line-ends ('naturales', '\u2026emadmodum', '\u2026binus, qui', '\u2026annulis', '\u2026lis, virtute', '\u2026datar dominus'\u2026). This leaf's own margins are blank. The OCR <margin> block of 24 lines ('naturalis / quemadmodum / finibus, qui / annulis, \u2026') transcribes that strip as if it were marginalia on this page.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b24-k:347:ocr:3",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (enlarged): 'et cui ad bibendum dederis diliget te' (a separate 'te' after 'diliget'). OCR: 'dederis diligenter'. The love-charm's effect (he will love you) becomes an adverb; the context ('provocant et movent benevolentiam') confirms the charm reading.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b24-k:347:ocr:4",
+  "verdict": "confirmed",
+  "class": "O10",
+  "evidence": "image (enlarged): 'quando \u263d est cum \u2609 et alia via quando \u263d est cum \u2640 et datus quando \u263d est \u260c \u2609' (crescent Moon, dotted circle Sun, Venus sign, aspect sign). OCR: 'quando D est cum O \u2026 cum Q \u2026 quando D est O O'. The planetary timing can't be recovered from the stored letters.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b18-k:229:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Luc\u00e6 Osiandri contra 34 articulos pa=|pisticos. T\u00fcbing\u00e6'. OCR: 'contra 34 articulos pacificos'. The polemical title (against the papist articles) becomes 'peaceful articles'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b18-k:229:ocr:1",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image right column: '1390:', '1391', '1392:', '1393:', '1394:'. The second digit is plainly a 3, unlike the '5' in the left year column ('1541', '1542'). OCR: 'Tiguri 1590: \u2026 1591: \u2026 1592: \u2026 1593: \u2026 1594:'. Every finding number in the catalogue is wrong, and they read like years.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-m:107:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 2: 'partes tres: Soluer\u00f2 quasi totus in mercurium resoluetur' (accented \u00f2 = Sol uer\u00f2, after a list of proportions for Mars, Venus and Jupiter). OCR: 'solvetur quasi totum in mercurium resolvetur'. Sol (gold) is lost as the subject.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b16-m:207:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'R\u0338 Mercurij optimi, et bene purgati un|cias tres, et Lun\u0119 cupellat\u0119, et uulgariter calcinat\u0119, aut foliat\u0119 \u2013 aut Solis purissimi'. OCR: 'et sunc cupellatis, et uulgari ter calcinatis, aut foliatis'. The silver alternative (Luna) disappears, which leaves the 'aut Solis' alternative with nothing to pair with.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b16-m:308:ocr:0",
+  "verdict": "confirmed",
+  "class": "O7",
+  "evidence": "image: 'una illius pars cadet supra Bo\u00b7 partes Lun\u0119 fin\u0119'. The glyph is identical to the one on p.193 ('per Bo\u00b7 aut 40 dies'), which the same transcription reads as 30, and '30 aut 40' is the natural sequence there. This scribe's 3 has an open B shape. OCR: '80. partes'. The projection ratio is wrong.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b03-t:4:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. 2: 'Sic aut\u0113 non \u0113 dict\u016b nc\u0304 significata \u0113 clarifica|tio filii hominis\u00b7 sed dict\u016b \u0113 nc\u0304 clari|ficatus \u0113 filius hominis'. 'nc\u0304' = nunc both times. OCR: 'nec significata \u2026 sed dictum est nec clarificatus est'. Augustine's contrast ('now it is signified' vs 'now he is glorified') is turned into negations.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-t:4:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. 2: 'non \u0113 dict\u016b\u00b7 petra significabat xp\u0304m\u00b7 | sed petra erat xp\u0304s'. OCR: 'non est dictum petra significabat Christum. sed petra significabat'. The 'erat Christus' that the argument turns on is replaced by a repeat of the rejected phrasing.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-t:5:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. 1: 'uiror\u016b quippe n\u014de solent | inscripturis pfectiores quinq; figurari'. 'n\u014de' = nomine. OCR: 'uirorum quippe non solent inseripturis', which turns 'by the name of men the perfect are figured' into a negation.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b03-t:5:ocr:1",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. 1, last lines: 'uirtut\u0113 inimici eor\u016b que n\u014da scripta | indicasse incelis'. 'n\u014da' = nomina (Luke 10:20, names written in heaven). OCR: 'eorum que non scripta indicaffe incelus', which says 'not written'.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b26-r:98:ocr:5",
+  "verdict": "confirmed",
+  "class": "O8",
+  "evidence": "image line 12: 'sic ca infinita e p\u0303ncipiu\u0303 efficiens qua facit de p\u0306tib\u02b9 angeli- / ipm\u0303 angelum' = 'de partibus angeli ipsum angelum'; OCR: 'facit de nihilo angelum ipsum angelum'. No 'nihilo' on the leaf; the scribe's 'de ptib9 angeli' (from the parts of the angel) is replaced by the theologically expected 'de nihilo', changing what the text says about how the infinite cause makes the angel.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b26-r:147:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image lines 1-10: 'utz bonitas sit dr\u0303ns quid e bonitas dr\u0303ns / utz bonitas sit \ua76fcordans quid est bonitas \ua76fcordans ... utz dr\u0103 sit \ua76fcordas ... utz \ua76fcor^a sit dr\u0303ns quid est \ua76fcordantia dr\u0303ns', and in the demonstration 'utz dr\u0103 sit \ua76fcordans' and 'dr\u0103 \ua76fcordantem'. 'dr\u0303ns' = differens (the page writes differentia as 'dr\u0103'), '\ua76fcordans' = concordans (con- sign). OCR reads every 'differens' as 'deus' and every 'concordans' as 'accidens' ('utrum bonitas sit deus', 'utrum differentia sit accidens', 'concordantia deus'). The Lullian question matrix and the demonstration are about the wrong terms throughout.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-r:50:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image line 1: 'a iudeis a c^rudelissimis uenatorib\u02b9 occis\u02b9 & inde resurgens' (superscript r over c = crudelissimis); OCR: 'aludens ac fidelissimis uenatoribus occisus est'. 'by the Jews, most cruel hunters' becomes 'by most faithful hunters' \u2014 the agent is dropped and the qualifier reversed.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b25-r:145:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (De Medo, last line): 'aq\u0304s resolut\u02b9 & potat\u02b9 facit euomi pulmone\u0304. q\u0304 lauit ip\u0304is aq\u0304s fronte\u0304' with the run-over '\u230ececum facit.' at the end of the next (Nitrum) line; OCR: 'Aquis resolutus et potatus sanat euomi pulmone quia lavit ipsis aquis strumas' and 'Nitrum ... De Nytro. cecum facit.' Stored text says the stone CURES (sanat) where the image says it MAKES one vomit the lung (facit euomi); 'frontem' is replaced by 'strumas' (not on the leaf); and the blinding effect ('qui lavit ... frontem, cecum facit') is detached from Medus and attributed to Nitrum. Reversed medical claim. (Minor note: image has 'euomi', passive infinitive, not 'euomere'.)",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b23-t:84:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image last line: 'Ut autem fiant \u263f^lis Aqu\u00e6 ignitiones' \u2014 the sign is a horned circle over a cross (Mercury) with superscript 'lis' = Mercurialis; the sulphur signs earlier on the page are a triangle over a cross, a different glyph. OCR: '<image-desc>Alchemical symbol for Sulfur</image-desc> Aqua ignitiones'. The heading of the next operation names the wrong substance (Sulphur for Mercurial water). Also unclaimed on this page: line 6 'Sic \ud83d\udf0d^r \u2642^is erit' (Sulphur Martis) is stored as just 'Sulfur', dropping Martis.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b23-t:122:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image: 'Uxor no-/minatur \u05de\u05d9 \u05d6\u05d4\u05d1 |Mai Sahab| id est Aqua auri, scilicet argentum vivum philosophicum, quod superius Mehetabel fuit appellatum'; OCR: 'Uxor nominatur \u05d6\u05d4\u05d1 \u05de\u05d9 Mehetabel: id est Aqua auri ... quod superius Mehetabel fuit appellatum'. The transliterated name 'Mai Sahab' is replaced by 'Mehetabel' from two lines below, so the gloss 'Aqua auri' is attached to the wrong name and the sentence 'which above was called Mehetabel' becomes circular. The Hebrew itself is kept (in reversed word order), so a Hebrew reader could partly recover it, but the Latin reader is told Mehetabel means 'water of gold'.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b23-t:122:ocr:2",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image last line: 'aureum \ud83d\udf0d^r Martiale' \u2014 triangle over a cross with superscript r (Sulphur), the same glyph used for sulphur on p.84; no Mars sign (\u2642). OCR: 'aureum <image-desc>Mars symbol</image-desc> Martiale'. The agent the artifex embodies ('golden Martial Sulphur', parallel to 'aureum Sulphur Ferri' six lines above) becomes 'golden Mars Martial'; the substance is lost. Partly recoverable from the earlier 'Sulphur Ferri', hence medium confidence on seriousness.",
+  "confidence": "medium"
+ }
+]

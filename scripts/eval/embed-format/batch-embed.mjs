@@ -36,7 +36,7 @@ import { arg, DOC_FORMS } from './common.mjs';
 const CMD = process.argv[2];
 const DIR = arg('--dir');
 if (!DIR) { console.error('--dir D required'); process.exit(1); }
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2';
 const DIMS = 768;
 // One running job per PROJECT, 10K rows each: a second 20K-row job 429'd at
 // create (enqueued-token limit), and a lone 20K-row job came back with every

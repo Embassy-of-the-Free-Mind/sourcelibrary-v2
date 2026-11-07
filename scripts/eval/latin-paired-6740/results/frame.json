@@ -1,0 +1,109 @@
+{
+ "at": "2026-11-01T01:10:01.167Z",
+ "census": {
+  "at": "2026-11-01T00:55:46.639Z",
+  "books": 15356,
+  "books_owing": 15356,
+  "pages_owed": 4741905,
+  "no_ocr_books": 15300
+ },
+ "exclusions": {
+  "files_scanned": 12901,
+  "ids_seen": 604554,
+  "books_named_directly": 1666,
+  "books": 1666
+ },
+ "queue": {
+  "books": 15356,
+  "pages": 4741905,
+  "century": {
+   "17th": 1734562,
+   "<=1600": 1947216,
+   "18th": 1056413,
+   "19th+": 3237,
+   "undated": 477
+  },
+  "no_ocr_books": 15300,
+  "provider": {
+   "bsb": 532541,
+   "gallica": 62438,
+   "mdz": 9623,
+   "internet_archive": 43045,
+   "e-rara": 4052119,
+   "tu_darmstadt": 2822,
+   "iiif": 13092,
+   "erara": 26107,
+   "lmu_ub": 118
+  }
+ },
+ "sample": {
+  "pages": 40,
+  "century": {
+   "17th": 15,
+   "18th": 9,
+   "<=1600": 16
+  },
+  "face": {
+   "antiqua": 37,
+   "fraktur": 3
+  },
+  "block_sizes": {
+   "4": 40
+  },
+  "provider": {
+   "e-rara": 40
+  }
+ },
+ "strata": {
+  "17th": {
+   "books": 6137,
+   "pages": 1604417,
+   "share": 0.3747,
+   "n": 15,
+   "selected": 15,
+   "books_excluded": 487,
+   "pages_excluded": 130145
+  },
+  "18th": {
+   "books": 3091,
+   "pages": 1006048,
+   "share": 0.235,
+   "n": 9,
+   "selected": 9,
+   "books_excluded": 193,
+   "pages_excluded": 50365
+  },
+  "19th+": {
+   "books": 10,
+   "pages": 2664,
+   "share": 0.0006,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 3,
+   "pages_excluded": 573
+  },
+  "<=1600": {
+   "books": 4448,
+   "pages": 1667822,
+   "share": 0.3895,
+   "n": 16,
+   "selected": 16,
+   "books_excluded": 983,
+   "pages_excluded": 279394
+  },
+  "undated": {
+   "books": 4,
+   "pages": 477,
+   "share": 0.0001,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  }
+ },
+ "replaced": {
+  "possible unsplit spread (spreadReason)": 52,
+  "face none (no printed body text)": 1
+ },
+ "tags_made": 98
+}

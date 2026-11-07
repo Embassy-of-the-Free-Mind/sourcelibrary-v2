@@ -1,0 +1,6698 @@
+{
+ "generated_at": "2026-10-29T15:05:36.288Z",
+ "judge": "claude -p --model opus, route-judge-6740 judgePrompt (unchanged), against the page image",
+ "bar": "caught >= 0.8 on B-E pooled per language",
+ "models": [
+  "claude-opus-5-5"
+ ],
+ "n": 180,
+ "by_lang": {
+  "French": {
+   "A": {
+    "reaccept": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "B": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "C": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "D": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "E": {
+    "caught": {
+     "k": 11,
+     "n": 12,
+     "rate": 0.917,
+     "ci95": [
+      0.646,
+      0.985
+     ]
+    },
+    "named": {
+     "k": 11,
+     "n": 12,
+     "rate": 0.917,
+     "ci95": [
+      0.646,
+      0.985
+     ]
+    },
+    "rejected": {
+     "k": 11,
+     "n": 12,
+     "rate": 0.917,
+     "ci95": [
+      0.646,
+      0.985
+     ]
+    }
+   },
+   "B_E": {
+    "caught": {
+     "k": 47,
+     "n": 48,
+     "rate": 0.979,
+     "ci95": [
+      0.891,
+      0.996
+     ]
+    },
+    "named": {
+     "k": 47,
+     "n": 48,
+     "rate": 0.979,
+     "ci95": [
+      0.891,
+      0.996
+     ]
+    },
+    "passes_bar": true
+   }
+  },
+  "German": {
+   "A": {
+    "reaccept": {
+     "k": 11,
+     "n": 12,
+     "rate": 0.917,
+     "ci95": [
+      0.646,
+      0.985
+     ]
+    }
+   },
+   "B": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "C": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "D": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "E": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 11,
+     "n": 12,
+     "rate": 0.917,
+     "ci95": [
+      0.646,
+      0.985
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "B_E": {
+    "caught": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "ci95": [
+      0.926,
+      1
+     ]
+    },
+    "named": {
+     "k": 47,
+     "n": 48,
+     "rate": 0.979,
+     "ci95": [
+      0.891,
+      0.996
+     ]
+    },
+    "passes_bar": true
+   }
+  },
+  "Latin": {
+   "A": {
+    "reaccept": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "B": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "C": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "D": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "E": {
+    "caught": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "named": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    },
+    "rejected": {
+     "k": 12,
+     "n": 12,
+     "rate": 1,
+     "ci95": [
+      0.758,
+      1
+     ]
+    }
+   },
+   "B_E": {
+    "caught": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "ci95": [
+      0.926,
+      1
+     ]
+    },
+    "named": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "ci95": [
+      0.926,
+      1
+     ]
+    },
+    "passes_bar": true
+   }
+  }
+ },
+ "pooled_by_kind": {
+  "A": {
+   "reaccept": {
+    "k": 35,
+    "n": 36,
+    "rate": 0.972,
+    "ci95": [
+     0.858,
+     0.995
+    ]
+   }
+  },
+  "B": {
+   "caught": {
+    "k": 36,
+    "n": 36,
+    "rate": 1,
+    "ci95": [
+     0.904,
+     1
+    ]
+   },
+   "named": {
+    "k": 36,
+    "n": 36,
+    "rate": 1,
+    "ci95": [
+     0.904,
+     1
+    ]
+   }
+  },
+  "C": {
+   "caught": {
+    "k": 36,
+    "n": 36,
+    "rate": 1,
+    "ci95": [
+     0.904,
+     1
+    ]
+   },
+   "named": {
+    "k": 36,
+    "n": 36,
+    "rate": 1,
+    "ci95": [
+     0.904,
+     1
+    ]
+   }
+  },
+  "D": {
+   "caught": {
+    "k": 36,
+    "n": 36,
+    "rate": 1,
+    "ci95": [
+     0.904,
+     1
+    ]
+   },
+   "named": {
+    "k": 36,
+    "n": 36,
+    "rate": 1,
+    "ci95": [
+     0.904,
+     1
+    ]
+   }
+  },
+  "E": {
+   "caught": {
+    "k": 35,
+    "n": 36,
+    "rate": 0.972,
+    "ci95": [
+     0.858,
+     0.995
+    ]
+   },
+   "named": {
+    "k": 34,
+    "n": 36,
+    "rate": 0.944,
+    "ci95": [
+     0.819,
+     0.985
+    ]
+   }
+  }
+ },
+ "rows": [
+  {
+   "id": "jpbe916527e7a4",
+   "page_id": "6990527f8d19cbc90d9d6698",
+   "book_id": "6990527e8d19cbc90d9d6456",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ἄντικ᾽ δὲ οὐκ ἂν παραγένοιτο",
+     "what": "Greek misread: the page has αὐτὴ δὲ, not ἄντικ᾽"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ᾧτινι αὐτῷ δὲ εἰκὸς",
+     "what": "Greek misread: the page has τὸν αὐτὸν δὲ εἰκὸς"
+    },
+    {
+     "class": "O10",
+     "severity": "cosmetic",
+     "quote": "ἡμᾶς ὁμοίως",
+     "what": "the page probably reads ὁμοίους"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "nem prædicaſti:",
+     "what": "the page has a question mark, not a colon (punctuation)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "hîc omnes",
+     "what": "the page has plain 'hic', with no circumflex"
+    }
+   ]
+  },
+  {
+   "id": "jp8bb28937b655",
+   "page_id": "6990527f8d19cbc90d9d6698",
+   "book_id": "6990527e8d19cbc90d9d6456",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Nec aliter de reliquis iudicandum eſſe exiſtimo.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Nec aliter de reliquis iudicandum eſſe exiſtimo.",
+     "what": "a whole sentence that is not on the page, inserted between 'timor Domini.' and 'Eſt enim'"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ἄντικ᾽ δὲ οὐκ ἂν",
+     "what": "the page has αὕτη δ' οὐκ ἂν; the Greek is garbled"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ᾧτινι αὐτῷ δὲ εἰκὸς",
+     "what": "the page has τὸν αὐτὸν δ' εἰκὸς; the Greek is garbled"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "nem prædicaſti:",
+     "what": "the page has a question mark after prædicasti, not a colon"
+    }
+   ]
+  },
+  {
+   "id": "jp685213a43cc4",
+   "page_id": "6990527f8d19cbc90d9d6698",
+   "book_id": "6990527e8d19cbc90d9d6456",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "pietatem",
+    "after": "humiditatem",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Quàm diuinè quoque ueram humiditatem definiuit",
+     "what": "page reads 'ueram pietatem'; 'humiditatem' is a wrong word that destroys the sense"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ὡς διὰ θεοσέβειαν ἀσκῶν ἄντικ᾽ δὲ οὐκ ἂν παραγένοιτο, ἀμῆτις",
+     "what": "Greek garbled; page has ὡς δεῖ θεοσέβειαν ἀσκεῖν· αὕτη δὲ … εἰ μή τις"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ᾧτινι αὐτῷ δὲ εἰκὸς",
+     "what": "Greek garbled; page reads τὸν αὐτὸν δὲ εἰκὸς"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "nem prædicaſti: Cum igitur",
+     "what": "the question mark after prædicasti is rendered as a colon"
+    }
+   ]
+  },
+  {
+   "id": "jpaaaacc67a3e7",
+   "page_id": "6990527f8d19cbc90d9d6698",
+   "book_id": "6990527e8d19cbc90d9d6456",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Hebræo, principium ſapientiæ. Quàm diuinè quoque ueram pietatem definiuit, ut",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "excellentiſsima: ab\nfiat qui colit",
+     "what": "a whole line is missing after 'ab': 'Hebræo, principium ſapientiæ. Quàm diuinè quoque ueram pietatem definiuit, ut'"
+    },
+    {
+     "class": "O10",
+     "severity": "cosmetic",
+     "quote": "ἀσκῶν ἄντικ᾽ δὲ οὐκ ἂν παραγένοιτο, ἀμῆτις",
+     "what": "the page's Greek 'αὕτη δὲ … εἰ μήτις' is garbled"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "hîc omnes uoluptates",
+     "what": "the page has 'hic' with no circumflex"
+    }
+   ]
+  },
+  {
+   "id": "jpdc5fb15bcf63",
+   "page_id": "69b51e98cf111105c42a0eb7",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": false,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Davon wil ich hernach weitläufftiger handeln.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Der Streit und Missverstand von Christi Person",
+     "what": "The decorated initial is A, so the page reads 'Aller Streit und Misverstand'. The candidate turned 'Aller' into 'Der'."
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "Decorative woodcut initial D depicting an angel",
+     "what": "The woodcut initial is an A, not a D."
+    },
+    {
+     "class": "O12",
+     "severity": "misleads",
+     "quote": "Durch das Aushauchen des Ewigen/ spricht sich GOtt.",
+     "what": "The printed side-note reads 'Durch das Aussprechen beschauet sich GOtt'."
+    },
+    {
+     "class": "O13",
+     "severity": "misleads",
+     "quote": "Eins und Unformet.",
+     "what": "This is a faint later handwritten note ('Eins Unformet'). It was given as a printed side-note, with 'und' added."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Missverstand",
+     "what": "The print spells it 'Misverstand'."
+    }
+   ]
+  },
+  {
+   "id": "jp3b05c3d8c3e5",
+   "page_id": "69b51e98cf111105c42a0eb7",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": false,
+   "named": false,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Der Streit und Missverstand von Christi Person",
+     "what": "The decorated initial is A, so the page reads \"Aller Streit\". Reading it as \"Der\" loses \"all\"."
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Decorative woodcut initial D depicting an angel kneeling",
+     "what": "The woodcut initial is an A, not a D."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Durch das Aushauchen des Ewigen/ spricht sich GOtt.",
+     "what": "The margin reads roughly \"Durch das Aussprechen ... sich GOtt\". \"des Ewigen\" is not there."
+    },
+    {
+     "class": "O13",
+     "severity": "cosmetic",
+     "quote": "<margin>Eins und Unformet.</margin>",
+     "what": "This is a later handwritten pencil note, but it is presented as a printed margin note."
+    }
+   ]
+  },
+  {
+   "id": "jp0cfe551263fc",
+   "page_id": "69b51e98cf111105c42a0eb7",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "15",
+    "after": "25",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "Joh. 25:5.",
+     "what": "the page reads Joh. 15:5 (John 15:5, the vine and branches); John has no chapter 25"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Der Streit und Missverstand von Christi Person",
+     "what": "the woodcut initial is A, so the text reads 'Aller Streit und Misverstand'; the candidate turns 'all strife' into 'the strife'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Decorative woodcut initial D depicting an angel",
+     "what": "the initial is the letter A, not D"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Missverstand",
+     "what": "the page spells it 'Misverstand'"
+    },
+    {
+     "class": "O13",
+     "severity": "cosmetic",
+     "quote": "<margin>Eins und Unformet.</margin>",
+     "what": "faint handwritten note by a later hand, tagged as if it were a printed side-note"
+    }
+   ]
+  },
+  {
+   "id": "jp7660d848a154",
+   "page_id": "69bda103f6d63c919748c922",
+   "book_id": "69bda103f6d63c919748c7c4",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "matieres réfineuses & bitumineuses",
+     "what": "long-s misread as f: page reads 'résineuses' (resinous), not 'réfineuses'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Après les avoir vidées des intestins",
+     "what": "page spells it 'vuidées'; the spelling was modernised"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "un serviteur fidèle",
+     "what": "page has 'fidéle'; the accent was modernised"
+    }
+   ]
+  },
+  {
+   "id": "jpd784a6d6442a",
+   "page_id": "69b51e98cf111105c42a0eb7",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Der Bauer ist deme so nahe als der Doctor/ sie müssen alle in die Einfalt Christi in Gehorsam treten/ und mit dem verlohrne Sohne und Zöllner in Tempel kommen; ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "sondern nur kindliche Einfalt und Demuht. ",
+     "what": "The rest of §23 is silently dropped. It runs 'Der Bauer ist deme so nahe als der Doctor / sie müssen alle in die Einfalt Christi in Gehorsam treten ... Es ist kein anderer Weg darzu.' (about five lines)."
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Der Streit und Missverstand von Christi Person",
+     "what": "The woodcut initial is A, so the text reads 'Aller Streit und Misverstand'. The candidate has 'Der Streit'."
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "Decorative woodcut initial D depicting an angel",
+     "what": "The image description calls the initial a D, but it is an A."
+    },
+    {
+     "class": "O13",
+     "severity": "misleads",
+     "quote": "<margin>Eins und Unformet.</margin>",
+     "what": "This faint handwritten note by a later hand is given as a printed margin note."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Missverstand",
+     "what": "The spelling is modernised; the page reads 'Misverstand'."
+    }
+   ]
+  },
+  {
+   "id": "jp336d27bde13c",
+   "page_id": "6990527f8d19cbc90d9d6698",
+   "book_id": "6990527e8d19cbc90d9d6456",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "duabus",
+    "after": "tribus",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "CVM IGITVR tribus partibus uera religio conſtet",
+     "what": "page reads 'duabus partibus' (two parts), which matches the two-part list that follows; 'tribus' contradicts the text"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ἄντικ᾽ δὲ οὐκ ἂν παραγένοιτο",
+     "what": "Greek misread; page has roughly 'αὐτὴ δ' οὐκ ἂν'"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "ᾧτινι αὐτῷ δὲ εἰκὸς",
+     "what": "Greek misread; page reads 'τὸν αὐτὸν δ' εἰκὸς'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "nem prædicaſti: Cum igitur",
+     "what": "page has a question mark ending the rhetorical question, not a colon"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "hîc omnes uoluptates",
+     "what": "page prints 'hic' with no circumflex"
+    }
+   ]
+  },
+  {
+   "id": "jp22863215d251",
+   "page_id": "69bda103f6d63c919748c922",
+   "book_id": "69bda103f6d63c919748c7c4",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "L'œil de Dieu, Dieu même toujours attentif à son ouvrage, est proprement la Nature même, & les loix qu'il a posées pour sa conservation, sont les causes de tout",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "NATURE. A ce premier moteur ou principe de génération",
+     "what": "The entry's whole opening sentence is silently dropped: \"L'œil de Dieu, Dieu même toujours attentif à son ouvrage, est proprement la Nature même, & les loix qu'il a posées pour sa conservation, sont les causes de tout ce qui s'opere dans l'Univers.\" That is about seven printed lines. Without it, \"ce premier moteur\" has nothing to refer back to."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Après les avoir vidées des intestins",
+     "what": "The page prints the older spelling \"vuidées\"; the candidate modernises it."
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "matieres réfineuses & bitumineuses",
+     "what": "The long s was misread as f. The word is \"résineuses\"."
+    }
+   ]
+  },
+  {
+   "id": "jp1d7019dd7bd7",
+   "page_id": "69bda103f6d63c919748c922",
+   "book_id": "69bda103f6d63c919748c7c4",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Ce que les anciens ont aussi diligemment obserué.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Ce que les anciens ont aussi diligemment obserué.",
+     "what": "This whole sentence is not on the page. It was inserted between 'trois regnes.' and 'Tous trois partent'."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "matieres réfineuses & bitumineuses",
+     "what": "The long s was misread as f. The page reads 'résineuses' (resinous)."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Après les avoir vidées des intestins",
+     "what": "The page's spelling 'vuidées' was modernised to 'vidées'."
+    }
+   ]
+  },
+  {
+   "id": "jp402be5e04716",
+   "page_id": "69bda103f6d63c919748c922",
+   "book_id": "69bda103f6d63c919748c7c4",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "altérations",
+    "after": "digestions",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "répare continuellement les digestions de son ouvrage",
+     "what": "the page reads 'les altérations' (al-/térations split across lines); 'digestions' is not on the page and changes the sense"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "matieres réfineuses & bitumineuses",
+     "what": "long-s misread as f: the page has 'résineuses' (rendered with long s), so 'réfineuses' is a non-word"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Après les avoir vidées des intestins",
+     "what": "the page spells it 'vuidées'; silently modernised"
+    }
+   ]
+  },
+  {
+   "id": "jpeb3315dbe55c",
+   "page_id": "69bda103f6d63c919748c922",
+   "book_id": "69bda103f6d63c919748c7c4",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "trois",
+    "after": "cinq",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "est divisé en cinq parties",
+     "what": "page reads 'trois parties'; 'cinq' contradicts the three regnes named straight after"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "matieres réfineuses & bitumineuses",
+     "what": "long s misread as f; page has 'résineuses'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Après les avoir vidées des intestins",
+     "what": "page spelling 'vuidées' normalised to 'vidées'"
+    }
+   ]
+  },
+  {
+   "id": "jp5019f2b2456b",
+   "page_id": "69b6813970c69d645a71d61c",
+   "book_id": "69b6813970c69d645a71d60d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "reſurrectionem",
+    "after": "compoſitionem",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Sadducæi compoſitionem mortuorum pernegabant",
+     "what": "page reads 'reſurrectionem' (resurrection of the dead), not 'compositionem'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Aurelia occulta Philoſophorum",
+     "what": "running head reads 'Aureliæ occultæ' (genitive)"
+    }
+   ]
+  },
+  {
+   "id": "jpbd95d8f5528a",
+   "page_id": "69b6813970c69d645a71d61c",
+   "book_id": "69b6813970c69d645a71d60d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "ſecunda",
+    "after": "quarta",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "quarta in miſericordiam",
+     "what": "the page reads 'ſecunda'; 'quarta' breaks the prima/secunda/tertia sequence"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Aurelia occulta Philoſophorum",
+     "what": "running head reads 'Aureliæ occultæ' (genitive), not 'Aurelia occulta'"
+    }
+   ]
+  },
+  {
+   "id": "jpc4a3f8ab56f7",
+   "page_id": "69b6813970c69d645a71d61c",
+   "book_id": "69b6813970c69d645a71d60d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Id quod multis exemplis facile poſſet oſtendi.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Id quod multis exemplis facile poſſet oſtendi.",
+     "what": "This sentence is not on the page. The line actually reads 'ante Chriſti tribunal. Si igitur poſtremis hiſce tempori-'."
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "Aurelia occulta Philoſophorum",
+     "what": "The running head on the page reads 'Aureliæ occultæ Philoſophorum'."
+    }
+   ]
+  },
+  {
+   "id": "jp13804dae80f6",
+   "page_id": "69b6813970c69d645a71d61c",
+   "book_id": "69b6813970c69d645a71d60d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<header>Aurelia occulta Philoſophorum</header>",
+     "what": "the running head reads 'Aureliæ occultæ' (genitive); the æ endings were dropped"
+    }
+   ]
+  },
+  {
+   "id": "jp483298db942b",
+   "page_id": "69b6813970c69d645a71d61c",
+   "book_id": "69b6813970c69d645a71d60d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "& pręcipuæ, quarum vnaquæque doctrinam de ſacroſancta",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "prenominatæ tamen primariæ erant\nTrinitate oppugnabat",
+     "what": "a whole line is missing: '& præcipuæ, quarum vnaquæque doctrinam de ſacroſancta'. Without it, 'Trinitate oppugnabat' has no subject and the sentence no longer makes sense."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Aurelia occulta Philoſophorum",
+     "what": "the running head reads 'Aureliæ occultæ' (genitive) and was normalised to the title form"
+    }
+   ]
+  },
+  {
+   "id": "jpc94cc4cf7bc8",
+   "page_id": "69906330ef12272ffdc901ff",
+   "book_id": "6990632fef12272ffdc900f2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "ist. Das Blut, sobald es aus den Gefäßen geflossen ist,",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "des thierischen Körpers erkennbar\ntrennt sich freywillig",
+     "what": "a whole line is missing: 'ist. Das Blut, sobald es aus den Gefäßen geflossen ist,'. Without it the sentence has no subject and does not make sense"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Oxygen. Denn",
+     "what": "the page has 'Oxygene', normalised here to 'Oxygen'"
+    }
+   ]
+  },
+  {
+   "id": "jp9c81a2e3d6b2",
+   "page_id": "69906330ef12272ffdc901ff",
+   "book_id": "6990632fef12272ffdc900f2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Dies haben schon die Alten sorgfältig beobachtet.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Dies haben schon die Alten sorgfältig beobachtet.",
+     "what": "This whole sentence is not on the page. On the page, 'Oxygene.' runs straight into 'Denn es ist allgemein bekannt'."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Oxygen. Dies",
+     "what": "The page reads 'Oxygene', not 'Oxygen'."
+    }
+   ]
+  },
+  {
+   "id": "jpd18efd5eed98",
+   "page_id": "69906330ef12272ffdc901ff",
+   "book_id": "6990632fef12272ffdc900f2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Meinung",
+    "after": "Verwandlung",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Die Verwandlung, als ob das Blut außer",
+     "what": "page reads 'Die Meinung' (the opinion), not 'Die Verwandlung' (transformation)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Oxygen. Denn es ist",
+     "what": "page prints 'Oxygene.'; the form is normalised"
+    }
+   ]
+  },
+  {
+   "id": "jp0a1801c18db1",
+   "page_id": "69906330ef12272ffdc901ff",
+   "book_id": "6990632fef12272ffdc900f2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Oxygen. Denn es ist allgemein bekannt",
+     "what": "the page has 'Oxygene.'; the candidate drops the final -e, while the later 'Oxygenes' is kept"
+    }
+   ]
+  },
+  {
+   "id": "jpaf955efabd3a",
+   "page_id": "69b51ed3c35d928cea4efd3f",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Ce précieux manuscrit, sur lequel on peut consulter le Catalogue La Serna, n° 6098 *, est vraiment une pièce très remarquable. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "1761, in-fol. v. 67 feuillets.\n\nLa même main y a exécuté",
+     "what": "The candidate drops the opening sentence of the last note: 'Ce précieux manuscrit, sur lequel on peut consulter le Catalogue La Serna, nº 6098 *, est vraiment une pièce très remarquable.'"
+    }
+   ]
+  },
+  {
+   "id": "jpc9d421ba048c",
+   "page_id": "69906330ef12272ffdc901ff",
+   "book_id": "6990632fef12272ffdc900f2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "125",
+    "after": "135",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "über das Blut S. 135.)",
+     "what": "the page reads S. 125; the cited page number is wrong"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Oxygen. Denn es ist",
+     "what": "the page has 'Oxygene'; normalised to 'Oxygen'"
+    }
+   ]
+  },
+  {
+   "id": "jpab9c7eac1608",
+   "page_id": "69b51ed3c35d928cea4efd3f",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "L'expérience de chaque jour le confirme assez.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Joh. L'expérience de chaque jour le confirme assez. Israel De Bry",
+     "what": "An invented French sentence is inserted into the middle of the De Bry name. It is not on the page."
+    }
+   ]
+  },
+  {
+   "id": "jpc66fb8497aca",
+   "page_id": "69b51ed3c35d928cea4efd3f",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "inscriptions",
+    "after": "compositions",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "compositions figurées",
+     "what": "page reads 'inscriptions figurées'"
+    }
+   ]
+  },
+  {
+   "id": "jp421e8aa77345",
+   "page_id": "69b51ed3c35d928cea4efd3f",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jp021f9821deb2",
+   "page_id": "69b51ed3c35d928cea4efd3f",
+   "book_id": "69b51ed3c35d928cea4efbf0",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "1596",
+    "after": "1591",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "Franckfurt, 1591, in-4. oblong",
+     "what": "imprint date is 1596 on the page, not 1591"
+    }
+   ]
+  },
+  {
+   "id": "jp82f03b9d218e",
+   "page_id": "69b63c911c1c21a373854588",
+   "book_id": "69b63c911c1c21a37385457d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Adfetus quibus toni plerumque mo-",
+     "what": "the page reads 'Adfectus'; the candidate drops the c"
+    }
+   ]
+  },
+  {
+   "id": "jpd3cd0edd70e6",
+   "page_id": "69b63c911c1c21a373854588",
+   "book_id": "69b63c911c1c21a37385457d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Adfinales tonorum fides tres ſunt.",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Finales fides tonorum quatuor ſunt.\nInitiariæ fides tonorum enumerantur.",
+     "what": "the index entry 'Adfinales tonorum fides tres ſunt.' between these two lines is dropped without notice"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Adfetus quibus toni",
+     "what": "misspelling: the page reads 'Adfectus'"
+    }
+   ]
+  },
+  {
+   "id": "jpa0ad4609d865",
+   "page_id": "69b63c911c1c21a373854588",
+   "book_id": "69b63c911c1c21a37385457d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Quod etiam veteres philoſophi diligenter obſervaverunt.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Quod etiam veteres philoſophi diligenter obſervaverunt.",
+     "what": "invented index line, not on the page; it sits between 'Adfinales…' and 'Initiariæ…', which are consecutive in the image"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Adfetus quibus toni plerumque mo-",
+     "what": "page reads 'Adfectus'"
+    }
+   ]
+  },
+  {
+   "id": "jp69d3523ffca7",
+   "page_id": "69b63c911c1c21a373854588",
+   "book_id": "69b63c911c1c21a37385457d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "duobus",
+    "after": "tribus",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "Dià paſon quinque tonis, & tribus ſemi\ntoniis conſtat.",
+     "what": "page reads 'duobus ſemitoniis' (two semitones), not 'tribus' (three); the candidate changes the content of the octave"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Adfetus quibus toni plerumque mo-",
+     "what": "dropped letter: the page reads 'Adfectus'"
+    }
+   ]
+  },
+  {
+   "id": "jp4b7073b47010",
+   "page_id": "6a212212f88bd9944a5840ed",
+   "book_id": "6a212212f88bd9944a5840d7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Bildung",
+    "after": "Bewegung",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "zur Bewegung tüchtiger Lehrer",
+     "what": "page reads 'zur Bildung' (training of teachers), not 'Bewegung'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ökonomischer Ausgaben",
+     "what": "page spells 'öconomischer'; spelling modernised"
+    }
+   ]
+  },
+  {
+   "id": "jpba7881232be5",
+   "page_id": "69b63c911c1c21a373854588",
+   "book_id": "69b63c911c1c21a37385457d",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "ſectionem",
+    "after": "mutationem",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "per portio\nnis monochordi mutationem",
+     "what": "page reads 'monochordi ſectionem' (division), not 'mutationem'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Adfetus quibus toni",
+     "what": "misspelling: the page has 'Adfectus'"
+    }
+   ]
+  },
+  {
+   "id": "jpad5ba7f6b1f1",
+   "page_id": "6a212212f88bd9944a5840ed",
+   "book_id": "6a212212f88bd9944a5840d7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "1",
+    "after": "4",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "die Gymnasiasten 4 1/2 Jahr",
+     "what": "page reads 1½ Jahr; the candidate makes the service obligation 4½ years"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ökonomischer Ausgaben",
+     "what": "page spells it 'öconomischer'; modernised to k"
+    }
+   ]
+  },
+  {
+   "id": "jpd6b411539592",
+   "page_id": "6a212212f88bd9944a5840ed",
+   "book_id": "6a212212f88bd9944a5840d7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ökonomischer Ausgaben",
+     "what": "page has the period spelling 'öconomischer', modernised to 'ökonomischer'"
+    }
+   ]
+  },
+  {
+   "id": "jpc4cd0cbf1ecf",
+   "page_id": "6a212212f88bd9944a5840ed",
+   "book_id": "6a212212f88bd9944a5840d7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Das bestätigt die tägliche Erfahrung zur Genüge.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Das bestätigt die tägliche Erfahrung zur Genüge.",
+     "what": "This whole sentence is not on the page. On the page, 'zu machen.' is followed directly by 'Verpflichtet sind aber…'."
+    }
+   ]
+  },
+  {
+   "id": "jp65a7088b0c1f",
+   "page_id": "69bd935f2d11455793b3f121",
+   "book_id": "69bd935f2d11455793b3f097",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "25",
+    "after": "35",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "au 35 décembre",
+     "what": "the page says 25 décembre; the candidate gives an impossible date for the Nativity feast"
+    }
+   ]
+  },
+  {
+   "id": "jpf4a3b1dabd0d",
+   "page_id": "6a212212f88bd9944a5840ed",
+   "book_id": "6a212212f88bd9944a5840d7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Verpflichtet sind aber die Gymnasiasten 1 1/2 Jahr, die Studenten 2 Jahre der Krone zu dienen für jedes Jahr, in dem sie das Stipendium genossen.",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Demosthenes oder Livius in's Russische zu machen. ",
+     "what": "Drops the next sentence: 'Verpflichtet sind aber die Gymnasiasten 1½ Jahr, die Studenten 2 Jahre der Krone zu dienen für jedes Jahr, in dem sie das Stipendium genossen.' That is about 3.5 printed lines, including the service-obligation figures."
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<vocab>Gymnasiasten, Stipendium,",
+     "what": "The vocab tag lists 'Gymnasiasten', which appears only in the dropped sentence, so the tags don't match the text."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ökonomischer Ausgaben",
+     "what": "The page has 'öconomischer'; the candidate modernises the spelling."
+    }
+   ]
+  },
+  {
+   "id": "jp08ab845a771a",
+   "page_id": "69bd935f2d11455793b3f121",
+   "book_id": "69bd935f2d11455793b3f097",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "christianisme",
+     "what": "The vocab tag lists a word that does not appear on the page (the page has 'chrétiennes' and 'chrétiens')."
+    }
+   ]
+  },
+  {
+   "id": "jp7d46e33d3298",
+   "page_id": "69bd935f2d11455793b3f121",
+   "book_id": "69bd935f2d11455793b3f097",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Il faut y prendre garde avec soin.",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jp180bc824ae1a",
+   "page_id": "69bd935f2d11455793b3f121",
+   "book_id": "69bd935f2d11455793b3f097",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "adaptations",
+    "after": "distillations",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "de ces distillations consista",
+     "what": "page reads 'adaptations' (hyphenated 'adap-tations'); the swapped word changes the sense of the key sentence"
+    }
+   ]
+  },
+  {
+   "id": "jpe26c34968201",
+   "page_id": "69bd935f2d11455793b3f121",
+   "book_id": "69bd935f2d11455793b3f097",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Vers la même date, en effet, le 7 du mois de paophi, d'après le calendrier égyptien, se célébrait la fête de la naissance d'Horus ou Harpocrate. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "l'apparition du soleil nouveau. Ce jour-là, dit Macrobe",
+     "what": "A full sentence is missing: \"Vers la même date, en effet, le 7 du mois de paophi, d'après le calendrier égyptien, se célébrait la fête de la naissance d'Horus ou Harpocrate.\" Without it, \"Ce jour-là\" refers to the wrong day."
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Horus, Harpocrate",
+     "what": "The vocab tag lists Horus and Harpocrate, but neither name appears in the transcribed text."
+    }
+   ]
+  },
+  {
+   "id": "jp3b7655c47cf6",
+   "page_id": "69b6370c1c1c21a373830ce8",
+   "book_id": "69b6370c1c1c21a373830cd8",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "fundatione",
+    "after": "ratione",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Philippi et zeno martyrum .festum omnium que eis oratio in communi.",
+     "what": "page reads 'so. q eiº' (sociorumque eius), not 'festum omnium que eis'"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Margarete virginis et martyris .Duplex cum ratione.",
+     "what": "page reads 'Dupl. cū fund.' (cum fundatione), not 'cum ratione'"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Depositio sancti germani episcopi et confessoris .cum sociis",
+     "what": "red tail reads 'ex fū' (ex fundatione), not 'cum sociis'"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "Theobaldi confessoris non pontificis .oc.",
+     "what": "red 'D.' before 'oc.' is dropped"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Anne matris marie virginis .S. commemoratio mar.",
+     "what": "page has 'd.' (duplex), not 'S.'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Arnulphi episcopi et confessoris",
+     "what": "page spells 'Anulphi'"
+    }
+   ]
+  },
+  {
+   "id": "jp16622653f629",
+   "page_id": "69b6370c1c1c21a373830ce8",
+   "book_id": "69b6370c1c1c21a373830cd8",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "xv g idibus xv Philippi et zeno martyrum .festum omnium que eis oratio in communi.",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "f ij id xiiij Hic incipiunt dies caniculares.\niiij A xvij kl xvj Augusti",
+     "what": "The whole 15 July line 'xv g idibus xv Philippi et zeno m. so. q3 ei' oratio in com.' is missing, so the calendar skips from 14 to 16 July. Philippus and Zeno still appear in the vocab tag."
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Anne matris marie virginis .S. commemoratio mar.",
+     "what": "The page reads 'vg. d.' (duplex), not '.S.'."
+    }
+   ]
+  },
+  {
+   "id": "jp7af9d4715514",
+   "page_id": "69b6370c1c1c21a373830ce8",
+   "book_id": "69b6370c1c1c21a373830cd8",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Septem",
+    "after": "Novem",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "wrong_text",
+     "quote": "Novem fratrum martyrum filiorum sancte felicitatis",
+     "what": "page reads 'Septē fratrū' (seven brothers), not nine"
+    },
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Depositio sancti germani episcopi et confessoris .cum sociis",
+     "what": "page ends 'epi et cõf. ex fũ' (ex fundatione); 'cum sociis' is invented"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "festum omnium que eis oratio in communi",
+     "what": "abbreviation 'fo. qꝫ ei⁹' expanded into a doubtful phrase"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "Theobaldi confessoris non pontificis .oc.",
+     "what": "red '.D.' after 'nõ põ' dropped"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Anne matris marie virginis .S. commemoratio mar.",
+     "what": "page has 'd.' (duplex), not '.S.'"
+    }
+   ]
+  },
+  {
+   "id": "jpfebab01417a9",
+   "page_id": "69b6370c1c1c21a373830ce8",
+   "book_id": "69b6370c1c1c21a373830cd8",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Cuius rei causam paulo post explicabimus.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Cuius rei causam paulo post explicabimus.",
+     "what": "A whole sentence that is not on the page is inserted between the calendar lines for 3 and 4 July."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Depositio sancti germani episcopi et confessoris .cum sociis",
+     "what": "The red ending of this line looks like 'ex fu.' (ex fundatione), not 'cum sociis'."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Anne matris marie virginis .S. commemoratio mar.",
+     "what": "The page has 'vg.d.' (D, the rank), not '.S.'."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Arnulphi episcopi et confessoris",
+     "what": "The page spells it 'Anulphi'; the candidate normalises it to 'Arnulphi'."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Philippi et zeno martyrum .festum omnium que eis oratio in communi",
+     "what": "The abbreviation 'fo.q3 ei'' is expanded into a guessed phrase that doesn't make sense."
+    }
+   ]
+  },
+  {
+   "id": "jpc07af03bd15e",
+   "page_id": "69f5036c64bf733e4036e86f",
+   "book_id": "69c6ebe4da9771c7163148a5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "zerschleifft und verstöret worden",
+     "what": "page reads 'zerstöret'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Aposteln umwandelt",
+     "what": "page reads 'umgewandelt'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "das verschmächte und gleichsam verstorbene Corpus",
+     "what": "page reads 'verschmachte' (languished); the umlaut suggests 'despised'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wegen seiner schwarzen Farbe",
+     "what": "tz spellings modernised: schwartzen, gantzen, Schmertzen, and margin 'schwartz'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "tröpfflicht",
+     "what": "page reads 'tröpflicht'"
+    }
+   ]
+  },
+  {
+   "id": "jp05f2836a2ddb",
+   "page_id": "69b6370c1c1c21a373830ce8",
+   "book_id": "69b6370c1c1c21a373830cd8",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "Theobaldi confessoris non pontificis .oc. sancti iohannis baptiste commemoratio.",
+     "what": "the red '.D.' after 'nō pō' is left out"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": ".festum omnium que eis oratio in communi.",
+     "what": "the abbreviations 'fo. q3 ei9' are expanded on a guess"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Anne matris marie virginis .S. commemoratio mar.",
+     "what": "the page reads 'vg. d.' (duplex), not '.S.'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Arnulphi episcopi",
+     "what": "the page spells it 'Anulphi'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "episcopi et confessoris .cum sociis",
+     "what": "the faint red ending, probably 'cū fū' (cum fundatione), is read as 'cum sociis'"
+    }
+   ]
+  },
+  {
+   "id": "jp62a742a79afb",
+   "page_id": "69f5036c64bf733e4036e86f",
+   "book_id": "69c6ebe4da9771c7163148a5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "40",
+    "after": "50",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "Die Stadt Jerusalem im 50. Jahr",
+     "what": "page reads 'im 40. Jahr'; the wrong number also breaks the passage's series of forties"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "von den Römern ist zerschleifft und verstöret worden",
+     "what": "page reads 'zerstöret'"
+    },
+    {
+     "class": "O5",
+     "severity": "misleads",
+     "quote": "bey seinen Jüngern und Aposteln umwandelt",
+     "what": "page reads 'umgewandelt'; the 'ge-' syllable is dropped"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wegen seiner schwarzen Farbe",
+     "what": "tz spellings modernised: page has 'schwartzen', 'gantzen', 'Schmertzen', and 'schwartz' in the margin"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "das verschmächte und gleichsam verstorbene Corpus",
+     "what": "page reads 'verschmachte'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "tröpfflicht",
+     "what": "page has 'tröpflicht' with a single f"
+    }
+   ]
+  },
+  {
+   "id": "jp624790e644c6",
+   "page_id": "69f5036c64bf733e4036e86f",
+   "book_id": "69c6ebe4da9771c7163148a5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Auch den Alten war dies wohl bekannt.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Auch den Alten war dies wohl bekannt.",
+     "what": "sentence not on the page; the leaf goes straight from 'worden.' to 'Und ist auch sonderlich zu mercken'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "zerschleifft und verstöret worden",
+     "what": "page reads 'zerstöret', not 'verstöret'"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "bey seinen Jüngern und Aposteln umwandelt",
+     "what": "page reads 'umgewandelt'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "das verschmächte und gleichsam verstorbene Corpus",
+     "what": "page reads 'verschmachte'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "seine Anima tröpfflicht allgemach",
+     "what": "page reads 'tröpflicht'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "einer ganzen heßlichen Gestalt",
+     "what": "page's tz spellings ('gantzen', 'schwartzen', 'Schmertzen', 'schwartz') normalised to z throughout"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "Er hatte keine Gestalt noch 2c.",
+     "what": "the 'etc.' abbreviation (zc.) is rendered as '2c.'"
+    }
+   ]
+  },
+  {
+   "id": "jpef23f8f11cad",
+   "page_id": "69f5036c64bf733e4036e86f",
+   "book_id": "69c6ebe4da9771c7163148a5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Und ist auch sonderlich zu mercken, daß die Philosophi solche Putrefaction, oder Erfaulung, wegen seiner schwarzen Farbe, das Caput Corvi genennet haben. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "verstöret worden. Dann, also ist auch Christus",
+     "what": "drops a full sentence: 'Und ist auch sonderlich zu mercken, daß die Philosophi solche Putrefaction, oder Erfaulung, wegen seiner schwartzen Farbe, das Caput Corvi genennet haben.'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "zerschleifft und verstöret worden",
+     "what": "page reads 'zerstöret', not 'verstöret'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "umwandelt",
+     "what": "page reads 'umgewandelt'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "verschmächte",
+     "what": "page reads 'verschmachte' (languished), not 'verschmächte'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Putrefaction, Erfaulung, Caput Corvi",
+     "what": "vocab tag lists terms from the dropped sentence, which are missing from the text"
+    }
+   ]
+  },
+  {
+   "id": "jp736b57b0ebc9",
+   "page_id": "69b63e702a1dde00d5a9d983",
+   "book_id": "69b63e702a1dde00d5a9d827",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jpd42a87a828f8",
+   "page_id": "69f5036c64bf733e4036e86f",
+   "book_id": "69c6ebe4da9771c7163148a5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Stärckung",
+    "after": "Meinung",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "bis sich nach Meinung des Feuers",
+     "what": "page reads 'nach Stärckung des Feuers' (after the fire is strengthened), not 'Meinung'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "zerschleifft und verstöret worden",
+     "what": "page reads 'zerstöret'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Aposteln umwandelt",
+     "what": "page reads 'umgewandelt'; the 'ge' is dropped"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "das verschmächte und gleichsam verstorbene Corpus",
+     "what": "page reads 'verschmachte'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Er hatte keine Gestalt noch 2c.",
+     "what": "the 'etc.' abbreviation (zc.) is rendered as '2c.'"
+    }
+   ]
+  },
+  {
+   "id": "jp3f0bd7b75c44",
+   "page_id": "69b63e702a1dde00d5a9d983",
+   "book_id": "69b63e702a1dde00d5a9d827",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "substance",
+    "after": "ressemblance",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "on recueille la ressemblance sucrée",
+     "what": "the page reads 'la substance sucrée'; 'ressemblance' is a misread that changes the meaning and makes the phrase nonsense"
+    }
+   ]
+  },
+  {
+   "id": "jp84e104aabd05",
+   "page_id": "69b63e702a1dde00d5a9d983",
+   "book_id": "69b63e702a1dde00d5a9d827",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Il faut y prendre garde avec soin.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Il faut y prendre garde avec soin.",
+     "what": "This sentence is not on the page. On the page, 'au moyen de madriers.' runs straight on to 'Au sortir de cette vallée'."
+    }
+   ]
+  },
+  {
+   "id": "jp3528b4dd4df3",
+   "page_id": "69b63e702a1dde00d5a9d983",
+   "book_id": "69b63e702a1dde00d5a9d827",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Merw Chahidjan est située dans une plaine unie dont le sol, imprégné de sel, doit sa fertilité aux canaux dérivés du Mourghâb ou Merwâb. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Les terrains qui ne sont point arrosés",
+     "what": "The opening of the second paragraph was dropped: 'Merw Chahidjan est située dans une plaine unie dont le sol, imprégné de sel, doit sa fertilité aux canaux dérivés du Mourghâb ou Merwâb.' (about 2.5 lines)"
+    }
+   ]
+  },
+  {
+   "id": "jpc24f11b3012d",
+   "page_id": "69b63e702a1dde00d5a9d983",
+   "book_id": "69b63e702a1dde00d5a9d827",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "deux",
+    "after": "trois",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "des trois côtés",
+     "what": "the page says \"des deux côtés\" (two sides), not three"
+    }
+   ]
+  },
+  {
+   "id": "jpef3b7975c7c0",
+   "page_id": "69b51e88768235dc65995160",
+   "book_id": "69b51e88768235dc659950db",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "51",
+    "after": "61",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "in Epist. 61. l. 2.",
+     "what": "letter number is 51 on the page, not 61"
+    }
+   ]
+  },
+  {
+   "id": "jp0559d5e4ce38",
+   "page_id": "69b51e88768235dc65995160",
+   "book_id": "69b51e88768235dc659950db",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>de</meta>",
+     "what": "catchword 'de' tagged as meta rather than as a catchword"
+    }
+   ]
+  },
+  {
+   "id": "jp0e2db3a3cd9d",
+   "page_id": "69b51e88768235dc65995160",
+   "book_id": "69b51e88768235dc659950db",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "editione",
+    "after": "dispositione",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "ab eo in dispositione operis non fuisse",
+     "what": "page reads 'in editione operis'; 'dispositione' was carried over from the line above and changes the sense"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>de</meta>",
+     "what": "catchword 'de' is tagged as meta rather than as a catchword"
+    }
+   ]
+  },
+  {
+   "id": "jpba855bb4c9c5",
+   "page_id": "69b51e88768235dc65995160",
+   "book_id": "69b51e88768235dc659950db",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Cuius rei causam paulo post explicabimus.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Cuius rei causam paulo post explicabimus.",
+     "what": "sentence not on the page; the leaf goes straight from 'promittitur.' to 'Itaque dici non poterit'"
+    }
+   ]
+  },
+  {
+   "id": "jp611bd11b1efa",
+   "page_id": "69b51e88768235dc65995160",
+   "book_id": "69b51e88768235dc659950db",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "*rabiliora continet, per ignem videlicet in hac arte possum mentis meæ conce-*",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "*Secundus liber multo mi-*\n*ptum notum facere artem scienti",
+     "what": "a whole line is missing: 'rabiliora continet, per ignem videlicet in hac arte possum mentis meæ conce-', so Trithemius's claim about sending messages 'per ignem' is lost"
+    }
+   ]
+  },
+  {
+   "id": "jp8288ea95cd30",
+   "page_id": "6a2121edf88bd9944a5840b7",
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "2",
+    "after": "5",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "I3",
+     "severity": "misleads",
+     "quote": "<columns>2</columns>",
+     "what": "the image is a two-page spread (each page has its own 'Das 5. Capitel.' header) but it is transcribed as one page with two columns"
+    },
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "verschwunden. 5. So erfol=",
+     "what": "the point number on the page is '2.', not '5.'"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "vnd hat mit diesem Drachen nichts zu",
+     "what": "drops 'das' from 'vnd hat das mit diesem Drachen'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "vnd sich sehen lasset",
+     "what": "the page reads 'lässet'"
+    }
+   ]
+  },
+  {
+   "id": "jp6703c53494cf",
+   "page_id": "6a2121edf88bd9944a5840b7",
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Solches lehret die tägliche Erfahrung genugsam.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Solches lehret die tägliche Erfahrung genugsam.",
+     "what": "sentence added that is not on the page; the page goes straight from 'angeruffen.' to 'Nu möchte jemand'"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "vnd hat mit diesem Drachen nichts zu",
+     "what": "the page reads 'vnd hat das mit diesem Drachen'; 'das' is dropped"
+    },
+    {
+     "class": "I3",
+     "severity": "cosmetic",
+     "quote": "<columns>2</columns>",
+     "what": "the image is a two-page spread, each page headed 'Das 5. Capitel.', but it is tagged as one page with two columns"
+    }
+   ]
+  },
+  {
+   "id": "jp652475b233f5",
+   "page_id": "6a2121edf88bd9944a5840b7",
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Blindheit",
+    "after": "Klarheit",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Denn in solche Klarheit",
+     "what": "The page reads \"Blindheit\" (blindness). \"Klarheit\" (clarity) reverses the sense of the passage."
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "vnd hat mit diesem Drachen nichts zu",
+     "what": "The word \"das\" is dropped. The page has \"vnd hat das mit diesem Drachen\"."
+    },
+    {
+     "class": "I3",
+     "severity": "cosmetic",
+     "quote": "<columns>2</columns>",
+     "what": "The image is a two-page spread, tagged as one page with 2 columns. Each leaf has its own \"Das 5. Capitel\" header, but only one header is given."
+    }
+   ]
+  },
+  {
+   "id": "jpab7258057113",
+   "page_id": "6a2121edf88bd9944a5840b7",
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Ende/das er sich dadurch erhalte/vnd von solcher Speise lebe/wie",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "denn er jsset zwar/aber nicht zu dem\ndie lebendige Creaturen",
+     "what": "A whole line of the right-hand page is missing: 'Ende/das er sich dadurch erhalte/vnd von solcher Speise lebe/wie'. Without it the sentence makes no sense."
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "vnd hat mit diesem Drachen nichts zu",
+     "what": "The word 'das' is missing; the page reads 'vnd hat das mit diesem Drachen'."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "hinsleucht",
+     "what": "Misread of 'hinfleucht' (an f read as a long s)."
+    },
+    {
+     "class": "I3",
+     "severity": "cosmetic",
+     "quote": "<columns>2</columns>",
+     "what": "The image is a two-page spread that was not split. It is tagged as one page with two columns, so the right-hand page's own header is merged into a single header."
+    }
+   ]
+  },
+  {
+   "id": "jpa596917d397f",
+   "page_id": "6a4ad95ed6371d99e7668c2f",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "trois",
+    "after": "cinq",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "les cinq Curiaces",
+     "what": "page reads 'les trois Curiaces'; the number of Curiaces is wrong"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "droit naturel, imputation, jugement",
+     "what": "vocab tag lists 'droit naturel', which is not on this page"
+    }
+   ]
+  },
+  {
+   "id": "jp16408aca4519",
+   "page_id": "6a2121edf88bd9944a5840b7",
+   "book_id": "6a2121edf88bd9944a5840a2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "I3",
+     "severity": "cosmetic",
+     "quote": "<columns>2</columns>",
+     "what": "the image is a two-page spread, but it is tagged as one page with two columns and one header; each page has its own 'Das 5. Capitel.' header"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "vnd hat mit diesem Drachen nichts zu",
+     "what": "drops 'das' (page reads 'vnd hat das mit diesem Drachen')"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wie er gestalt sey",
+     "what": "page reads 'gestallt'; also 'vnnd hinrücke' is given as 'vnd'"
+    }
+   ]
+  },
+  {
+   "id": "jp7420a89b6feb",
+   "page_id": "6a4ad95ed6371d99e7668c2f",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Ajoûtons encore l'exemple d'une imputation avantageuse, ou d'un Jugement de récompense. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "le jeune homme absous. Ciceron, au commencement de son Con-",
+     "what": "A whole sentence is left out: 'Ajoûtons encore l'exemple d'une imputation avantageuse, ou d'un Jugement de récompense.'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les trois frères de ce nom",
+     "what": "The page's accents are modernised: 'fréres' becomes 'frères' and 'condamnérent' becomes 'condamnèrent'."
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "droit naturel",
+     "what": "The vocab tag lists a term that does not appear on this page."
+    }
+   ]
+  },
+  {
+   "id": "jp94e7c08bcaa5",
+   "page_id": "6a4ad95ed6371d99e7668c2f",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Dont nous parlerons plus amplement cy apres.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Dont nous parlerons plus amplement cy apres.",
+     "what": "a whole sentence that is not on the page was inserted between 'récompense.' and 'Ciceron'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "trois frères de ce nom",
+     "what": "the page's 'fréres' (and 'condamnérent') was modernised to the grave accent"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "droit naturel",
+     "what": "the vocab tag lists a term that does not appear on the page"
+    }
+   ]
+  },
+  {
+   "id": "jp28183bba743a",
+   "page_id": "69b51e98cf111105c42a0eb7",
+   "book_id": "69b51e98cf111105c42a0dd1",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Meinung",
+    "after": "Handlung",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "um welcher Handlung willen dieses Büchlein geschrieben worden ist",
+     "what": "page reads 'um welcher Meinung willen'; 'Handlung' changes the stated purpose of the book"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Der Streit und Missverstand von Christi Person",
+     "what": "the woodcut initial is A, so the page reads 'Aller Streit'; the initial is also described as a D"
+    },
+    {
+     "class": "O12",
+     "severity": "misleads",
+     "quote": "Durch das Aushauchen des Ewigen/ spricht sich GOtt.",
+     "what": "marginal note expanded with 'des Ewigen', which is not in the printed margin"
+    },
+    {
+     "class": "O13",
+     "severity": "cosmetic",
+     "quote": "Eins und Unformet.",
+     "what": "faint handwritten (later-hand) marginal note tagged as a printed marginal note"
+    }
+   ]
+  },
+  {
+   "id": "jp3bde9a192f1e",
+   "page_id": "6a4ad95ed6371d99e7668c2f",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les trois frères de ce nom",
+     "what": "the page has 'fréres' and 'condamnérent'; the candidate silently changes them to modern grave accents"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "droit naturel, imputation, jugement",
+     "what": "the vocab tag lists 'droit naturel', which does not appear on this page"
+    }
+   ]
+  },
+  {
+   "id": "jp39b5075bdb8d",
+   "page_id": "6a4ad95ed6371d99e7668c2f",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "conséquence",
+    "after": "science",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "& en science il déclara le jeune homme absous",
+     "what": "page reads 'en conséquence'; 'en science' is a misread that makes no sense"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les trois frères",
+     "what": "page has 'fréres'; accent modernised (also 'condamnèrent' for 'condamnérent')"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "droit naturel, imputation, jugement",
+     "what": "vocab tag lists 'droit naturel', which does not appear on this page"
+    }
+   ]
+  },
+  {
+   "id": "jp6521f00e3b72",
+   "page_id": "69b6477c18b87551bfc4cba1",
+   "book_id": "69b6477c18b87551bfc4cb92",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Prima",
+    "after": "Tertia",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Tertia pars\nin principio libri",
+     "what": "page reads 'Prima ps' (Prima pars); the misread makes the three-part division say 'Tertia' twice"
+    }
+   ]
+  },
+  {
+   "id": "jp7681a656e880",
+   "page_id": "69b6477c18b87551bfc4cba1",
+   "book_id": "69b6477c18b87551bfc4cb92",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "nihil boni perfici poterit inuocat et implorat. Prima pars",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Tertio diuinum auxilium sine quo\nin principio libri (Musica per flores)",
+     "what": "a whole line is missing: 'nihil boni perfici poterit inuocat et implorat. Prima pars'. Without it the third point loses its verb and the 'Prima' division disappears."
+    }
+   ]
+  },
+  {
+   "id": "jpb530c8ea292f",
+   "page_id": "69b6477c18b87551bfc4cba1",
+   "book_id": "69b6477c18b87551bfc4cb92",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "scientiam",
+    "after": "sapientiam",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "artem illam siue sapientiam de qua tractare",
+     "what": "page reads 'siue scientiam'; candidate substitutes 'sapientiam'"
+    }
+   ]
+  },
+  {
+   "id": "jpc6fa3ae58cc3",
+   "page_id": "69b6477c18b87551bfc4cba1",
+   "book_id": "69b6477c18b87551bfc4cb92",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Id quod multis exemplis facile posset ostendi.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Id quod multis exemplis facile posset ostendi.",
+     "what": "a whole sentence not on the page is inserted between 'implorat.' and 'Prima pars'"
+    }
+   ]
+  },
+  {
+   "id": "jpa342e8c72655",
+   "page_id": "69b6477c18b87551bfc4cba1",
+   "book_id": "69b6477c18b87551bfc4cb92",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Sunt postponētes : artem veram re-\ntinētes",
+     "what": "macron abbreviation marks added where the print spells out postponentes/retinentes, while the real abbreviation verā is expanded — inconsistent and the reverse of the page"
+    }
+   ]
+  },
+  {
+   "id": "jp02886bf61bab",
+   "page_id": "69f6d66d082a76724571c684",
+   "book_id": "69c823c96c6f3cc53c84b1b6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "zwey",
+    "after": "drey",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "werden nur drey in ihren Büchern gesetzet",
+     "what": "page reads 'zwey' (two fires, dry and moist); candidate says three"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Roßbauchs Eigenschaft ist",
+     "what": "page spells 'Eigenschafft'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "zu dem Werc. gehört/",
+     "what": "the abbreviated 'Werck' is shown as 'Werc.'; 'ge-' at the line end is joined with the catchword 'hört/'"
+    }
+   ]
+  },
+  {
+   "id": "jpe920acf1444b",
+   "page_id": "69f6d66d082a76724571c684",
+   "book_id": "69c823c96c6f3cc53c84b1b6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Darauf ist hier besonders zu achten.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Darauf ist hier besonders zu achten.",
+     "what": "This sentence is not on the page. It was inserted between 'natürliche Feuer.' and 'Das bezeuget darauf Calid'."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Eigenschaft",
+     "what": "The page spells it 'Eigenschafft'; the candidate modernises the spelling."
+    }
+   ]
+  },
+  {
+   "id": "jp4f387878a1f0",
+   "page_id": "69f6d66d082a76724571c684",
+   "book_id": "69c823c96c6f3cc53c84b1b6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Feuchtigkeit",
+    "after": "Gerechtigkeit",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "in welches Gerechtigkeit die verborgen Wärm behalten wird",
+     "what": "page reads 'welches Feuchtigkeit' (moisture), not 'Gerechtigkeit' (justice)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Eigenschaft ist",
+     "what": "page spells 'Eigenschafft'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "zu dem Werc. gehört/",
+     "what": "'Werck' is shown as 'Werc.' because the k is half-printed"
+    }
+   ]
+  },
+  {
+   "id": "jp938826e5a8f3",
+   "page_id": "69f6d66d082a76724571c684",
+   "book_id": "69c823c96c6f3cc53c84b1b6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Eigenschaft",
+     "what": "page reads 'Eigenschafft'; spelling quietly modernised"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "zu dem Werc. gehört/",
+     "what": "the abbreviation mark on 'Werc' is shown as a full stop, and the catchword 'hört/' is joined into the text without being marked"
+    }
+   ]
+  },
+  {
+   "id": "jp0fb077bb807e",
+   "page_id": "69907d225f855ec553e790e4",
+   "book_id": "69907d225f855ec553e78ee2",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "croyance",
+    "after": "connoissance",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "l’Hadès dans la connoissance hellénique",
+     "what": "page reads 'croyance' (belief), not 'connoissance'; the word is substituted and the sense changes"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "ils resplendissent\n« de leur propre éclat",
+     "what": "line breaks re-flowed: 'resplen-/dissent' and 'juri-/dique' joined, so line ends differ from the page"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les Ṛṣhis riches",
+     "what": "page prints Ṛshis with only the R dotted; the candidate adds a dot under the s"
+    }
+   ]
+  },
+  {
+   "id": "jp1a61e153e0c6",
+   "page_id": "69f6d66d082a76724571c684",
+   "book_id": "69c823c96c6f3cc53c84b1b6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Darum spricht Alchidonus Philosophus: Fürwar unser Medicin die ist zu verbergen in dem feuchten Roßmist/ welcher Mist der Weisen Feuer ist.",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "da andere Feuer dasselbe zerstören durch ihre Truckenheit. ",
+     "what": "The whole sentence 'Darum spricht Alchidonus Philosophus: Fürwar unser Medicin die ist zu verbergen in dem feuchten Roßmist/ welcher Mist der Weisen Feuer ist.' is silently left out (about 3.5 lines)."
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "Alchidonus",
+     "what": "The vocab list names Alchidonus, but the omitted passage was the only place he appears."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "zu dem Werc. gehört/",
+     "what": "'Werck' is transcribed as 'Werc.' with a stray full stop. Also, 'hört/' at the foot is the catchword line but was merged into the body text."
+    }
+   ]
+  },
+  {
+   "id": "jp24ac7ce5cd85",
+   "page_id": "69907d225f855ec553e790e4",
+   "book_id": "69907d225f855ec553e78ee2",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "XVIII",
+    "after": "XX",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "L’Atharva-\nVéda (XX. 2. 47)",
+     "what": "page cites Atharva-Veda XVIII. 2. 47; the candidate has XX, which points to the wrong book"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les Ṛṣhis riches",
+     "what": "page prints Ṛshis with a dot under R only; the candidate adds a dot under s (same in all three places)"
+    }
+   ]
+  },
+  {
+   "id": "jpb252b86f655f",
+   "page_id": "69907d225f855ec553e790e4",
+   "book_id": "69907d225f855ec553e78ee2",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les Ṛṣhis riches",
+     "what": "The page prints 'Ṛshis' with a dot under the R only. The candidate adds a dot under the s here and in the other two instances."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "ils resplendissent\n« de leur propre éclat",
+     "what": "Hyphenated words are joined across line breaks ('resplen-/dissent', 'juri-/dique'), so a few lines end differently from the page. No text is lost."
+    }
+   ]
+  },
+  {
+   "id": "jp920b221550b1",
+   "page_id": "69907d225f855ec553e790e4",
+   "book_id": "69907d225f855ec553e78ee2",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "les âmes des sages qui ont fait le bien », dit un texte juridique²;",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "on peut voir briller dans les hauteurs\net un Brāhmaṇa³",
+     "what": "A printed line is missing: \"les âmes des sages qui ont fait le bien », dit un texte juri-dique² ;\". The quotation is left unclosed and the call-out for note 2 is lost."
+    }
+   ]
+  },
+  {
+   "id": "jpf9e18bf7686b",
+   "page_id": "69bd9cd86120d54bd03715b5",
+   "book_id": "69bd9cd86120d54bd037157c",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Hoc autem quotidiana experientia satis comprobatur.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Hoc autem quotidiana experientia satis comprobatur.",
+     "what": "a whole sentence that is not on the page, inserted between 'absconditum.' and 'Lapis noster'"
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "<meta>catchword: ars</meta>",
+     "what": "the page has no catchword, only the signature 'G iij' after the hyphenated 'ar='"
+    }
+   ]
+  },
+  {
+   "id": "jp1e420e7d84c0",
+   "page_id": "69bd9cd86120d54bd03715b5",
+   "book_id": "69bd9cd86120d54bd037157c",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "& circa ipsum inceperis operari ad perfectionem",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "lapidem si extraxeris ab illa re, in qua inuenitur,\nincipiendo in eo",
+     "what": "a whole printed line is missing between these two lines: '& circa ipsum inceperis operari ad perfectionem'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>catchword: ars</meta>",
+     "what": "the page has no catchword; the last line just ends in the hyphenated 'ar=', and only the signature 'G iij' stands below"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "in magisterio.\n\n<margin>Mercurius\nnoster</margin>\nItem, Lapis quem Philoso=",
+     "what": "a paragraph break is invented: 'Item' continues the same line as 'in magisterio.', and the margin note is put mid-line"
+    }
+   ]
+  },
+  {
+   "id": "jpc0a25456353f",
+   "page_id": "69bd9cd86120d54bd03715b5",
+   "book_id": "69bd9cd86120d54bd037157c",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "varietatem",
+    "after": "civitatem",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "colorum civitatem",
+     "what": "the page reads 'colorum varietatem' (variety of colours); 'civitatem' (city) is a misread that makes no sense here"
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "catchword: ars",
+     "what": "the page has no catchword; 'ar=' is just the word broken at the end of the last line, and only the signature G iij appears below"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "<margin>Vilißimus.</margin>\nfectione.",
+     "what": "the note sits beside line 4 ('vilissimus per putrefa-') on the page, but the candidate puts it before line 1"
+    }
+   ]
+  },
+  {
+   "id": "jp120aead5f3bb",
+   "page_id": "69907d225f855ec553e790e4",
+   "book_id": "69907d225f855ec553e78ee2",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Nous en parlerons plus amplement dans la suite.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Nous en parlerons plus amplement dans la suite.",
+     "what": "sentence that is not on the page, inserted between « céleste. » and « Or c'est là »"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "les Ṛṣhis riches",
+     "what": "page prints Ṛshis with no dot under the s; the same change is made at all three occurrences"
+    }
+   ]
+  },
+  {
+   "id": "jpb7a56e059bc6",
+   "page_id": "69bd9cd86120d54bd03715b5",
+   "book_id": "69bd9cd86120d54bd037157c",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O11",
+     "severity": "misleads",
+     "quote": "<meta>catchword: ars</meta>",
+     "what": "the page has no catchword; 'ar=' is the hyphenated end of the last text line, and 'ars' appears nowhere on the page"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "in magisterio.\n\n<margin>Mercurius\nnoster</margin>\nItem, Lapis quem Philoso=",
+     "what": "one printed line ('in magisterio. Item, Lapis quem Philoso=') is split into two, with a paragraph break added"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "& gaudebis.",
+     "what": "the page has a comma after 'gaudebis', not a full stop"
+    }
+   ]
+  },
+  {
+   "id": "jpfc350e376ec2",
+   "page_id": "69bd9cd86120d54bd03715b5",
+   "book_id": "69bd9cd86120d54bd037157c",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "prima",
+    "after": "tertia",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "in quo sunt elementa tertia mine=",
+     "what": "page reads 'elementa prima mineralium'; 'tertia' changes the sense"
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "catchword: ars",
+     "what": "the page has no catchword; 'ar=' is a word split at the end of the last line, and 'ars' is a guess"
+    }
+   ]
+  },
+  {
+   "id": "jp7ae0b373cd7b",
+   "page_id": "6a267bfc6c1f37c9c4f346c9",
+   "book_id": "6a267bfc6c1f37c9c4f346b2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "der nicht wie er wird auszulöschen seyn",
+     "what": "page reads 'der nicht wieder wird auszulöschen seyn'; the misread garbles the phrase"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "in einem ganzen Ocean",
+     "what": "page spells 'gantz/gantzen' throughout (also 'gantzen Welt', 'gantz nichts', 'gantz verkehrte'); modernised to 'ganz'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "die einfältigen Gedanken",
+     "what": "page has 'Gedancken'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "kein Zweifel",
+     "what": "page has 'Zweiffel'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "Ornamental headpiece with floral motifs and central emblem",
+     "what": "there is no headpiece, only small fleurons on either side of the page number '(23)'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Rechtswesen",
+     "what": "vocab tag says 'Rechtswesen'; the page and the transcription both have 'Rechtswegen'"
+    }
+   ]
+  },
+  {
+   "id": "jp16fa0165cf7a",
+   "page_id": "6a267bfc6c1f37c9c4f346c9",
+   "book_id": "6a267bfc6c1f37c9c4f346b2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "gerathen können/ daß sie Se. Käyserliche Majestät beschuldigen",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "auf die einfältigen Gedanken haben\nwollen/ sie würden",
+     "what": "a whole line is missing: 'gerathen können/ daß sie Se. Käyserliche Majestät beschuldigen'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "der nicht wie er wird auszulöschen seyn",
+     "what": "page reads 'nicht wieder' (never again), not 'nicht wie er'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "in einem ganzen Ocean",
+     "what": "'gantz' normalised to 'ganz' throughout; also 'Gedancken' to 'Gedanken' and 'Zweiffel' to 'Zweifel'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Ornamental headpiece with floral motifs and central emblem",
+     "what": "there is no headpiece, only small fleurons on either side of the page number"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Rechtswesen",
+     "what": "the vocab tag has 'Rechtswesen'; the page says 'Rechtswegen'"
+    }
+   ]
+  },
+  {
+   "id": "jp4e39b3ff18a4",
+   "page_id": "6a267bfc6c1f37c9c4f346c9",
+   "book_id": "6a267bfc6c1f37c9c4f346b2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Aufführung",
+    "after": "Erfahrung",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "durch ihre Erfahrung sich",
+     "what": "page reads 'Aufführung' (conduct), not 'Erfahrung' (experience)"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "der nicht wie er wird auszulöschen seyn",
+     "what": "page reads 'nicht wieder' (damaged type); 'wie er' garbles the sense"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ganzen Ocean",
+     "what": "page spells 'gantz-' throughout; also 'Gedancken'→'Gedanken', 'Zweiffel'→'Zweifel'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Ornamental headpiece with floral motifs and central emblem",
+     "what": "no headpiece; only small fleurons around the page number"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Rechtswesen",
+     "what": "vocab entry; page reads 'Rechtswegen'"
+    }
+   ]
+  },
+  {
+   "id": "jp6aa191f131d5",
+   "page_id": "6a267bfc6c1f37c9c4f346c9",
+   "book_id": "6a267bfc6c1f37c9c4f346b2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Darumb sol man hierin gute acht haben.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "J. Käys. Darumb sol man hierin gute acht haben. Maj. suchen itzo weiter nichts",
+     "what": "invented sentence inserted inside 'J. Käys. Maj.'; the page reads 'J. Käys. Maj. suchen itzo weiter nichts'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "der nicht wie er wird auszulöschen seyn",
+     "what": "page reads 'nicht wieder wird', misread as 'wie er'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ganzen Ocean",
+     "what": "'gantz/gantzen', 'Gedancken', 'Zweiffel' normalised throughout"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Ornamental headpiece with floral motifs and central emblem",
+     "what": "no headpiece; only small fleurons flank the page number"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Rechtswesen",
+     "what": "vocab gives 'Rechtswesen'; page has 'Rechtswegen'"
+    }
+   ]
+  },
+  {
+   "id": "jp8e1cd7ae44d9",
+   "page_id": "6a8ee2e990f5a0e4155ebaa7",
+   "book_id": "6a8ee2e990f5a0e4155eba1b",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jpa450f62edeec",
+   "page_id": "6a8ee2e990f5a0e4155ebaa7",
+   "book_id": "6a8ee2e990f5a0e4155eba1b",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Mais dans les \"quatre\" Sociétés incohérentes, on a besoin de contraindre, même pour les mesures évidemment salutaires, et dont l'adoption ne cause aucune fatigu",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "et sur un simple avis. Si nous étions en septième Période",
+     "what": "drops a sentence of about 5 lines: 'Mais dans les « quatre » Sociétés incohérentes, on a besoin de contraindre, même pour les mesures évidemment salutaires, et dont l'adoption ne cause aucune fatigue, aucun dommage ; telle est l'uniformité des poids et mesures.'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "uniformité des poids et mesures",
+     "what": "the vocab tag lists a term from the dropped passage that does not appear in the transcription"
+    }
+   ]
+  },
+  {
+   "id": "jp814e51254e52",
+   "page_id": "6a267bfc6c1f37c9c4f346c9",
+   "book_id": "6a267bfc6c1f37c9c4f346b2",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "XI",
+    "after": "XIII",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "Clemens XIII. werde Cle=\nmens XI. bleiben",
+     "what": "page reads 'Clemens XI. werde Clemens XI.'; the candidate names a different pope"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "der nicht wie er wird auszulöschen seyn",
+     "what": "page reads 'der nicht wieder wird auszulöschen seyn'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "einfältigen Gedanken",
+     "what": "spellings normalised: page has 'Gedancken', 'gantz', 'gantzen', 'Zweiffel'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Ornamental headpiece with floral motifs and central emblem",
+     "what": "the page only has two small fleurons beside the page number, not a headpiece"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Rechtswesen",
+     "what": "vocab list gives 'Rechtswesen' but the page reads 'Rechtswegen'"
+    }
+   ]
+  },
+  {
+   "id": "jp4dd831d1d0c2",
+   "page_id": "6a8ee2e990f5a0e4155ebaa7",
+   "book_id": "6a8ee2e990f5a0e4155eba1b",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "quatre",
+    "after": "six",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "Mais dans les \"six\" Sociétés incohérentes",
+     "what": "page reads \"quatre\" Sociétés; the count of incoherent societies is changed to six"
+    }
+   ]
+  },
+  {
+   "id": "jpda236665ec38",
+   "page_id": "6a8ee2e990f5a0e4155ebaa7",
+   "book_id": "6a8ee2e990f5a0e4155eba1b",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "administration",
+    "after": "purification",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "que l'purification se borne à *avertir*",
+     "what": "page reads \"l'administration\"; \"purification\" is a word the page does not have and it changes the sense"
+    }
+   ]
+  },
+  {
+   "id": "jpe17e0629c3d2",
+   "page_id": "69b6ad81dc00a90e322aa762",
+   "book_id": "69b6ad81dc00a90e322aa757",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Quod etiam veteres philoſophi diligenter obſervaverunt.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Quod etiam veteres philoſophi diligenter obſervaverunt.",
+     "what": "sentence not on the page, inserted between 'in alvo.' and 'Aliàs mordet'"
+    }
+   ]
+  },
+  {
+   "id": "jp12c6ef1e8fd9",
+   "page_id": "69b6ad81dc00a90e322aa762",
+   "book_id": "69b6ad81dc00a90e322aa757",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "*cap. 15. ab init.* quòd nempe aculei ſint ſicci, nec adeò vires poſſint",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "probat Cardanus *lib. 1. de ven.*\ncontinere;",
+     "what": "a whole line is missing after 'de ven.': 'cap. 15. ab init. quòd nempe aculei ſint ſicci, nec adeò vires poſſint'. Without it, Cardanus's reason makes no sense."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "variisq́ue",
+     "what": "an abbreviation mark was added; the page prints plain 'variisque'"
+    }
+   ]
+  },
+  {
+   "id": "jpaaa134ae3a01",
+   "page_id": "69b6ad81dc00a90e322aa762",
+   "book_id": "69b6ad81dc00a90e322aa757",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "ut eleganter diſſeruit Ambroſius Pareus",
+     "what": "page reads 'diſſerit' (present tense); candidate gives perfect 'diſſeruit'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "variisq́ue ejus adjunctis",
+     "what": "page has a plain 'variisque' with no q-ligature; the candidate adds an abbreviation mark"
+    }
+   ]
+  },
+  {
+   "id": "jp66806281b1e7",
+   "page_id": "69b6ad81dc00a90e322aa762",
+   "book_id": "69b6ad81dc00a90e322aa757",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "1",
+    "after": "4",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "conſect. 4.",
+     "what": "page reads 'conſect. 1.'; the citation number is wrong"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "variisq́ue",
+     "what": "page prints 'variisque' in full; the candidate adds a -q́ue abbreviation that is not there"
+    }
+   ]
+  },
+  {
+   "id": "jp0fbb6ec70599",
+   "page_id": "69b6ad81dc00a90e322aa762",
+   "book_id": "69b6ad81dc00a90e322aa757",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "ſententia",
+    "after": "prudentia",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "ex Camerarii prudentia percepimus",
+     "what": "page reads 'Camerarii ſententia' (Camerarius's opinion), not 'prudentia' (prudence)"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "ut eleganter diſſeruit Ambroſius Pareus",
+     "what": "page reads 'diſſerit' (present tense); the candidate changes it to the perfect 'diſſeruit'"
+    }
+   ]
+  },
+  {
+   "id": "jp057fabe3cd8e",
+   "page_id": "69b51e94cf111105c42a0630",
+   "book_id": "69b51e94cf111105c42a05d5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Gleichnuß",
+     "what": "page has 'Gleichnüß'; the umlaut is dropped, as also in 'Finsternuß', 'Erkäntnuß' and 'Bildnuß'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "lassen\n\nsen",
+     "what": "the catchword 'sen' is not tagged as page furniture and reads like the line continuing"
+    }
+   ]
+  },
+  {
+   "id": "jp157a1c3a0e32",
+   "page_id": "6a8ee2e990f5a0e4155ebaa7",
+   "book_id": "6a8ee2e990f5a0e4155eba1b",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Nous en parlerons plus amplement dans la suite.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "E2",
+     "severity": "wrong_text",
+     "quote": "Nous en parlerons plus amplement dans la suite.",
+     "what": "Interpolated sentence: it is not on the page, which goes straight from 'poids et mesures.' to 'Si nous étions'."
+    }
+   ]
+  },
+  {
+   "id": "jp309628e17468",
+   "page_id": "69b51e94cf111105c42a0630",
+   "book_id": "69b51e94cf111105c42a05d5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Eigenschafft",
+    "after": "Herrschafft",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Creatur ihre Herrschafft davon empfähet",
+     "what": "page reads 'Eigenschafft' (property), not 'Herrschafft' (dominion)"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "sen",
+     "what": "catchword at the foot of the page given as a running-text line instead of tagged as furniture"
+    }
+   ]
+  },
+  {
+   "id": "jp7d0142020f9c",
+   "page_id": "69b51e94cf111105c42a0630",
+   "book_id": "69b51e94cf111105c42a05d5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Leser nicht gnug verstanden/ denn man findet gahr ein hohes in",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "So ists doch dem begierlichen\nder Sternen Krafft und Gewalt",
+     "what": "a whole line is missing after 'begierlichen': 'Leser nicht gnug verstanden/ denn man findet gahr ein hohes in'. Without it, §16 breaks off mid-sentence and makes no sense"
+    }
+   ]
+  },
+  {
+   "id": "jpae9647ec1089",
+   "page_id": "69b51e94cf111105c42a0630",
+   "book_id": "69b51e94cf111105c42a05d5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "ersten",
+    "after": "dritten",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "mit der dritten Welt der Sünd-fluht",
+     "what": "page reads 'ersten' (first), not 'dritten' (third)"
+    }
+   ]
+  },
+  {
+   "id": "jpca8ea00aa7dc",
+   "page_id": "69d8ca29a09828f83ddc9f2b",
+   "book_id": "69d8ca29a09828f83ddc9e05",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "huit",
+    "after": "dix",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "dix parties d'esprit-de-vin rectifié",
+     "what": "the page says 'huit parties', not 'dix'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "inféré dans le *Journal de Physique*",
+     "what": "the long s in 'inséré' was read as f, giving 'inféré' (inferred), a different word"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "une matière réfineuse",
+     "what": "the long s in 'résineuse' was read as f"
+    }
+   ]
+  },
+  {
+   "id": "jpdee99788596d",
+   "page_id": "69d8ca29a09828f83ddc9f2b",
+   "book_id": "69d8ca29a09828f83ddc9e05",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Lorsque ses feuillets brunissent, il faut le rejeter.",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "étoit un moyen efficace d'en faciliter la digestion. ",
+     "what": "drops the sentence 'Lorsque ses feuillets brunissent, il faut le rejeter.' that ends line 3"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "inféré dans le *Journal de Physique*",
+     "what": "long s misread as f; the page reads 'inséré'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "matière réfineuse",
+     "what": "long s misread as f; the page reads 'résineuse'"
+    }
+   ]
+  },
+  {
+   "id": "jp9d6d4a1a8ac5",
+   "page_id": "69d8ca29a09828f83ddc9f2b",
+   "book_id": "69d8ca29a09828f83ddc9e05",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "végétation",
+    "after": "composition",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "dépouillée de l'eau de la composition",
+     "what": "page reads \"de l'eau de la végétation\"; candidate substitutes a different word"
+    }
+   ]
+  },
+  {
+   "id": "jpdf812b68d182",
+   "page_id": "69d8ca29a09828f83ddc9f2b",
+   "book_id": "69d8ca29a09828f83ddc9e05",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "C'est ce que les anciens avaient déjà soigneusement observé.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "C'est ce que les anciens avaient déjà soigneusement observé.",
+     "what": "This whole sentence is invented. On the page, 'la digestion.' is followed directly by 'Lorsque ses feuillets brunissent'."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "inféré dans le Journal de Physique",
+     "what": "The long s was misread as f. The page reads 'inséré' (inserted), but the candidate gives 'inféré' (inferred)."
+    }
+   ]
+  },
+  {
+   "id": "jpc95799c97180",
+   "page_id": "69d8ca29a09828f83ddc9f2b",
+   "book_id": "69d8ca29a09828f83ddc9e05",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "inféré dans le *Journal de Physique*",
+     "what": "long-s misread as f: page reads 'inséré' (inserted); 'inféré' means 'inferred'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "une matière réfineuse",
+     "what": "long-s misread as f: page reads 'résineuse' (resinous)"
+    }
+   ]
+  },
+  {
+   "id": "jp32fbc79c4c52",
+   "page_id": "69f6a6ffd003c47d22ea0ed7",
+   "book_id": "69c880496c6f3cc53c859041",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "increpavit, quibus nec capita eſſent, nec",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "genio & labore, artificum filios duriter\nmanus, & officinis tamen præficerentur.",
+     "what": "dropped the whole line 'increpavit, quibus nec capita essent, nec' between 'duriter' and 'manus'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "abſore diu",
+     "what": "page reads 'abfore' (f, not long s), so the transcription gives a non-word"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "catchword: I",
+     "what": "no catchword on the page; the 'I' is a stray mark in the left margin"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "ſtrategemata",
+     "what": "page appears to read 'stratagemata' (letter damaged)"
+    }
+   ]
+  },
+  {
+   "id": "jp7bc00d5e6f30",
+   "page_id": "69f6a6ffd003c47d22ea0ed7",
+   "book_id": "69c880496c6f3cc53c859041",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>catchword: I</meta>",
+     "what": "no catchword is visible under the last line; this one is invented"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "<margin>\n40. Ars.\n</margin>\ntium ſpecies",
+     "what": "the note sits one line too early; on the page it is beside 'quid de tot animantium'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "ſtrategemata",
+     "what": "the vowel after 'ſtrat' is smudged; 'stratagemata' is the usual form"
+    }
+   ]
+  },
+  {
+   "id": "jpc48fe93f5a51",
+   "page_id": "69f6a6ffd003c47d22ea0ed7",
+   "book_id": "69c880496c6f3cc53c859041",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "defatigatione",
+    "after": "distillatione",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "& distillatione, ac hominum ingrati-",
+     "what": "page reads 'defatigatione' (weariness), not 'distillatione'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "importunitatque conqueſta",
+     "what": "dropped the 'e' of the enclitic: the page has 'importunitatéque'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "abſore diu",
+     "what": "page reads 'abfore'"
+    },
+    {
+     "class": "O16",
+     "severity": "misleads",
+     "quote": "catchword: I",
+     "what": "there is no catchword below the last line"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "<margin>\n40. Ars.\n</margin>\ntium ſpecies",
+     "what": "the note sits beside the 'quid de tot' line, one line lower"
+    }
+   ]
+  },
+  {
+   "id": "jpf96cac73311f",
+   "page_id": "69f6a6ffd003c47d22ea0ed7",
+   "book_id": "69c880496c6f3cc53c859041",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Cuius rei cauſam paulo poſt explicabimus.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Cuius rei cauſam paulo poſt explicabimus.",
+     "what": "a whole sentence that is not on the page; the line reads only 'gi:sed & æterna habita finiri. Riſit hic'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "abſore diu",
+     "what": "the page reads 'abfore' (future infinitive of absum)"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "catchword: I",
+     "what": "there is no catchword at the foot; the 'I' is a stray mark in the left margin"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "<margin>\n40. Ars.\n</margin>\ntium ſpecies",
+     "what": "the 'Ars' note sits beside the 'quid de tot' line, one line lower than placed"
+    }
+   ]
+  },
+  {
+   "id": "jp56e36b99ec74",
+   "page_id": "69f512c72c50c99ed1a66846",
+   "book_id": "69c634823e8cae136d1497fa",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Et entent l'on que ces cordoles sont touchées & mises entour une Ydole; qui est en la forme d'une tête d'homme a grande barbe. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "tant comme il vivra. Du Puy S. 202.",
+     "what": "A whole sentence of the French footnote is missing: 'Et entent l'on que ces cordoles sont touchiées & mises entour une Ydole; qui est en la forme d'une tête d'homme a grande barbe.'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wenn er's nicht",
+     "what": "The page prints 'ers' with no apostrophe."
+    }
+   ]
+  },
+  {
+   "id": "jpfceaacab1f11",
+   "page_id": "69f6a6ffd003c47d22ea0ed7",
+   "book_id": "69c880496c6f3cc53c859041",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Tertia",
+    "after": "Quinta",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Quinta Creatura",
+     "what": "the page reads 'Tertia Creatura'; the ordinal is changed, which breaks the sequence after 'Secunda Ars'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<meta>catchword: I</meta>",
+     "what": "the page has no catchword; the 'I' is a stray mark in the margin"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "<margin>\n40. Ars.\n</margin>\ntium ſpecies",
+     "what": "the note sits beside 'quid de tot', one line lower than placed"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "abſore",
+     "what": "the page reads 'abfore'; long s and f confused"
+    }
+   ]
+  },
+  {
+   "id": "jp5cfb24735858",
+   "page_id": "69f512c72c50c99ed1a66846",
+   "book_id": "69c634823e8cae136d1497fa",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "202",
+    "after": "212",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "Du Puy S. 212.",
+     "what": "page reads 'S. 202'; the citation page number is wrong"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "touchées",
+     "what": "page has the Old French 'touchiées', normalised to the modern spelling"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wenn er's nicht",
+     "what": "page prints 'ers' with no apostrophe"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Tempelherrenorden, Gaucerand de Montepesato, R. de Hamilton, Geheimniss",
+     "what": "vocab tag lists words that are not on the page"
+    }
+   ]
+  },
+  {
+   "id": "jp4e84fcdd250d",
+   "page_id": "69f512c72c50c99ed1a66846",
+   "book_id": "69c634823e8cae136d1497fa",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Dies haben viele gelehrte Männer bezeugt.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Dies haben viele gelehrte Männer bezeugt.",
+     "what": "Invented sentence. The page goes straight from 'gesehen hatten.' to 'Zwar findet man'."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "touchées",
+     "what": "The page reads 'touchiées'; the Old French spelling was normalised."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "wenn er's nicht",
+     "what": "An apostrophe was added. The page has 'ers'."
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Tempelherrenorden, Gaucerand de Montepesato, R. de Hamilton, Geheimniss",
+     "what": "The vocab tag lists terms that do not appear on the page."
+    }
+   ]
+  },
+  {
+   "id": "jpdcfd6432f537",
+   "page_id": "69f512c72c50c99ed1a66846",
+   "book_id": "69c634823e8cae136d1497fa",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Erklärung",
+    "after": "Bereitung",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "die natürlichste Bereitung",
+     "what": "the page reads 'natürlichste Erklärung' (split across lines as 'Er-/klärung'), not 'Bereitung'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "sont touchées",
+     "what": "the page prints the Old French spelling 'touchiées'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Tempelherrenorden, Gaucerand de Montepesato, R. de Hamilton, Geheimniss",
+     "what": "the vocab tag lists 'Tempelherrenorden' and 'Geheimniss', which are not on this page"
+    }
+   ]
+  },
+  {
+   "id": "jpe73936467109",
+   "page_id": "69f512c72c50c99ed1a66846",
+   "book_id": "69c634823e8cae136d1497fa",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "touchées",
+     "what": "page prints 'touchiées'; normalised to modern French"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wenn er's nicht",
+     "what": "page has 'wenn ers'; apostrophe added"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Tempelherrenorden, Gaucerand de Montepesato, R. de Hamilton, Geheimniss",
+     "what": "vocab tag lists terms not on the page (Tempelherrenorden, Geheimniss)"
+    }
+   ]
+  },
+  {
+   "id": "jpcefeac166f95",
+   "page_id": "6a8ee2e090f5a0e4155eb8db",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "deux",
+    "after": "trois",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "l'un ou l'autre de ces trois événements",
+     "what": "the page says \"deux événements\" (two, i.e. the discovery and the accident), not \"trois\""
+    }
+   ]
+  },
+  {
+   "id": "jp7878a0c88c7a",
+   "page_id": "6a8ee2e090f5a0e4155eb8db",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "On conçoit même tel cas où la cause première d'une variation de prix s'imposerait en quelque sorte à l'attention des observateurs. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "éclaircirait la question. Qu'on suppose par exemple",
+     "what": "dropped the whole sentence 'On conçoit même tel cas où la cause première d'une variation de prix s'imposerait en quelque sorte à l'attention des observateurs.'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<scan-quality>good</scan-quality>",
+     "what": "an ink blot covers the words in the last line, so 'good' overstates the scan"
+    }
+   ]
+  },
+  {
+   "id": "jp981c7800a1b3",
+   "page_id": "6a8ee2e090f5a0e4155eb8db",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Il faut y prendre garde avec soin.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Il faut y prendre garde avec soin.",
+     "what": "sentence not on the page; the page goes straight from 'la déclarer impossible.' to 'Une enquête'"
+    }
+   ]
+  },
+  {
+   "id": "jpfd07f1d85261",
+   "page_id": "6a8ee2e090f5a0e4155eb8db",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "variation",
+    "after": "opération",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "la cause première d'une opération de prix",
+     "what": "page reads 'variation de prix'"
+    }
+   ]
+  },
+  {
+   "id": "jp6e894983d9a0",
+   "page_id": "69b51e94cf111105c42a0630",
+   "book_id": "69b51e94cf111105c42a05d5",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Davon wil ich hernach weitläufftiger handeln.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Davon wil ich hernach weitläufftiger handeln.",
+     "what": "sentence not on the page, inserted in line 3 of §14 between 'verschlucken.' and 'Denn'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "lassen",
+     "what": "catchword 'sen' at the foot is printed as a body line, not tagged as a catchword"
+    }
+   ]
+  },
+  {
+   "id": "jp0a72ea946b88",
+   "page_id": "69b51e4bcf111105c429a097",
+   "book_id": "69b51e4bcf111105c429a045",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Quod etiam veteres philoſophi diligenter obſervaverunt.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Quod etiam veteres philoſophi diligenter obſervaverunt.",
+     "what": "a sentence that is not on the page was added after 'habituri partes.'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<sig>C</sig>",
+     "what": "there is no signature mark on this page"
+    }
+   ]
+  },
+  {
+   "id": "jpb45fb6cd611a",
+   "page_id": "69b51e4bcf111105c429a097",
+   "book_id": "69b51e4bcf111105c429a045",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Nam palmæ ſeu Thamar dati *Her* &",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "*Onan*, ſeminarunt in Terram",
+     "what": "most of the line 'Nam palmæ seu Thamar dati Her & Onan,' is silently dropped; only 'Onan' survives"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<sig>C</sig>",
+     "what": "no signature mark is visible on the page; the marks at the foot are stamps or ornaments"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Thamar, Her,",
+     "what": "the vocab list names words that the candidate's text itself leaves out"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<page-num>86</page-num>",
+     "what": "the printed page number looks like 66 and is faint; 86 is not certain"
+    }
+   ]
+  },
+  {
+   "id": "jpde5f9b0d55af",
+   "page_id": "69b51e4bcf111105c429a097",
+   "book_id": "69b51e4bcf111105c429a045",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "citationes",
+    "after": "diſtillationes",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "ſuſ-\ndiſtillationes",
+     "what": "the page reads 'ſuſ-citationes' (raisings up of seed), but the candidate has the different word 'distillationes'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<sig>C</sig>",
+     "what": "no signature mark is visible on the leaf; only the faint marks at the foot"
+    }
+   ]
+  },
+  {
+   "id": "jp97a562b7bc90",
+   "page_id": "69b51e4bcf111105c429a097",
+   "book_id": "69b51e4bcf111105c429a045",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "60",
+    "after": "70",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "Captivitate & 70 centenorum millium",
+     "what": "the page reads '60 centenorum millium', not 70"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<sig>C</sig>",
+     "what": "there is no signature mark at the foot; only stray show-through marks"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "<page-num>86</page-num>",
+     "what": "the printed page number looks like 66, not 86"
+    }
+   ]
+  },
+  {
+   "id": "jp4862190d20c6",
+   "page_id": "69b51e4bcf111105c429a097",
+   "book_id": "69b51e4bcf111105c429a045",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "<page-num>86</page-num>",
+     "what": "printed page number reads 66, not 86"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<sig>C</sig>",
+     "what": "no signature mark is printed on this page; the marks at the foot are scan artefacts"
+    }
+   ]
+  },
+  {
+   "id": "jp1e60f3ca800f",
+   "page_id": "69f4b43ca287a170209c83d5",
+   "book_id": "6909c8ebcf28baa1b4cafbb7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "nicht erreichen kan; Denn die Nothwendigkeit",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "durch die Menschen gehindert / daß sie ihr Ziel\ndes Eisens zwinget",
+     "what": "dropped the whole line 'nicht erreichen kan; Denn die Nohtwendigkeit', which leaves the sentence broken"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "transmuret",
+     "what": "the page reads 'transmutiret'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Zuse-\nkung",
+     "what": "misread: the page has 'Zuse-tzung' (Zusetzung)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "schmel-\nzen",
+     "what": "the page spells 'schmel-tzen'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Kunst, transmuret",
+     "what": "the vocab list repeats the misread 'transmuret'"
+    }
+   ]
+  },
+  {
+   "id": "jp8bfd7de0d65e",
+   "page_id": "69f4b43ca287a170209c83d5",
+   "book_id": "6909c8ebcf28baa1b4cafbb7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Das bestätigt die tägliche Erfahrung zur Genüge.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Das bestätigt die tägliche Erfahrung zur Genüge.",
+     "what": "whole sentence invented; not on the page"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "transmuret",
+     "what": "page reads 'transmutiret'; error also copied into vocab"
+    },
+    {
+     "class": "E2",
+     "severity": "misleads",
+     "quote": "Zuse-\nkung",
+     "what": "garbled; page reads 'Zuse-tzung' (Zusetzung)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Nothwendigkeit",
+     "what": "page spells 'Nohtwendigkeit'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "schmel-\nzen",
+     "what": "page reads 'schmel-tzen'"
+    }
+   ]
+  },
+  {
+   "id": "jpb572358a3d24",
+   "page_id": "69f4b43ca287a170209c83d5",
+   "book_id": "6909c8ebcf28baa1b4cafbb7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Zuse-\nkung",
+     "what": "page reads 'Zuse-tzung' (Zusetzung); candidate's 'Zusekung' is not a word"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "transmuret",
+     "what": "page reads 'transmutiret'; the 'ti' is dropped (also in the vocab line)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Nothwendigkeit",
+     "what": "page spells it 'Nohtwendigkeit'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "schmel-\nzen",
+     "what": "page has 'schmel-tzen'"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "fon=",
+     "what": "the catchword is 'son=' (long s), misread as f, in both the meta tag and the text"
+    }
+   ]
+  },
+  {
+   "id": "jpcd1b32e1e0f2",
+   "page_id": "69f4b43ca287a170209c83d5",
+   "book_id": "6909c8ebcf28baa1b4cafbb7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "sieben",
+    "after": "neun",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "in neun\nMonaten in Silber",
+     "what": "page says 'in sieben Monaten in Silber'; the candidate repeats 'neun', so silver and gold wrongly take the same nine months"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "transmuret",
+     "what": "page reads 'transmutiret'; the candidate's form is not a word"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Zuse-\nkung",
+     "what": "page reads 'Zuse-tzung' (Zusetzung); the candidate's word is garbled"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Nothwendigkeit",
+     "what": "page spells 'Nohtwendigkeit'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "schmel-\nzen",
+     "what": "page has 'schmel-tzen'"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "fon=",
+     "what": "catchword is 'son=' (long s)"
+    }
+   ]
+  },
+  {
+   "id": "jp0c24cdee6c17",
+   "page_id": "69f4b43ca287a170209c83d5",
+   "book_id": "6909c8ebcf28baa1b4cafbb7",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Nothwendigkeit",
+    "after": "Feuchtigkeit",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Denn die Feuchtigkeit",
+     "what": "page reads 'Nohtwendigkeit' (necessity), not 'Feuchtigkeit' (moisture)"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "transmuret",
+     "what": "page reads 'transmutiret'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Zuse-\nkung",
+     "what": "page reads 'Zuse-tzung'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "schmel-\nzen",
+     "what": "page spells 'schmel-tzen'"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "fon=",
+     "what": "the catchword is 'son=' (start of 'sondern')"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "transmuret</vocab>",
+     "what": "the vocab tag repeats the misread"
+    }
+   ]
+  },
+  {
+   "id": "jpa96bf7cd876e",
+   "page_id": "6ad5489590dd8591ceb2ec64",
+   "book_id": "6ad5489590dd8591ceb2eaba",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Plusieurs savants l'ont attesté avant nous.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Plusieurs savants l'ont attesté avant nous.",
+     "what": "This sentence is not on the page. It was inserted between 'régiment.' and 'Au contraire'."
+    }
+   ]
+  },
+  {
+   "id": "jp65bca919380d",
+   "page_id": "6ad5489590dd8591ceb2ec64",
+   "book_id": "6ad5489590dd8591ceb2eaba",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Bref, les solitones ont une passion dominante à laquelle ils rapportent tout : ils varient peu dans leurs goûts et ont de l'aptitude aux ouvrages de longue duré",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Au contraire, les 2 pentatones, homme et femme sont l'équivalent des colonels",
+     "what": "The opening of the last paragraph is silently dropped. The missing passage runs from 'Bref, les solitones ont une passion dominante à laquelle ils rapportent tout…' to '…ce que sont les simples soldats dans un régiment.' The paragraph then wrongly starts at 'Au contraire'."
+    }
+   ]
+  },
+  {
+   "id": "jp01bcc49a8885",
+   "page_id": "6ad5489590dd8591ceb2ec64",
+   "book_id": "6ad5489590dd8591ceb2eaba",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O17",
+     "severity": "cosmetic",
+     "quote": "*d, b, mixtes*",
+     "what": "italics extended over 'd, b,' where only 'mixtes' is italic on the page"
+    }
+   ]
+  },
+  {
+   "id": "jp7ccbc28260fd",
+   "page_id": "6ad5489590dd8591ceb2ec64",
+   "book_id": "6ad5489590dd8591ceb2eaba",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "2",
+    "after": "5",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "les 5 pentatones, homme et femme",
+     "what": "page reads 'les 2 pentatones', which matches the table's 2 and 'à eux deux'"
+    }
+   ]
+  },
+  {
+   "id": "jp50da46031d32",
+   "page_id": "6ad5489590dd8591ceb2ec64",
+   "book_id": "6ad5489590dd8591ceb2eaba",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "distribution",
+    "after": "observation",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "la observation est progressive",
+     "what": "page reads 'la distribution est progressive' (dis-/tribution split across lines); the substituted word changes the sense and is ungrammatical ('la observation')"
+    }
+   ]
+  },
+  {
+   "id": "jp312aa284bfe2",
+   "page_id": "698fb9446b95eeda7d2d3b2d",
+   "book_id": "698fb9446b95eeda7d2d38b9",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "grauitate",
+    "after": "utilitate",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "nihil debet diminuere de pœnæ or-\ndinariæ utilitate",
+     "what": "the page reads 'grauitate' (severity), not 'utilitate'"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "F</margin>",
+     "what": "the section letter F at the outer edge is folded into note b"
+    }
+   ]
+  },
+  {
+   "id": "jp9769e433bb85",
+   "page_id": "698fb9446b95eeda7d2d3b2d",
+   "book_id": "698fb9446b95eeda7d2d38b9",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Nec aliter de reliquis iudicandum eſſe exiſtimo.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Nec aliter de reliquis iudicandum eſſe exiſtimo.",
+     "what": "sentence not on the page, inserted after 'illam commutandi.'"
+    }
+   ]
+  },
+  {
+   "id": "jp1fc64ed12e1f",
+   "page_id": "698fb9446b95eeda7d2d3b2d",
+   "book_id": "698fb9446b95eeda7d2d38b9",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "4",
+    "after": "7",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "Non valet inquam reſpectu partis, ſed benè reſpectu fiſci tranſigentis. 7. limi-",
+     "what": "page reads '4.limitatio'; the candidate breaks the 1–5 sequence of limitations with 7"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "b ſupra à nu. 31. & q. 5. per totam.\nF",
+     "what": "the edge letter F, a printer's section mark, is merged into the marginal note"
+    }
+   ]
+  },
+  {
+   "id": "jp47d4b5defa78",
+   "page_id": "69ef2b1085daccce30f2d9b3",
+   "book_id": "69ef2b1085daccce30f2d945",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Auch den Alten war dies wohl bekannt.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Auch den Alten war dies wohl bekannt.",
+     "what": "This sentence is not on the page. It was added between 'die zweite Octave.' and 'Durch die punktirten Linien'."
+    }
+   ]
+  },
+  {
+   "id": "jp5c9496a8bbe3",
+   "page_id": "698fb9446b95eeda7d2d3b2d",
+   "book_id": "698fb9446b95eeda7d2d38b9",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "ſuper quibus vt valeat tranſactio conſulendus primò eſt ipſe Princeps: & his",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "raptus virginum & ſimilia,\ncriminibus annumero ſortilegium hæreticale",
+     "what": "a whole printed line is missing: 'ſuper quibus vt valeat tranſactio conſulendus primò eſt ipſe Princeps: & his'. Without it, the list of crimes runs straight into 'criminibus annumero' and the sense is lost."
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "b ſupra à nu. 31. & q. 5. per totam.\nF</margin>",
+     "what": "the signature letter 'F' in the outer margin is put inside the side-note block as if it were part of note b"
+    }
+   ]
+  },
+  {
+   "id": "jp9bb006511def",
+   "page_id": "698fb9446b95eeda7d2d3b2d",
+   "book_id": "698fb9446b95eeda7d2d38b9",
+   "cell": "latin-lite",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "b ſupra à nu. 31. & q. 5. per totam.\nF",
+     "what": "the 'F' printed in the right margin is merged into the left-margin notes a/b"
+    }
+   ]
+  },
+  {
+   "id": "jp74a58823392d",
+   "page_id": "69ef2b1085daccce30f2d9b3",
+   "book_id": "69ef2b1085daccce30f2d945",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "zwei",
+    "after": "drei",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "bei $c$ ruhen drei Punkte, nämlich $\\gamma_1$ und $\\gamma_2$",
+     "what": "the page reads 'ruhen zwei Punkte'; the candidate changes the count of nodes for form c to three, which contradicts the two nodes it then lists"
+    }
+   ]
+  },
+  {
+   "id": "jp9bae0c4ae2f4",
+   "page_id": "69ef2b1085daccce30f2d9b3",
+   "book_id": "69ef2b1085daccce30f2d945",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Schwingungen",
+    "after": "Bereitungen",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Die Bereitungen von Saiten kann man entweder studiren",
+     "what": "The page reads \"Die Schwingungen von Saiten\" (vibrations of strings). \"Bereitungen\" (preparations) changes what the opening sentence says."
+    }
+   ]
+  },
+  {
+   "id": "jp5e4c876c3c6f",
+   "page_id": "69ef2b1085daccce30f2d9b3",
+   "book_id": "69ef2b1085daccce30f2d945",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Bei der Schwingungsform $b$ lässt die Saite keinen anderen Ton als die höhere Octave ihres Grundtons hören, bei $c$ die Duodecime, bei $d$ die zweite Octave. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Wellenlinie. Durch die punktirten Linien",
+     "what": "whole sentence dropped between these words: 'Bei der Schwingungsform b lässt die Saite keinen anderen Ton als die höhere Octave ihres Grundtons hören, bei c die Duodecime, bei d die zweite Octave.'"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Octave, Duodecime",
+     "what": "vocab tag lists terms that appear only in the omitted sentence, not in the transcription"
+    }
+   ]
+  },
+  {
+   "id": "jp79d52940cede",
+   "page_id": "69ef2b1085daccce30f2d9b3",
+   "book_id": "69ef2b1085daccce30f2d945",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jp5e3f8529740b",
+   "page_id": "6a8ee22f90f5a0e4155eab82",
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "25",
+    "after": "35",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "puis 35 siècles",
+     "what": "the page prints 25 siècles, not 35"
+    }
+   ]
+  },
+  {
+   "id": "jpc6d83bfa8836",
+   "page_id": "6a8ee22f90f5a0e4155eab82",
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "aspérité",
+    "after": "dignité",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "mais cette dignité de formes devient un titre de recommandation",
+     "what": "the page reads 'cette aspérité de formes' (roughness), not 'dignité'; the author's admission of harsh style becomes praise"
+    }
+   ]
+  },
+  {
+   "id": "jpd44bea6941b9",
+   "page_id": "6a8ee22f90f5a0e4155eab82",
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Le fond se compose de calculs si incontestables, qu'on n'ose pas en essayer la critique. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Les formes n'ont rien d'insinuant",
+     "what": "The opening sentence of the last paragraph is silently dropped: \"Le fond se compose de calculs si incontestables, qu'on n'ose pas en essayer la critique.\""
+    }
+   ]
+  },
+  {
+   "id": "jpfab60fac0b86",
+   "page_id": "6a8ee22f90f5a0e4155eab82",
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Il faut y prendre garde avec soin.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Il faut y prendre garde avec soin.",
+     "what": "This sentence is not on the page. The page goes straight from 'écrivains de divers partis.' to 'Tous, du plus au moins'."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "puis 25 siècles, à la connaissance de la destinée de l'homme",
+     "what": "The page's italic emphasis (most of the running text, with roman words such as 'sociétaire') is not marked."
+    }
+   ]
+  },
+  {
+   "id": "jp61bc193429d0",
+   "page_id": "6a8ee22f90f5a0e4155eab82",
+   "book_id": "6a8ee22f90f5a0e4155eab07",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jpc36af9d2a09b",
+   "page_id": "69b64a6c18b87551bfc65101",
+   "book_id": "69b64a6c18b87551bfc650fc",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 4,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "diſſonaniam",
+     "what": "transcription typo: the page reads 'diſſonantiam' (the vocab tag has it right)"
+    }
+   ]
+  },
+  {
+   "id": "jp55d061793d6d",
+   "page_id": "69b64a6c18b87551bfc65101",
+   "book_id": "69b64a6c18b87551bfc650fc",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "differentia",
+    "after": "ſcientia",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "& tum nulla prorſus ſcientia accidit",
+     "what": "page reads 'differentia', not 'ſcientia'; this changes the sense (an equal sound has no difference)"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "& diſſonaniam",
+     "what": "typo: the page has 'diſſonantiam'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>aliqua</meta>",
+     "what": "catchword 'aliquã' is wrapped in a meta tag instead of being marked as a catchword"
+    }
+   ]
+  },
+  {
+   "id": "jpb90b2c42773c",
+   "page_id": "69b64a6c18b87551bfc65101",
+   "book_id": "69b64a6c18b87551bfc650fc",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "7",
+    "after": "10",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "ut. 10. ad. 4.",
+     "what": "page prints '7. ad. 4.' (7:4 is the supertripartiens example); 10:4 is mathematically wrong for the term"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "diſſonaniam",
+     "what": "typo: page reads 'diſſonantiam' (the vocab tag even spells it correctly)"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>aliqua</meta>",
+     "what": "the catchword 'aliquã' is wrapped in a meta tag instead of being marked as a catchword"
+    }
+   ]
+  },
+  {
+   "id": "jp01255ceb189a",
+   "page_id": "69b64a6c18b87551bfc65101",
+   "book_id": "69b64a6c18b87551bfc650fc",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "uel inæqualis, hoc quod bifariam accidit, nanque uel maior ſonus",
+    "after": "",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "uel illi æqualis eſt, & tum nulla prorſus differentia accidit,\nminori comparatur, aut contra",
+     "what": "A whole printed line is missing: 'uel inæqualis, hoc quod bifariam accidit, namque uel maior ſonus'. Without it, the second branch of the comparison (unequal sounds) has no lead-in."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "diſſonaniam",
+     "what": "Typo: the page reads 'diſſonantiam'."
+    }
+   ]
+  },
+  {
+   "id": "jpc68521697790",
+   "page_id": "69bd93a22d11455793b3fb1c",
+   "book_id": "69bd93a22d11455793b3fae6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Darauf ist hier besonders zu achten.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Darauf ist hier besonders zu achten.",
+     "what": "This sentence is not on the page. It was added between \"Proselyten.\" and \"So haben sich\"."
+    }
+   ]
+  },
+  {
+   "id": "jp98c283e5c2b6",
+   "page_id": "69b64a6c18b87551bfc65101",
+   "book_id": "69b64a6c18b87551bfc650fc",
+   "cell": "latin-gpu-7263",
+   "lang": "Latin",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Nec aliter de reliquis iudicandum eſſe exiſtimo.",
+    "mode": "line"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Nec aliter de reliquis iudicandum eſſe exiſtimo.",
+     "what": "a whole sentence that is not on the page is added between 'graue.' and 'Omnis'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "diſſonaniam",
+     "what": "typo: the page reads 'diſſonantiam'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "<meta>aliqua</meta>",
+     "what": "the catchword 'aliquā' is tagged as meta, not as a catchword, and its macron is dropped"
+    }
+   ]
+  },
+  {
+   "id": "jpba5bf9d34018",
+   "page_id": "69bd93a22d11455793b3fb1c",
+   "book_id": "69bd93a22d11455793b3fae6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "zwanzig",
+    "after": "dreissig",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "für dreissig Jahre und länger",
+     "what": "page reads 'zwanzig' (twenty), not 'dreissig' (thirty)"
+    }
+   ]
+  },
+  {
+   "id": "jp2b67821af48b",
+   "page_id": "69bd93a22d11455793b3fb1c",
+   "book_id": "69bd93a22d11455793b3fae6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jp8938c85eb329",
+   "page_id": "69bd93a22d11455793b3fb1c",
+   "book_id": "69bd93a22d11455793b3fae6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Anforderungen",
+    "after": "Meinungen",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "den Meinungen des Dienstes",
+     "what": "page reads \"den Anforderungen des Dienstes\"; the substituted word changes the sense"
+    }
+   ]
+  },
+  {
+   "id": "jp0afd03222149",
+   "page_id": "69bd93a22d11455793b3fb1c",
+   "book_id": "69bd93a22d11455793b3fae6",
+   "cell": "german-lite",
+   "lang": "German",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Sobald sie Mittel und Wege dazu fanden, schlossen sie sich zusammen, um ihnen einen Kultus zu widmen. ",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "Götter fest. Sie empfanden das Bedürfnis",
+     "what": "drops the full sentence 'Sobald sie Mittel und Wege dazu fanden, schlossen sie sich zusammen, um ihnen einen Kultus zu widmen.' (about 2.5 lines)"
+    },
+    {
+     "class": "O16",
+     "severity": "cosmetic",
+     "quote": "Kultus",
+     "what": "vocab lists 'Kultus', a word from the dropped sentence that does not appear in the transcription"
+    }
+   ]
+  },
+  {
+   "id": "jp42ca3c6d34ed",
+   "page_id": "6a8ee2e090f5a0e4155eb8db",
+   "book_id": "6a8ee2e090f5a0e4155eb868",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": []
+  },
+  {
+   "id": "jp8c1972165c28",
+   "page_id": "6a08dd9fdb330455085803ab",
+   "book_id": "6a08dd9fdb33045508580330",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "C",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "occupation",
+    "after": "préparation",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "cette préparation est le charme de sa solitude",
+     "what": "page reads 'cette occupation'; 'préparation' is a different word that changes the sense"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "(c'est ainsi qu'on appelle ces ani-",
+     "what": "catchword 'ani-' copied into the body text as well as the meta tag; the body line ends at 'ces'"
+    }
+   ]
+  },
+  {
+   "id": "jp20704c679970",
+   "page_id": "6a08dd9fdb330455085803ab",
+   "book_id": "6a08dd9fdb33045508580330",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "E",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "Ce que plusieurs doctes personnages ont tesmoigné.",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Ce que plusieurs doctes personnages ont tesmoigné.",
+     "what": "This whole sentence is not on the page. The page goes straight from 'pareillement vivantes.' to 'Après avoir'."
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "c'est ainsi qu'on appelle ces ani-",
+     "what": "The catchword 'ani-' is added to the end of the last text line, which ends at 'ces'. It is also tagged correctly in meta."
+    }
+   ]
+  },
+  {
+   "id": "jp00161137e981",
+   "page_id": "6a08dd9fdb330455085803ab",
+   "book_id": "6a08dd9fdb33045508580330",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "D",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 2,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "Comme elle ne se cache point de cette folie, & que tous ses amis savent que cette occupation est le charme de sa solitude, ils s'efforcent tous à contribuer à s",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "des Tortuës & des poissons. L'Abbé de Saint Valery",
+     "what": "About six lines are silently missing between 'poissons.' and 'L'Abbé': 'Comme elle ne se cache point de cette folie, & que tous ses amis savent que cette occupation est le charme de sa solitude, ils s'efforcent tous à contribuer à son divertissement en lui faisant present tantôt d'une bête, tantôt d'une autre.'"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "(c'est ainsi qu'on appelle ces ani-",
+     "what": "The catchword 'ani-' is copied into the body text, though the page's text ends at 'appelle ces'"
+    }
+   ]
+  },
+  {
+   "id": "jpb257a8cbaf11",
+   "page_id": "6a08dd9fdb330455085803ab",
+   "book_id": "6a08dd9fdb33045508580330",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "B",
+   "accepted": false,
+   "named": true,
+   "caught": true,
+   "fidelity": 3,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "quatre",
+    "after": "six",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "il y a six jours",
+     "what": "page reads 'il y a quatre jours'; number changed"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "(c'est ainsi qu'on appelle ces ani-",
+     "what": "catchword 'ani-' put into the last body line, which ends at 'ces'; it is also tagged separately in meta"
+    }
+   ]
+  },
+  {
+   "id": "jp04242d80bbcc",
+   "page_id": "6a08dd9fdb330455085803ab",
+   "book_id": "6a08dd9fdb33045508580330",
+   "cell": "french-lite",
+   "lang": "French",
+   "kind": "A",
+   "accepted": true,
+   "named": false,
+   "caught": false,
+   "fidelity": 5,
+   "model": "claude-opus-5-5",
+   "plant": {
+    "before": "",
+    "after": "",
+    "mode": "paragraph"
+   },
+   "defects": [
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "qu'on appelle ces ani-",
+     "what": "The catchword 'ani-' is copied into the end of the body text as well as being tagged in meta. On the page the last text line ends 'appelle ces'."
+    }
+   ]
+  }
+ ]
+}

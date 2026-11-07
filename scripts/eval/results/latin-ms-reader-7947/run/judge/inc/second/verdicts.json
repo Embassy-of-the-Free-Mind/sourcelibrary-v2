@@ -1,0 +1,195 @@
+[
+ {
+  "claim_id": "b07-k:199:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image col. 2: 'ista.in q\u0304c\u016bq; n\u014d \u0113 m\u0101 \u00f1 est a\u012ba.' (in quocumque non est materia non est anima); OCR: 'in quocumque non est materia si est anima'. The negation '\u00f1' is clearly printed; 'si' turns the premise of the argument against ensouled heavens into its opposite.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-k:199:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image col. 1: 'p alios eti fit.\u00df \u00f1 digne ul' rc\u0304.' (per alios etiam fit, sed non digne vel recte); OCR: 'per alios et fit si digne uel recte'. '\u00df \u00f1' (sed non) read as 'si', so the text now says unworthy ministers act worthily or rightly.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-k:199:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "image col. 1: 'expsse fuerit eis \u0254miss\u016b' (con-tittle + missum = commissum); OCR: 'expresse fuerit eis omissa'. Parish priests may excommunicate only where it was expressly COMMITTED to them; 'omissa' inverts the condition.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-k:199:ocr:3",
+  "verdict": "confirmed",
+  "evidence": "image col. 1 l.3: 'in o\u012bb\ua76b epl'is pauli \u00f1 inu\u0113ies \ua759 exc\u014dicauerit nisi trib\ua76b uicib\ua76b'; OCR: 'in omnibus epistolis pauci inuenies qui excommunicauerit nisi tribus uicibus'. Paul's name and the negation are lost; the claim that in all of Paul's letters he excommunicated only three times becomes a garbled statement about 'few' excommunicators.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b07-k:395:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image col. 1, foot: 'n\u014d pmittebant ho\u012be\u0292 curari in sabbato.& ou\u0113 uel bou\u0113 trahebant de puteo \u012b sabbato'; OCR: 'non permittebant homines curari de puteo et sabbato'. An eye-skip between the two 'sabbato's drops the sheep/ox clause and fuses a false sentence (men not allowed to be cured 'from the well').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-k:395:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image col. 1: 'i\u014d necessitate \u0254\u0304ne ncc\u012bu\u0292 fuit xp\u0304m pati. \u00df\u0304m a\u016bt necessitat\u0113 t\u0101 a\u012bs \ua759 \u0254\u0304ns fuit \u0254ting\u0113s' (necessitate consequentiae necessarium fuit Christum pati; secundum autem necessitatem tam antecedentis quam consequentis fuit contingens); OCR: 'io necessitatem sine necessitauit fuit christum pati. sed aut necessitate tamen ans quod ans continges'. The scholastic distinction that carries the answer is unrecoverable from the stored text.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b07-k:591:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image col. 1: '3\u00aa \u0254cl'o est ista actualis diui\u2079 rer\u016b \u00f1 fuit facta p leg\u0113 nat'e. nec p diuinam'; OCR: 'actualis diuisio fuit facta per legem nature. nec per diuinam'. 'rerum non' dropped: the conclusion is reversed and contradicts the same paragraph ('per legem nature non\u2026 fuit facta per legem positiuam').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-k:591:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image col. 2: 'ipsi de c\u014dmuni \u0254cordia in\u0165 se diuiser\u016bt' (con-sign = concordia); OCR: 'de communi discordia inter se diuiserunt'. Division by common agreement becomes division by discord \u2014 sense reversed.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-k:591:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "image col. 2: 'auctoritas \u0113 duplex.s.p\u0101\u0165na & politica\u2026 pa\u0165na \u0113 iusta ex lege nature.q\u0304 o\u0113s filii tene\u0144\u0165 obedire par\u0113tib\ua76b'; OCR: 'scilicet pena et politica\u2026 pena est iusta ex lege nature'. Paternal authority becomes 'penal' authority twice; the context (sons obeying parents) shows the reading is wrong, but the stored text names a different kind of authority.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b05-r:27:ocr:0",
+  "verdict": "real_not_serious",
+  "evidence": "image commentary: 'N\u0101 nihil vtili\u2079 ho\u012bb\u2079 \u012b hac vita \u0113 q\u0304 ipa' (nothing is more useful to men in this life than wisdom); OCR: 'Nam nihil vtilius patuit Neque solis viris sed omnibus in hac vita est que ipsa'. 'patuit Neque' is copied from the line above ('vt p\u2079 patuit Neq\ua76b'), and 'solis viris sed omnibus' replaces 'hominibus'. The words are not on the leaf, but this is a local eye-skip and substitution, not O1 confabulation, and the sense (nothing is more useful than wisdom in this life) survives with only a slight widening.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b05-r:27:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image: 'Iusticia p\u2079 hec \u271dtus est' (Martin of Braga, Formula vitae honestae: 'Iustitia post haec virtus est'); OCR: 'Justicia prima hec virtus est'. Justice is the fourth virtue in the treatise; the stored lemma calls it the first.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b05-m:27:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image l.2: 'Nulli\u2079 ip\u0304rudenti\u0101 despicias' (Martin's text: 'nullius imprudentiam despicias'); OCR: 'Nullius prudentiam despicias'. The precept is reversed. The other OCR of this same leaf (b05-r) reads 'imprudentiam' correctly.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b05-m:27:ocr:1",
+  "verdict": "misclassified",
+  "class": "O6",
+  "evidence": "image: 'Hec \u0113 vlt\u012ba ps h\u2079 capituli \u0111 tpantia In q\u0304 seneca pl\u012bma officia tpantie supaddit c\u016b rpetiti\u014de q\u0304r\u016bd\u0101 phabito\ua75d Et vult pmo \ua759 tu ptin\u0113s firm\u2079 e\u0113 debes \u012b disfortunijs'; OCR: 'Hec est uersia presentis capituli et partia. In qua Seneca prima officia proponit. Que debes in disfortunis'. The leaf's text is there, but it is misread ('vltima'\u2192'uersia', 'de temperantia'\u2192'et partia', 'plurima\u2026superaddit cum repetitione'\u2192'prima officia proponit') and a clause ('Et vult primo quod tu continens firmus esse') is dropped (O5). The reader is told Seneca 'sets out the first duties' when this is the last part, adding many more. Serious, but a misread and an omission, not invented text.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b05-m:27:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "image: 'q\u0304b\u2079 a\u016bposit\u2079 \ua75b ppo/sit\u2079 \u0113 i dignitate s\ua76b h\u016bil' vt p\u2079 patuit Neq\ua76b eti\u0101 c\u014dtin\u0113s alic\u2079 isipi\u0113ti\u0101 spnere d\ua76b N\u0101 magna m\u012ba'; OCR: 'quibus apposuit et sponsore. Et nam magna misericordia'. The precept (the continent man must be humble in office and must not despise anyone's folly) is silently dropped, so 'Nam magna misericordia est miserere insipientis' no longer supports anything.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b06-r:131:ocr:2",
+  "verdict": "confirmed",
+  "evidence": "image col. 1, foot: '\ua75b tetan\u2079 q\u00f1 / sc\ua76b anteriores \ua75b posteriores \u0254\u0304tion\u0113 pati\u016bt. / in his trib\u2079 n\u014d est pfecta cura'; OCR: 'et tetan qn in his tribus non est pfecta cura'. The definition of tetanus (when both front and back nerves contract) is gone, and the two halves are fused into a false sentence.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b06-r:131:ocr:3",
+  "verdict": "real_not_serious",
+  "evidence": "image col. 2: 'inobedi\u0113ti\u2079 redde/ret. et ideo pdicto m\u014d caute est pcedendum / C\u014dgruis igi\u0165 medicinis'; OCR: 'inobedient redde/ Logruis igit medicinis'. The line is dropped, but it only states the obvious conclusion of the previous sentence (proceed cautiously). No false claim results, and the treatment advice that follows is intact.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b06-r:260:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image col. 1: 'U\u00f1 heremite dicun\u0165 ho\u012bes deserta soli/tudinis appet\u0113tes.se ab aspectu homin\u016b se/questr\u0101tes'; OCR: 'Un beremite dicunt hoies deserta dominu se questrantes'. 'solitudinis appetentes se ab aspectu homin-' is dropped and fused into 'deserta dominu sequestrantes', so the chapter's definition of hermits (men who seek the solitude of deserts and withdraw from the sight of men) is lost.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b06-r:260:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image col. 2: 'Fouea a\u016bt intra foue\u0101 a late/re ad mod\u016b spelunce fodi\u0165 i qua cauea que/dam poni\u0165 que ad mod\u016b cistule prepara\u0165.'; OCR: 'Fouea aut intra fouea a late rad modum cistule preparat.' The cave-like pit and the cage are dropped, yet the next sentence relies on them ('ibi i cauea ad hoc parata clauditur').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b06-r:388:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image col. 1, foot: rubric 'De virgulto / Capl'um. CLXXVI' then 'Virgult\u016b a virga est dict\u016b fm Hug. \u2026 pcisum rur/' (about 8 lines); OCR col. 1 ends '\u2026insolentia coercetur.' and col. 2 opens 'sum pullulat'. The <image-desc> even mentions a 'De virgulto' pilcrow, but the heading and the chapter's opening are absent from the body.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b06-r:388:ocr:4",
+  "verdict": "real_not_serious",
+  "evidence": "image col. 2: 'It\u0113 eis \u0254uenit p\u014dpinatio Est a\u016bt pampinare pam/pinos.i.folia supflua de vite amouere vt vue / liberi\u2079 aerem pur\u016b capi\u0101t.\ua75b foliis n\u014d obum/brate cit\u2079 maturesc\u0101t'; OCR: 'Item eis evenit popinatio est pinos. id est folia supplua devite amouere et vrue. Visi sunt folia supplua devite non obum bzate cito maturescant'. The line 'liberius aerem purum capiant' is dropped and a phrase is repeated in its place. Real, but the definition (removing superfluous leaves so the unshaded grapes ripen faster) is still recoverable; it is garbled, not reversed.",
+  "confidence": "medium"
+ },
+ {
+  "claim_id": "b02-r:16:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image l.6\u20137: 'go aliquid n\u014d est.ergo a pmo si aliqd est aliquid n\u014d est p pdict\u0101 regul\u0101 Boetij'; OCR: 'go aliquid n\u014d est.ergo \u0101 pmo si aliqd n\u014d est p pdict\u0101 regul\u0101'. Dropping 'est aliquid' destroys the inferred conditional (if something is, something is not), which the argument needs for its contradiction.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-r:33:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image: 'Scd\u014d sic.ome tot\u016b integrale sequit\u0304 suas ptes.sed h\u014d mortu\u2079 est to/tum integrale ad hoiem.ergo sequit\u0304.est h\u014d mortuus.ergo est h\u014d'; OCR: 'Scd\u014d sic. omne tot\u016b integrale est boiem. ergo sequit.' Major and minor premises are fused into one nonsense premise, and the reply below ('Ad sc\u014dm\u2026 h\u014d mortuus \u204a h\u014d ad voc\u0113 sol\u016b est tot\u016b integrale') now answers an argument the reader cannot see.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-r:48:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image: 'ergo semp distinctio fiet circa singularia. \ua75b nunq\ua76b circa sensus.quare nulla distinctio erit hic. Decimo sic.ois distinctio cadit sub arte.sed singularia n\u014d cad\u016bt sub arte'; OCR: 'ergo semper distinctio fiet circa singularia. et nunquam cadit sub arte. sed singularia non cadunt sub arte'. The ninth argument's conclusion and the 'Decimo' marker are dropped, and the merged text asserts that distinction never falls under art, the opposite of the tenth argument's major premise.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-k:93:ocr:0",
+  "verdict": "confirmed",
+  "evidence": "image right column under '\u2026laus & bon\u016b nom\u0113 amittaf.': 'Ericulosae autem: postq\u0304 de periculis adeundis fecit mention\u0113: dicit p diuision\u0113\u2026 Laudatq; fabium maxim\u016b: qui nunq\u0304 rumores de se: & infamiam posuit ante patriae sa-' (~13 lines); OCR goes from the text's '\u2026ne nimia quidem facere.' straight to 'lut\u00e9 cu. f. cunctator'. The whole commentary block is missing and the continuation begins mid-word. O5 (it is the page's main commentary, not marginal apparatus).",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b08-k:93:ocr:1",
+  "verdict": "confirmed",
+  "evidence": "image: 'Apro. C\u014dmodis:utilitatibus & bonis externis:qm\u0304 ipse magnanimus:q circa magna uersaf:non curat bona fortunae:sed nomen & glori\u00e3: citra t\u00f1 ignomini\u00e3 alio\ua75d: qm\u0304 ad glori\u00e3\u2026 nati sumus:cum sint uirtut\u0169 praemia. Inuenti a\u0169t sunt:nunc affert illos qui pro patria quicquid habuerunt:& eti\u00e3 uit\u00e3 effundere uoluissent'; OCR: 'Apro. Comodis: fed nomen et gloria: citra tn ignominia alioge qm ad gloria et honore et honestate nati fumus: cum uita effundere uoluiffent'. Both drops are real, and the splice yields a false sentence ('we are born for glory\u2026 since they had wished to pour out their lives').",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-r:39:ocr:0",
+  "verdict": "confirmed",
+  "class": "O5",
+  "evidence": "image ll.4-7, wrapped around the printed signs: 'Si simile sign\u016b [\u0394] \ua753pe toral\u0113 uel uit\u00e6 line\u0101 iu\u0113ies / mors\u016b c\u0101is expectato et ma-xime illis i ptibus qb\ua770 linee r\u016b-deb\u016bt. Tale sign\u016b [S-sign] iuxta supm\u016b \u0101gul\u016b si rub\u211e fuerit ho-min\u0113 cito isirm\u0101-d\u016b dsignabit.' OCR: 'Si simile signum [triangle] apparet orale uel uitae lineae iuxta supremum angulum si rubeum fuerit homine cito infirmabitur. Tale signum [curved line] d\u016b dignabit.' The whole dog-bite clause ('iuenies morsum canis expectato et maxime illis in partibus quibus lineae rumdebunt') is missing, although the margin 'Morsus canis' stands right beside it. The triangle is then joined to the second sign's prognosis (red upper angle \u2192 quick illness), and 'prope toralem' is stored as 'apparet orale'. So a reader is told the wrong meaning for the triangle sign.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:26:ocr:0",
+  "verdict": "real_not_serious",
+  "class": "O12",
+  "evidence": "image, left margin beside the first paragraph: only 'Caue ab / isto hoie' and 'Homici/cide q\u0304les' (= Homicidae quales). The lower margins have 'Cepha/lea qu\u014d formatur', 'Inepti quales.' and 'Caue ab isto hoie'. OCR adds '<margin>Homicidii periculo</margin>', which is on no part of the leaf; the only other marks are show-through from the facing side. So a marginal heading really was invented. But it only restates the adjacent text ('Orbiculi in ea tot \ua753sagunt homicidia'), so a reader learns nothing false about what the text says. It is wrong about the page's apparatus, and the error stays local.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b01-k:39:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "Same leaf as b01-r p.39. Image lines: (5) 'mors\u016b c\u0101is expectato et ma [sign] xime illis i ptibus qb\ua770 linee r\u016b' (6) 'deb\u016bt. Tale sign\u016b [S] iuxta supm\u016b \u0101gul\u016b si rub\u211e fuerit ho' (7) 'min\u0113 cito isirm\u0101 [~] d\u016b dsignabit. Talis uero figura [sign]'. OCR: 'maxime illis in partibus quibus line\u00e6 rui / morfum canis expectato et ma[wavy]iuxta fummum angulum si rubra fuerit homi / debit. Tale fignum [wavy]dici designabit. Talis vero figura [cross] / min\u0113 cito ifirmandum'. Every word is present, but the half-lines on each side of the signs are put in the wrong order. 'et ma' runs into 'iuxta summum angulum', 'd\u016b dsignabit' becomes 'dici designabit', and 'min\u0113 cito ifirmandum' is cut off after the next sentence. A reader cannot tell which sign means dog-bite and which means quick illness. Strictly this is a reading-order splice around inline figures rather than a single-word misread, but O6 is the closest class (meaning-changing, unrecoverable), so I'm confirming it under that class.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b02-m:48:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image (zoomed, the 'Undecimo' argument): 'sed ista quodda\u021d a\u012bal n\u014d fuit in / archa noe n\u014d dr multipliciter. ergo nec ista o\u012be a\u012bal fuit in archa noe'. 'n\u014d' stands clearly before 'fuit'. OCR: 'sed ista quoddam animal fuit in archa noe non dicitur multipliciter'. The negation is dropped. The argument depends on the opposite of 'omne animal fuit' being 'quoddam animal non fuit'. Without the negation, both propositions are affirmative and the topical argument means nothing.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-m:199:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image, col. b, after 'R\u0337\ua770 q celi \u00f1 s\u016bt animati. r\u014d \u0113 ista.': 'in q\u0304c\u016bq; n\u014d \u0113 m\u0101 \u00f1 est a\u012ba. q o\u012be aiat\u016b \u0113 \u0254po(situ)m ex m\u0101 & for\u0101'. The '\u00f1' (non) is plain. OCR: 'in quocunque non est materia si est anima'. '\u00f1' is read as 'si', so the major premise (where there is no matter there is no soul), on which the conclusion that the heavens are not animated rests, turns into a dangling conditional with no negation.",
+  "confidence": "high"
+ },
+ {
+  "claim_id": "b07-m:395:ocr:0",
+  "verdict": "confirmed",
+  "class": "O6",
+  "evidence": "image col. a: 'i\u014d necessitate \u0254\u0304\u00f1e ncci\u016b3 fuit xp\u0304m pati. \u1e9cm a\u016bt necessitat\u0113 t\u0101 a\u012bs q\u0304 \u0254\u0304ns fuit \u0254ting\u0113s' (= ideo necessitate consequentiae necessarium fuit Christum pati; secundum autem necessitatem tam antecedentis quam consequentis fuit contingens). OCR: 'ideo necessitate sine neccesse cur fuit christum pati.sed cum aut necessitate ta antis quam consequentis contingens'. '\u0254\u0304\u00f1e' (consequentiae) is read as 'sine', which makes it look as if Christ suffered 'without necessity', and 'necessarium' is garbled into 'neccesse cur'. That loses the response's thesis (necessary by necessity of the consequence, contingent absolutely). The same abbreviation is misread again in col. b, 'nulla \u0113 necitas abso(lu)ta. \u1e9c tm\u0304 \u0254\u0304\u00f1e', which is stored as 'sed tantum ordine'.",
+  "confidence": "high"
+ }
+]

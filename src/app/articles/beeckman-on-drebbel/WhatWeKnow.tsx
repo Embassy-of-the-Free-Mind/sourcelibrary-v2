@@ -4,16 +4,23 @@ import { HowItSank, SourcesTable, SourcesTimeline } from './BoatFigures';
 
 // Shown after Beeckman's 1620 entry: every early report of the boat that the
 // library holds, in date order, so a reader can see how little rests on
-// Drebbel's own time. Papin's two plates are the earliest printed pictures of
-// a submarine in Drebbel's line that we found (Derek asked for "the first
-// drawing of it after Beeckman", 2026-10-29). Mersenne and Wilkins are served
+// Drebbel's own time. Borelli's 1680 plate is the earliest printed picture of
+// a rowed submarine that we found, and Papin's two plates follow (Derek asked
+// for "the first drawing of it after Beeckman", 2026-10-29). Borelli's figure
+// is cropped from the Library of Congress copy of Tab. XIV (cph.3b09148,
+// public domain). Mersenne and Wilkins are served
 // from the library's own page images; Papin's pages and plate are copied from
 // the Bayerische Staatsbibliothek scan (bsb10843010), since the library's copy
 // has no archived images yet. Harsdörffer 1651 (no figure) is copied from the
 // Internet Archive scan bub_gb_r1U_AAAAcAAJ; the library holds only a hidden 1677
-// reprint with no text.
+// reprint with no text. Monconys 1666 is the library's own translated copy.
+// "How the story grew" traces the later accretions by eye: Hautefeuille 1681
+// (e-rara 4563800; the library's copy is hidden), Fyfe 1902 relabelling
+// Borelli's picture, and Burgoyne 1903 crediting Monconys's depth to Boyle
+// (both from Internet Archive scans; the library's copies are hidden).
 
 const MERSENNE = '69af0dab9f13b61d0a6c6105';
+const MONCONYS = '6a44359d0235c9147000dd12';
 const WILKINS = '69aebe60c0472fef6455a8f3';
 const PAPIN = '6adfd7cf16aaa80a976bbf45';
 
@@ -128,6 +135,29 @@ export default function WhatWeKnow() {
       </p>
 
       <SourceQuote
+        book={MONCONYS}
+        page={50}
+        printedPage={40}
+        src={`https://images.sourcelibrary.org/archived/${MONCONYS}/50.jpg`}
+        source={<>Balthasar de Monconys, <em>Journal des voyages</em>, part 2 (Lyon, 1666), &ldquo;Voyage d&rsquo;Angleterre&rdquo;, 2 June 1663</>}
+        original={<span lang="fr">Il auoit fait aussi vn vaisseau qui se plongeoit dans l&rsquo;eau quand on vouloit, &amp; par le moyen des rames qu&rsquo;il y auoit attach&eacute;es par dehors auec des m&acirc;ches aussi qu&rsquo;on vestissoit, pour manier ces rames, il alloit entre deux eaux; mais il ne pouuoit pas descendre plus bas que douze ou quinze pieds</span>}
+      >
+        He had also made a vessel that went down into the water when one wished, and by means of
+        oars fixed to the outside, with sleeves as well that one put on to work the oars, it went
+        along between two waters; but it could not go down lower than twelve or fifteen feet,
+        or the weight of the water would have kept it from coming up again, and he would have
+        drowned.
+      </SourceQuote>
+      <p className="text-secondary leading-relaxed mb-4 font-body">
+        Monconys went out to Stratford-le-Bow with Henry Oldenburg to see &ldquo;Doctor
+        Keiffer, son-in-law of M. Drebel&rdquo;, and had these things &ldquo;confirmed&rdquo; by
+        him. It is the only early account that gives a depth, and the only one that says how the
+        oars were worked from inside: through sleeves the rowers put on. It comes thirty years
+        after Drebbel&rsquo;s death, from a son-in-law who, Monconys adds, had found &ldquo;nothing
+        new&rdquo; of his own.
+      </p>
+
+      <SourceQuote
         book={PAPIN}
         page={182}
         printedPage={126}
@@ -159,8 +189,26 @@ export default function WhatWeKnow() {
 
       <h3 className="font-serif text-xl text-primary mt-10 mb-3">The first pictures after Beeckman&rsquo;s</h3>
       <p className="text-secondary leading-relaxed mb-4 font-body">
-        The earliest printed pictures of a submarine in Drebbel&rsquo;s line that we have found
-        are Papin&rsquo;s, seventy-five years after Beeckman&rsquo;s sketch. They show
+        No picture of Drebbel&rsquo;s own boat was ever made from life, as far as we can find.
+        The first printed picture of a submarine with rowers is Giovanni Alfonso
+        Borelli&rsquo;s, in his book on how animals move (1680), sixty years after
+        Beeckman&rsquo;s sketch. Borelli does not name Drebbel, and his boat is a design, not a
+        record. But it works as the reports say Drebbel&rsquo;s did. Goatskin bottles, open to
+        the river through holes in the bottom, fill with water to sink the boat, as
+        Harsd&ouml;rffer&rsquo;s water-boxes do. A man squeezes them with a lever to send the
+        water out and rise. The oars pass through holes in the sides sealed with doubled goat
+        leather, the detail Papin later reports of Drebbel&rsquo;s boat.
+      </p>
+      <PageFigure src="/articles/beeckman-on-drebbel/borelli-1680-fig-9.jpg" alt="Engraving of a boat with its side cut away: inside, a row of tall leather bottles N stands on the floor and a man works a lever P against them; two oars V pass through the hull and end in webbed blades.">
+        Borelli&rsquo;s <span lang="la"><em>navis urinatoria</em></span>, a &ldquo;diving
+        ship&rdquo;: the bottles N, the lever P, the oars V with webbed blades Z &ldquo;like the
+        feet of geese and frogs&rdquo;. <em>De motu animalium</em>, part 1 (Rome, 1680),
+        proposition 224, Tab. XIV, Fig. 9.{' '}
+        <a href="https://www.loc.gov/pictures/item/2007675509/" className="underline">Library of Congress</a>.
+        The <em>Gentleman&rsquo;s Magazine</em> reprinted it in English in June 1749.
+      </PageFigure>
+      <p className="text-secondary leading-relaxed mb-4 mt-8 font-body">
+        Papin&rsquo;s pictures came fifteen years later. They show
         Papin&rsquo;s own two boats, built for Charles, Landgrave of Hesse, which he
         offers as the remedy for Drebbel&rsquo;s want of air. They are not pictures of
         Drebbel&rsquo;s boat. The first, a box of tinned iron plates, was wrecked when the crane
@@ -188,9 +236,86 @@ export default function WhatWeKnow() {
 
       <SourcesTable />
 
+      <h3 className="font-serif text-xl text-primary mt-10 mb-3">How the story grew</h3>
+      <p className="text-secondary leading-relaxed mb-4 font-body">
+        Later writers joined these accounts together, added to them, and lost track of which
+        piece came from where. Jean de Hautefeuille, in a pamphlet on breathing under water
+        (1681), was the first we have found to give the boat a shape:
+      </p>
+      <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-center">
+        <blockquote className="border-l-2 border-accent-gold/60 pl-5 font-body text-lg leading-relaxed text-primary">
+          <p lang="fr" className="mb-3 text-secondary italic">
+            Ce Navire n&rsquo;estoit autre chose qu&rsquo;un B&acirc;teau, qui avoit &agrave; peu pr&eacute;s
+            la figure d&rsquo;un &oelig;uf [&hellip;]
+          </p>
+          <p>
+            This ship was nothing other than a boat almost the shape of an egg, so heavy that it
+            sank of itself in the water, and so exactly closed on all sides that the water could
+            not get in, which held a certain number of men who steered it up and down, right and
+            left and wherever they wished, with oars arranged in a particular way.
+          </p>
+          <figcaption className="mt-3 text-sm text-muted not-italic">
+            Jean de Hautefeuille, <em>L&rsquo;art de respirer sous l&rsquo;eau</em> (1681), p. 7,{' '}
+            <a href="https://www.e-rara.ch/content/titleinfo/4563800" className="underline">
+              scan at e-rara
+            </a>
+          </figcaption>
+        </blockquote>
+        <div className="max-w-[16rem] mx-auto w-full">
+          <PageFigure
+            src="/articles/beeckman-on-drebbel/hautefeuille-1681-p7.jpg"
+            alt="A printed French page numbered 7, beginning with two lines of Latin italic, then Ce Navire n'estoit autre chose qu'un Bâteau."
+          />
+        </div>
+      </figure>
+      <p className="text-secondary leading-relaxed mb-4 font-body">
+        Hautefeuille is working from Mersenne, whose Latin he quotes just before, and he
+        does not believe a word of it: &ldquo;this invention cannot be put into practice&rdquo;.
+        He does not say where the egg came from. On pp. 20&ndash;21 he copies out Monconys&rsquo;s
+        passage, twelve or fifteen feet and all.
+      </p>
+
+      <PageFigure
+        src="/articles/beeckman-on-drebbel/fyfe-1902-p159.jpg"
+        alt="A halftone picture of a long wooden boat cut open in the middle to show a row of large bags and a man working a lever, with two oars hanging from the side. Caption: The earliest known picture of an under-water vessel."
+      >
+        Borelli&rsquo;s boat of 1680, redrawn and reversed, in Herbert C. Fyfe,{' '}
+        <em>Submarine Warfare, Past, Present and Future</em> (London, 1902), p. 159,{' '}
+        <a href="https://archive.org/details/submarinewarfare00fyfe/page/n190/mode/1up" className="underline">
+          scan at the Internet Archive
+        </a>
+        .
+      </PageFigure>
+      <p className="text-secondary leading-relaxed mb-4 font-body">
+        By 1902 Borelli&rsquo;s picture had come loose from Borelli. Fyfe prints it with no name
+        and no date, as &ldquo;the earliest known picture of an under-water vessel&rdquo;, in the
+        middle of his quotation of Boyle on Drebbel. He does not say it is Drebbel&rsquo;s boat,
+        but a reader turning the page would take it so.
+      </p>
+
+      <blockquote className="border-l-2 border-accent-gold/60 pl-5 my-10 font-body text-lg leading-relaxed text-primary">
+        <p>
+          She carried twelve rowers besides passengers, and made a journey of several hours at a
+          depth of from 12 to 15 feet. The holes of the oars were made to hold the water by
+          leather joints.
+        </p>
+        <p className="mt-3 text-sm text-muted">
+          Alan H. Burgoyne, <em>Submarine Navigation Past and Present</em>, vol. 1 (London, 1903),
+          p. 7, footnoted to Boyle 1660,{' '}
+          <a href="https://archive.org/details/submarinenavigat0001burg/page/n26/mode/1up" className="underline">
+            scan at the Internet Archive
+          </a>
+        </p>
+      </blockquote>
+      <p className="text-secondary leading-relaxed mb-4 font-body">
+        A year later Burgoyne put the pieces into one sentence and gave it to Boyle. The twelve
+        rowers and the passengers are Boyle&rsquo;s. The depth is Monconys&rsquo;s, which Burgoyne
+        could have read in Hautefeuille, whose pamphlet he cites four lines further down. The
+        leather is Mersenne&rsquo;s proposal and Papin&rsquo;s report. Boyle mentions neither.
+      </p>
       <p className="text-secondary leading-relaxed mt-8 font-body">
-        Other parts of the familiar story, such as a dive of twelve to fifteen feet and a run from
-        Westminster to Greenwich, are in none of these sources. The picture at the top of this
+        Another part of the familiar story, a run from Westminster to Greenwich, is in none of
+        these sources, and we have not yet found where it begins. The picture at the top of this
         page, and the replica built for the BBC in 2002, are reconstructions from the same few
         lines.
       </p>

@@ -8,6 +8,7 @@ n_books: null
 n_pages: 715
 verdict: "Estimator v2 adds the first non-Claude judges (Gemini 3.1 Pro and 3.8 Flash High, from #6545, #6559 and #6690) and a judge-family term. Held out, it covers 0.92 of 305 cells on the v1 experiments (v1: 0.92 of 330) and 0.89 of 98 cells on the new ones. xlref-t4 rises from 9 of 16 to 12 of 16, but because of #6545's new Persian data, not the judge term: xlref-t4 had only Opus judges, and with the round × arm-maker term removed it is still 12 of 16. The misses that remain are language-specific (Arabic and Persian in xlref-t4; Hebrew in #6545 stage 2). No Claude self-preference shows: the Gemini 3.1 Pro judge puts Opus further ahead of 3.8 Flash than the Opus judge does."
 status: informational
+supersedes: [2026-10-12-estimator-v1-ordinal-instrument-rounds-6557.md]
 decision: "The planner (#6740 part 3) reads v2 for differences inside one judging round, as v1 allowed; levels across rounds and the router stay out (#6740)"
 superseded_by: null
 issue: [6740, 6557, 6553]

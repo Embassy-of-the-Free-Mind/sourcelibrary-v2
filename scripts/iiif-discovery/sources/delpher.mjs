@@ -36,7 +36,7 @@ const CENTURIES = String(args.centuries || '15,16,17,18,19').split(',').map(s =>
 const DELAY = parseInt(args.delay) || 1100;
 const PER_PAGE = 100;
 const API = 'https://www.delpher.nl/nl/api/results';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library; Delpher harvest)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) delpher-harvest';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // Delpher labels languages in Dutch.

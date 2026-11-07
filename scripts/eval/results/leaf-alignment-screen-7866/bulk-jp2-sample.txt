@@ -1,0 +1,21 @@
+{
+  frame_books: 18994,
+  frame_pages: 4205486,
+  sample: 200,
+  aligned: 182,
+  shifted: 8,
+  single_off: 1,
+  undecided: 7,
+  no_source: 2,
+  missing: 0
+}
+shifted / sampled 8 / 200 [ '0.020', '0.077' ] → books 760 [ 388, 1461 ]
+shifted / decided 8 / 191 [ '0.021', '0.080' ]
+6a4a18973a9243f77368d9b8 k=-1/-1/-1
+6a3e76cf28fae891bf27e1ab k=-1/-1/-1
+69f8c13a0c0c281d4bd32e1c k=-1/-1/-1
+6a4a175a3a9243f77368d25b k=-1/-1/-1
+6a3e763e28fae891bf27ce0e k=-1/-1/-1
+69e53425d48480a386965455 k=-6/-4
+69e4168e01fba13948b2d237 k=-3/-3/-3
+6a3e6e776493e2d2112994ca k=-3/-1/-3

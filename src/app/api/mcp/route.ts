@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { pageEnvelope, parseOffset } from '@/lib/mcp-pagination';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
-import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
+import { countToolResults, logMcpToolCall, logMcpInitialize, mintMcpSessionId, readMcpSessionId } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
@@ -54,7 +54,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.12.1';
+const SERVER_VERSION = '4.13.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 //
@@ -416,7 +416,7 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `${absent ? `No page of this book prints these words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift): this book most likely does not contain what you are looking for. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
+    tip: `${absent ? `No page of this book prints these exact words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift). Matching here is by spelling, so this does not show the book lacks a name or term: it may be printed in another spelling or Latin case (Zalmoxis, Zamolxis, Zalmoxen). Try those forms before saying the book does not contain it. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
@@ -1301,7 +1301,7 @@ async function startReviewShift(args: Record<string, unknown>) {
     first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
       'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
       'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
-      'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
+      'proposed fixes are licensed to Source Library to publish and license as part of the library (terms: https://sourcelibrary.org/terms), and ' +
       'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
       'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
       'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +
@@ -2155,7 +2155,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
   };
 }
 
-function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest }) {
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest; sessionId: string | null }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
     {
@@ -2174,8 +2174,17 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       // claude.ai was answered with an improvised menu instead of a call to
       // start_review_shift (first live try, 2026-10-10, #6418).
       instructions:
-        'Source Library: historical primary sources with transcriptions and English translations. ' +
-        'To find and cite texts, use search_library, search_translations and get_quote. ' +
+        // The first half decides whether a client reaches for us at all: on 30 history
+        // questions this wording took Claude Code from 17 to 30 calls, and 10 modern
+        // questions stayed at 0 (scripts/eval/experiments/2026-11-04-mcp-trigger-instructions-8154.md).
+        'Source Library: rare historical books and manuscripts, from Sumerian tablets to the 19th century, ' +
+        'with transcriptions, English translations and page images. It covers theology, philosophy, history, ' +
+        'literature, science, medicine, magic and more. Use it whenever an answer would be better for what ' +
+        'historical authors actually wrote: what someone said or believed, a quotation or citation, how an idea ' +
+        'looked before the modern era, primary sources for study or teaching, or an old illustration. Search first ' +
+        '(search_library for books, search_translations for words, search_concept for ideas, search_images for ' +
+        'pictures), then quote with get_quote and give the reader its short_url so they can open the page. It does ' +
+        'not hold modern scholarship or current events, so do not use it for those. ' +
         'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
         'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
         'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
@@ -2287,9 +2296,12 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
               route: `mcp:${name}`, status: 429, ms: Date.now() - started,
               wouldBlock: true, blocked: true, reason: 'page_budget',
             });
+            // Logged as a failure: the reader got no text, and a refusal that reads
+            // ok:true is invisible in the failure table.
             logMcpToolCall({
               tool: name, args: argsObj, ms: Date.now() - started,
-              ip: reqContext.ip, userAgent: reqContext.userAgent,
+              error: `page_budget ${usedPages24h}/${limit}`,
+              ip: reqContext.ip, userAgent: reqContext.userAgent, sessionId: reqContext.sessionId,
             });
             return { content: [{ type: 'text' as const, text: JSON.stringify(refusal, null, 2) }] };
           }
@@ -2323,6 +2335,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
+        sessionId: reqContext.sessionId, resultCount: countToolResults(result),
       });
 
       const upgradeHint = buildUpgradeHint(reqContext.identity, reqContext.ip);
@@ -2368,7 +2381,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       const message = error instanceof Error ? error.message : 'Unknown error';
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started, error: message,
-        ip: reqContext.ip, userAgent: reqContext.userAgent,
+        ip: reqContext.ip, userAgent: reqContext.userAgent, sessionId: reqContext.sessionId,
       });
       // Structured, not prose. Ten separate AI-client reports (#3083) describe
       // the same failure: an opaque string reads as a NON-DETERMINISTIC error,
@@ -2426,7 +2439,12 @@ export async function GET(req: Request) {
  * Batched JSON-RPC arrives as an array, hence the normalisation. Never throws:
  * a malformed body is the client's problem, not a reason to fail the request.
  */
-function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) {
+function isInitialize(body: unknown): boolean {
+  const messages = Array.isArray(body) ? body : [body];
+  return messages.some((m) => (m as { method?: unknown } | null)?.method === 'initialize');
+}
+
+function logInitializeFrom(body: unknown, ip: string, userAgent: string | null, sessionId: string | null) {
   const messages = Array.isArray(body) ? body : [body];
   for (const msg of messages) {
     const m = msg as { method?: unknown; params?: Record<string, unknown> } | null;
@@ -2440,6 +2458,7 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) 
       protocolVersion: s(m.params?.protocolVersion),
       ip,
       userAgent,
+      sessionId,
     });
   }
 }
@@ -2447,7 +2466,11 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) 
 export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
   try {
     const body = await req.json();
-    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'));
+    // Measurement only (see mintMcpSessionId). The transport stays stateless: with
+    // no sessionIdGenerator it neither issues nor validates a session id.
+    const initializing = isInitialize(body);
+    const sessionId = initializing ? mintMcpSessionId() : readMcpSessionId(req.headers);
+    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'), sessionId);
 
     // Always set the Accept header the SDK requires — clients send varying
     // combinations (just application/json, just text/event-stream, or neither)
@@ -2464,10 +2487,16 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
       userAgent: req.headers.get('user-agent'),
       identity,
       request: req,
+      sessionId,
     });
     await server.connect(transport);
     try {
-      return await transport.handleRequest(fixedReq, { parsedBody: body });
+      const res = await transport.handleRequest(fixedReq, { parsedBody: body });
+      if (!initializing || !sessionId || !res.ok) return res;
+      const headers = new Headers(res.headers);
+      headers.set('Mcp-Session-Id', sessionId);
+      headers.set('Access-Control-Expose-Headers', 'Mcp-Session-Id');
+      return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
     } finally {
       await transport.close();
       await server.close();

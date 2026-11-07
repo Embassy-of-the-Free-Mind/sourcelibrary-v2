@@ -20,7 +20,7 @@ import { readFileSync } from 'fs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const REPORT = process.argv.find((_, i, a) => a[i - 1] === '--report') || 'scripts/output/artwork-upgrade-audit.json';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const s3 = new S3Client({

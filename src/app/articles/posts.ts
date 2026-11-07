@@ -105,9 +105,8 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 // Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider). The Rithmomachia game stays at /rithmomachia: it is a
-// full-width game with its own guide and scenario pages, not an article; the
-// article about it is /articles/rithmomachia.
+// home slider). /rithmomachia redirects to the standalone game (#7821), which
+// is not an article; the article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
   {
     slug: 'play-rithmomachia',
@@ -125,6 +124,20 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'kircher-hieroglyphs',
+    title: 'Kircher and the Hieroglyphs',
+    subtitle:
+      'What Athanasius Kircher thought the Egyptian signs were, how he read whole obelisks, and the one thing he got right, in the books he printed in Rome between 1636 and 1676.',
+    summary:
+      'Athanasius Kircher read Rome’s obelisks as hymns to a hidden Hermetic theology. Oedipus Aegyptiacus and his Coptic books, quoted from the printed pages.',
+    date: '3 November 2026',
+    readTime: '13 min read',
+    kind: 'stories',
+    image: 'https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/78.jpg',
+    imageAlt:
+      'Kircher’s folding plate of the Pamphilian obelisk: its four faces of hieroglyphs drawn side by side, with the papal arms and the obelisk in Piazza Navona between them.',
+  },
   {
     slug: 'agrippa-against-himself',
     title: 'Agrippa Against Himself',
@@ -1110,6 +1123,42 @@ export const posts: BlogPost[] = [
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
+  },
+  {
+    slug: 'alchemical-process',
+    title: 'Is Source Library an Alchemical Process? Testing the Frame',
+    subtitle: 'Which alchemy the comparison borrows, which steps hold up against our measurements, and three places it breaks.',
+    summary:
+      'We set the steps of alchemy against what happens to a page here. Where the comparison holds, with measurements, and three places it fails.',
+    date: '4 November 2026',
+    readTime: '20 min read',
+    kind: 'research',
+    image: '/articles/alchemical-process/emblem-iii.jpg',
+    imageAlt: 'Engraving from Atalanta fugiens (1618): a woman pours steaming water from a jug into a large wooden tub, with a fire behind her and laundry on the ground.',
+  },
+  {
+    slug: 'how-many-translated-into-english',
+    title: 'How Many Old Books Have Been Translated into English?',
+    subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
+    summary:
+      'Of some 815,000 works printed in Europe before 1700, about 18,000 to 39,000 have ever been put into English. Three estimates, and why catalogues miss most.',
+    date: '2 November 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg',
+    imageAlt: 'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), translated into English by Doctor Everard, in a printed border.',
+  },
+  {
+    slug: 'how-much-in-english',
+    title: 'How Much of the Written Past Can You Read in English?',
+    subtitle: 'What survives, what is scanned, and what has been translated, tradition by tradition, from Latin print to Tibetan and Japanese.',
+    summary:
+      'How many old books and manuscripts survive in Latin, Arabic, Sanskrit, Tibetan, Chinese and more, how many are scanned, and how few are in English.',
+    date: '30 October 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: 'Engraved frontispiece of Athanasius Kircher, Turris Babel (Amsterdam, 1679): robed figures in the foreground, the tower rising in the background under a sky of angels.',
   },
   {
     slug: 'counting-the-gap',

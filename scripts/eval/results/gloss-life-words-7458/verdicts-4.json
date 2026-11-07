@@ -1,0 +1,50 @@
+[
+ { "id": "G02",
+   "translations": {
+     "X": { "fidelity": 3, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["\"The vital energy of yin and yang\" for 陰陽之氣"], "serious_errors": [{ "type": "omission", "what": "Shiji Sanwang shijia citation 蓬生麻中不扶自直 (visible in image, missing from transcription); its tail 直 rendered as 'Direct commentary'" }, { "type": "mistranslation", "what": "相扶 elided in 陰陽之氣相扶而行 — 'acts and moves according to season' loses mutual support" }] },
+     "Y": { "fidelity": 3, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "omission", "what": "Shiji Sanwang shijia citation 蓬生麻中不扶自直 (visible in image); tail 直 rendered as 'Directly:'" }, { "type": "mistranslation", "what": "越絕 rendered 'Surpassing all bounds' (a book title)" }] },
+     "Z": { "fidelity": 3, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "omission", "what": "Shiji Sanwang shijia citation 蓬生麻中不扶自直 (visible in image); tail 直 rendered as 'Straight white sand'" }] } },
+   "note": "Transcription drops a Shiji citation present in the image; all three inherit the gap. 靈壽杖 is a wood name (X/Z 'staff of longevity', Y 'Lingshou wood'), not counted as a life word." },
+ { "id": "G31",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 5, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 4, "life_words_correct": 4, "life_words_wrong": 1, "life_wrong_examples": ["\"celestial breath\" for Himmelsluft (heavenly air)"], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 5, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "Life words: Seele x2, Himmelsluft, Leben, beseelt." },
+ { "id": "G38",
+   "translations": {
+     "X": { "fidelity": 4, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'lie in wait together' — image reads 'zusammen lauten' (sound together/harmonize)" }] },
+     "Y": { "fidelity": 4, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [{ "type": "mistranslation", "what": "'lurk together' — image reads 'zusammen lauten' (harmonize)" }] },
+     "Z": { "fidelity": 5, "life_words_correct": 3, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "Lebenskraft is a named vital force; 'vital force'/'life force' correct in all three." },
+ { "id": "G35",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 9, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 5, "life_words_correct": 9, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 9, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "Luft, Hauch x2, Seele(n) x3, dschān, Leben, eingehaucht all rendered literally." },
+ { "id": "G18",
+   "translations": {
+     "X": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 1, "life_wrong_examples": ["<gloss>the dynamic energy of life and breath</gloss> for prāṇa-śakti"], "serious_errors": [] },
+     "Y": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 1, "life_wrong_examples": ["<gloss>vital life force</gloss> for prāṇa-śakti"], "serious_errors": [{ "type": "mistranslation", "what": "stalk is twelve inches 'because it is the embodiment of the breath-energy' — the twelve-finger reason is only the navel-heart distance" }] },
+     "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "" },
+ { "id": "G05",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Y": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["\"vital energy endures\" for 氣久"], "serious_errors": [] },
+     "Z": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["\"the vital energy endures\" for 氣久"], "serious_errors": [] } },
+   "note": "Y and Z cite Mencius 5B for the 隘/不恭 judgement, which is 2A:9 (X correct)." },
+ { "id": "G12",
+   "translations": {
+     "X": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 1, "life_wrong_examples": ["stomach qi <gloss>breath, vapour</gloss> for 胃氣 (literal gloss does not fit stomach function here)"], "serious_errors": [] },
+     "Y": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 1, "life_wrong_examples": ["<gloss>stomach qi, vital digestive and recuperative energy</gloss> for 胃氣"], "serious_errors": [] },
+     "Z": { "fidelity": 5, "life_words_correct": 2, "life_words_wrong": 1, "life_wrong_examples": ["<gloss>stomach qi, vital digestive and nutritional energy</gloss> for 胃氣"], "serious_errors": [] } },
+   "note": "Correct renderings counted: 保生 'Preserving Life' and running 'stomach qi'." },
+ { "id": "G09",
+   "translations": {
+     "X": { "fidelity": 4, "life_words_correct": 0, "life_words_wrong": 1, "life_wrong_examples": ["<term>qi</term> <gloss>vital cosmic energy</gloss> for 天地之氣"], "serious_errors": [] },
+     "Y": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] },
+     "Z": { "fidelity": 4, "life_words_correct": 1, "life_words_wrong": 0, "life_wrong_examples": [], "serious_errors": [] } },
+   "note": "Image reads 不過其序 人之亂也 where transcription has 不適其序 久之亂也; all three follow the transcription ('disorder over time')." }
+]

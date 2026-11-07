@@ -57,3 +57,17 @@ describe('isForgedChrome', () => {
     expect(isForgedChrome(p, h({ 'user-agent': LINUX_149 }))).toBe(false);
   });
 });
+
+describe('isForgedChrome on translated URLs', () => {
+  it.each(['/es/book/abc', '/la/book/abc', '/nl/book/abc', '/zh/book/abc/page/1', '/es/work/abc'])('refuses a fake Chrome on %s', (p) => {
+    expect(isForgedChrome(p, h({ 'user-agent': LINUX_149 }))).toBe(true);
+  });
+
+  it.each(['/es', '/es/collections', '/zh/search', '/est/book/abc', '/embed/bph/book/abc'])('leaves %s alone', (p) => {
+    expect(isForgedChrome(p, h({ 'user-agent': LINUX_149 }))).toBe(false);
+  });
+
+  it('lets a real Chrome read a translated page', () => {
+    expect(isForgedChrome('/zh/book/abc', h({ 'user-agent': WIN_155, ...REAL_HINTS }))).toBe(false);
+  });
+});

@@ -42,6 +42,17 @@ describe('unwrapSentinels', () => {
   });
 });
 
+describe('unwrapRead', () => {
+  it('refuses a reply with a second marker inside the block (#6871)', async () => {
+    // @ts-expect-error plain .mjs helper
+    const { unwrapRead } = await import('../../scripts/lib/agy-cli.mjs');
+    expect(unwrapRead(`<<<BEGIN>>>\n${page}\n<<<END>>>`)).toEqual({ text: page, problem: null });
+    expect(unwrapRead('<<<BEGIN>>>\nUNCHANGED\n<<<END>>>').problem).toBeNull();
+    // the shape stored on six #6871 test reads and five live pages: a cut correction, then a second block
+    expect(unwrapRead(`<<<BEGIN>>>\n${page.slice(0, 40)}\n<<<BEGIN>>>\nUNCHANGED\n<<<END>>>`).problem).toBe('a second marker inside the block');
+  });
+});
+
 describe('agy-tool-gate.py', () => {
   const gate = (call: object) => JSON.parse(execFileSync('python3', ['scripts/lib/agy-tool-gate.py'], { input: JSON.stringify({ toolCall: call }), env: { ...process.env, AGY_GATE_ROOT: '/tmp/ws-6523' }, encoding: 'utf8' }));
   it('allows view_file inside the workspace only, and denies everything else with a reason', () => {

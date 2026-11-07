@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<columns>4</columns>
+<header>本草綱目 卷四十二 目錄</header>
+<vocab>本草綱目, 蟲部, 濕生類, 蟾蜍, 蠑螈, 蜈蚣, 蚯蚓, 溪鬼蟲</vocab>
+
+# 本草綱目蟲部目錄第四十二卷
+
+## 蟲之四 濕生類二十三種附錄七種
+
+---
+
+| | | | |
+|:---|:---|:---|:---|
+| 蟾蜍<gloss>別錄</gloss> | 蠑螈<gloss>本經</gloss> | 鼉<gloss>別錄</gloss> | 蝌蚪<gloss>拾遺</gloss> |
+| 溪𧒽<gloss>拾遺</gloss> | 山蛤<gloss>圖經</gloss> | 田父<gloss>圖經</gloss> | 蜈蚣<gloss>本經</gloss> |
+| 馬陸<gloss>本經</gloss> | 山蚤<gloss>拾遺</gloss><br/>蛐蜒 蠼螋附 | 蚯蚓<gloss>本經</gloss> | 蝸牛<gloss>別錄</gloss> |
+| 蛞蝓 | 蠼螋<gloss>證類</gloss><br/>絲桑蠒 即桑牛 | 溪鬼蟲<gloss>拾遺</gloss><br/>水虎 鬼彈附 | 沙蝨<gloss>綱目</gloss><br/>沙蝨附 |
+| 水黽<gloss>拾遺</gloss> | 豉蟲<gloss>拾遺</gloss> | 砂擽子<gloss>拾遺</gloss> | 蚑蟲<gloss>拾遺</gloss> |
+| 風驢肚內蟲<gloss>綱目</gloss> | 蟲𧖼<gloss>拾遺</gloss> | 金蠶<gloss>綱目</gloss> | |
+
+---
+
+### 附錄諸蟲 綱目一種 拾遺一種 別錄五種
+
+| | | | |
+|:---|:---|:---|:---|
+| 窳臘蟲 | 灰藥 | 黃蟲 | 地防 |
+| 梗雜 | 益符 | 蜚厲 | |
+
+---
+
+->右附方舊二十九新一百零六<-
+
+<vocab>別錄, 本經, 圖經, 拾遺, 綱目, 證類, 附方</vocab>

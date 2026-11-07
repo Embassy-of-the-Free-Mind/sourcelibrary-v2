@@ -1,0 +1,1426 @@
+{
+"campaign": "zh-complete-sets-8053",
+"sweep": "zh-complete-sets-8053-import",
+"issue": 8053,
+"collections": [],
+"work_id_source": "kanripo-catalog:8053",
+"hold": "zh-complete-sets-8053",
+"release_when": "decision:release zh-complete-sets-8053",
+"hold_release": "#8053: the missing volumes of Siku 經部/子部 works held in part, imported hidden from IA's CADAL mirror so each set is whole. OCR only, by the Paddle SKQS lane (#5600). Translation and publishing are Derek's decision. Release with --to ocr_complete after OCR (never --to queued, which re-reads with Gemini).",
+"note": "Generated 2026-11-04 by job zh-complete-sets-8053 from the 拆分成M册 census of live Chinese multi-volume works (經部, 子部). Each volume is from the same IA id run as the volumes we hold. Left out: 詩經疏義會通 and 御製律呂正義 (the run is longer than IA's 册 count: another copy or a mislabel; report, not import). Run: node --env-file=… scripts/import/ia-manifest-direct.mjs --manifest <this> --commit --hold zh-complete-sets-8053 --release-when \"decision:release zh-complete-sets-8053\" --out $JOB_SCRATCH/wider-import.jsonl",
+"BOOKS": [
+{
+"id": "06057514.cn",
+"title": "幾何原本·卷二之首~卷三之首 (Siku Quanshu, vol. 2 of 6)",
+"author": "Matteo Ricci and Xu Guangqi",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:matteo-ricci-and-xu-guangqi:elements-euclid",
+"note": "#8053 completes a set held in part (2 of 6 冊 before this import). IA: 幾何原本·卷二之首~卷三之首; 四庫全書 子部. Same IA id run as the held volumes (06057513.cn…06057518.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057515.cn",
+"title": "幾何原本·卷三~卷四之首 (Siku Quanshu, vol. 3 of 6)",
+"author": "Matteo Ricci and Xu Guangqi",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:matteo-ricci-and-xu-guangqi:elements-euclid",
+"note": "#8053 completes a set held in part (2 of 6 冊 before this import). IA: 幾何原本·卷三~卷四之首; 四庫全書 子部. Same IA id run as the held volumes (06057513.cn…06057518.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057516.cn",
+"title": "幾何原本·卷四~卷五之首 (Siku Quanshu, vol. 4 of 6)",
+"author": "Matteo Ricci and Xu Guangqi",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:matteo-ricci-and-xu-guangqi:elements-euclid",
+"note": "#8053 completes a set held in part (2 of 6 冊 before this import). IA: 幾何原本·卷四~卷五之首; 四庫全書 子部. Same IA id run as the held volumes (06057513.cn…06057518.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057442.cn",
+"title": "欽定儀象考成·卷四~卷六 (Siku Quanshu, vol. 2 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷四~卷六; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057443.cn",
+"title": "欽定儀象考成·卷七~卷九 (Siku Quanshu, vol. 3 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷七~卷九; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057444.cn",
+"title": "欽定儀象考成·卷十~卷十二 (Siku Quanshu, vol. 4 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷十~卷十二; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057445.cn",
+"title": "欽定儀象考成·卷十三~卷十六 (Siku Quanshu, vol. 5 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷十三~卷十六; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057446.cn",
+"title": "欽定儀象考成·卷十七~卷十九 (Siku Quanshu, vol. 6 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷十七~卷十九; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057447.cn",
+"title": "欽定儀象考成·卷二十~卷二十二 (Siku Quanshu, vol. 7 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷二十~卷二十二; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057448.cn",
+"title": "欽定儀象考成·卷二十三~卷二十五 (Siku Quanshu, vol. 8 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷二十三~卷二十五; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057449.cn",
+"title": "欽定儀象考成·卷二十六 (Siku Quanshu, vol. 9 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷二十六; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06057450.cn",
+"title": "欽定儀象考成·卷二十七~卷三十 (Siku Quanshu, vol. 10 of 10)",
+"author": "Imperial Astronomical Bureau",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:astronomical-bureau-impe:1-3-instruments-survey-vols",
+"note": "#8053 completes a set held in part (1 of 10 冊 before this import). IA: 欽定儀象考成·卷二十七~卷三十; 四庫全書 子部. Same IA id run as the held volumes (06057441.cn…06057450.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06075337.cn",
+"title": "易象圖說·外篇卷上~卷下 (Siku Quanshu Huiyao, vol. 2 of 2)",
+"author": "Zhang Li",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:a:zhang-li:ching-diagrams-explanation-illustrated-images",
+"note": "#8053 completes a set held in part (1 of 2 冊 before this import). IA: 易象圖說·外篇卷上~卷下; 四庫全書薈要 经部. Same IA id run as the held volumes (06075336.cn…06075337.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06070921.cn",
+"title": "奇器圖說·卷二 (Siku Quanshu, vol. 2 of 3)",
+"author": "Johann Terrenz Schreck and Wang Zheng",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:johann-terrenz-schreck-and-wang-zheng:1-explanation-illustrated-machines-marvelous-vol",
+"note": "#8053 completes a set held in part (1 of 3 冊 before this import). IA: 奇器圖說·卷二; 四庫全書 子部. Same IA id run as the held volumes (06070920.cn…06070922.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06070922.cn",
+"title": "奇器圖說·卷三 (Siku Quanshu, vol. 3 of 3)",
+"author": "Johann Terrenz Schreck and Wang Zheng",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:johann-terrenz-schreck-and-wang-zheng:1-explanation-illustrated-machines-marvelous-vol",
+"note": "#8053 completes a set held in part (1 of 3 冊 before this import). IA: 奇器圖說·卷三; 四庫全書 子部. Same IA id run as the held volumes (06070920.cn…06070922.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06076376.cn",
+"title": "抱朴子內篇·卷二 (Siku Quanshu Huiyao, vol. 2 of 4)",
+"author": "Ge Hong",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:a:ge-hong:1-baopuzi-quanshu-siku",
+"note": "#8053 completes a set held in part (1 of 4 冊 before this import). IA: 抱朴子內篇·卷二; 四庫全書薈要 子部. Same IA id run as the held volumes (06076375.cn…06076378.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06076377.cn",
+"title": "抱朴子內篇·卷三 (Siku Quanshu Huiyao, vol. 3 of 4)",
+"author": "Ge Hong",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:a:ge-hong:1-baopuzi-quanshu-siku",
+"note": "#8053 completes a set held in part (1 of 4 冊 before this import). IA: 抱朴子內篇·卷三; 四庫全書薈要 子部. Same IA id run as the held volumes (06076375.cn…06076378.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06076378.cn",
+"title": "抱朴子內篇·卷四 (Siku Quanshu Huiyao, vol. 4 of 4)",
+"author": "Ge Hong",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:a:ge-hong:1-baopuzi-quanshu-siku",
+"note": "#8053 completes a set held in part (1 of 4 冊 before this import). IA: 抱朴子內篇·卷四; 四庫全書薈要 子部. Same IA id run as the held volumes (06076375.cn…06076378.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06054847.cn",
+"title": "周髀算經·卷下之一~卷下之三 (Siku Quanshu, vol. 2 of 2)",
+"author": "Unknown (Zhou Dynasty, c. 1000 BCE)",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:n:unknown:1-arithmetical-classic-gnomon-vol",
+"note": "#8053 completes a set held in part (1 of 2 冊 before this import). IA: 周髀算經·卷下之一~卷下之三; 四庫全書 子部. Same IA id run as the held volumes (06054846.cn…06054847.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051978.cn",
+"title": "備急千金要方·卷一 (Siku Quanshu, vol. 1 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷一; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051979.cn",
+"title": "備急千金要方·卷二~卷三 (Siku Quanshu, vol. 2 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷二~卷三; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051980.cn",
+"title": "備急千金要方·卷四~卷六 (Siku Quanshu, vol. 3 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷四~卷六; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051981.cn",
+"title": "備急千金要方·卷七~卷十一 (Siku Quanshu, vol. 4 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷七~卷十一; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051982.cn",
+"title": "備急千金要方·卷十二~卷十六 (Siku Quanshu, vol. 5 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷十二~卷十六; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051983.cn",
+"title": "備急千金要方·卷十七~卷二十一 (Siku Quanshu, vol. 6 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷十七~卷二十一; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051984.cn",
+"title": "備急千金要方·卷二十二~卷二十五 (Siku Quanshu, vol. 7 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷二十二~卷二十五; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051986.cn",
+"title": "備急千金要方·卷三十二~卷三十六 (Siku Quanshu, vol. 9 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷三十二~卷三十六; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051987.cn",
+"title": "備急千金要方·卷三十七~卷四十 (Siku Quanshu, vol. 10 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷三十七~卷四十; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051988.cn",
+"title": "備急千金要方·卷四十一~卷四十四 (Siku Quanshu, vol. 11 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷四十一~卷四十四; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051989.cn",
+"title": "備急千金要方·卷四十五~卷五十 (Siku Quanshu, vol. 12 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷四十五~卷五十; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051990.cn",
+"title": "備急千金要方·卷五十一~卷五十四 (Siku Quanshu, vol. 13 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷五十一~卷五十四; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051991.cn",
+"title": "備急千金要方·卷五十五~卷五十七 (Siku Quanshu, vol. 14 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷五十五~卷五十七; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051992.cn",
+"title": "備急千金要方·卷五十八~卷五十九 (Siku Quanshu, vol. 15 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷五十八~卷五十九; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051993.cn",
+"title": "備急千金要方·卷六十~卷六十二 (Siku Quanshu, vol. 16 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷六十~卷六十二; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051994.cn",
+"title": "備急千金要方·卷六十三~卷六十六 (Siku Quanshu, vol. 17 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷六十三~卷六十六; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051995.cn",
+"title": "備急千金要方·卷六十七~卷七十一 (Siku Quanshu, vol. 18 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷六十七~卷七十一; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051996.cn",
+"title": "備急千金要方·卷七十二~卷七十六 (Siku Quanshu, vol. 19 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷七十二~卷七十六; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051997.cn",
+"title": "備急千金要方·卷七十七~卷八十 (Siku Quanshu, vol. 20 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷七十七~卷八十; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051998.cn",
+"title": "備急千金要方·卷八十一~卷八十五 (Siku Quanshu, vol. 21 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷八十一~卷八十五; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06051999.cn",
+"title": "備急千金要方·卷八十六~卷九十 (Siku Quanshu, vol. 22 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷八十六~卷九十; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06052000.cn",
+"title": "備急千金要方·卷九十一~卷九十三 (Siku Quanshu, vol. 23 of 23)",
+"author": "Sun Simiao 孫思邈",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "local:a:sun-simiao:26-31-emergencies-essential-formulas-gold-juan-thousand-worth",
+"note": "#8053 completes a set held in part (1 of 23 冊 before this import). IA: 備急千金要方·卷九十一~卷九十三; 四庫全書 子部. Same IA id run as the held volumes (06051978.cn…06052000.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06073457.cn",
+"title": "淮南鴻烈解·卷十一~卷十三 (Siku Quanshu Huiyao, vol. 4 of 7)",
+"author": "劉安 (Liu An) et al.",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:n::quanshu-siku",
+"note": "#8053 completes a set held in part (3 of 7 冊 before this import). IA: 淮南鴻烈解·卷十一~卷十三; 四庫全書薈要 子部. Same IA id run as the held volumes (06073454.cn…06073460.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06073458.cn",
+"title": "淮南鴻烈解·卷十四~卷十六 (Siku Quanshu Huiyao, vol. 5 of 7)",
+"author": "劉安 (Liu An) et al.",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:n::quanshu-siku",
+"note": "#8053 completes a set held in part (3 of 7 冊 before this import). IA: 淮南鴻烈解·卷十四~卷十六; 四庫全書薈要 子部. Same IA id run as the held volumes (06073454.cn…06073460.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06073459.cn",
+"title": "淮南鴻烈解·卷十七~卷十八 (Siku Quanshu Huiyao, vol. 6 of 7)",
+"author": "劉安 (Liu An) et al.",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:n::quanshu-siku",
+"note": "#8053 completes a set held in part (3 of 7 冊 before this import). IA: 淮南鴻烈解·卷十七~卷十八; 四庫全書薈要 子部. Same IA id run as the held volumes (06073454.cn…06073460.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06073460.cn",
+"title": "淮南鴻烈解·卷十九~卷二十一 (Siku Quanshu Huiyao, vol. 7 of 7)",
+"author": "劉安 (Liu An) et al.",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "local:n::quanshu-siku",
+"note": "#8053 completes a set held in part (3 of 7 冊 before this import). IA: 淮南鴻烈解·卷十九~卷二十一; 四庫全書薈要 子部. Same IA id run as the held volumes (06073454.cn…06073460.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061883.cn",
+"title": "古今事文類聚前集·卷七~卷九 (Siku Quanshu, vol. 4 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷七~卷九; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061884.cn",
+"title": "古今事文類聚前集·卷十~卷十一 (Siku Quanshu, vol. 5 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷十~卷十一; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061885.cn",
+"title": "古今事文類聚前集·卷十二~卷十三 (Siku Quanshu, vol. 6 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷十二~卷十三; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061886.cn",
+"title": "古今事文類聚前集·卷十四~卷十五 (Siku Quanshu, vol. 7 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷十四~卷十五; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061887.cn",
+"title": "古今事文類聚前集·卷十六~卷十七 (Siku Quanshu, vol. 8 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷十六~卷十七; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061888.cn",
+"title": "古今事文類聚前集·卷十八~卷二十 (Siku Quanshu, vol. 9 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷十八~卷二十; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061889.cn",
+"title": "古今事文類聚前集·卷二十一~卷二十三 (Siku Quanshu, vol. 10 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷二十一~卷二十三; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061890.cn",
+"title": "古今事文類聚前集·卷二十四~卷二十五 (Siku Quanshu, vol. 11 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷二十四~卷二十五; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061891.cn",
+"title": "古今事文類聚前集·卷二十六~卷二十七 (Siku Quanshu, vol. 12 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷二十六~卷二十七; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061892.cn",
+"title": "古今事文類聚前集·卷二十八~卷二十九 (Siku Quanshu, vol. 13 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷二十八~卷二十九; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061893.cn",
+"title": "古今事文類聚前集·卷三十~卷三十一 (Siku Quanshu, vol. 14 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷三十~卷三十一; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061894.cn",
+"title": "古今事文類聚前集·卷三十二~卷三十三 (Siku Quanshu, vol. 15 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷三十二~卷三十三; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061895.cn",
+"title": "古今事文類聚前集·卷三十四~卷三十五 (Siku Quanshu, vol. 16 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷三十四~卷三十五; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061896.cn",
+"title": "古今事文類聚前集·卷三十六~卷三十七 (Siku Quanshu, vol. 17 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷三十六~卷三十七; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061897.cn",
+"title": "古今事文類聚前集·卷三十八~卷三十九 (Siku Quanshu, vol. 18 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷三十八~卷三十九; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061898.cn",
+"title": "古今事文類聚前集·卷四十~卷四十二 (Siku Quanshu, vol. 19 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷四十~卷四十二; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061899.cn",
+"title": "古今事文類聚前集·卷四十三~卷四十五 (Siku Quanshu, vol. 20 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷四十三~卷四十五; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061900.cn",
+"title": "古今事文類聚前集·卷四十六~卷四十八 (Siku Quanshu, vol. 21 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷四十六~卷四十八; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061901.cn",
+"title": "古今事文類聚前集·卷四十九~卷五十 (Siku Quanshu, vol. 22 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷四十九~卷五十; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061902.cn",
+"title": "古今事文類聚前集·卷五十一~卷五十三 (Siku Quanshu, vol. 23 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷五十一~卷五十三; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061903.cn",
+"title": "古今事文類聚前集·卷五十四~卷五十七 (Siku Quanshu, vol. 24 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷五十四~卷五十七; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061904.cn",
+"title": "古今事文類聚前集·卷五十八~卷六十 (Siku Quanshu, vol. 25 of 25)",
+"author": "祝穆",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0024",
+"note": "#8053 completes a set held in part (3 of 25 冊 before this import). IA: 古今事文類聚前集·卷五十八~卷六十; 四庫全書 子部. Same IA id run as the held volumes (06061880.cn…06061904.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082068.cn",
+"title": "御定康熙字典·卷三 (Siku Quanshu Huiyao, vol. 4 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082069.cn",
+"title": "御定康熙字典·卷四 (Siku Quanshu Huiyao, vol. 5 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷四; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082070.cn",
+"title": "御定康熙字典·卷五 (Siku Quanshu Huiyao, vol. 6 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷五; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082071.cn",
+"title": "御定康熙字典·卷六 (Siku Quanshu Huiyao, vol. 7 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷六; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082072.cn",
+"title": "御定康熙字典·卷七 (Siku Quanshu Huiyao, vol. 8 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷七; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082073.cn",
+"title": "御定康熙字典·卷八 (Siku Quanshu Huiyao, vol. 9 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷八; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082078.cn",
+"title": "御定康熙字典·卷十四 (Siku Quanshu Huiyao, vol. 14 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷十四; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082079.cn",
+"title": "御定康熙字典·卷十五 (Siku Quanshu Huiyao, vol. 15 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷十五; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082081.cn",
+"title": "御定康熙字典·卷十七 (Siku Quanshu Huiyao, vol. 17 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷十七; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082083.cn",
+"title": "御定康熙字典·卷十九 (Siku Quanshu Huiyao, vol. 19 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷十九; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082086.cn",
+"title": "御定康熙字典·卷二十二 (Siku Quanshu Huiyao, vol. 22 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十二; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082087.cn",
+"title": "御定康熙字典·卷二十三 (Siku Quanshu Huiyao, vol. 23 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十三; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082088.cn",
+"title": "御定康熙字典·卷二十四 (Siku Quanshu Huiyao, vol. 24 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十四; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082089.cn",
+"title": "御定康熙字典·卷二十五 (Siku Quanshu Huiyao, vol. 25 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十五; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082090.cn",
+"title": "御定康熙字典·卷二十六 (Siku Quanshu Huiyao, vol. 26 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十六; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082091.cn",
+"title": "御定康熙字典·卷二十七 (Siku Quanshu Huiyao, vol. 27 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十七; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082092.cn",
+"title": "御定康熙字典·卷二十八 (Siku Quanshu Huiyao, vol. 28 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十八; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082093.cn",
+"title": "御定康熙字典·卷二十九 (Siku Quanshu Huiyao, vol. 29 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷二十九; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082094.cn",
+"title": "御定康熙字典·卷三十 (Siku Quanshu Huiyao, vol. 30 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三十; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082095.cn",
+"title": "御定康熙字典·卷三十一 (Siku Quanshu Huiyao, vol. 31 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三十一; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082096.cn",
+"title": "御定康熙字典·卷三十二 (Siku Quanshu Huiyao, vol. 32 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三十二; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082097.cn",
+"title": "御定康熙字典·卷三十三 (Siku Quanshu Huiyao, vol. 33 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三十三; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082098.cn",
+"title": "御定康熙字典·卷三十四 (Siku Quanshu Huiyao, vol. 34 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三十四; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082099.cn",
+"title": "御定康熙字典·卷三十五 (Siku Quanshu Huiyao, vol. 35 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·卷三十五; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082101.cn",
+"title": "御定康熙字典·補遺 (Siku Quanshu Huiyao, vol. 37 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·補遺; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06082102.cn",
+"title": "御定康熙字典·備考 (Siku Quanshu Huiyao, vol. 38 of 38)",
+"author": "張玉書",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1j0048",
+"note": "#8053 completes a set held in part (12 of 38 冊 before this import). IA: 御定康熙字典·備考; 四庫全書薈要 經部. Same IA id run as the held volumes (06082065.cn…06082102.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065108.cn",
+"title": "太平御覽·目錄七~目錄十 (Siku Quanshu, vol. 3 of 3)",
+"author": "李昉",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0012",
+"note": "#8053 completes a set held in part (2 of 3 冊 before this import). IA: 太平御覽·目錄七~目錄十; 四庫全書 子部. Same IA id run as the held volumes (06065106.cn…06065108.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061975.cn",
+"title": "古今源流至論前集·卷八~卷十 (Siku Quanshu, vol. 4 of 4)",
+"author": "林駧",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0031",
+"note": "#8053 completes a set held in part (3 of 4 冊 before this import). IA: 古今源流至論前集·卷八~卷十; 四庫全書 子部. Same IA id run as the held volumes (06061972.cn…06061975.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066974.cn",
+"title": "四書大全論語集註大全·卷六 (Siku Quanshu, vol. 4 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷六; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066975.cn",
+"title": "四書大全論語集註大全·卷七 (Siku Quanshu, vol. 5 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷七; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066976.cn",
+"title": "四書大全論語集註大全·卷八~卷九 (Siku Quanshu, vol. 6 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷八~卷九; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066977.cn",
+"title": "四書大全論語集註大全·卷十~卷十一 (Siku Quanshu, vol. 7 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷十~卷十一; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066978.cn",
+"title": "四書大全論語集註大全·卷十二~卷十三 (Siku Quanshu, vol. 8 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷十二~卷十三; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066979.cn",
+"title": "四書大全論語集註大全·卷十四 (Siku Quanshu, vol. 9 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷十四; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066980.cn",
+"title": "四書大全論語集註大全·卷十五~卷十六 (Siku Quanshu, vol. 10 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷十五~卷十六; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066981.cn",
+"title": "四書大全論語集註大全·卷十七~卷十八 (Siku Quanshu, vol. 11 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷十七~卷十八; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06066982.cn",
+"title": "四書大全論語集註大全·卷十九~卷二十 (Siku Quanshu, vol. 12 of 12)",
+"author": "胡廣",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1h0043",
+"note": "#8053 completes a set held in part (3 of 12 冊 before this import). IA: 四書大全論語集註大全·卷十九~卷二十; 四庫全書 經部. Same IA id run as the held volumes (06066971.cn…06066982.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061993.cn",
+"title": "翰苑新書前集·卷十三~卷十五 (Siku Quanshu, vol. 4 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷十三~卷十五; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061994.cn",
+"title": "翰苑新書前集·卷十六~卷二十一 (Siku Quanshu, vol. 5 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷十六~卷二十一; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061995.cn",
+"title": "翰苑新書前集·卷二十二~卷二十五 (Siku Quanshu, vol. 6 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷二十二~卷二十五; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061996.cn",
+"title": "翰苑新書前集·卷二十六~卷三十一 (Siku Quanshu, vol. 7 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷二十六~卷三十一; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061997.cn",
+"title": "翰苑新書前集·卷三十二~卷三十七 (Siku Quanshu, vol. 8 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷三十二~卷三十七; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061998.cn",
+"title": "翰苑新書前集·卷三十八~卷四十五 (Siku Quanshu, vol. 9 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷三十八~卷四十五; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061999.cn",
+"title": "翰苑新書前集·卷四十六~卷五十一 (Siku Quanshu, vol. 10 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷四十六~卷五十一; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06062000.cn",
+"title": "翰苑新書前集·卷五十二~卷五十六 (Siku Quanshu, vol. 11 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷五十二~卷五十六; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06062001.cn",
+"title": "翰苑新書前集·卷五十七~卷六十 (Siku Quanshu, vol. 12 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷五十七~卷六十; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06062002.cn",
+"title": "翰苑新書前集·卷六十一~卷六十四 (Siku Quanshu, vol. 13 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷六十一~卷六十四; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06062003.cn",
+"title": "翰苑新書前集·卷六十五~卷六十八 (Siku Quanshu, vol. 14 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷六十五~卷六十八; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06062004.cn",
+"title": "翰苑新書前集·卷六十九~卷七十 (Siku Quanshu, vol. 15 of 15)",
+"author": "闕名",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0038",
+"note": "#8053 completes a set held in part (3 of 15 冊 before this import). IA: 翰苑新書前集·卷六十九~卷七十; 四庫全書 子部. Same IA id run as the held volumes (06061990.cn…06062004.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061908.cn",
+"title": "古今合璧事類備要前集·卷十一~卷十四 (Siku Quanshu, vol. 4 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷十一~卷十四; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061909.cn",
+"title": "古今合璧事類備要前集·卷十五~卷十七 (Siku Quanshu, vol. 5 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷十五~卷十七; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061910.cn",
+"title": "古今合璧事類備要前集·卷十八~卷二十一 (Siku Quanshu, vol. 6 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷十八~卷二十一; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061911.cn",
+"title": "古今合璧事類備要前集·卷二十二~卷二十六 (Siku Quanshu, vol. 7 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷二十二~卷二十六; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061912.cn",
+"title": "古今合璧事類備要前集·卷二十七~卷二十九 (Siku Quanshu, vol. 8 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷二十七~卷二十九; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061913.cn",
+"title": "古今合璧事類備要前集·卷三十~卷三十三 (Siku Quanshu, vol. 9 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷三十~卷三十三; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061914.cn",
+"title": "古今合璧事類備要前集·卷三十四~卷三十九 (Siku Quanshu, vol. 10 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷三十四~卷三十九; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061915.cn",
+"title": "古今合璧事類備要前集·卷四十~卷四十四 (Siku Quanshu, vol. 11 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷四十~卷四十四; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061916.cn",
+"title": "古今合璧事類備要前集·卷四十五~卷四十九 (Siku Quanshu, vol. 12 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷四十五~卷四十九; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061917.cn",
+"title": "古今合璧事類備要前集·卷五十~卷五十四 (Siku Quanshu, vol. 13 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷五十~卷五十四; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061918.cn",
+"title": "古今合璧事類備要前集·卷五十五~卷五十七 (Siku Quanshu, vol. 14 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷五十五~卷五十七; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061919.cn",
+"title": "古今合璧事類備要前集·卷五十八~卷六十二 (Siku Quanshu, vol. 15 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷五十八~卷六十二; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061920.cn",
+"title": "古今合璧事類備要前集·卷六十三~卷六十六 (Siku Quanshu, vol. 16 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷六十三~卷六十六; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06061921.cn",
+"title": "古今合璧事類備要前集·卷六十七~卷六十九 (Siku Quanshu, vol. 17 of 17)",
+"author": "謝維新",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0030",
+"note": "#8053 completes a set held in part (3 of 17 冊 before this import). IA: 古今合璧事類備要前集·卷六十七~卷六十九; 四庫全書 子部. Same IA id run as the held volumes (06061905.cn…06061921.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081712.cn",
+"title": "御定子史精華·卷一~卷二 (Siku Quanshu Huiyao, vol. 1 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷一~卷二; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081713.cn",
+"title": "御定子史精華·卷三~卷六 (Siku Quanshu Huiyao, vol. 2 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷三~卷六; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081714.cn",
+"title": "御定子史精華·卷七~卷九 (Siku Quanshu Huiyao, vol. 3 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷七~卷九; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081715.cn",
+"title": "御定子史精華·卷十~卷十二 (Siku Quanshu Huiyao, vol. 4 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷十~卷十二; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081722.cn",
+"title": "御定子史精華·卷三十七~卷三十九 (Siku Quanshu Huiyao, vol. 11 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷三十七~卷三十九; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081728.cn",
+"title": "御定子史精華·卷五十四~卷五十六 (Siku Quanshu Huiyao, vol. 17 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷五十四~卷五十六; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081748.cn",
+"title": "御定子史精華·卷一百十四~卷一百十五 (Siku Quanshu Huiyao, vol. 37 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷一百十四~卷一百十五; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081760.cn",
+"title": "御定子史精華·卷一百四十三~卷一百四十六 (Siku Quanshu Huiyao, vol. 49 of 54)",
+"author": "吳士玉",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3k0058",
+"note": "#8053 completes a set held in part (46 of 54 冊 before this import). IA: 御定子史精華·卷一百四十三~卷一百四十六; 四庫全書薈要 子部. Same IA id run as the held volumes (06081712.cn…06081765.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065985.cn",
+"title": "三易洞璣·卷十四~卷十五 (Siku Quanshu, vol. 6 of 7)",
+"author": "黃道周",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3g0016",
+"note": "#8053 completes a set held in part (5 of 7 冊 before this import). IA: 三易洞璣·卷十四~卷十五; 四庫全書 子部. Same IA id run as the held volumes (06065980.cn…06065986.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065986.cn",
+"title": "三易洞璣·卷十六 (Siku Quanshu, vol. 7 of 7)",
+"author": "黃道周",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3g0016",
+"note": "#8053 completes a set held in part (5 of 7 冊 before this import). IA: 三易洞璣·卷十六; 四庫全書 子部. Same IA id run as the held volumes (06065980.cn…06065986.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065938.cn",
+"title": "易通變·卷一~卷三 (Siku Quanshu, vol. 1 of 14)",
+"author": "張行成",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3g0008",
+"note": "#8053 completes a set held in part (13 of 14 冊 before this import). IA: 易通變·卷一~卷三; 四庫全書 子部. Same IA id run as the held volumes (06065938.cn…06065951.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065972.cn",
+"title": "天原發微·卷二上~卷二下 (Siku Quanshu, vol. 3 of 7)",
+"author": "鮑雲龍",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3g0013",
+"note": "#8053 completes a set held in part (4 of 7 冊 before this import). IA: 天原發微·卷二上~卷二下; 四庫全書 子部. Same IA id run as the held volumes (06065970.cn…06065976.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065975.cn",
+"title": "天原發微·卷五上 (Siku Quanshu, vol. 6 of 7)",
+"author": "鮑雲龍",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3g0013",
+"note": "#8053 completes a set held in part (4 of 7 冊 before this import). IA: 天原發微·卷五上; 四庫全書 子部. Same IA id run as the held volumes (06065970.cn…06065976.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06065976.cn",
+"title": "天原發微·卷五下 (Siku Quanshu, vol. 7 of 7)",
+"author": "鮑雲龍",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3g0013",
+"note": "#8053 completes a set held in part (4 of 7 冊 before this import). IA: 天原發微·卷五下; 四庫全書 子部. Same IA id run as the held volumes (06065970.cn…06065976.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06081655.cn",
+"title": "論衡·卷二十七~卷三十 (Siku Quanshu Huiyao, vol. 9 of 9)",
+"author": "王充",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR3j0080",
+"note": "#8053 completes a set held in part (8 of 9 冊 before this import). IA: 論衡·卷二十七~卷三十; 四庫全書薈要 子部. Same IA id run as the held volumes (06081647.cn…06081655.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048588.cn",
+"title": "春秋大事表興圖 (Siku Quanshu, vol. 36 of 36)",
+"author": "顧棟高",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1e0114",
+"note": "#8053 completes a set held in part (35 of 36 冊 before this import). IA: 春秋大事表興圖; 四庫全書 經部. Same IA id run as the held volumes (06048553.cn…06048588.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06074786.cn",
+"title": "欽定春秋傳說彙纂·卷首上 (Siku Quanshu Huiyao, vol. 1 of 29)",
+"author": "王掞",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1e0094",
+"note": "#8053 completes a set held in part (28 of 29 冊 before this import). IA: 欽定春秋傳說彙纂·卷首上; 四庫全書薈要 经部. Same IA id run as the held volumes (06074786.cn…06074814.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06074816.cn",
+"title": "御纂春秋直解·卷三上~卷四 (Siku Quanshu Huiyao, vol. 2 of 8)",
+"author": "傅恒",
+"year": 1778,
+"lang": "Chinese",
+"work_id": "kr:KR1e0095",
+"note": "#8053 completes a set held in part (7 of 8 冊 before this import). IA: 御纂春秋直解·卷三上~卷四; 四庫全書薈要 经部. Same IA id run as the held volumes (06074815.cn…06074822.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048590.cn",
+"title": "樂書·卷一 (Siku Quanshu, vol. 1 of 29)",
+"author": "陳暘",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1i0002",
+"note": "#8053 completes a set held in part (26 of 29 冊 before this import). IA: 樂書·卷一; 四庫全書 經部. Same IA id run as the held volumes (06048590.cn…06048618.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048609.cn",
+"title": "樂書·卷一百三十七~卷一百四十一 (Siku Quanshu, vol. 20 of 29)",
+"author": "陳暘",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR1i0002",
+"note": "#8053 completes a set held in part (26 of 29 冊 before this import). IA: 樂書·卷一百三十七~卷一百四十一; 四庫全書 經部. Same IA id run as the held volumes (06048590.cn…06048618.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048749.cn",
+"title": "儒門事親·卷一~卷二 (Siku Quanshu, vol. 1 of 6)",
+"author": "張從正",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3e0051",
+"note": "#8053 completes a set held in part (1 of 6 冊 before this import). IA: 儒門事親·卷一~卷二; 四庫全書 子部. Same IA id run as the held volumes (06048749.cn…06048754.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048750.cn",
+"title": "儒門事親·卷三~卷四 (Siku Quanshu, vol. 2 of 6)",
+"author": "張從正",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3e0051",
+"note": "#8053 completes a set held in part (1 of 6 冊 before this import). IA: 儒門事親·卷三~卷四; 四庫全書 子部. Same IA id run as the held volumes (06048749.cn…06048754.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048751.cn",
+"title": "儒門事親·卷五~卷六 (Siku Quanshu, vol. 3 of 6)",
+"author": "張從正",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3e0051",
+"note": "#8053 completes a set held in part (1 of 6 冊 before this import). IA: 儒門事親·卷五~卷六; 四庫全書 子部. Same IA id run as the held volumes (06048749.cn…06048754.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048752.cn",
+"title": "儒門事親·卷七~卷十 (Siku Quanshu, vol. 4 of 6)",
+"author": "張從正",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3e0051",
+"note": "#8053 completes a set held in part (1 of 6 冊 before this import). IA: 儒門事親·卷七~卷十; 四庫全書 子部. Same IA id run as the held volumes (06048749.cn…06048754.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06048753.cn",
+"title": "儒門事親·卷十一~卷十二 (Siku Quanshu, vol. 5 of 6)",
+"author": "張從正",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3e0051",
+"note": "#8053 completes a set held in part (1 of 6 冊 before this import). IA: 儒門事親·卷十一~卷十二; 四庫全書 子部. Same IA id run as the held volumes (06048749.cn…06048754.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06071866.cn",
+"title": "廣博物志·卷八~卷九 (Siku Quanshu, vol. 4 of 31)",
+"author": "董斯張",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0054",
+"note": "#8053 completes a set held in part (28 of 31 冊 before this import). IA: 廣博物志·卷八~卷九; 四庫全書 子部. Same IA id run as the held volumes (06071862.cn…06071892.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+},
+{
+"id": "06071876.cn",
+"title": "廣博物志·卷二十六~卷二十七 (Siku Quanshu, vol. 14 of 31)",
+"author": "董斯張",
+"year": 1782,
+"lang": "Chinese",
+"work_id": "kr:KR3k0054",
+"note": "#8053 completes a set held in part (28 of 31 冊 before this import). IA: 廣博物志·卷二十六~卷二十七; 四庫全書 子部. Same IA id run as the held volumes (06071862.cn…06071892.cn), so the same copy. Juan = IA's label; vol. k = position in that run."
+}
+]
+}

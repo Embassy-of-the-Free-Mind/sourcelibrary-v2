@@ -1,0 +1,202 @@
+[
+ {
+  "page_id": "6a3c5f57879008ba7e1548dd",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches all 8 columns (次及乎分二掛一…何者天); English is complete. Only nuance: 可與酧酢 is rendered 'can be consulted' rather than 'can respond (to spirits/men)'."
+ },
+ {
+  "page_id": "6a3c712539b4508b04e522f7",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Leaf matches (人將不食…依已而安或). The small-script heading and notes 與張敬夫論癸巳論語說, 此雖非大義所係亦當知之 and 荅陳安卿〇以上文集四條 are all rendered. He Yan preface wording is slightly loose but keeps its sense."
+ },
+ {
+  "page_id": "6a3c722901fe4f593c1dcb6e",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches all 8 columns (乎此斯為格致…所以為敎皆本). English is faithful; small liberties such as 循理 as 'cosmic order' and 致主有本末 as 'roots and branches of serving the sovereign'."
+ },
+ {
+  "page_id": "6a3c7aaf01fe4f593c219513",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Leaf matches (宰我冉求之徒…則亦顏子矣 熹). Both entries and their recorder tags 大必 and 熹 are translated accurately."
+ },
+ {
+  "page_id": "6a3cbb2b3dce6cfad74a1338",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Leaf matches (及司馬及獲者…獲者持), including the interlinear note 挾謂置矢於弓. The positions and choreography are correct. Minor: 乘矢 is romanised 'chengyi', and 張弓 is rendered 'draws the bow'."
+ },
+ {
+  "page_id": "6a3cbb3e3dce6cfad74a1f54",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches leaf (juan 196, 白道/高弧 angles, Jiang Yong comment); figures 85°1'30\" + 4°58'30\" = 90° correct; only issue: large-character heading 得用時白道與髙弧交角 merged into the following sentence ('When the obtained angle... exceeds ninety degrees')."
+ },
+ {
+  "page_id": "6a3cbba487ee3d48c89cfcf9",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 2,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "OCR correct. 音義沈音鈎刋本音訛皆今改 = 'Shen [Chong] reads it gou; printed edition miswrites 音 as 皆, now corrected', but English treats 沈 as the glossed word ('regarding shen deep/Shen') and reads 皆 as 'All instances have now been corrected'; also 後一行 rendered 'the last line' (should be line one), a minor slip."
+ },
+ {
+  "page_id": "6a3cc2f2af74b230c690af56",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "OCR matches all 16 columns (假樂/公劉/泂酌/卷阿, then 由庚…湛露彤弓); translation follows closely; 假樂 rendered 'Approaching Joy' (假=嘉, 'Fine Joy') and 既見因饗燕而賜之 phrased awkwardly ('Having met')."
+ },
+ {
+  "page_id": "6ae0bdd14adf2ffb52f727cb",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Shiji 太史公自序 entries 12-15 (穰侯, 白起王翦, 孟子荀卿, 孟嘗君) match the image; Xu Guang notes 苞一作施 and 一作壞 are placed correctly; 武安為率 / 王翦之能 split correctly."
+ },
+ {
+  "page_id": "6ae0bef64adf2ffb52f73097",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Hanshu 食貨志 juan 24上: firewood/班白, night-spinning with 45 days (Fu Qian note), 燎音力召反, 餘子 in 序室, age-eight 小學 with Su Lin note all match the image; OCR's stray '金 金 匹' header noise does not affect the English."
+ },
+ {
+  "page_id": "6ae0bf464adf2ffb52f733c7",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Hanshu geography of Taiyuan commandery; counties Jinyang-Daling, fief/waterway/phonetic notes all match the leaf column by column."
+ },
+ {
+  "page_id": "6ae0bf904adf2ffb52f73601",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Battle of Jingxing narrative and Yan Shigu/Liu Fengshi/Song Qi glosses faithful; trailing 'Chapter 34, sheet 23' note is a garbled render of the 欽定四庫全書 margin but flagged as editorial."
+ },
+ {
+  "page_id": "6ae0c19b4adf2ffb52f741dd",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "He Wu / He Shou banquet episode and Yan Shigu glosses match the leaf; header 欽定四庫全書 卷八十六 confirmed on image."
+ },
+ {
+  "page_id": "6ae0c1e14adf2ffb52f74393",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "辠其姊子 means Guo Xie laid the blame on his (dead) nephew; English 'took upon himself the guilt of his nephew' reverses who is held at fault. OCR is correct, so not from OCR."
+ },
+ {
+  "page_id": "6ae0c3174adf2ffb52f74cf6",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "Hou Hanshu drought apocrypha (Chunqiu kaoyi you, Guanzi, Fang Chu) and the Jianwu/Yongping/Zhanghe drought dates all match the leaf; reign-year conversions correct."
+ },
+ {
+  "page_id": "6ae0c53b4adf2ffb52f75b46",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Text matches the leaf from 天子還洛陽 to 霧氣交侵. The final 'A great' comes from the OCR's stray 大, which is really part of the folio number in the margin. 士孫瑞 is romanised as 'Shi Sunrui' (the surname is Shisun). Both are minor."
+ },
+ {
+  "page_id": "6ae0c5df4adf2ffb52f75fe6",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Leaf ends at 大者萬餘戶小. The English adds 'while the smaller ones have several thousand households', which is the next leaf's text and only a clause, so it is not counted as invented. The OCR's last line 次宅句事人二句 is garbage that is not on the leaf. 檀弓 is rendered as 'birch bows' (minor)."
+ },
+ {
+  "page_id": "6ae0c6694adf2ffb52f76292",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Text matches the leaf from 申南安郡地震 to 破虜將軍. The English guesses the cut-off stem as 'jianshen' (a typo for jiashen). It adds 'at the ancestral temple of the founder', which is not on this leaf. 太常 is rendered as 'Grand Ordinary'. All of these are minor."
+ },
+ {
+  "page_id": "6ae0c6cb4adf2ffb52f767ac",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR matches the image column by column: the Hong Yan note, then 太祖乃遣赴救吳, through 入為丞. The English is faithful, including the 曲周民 ox-sacrifice pardon and the 三典/三章 reasoning."
+ },
+ {
+  "page_id": "6ae0c7604adf2ffb52f76cb5",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR matches the leaf from 也權弗能用之 to 有司又奏立后. The English is accurate, and the date note 242 CE (赤烏五年) is correct."
+ }
+]
