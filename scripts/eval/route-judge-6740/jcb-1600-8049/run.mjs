@@ -21,6 +21,7 @@
  *   ROUTE_JUDGE_WEEKLY_MAX=999 node judge.mjs judge --out=DIR   (judge.mjs, unchanged; Opus through claude -p)
  *   node run.mjs plant    --out=DIR ; judge again               2 planted items a cell
  *   node run.mjs score    --out=DIR                             RULE.md's measures → DIR/score.json
+ *   node run.mjs pooled   --out=DIR,DIR2                        a first and second draw scored together → DIR/pooled.json
  *   node --env-file=… run.mjs apply   --out=DIR [--apply]       write each test page's ACCEPTED read (first reads only,
  *                                                               holds kept); a rejected page stays unread
  * Read-only except `apply --apply`.
@@ -349,6 +350,47 @@ function score() {
   W('score.json', out);
 }
 
+/**
+ * pooled --out=DIR,DIR2: the rule over a first draw and its second draw together (new books only, so one page a book
+ * still holds), per cell. `marker_guard` scores the same pages with every read whose written text carries a
+ * <<<BEGIN>>>/<<<END>>> marker counted as unwritten — what unwrapRead refuses since #8296 — reported beside the rule's
+ * own figure, never in place of it. Writes pooled.json into the first DIR.
+ */
+function pooled() {
+  const dirs = String(arg('out')).split(',').map((d) => path.resolve(d));
+  const rd = (d, f) => JSON.parse(fs.readFileSync(path.join(d, f), 'utf8'));
+  const marker = /<<<\s*(?:BEGIN|END)\s*>>>/;
+  const out = { scored_at: new Date().toISOString(), dirs, cells: {} };
+  const cells = [...new Set(dirs.flatMap((d) => Object.keys(rd(d, 'sample.json').cells)))];
+  for (const cell of cells) {
+    const per = dirs.filter((d) => rd(d, 'sample.json').cells[cell]).map((d) => {
+      const V = new Map(jsonl(path.join(d, 'verdicts-opus.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
+      const items = new Map(rd(d, 'packet.json').items.map((i) => [i.id, i]));
+      return { V, items, rows: rd(d, 'key.json').filter((k) => k.cell === cell), drawn: rd(d, 'sample.json').cells[cell].pages.length };
+    });
+    const measure = (guard) => {
+      let n = 0, acc = 0, wrong = 0, wpN = 0, wpRej = 0, wpBad = 0, plN = 0, plC = 0, drawn = 0, cut = 0;
+      for (const { V, items, rows, drawn: dn } of per) {
+        drawn += dn;
+        for (const k of rows) {
+          const v = V.get(k.judged_as); if (!v) continue;
+          if (k.kind === 'item') { if (guard && marker.test(items.get(k.judged_as)?.text || '')) { cut++; continue; } n++; if (v.accept) acc++; if (wt(v)) wrong++; }
+          if (k.kind === 'wrong_page') { wpN++; if (!v.accept) wpRej++; if (v.accept || (v.fidelity ?? 0) > 2) wpBad++; }
+          if (k.kind === 'planted') { plN++; if (!v.accept || (v.defects || []).length) plC++; }
+        }
+      }
+      const P = betaP(acc, n, 0.8, parseInt(h(`s-${cell}`).slice(0, 8), 16));
+      const ok = n >= 10 && wrong / n <= 0.04 && P >= 0.9 && wpN > 0 && !wpBad && !(plN >= 2 && plC === 0);
+      return { drawn, judged: n, accepted: acc, wrong_text: wrong, p_acc_ge_08: P, wrong_page_controls: `${wpRej}/${wpN}`, planted_caught: `${plC}/${plN}`, ...(guard && { marker_reads_refused: cut }), decision: ok ? 'PASS' : 'HOLD',
+        why: ok ? null : [n < 10 && 'under 10 judged', n && wrong / n > 0.04 && `wrong text ${wrong}/${n}`, P < 0.9 && `P(acc>=0.8) ${P}`, (!wpN || wpBad) && 'wrong-page control', plN >= 2 && !plC && 'plants missed'].filter(Boolean).join('; ') };
+    };
+    out.cells[cell] = { draws: per.length, rule: measure(false), marker_guard: measure(true) };
+    const r = out.cells[cell].rule, g = out.cells[cell].marker_guard;
+    console.log(`${cell} (${per.length} draw${per.length > 1 ? 's' : ''}): ${r.accepted}/${r.judged} accepted, wrong ${r.wrong_text}, P ${r.p_acc_ge_08} → ${r.decision}${r.why ? ` (${r.why})` : ''} | marker guard: ${g.accepted}/${g.judged}, wrong ${g.wrong_text}, P ${g.p_acc_ge_08} → ${g.decision}${g.why ? ` (${g.why})` : ''}`);
+  }
+  fs.writeFileSync(path.join(dirs[0], 'pooled.json'), JSON.stringify(out, null, 1));
+}
+
 /** apply: each test page's read the judge ACCEPTED, through the lane's GPU-draft guards (first reads only; holds kept). */
 function apply() {
   const key = J('key.json'), V = verdicts(), s = J('sample.json');
@@ -381,8 +423,10 @@ async function record() {
       const r = V.get(k.judged_as), v = r.verdict; model ??= r.model;
       const bad = (v.defects || []).filter((d) => d.severity === 'wrong_text' || d.severity === 'misleads');
       const serious = !v.accept || bad.length > 0;
-      const errors = serious ? (bad.length ? bad.map((d) => ({ stage: 'ocr', class: d.class, kind: d.severity, problem: `${d.what ?? ''}: "${String(d.quote ?? '').slice(0, 200)}"` }))
-        : [{ stage: 'ocr', kind: 'not_accepted', problem: String(v.reader_note || 'the judge did not accept the page').slice(0, 600) }]) : [];
+      // recordPageVerdicts' kinds (book-checks.mjs), from the judge's page-error-taxonomy class; the severity rides along
+      const kindOf = (cls) => (cls === 'O5' ? 'omission' : /^O(6|7|8)$/.test(cls) ? 'misread' : 'other');
+      const errors = serious ? (bad.length ? bad.map((d) => ({ stage: 'ocr', class: d.class, kind: kindOf(d.class), severity: d.severity, problem: `${d.what ?? ''}: "${String(d.quote ?? '').slice(0, 200)}"` }))
+        : [{ stage: 'ocr', kind: 'other', severity: 'not_accepted', problem: String(v.reader_note || 'the judge did not accept the page').slice(0, 600) }]) : [];
       verdicts.push({ page_id: k.page_id, outcome: serious ? 'serious' : (v.defects || []).length ? 'minor' : 'clean', page_verdict: serious ? 'fix' : (v.defects || []).length ? 'caveat' : 'show',
         verdict: `${k.cell} accept=${v.accept} fidelity=${v.fidelity}`, note: v.reader_note, defects: v.defects || [], errors, judged: { ocr: items.get(k.judged_as)?.text ?? '', translation: '' } });
     }
@@ -419,6 +463,6 @@ async function fallback() {
   console.log(`la4: ${pages.length} drawn pages, ${read_ids.length} to read`);
 }
 
-const STAGES = { draw, collect, read, written, packet, plant, score, apply, fallback, record };
+const STAGES = { draw, collect, read, written, packet, plant, score, pooled, apply, fallback, record };
 if (!STAGES[STAGE]) { console.error(`stage must be one of ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
 await STAGES[STAGE]();

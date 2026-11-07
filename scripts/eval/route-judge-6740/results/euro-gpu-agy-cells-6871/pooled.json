@@ -1,0 +1,165 @@
+{
+ "scored_at": "2026-11-07T04:16:51.923Z",
+ "dirs": [
+  "/data/scratch/sl/jobs/euro-1800-cells-6871/cell",
+  "/data/scratch/sl/jobs/euro-1800-cells-6871/cell2"
+ ],
+ "cells": {
+  "fr19": {
+   "draws": 2,
+   "rule": {
+    "drawn": 60,
+    "judged": 32,
+    "accepted": 28,
+    "wrong_text": 2,
+    "p_acc_ge_08": 0.815,
+    "wrong_page_controls": "4/4",
+    "planted_caught": "4/4",
+    "decision": "HOLD",
+    "why": "wrong text 2/32; P(acc>=0.8) 0.815"
+   },
+   "marker_guard": {
+    "drawn": 60,
+    "judged": 30,
+    "accepted": 28,
+    "wrong_text": 0,
+    "p_acc_ge_08": 0.962,
+    "wrong_page_controls": "4/4",
+    "planted_caught": "4/4",
+    "marker_reads_refused": 2,
+    "decision": "PASS",
+    "why": null
+   }
+  },
+  "fr17": {
+   "draws": 2,
+   "rule": {
+    "drawn": 60,
+    "judged": 29,
+    "accepted": 26,
+    "wrong_text": 0,
+    "p_acc_ge_08": 0.875,
+    "wrong_page_controls": "4/4",
+    "planted_caught": "4/4",
+    "decision": "HOLD",
+    "why": "P(acc>=0.8) 0.875"
+   },
+   "marker_guard": {
+    "drawn": 60,
+    "judged": 29,
+    "accepted": 26,
+    "wrong_text": 0,
+    "p_acc_ge_08": 0.875,
+    "wrong_page_controls": "4/4",
+    "planted_caught": "4/4",
+    "marker_reads_refused": 0,
+    "decision": "HOLD",
+    "why": "P(acc>=0.8) 0.875"
+   }
+  },
+  "es19": {
+   "draws": 1,
+   "rule": {
+    "drawn": 27,
+    "judged": 24,
+    "accepted": 23,
+    "wrong_text": 1,
+    "p_acc_ge_08": 0.973,
+    "wrong_page_controls": "2/2",
+    "planted_caught": "0/0",
+    "decision": "HOLD",
+    "why": "wrong text 1/24"
+   },
+   "marker_guard": {
+    "drawn": 27,
+    "judged": 23,
+    "accepted": 23,
+    "wrong_text": 0,
+    "p_acc_ge_08": 0.995,
+    "wrong_page_controls": "2/2",
+    "planted_caught": "0/0",
+    "marker_reads_refused": 1,
+    "decision": "PASS",
+    "why": null
+   }
+  },
+  "es17": {
+   "draws": 2,
+   "rule": {
+    "drawn": 35,
+    "judged": 30,
+    "accepted": 27,
+    "wrong_text": 1,
+    "p_acc_ge_08": 0.895,
+    "wrong_page_controls": "4/4",
+    "planted_caught": "0/0",
+    "decision": "HOLD",
+    "why": "P(acc>=0.8) 0.895"
+   },
+   "marker_guard": {
+    "drawn": 35,
+    "judged": 30,
+    "accepted": 27,
+    "wrong_text": 1,
+    "p_acc_ge_08": 0.895,
+    "wrong_page_controls": "4/4",
+    "planted_caught": "0/0",
+    "marker_reads_refused": 0,
+    "decision": "HOLD",
+    "why": "P(acc>=0.8) 0.895"
+   }
+  },
+  "it19": {
+   "draws": 1,
+   "rule": {
+    "drawn": 30,
+    "judged": 21,
+    "accepted": 18,
+    "wrong_text": 3,
+    "p_acc_ge_08": 0.667,
+    "wrong_page_controls": "2/2",
+    "planted_caught": "0/0",
+    "decision": "HOLD",
+    "why": "wrong text 3/21; P(acc>=0.8) 0.667"
+   },
+   "marker_guard": {
+    "drawn": 30,
+    "judged": 21,
+    "accepted": 18,
+    "wrong_text": 3,
+    "p_acc_ge_08": 0.667,
+    "wrong_page_controls": "2/2",
+    "planted_caught": "0/0",
+    "marker_reads_refused": 0,
+    "decision": "HOLD",
+    "why": "wrong text 3/21; P(acc>=0.8) 0.667"
+   }
+  },
+  "it17": {
+   "draws": 1,
+   "rule": {
+    "drawn": 30,
+    "judged": 19,
+    "accepted": 16,
+    "wrong_text": 1,
+    "p_acc_ge_08": 0.587,
+    "wrong_page_controls": "2/2",
+    "planted_caught": "0/0",
+    "decision": "HOLD",
+    "why": "wrong text 1/19; P(acc>=0.8) 0.587"
+   },
+   "marker_guard": {
+    "drawn": 30,
+    "judged": 19,
+    "accepted": 16,
+    "wrong_text": 1,
+    "p_acc_ge_08": 0.587,
+    "wrong_page_controls": "2/2",
+    "planted_caught": "0/0",
+    "marker_reads_refused": 0,
+    "decision": "HOLD",
+    "why": "wrong text 1/19; P(acc>=0.8) 0.587"
+   }
+  }
+ }
+}
