@@ -357,3 +357,7 @@
 42 * * * * flock -n /tmp/sl-token-usage.lock nice -n 19 bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/token-usage-push.mjs --box main --meter' >> /var/log/sourcelibrary/token-usage-push.log 2>&1
 # Spend-gate refusal watcher (#7492): pages once per streak; no database, no spend.
 5,20,35,50 * * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-gate-refusal-watch.mjs ] && flock -n /tmp/sl-spend-gate-watch.lock node scripts/audit/spend-gate-refusal-watch.mjs >> /var/log/sourcelibrary/spend-gate-refusal-watch.log 2>&1  # #7492
+# router board for /admin/router (#7913): writes one ops_reports row, no model calls
+17 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/maintenance/router-board-push.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-router-board.lock timeout 5m node --no-warnings --env-file=.env.production.local $f >> /var/log/sourcelibrary/router-board.log 2>&1  # /admin/router (#7913)
+# weekly text hash snapshot with a public timestamp (#8150, #8209): reads Sunday's restic dump, no Atlas read
+30 1 * * 1 flock -n /tmp/sl-hash-snapshot.lock /root/sourcelibrary/scripts/workers/hash-snapshot-weekly.sh
