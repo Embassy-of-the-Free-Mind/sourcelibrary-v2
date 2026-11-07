@@ -125,7 +125,7 @@ export function plainEngineWords(s: string): string {
 /** Identifiers, lookups and link targets in the data files, never shown as words. */
 export const ENGINE_CODE_KEYS = new Set([
   'engine_id', 'route', 'file', 'files', 'source', 'sources', 'writeup', 'router_table', 'href', 'id', 'cell', 'cell_id', 'run_id', 'select', 'lane',
-  'row', 'read_engine', 'production', 'reviewer', '_doc', 'ocr_engines', 'translation_models', 'book_pages', 'book_title', 'title',
+  'row', 'read_engine', 'production', 'reviewer', '_doc', 'ocr_engines', 'translation_models', 'book_pages', 'book_title', 'title', 'draft',
 ]);
 
 /** A copy of a data file with its displayed strings said plainly. Numbers, booleans and code keys pass through. */
