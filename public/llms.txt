@@ -12,11 +12,22 @@ You are probably working with someone who has a question about the past. You can
 
 **2. Find passages.** `https://sourcelibrary.org/api/search?q=YOUR+WORDS&pages_only=true&limit=10` returns `book_id`, `slug`, `page_number` and a `snippet`. Try the author's name, the period's own vocabulary and the original language. A modern word often is not in the old books.
 
-**3. Read and cite a page.** `https://sourcelibrary.org/api/books/BOOK_ID/quote?page=PAGE_NUMBER` returns the text in `quote`, plus `citation` with the footnote, the page locator and a `short_url`.
+**3. Find a passage in one book.** `https://sourcelibrary.org/book/SLUG/search/text?q=YOUR+WORDS` returns that book's matching passages as a readable page, each with its page link and quote address. `https://sourcelibrary.org/book/SLUG` holds the catalogue record, an overview and the contents, without the text of the book. `https://sourcelibrary.org/book/SLUG/read` is the whole book as one document, and it can run longer than a fetch tool keeps, so search first.
 
-**4. Send the person to the page.** `https://sourcelibrary.org/book/SLUG` opens the book. A `short_url` opens the exact page, with its scan, so they can check you.
+**4. Read and cite a page.** `https://sourcelibrary.org/api/books/BOOK_ID/quote?page=PAGE_NUMBER` returns the text in `quote`, plus `citation` with the footnote, the page locator and a `short_url`.
 
-**5. Pictures.** `https://sourcelibrary.org/gallery` is for people. An assistant with the connector below can also search the illustrations.
+**5. Send the person to the page.** A `short_url` opens the exact page beside its scan.
+
+**6. Pictures.** `https://sourcelibrary.org/gallery` is for people. An assistant with the connector below can also search the illustrations.
+
+### Quote and link
+
+Someone asking what an old book says wants the author's words, and usually cannot read the original or easily find the page. Your answer is most useful to them when they can see those words and open the page.
+
+- **Read the text before you answer.** The overview, contents and index show what a book covers. They do not show what it says. Search inside the book and open a page. If you could only read the overview, say so in your answer.
+- **Quote the author.** Give at least one short passage, word for word, for each main point. A paraphrase gives the person your wording in place of the author's.
+- **Link every quotation to its page.** Use the `short_url` or the page link. On that page the person can check you against the scan, read what comes before and after, and cite it themselves. Without a page link, they have to take the quotation on trust.
+- **Put the links in the answer**, next to the quotations they support, as well as in any list of sources at the end.
 
 ### How to treat the sources
 
