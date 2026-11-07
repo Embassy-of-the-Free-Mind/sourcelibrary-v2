@@ -15,9 +15,10 @@ ledger and the text is the stored page. lane-spot-check.md is the Siku rubric, n
 ## gpu-print-6871 v1 — is the first read a GPU print lane wrote on this page what the page prints?
 
 **What it is for.** The #6871 GPU print lanes after the four-route rule (Derek, 2026-11-06: agy, GPU>agy, Opus,
-GPU>Opus). First used on the English 1800-1929 widening pilot (`cli-ocr-lane.mjs armc --frame=euro --cell=en19`):
-LightOnOCR-3-1B drafts the page on gex45, agy Gemini 3.8 Flash-low corrects it with the page image, and the lane writes
-it (stamped `gpu-agy-first-read-en-6871`). It answers "may this lane keep running?" A row says what the judge saw on one
+GPU>Opus), and after Derek's 2026-11-07 note ("we can use ocr gpu until we later correct"). First used on the English
+1800-1929 widening pilot (`gpu-print-lane.mjs --lang en19`): a bare guarded LightOnOCR-3-1B read on gex45, written by
+the gpu-print lane (stamped `gpu-print-en19-2026-11`, `ocr.engine.corrected: false`). The same judge serves a GPU>agy
+lane unchanged. It answers "may this lane keep running?" A row says what the judge saw on one
 page of the book; it says nothing about the rest of the book.
 
 **Sampling.** `frame.selection: random`. Pages the lane WROTE in its pilot, drawn seeded, one per book where books allow,

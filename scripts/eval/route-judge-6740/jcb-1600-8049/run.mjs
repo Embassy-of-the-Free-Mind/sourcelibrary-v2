@@ -53,7 +53,7 @@ const STUDIES = {
   // --study=en19-6871 (#6871): the English 1800-1929 widening gate. The draw is over the production lane's written pilot
   // pages (scripts/eval/route-judge-6740/euro-route-gate-6871/draw.mjs --cell=en19); packet, judge, score and record
   // run here unchanged. The planter has no English: this study carries no planted controls.
-  'en19-6871': { salt: '6871en', lane: 'gpu-agy-first-read-en-6871', job: 'en19-gate-6871', reason: '#6871 English 1800-1929 widening gate', method: 'gpu-print-6871', evidence: 'scripts/eval/route-judge-6740/results/en19-gate-6871/' },
+  'en19-6871': { salt: '6871en', lane: 'gpu-print-en19-2026-11', route: 'lighton (bare, guarded)', job: 'en19-gate-6871', reason: '#6871 English 1800-1929 widening gate', method: 'gpu-print-6871', evidence: 'scripts/eval/route-judge-6740/results/en19-gate-6871/' },
 };
 const ST = STUDIES[STUDY]; if (!ST) throw new Error(`--study must be one of ${Object.keys(STUDIES).join(', ')}`);
 const LANE = ST.lane;
@@ -442,9 +442,9 @@ async function record() {
       method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `${ST.job}-${new Date().toISOString().slice(0, 10)}`, checked_at: new Date(),
       selection: 'random', stages: ['ocr'], reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },
       evidence_path: ST.evidence, reader_warning: false, exposure: 'unrecorded',
-      note: STUDY === 'en19-6871' ? 'One page of the book written by the en19 lane (LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image, #6871 widening pilot), judged blind by Opus against the image.'
+      note: STUDY === 'en19-6871' ? 'One page of the book written by the en19 lane (a bare guarded LightOnOCR-3-1B read, gpu-print-lane.mjs --lang en19, #6871 widening pilot), judged blind by Opus against the image.'
         : 'One unread page of the book read by LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image (#6871 cell test), judged blind by Opus against the image.',
-      frame: { route: 'lighton>agy-flash-low', study: STUDY, pages: verdicts.length },
+      frame: { route: ST.route ?? 'lighton>agy-flash-low', study: STUDY, pages: verdicts.length },
       verdicts,
     }, { apply: process.argv.includes('--apply') });
     console.log(`record: ${verdicts.length} pages → rows ${res.rows.length}, inserted ${res.inserted}, already ${res.already}, failed ${res.failed.length}${res.failed.length ? ` ${JSON.stringify(res.failed.slice(0, 5))}` : ''}`);

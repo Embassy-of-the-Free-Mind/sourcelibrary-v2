@@ -52,6 +52,9 @@ export const isEnglishBook = (language) => /^English\b/.test(String(language || 
 export const LANGS = Object.freeze({
   en: { language: 'English', isBook: isEnglishBook, lane: LANE, cell: null,
     measured: 'scripts/eval/experiments/2026-10-29-print1800-gpu-engine-lanes-6871.md: 97 English 1800+ typed-reference pages, median folded CER 0.12% vs flash-lite 0.27%, catastrophic 0 vs 17' },
+  // English 1800-1929 past the 10-29 frame (#6871, 2026-11-07): the cli-ocr-lane.mjs en19 book rule, its own stamp
+  en19: { language: 'English', isBook: isEnglishBook, lane: 'gpu-print-en19-2026-11', cell: 'en19',
+    measured: 'scripts/eval/experiments/2026-10-29-print1800-gpu-engine-lanes-6871.md (median folded CER 0.12% vs flash-lite 0.27%, catastrophic 0 vs 17) and the en19 pilot gate, scripts/eval/experiments/2026-11-07-en1800-gpu-agy-widen-6871.md' },
   fr: { language: 'French', isBook: (l) => /^French\b/.test(String(l || '')), lane: 'gpu-print-fr-2026-11', cell: 'fr19r',
     measured: 'scripts/eval/experiments/2026-11-06-fr-refusals-gpu-read-6871.md: 770 French 1800+ pages Flash-Lite refused, read on the GPU, 627 past the guards, 10/10 usable by eye' },
 });
