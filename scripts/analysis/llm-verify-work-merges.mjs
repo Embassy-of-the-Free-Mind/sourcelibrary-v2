@@ -41,6 +41,7 @@
  */
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
+import { loadSplitPairs, splitPairIn } from '../lib/work-merge-lib.mjs';
 
 if (process.argv.some((a) => a === '--apply' || a.startsWith('--apply-from'))) {
   console.error('llm-verify-work-merges.mjs no longer writes (#8293): it logged no work_id_merges row and had no second judge.\n'
@@ -322,6 +323,16 @@ if (MEGA) {
   }
   await rollingPool(megaPool, MCONC, runMega);
 }
+
+// a reviewed split (work_id_splits, #8293) is never re-proposed: the model sees
+// titles, and titles are what fused these clusters in the first place
+const splitPairs = await loadSplitPairs(db);
+const rejoins = [];
+for (let i = proposals.length - 1; i >= 0; i--) {
+  const split = splitPairIn(proposals[i].members.map(m => m.currentWorkId), splitPairs);
+  if (split) { rejoins.push({ author: proposals[i].author, canonical_title: proposals[i].canonical_title, split }); proposals.splice(i, 1); mergeGroups--; }
+}
+if (rejoins.length) console.log(`dropped ${rejoins.length} proposals that rejoin a reviewed split (#8293), e.g. ${rejoins.slice(0, 3).map(r => r.split.join(' | ')).join('; ')}`);
 
 const outDir = new URL('../output/', import.meta.url).pathname;
 fs.mkdirSync(outDir, { recursive: true });
