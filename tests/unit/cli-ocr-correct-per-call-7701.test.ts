@@ -110,7 +110,7 @@ describe('cli-ocr-lane.mjs armc --frame=first-read (#7701: Latin arm c on unread
   it('stamps its own lane, Latin only', () => {
     expect(lane.ARMC_FIRST_READ_LANE).toBe('pero-agy-first-read-7701');
     expect(lane.ARMC_FIRST_READ_LANGS).toEqual(['la']);
-    expect(run).toContain("LANE_ID = CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
+    expect(run).toContain("LANE_ID = EU ? ARMC_EURO_LANE : CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
     expect(run).toContain('`--lane=${LANE_ID}`');
   });
 
@@ -121,7 +121,7 @@ describe('cli-ocr-lane.mjs armc --frame=first-read (#7701: Latin arm c on unread
   });
 
   it('re-checks the first-read frame (book and page still unread) at run time, never the correct frame', () => {
-    expect(run).toMatch(/const bookOk = CF \? armcCampaignBookOk\(book[^\n]*\n\s*: FR \? !firstReadSkip\(book/);
+    expect(run).toMatch(/const bookOk = EU \? !armcEuroSkip\(book[^\n]*\n\s*: CF \? armcCampaignBookOk\(book[^\n]*\n\s*: FR \? !firstReadSkip\(book/);
     expect(run).toContain('FR ? await armcFirstReadPages(db, book, take.map((p) => p.id))');
     const pages = src.slice(src.indexOf('async function armcFirstReadPages'), src.indexOf('async function armcFirstReadPages') + 600);
     expect(pages).toContain('...UNREAD');
@@ -166,7 +166,7 @@ describe('cli-ocr-lane.mjs armc --frame=campaign (#8049: hidden campaign books, 
 
   it('plans archived books only, and the frameless draft task still fetches every planned language', () => {
     expect(src).toContain("'pipeline_auto.hold.reason': CAMPAIGN, archive_status: 'archive_complete' }");
-    const fetchFn = src.slice(src.indexOf('async function armcFetch'), src.indexOf('async function armcFetch') + 700);
+    const fetchFn = src.slice(src.indexOf('async function armcFetch'), src.indexOf('async function armcFetch') + 1500);
     expect(fetchFn).toContain("(!arg('langs') || LANGS.includes(p.lang))");
     const task = fs.readFileSync(path.join(__dirname, '../../scripts/gpu/euro-draft-task.sh'), 'utf8');
     expect(task).toMatch(/lane armc-fetch --max-pages="\$MAX"/);

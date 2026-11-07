@@ -10,7 +10,7 @@ import os from 'os';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON, armcEuroSkip, ARMC_EURO_CELLS, ARMC_EURO_LANE, dropBookImagesIfDone, armcHandSkip, ARMC_EURO_PROBE } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { LANES } from '../../scripts/eval/lane-judge-sampler.mjs';
@@ -100,5 +100,85 @@ describe('translate-held frame (#7263): the books the CLI translation lane waits
   });
   it('takes BPH books too: everything translates on agy (Derek 2026-11-06, #8283)', () => {
     expect(armcTranslateBookOk(book({ image_source: { provider: 'bph' } }))).toBe(true);
+  });
+});
+
+describe('euro frame (#6871): 1800-1929 Spanish and French print with page records', () => {
+  const book = (o: Record<string, unknown> = {}) => ({ id: 'b1', title: 'Historia de las Indias', language: 'Spanish', year: 1875, visible: true, pages_count: 500, pages_ocr: 26, pipeline_auto: { status: 'held', hold: { reason: 'scans-only-publish-7270' } }, ...o });
+  it('has the two cells that passed, on LightOnOCR > agy, stamped as the cell test', () => {
+    expect(Object.keys(ARMC_EURO_CELLS)).toEqual(['es19', 'fr19']);
+    expect(ARMC_EURO_CELLS.es19.route).toBe('lighton>agy-flash-low');
+    expect(ARMC_EURO_LANE).toBe('gpu-agy-first-read-euro-6871');
+  });
+  it('takes an unheld book and a scans-only one, and keeps every other hold out', () => {
+    expect(armcEuroSkip(book(), 'es19')).toBeNull();
+    expect(armcEuroSkip(book({ pipeline_auto: { status: 'needs_attention' } }), 'es19')).toBeNull();
+    expect(armcEuroSkip(book({ pipeline_auto: { status: 'held', hold: { reason: 'wrong-leaf-text-7517' } } }), 'es19')).toMatch(/other hold/);
+    expect(armcEuroSkip(book({ pipeline_auto: { status: 'held', hold: { reason: 'title-leaf-recitation-6297' } } }), 'es19')).toMatch(/other hold/);
+    expect(armcEuroSkip(book({ pipeline_auto: { status: 'complete', held: true } }), 'es19')).toBe('pipeline_auto.held');
+  });
+  it('needs the cell language first, a parsed year inside the cell, and page records', () => {
+    expect(armcEuroSkip(book({ language: 'Latin; Spanish' }), 'es19')).toBe('other first language');
+    expect(armcEuroSkip(book({ year: 1799 }), 'es19')).toBe('year outside the cell');
+    expect(armcEuroSkip(book({ year: undefined }), 'es19')).toBe('year outside the cell');
+    expect(armcEuroSkip(book({ year: 1930 }), 'es19')).toBe('year outside the cell');
+    expect(armcEuroSkip(book({ pages_state: { state: 'manifest_only' } }), 'es19')).toMatch(/manifest only/);
+  });
+  it('keeps unsplit spreads and manuscripts out', () => {
+    expect(armcEuroSkip(book({ needs_splitting: true }), 'es19')).toMatch(/unsplit/);
+    expect(armcEuroSkip(book({ needs_splitting: true, split_completed: true }), 'es19')).toBeNull();
+    expect(armcEuroSkip(book({ image_source: { provider: 'vatican' } }), 'es19')).toBe('manuscript');
+  });
+  it('French leaves the books the visible-unread first-read lane reads to that lane', () => {
+    const fr = (o: Record<string, unknown> = {}) => book({ language: 'French', ...o });
+    // visible and held scans-only: the deu,fra visible-unread cron reads it
+    expect(armcEuroSkip(fr(), 'fr19')).toBe('read by the visible-unread first-read lane');
+    expect(armcEuroSkip(fr({ visible: false }), 'fr19')).toBeNull();
+    expect(armcEuroSkip(fr({ pipeline_auto: { status: 'needs_attention' } }), 'fr19')).toBeNull();
+    // Spanish has no such lane: a visible scans-only Spanish book stays in
+    expect(armcEuroSkip(book(), 'es19')).toBeNull();
+  });
+});
+
+describe('dropBookImagesIfDone (#6871 disk guard)', () => {
+  it('drops a book\'s img/ only once every planned page is ledgered, and keeps the drafts', () => {
+    const L = fs.mkdtempSync(path.join(os.tmpdir(), 'armc-euro-'));
+    const P = armcPaths(L);
+    fs.mkdirSync(path.join(P.drafts, 'b1', 'img'), { recursive: true });
+    fs.writeFileSync(path.join(P.drafts, 'b1', 'img', 'p2.jpg'), 'x');
+    fs.writeFileSync(path.join(P.drafts, 'b1', 'p1.json'), '{}');
+    const pl = { bid: 'b1', pages: [{ id: 'p1', pn: 1 }, { id: 'p2', pn: 2 }] };
+    expect(dropBookImagesIfDone(P, pl, new Set(['p1']))).toBe(false);
+    expect(fs.existsSync(path.join(P.drafts, 'b1', 'img', 'p2.jpg'))).toBe(true);
+    expect(dropBookImagesIfDone(P, pl, new Set(['p1', 'p2']))).toBe(true);
+    expect(fs.existsSync(path.join(P.drafts, 'b1', 'img'))).toBe(false);
+    expect(fs.existsSync(path.join(P.drafts, 'b1', 'p1.json'))).toBe(true);
+    fs.rmSync(L, { recursive: true, force: true });
+  });
+});
+
+describe('armcHandSkip (#6871: a catalogued-print manuscript costs a probe, not a chunk)', () => {
+  const hw = { why: 'corrector tags the page <script>handwritten</script>: the GPU-draft route is print only' };
+  const mixed = { why: 'corrector tags the page <script>mixed</script>: the GPU-draft route is print only' };
+  const ok = { why: 'written' };
+  it('skips a book when half or more of a probe-sized chunk is handwritten or mixed', () => {
+    expect(ARMC_EURO_PROBE).toBe(4);
+    expect(armcHandSkip([hw, mixed, ok, ok])).toBe('corrector tagged 2/4 pages handwritten or mixed');
+    expect(armcHandSkip([hw, hw, hw, hw])).toMatch(/4\/4/);
+  });
+  it('keeps a book with fewer hand tags, or a chunk under the probe size', () => {
+    expect(armcHandSkip([hw, ok, ok, ok])).toBeNull();
+    expect(armcHandSkip([hw, hw, hw])).toBeNull();
+    expect(armcHandSkip([])).toBeNull();
+  });
+  it('drops a skipped book\'s staged images even with pages not ledgered', () => {
+    const L = fs.mkdtempSync(path.join(os.tmpdir(), 'armc-euro-'));
+    const P = armcPaths(L);
+    expect(P.booksSkipped).toBe(path.join(L, 'armc-books-skipped.jsonl'));
+    fs.mkdirSync(path.join(P.drafts, 'b1', 'img'), { recursive: true });
+    const pl = { bid: 'b1', pages: [{ id: 'p1', pn: 1 }, { id: 'p2', pn: 2 }] };
+    expect(dropBookImagesIfDone(P, pl, new Set(['p1']), { skipped: true })).toBe(true);
+    expect(fs.existsSync(path.join(P.drafts, 'b1', 'img'))).toBe(false);
+    fs.rmSync(L, { recursive: true, force: true });
   });
 });
