@@ -37,7 +37,7 @@ export default async function RecentlyTranslatedLinks({
             <Link href={bookUrl({ slug: b.slug ?? undefined, id: b.id })} className="text-primary underline-offset-2 hover:underline">
               {b.display_title || b.title}
             </Link>
-            {b.author && <span className="text-muted"> — {b.author}</span>}
+            {b.author && <span className="text-muted">, {b.author}</span>}
           </li>
         ))}
       </ul>
