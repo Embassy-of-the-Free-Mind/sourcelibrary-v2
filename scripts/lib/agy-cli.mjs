@@ -105,7 +105,7 @@ export function installNarrowAgent(dir, task = 'ocr') {
   const a = NARROW_AGENTS[task];
   if (!a) throw new Error(`no narrow agent for task ${task}`);
   fs.mkdirSync(path.join(dir, '.agents', 'agents'), { recursive: true });
-  fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\nFollow the instructions in the request exactly.\n`);
+  fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\nOpen each named file once with read_file, in one step if you can. Do not open a file twice. Then answer.\n`);
   return ['--agent', a.name];
 }
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
