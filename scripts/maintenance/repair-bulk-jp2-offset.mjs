@@ -204,6 +204,21 @@ async function repairBook(db, bookId) {
   }
 
   // Gate 2 — the independent witness must exist (see header).
+  // Gate 3 (erara_pdf) — the text must still sit on the source leaf. Gate 2 goes by OCR date, so it
+  // cannot see a text MOVE: #7949 moved text onto the shifted images of books July had already moved
+  // to the source, and correcting those images would break them again. Same event type for both, so
+  // the writer decides: the latest move must be July's. No move at all leaves Gate 2 in charge.
+  if (SOURCE === 'erara_pdf' && !BY_EYE) {
+    const [lastMove] = await db.collection('book_events')
+      .find({ book_id: book.id, type: 'text_shift_repair' }).sort({ at: -1 }).limit(1).toArray();
+    if (lastMove && lastMove.source !== 'repair-erara-text-shift') {
+      return console.log(`  [REFUSE] latest text move is ${lastMove.source || 'unlabelled'} (${new Date(lastMove.at).toISOString().slice(0, 10)}): the text may follow the shifted images (#7949)`);
+    }
+    if (await db.collection('book_events').findOne({ book_id: book.id, type: 'text_shift_repair_undo' })) {
+      return console.log('  [REFUSE] text_shift_repair_undo on record: read this book by eye first (#7949)');
+    }
+  }
+
   let split = readerVisibleShift(bulk);
   const awaitingImages = book.archive_metadata?.jp2_text_shift_awaiting_image_rearchive === true;
   if (awaitingImages || BY_EYE) {
