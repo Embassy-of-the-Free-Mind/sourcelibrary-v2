@@ -1,6 +1,6 @@
 ---
 stage: ocr
-measure: [simulated]
+measure: [none]
 languages: []
 scripts: []
 canons: []
