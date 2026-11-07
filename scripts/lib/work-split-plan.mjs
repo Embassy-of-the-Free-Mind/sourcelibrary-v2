@@ -48,6 +48,12 @@
  *                            work THEY are); needs row.stay or row.dissolve.
  *   move.slug: 'alias'       the source slug becomes an alias on the group, which
  *                            gets a fresh slug (old URL redirects to them).
+ *   move.alias_source: true  (dissolve only, one group) the source id becomes an alias
+ *                            on THIS group although others go elsewhere: nobody keeps
+ *                            the id, so /work/<source> resolves to the main group. Used
+ *                            for re-keying an edition QID whose stray containers leave
+ *                            for their own ids (#8325). The source then counts as renamed
+ *                            to that group, and the merge guard does not fence the pair.
  */
 import crypto from 'node:crypto';
 import { deacc, slug, authorTokens, mintAuthorPart } from './work-id-remint.mjs';
@@ -137,6 +143,7 @@ export function planSplits(rows, carriers, taken) {
     if (!bad && moved.size >= cur.length && !r.dissolve) bad = 'every book moves; nothing keeps the source id';
     if (!bad && r.dissolve && moved.size < cur.length) bad = 'dissolve names only some carriers';
     if (!bad && (r.moves || []).some((m) => m.slug) && !(r.stay || r.dissolve)) bad = 'a group takes the source slug but the stayers are not retitled';
+    if (!bad && (r.moves || []).filter((m) => m.alias_source).length > (r.dissolve ? 1 : 0)) bad = 'alias_source needs dissolve and at most one group';
     if (!bad) for (const m of r.moves || []) {
       if (m.new_id && (m.to !== 'new' || !free(m.new_id) || (carriers.get(m.new_id) || []).length)) bad = `new_id ${m.new_id} is not free`;
     }
@@ -149,7 +156,10 @@ export function planSplits(rows, carriers, taken) {
     const groups = r.moves.map((m) => ({ ...m, books: [...m.books].sort().map((id) => byId.get(id)) }));
     const sourceSlug = commonest(cur.map((b) => b.work_slug));
     const dests = new Set(groups.map((g) => (g.to === 'new' ? g.new_id || null : g.to)));
-    const renameTo = r.dissolve && dests.size === 1 && !dests.has(null) ? [...dests][0] : null;
+    let renameTo = r.dissolve && dests.size === 1 && !dests.has(null) ? [...dests][0] : null;
+    // the group the source id is aliased onto: alias_source, or the only group of a dissolve
+    // (a minted local id included: the edition QID it replaces must keep resolving, #8325)
+    const renameGroup = r.dissolve ? (groups.some((g) => g.alias_source) ? groups.findIndex((g) => g.alias_source) : groups.length === 1 ? 0 : -1) : -1;
 
     // alias ownership across the moved groups (stayers win outright, never written)
     const owner = new Map();
@@ -199,7 +209,8 @@ export function planSplits(rows, carriers, taken) {
         for (let n = 2; !freeSlug(workSlug); n++) workSlug = `${sbase}-${n}`;
         claimedSlugs.add(workSlug);
       }
-      const extra = [...(g.slug === 'alias' && sourceSlug ? [sourceSlug] : []), ...(renameTo ? [r.work_id] : [])];
+      if (gi === renameGroup) renameTo = to;
+      const extra = [...(g.slug === 'alias' && sourceSlug ? [sourceSlug] : []), ...(renameTo === to ? [r.work_id] : [])];
       const books = g.books.map((b) => {
         const had = b.work_id_aliases || [];
         const keep = [...new Set([...had.filter((a) => owner.get(a) === gi && a !== to && a !== r.work_id), ...extra])];

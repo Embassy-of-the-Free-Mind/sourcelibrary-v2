@@ -9,7 +9,9 @@
  *
  * Input: scripts/eval/work-recall/split-reviewed-8293.jsonl — one row per cluster
  * a reader judged different_work, naming the odd books and their destination.
- * Only `bar: "clear"` rows unless --include-arguable.
+ * Only `bar: "clear"` rows unless --include-arguable. The same writer re-keys work_ids
+ * that are Wikidata EDITION items (#8325, rekey-edition-qids-8325.jsonl): a dissolve onto
+ * the P629 work, the source kept as an alias. Pass --issue 8325 for those.
  *
  *   # 1. dry run (default): plan + full before-state backup + reader report, no writes
  *   node --env-file=.env.production.local scripts/maintenance/apply-reviewed-work-splits.mjs \
@@ -41,7 +43,8 @@ const flag = (f) => argv.includes(f);
 const val = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : null);
 const APPLY_PLAN = val('--apply');
 const REVERT = val('--revert');
-const ISSUE = 8293;
+// #8325 re-keys edition QIDs with this writer: --issue at plan time, read back from the plan at apply
+const ISSUE = Number(val('--issue') || (APPLY_PLAN ? JSON.parse(fs.readFileSync(APPLY_PLAN, 'utf8')).issue : 0) || 8293);
 const SWEEP = val('--sweep') || `reviewed-work-splits-${new Date().toISOString().slice(0, 10)}`;
 const ID_FIELDS = { _id: 0, id: 1, work_id: 1, work_title: 1, work_slug: 1, work_id_aliases: 1, work_id_source: 1, work_id_confidence: 1, display_title: 1,
   author: 1, author_id: 1, visible: 1, hidden: 1, title: 1, pages_count: 1, pages_ocr: 1, edition_key: 1, 'pipeline_auto.status': 1 };
@@ -191,6 +194,10 @@ async function apply(planFile) {
     // books out of it changes what their pages say. Only silent (under_review) cards pass.
     const card = await cards.findOne({ _id: c.work_id });
     if (card && card.status !== 'under_review' && !flag('--allow-settled-cards')) { skipped.push([c.work_id, `settled FT card (${card.status}) on the source id`]); continue; }
+    // the same claim seen from the other side: books JOINING a work whose card badges it
+    // would take that badge. A silent card, or prior_exists (no first claim), passes (#8325).
+    const destCards = await cards.find({ _id: { $in: c.moves.map((m) => m.to) }, status: { $nin: ['under_review', 'prior_exists'] } }, { projection: { status: 1 } }).toArray();
+    if (destCards.length && !flag('--allow-settled-cards')) { skipped.push([c.work_id, `settled FT card (${destCards[0].status}) on destination ${destCards[0]._id}`]); continue; }
     const log = { work_id: c.work_id, stays: c.stays, dissolve: !!c.dissolve, renamed_to: c.renamed_to ?? null, moves: [], stay: null, card_copy: null, queue_superseded: [],
       issue: ISSUE, sweep: SWEEP, reviewed_from: plan.reviewed_from, plan: planFile, applied_at: t0, reverted_at: null };
     for (const m of c.moves) {
@@ -263,7 +270,7 @@ async function revert(sweep, really) {
         if (before[f] === null) unset[f] = ''; else set[f] = before[f];
       }
       if (really) {
-        await recordSweepAction(db, { sweep: `${sweep}-revert`, book_id: id, action: 'work-id-split-reverted', detail: { from: m.to, to: before.work_id, issue: ISSUE } });
+        await recordSweepAction(db, { sweep: `${sweep}-revert`, book_id: id, action: 'work-id-split-reverted', detail: { from: m.to, to: before.work_id, issue: row.issue ?? ISSUE } });
         await books.updateOne({ id, work_id: m.to }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
       }
       restored++;
@@ -275,7 +282,7 @@ async function revert(sweep, really) {
         unretitled += r.modifiedCount;
       } else unretitled++;
     }
-    if (really && row.card_copy) await db.collection('work_translation_history').deleteOne({ _id: row.card_copy.to, seeded_from: `work-split-${ISSUE}:${row.work_id}` });
+    if (really && row.card_copy) await db.collection('work_translation_history').deleteOne({ _id: row.card_copy.to, seeded_from: `work-split-${row.issue ?? ISSUE}:${row.work_id}` });
     if (really && row.queue_superseded?.length) await db.collection('work_merge_queue').updateMany({ _id: { $in: row.queue_superseded }, status: 'superseded' }, { $set: { status: 'pending', updated_at: new Date() }, $unset: { superseded_by: '', sweep: '' } });
     if (really) await db.collection('work_id_splits').updateOne({ _id: row._id }, { $set: { reverted_at: new Date() } });
   }

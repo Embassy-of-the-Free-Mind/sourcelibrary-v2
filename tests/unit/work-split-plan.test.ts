@@ -131,6 +131,29 @@ describe('planSplits — hand-fixed rows (#8293 six)', () => {
     expect(clusters[0].moves[0].books.map((b: { after: { work_id_aliases: string[] } }) => b.after.work_id_aliases)).toEqual([[Q], [Q]]);
   });
 
+  it('a dissolve onto ONE minted local id still aliases the old id there (#8325)', () => {
+    const carriers = new Map([[Q, [cic('a'), cic('b')]]]);
+    const { clusters } = planSplits([{ work_id: Q, seen: ['a', 'b'], dissolve: true,
+      moves: [{ books: ['a', 'b'], to: 'new', slug: 'take', title: 'Comoediae' }] }], carriers, taken());
+    expect(clusters[0].renamed_to).toBe('local:a:cicero:comoediae');
+    expect(clusters[0].moves[0].books.map((b: { after: { work_id_aliases: string[] } }) => b.after.work_id_aliases)).toEqual([[Q], [Q]]);
+  });
+
+  it('alias_source puts the old id on the main group only, and needs a dissolve (#8325)', () => {
+    const carriers = new Map([[Q, [cic('a'), cic('b'), cic('c')]]]);
+    const { clusters } = planSplits([{ work_id: Q, seen: ['a', 'b', 'c'], dissolve: true, moves: [
+      { books: ['a', 'b'], to: 'new', new_id: 'Q861927', slug: 'take', alias_source: true, title: 'Consolatio' },
+      { books: ['c'], to: 'new', title: 'Miscellany (MS)' },
+    ] }], carriers, taken());
+    const [main, stray] = clusters[0].moves;
+    expect(clusters[0].renamed_to).toBe('Q861927');
+    expect(main.books.map((b: { after: { work_id_aliases: string[] } }) => b.after.work_id_aliases)).toEqual([[Q], [Q]]);
+    expect(stray.books[0].after.work_id_aliases).toEqual([]);
+    const { refused } = planSplits([{ work_id: Q, seen: ['a', 'b', 'c'], moves: [
+      { books: ['a'], to: 'new', alias_source: true, title: 'x y' }] }], carriers, taken());
+    expect(refused[0].why).toContain('alias_source');
+  });
+
   it('a dissolve onto several ids aliases the old id nowhere; slug "alias" keeps the old URL on one side', () => {
     const carriers = new Map([[Q, [cic('a'), cic('b')]]]);
     const { clusters } = planSplits([{ work_id: Q, seen: ['a', 'b'], dissolve: true, moves: [

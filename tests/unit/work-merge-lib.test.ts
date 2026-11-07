@@ -267,6 +267,13 @@ describe('split memory (#8293)', () => {
     expect(demoted[0].reason).toContain('reviewed split');
   });
 
+  it('a rename (#8325) does not fence its source from where it went; its stray groups stay fenced', () => {
+    const p = splitPairsFromRows([{ work_id: 'Q125', renamed_to: 'Q184742', moves: [{ to: 'Q184742' }, { to: 'local:a:ovid:ms' }], reverted_at: null }]);
+    expect(splitPairIn(['Q125', 'Q184742'], p)).toBeNull();
+    expect(splitPairIn(['Q125', 'local:a:ovid:ms'], p)).not.toBeNull();
+    expect(splitPairIn(['Q184742', 'local:a:ovid:ms'], p)).not.toBeNull();
+  });
+
   it('without split pairs the same union merges (control)', () => {
     const { merges } = unionMergeClusters([
       { source: 'identical-title', ids: ['Q1', 'local:a:x:mid'] },
