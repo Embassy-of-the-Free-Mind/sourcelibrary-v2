@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { logAiUsage } from '@/lib/log-ai-usage';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { clientCountry } from '@/lib/client-ip';
 
 export const preferredRegion = 'fra1';
 
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
   }
 
   const _aiStart = Date.now();
-  const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || null;
+  const country = clientCountry(request.headers) || null;
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
