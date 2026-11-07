@@ -138,7 +138,7 @@ export default function CollectionsBrowser({ items, featured, subjects }: { item
           {shown.map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
               <Thumb item={c} mode={thumb} />
-              <span className="block mt-2.5 text-[17px] leading-snug text-primary font-display group-hover:text-accent-rust">{c.name}</span>
+              <span className="block mt-2.5 text-[17px] leading-snug text-primary font-display group-hover:underline underline-offset-2">{c.name}</span>
               <span className="block text-[13px] text-muted mt-0.5">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
             </Link>
           ))}
@@ -149,7 +149,7 @@ export default function CollectionsBrowser({ items, featured, subjects }: { item
             <Link key={c.slug} href={c.href} className="grid grid-cols-[72px_1fr] gap-4 py-3 border-t border-border-light group">
               <Thumb item={c} mode="single" />
               <span className="min-w-0">
-                <span className="block text-[17px] text-primary font-display group-hover:text-accent-rust">{c.name}</span>
+                <span className="block text-[17px] text-primary font-display group-hover:underline underline-offset-2">{c.name}</span>
                 <span className="block text-sm text-secondary truncate">{c.deck}</span>
                 <span className="block text-[13px] text-muted">{[c.label, c.example ? 'Example' : null, meta(c)].filter(Boolean).join(' · ')}</span>
               </span>

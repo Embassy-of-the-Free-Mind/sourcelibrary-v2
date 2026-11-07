@@ -66,7 +66,7 @@ function Popular({ pop }: { pop: IndexItem[] }) {
           {pop.slice(0, 6).map((c) => (
             <Link key={c.slug} href={c.href} className="block group">
               <Thumb item={c} mode="grid" />
-              <span className="block mt-2 text-[14px] leading-snug text-primary group-hover:text-accent-rust">{c.name}</span>
+              <span className="block mt-2 text-[14px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span>
             </Link>
           ))}
         </div>
@@ -98,7 +98,7 @@ export default function HomeLayouts({ features, popular }: { features: HomeFeatu
         <section className="bg-warm min-h-[calc(100svh-3.5rem)] lg:min-h-[calc(100svh-4rem)] flex flex-col">
           <div className={`${PAD} flex-1 grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-14 items-center py-8 md:py-10`}>
             <div className="min-w-0 order-2 md:order-1">
-              {eyebrow('#a5503d')}
+              {eyebrow('#6b6560')}
               <h1 className="text-balance font-serif text-[44px] leading-[1.02] md:text-[clamp(56px,6.2vw,92px)] tracking-[-0.03em] text-primary"><Link href={`/revamp/c/${f.slug}`}>{f.name}</Link></h1>
               <p className="mt-5 text-lg md:text-xl text-secondary max-w-xl leading-relaxed">{deck}</p>
               <div className="mt-7"><Open f={f} /></div>
@@ -116,7 +116,7 @@ export default function HomeLayouts({ features, popular }: { features: HomeFeatu
           <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 90% at 82% 18%, rgba(165,80,61,0.2) 0%, transparent 55%)' }} />
           <div className={`${PAD} relative flex-1 grid lg:grid-cols-[1fr_1.25fr] gap-8 lg:gap-14 items-center py-8 md:py-10`}>
             <div className="min-w-0">
-              {eyebrow('#e0a48f')}
+              {eyebrow('rgba(255,255,255,.7)')}
               <h1 className="text-balance font-serif text-[44px] leading-[1.02] md:text-[clamp(52px,5.4vw,84px)] tracking-[-0.03em]"><Link href={`/revamp/c/${f.slug}`}>{f.name}</Link></h1>
               <p className="mt-5 text-lg text-stone-200 max-w-xl leading-relaxed">{deck}</p>
               <div className="mt-6"><Pills f={f} /></div>
@@ -135,7 +135,7 @@ export default function HomeLayouts({ features, popular }: { features: HomeFeatu
           {lead && <img src={lead.src} alt="" className="absolute inset-0 w-full h-full object-cover" />}
           <HeroScrim />
           <div className={`${PAD} relative flex-1 flex flex-col justify-end pt-12 pb-6`}>
-            {eyebrow('#e0a48f')}
+            {eyebrow('rgba(255,255,255,.7)')}
             <h1 className="text-balance font-serif text-[44px] leading-[1.02] md:text-[clamp(56px,6.2vw,92px)] tracking-[-0.03em]"><Link href={`/revamp/c/${f.slug}`}>{f.name}</Link></h1>
             <p className="mt-5 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{deck}</p>
             <div className="mt-6 flex flex-wrap items-center gap-4"><Open f={f} /></div>

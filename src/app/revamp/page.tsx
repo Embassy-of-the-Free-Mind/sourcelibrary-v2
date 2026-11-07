@@ -18,7 +18,7 @@ export default function Page() {
       <div className="mt-8">
         {ITEMS.map(([href, title, note]) => (
           <Link key={href} href={href} className="block border-t border-border-light py-4 group">
-            <span className="block text-lg text-primary group-hover:text-accent-rust">{title}</span>
+            <span className="block text-lg text-primary group-hover:underline underline-offset-2">{title}</span>
             <span className="block text-sm text-muted">{note}</span>
           </Link>
         ))}

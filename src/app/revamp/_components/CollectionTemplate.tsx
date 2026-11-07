@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { ArrowRight, BookOpen, Search } from 'lucide-react';
 import HeroScrim from '@/components/HeroScrim';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
-import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import type { CollectionBook } from '@/components/CollectionBookCard';
+import WorksGrid from './WorksGrid';
 import BookSlider from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -62,7 +63,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
         <div className="absolute inset-0 md:hidden"><HeroScrim variant="bottom" /></div>
         <div className="absolute inset-0 hidden md:block"><HeroScrim /></div>
         <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 12px rgba(0,0,0,.5)' }}>
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3" style={{ color: '#e0a48f' }}>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3" style={{ color: 'rgba(255,255,255,.7)' }}>
             <Link href="/revamp/c" className="hover:opacity-80">Collections</Link>
             {m.label && <><span style={{ opacity: 0.5 }}>/</span><span>{m.label}</span></>}
           </nav>
@@ -99,7 +100,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
             </div>
             {m.subjects.length > 0 && (
               <p className="mt-6 text-sm text-muted">Subjects: {m.subjects.map((s, i) => (
-                <span key={s.id}>{i > 0 && ', '}<Link className="text-accent-rust hover:opacity-70" href={`/revamp/subjects#${s.id}`}>{s.label}</Link></span>
+                <span key={s.id}>{i > 0 && ', '}<Link className="underline underline-offset-2 hover:opacity-70" href={`/revamp/subjects#${s.id}`}>{s.label}</Link></span>
               ))}</p>
             )}
           </div>
@@ -219,7 +220,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
               </figure>
             )}
             <div className="max-w-xl flex-1 min-w-0">
-              <p className="text-xs font-medium uppercase tracking-[0.15em] text-accent-rust mb-3">Ask the librarian</p>
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted mb-3">Ask the librarian</p>
               <h2 className={`${H2} mb-3`}>Search inside every book</h2>
               <p className="text-secondary leading-relaxed font-body mb-7">The librarian reads the full transcribed text and the description of every illustration in each book that has been digitised here. Ask a question in plain language and it points you to the exact page, passage, or plate that answers it.</p>
               <div className="flex items-center gap-3 bg-white border border-border-light px-5 py-3.5 text-base text-muted"><Search className="w-5 h-5 shrink-0" />{m.ask}</div>
@@ -235,12 +236,7 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
               <h2 className={H2}>Works in this collection</h2>
               <span className="text-sm text-muted whitespace-nowrap">{n(m.stats.works)} works</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {m.books.map((b) => <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} />)}
-            </div>
-            {m.moreWorks > 0 && (
-              <p className="mt-8 text-sm text-muted">{n(m.moreWorks)} more works, in the Library filtered to this collection.</p>
-            )}
+            <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.stats.works} slug={m.slug} />
           </div>
         </section>
       )}

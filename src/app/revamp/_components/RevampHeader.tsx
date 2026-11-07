@@ -127,7 +127,7 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
               <p className={small}>{hotSubject?.label}</p>
               <ul className="m-0 p-0 list-none columns-2 gap-8">
                 {hotSubject?.narrower.slice(0, 20).map((n) => (
-                  <li key={n.id} className="m-0 break-inside-avoid"><Link href={`/revamp/subjects#${n.id}`} className="block py-1 text-[14px] hover:text-accent-rust">{n.label}</Link></li>
+                  <li key={n.id} className="m-0 break-inside-avoid"><Link href={`/revamp/subjects#${n.id}`} className="block py-1 text-[14px] hover:underline underline-offset-2">{n.label}</Link></li>
                 ))}
               </ul>
             </div>
@@ -141,9 +141,9 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
                 </Link>
               )}
               <ul className="m-0 p-0 list-none text-[14px]">
-                <li className="m-0"><Link href="/revamp/c" className="block py-1 hover:text-accent-rust">All collections</Link></li>
-                <li className="m-0"><Link href="/revamp/c#readers" className="block py-1 hover:text-accent-rust">From readers</Link></li>
-                <li className="m-0"><Link href="/libraries" className="block py-1 hover:text-accent-rust">Libraries</Link></li>
+                <li className="m-0"><Link href="/revamp/c" className="block py-1 hover:underline underline-offset-2">All collections</Link></li>
+                <li className="m-0"><Link href="/revamp/c#readers" className="block py-1 hover:underline underline-offset-2">From readers</Link></li>
+                <li className="m-0"><Link href="/libraries" className="block py-1 hover:underline underline-offset-2">Libraries</Link></li>
               </ul>
             </div>
           </div>
@@ -155,8 +155,8 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
           <div className="max-w-[1500px] mx-auto px-10 py-7 columns-4 gap-10">
             {nav.subjects.map((s) => (
               <div key={s.id} className="break-inside-avoid mb-5">
-                <Link href={`/revamp/subjects#${s.id}`} className="block text-[14.5px] font-medium mb-1 hover:text-accent-rust">{s.label}</Link>
-                {s.narrower.slice(0, 5).map((n) => <Link key={n.id} href={`/revamp/subjects#${n.id}`} className="block text-[13px] text-secondary py-0.5 hover:text-accent-rust">{n.label}</Link>)}
+                <Link href={`/revamp/subjects#${s.id}`} className="block text-[14.5px] font-medium mb-1 hover:underline underline-offset-2">{s.label}</Link>
+                {s.narrower.slice(0, 5).map((n) => <Link key={n.id} href={`/revamp/subjects#${n.id}`} className="block text-[13px] text-secondary py-0.5 hover:underline underline-offset-2">{n.label}</Link>)}
               </div>
             ))}
           </div>
@@ -174,9 +174,9 @@ export default function RevampHeader({ nav }: { nav: NavData }) {
               </Link>
             ))}
             <ul className="m-0 p-0 list-none text-[14px] border-l border-border-light pl-5">
-              <li className="m-0"><Link href="/revamp/c" className="block py-1 hover:text-accent-rust">All collections</Link></li>
-              <li className="m-0"><Link href="/revamp/c#readers" className="block py-1 hover:text-accent-rust">From readers</Link></li>
-              <li className="m-0"><Link href="/libraries" className="block py-1 hover:text-accent-rust">Libraries</Link></li>
+              <li className="m-0"><Link href="/revamp/c" className="block py-1 hover:underline underline-offset-2">All collections</Link></li>
+              <li className="m-0"><Link href="/revamp/c#readers" className="block py-1 hover:underline underline-offset-2">From readers</Link></li>
+              <li className="m-0"><Link href="/libraries" className="block py-1 hover:underline underline-offset-2">Libraries</Link></li>
             </ul>
           </div>
         </div>

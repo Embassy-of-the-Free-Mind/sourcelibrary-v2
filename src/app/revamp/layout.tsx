@@ -13,7 +13,12 @@ export default function RevampLayout({ children }: { children: React.ReactNode }
     <>
       <LinkOut />
       <RevampHeader nav={navData()} />
-      {children}
+      {/* Shared cards turn rust on hover. Prototype only: no red text or hover red. */}
+      <style>{`
+        .revamp-scope .group:hover .group-hover\\:text-accent-rust { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+        .revamp-scope .hover\\:border-accent-rust:hover, .revamp-scope [class*="hover:border-accent-rust"]:hover { border-color: var(--text-primary, #1a1612); }
+      `}</style>
+      <div className="revamp-scope">{children}</div>
     </>
   );
 }

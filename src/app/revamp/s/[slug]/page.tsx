@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
+import type { CollectionBook } from '@/components/CollectionBookCard';
+import WorksGrid from '../../_components/WorksGrid';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import PlateWall from '../../_components/PlateWall';
 import SubjectSearch from '../../_components/SubjectSearch';
@@ -26,9 +27,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[56vh] flex items-end">
-        <PlateWall tiles={m.heroTiles} rows={3} />
+        <PlateWall tiles={m.heroTiles} rows={3} still />
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
-          <p className="uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3" style={{ color: '#e0a48f' }}>Subject</p>
+          <p className="uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3" style={{ color: 'rgba(255,255,255,.7)' }}>Subject</p>
           <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[13.5px] font-medium">
             <span style={{ color: '#8fbfe6' }}>{n(m.stats.works)} works</span>
@@ -45,7 +46,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       {narrower.length > 0 && (
         <section className={`${WRAP} pb-10`}>
           <h2 className={`${H2} mb-4`}>Narrower subjects</h2>
-          <div className="columns-2 md:columns-4 gap-8 text-[15px] leading-loose">{narrower.map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block hover:text-accent-rust">{s.label}</Link>)}</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block bg-warm border border-border-light px-[18px] py-3.5 text-[15px] text-primary hover:border-primary transition-colors">{s.label}</Link>)}</div>
         </section>
       )}
       {about.length > 0 && (
@@ -54,15 +55,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <h2 className={`${H2} mb-6`}>Collections about this</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
               {about.slice(0, 10).map((c) => (
-                <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="grid" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:text-accent-rust">{c.name}</span></Link>
+                <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="grid" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
               ))}
             </div>
           </div>
         </section>
       )}
       <section className={`${WRAP} py-10 md:py-14`}>
-        <div className="flex items-end justify-between mb-6"><h2 className={H2}>Works</h2><span className="text-sm text-muted">{n(m.stats.works)} works, filtered as in the Library</span></div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">{m.books.slice(0, 15).map((b) => <CollectionBookCard key={b.id} book={b as unknown as CollectionBook} />)}</div>
+        <div className="flex items-end justify-between mb-6"><h2 className={H2}>Works</h2><span className="text-sm text-muted">{n(m.stats.works)} works</span></div>
+        <WorksGrid books={m.books as unknown as CollectionBook[]} total={m.stats.works} slug={m.slug} />
       </section>
       {m.plates.length > 0 && (
         <section className="bg-warm border-t border-border-light">
