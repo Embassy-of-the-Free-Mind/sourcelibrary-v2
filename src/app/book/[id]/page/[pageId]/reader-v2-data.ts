@@ -17,7 +17,7 @@ import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 const BOOK_NAV_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1,
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
-  visible: 1, 'translation_state.english_original': 1,
+  visible: 1, 'translation_state.english_original': 1, facing_translation: 1,
 };
 
 export interface ReaderV2Data {

@@ -14,6 +14,7 @@ import { jsonLdHtml } from '@/lib/json-ld';
 import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
 import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
+import { findFacingPartner } from '@/lib/facing-translation';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
@@ -102,7 +103,7 @@ const BOOK_NAV_PROJECTION = {
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   // English edition? Then an English leaf serves its transcription, not the
   // stored English-to-English rewording (#7100).
-  'translation_state.english_original': 1,
+  'translation_state.english_original': 1, facing_translation: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
   // The copy clause of the citation panel (#4360): which library's physical
   // copy the scan shows, and its shelfmark there. Sub-paths only — the full
@@ -275,6 +276,20 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
   const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
+  // A facing-page edition (a Loeb, #8321): the leaf opposite this one, so the
+  // first paint already shows the printed English beside the Greek. One indexed
+  // read, on a flagged book only; client page turns find it in the prefetch.
+  const facing = await findFacingPartner<Page>(db, book, currentPage as unknown as Page, READER_PAGE_PROJECTION);
+  const facingSeed = facing
+    ? (() => {
+        const p = serveEnglishOriginalPage(JSON.parse(JSON.stringify(withoutTextLayer(facing.page))) as Page, book);
+        const gated = metered
+          ? (stripGatedPage(p as unknown as Record<string, unknown>, (book as unknown as { pages_count?: number }).pages_count || 0) as unknown as Page)
+          : p;
+        return markPageForReader(gated, scopedBookId);
+      })()
+    : null;
+
   return (
     <>
       {jsonLd && (
@@ -306,6 +321,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
           initialBook={readerBook}
           initialPage={markedPage}
           initialPageList={serializedNavPages}
+          initialFacingPage={facingSeed}
           qualityWarnings={qualityWarnings}
           scanGaps={scanGaps}
           printedNumbers={printedNumbers}

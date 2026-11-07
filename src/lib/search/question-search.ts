@@ -268,7 +268,7 @@ export async function questionSearch(question: string, opts: { feature?: string 
   const books = new Map(
     (bookIds.length ? await db.collection('books').find(
       { id: { $in: bookIds }, visible: true, pages_count: { $gt: 0 }, hidden: { $ne: true }, tenantId: { $in: [null, undefined] } },
-      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1, 'translation_state.english_original': 1 } },
+      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1, 'translation_state.english_original': 1, facing_translation: 1 } },
     ).toArray() : []).map(b => [b.id as string, b]),
   );
   const kept = order.filter(c => books.has(c.book_id));

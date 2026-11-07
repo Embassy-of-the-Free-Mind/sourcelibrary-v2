@@ -9,6 +9,7 @@ import { getPageDisplayUrl } from '@/lib/utils';
 import { pageHasNoTextToShow } from '@/lib/reader-panes';
 import { localeFromPathname, readsOriginal } from '@/lib/locale-path';
 import { isEnglishBook } from '@/lib/translation-pane-state';
+import { facingStepIndex, hasPublishedFacingTranslation } from '@/lib/facing-translation';
 
 // Shared state model for the v2 reader design previews (2a "Quiet Desk" and
 // 2c "Study Desk"). Owns: current page + cache + prefetch, page navigation
@@ -143,8 +144,12 @@ export function useReaderV2(
     }
   }, [pageList]);
 
+  // A facing-page edition (a Loeb, #8321) turns by opening, and turning back
+  // from an opening has to see two leaves behind it to know whether it lands
+  // on a pair.
+  const facingBook = hasPublishedFacingTranslation(book);
   const prefetchAround = useCallback((index: number) => {
-    const start = Math.max(0, index - 2);
+    const start = Math.max(0, index - (facingBook ? 3 : 2));
     const end = Math.min(pageList.length - 1, index + 5);
     const wanted: string[] = [];
     for (let i = start; i <= end; i++) {
@@ -159,7 +164,7 @@ export function useReaderV2(
     }).catch(() => {
       for (const id of wanted) fetchPage(id);
     });
-  }, [pageList, fetchPage, warmScans]);
+  }, [pageList, fetchPage, warmScans, facingBook]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 
@@ -333,14 +338,21 @@ export function useReaderV2(
   // digitizer inserts, negative page numbers — 182k pages in the corpus).
   // Without this guard goNext() fell through to goToIndex(0) and jumped the
   // reader to page 1 of the book.
-  const goNext = useCallback(
-    () => { if (currentIndex >= 0) goToIndex(currentIndex + 1); },
-    [goToIndex, currentIndex],
-  );
-  const goPrev = useCallback(
-    () => { if (currentIndex >= 0) goToIndex(currentIndex - 1); },
-    [goToIndex, currentIndex],
-  );
+  // On a facing-page edition a turn steps past the English leaf facing the
+  // original to the next opening (facingStepIndex); every other book, and
+  // every unpaired leaf, turns one leaf as before.
+  const step = useCallback((dir: 1 | -1) => {
+    if (currentIndex < 0) return;
+    if (!facingBook) { goToIndex(currentIndex + dir); return; }
+    const leafAt = (i: number) => {
+      const id = pageList[i]?.id;
+      return id ? cacheRef.current.get(id) ?? (id === currentPage.id ? currentPage : undefined) : undefined;
+    };
+    const target = facingStepIndex(currentIndex, dir, pageList.length, leafAt);
+    if (target != null) goToIndex(target);
+  }, [currentIndex, facingBook, goToIndex, pageList, currentPage]);
+  const goNext = useCallback(() => step(1), [step]);
+  const goPrev = useCallback(() => step(-1), [step]);
 
   // Jump by the printed page number shown in the stepper
   const goToPageNumber = useCallback((num: number) => {

@@ -21,7 +21,11 @@
  * sentence carries on (src/lib/flow-join.ts) and marks the boundary with a
  * small linked page number. `?view=pages` keeps the page-by-page document
  * above — one heading per page for heading navigation, the original folded
- * under each — and `?text=both` is always page by page. Every
+ * under each — and `?text=both` is always page by page. On a facing-page
+ * edition (a Loeb, #8321) each text keeps its own lane, so no passage reads
+ * twice: the translation is the published English leaves alone, `?text=original`
+ * the Greek or Latin leaves alone, and `?text=both` the pairs, each once, side
+ * by side on a wide screen and stacked on a phone. Every
  * text block carries the `lang` it is written in (#5115). Long books are cut
  * into parts of PART_SIZE pages so no single response is megabytes.
  *
@@ -57,6 +61,7 @@ import { markdownToHtml } from '@/lib/export-markdown-html';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { isRTLLanguage, type PrintedPage } from '@/lib/types';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { facingTranslationOf, facingTranslationLabel, isFacingPair, leafRole } from '@/lib/facing-translation';
 import { joinPagesHtml, type FlowPage } from '@/lib/flow-join';
 import { galleryFilter } from '@/lib/gallery-scope';
 
@@ -73,7 +78,8 @@ export const preferredRegion = 'fra1';
 const PART_SIZE = 60;
 
 type TextMode = 'translation' | 'original' | 'both';
-type ViewMode = 'flow' | 'pages';
+// `facing`: `?text=both` on a facing-page edition (a Loeb, #8321): each original leaf and the published English opposite it, once.
+type ViewMode = 'flow' | 'pages' | 'facing';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -90,6 +96,7 @@ interface BookDoc {
   published?: string | number;
   language?: string;
   translation_state?: { english_original?: boolean | null } | null;
+  facing_translation?: unknown;
   pages_count?: number;
   chapters?: Array<{ title?: string; titleEn?: string; pageNumber?: number; level?: number; confidence?: string }>;
 }
@@ -107,7 +114,7 @@ interface PageDoc {
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
   language: 1, pages_count: 1, chapters: 1, visible: 1, hidden_reason: 1,
-  'translation_state.english_original': 1,
+  'translation_state.english_original': 1, facing_translation: 1,
 };
 
 const PAGE_PROJECTION = {
@@ -182,8 +189,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const sp = await searchParams;
   const textParam = firstString(sp.text);
   const mode: TextMode = textParam === 'original' ? 'original' : textParam === 'both' ? 'both' : 'translation';
-  // Both texts at once only make sense side by side per page.
-  const view: ViewMode = firstString(sp.view) === 'pages' || mode === 'both' ? 'pages' : 'flow';
+  const viewParam = firstString(sp.view);
   const part = Math.max(1, parseInt(firstString(sp.part) ?? '1', 10) || 1);
 
   const ctx = await getTenantContext();
@@ -195,6 +201,14 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const bookId = (book.id || book._id?.toString()) as string;
   const bookPath = book.slug || bookId;
   const pagesCount = book.pages_count || 0;
+  // A facing-page edition (a Loeb, #8321) is continuous by default like any book,
+  // but each text runs in its own lane: the translation is the published English
+  // leaves, the original the Greek or Latin ones (see outOfLane). `?text=both` is
+  // the pairs, each once, side by side.
+  const facingFlag = facingTranslationOf(book);
+  // Both texts at once only make sense side by side per page.
+  const view: ViewMode = facingFlag && mode === 'both' ? 'facing'
+    : viewParam === 'pages' || mode === 'both' ? 'pages' : 'flow';
 
   // Who is asking. Same ladder as /api/books/[id]/text: partner reading rooms
   // are exempt; untrusted bots, and anonymous humans while the metered reader
@@ -218,6 +232,26 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     .filter(isReaderListedPage)
     .map(p => serveEnglishOriginalPage(p, book, { modernized: false }));
   if (pages.length === 0) notFound();
+
+  // The pairs, by the original leaf's page number (#8321). Empty on any other book.
+  const facingEnglishOf = new Map<number, (typeof pages)[number]>();
+  const pairedEnglish = new Set<number>();
+  if (facingFlag) {
+    for (let i = 0; i + 1 < pages.length; i++) {
+      if (isFacingPair(pages[i], pages[i + 1])) {
+        facingEnglishOf.set(pages[i].page_number, pages[i + 1]);
+        pairedEnglish.add(pages[i + 1].page_number);
+      }
+    }
+  }
+  // An English leaf of a flagged book is the published translation: its own words are the text.
+  const isPrintedEnglish = (p: { ocr?: { data?: string } }) => !!facingFlag && leafRole(p.ocr?.data) === 'translation';
+  // One text per lane on a Loeb, so no passage reads twice: the translation lane
+  // skips the original leaves (their AI translation restates the English opposite),
+  // the original lane skips the English leaves. Leaves that are neither (title,
+  // blank, plate) stay in both. Only `?text=both` shows the two together.
+  const outOfLane = (p: { ocr?: { data?: string } }) => !!facingFlag && mode !== 'both'
+    && leafRole(p.ocr?.data) === (mode === 'original' ? 'translation' : 'original');
 
   const partCount = Math.max(1, Math.ceil(pages.length / PART_SIZE));
   if (part > partCount) notFound();
@@ -264,7 +298,9 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     return `/book/${bookPath}/read${qs ? `?${qs}` : ''}${opts.hash ? `#${opts.hash}` : ''}`;
   };
 
-  const modeLabel: Record<TextMode, string> = { translation: 'Translation', original: `Original (${languageLabel})`, both: 'Both' };
+  const modeLabel: Record<TextMode, string> = facingFlag
+    ? { translation: facingTranslationLabel(book), original: `Original (${languageLabel})`, both: 'Side by side' }
+    : { translation: 'Translation', original: `Original (${languageLabel})`, both: 'Both' };
   const first = slice[0]?.page_number;
   const last = slice[slice.length - 1]?.page_number;
 
@@ -309,8 +345,12 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     const pageHref = `/book/${bookPath}/page/${p.id}`;
     // The printed number, so the book's own references ("see p. 279", its index) can be followed in the flow.
     const printed = typeof p.printed_page?.label === 'string' && p.printed_page.label.trim() ? p.printed_page.label.trim() : undefined;
+    // A Loeb (#8321): a leaf outside this lane keeps only its linked number, which joins the next page's.
+    if (outOfLane(p)) return { n, html: null, href: pageHref, label: printed };
     const originalHtml = pageHtml(p.ocr?.data, flowLevel);
     if (mode === 'original') return { n, html: originalHtml, href: pageHref, label: printed };
+    // The published English runs on in the translator's words.
+    if (isPrintedEnglish(p)) return { n, html: originalHtml, href: pageHref, label: printed };
     const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
     const translationHtml = pageHtml(translationRaw, flowLevel);
     if (translationHtml) return { n, html: translationHtml, href: pageHref, label: printed };
@@ -322,8 +362,99 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     return { n, html: `<div class="my-4 pl-4 border-l-2" style="border-color: var(--border-light)">${label}<div ${attrs}>${originalHtml}</div></div>`, href: pageHref, block: true, label: printed };
   };
 
+  // One page on its own: the page-by-page view, and any leaf of a Loeb without a facing page (#8321).
+  const pageSection = (p: (typeof open)[number]) => {
+    const n = p.page_number;
+    const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
+    const translationHtml = pageHtml(translationRaw, pageLevel);
+    const originalHtml = pageHtml(p.ocr?.data, pageLevel);
+    // A leaf re-read as blank is a blank page, not a withdrawn translation (#5813).
+    const blank = !translationHtml && p.page_type === 'blank';
+    const withheld = !translationHtml && !blank && !!p.translation_withheld;
+
+    const translationBlock = translationHtml
+      ? <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: translationHtml }} />
+      : <p className="text-muted italic">{blank ? 'Blank page.' : withheld ? 'Translation withheld: it was made from an earlier reading of this page.' : originalHtml ? 'Not yet translated.' : null}</p>;
+    // A Loeb's English leaf is written in English, whatever the book is catalogued as.
+    const originalBlock = originalHtml
+      ? (isPrintedEnglish(p)
+        ? <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: originalHtml }} />
+        : <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />)
+      : <p className="text-muted italic">Not transcribed.</p>;
+    // `?text=both` on a Loeb leaf with no facing page (#8321): an English leaf IS the
+    // translation, and an original leaf's AI translation folds away as ours, so a
+    // passage the English leaf beside it prints is never read twice.
+    const loebLeaf = facingFlag && mode === 'both' ? leafRole(p.ocr?.data) : null;
+
+    const hasAnyText = !!(translationHtml || originalHtml);
+    // A page with no translation shows the ORIGINAL as its text, not a
+    // "not yet translated" line with the words folded away — for an
+    // English original that line is simply false, and for a Latin one
+    // the reader still wants the Latin rather than nothing. Measured on
+    // the preview: 79 pages of an English book hid behind that line.
+    const primaryIsOriginal = mode === 'original' || !translationHtml;
+    const primary = primaryIsOriginal ? originalBlock : translationBlock;
+    const primaryNote = primaryIsOriginal && mode !== 'original' && originalHtml && !isPrintedEnglish(p)
+      ? <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">{withheld ? 'Translation withheld' : 'Not yet translated'} · original ({languageLabel})</p>
+      : null;
+    const secondaryLabel = primaryIsOriginal ? 'Translation' : `Original (${languageLabel})`;
+    const secondary = primaryIsOriginal ? translationBlock : originalBlock;
+    // No point folding a "not yet translated" line under the original.
+    const showSecondary = primaryIsOriginal ? !!translationHtml : !!originalHtml;
+
+    return (
+      <section key={p.id} id={`p${n}`} aria-labelledby={`h-p${n}`} className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
+        {chapterAt.get(n)?.map((c, i) => (
+          <Heading key={i} level={2} className="font-display text-2xl mb-4">
+            {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
+          </Heading>
+        ))}
+        <div className="flex items-baseline justify-between gap-4 mb-3">
+          <Heading level={pageLevel} id={`h-p${n}`} className="font-sans text-xs uppercase tracking-[0.15em] text-muted">Page {n}</Heading>
+          <Link href={`/book/${bookPath}/page/${p.id}`} className="text-xs text-muted underline underline-offset-2 hover:text-accent-rust" aria-label={`Open page ${n} in the reader, with the scan`}>
+            Scan
+          </Link>
+        </div>
+        {!hasAnyText ? (
+          <p className="text-muted italic">No transcribed text on this page.</p>
+        ) : loebLeaf ? (
+          <>
+            {originalBlock}
+            {loebLeaf === 'original' && translationHtml && (
+              <details className="mt-3">
+                <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">Source Library translation</summary>
+                <p className="font-sans text-xs text-muted mt-3 mb-2">Our AI translation of the {languageLabel} on page {n}, not the published one.</p>
+                {translationBlock}
+              </details>
+            )}
+          </>
+        ) : mode === 'both' ? (
+          <>
+            {translationBlock}
+            <div className="mt-4 pl-4 border-l-2" style={{ borderColor: 'var(--border-light)' }}>
+              <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">Original ({languageLabel})</p>
+              {originalBlock}
+            </div>
+          </>
+        ) : (
+          <>
+            {primaryNote}
+            {primary}
+            {showSecondary && (
+              <details className="mt-3">
+                <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">{secondaryLabel}</summary>
+                <div className="mt-3">{secondary}</div>
+              </details>
+            )}
+          </>
+        )}
+      </section>
+    );
+
+  };
+
   return (
-    <main className="max-w-[72ch] mx-auto px-4 sm:px-6 py-10 text-primary">
+    <main className={`${view === 'facing' ? 'max-w-[72ch] lg:max-w-[150ch]' : 'max-w-[72ch]'} mx-auto px-4 sm:px-6 py-10 text-primary`}>
       <header className="mb-8">
         <p className="text-sm text-muted mb-4">
           <Link href={`/book/${bookPath}`} className="hover:text-accent-rust underline underline-offset-2">← Book page</Link>
@@ -335,7 +466,11 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </p>
         <p className="text-sm text-muted mt-3">
           The whole book as one document, {pages.length} pages{partCount > 1 ? ` in ${partCount} parts` : ''}.
-          {view === 'flow'
+          {view === 'facing'
+            ? ` Each page of the original sits beside the published English translation printed facing it (${facingTranslationLabel(book)}); pages without a facing translation read on their own.`
+            : facingFlag && mode !== 'both'
+            ? ` ${mode === 'original' ? `The ${languageLabel} runs on by itself` : `The published English (${facingTranslationLabel(book)}) runs on by itself, without our AI translation`}, so no passage reads twice. The small numbers mark where each page begins and open it beside the scan.`
+            : view === 'flow'
             ? ' The text runs on across pages. The small numbers after a thin rule mark where each page begins: the number printed on it where the book has one, otherwise the scan; each opens that page beside the scan.'
             : ` Each page is a heading; the ${mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.`}
         </p>
@@ -454,76 +589,58 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
             />
           </div>
         ))}
-        {view === 'pages' && open.map(p => {
+        {view === 'facing' && open.map(p => {
           const n = p.page_number;
-          const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
-          const translationHtml = pageHtml(translationRaw, pageLevel);
+          // The English leaf of a pair is drawn with its original, which comes first —
+          // in this part or, across a part boundary, at the end of the one before.
+          if (pairedEnglish.has(n)) return null;
+          const en = facingEnglishOf.get(n);
+          // Past the free sample the facing English stays behind the sign-in notice.
+          if (!en || (clampAt !== undefined && en.page_number > clampAt)) return pageSection(p);
+          const label = (q: typeof p) => (typeof q.printed_page?.label === 'string' && q.printed_page.label.trim()) || String(q.page_number);
           const originalHtml = pageHtml(p.ocr?.data, pageLevel);
-          // A leaf re-read as blank is a blank page, not a withdrawn translation (#5813).
-          const blank = !translationHtml && p.page_type === 'blank';
-          const withheld = !translationHtml && !blank && !!p.translation_withheld;
-
-          const translationBlock = translationHtml
-            ? <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: translationHtml }} />
-            : <p className="text-muted italic">{blank ? 'Blank page.' : withheld ? 'Translation withheld: it was made from an earlier reading of this page.' : originalHtml ? 'Not yet translated.' : null}</p>;
-          const originalBlock = originalHtml
-            ? <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />
-            : <p className="text-muted italic">Not transcribed.</p>;
-
-          const hasAnyText = !!(translationHtml || originalHtml);
-          // A page with no translation shows the ORIGINAL as its text, not a
-          // "not yet translated" line with the words folded away — for an
-          // English original that line is simply false, and for a Latin one
-          // the reader still wants the Latin rather than nothing. Measured on
-          // the preview: 79 pages of an English book hid behind that line.
-          const primaryIsOriginal = mode === 'original' || !translationHtml;
-          const primary = primaryIsOriginal ? originalBlock : translationBlock;
-          const primaryNote = primaryIsOriginal && mode !== 'original' && originalHtml
-            ? <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">{withheld ? 'Translation withheld' : 'Not yet translated'} · original ({languageLabel})</p>
-            : null;
-          const secondaryLabel = primaryIsOriginal ? 'Translation' : `Original (${languageLabel})`;
-          const secondary = primaryIsOriginal ? translationBlock : originalBlock;
-          // No point folding a "not yet translated" line under the original.
-          const showSecondary = primaryIsOriginal ? !!translationHtml : !!originalHtml;
-
+          const englishHtml = pageHtml(en.ocr?.data, pageLevel);
+          const ourHtml = pageHtml(p.translation?.data ? markForExport(p.translation.data, bookId) : undefined, pageLevel);
+          const caps = 'font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2';
           return (
             <section key={p.id} id={`p${n}`} aria-labelledby={`h-p${n}`} className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
-              {chapterAt.get(n)?.map((c, i) => (
+              {[...(chapterAt.get(n) ?? []), ...(chapterAt.get(en.page_number) ?? [])].map((c, i) => (
                 <Heading key={i} level={2} className="font-display text-2xl mb-4">
                   {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
                 </Heading>
               ))}
               <div className="flex items-baseline justify-between gap-4 mb-3">
-                <Heading level={pageLevel} id={`h-p${n}`} className="font-sans text-xs uppercase tracking-[0.15em] text-muted">Page {n}</Heading>
-                <Link href={`/book/${bookPath}/page/${p.id}`} className="text-xs text-muted underline underline-offset-2 hover:text-accent-rust" aria-label={`Open page ${n} in the reader, with the scan`}>
-                  Scan
-                </Link>
+                <Heading level={pageLevel} id={`h-p${n}`} className="font-sans text-xs uppercase tracking-[0.15em] text-muted">Pages {label(p)}–{label(en)}</Heading>
+                <span className="text-xs text-muted">
+                  Scan{' '}
+                  <Link href={`/book/${bookPath}/page/${p.id}`} className="underline underline-offset-2 hover:text-accent-rust" aria-label={`Open page ${label(p)} in the reader, with the scan`}>{label(p)}</Link>
+                  {' · '}
+                  <Link href={`/book/${bookPath}/page/${en.id}`} className="underline underline-offset-2 hover:text-accent-rust" aria-label={`Open page ${label(en)} in the reader, with the scan`}>{label(en)}</Link>
+                </span>
               </div>
-              {!hasAnyText ? (
-                <p className="text-muted italic">No transcribed text on this page.</p>
-              ) : mode === 'both' ? (
-                <>
-                  {translationBlock}
-                  <div className="mt-4 pl-4 border-l-2" style={{ borderColor: 'var(--border-light)' }}>
-                    <p className="font-sans text-xs uppercase tracking-[0.15em] text-muted mb-2">Original ({languageLabel})</p>
-                    {originalBlock}
-                  </div>
-                </>
-              ) : (
-                <>
-                  {primaryNote}
-                  {primary}
-                  {showSecondary && (
-                    <details className="mt-3">
-                      <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">{secondaryLabel}</summary>
-                      <div className="mt-3">{secondary}</div>
-                    </details>
-                  )}
-                </>
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
+                <div>
+                  <p className={caps}>{languageLabel}</p>
+                  {originalHtml
+                    ? <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />
+                    : <p className="text-muted italic">Not transcribed.</p>}
+                </div>
+                <div id={`p${en.page_number}`}>
+                  <p className={caps}>{facingTranslationLabel(book)}</p>
+                  <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: englishHtml ?? '' }} />
+                </div>
+              </div>
+              {ourHtml && (
+                <details className="mt-3">
+                  <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">Source Library translation</summary>
+                  <p className="font-sans text-xs text-muted mt-3 mb-2">Our AI translation of the {languageLabel} on page {label(p)}, not the published one.</p>
+                  <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: ourHtml }} />
+                </details>
               )}
             </section>
           );
         })}
+        {view === 'pages' && open.filter(p => !outOfLane(p)).map(p => pageSection(p))}
         {gateFrom !== null && (
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
             <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>
