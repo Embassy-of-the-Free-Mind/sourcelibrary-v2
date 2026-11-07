@@ -321,6 +321,9 @@
 50 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-printed-page.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-printed-page-4291.mjs --apply --ocr-since=26h" >> /var/log/sourcelibrary/printed-page.log 2>&1
 # Vercel prod build watcher (#5708)
 7,22,37,52 * * * * cd /root/sourcelibrary && [ -f scripts/audit/vercel-prod-watch.mjs ] && flock -n /tmp/sl-vercel-prod-watch.lock bash -c "set -a; source .env.production.local; set +a; VERCEL_TOKEN=\$VERCEL_API_TOKEN node scripts/audit/vercel-prod-watch.mjs" >> /var/log/sourcelibrary/vercel-prod-watch.log 2>&1  # #5708
+# Spend-gate refusal watcher (#7492): reads the embed-gemini / enrich-batch / site-pages logs, pages ntfy once when a
+# worker's gate refused ≥80% of its runs for 24 h (envelope expiry stops recurring crons silently; they exit 0). No database, no spend.
+5,20,35,50 * * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-gate-refusal-watch.mjs ] && flock -n /tmp/sl-spend-gate-watch.lock node scripts/audit/spend-gate-refusal-watch.mjs >> /var/log/sourcelibrary/spend-gate-refusal-watch.log 2>&1  # #7492
 # Spare lane (#6395): when this box's Claude account is under its fair share of the week (or in the last 48 h before
 # the reset), start a claude-job on the next small bug / user-feedback / data-quality issue; stop lane jobs at weekly 92% /
 # session 85%. Subscription only, $0. Guarded on the script so the line is inert until it is on main.
