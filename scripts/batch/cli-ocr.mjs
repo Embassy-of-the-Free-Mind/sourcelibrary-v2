@@ -136,7 +136,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, cliExitCode } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
@@ -388,7 +388,7 @@ if (STAGE === 'read') {
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
     const meta = {
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: r.cls, ...(r.hung_after_reply && { hung_after_reply: true }),
       chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
@@ -488,7 +488,7 @@ if (STAGE === 'read') {
       fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
       const meta = {
         page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null,
+        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: null, ...(r.hung_after_reply && { hung_after_reply: true }),
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
         prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
         wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
@@ -646,6 +646,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file or --draft-dir (an eval read), not the stored OCR'); continue; }
   // Route C (#7263): a correction of a GPU engine's draft of a page with no OCR. Its reply carries the full header.
   const gpu = correct && m.draft?.source === 'gpu';
+  // #8110: a reply agy printed whole before it hung is recorded as exit 0 since then. Metas written before that still
+  // say -9 and stay refused here on purpose: those reads are unjudged, and what happens to them is decided on #7701.
   if (m.exit !== 0) { failed(m, `cli exit ${m.exit}`, 'exit'); continue; }
   // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
   // written even when the text inside looks like a transcription: it is usually a partial page.

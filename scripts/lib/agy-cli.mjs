@@ -100,6 +100,11 @@ export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').sp
  * `tool_calls` and no allowed read is that case. A read with no `tool_calls` field (before the gate, or another CLI)
  * is not judged here.
  */
+// #8110: the exit a read's meta records. agyCall ends a CLI that printed a whole SUCCESS reply and then never exited
+// (#7503) with SIGKILL, so its code is null, but it returns that reply as the call's result (`hung_after_reply`, no
+// error class). That is a delivered reply: exit 0. A kill with no complete reply stays -9 (agyCall classes it 'timeout').
+export const cliExitCode = (r) => (r.code === null ? (r.hung_after_reply ? 0 : -9) : r.code);
+
 export function imageNeverOpened(meta) {
   if (!meta || meta.cli !== 'agy' || !Array.isArray(meta.tool_calls)) return false;
   return !meta.tool_calls.some((t) => t === 'read_file' || t === 'view_file');
