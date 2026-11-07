@@ -138,7 +138,11 @@
   "menu": {
     "_about": "Derek 2026-11-06 (#8283): 'basically we choose between agy alone, agy correcting ocr gpu, and opus alone and opus correcting.' A route is agy or Opus, alone or over a draft (a stored read costs nothing; a GPU draft is a named engine). off_menu_stages are never picked and never the gate's reference. default: a cell the evidence has not decided (UNTESTED, HOLD for too few pages, or a keep whose only measured route is the one it serves) takes the plainest agy route, never the incumbent. build.py on_menu / menu_default.",
     "in_force": true,
-    "off_menu_stages": ["sonnet-read@1", "sonnet-img@1", "lite-text"]
+    "off_menu_stages": ["sonnet-read@1", "sonnet-img@1", "lite-text"],
+    "keep_live": {
+      "german-tr-flash3/unknown": "Derek took the default, 2026-11-07 (#8283): agy is floor-blocked in the print sibling, so the unknown-script cell does not default to it.",
+      "german-tr-lite/unknown": "Derek took the default, 2026-11-07 (#8283): agy is floor-blocked in the print sibling, so the unknown-script cell does not default to it."
+    }
   },
   "no_served_privilege": {
     "_about": "Rule 3. No privilege for an unmeasured served route: when no candidate passes the gate, the cell does not fall back to its current route (italian-gpu-7263/print kept an untested `lite` over four routes judged 30/30-39/40). The fallback is the lowest-loss measured agy / GPU route that clears the hard floor; only when none does, the lowest-loss Opus route that does; else HOLD (hard floor). The k/n fallback is not re-decided by the defect rule. RETIRED 2026-11-06 (#8283): the k/n decision path is gone from build.py; kept for kn_rule.py (v3_sim.py's frozen V3 reproduction) and sonnet_plan.py.",

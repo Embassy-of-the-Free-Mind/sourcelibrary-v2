@@ -15,12 +15,16 @@
 // newer build while every other cell stays on `table`, so a decision about two cells does not carry along every other
 // change a rebuild makes.
 //
+// BINDING (#8283): a build's rows carry `bound_route`, what the cell runs (build.py bind): a HOLD cell runs it too, and the
+// nightly rebuild moves this pointer by itself (planBind; scripts/eval/lane-judge-sampler.mjs). An older build's row binds its
+// route only when the decision is keep or switch. boundRoute answers for both.
+//
 // A lane derives the routes it runs from its own flags (servedByFirstRead, servedByCorrect, servedByReread) and calls checkBinding.
 // Each served cell gets one status:
 //   ok         the lane runs the decided route (keep or switch)
-//   mismatch   the decision is keep/switch and the lane runs something else, with no live waiver
+//   mismatch   the cell binds a route and the lane runs something else, with no live waiver
 //   waived     a mismatch with a live waiver
-//   undecided  the cell is HOLD / UNTESTED / planned / held: the lane runs an undecided cell (reported, not an error)
+//   undecided  the cell binds no route (held, planned, or an older build's HOLD / UNTESTED): reported, not an error
 //   no-cell    the current table has no such cell
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,11 +45,35 @@ export function loadCurrentTable(dir = ROUTER_DIR) {
   const read = (name) => JSON.parse(fs.readFileSync(path.join(dir, `${name}.json`), 'utf8'));
   const rows = new Map(read(pointer.table).rows.map((r) => [r.id, r]));
   for (const [cell, c] of Object.entries(pointer.cells || {})) {
+    if (!c.table) { rows.delete(cell); continue; }   // a new cell not bound yet (planBind)
     const row = read(c.table).rows.find((r) => r.id === cell);
     if (!row) throw new Error(`current.json cells: ${c.table} has no cell ${cell}`);
     rows.set(cell, { ...row, table: c.table });
   }
   return { name: pointer.table, rows, waivers: pointer.waivers || [], pointer };
+}
+
+/** A keep or switch the evidence decided, not an UNTESTED keep. */
+export const isDecided = (row) => /^(keep|switch)\b/.test(row?.decision || '') && !/UNTESTED/.test(row.decision);
+
+/** What the cell runs: the build's bound_route (null: nothing), or an older build's decided route. */
+export function boundRoute(row) {
+  if (row && 'bound_route' in row) return row.bound_route;
+  return isDecided(row) ? row.route : null;
+}
+
+/** A route id's reading stage ('agy-flash-low@4>agy-flash-low-written' → agy, 4 a call): what a router can act on. */
+export function routeReader(route) {
+  const stages = String(route).split('>');
+  const name = (s) => s.split(/[@+]/)[0];
+  const first = name(stages[0]), last = name(stages[stages.length - 1]);
+  const reader = /^agy-flash-low\b/.test(last) ? 'agy' : /^opus\b/.test(last) ? 'opus' : null;
+  const reading = stages.find((s) => /^(agy|opus)/.test(s));
+  return {
+    first_read: !['lite', '3flash', 'flash3', 'stored', 'scans-only'].includes(first), reader,
+    draft: stages.length > 1 && !/^(agy|opus)/.test(first) ? first : null,
+    per_call: Number(reading?.match(/@(\d+)/)?.[1] ?? 1),
+  };
 }
 
 /**
@@ -115,8 +143,10 @@ export function checkBinding(table, served, { today = new Date().toISOString().s
     if (!row) return { ...base, status: 'no-cell' };
     const decision = String(row.decision || '');
     const f = { ...base, decision, decided: row.route, decided_kn: kn(row, row.route), pages_waiting: row.pages_waiting ?? null };
-    if (!/^(keep|switch)\b/.test(decision) || /UNTESTED/.test(decision)) return { ...f, status: 'undecided' };
-    if (row.route === route) return { ...f, status: 'ok' };
+    const bound = boundRoute(row);
+    if (!bound) return { ...f, status: 'undecided' };
+    f.decided = bound; f.decided_kn = kn(row, bound);
+    if (bound === route) return { ...f, status: 'ok' };
     const w = liveWaiver(table.waivers, cell, lane, today);
     return w ? { ...f, status: 'waived', waiver: w } : { ...f, status: 'mismatch' };
   });
@@ -174,6 +204,61 @@ export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '
     process.exit(9);
   }
   return findings;
+}
+
+const TRANSLATION_ROUTE_ENGINE = Object.freeze({ 'opus-cli': 'claude-opus-5-5', 'agy-flash-low': 'gemini-3.8-flash+agy-cli', 'flash-lite': 'gemini-3.1-flash-lite', flash3: 'gemini-3-flash-preview' });
+
+/**
+ * A translation cell whose bound route the translation router does not run (#8283): the reason, or null. Only `<lang>-tr-first`
+ * cells have a router rule to compare (first translations, translateLaneForBook on the language); translation's rows stay
+ * hand-written, so a move it would not follow waits for a person. `lane` is translateLaneForBook(translationTable, book).
+ */
+export function translationDisagrees(row, lane) {
+  const route = boundRoute(row);
+  if (!route) return null;
+  const [name, n] = route.split('@');
+  const same = TRANSLATION_ROUTE_ENGINE[name] === lane.engine && (!n || Number(n) === (lane.row?.per_call ?? 1));
+  return same ? null : `the translation router runs ${lane.engine}${lane.row?.per_call ? `@${lane.row.per_call}` : ''}, the cell binds ${route}`;
+}
+
+/** The book language of a `<lang>-tr-first` cell, or null for any other cell. */
+export const trFirstLanguage = (id) => id.match(/^([a-z]+)-tr-first\//)?.[1].replace(/^./, (c) => c.toUpperCase()) ?? null;
+
+/**
+ * A first-read OCR cell bound to an Opus read (#8283): the reason, or null. getOcrModelForBook would answer Opus for the cell's books,
+ * and no lane reads an unread book on Opus (cli-ocr-lane has no CLI model for it, its first-read cohort skips it), so they would stop
+ * being read and nothing would fail. `bases` is FIRST_READ_CELL's values. A person can still pin it; the nightly does not.
+ */
+export function ocrCellNoLane(row, bases) {
+  const route = boundRoute(row), reads = route && routeReader(route);
+  return reads?.first_read && reads.reader === 'opus' && bases.includes(row.id.split('/')[0]) ? `no OCR lane reads an unread book on ${route}` : null;
+}
+
+/**
+ * What the nightly rebuild does with a new build (#8283), pure. A cell whose bound route changes MOVES when a V3-tested rule
+ * pick passes V3 (row.v3.passes; an annotated row has v3, null when the rule compared nothing), the judge gate did not hold it,
+ * and `refuse(row)` (the routers cannot follow) gives no reason. A default, a held-over live route or a person's planned
+ * decision is no rule pick, so V3 has nothing to say of it. A cell that fails stays where it runs, by a `cells` pin. Waivers
+ * are copied verbatim and expire on their dates. {moved, blocked, pointer}; moved empty = no PR.
+ */
+export function planBind(table, next, { name, today, refuse = () => null }) {
+  const moved = [], blocked = [], pins = {};
+  const nextRows = new Map(next.rows.map((r) => [r.id, r]));
+  const pin = (id, why) => { pins[id] = table.pointer.cells?.[id] ?? { table: table.name, set: today, why }; };   // a cell the live table lacks: table null, it stays out
+  for (const id of table.rows.keys()) if (!nextRows.has(id)) pin(id, `${name} has no such cell (#8283).`);
+  for (const row of next.rows) {
+    const old = table.rows.get(row.id), from = boundRoute(old), to = boundRoute(row);
+    if (from === to) continue;
+    const rulePick = isDecided(row) && row.route === to && !/\(default:/.test(row.decision) && !row.rule_alone;
+    if (rulePick && row.v3 === undefined) throw new Error(`planBind: ${row.id} has no V3 result: run v3_sim.py --annotate first`);
+    const why = rulePick && row.v3 && !row.v3.passes ? `V3 false-pick rate ${(100 * row.v3.false_pick_boundary).toFixed(1)}% over the 5% bar`
+      : row.judge_validity?.held ? `judge not valid: ${row.judge_validity.held}` : refuse(row);
+    if (!why) { moved.push({ cell: row.id, from, to, decision: row.decision, pages_waiting: row.pages_waiting ?? 0 }); continue; }
+    blocked.push({ cell: row.id, from, to, why });
+    pins[row.id] = table.pointer.cells?.[row.id] ?? { table: old ? table.name : null, set: today, why: `Not auto-bound on ${today} (#8283): ${why}.` };
+  }
+  const { cells: _old, ...pointer } = table.pointer;
+  return { moved, blocked, pointer: { ...pointer, table: name, set: today, why: `Nightly rebuild (#8283): ${moved.length} cell(s) moved; the PR body is the diff. Rollback: revert the PR.`, cells: pins, waivers: table.waivers } };
 }
 
 /**

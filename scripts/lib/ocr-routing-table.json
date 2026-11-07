@@ -16,7 +16,7 @@
     "pareto": "optional: the /quality/pareto chart this row's reader is the engine in use for, and that engine's id in the benchmark data. scripts/eval/build-ocr-pareto.mjs reads it; a chart no row names takes its engine in use from getOcrModelForBook",
     "stored": "public: what readers have now, the stored text by the engine that wrote it, in pages, with the count it came from (the `census` block gives date, method and source; a row counted on another date says so); null where it was not counted. It differs from `reader`, which is what NEW pages get",
     "charts": "optional: the /quality/pareto charts whose pages are this kind; build-ocr-pareto.mjs copies `stored` onto them so each chart names both baselines",
-    "route": "internal, READ BY THE ROUTER (#7170): what the code does for this kind. {engine, families: {<language family>: {from: date, hidden?: true}}}: getOcrModelForBook sends a book whose first language is in one of these families to `engine` (visible books, books created on or after `from`, and the hidden backlog too when `hidden`). {engine, default: true}: the model for every other book. {fallback: [{chart, engine, lane}], otherwise, source}: the next reader for a page Gemini refused, per estimator chart, never a Gemini model; `otherwise` for a page no chart covers; `source` is the derive_routes.py proposal it was adopted from. A row with no `route` routes nothing; with no family route anywhere the router keeps its pinned constants (FLASH_OCR_FROM_FALLBACK). A change to a route is proposed by scripts/eval/estimator/routing/derive_routes.py and lands as a reviewed diff of this field, never a silent edit."
+    "route": "internal, READ BY THE ROUTER (#7170): {fallback: [{chart, engine, lane}], otherwise, source}: the next reader for a page Gemini refused, per estimator chart, never a Gemini model; `otherwise` for a page no chart covers; `source` is the derive_routes.py proposal it was adopted from. No router cell covers a refusal, so this one stays hand-written. Which model reads a book is not here: `router_cells` below, generated from the router table (#8283)."
   },
   "rows": [
     {
@@ -29,10 +29,6 @@
       "status": "settled",
       "routed": "yes",
       "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Since 2026-11-06 the label lite no longer names a channel: no model runs on the paid API for OCR (API_OCR_MODELS is empty, Derek \"everything on agy\"), so the orchestrator holds the book with CLI_FLASH_OCR_HOLD and cli-ocr-lane.mjs reads it on gemini-3.8-flash-low, 4 pages a call (CLI_MODEL_FOR).",
-      "route": {
-        "engine": "gemini-3.1-flash-lite",
-        "default": true
-      },
       "code": {
         "router": {
           "language": "Latin",
@@ -82,14 +78,6 @@
       "status": "settled",
       "routed": "partly",
       "production": "FLASH_OCR_FROM.grc: visible Greek books and Greek books created from 2026-10-02 read on gemini-3-flash-preview (Derek, #5575). The hidden Greek backlog stays on lite until its language labels are fixed (#4884). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
-      "route": {
-        "engine": "gemini-3-flash-preview",
-        "families": {
-          "grc": {
-            "from": "2026-10-02"
-          }
-        }
-      },
       "code": {
         "router": {
           "language": "Greek",
@@ -132,27 +120,6 @@
       "status": "provisional",
       "routed": "partly",
       "production": "FLASH_OCR_FROM fas/san/pli/ara/gez: visible and new books read on gemini-3-flash-preview (PR #5760). Persian's hidden backlog too (FLASH_OCR_INCLUDES_HIDDEN, Derek 2026-10-04). Ge'ez is routed the same way on agreement evidence only (0.47 with flash, 9 of 20 pages catastrophic on lite, #4729). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
-      "route": {
-        "engine": "gemini-3-flash-preview",
-        "families": {
-          "fas": {
-            "from": "2026-10-04",
-            "hidden": true
-          },
-          "san": {
-            "from": "2026-10-04"
-          },
-          "pli": {
-            "from": "2026-10-04"
-          },
-          "ara": {
-            "from": "2026-10-04"
-          },
-          "gez": {
-            "from": "2026-10-04"
-          }
-        }
-      },
       "code": {
         "router": {
           "language": "Persian",
@@ -325,14 +292,6 @@
       "status": "settled",
       "routed": "partly",
       "production": "scripts/workers/paddle-print-lane.mjs (ocr.pipeline paddle-print-2026-10, ocr.source paddle), run by hand on gex45 through /root/gpu-queue over a frame of print books outside the Siku, cursive-Japanese and Meiji-typeset cohorts (#6101, PR #7211). Each spread is split at the gutter; per leaf the lane turns away faint leaves (show-through), unstable short leaves (re-read at 1,200 px disagrees), under-read leaves, loops, textless spreads, kana-heavy (Japanese) books and pages that lost their ditto marks; it never replaces a Gemini Flash / Pro, Claude, CBETA or human text, and replaces flash-lite only when it covers lite's text. Books are held paddle-print-6101 before the first write. Written 2026-10-25: 73,330 pages. Census 2026-10-26 (job paddle-print-rest-6101): no unread non-Siku Chinese print book is left outside that frame; the next frame is the Berlin State Library import (#7343, held manifest-only-lazy-pages, no page records yet). The fallback is wired (job paddle-rejects-flash-6101, 2026-10-26): the lane's apply lists every page its checks turned away that is still without text (fallbackRoute: guard rejects to Flash, textless pages with every leaf blank or faint left unread, pages with no image to the fetch lane), and `paddle-print-lane.mjs fallback --read --apply` reads that list with Gemini 3.8 Flash through agy (scripts/batch/cli-ocr.mjs, its guards and provenance); the book keeps its hold. Everything outside the lane: FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Siku Paddle lane (row chinese-siku-manuscript) keep that hold.",
-      "route": {
-        "engine": "gemini-3-flash-preview",
-        "families": {
-          "zho": {
-            "from": "2026-10-21"
-          }
-        }
-      },
       "code": {
         "router": {
           "language": "Chinese",
@@ -893,12 +852,18 @@
       }
     ]
   },
-  "_router_cells": "GENERATED by scripts/maintenance/router-routing-rows.mjs from scripts/eval/estimator/router-table/current.json (#7913): one row per decided cell (keep / switch) of the live router table, its route, the route's judged k/n, the build the decision comes from and any waiver. Do not edit: move the pointer in current.json and run the script with --write; tests/unit/router-routing-rows-7913.test.ts fails while this block and current.json disagree. Lanes bind to these decisions through routeCheck (scripts/lib/router-binding.mjs); the routers read `rows` and `default`, not this block.",
+  "_router_cells": "GENERATED by scripts/maintenance/router-routing-rows.mjs from scripts/eval/estimator/router-table/current.json (#7913): one row per cell of the live router table that binds a route, that route, the route's judged k/n, the build the decision comes from and any waiver. Do not edit: move the pointer in current.json and run the script with --write; tests/unit/router-routing-rows-7913.test.ts fails while this block and current.json disagree. getOcrModelForBook routes from this block in the OCR table (`reads`, #8283); lanes bind through routeCheck (scripts/lib/router-binding.mjs); translation's routers read `rows`, and tests/unit/router-bound-table.test.ts fails when they disagree with it.",
   "router_cells": [
     {
       "cell": "english-gpu-7263/print",
       "decision": "switch",
       "route": "gpu2>agy-flash-low+diff",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "gpu2",
+        "per_call": 1
+      },
       "k_of_n": "45/45",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -907,6 +872,12 @@
       "cell": "french-blank/print",
       "decision": "switch",
       "route": "agy-flash-low@4-written",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
       "k_of_n": "24/24",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -915,6 +886,12 @@
       "cell": "french-gpu-7263/print",
       "decision": "switch",
       "route": "gpu-glm>agy-flash-low",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "gpu-glm",
+        "per_call": 1
+      },
       "k_of_n": "38/38",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -923,6 +900,12 @@
       "cell": "french-lite/print",
       "decision": "switch",
       "route": "agy-flash-low@4-read",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
       "k_of_n": "55/60",
       "table": "2026-11-01-reread-7853",
       "set": "2026-11-01"
@@ -931,6 +914,12 @@
       "cell": "german-blank/print",
       "decision": "keep",
       "route": "agy-flash-low@4-written",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
       "k_of_n": "63/68",
       "table": "2026-10-31-correction-pass-7818",
       "set": "2026-11-01",
@@ -946,6 +935,12 @@
       "cell": "german-flash3/print",
       "decision": "keep",
       "route": "3flash>opus",
+      "reads": {
+        "first_read": false,
+        "reader": "opus",
+        "draft": "3flash",
+        "per_call": 1
+      },
       "k_of_n": "21/21",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -954,6 +949,12 @@
       "cell": "german-gpu-7263/print",
       "decision": "switch",
       "route": "gpu>agy-flash-low",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "gpu",
+        "per_call": 1
+      },
       "k_of_n": "49/49",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -962,6 +963,12 @@
       "cell": "german-lite/print",
       "decision": "keep",
       "route": "lite>opus",
+      "reads": {
+        "first_read": false,
+        "reader": "opus",
+        "draft": "lite",
+        "per_call": 1
+      },
       "k_of_n": "299/307",
       "table": "2026-11-01-reread-7853",
       "set": "2026-11-01",
@@ -982,6 +989,12 @@
       "cell": "german-lite/unknown",
       "decision": "switch",
       "route": "lite>agy-flash-low",
+      "reads": {
+        "first_read": false,
+        "reader": "agy",
+        "draft": "lite",
+        "per_call": 1
+      },
       "k_of_n": "91/104",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -990,6 +1003,12 @@
       "cell": "italian-gpu-7263/print",
       "decision": "keep",
       "route": "lite",
+      "reads": {
+        "first_read": false,
+        "reader": null,
+        "draft": null,
+        "per_call": 1
+      },
       "k_of_n": null,
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -998,6 +1017,12 @@
       "cell": "latin-blank/print",
       "decision": "switch",
       "route": "pero>agy-flash-low-written",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "pero",
+        "per_call": 1
+      },
       "k_of_n": "18/18",
       "table": "2026-10-31-correction-pass-7818",
       "set": "2026-11-01"
@@ -1006,6 +1031,12 @@
       "cell": "latin-gpu-7263/print",
       "decision": "switch",
       "route": "pero>agy-flash-low",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "pero",
+        "per_call": 1
+      },
       "k_of_n": "105/108",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"
@@ -1014,6 +1045,12 @@
       "cell": "latin-lite/print",
       "decision": "switch",
       "route": "agy-flash-low@4-read",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
       "k_of_n": "20/30",
       "table": "2026-11-03-latin-v4-7263",
       "set": "2026-11-03"
@@ -1022,6 +1059,12 @@
       "cell": "sanskrit-lite/print",
       "decision": "keep",
       "route": "lite",
+      "reads": {
+        "first_read": false,
+        "reader": null,
+        "draft": null,
+        "per_call": 1
+      },
       "k_of_n": "42/250",
       "table": "2026-11-01-validated-7263",
       "set": "2026-11-01"

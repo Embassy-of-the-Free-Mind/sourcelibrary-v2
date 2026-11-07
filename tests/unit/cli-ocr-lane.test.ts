@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import { rereadTier, byRereadPriority, latinRereadSkip, untaggedPagesAllowed, parseRereadLanguages, parseRereadTiers, loadLatinByEye, latinFirstSteps } from '../../scripts/batch/cli-ocr-lane.mjs';
 import { staleLanePages, laneWithPerCall, readerArgs } from '../../scripts/batch/cli-translate-lane.mjs';
-import { servedByCrontab } from '../../scripts/audit/router-binding.mjs';
+import { servedByCrontab } from '../../scripts/maintenance/router-board-push.mjs';
 import fs from 'fs';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
