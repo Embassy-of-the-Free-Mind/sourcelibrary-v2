@@ -398,3 +398,72 @@ describe('/read on a Loeb: each passage once', () => {
     expect(r.count(r.text, OURS)).toBe(1);
   });
 });
+
+// ── The continuous EPUB (Kindle), and the plain text built from it ───────────
+// (#8321 inbox 2026-11-07 12:38Z) On L118 every passage came out twice (our AI
+// English of the Greek leaf, then the Loeb leaf). The flow EPUB of a flagged
+// book carries the Loeb English alone, once; `epub-ocr` the Greek alone; the
+// Greek leaf's plate stays in place; the title page credits the translator.
+describe('flow EPUB on a Loeb: each passage once', () => {
+  const OURS = 'impoverished lives and were somewhat simple-minded';
+  const GREEK = 'δουλεῦσαι ἐν Σάμῳ';
+  const plate = [{ page_number: L118_GREEK.page_number, description: 'A map of Scythia' }];
+  const epubDb = { collection: () => ({ find: () => ({ toArray: async () => plate }) }) };
+  // As the download route does: the #7100 strip first, then the flow builder.
+  const build = async (book: Doc, leaves: PageFx[], text: 'translation' | 'ocr') => {
+    const { buildFlowEpub } = await import('@/lib/export-flow-epub');
+    const { servesTranscriptionInsteadOfTranslation } = await import('@/lib/english-original-text');
+    const pages = leaves.map((p) => structuredClone(p)) as Array<PageFx & { translation?: { data: string } }>;
+    for (const p of pages) if (servesTranscriptionInsteadOfTranslation(p as never, book as never)) delete p.translation;
+    const flow = await buildFlowEpub(epubDb as never, book as never, pages as never, { text, baseUrl: 'https://sourcelibrary.org', includeImages: false });
+    flow.cleanup();
+    const html = flow.chapters.map((c) => c.content).join('\n');
+    const plain = stripMarks(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
+    return { flow, html, plain, count: (n: string) => plain.split(n).length - 1 };
+  };
+
+  it('translation: Godley once; no Greek, no AI English, no rewording, no "not yet translated"', async () => {
+    const r = await build(L118_BOOK, [L118_GREEK, L118_ENGLISH], 'translation');
+    expect(r.count(GODLEY)).toBe(1);
+    expect(r.count(OURS)).toBe(0);
+    expect(r.count(REWORDING)).toBe(0);
+    expect(r.count(GREEK)).toBe(0);
+    expect(r.plain).not.toContain('not yet translated');
+    // No running head or printed number from the leaf in the text ("BOOK IV. 94-96", "297").
+    expect(r.plain).not.toMatch(/BOOK IV\.\s*94/);
+    // Both page markers stay; the Greek leaf's plate stays in place.
+    expect(r.html).toContain(`?page=${L118_GREEK.page_number}`);
+    expect(r.html).toContain(`?page=${L118_ENGLISH.page_number}`);
+    expect(r.plain).toContain('A map of Scythia');
+    expect(r.flow.translationCredit).toContain('A. D. Godley');
+  });
+
+  it('ocr: the Greek once, nothing English', async () => {
+    const r = await build(L118_BOOK, [L118_GREEK, L118_ENGLISH], 'ocr');
+    expect(r.count(GREEK)).toBe(1);
+    expect(r.count(GODLEY)).toBe(0);
+    expect(r.flow.translationCredit).toBeNull();
+  });
+
+  it('the Latin Loeb too: Falconer once', async () => {
+    const r = await build(LATIN_BOOK, [LATIN_LATIN, LATIN_ENGLISH], 'translation');
+    expect(r.count(FALCONER)).toBe(1);
+  });
+
+  it('the plain-text edition (buildFlowText) reads the same lane', async () => {
+    const { buildFlowText } = await import('@/lib/export-flow-text');
+    const { servesTranscriptionInsteadOfTranslation } = await import('@/lib/english-original-text');
+    const pages = [L118_GREEK, L118_ENGLISH].map((p) => structuredClone(p)) as Array<PageFx & { translation?: { data: string } }>;
+    for (const p of pages) if (servesTranscriptionInsteadOfTranslation(p as never, L118_BOOK as never)) delete p.translation;
+    const { body } = await buildFlowText(epubDb as never, L118_BOOK as never, pages as never, { text: 'translation', baseUrl: 'https://sourcelibrary.org' });
+    const plain = stripMarks(body).replace(/\s+/g, ' ');
+    expect(plain.split(GODLEY).length - 1).toBe(1);
+    expect(plain).not.toContain(OURS);
+  });
+
+  it('the unflagged control is unchanged: our translation of the Greek leaf is the text', async () => {
+    const r = await build(CONTROL_BOOK, [CONTROL_GREEK, CONTROL_ENGLISH] as unknown as PageFx[], 'translation');
+    expect(r.count(OURS)).toBe(1);
+    expect(r.flow.translationCredit).toBeNull();
+  });
+});

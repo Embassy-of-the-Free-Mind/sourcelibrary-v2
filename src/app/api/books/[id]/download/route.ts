@@ -382,6 +382,7 @@ async function generateEpubDownload(
     ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
     <p><strong>Content:</strong> ${contentLabel}</p>
     ${flow ? '<p>The text runs on across pages; the small raised numbers mark where each printed page begins and link to it, with its scan.</p>' : ''}
+    ${flow?.translationCredit ? `<p><strong>Translation:</strong> ${flow.translationCredit}</p>` : ''}
     ${flow?.imagesNote ? `<p>${flow.imagesNote}</p>` : ''}
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
@@ -437,9 +438,12 @@ async function generateEpubDownload(
     <p>Source Library, created by Derek Lomas. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
-    <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
+    ${flow?.translationCredit
+      // A Loeb (#8321): the English is the published translation, not ours, and carries no mark of ours.
+      ? `<p><em>${flow.translationCredit}</em></p>`
+      : `<p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
-    by Source Library. It does not identify you or track your usage.</em></p>
+    by Source Library. It does not identify you or track your usage.</em></p>`}
   `;
   chapters.push({ title: 'About This Edition', content: colophon });
 

@@ -23,6 +23,7 @@ import { galleryFilter } from '@/lib/gallery-scope';
 import { fetchAndCompressImage } from '@/lib/export-page-images';
 import { EPub, type Options } from 'epub-gen-memory';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { facingTranslationLabel, facingTranslationOf, leafRole } from '@/lib/facing-translation';
 
 export const PAGES_PER_SECTION = 40;
 /** At ~40 KB each, 400 illustrations (Fludd's Utriusque cosmi has 402) keep the EPUB near 16 MB: inside Send to
@@ -49,6 +50,7 @@ interface FlowBookDoc {
   thumbnail_blob?: string | null;
   image_display?: string | null;
   image_thumb?: string | null;
+  facing_translation?: unknown;
 }
 interface FlowPageDoc {
   id: string;
@@ -99,6 +101,8 @@ export interface FlowEpub {
   /** The book's own cover as a local JPEG for the EPUB builder (`file://…`), or null: only when the scans may be
    *  redistributed, like the illustrations. Without one a Kindle library shows a grey placeholder. */
   cover: string | null;
+  /** On a facing-page edition (a Loeb, #8321), who the English is by, for the title page; null otherwise. */
+  translationCredit: string | null;
   /** Removes the temporary image files. Call after the EPUB is built. */
   cleanup: () => void;
 }
@@ -160,8 +164,21 @@ export async function buildFlowEpub(
   const readable = pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && p.page_number >= 0);
   const figures = await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)), opts.baseUrl, opts.includeImages);
 
+  // A facing-page edition (a Loeb, #8321) prints its own English on the leaf opposite each original leaf. Each
+  // text keeps its lane, as in /read, so no passage reads twice: the translation is the published English leaves'
+  // own words (never our AI English of the Greek or Latin leaves), the original the Greek or Latin leaves alone.
+  // A leaf out of the lane keeps its page marker and its plates, which join the next page's.
+  const facing = facingTranslationOf(book);
+  const role = (p: FlowPageDoc) => (facing ? leafRole(p.ocr?.data) : null);
+  const outOfLane = (p: FlowPageDoc) => !!facing && role(p) === (opts.text === 'translation' ? 'original' : 'translation');
+  // In the translation lane a Loeb's English leaf is its own words, and so is a leaf whose stored English was
+  // withheld (#7100: a title page, the short last page of the introduction, the index head): it is English already,
+  // and "not yet translated" would be false.
+  const printedEnglish = (p: FlowPageDoc) => !!facing && opts.text === 'translation'
+    && (role(p) === 'translation' || !p.translation?.data);
   const flowPage = (p: FlowPageDoc): FlowPage => {
-    const raw = opts.text === 'translation'
+    const raw = outOfLane(p) ? ''
+      : opts.text === 'translation' && !printedEnglish(p)
       ? (p.translation?.data ? markForExport(p.translation.data, book.id) : '')
       : (p.ocr?.data || '');
     // A page's own headings sit below the section's <h2>, ranked in the order the page uses them (h3, h4, …):
@@ -173,7 +190,8 @@ export async function buildFlowEpub(
   // A transcribed page with no translation yet says so, once per run ("Pages 45–52 are not yet translated"),
   // instead of vanishing: the reader would otherwise take the gap for the book (no silent skips). It stands as
   // its own block, so no sentence runs across it.
-  const untranslated = (p: FlowPageDoc) => opts.text === 'translation' && !p.translation?.data && !!p.ocr?.data?.trim();
+  const untranslated = (p: FlowPageDoc) => opts.text === 'translation' && !outOfLane(p) && !printedEnglish(p)
+    && !p.translation?.data && !!p.ocr?.data?.trim();
   const flowPages = (list: FlowPageDoc[]): FlowPage[] => list.map((p, i) => {
     const fp = flowPage(p);
     if (!untranslated(p) || (i > 0 && untranslated(list[i - 1]))) return fp;
@@ -235,6 +253,9 @@ export async function buildFlowEpub(
     imagesTotal: figures.total,
     imagesIncluded: figures.included,
     imagesNote,
+    translationCredit: facing && opts.text === 'translation'
+      ? `${facingTranslationLabel(book)}: the published English, printed facing the original, transcribed from the scan. Source Library's AI translation is not included.`
+      : null,
     cover: cover ? `file://${cover}` : null,
     cleanup: () => {
       if (figures.dir) fs.rmSync(figures.dir, { recursive: true, force: true });
