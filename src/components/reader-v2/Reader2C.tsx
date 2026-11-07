@@ -3535,7 +3535,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // citation and a Spanish edition keep the one-leaf desk they work on.
   const opening = !editing && !showingSpanish && pinnedTranslation == null ? openingOf(r.currentPage, facing) : null;
   const openingPages = opening ? openingPagesLabel(opening, t.facing.openingPages) : null;
-  const openingView = opening && (
+  // Per layout, not from isDesktop: both layouts are in the DOM, one hidden by CSS.
+  const openingView = (stacked: boolean) => opening && (
     <FacingOpening
       book={r.book}
       opening={opening}
@@ -3544,7 +3545,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
       showOurs={showOurTranslation}
       onToggleOurs={() => setShowOurTranslation((v) => !v)}
       onSelectLeaf={(id) => r.goToPage(id)}
-      stacked={!isDesktop}
+      stacked={stacked}
     />
   );
 
@@ -3975,7 +3976,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {openingView || (<>
+          {openingView(false) || (<>
           {scanPaneShown && (
             <section
               data-scan-pane
@@ -4413,7 +4414,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           {/* The floating bar's share of the column. Fixed, so the reading
               area never changes size and the text never shifts. */}
           <div className="shrink-0" style={{ height: PHONE_BAR_H }} aria-hidden="true" />
-          {openingView || (<>
+          {openingView(true) || (<>
           {r.views.scan && !scan.display && !witness && (
             /* No facsimile: one quiet line instead of a scan-sized empty bed.
                The full-height placeholder read as an image that failed to
