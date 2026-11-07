@@ -19,7 +19,7 @@
  *
  *   node scripts/analysis/llm-verify-work-merges.mjs                 # dry-run (proposals + sample)
  *   node scripts/analysis/llm-verify-work-merges.mjs --limit-authors 40
- *   node scripts/analysis/llm-verify-work-merges.mjs --apply         # write HIGH merges (+backup)
+ *   (--apply / --apply-from are CLOSED, #8293 — see below)
  *   node scripts/analysis/llm-verify-work-merges.mjs --coverage-only # exclusion report + coverage, NO LLM calls (free)
  *   node scripts/analysis/llm-verify-work-merges.mjs --include-backlog # ALSO judge hidden/backlog books (#4246 Phase 1)
  *   node scripts/analysis/llm-verify-work-merges.mjs --authors=<file>  # judge ONLY these author ids (one per line)
@@ -29,12 +29,25 @@
  *                                                                     # convergence. Writes llm-work-merge-proposals-mega.json.
  *
  * Env: MONGODB_URI, GEMINI_API_KEY_TIER3|GEMINI_API_KEY. Model: gemini-3.1-flash-lite.
+ *
+ * WRITING IS CLOSED (#8293). --apply and --apply-from wrote books with no
+ * work_id_merges row and no second judge: 1,987 clusters carry
+ * work_id_source 'work-merge:llm-verified' that no log can name, which is how
+ * the over-merge audit (#8291) found them unjudged, ~6% of them fusing
+ * different works. The path that writes now:
+ *   1. this script (dry run) -> proposals JSON
+ *   2. scripts/eval/work-recall/merge-precision.mjs --approved-out <f> --proposals <json>   (Sonnet reads every book)
+ *   3. scripts/maintenance/apply-verified-work-merges.mjs <f> [--apply]   (backup, sweep_log, work_id_merges row)
  */
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
-import { remintAliasPlan } from '../lib/work-id-remint.mjs';
 
-const APPLY = process.argv.includes('--apply');
+if (process.argv.some((a) => a === '--apply' || a.startsWith('--apply-from'))) {
+  console.error('llm-verify-work-merges.mjs no longer writes (#8293): it logged no work_id_merges row and had no second judge.\n'
+    + 'Judge the proposals with scripts/eval/work-recall/merge-precision.mjs --approved-out <f> --proposals <json>,\n'
+    + 'then write with scripts/maintenance/apply-verified-work-merges.mjs <f> [--apply].');
+  process.exit(2);
+}
 const COVERAGE_ONLY = process.argv.includes('--coverage-only');
 // Include hidden/backlog books in the judged universe (#4246 Phase 1). Work
 // identity pays off most BEFORE a book is processed — "do we already hold
@@ -61,8 +74,6 @@ const GEN_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL
 if (!KEY) { console.error('GEMINI_API_KEY[_TIER3] not set'); process.exit(1); }
 
 const deacc = s => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
-const slug = s => deacc(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
-const isQID = w => /^Q\d/.test(w || '');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const SCHEMA = {
@@ -128,42 +139,12 @@ function hasVolumeConflict(titles) {
   return nums.size > 1;
 }
 
-const _afIdx = process.argv.indexOf('--apply-from');
-const APPLY_FROM = (process.argv.find(a => a.startsWith('--apply-from=')) || '').split('=')[1]
-  || (_afIdx !== -1 && process.argv[_afIdx + 1] && !process.argv[_afIdx + 1].startsWith('--') ? process.argv[_afIdx + 1] : '');
-
 const mc = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
 await mc.connect();
 const db = mc.db('bookstore');
 const books = db.collection('books');
 const authorsCol = db.collection('authors');
 
-// ── apply-from-file: no LLM spend — apply HIGH merges from a saved proposal ──
-if (APPLY_FROM) {
-  const data = JSON.parse(fs.readFileSync(APPLY_FROM, 'utf8'));
-  const high = (data.proposals || []).filter(p => p.confidence === 'high');
-  const outDir2 = new URL('../output/', import.meta.url).pathname;
-  const writes = [];
-  for (const p of high) {
-    const wids = p.members.map(m => m.currentWorkId).filter(Boolean);
-    const wid = wids.find(isQID) || wids.filter(w => w.startsWith('local:')).sort()[0] || `local:a:${p.author_id}:${slug(p.canonical_title)}`;
-    for (const id of p.bookIds) writes.push({ id, work_id: wid, title: p.canonical_title });
-  }
-  fs.writeFileSync(`${outDir2}llm-work-merge-apply-backup.json`, JSON.stringify({ when: 'apply-from', source: APPLY_FROM, groups: high.length, writes }, null, 2));
-  console.log(`apply-from ${APPLY_FROM}: ${high.length} HIGH merge groups → ${writes.length} book writes`);
-  let mod = 0;
-  // ids this merge retires stay followable (#4329): see scripts/lib/work-id-remint.mjs
-  const { aliasFor, tally } = await remintAliasPlan(books, writes);
-  console.log(`retired ids kept as aliases: ${tally.renamed} (${tally.split} split, ${tally.partial} still live elsewhere: no alias)`);
-  for (const w of writes) {
-    const alias = aliasFor.get(w.id);
-    const r = await books.updateOne(alias ? { id: w.id, work_id: alias } : { id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() }, ...(alias ? { $addToSet: { work_id_aliases: alias } } : {}) });
-    mod += r.modifiedCount;
-  }
-  console.log(`applied: ${mod} book records updated`);
-  await mc.close();
-  process.exit(0);
-}
 
 const TEXT = { ...(INCLUDE_BACKLOG ? {} : { visible: true }), pages_count: { $gt: 0 }, language: { $nin: ['Visual', 'Unknown', null] }, author_id: { $exists: true, $ne: null } };
 const all = await books.find(TEXT, { projection: { id: 1, work_id: 1, title: 1, display_title: 1, language: 1, year: 1, author_id: 1 } }).toArray();
@@ -358,30 +339,5 @@ for (const p of crossLang.slice(0, 12)) {
   console.log(`     ${p.reason.slice(0, 120)}`);
 }
 console.log(`\nProposal → ${proposalsFile}`);
-
-if (APPLY) {
-  const backup = `${outDir}llm-work-merge-backup.json`;
-  const writes = [];
-  for (const p of high) {
-    // canonical work_id: prefer existing QID > existing local slug (sorted) > mint
-    const wids = p.members.map(m => m.currentWorkId).filter(Boolean);
-    let wid = wids.find(isQID) || wids.filter(w => w.startsWith('local:')).sort()[0]
-      || `local:a:${p.author_id}:${slug(p.canonical_title)}`;
-    for (const id of p.bookIds) writes.push({ id, work_id: wid, title: p.canonical_title });
-  }
-  fs.writeFileSync(backup, JSON.stringify({ when: 'apply', groups: high.length, writes }, null, 2));
-  console.log(`\n--apply: ${high.length} HIGH merges → ${writes.length} book writes (backup ${backup})`);
-  let mod = 0;
-  // ids this merge retires stay followable (#4329): see scripts/lib/work-id-remint.mjs
-  const { aliasFor, tally } = await remintAliasPlan(books, writes);
-  console.log(`retired ids kept as aliases: ${tally.renamed} (${tally.split} split, ${tally.partial} still live elsewhere: no alias)`);
-  for (const w of writes) {
-    // reassign even if already set (cross-slug unify) — but only within this LLM pass's books
-    const alias = aliasFor.get(w.id);
-    const r = await books.updateOne(alias ? { id: w.id, work_id: alias } : { id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() }, ...(alias ? { $addToSet: { work_id_aliases: alias } } : {}) });
-    mod += r.modifiedCount;
-  }
-  console.log(`applied: ${mod} book records updated`);
-}
 
 await mc.close();

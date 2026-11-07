@@ -5,13 +5,13 @@
  * embedding distances between original text, AI translation, and
  * human translation. Detects hallucination via embedding divergence.
  *
- * Uses gemini-embedding-2-preview (768d) — same model as production
+ * Uses gemini-embedding-2 (768d) — same model as production
  * semantic search (src/lib/semantic-search.ts).
  */
 
 import { cosineSimilarity, cosineDistance, cleanText } from './metrics.mjs';
 
-const EMBEDDING_MODEL = 'gemini-embedding-2-preview';
+const EMBEDDING_MODEL = 'gemini-embedding-2';
 const EMBEDDING_DIMS = 768;
 
 // ── Gemini Embedding API ───────────────────────────────────────────

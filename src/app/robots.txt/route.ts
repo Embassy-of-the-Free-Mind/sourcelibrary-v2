@@ -155,11 +155,12 @@ const GROUPS: Group[] = [
   // search traffic (5x the landing pages). A named group replaces '*' for this
   // crawler, so it repeats the defaults.
   { userAgent: 'Sogou web spider', allow: ['/'], disallow: [...DEFAULT_DISALLOW, '/book/*/page/'] },
-  // A named group replaces '*' for this fetcher, so it repeats the defaults.
+  // A named group replaces '*' for this fetcher, so it repeats the defaults, without
+  // the search it is allowed: Allow and Disallow on one path is a tie parsers may differ on.
   ...USER_FETCHERS.map((userAgent) => ({
     userAgent,
     allow: ['/', ...USER_FETCH_API],
-    disallow: DEFAULT_DISALLOW,
+    disallow: DEFAULT_DISALLOW.filter((path) => path !== SEARCH_TEXT_PATH),
   })),
   { userAgent: 'Claude-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH] },
   { userAgent: 'OAI-SearchBot', allow: ['/'], disallow: [TRIPWIRE_PATH, SEARCH_TEXT_PATH, BOOK_SEARCH_TEXT_PATH] },

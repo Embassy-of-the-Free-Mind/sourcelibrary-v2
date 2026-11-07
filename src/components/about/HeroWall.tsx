@@ -74,7 +74,8 @@ export default function HeroWall({
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setLocked(!e.isIntersecting && e.boundingClientRect.top < 0), { threshold: 0.12 });
+    // Early enough that the second panel's text is there as the hero's leaves.
+    const io = new IntersectionObserver(([e]) => setLocked(!e.isIntersecting && e.boundingClientRect.top < 0), { threshold: 0.6 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -85,154 +86,10 @@ export default function HeroWall({
     darkRef.current = secondTone === 'dark';
   }, [secondTone]);
 
-  // Hero and second panel are two stops, not a scroll range: any scroll in
-  // between glides to one of them, and the momentum of a trackpad flick is
-  // swallowed on arrival so it can't carry on past the second panel.
+  // Scrolling is left entirely to the browser. This wall once took over the wheel,
+  // touch and keys to glide between two stops; on some laptops, mice and scroll
+  // settings that fought the user, so the panels now change on position alone.
   const wallRef = useRef<HTMLDivElement>(null);
-  const secondRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const wall = wallRef.current;
-    const second = secondRef.current;
-    if (!wall || !second) return;
-    // The wall sits right under the header, so the hero's stop is the very top.
-    // The second stop is measured from the wall's own top plus the hero's
-    // height, which stays put while the panels animate.
-    const stops = () => [0, Math.round(wall.getBoundingClientRect().top + window.scrollY + second.offsetTop)];
-    let anim = 0;
-    let busy = false;
-    let animDir = 0; // which way the current glide is going
-    // After a glide lands, the rest of the flick that started it (a trackpad's
-    // momentum tail, or extra wheel notches) is eaten so it can't carry you
-    // past the stop. A tail only ever goes the same way and keeps getting
-    // smaller; anything else is you scrolling again, and goes through at once.
-    let tailDir = 0;
-    let lastAbs = 0;
-    let lastWheel = 0;
-    const DUR = still ? 0 : 900;
-    const go = (to: number) => {
-      cancelAnimationFrame(anim);
-      const from = window.scrollY;
-      if (Math.abs(to - from) < 1) return;
-      if (!DUR) {
-        window.scrollTo({ top: to, behavior: 'instant' as ScrollBehavior });
-        return;
-      }
-      busy = true;
-      document.documentElement.style.overflowAnchor = 'none';
-      animDir = Math.sign(to - from);
-      tailDir = animDir;
-      const t0 = performance.now();
-      const step = (now: number) => {
-        const t = Math.min(1, (now - t0) / DUR);
-        const k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        window.scrollTo({ top: from + (to - from) * k, behavior: 'instant' as ScrollBehavior });
-        if (t < 1) anim = requestAnimationFrame(step);
-        else {
-          busy = false;
-          document.documentElement.style.overflowAnchor = '';
-        }
-      };
-      anim = requestAnimationFrame(step);
-    };
-    // Which way, if any, the gate takes a scroll in direction d (+1 down, -1 up).
-    const gate = (d: number) => {
-      const [a, b] = stops();
-      const y = window.scrollY;
-      if (d > 0 && y >= a - 2 && y < b - 2) return b;
-      if (d < 0 && y > a + 2 && y <= b + 2) return a;
-      return null;
-    };
-    const onWheel = (e: WheelEvent) => {
-      const now = performance.now();
-      const gap = now - lastWheel;
-      lastWheel = now;
-      const d = Math.sign(e.deltaY);
-      const abs = Math.abs(e.deltaY);
-      const prevAbs = lastAbs;
-      lastAbs = abs;
-      if (!d) return;
-      // Same way, no bigger than the event before, no pause: still the old flick.
-      if (busy) {
-        e.preventDefault();
-        // Changing your mind mid-glide turns it round.
-        if (d === -animDir && abs >= 3) {
-          const [a, b] = stops();
-          go(animDir > 0 ? a : b);
-        }
-        return;
-      }
-      if (tailDir) {
-        // Momentum is noisy (12, 13, 11...), so only a clear break counts as
-        // you scrolling again: the other way, a pause, or a sharp push.
-        const fresh = d !== tailDir || gap > 220 || abs > prevAbs * 1.6 + 6;
-        if (!fresh) return e.preventDefault();
-        tailDir = 0;
-      }
-      if (abs < 2) return;
-      const to = gate(d);
-      if (to == null) return;
-      e.preventDefault();
-      go(to);
-    };
-    let touchY: number | null = null;
-    let touchTo: number | null = null;
-    const onTouchStart = (e: TouchEvent) => {
-      touchY = e.touches[0].clientY;
-      touchTo = null;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (touchY == null) return;
-      if (busy) return e.preventDefault();
-      const dy = touchY - e.touches[0].clientY;
-      if (touchTo == null && Math.abs(dy) > 8) touchTo = gate(Math.sign(dy));
-      if (touchTo != null) e.preventDefault();
-    };
-    const onTouchEnd = () => {
-      if (touchTo != null) go(touchTo);
-      touchY = null;
-      touchTo = null;
-    };
-    const onKey = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null;
-      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
-      const d = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey ? 1 : ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey) ? -1 : 0;
-      if (!d) return;
-      if (busy) return e.preventDefault();
-      const to = gate(d);
-      if (to == null) return;
-      e.preventDefault();
-      go(to);
-    };
-    // Anything else (scrollbar drag, find-in-page) that leaves you between the
-    // two stops settles on the nearer one once scrolling stops.
-    let settle = 0;
-    const onScroll = () => {
-      if (busy) return;
-      clearTimeout(settle);
-      settle = window.setTimeout(() => {
-        if (busy || touchY != null) return;
-        const [a, b] = stops();
-        const y = window.scrollY;
-        if (y > a + 2 && y < b - 2) go(y - a < (b - a) / 2 ? a : b);
-      }, 160);
-    };
-    window.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('touchend', onTouchEnd);
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(anim);
-      clearTimeout(settle);
-      window.removeEventListener('wheel', onWheel);
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onTouchEnd);
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [still]);
 
   useEffect(() => {
     const c = canvasRef.current;
@@ -509,7 +366,7 @@ export default function HeroWall({
       <section className="relative text-white">
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-12 md:pt-40 pb-6 md:pb-16 min-h-[calc(100svh-64px)] md:min-h-[calc(100svh-64px)] flex flex-col justify-end">
           <div ref={heroRef} className="hw-hero">
-          <h1 className="ah-in font-serif text-[44px] leading-[1.02] md:text-[clamp(56px,6.2vw,92px)] tracking-[-0.03em] max-w-[11em] text-white">
+          <h1 className="ah-in text-balance font-serif text-[44px] leading-[1.02] md:text-[clamp(56px,6.2vw,92px)] tracking-[-0.03em] max-w-[11em] text-white">
             {title}
           </h1>
           <p className="ah-in mt-6 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">
@@ -539,7 +396,7 @@ export default function HeroWall({
       </section>
 
       {/* Panel 2: the locked wall */}
-      <section ref={secondRef} className="relative min-h-[100svh] flex items-end md:items-start">
+      <section className="relative min-h-[100svh] flex items-end md:items-start">
         <div className="hw-second max-w-[var(--container-wide)] w-full mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-16">
           {second}
         </div>

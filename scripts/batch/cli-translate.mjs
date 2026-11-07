@@ -75,7 +75,7 @@ import { blockPageRefusals, lengthRatioK } from '../lib/block-page-guard.mjs';
 import { sourceProse } from '../lib/block-drift.mjs';
 import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash, bodyLen } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
-import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage } from '../lib/agy-cli.mjs';
+import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage, cliExitCode } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
@@ -196,7 +196,7 @@ if (STAGE === 'read') {
       const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(pg.ocr.data), prompt_variant: PROMPT_VARIANT_MARKED, instruction: null });
       const meta = {
         page_id: pg.id, book_id: pg.book_id, page_number: pg.page_number, cli: CLI, cli_version: version, model: MODEL,
-        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null, attempts: r.calls, chars: text.length,
+        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: null, attempts: r.calls, chars: text.length,
         prompt_variant: PROMPT_VARIANT_MARKED, wrapper: null, tool_calls: r.tool_calls,
         ocr_hash: contentHash(pg.ocr.data), ocr_updated_at: pg.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
         prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), call_usage: agyUsage(r.usage),
@@ -281,7 +281,7 @@ if (STAGE === 'read') {
     fs.writeFileSync(path.join(OUT, `${id}.txt`), text);
     const meta = {
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: r.cls, attempts: r.calls, chars: text.length,
       prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(caption && { caption_leaf: true }),
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),

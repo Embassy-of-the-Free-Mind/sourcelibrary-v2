@@ -108,6 +108,52 @@ describe('sync-worker syncPageCounts (#5326)', () => {
     expect(await book(db, 'U')).toMatchObject(COUNTS(2, 1, 1, 2));
   });
 
+  it('keeps the counters of a book created or recounted while the aggregate ran (#8070)', async () => {
+    const db = getTestDb();
+    // The pages aggregate returns, THEN an importer inserts a book with its pages and
+    // its own counters (N), and a recount lands on R — both before `books` is read.
+    const racing = new Proxy(db, {
+      get(target, prop) {
+        if (prop !== 'collection') return Reflect.get(target, prop);
+        return (name: string) => {
+          const coll = target.collection(name);
+          if (name !== 'pages') return coll;
+          return new Proxy(coll, {
+            get(c, p) {
+              if (p !== 'aggregate') return Reflect.get(c, p);
+              return (...args: Parameters<typeof c.aggregate>) => {
+                const cursor = c.aggregate(...args);
+                return {
+                  async toArray() {
+                    const rows = await cursor.toArray();
+                    const now = new Date();
+                    await target.collection('books').insertOne({ id: 'N', language: 'Latin', ...COUNTS(3, 0, 0, 3), created_at: now, updated_at: now });
+                    await target.collection('pages').insertMany([1, 2, 3].map(n => ({ book_id: 'N', page_number: n })));
+                    await target.collection('books').updateOne({ id: 'R' }, { $set: { ...COUNTS(12, 10, 9, 10), page_counts_at: now } });
+                    return rows;
+                  },
+                };
+              };
+            },
+          });
+        };
+      },
+    }) as Db;
+
+    const res = await syncPageCounts(racing, { dryRun: false });
+    expect(res.skipped_after_snapshot).toBe(2);
+    const n = await book(db, 'N');
+    expect(n).toMatchObject(COUNTS(3, 0, 0, 3));
+    expect(n?.pipeline_next).toBeUndefined();
+    expect(await book(db, 'R')).toMatchObject(COUNTS(12, 10, 9, 10));
+
+    // The next cycle counts both from their pages.
+    const next = await syncPageCounts(db, { dryRun: false });
+    expect(next.skipped_after_snapshot).toBe(0);
+    expect(await book(db, 'N')).toMatchObject(COUNTS(3, 0, 0, 3));
+    expect(await book(db, 'R')).toMatchObject(COUNTS(11, 10, 9, 9));
+  });
+
   it('formats the per-counter tally in documented order', () => {
     expect(formatCounterTally({ pages_ocr: 12, pages_translatable: 40, pages_count: 3 }))
       .toBe('count 3 · ocr 12 · translated 0 · translatable 40 · blank 0 · archived 0');

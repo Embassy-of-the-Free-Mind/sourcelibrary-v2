@@ -1,0 +1,1355 @@
+{
+ "drawn_at": "2026-11-07T10:07:34.911Z",
+ "study": "euro-manifest-6871",
+ "trigger": "eval-euro-manifest-6871",
+ "dry": true,
+ "relay": "root@65.108.136.89",
+ "frame": {
+  "frm19": {
+   "books": 2547,
+   "other_language_first": 0,
+   "unsplit_spread": 0,
+   "manuscript": 2,
+   "other_hold": {},
+   "failed_before": 0,
+   "sampled_before": 0,
+   "in_frame": 2545,
+   "pages_in_frame": 1131596
+  }
+ },
+ "libraries": {
+  "erara": {
+   "books": 2247,
+   "pages": 1031918,
+   "page_share": 0.9119,
+   "allotted": 27,
+   "walked": 27,
+   "manifest_failed": 0,
+   "no_body_page": 0,
+   "image_failed": 0,
+   "multi_leaf": 0,
+   "materialize_failed": 0,
+   "drawn": 27,
+   "via": {
+    "manifest:relay": 27,
+    "direct_refused:HTTP 403": 27,
+    "image:relay": 27
+   },
+   "errors": [],
+   "host_dropped": null,
+   "bytes": 20613557,
+   "fetch_secs": 519.014
+  },
+  "nb_norway": {
+   "books": 164,
+   "pages": 57690,
+   "page_share": 0.051,
+   "allotted": 2,
+   "walked": 2,
+   "manifest_failed": 0,
+   "no_body_page": 0,
+   "image_failed": 0,
+   "multi_leaf": 0,
+   "materialize_failed": 0,
+   "drawn": 2,
+   "via": {
+    "manifest:direct": 2,
+    "image:direct": 2
+   },
+   "errors": [],
+   "host_dropped": null,
+   "bytes": 393226,
+   "fetch_secs": 1.3119999999999998
+  },
+  "ia_language": {
+   "books": 63,
+   "pages": 29824,
+   "page_share": 0.0264,
+   "allotted": 1,
+   "walked": 2,
+   "manifest_failed": 0,
+   "no_body_page": 0,
+   "image_failed": 1,
+   "multi_leaf": 0,
+   "materialize_failed": 0,
+   "drawn": 1,
+   "via": {
+    "manifest:direct": 2,
+    "image:direct": 1
+   },
+   "errors": [
+    {
+     "book_id": "6adec99ca765b2fd7a0ab8e0",
+     "kind": "image_failed",
+     "error": "relay: The requested URL returned error: 504"
+    }
+   ],
+   "host_dropped": null,
+   "bytes": 1437157,
+   "fetch_secs": 162.289
+  },
+  "bsb": {
+   "books": 71,
+   "pages": 12164,
+   "page_share": 0.0107,
+   "allotted": 0,
+   "walked": 0,
+   "manifest_failed": 0,
+   "no_body_page": 0,
+   "image_failed": 0,
+   "multi_leaf": 0,
+   "materialize_failed": 0,
+   "drawn": 0,
+   "via": {},
+   "errors": [],
+   "host_dropped": null,
+   "bytes": 0,
+   "fetch_secs": 0
+  }
+ },
+ "cells": {
+  "frm19": {
+   "lang": "French",
+   "years": [
+    1800,
+    1929
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "550e8839ee242e6718f957bf",
+     "book_id": "6adec920a765b2fd7a0ab155",
+     "page_number": 59,
+     "canvases": 112,
+     "pages_count": 112,
+     "year": 1831,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Cours de mécanique céleste",
+     "width": 2548,
+     "height": 3210,
+     "bytes": 912796,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 112,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T03:29:36.075Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "69156961ce0d7a0c3468c9d2",
+     "book_id": "6adf1dddbf12d2ef205709f6",
+     "page_number": 501,
+     "canvases": 671,
+     "pages_count": 671,
+     "year": 1813,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "La  science des ingénieurs, dans la conduite des travaux de fortification et d'a",
+     "width": 2602,
+     "height": 3610,
+     "bytes": 1239049,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 671,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T09:31:09.155Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "82d8fcbe054b5bba13c6ab14",
+     "book_id": "6adf6807bf12d2ef2059b13c",
+     "page_number": 208,
+     "canvases": 370,
+     "pages_count": 370,
+     "year": 1836,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Voyage philosophique en Angleterre et en Ecosse",
+     "width": 1435,
+     "height": 2630,
+     "bytes": 497650,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 370,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T14:47:35.202Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "c75083f0a910057fbf17de64",
+     "book_id": "6adf6761bf12d2ef2059ab29",
+     "page_number": 71,
+     "canvases": 236,
+     "pages_count": 236,
+     "year": 1840,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Albert de Haller : Seigneur de Goumoëns, de Joux et d'Eclagnens, du conseil souv",
+     "width": 1339,
+     "height": 2465,
+     "bytes": 474486,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 236,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T14:44:49.181Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "8acccad073c3335d502fe104",
+     "book_id": "6aded13abf12d2ef2053abc8",
+     "page_number": 14,
+     "canvases": 30,
+     "pages_count": 30,
+     "year": 1825,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Escher de la Linth, ou le véritable patriote",
+     "width": 1461,
+     "height": 2333,
+     "bytes": 493448,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 30,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T04:04:10.647Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "a793d136bb80d3a8695268de",
+     "book_id": "6adf2024bf12d2ef20571d26",
+     "page_number": 128,
+     "canvases": 238,
+     "pages_count": 238,
+     "year": 1846,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Catalogue général des etoiles filantes et des autres météores observés en Chine ",
+     "width": 2461,
+     "height": 3234,
+     "bytes": 1102291,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 238,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T09:40:52.111Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "511b630d38122a0caa2801e7",
+     "book_id": "6adecb2aa765b2fd7a0ad0f8",
+     "page_number": 20,
+     "canvases": 36,
+     "pages_count": 36,
+     "year": 1822,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Mémoire sur la réduction des distances lunaires; contenant une méthode courte et",
+     "width": 1480,
+     "height": 2371,
+     "bytes": 446684,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 36,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T03:38:18.073Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "fa822e7c7ddc186430cda163",
+     "book_id": "6adf52fdbf12d2ef2058fdb3",
+     "page_number": 25,
+     "canvases": 181,
+     "pages_count": 181,
+     "year": 1841,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Règlement militaire général pour la confédération suisse du 20 août 1817",
+     "width": 1290,
+     "height": 2081,
+     "bytes": 228656,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 181,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T13:17:49.954Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "27d82f56e709608b55120e9c",
+     "book_id": "6adee386bf12d2ef205499c7",
+     "page_number": 6,
+     "canvases": 52,
+     "pages_count": 52,
+     "year": 1804,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Sur la plus grande équation du centre des orbites planétaires",
+     "width": 2050,
+     "height": 2622,
+     "bytes": 946833,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 52,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T05:22:14.545Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "4156a3e2663641f6a56fe103",
+     "book_id": "6adea6fe850d4350758618db",
+     "page_number": 96,
+     "canvases": 810,
+     "pages_count": 810,
+     "year": 1802,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Mémoires pour servir à l'histoire naturelle et principalement à l'oryctographie ",
+     "width": 1376,
+     "height": 2452,
+     "bytes": 416761,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 810,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T01:03:58.744Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "98e5ce2e46f84c9134847bc6",
+     "book_id": "6adefaadbf12d2ef2055b2d2",
+     "page_number": 145,
+     "canvases": 213,
+     "pages_count": 213,
+     "year": 1802,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Nouvelles expériences d'artillerie : où l'on détermine la force de la poudre, la",
+     "width": 2316,
+     "height": 3193,
+     "bytes": 936788,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 213,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T07:01:01.575Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "870f3517575db3a746c28b73",
+     "book_id": "6adf85cbbf12d2ef205aad4a",
+     "page_number": 35,
+     "canvases": 44,
+     "pages_count": 44,
+     "year": 1846,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Histoire édifiante et curieuse de Rothschild I, roi des juifs : par Satan",
+     "width": 1338,
+     "height": 2111,
+     "bytes": 296925,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 44,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T16:54:35.652Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "be145b3cbdfeb04fe3d9f8dc",
+     "book_id": "6adf74cebf12d2ef205a2281",
+     "page_number": 263,
+     "canvases": 390,
+     "pages_count": 390,
+     "year": 1827,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Histoire des campagnes d'Allemagne depuis 1807 jusqu'en 1809",
+     "width": 1598,
+     "height": 2501,
+     "bytes": 518061,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 390,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T15:42:06.232Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "37f2242853e31a64a4c20f69",
+     "book_id": "6adf2c7cbf12d2ef20579b3c",
+     "page_number": 11,
+     "canvases": 25,
+     "pages_count": 25,
+     "year": 1819,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Projets de reconstruction de la salle de l'Odéon",
+     "width": 4724,
+     "height": 6840,
+     "bytes": 4504829,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 25,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T10:33:32.026Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "a0d5f9b5106d3b13141f679d",
+     "book_id": "6adea8b1850d435075862d09",
+     "page_number": 109,
+     "canvases": 615,
+     "pages_count": 615,
+     "year": 1814,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Recherches expérimentales et mathématiques sur les mouvemens des molécules de la",
+     "width": 2272,
+     "height": 3113,
+     "bytes": 734644,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 615,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T01:11:13.774Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "c9e5a34e7126ce8e50984bd6",
+     "book_id": "6adef9e0bf12d2ef2055a858",
+     "page_number": 46,
+     "canvases": 198,
+     "pages_count": 198,
+     "year": 1828,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Rapport fait à la classe d'industrie et commerce sur l'exposition des produits d",
+     "width": 1501,
+     "height": 2365,
+     "bytes": 524862,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 198,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T06:57:36.570Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "4b60ce511a5d488a80319a40",
+     "book_id": "6adeb60fa765b2fd7a097bd7",
+     "page_number": 72,
+     "canvases": 378,
+     "pages_count": 378,
+     "year": 1811,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Géométrie descriptive",
+     "width": 2430,
+     "height": 3192,
+     "bytes": 894986,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 378,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T02:08:15.564Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "8de8348fbcbd599ffb5d2f56",
+     "book_id": "6adf465fbf12d2ef20589876",
+     "page_number": 62,
+     "canvases": 256,
+     "pages_count": 256,
+     "year": 1846,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Recherches sur les mouvements de la planète Herschel",
+     "width": 2010,
+     "height": 3053,
+     "bytes": 477122,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 256,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T12:23:58.998Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "706d3753d0ea132f6b2da66e",
+     "book_id": "6adf5a9fbf12d2ef20593b90",
+     "page_number": 683,
+     "canvases": 1206,
+     "pages_count": 1206,
+     "year": 1821,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Voyage pittoresque et historique à Lyon, aux environs et sur les rives de la Saô",
+     "width": 2183,
+     "height": 3459,
+     "bytes": 917261,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 1206,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T13:50:23.087Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "9640b5ec7cd019ddb71fdfca",
+     "book_id": "6adf61a4bf12d2ef2059779c",
+     "page_number": 34,
+     "canvases": 48,
+     "pages_count": 48,
+     "year": 1815,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "De la féodalité, ou mémoire sur cette question: Le rétablissement de la féodalit",
+     "width": 1570,
+     "height": 2384,
+     "bytes": 637637,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 48,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T14:20:20.957Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "776487d7d7e2daca0cef8c28",
+     "book_id": "6adf3d7ebf12d2ef20584232",
+     "page_number": 16,
+     "canvases": 20,
+     "pages_count": 20,
+     "year": 1844,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Mémoire sur l'application de la méthode logarithmique à la détermination des iné",
+     "width": 2348,
+     "height": 2946,
+     "bytes": 679484,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 20,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T11:46:06.414Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "43110495061355807b0ac369",
+     "book_id": "6adfb6e416aaa80a976b03b1",
+     "page_number": 36,
+     "canvases": 203,
+     "pages_count": 203,
+     "year": 1848,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Abrégé de sylviculture : à l'usage des préposés des communes et des corporations",
+     "width": 1324,
+     "height": 2056,
+     "bytes": 452042,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 203,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T20:24:04.507Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "236f4e8eab7c4d5af1cd7856",
+     "book_id": "6adf24e8bf12d2ef20574c7a",
+     "page_number": 74,
+     "canvases": 169,
+     "pages_count": 169,
+     "year": 1830,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Histoire des machines à vapeur, depuis leur origine jusqu à nos jours",
+     "width": 1539,
+     "height": 2454,
+     "bytes": 510240,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 169,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T10:01:12.088Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "50c653157b896314a3e07f26",
+     "book_id": "6adf634ebf12d2ef205986a7",
+     "page_number": 37,
+     "canvases": 64,
+     "pages_count": 64,
+     "year": 1847,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Liste officielle des ouvrages autorisés pour le service de l'instruction primair",
+     "width": 1721,
+     "height": 2604,
+     "bytes": 401836,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 64,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T14:27:26.941Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "52c18472539f5e0d6af69b05",
+     "book_id": "6adf5777bf12d2ef20591ca2",
+     "page_number": 416,
+     "canvases": 449,
+     "pages_count": 449,
+     "year": 1835,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Mémoires d'un officier d'état-major : expédition d'Afrique",
+     "width": 1297,
+     "height": 2039,
+     "bytes": 378420,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 449,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T13:36:55.991Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "90a293bcbe323f906eaebaa1",
+     "book_id": "6adea455850d43507585f326",
+     "page_number": 5,
+     "canvases": 16,
+     "pages_count": 16,
+     "year": 1810,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Mémoire sur la meilleure marche à suivre dans l'enseignement de la géométrie élé",
+     "width": 1610,
+     "height": 2568,
+     "bytes": 616736,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 16,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T00:52:37.198Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "98ee134812d66c7a2071fa7c",
+     "book_id": "6aded06cbf12d2ef20539f2c",
+     "page_number": 334,
+     "canvases": 404,
+     "pages_count": 404,
+     "year": 1820,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "erara",
+     "library": "erara",
+     "title": "Mémorial pour les travaux de guerre",
+     "width": 1532,
+     "height": 2440,
+     "bytes": 373030,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 404,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T04:00:44.597Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "922a842e99c6e66ee6619a9d",
+     "book_id": "6adec969a765b2fd7a0ab5ce",
+     "page_number": 38,
+     "canvases": 245,
+     "pages_count": 245,
+     "year": 1810,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "nb_norway",
+     "library": "nb_norway",
+     "title": "Voyages de Tavernier en Turquie, en Perse et aux Indes : avec atlas. T. 2",
+     "width": 1199,
+     "height": 2028,
+     "bytes": 224626,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 245,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T03:30:49.711Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "archive_status": "archive_complete",
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "9adfacbe5250c935fd784a75",
+     "book_id": "6adec7caa765b2fd7a0a9a48",
+     "page_number": 32,
+     "canvases": 277,
+     "pages_count": 277,
+     "year": 1804,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "nb_norway",
+     "library": "nb_norway",
+     "title": "Voyage en Chine et en Tartarie. T. 6",
+     "width": 1192,
+     "height": 2073,
+     "bytes": 168600,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 277,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T03:23:54.707Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    },
+    {
+     "page_id": "d9d806b735da7c0f72020611",
+     "book_id": "6adeddd4bf12d2ef2054564a",
+     "page_number": 525,
+     "canvases": 726,
+     "pages_count": 726,
+     "year": 1846,
+     "hold": "manifest-only-lazy-pages",
+     "visible": false,
+     "provider": "ia_language",
+     "library": "ia_language",
+     "title": "Celse, Vitruve, Censorin, (Oeuvres complètes), Frontin, (Des aqueducs de Rome)",
+     "width": 2113,
+     "height": 3229,
+     "bytes": 1437157,
+     "materialize": "dry_run",
+     "before": {
+      "pages_count": 726,
+      "pages_state": {
+       "state": "manifest_only",
+       "since": "2026-10-26T04:57:56.461Z"
+      },
+      "hidden": true,
+      "visible": false,
+      "pipeline_auto": {
+       "status": "held",
+       "hold": {
+        "reason": "manifest-only-lazy-pages"
+       }
+      },
+      "archive_metadata": {
+       "blocked": true,
+       "blocked_reason": "acquisition-wave-2026-10-lazy: hidden acquisition, images hot-linked"
+      },
+      "pages_ocr": 0,
+      "pages_translated": 0,
+      "pages_archived": 0,
+      "page_docs": 0
+     },
+     "after": null
+    }
+   ]
+  }
+ }
+}

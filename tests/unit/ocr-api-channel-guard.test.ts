@@ -1,15 +1,19 @@
 /**
- * The channel rule for OCR (#7075): only gemini-3.1-flash-lite is sent to the paid Gemini API.
- * Every other Gemini model reads through the agy CLI lane on the subscription, and a book whose
- * CLI lane has no quota waits; it never falls through to the API.
+ * The channel rule for OCR (#7075), as of 2026-11-06: NO model is sent to the paid Gemini API for OCR.
+ * Every book reads through the agy CLI lane on the subscription, a book the router labels flash-lite
+ * included (cli-ocr-lane.mjs CLI_MODEL_FOR maps lite and Flash to gemini-3.8-flash-low), and a book whose
+ * lane has no quota waits; it never falls through to the API.
  *
- * Derek, 2026-10-08; DECIDED 2026-10-10 ("Only via the CLI lane, no API"). Before #7075 the
- * orchestrator sent every book the router answered flash for to the Batch API on
- * gemini-3-flash-preview: 502 jobs, 4,106 pages, $10.50 between 2026-10-08 and 2026-10-21.
+ * Derek, 2026-10-08 (only lite on the API), DECIDED 2026-10-10 ("Only via the CLI lane, no API"), then
+ * 2026-11-06: "no one should use lite", "everything on agy", "its just better and cheaper". Before #7075
+ * the orchestrator sent every book the router answered flash for to the Batch API: 502 jobs, 4,106 pages,
+ * $10.50 between 2026-10-08 and 2026-10-21. On 2026-11-06 seven hand-picked imports released to the queue
+ * were headed for paid lite, because lite was still an API model.
  *
  * Three layers:
- *  1. the helpers in scripts/lib/ocr-routing.mjs refuse every non-lite model;
- *  2. the router's API answer is always lite, over a grid of books and both OCR_LITE_ONLY modes;
+ *  1. the helpers in scripts/lib/ocr-routing.mjs refuse every model;
+ *  2. the router never answers an API channel, over a grid of books and both OCR_LITE_ONLY modes, and the
+ *     CLI lane has a reader for every model the router can name;
  *  3. a static sweep: every OCR submitter under scripts/ that can reach the API calls the guard,
  *     and the orchestrator's submit functions check the model before they select or upload pages.
  * Each layer has a negative control that shows it can fail.
@@ -21,25 +25,22 @@ import {
   API_OCR_MODELS, isApiOcrModel, assertApiOcrModel, ocrLaneForBook, apiOcrModelForBook,
   CLI_FLASH_OCR_HOLD, FLASH_OCR_FROM, OCR_MODEL_LITE, OCR_MODEL_FLASH,
 } from '../../scripts/lib/ocr-routing.mjs';
+import { CLI_MODEL_FOR } from '../../scripts/batch/cli-ocr-lane.mjs';
 
 const ROOT = path.resolve(__dirname, '../..');
 const read = (rel: string) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 
-const NON_LITE = [
-  'gemini-3-flash-preview', 'gemini-3-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite',
+const MODELS = [
+  OCR_MODEL_LITE, OCR_MODEL_FLASH,
+  'gemini-3-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite',
   'gemini-3.8-flash', 'gemini-3.8-flash-low', 'gemini-3.1-pro-preview', 'gemini-2.5-flash',
 ];
 
-describe('the helpers refuse every Gemini model but flash-lite', () => {
-  it('flash-lite is the only API model', () => {
-    expect([...API_OCR_MODELS]).toEqual(['gemini-3.1-flash-lite']);
+describe('the helpers refuse every model for the paid API', () => {
+  it('the API model set is empty: flash-lite is refused like the rest', () => {
+    expect([...API_OCR_MODELS]).toEqual([]);
     expect(OCR_MODEL_LITE).toBe('gemini-3.1-flash-lite');
-    expect(isApiOcrModel(OCR_MODEL_LITE)).toBe(true);
-    expect(assertApiOcrModel(OCR_MODEL_LITE, 'test')).toBe(OCR_MODEL_LITE);
-  });
-
-  it('NEGATIVE CONTROL: every other model is refused, the router\'s flash first', () => {
-    for (const m of [OCR_MODEL_FLASH, ...NON_LITE, '', undefined]) {
+    for (const m of [...MODELS, '', undefined]) {
       expect([m, isApiOcrModel(m)]).toEqual([m, false]);
       expect(() => assertApiOcrModel(m, 'test')).toThrow(/refusing to send .* to the paid Gemini API/);
     }
@@ -52,37 +53,43 @@ describe('the helpers refuse every Gemini model but flash-lite', () => {
   });
 });
 
-describe('the router never answers a non-lite model for the API', () => {
-  const families = ['Latin', 'English', 'German', 'Greek', 'Persian', 'Sanskrit', 'Pali', 'Arabic', "Ge'ez",
+describe('the router never answers the API channel, and the CLI lane can read every routed model', () => {
+  const families = ['Latin', 'English', 'German', 'French', 'Spanish', 'Greek', 'Persian', 'Sanskrit', 'Pali', 'Arabic', "Ge'ez",
     'Chinese', 'Classical Chinese', 'Japanese', 'Tibetan', 'Syriac', 'Hebrew', 'Russian', '', 'Unknown'];
   const old = new Date('2026-01-01T00:00:00Z');
   const fresh = new Date('2026-12-01T00:00:00Z');
   const books = families.flatMap((language) => [
     { language, visible: true, created_at: old },
     { language, visible: false, created_at: old },
-    { language, visible: false, created_at: fresh },
+    { language, visible: false, hidden: true, created_at: fresh },
     { language, visible: true, created_at: old, image_source: { provider: 'bph' } },
   ]);
 
   for (const liteOnly of [true, false]) {
-    it(`OCR_LITE_ONLY=${liteOnly}: channel 'api' always carries flash-lite; every other model is 'cli'`, () => {
-      let cli = 0;
+    it(`OCR_LITE_ONLY=${liteOnly}: every book is 'cli', and its model has an agy reader`, () => {
+      let lite = 0;
       for (const book of books) {
         const lane = ocrLaneForBook(book, { liteOnly });
-        if (lane.channel === 'api') expect([book, lane.model]).toEqual([book, OCR_MODEL_LITE]);
-        else { cli++; expect([book, lane.model]).not.toEqual([book, OCR_MODEL_LITE]); }
-        expect(apiOcrModelForBook(book, { liteOnly })).toBe(lane.channel === 'api' ? OCR_MODEL_LITE : null);
+        expect([book, lane.channel]).toEqual([book, 'cli']);
+        expect(apiOcrModelForBook(book, { liteOnly })).toBeNull();
+        expect([book, lane.model, CLI_MODEL_FOR[lane.model]]).toEqual([book, lane.model, 'gemini-3.8-flash-low']);
+        if (lane.model === OCR_MODEL_LITE) lite++;
       }
-      expect(cli).toBeGreaterThan(0); // the grid does reach the Flash branch
+      // The 2026-11-06 case: a hidden new Latin import is on the agy lane, not paid lite.
+      expect(ocrLaneForBook({ language: 'Latin', visible: false, hidden: true, created_at: fresh }, { liteOnly })).toEqual({ channel: 'cli', model: OCR_MODEL_LITE });
+      if (liteOnly) expect(lite).toBeGreaterThan(0); // the grid reaches the lite-labelled tier
     });
   }
 
+  it('NEGATIVE CONTROL: a routed model with no agy reader would wait, and the map names it', () => {
+    expect(CLI_MODEL_FOR['gemini-3.1-pro-preview']).toBeUndefined();
+  });
+
   it('the Flash-routed scripts go to the CLI lane, Chinese print among them (#6101)', () => {
     expect(FLASH_OCR_FROM.zho).toBeInstanceOf(Date);
-    for (const language of ['Greek', 'Persian', 'Arabic', 'Chinese', 'Classical Chinese']) {
+    for (const language of ['Greek', 'Persian', 'Arabic', 'Chinese', 'Classical Chinese', 'Latin']) {
       expect([language, ocrLaneForBook({ language, visible: true }, { liteOnly: true }).channel]).toEqual([language, 'cli']);
     }
-    expect(ocrLaneForBook({ language: 'Latin', visible: true }, { liteOnly: true })).toEqual({ channel: 'api', model: OCR_MODEL_LITE });
   });
 });
 

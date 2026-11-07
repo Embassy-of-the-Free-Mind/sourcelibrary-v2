@@ -139,18 +139,41 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect([lane.channel, lane.engine, lane.reader, lane.row.id]).toEqual(['cli', 'claude-opus-5-5', 'scripts/batch/claude-translate.mjs', 'pali-test']);
     expect(translateEngineFor(t, { language: 'Pali' })).toBe(MODEL_FLASH);
     expect(tableRowFor(t, { language: 'Pali' })?.id).toBe('flash-measured');
-    expect(translateLaneForBook(t, { language: 'Hebrew' })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
-    expect(translateLaneForBook(t, { language: 'Spanish' })).toMatchObject({ channel: 'batch', engine: MODEL_LITE, row: null });
+    // Since 2026-11-06 (everything-cli-agy) every other book is cli too; the Batch engine underneath is unchanged.
+    expect(translateLaneForBook(t, { language: 'Hebrew' })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+    expect(translateEngineFor(t, { language: 'Hebrew' })).toBe(MODEL_FLASH);
+    expect(translateLaneForBook(t, { language: 'Spanish' })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+    expect(translateEngineFor(t, { language: 'Spanish' })).toBe(MODEL_LITE);
+  });
+
+  // Derek 2026-11-06: "no one should use lite", "everything on agy". The catch-all is the last cli row.
+  it('every book translates on agy, except a Loeb (printed English facing: the agy read copied it, #7075)', () => {
+    const t = TRANSLATION_ROUTING_TABLE;
+    for (const language of ['Spanish', 'Dutch', 'Portuguese', 'Hebrew', 'Arabic', 'Sanskrit', 'Tibetan', 'Old French', '', 'Unknown']) {
+      expect([language, translateLaneForBook(t, { language }).channel]).toEqual([language, 'cli']);
+    }
+    expect(translateLaneForBook(t, { language: 'Latin', image_source: { provider: 'bph' } })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+    expect(translateLaneForBook(t, { language: 'Hebrew', title: 'Josephus (Loeb Classical Library)' }).channel).toBe('batch');
+    const last = (t.rows as { channel?: string; id: string }[]).filter((r) => r.channel === 'cli').at(-1);
+    expect(last?.id).toBe('everything-cli-agy');
+    // A cli row after the catch-all is unreachable, and match.any is cli-only.
+    const after = clone(TRANSLATION_ROUTING_TABLE); after.rows.push(cliRow({ id: 'after-catch-all' }));
+    expect(() => validateTranslationTable(after, [MODEL_FLASH, MODEL_LITE])).toThrow(/unreachable/);
+    const batchAny = clone(TRANSLATION_ROUTING_TABLE); batchAny.rows.unshift({ id: 'batch-any', match: { any: true }, engine: MODEL_LITE, evidence: [{ issue: 1 }] });
+    expect(() => validateTranslationTable(batchAny, [MODEL_FLASH, MODEL_LITE])).toThrow(/only on a cli row/);
+    // cliBookFilter (the orchestrator's Phase 4 selector) now selects every book that is not a Loeb.
+    const f = cliBookFilter(t) as { $or: Record<string, unknown>[] };
+    expect(f.$or.some((c) => !('language' in c) && !('image_source.provider' in c))).toBe(true);
   });
 
   // #7075 (2026-10-25): Greek and Ancient Greek go to the agy reader; every other flash-measured language stays on Batch.
-  it('the live table sends Greek to the agy cli lane and leaves the rest of flash-measured on Batch', () => {
+  it('the live table sends Greek to its own agy cli row; the rest of flash-measured reaches agy by the catch-all', () => {
     const t = TRANSLATION_ROUTING_TABLE;
     for (const language of ['Greek', 'Ancient Greek', 'Greek, Latin']) {
-      expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli' });
+      expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id: 'greek-cli-gemini38' } });
       expect(translateEngineFor(t, { language })).toBe(MODEL_FLASH);
     }
-    for (const language of ['Hebrew', 'Arabic', 'Sanskrit']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    for (const language of ['Hebrew', 'Arabic', 'Sanskrit']) expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
     // "Latin; Greek" is not Greek (first label); it is Latin, and Latin has its own cli row since #7263.
     expect(translateLaneForBook(t, { language: 'Latin; Greek' })).toMatchObject({ channel: 'cli', row: { id: 'latin-cli-agy4' } });
     expect(translateLaneForBook(t, { language: 'Pali' })).toMatchObject({ channel: 'cli', engine: 'claude-opus-5-5' });
@@ -182,11 +205,14 @@ describe('Translation: both routers read translation-routing-table.json', () => 
       expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id, per_call: 4 } });
       expect(translateEngineFor(t, { language })).toBe(MODEL_LITE);
     }
+    // BPH skips the language rows (their `unless`) and, since 2026-11-06, reaches agy by the catch-all; its Batch row
+    // is still what a Batch caller would get.
     for (const language of ['Latin', 'German', 'Latin. French. English']) {
-      expect(translateLaneForBook(t, { language, image_source: { provider: 'bph' } })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH, row: { id: 'bph' } });
+      expect(translateLaneForBook(t, { language, image_source: { provider: 'bph' } })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+      expect(tableRowFor(t, { language, image_source: { provider: 'bph' } })?.id).toBe('bph');
     }
-    // Not the tested cells: other first labels, and the Greek row keeps its own reader (no per_call).
-    for (const language of ['Old French', 'Middle High German', 'Neo-Latin', 'Spanish']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    // Not the tested cells: other first labels reach agy by the catch-all; the Greek row keeps its own reader (no per_call).
+    for (const language of ['Old French', 'Middle High German', 'Neo-Latin', 'Spanish']) expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
     expect(translateLaneForBook(t, { language: 'Greek, Latin' }).row.id).toBe('greek-cli-gemini38');
     expect(translateLaneForBook(t, { language: 'Greek' }).row.per_call).toBeUndefined();
   });

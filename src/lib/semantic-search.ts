@@ -69,13 +69,13 @@ async function fetchQueryEmbedding(query: string): Promise<number[] | null> {
 
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${geminiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${geminiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           requests: [{
-            model: 'models/gemini-embedding-2-preview',
+            model: 'models/gemini-embedding-2',
             content: { parts: [{ text: query }] },
             outputDimensionality: 768,
           }],
@@ -277,13 +277,13 @@ async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
   if (!geminiKey) return null;
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${geminiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${geminiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           requests: [{
-            model: 'models/gemini-embedding-2-preview',
+            model: 'models/gemini-embedding-2',
             content: { parts: [{ text: query }] },
             // No outputDimensionality — full 3072 dims for artwork_embeddings
           }],

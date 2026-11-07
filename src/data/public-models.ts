@@ -256,7 +256,7 @@ export const MODELS: PublicModel[] = [
 
   // ── Searching by meaning ────────────────────────────────────────────────
   {
-    id: 'search-gemini-embedding', job: 'search', name: 'Gemini Embedding 2', version: 'gemini-embedding-2-preview',
+    id: 'search-gemini-embedding', job: 'search', name: 'Gemini Embedding 2', version: 'gemini-embedding-2',
     maker: 'Google', access: 'commercial service', status: 'in use',
     books: 'Every translated page, every book summary and every picture label.',
     why: 'One model for every kind of text, so a search can compare a page with a picture label.',

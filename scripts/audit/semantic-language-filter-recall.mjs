@@ -96,13 +96,13 @@ const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function embed(query) {
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${GEMINI_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${GEMINI_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         requests: [{
-          model: 'models/gemini-embedding-2-preview',
+          model: 'models/gemini-embedding-2',
           content: { parts: [{ text: query }] },
           outputDimensionality: 768,
         }],
