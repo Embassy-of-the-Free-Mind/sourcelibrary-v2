@@ -36,7 +36,9 @@ describe('assistant guide', () => {
   it('names the full text, a passage search and a quote on a book page', () => {
     const line = bookAssistantGuide({ id: 'b1', slug: 'de-secretis', pages_count: 12 }, 'x')!;
     expect(line).toContain('https://sourcelibrary.org/book/de-secretis/read');
-    expect(line).toContain('https://sourcelibrary.org/api/books/b1/search?q=YOUR+WORDS');
+    expect(line).toContain('https://sourcelibrary.org/book/de-secretis/search/text?q=YOUR+WORDS');
+    // The short passage page comes before the long document, which fetch tools truncate.
+    expect(line.indexOf('/search/text')).toBeLessThan(line.indexOf('/read'));
     expect(line).toContain('https://sourcelibrary.org/api/books/b1/quote?page=N');
   });
 

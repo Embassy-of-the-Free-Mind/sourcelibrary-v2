@@ -26,7 +26,10 @@ export function homeAssistantGuide(): string {
 export function bookAssistantGuide(book: { id?: string; slug?: string; pages_count?: number }, fallbackId: string): string | null {
   if (!book.pages_count) return null;
   const id = book.id ?? fallbackId;
-  const read = `${BASE}/book/${book.slug || id}/read`;
-  const api = `${BASE}/api/books/${id}`;
-  return `${LEAD} this page describes the book, and the text is elsewhere. The whole book as one document: ${read}. Find a passage in it: ${api}/search?q=YOUR+WORDS. The text and citation of one page: ${api}/quote?page=N. ${HOW_TO}`;
+  const bookUrl = `${BASE}/book/${book.slug || id}`;
+  // The passage search comes first. In the re-run after this line shipped, Claude opened
+  // the book page on 10 of 10 questions and still quoted the book itself on about 3: /read
+  // is 60K-220K characters, more than a fetch tool keeps, so the model got a digest. A
+  // short page of matching passages fits (/book/<slug>/search/text, #8276).
+  return `${LEAD} this page describes the book, and the text is elsewhere. Passages in this book that match some words, with page links and citations: ${bookUrl}/search/text?q=YOUR+WORDS. The text and citation of one page: ${BASE}/api/books/${id}/quote?page=N. The whole book as one long document: ${bookUrl}/read. ${HOW_TO}`;
 }
