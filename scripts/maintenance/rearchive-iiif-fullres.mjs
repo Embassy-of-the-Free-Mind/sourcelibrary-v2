@@ -540,6 +540,7 @@ async function realignOne(book) {
           'image_metadata.width': result.dims?.width,
           'image_metadata.height': result.dims?.height,
           'image_metadata.realigned_at': new Date(),
+          // image-pick-ok: provenance of the URL being replaced, never rendered; split books are refused above
           'image_metadata.realigned_from': page.archived_photo || null,
           updated_at: new Date(),
         } },
