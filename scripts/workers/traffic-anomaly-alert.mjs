@@ -272,6 +272,9 @@ export function isCdnEgress(ip) {
 
 /** A hostname serving reader traffic that we did not expect. */
 export function isUnexpectedHost(host) {
+  // Loopback is a local dev server writing to the shared database. It cannot be a public host, so it is not an
+  // exposure: two reads from one Mac paged as critical on 2026-11-07 (#8353).
+  if (/^(localhost|127\.\d+\.\d+\.\d+|\[?::1\]?)(:\d+)?$/.test(host || '')) return false;
   return Boolean(host) && !EXPECTED_HOSTS.has(host);
 }
 
