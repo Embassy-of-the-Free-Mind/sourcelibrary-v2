@@ -1,0 +1,84 @@
+[
+  {
+    "book_id": "b01-k", "slot": 1, "title": "Origenes Adamantius: Tractatus super Leviticum", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Origen's Homilies on Leviticus in Rufinus' Latin (p136 rubric 'Explicit lib. xi. Incip. xii. De magno sacerdote' matches Homily XII on the high priest). No tradition or collection given; patristic allegorical exegesis is adjacent to the library's early-Christian/Hermetic scope.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. None of the three pages has a translation: the `translation` field is empty on all three. Foliation is consistent: image 47 is foliated '22' (recto). The 'published 1300' date may be too late for this hand, which looks 12th-century protogothic to me (low confidence). The images carry the Herzog August Bibliothek Wolfenbüttel scale bar.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 47,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "liceat ecclesie sacerdotibus edendum. etiam omnia conceduntur. et pars ex ipsis aliqua deo offertur et altari signum traditur", "image": "licet cedant sacerdotibus ad edendum. non tamen omnia conceduntur. sed pars ex ipsis aliqua deo offertur et altaris ignibus traditur", "problem": "'non tamen omnia' (not all are granted) read as 'etiam omnia' (all are granted): the sense is reversed; 'altaris ignibus' (to the altar's fires) also became 'altari signum'", "severity": "serious", "class": "O6" },
+          { "ocr": "delictum in legum quod est dicat ad morte", "image": "delictum non legimus quod esse dicatur ad mortem", "problem": "negation lost: 'we do not read that a delictum is unto death' becomes garble without 'non'", "severity": "serious", "class": "O6" },
+          { "ocr": "committe / mus. idcirco generalem affirmare non possum", "image": "committere. Sed hec quoniam non semper in scripturis divinis sub ista distinctione invenimus. idcirco generalem affirmare non possum", "problem": "a whole manuscript line ('Sed hec quoniam non semper in scripturis divinis sub ista distinctione inveni-') is silently dropped, so the reason for the conclusion is gone", "severity": "serious", "class": "O5" },
+          { "ocr": "que cum malam intelligentiam superant", "image": "que cum nostram intelligentiam superent", "problem": "'nostram' (our understanding) misread as 'malam' (bad understanding)", "severity": "moderate", "class": "O6" },
+          { "ocr": "non enim alienigene. nisi si alteri / iam fuerunt", "image": "non tamen alienigene. nisi si asscripti iam fuerint", "problem": "'asscripti' (enrolled) misread as 'alteri'", "severity": "moderate" },
+          { "ocr": "Egyptii enim tercia generatione in / trant", "image": "Egyptius enim tercia generatione intrabit", "problem": "verb and number changed", "severity": "minor" },
+          { "ocr": "Nam cum / lupi in hostia peccato uui sacrificii ... ne / separatim", "image": "Nam cum supra in hostia pro peccato totius sacrificii ... nunc separatim", "problem": "'supra' read as 'lupi' (wolves), 'totius' read as 'uui', 'nunc' read as 'ne'", "severity": "moderate" },
+          { "ocr": "igitur eodem in margi / eade tradmone", "image": "Igitur eodem itaque eadem traditione", "problem": "'itaque' misread as 'in margi[ne]', a phantom reference to a margin", "severity": "moderate" },
+          { "ocr": "debere te offerre uigulan / tari", "image": "debere te offerre igni altaris", "problem": "'igni altaris' read as 'uigulan tari'; also 'iugulant' consistently read as 'uigulant'", "severity": "moderate" },
+          { "ocr": "cum domino et est", "image": "coram domino et cetera", "problem": "abbreviations 'cor(am)' and 'et c(etera)' misexpanded", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page (translation field empty).", "severity": "moderate", "class": "other:no-translation" },
+          { "note": "<image-desc> describes a 'manicula pointing to the text'; the margin actually has three 'N'-shaped nota marks, not a manicula.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 92,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "pacis et fidei quam prius suscepimus", "image": "pacis et fidei quam per Christum (p xpm) suscepimus", "problem": "the nomen sacrum 'per Christum' is replaced by 'prius', so Christ drops out of the sentence", "severity": "moderate", "class": "O6" },
+          { "ocr": "rursum in uita ci / catrice ascendat aliquod peccati prius initium", "image": "rursum in ista cicatrice ascendat aliquod peccati prioris indicium", "problem": "'ista' read as 'uita', 'prioris indicium' read as 'prius initium'", "severity": "moderate" },
+          { "ocr": "Sed et uero spe / lepre", "image": "Secunda vero species lepre", "problem": "'Secunda' (the second kind of leprosy) is lost, so the enumeration goes", "severity": "moderate" },
+          { "ocr": "et simul cum eos", "image": "et simul curabo eos", "problem": "the superscript '-bo' is ignored and 'curabo' becomes 'cum'", "severity": "moderate" },
+          { "ocr": "et pontifi / cem sedem ea", "image": "per pontificem secundum ea", "problem": "abbreviations misexpanded", "severity": "minor" },
+          { "ocr": "ut / uulneris", "image": "vel vulnerum", "problem": "small misreading", "severity": "minor" },
+          { "ocr": "Si post co / gnitionem", "image": "Si igitur post cognitionem", "problem": "'igitur' dropped", "severity": "minor" },
+          { "ocr": "Si in quacunque die", "image": "Sed in quacunque die", "problem": "'Sed' read as 'Si'", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page (translation field empty).", "severity": "moderate", "class": "other:no-translation" },
+          { "note": "The left-margin quotation marks (\") flagging the scriptural lemma are not transcribed. The catchword 'qua' is correctly noted in a <meta> tag.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 136,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "<margin> et de / magno / sacerdote / et de / eius / officio / ... et de / eius / morte </margin>", "image": "no marginal text beside the initial; the margin is blank apart from the red 'O'", "problem": "a 30-line marginal block that is not on the leaf, with its last six entries repeated: an invented, looping table of contents", "severity": "serious", "class": "O4" },
+          { "ocr": "<insert>Explicit liber VI. Incipit VII.</insert>", "image": "Explicit lib. xi. Incip. xii. (red rubric)", "problem": "the book numbers are wrong (XI/XII read as VI/VII): it misidentifies which homily begins", "severity": "serious", "class": "O7" },
+          { "ocr": "<margin> deponere non / potest. </margin>", "image": "the text 'non depone…' is at the edge of the FACING leaf (right edge of the frame), not on this page", "problem": "the neighbour leaf's text is read as this page's margin", "severity": "moderate", "class": "I4" },
+          { "ocr": "de / sacerdote est ad illum sacerdotem de quo dicit deus magno sacerdo- / te et sacerdos in eternum sed in ordinem Melchisedech", "image": "[Omnis qui inter homines] sacerdos est ad illum sacerdotem de quo dicit deus: [rubric: magno sacerdote] Tu es sacerdos in eternum secundum ordinem Melchisedech", "problem": "the rubric title 'De magno sacerdote' is merged into the running text and 'Tu es' (Ps 109:4) is dropped", "severity": "moderate", "class": "O11" },
+          { "ocr": "ut neque ipsi enti utta sed in / legem obnoxii simul mori. nec sed in spirituale legem humana nos / pena maneat", "image": "ut neque in presenti vita secundum legem obnoxii simus morti, neque secundum spiritualem legem futura nos pena maneat", "problem": "'in presenti vita' garbled; 'futura' (future punishment) misread as 'humana'", "severity": "moderate", "class": "O6" },
+          { "ocr": "cum gloria et impii uita sanctorum amen", "image": "cum gloria et imperio in secula seculorum amen", "problem": "the closing doxology misread ('imperio' read as 'impii', impious)", "severity": "moderate" },
+          { "ocr": "ad conclusione terre- / ne alicuius urbis", "image": "ad conditionem terrene alicuius urbis", "problem": "'conditionem' misread as 'conclusione'", "severity": "minor" },
+          { "ocr": "in sancta manufacta illa / inibi exstructa", "image": "in sancta sed manufacta sed lapidibus exstructa", "problem": "'lapidibus' (built of stones) misread", "severity": "moderate" },
+          { "ocr": "Vii / et uidet ... dii typol ue- / ritate ... Nol / au", "image": "Unde et iudei ... dum typos veritate ... Nos autem", "problem": "'iudei' (the Jews, the subject) read as 'uidet'; several other words garbled", "severity": "moderate" },
+          { "ocr": "ex filiis suis", "image": "ex fratribus suis", "problem": "'fratribus' (from his brothers) read as 'filiis' (from his sons)", "severity": "moderate" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page (translation field empty).", "severity": "moderate", "class": "other:no-translation" },
+          { "note": "An invented, repeating <margin> block ('et de eius filiis / et de eius morte' ×2) would show as apparatus that the leaf does not have.", "severity": "serious", "class": "O4" },
+          { "note": "An <insert> tag wraps the rubric in the OCR text; it may leak into display.", "severity": "minor", "class": "D1" }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right work on the right leaves, but no page has a translation, and the OCR is unreliable: on p47 a 'non tamen' is read as 'etiam', reversing the sense, and a whole line is dropped. On p136 a 30-line marginal table of contents is invented and the homily numbers are misread (XI/XII as VI/VII). An expert would distrust the transcription on sight."
+  }
+]

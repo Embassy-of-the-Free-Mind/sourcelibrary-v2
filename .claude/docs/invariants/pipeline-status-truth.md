@@ -144,7 +144,7 @@ replaced, while the memory said "retranslation not approved, no lane exists."
 
 - Before a bulk OCR apply on finished books, decide whether retranslation should follow.
   If it needs approval, **hold the books first**
-  (`hold-pipeline-books.mjs --ids … --reason <x>-awaits-<who> --issue N --release "…" --apply`).
+  (`hold-pipeline-books.mjs --ids … --reason <x>-awaits-<who> --issue N --release "…" --release-when decision:<words> --apply`).
   Page-level writers never touch status, so the apply is unaffected.
 - Release with **`--to ocr_complete`**. A plain release restores the prior status, and
   `loop_quarantine_hold` (common in re-OCR cohorts) is selected by no translate phase.
@@ -162,6 +162,19 @@ or retry can put it back. Release restores `held_from_status` and records a
 wrong, a human should look" but "nothing is wrong yet, and running the lane would make it
 so". `scripts/audit/pipeline-hold-drift.mjs` finds a marker without the status (a writer
 this rule does not know about) and a hold whose release condition has been met.
+
+**A hold names what releases it, in a form a detector can test (#7860).** Placing a hold is one
+line and nothing owned releasing one: on 2026-10-31, 464,263 held books under 108 reasons, and
+1,535 had sat a month on `*-awaits-derek` holds whose decisions were already made. So `holdBook()`
+(and `makeHoldMarker()`, which the insert-time importers use) **refuses a hold without
+`release_when: { kind: decision|issue|test|date, ref, note }`** — a `release` sentence alone is read by
+nobody. `scripts/audit/hold-release-check.mjs` (weekly) lists holds QUIET (over 14 days, their issue
+silent 14 days), DECIDED (the decision is in ops `DECIDED.md` / DECISIONS-PENDING Done, or a
+"decided"/"default taken" comment), DUE (date passed, issue closed) and NO_CONDITION, keeps one issue
+open while any exist, and closes it when clean. The not-acquired catalogue records
+(`NOT_ACQUIRED_HOLD_REASONS`: manifest-only-lazy-pages, acquisition-wave-2026-10b) are counted apart,
+never flagged, and left out of the /admin held count. **Tell:** a hold reason ending `-awaits-<who>`
+older than the decision it waits on.
 
 **The status is not the test; the marker is (#6122).** `archive-erara.mjs` selected e-rara
 books at any status and wrote `archive_complete` with a raw `$set`, lifting **329** holds

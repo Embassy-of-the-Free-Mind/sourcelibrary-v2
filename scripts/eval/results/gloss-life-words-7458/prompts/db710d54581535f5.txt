@@ -1,0 +1,150 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Chinese
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Imperially Commissioned Essences of Masters and Historians, juan 72–74 (vol 125) | Author: 吳士玉 | Date: Unknown
+
+**Text to translate:**
+<language>Chinese</language>
+<script>handwritten</script>
+
+神不知不神之所以神也日月有數大小有定聖功生
+焉神明出焉其盜機也天下莫能見莫能知君子得之
+固躬小人得之輕命瞽者善聽聲者善視絕利一源用
+師十倍三反畫夜用師萬倍心生於物死於物機在於
+目禽之制在氣天之無恩而大恩生迅雷烈風莫不蠢
+然至樂性餘至靜性廉天之至私用之至公生者死之
+根死者生之根恩生於害害生於恩故曰沈水入火自
+取滅亡愚人以天地大理聖我以時物文理哲人以愚
+虞聖我以不愚虞聖人以奇期聖我以不奇期聖自然
+之道靜故天地萬物生天地之道没故隂陽勝隂陽相
+推而變化順矣是故聖人知自然之道不可違因而制
+之至靜之道律厯所不能契爰有奇器是生萬象八卦
+甲子神機鬼藏隂陽相勝
+之術昭昭乎進乎象矣
+天人合發萬變定基
+見
+上
+三盜
+見
+上
+三反晝夜用師萬倍
+見
+上
+難知如隂不動如山
+隂符經
+注聖人
+御定子文精華
+<header>欠乞习事全書</header>
+<page-num>三十</page-num>
+
+**Previous page translation for continuity:**
+Volume 72
+
+The convenience of it, he followed his plan. Anguo led his ten thousand troops in a rapid drive to take cover in the dense forests and mist. Their tribal leader, Jie, surrendered. He was promoted four levels in rank and moved to the position of Left Wing Commander.
+-> Wood was arranged to set up deceptive troops. <-
+
+In the History of the Yuan, Biography of Hong Junqi: His childhood name was Chaqiu. When Naiyan rebelled, the Emperor personally went on a campaign and ordered Chaqiu to lead Goryeo <note>Korean</note>, Jurchen, and Han troops as an escort. They suddenly encountered ove
+[…]
+r. The five thieves are in the heart, and their implementation is in Heaven. Heaven’s nature is man; man’s heart is the mechanism. Establishing the Way of Heaven serves to stabilize man. When Heaven releases the killing mechanism, the stars move and the constellations shift. When Earth releases the killing mechanism, dragons and snakes rise from the land. When Man releases the killing mechanism, Heaven and Earth are overturned. When Heaven and Man release it together, the ten thousand changes are fixed in their nature. There is skill and clumsiness, which can be hidden. The evil of the nine apertures lies in the three essentials, which can be still or in motion. Fire is born from wood; when fire breaks out, it must overcome. Treachery is born in the state; when the moment moves, there must be a collapse. One who knows this and cultivates it is called a Sage. Heaven gives life and Heaven kills; this is the principle of the Way. Heaven and Earth are the thieves of the ten thousand things; the ten thousand things are the thieves of man; man is the thief of the ten thousand things. When the three thieves are in accord, the three powers <note>Heaven, Earth, and Man</note> are at peace. Therefore it is said: Eat at the proper time, and the hundred bones will be regulated; move the mechanism, and the ten thousand transformations will be at peace. Men know the divinity of the spirit...
+<summary>This page records military stratagems from the Yuan Dynasty involving psychological warfare and quotes extensively from the Classic of the Hidden Accord regarding the metaphysical relationship between Heaven, Earth, and Man.</summary>
+<keywords>History of Yuan, Hong Chaqiu, military deception, Yinfu Jing, five thieves, three powers, Taoist cosmology, internal cultivation</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

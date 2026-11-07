@@ -1,0 +1,661 @@
+[
+  {
+    "book_id": "69b3002aa1a4246ddb45b7ed",
+    "slot": 43,
+    "title": "Commentarii in Psalmos",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Froben 1537 Arnobius the Younger, Psalm commentary; matches its Sevilla university-library / patron-library collections.",
+    "rights_flag": null,
+    "structure_note": "Scan pages 151/299/447 carry printed pages 145/293/441, a constant offset of 6 for front matter; nothing out of order. 583 of 597 pages translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 151,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 299,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<meta>catchword: Inſincæ</meta>",
+            "image": "In ſinem",
+            "problem": "catchword misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "&amp; ſingularis ferus",
+            "image": "& ſingularis ferus",
+            "problem": "HTML entity &amp; stored in the transcription throughout the page instead of &",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "& ſuffoſſa manu",
+            "english": "and dug-up hand",
+            "problem": "suffossa manu is the pierced hand (of Christ); 'dug-up' is nonsense",
+            "severity": "moderate"
+          },
+          {
+            "source": "Quem prius & in nobis tu multum Chriſtus patitur",
+            "english": "Which <term>Christ</term> <gloss>the Anointed One</gloss> suffers much in us before this",
+            "problem": "an unneeded gloss 'the Anointed One' is added on Christ; the awkward clause is rendered literally",
+            "severity": "minor"
+          },
+          {
+            "source": "rabiem dæmonum",
+            "english": "the rabies of demons",
+            "problem": "false friend; should be 'rage'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 447,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Omnes enim gentes in destructione idolorum morabantur",
+            "english": "For all nations lingered in the destruction of idols",
+            "problem": "the sense is that the nations were stuck in the perdition of idol-worship; 'lingered in the destruction of idols' reads as though they were destroying idols",
+            "severity": "moderate"
+          },
+          {
+            "source": "quibus ab origine mundi per Moysen quid egerit",
+            "english": "to whom ... through Moses, <note>it was made known</note> what He had done",
+            "problem": "a supplied verb is wrapped in a <note> tag in the reading text",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, faithful reading of a 1537 Froben print: the OCR is near-perfect and the translation is fluent and accurate, with only a few literalisms ('dug-up hand', 'rabies')."
+  },
+  {
+    "book_id": "6a4f262dfafa84405cd5012f",
+    "slot": 104,
+    "title": "Oratio Solennis & Quatuor Temporum. De Superstitiosa Pontificiorum Ceremonia ... Festum Corporis Christi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 17th-century Lutheran Latin oration against the Corpus Christi feast. It has no tradition or collection assigned, so nothing contradicts its shelf, though it lies outside the core esoteric traditions.",
+    "rights_flag": null,
+    "structure_note": "22 pages: 22 with OCR, 21 translated. The sampled pages run in order. Publication date is 'Unknown'.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Bulla edita Anno Christi 1262. et approbata à Clemente V. De Origine Festorum apud Hospinianum cui adde Georgium Anhaltinum folio 181. Confer etiam Lutherum Fest-postilla folio 14.</margin>",
+            "image": "Bulla edita A.C. 1262. & approbata à Clemente V. De Orig. Fest. ap. Hospin. cui adde Georg. Anhalt. fol. 181. Conf. etiam Luth. Fest-Postill fol. 14.",
+            "problem": "the marginal note's abbreviations are silently expanded, so the reader sees words that are not printed (expansions are correct)",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "liceat tibi, ut non Bosthium modò & Præmonstratensem Petrum cum Eva sua, sed & cum Juliana Diesthemium ... res suas habere jubeas",
+            "english": "let it be permitted to you to order your own people—not only Bosthius and Peter the Premonstratensian with their Eva ...",
+            "problem": "'res suas habere jubeas' (the formula for dismissing someone, i.e. you may disown them) is mistranslated as 'order your own people', which blurs the concession",
+            "severity": "moderate"
+          },
+          {
+            "source": "enſi.",
+            "english": ". And as for us",
+            "problem": "the word fragment from the previous page becomes a stray leading full stop",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "imperatum quidem ab Urbano ... qvæ / quinquaginta / absque",
+            "image": "qvidem ... qvinqvaginta ... absqve (qv spellings, accents à, ſ)",
+            "problem": "this page normalises qv→qu and drops accents, while page 7 of the same book keeps qv; an inconsistent convention",
+            "severity": "minor",
+            "class": "O9"
+          },
+          {
+            "ocr": "*Rationale*",
+            "image": "Rationale (roman type)",
+            "problem": "invented italics",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "publicâ & universali usurpatione roboratum",
+            "english": "strengthened by public and universal usurpation",
+            "problem": "false friend: usurpatio means usage, so the English reads as an accusation the text does not make",
+            "severity": "moderate"
+          },
+          {
+            "source": "Id enim successorem Ejus demum Johannem XXII. ... consequutum dixeris",
+            "english": "his successor, John XXII, followed it only after not many years",
+            "problem": "consequutum = attained (public applause); 'followed it' muddies the sense",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A sound reading of a polemical oration: accurate transcription and a fluent, mostly faithful translation, with a couple of false-friend slips ('usurpation') and silently expanded marginal abbreviations."
+  },
+  {
+    "book_id": "69b52cb28a30f8bb136614f0",
+    "slot": 9,
+    "title": "Boethius De consolatione philosophiae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 14th-century manuscript of Boethius (Laurenziana). No collection is assigned; it is a natural primary source for the library.",
+    "rights_flag": null,
+    "structure_note": "102 pages, 96 with OCR, 92 translated. The pencil foliation (10 on image 25, 25 on image 55) is consistent with rectos and versos imaged separately; nothing out of order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Si plus uis moribus ne <gloss>et ante me</gloss> queraris",
+            "image": "Si p[ro]bas ut[er]e moribus ne q[ue]raris",
+            "problem": "misread 'if you approve, use her ways'; an interlinear gloss is invented",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Si priscam potestas essene atq[ue] abice peritiosa allutentur",
+            "image": "Si p[er]fidiam horrescis sp[er]ne atq[ue] abice p[er]niciosa[m] alludentem",
+            "problem": "the sentence is garbled into nonsense",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "fortune te regendu[m] dedisti u[n]de moribus oportet obtemperas",
+            "image": "fortune te regendu[m] dedisti d[omi]ne moribus oportet obtemperes",
+            "problem": "'dominae' (your mistress's ways) is misread as 'unde'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Quod si manendi abcu[m] diqi facile ex lege uelis",
+            "image": "Quod si manendi abeu[n]diq[ue] scribere legem uelis",
+            "problem": "misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Haec cum supra ite[m] it una uerterit.",
+            "image": "Hec cum sup[er]ba u[er]terit uices dextra",
+            "problem": "the first verse of the metrum is garbled; 'superba ... vices dextra' is lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Si priscam potestas essene atq[ue] abice peritiosa allutentur",
+            "english": "If you consider her ancient power, and how she is accustomed to deceive those she possesses, you will see that there is no cause for such great mourning",
+            "problem": "fluent English is built over a garbled source: it is neither what the OCR says nor Boethius's 'if you shudder at her treachery, spurn her'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Si plus uis moribus ne <gloss>et ante me</gloss> queraris",
+            "english": "If you wish to know her manners, do not complain of me",
+            "problem": "the invented gloss becomes 'of me'; Boethius says 'if you approve, use her ways and do not complain'",
+            "severity": "moderate"
+          },
+          {
+            "source": "Haec cum superba verterit vices dextra",
+            "english": "Since this has once turned",
+            "problem": "'the proud right hand' turning the changes is dropped",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "Three <image-desc> blocks describing maniculae are inside <margin> tags in the reading flow",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 55,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Si quae <gloss>scilicet libidines</gloss> possint explicare. Beata videtur esse in pecudibus quae <gloss>scilicet pecudes</gloss> esse dicuntur.",
+            "image": "Que si beatos possu[n]t explicare. Nichil cause e[st] quin pecudes q[uoque] [beatae] esse dicantur.",
+            "problem": "Boethius's argument (if pleasures made people blessed, cattle would be blessed too) is misread into a different sentence",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "sed nimium est nostri dictu est <unclear>naturae</unclear> quos pignora suos invenisse tortores",
+            "image": "s[ed] nimiu[m] e[st] n[atur]a dictu[m] e[st] nescio que[m] p[er] filios invenisse tortores",
+            "problem": "misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Celsa sic sede <unclear>petens</unclear>",
+            "image": "Celsa sede petitos",
+            "problem": "misread; the souls are 'sought from the high seat'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Stimulis angit fluentes. scit ita corda morsu. / Apis quae iam volantius",
+            "image": "Stimulis agit fruentes ... ferit icta corda morsu / Apis par volantis",
+            "problem": "the final metrum is misread (fluentes for fruentes; 'scit ita' for 'ferit icta')",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Beata videtur esse in pecudibus quae esse dicuntur",
+            "english": "It seems that happiness exists in cattle, which are said to be cattle.",
+            "problem": "nonsense in place of Boethius's reductio (then cattle too would be called blessed)",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "neque alias experti te neque nunc anxium necesse est admonere",
+            "english": "you do not need to be reminded by me, having experienced it at other times, nor are you anxious now",
+            "problem": "sense inverted: there is no need to remind you, who have experienced it and are anxious now",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "nimium est nostri dictu est naturae quos pignora suos invenisse tortores",
+            "english": "it is too much to say—and it is against our nature—that some have found their own tormentors in their offspring",
+            "problem": "inverted: Boethius says it was most naturally said that someone found his children to be his torturers",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Apis quae iam volantius / Vin grata mella fundit",
+            "english": "just as the bee, as it flies away, / pours out its welcome honey",
+            "problem": "the sting, which is the point of the simile, is lost",
+            "severity": "moderate"
+          },
+          {
+            "source": "Dedit et cornua lune <gloss>id est lune</gloss> ... Hic clausit membris animas <gloss>id est spiritum</gloss>",
+            "english": "He gave horns to the moon, that is, the moon. ... He enclosed souls in limbs, that is, the spirit.",
+            "problem": "interlinear glosses are merged into the verse as if they were Boethius's words",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->Adsit principio virgo maria meo<-' and '-> May the Virgin Mary be present at my beginning <-': arrow markup leaks into both panes",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "num satia se bonorum?",
+            "image": "Inscia[n]e bonorum?",
+            "problem": "'ignorance of the good?' is misread as 'satisfied by goods?'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nec idcirco miseris contingit exis-que solum dies noctesque <unclear>na</unclear> moliuntur",
+            "image": "Nec id miseris contingit eff[ectum] q[uod] solu[m] dies noctesq[ue] moliuntur",
+            "problem": "garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "eum <unclear>sis</unclear> gressibus ceteris",
+            "image": "eum q[ui] pedibus incedens",
+            "problem": "misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "uicissimque",
+            "image": "uerticemq[ue]",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "defi<margin>na<br/>on<br/>sis</margin>ciunt",
+            "image": "interlinear insertion between the columns of a split block",
+            "problem": "a margin tag with <br/> is spliced into the middle of a word",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "num satia se bonorum?",
+            "english": "Are they satisfied by goods?",
+            "problem": "Boethius asks whether the wicked follow vice out of ignorance of the good; the English makes it satiety, which breaks the argument",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Nec idcirco miseris contingit ... quod solum dies noctesque moliuntur",
+            "english": "Nor does it happen to the miserable on that account that they only toil day and night",
+            "problem": "sense inverted: the wretched do not attain the one thing they strive for day and night",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Sed quod eneruati uis ignorantiae caecitate",
+            "english": "But they are weakened by the blindness of ignorance",
+            "problem": "a rhetorical question becomes a statement; minor shift",
+            "severity": "minor"
+          },
+          {
+            "source": "uti cadauer hominem mortuum dixeris simpliciter hominem appellare non possis",
+            "english": "just as you would call a dead body a man, but you could not call him a man simply",
+            "problem": "'dead' is dropped ('you would call a corpse a dead man'), which obscures the analogy",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The Gothic hand defeats the OCR in many places, and the translation papers over the garble with fluent English that sometimes says the opposite of Boethius ('Are they satisfied by goods?', cattle 'said to be cattle'). Glosses merge into the verse and arrow markup shows on screen; an expert would flag this on sight."
+  },
+  {
+    "book_id": "6a483fab0278a71dd7757b38",
+    "slot": 73,
+    "title": "Exercitationum Feudalium Septima, De Acquisitione Feudi Per Investituram",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1651 Wittenberg feudal-law disputation (Suevus praeses); fits the europeanlibraries collection.",
+    "rights_flag": null,
+    "structure_note": "20 pages, all with OCR and all translated. Section numbers on the sampled pages run in order (II, V, IX).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "11. Investituram",
+            "image": "II. Investituram",
+            "problem": "the section numeral is read as Arabic 11 (the translation correctly has II)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "à vestimenti quodam genere in collatione feudi plerumque adhibito tradit Lindem.",
+            "english": "Lindemann ... teaches that it is mostly used from a certain kind of garment in the collation of a fief",
+            "problem": "Lindemann derives the word from a garment used in conferring a fief; the English is muddled",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Hartmanni Pistoris dicta quaestione 29. numero 20. et sequentes ... capitulo unico 2. Feudorum 2.",
+            "image": "Hartm. Pistoris d. q. 29. n. 20. & seqq. ... c. un. 2. F. 2.",
+            "problem": "every citation abbreviation is silently expanded (page 6 keeps them abbreviated); the reader sees words not printed",
+            "severity": "minor",
+            "class": "O9"
+          },
+          {
+            "ocr": "versiculo altero",
+            "image": "verſ. ult.",
+            "problem": "wrong expansion: ult. = ultimo; carried into the English as 'verse \"the other or\"'",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ex usu quidem Mediolanensium",
+            "english": "by the custom of the <term>Milaense</term> <gloss>people of Milan</gloss>",
+            "problem": "invented Latin term 'Milaense'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "capitulo 100. extraordinariis foeminis & masculis",
+            "image": "c. 100. extraord. fœminis & maſculis",
+            "problem": "the abbreviation 'extraord.' (a citation) is expanded into an adjective governing 'women and men'; the English follows ('Chapter 100, extraordinary, to women and men')",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ut juvet Dominum adversus omnes, excepto Imperatore vel Rege ... & antiquiore Domino ... patriâ quoque & se ipso",
+            "english": "that he may aid the Lord against all, except the Emperor or King ... and the older Lord. ... Also against the fatherland and himself.",
+            "problem": "sense reversed: the fatherland and the vassal himself are further EXCEPTIONS (ablative with excepto); the English says the vassal must aid the lord against his own country",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Illud affirmantes, hoc negantes: uni tantùm ... jurandum esse",
+            "english": "Affirming it, denying this: that it must be sworn in the name of all by one only",
+            "problem": "the two camps (some affirm, others deny that one may swear for all) are collapsed",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Accurate transcription of a dense legal disputation and a generally careful translation, but one legal point is reversed: on p.15 the vassal is made to aid his lord 'against the fatherland and himself' where the text exempts them. Abbreviation expansion is inconsistent between pages."
+  },
+  {
+    "book_id": "69f3359e876dd827cbc4ecfc",
+    "slot": 20,
+    "title": "Precedents of conveyancing and other instruments, ca. 1460",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century English formulary of conveyancing precedents (Harvard). No collection is assigned. It also holds a Latin–English nominale (p.71), which suits a practitioner's miscellany.",
+    "rights_flag": null,
+    "structure_note": "287 pages: 286 with OCR, 241 translated (45 untranslated). Image 200 (fol. 96) is stored rotated 90°, so the reader sees the page sideways.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 71,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Stercus a cow torde (twice)",
+            "image": "ffetosus a cu w[ith] calve (twice)",
+            "problem": "'a cow with calf' is replaced by an invented entry 'a cow turd'; the English shows 'a cow turd' twice",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Hic mansuetus a manzer",
+            "image": "Hoc mansorium a manger",
+            "problem": "misread; the translation adds '<note>tame horse</note>' on the strength of it",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Haec caro an oxe",
+            "image": "Hic bos an ox",
+            "problem": "misread (caro = flesh)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Hoc prepe / Hic canis / Hoc talcar / Hic spadarius",
+            "image": "presepe / camus / calcar / gradarius",
+            "problem": "several headwords misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Sic canis colla tuo per colla non teneat / Deviat omni sella per te tua sella notatur",
+            "english": "So let the dog, for your collar, not hold / Deviating from every saddle, by you, your saddle is noted",
+            "problem": "fluent nonsense over a garbled mnemonic couplet",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Hic mansuetus a manzer",
+            "english": "a manzer <note>tame horse</note>",
+            "problem": "an invented gloss built on the misread",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 133,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "in predictis terris sine hospitium cum shopis",
+            "image": "in predict[is] ter[ris] sive hospicium cum shopis",
+            "problem": "sive (or) is read as sine (without); the English says 'without lodging'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Noveritis me Belstaltus me prefatum henricum",
+            "image": "Noveritis me vel statu[s]? me prefatum henricum",
+            "problem": "garbled word",
+            "severity": "minor"
+          },
+          {
+            "ocr": "sub conditione inveniendi victum cum consimili victum et vestitum",
+            "image": "sub condicione inveniendi ... certum victum et vestitum",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "sine hospitium cum shopis cellariis solariis",
+            "english": "re-seize the aforesaid lands without lodging, including the shops",
+            "problem": "should be 'or the messuage, with shops ...'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 200,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Et predictus Adam ... non venient ad interficiendum aliquam rem de firma predicta ... Et satisfaciat unus per terminum predictum debet habere rationabilem focum de boscis dicti Johannis",
+            "image": "Et quotienscumq[ue] supervisor dicte comitisse vel aliq[ui]s alius nomine suo venit ad supervidendum ... Et dictus firmarius p[er] terminum p[re]dictum habebit ... de dicta comitissa ...",
+            "problem": "a party 'Adam' who is not on the leaf is invented; the countess (comitissa), her supervisor and 'Thomas firmarius' are dropped; whole clauses (killing animals of the farm, two ponds) do not appear on the page",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "In cuius rei testimonium partes predicte sigilla sua hiis scriptis indentatis alternatim apposuerunt. Data die et anno supradictis.",
+            "image": "... ubicumq[ue] fuerint in comitatu ac alibi infra regnum Anglie. Et non omnia ... p[er] totum terminum p[re]dictum ...",
+            "problem": "an invented sealing and dating clause replaces the page's real ending (distraint anywhere in England)",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Et predictus Adam et heredes sui ... non venient ad interficiendum aliquam rem",
+            "english": "And the aforesaid Adam and his heirs ... shall not come to kill any thing from the aforesaid farm",
+            "problem": "faithful to the OCR, so the reader receives a lease with invented parties and clauses as the text of this leaf",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "The image is stored rotated 90°, so the reader sees the leaf sideways",
+            "severity": "moderate",
+            "class": "other:image-rotated"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A useful 15th-century formulary, but the OCR confabulates on the harder hands: p.200 is largely a plausible generic lease (invented party 'Adam', invented sealing clause) and its image is stored sideways, and the p.71 vocabulary invents 'a cow turd' for 'a cow with calf'. Should be contained before it is shown."
+  }
+]

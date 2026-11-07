@@ -1,0 +1,1194 @@
+{
+ "date": "2026-11-04",
+ "seed": 20261104,
+ "frame": 70942,
+ "n_drawn": 200,
+ "n_judged": 200,
+ "n_withheld": 10,
+ "n_stored_label": 36,
+ "n_claude_made": 3,
+ "n_with_text": 121,
+ "n_with_english": 67,
+ "counts": {
+  "text_leaf": {
+   "this_leaf": 122,
+   "prev_leaf": 0,
+   "next_leaf": 0,
+   "other": 2,
+   "empty": 76,
+   "cannot_tell": 0
+  },
+  "english": {
+   "this_text": 67,
+   "prev_text": 0,
+   "next_text": 0,
+   "mixed": 0,
+   "invents": 0,
+   "none": 133,
+   "cannot_tell": 0
+  },
+  "number": {
+   "agrees": 5,
+   "disagrees": 103,
+   "none_printed": 85,
+   "cannot_tell": 7
+  },
+  "order": {
+   "forward": 194,
+   "backward": 0,
+   "jumbled": 0,
+   "cannot_tell": 6
+  },
+  "split": {
+   "single_leaf": 193,
+   "two_leaves": 7,
+   "plate_cut": 0,
+   "cannot_tell": 0
+  }
+ },
+ "defects": {
+  "text: a neighbour's leaf": {
+   "k": 0,
+   "n": 121,
+   "pct": 0,
+   "lo": 0,
+   "hi": 3.1
+  },
+  "text: other book or elsewhere": {
+   "k": 2,
+   "n": 121,
+   "pct": 1.7,
+   "lo": 0.5,
+   "hi": 5.8
+  },
+  "text: empty where the leaf has text": {
+   "k": 76,
+   "n": 200,
+   "pct": 38,
+   "lo": 31.6,
+   "hi": 44.9
+  },
+  "english: renders a neighbour": {
+   "k": 0,
+   "n": 67,
+   "pct": 0,
+   "lo": 0,
+   "hi": 5.4
+  },
+  "english: invents": {
+   "k": 0,
+   "n": 67,
+   "pct": 0,
+   "lo": 0,
+   "hi": 5.4
+  },
+  "number: stored printed number differs from the print": {
+   "k": 1,
+   "n": 35,
+   "pct": 2.9,
+   "lo": 0.5,
+   "hi": 14.5
+  },
+  "number: the leaf has a number and none is stored": {
+   "k": 73,
+   "n": 108,
+   "pct": 67.6,
+   "lo": 58.3,
+   "hi": 75.7
+  },
+  "number: frame differs from the print": {
+   "k": 103,
+   "n": 108,
+   "pct": 95.4,
+   "lo": 89.6,
+   "hi": 98
+  },
+  "order: backward": {
+   "k": 0,
+   "n": 194,
+   "pct": 0,
+   "lo": 0,
+   "hi": 1.9
+  },
+  "order: jumbled": {
+   "k": 0,
+   "n": 194,
+   "pct": 0,
+   "lo": 0,
+   "hi": 1.9
+  },
+  "split: two leaves in a frame": {
+   "k": 7,
+   "n": 200,
+   "pct": 3.5,
+   "lo": 1.7,
+   "hi": 7
+  },
+  "split: one plate cut in two": {
+   "k": 0,
+   "n": 200,
+   "pct": 0,
+   "lo": 0,
+   "hi": 1.9
+  },
+  "repeat: a neighbour is the same leaf": {
+   "k": 1,
+   "n": 200,
+   "pct": 0.5,
+   "lo": 0.1,
+   "hi": 2.8
+  }
+ },
+ "by_language": {
+  "CJK": {
+   "text": {
+    "k": 0,
+    "n": 39,
+    "pct": 0,
+    "lo": 0,
+    "hi": 9
+   },
+   "english": {
+    "k": 0,
+    "n": 5,
+    "pct": 0,
+    "lo": 0,
+    "hi": 43.4
+   },
+   "number": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "order": {
+    "k": 0,
+    "n": 43,
+    "pct": 0,
+    "lo": 0,
+    "hi": 8.2
+   },
+   "split": {
+    "k": 0,
+    "n": 43,
+    "pct": 0,
+    "lo": 0,
+    "hi": 8.2
+   },
+   "n": 43
+  },
+  "English": {
+   "text": {
+    "k": 1,
+    "n": 14,
+    "pct": 7.1,
+    "lo": 1.3,
+    "hi": 31.5
+   },
+   "english": {
+    "k": 0,
+    "n": 9,
+    "pct": 0,
+    "lo": 0,
+    "hi": 29.9
+   },
+   "number": {
+    "k": 1,
+    "n": 8,
+    "pct": 12.5,
+    "lo": 2.2,
+    "hi": 47.1
+   },
+   "order": {
+    "k": 0,
+    "n": 15,
+    "pct": 0,
+    "lo": 0,
+    "hi": 20.4
+   },
+   "split": {
+    "k": 1,
+    "n": 15,
+    "pct": 6.7,
+    "lo": 1.2,
+    "hi": 29.8
+   },
+   "n": 15
+  },
+  "German": {
+   "text": {
+    "k": 0,
+    "n": 8,
+    "pct": 0,
+    "lo": 0,
+    "hi": 32.4
+   },
+   "english": {
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "lo": 0,
+    "hi": 49
+   },
+   "number": {
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "lo": 0,
+    "hi": 49
+   },
+   "order": {
+    "k": 0,
+    "n": 22,
+    "pct": 0,
+    "lo": 0,
+    "hi": 14.9
+   },
+   "split": {
+    "k": 0,
+    "n": 22,
+    "pct": 0,
+    "lo": 0,
+    "hi": 14.9
+   },
+   "n": 22
+  },
+  "Latin": {
+   "text": {
+    "k": 1,
+    "n": 34,
+    "pct": 2.9,
+    "lo": 0.5,
+    "hi": 14.9
+   },
+   "english": {
+    "k": 0,
+    "n": 26,
+    "pct": 0,
+    "lo": 0,
+    "hi": 12.9
+   },
+   "number": {
+    "k": 0,
+    "n": 13,
+    "pct": 0,
+    "lo": 0,
+    "hi": 22.8
+   },
+   "order": {
+    "k": 0,
+    "n": 82,
+    "pct": 0,
+    "lo": 0,
+    "hi": 4.5
+   },
+   "split": {
+    "k": 0,
+    "n": 84,
+    "pct": 0,
+    "lo": 0,
+    "hi": 4.4
+   },
+   "n": 84
+  },
+  "Romance + Dutch": {
+   "text": {
+    "k": 0,
+    "n": 12,
+    "pct": 0,
+    "lo": 0,
+    "hi": 24.2
+   },
+   "english": {
+    "k": 0,
+    "n": 12,
+    "pct": 0,
+    "lo": 0,
+    "hi": 24.2
+   },
+   "number": {
+    "k": 0,
+    "n": 6,
+    "pct": 0,
+    "lo": 0,
+    "hi": 39
+   },
+   "order": {
+    "k": 0,
+    "n": 15,
+    "pct": 0,
+    "lo": 0,
+    "hi": 20.4
+   },
+   "split": {
+    "k": 1,
+    "n": 17,
+    "pct": 5.9,
+    "lo": 1,
+    "hi": 27
+   },
+   "n": 17
+  },
+  "other Latin script": {
+   "text": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "english": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "number": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "order": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "split": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "n": 1
+  },
+  "other script": {
+   "text": {
+    "k": 0,
+    "n": 13,
+    "pct": 0,
+    "lo": 0,
+    "hi": 22.8
+   },
+   "english": {
+    "k": 0,
+    "n": 10,
+    "pct": 0,
+    "lo": 0,
+    "hi": 27.8
+   },
+   "number": {
+    "k": 0,
+    "n": 3,
+    "pct": 0,
+    "lo": 0,
+    "hi": 56.1
+   },
+   "order": {
+    "k": 0,
+    "n": 16,
+    "pct": 0,
+    "lo": 0,
+    "hi": 19.4
+   },
+   "split": {
+    "k": 5,
+    "n": 18,
+    "pct": 27.8,
+    "lo": 12.5,
+    "hi": 50.9
+   },
+   "n": 18
+  }
+ },
+ "by_repair": {
+  "#5021 touched this book": {
+   "text": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "english": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "number": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "order": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "split": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "n": 0
+  },
+  "#5021 not touched": {
+   "text": {
+    "k": 2,
+    "n": 121,
+    "pct": 1.7,
+    "lo": 0.5,
+    "hi": 5.8
+   },
+   "english": {
+    "k": 0,
+    "n": 67,
+    "pct": 0,
+    "lo": 0,
+    "hi": 5.4
+   },
+   "number": {
+    "k": 1,
+    "n": 35,
+    "pct": 2.9,
+    "lo": 0.5,
+    "hi": 14.5
+   },
+   "order": {
+    "k": 0,
+    "n": 194,
+    "pct": 0,
+    "lo": 0,
+    "hi": 1.9
+   },
+   "split": {
+    "k": 7,
+    "n": 200,
+    "pct": 3.5,
+    "lo": 1.7,
+    "hi": 7
+   },
+   "n": 200
+  },
+  "#5803 touched this book": {
+   "text": {
+    "k": 1,
+    "n": 1,
+    "pct": 100,
+    "lo": 20.7,
+    "hi": 100
+   },
+   "english": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "number": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "order": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "split": {
+    "k": 0,
+    "n": 1,
+    "pct": 0,
+    "lo": 0,
+    "hi": 79.3
+   },
+   "n": 1
+  },
+  "#5803 not touched": {
+   "text": {
+    "k": 1,
+    "n": 120,
+    "pct": 0.8,
+    "lo": 0.1,
+    "hi": 4.6
+   },
+   "english": {
+    "k": 0,
+    "n": 67,
+    "pct": 0,
+    "lo": 0,
+    "hi": 5.4
+   },
+   "number": {
+    "k": 1,
+    "n": 34,
+    "pct": 2.9,
+    "lo": 0.5,
+    "hi": 14.9
+   },
+   "order": {
+    "k": 0,
+    "n": 193,
+    "pct": 0,
+    "lo": 0,
+    "hi": 2
+   },
+   "split": {
+    "k": 7,
+    "n": 199,
+    "pct": 3.5,
+    "lo": 1.7,
+    "hi": 7.1
+   },
+   "n": 199
+  },
+  "#5699 touched this book": {
+   "text": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "english": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "number": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "order": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "split": {
+    "k": 0,
+    "n": 0,
+    "pct": null,
+    "lo": 0,
+    "hi": 100
+   },
+   "n": 0
+  },
+  "#5699 not touched": {
+   "text": {
+    "k": 2,
+    "n": 121,
+    "pct": 1.7,
+    "lo": 0.5,
+    "hi": 5.8
+   },
+   "english": {
+    "k": 0,
+    "n": 67,
+    "pct": 0,
+    "lo": 0,
+    "hi": 5.4
+   },
+   "number": {
+    "k": 1,
+    "n": 35,
+    "pct": 2.9,
+    "lo": 0.5,
+    "hi": 14.5
+   },
+   "order": {
+    "k": 0,
+    "n": 194,
+    "pct": 0,
+    "lo": 0,
+    "hi": 1.9
+   },
+   "split": {
+    "k": 7,
+    "n": 200,
+    "pct": 3.5,
+    "lo": 1.7,
+    "hi": 7
+   },
+   "n": 200
+  },
+  "#5056 touched this book": {
+   "text": {
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "lo": 0,
+    "hi": 49
+   },
+   "english": {
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "lo": 0,
+    "hi": 49
+   },
+   "number": {
+    "k": 0,
+    "n": 2,
+    "pct": 0,
+    "lo": 0,
+    "hi": 65.8
+   },
+   "order": {
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "lo": 0,
+    "hi": 49
+   },
+   "split": {
+    "k": 0,
+    "n": 4,
+    "pct": 0,
+    "lo": 0,
+    "hi": 49
+   },
+   "n": 4
+  },
+  "#5056 not touched": {
+   "text": {
+    "k": 2,
+    "n": 117,
+    "pct": 1.7,
+    "lo": 0.5,
+    "hi": 6
+   },
+   "english": {
+    "k": 0,
+    "n": 63,
+    "pct": 0,
+    "lo": 0,
+    "hi": 5.7
+   },
+   "number": {
+    "k": 1,
+    "n": 33,
+    "pct": 3,
+    "lo": 0.5,
+    "hi": 15.3
+   },
+   "order": {
+    "k": 0,
+    "n": 190,
+    "pct": 0,
+    "lo": 0,
+    "hi": 2
+   },
+   "split": {
+    "k": 7,
+    "n": 196,
+    "pct": 3.6,
+    "lo": 1.7,
+    "hi": 7.2
+   },
+   "n": 196
+  }
+ },
+ "judge": {
+  "controls": {
+   "shift_run": {
+    "planted": 5,
+    "caught": 4,
+    "missed_items": [
+     "d8c138a3efa1"
+    ]
+   },
+   "number_stamp": {
+    "planted": 4,
+    "caught": 3,
+    "missed_items": [
+     "3c716a8c46d2"
+    ]
+   },
+   "neighbour_text": {
+    "planted": 5,
+    "caught": 4,
+    "missed_items": [
+     "86fd01cf9b2d"
+    ]
+   },
+   "wrong_image_other_book": {
+    "planted": 5,
+    "caught": 5,
+    "missed_items": []
+   },
+   "order_backward": {
+    "planted": 5,
+    "caught": 4,
+    "missed_items": [
+     "3aeae2b0bd24"
+    ]
+   },
+   "two_leaves": {
+    "planted": 4,
+    "caught": 4,
+    "missed_items": []
+   },
+   "english_other_book": {
+    "planted": 5,
+    "caught": 5,
+    "missed_items": []
+   },
+   "english_neighbour": {
+    "planted": 5,
+    "caught": 5,
+    "missed_items": []
+   }
+  },
+  "not_settled": [],
+  "miss_rate": {
+   "k": 4,
+   "n": 38,
+   "pct": 10.5,
+   "lo": 4.2,
+   "hi": 24.1
+  },
+  "over_flag": {
+   "flags_reasked": 11,
+   "flags_repeated": 11,
+   "not_repeated": {
+    "k": 0,
+    "n": 11,
+    "pct": 0,
+    "lo": 0,
+    "hi": 25.9
+   },
+   "clean_reasked": 10,
+   "clean_stayed_clean": 10,
+   "new_flags": {
+    "k": 0,
+    "n": 10,
+    "pct": 0,
+    "lo": 0,
+    "hi": 27.8
+   }
+  }
+ },
+ "positives": [
+  {
+   "slot": 18,
+   "book_id": "69e795ea80b52390feb18b1a",
+   "frame": 1,
+   "group": "other script",
+   "provider": "bl",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": null,
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "Transcription is \"(empty)\", but the image shows a two-line Tibetan title on the top leaf and seven lines of handwritten Tibetan on the lower leaf.",
+    "english": "English is \"(none)\"; no translation is shown for this frame.",
+    "order": "Top title leaf before frame 2's \"ན་མོ་གུ་རུ\" opening suggests forward, but frame 1's lower leaf, ending about \"ཀུན\", shows no clear run into it. No legible numbers."
+   },
+   "url": "https://sourcelibrary.org/book/69e795ea80b52390feb18b1a/page-number/1",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "withhold-gemini-ocr-tibetan-4523",
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": null,
+    "printed_prev": null,
+    "printed_next": null,
+    "label": "cannot_tell",
+    "label_agrees": "no_stored_number"
+   }
+  },
+  {
+   "slot": 26,
+   "book_id": "69ac7fdd6a7dbd267e0cfe15",
+   "frame": 22,
+   "group": "English",
+   "provider": "internet_archive",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3-flash-preview",
+   "flags": [
+    "text:other",
+    "number:label_disagrees"
+   ],
+   "repeated_on_rejudge": [
+    "text:other",
+    "number:label_disagrees"
+   ],
+   "evidence": {
+    "text": "Transcription \"sonum Graecum\" / \"Bishops ignorant of Greek\" is page xviii text. Image shows page xvii, opening \"Latini nullum textum\", with heading \"Inferiority of Latins\". Page xviii appears on none of the three images.",
+    "english": "",
+    "order": "Printed numbers rise xvi, xvii, xix, so direction is forward, but page xviii is skipped: xvii ends \"corrumpunt\", xix begins \"vent\"."
+   },
+   "url": "https://sourcelibrary.org/book/69ac7fdd6a7dbd267e0cfe15/page-number/22",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "title-leaf-recitation-6297",
+    "trail": [
+     "notes-layer-backfill-5942",
+     "title-leaf-recitation-6297"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": "xvii",
+    "printed_prev": "xvi",
+    "printed_next": "xix",
+    "label": "disagrees",
+    "label_agrees": "disagrees"
+   }
+  },
+  {
+   "slot": 87,
+   "book_id": "6a089ad2c00e102b3bb2395c",
+   "frame": 175,
+   "group": "English",
+   "provider": "internet_archive",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite",
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "",
+    "english": "",
+    "order": ""
+   },
+   "url": "https://sourcelibrary.org/book/6a089ad2c00e102b3bb2395c/page-number/175",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": []
+   },
+   "verdict_number": {
+    "printed_on_image": "324, 325",
+    "printed_prev": "322, 323",
+    "printed_next": "326, 327",
+    "label": "disagrees",
+    "label_agrees": "agrees"
+   }
+  },
+  {
+   "slot": 102,
+   "book_id": "69b525aa29577f283b57a5f6",
+   "frame": 9,
+   "group": "Romance + Dutch",
+   "provider": "allard_pierson",
+   "ocr_engine": "gemini-3-flash-preview",
+   "translation_engine": "gemini-3.1-flash-lite-preview",
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "",
+    "english": "",
+    "order": ""
+   },
+   "url": "https://sourcelibrary.org/book/69b525aa29577f283b57a5f6/page-number/9",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": null,
+    "trail": [
+     "notes-layer-backfill-5942"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": "14 / 13 (pencil 584 / 585)",
+    "printed_prev": "12 / 13 (pencil 582 / 583)",
+    "printed_next": "14 / 15 (pencil 586 / 587)",
+    "label": "disagrees",
+    "label_agrees": "no_stored_number"
+   }
+  },
+  {
+   "slot": 112,
+   "book_id": "69e7ac1e5f1a22ab19aa3e47",
+   "frame": 266,
+   "group": "other script",
+   "provider": "bl",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "",
+    "english": "",
+    "order": ""
+   },
+   "url": "https://sourcelibrary.org/book/69e7ac1e5f1a22ab19aa3e47/page-number/266",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "bdrc",
+     "batch_api",
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": null,
+    "printed_prev": null,
+    "printed_next": null,
+    "label": "none_printed",
+    "label_agrees": "no_stored_number"
+   }
+  },
+  {
+   "slot": 131,
+   "book_id": "6a14e148311a9edd4621e634",
+   "frame": 444,
+   "group": "other script",
+   "provider": "bl",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "",
+    "english": "",
+    "order": "Text runs across frames: 443 upper strip ends 'ནཱ་ག་ཏྲི་ལི་', 444 upper strip begins 'ནན༏ ཏྲི་ཡ་ནཱ་ག'. 444 lower strip ends 'ཚ་བ་དམུ་ཆུ', 445 upper strip begins 'ཕོལ་འབྲས་གཡོ'. Chapter count also advances."
+   },
+   "url": "https://sourcelibrary.org/book/6a14e148311a9edd4621e634/page-number/444",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "bdrc",
+     "batch_api",
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": null,
+    "printed_prev": null,
+    "printed_next": null,
+    "label": "none_printed",
+    "label_agrees": "no_stored_number"
+   }
+  },
+  {
+   "slot": 143,
+   "book_id": "69aebfdee997cc01b0cab898",
+   "frame": 57,
+   "group": "Latin",
+   "provider": "internet_archive",
+   "ocr_engine": "gemini-3.1-flash-lite-preview",
+   "translation_engine": null,
+   "flags": [
+    "text:other"
+   ],
+   "repeated_on_rejudge": [
+    "text:other"
+   ],
+   "evidence": {
+    "text": "Transcription is Russian prose: \"Троянскій сдѣлалъ на меня самое странное впечатлѣніе\". Image is English: \"The Nymph-Worm of a Gnat\", Explanation of the Twenty-Fourth Plate. Neither neighbour image holds this Russian text.",
+    "english": "",
+    "order": ""
+   },
+   "url": "https://sourcelibrary.org/book/69aebfdee997cc01b0cab898/page-number/57",
+   "coverage": {
+    "#5021": false,
+    "#5803": true,
+    "#5699": false,
+    "#5056": false,
+    "hold": "wrong-leaf-clef-audit-5803",
+    "trail": [
+     "withhold-by-eye 5803",
+     "ai",
+     "wrong-leaf-clef-audit-5803"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": "47",
+    "printed_prev": "46",
+    "printed_next": "48",
+    "label": "disagrees",
+    "label_agrees": "agrees"
+   }
+  },
+  {
+   "slot": 156,
+   "book_id": "6ac4f7d2e4016f24bafabc80",
+   "frame": 195,
+   "group": "other script",
+   "provider": "vatican",
+   "ocr_engine": null,
+   "translation_engine": null,
+   "flags": [
+    "repeat:next"
+   ],
+   "repeated_on_rejudge": [
+    "order:jumbled",
+    "repeat:next"
+   ],
+   "evidence": {
+    "text": "No transcription is stored, but the image shows a full column of Hebrew and Aramaic text headed הפטרת ואתחנן.",
+    "english": "",
+    "order": "Empty transcriptions. Frame 194 is a binding cover; 195 and 196 are chart-bearing captures of one leaf, so no reading sequence shows."
+   },
+   "url": "https://sourcelibrary.org/book/6ac4f7d2e4016f24bafabc80/page-number/195",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "acquisition-wave-2026-10-images-only",
+    "trail": [
+     "acquisition-wave-2026-10-images-only"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": null,
+    "printed_prev": null,
+    "printed_next": "פה / 55",
+    "label": "none_printed",
+    "label_agrees": "no_stored_number"
+   }
+  },
+  {
+   "slot": 185,
+   "book_id": "69e792bd80b52390feb1690d",
+   "frame": 2,
+   "group": "other script",
+   "provider": "bl",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": "gemini-3-flash-preview",
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "",
+    "english": "",
+    "order": ""
+   },
+   "url": "https://sourcelibrary.org/book/69e792bd80b52390feb1690d/page-number/2",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "ai",
+     "bdrc",
+     "tibetan-translation-lane-6948"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": null,
+    "printed_prev": null,
+    "printed_next": null,
+    "label": "none_printed",
+    "label_agrees": "no_stored_number"
+   }
+  },
+  {
+   "slot": 197,
+   "book_id": "69e792c180b52390feb16917",
+   "frame": 2,
+   "group": "other script",
+   "provider": "bl",
+   "ocr_engine": "bdrc-yigdzin-v1",
+   "translation_engine": null,
+   "flags": [
+    "split:two_leaves"
+   ],
+   "repeated_on_rejudge": [
+    "split:two_leaves"
+   ],
+   "evidence": {
+    "text": "",
+    "english": "English shown is '(none)'; no translation is stored for this frame.",
+    "order": "Frame 2's bottom text ends 'ཞལ་ན་'; frame 3 opens 'ཕྱགཉིས་རྡོེ་དང་དྲིལ་བུ'. Frame 1 ends 'སྙིང་ཁར་བབས་ཡིད་ཀྱི་'; frame 2's bottom opens 'སྒྲིབ་པ་དག་'."
+   },
+   "url": "https://sourcelibrary.org/book/69e792c180b52390feb16917/page-number/2",
+   "coverage": {
+    "#5021": false,
+    "#5803": false,
+    "#5699": false,
+    "#5056": false,
+    "hold": "tibetan-translation-lane-6948",
+    "trail": [
+     "ai",
+     "tibetan-translation-lane-6948"
+    ]
+   },
+   "verdict_number": {
+    "printed_on_image": null,
+    "printed_prev": null,
+    "printed_next": null,
+    "label": "none_printed",
+    "label_agrees": "no_stored_number"
+   }
+  }
+ ],
+ "not_judged": []
+}

@@ -1,6 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { toDisplayVariantUrl, getBookThumbnailUrl } from '@/lib/utils';
 
+describe('getBookThumbnailUrl: Munich IIIF covers', () => {
+  const base = 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11426583_00005';
+  it('asks for a card-sized image, not the whole scan', () => {
+    expect(getBookThumbnailUrl({ thumbnail: `${base}/full/full/0/default.jpg` })).toBe(`${base}/full/400,/0/default.jpg`);
+  });
+  it('leaves a size that is already set', () => {
+    expect(getBookThumbnailUrl({ thumbnail: `${base}/full/200,/0/default.jpg` })).toBe(`${base}/full/200,/0/default.jpg`);
+  });
+});
+
 const R2 = 'https://images.sourcelibrary.org';
 
 describe('toDisplayVariantUrl (#6092)', () => {
@@ -22,5 +32,20 @@ describe('toDisplayVariantUrl (#6092)', () => {
     expect(getBookThumbnailUrl({ image_display: `${R2}/artwork/a-full.jpg` }, 'display')).toBe(`${R2}/artwork/a.jpg`);
     expect(getBookThumbnailUrl({ thumbnail: `${R2}/artwork/a-thumb.jpg` }, 'display')).toBe(`${R2}/artwork/a.jpg`);
     expect(getBookThumbnailUrl({ image_display: `${R2}/artwork/a.jpg` }, 'thumb')).toBe(`${R2}/artwork/a-thumb.jpg`);
+  });
+});
+
+describe('getBookThumbnailUrl: IA BookReader covers', () => {
+  // The BookReader URL serves IA's master whatever size it names (measured 2026-10-29),
+  // so a card must never load it; IA's 180px item thumbnail stands in.
+  it('maps an archive.org/download page URL to the item thumbnail, on both tiers', () => {
+    const t = 'https://archive.org/download/10928485bsb/page/n0/full/pct:15/0/default.jpg';
+    expect(getBookThumbnailUrl({ thumbnail: t }, 'display')).toBe('https://archive.org/services/img/10928485bsb');
+    expect(getBookThumbnailUrl({ thumbnail: t }, 'thumb')).toBe('https://archive.org/services/img/10928485bsb');
+  });
+
+  it('still prefers a stored R2 cover', () => {
+    expect(getBookThumbnailUrl({ image_display: `${R2}/pages/abc/0001.jpg`, thumbnail: 'https://archive.org/download/x/page/n0/full/full/0/default.jpg' }, 'display'))
+      .toBe(`${R2}/pages/abc/0001.jpg`);
   });
 });

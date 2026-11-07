@@ -29,7 +29,7 @@ const { stripEditorialWrappers } = await import(
 );
 
 const HERE = '/private/tmp/claude-501/-Users-dereklomas-sourcelibrary/b4cc9f10-7660-4f2b-b3cf-554d4017f8f7/scratchpad';
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2';
 const DIMS = 768, THRESHOLD = 0.45, MATCH = 50, CONCURRENCY = 5;
 
 const req = (n) => { const v = process.env[n]; if (!v) throw new Error(`Missing ${n}`); return v; };

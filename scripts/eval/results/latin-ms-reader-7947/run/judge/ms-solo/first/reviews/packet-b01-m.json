@@ -1,0 +1,61 @@
+[
+  {
+    "book_id": "b01-m", "slot": 1, "title": "Origenes Adamantius: Tractatus super Leviticum", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 12th-century Wolfenbüttel (HAB) manuscript of Rufinus' Latin Origen, Homilies on Leviticus. The pages match the title: hostia pro delicto (hom. 5), leprosy and scars (hom. 8), and 'Explicit liber xi. Incipit xii. De magno sacerdote'. No tradition or collection is given to test it against.",
+    "rights_flag": null,
+    "structure_note": "There are no structure counts, and none of the three pages carries a translation, so only OCR can be judged. Page 47 has the folio number '22' in modern pencil, and the OCR records it correctly as <page-num>22</page-num>. Pages 92 and 136 are versos with the facing recto visible at the right edge, which is what a normal opening looks like. Nothing suggests a splice or the wrong work.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 47,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Verumtamen … videtur … Videtur quidem … divinis", "image": "uerumtamen … uidetur (u-spelling throughout)", "problem": "v-normalised spelling here while pages 92 and 136 keep the manuscript's u. The convention flips between pages of one book", "severity": "minor", "class": "O9" },
+          { "ocr": "quam se habe<unclear>t</unclear> veritas", "image": "qua se habe[at] / ueritas", "problem": "An <unclear> tag splits the word into a fragment the reader sees. The image reads habeat", "severity": "minor" },
+          { "ocr": "Igitur eodem <unclear>modo</unclear> atque", "image": "Igr eode m atq;", "problem": "The abbreviated 'm(odo)' is flagged unclear, but the expansion is right", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page, so the reader sees only the Latin.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 92,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "et magnificabo eis pacem et fidem", "image": "et magnifestabo eis pacem et fidem", "problem": "The scribe's 'magnifestabo' (for manifestabo, which echoes the Jeremiah quotation above) becomes 'magnificabo', a different verb ('I will magnify'). This silently changes the scribal reading", "severity": "moderate", "class": "O8" },
+          { "ocr": "Secunda uero species\n\n<margin>\"</margin>\n<margin>\"</margin>\n<margin>\"</margin>\nlepre: si effloruerit", "image": "Secda uero spes / [\" \" \" quotation marks in the left margin beside the next three lines] lepre si effloruerit", "problem": "The marginal quotation marks are emitted as three standalone lines that split 'species | lepre' mid-phrase with a paragraph break", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page.", "severity": "minor" },
+          { "note": "Three stray lines reading only a quotation mark (\") show in the reader text in the middle of a sentence.", "severity": "minor", "class": "D1" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 136,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Omnis qui inter homines **Explicit liber xi· Incipit xii· De** sacerdos est· ad illum sacerdotem· de quo dicit deus· **magno sacerdote.** tu es sacerdos", "image": "The red rubric 'Explicit lib. xi. Incip. xii. De magno sacerdote' sits at the line ends beside the opening of homily 12", "problem": "The rubric (explicit/incipit and the homily title) is spliced into the middle of the first sentence of homily 12, so the reader gets 'Omnis qui inter homines Explicit liber xi … sacerdos est'. It should come before the homily text as a heading", "severity": "moderate", "class": "O11" },
+          { "ocr": "cuius infusum est super caput eius oleum crismatis", "image": "cum ī / fusum ē sup cap ei9 oleu crysmatis (as far as I can read it)", "problem": "Possibly 'cui'/'cum' misread as 'cuius'. At this resolution I cannot be sure", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation exists for this page.", "severity": "minor" },
+          { "note": "The scriptural lemma 'Et sacerdos inquid magnus…' is split off with a <margin>\"</margin> line and a markdown '>' blockquote in the middle of the sentence 'lex prophetico spiritu scribit. Et sacerdos…'.", "severity": "minor", "class": "D1" }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR of a difficult 12th-century book hand is faithful almost word for word: abbreviations are expanded correctly and every page is the right leaf. The flaws are layout ones (a rubric spliced mid-sentence on p.136, marginal quotation marks emitted as stray lines) plus one normalised scribal reading ('magnificabo'). There is no translation yet, so a reader gets Latin only."
+  }
+]

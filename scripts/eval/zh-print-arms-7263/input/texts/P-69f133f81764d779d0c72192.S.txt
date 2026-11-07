@@ -1,0 +1,25 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+<image-desc size="large" type="woodcut" significance="high">
+A double-page spread of a Chinese woodblock-printed Buddhist sutra (likely the Mahaprajnaparamita Sutra). The text is arranged in 12 vertical columns of 14 to 15 characters each, enclosed within a thick black rectangular border at the top and bottom. The script is a formal, balanced Kaishu (standard) style. There is a visible vertical fold in the center of the sheet, and the paper is aged to a tan or light brown color.
+</image-desc>
+
+> 細何以故四念住深細性不可得故
+> 四正斷乃至八聖道支深細性亦不
+> 可得故天子當知五眼非甚深非微
+> 細六神通亦非甚深非微細何以故
+> 五眼深細性不可得故六神通深細
+> 性亦不可得故天子當知佛十力非
+> 甚深非微細四無所畏四無礙解大
+> 慈大悲大喜大捨十八佛不共法亦
+> 非甚深非微細何以故佛十力深細
+> 性不可得故四無所畏乃至十八佛不
+> 共法深細性亦不可得故天子當知
+> 無忘失法非甚深非微細恒住捨性
+
+<note>This page is from the "Hard to Understand" section (難解品) of the Mahaprajnaparamita Sutra (大般若波羅蜜多經), likely volume 415. The text discusses the nature of various Buddhist concepts such as the Four Foundations of Mindfulness and the Eightfold Path as being neither "deep" nor "minute" because their inherent "deep-minute" nature cannot be apprehended.</note>
+
+<vocab>四念住, 四正斷, 八聖道支, 五眼, 六神通, 佛十力, 四無所畏, 四無礙解, 十八佛不共法, 無忘失法, 恒住捨性</vocab>

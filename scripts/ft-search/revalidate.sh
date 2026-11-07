@@ -8,10 +8,15 @@ DIR=$1
 SEC=${REVALIDATE_SECRET:-$CRON_SECRET}
 [ -n "$SEC" ] || { echo "REVALIDATE_SECRET/CRON_SECRET not set"; exit 1; }
 python3 -I -c "
-import json,sys
-for x in json.load(open(sys.argv[1])):
-    if x['action'] in ('first_new_badge','prior_credit','first_confirmed_search_added'): print(x['book_id'])
-" "$DIR/ingest-log.json" > "$DIR/revalidate-ids.txt"
+import json,os,sys
+# ingest.mjs writes ingest-log.json (book_id); held.mjs writes held-log.json (id).
+SHOW = ('first_new_badge','prior_credit','first_confirmed_search_added','badge_removed_prior_credited','badge_kept_partial_credited')
+for f in ('ingest-log.json','held-log.json'):
+    f = os.path.join(sys.argv[1], f)
+    if os.path.exists(f):
+        for x in json.load(open(f)):
+            if x['action'] in SHOW: print(x.get('book_id') or x['id'])
+" "$DIR" > "$DIR/revalidate-ids.txt"
 : > "$DIR/revalidate-result.txt"
 while read -r b; do
   for t in 1 2 3 4; do

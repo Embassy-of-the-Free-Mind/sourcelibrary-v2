@@ -61,6 +61,12 @@ export interface InfraFlag {
   kind: 'no-lease' | 'bad-lease' | 'expired' | 'idle' | 'unwatched'; reason: string;
 }
 
+/** A standing lane STOP from the box's registry (scripts/lib/lane-stop.mjs, #7912), pushed by work-board-push.mjs. */
+export interface LaneStop {
+  lane: string; kind: string; reason: string; stopped_at: string;
+  lane_issue: number | null; ticket: number | null; pages_waiting: number | null; stop_exists: boolean;
+}
+
 export interface BoxDoc {
   _id: string;
   type: typeof WORK_BOARD_TYPE;
@@ -69,6 +75,7 @@ export interface BoxDoc {
   jobs: BoxJob[];
   chains: BoxChain[];
   flags?: InfraFlag[];
+  stops?: LaneStop[];
   /** A pusher on a slower cadence than STALE_MIN (the hourly Hetzner pass) says how old is too old. */
   stale_after_min?: number;
 }
@@ -109,8 +116,8 @@ export interface PrRef { number: number; url: string; state: string | null; tier
 
 export interface WaitingItem { issue: IssueRef; line: string; default: string | null; url: string; at: string }
 export interface DeadItem {
-  kind: 'job' | 'chain' | 'infra';
-  name: string; box: string; state: JobState | 'stuck' | 'billing';
+  kind: 'job' | 'chain' | 'infra' | 'stop';
+  name: string; box: string; state: JobState | 'stuck' | 'billing' | 'stopped';
   why: string; at: string | null; issue: IssueRef | null;
   /** infra only: what ignoring it costs. */
   eur_month?: number | null;
@@ -177,6 +184,16 @@ export function infraItem(f: InfraFlag, b: BoxDoc, gh: GithubDoc | null): DeadIt
     f.cpu_24h != null ? `CPU ${f.cpu_24h.toFixed(1)} % / 24 h` : null,
   ].filter(Boolean).join(' · ');
   return { kind: 'infra', name: f.name, box: b.box, state: 'billing', why: `${facts}: ${f.reason}`, at: iso(b.generated_at), issue: issueRef(f.issue ?? undefined, gh), eur_month: f.eur_month };
+}
+
+/** A lane held by a STOP file: it waits on a person, so it sits with the blocked jobs. Links the ticket. */
+export function stopItem(st: LaneStop, b: BoxDoc, gh: GithubDoc | null): DeadItem {
+  const facts = [
+    'STOP file',
+    st.pages_waiting != null ? `${st.pages_waiting.toLocaleString('en-US')} pages waiting` : null,
+    st.reason,
+  ].filter(Boolean).join(' · ');
+  return { kind: 'stop', name: st.lane, box: b.box, state: 'stopped', why: facts, at: iso(st.stopped_at), issue: issueRef(st.ticket ?? st.lane_issue ?? undefined, gh) };
 }
 
 /** Grace after the done file for the report comment, which some jobs post just after touching it. */
@@ -250,7 +267,8 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
     }
   }
   for (const b of boxes) for (const f of b.flags ?? []) dead.push(infraItem(f, b, gh));
-  const rank = { blocked: 0, billing: 1, 'gave-up': 2, stuck: 3, dead: 4, running: 5, done: 6 } as Record<string, number>;
+  for (const b of boxes) for (const st of b.stops ?? []) if (st.stop_exists) dead.push(stopItem(st, b, gh));
+  const rank = { blocked: 0, stopped: 1, billing: 2, 'gave-up': 3, stuck: 4, dead: 5, running: 6, done: 7 } as Record<string, number>;
   dead.sort((a, b) => rank[a.state] - rank[b.state] || (b.eur_month ?? 0) - (a.eur_month ?? 0) || ms(b.at) - ms(a.at));
 
   // 3. Running

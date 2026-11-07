@@ -77,7 +77,7 @@ function bookToOaiDc(book: Document): string {
   add('type', 'Text');
   add('publisher', book.dublin_core?.dc_publisher || book.image_source?.provider_name);
   add('source', book.image_source?.source_url);
-  add('rights', book.dublin_core?.dc_rights || 'CC BY-SA 4.0');
+  add('rights', book.dublin_core?.dc_rights || 'CC BY-NC-SA 4.0');
   add('identifier', `https://sourcelibrary.org/book/${book.slug || book.id}`);
 
   // Subjects from categories and faceted tags

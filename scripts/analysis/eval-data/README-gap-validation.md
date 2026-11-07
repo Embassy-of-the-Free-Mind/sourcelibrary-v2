@@ -52,6 +52,12 @@ scanned; 74% of the validation frame). Next: a blind precision sample of scan ma
 | `gap-validation-n250-estimate.json` | debiased population estimate (era post-stratified, bootstrap CIs) |
 | `gap-validation-gold-subset.json` + `-gold-review.html` | the 40-work human-gold subset + offline review page |
 | `translation-gap-validation-2026-06-21.json` | the original n=30 pilot artifact (superseded) |
+| `gap-validation-sonnet-verdicts.jsonl` + `-n250-estimate-sonnet.json` | Sonnet alone on all 1000 (#7691) |
+| `gap-validation-translation-years.json` | year of the first English translation, by hand, for the 79 Renaissance-composed works found translated (#7778) |
+| `gap-validation-cluster-audit.jsonl` | per sampled cluster: distinct works inside it, other clusters that are the same work (Sonnet, titles only; #7778) |
+| `gap-validation-counts.json` | absolute counts, edition-level and clustering-corrected shares, SL comparison, pace and years-to-finish, three variants (#7778) |
+| `gap-validation-staged.jsonl` | the 42 matcher-missed translations that pass the staging gate, in the #7769 staged shape (source `gap_validation`). NOT in `translation_catalogs` |
+| `gap-validation-catalog-rows.json` | all 78 matcher-missed translations with verdicts, link checks and held reasons, plus the 46 matcher false positives as cluster flags |
 
 ## Reproduce
 
@@ -79,6 +85,11 @@ node scripts/analysis/gap-validation-gemini-adjudicate.mjs --concurrency 5
 # 4. Score + debias:
 node scripts/analysis/gap-validation-score.mjs
 node scripts/analysis/gap-validation-estimate.mjs
+
+# 4b. Counts, pace, clustering (#7778):
+node scripts/analysis/gap-validation-cluster-audit.mjs --editions <ustc-latin-editions.jsonl> --work-graph <work-graph.jsonl>
+node scripts/analysis/gap-validation-counts.mjs
+node scripts/analysis/gap-validation-stage-translations.mjs --to-staging-dir   # → scripts/output/translation-staging/gap_validation.jsonl
 
 # 5. Human gold standard (the binding step):
 node scripts/analysis/gap-validation-gold-export.mjs 40      # writes the review HTML

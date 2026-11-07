@@ -1,3 +1,4 @@
+// provenance-ok: pagePaths() only names keys; the checks apply to the files that write them (#4406).
 /**
  * Storage abstraction — Cloudflare R2 (primary) with Vercel Blob fallback
  *

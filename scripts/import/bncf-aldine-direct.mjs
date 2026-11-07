@@ -32,6 +32,7 @@ import { pipeline } from 'stream/promises';
 import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const args = process.argv.slice(2);
@@ -308,7 +309,7 @@ async function rasterizeAndUploadPdf(pdfUrl, iaIdentifier, bookId, pageCount) {
 
       const [archivedUrl, displayUrl, thumbUrl] = await Promise.all([
         uploadToR2(archivedKey, jpegBuffer, 'image/jpeg'),
-        uploadToR2(displayKey, displayBuffer, 'image/jpeg'),
+        uploadToR2(displayKey, await markDisplay(displayBuffer, { bookId, pageNumber }), 'image/jpeg'),
         uploadToR2(thumbKey, thumbBuffer, 'image/jpeg'),
       ]);
 

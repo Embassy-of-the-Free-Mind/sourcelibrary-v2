@@ -1,0 +1,428 @@
+{
+ "L1_reread_helps": {
+  "positives": 5,
+  "n": 55,
+  "books": 55,
+  "lobo": {
+   "tp": 4,
+   "fn": 1,
+   "tn": 30,
+   "fp": 20,
+   "sensitivity": 0.8,
+   "sens_ci95": [
+    0.376,
+    0.964
+   ],
+   "specificity": 0.6,
+   "spec_ci95": [
+    0.462,
+    0.724
+   ],
+   "flagged": 24,
+   "n": 55
+  },
+  "rule_on_all": {
+   "line_excess_abs": 1,
+   "dup_line": 0.4
+  },
+  "in_sample": {
+   "tp": 5,
+   "fn": 0,
+   "tn": 30,
+   "fp": 20,
+   "sensitivity": 1,
+   "sens_ci95": [
+    0.566,
+    1
+   ],
+   "specificity": 0.6,
+   "spec_ci95": [
+    0.462,
+    0.724
+   ],
+   "flagged": 25,
+   "n": 55
+  },
+  "single_features": {
+   "whole_read>=1": {
+    "tp": 3,
+    "fn": 2,
+    "tn": 26,
+    "fp": 24,
+    "sensitivity": 0.6,
+    "sens_ci95": [
+     0.231,
+     0.882
+    ],
+    "specificity": 0.52,
+    "spec_ci95": [
+     0.385,
+     0.652
+    ],
+    "flagged": 27,
+    "n": 55
+   },
+   "line_excess_abs>=1": {
+    "tp": 4,
+    "fn": 1,
+    "tn": 34,
+    "fp": 16,
+    "sensitivity": 0.8,
+    "sens_ci95": [
+     0.376,
+     0.964
+    ],
+    "specificity": 0.68,
+    "spec_ci95": [
+     0.542,
+     0.792
+    ],
+    "flagged": 20,
+    "n": 55
+   },
+   "seg_mismatch>=1": {
+    "tp": 1,
+    "fn": 4,
+    "tn": 50,
+    "fp": 0,
+    "sensitivity": 0.2,
+    "sens_ci95": [
+     0.036,
+     0.624
+    ],
+    "specificity": 1,
+    "spec_ci95": [
+     0.929,
+     1
+    ],
+    "flagged": 1,
+    "n": 55
+   },
+   "dup_line>=0.4": {
+    "tp": 2,
+    "fn": 3,
+    "tn": 44,
+    "fp": 6,
+    "sensitivity": 0.4,
+    "sens_ci95": [
+     0.118,
+     0.769
+    ],
+    "specificity": 0.88,
+    "spec_ci95": [
+     0.762,
+     0.944
+    ],
+    "flagged": 8,
+    "n": 55
+   },
+   "dup_seam>=0.2": {
+    "tp": 2,
+    "fn": 3,
+    "tn": 42,
+    "fp": 8,
+    "sensitivity": 0.4,
+    "sens_ci95": [
+     0.118,
+     0.769
+    ],
+    "specificity": 0.84,
+    "spec_ci95": [
+     0.715,
+     0.917
+    ],
+    "flagged": 10,
+    "n": 55
+   },
+   "rep>=0.03": {
+    "tp": 2,
+    "fn": 3,
+    "tn": 39,
+    "fp": 11,
+    "sensitivity": 0.4,
+    "sens_ci95": [
+     0.118,
+     0.769
+    ],
+    "specificity": 0.78,
+    "spec_ci95": [
+     0.648,
+     0.872
+    ],
+    "flagged": 13,
+    "n": 55
+   },
+   "short_frac>=0.1": {
+    "tp": 0,
+    "fn": 5,
+    "tn": 49,
+    "fp": 1,
+    "sensitivity": 0,
+    "sens_ci95": [
+     0,
+     0.434
+    ],
+    "specificity": 0.98,
+    "spec_ci95": [
+     0.895,
+     0.996
+    ],
+    "flagged": 1,
+    "n": 55
+   },
+   "asym>=0.2": {
+    "tp": 2,
+    "fn": 3,
+    "tn": 37,
+    "fp": 13,
+    "sensitivity": 0.4,
+    "sens_ci95": [
+     0.118,
+     0.769
+    ],
+    "specificity": 0.74,
+    "spec_ci95": [
+     0.604,
+     0.841
+    ],
+    "flagged": 15,
+    "n": 55
+   }
+  },
+  "missed_lobo": [
+   "a026"
+  ],
+  "false_flags_lobo": [
+   "a007",
+   "a008",
+   "a010",
+   "a011",
+   "a012",
+   "a013",
+   "a014",
+   "a015",
+   "a019",
+   "a023",
+   "a027",
+   "a028",
+   "a029",
+   "a034",
+   "a035",
+   "a036",
+   "a050",
+   "a055",
+   "a069",
+   "a072"
+  ]
+ },
+ "L2_seam_bad_from_ocr": {
+  "positives": 23,
+  "n": 80,
+  "books": 80,
+  "lobo": {
+   "tp": 20,
+   "fn": 3,
+   "tn": 45,
+   "fp": 12,
+   "sensitivity": 0.87,
+   "sens_ci95": [
+    0.679,
+    0.955
+   ],
+   "specificity": 0.789,
+   "spec_ci95": [
+    0.667,
+    0.875
+   ],
+   "flagged": 32,
+   "n": 80
+  },
+  "rule_on_all": {
+   "whole_read": 1,
+   "asym": 0.4
+  },
+  "in_sample": {
+   "tp": 23,
+   "fn": 0,
+   "tn": 45,
+   "fp": 12,
+   "sensitivity": 1,
+   "sens_ci95": [
+    0.857,
+    1
+   ],
+   "specificity": 0.789,
+   "spec_ci95": [
+    0.667,
+    0.875
+   ],
+   "flagged": 35,
+   "n": 80
+  },
+  "single_features": {
+   "whole_read>=1": {
+    "tp": 20,
+    "fn": 3,
+    "tn": 49,
+    "fp": 8,
+    "sensitivity": 0.87,
+    "sens_ci95": [
+     0.679,
+     0.955
+    ],
+    "specificity": 0.86,
+    "spec_ci95": [
+     0.747,
+     0.927
+    ],
+    "flagged": 28,
+    "n": 80
+   },
+   "line_excess_abs>=1": {
+    "tp": 13,
+    "fn": 10,
+    "tn": 46,
+    "fp": 11,
+    "sensitivity": 0.565,
+    "sens_ci95": [
+     0.368,
+     0.744
+    ],
+    "specificity": 0.807,
+    "spec_ci95": [
+     0.687,
+     0.889
+    ],
+    "flagged": 24,
+    "n": 80
+   },
+   "seg_mismatch>=1": {
+    "tp": 1,
+    "fn": 22,
+    "tn": 54,
+    "fp": 3,
+    "sensitivity": 0.043,
+    "sens_ci95": [
+     0.008,
+     0.21
+    ],
+    "specificity": 0.947,
+    "spec_ci95": [
+     0.856,
+     0.982
+    ],
+    "flagged": 4,
+    "n": 80
+   },
+   "dup_line>=0.3": {
+    "tp": 11,
+    "fn": 12,
+    "tn": 54,
+    "fp": 3,
+    "sensitivity": 0.478,
+    "sens_ci95": [
+     0.292,
+     0.67
+    ],
+    "specificity": 0.947,
+    "spec_ci95": [
+     0.856,
+     0.982
+    ],
+    "flagged": 14,
+    "n": 80
+   },
+   "dup_seam>=0.2": {
+    "tp": 6,
+    "fn": 17,
+    "tn": 53,
+    "fp": 4,
+    "sensitivity": 0.261,
+    "sens_ci95": [
+     0.125,
+     0.465
+    ],
+    "specificity": 0.93,
+    "spec_ci95": [
+     0.833,
+     0.972
+    ],
+    "flagged": 10,
+    "n": 80
+   },
+   "rep>=0.03": {
+    "tp": 7,
+    "fn": 16,
+    "tn": 51,
+    "fp": 6,
+    "sensitivity": 0.304,
+    "sens_ci95": [
+     0.156,
+     0.509
+    ],
+    "specificity": 0.895,
+    "spec_ci95": [
+     0.789,
+     0.951
+    ],
+    "flagged": 13,
+    "n": 80
+   },
+   "short_frac>=0.1": {
+    "tp": 1,
+    "fn": 22,
+    "tn": 57,
+    "fp": 0,
+    "sensitivity": 0.043,
+    "sens_ci95": [
+     0.008,
+     0.21
+    ],
+    "specificity": 1,
+    "spec_ci95": [
+     0.937,
+     1
+    ],
+    "flagged": 1,
+    "n": 80
+   },
+   "asym>=0.4": {
+    "tp": 8,
+    "fn": 15,
+    "tn": 51,
+    "fp": 6,
+    "sensitivity": 0.348,
+    "sens_ci95": [
+     0.188,
+     0.551
+    ],
+    "specificity": 0.895,
+    "spec_ci95": [
+     0.789,
+     0.951
+    ],
+    "flagged": 14,
+    "n": 80
+   }
+  },
+  "missed_lobo": [
+   "a046",
+   "a066",
+   "a076"
+  ],
+  "false_flags_lobo": [
+   "a012",
+   "a023",
+   "a032",
+   "a033",
+   "a035",
+   "a036",
+   "a042",
+   "a045",
+   "a057",
+   "a060",
+   "a072",
+   "a073"
+  ]
+ }
+}

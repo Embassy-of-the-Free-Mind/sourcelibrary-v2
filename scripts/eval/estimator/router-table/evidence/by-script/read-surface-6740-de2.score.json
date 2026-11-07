@@ -1,0 +1,58 @@
+{
+ "generated_by": "scripts/eval/read-surface-6740/confirm.mjs evidence --cell=de-surface2 (#6740; no model calls in this step)",
+ "cells": {
+  "de-surface2|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 45,
+     "books": 45,
+     "accept": "39/45",
+     "wrong_text_pages": "3/45",
+     "classes_k_of_n": {
+      "O8": "22/45",
+      "O6": "14/45",
+      "E2": "12/45",
+      "O11": "4/45",
+      "O12": "4/45",
+      "T6": "3/45",
+      "O16": "2/45",
+      "D1": "2/45",
+      "O7": "2/45",
+      "O5": "1/45"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-written": {
+     "n": 45,
+     "books": 45,
+     "accept": "41/45",
+     "wrong_text_pages": "3/45",
+     "classes_k_of_n": {
+      "O8": "25/45",
+      "O6": "17/45",
+      "E2": "15/45",
+      "O12": "5/45",
+      "T6": "4/45",
+      "O11": "3/45",
+      "O16": "2/45",
+      "O7": "2/45",
+      "O5": "1/45",
+      "D1": "1/45",
+      "O17": "1/45"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-written|agy-flash-low@4-written": {
+     "n": 45,
+     "books": 45,
+     "both": 38,
+     "a_only": 3,
+     "b_only": 1,
+     "neither": 3
+    }
+   }
+  }
+ }
+}

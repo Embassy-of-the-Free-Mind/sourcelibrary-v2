@@ -1,0 +1,62 @@
+[
+  {
+    "book_id": "b19-t", "slot": 1, "title": "Collection of Rosicrucian and Alchemical Texts (PH255)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century Latin alchemical manuscript about the antimony regulus, Mercurius philosophorum, purification with Mars and gold, citing Philaletha. It belongs in a Rosicrucian/alchemical collection.",
+    "rights_flag": null,
+    "structure_note": "The packet has no structure counts, and none of the three pages carries a translation, so this record is OCR-only on the sampled pages. All three images are leaves of the same bound manuscript in the same hand, and none shows a splice. Each frame catches a strip of the facing leaf at the right edge. The OCR says it ignores that strip on two pages and does not read it on the third.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "rectificati nostri <unclear>Arsenici</unclear> <unclear>Mercurii</unclear> mortificalis", "image": "rectificati nri [symbol]i [symbol]ii mortificalis (two crossed-circle signs)", "problem": "The OCR expands two alchemical signs into words. It flags both as unclear, and the heading 'Mercurii mediante Arsenico' makes the reading plausible, but it is a guess and not a reading.", "severity": "minor" },
+          { "ocr": "subtili Sale", "image": "subtili ⊖ (circle-with-bar sign)", "problem": "Expanding the salt sign to 'Sale' is reasonable. The page warning discloses that signs are expanded.", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The page has no translation. The packet's translation field is null, so a reader gets Latin only.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 154,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "5 aut 6 lot ⊖i et paucam quantitatem ⊖ fusi", "image": "5 aut 6 lot Øi (a circle with an oblique stroke) … quantitate ⊖ fusi (a circle with a horizontal bar)", "problem": "Two different signs on the leaf both become ⊖, so the two ingredients of the recipe merge into one. The same happens again in 'lot ⊖i … ⊖is quantitate' and 'augmentationem ⊖i'.", "severity": "moderate", "class": "O6" },
+          { "ocr": "necdum <unclear>corporalia</unclear>", "image": "necdum ☿rialia (a mercury sign plus '-rialia', i.e. mercurialia)", "problem": "'Mercurialia' is read as 'corporalia', which changes the sense of the explanation. The OCR flags it as unclear.", "severity": "moderate", "class": "O6" },
+          { "ocr": "ad augmentationem ⊖i et fixationemque <unclear>♀ri</unclear>", "image": "ad augmentationem Øi et [a small sign, possibly ☉o] fixationemque ☿ri", "problem": "The OCR seems to drop a sign after 'et', and it reads the mercury sign as ♀ (flagged unclear). I read this at low confidence.", "severity": "minor" },
+          { "ocr": "1mo ♁: ⊖: et <unclear>♀</unclear>: ⊖is et ♁ii", "image": "1mo ♀(?): ⊖: et ☿: Øis et ♁ii", "problem": "The signs in the list of three principles are uncertain or confused. The OCR flags one of them.", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The page has no translation. The packet's translation field is null.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 232,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "quamvis autem Reguli nomine optime purificatus ♁ purissimi coagulati typum", "image": "quamvis autem Regl[us] nr[oste]r optime purificatus ☿ii purissimi coagulati typum", "problem": "The abbreviation 'Regulus noster' is read as 'Reguli nomine', and the mercury sign ('☿ii') becomes ♁. The image says our Regulus bears the type of the purest coagulated mercury; the OCR makes the 'purified antimony' the subject.", "severity": "moderate", "class": "O6" },
+          { "ocr": "unciam 1½ ♂ii recentis", "image": "unciam 1½ [crossed-circle sign]ii recentis", "problem": "At this resolution the sign looks like the antimony sign (a circle with a cross above), not Mars, so the ingredient in the dose may be wrong. Low confidence.", "severity": "moderate", "class": "O7" },
+          { "ocr": "Purgatio ♁ii cum ♂ro", "image": "Purgatio ♁ii cum [a sign shaped like the sulphur/Jupiter glyph]ro", "problem": "The sign is uncertain. It may not be Mars.", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The page has no translation. The packet's translation field is null.", "severity": "minor" },
+          { "note": "The later pencil annotation ('V. p. sequ: 7. ubi d. … nomin:') is tagged as <margin> and disclosed in <meta> as a later hand. That is handled correctly and is not a defect.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of this Latin alchemical manuscript is faithful, with the uncertain words flagged. Its weak point is the alchemical signs: distinct signs are merged or swapped, and that changes which ingredient a step or dose names. The sampled pages have no English translation."
+  }
+]

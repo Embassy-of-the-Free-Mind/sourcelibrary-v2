@@ -1,0 +1,26 @@
+{
+  "_status": "DESIGN ONLY (defect-notes-7263, 2026-11-05). Not run.",
+  "question": "prompt",
+  "issue": 7263,
+  "stage": "ocr",
+  "languages": ["la", "it", "fr", "de", "en", "ar", "he", "fa", "ko", "ja"],
+  "baseline": "A",
+  "arms": [
+    {"name": "A", "what": "live OCR prompt v19.1, unchanged"},
+    {"name": "A2", "what": "A again, a second independent read (the reader's own run-to-run noise)"},
+    {"name": "G", "what": "v19.1 with handwritten rule 4's 'If you are marking more than ~20% of words as unclear, you are being too cautious' removed, and one line added to the handwritten rules: 'Never replace a word you cannot read with a likelier or more familiar word, name or number. Mark it <unclear>…</unclear> with what you can see.'"}
+  ],
+  "readers": "the two served first readers, each its own pair: lite (Batch) and 3flash via agy; same pages for A, A2, G",
+  "draw": "stratum H: 40 hard-hand manuscript pages, one per book, from books whose served page drew an invented/misread note (Latin MS excluded if #7947 has switched it to Opus); stratum P: 30 clean print pages, one per book, Latin/German/French print, where the extra <unclear> marks would show up as lost readable text",
+  "batch": {"pages_per_call": 1, "tested": null},
+  "controls": "one wrong_page per arm",
+  "noise_floor": {"repeat_kind": "repeat", "from": "A vs A2 on the same pages"},
+  "judges": [{"judge": "opus", "role": "blind, image attached; on stratum H every 'invented' call on G and A read by eye on 10 pages"}],
+  "outcomes": ["H: wrong-text (invented or substituted) spans per page, G minus A, against the A2 minus A spread", "P: readable words lost to <unclear> per page and accept rate (must not drop)", "loops per arm"],
+  "decision": "Adopt G only if, on stratum H, G's invented spans per page fall below A by more than A2-A noise for BOTH readers, and on stratum P accept does not fall by more than 0.05 and readable words marked unclear rise by under 2%. If G only moves words into <unclear> without cutting invented spans, reject: the prompt is not the lever and P1 is.",
+  "cost": "70 pages x 3 arms x 2 readers = 420 reads (lite Batch under $1; 3flash on the agy subscription) + about 420 Opus judgings on the subscription + by-eye reads",
+  "prior": "v20 arm F (2026-10-03-ocr-v20-tags-4195.md) dropped the same line: UNREADABLE, never on hard hands; #7966: prompt extras do not move accuracy on print. This test is only worth running on hard hands, and only if P1 does not move those books to another reader first.",
+  "feeds": "prompt",
+  "router_evidence": "none — a prompt change, applies to every route that uses the live prompt",
+  "waive": {}
+}

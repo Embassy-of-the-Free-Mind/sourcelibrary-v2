@@ -1,0 +1,14 @@
+{
+  "question": "leaf",
+  "issue": 5274,
+  "stage": "translation",
+  "languages": ["lzh"],
+  "baseline": "stored",
+  "arms": ["stored", "new"],
+  "batch": { "pages_per_call": 1, "tested": null },
+  "noise_floor": { "repeat_kind": "repeat", "from": null },
+  "feeds": "route",
+  "router_evidence": "none — a repair gate on one queue, no router cell",
+  "waive": {},
+  "_note": "Reconstructed after the fact from wrong-leaf-fix-5021.mjs's gate (#8029) by paired-arm-recipe-6553: the design as the gate ran it, not a preregistration."
+}

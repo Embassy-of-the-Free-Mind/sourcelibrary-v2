@@ -32,7 +32,9 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/maintenance/hold-pipeline-books.mjs --from <leaf-drift joined.jsonl>          # CLASS C, counts
  *   node scripts/maintenance/hold-pipeline-books.mjs --from <joined.jsonl> --apply
- *   node scripts/maintenance/hold-pipeline-books.mjs --ids <file> --reason <kebab> --issue N --release "<sentence>" --apply
+ *   node scripts/maintenance/hold-pipeline-books.mjs --ids <file> --reason <kebab> --issue N --release "<sentence>" --release-when <kind:ref> --apply
+ *     --release-when is required (#7860): issue:<N> (due when it closes) | decision:<words in ops DECIDED.md> |
+ *     test:<the check that releases it> | date:YYYY-MM-DD. The weekly scripts/audit/hold-release-check.mjs reads it.
  *   node scripts/maintenance/hold-pipeline-books.mjs --release-held --reason ia-wrong-leaf-4790 [--book <id> | --ids <file>] [--to ocr_complete] --apply
  *   node scripts/maintenance/hold-pipeline-books.mjs --reassert [--reason <kebab>] --apply     # CLOBBERED → held again
  * `--from` implies reason `ia-wrong-leaf-4790`; `--release-held` lifts every hold with that reason (or only the books in `--ids <file>`)
@@ -43,7 +45,7 @@ import fs from 'node:fs';
 import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { bucketByLeafDriftClass } from '../lib/ia-leaf-drift-class.mjs';
-import { holdBook, releaseBook, HOLD_STATUS, HOLD_SWEEP } from '../lib/pipeline-hold.mjs';
+import { holdBook, releaseBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_SWEEP } from '../lib/pipeline-hold.mjs';
 
 const arg = (k, d) => { const eq = process.argv.find((a) => a.startsWith(`${k}=`)); if (eq) return eq.slice(k.length + 1); const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const APPLY = process.argv.includes('--apply'), RELEASE = process.argv.includes('--release-held'), REASSERT = process.argv.includes('--reassert');
@@ -54,6 +56,7 @@ const IA_WRONG_LEAF = {
   reason: 'ia-wrong-leaf-4790',
   issue: 4790,
   release: 'the #3368 image repair has landed for this book AND repair-ia-ocr-leaf-offset.mjs has re-pointed its ia_djvu text to offset 0 in the same pass (an ia_ocr_leaf_repair book_event newer than the hold)',
+  release_when: { kind: 'test', ref: 'scripts/audit/pipeline-hold-drift.mjs RELEASABLE (an ia_ocr_leaf_repair book_event newer than the hold)' },
 };
 
 let targets = [];
@@ -75,7 +78,8 @@ if (REASSERT) {
   const reason = arg('--reason', null), release = arg('--release', null);
   if (!reason || !release) { console.error('--ids needs --reason <kebab> and --release "<sentence>"'); process.exit(2); }
   targets = fs.readFileSync(IDS, 'utf8').split('\n').map((x) => x.trim()).filter(Boolean).map((book_id) => ({ book_id, detail: null }));
-  hold = { reason, issue: ISSUE ? +ISSUE : null, release, source: 'hold-pipeline-books' };
+  hold = { reason, issue: ISSUE ? +ISSUE : null, release, release_when: parseReleaseWhen(arg('--release-when', null)), source: 'hold-pipeline-books' };
+  try { makeHoldMarker(hold); } catch (e) { console.error(`${e.message}\n  pass --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); }
 } else {
   console.error('one of --from <joined.jsonl> | --ids <file> | --release-held is required');
   process.exit(2);

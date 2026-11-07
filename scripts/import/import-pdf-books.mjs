@@ -37,6 +37,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { parseArgs } from 'util';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
 const { values: args } = parseArgs({ options: {
@@ -274,7 +275,7 @@ async function importBook(db, entry) {
       ]);
       const [fullUrl, displayUrl, thumbUrl] = await Promise.all([
         uploadToR2(`${base}-full.jpg`, fullBuf),
-        uploadToR2(`${base}.jpg`, displayBuf),
+        uploadToR2(`${base}.jpg`, await markDisplay(displayBuf, { bookId: bookIdStr, pageNumber: pageNum })),
         uploadToR2(`${base}-thumb.jpg`, thumbBuf),
       ]);
       if (pageNum % 25 === 0) console.log(`    uploaded ${pageNum}/${rendered.length}`);

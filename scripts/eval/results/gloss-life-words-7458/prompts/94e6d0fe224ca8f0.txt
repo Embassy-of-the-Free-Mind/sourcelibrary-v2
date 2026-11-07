@@ -1,0 +1,162 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** German
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: A New Chemical Light from the Fountain of Nature | Author: Sendivogius, Michael | Date: 1766
+
+**Note:** This is a public domain work published in 1766. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>German</language>
+<page-type>text</page-type>
+<page-num>314</page-num>
+<header>Der 44. Brief.</header>
+<meta>catchword: Damit</meta>
+
+sind zwen würklich unterschiedene Dinge, ja
+zwen vollständige Substanzen, welche aber doch
+nach der homogeneitæt des *principii princi-*
+*piantis* homogen und also von einer Wurzel
+sind, welches bey denen wahren Philosophen
+eben das nehmliche ist.
+
+Du wirst vielleicht bey dir gedenken, daß alle
+so viel immer in der Gestalt und Natur verschie-
+dene *mixta* nach der homogeneitæt des *prin-*
+*cipii* homogen sind, weilen die Materie, welche
+deren Gestalt unterworfen ist, mit dem gemeldten
+Universal-Geist nach der vorhergehenden lehre ho-
+mogen ist. Also sind sie einer und der nehmli-
+chen Wurzel, und eine jede kan zur Multiplication,
+eines jeden vor die Materie genommen werden.
+Welches wenn es in denen vermischten, welche in
+der Gestalt und in der Zahl unterschieden sind, statt
+findet, so wird es vielmehr in denen natürlichen
+Theilen eines jeden vermischten, in so fern es ein
+*mixtum* ist, nehmlich in dem Mercurio, Salz,
+und Schwefel Platz haben, weilen sie mit ihrem
+ganzen, in der Zahl und Gestalt den nehmlichen
+materialischen Anfang haben, und dieser Einwurf
+ist gewißlich stark, und es ist dessen Auflösung kaum
+anderswo so eigentlich ausgedruckt zu finden, nun
+wollen wir, daß du solche allhier vernehmest.
+
+<vocab>homogeneitæt, principii principiantis, mixta, Universal-Geist, Multiplication, Mercurio, Salz, Schwefel, mixtum</vocab>
+
+**At the page break:** The word «Materie» was split across the break from the previous page and is translated there; this page's text begins after it. The catchword «Damit» at the foot of this page is a printer's device repeating the next page's first word: it is not text of this page and must not be translated.
+
+**Previous page translation for continuity:**
+<page-num>313</page-num>
+# The 44th Letter.
+<sig>U 5</sig>
+
+...ery <note>completing the word "cookery" from the previous page</note> and the perfection of the **Magistery** <term>Magisterium</term> <note>the "Mastery," or the completed alchemical process of transformation</note> finishes by imitating the natural cooking of the very same **Mercury** <note>original: *Mercurii*</note>, even before it is specified within the innermost parts of the earth by the very first original seeds.
+
+However, if one understands the aforementioned opinion regarding the **specification** <note>the process by whi
+[…]
+gistery, or regarding the specific naming according to the nature of **Gold** <note>original: *Solis*, "of the Sun"</note> or **Silver** <note>original: *Lunæ*, "of the Moon"</note>, one must distinguish between them in two ways. First, there is the opinion concerning that which can happen through the power of the first original seeds—even if this occurs rarely and over a very long period of time without any external addition. This happens because of their miniscule quantity, especially since they are so very few. In this case, the aforementioned **Universal Spirit** <note>the fundamental cosmic life-force believed to be the root of all matter</note> contains these seeds within itself; these seeds determine its **hermaphroditic nature** <note>a central alchemical concept where a substance contains both active/male and passive/female principles</note>. Here, the seeds themselves take the place of the male seed, while the substance of the Spirit holds the power of the female seed. 
+
+Alternatively, we might consider that which occurs through external addition and the union of either the first original seeds in the innermost parts of the earth, or the specific ones in the artificial vessel. In this sense, the mentioned opinion is false: for the specifying seed and the specifiable mat— <note>the text cuts off; the catchword "terie" indicates the next page begins with "matter"</note>
+<summary>This page explains how the "Universal Spirit" acts as a biological parent to metals, containing both male and female "seeds" that allow it to naturally evolve into gold or silver over time. It distinguishes between this slow natural growth within the earth and the accelerated "specification" performed by alchemists in their vessels.</summary>
+<keywords>Magistery, Mercury, Gold, Silver, Universal Spirit, Hermaphroditic Nature, Specification, Alchemical Seeds, Generation of Metals</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

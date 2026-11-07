@@ -139,14 +139,13 @@ export const POST = withAuth(async (request, session, context) => {
     const prompt = promptResult.text;
     const promptRef = promptResult.reference;
 
-    // Phase 1: Submit ALL chunks to Gemini first (no DB writes yet).
-    // This prevents orphan parent records if Gemini submission fails (e.g. quota exhaustion).
-    const submittedChildren: Array<{
-      childJobId: string;
-      batchJobName: string;
-      pageIds: string[];
-      pageCount: number;
-    }> = [];
+    // Record each child the moment Gemini accepts it, and the parent last. A
+    // submitted Gemini job is paid for; if this function dies mid-loop (time
+    // limit, a quota throw on chunk N), every child already submitted must
+    // still have a batch_jobs row or the collector never reads it (#8298). The
+    // collector handles a child whose parent row is missing.
+    const childJobIds: string[] = [];
+    const now = new Date();
 
     for (const chunk of chunks) {
       const childJobId = nanoid();
@@ -200,26 +199,12 @@ export const POST = withAuth(async (request, session, context) => {
         `ocr-${bookId}-${childJobId}-${Date.now()}`
       );
 
-      submittedChildren.push({
+      const child = {
         childJobId,
         batchJobName: batchJob.name!,
         pageIds: batchRequests.map(r => r.key),
         pageCount: batchRequests.length,
-      });
-    }
-
-    if (submittedChildren.length === 0) {
-      return NextResponse.json(
-        { error: 'All Gemini batch submissions failed; no DB records created' },
-        { status: 500 }
-      );
-    }
-
-    // Phase 2: All Gemini submissions succeeded — now create DB records.
-    const childJobIds: string[] = [];
-    const now = new Date();
-
-    for (const child of submittedChildren) {
+      };
       childJobIds.push(child.childJobId);
 
       const childJob: BatchJob = {
@@ -264,6 +249,13 @@ export const POST = withAuth(async (request, session, context) => {
         endpoint: '/api/[tenant]/books/[id]/batch-ocr-multi',
         triggered_by: triggeredBy,
       });
+    }
+
+    if (childJobIds.length === 0) {
+      return NextResponse.json(
+        { error: 'All Gemini batch submissions failed; no DB records created' },
+        { status: 500 }
+      );
     }
 
     // Create parent record last (all children already exist)

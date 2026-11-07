@@ -1,0 +1,100 @@
+{
+ "design": "3 x 3 full factorial in pages a call x thinking, image as served, live prompt; the live cell (4, low) is read on every book (L), the other 8 cells G01-G08 in incomplete blocks of 3 a book",
+ "factors": [
+  {
+   "key": "ppc",
+   "name": "pages a call",
+   "kind": "continuous",
+   "levels": [
+    1,
+    4,
+    8
+   ]
+  },
+  {
+   "key": "think",
+   "name": "thinking",
+   "kind": "continuous (ordinal)",
+   "levels": [
+    "low",
+    "medium",
+    "high"
+   ]
+  }
+ ],
+ "runs": [
+  {
+   "id": "G01",
+   "x": [
+    -1,
+    -1
+   ],
+   "ppc": 1,
+   "think": "low"
+  },
+  {
+   "id": "G02",
+   "x": [
+    -1,
+    0
+   ],
+   "ppc": 1,
+   "think": "medium"
+  },
+  {
+   "id": "G03",
+   "x": [
+    -1,
+    1
+   ],
+   "ppc": 1,
+   "think": "high"
+  },
+  {
+   "id": "G04",
+   "x": [
+    0,
+    0
+   ],
+   "ppc": 4,
+   "think": "medium"
+  },
+  {
+   "id": "G05",
+   "x": [
+    0,
+    1
+   ],
+   "ppc": 4,
+   "think": "high"
+  },
+  {
+   "id": "G06",
+   "x": [
+    1,
+    -1
+   ],
+   "ppc": 8,
+   "think": "low"
+  },
+  {
+   "id": "G07",
+   "x": [
+    1,
+    0
+   ],
+   "ppc": 8,
+   "think": "medium"
+  },
+  {
+   "id": "G08",
+   "x": [
+    1,
+    1
+   ],
+   "ppc": 8,
+   "think": "high"
+  }
+ ],
+ "seed": 6740
+}

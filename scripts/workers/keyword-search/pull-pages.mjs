@@ -28,6 +28,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { once } from 'node:events';
 import { SHARD_DIR, mongo, log, PAGE_PROJECTION, pageRow, writeJsonAtomic } from './lib.mjs';
+import { NOT_REPEAT_CAPTURE } from '../../lib/page-counts.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const WORKERS = +arg('--workers', 8);
@@ -65,7 +66,7 @@ async function readBook(id) {
   for (let attempt = 1; ; attempt++) {
     try {
       return await db.collection('pages')
-        .find({ book_id: id, page_number: { $gt: 0 } }, { projection: PAGE_PROJECTION })
+        .find({ book_id: id, page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE }, { projection: PAGE_PROJECTION }) // repeat captures stay out (#5056)
         .sort({ page_number: 1 })
         .maxTimeMS(300000)
         .toArray();

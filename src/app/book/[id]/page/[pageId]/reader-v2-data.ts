@@ -4,8 +4,10 @@ import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import type { Book, Page } from '@/lib/types';
-import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
+import { READER_PAGE_PROJECTION, withoutTextLayer } from '@/lib/reader-page-projection';
+import { loadReaderTextLayers, applyReaderTextLayer } from '@/lib/reader-text-layer';
 import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 
 // Shared server loader for the v2 reader design previews (/v2a, /v2c).
 // Mirrors the (reader)/page.tsx fetch: current page + book + nav page list.
@@ -30,22 +32,24 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
 
   // Same inclusion list as the production reader (reader-page-projection.ts),
   // so the previews render from the same field set.
-  const currentPage = await db.collection('pages').findOne(
+  const fetchedPage = await db.collection('pages').findOne(
     { id: pageId },
     { projection: READER_PAGE_PROJECTION }
   );
+  const currentPage = withoutTextLayer(fetchedPage); // #5942: the stored text layer never reaches the payload
   if (!currentPage) notFound();
 
-  const [bookResult, navPages] = await Promise.all([
+  const [bookResult, navPages, textLayers] = await Promise.all([
     findBookForTenant(db, id, BOOK_NAV_PROJECTION, ctx),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
+      .find(readerPageListFilter(currentPage.book_id as string))
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1, display_photo: 1, archived_photo: 1, photo: 1 })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
+      .then(pages => pages.filter(isReaderListedPage))
       .catch(() => [{ id: pageId, page_number: currentPage.page_number }]),
+    loadReaderTextLayers(db, [fetchedPage]), // the notes layer, as the production reader reads it (#7965)
   ]);
 
   if (!bookResult) notFound();
@@ -60,7 +64,7 @@ export async function getReaderV2Data(id: string, pageId: string): Promise<Reade
   return {
     book,
     // English edition, English leaf: the transcription is the text (#7100).
-    page: serveEnglishOriginalPage(JSON.parse(JSON.stringify(currentPage)) as Page, book),
+    page: applyReaderTextLayer(serveEnglishOriginalPage(JSON.parse(JSON.stringify(currentPage)) as Page, book), textLayers),
     pageList: JSON.parse(JSON.stringify(navPages)) as Page[],
   };
 }

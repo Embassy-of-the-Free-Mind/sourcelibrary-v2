@@ -3,6 +3,11 @@ import PageEditorPage from '@/app/book/[id]/page/[pageId]/(reader)/page';
 
 // Iframe-target wrapper for the page reader. See sibling page.tsx for the
 // embed-v1.js coupling rationale.
+//
+// No loading.tsx may sit above this route (see ../../../../(library)/loading.tsx):
+// the reader's redirects (a hidden repeat capture to its kept page, #5056; a
+// split parent to its first leaf) must answer with a real 307/308, staying
+// under /embed/<tenant>. tests/unit/embed-reader-redirect.test.ts pins both.
 
 export const revalidate = 86400;
 

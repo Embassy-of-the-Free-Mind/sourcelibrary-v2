@@ -455,10 +455,14 @@ export function upgradeToFullRes(url) {
  * wall); openapi.bnf.fr `/iiif/image/v3/…/full/max/0/default.jpg` 200, 888 KB JPEG. The path is v3,
  * so the size keyword is `max` (archive-fetch-failures.md: the size keyword belongs to the API
  * version). Only a full-region Gallica page URL is rewritten; anything else is returned unchanged.
+ * The short viewer form `gallica.bnf.fr/ark:/12148/<ark>/f9` names the same whole page, so it is
+ * rewritten too: al-Biruni's Qanun (Arabe 6840) is stored that way, and the lane asked the walled
+ * host for it on every run (2026-11-01).
  */
 export function gallicaOpenApiUrl(url) {
   if (typeof url !== 'string') return url;
-  const m = /^https?:\/\/gallica\.bnf\.fr\/iiif\/(ark:\/12148\/[^/]+\/f\d+)\/full\/[^/]+\/0\/[a-z]+\.(?:jpg|jpeg)$/i.exec(url);
+  const m = /^https?:\/\/gallica\.bnf\.fr\/iiif\/(ark:\/12148\/[^/]+\/f\d+)\/full\/[^/]+\/0\/[a-z]+\.(?:jpg|jpeg)$/i.exec(url)
+    ?? /^https?:\/\/gallica\.bnf\.fr\/(ark:\/12148\/[^/]+\/f\d+)$/i.exec(url);
   return m ? `https://openapi.bnf.fr/iiif/image/v3/${m[1]}/full/max/0/default.jpg` : url;
 }
 

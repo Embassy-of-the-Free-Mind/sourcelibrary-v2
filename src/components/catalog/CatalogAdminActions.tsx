@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 /**
  * Catalogue-admin panel on a record: correct the UBN, delete, restore.
@@ -30,6 +31,7 @@ interface Props {
 }
 
 export default function CatalogAdminActions({ tenant, recordKey, ubn, title, deleted }: Props) {
+  const embedHref = useEmbedHref();
   const [mode, setMode] = useState<'idle' | 'ubn' | 'delete'>('idle');
   const [newUbn, setNewUbn] = useState(ubn ?? '');
   const [note, setNote] = useState('');
@@ -62,7 +64,7 @@ export default function CatalogAdminActions({ tenant, recordKey, ubn, title, del
 
   async function submitUbn() {
     const data = await call({ action: 'change_ubn', newUbn: newUbn.trim(), note: note.trim() });
-    if (data && typeof data.ubn === 'string') window.location.href = `/catalog/${encodeURIComponent(data.ubn)}`;
+    if (data && typeof data.ubn === 'string') window.location.href = embedHref(`/catalog/${encodeURIComponent(data.ubn)}`);
   }
 
   async function submitDelete() {

@@ -1,0 +1,100 @@
+{
+ "cells": {
+  "la-lite-250|print": {
+   "routes": {
+    "agy-flash-low-read": {
+     "n": 500,
+     "books": 10,
+     "accept": "448/500",
+     "wrong_text_pages": "52/500",
+     "classes_k_of_n": {
+      "O8": "295/500",
+      "O11": "120/500",
+      "O6": "117/500",
+      "O5": "32/500",
+      "O7": "16/500",
+      "O12": "30/500",
+      "O1": "22/500",
+      "O4": "2/500",
+      "D1": "2/500",
+      "O15": "1/500",
+      "O3": "10/500",
+      "I4": "1/500"
+     },
+     "script_basis": {
+      "page": 500
+     }
+    },
+    "lite": {
+     "n": 690,
+     "books": 10,
+     "accept": "421/690",
+     "wrong_text_pages": "269/690",
+     "classes_k_of_n": {
+      "O8": "360/690",
+      "O11": "203/690",
+      "O6": "387/690",
+      "O5": "189/690",
+      "O12": "86/690",
+      "O4": "16/690",
+      "O7": "31/690",
+      "I4": "34/690",
+      "O1": "53/690",
+      "I1": "25/690",
+      "O13": "3/690",
+      "O3": "24/690"
+     },
+     "script_basis": {
+      "page": 690
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 500,
+     "books": 10,
+     "accept": "405/500",
+     "wrong_text_pages": "95/500",
+     "classes_k_of_n": {
+      "O8": "144/500",
+      "O6": "183/500",
+      "O12": "24/500",
+      "O5": "39/500",
+      "O7": "12/500",
+      "O11": "79/500",
+      "O1": "22/500",
+      "O13": "1/500",
+      "O3": "42/500",
+      "O10": "2/500",
+      "O9": "1/500"
+     },
+     "script_basis": {
+      "page": 500
+     }
+    },
+    "lite>opus-correct": {
+     "n": 750,
+     "books": 10,
+     "accept": "659/750",
+     "wrong_text_pages": "91/750",
+     "classes_k_of_n": {
+      "O8": "146/750",
+      "O11": "59/750",
+      "O7": "14/750",
+      "O6": "48/750",
+      "O12": "8/750",
+      "O5": "19/750",
+      "O3": "10/750",
+      "I4": "33/750",
+      "O10": "2/750",
+      "O1": "1/750",
+      "O9": "1/750"
+     },
+     "script_basis": {
+      "page": 750
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/latin-250-5924.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

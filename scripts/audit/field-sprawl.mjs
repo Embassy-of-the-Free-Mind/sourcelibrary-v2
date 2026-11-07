@@ -100,7 +100,7 @@ const MAX_NESTED = Number(argVal('--max-nested') || 0);
 const FORBID = (argVal('--forbid') || '').split(',').map((s) => s.trim()).filter(Boolean);
 
 // Collections worth watching by default. Everything else needs --all.
-const WATCHED = ['books', 'deleted_books', 'pages', 'first_translation_attempts', 'entities'];
+const WATCHED = ['books', 'deleted_books', 'pages', 'first_translation_attempts', 'entities', 'page_annotations'];
 
 // Object-valued fields whose sub-keys sprawl independently of the top level.
 const NESTED = {

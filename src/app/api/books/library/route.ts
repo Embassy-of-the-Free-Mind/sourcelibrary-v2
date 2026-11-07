@@ -7,6 +7,7 @@ import { translationPercent } from '@/lib/translation-completeness';
 import { buildSortStage, type SortOption } from '@/lib/book-sort';
 import { resolveAuthorBookFilter } from '@/lib/author-thesaurus';
 import { parseWorkYear, workYearMatch } from '@/lib/work-dates';
+import { orderRecordKeys } from '@/lib/key-order-mark';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -388,7 +389,11 @@ export async function GET(request: NextRequest) {
       // usable back (#3652 B). One formula: src/lib/translation-completeness.ts.
       translation_percent: translationPercent(book),
       tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
-    }));
+    }))
+      // Keyed, deterministic key order per book (#8150 slice 7): JSON keys are
+      // unordered and every consumer reads by name, so a copied catalogue can
+      // be recognised without changing a value. src/lib/key-order-mark.ts.
+      .map((book: Record<string, unknown>) => orderRecordKeys(book));
 
     const responseData = JSON.stringify({
       books: booksWithTenantSlug,

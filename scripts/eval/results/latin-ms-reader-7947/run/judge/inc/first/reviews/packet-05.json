@@ -1,0 +1,418 @@
+[
+ {
+  "book_id": "b05-k",
+  "slot": 1,
+  "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 9,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Quasi diceret <unclear>et quod</unclear> nos",
+      "image": "Quasi diceret erg͡ nos",
+      "problem": "'ergo' read as 'et quod' (flagged unclear)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Quicquid <unclear>clautum</unclear>",
+      "image": "Quicq3 clautum",
+      "problem": "faithful to the print, flagged unclear; no error",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 18,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "depriuationem",
+      "image": "depuationē (depravationem)",
+      "problem": "wrong expansion",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Gaufredus",
+      "image": "Gāfred⁹ (Galfredus)",
+      "problem": "name spelling",
+      "severity": "minor"
+     },
+     {
+      "ocr": "in paradoxis",
+      "image": "in padoxis",
+      "problem": "normalized misprint to paradoxis (harmless)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 27,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Nam vltima raro <unclear>correspondent</unclear>",
+      "image": "Nā vltia raro eorꝫ",
+      "problem": "'eorum' expanded as a guessed verb (flagged unclear)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A careful, fully expanded reading; every page right, only minor slips mostly flagged with <unclear>. A reader could trust it."
+ },
+ {
+  "book_id": "b05-m",
+  "slot": 2,
+  "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 9,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "& suspēsa tene sentētia",
+      "image": "ꝫ suspēsā tene sentētiā (sed)",
+      "problem": "'sed' sign read as '&'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "nihil inceptū affirmes",
+      "image": "nihil inexptū affirmes",
+      "problem": "inexpertum read as inceptum, changes the precept",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Hic autor post alta cōditione",
+      "image": "Hic autor poīt aliā cōditionē",
+      "problem": "'ponit aliam' read as 'post alta'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Tulli’ autor est in padoris cē inqt",
+      "image": "Tulli⁹ autor est in padoxis cū inqt",
+      "problem": "title of Cicero's Paradoxa garbled",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "vt diat Quidq’ in li. fast. sed nos in vian credula turba",
+      "image": "vt dicit Ouidi⁹ in li. fast. sed nos in viciū credula turba",
+      "problem": "Ovid's name and 'vicium' garbled",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Glolēs / Atri’ / er cōuerso / Mā / Mon / expe dat / prospedū",
+      "image": "Volēs / Atn̄ / et ecōuerso / Nā / Non / expectat / prospectū",
+      "problem": "many letter-level misreads of initials and ligatures",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta>catchword: tat.sed</meta> — there is no catchword on this leaf; 'tat.sed' is the start of the last text line",
+      "severity": "moderate",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 18,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Valissimū preceptū",
+      "image": "Vtilissimū preceptū",
+      "problem": "Utilissimum misread",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Lum tibi deus",
+      "image": "Cum tibi deus",
+      "problem": "initial C read as L",
+      "severity": "minor"
+     },
+     {
+      "ocr": "si recte co vtaf / temporales.co q",
+      "image": "si recte eo vtaf / temporales.eo qꝫ",
+      "problem": "e read as c",
+      "severity": "minor"
+     },
+     {
+      "ocr": "caduce sunt et transitorie.",
+      "image": "caduce sunt et / temporales et transitorie.",
+      "problem": "'temporales et' at the line turn dropped",
+      "severity": "minor",
+      "class": "O5"
+     },
+     {
+      "ocr": "que sunt derectada",
+      "image": "que sunt detestāda",
+      "problem": "detestanda misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Mon tibi ascribas",
+      "image": "Non tibi ascribas",
+      "problem": "N read as M",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 27,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Nullius prudentiam despicias",
+      "image": "Nulli⁹ ípꝛudentiā despicias (imprudentiam)",
+      "problem": "'imprudentiam' read as 'prudentiam' — the precept is reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hec est uersia presentis capituli et partia. In qua Seneca prima officia proponit. Que debes in disfortunis",
+      "image": "Hec ē vltīa ps h⁹ capituli đ tpantia In q̄ seneca plīma officia tpantie supaddit cū rpetitiōe q̄rūdā phabitoꝝ Et vult pmo qꝫ tu ptinēs firm⁹ eē debes i disfortunijs",
+      "problem": "opening of the commentary rewritten and a clause dropped",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "crudelior exactor uel corrector illorum hominum quibus apposuit et sponsore. Et nam magna misericordia",
+      "image": "crudel' exactor vl' correctoꝛ illoꝝ hoīꝫ q̄b⁹ aūposit⁹ ꝛ ppo/sit⁹ ē i dignitate sꝫ hūil' vt p⁹ patuit Neqꝫ etiā cōtinēs alic⁹ isipiētiā spnere dꝫ Nā magna mīa",
+      "problem": "a full sentence ('…in dignitate sed humilis… insipientiam spernere debet') silently dropped",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "Seneca in libro.vii. ad Lucilium",
+      "image": "Señ i lxxviij.ad Lucil.",
+      "problem": "letter number 78 read as book 7",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Tullius.i. officii",
+      "image": "Tull'.ij.offi.",
+      "problem": "book ii read as i",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Helas fortuna / Noli sis uetosus / Quia uilipost oia / uita certa / Nec tria discipula suat unt",
+      "image": "Nescis fortuna / Nō sis vētos⁹ / Quia dispoīt oia / vitā q̄etā / Hec tria discipulū faciunt",
+      "problem": "many garbled phrases in the commentary",
+      "severity": "moderate",
+      "class": "O1"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<image-desc …>Decorative initial letter D</image-desc> markup inline before the heading",
+      "severity": "moderate",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Semi-diplomatic reading with abbreviations kept; pages 9 and 18 have many letter-level misreads, and page 27's commentary is largely garbled, with a sentence dropped and 'imprudentiam' read as 'prudentiam' (sense reversed)."
+ },
+ {
+  "book_id": "b05-r",
+  "slot": 3,
+  "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 9,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Qui cognitaniuum prudentis mos est",
+      "image": "Quicq3 clautum prudēt' mos est",
+      "problem": "nonsense word in place of the printed text",
+      "severity": "moderate",
+      "class": "O1"
+     },
+     {
+      "ocr": "non omne quod similitudinem veribus verum est",
+      "image": "nō ōne qđ silitudinē veri hꝫ veꝝ ħ est",
+      "problem": "'veri habet' collapsed into 'veribus'; the verb is lost",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Item hoc non facit",
+      "image": "Atn̄ hoc non facit (Attamen)",
+      "problem": "'Attamen' (but) read as 'Item' (also) — logic connective changed",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "in padoris",
+      "image": "in padoxis",
+      "problem": "Paradoxa title garbled",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "pertrahere / pendet / quam seruari / Et hoc ostendit hoc",
+      "image": "ptrahere / pcedit / q̄ seruari / Et h' ōndit h'",
+      "problem": "small expansion slips",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 18,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Tullius in padoris",
+      "image": "Tullius in padoxis",
+      "problem": "Paradoxa title garbled",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "nihil sciosius",
+      "image": "nihil pciosius (preciosius)",
+      "problem": "preciosius misread",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "libidines manuum et articulorum depravationem",
+      "image": "libidines manuū ꝛ articuloꝝ oīm depuationē",
+      "problem": "'omnium' dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "preceptum quia voluptates",
+      "image": "preceptū qꝫ voluptates",
+      "problem": "'quod' expanded as 'quia'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "verse lemma 'Si continentie studes…' prefixed with a markdown '#' and shown as a heading",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 27,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Nam nihil vtilius patuit Neque solis viris sed omnibus in hac vita est que ipsa",
+      "image": "Nā nihil vtili⁹ hoīb⁹ i hac vita ē q̄ ipā",
+      "problem": "'patuit Neque solis viris sed omnibus' is not on the page — invented phrase in place of 'hominibus'",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "Justicia prima hec virtus est",
+      "image": "Iusticia p⁹ hec ✝tus est (post)",
+      "problem": "'post' read as 'prima' — the lemma now calls justice the first virtue",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Seuerus non seuerus",
+      "image": "Seuer⁹ nō seu⁹ (seuus)",
+      "problem": "'severe, not cruel' becomes self-contradictory",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Et vult primo quod tu pertinens / Etiam pertinens",
+      "image": "tu ꝯtinēs (continens)",
+      "problem": "continens read as pertinens twice",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Non sis ventosus",
+      "image": "Nō sis vētos⁹ (verbosus per Cato)",
+      "problem": "Cato's 'verbosus' misread",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Totum viuas tam diu discas",
+      "image": "q̄diu viuas tā diu discas",
+      "problem": "quamdiu misread",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Nam vltima raro eorum Quo est seneca libro. vij.",
+      "image": "Nā vltīa raro eorꝫ Jō ec̄ Sen li.viij.",
+      "problem": "'Ideo etiam Seneca' garbled and book viii read as vii",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "non debes vereri sed indistrictione",
+      "image": "nō debes vereri đ inq̄sitiōe",
+      "problem": "'de inquisitione' misread",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Fully expanded and readable on pages 9 and 18, with some garbled words. Page 27 adds a phrase that is not on the page and turns 'Iusticia post hec' into 'Iusticia prima hec'."
+ }
+]

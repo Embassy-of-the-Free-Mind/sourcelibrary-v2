@@ -84,6 +84,13 @@ const flag = (name, dflt) => {
   return i !== -1 && args[i + 1] !== undefined ? args[i + 1] : dflt;
 };
 const APPLY = args.includes('--apply');
+// Retired (#8266). This wrote the text half of a two-part repair and left the images for later.
+// Nothing ever did the later part: 8 books sat half repaired from 2026-08-09 to 2026-11-05, and on
+// one of them the OCR-timing test had picked the wrong side. Dry runs still work for reading.
+if (APPLY) {
+  console.error('[REFUSE] retired: text and images must move in one run. Check the source leaf by eye, then use repair-text-offset-segments.mjs and repair-bulk-jp2-offset.mjs together (#8266).');
+  process.exit(2);
+}
 const REDERIVE = args.includes('--rederive');
 const FROM = flag('from');
 const LIMIT = parseInt(flag('limit', '0'), 10) || 0;

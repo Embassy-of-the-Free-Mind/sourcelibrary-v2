@@ -44,6 +44,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin', label: 'Dashboard', exact: true, menu: true },
       { href: '/admin/work', label: 'Work in flight', menu: true },
       { href: '/admin/spend', label: 'Spend', gate: 'spend', menu: true },
+      { href: '/admin/tokens', label: 'Tokens', gate: 'spend' },
       { href: '/admin/errors', label: 'Errors' },
     ],
   },
@@ -78,6 +79,8 @@ export const ADMIN_SECTIONS: AdminSection[] = [
     label: 'Pipeline',
     links: [
       { href: '/admin/pipeline', label: 'Pipeline' },
+      { href: '/admin/pipeline/now', label: 'Pipeline now' },
+      { href: '/admin/router', label: 'Router' },
       { href: '/admin/processing', label: 'Processing' },
       { href: '/admin/quality', label: 'Quality' },
       { href: '/admin/scan-evaluation', label: 'Scan review' },

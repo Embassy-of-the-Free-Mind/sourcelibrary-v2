@@ -233,7 +233,7 @@ async function contain() {
   for (const [bookId, ds] of Object.entries(byBook)) {
     const pages = ds.map((d) => d.page_number).sort((a, b) => a - b);
     const evidence = `#6694 step 3 (job opus-screen-6694, ${SET}): a gemini-3.8-flash-low screen of arm B's text flagged the page and a sealed Opus reader of the image confirmed it: ${ds.map((d) => `p.${d.page_number} ${d.settle.kind}: ${d.settle.note}`).join('; ')}`.slice(0, 1800);
-    const h = await holdBook(db, bookId, { reason: 'ocr-unsettled-6420', issue: 6694, release: 'the contained pages are re-read from their own images and settled, or a person releases them', source: 'scripts/batch/ocr-convergence/screen-6694.mjs', detail: { pages, set: SET } }, { dryRun: !APPLY });
+    const h = await holdBook(db, bookId, { reason: 'ocr-unsettled-6420', issue: 6694, release: 'the contained pages are re-read from their own images and settled, or a person releases them', release_when: { kind: 'issue', ref: 6694 }, source: 'scripts/batch/ocr-convergence/screen-6694.mjs', detail: { pages, set: SET } }, { dryRun: !APPLY });
     const w = spawnSync('node', [path.join(REPO, 'scripts/maintenance/withhold-stale-translations.mjs'), `--book=${bookId}`, `--by-eye-pages=${pages.join(',')}`, `--evidence=${evidence}`, '--issue=6694', ...(APPLY ? ['--apply'] : [])], { encoding: 'utf8', env: process.env, maxBuffer: 64 * 1024 * 1024 });
     log.push(`== ${bookId} ${ds[0].slug} hold:${h.outcome} pages ${pages.join(',')}\n${w.stdout}${w.stderr}`);
     console.log(`  contain ${ds[0].slug} p.${pages.join(',')}: hold ${h.outcome}; withhold exit ${w.status}`);

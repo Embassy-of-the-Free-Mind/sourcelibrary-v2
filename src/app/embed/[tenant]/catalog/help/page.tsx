@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Metadata } from 'next';
 
 /**
@@ -32,13 +33,14 @@ function Step({ n, title, children }: { n: string; title: string; children: Reac
 
 export default async function CatalogHelpPage({ params }: Props) {
   const { tenant } = await params;
+  const room = await getRoomHref(tenant);
   if (tenant !== 'bph') notFound();
 
   return (
     <div className="bg-cream min-h-screen">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={room('/catalog')}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Back to catalogue
