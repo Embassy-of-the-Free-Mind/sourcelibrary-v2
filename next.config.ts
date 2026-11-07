@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
@@ -761,4 +760,6 @@ const withAnalytics = (config: typeof nextConfig) =>
       })
     : config;
 
-export default withBotId(withAnalytics(nextConfig));
+// botid's withBotId wrapper was removed in #8374: it only added rewrites to
+// api.vercel.com/bot-protection, and nothing in src/ ever called checkBotId.
+export default withAnalytics(nextConfig);

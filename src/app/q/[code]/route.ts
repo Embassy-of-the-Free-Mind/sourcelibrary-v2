@@ -5,6 +5,7 @@ import { mintCitationToken } from '@/lib/citation-token';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 import { logShortlinkVisit } from '@/lib/shortlink-visit-log';
 import { Page } from '@/lib/types';
+import { publicUrl } from '@/lib/public-origin';
 
 interface RouteContext {
   params: Promise<{ code: string }>;
@@ -77,7 +78,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     if (!page) {
       // Redirect to book page if specific page not found
       return NextResponse.redirect(
-        new URL(`${prefix}/book/${bookPath}`, request.url),
+        publicUrl(`${prefix}/book/${bookPath}`, request),
         { status: 302 }
       );
     }
@@ -92,12 +93,12 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Redirect to the full page URL
     return NextResponse.redirect(
-      new URL(`${prefix}/book/${bookPath}/page/${page.id}${citeSuffix}`, request.url),
+      publicUrl(`${prefix}/book/${bookPath}/page/${page.id}${citeSuffix}`, request),
       { status: 302 }
     );
   } catch (error) {
     console.error('Shortlink decode error:', error);
     // Invalid shortlink - redirect to home
-    return NextResponse.redirect(new URL('/', request.url), { status: 302 });
+    return NextResponse.redirect(publicUrl('/', request), { status: 302 });
   }
 }
