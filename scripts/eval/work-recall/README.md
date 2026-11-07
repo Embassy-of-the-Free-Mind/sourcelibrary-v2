@@ -38,3 +38,7 @@ The judge is `claude -p --model sonnet` with no tools and no project settings. I
 sees title, author, year, language and page count only, never the image, so each call
 is a catalogue judgement, not a by-eye one. Result:
 `../experiments/2026-10-29-work-identity-recall-7761.md`.
+
+**The other direction, over-merging (#8291).** `overmerge-audit.mjs` samples live clusters per way they were
+made, plants known errors (`overmerge-planted-8291.jsonl`) as the gate, and scores a route-blind second read. Result:
+`../experiments/2026-11-07-work-id-overmerge-audit-8291.md`; the list is `overmerge-confirmed-8291.jsonl`.
