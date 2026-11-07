@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { resolvePageByNumber } from '@/lib/page-number-resolve';
+import { publicUrl } from '@/lib/public-origin';
 
 interface RouteContext {
   params: Promise<{ tenant: string; slug: string; num: string }>;
@@ -48,7 +49,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
   }
 
   const pageId = page.id || page._id?.toString();
-  const destination = new URL(`/embed/${tenant}/book/${bookSlug}/page/${pageId}`, request.url);
+  const destination = publicUrl(`/embed/${tenant}/book/${bookSlug}/page/${pageId}`, request);
   destination.search = request.nextUrl.search;
   return NextResponse.redirect(destination, 308);
 }
