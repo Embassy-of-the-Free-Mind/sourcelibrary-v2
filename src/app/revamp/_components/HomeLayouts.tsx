@@ -21,7 +21,7 @@ const TITLE = 'text-balance font-serif text-[44px] leading-[1.02] md:text-[clamp
 /* The /about pills. */
 function Pills({ f }: { f: HomeFeature }) {
   const items: [string, string, string][] = [
-    [n(f.works), 'works', '#8fbfe6'], [n(f.images), 'images', '#e6a06a'],
+    [n(f.works), 'works', '#8fbfe6'], [n(f.images), 'images', '#86c9b4'],
     ...(f.firstTranslations ? [[String(f.firstTranslations), 'first translations', '#e0b46a'] as [string, string, string]] : []),
   ];
   return (

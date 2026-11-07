@@ -8,6 +8,7 @@ import SubjectSearch from '../../_components/SubjectSearch';
 import OverviewBand from '../../_components/OverviewBand';
 import { Thumb } from '../../_components/CollectionsBrowser';
 import { collectionModel, dataFile, indexItems } from '../../_lib/data';
+import { RAMP } from '../../_lib/ramp';
 
 interface Sorted { source: string; slug: string; proposed: string; proposed_subject?: string | null }
 interface Subj { id: string; label: string; level: number; parents: string[] }
@@ -23,18 +24,20 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const about = indexItems(new Map(sorted.map((r) => [r.slug, r.proposed]))).filter((i) => sorted.find((r) => r.slug === i.slug)?.proposed_subject?.toLowerCase() === m.name.toLowerCase());
   const subjects = dataFile<{ subjects: Subj[] }>('subjects')?.subjects ?? [];
   const self = subjects.find((s) => s.label.toLowerCase() === m.name.toLowerCase());
+  const parent = self?.parents[0] ? subjects.find((x) => x.id === self.parents[0]) : undefined;
   const narrower = self ? subjects.filter((s) => s.parents.includes(self.id)) : [];
   return (
     <div className="bg-cream min-h-screen">
       <section className="relative overflow-hidden text-white min-h-[46svh] md:min-h-[56vh] flex items-end">
         <PlateWall tiles={m.heroTiles} rows={3} still />
         <div className={`${WRAP} relative w-full py-10 md:py-14`}>
-          <p className="uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3" style={{ color: 'rgba(255,255,255,.7)' }}>Subject</p>
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 uppercase text-[10.5px] md:text-[13px] tracking-[0.15em] mb-3 text-white/70">
+            <Link href="/revamp/subjects" className="hover:text-white">Subjects</Link>
+            {parent && <><span className="opacity-50">/</span><Link href={`/revamp/subjects#${parent.id}`} className="hover:text-white">{parent.label}</Link></>}
+          </nav>
           <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[13.5px] font-medium">
-            <span style={{ color: '#8fbfe6' }}>{n(m.stats.works)} works</span>
-            <span style={{ color: '#e6a06a' }}>{n(m.stats.images)} images</span>
-            {about.length > 0 && <span className="text-stone-200">{about.length} collections</span>}
+            {[`${n(m.stats.works)} works`, `${n(m.stats.images)} images`, about.length ? `${about.length} collections` : ''].filter(Boolean).map((t, i) => <span key={t} style={{ color: RAMP[i] }}>{t}</span>)}
           </div>
         </div>
       </section>

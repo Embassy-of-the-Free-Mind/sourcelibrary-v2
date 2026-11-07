@@ -6,6 +6,7 @@ import HeroScrim from '@/components/HeroScrim';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import type { CollectionBook } from '@/components/CollectionBookCard';
 import WorksGrid from './WorksGrid';
+import { RAMP } from '../_lib/ramp';
 import BookSlider from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -70,12 +71,14 @@ export default function CollectionTemplate({ m }: { m: CollectionModel }) {
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">{m.name}</h1>
           {m.deck && <p className="text-lg sm:text-xl text-white/75 max-w-3xl leading-relaxed mb-5">{m.deck}</p>}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] md:text-[13.5px] font-medium">
-            {m.stats.works > 0 && <span style={{ color: '#8fbfe6' }}>{n(m.stats.works)} works</span>}
-            {m.stats.images > 0 && <span style={{ color: '#efe9df' }}>{n(m.stats.images)} {m.opensOn === 'artworks' ? 'artworks' : 'images'}</span>}
-            {m.pages.length > 0 && <span style={{ color: '#8fbfe6' }}>{m.pages.length} pages</span>}
-            {m.quotes.length > 0 && <span style={{ color: '#8fbfe6' }}>{m.quotes.length} quotes</span>}
-            {m.stats.years && <span style={{ color: '#86c98f' }}>{m.stats.years}</span>}
-            {m.stats.firstTranslations > 0 && <span style={{ color: '#e0b46a' }}>{m.stats.firstTranslations} first translation{m.stats.firstTranslations === 1 ? '' : 's'}</span>}
+            {[
+              m.stats.works > 0 ? `${n(m.stats.works)} works` : '',
+              m.stats.images > 0 ? `${n(m.stats.images)} ${m.opensOn === 'artworks' ? 'artworks' : 'images'}` : '',
+              m.pages.length > 0 ? `${m.pages.length} pages` : '',
+              m.quotes.length > 0 ? `${m.quotes.length} quotes` : '',
+              m.stats.years ?? '',
+              m.stats.firstTranslations > 0 ? `${m.stats.firstTranslations} first translation${m.stats.firstTranslations === 1 ? '' : 's'}` : '',
+            ].filter(Boolean).map((t, i) => <span key={t} style={{ color: RAMP[Math.min(i, RAMP.length - 1)] }}>{t}</span>)}
             <span className="text-white/60">{m.byline}</span>
           </div>
         </div>
