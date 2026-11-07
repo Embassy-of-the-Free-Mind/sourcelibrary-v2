@@ -6,9 +6,9 @@ scripts: [Latn]
 canons: []
 n_books: 30
 n_pages: 30
-verdict: "PENDING — rule and frame committed before materializing and judging."
-status: undecided
-decision: "PENDING"
+verdict: "PASS — 25/26 written pages accepted, 0 wrong text, P(acc>=0.8)=0.981; 26/30 drawn pages written (87%)"
+status: decided
+decision: "The route carries over to manifest-only French 1800-1929 books (e-rara, NB, IA). At scale agy quota, not fetch, GPU or storage, is the limit: 1.13M calls is 43-343 weeks of pools."
 defect_rates: "scripts/eval/route-judge-6740/results/euro-manifest-sample-6871/defect-rates.json"
 feeds: route
 superseded_by: null
@@ -106,5 +106,61 @@ Each judge-accepted page is written as a first read through `cli-ocr.mjs apply -
 Rejected and unwritten pages stay unread. Page verdicts go to `recordPageVerdicts()` under method
 `euro-gpu-agy-cell-6871`.
 
-### Results
-PENDING.
+### Results (2026-11-07)
+
+| | drawn | materialized | written | accepted | wrong text | P(acc ≥ 0.8) | decision |
+|---|---:|---:|---:|---:|---:|---:|---|
+| e-rara | 27 | 27 | 23 | 22 | 0 | | |
+| NB Norway | 2 | 2 | 2 | 2 | 0 | | |
+| Internet Archive | 1 | 1 | 1 | 1 | 0 | | |
+| BSB | 0 (probe 3) | 0 | – | – | – | | |
+| **cell** | **30** | **30** | **26** | **25** | **0 (0%)** | **0.981** | **PASS** |
+
+Controls: wrong-page 2/2 rejected; planted errors 2/2 caught. No second draw (not close).
+`defect-rates.mjs`: 6,811 words judged, misleads 0.15 per 1K words, wrong text 0, fidelity 4.88/5.
+
+- **The one reject:** e-rara `6adefaadbf12d2ef2055b2d2` p145, O7 misleads: a printed `20⅓` read as `20½`. Cosmetic
+  notes on accepted pages: italics dropped (3), `réglement` modernised to `règlement`, `!!!` spacing, alignment markup,
+  a catchword note.
+- **Why 4 pages went unwritten:** 3 refused by the diff guard (put-back not like-for-like with the GPU draft), 1 for
+  letters outside the book's scripts. No refusals from agy (30/30 calls ok, 0 re-reads), marker residue 0
+  (#8296 holds), and **0 handwritten tags** (the IA French cell lost 29 of 59 unwritten pages to those).
+- **Fetches.** e-rara refused every direct GET from this box (27/27 HTTP 403) and served all 27 through the gex45
+  relay (direct from gex45 ~0.4-0.9 s an image). NB direct OK. IA: in the dry run one image (book
+  `6adec99ca765b2fd7a0ab8e0`) gave 504 twice (direct and relay) and the next book was drawn; in the real run the same
+  book fetched (transient, so IA was not dropped). BSB: 3/3 probe books gave manifest and image direct (0.2-0.8 s); the
+  sync worker's 12/12 `digitale-sammlungen` failures did not reproduce here. **No host was dropped.** The dry run's IA
+  pick (a page of `6adeddd4bf12d2ef2054564a`) was a dry-run pick only and was NOT materialized.
+- **State after.** 30 books, 8,552 page docs, `pages_state.state: materialized`, all still hidden,
+  `pipeline_auto.status: held`, hold `manifest-only-lazy-pages` unchanged (re-checked after the writes). One NB book
+  was born archived (245 pages from the ledger). Writes: 25 pages (run `cli-ocr-20261107102347-260198`, pipeline
+  `gpu-agy-first-read-euro-manifest-6871`, 25 `page_revisions`); `recordPageVerdicts` 26 rows under
+  `euro-gpu-agy-cell-6871`.
+- **Cost:** $0. agy pool `/root/.agy-milo`: 30 calls, weekly 91.15% → 90.81% left, 5-hour 84.7% → 82.3% (pool shared
+  with the gex45 Latin cron, so per call ≤ 0.011% weekly). GPU: 30 drafts, 0 errors, 26.7 s read (4,045 pages/h),
+  peak 15 GB.
+
+### Compared with the Internet Archive French cell (books with page records)
+Same route and rule: 28/30 accepted there with #8296, about 53% of drawn pages written (32/60), 29 of the 59 unwritten
+lost to handwritten tags. Here 25/26 accepted and **87% written** (26/30). The e-rara scans (full-size IIIF, ~763 KB
+an image) read at least as well as the IA scans; the write rate is higher because the handwritten-tag refusal did not
+fire once. n = 30, so the write rate's interval is wide (roughly 70-95%).
+
+### What reading manifest-only French 1800+ at scale would take (measured numbers)
+Frame: 2,545 books, 1,131,596 pages (e-rara 91%).
+- **Page docs:** a lazy page doc is 414 B, one with OCR 4.7 KB (`bsonSize`). 1.13M pages → ~0.47 GB bare, ~4.7 GB
+  uncompressed after OCR (~1.8 GB on disk at the collection's 0.39 storage ratio), ~0.12 GB of index, revisions about
+  as much again. +3.4% on the 33.5M-doc `pages` collection. Not a constraint.
+- **Images:** IIIF on demand is enough for the read (the harness fetched each image once and fed it to the GPU and
+  agy). Archiving is preservation, not a prerequisite; if done, ~0.75 MB a page weighted → ~850 GB on R2,
+  ~$13/month. The archive lanes already do it at their own pace (frame ledger coverage today: e-rara 0 books, NB
+  54/164).
+- **Fetch time** at the lanes' polite rates: e-rara 1 req/s → ~12 days; NB ~0.7 day; IA ~1.7 h; BSB (~25K req/day
+  shared quota) ~0.5 day. e-rara must be fetched from gex45 or l7a; it refuses this box.
+- **GPU:** 2,555-4,045 pages/h → 280-443 h, 12-18 days of the gex45 card.
+- **agy is the limit:** 1.0 call a page drawn (1.15 per written page) → ~1.13M calls. A pool's weekly room measured
+  between ~3,300 calls (earlier estimate, 0.03% a call) and ≥ 8,800 (this run) → **128-343 weeks on one pool, 43-114
+  weeks on three.** Every other part fits in about two weeks.
+- **Realistic?** Not as a single sweep on agy. It is realistic as a reader-driven and planned-wave lane (#6553) at a
+  few thousand pages a week, or on a route whose correction step is not agy-quota-bound. A bare GPU draft is never
+  served, so the GPU alone does not change this.
