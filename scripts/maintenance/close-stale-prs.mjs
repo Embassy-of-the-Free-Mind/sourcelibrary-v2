@@ -28,7 +28,7 @@
  *        node scripts/maintenance/close-stale-prs.mjs --apply
  *        node scripts/maintenance/close-stale-prs.mjs --idle 21 --max 5
  */
-import { execSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 export const NEVER_CLOSE = ['blocked', 'keep'];
@@ -102,7 +102,8 @@ function main() {
   if (!APPLY) return;
   let n = 0;
   for (const p of picked) {
-    sh(`gh pr close ${p.number} --repo ${repo} --comment ${JSON.stringify(closeComment(p, IDLE))}`);
+    // No shell: the comment has backticks, which a double-quoted shell string would run as commands.
+    execFileSync('gh', ['pr', 'close', String(p.number), '--repo', repo, '--comment', closeComment(p, IDLE)], { stdio: ['ignore', 'pipe', 'pipe'] });
     n++;
   }
   console.log(`closed ${n}`);
