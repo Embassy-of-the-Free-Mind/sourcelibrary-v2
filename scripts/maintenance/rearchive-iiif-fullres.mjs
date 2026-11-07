@@ -81,6 +81,13 @@
  *   - ambiguous→ skipped + flagged for manual review.
  *   --no-guard                 disable the guard (ONLY for a provider already
  *                              audited aligned; never blanket — this is the incident switch)
+ *   --page-guard               check EVERY page before writing it, instead of a sample: the
+ *                              fetched master must correlate with the held archive (48×64
+ *                              grayscale, r >= 0.9, page-alignment.mjs sameLeaf). A page that
+ *                              fails is skipped and listed, the rest of the book proceeds.
+ *                              Replaces the sampled guard, whose 8×8 dHash cannot separate
+ *                              leaves of one ruled layout and blocked aligned Siku books (#3186).
+ *                              Costs one R2 GET of the held image per page.
  *   Note: --recover-split does NOT run the guard; don't point it at unaudited providers.
  *
  * Other:
@@ -96,6 +103,10 @@
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
  *   --dry-run                  no writes
+ *   --book-ids-file F          process exactly these books, in file order (one id per line, or
+ *                              JSONL with an `id`); other selection filters are ignored
+ *   --done-file F              checkpoint: append one JSON line per finished book (counts, bytes,
+ *                              skipped pages) and skip books already in it on the next run
  *   --min-upgrade-ratio R      only refetch if maxres/current >= R (default 1.5)
  *   --max-chunk N              tile-stitch stride ceiling (default 1024). Raise only for a
  *                              host checked by hand to serve N×N regions (Manchester: 2000)
@@ -118,9 +129,11 @@ import sharp from 'sharp';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
+import { readFileSync, existsSync, appendFileSync } from 'fs';
 
-import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch } from '../lib/iiif-utils.mjs';
-import { checkAlignment as checkAlignmentShared, hashBuffer } from '../lib/page-alignment.mjs';
+import { upgradeToFullRes, rateLimitedFetch, fetchIiifInfo, isIiifUrl, getIiifSizeCap, fetchIiifNativeRes, shouldTileStitch, dimensionFields } from '../lib/iiif-utils.mjs';
+import { checkAlignment as checkAlignmentShared, hashBuffer, sameLeaf } from '../lib/page-alignment.mjs';
+import { upgradedPageSet } from '../lib/rearchive-page-set.mjs';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { withdrawPageVectors } from '../lib/withdraw-page-vectors.mjs';
@@ -159,6 +172,9 @@ const SKIP_UPGRADED_PAGES = FLAG('--skip-upgraded-pages');
 // the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
 // explicit, audited one-offs on a provider already proven aligned.
 const NO_GUARD = FLAG('--no-guard');
+const PAGE_GUARD = FLAG('--page-guard');
+const BOOK_IDS_FILE = ARG('--book-ids-file');
+const DONE_FILE = ARG('--done-file');
 
 // ── Setup ──
 
@@ -346,7 +362,9 @@ async function fetchUpgraded(url, { evenIfUrlIsFull = false } = {}) {
   try {
     if (ia) {
       // Already the master, whatever size the URL names (see header).
-      raw = await rateLimitedFetch(url, { timeout: 60_000 });
+      // Two retries, not the default three: the Archive renders each leaf on demand (~11 s), and a
+      // host that failed three times running is down, not flaky (#3186).
+      raw = await rateLimitedFetch(url, { timeout: 60_000, retries: 2 });
     } else {
       // Servers like Cambridge (maxWidth/maxHeight 2000) silently downscale
       // /full/full/ below the master size — the only path to native pixels is
@@ -548,7 +566,7 @@ async function refetchOne(book) {
 
   // ── Consistency guard: never overwrite an archive whose photo_original is a
   // different image than what we hold (the e-rara off-by-one class, #3186). ──
-  if (!NO_GUARD) {
+  if (!NO_GUARD && !PAGE_GUARD) {
     const align = await checkAlignment(pages);
     if (align.verdict !== 'aligned') {
       if (!DRY_RUN) {
@@ -572,6 +590,8 @@ async function refetchOne(book) {
 
   let updated = 0, skipped = 0, failed = 0;
   const updatedPages = [];
+  const bytes = { new: 0, old: 0, pages: 0 };
+  const offLeaf = [];
   await parallelMap(toWrite, async (page) => {
     const url = page.photo_original || page.photo;
     if (!isIiifUrl(url)) { skipped++; return; }
@@ -592,6 +612,29 @@ async function refetchOne(book) {
     const pageHeld = await heldMasterWidth(page, null);
     if (pageHeld && result.dims?.width && result.dims.width <= pageHeld * 1.05) { skipped++; return; }
 
+    // --page-guard: the master must be the leaf we hold, page by page. A tissue frame or an
+    // excluded leaf shifts the Archive's index from that page on (#8266), which a three-page
+    // sample at the quartiles can miss.
+    let heldBytes = null;
+    if (PAGE_GUARD) {
+      let leaf;
+      try {
+        const held = await rateLimitedFetch(page.archived_photo, { timeout: 30_000, retries: 2 });
+        heldBytes = held.length;
+        leaf = await sameLeaf(held, result.raw);
+      } catch (e) {
+        console.error(`    page ${page.page_number} guard-fetch-fail: ${e.message?.substring(0, 80)}`);
+        failed++;
+        return;
+      }
+      if (!leaf.same) {
+        console.error(`    page ${page.page_number} off-leaf (r=${leaf.r}): kept the held image`);
+        offLeaf.push({ page: page.page_number, r: leaf.r });
+        skipped++;
+        return;
+      }
+    }
+
     const key = `archived/${book.id}/${page.page_number}.jpg`;
     assertBookScopedKey(key, book.id, 'rearchive-iiif-fullres');
     if (DRY_RUN) {
@@ -600,23 +643,22 @@ async function refetchOne(book) {
     }
     try {
       const newUrl = await r2Put(key, result.processed);
+      bytes.new += result.processed.length;
+      if (heldBytes) { bytes.old += heldBytes; bytes.pages++; }
       // Pre-sized R2 variants (display_photo / image_thumb) are what the reader
       // actually serves — regenerate them from the upgraded master onto the SAME
       // keys, else the reader keeps showing the old low-res derivative.
       await regenerateVariants(page, result.processed);
       await db.collection('pages').updateOne(
         { _id: page._id || new ObjectId(page.id) },
-        { $set: {
-          archived_photo: newUrl,
-          photo: newUrl,
+        // Both size pairs, image_metadata and the top-level image_width/height (#3186).
+        { $set: upgradedPageSet({
+          newUrl,
+          dims: result.dims,
+          masterWidth: info.width,
           // Keep the IA leaf of record; `photo` is about to be ours.
-          ...(isIaBookReaderUrl(url) && !page.photo_original ? { photo_original: url } : {}),
-          'image_metadata.width': result.dims?.width,
-          'image_metadata.height': result.dims?.height,
-          'image_metadata.source_max_width': info.width,
-          'image_metadata.upgraded_at': new Date(),
-          updated_at: new Date(),
-        } },
+          keepSource: isIaBookReaderUrl(url) && !page.photo_original ? url : null,
+        }) },
       );
       updated++;
       updatedPages.push(page.page_number);
@@ -650,7 +692,7 @@ async function refetchOne(book) {
     });
   }
 
-  return { updated, skipped, failed };
+  return { updated, skipped, failed, bytes, offLeaf };
 }
 
 /**
@@ -817,6 +859,7 @@ async function recoverOne(book) {
           photo: r.url,
           photo_original: entry.sourceUrl,
           archived_photo: r.url,
+          ...dimensionFields(r.dims, null),
           image_metadata: {
             width: r.dims?.width,
             height: r.dims?.height,
@@ -892,10 +935,26 @@ async function main() {
     return;
   }
 
-  const books = await db.collection('books').find(buildBookQuery(), {
-    projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1, image_resolution_upgraded_at: 1 },
-  }).limit(LIMIT || 0).toArray();
+  const projection = { id: 1, slug: 1, title: 1, 'image_source.provider': 1, image_resolution_upgraded_at: 1 };
+  let books;
+  if (BOOK_IDS_FILE) {
+    const ids = readFileSync(BOOK_IDS_FILE, 'utf8').split('\n').map(l => l.trim()).filter(Boolean)
+      .map(l => (l.startsWith('{') ? JSON.parse(l).id : l));
+    const done = DONE_FILE && existsSync(DONE_FILE)
+      ? new Set(readFileSync(DONE_FILE, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l).id))
+      : new Set();
+    const want = ids.filter(id => !done.has(id)).slice(0, LIMIT || undefined);
+    const found = new Map((await db.collection('books').find({ id: { $in: want } }, { projection }).toArray()).map(b => [b.id, b]));
+    books = want.map(id => found.get(id)).filter(Boolean);
+    console.log(`Book list: ${ids.length} ids, ${done.size} already done, ${want.length - books.length} not found`);
+  } else {
+    books = await db.collection('books').find(buildBookQuery(), { projection }).limit(LIMIT || 0).toArray();
+  }
   console.log(`Found ${books.length} books to process\n`);
+  const checkpoint = (book, result) => {
+    if (!DONE_FILE || DRY_RUN) return;
+    appendFileSync(DONE_FILE, JSON.stringify({ id: book.id, at: new Date().toISOString(), ...result }) + '\n');
+  };
 
   let processed = 0, skipped = 0, failed = 0;
   const startTime = Date.now();
@@ -904,6 +963,7 @@ async function main() {
   await parallelMap(queue, async (book) => {
     try {
       const result = (MODE === 'recover-split') ? await recoverOne(book) : await refetchOne(book);
+      checkpoint(book, result);
       // refetchOne also returns a per-page skip COUNT under `skipped`; only a
       // string is a book-level skip.
       if (typeof result.skipped === 'string') {
@@ -919,6 +979,7 @@ async function main() {
       }
     } catch (e) {
       failed++;
+      checkpoint(book, { error: e.message?.substring(0, 200) });
       console.error(`  FAIL ${(book.title || '').substring(0, 50)}: ${e.message?.substring(0, 100)}`);
     }
   }, CONCURRENCY);
