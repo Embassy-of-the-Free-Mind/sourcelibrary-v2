@@ -6,6 +6,7 @@ import { localePath, hasBookPageForEveryBook, type Locale } from '@/lib/locale-p
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { hasLocalizedEdition, localizedCollection, localizedTitle, type LocalizedBookMap, type LocalizedCollectionMap } from '@/lib/localized';
 import { HOME_STRINGS, collectionName } from '@/lib/home-i18n';
+import { renderInlineProse } from '@/lib/inline-prose';
 
 interface FeaturedBook {
   id: string;
@@ -90,12 +91,12 @@ export default function EditorialSpread({ collection, books, lang = 'en' }: Edit
           </h2>
           {subtitle && (
             <p className="text-xl text-white/70 leading-relaxed mb-4 font-body">
-              {subtitle}
+              {renderInlineProse(subtitle, (seg) => seg, 'subt')}
             </p>
           )}
           {description && (
             <p className="text-base text-white/50 leading-relaxed mb-8 line-clamp-3 font-body">
-              {description}
+              {renderInlineProse(description, (seg) => seg, 'desc')}
             </p>
           )}
           <Link
