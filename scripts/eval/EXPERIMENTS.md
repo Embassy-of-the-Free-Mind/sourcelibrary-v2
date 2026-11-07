@@ -344,6 +344,75 @@ The other 109 cells have no rule pick to be false.
 
 **What it does not say.** The boundary is the least favourable truth, not the likely one: with the table's own estimates as the truth, the rate is under 6% in all but one cell. It measures the rule's margins at these n, not whether any route is good. Reports: issue comment on #8283 (2026-11-07), and rows[].v3 in every table the nightly rebuild builds.
 
+## 2026-11-07 · Does OCR prompt v19.2 change long s on Latin print? (#7263)
+
+**Result: the posted rule fails, 4 pages of 20 worse against a bar of 1, so v19.2 is not promoted.** The result does not show that v19.2 writes more long s as f overall. It shows that a single read of either prompt can switch letter form for a whole page, and that a test of one v19.2 read per page cannot separate the two prompts.
+
+**Design.** The rule was posted before any read and before any page was picked (issue comment 6710851197).
+- **Reads:** `cli-ocr.mjs read --fresh`, `CANDIDATE_READS=off`, gemini-3.8-flash-low, one page a call, the `.agy-james` pool, the `prompt-swap.mjs` preload from #8379. v19.1 twice (a, b) and v19.2 once (c), at the same time. Nothing was written or kept.
+- **Prompts sent:** checked from each arm's `prompt-base.txt`: they differ only by the two page types of #8346. v19.2 md5 `b0aa9d7d2e2c859e7adc0ac61060d7f4`.
+- **Pages:** 20 Latin print pages from 20 books, 7 from the 1500s, 7 from the 1600s and 6 from the 1700s, 1 of them gothic. Claude picked them by eye from image crops, out of 60 drawn, and no book comes from the first run.
+- **Long s written as f (F):** `applyLongS(text, model).kept`, with the #5924 model. Share = F / (F + ſ + round s not ending a word).
+- **Spend:** 61 agy calls and 14 Opus judge calls, all on subscriptions.
+
+### Clauses
+
+| Clause | Bar | Result | |
+|---|---|---|---|
+| Pages worse | ≤ 1 of 20 | **4** | **fail** |
+| Median share, v19.2 vs the top of v19.1's spread | ≤ 0.006 | 0 | pass |
+
+| Page worse | Year | Why | v19.1 a | v19.1 b | v19.2 |
+|---|---|---|---|---|---|
+| ad3074 | 1553 | long s | F 0 | F 0 | **F 49** |
+| f1dcdc | 1601 | long s | F 1 | F 0, 29 ſ | **F 17**, 10 ſ |
+| 632e66 | 1712 | long s | F 2 | F 0 | **F 31** |
+| 51d947 | 1582 | judged twice | accept, 4 | accept, 4 | **reject 3, reject 3** |
+
+### Long s across all 20 pages
+
+| | v19.1 a | v19.1 b | v19.2 |
+|---|---|---|---|
+| Total F | 83 | 135 | 103 |
+| Total ſ | 0 | 29 | 222 |
+| Median share | 0 | 0 | 0 |
+| Pages tripping the long-s test from this seat | 0 | 2 | 3 |
+| Reads that left round s for all-f or all-ſ on the page | 1 | 4 | 5 |
+
+- **v19.1 trips the same test.** With v19.1 b in c's seat, 377c10 (F 13) and 3af128 (F 43) count as worse. On 800a42 both v19.1 reads have F 71 and v19.2 has F 0 and 82 ſ.
+- **Off-round reads, not part of the rule:** v19.1 5/40, v19.2 5/20 (Fisher p = 0.28). With the first run's 5 pages: v19.1 6/50, v19.2 8/25 (p = 0.057). That count was made after seeing the results, and it counts a move to ſ, which is the truer letter, the same as a move to f.
+- **Text distance, median:** a–b 0.079, a–c 0.066, b–c 0.079.
+
+### Judge: Opus, blind, one output a call, with the image
+
+Five pages met the distance test and all five were judged, so none is unjudged. The wrong-page control was rejected in both arms (fidelity 1).
+
+| page | v19.2 | repeat | v19.1 a | v19.1 b | worse? |
+|---|---|---|---|---|---|
+| 51d947 | reject, 3 | reject, 3 | accept, 4 | accept, 4 | **yes**: margin notes; the body text is close |
+| 26d102 | reject, 3 | reject, 3 | reject, 3 | reject, 3 | no |
+| 800a42 | accept, 5 | not called | not called | not called | no |
+| ad3074 | accept, 5 | not called | not called | not called | no |
+| 08b05f | accept, 4 | not called | not called | not called | no |
+
+**The judge and the long-s measure disagree on ad3074.** That read writes `eft`, `fine`, `fpirat` throughout, and the judge accepted it at fidelity 5, calling the differences trivial. A word-level reader and a search index would not treat them as trivial. The judge is not a check on this defect.
+
+**The map page, reported only:** a new v19.2 read of 1,056 bytes, with 上猶 present, rejected at fidelity 3 (新昌 and 寧 missing, prefecture ovals garbled). The first run's v19.1 reads were accepted once and rejected once. This does not settle that page.
+
+### Limits
+
+- One v19.2 read per page. Under the two prompts' observed rate of whole-page switching, the at-most-1 bar can fail by chance, and this run cannot say how much of the 3 long-s pages is chance.
+- 60 candidates were cut to 20 by Claude's eye, not by a human reader. `applyLongS` is measured on roman type; one page is gothic, and it did not move (F 2 in all three).
+- 51d947 turns on a repeated accept/reject with fidelity one point apart, and the same judge flipped on 2/7 repeats in the first run.
+
+### Files
+
+`scripts/eval/route-judge-6740/results/ocr-prompt-v19-2-latin-7263/`: `analysis.json` (every page and read), `reads.json.gz`, `set-L.json`, `packet.json`, `key.json`, `verdicts-opus.jsonl.gz`, `recipe.json`, `paired-score.json`. Scripts: `ocr-v192-7263/longs.mjs`, `latin-packet.mjs`.
+
+### Replicated?
+
+The direction of the map and long-s worries is unresolved. Separating the prompts would need many reads per page, not more pages at one read each.
+
 ## 2026-11-07 · Does OCR prompt v19.2 type scores and tables without changing anything else? (#7263)
 
 **Result: the posted rule fails on one page, so v19.2 is not promoted.** The new types work. The failure is one map page, and the diagnostic reads suggest it is noise in that one read, but they do not prove it.
