@@ -39,6 +39,7 @@ describe('assistant guide', () => {
     expect(line).toContain('https://sourcelibrary.org/book/de-secretis/search/text?q=YOUR+WORDS');
     // The short passage page comes before the long document, which fetch tools truncate.
     expect(line.indexOf('/search/text')).toBeLessThan(line.indexOf('/read'));
+    expect(line).toContain('check a quotation against the scan');
     expect(line).toContain('https://sourcelibrary.org/api/books/b1/quote?page=N');
   });
 

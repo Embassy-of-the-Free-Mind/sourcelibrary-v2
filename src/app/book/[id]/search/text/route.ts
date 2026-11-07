@@ -148,7 +148,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     results.length
       ? `<p>${results.length === total ? `${total} matching pages.` : `The top ${results.length} of ${total} matching pages.`}</p><ol>${results.map((r) => renderResult(r, bookPath, book.id!, title)).join('')}</ol>`
       : '<p>No passages matched. Empty results mean try other words, not that the book does not discuss it: try the period’s own vocabulary and the original language.</p>',
-    results.length ? `<h2>Using these</h2><p>Open a page to read it beside its scan. Quote only text you received, word for word, and give the author, the date, the page and the link. Most English here is machine translation, so say so. More: <a href="${BASE}/llms.txt">${BASE}/llms.txt</a></p>` : '',
+    results.length ? `<h2>Using these</h2><p>Open a page to read it beside its scan. Quote only text you received, word for word, and give the author, the date, the page and the link, so the reader can check it against the scan. Most English here is machine translation, so say so. More: <a href="${BASE}/llms.txt">${BASE}/llms.txt</a></p>` : '',
     `<p>To go further, change the words. To search the whole library: <a href="${BASE}/search/text?q=${encodeURIComponent(q)}">${BASE}/search/text?q=${esc(encodeURIComponent(q))}</a></p>`,
   ].filter(Boolean).join('');
 
