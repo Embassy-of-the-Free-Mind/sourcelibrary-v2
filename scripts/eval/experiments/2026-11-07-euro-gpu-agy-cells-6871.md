@@ -10,6 +10,7 @@ verdict: "First reads of French, Spanish and Italian print (1600-1799 and 1800-1
 status: undecided
 decision: "No production lane (out of scope). Recommended to Derek on #6871: once #8296 merges, give French 1800-1929 and Spanish 1800-1929 (books with page records) the GPU draft > agy Flash-low route; the other four cells stay off the GPU. 138 judge-accepted test pages were written as first reads (holds kept); rejected pages stay unread."
 defect_rates: "scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/defect-rates.json"
+feeds: route
 superseded_by: null
 issue: [6871]
 router_evidence: "none — score files in scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/ (score, score-draw2, pooled); router table not edited"
