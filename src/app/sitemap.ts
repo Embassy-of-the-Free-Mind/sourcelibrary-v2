@@ -8,6 +8,7 @@ import { isLivePath } from '@/lib/page-status';
 import { isRepeatCapture } from '@/lib/page-counts';
 import { HISTORIES } from '@/app/explore/histories/histories';
 import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
+import { sibuCodes } from '@/lib/sibu-catalogue';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -175,6 +176,7 @@ export default async function sitemap({
       ...blogPosts(),
       ...categoryPages(),
       ...historyPages(),
+      ...sibuPages(),
     ]);
   }
 
@@ -244,6 +246,10 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/support`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/es/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/la/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/nl/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/zh/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/es/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   ];
 }
@@ -276,6 +282,17 @@ function blogPosts(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
   return [...posts, ...kinds];
+}
+
+// The 四部 catalogue (#8035), in both languages: empty classes included, since the page says plainly what we lack.
+function sibuPages(): MetadataRoute.Sitemap {
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/sibu', 0.6),
+    at('/zh/sibu', 0.7),
+    at('/zh/collections', 0.7),
+    ...sibuCodes().flatMap((code) => [at(`/sibu/${code}`, 0.5), at(`/zh/sibu/${code}`, 0.6)]),
+  ];
 }
 
 // The conceptual histories (#7623): index, each concept, its essays, its
@@ -480,7 +497,7 @@ async function getArtworks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
     const artworks = await db.collection('books').find(
       ARTWORK_SITEMAP_FILTER,
       {
-        projection: { _id: 0, slug: 1, thumbnail_blob: 1, thumbnail: 1, updated_at: 1 },
+        projection: { _id: 0, slug: 1, archived_full_url: 1, thumbnail_blob: 1, thumbnail: 1, updated_at: 1 },
         sort: { _id: 1 },
         skip: chunkIndex * ARTWORKS_PER_CHUNK,
         limit: ARTWORKS_PER_CHUNK,
@@ -498,8 +515,9 @@ async function getArtworks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
         } catch {
           lastModified = new Date();
         }
-        // Same image preference as the artwork page's own openGraph block.
-        const image = art.thumbnail_blob || art.thumbnail;
+        // Our full-size copy, as the page's ImageObject contentUrl uses: in a sample of 200,
+        // 169 thumbnails were under 300 px on the long side, too small to rank in image search.
+        const image = art.archived_full_url || art.thumbnail_blob || art.thumbnail;
         return {
           url: `${BASE_URL}/artwork/${encodeURIComponent(art.slug)}`,
           lastModified,

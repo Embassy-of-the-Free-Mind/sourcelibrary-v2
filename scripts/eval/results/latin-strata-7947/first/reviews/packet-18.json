@@ -1,0 +1,681 @@
+[
+  {
+    "book_id": "6958e011cf7070242ed4235c",
+    "slot": 4,
+    "title": "Herbarum varias qui vis cognoscere vires",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Macer Floridus' verse herbal with a word-by-word prose commentary; a medieval medical botany fits a library of early science.",
+    "rights_flag": null,
+    "structure_note": "The scan is a printed blackletter edition (a Baquelier imprint, with commentary), but 'published' reads 1150, the date the poem was composed, not when this edition was printed (I7, minor). Handwritten folio numbers (fol 44, fol 83) and signatures (f iij, l ii) run in order across the pages drawn. All 312 pages have OCR and translation.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 79,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "portio huius aque",
+            "image": "potio huius aque",
+            "problem": "'potio' (drink) read as 'portio' (portion); carried into the translation as 'a portion of this water'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Si porri par. ac. si coqueris idest decoqueris",
+            "image": "Si porri par. &c. si coxeris idest decoxeris",
+            "problem": "'&c.' read as 'ac.'; 'coxeris' normalised to 'coqueris'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Si porri par. &c. si coxeris",
+            "english": "If <insert>you take</insert> a portion of leek as if you cook it",
+            "problem": "the lemma 'Si porri par[tes] &c.' is misconstrued and a verb is inserted, so the opening of the gloss is muddled",
+            "severity": "minor"
+          },
+          {
+            "source": "succus porri mixtus supple cum felle capre",
+            "english": "Leek juice mixed <insert>supply: with goat's gall</insert>",
+            "problem": "'with goat's gall' is printed on the page but is shown as an editorial insertion",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 157,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "haec semina",
+            "image": "hec semina",
+            "problem": "spelling normalised",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Candida meconis species sic nempe vocari / Grecorum lingua dicunt quodcunque papaver",
+            "english": "The white species is indeed called meconis; / For they say that in the language of the Greeks, every kind of poppy / Is called by this name.",
+            "problem": "two verse lines are spread over three; the sense is kept",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 234,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "diffin=tericos",
+            "image": "dissin-thericos",
+            "problem": "minor letter misreading",
+            "severity": "minor"
+          },
+          {
+            "ocr": "cuius auctoritas Ctum inter latinos",
+            "image": "c̄tum (abbreviation)",
+            "problem": "abbreviation left as nonsense 'Ctum'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<meta>Digitized by Google watermark at the bottom of the page. The text is printed in a Gothic (blackletter) typeface.</meta>",
+            "image": "(a description, not page text)",
+            "problem": "a description of the page is stored inside the OCR",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Qum dat apis volucris",
+            "english": "\"When the winged bee [*apis*] gives...\"",
+            "problem": "Alexander's mnemonic line is reduced to a fragment; the note's account of the grammatical point (parsley vs genitive of bees) is a guess",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation's <meta> says this page concerns Lemon balm (Melissa), but the commentary says 'in hoc capite ... apium legisti' (in this chapter you have read 'apium'); the identification is unverified and may be wrong",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean read of a hard blackletter herbal: the verse and its glosses are transcribed and translated faithfully, with only small misreadings ('portio' for 'potio')."
+  },
+  {
+    "book_id": "69b4cc34d2bf9b45ea478d30",
+    "slot": 60,
+    "title": "Auriferae Artis, quam Chemiam vocant, Antiquissimi Authores",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Grataroli's 1572 alchemical anthology (Turba, Rosarium, commentaries); core alchemy. No collection is set in catalog_metadata.",
+    "rights_flag": null,
+    "structure_note": "Printed pages 315 (index 337) and 618 (index 670), then 260 (index 1002, ROSARIVM): the backstep matches the two separately paginated volumes of the 1572 edition bound into one record, so it is not a defect. 1,339 of 1,340 pages have OCR and 1,329 are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 337,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<meta>catchword: per</meta>",
+            "image": "'per' is the last word of the text line; no separate catchword is visible",
+            "problem": "self-reported tag dubious",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "QVI ME MISERCVLAM, id est, me habentem materiam Mercurialem & lunarem, offenderit",
+            "english": "HE WHO HAS OFFENDED ME, THE MISERABLE ONE, that is, one who has not yet possessed my Mercurial and Lunar matter",
+            "problem": "'me habentem' (me, who hold Mercurial and Lunar matter) becomes 'one who has not yet possessed': a negation is invented and the participle is moved onto the wrong person",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "de loco meo, id est, de corpore eris abstulerit",
+            "english": "from my place, that is, from the body of the quicksilver",
+            "problem": "'eris' (aeris, copper/bronze) is rendered as quicksilver, so the substance in an alchemical instruction is wrong",
+            "severity": "serious",
+            "class": "other:lexical-mistranslation"
+          },
+          {
+            "source": "dilectum meum, id est, pinguedinem solarem mecum, id est, cum humiditate Lunari vinculauerit",
+            "english": "my beloved, that is, the fatness, has solarized with me, that is, has bound him with Lunar humidity",
+            "problem": "the adjective 'solarem' (solar fatness) is turned into an invented verb 'has solarized'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 670,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Extracta tandé Venere, aqua in qua est",
+            "image": "aquā in qua est",
+            "problem": "accusative mark dropped (aquam is the object of distillabis)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(text ends 'cū adhuc corruptio')",
+            "image": "catchword 'ruptio' below the last line",
+            "problem": "catchword not recorded",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "tatur.",
+            "english": "is generated.",
+            "problem": "the end of a word carried over from the previous page is translated as an invented verb",
+            "severity": "minor"
+          },
+          {
+            "source": "intellige spiritum, animam, fermentum",
+            "english": "understand spirit and soul-ferment",
+            "problem": "a list of three items is merged into two",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<header>DE ARTE</header> tag at the top of the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 1002,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<sig>S 2</sig>",
+            "image": "no signature 'S 2' is visible; only the catchword 'Philoso-' and faint marks",
+            "problem": "self-reported signature possibly invented",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR is excellent throughout, but the flash-lite translation of the Sarratantar commentary invents a negation and turns copper into quicksilver on one page. An expert reading the alchemical instructions would be misled there."
+  },
+  {
+    "book_id": "69dbc9571040d1d5e20a25e1",
+    "slot": 29,
+    "title": "De officiis. Comm: Petrus Marsus. Add: Laelius, sive de amicitia. Comm: Omnibonus Leonicenus; Cato maior, sive de senectute. Comm: Martinus Phileticus; Paradoxa Stoicorum",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 1486 incunable of Cicero's moral works with humanist commentaries; a classical primary source, though outside the esoteric core. No collection is set.",
+    "rights_flag": null,
+    "structure_note": "Handwritten folio numbers 45, 91 and 137 rise in step with the page index, and the signature m iii is consistent. The pages are complex layouts: Cicero's text in a large-type block with commentary wrapped around it. The OCR and translation lose blocks of this layout: on p.93 the commentary column and one line of the main text are dropped, and on p.277 the whole Cicero text block is missing from the translation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 93,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "(absent)",
+            "image": "right-hand commentary column 'Ericulosae autem: postquam de periculis adeundis fecit mentionem ... Laudatque fabium maximum qui nunquam rumores de se & infamiam posuit ante patriae salutem'",
+            "problem": "a whole commentary column (about 14 lines) is silently omitted, which leaves the fragment 'luté cū. f. cunctator' with nothing to attach to",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "(absent)",
+            "image": "plus adipiscare re explicata boni: quam addubitata mali.",
+            "problem": "a line of Cicero's own text is omitted",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "Re explicata et manifesta, que exornata naui ... Qua addubitata: que re non explicata est resultet",
+            "image": "Re explicata: clara & manifesta, qm exornata naui ... Quã addubitata: incerta: qm re non explicata est res uitae",
+            "problem": "the gloss words 'clara', 'incerta' and 'res uitae' are garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "que bona fortunae con tenenda fut, puta conseruanda",
+            "image": "qm bona fortunae contenenda sũt pro uita conseruanda",
+            "problem": "'pro uita' read as 'puta', which leads to a reversed translation",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Comodis: fed nomen et gloria",
+            "image": "Comodis: utilitatibus & bonis externis: qm ipse magnanimus qui circa magna uersatur non curat bona fortunae: sed nomen & gloriam ... Inuenti aũt sunt: nunc affert illos qui pro patria quicquid habuerunt",
+            "problem": "more than a line of commentary is dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "bona fortunae contenenda sunt pro uita conseruanda (OCR: 'con tenenda fut, puta conseruanda')",
+            "english": "the goods of fortune are to be held as things to be preserved",
+            "problem": "the source says the goods of fortune are to be despised to save one's life; the translation says the reverse",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Idem gloriae iacturam ne nimiam quidem facere [vellent]",
+            "english": "The same is true of the loss of glory, not to do even too much.",
+            "problem": "the point (the same men would not suffer even a slight loss of glory) is lost in a fluent non-sentence",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "luté cũ. f. cunctator, pro dictatore appellaretur",
+            "english": "Luté <note>i.e., Quintus Fabius Cunctator</note>, when he was called dictator",
+            "problem": "the end of a word from the omitted column ('[sa]lutem cum F[abius]') is treated as a name",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation adds <margin>Actions of affairs</margin> and <margin>Luté cu. f. cunctator</margin> as marginal heads that are not on the page as margins",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 185,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "et non est hominis noie tantum",
+            "image": "& nõ est homo nisi noĩe tantũ",
+            "problem": "'nisi' dropped and 'homo' changed: 'is a man only in name' becomes 'is not a human in name only'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Sextus Rhofcius pf huius Rhofcii",
+            "image": "Sextus Rhoscius pr̃ (pater) huius Rhoscii",
+            "problem": "'pater' misread; the translation then makes the murdered father into the son",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "M. brutus i quo nunquid fuit brute uulnus",
+            "image": "M. brutus i quo magnũ fuit brute uulnus",
+            "problem": "'magnum' read as 'nunquid'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "De phia: quae uere quaerit. et iustitia oibus rebus anteponeda est.",
+            "image": "De phia: quae uerũ quaerit. & iustitiã oibus anteponit: estque magistra uitae & expultrix uitiorum. Veritas inqt Aristoteles primo moraliũ oibus rebus anteponẽda est.",
+            "problem": "a line dropped, so a saying about truth attributed to Aristotle becomes 'justice is to be preferred over all things'",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "quos non timet pueritate et humanitate oraturi",
+            "image": "quos nõ timẽt pro ueritate & humanitate oraturi",
+            "problem": "'pro ueritate' read as 'pueritate', translated as 'with youth'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Iudicis est semper in causis ueru sequi patroni nonum uerisimile",
+            "image": "patroni nõnũq̃ uerisimile",
+            "problem": "'nonnumquam' (sometimes) garbled; the qualifier is lost in the translation",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>pter sanctitate ...</margin>",
+            "image": "full-width commentary block below the two columns, not a margin",
+            "problem": "body commentary mis-tagged as margin",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Sextus Rhoscius pater huius Rhoscii Amerinus ... occiditur",
+            "english": "Sextus Roscius, son of this Roscius, an Amerian, ... was killed.",
+            "problem": "the victim is the father of Cicero's client; the translation says the son was killed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "nõ est homo nisi noĩe tantum",
+            "english": "is not a human in name only",
+            "problem": "sense inverted (from the OCR omission)",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Cecilia nepotis filia",
+            "english": "Cecilia, the niece of Nepos",
+            "problem": "'filia' is daughter",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 277,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "illeuicissim opinione fortaffe non ulla",
+            "image": "ille uicissim opinione fortasse nõnulla",
+            "problem": "'nonnulla' (some) split into 'non ulla' (none)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "cu fi & iatate",
+            "image": "cũ si gnũ uirtutis i eũ agnoscat. Vsu: cõsuetudine eius fruimur. Pares: ad aicitiã: aeqles i moribus: i lris: & i aetate.",
+            "problem": "half a line of the bottom commentary is dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "sane relinquunt et minime generosum ... Sic et utilitates ex amicitia maxime capientur. et erit eius (the whole main-text block, Laelius 29–32, about 30 lines)",
+            "english": "(absent)",
+            "problem": "the translation renders only the commentary; Cicero's own text, the centrepiece of the page, is silently left out",
+            "severity": "serious",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The incunable's layout of text block plus wraparound commentary defeats the pipeline. On p.93 a commentary column and a line of Cicero vanish from the OCR, on p.185 misreadings reverse the sense and turn the murdered father into the son, and on p.277 the English drops Cicero's own text entirely. An expert would flag it at once."
+  },
+  {
+    "book_id": "69dbc8751040d1d5e2099d42",
+    "slot": 41,
+    "title": "Compendium naturalis philosophiae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Usingen's 1507 scholastic compendium of natural philosophy (chance, monsters, meteors, inner senses): early science.",
+    "rights_flag": null,
+    "structure_note": "Running heads (Primus, Quartus, Tractatus) and signatures (C ii, z iii) fit the order of the book. 150 of 157 pages are translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "vt dicit phus si later ceciderit",
+            "image": "vt dicit phus Silr̃ si later ceciderit",
+            "problem": "'Similiter' dropped, so 'as the Philosopher says' attaches to the wrong example",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Mon In natura est peccatū ... ab strum intentiōe",
+            "image": "marginal 'Mon-strum' beside the text",
+            "problem": "a marginal word is spliced into two text lines",
+            "severity": "minor",
+            "class": "O12"
+          },
+          {
+            "ocr": "effectū monstrorum",
+            "image": "effectũ monstrosum",
+            "problem": "minor misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "tunam et sic est forma agentis",
+            "english": "...against fortune, and thus it is the form",
+            "problem": "a carried-over word end ('[for]tunam') is given an invented 'against'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Astub descendens",
+            "image": "Assub descendens",
+            "problem": "the meteor-name 'assub' (from Arabic) misread as 'astub', in the heading and the gloss",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ut capias saltantes",
+            "image": "vt capras saltantes",
+            "problem": "'capras' (leaping goats, a named meteor) misread; translated as 'jumping candles'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "qui est ut puta celi fenestra",
+            "image": "qui hz se vt pua celi fenestra (habet se ut parva)",
+            "problem": "'parva' (small) lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "capias (capras) saltantes",
+            "english": "jumping candles",
+            "problem": "named meteor rendered wrongly",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 115,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "**Estimatiuus est qui elicit a sensatis non sensata.**",
+            "image": "Elicitiuus est qui elicit a sensatis non sensata.",
+            "problem": "the printed heading term 'Elicitiuus' is replaced by the expected 'Estimatiuus'",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "qui dicitur estimatiuus in brutis",
+            "image": "q̃ dr̃ elicitiuꝰ in hoĩe & estimatiuꝰ in brutis",
+            "problem": "'elicitive in man' is dropped, which erases the distinction the page makes",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "quibus potest fieri sedata sensatio",
+            "image": "quibꝰ põt fieri scd̃aria sensatio",
+            "problem": "'secundaria' (secondary) read as 'sedata'; translated as 'sensation can be made quiet'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>Notandum est quod facta sensatione ...</margin>",
+            "image": "body commentary under the heading, with the actual marginal words 'Nam', 'Ut', 'In' beside it",
+            "problem": "commentary paragraphs are tagged as margin and the real marginal words are dropped; the opening 'Hic agit de secundo sensu interiori qui dicitur Imaginatiuus. Circa quem' is also lost",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "sedata (secundaria) sensatio",
+            "english": "a sensation can be made quiet",
+            "problem": "follows the misread",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Good, usable reads of a dense blackletter scholastic text. The slips are mostly technical terms normalised or misread ('Elicitiuus' becomes 'Estimatiuus', 'capras' becomes 'candles'); none reverses the argument."
+  },
+  {
+    "book_id": "6a085d0349638a50931ce8b7",
+    "slot": 56,
+    "title": "C. Velleii Paterculi Historiae. Romanae ad. M. Vinicium. cos. libri. 2 ab Aldo Manutio, Paulli f. Aldi n. emendati, et scholiis illustrati.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The 1571 Aldine Velleius with Aldo the Younger's scholia; an early printed classical text, consistent with early-european-books.",
+    "rights_flag": true,
+    "structure_note": "Printed pages 47 and 104, then the scholia section (ALDI MANVTII, sig. L) at index 170, in the order the edition prints them. 227 of 228 pages have OCR and 222 are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 56,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "tribunus plebis",
+            "image": "tribunus pl.",
+            "problem": "abbreviation silently expanded",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ta Atheniensium in Romanos fides fuit, ut",
+            "english": "that always and in every matter",
+            "problem": "the opening clause ('so great was the Athenians' loyalty to the Romans') is dropped",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "in perfugas, noxiosque animaduertit",
+            "english": "took note of the deserters and the guilty",
+            "problem": "'animadvertere in' means to punish; 'took note of' loses the meaning",
+            "severity": "moderate"
+          },
+          {
+            "source": "parentem ante omnia, supplicemque Mithridatem",
+            "english": "Mithridates—before all else a suppliant",
+            "problem": "'parentem' (obedient) dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "riae suae facturus",
+            "image": "*riae suae facturus",
+            "problem": "the asterisk marking the corrupt place is dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ad solium alarunt, in prisca grauitate celeberrimi fides",
+            "english": "To the throne [he was raised], loyalty most famous in ancient gravity",
+            "problem": "a known corrupt passage (asterisked in the edition) is rendered as fluent pseudo-sense with no warning",
+            "severity": "minor",
+            "class": "T7"
+          },
+          {
+            "source": "ab eo, iussuue eius interemptus",
+            "english": "was killed by his order",
+            "problem": "'by him' dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 170,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Sed ex dignitate, constantiaq. in illam conu. ampl.",
+            "english": "<gloss>But from the dignity, and constancy toward that... [illegible/truncated]</gloss>",
+            "problem": "the lemma's abbreviations are labelled 'illegible' though they are clear on the page",
+            "severity": "minor"
+          },
+          {
+            "source": "a librarijs postea corruptum",
+            "english": "later corrupted by librarians",
+            "problem": "'librarii' are copyists, not librarians",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the running head 'ALDI. MANVTII' is rendered as a top-level '# ' heading in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Accurate OCR of a clear Aldine italic, with mostly faithful translation; one page drops its opening clause and misrenders 'animadvertit'. [rights note redacted]"
+  }
+]

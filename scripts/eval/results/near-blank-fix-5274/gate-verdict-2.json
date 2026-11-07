@@ -1,0 +1,88 @@
+{
+ "judged": 30,
+ "of": 30,
+ "prompt_line": "This leaf may carry only a title, a caption or a few labels beside a picture. In the translation, the notes, the summary and the keywords alike, say only what is printed on this leaf or plainly visible in its picture: translate the printed words, describe the picture if there is one, and add no entry text, use, date, dynasty, source work, author or background that the leaf itself does not give.",
+ "new_clean": 26,
+ "stored_clean": 3,
+ "major_other": {
+  "new": 2,
+  "stored": 8
+ },
+ "by_bucket": {
+  "三才圖會": "11/13",
+  "武備志": "6/7",
+  "植物名實圖考": "1/1",
+  "other": "8/9"
+ },
+ "pass": false,
+ "adds": [
+  {
+   "page_id": "6992cd9943713c66ea63782c",
+   "book_id": "6992cd9943713c66ea6377ef",
+   "page": 61,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "historically also served as a place of confinement for imperial consorts",
+     "why": "Historical background that goes beyond a short gloss of the title term."
+    },
+    {
+     "quote": "Palace Laundry and Dyeing Workshop",
+     "why": "'Dyeing' is not in 暴室 (literally 'sunning/bleaching room') and nothing in the picture shows dyeing. This is extra interpretation built into the title."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cdb243713c66ea63806d",
+   "book_id": "6992cdb243713c66ea638041",
+   "page": 44,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "illustrating the classical Chinese idiom \"carving a mark on a boat to seek a sword\"",
+     "why": "The leaf prints no idiom. Only 刻船 appears, and the picture shows a man poling a boat with no sword or mark. Calling the scene the 刻舟求劍 story is the translator's interpretation, not something printed or visible."
+    },
+    {
+     "quote": "Carving a Mark on a Boat",
+     "why": "Applies the idiom reading to the title. The leaf prints only 刻船 ('carved boat'/boat type), and nothing on it says 'carving a mark'."
+    }
+   ]
+  },
+  {
+   "page_id": "6992ce582960dc4e5cea9265",
+   "book_id": "6992ce582960dc4e5cea91f3",
+   "page": 31,
+   "family": "武備志",
+   "adds": [
+    {
+     "quote": "mounted upon a segmented mechanical horse",
+     "why": "The picture shows an ordinary drawn horse with a pole running along its side. Nothing visible shows that it is segmented or mechanical; that is an interpretation taken from the faulty image description."
+    },
+    {
+     "quote": "shows a rider atop a segmented mechanical horse",
+     "why": "The summary repeats the same unseen claim that the horse is segmented and mechanical."
+    },
+    {
+     "quote": "automaton, pyrotechnics",
+     "why": "These keywords claim the subject is a mechanical, fire-producing device. That is neither printed on the leaf nor visible in it."
+    }
+   ]
+  },
+  {
+   "page_id": "6992c93c69b777d72c7638d0",
+   "book_id": "6992c93c69b777d72c76353e",
+   "page": 914,
+   "family": "other",
+   "adds": [
+    {
+     "quote": "alongside a vocabulary list",
+     "why": "The summary says the page has a vocabulary list. The leaf has only the title and the star chart."
+    },
+    {
+     "quote": "astronomy <note>original: астрономия</note>",
+     "why": "The gloss gives a Russian word as the 'original'. Nothing like it is printed on the leaf; it was carried over from the transcription's vocab line."
+    }
+   ]
+  }
+ ]
+}

@@ -23,13 +23,17 @@ export const BOOK_META_PROJECTION = {
   // Gates whether a LOCALIZED reader URL may exist for this book at all — see
   // the redirect in layout.tsx. Always projected, so its absence is an answer.
   pages_translated_es: 1,
+  // Opens the 中文 pane on /zh for a book with a Chinese edition (#7537).
+  pages_translated_zh: 1,
   // English edition? Its English leaves describe themselves by their own
   // words, not a stored rewording (#7100).
-  'translation_state.english_original': 1,
+  'translation_state.english_original': 1, facing_translation: 1,
 };
 export const PAGE_META_PROJECTION = {
   _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
   'translation.data': 1, 'ocr.data': 1, seo_indexable: 1,
+  // citation_firstpage in the metadata (#8161).
+  printed_page: 1,
   // An archived split parent (negative page_number) names its leaves here;
   // the reader redirects to the first one (#5842).
   split_into: 1,
@@ -82,6 +86,31 @@ export const getRepeatKeeperId = cache(async function getRepeatKeeperId(bookId: 
       (id) => db.collection('pages').findOne({ id, book_id: bookId }, { projection: REPEAT_KEEPER_PROJECTION }),
       repeatOf,
     );
+  } catch {
+    return null;
+  }
+});
+
+/**
+ * The real page behind a page id with junk stuck to its end, or null.
+ *
+ * not_found_reports logged ~200 of these a month (from 2026-09-12): a valid
+ * 24-hex page id followed by extra characters, e.g. `…cab155` + `26`, all
+ * with no referrer — links copied or retyped by people and chat assistants.
+ * 161 of 200 resolved, in the same book, to their first 24 characters. Only
+ * a page in the SAME book answers, so a stray id can never land a reader in
+ * another book.
+ */
+export const getTrimmedPageId = cache(async function getTrimmedPageId(bookId: string, pageId: string): Promise<string | null> {
+  const m = /^([0-9a-f]{24}).+$/i.exec(pageId);
+  if (!m) return null;
+  try {
+    const db = await getReadDb();
+    const page = await db.collection('pages').findOne(
+      { id: m[1].toLowerCase(), book_id: bookId },
+      { projection: { _id: 0, id: 1 } },
+    );
+    return page ? (page.id as string) : null;
   } catch {
     return null;
   }

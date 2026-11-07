@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Metadata } from 'next';
 import { supabase, supabaseAdmin } from '@/lib/supabase';
 import { getDb } from '@/lib/mongodb';
@@ -109,6 +110,7 @@ async function resolveDisplayNames(emails: string[]): Promise<Map<string, string
 
 export default async function CatalogHistoryPage({ params }: Props) {
   const { tenant, ubn } = await params;
+  const room = await getRoomHref(tenant);
   if (tenant !== 'bph') notFound();
 
   // Pull the work title so the page header is friendly.
@@ -149,7 +151,7 @@ export default async function CatalogHistoryPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <a
-          href={`/catalog/${encodeURIComponent(ubn)}`}
+          href={room(`/catalog/${encodeURIComponent(ubn)}`)}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Back to {displayTitle}

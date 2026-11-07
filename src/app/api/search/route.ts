@@ -25,6 +25,7 @@ import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { asksForOneVolume, sibuRowForWork } from '@/lib/sibu-catalogue';
 import { fetchTranslatedEditions, namesOneVolume, readabilityTier, TIER_READABLE, type ReadabilitySource } from '@/lib/search/readable-edition';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence, ROLLUP_BUCKETS, type BookPageCount } from '@/lib/search/page-rollup';
@@ -34,7 +35,9 @@ import { phraseMatch } from '@/lib/passage-score';
 import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { NATIVE_SHELF_LANGUAGE } from '@/lib/home-i18n';
 import { NATIVE_EDITION_LANGUAGE } from '@/lib/localized';
+import { foldSimplifiedHan } from '@/lib/search/han-fold';
 import { locateQuery } from '@/lib/search/original-snippet';
+import { wordStartHits } from '@/lib/search/match-quality';
 
 export const preferredRegion = 'fra1';
 
@@ -176,7 +179,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
   const _searchStart = Date.now();
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('q') || '';
+    const typedQuery = searchParams.get('q') || '';
+    // Every lane below matches the corpus's traditional characters. The log keeps what was typed.
+    const query = foldSimplifiedHan(typedQuery);
     let language = searchParams.get('language');
     const languagesParam = searchParams.get('languages');
     const excludeLanguagesParam = searchParams.get('exclude_languages');
@@ -386,6 +391,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       return filters;
     }
 
+    const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 };
+
     // Helper: convert book document to search result
     function bookToResult(typedBook: Book): SearchResult {
       const summaryText = (typedBook as any).reading_summary?.overview
@@ -524,7 +531,6 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -953,7 +959,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // filters admit, whatever the search stage was handed (#5921).
             // A `book_id` search names its one book and keeps the old lookup.
             { id: { $in: pageBookIds }, ...(bookId ? (tenantId ? { tenantId } : {}) : buildBookFilters()) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -1085,7 +1091,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // language / languages / exclude_languages, and since #5921
             // category, has_doi, has_translation, first_translation, library.
             { id: { $in: semanticBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -1169,7 +1175,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // Same object as every other lane (#5921): a vector lane has no
             // metadata predicate, so what is not re-applied here leaks.
             { id: { $in: pageBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -1256,6 +1262,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       const ENGLISH = 'English';
       const queryLower = matchQuery.toLowerCase();
       const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
+      const namedAsWords = (r: SearchResult) =>
+        wordStartHits(matchQuery, `${r.display_title || ''} ${r.title} ${r.author || ''}`);
 
       // The legacy heuristic ladder. Used directly for ranking=ladder, and as
       // the tiebreaker when ranking=rrf (so equal fused scores still get a
@@ -1324,6 +1332,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aAuthorHits = authorHits(a);
         const bAuthorHits = authorHits(b);
         if (aAuthorHits !== bAuthorHits) return bAuthorHits - aAuthorHits;
+
+        // 2c'. A row that carries the query as a word before one that holds it
+        // inside a longer word (#8309). Rung 2 counts substrings, so "Getica"
+        // tied *Romana et Getica* with every *exegetica* and *apologetica*, and
+        // the tie fell to "older first": rank 71 of 100.
+        const aNamed = namedAsWords(a);
+        const bNamed = namedAsWords(b);
+        if (aNamed !== bNamed) return bNamed - aNamed;
 
         // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
@@ -1439,6 +1455,49 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const collapsed = collapseByWork(results, { getIdentity: identityOf, betterRepresentative });
     let dedupedResults: SearchResult[] = collapsed.results;
 
+    // A work in many volumes opens at its first (#8035). The row shows whichever volume the
+    // lanes ranked highest, which for 佩文韻府 can be volume 412 of 728. Only for a work the
+    // 四部 catalogue names, only when the reader did not ask for a volume, and only through the
+    // same filters as every other row, so a volume this search may not show is never swapped in.
+    // English search keeps a volume that has more English than the first (#5975).
+    if (!pagesOnly && sortBy === 'relevance' && !asksForOneVolume(query)) {
+      const groupsByPrimary = new Map([...collapsed.byKey.values()].map(g => [g.primary, g]));
+      const leadBySlot = new Map<number, { group: (typeof collapsed.groups)[number] | undefined; first: string; workId: string }>();
+      dedupedResults.slice(offset, offset + limit).forEach((r, i) => {
+        if (r.type !== 'book') return;
+        const workId = (r as any)._work_id as string | undefined;
+        const first = sibuRowForWork(workId)?.first;
+        if (workId && first && first !== r.slug && first !== r.id) {
+          leadBySlot.set(offset + i, { group: groupsByPrimary.get(r), first, workId });
+        }
+      });
+      if (leadBySlot.size > 0) {
+        const firsts = [...leadBySlot.values()].map(s => s.first);
+        const docs = await db.collection('books')
+          .find({ $and: [buildBookFilters(), { $or: [{ slug: { $in: firsts } }, { id: { $in: firsts } }] }] })
+          .project(bookProjection)
+          .maxTimeMS(2000)
+          .toArray()
+          .catch(() => []);
+        const docByKey = new Map<string, Book>();
+        for (const d of docs as unknown as Book[]) {
+          docByKey.set(d.id, d);
+          const slug = (d as any).slug as string | undefined;
+          if (slug) docByKey.set(slug, d);
+        }
+        dedupedResults = [...dedupedResults];
+        for (const [slot, { group, first, workId }] of leadBySlot) {
+          const doc = docByKey.get(first);
+          const current = dedupedResults[slot];
+          if (!doc || doc.work_id !== workId) continue;
+          if (!isLocalizedSearch && (doc.pages_translated ?? 0) < (current.translated_count ?? 0)) continue;
+          const lead = bookToResult(doc);
+          dedupedResults[slot] = lead;
+          if (group) group.primary = lead;
+        }
+      }
+    }
+
     // Asked-for diversity on a passage list (MCP search_translations, #3895):
     // re-order, never drop. No score is passed: the list is fused from lanes
     // whose scores do not compare, so the caps are absolute.
@@ -1550,7 +1609,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     });
 
     logSearchQuery({
-      request, identity, route: 'search', query,
+      request, identity, route: 'search', query: typedQuery,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
       vector_shadow: vectorShadow.result,

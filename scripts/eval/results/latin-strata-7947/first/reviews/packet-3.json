@@ -1,0 +1,507 @@
+[
+  {
+    "book_id": "69b4194bddff1f043992a157",
+    "slot": 81,
+    "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Freher's emblem manuscript of Boehmist theosophy (BPH PH357); squarely within the library's Hermetic/theosophical scope.",
+    "rights_flag": null,
+    "structure_note": "88 pages, all OCR'd, 78 translated; the sampled leaves carry consecutive emblem numbers (58–60, 81–83, 135–136), so the order is plausible. Nothing broken.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Translation notes add interpretation that isn't on the page (\"This describes the paradox of the mathematical and spiritual point\", \"This warns against interpreting spiritual origins in purely physical terms\")",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Gläntze in der Sonnen Licht, wie du wilt, etc.",
+            "image": "Gläntze in der Sonnen Lufft [or Luſt], wie du wilt, etc.",
+            "problem": "the German motto's last noun is not 'Licht' (no dotted i, no c-h); it reads as Lufft/Luſt. The model swapped in the expected word",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Gläntze in der Sonnen Licht",
+            "english": "Shine in the sun's light",
+            "problem": "carries the misread 'Licht' into English",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The image description says the centre of emblem 81 holds 'a radiant sun or monstrance-like object on an altar'. It actually shows a seated figure holding a branch, sitting on a block inside a ring of rays. The translation repeats this description.",
+            "severity": "moderate",
+            "class": "other:image-desc-wrong"
+          },
+          {
+            "note": "<note> nested inside <note> in the translation (the image-description note contains an 'original:' note)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 74,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Ex Uno (mirum! non mirum) innumera.",
+            "english": "From the One <note>strange! and yet not strange</note> come things without number.",
+            "problem": "the parenthesis that belongs to the motto was moved into a note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean. The emblem mottoes are transcribed and translated faithfully. The only slips are one misread German word on p.45 and a wrong description of an emblem's centre."
+  },
+  {
+    "book_id": "69f33964876dd827cbc54e04",
+    "slot": 31,
+    "title": "Actus et consecratio crismatis in cena domini",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A decorated liturgical manuscript (Houghton fMS Typ 309: Maundy Thursday chrism rite, Canon of the Mass, Pater noster with chant). This is Catholic liturgy, outside the library's esoteric and early-science core, and no collection is given.",
+    "rights_flag": null,
+    "structure_note": "Only 3 images for a whole manuscript, so this is a selection of leaves, not the codex. The record's title is just the first rubric. Pages 2–3 are the Te igitur and the Pater noster, not the chrism rite. A reader would take the record for the complete work.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "in cena domini",
+            "english": "on the Lord's Supper",
+            "problem": "should be 'at the Lord's Supper' (Maundy Thursday)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The image description invents the miniature. The initial N is formed by two caryatid/mermaid figures with a fish/dragon on the diagonal; there is no bird. The OCR says 'a bird (likely a pelican) feeding its young', and the translation elaborates: 'depicts a pelican feeding her young from her own breast, a traditional symbol of self-sacrifice and Christ's sacrifice'. 'Pelican symbolism' is in the keywords.",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "omnibus orthodoxis atque catholice et apostolice fidei cultoribus",
+            "english": "all those who hold to the true faith and the catholic and apostolic religion",
+            "problem": "paraphrased ('all the orthodox and worshippers of the catholic and apostolic faith')",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "image description wrapped in <meta> in the translation pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Per omnia secula seculorum",
+            "english": "For all ages of ages",
+            "problem": "over-literal for the doxology ('world without end')",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text is read and translated well. But page 1's image description invents a pelican in an initial that has none, and the translation builds a symbolic reading on it. The record is 3 selected leaves titled after the first rubric, and it sits on the edge of the library's scope."
+  },
+  {
+    "book_id": "6a0851ce15c643eb1af4b329",
+    "slot": 39,
+    "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem ... auctore Paulo Manutio Aldi filio",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Aldine 1548 Cicero letters in the europeanlibraries collection: a classical source, appropriate to that collection.",
+    "rights_flag": null,
+    "structure_note": "701 pages, 697 with OCR, 695 translated, so near-complete. The OCR spelling convention flips between pages (u kept on p.176 and p.526, normalised to v on p.349: 'crevi', 'video'). This is O9, minor.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 176,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "post a Pompeii procuratoribus sexcentis premi coeptus",
+            "english": "Afterward, he began to be pressed by Pompey's agents.",
+            "problem": "'sexcentis' (countless/six hundred) dropped",
+            "severity": "minor"
+          },
+          {
+            "source": "ei tamen sic nunc soluitur",
+            "english": "to him, however, he is now paying",
+            "problem": "the Pompey sentence is knotted: the 'cum ... tum' causal clause and the main clause run together",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>Catchword: et</meta>: 'et' is just the last word of the text line, not a catchword",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 349,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "pridie Nonas Februarias (image: prid. Non. Feb.)",
+            "english": "on the 2nd of February",
+            "problem": "the day before the Nones of February is 4 February, not the 2nd. The letter's date is wrong.",
+            "severity": "moderate"
+          },
+          {
+            "source": "de quibus ad te dolore, et lacrymis scribere prohibeor",
+            "english": "about which I am prohibited from writing to you with grief and tears",
+            "problem": "should be 'prevented BY grief and tears from writing'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 526,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ut, quid possem prouidere, in mentem ueniret mihi, nisi quod praesens me ipse defenderem",
+            "image": "ut, quid possem prouidere, in menté non ueniret mihi, nisi q praesens me ipse defenderé",
+            "problem": "'non' dropped. Cicero says nothing came to mind except defending himself in person; the transcription says something did. Sense reversed.",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "in mentem [non] ueniret mihi, nisi quod praesens me ipse defenderem",
+            "english": "so that it came into my mind what I could provide, except that I should defend myself in person",
+            "problem": "carries the dropped 'non' into English, so the sense is reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "sed abesse hanc aetatem longe a sepulcro negant oportere",
+            "english": "But they say that this age ought to be far from the grave",
+            "problem": "'negant' (they deny) is translated as 'they say', so the sentence says the opposite: a man of my age should NOT be far from his grave",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "etsi idem, te scribere, sperare melius",
+            "english": "And yet [you say] the same, that you are writing to hope for better",
+            "problem": "garbled: 'although he also said you wrote that you hope for better'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "<header>LIB. XVI. EPIST.</header> repeated at the top of the translation pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good, fluent reading overall. But p.526 drops a 'non' in the OCR and renders 'negant' as 'they say', so two sentences on one page say the opposite of Cicero. P.349 also misdates a letter."
+  },
+  {
+    "book_id": "69f338e1876dd827cbc54599",
+    "slot": 30,
+    "title": "Horae beatae Mariae virginis (use of Paris)",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "An illuminated Book of Hours (Harvard), devotional and liturgical. It is outside the library's esoteric and early-science core, and no collection is given.",
+    "rights_flag": null,
+    "structure_note": "18 images of a full Book of Hours, i.e. the miniature pages only. Each image is a right-hand miniature page with a strip of the facing leaf's text at the left edge. The engine transcribed that strip as <margin> on every sampled page and the translator 'translated' the fragments.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>dicat. O / nobis qui / abrenunci / ente fan / ... cramen / tous.</margin>",
+            "image": "the cut-off line ends of the FACING leaf's text, visible at the left edge",
+            "problem": "a neighbour leaf's strip is read as this page's marginalia (about half the transcription)",
+            "severity": "serious",
+            "class": "I4"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Domine labia mea aperies et os meum annuntiabit laudem tuam Deus",
+            "english": "**D**omine labia mea <note>original: O Lord, open my lips</note> aperies et os me um annuntiabit lau dem tuam Deus",
+            "problem": "the page's only real text is left in Latin. Half a line of English sits in a note labelled 'original', and the rest is untranslated.",
+            "severity": "serious",
+            "class": "T2"
+          },
+          {
+            "source": "neighbour-strip fragments ('ente fan', 'tate neam', 'bis')",
+            "english": "'being <unclear>fan-</unclear>', 'to us', 'with. Hymnus'",
+            "problem": "word fragments from another leaf rendered as English",
+            "severity": "moderate",
+            "class": "I4"
+          }
+        ],
+        "other": [
+          {
+            "note": "Broken markup in the translation: '<margin></margin>' then the content, then a stray '</margin>'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>ne patre nos / omnes atque / ... rtine. / gloria facer / ... mum.</margin>",
+            "image": "line ends of the facing leaf (a collect for St Catherine), cut off at the gutter",
+            "problem": "the neighbour leaf's strip is transcribed as marginalia on this page",
+            "severity": "serious",
+            "class": "I4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "rtine. / gloria facer / artimum b",
+            "english": "Martin. / glory to make / martyrdom",
+            "problem": "fragments are guessed into words that are not there: 'rtine' becomes the name 'Martin' (most likely '[Kathe]rine/[ma]rtine'); 'sacer' is misread as 'facer' and rendered 'to make'",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Broken markup again: '<margin></margin>' followed by content and a stray '</margin>'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>h deum. et pa / ... ndum. amen</margin>",
+            "image": "the facing leaf's text strip",
+            "problem": "neighbour strip read as marginalia",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "**O**ut a par moy",
+            "image": "Tout a par moy (the decorated initial is T)",
+            "problem": "the decorated initial is dropped, leaving the non-word 'Out'",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "affu quon neme boye. Mesius retraict",
+            "image": "affin quon ne me voye. Me suis retraict",
+            "problem": "'affin … voye' and 'Me suis' are misread, losing the sense ('so that no one sees me, I have withdrawn')",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Tout a par moy affin quon ne me voye. Me suis retraict a vng lieu solitaire",
+            "english": "Out of my own have I no one to whom I might complain. My mind withdraws to a solitary place.",
+            "problem": "'have I no one to whom I might complain' and 'My mind' are invented over the garbled OCR. The French says 'All alone, so that no one may see me, I have withdrawn to a solitary place.'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "ou tout cueur se rauoye",
+            "english": "where every heart is renewed",
+            "problem": "'se ravoie' means 'finds its way back', not 'is renewed'",
+            "severity": "moderate"
+          },
+          {
+            "source": "Sulpicia (strip; probably 'Suscipe'/'Suspicia')",
+            "english": "death. Sulpicia",
+            "problem": "a proper name invented from a fragment of the neighbour strip",
+            "severity": "moderate",
+            "class": "I4"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "On every sampled page the facing leaf's edge strip was transcribed and 'translated' as this page's marginalia. Page 5's real text was left untranslated. Page 14's French prayer is invented over a garbled read. Not showable."
+  },
+  {
+    "book_id": "6a100a46f71729295096edcb",
+    "slot": 89,
+    "title": "Origenis opera omnia et quae eius nomine circumferuntur / Tomus primus.",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "De la Rue's 1743 Origen (De principiis, Contra Celsum): patristic Platonism, adjacent to the library's Hermetic and Platonist holdings.",
+    "rights_flag": null,
+    "structure_note": "541 pages, 522 OCR'd, 517 translated; the gap is probably plates/blanks. The OCR switches convention between pages: p.142 normalises long s, p.276 keeps ſ but misreads many as f ('Celfus', 'Jefu', 'fit' for 'ſit'), and p.407 normalises again. This is O9.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 142,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "eos qui cum capere possunt",
+            "image": "eos qui eum capere possunt",
+            "problem": "eum/cum",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Vide l. 2. Origen. q. xj. num. 15.",
+            "english": "See book 2, Origen, question 11, number 15.",
+            "problem": "'Origen.' here is Huet's Origeniana (rendered correctly elsewhere on the page)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 276,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Celfus / Jefu / Theffalonicenfes / Moyfe / revelandus fit / fignis / falus",
+            "image": "Celſus / Jeſu / Theſſalonicenſes / Moyſe / revelandus ſit / ſignis / ſalus",
+            "problem": "long s systematically read as f, which breaks search for Celsus/Jesu/Moyses. The translation reads through it correctly.",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Vita hominum infeatetur malis",
+            "image": "infeſtatur",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 407,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Dixi hoc futurum?",
+            "image": "Dixin hoc futurum?",
+            "problem": "the -n question particle is dropped (the translation still reads it as a question)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Qua vox est",
+            "image": "Quae vox est",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "e Aristocreonti.) Niceonti Plutarch.",
+            "image": "Nicreonti",
+            "problem": "name in the footnote misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "OCR contains a model-authored note: '<note>The following section contains scholarly apparatus and footnotes in sm[aller type]</note>'",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Strong. Dense two-column Latin with footnotes is transcribed and translated faithfully, apparatus included. The flaws are cosmetic: long s read as f on one page, and the spelling convention changes from page to page."
+  }
+]

@@ -29,7 +29,7 @@
  * undo removes docs, and only the ones carrying its own run id. `translation.data` is never rewritten.
  */
 
-import { splitAnnotations } from './annotation-layer.mjs';
+import { splitAnnotations, renderMarkup, resolveAnchor, spanAnchor } from './annotation-layer.mjs';
 import { contentHash } from './write-provenance.mjs';
 
 /** Bump when annotation-layer.mjs changes what `text` or the annotations are for the same input. */
@@ -107,6 +107,87 @@ export function getTranslationText(page) {
   if (!t || typeof t.data !== 'string' || !t.data) return '';
   if (translationTextIsCurrent(t)) return t.text;
   return splitAnnotations(t.data).text;
+}
+
+/**
+ * The markup the reader renders from the layer (#7965): `text` with the stored annotations put back
+ * inline by renderMarkup, so the reader's one renderer (NotesRenderer) draws every annotation type the
+ * parser emits, notes on and off, with the treatment it already has.
+ *
+ * Rules the reader needs that renderMarkup (a faithful rebuild) does not apply, each found on the #7965 gate:
+ *   - a MALFORMED annotation (an unclosed tag, a stray close tag) is not put back. In `text` the words after
+ *     an unclosed tag are book words already; re-emitting the lone open tag makes the renderer read the rest
+ *     of the page as inside it, and a note there then shows as the book's words with notes off.
+ *   - a note never lands INSIDE a mark. The renderer flattens a `<note>` nested in a `<margin>`/`<insert>` into
+ *     plain words (notes on and off), so a mark that spans a note's place is split around it:
+ *     `<insert>a</insert> <note>…</note><insert> b</insert>`.
+ *   - a definition of a term (no stored `gap`) whose term is followed by one space and then a space or a
+ *     markdown closer (`*`, `_`) goes after that space, as the model wrote it: `**<term>Iyatē</term> <gloss>he
+ *     goes</gloss>**`, not `… </gloss> **`, which breaks the bold. A note placed after a space and straight before
+ *     a word gets a space after it (`trail`): the parser folds one of the two spaces around a note into its cut.
+ *   - an EMPTY mark (`<margin></margin>`, or a margin that only held a note) is left out: rebuilt, its close
+ *     sorts before its open and the renderer reads the rest of the page as inside it.
+ *   - a note with nothing but space after it in `text` (footnotes, an apparatus at the foot of the page) gets its
+ *     own paragraph again (`para`), as it stood; inline, the renderer reads "LA, <note>1) See pp. …" differently.
+ *   - any ORPHAN (an anchor that does not resolve in `text`) returns null: the caller serves today's path.
+ *     A doc carrying the current hash should never orphan; if it does, the layer disagrees with itself.
+ *     So does a result whose inline tags do not nest (inlineTagsNest).
+ * @param {string} text translation.text (current: its text_from.data_hash is the hash of data)
+ * @param {object[]} stored the page_annotations doc's `annotations` (flat anchors)
+ * @returns {string|null}
+ */
+export function layerMarkup(text, stored) {
+  if (typeof text !== 'string' || !Array.isArray(stored)) return null;
+  const anns = stored.filter((a) => a && !a.malformed).map(parserAnnotation);
+  // Where each anchored note goes (renderMarkup's rule), after the term-gap rule above.
+  const cuts = [];
+  for (const a of anns) {
+    if (a.kind === 'mark' || a.scope === 'page' || a.glossary || a.type === 'interp' || !a.anchor) continue;
+    const r = resolveAnchor(text, a.anchor);
+    if (!r) return null;
+    if (!a.gap && r.end > r.start && text[r.end] === ' ' && /^(?: |[*_]+(?:[\s.,;:!?)\]]|$))/.test(text.slice(r.end + 1))) a.gap = ' ';
+    const at = a.gap && text.startsWith(a.gap, r.end) ? r.end + a.gap.length : r.end;
+    // Placed after a space and straight before a word: the space the parser folded into the cut comes back after it.
+    if (at > 0 && /[ \t]/.test(text[at - 1]) && /[\p{L}\p{N}]/u.test(text[at] ?? '')) a.trail = true;
+    // Nothing but space after it: a note the page ends on (footnotes, an apparatus) stood in its own paragraph.
+    if (!text.slice(at).trim()) a.para = true;
+    cuts.push(at);
+  }
+  const out = [];
+  for (const a of anns) {
+    if (a.kind !== 'mark' || !a.anchor) { out.push(a); continue; }
+    const r = resolveAnchor(text, a.anchor);
+    if (!r) return null;
+    if (r.end <= r.start) continue; // an empty mark has no words; put back, its close sorts before its open
+    const inner = [...new Set(cuts.filter((c) => c > r.start && c < r.end))].sort((x, y) => x - y);
+    if (!inner.length) { out.push(a); continue; }
+    // Each piece keeps its words only: the spaces at a cut stay outside the tags, where the renderer keeps them.
+    let s = r.start;
+    for (const e of [...inner, r.end]) {
+      let ps = s, pe = e;
+      while (ps < pe && /\s/.test(text[ps])) ps++;
+      while (pe > ps && /\s/.test(text[pe - 1])) pe--;
+      if (pe > ps) out.push({ ...a, anchor: spanAnchor(text, ps, pe) });
+      s = e;
+    }
+  }
+  const { markup, orphans } = renderMarkup(text, out);
+  return orphans.length || !inlineTagsNest(markup) ? null : markup;
+}
+
+/**
+ * True when every inline tag of the closed vocabulary in `markup` closes in order. A body that itself holds tag
+ * text (a garbled page: `<gloss>a paste</term>`) can make a rebuilt page cross; the reader then takes today's path.
+ * 1 page in 4,983 on the #7965 scan.
+ */
+function inlineTagsNest(markup) {
+  const stack = [];
+  for (const m of markup.matchAll(/<(\/?)(note|image-desc|margin|gloss|insert|unclear|term)(?:\s[^<>]*)?>/gi)) {
+    const name = m[2].toLowerCase();
+    if (!m[1]) stack.push(name);
+    else if (stack.pop() !== name) return false;
+  }
+  return stack.length === 0;
 }
 
 /** The run id a translation writer stamps when its caller has no job id: one doc per text. */

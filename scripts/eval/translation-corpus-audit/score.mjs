@@ -107,11 +107,30 @@ const report = {
 // ── Post-stratified corpus estimate (weights = live translated pages per language) ─
 const W = drawLog.weights;
 const totalPages = Object.values(W).reduce((s, w) => s + w.translated_pages, 0);
+// Chinese strata oversample (draw.mjs --zh-strata, #5274): the Chinese rate is the mean over its strata (translation
+// model × transcription engine) of main + kind "zh" books, each stratum weighted by w_books, the probability that the
+// book-random main draw lands in it. So the oversample sharpens the Chinese cell without changing what it estimates,
+// and the language weights stay the headline's. Without --zh-strata this is the plain per-language mean, as before.
+const ZHW = drawLog.zh_strata?.weights?.strata || null;
+const zhPool = ZHW ? manifest.filter((m) => (m.kind === 'main' || m.kind === 'zh') && m.language === 'Chinese' && m.zh?.stratum && ZHW[m.zh.stratum] && V[m.id]) : [];
+const zhByS = groupBy(zhPool, (m) => m.zh.stratum);
+function langRate(lang, items, pred, rand = null) {
+  if (lang === 'Chinese' && zhPool.length) {
+    let r = 0, c = 0;
+    for (const [s, arr] of Object.entries(zhByS)) {
+      let k = 0; for (let j = 0; j < arr.length; j++) k += pred(V[(rand ? arr[Math.floor(rand() * arr.length)] : arr[j]).id]) ? 1 : 0;
+      r += ZHW[s].w_books * k / arr.length; c += ZHW[s].w_books;
+    }
+    return c ? r / c : 0;
+  }
+  if (rand) { let k = 0; for (let j = 0; j < items.length; j++) k += pred(V[items[Math.floor(rand() * items.length)].id]) ? 1 : 0; return k / items.length; }
+  return items.filter((m) => pred(V[m.id])).length / items.length;
+}
 function weighted(pred) {
   let est = 0;
   for (const [lang, items] of Object.entries(byLang)) {
     const share = W[lang].translated_pages / totalPages;
-    est += share * items.filter((m) => pred(V[m.id])).length / items.length;
+    est += share * langRate(lang, items, pred);
   }
   return +(100 * est).toFixed(1);
 }
@@ -124,8 +143,7 @@ function weightedCI(pred, iters = 2000) {
     let est = 0;
     for (const [lang, items] of langs) {
       const share = W[lang].translated_pages / totalPages;
-      let k = 0; for (let j = 0; j < items.length; j++) k += pred(V[items[Math.floor(seededRand() * items.length)].id]) ? 1 : 0;
-      est += share * k / items.length;
+      est += share * langRate(lang, items, pred, seededRand);
     }
     draws.push(100 * est);
   }
@@ -165,7 +183,7 @@ function weightedBy(pred, mode) {
       const ws = items.map((m) => Math.max(1, bookW[m.book_id]?.pages_translated || 1));
       const tot = ws.reduce((s, x) => s + x, 0);
       est += share * items.reduce((s, m, i) => s + (pred(V[m.id]) ? ws[i] : 0), 0) / tot;
-    } else est += share * items.filter((m) => pred(V[m.id])).length / items.length;
+    } else est += share * langRate(lang, items, pred);
   }
   return +(100 * est).toFixed(1);
 }
@@ -178,6 +196,20 @@ report.sensitivity = {
     return [lang, { pct_ge4: f((v) => v.fidelity >= 4), pct_le2: f((v) => v.fidelity <= 2), any_major: f((v) => v.defects.some((d) => d.severity === 'major')) }];
   })) : null,
 };
+
+// The Chinese oversample, shown beside the cell it sharpens (analyze-zh-strata.mjs has the full strata report).
+if (zhPool.length) {
+  const mainZh = byLang.Chinese || [];
+  const r = (items, pred) => items.length ? +(100 * items.filter((m) => pred(V[m.id])).length / items.length).toFixed(1) : null;
+  const ge4 = (v) => v.fidelity >= 4, maj = (v) => v.defects.some((d) => d.severity === 'major');
+  report.zh_strata = {
+    note: 'Chinese headline cell = strata-weighted (w_books) over main + zh books; main_only = the cell without the oversample',
+    n_main: mainZh.length, n_pool: zhPool.length,
+    pct_ge4: { main_only: r(mainZh, ge4), strata_weighted: +(100 * langRate('Chinese', mainZh, ge4)).toFixed(1) },
+    any_major: { main_only: r(mainZh, maj), strata_weighted: +(100 * langRate('Chinese', mainZh, maj)).toFixed(1) },
+    by_stratum: Object.fromEntries(Object.entries(zhByS).sort().map(([k, v]) => [k, { w_books: +(100 * ZHW[k].w_books).toFixed(1), w_pages: +(100 * ZHW[k].w_pages).toFixed(1), ...cell(v, V) }])),
+  };
+}
 
 // ── Defect types ─────────────────────────────────────────────────────────────
 const defects = judged.flatMap((m) => V[m.id].defects.map((d) => ({ ...d, id: m.id, language: m.language, arm: m.arm })));
@@ -238,6 +270,7 @@ let md = `# Translation corpus audit — ${DIR.split('/').pop()}\n\nJudge: ${PRI
 md += `**Controls gate: ${controlsGate.pass ? 'PASS' : 'FAIL — this run is not reported'}** (swap ≥ ${Math.round(GATE.swap_caught * 100)}% rated ≤2, drop ≥ ${Math.round(GATE.drop_flagged * 100)}% flagged omission, repeat ≥ ${Math.round(GATE.repeat_within1 * 100)}% within one; ≥ ${GATE.min_n} of each).\n\n`;
 md += `## Controls (read first)\n- swap (translation of another page): ${ctrl.swap.caught_fidelity_le2}/${ctrl.swap.n} rated ≤2, ${ctrl.swap.flagged_wrong_page}/${ctrl.swap.n} flagged wrong_page\n- drop (middle ~35% removed): ${ctrl.drop.flagged_omission}/${ctrl.drop.n} flagged omission, ${ctrl.drop.fidelity_le3}/${ctrl.drop.n} rated ≤3\n- repeat (same item twice): ${ctrl.repeat.exact}/${ctrl.repeat.n} exact, ${ctrl.repeat.within1}/${ctrl.repeat.n} within 1, ${ctrl.repeat.flags_identical}/${ctrl.repeat.n} identical flags\n\n`;
 md += `## Corpus estimate (post-stratified by language; 95% CI)\n| statistic | est % | CI |\n|---|---:|---|\n| fidelity 5 | ${report.corpus_estimate.pct_fidelity_5.est} | ${report.corpus_estimate.pct_fidelity_5.ci.join('–')} |\n| fidelity ≥ 4 | ${report.corpus_estimate.pct_fidelity_ge4.est} | ${report.corpus_estimate.pct_fidelity_ge4.ci.join('–')} |\n| fidelity ≤ 2 | ${report.corpus_estimate.pct_fidelity_le2.est} | ${report.corpus_estimate.pct_fidelity_le2.ci.join('–')} |\n| any major defect | ${report.corpus_estimate.any_major_defect.est} | ${report.corpus_estimate.any_major_defect.ci.join('–')} |\n` + FLAGS.map((k) => `| ${k} | ${report.corpus_estimate.flags[k].est} | ${report.corpus_estimate.flags[k].ci.join('–')} |`).join('\n') + '\n\n';
+if (report.zh_strata) md += `## Chinese strata oversample (#5274)\nChinese cell in the corpus estimate: fidelity ≥ 4 ${report.zh_strata.pct_ge4.strata_weighted}% strata-weighted over ${report.zh_strata.n_pool} books (${report.zh_strata.pct_ge4.main_only}% on the ${report.zh_strata.n_main} main books alone); any major ${report.zh_strata.any_major.strata_weighted}% (${report.zh_strata.any_major.main_only}%).\n\n${hdr}\n` + Object.entries(report.zh_strata.by_stratum).map(([k, c]) => row(k, c)).join('\n') + '\n\n';
 md += `## By language\n${hdr}\n` + Object.entries(report.by_language).map(([k, c]) => row(k, c)).join('\n') + '\n\n';
 md += `## By translation model arm (unpaired: different pages per arm, model follows the book)\n${hdr}\n` + Object.entries(report.by_arm).map(([k, c]) => row(k, c)).join('\n') + '\n\n';
 md += `## By language × arm\n${hdr}\n` + Object.entries(report.by_language_arm).flatMap(([l, o]) => Object.entries(o).map(([a, c]) => row(`${l} / ${a}`, c))).join('\n') + '\n\n';

@@ -32,7 +32,12 @@
  *
  * Page class: next (next ≥ 1, own = 0, prev = 0), prev (mirror), own (own ≥ 1, no neighbour
  * vote), mixed (anything else with a vote), none (no vote: NO CLAIM, not "aligned").
- * A book is FLAGGED when ≥ MIN_RUN consecutive page_numbers are all `next` or all `prev`.
+ * A book is FLAGGED on a RUN (the gappy rule, 2026-11-03, scripts/lib/leaf-shift.mjs gappyRuns):
+ * ≥ MIN_RUN pages voting one direction inside a window of page_numbers where no page votes the
+ * other way, `own` or `mixed`, and at most MAX_GAP silent pages sit between two voting ones; a
+ * `next` run may end on one `prev` page (the last leaf of a slipped block carries the previous
+ * leaf's footnotes back: Karl Grosherzog p.20). Until 2026-11-03 the run had to be ≥ MIN_RUN
+ * ADJACENT pages; that rule (`strictRuns`) is kept in the output and is still the write-time gate's.
  * A single `next` page is a boundary drift candidate (#5021's class), not a whole-page shift.
  * Tier A: some run where EVERY page also lacks at least one of its own body numbers (ownMissing)
  * and votes with a number ≥ STRONG_MIN — the small sequential numbers (10, 11, 12) that lists
@@ -46,6 +51,11 @@
  *              which cannot move a page, were all false: tier B is a noise floor there.
  *   coverage   84% of translated pages in caseless-label books cast no vote (Tibetan 99%), and
  *              3,862 of 5,903 such books have no testable pair. No flag is NOT "aligned".
+ * MEASURED 2026-11-03 (#5021), scripts/eval/experiments/2026-11-03-leaf-shift-library-5021.md: every live
+ *              translated book (24,859), gappy rule: 1,164 flagged, 310 tier A. Opus with the scans, blind to the
+ *              direction (scripts/audit/leaf-shift-confirm-5021.mjs): tier A 76/80 real, tier B 156/220, 0/20 on
+ *              random unflagged windows; the v2/v5 single-page lane 3/22 runs. Absorption (absorptionsOf, the
+ *              `absorbed` field) confirms 40/59 outside the number runs. Names alone sit at the noise floor.
  * A flag is a work list; open the scan before acting on it (measurement-instruments.md).
  *
  * Usage (node --env-file=.env.production.local):
@@ -54,7 +64,11 @@
  *   --frame caseless                       every translated book whose language label is a
  *                                          caseless script
  *   --frame rest --sample 300 [--seed 5021]  seeded draw from the other translated books
+ *   --frame rest --sample all              every other translated book
+ *   --live        only books readers can open (visible, pages_count > 0)
  *   --out <dir>   checkpoint file <dir>/<frame>.jsonl, one line per book, resumed on re-run
+ *   --shard i/n   scan every n-th book from i into <dir>/<frame>.s<i>.jsonl (run n processes; the
+ *                 classifier is CPU-bound, about 25 books a minute per process)
  *   --self-test   assertions on the extractor, no database
  */
 import fs from 'node:fs';
@@ -95,7 +109,7 @@ function selfTest() {
   eq(cjkNumber('一七三'), 173, 'cjk positional');
   eq([...numbersIn('Verse 173. See (12) and [45], p. 275; CLXXIV; MIX; 7')].sort((a, b) => a - b), [173, 174, 275], 'numbersIn');
   const mk = (n, own, eng) => ({ page_number: n, ocr: `<page-num>${n + 100}</page-num>\n\nपाठः ॥${own}॥\n\nVerse ${own}. note`, tr: `${n + 100} || Act VII ||\n\nText.\n\n<note>Verse ${eng}</note>` });
-  const shifted = classifyBook([mk(1, 170, 170), mk(2, 171, 172), mk(3, 172, 173), mk(4, 173, 174), mk(5, 174, 174)]);
+  const shifted = classifyBook([mk(1, 170, 170), mk(2, 171, 172), mk(3, 172, 173), mk(4, 173, 174), mk(5, 174, 174)], { rule: 'gappy' });
   eq(shifted.rows.map(r => r.cls), ['own', 'next', 'next', 'next', 'own'], 'shifted classes');
   eq(shifted.runs.map(r => [r.dir, r.start, r.end]), [['next', 2, 4]], 'shifted run');
   eq(classifyBook([mk(1, 170, 170), mk(2, 171, 171), mk(3, 172, 172)]).runs, [], 'aligned book');
@@ -104,9 +118,11 @@ function selfTest() {
 
 // ---------------------------------------------------------------------------------------------
 async function loadBook(db, bookId, asOf) {
-  const pages = await db.collection('pages')
-    .find({ book_id: bookId }, { projection: { page_number: 1, id: 1, 'ocr.data': 1, 'translation.data': 1, 'translation.prompt_version': 1, 'translation.updated_at': 1, 'translation.model': 1 } })
+  let pages = await db.collection('pages')
+    .find({ book_id: bookId }, { projection: { page_number: 1, id: 1, page_type: 1, 'translation_withheld.updated_at': 1, 'translation_withheld.chars': 1, 'ocr.data': 1, 'translation.data': 1, 'translation.prompt_version': 1, 'translation.updated_at': 1, 'translation.model': 1 } })
     .sort({ page_number: 1 }).toArray();
+  // Negative page_numbers are hidden pages (moved out of the reading order); readers never see them.
+  pages = pages.filter(p => p.page_number >= 0);
   let restored = 0;
   if (asOf) {
     const ids = pages.map(p => p.id || String(p._id));
@@ -119,23 +135,29 @@ async function loadBook(db, bookId, asOf) {
       const r = firstAfter.get(p.id || String(p._id));
       // A revision row holds the value it REPLACED, so the first one after as-of is the text as-of.
       if (r && typeof r.data === 'string') {
-        p.translation = { data: r.data, prompt_version: r.prompt_version };
+        p.translation = { data: r.data, prompt_version: r.prompt_version, updated_at: p.translation?.updated_at ?? p.translation_withheld?.updated_at, model: p.translation?.model ?? null };
         restored++;
       }
     }
   }
   return {
     restored,
-    pages: pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data || '', tr: p.translation?.data || '', pv: p.translation?.prompt_version != null ? String(p.translation.prompt_version).replace(/^v/i, '') : null })),
+    pages: pages.map(p => ({ page_number: p.page_number, ocr: p.ocr?.data || '', tr: p.translation?.data || '', pv: p.translation?.prompt_version != null ? String(p.translation.prompt_version).replace(/^v/i, '') : null, model: p.translation?.model || null, page_type: p.page_type ?? null, updated: p.translation?.updated_at ? new Date(p.translation.updated_at).toISOString() : null })),
   };
 }
 
 function summarise(book, loaded) {
   const { pages } = loaded;
-  const res = classifyBook(pages);
+  const res = classifyBook(pages, { rule: 'gappy', names: true, absorb: true });
+  const strict = res.strictRuns;
   const translated = res.rows.filter(r => r.translated);
   const pvCount = {};
   for (const r of translated) pvCount[r.pv ?? 'none'] = (pvCount[r.pv ?? 'none'] || 0) + 1;
+  const modelCount = {};
+  for (const p of pages) if (p.tr) modelCount[p.model ?? 'none'] = (modelCount[p.model ?? 'none'] || 0) + 1;
+  // Runs the name signal adds: a numbers+names run that overlaps no numbers-only run.
+  const overlaps = (a, b) => a.dir === b.dir && a.start <= b.end && b.start <= a.end;
+  const nameOnly = res.runsNames.filter(x => !res.runs.some(y => overlaps(x, y)));
   const sc = scriptOf(pages.filter(p => p.tr).slice(0, 400).map(p => p.ocr.slice(0, 1500)).join('\n'));
   return {
     book_id: book.id || String(book._id),
@@ -150,13 +172,23 @@ function summarise(book, loaded) {
     blockEra: (pvCount['10'] || 0) + (pvCount['11'] || 0),
     classes: res.classes,
     hdrClasses: res.hdrClasses,
+    model: modelCount,
     signal: translated.filter(r => r.cls !== 'none').length,
+    nameSignal: translated.filter(r => r.cls === 'none' && r.nameCls && r.nameCls !== 'none').length,
     // Consecutive translated pages that BOTH vote: the only places a run could have been seen.
     pairs: res.rows.filter((r, i) => i > 0 && r.translated && r.cls !== 'none' && res.rows[i - 1].translated && res.rows[i - 1].cls !== 'none' && res.rows[i - 1].page_number === r.page_number - 1).length,
     singles: { next: res.rows.filter(r => r.cls === 'next').length, prev: res.rows.filter(r => r.cls === 'prev').length },
     runs: res.runs,
     flagged: res.runs.length > 0,
     tier: !res.runs.length ? null : res.runs.some(x => x.strong) ? 'A' : 'B',
+    // The 2026-10-13 rule on the same text: what the gappy rule changed.
+    strictRuns: strict.map(x => [x.dir, x.start, x.end, x.strong]),
+    strictTier: !strict.length ? null : strict.some(x => x.strong) ? 'A' : 'B',
+    // Name-signal runs that no numbers-only run covers (reported separately; see --names notes).
+    nameRuns: nameOnly,
+    // Absorbing pages (scripts/lib/leaf-shift.mjs absorptionsOf): all, and those a vote corroborates.
+    absorptions: res.absorptions.length,
+    absorbed: res.absorptions.filter(a => a.corroborated.length),
     ...(loaded.restored ? { restored: loaded.restored } : {}),
   };
 }
@@ -206,14 +238,16 @@ async function main() {
     if (!['caseless', 'rest'].includes(FRAME)) throw new Error('give --book <id>, --frame caseless, --frame rest, or --self-test');
     const OUT = arg('--out', 'scripts/output/translation-leaf-shift');
     fs.mkdirSync(OUT, { recursive: true });
-    const file = path.join(OUT, `${FRAME}.jsonl`);
+    // --shard i/n: this process scans every n-th book from i; each shard writes its own file.
+    const [SH_I, SH_N] = (arg('--shard', '0/1')).split('/').map(Number);
+    const file = path.join(OUT, SH_N > 1 ? `${FRAME}.s${SH_I}.jsonl` : `${FRAME}.jsonl`);
     const all = await db.collection('books')
-      .find({ pages_translated: { $gt: 0 } }, { projection: { id: 1, title: 1, language: 1, visible: 1, pages_translated: 1 } })
+      .find(argv.includes('--live') ? { pages_translated: { $gt: 0 }, visible: true, pages_count: { $gt: 0 } } : { pages_translated: { $gt: 0 } }, { projection: { id: 1, title: 1, language: 1, visible: 1, pages_translated: 1 } })
       .sort({ _id: 1 }).toArray();
     const isCaseless = b => CASELESS_LABEL.test(String(b.language || ''));
     let books = all.filter(b => (FRAME === 'caseless' ? isCaseless(b) : !isCaseless(b)));
     const frameSize = books.length;
-    if (FRAME === 'rest') {
+    if (FRAME === 'rest' && arg('--sample', '300') !== 'all') {
       const n = Number(arg('--sample', '300'));
       const rnd = mulberry32(Number(arg('--seed', '5021')));
       for (let i = books.length - 1; i > 0; i--) {
@@ -222,7 +256,13 @@ async function main() {
       }
       books = books.slice(0, n);
     }
-    const done = new Set(fs.existsSync(file) ? fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l).book_id) : []);
+    const done = new Set();
+    for (const f of fs.readdirSync(OUT).filter(f => f.startsWith(`${FRAME}.`) && f.endsWith('.jsonl'))) {
+      for (const l of fs.readFileSync(path.join(OUT, f), 'utf8').split('\n')) {
+        try { if (l) done.add(JSON.parse(l).book_id); } catch { /* a torn last line: re-scan that book */ }
+      }
+    }
+    if (SH_N > 1) books = books.filter((_, i) => i % SH_N === SH_I);
     console.error(`${FRAME}: frame ${frameSize} books, ${books.length} to scan, ${done.size} already in ${file}`);
     const queue = books.filter(b => !done.has(b.id || String(b._id)));
     let n = 0;

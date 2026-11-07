@@ -1,0 +1,147 @@
+[
+  {
+    "book_id": "b14-k", "slot": 1, "title": "De Trinitatis Erroribus: Michael Servetus (PH474)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin><unclear>[...]</unclear> divinitas ag<unclear>[...]</unclear> / nostro, qui est … / vinitas visus sum ipsi <unclear>[...]</unclear></margin>", "image": "these are the left-edge line beginnings of the FACING page (p. 39), visible at the right of the photograph; this leaf has no margin note", "problem": "25 line fragments of the neighbouring leaf transcribed as a marginal note of this page and inserted between the two paragraphs", "severity": "serious", "class": "I4" },
+          { "ocr": "Matth. XXIX.", "image": "Matth. XXIIX.", "problem": "chapter numeral misread (Matthew 28, the baptismal formula; there is no chapter 29)", "severity": "moderate", "class": "O7" },
+          { "ocr": "sermo de agendo", "image": "sermo de ag- / do (middle of the word lost in the gutter)", "problem": "reasonable completion of a gutter-split word, not marked", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 82, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "2 Reg. 14.", "image": "2 Reg. 19.", "problem": "reference numeral misread", "severity": "moderate", "class": "O7" },
+          { "ocr": "Principes Judaeorum con[...]", "image": "Principes Judaeorum cum", "problem": "cum misread as con", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "every cut-off line end written as '[...]<unclear></unclear>' (empty unclear tag after the ellipsis) — honest about the cut, but clumsy markup", "severity": "minor", "class": "D1" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "et nostrum ideo dixit", "image": "et nostra[m] (line end at gutter)", "problem": "case ending", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "catchword 'quam' put in a <meta> block after the text", "severity": "minor" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Main-text readings are very good and line-end losses on p. 82 are honestly marked, but p. 42 imports 25 fragments of the facing leaf as a 'margin' note, which a reader sees as garbled text on the page."
+  },
+  {
+    "book_id": "b14-m", "slot": 2, "title": "De Trinitatis Erroribus: Michael Servetus (PH474)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Matth. XXIX.", "image": "Matth. XXIIX.", "problem": "chapter numeral misread (Matthew 28)", "severity": "moderate", "class": "O7" },
+          { "ocr": "sermo de agendo", "image": "sermo de ag- / do (gutter)", "problem": "unmarked completion of gutter-split word", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 82, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "omnes enim desperaverant. Ideo … filius Dei vocatur, hodie genitus est … Intelligitur enim tunc genitus … quasi novus homo … Christus in regno Patris sui … genui te in Regem, ut Paulus …", "image": "the right edge of every line is cut off by the photograph/binding: 'omnes enim d' | 'filius Dei vo' | 'a generatio' | 'incorruptibilem. In' | 'potestate quas' | 'dixit Christ' | 'genui te' …", "problem": "the missing line ends of all ~23 lines are supplied as if read, with no mark of uncertainty — text not visible on this image (plausibly the printed Servetus, but not read from this leaf)", "severity": "serious", "class": "O3" },
+          { "ocr": "cum Absalon conjuraverunt contra Davidem sicut et factum est contra Christum Act. 4. … meditati sunt inania contra David … dicere possumus, hodie sum natus … Vbi de eodem die dicit David", "image": "'Principes Judaeorum cum' | 'juraverunt contra Davidem sicut et factum est contra Ch' … 'Vbi de eodem d' — 'Absalon', 'Act. 4', 'inania', 'dicere possumus', 'die dicit David' are not visible", "problem": "invented names and a scripture reference (Absalon, Act. 4) presented as the manuscript's text", "severity": "serious", "class": "O3" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<meta>catchword: novi</meta> — no catchword is visible at the foot of this page (it is cut off if present)", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "quia sibi דְּמוּת et תְּמוּנָה in Scripturis attribuuntur", "image": "quia sibi צלם et דמות (tselem drawn as a box-shaped ligature)", "problem": "the two Hebrew terms replaced: tselem dropped, temunah (not on the page) added, and both vocalised although the hand writes no points", "severity": "moderate", "class": "O10" },
+          { "ocr": "latere mysteria rec<unclear>aliqua</unclear> sine significatione", "image": "latere mysteria nec aliqui[d] sine significatione", "problem": "'nec aliquid' misread; the negation is lost, so the sentence no longer says nothing in the oracles is without meaning", "severity": "moderate", "class": "O6" },
+          { "ocr": "Dei יְהוָה", "image": "unpointed Tetragrammaton", "problem": "vowel points added", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Fluent and accurate where the hand is visible, but on p. 82 it silently fills in every cut-off line end (including 'Absalon' and 'Act. 4', which are not on the image) and it substitutes a Hebrew term on p. 122; it cannot be trusted where the leaf is damaged or cut."
+  },
+  {
+    "book_id": "b14-r", "slot": 3, "title": "De Trinitatis Erroribus: Michael Servetus (PH474)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 42, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "tres æquales <unclear>ne-</unclear> / sed trinam", "image": "tres æquales re[s] (at gutter) / sed trinam", "problem": "'res' read as a hyphenated 'ne-'", "severity": "minor" },
+          { "ocr": "sermo de <unclear>ag-</unclear> / do", "image": "sermo de ag- / do", "problem": "word left unresolved (agendo), but correctly flagged", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 82, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "each lost line end marked '<unclear>[cut off]</unclear>' — honest, but repeated on 21 lines it is visually heavy", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "The best of the four: line-faithful on p. 42, honest about the cut line ends on p. 82, correct Hebrew and references, facing-page text excluded; only trivial slips."
+  },
+  {
+    "book_id": "b14-t", "slot": 4, "title": "De Trinitatis Erroribus: Michael Servetus (PH474)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "<column-break/> divinitas agnostro, qui est Spiritus noster ta, licet varie dicuntur i.e. m ab hac sententia jam ad rationem … visus sum ipsi", "image": "line beginnings of the FACING page (p. 39) at the right of the photograph", "problem": "the neighbour leaf's fragments transcribed as a second column of this page and run together as prose", "severity": "serious", "class": "I4" },
+          { "ocr": "nisi ubi est sermo de Deo", "image": "nisi vbi est sermo de ag[en]do", "problem": "'agendo' misread as 'Deo', changing the point (the Spirit is mentioned only where action is spoken of)", "severity": "serious", "class": "O6" },
+          { "ocr": "Trinitatem dicerent, tari posset", "image": "dicerent, tole- / rari posset", "problem": "'tolerari' mangled", "severity": "moderate", "class": "O6" },
+          { "ocr": "Matth. XXIX.", "image": "Matth. XXIIX.", "problem": "chapter numeral misread", "severity": "moderate", "class": "O7" },
+          { "ocr": "non aliqua rerum in distinctione", "image": "non aliqua rerum in Deo distinctione", "problem": "'Deo' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "tres aequales, sed", "image": "tres æquales re[s] sed", "problem": "'res' dropped", "severity": "minor" },
+          { "ocr": "omnipotente; Frequens est; Magnificentia; admiranda; oikonomian", "image": "omnipotenti; Frequensque est; Magnificentiæ; admirandæ; οἰκονομίαν (Greek)", "problem": "several small misreadings and Greek transliterated", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<columns>2</columns> — the page is single-column", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 82, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "omnes enim / Adeo omni modo … filius Dei vo- / nitus est …", "image": "line ends cut off at the right edge", "problem": "lost line ends not marked at all; truncated lines are presented as if the text ran on (e.g. 'vo-' / 'nitus')", "severity": "moderate", "class": "O5" },
+          { "ocr": "2 Reg. 14.", "image": "2 Reg. 19.", "problem": "reference numeral misread", "severity": "moderate", "class": "O7" },
+          { "ocr": "Adeo omni modo", "image": "Ideo omni modo", "problem": "initial misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<page-num>56</page-num> — the page is numbered 76", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Dei יהוה sed quam in Novo Scriptura talis ad imaginem inquit … ad imaginem es legas, manus, digitos, oculos et secundum imaginem … Per Angelum igitur Christi vultum dum dicitur … Nam ut Cyprianus inquit idem do dixit …", "image": "the phrases 'quam in Novo Scriptura talis', 'es legas, manus, digitos, ocu…', 'Per Angelum igitur Christi vult…', 'Nam ut Cyprianus inquit', 'Tanta enim est Christi gloria', 'In qua sententia tot sunt errores' etc. are the lines of the FACING page (p. 117)", "problem": "the facing page's lines are interleaved line by line into this page's text, producing nonsense sentences throughout", "severity": "serious", "class": "I4" },
+          { "ocr": "Apparet ille filius Israel itineris comes", "image": "Ipse est ille filiis Israel itineris comes", "problem": "misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "faciam hominem; intelligeretur; imagines filii Dei; Parabolice; recalique", "image": "faciamus hominem; intelligebatur; imaginis filii Dei; Parabolis; nec aliquid", "problem": "several misreadings, one losing the negation", "severity": "moderate", "class": "O6" },
+          { "ocr": "<margin>Aperiam in parabolis os meum et eructabo abscondita per Christum</margin>", "image": "margin note ends at 'abscondita'; 'per Christum' is main text", "problem": "main-text words pulled into the margin note", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<insert>Christus</insert> and <term> tags in the reader text; the interlinear 'Christus' belongs to the facing page", "severity": "minor", "class": "D1" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Not usable: on pp. 42 and 122 the facing page's text is merged into this page (interleaved line by line on p. 122), and there are meaning-changing misreadings; p. 82 hides its cut line ends."
+  }
+]

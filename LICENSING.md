@@ -1,7 +1,8 @@
 Source Library — Licensing
 
 This project contains multiple types of intellectual property, each
-governed by a different license.
+governed by a different license. For how to use the library's content,
+https://sourcelibrary.org/terms is the plain statement.
 
 
 1. SOFTWARE (AGPL-3.0-or-later)
@@ -56,32 +57,25 @@ Users are responsible for verifying the public domain status of
 individual texts under the laws of their own jurisdiction.
 
 
-3. OCR TRANSCRIPTIONS AND TRANSLATIONS (CC BY-SA 4.0)
+3. OCR TRANSCRIPTIONS AND TRANSLATIONS (CC BY-NC-SA 4.0)
 ══════════════════════════════════════════════════════════
 
-All machine-generated OCR transcriptions and AI-generated translations
-produced by Source Library are licensed under the Creative Commons
-Attribution-ShareAlike 4.0 International License.
+Source Library's transcriptions and translations are offered under the
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+License.
 
-    You are free to:
-      • Share — copy and redistribute the material in any medium or format
-      • Adapt — remix, transform, and build upon the material for any
-        purpose, including commercially
+    Full license text: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-    Under the following terms:
-      • Attribution — You must give appropriate credit to Source Library
-        and the Embassy of the Free Mind, provide a link to the license,
-        and indicate if changes were made.
-      • ShareAlike — If you remix, transform, or build upon the material,
-        you must distribute your contributions under the same license.
+Extra permission: quoting this text inside your own commercial work is
+allowed, with credit and a link, where it is not the main thing being
+sold. See https://sourcelibrary.org/terms.
 
-    Full license text: https://creativecommons.org/licenses/by-sa/4.0/
+Copies obtained under CC BY-SA 4.0 before November 5, 2026 stay under
+that license. Text taken from another open source keeps its own license.
+A published edition with a DOI carries the license stated on it. A signed
+agreement takes priority.
 
-COMMERCIAL LICENSING: The CC BY-SA 4.0 ShareAlike clause requires
-derivative works to be released under the same license. Organizations
-seeking to use Source Library translations under alternative commercial
-terms (e.g., without the ShareAlike obligation) may obtain a separate
-commercial license. Contact: derek@sourcelibrary.org
+Other commercial use: contact team@sourcelibrary.org
 
 
 4. CURATED DATASETS (Commercial License Available)
@@ -91,40 +85,31 @@ Source Library offers curated, structured datasets — including parallel
 corpora (original text + translation), metadata, and scholarly
 annotations — via API for research and commercial use.
 
-Individual translations on the website are CC BY-SA 4.0 (see above).
+Individual translations on the website are CC BY-NC-SA 4.0 (see above).
 The curated datasets as a whole, including their selection, structure,
 labeling, and delivery format, are available under separate commercial
 license terms.
 
-Commercial dataset licensing is administered by the Embassy of the Free
-Mind (Stichting Wereldhart). Contact: derek@sourcelibrary.org
+A dataset license names the entity that grants it. Contact:
+team@sourcelibrary.org
 
 
-5. DATABASE RIGHTS (Sui Generis)
+5. THE LIBRARY AS A WHOLE
 ══════════════════════════════════
 
-The structured database — including the selection, arrangement, and
-organization of catalog records, metadata, and cross-references — is
-protected under the EU Database Directive (96/9/EC) and Dutch copyright
-law (Databankenwet).
+Source Library is one work, created by Derek Lomas: its selection and
+arrangement of books, and how they are read, translated and connected.
+Credit it wherever a part is used: "Source Library", with a link to the
+page.
 
-Database rights are held by:
-
-    PlayPower Labs, Inc.
-    Delaware, United States
-
-A perpetual, irrevocable, worldwide, royalty-free license to the
-database (including rights to extract and re-utilize the whole or a
-substantial part) has been granted to:
-
-    Stichting Wereldhart
-    Amsterdam, The Netherlands
-    (operating as the Embassy of the Free Mind /
-     Bibliotheca Philosophica Hermetica)
+Rights in the structured database — including the selection, arrangement, and
+organization of catalog records, metadata, and cross-references — are
+reserved as far as the EU Database Directive (96/9/EC) and the Dutch
+Databankenwet protect it.
 
 The database is made available for non-commercial research and
 educational use. Commercial use of substantial portions of the database
-requires a separate license. Contact: derek@sourcelibrary.org
+requires a separate license. Contact: team@sourcelibrary.org
 
 
 6. THIRD-PARTY CONTENT

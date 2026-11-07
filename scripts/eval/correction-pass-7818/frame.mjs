@@ -21,6 +21,7 @@ import { scriptClass } from '../lane-judge-sampler.mjs';
 import { bookHand } from '../../lib/ocr-trust-gate.mjs';
 import { LITE_MODELS } from '../../batch/cli-ocr-lane.mjs';
 import { textHash } from '../../lib/page-text-writer.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 export const GEX45 = 'root@65.108.136.89';
 export const LANE_DIR = '/root/jobs/cli-ocr-correct';
@@ -40,7 +41,8 @@ async function draw() {
   try {
     const bookIds = [...new Set([...byPage.values()].map((r) => r.book_id))];
     const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, language: 1, year: 1, visible: 1, pages_count: 1, 'pipeline_auto.held': 1 } }).toArray()).map((b) => [b.id, b]));
-    const judged = new Set((await db.collection('lane_judge_verdicts').find({ kind: { $in: ['item', 'draft'] } }, { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
+    // all origins: an exclusion set (a page judged by a test is judged too), not evidence.
+    const judged = new Set((await db.collection('lane_judge_verdicts').find(verdictQuery({ kind: { $in: ['item', 'draft'] } }, { tests: true }), { projection: { page_id: 1 } }).toArray()).map((r) => r.page_id));
     const frame = {}, drawn = [], log = {};
     for (const [lc, re] of LANGS) {
       const mine = [...byPage.values()].filter((r) => re.test(books.get(r.book_id)?.language || ''));

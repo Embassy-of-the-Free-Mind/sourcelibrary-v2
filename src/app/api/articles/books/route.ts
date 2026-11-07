@@ -14,6 +14,7 @@ const BOOK_PROJECTION = {
   language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translatable: 1, pages_blank: 1,
   translation_state: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_card: 1, thumbnail_frame: 1,
   is_first_translation: 1, ft_disposition: 1, 'translation_verification.disposition': 1, resource_type: 1, preview: 1,
+  slug_aliases: 1,
 } as const;
 
 const MAX_BOOKS = 80;
@@ -30,7 +31,9 @@ export async function GET(req: NextRequest) {
 
   const rows = (await db
     .collection('books')
-    .find({ $or: [{ id: { $in: refs } }, { slug: { $in: refs } }], visible: { $ne: false } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 })
+    // slug_aliases: a slug repair renames a book without touching the article that
+    // links it. The link still redirects; without this its card silently vanishes (#7641).
+    .find({ $or: [{ id: { $in: refs } }, { slug: { $in: refs } }, { slug_aliases: { $in: refs } }], visible: { $ne: false } }, { projection: BOOK_PROJECTION, maxTimeMS: 8000 })
     .toArray()) as Record<string, unknown>[];
 
   // Keep the order the article mentions them in; one card per book.
@@ -38,13 +41,14 @@ export async function GET(req: NextRequest) {
   for (const b of rows) {
     if (b.id) byRef.set(b.id as string, b);
     if (b.slug) byRef.set(b.slug as string, b);
+    for (const alias of (b.slug_aliases as string[] | undefined) || []) if (!byRef.has(alias)) byRef.set(alias, b);
   }
   const seen = new Set<string>();
   const books = refs.flatMap((ref) => {
     const b = byRef.get(ref);
     if (!b || seen.has(b.id as string)) return [];
     seen.add(b.id as string);
-    const { translation_verification, ...rest } = b as Record<string, unknown> & { translation_verification?: { disposition?: string } };
+    const { translation_verification, slug_aliases: _aliases, ...rest } = b as Record<string, unknown> & { translation_verification?: { disposition?: string } };
     return [{
       ...rest,
       thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string),

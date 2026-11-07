@@ -118,7 +118,7 @@ function judge(packet: string): Promise<Array<{ id: string; label: string }> | n
       opusCalls++;
       const env = { ...process.env };
       delete env.ANTHROPIC_API_KEY; // the subscription, never the API
-      const child = execFile(CLAUDE, ['-p', '--model', 'opus', '--allowedTools', ''], { cwd: os.tmpdir(), env, timeout: 15 * 60e3, maxBuffer: 8 << 20 }, (err, stdout) => {
+      const child = execFile(CLAUDE, ['-p', '--model', 'opus', '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence'], { cwd: os.tmpdir(), env, timeout: 15 * 60e3, maxBuffer: 8 << 20 }, (err, stdout) => {
         const m = String(stdout ?? '').match(/\{"links".*\}/g);
         try { if (m) return resolve(JSON.parse(m[m.length - 1]).links ?? null); } catch { /* retry */ }
         if (/usage limit|hit your limit|limit reached/i.test(String(stdout) + String(err ?? ''))) return resolve(null);

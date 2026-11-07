@@ -19,13 +19,15 @@
  *   node --env-file=.env.production.local scripts/batch/siku-translate-lane.mjs run [--apply] [--max-pages=1500]
  *        [--parallel=3] [--per-call=1] [--state=DIR]
  *   node --env-file=.env.production.local scripts/batch/siku-translate-lane.mjs spot-check [--force] [--n=10]
+ *   node --env-file=.env.production.local scripts/batch/siku-translate-lane.mjs record-spot --dir=<state>/spot/<stamp> [--evidence=PATH] [--apply]
  *
  * POOL GATE. Every agy pool on the box is read with `agy -p /quota --output-format json` (0 tokens): the default HOME,
  * and each AGY_HOME in POOL_HOMES that exists. A non-default pool that another process is using (AGY_HOME in its
  * environment, e.g. a measurement job) is skipped; a lane marked AGY_POOL_SHARED=1 (cli-ocr-lane correct) only shares
- * it (scripts/lib/agy-pools.mjs). The pool with the most Gemini weekly remaining is used, and only if
- * weekly remaining > 0.35, or > 0.05 when its weekly reset is < 24 h away (quota idle before a reset is free, Derek
- * 2026-10-26). The pool is re-read before each book; the wave stops the moment it falls below the floor. A reading
+ * it (scripts/lib/agy-pools.mjs). The pool with the most Gemini weekly remaining is used, and only if weekly
+ * remaining is above the other lanes' weekly reserve (agy-pools.mjs weeklyReserve; 0 in the last 36 h before the
+ * reset, when it must still be above AGY_GEMINI_EMPTY), drain by reset (#7911; was 0.35, 0.05 in the last 24 h).
+ * The pool is re-read before each book; the wave stops the moment it falls below the floor. A reading
  * that fails twice in a row stops the wave and pings ntfy.
  *
  * BOOKS. Held `paddle-zh-5600-ocr-only` or `gpu-backlog-5660`, rung `transcribed` or `translating`, OCR on >= 80% of
@@ -33,6 +35,13 @@
  * pattern), not a #7090 book, not on another live job's lane_job_books list (3 days), no dupe (a work_id sibling
  * that is NOT a different volume of the same Siku set and carries English, or is an English book). Volumes of one
  * set share a work_id (kr:KR…), so a translated sibling VOLUME is not a dupe. Visible first, then fewest pages.
+ *
+ * READER REQUESTS GO FIRST (#7690). A book with an open request the reader-request lane judged `siku` leads the wave,
+ * oldest request first, its requested pages first, and its rung need not be on RUNGS (a `readable` book can still lack
+ * the page a reader asked for). The list is read from `feedback` at the start of each wave and each `count`, so an
+ * answered request drops off by itself; a request that arrives mid-wave waits for the next wave. Every other filter
+ * above still applies, and a request reorders only: it never unlocks a book this lane would not translate, and it
+ * releases nothing. reader-request-lane.mjs marks the row and emails the reader once the page has English.
  *
  * PAGES. Untranslated translatable pages (cli-translate-lane UNTRANSLATED), minus the ledger, minus a page whose OCR
  * holds a chat-model reply (#5600 2026-10-27: 詩總聞 p.118 ended in "作为一个人工智能语言模型…"; ledgered as
@@ -46,6 +55,8 @@
  * subscription login). Skipped while this box's Claude account is >= 90% weekly; the next run does it. A check
  * deferred for 6 h pages ntfy once, so a box whose account is spent does not leave the lane unchecked silently (it was
  * deferred 19 h on 2026-10-29); run `spot-check --force` on a box whose account has room, with --state pointing at a copy. The tally is
+ * recorded in book_checks (#8069, method lane-spot-check: every page, clean ones too; `record-spot` writes a folder's
+ * verdicts again, and is how a failed write or an older run gets in; write-once) and
  * posted on #5600 against the bar: 0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3. An invented or wrong-leaf
  * page is CONTAINED (containment-on-finding.md: the book is already held; withhold-stale-translations --by-eye-pages
  * --apply) and the lane PAUSES: the stop file is written and ntfy is pinged.
@@ -70,6 +81,7 @@
  * margin furniture out of the English; stop where the leaf stops. Measured in scripts/eval/siku-percall-5600 (arm C).
  */
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -79,7 +91,11 @@ import { claudeUsage } from '../lib/model-limits.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ntfyPost } from '../lib/ntfy-send.mjs';
 import { writeLaneStop } from '../lib/lane-stop.mjs';
-import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName } from '../lib/agy-pools.mjs';
+import { readMethod, recordPageVerdicts } from '../lib/book-checks.mjs';
+import { POOL_HOMES, parseQuota, choosePool as choosePoolBy, readPool as readPoolBy, readPools as readPoolsBy, poolName, weeklyReserve } from '../lib/agy-pools.mjs';
+import { AGY_GEMINI_EMPTY } from '../lib/agy-cli.mjs';
+import { SIKU_LANE_HOLDS } from '../lib/hold-reasons.mjs';
+import { judgeRequests, requestedFirst } from './reader-request-lane.mjs';
 
 export { POOL_HOMES, parseQuota, poolName };
 
@@ -87,17 +103,17 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..');
 export const ISSUE = 5600;
 export const JOB = 'siku-lane-5600';
-// zh-histories-7546: the Four Histories (Shiji, Hanshu, Hou Hanshu, Sanguozhi), Siku copies OCR'd by the Paddle lane on
-// 2026-10-28 (#7546). Derek 2026-10-29: "get more chinese translated". They go first, his 10-27 priority volumes first.
-export const HOLD_REASONS = Object.freeze(['paddle-zh-5600-ocr-only', 'gpu-backlog-5660', 'zh-histories-7546']);
+export const HOLD_REASONS = SIKU_LANE_HOLDS;
 export const FIRST_HOLD = 'zh-histories-7546';
 // Derek's 10-27 translation priority list (#7546 comment, section 3): the 21 volumes holding those chapters.
 export const PRIORITY_IDS = Object.freeze(new Set(['6ae0bab64adf2ffb52f71058', '6ae0baf94adf2ffb52f7121a', '6ae0bb854adf2ffb52f7166f', '6ae0bb894adf2ffb52f7170c', '6ae0bbc74adf2ffb52f7176e', '6ae0bd3d4adf2ffb52f72384', '6ae0bdca4adf2ffb52f72677', '6ae0bdce4adf2ffb52f72711', '6ae0beb34adf2ffb52f72f36', '6ae0bef64adf2ffb52f7304b', '6ae0befa4adf2ffb52f730c0', '6ae0befe4adf2ffb52f7311a', '6ae0bf3b4adf2ffb52f731bb', '6ae0bf3f4adf2ffb52f7321e', '6ae0bf424adf2ffb52f732bf', '6ae0bf884adf2ffb52f73494', '6ae0bf9a4adf2ffb52f73668', '6ae0bfa24adf2ffb52f736b3', '6ae0c5d74adf2ffb52f75eba', '6ae0c5db4adf2ffb52f75f31', '6ae0c61d4adf2ffb52f76087']));
 export const RUNGS = Object.freeze(['transcribed', 'translating']);
 export const MIN_OCR_SHARE = 0.8;
-export const FLOOR = Object.freeze({ weekly: 0.35, nearReset: 0.05, nearResetHours: 24 });
 export const SPOT_EVERY = 5000;
 export const SPOT_N = 10;
+export const SPOT_METHOD = 'lane-spot-check';
+/** scripts/eval/methods/lane-spot-check.md, "Readers": whether these rows warn readers is decided there, not by accident. */
+export const SPOT_READER_WARNING = true;
 export const MODEL = 'gemini-3.8-flash-low';
 export const REASON = 'Siku lane #5600, Derek 2026-10-27';
 /** #7090: reader requests, translated by their own job. */
@@ -119,7 +135,8 @@ export const CHAT_REPLY_RE = /作为一个人工智能|人工智能语言模型|
 export function poolGate(reading, { now = Date.now() } = {}) {
   if (!reading) return { open: false, why: 'no reading' };
   const h = reading.weeklyReset ? (Date.parse(reading.weeklyReset) - now) / 3600e3 : Infinity;
-  const floor = h < FLOOR.nearResetHours ? FLOOR.nearReset : FLOOR.weekly;
+  // a spent pool keeps a residue and never reads exactly 0 (agy-cli.mjs AGY_GEMINI_EMPTY)
+  const floor = Math.max(weeklyReserve({ resetTime: reading.weeklyReset, now, lane: 'siku' }), AGY_GEMINI_EMPTY);
   const w = reading.weekly;
   const why = `weekly ${w.toFixed(3)} remaining, floor ${floor} (reset in ${Number.isFinite(h) ? h.toFixed(1) : '?'} h)`;
   return { open: w > floor, floor, why };
@@ -142,18 +159,27 @@ export function isDupeSibling(book, sib) {
   return sib.title === book.title;                 // the same volume twice
 }
 
-/** Book-level filter and order. books: candidate rows; ctx: { exclude: Set, sealRe: RegExp|null }. */
-export function rankBooks(books, { exclude = new Set(), sealRe = null } = {}) {
+/** Book-level filter and order. books: candidate rows; ctx: { exclude: Set, sealRe: RegExp|null, requested: Map book id → page ids, oldest request first (#7690) }. */
+export function rankBooks(books, { exclude = new Set(), sealRe = null, requested = new Map() } = {}) {
+  const order = [...requested.keys()];
+  const requestRank = (b) => (requested.has(b.id) ? order.indexOf(b.id) : order.length);
   return books.filter((b) => {
     if (!b.id || exclude.has(b.id)) return false;
     if (!HOLD_REASONS.includes(b.pipeline_auto?.hold?.reason) || b.pipeline_auto?.status !== 'held') return false;
     const ts = b.translation_state || {};
-    if (!RUNGS.includes(ts.rung)) return false;
+    if (!RUNGS.includes(ts.rung) && !requested.has(b.id)) return false;
     if (!(ts.whole > 0) || (ts.ocr ?? 0) / ts.whole < MIN_OCR_SHARE) return false;
     if (sealRe && sealRe.test(b.title || '')) return false;
     return true;
-  }).sort((a, b) => rankKey(b) - rankKey(a) || (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
+  }).sort((a, b) => requestRank(a) - requestRank(b) || rankKey(b) - rankKey(a) || (b.visible ? 1 : 0) - (a.visible ? 1 : 0) || (a.pages_count ?? 0) - (b.pages_count ?? 0) || (a.id < b.id ? -1 : 1));
 }
+/** The `siku` verdicts as rankBooks' `requested`: judgeRequests sorts by date, and a Map keeps the first request's place. */
+export function requestedBooks(reqs) {
+  const requested = new Map();
+  for (const r of reqs) if (r.verdict?.verdict === 'siku') (requested.get(r.book.id) ?? requested.set(r.book.id, new Set()).get(r.book.id)).add(r.page.id);
+  return requested;
+}
+
 /** 2 = a priority Four Histories volume, 1 = another Four Histories volume, 0 = the Siku cohort. */
 function rankKey(b) {
   if (b.pipeline_auto?.hold?.reason !== FIRST_HOLD) return 0;
@@ -207,12 +233,22 @@ async function exclusions(db) {
 }
 
 const BOOK_PROJ = { id: 1, title: 1, language: 1, visible: 1, pages_count: 1, work_id: 1, translation_state: 1, pipeline_auto: 1 };
-async function candidates(db) {
+async function candidates(db, requested = new Map()) {
   const rows = await db.collection('books').find(
-    { 'pipeline_auto.status': 'held', 'pipeline_auto.hold.reason': { $in: [...HOLD_REASONS] }, 'translation_state.rung': { $in: [...RUNGS] }, pages_count: { $gt: 0 } },
+    { 'pipeline_auto.status': 'held', 'pipeline_auto.hold.reason': { $in: [...HOLD_REASONS] }, $or: [{ 'translation_state.rung': { $in: [...RUNGS] } }, { id: { $in: [...requested.keys()] } }], pages_count: { $gt: 0 } },
     { projection: BOOK_PROJ },
   ).toArray();
-  return rankBooks(rows, await exclusions(db));
+  return rankBooks(rows, { ...(await exclusions(db)), requested });
+}
+
+/** This wave's reader requests. A failure here costs the order, never the wave. */
+async function readRequests(db) {
+  try {
+    return requestedBooks(await judgeRequests(db));
+  } catch (e) {
+    log(`reader requests not read (${e.message}); the wave keeps its usual order`);
+    return new Map();
+  }
 }
 
 async function hasDupe(db, book) {
@@ -222,7 +258,7 @@ async function hasDupe(db, book) {
 }
 
 /** The pages to read for one book, after ledgering any whose OCR is a chat reply. */
-async function bookPages(db, book, done) {
+async function bookPages(db, book, done, wanted) {
   const pages = await db.collection('pages').find({ book_id: book.id, ...UNTRANSLATED }, { projection: { id: 1, page_number: 1, 'ocr.data': 1 } }).sort({ page_number: 1 }).toArray();
   const out = [];
   for (const p of pages) {
@@ -230,7 +266,7 @@ async function bookPages(db, book, done) {
     if (CHAT_REPLY_RE.test(p.ocr?.data || '')) { ledger({ page_id: p.id, book_id: book.id, page_number: p.page_number, error_class: 'ocr-chat-reply' }); done.add(p.id); continue; }
     out.push({ id: p.id, page_number: p.page_number });
   }
-  return out;
+  return wanted ? requestedFirst(out, wanted) : out;
 }
 
 const stillHeld = async (db, id) => {
@@ -244,6 +280,12 @@ function runNode(args, env, logFile) {
     const child = spawn(process.execPath, ['--no-warnings', ...args], { stdio: ['ignore', fd, fd], env, cwd: ROOT });
     child.on('close', (code) => { fs.closeSync(fd); resolve(code); });
   });
+}
+
+/** A requested book the lane's filters leave out would otherwise look queued for ever: say so on every wave. */
+function logRequested(requested, books) {
+  const eligible = new Set(books.map((b) => b.id));
+  for (const [id, pages] of requested) log(`  reader request: ${id} (${pages.size} page(s)) ${eligible.has(id) ? 'goes first' : 'NOT eligible: a filter leaves it out (OCR share, residue, another job, or refused earlier); the request stays open'}`);
 }
 
 // ── run ──
@@ -272,8 +314,10 @@ async function runWave(db) {
 
   const done = readLedger();
   const skipped = readSkips();
-  const books = (await candidates(db)).filter((b) => !skipped.has(b.id));
+  const requested = await readRequests(db);
+  const books = (await candidates(db, requested)).filter((b) => !skipped.has(b.id));
   log(`cohort: ${books.length} books eligible before the per-book checks (${skipped.size} refused by the reader earlier, left out)`);
+  logRequested(requested, books);
   const env = { ...process.env, CLI_JOB_NAME: JOB, JOB_NAME: process.env.JOB_NAME || JOB, JOB_LANDS: `#${ISSUE}`, SIKU_LANE_CHILD: '1' };
   if (pool.home) env.AGY_HOME = pool.home; else delete env.AGY_HOME;
   const day = new Date().toISOString().slice(0, 10);
@@ -302,7 +346,7 @@ async function runWave(db) {
     while (cursor < books.length && budget > 0) {
       const b = books[cursor++];
       if (await hasDupe(db, b)) { log(`  ${b.id} skipped: a work_id sibling is another edition with English`); continue; }
-      const pages = await bookPages(db, b, done);
+      const pages = await bookPages(db, b, done, requested.get(b.id));
       if (!pages.length) continue;
       budget -= pages.length;
       return { book: b, pages };
@@ -415,6 +459,59 @@ For each item decide:
 Write OUTPUT_FILE as a JSON array, one object per item: {"page_id", "wrong_leaf", "invented", "invented_quote",
 "sense_errors", "from_ocr", "verdict", "note"}. No prose outside the file.`;
 
+/** One spot-check verdict as a recordPageVerdicts() page: the draft bar's severity, in lane-spot-check.md's words. */
+export function spotVerdict(v, item) {
+  const fromOcr = v.from_ocr === true || (typeof v.from_ocr === 'string' && !/^(false|no|none|)$/i.test(v.from_ocr.trim()));
+  const stage = fromOcr ? 'ocr' : 'translation';
+  const note = String(v.note ?? '').trim();
+  const errors = [];
+  const invented = v.invented === true || v.verdict === 'invented';
+  if (invented) errors.push({ stage, kind: 'confabulation', problem: String(v.invented_quote || note || 'A passage that is not on this leaf.').slice(0, 600) });
+  if ((v.sense_errors || 0) > 0 || v.verdict === 'sense-error') errors.push({ stage, kind: fromOcr ? 'misread' : 'mistranslation', problem: (note || 'A clause whose meaning changes.').slice(0, 600) });
+  if (v.verdict === 'omission') errors.push({ stage: 'translation', kind: 'omission', problem: (note || 'Text on the leaf is missing from the English.').slice(0, 600) });
+  const wrong = v.wrong_leaf === true || v.verdict === 'wrong-leaf';
+  return {
+    page_id: v.page_id, verdict: v.verdict, note,
+    outcome: wrong || errors.length ? 'serious' : v.verdict === 'minor' ? 'minor' : 'clean',
+    page_verdict: wrong || invented ? 'fix' : errors.length ? 'caveat' : 'show',
+    ...(wrong ? { wrong_page: true } : {}), errors,
+    ...(item ? { judged: { ocr: item.ocr, translation: item.english } } : {}),
+  };
+}
+
+/** The Opus id a sealed judge's stream-json transcript reports. */
+export function transcriptModel(text) {
+  return String(text ?? '').match(/"model":"(claude-[^"]+)"/)?.[1] ?? null;
+}
+
+/**
+ * Record one spot-check folder in book_checks, from what the folder holds: verdicts.json and c<k>/items.json (the text the
+ * judge was given), so a live run and a later backfill cannot differ. Selection is `random`: spotCheck draws at random
+ * from the pages written since the last check and picks nothing itself.
+ */
+export async function recordSpot(db, dir, { apply = true, evidence, exposure = 'live', frame = {} } = {}) {
+  const chunks = fs.readdirSync(dir).filter((d) => /^c\d+$/.test(d));
+  const read = (f) => { try { return fs.readFileSync(f, 'utf8'); } catch { return null; } };
+  const items = chunks.flatMap((c) => JSON.parse(read(path.join(dir, c, 'items.json')) ?? '[]'));
+  const verdicts = JSON.parse(fs.readFileSync(path.join(dir, 'verdicts.json'), 'utf8'));
+  const stamp = path.basename(dir);
+  const m = stamp.match(/^(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)?$/);
+  if (!m) throw new Error(`record-spot: ${dir} is not a spot folder (<yyyymmdd>T<hh>[mm])`);
+  const model = chunks.map((c) => transcriptModel(read(path.join(dir, c, 'transcript.jsonl')))).find(Boolean);
+  const byId = new Map(items.map((i) => [i.page_id, i]));
+  return recordPageVerdicts(db, {
+    method_id: SPOT_METHOD, method_version: readMethod(SPOT_METHOD).version, run_id: `siku-translate-5600-${stamp}`,
+    checked_at: new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +(m[5] ?? 0))),
+    selection: 'random', stages: ['ocr', 'translation'],
+    reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },   // judgeSealed keeps a verdict only if the transcript shows its image opened
+    evidence_path: evidence ?? `box:${os.hostname()}:${path.join(dir, 'verdicts.json')}`,
+    reader_warning: SPOT_READER_WARNING, exposure,
+    note: 'One page drawn at random from the books this lane had just translated, read against the page image.',
+    frame: { lane: 'siku-translate-5600', draft_bar: '0 wrong-leaf, 0 invented, sense errors on <= 1 page in 3', pages_drawn: items.length || null, verdicts_kept: verdicts.length, ...frame },
+    verdicts: verdicts.map((v) => spotVerdict(v, byId.get(v.page_id))),
+  }, { apply });
+}
+
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** The judge's claude binary: /usr/bin/claude first (an older ~/.local/bin/claude lacks --restricted), else the first
  *  one on this box that has it. l7a has no /usr/bin/claude (2026-10-29: the spot check died with ENOENT there). */
@@ -496,6 +593,11 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'verdicts.json'), JSON.stringify(verdicts, null, 1));
   if (!verdicts.length) { log(`spot check: no usable verdicts (${dir}); the next run tries again`); return; }
+  // The record first, while the pages are as the judge read them and before anything below can fail or withhold them.
+  // A failed write does not hold up containment; it is logged, paged and said in the comment (retry: record-spot).
+  const rec = await recordSpot(db, dir, { frame: { pool_books: byBook.size, written_total: s.written_total } }).catch((e) => ({ inserted: 0, already: 0, failed: [{ error: e.message }] }));
+  log(`spot check: book_checks ${rec.inserted} inserted, ${rec.already} already held, ${rec.failed.length} failed${rec.failed.length ? `: ${JSON.stringify(rec.failed).slice(0, 500)}` : ''}`);
+  if (rec.failed.length) await ntfy('Siku lane: spot check not fully recorded', `siku-translate-lane: ${rec.failed.length} book_checks write(s) failed for ${dir}. Retry: siku-translate-lane.mjs record-spot --dir=${dir} --apply (#8069)`);
   const t = tallyBar(verdicts);
   const books = new Map((await db.collection('books').find({ id: { $in: items.map((i) => i.book_id) } }, { projection: { id: 1, title: 1 } }).toArray()).map((b) => [b.id, b.title]));
   const table = verdicts.map((v) => { const it = items.find((i) => i.page_id === v.page_id); return `| [${books.get(it?.book_id) ?? it?.book_id} p.${it?.page_number}](https://sourcelibrary.org/book/${it?.book_id}?page=${it?.page_number}) | ${v.verdict} | ${String(v.note || '').replace(/\|/g, '/').slice(0, 160)} |`; });
@@ -526,6 +628,7 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
     '| page | verdict | note |', '|---|---|---|', ...table,
     ...(bad.length ? ['', `**Contained** (containment-on-finding.md; the books are held): ${contained}`, `The lane is paused: \`${P.stop}\` exists. Resume with \`rm ${P.stop}\` after a look.${ticket?.url ? ` Ticket (paged daily while the STOP stands): ${ticket.url}` : ''}`] : []),
     ...(!t.pass && !bad.length ? ['', 'The sense-error rate is over the bar; the lane keeps running (the bar\'s stop is invented or wrong-leaf text). Raising it here for a look.'] : []),
+    '', `Recorded in \`book_checks\` (method \`${SPOT_METHOD}\`): ${rec.inserted} book rows${rec.failed.length ? `. **${rec.failed.length} write(s) FAILED** (\`${JSON.stringify(rec.failed).slice(0, 300)}\`); retry with \`record-spot --dir=${dir} --apply\`` : ''}.`,
   ].join('\n'));
   delete s.spot_deferred_since; delete s.spot_deferred_paged;
   s.spot_at = s.written_total; s.spot_written_rows = rows.length; s.spots = [...(s.spots || []), { at: new Date().toISOString(), dir, ...t }]; saveState(s);
@@ -534,7 +637,9 @@ async function spotCheck(db, { force = false, n = SPOT_N } = {}) {
 // ── count ──
 
 async function count(db) {
-  const books = await candidates(db);
+  const requested = await readRequests(db);
+  const books = (await candidates(db, requested)).filter((b) => !readSkips().has(b.id));
+  logRequested(requested, books);
   const done = readLedger();
   let pages = 0, dupes = 0;
   for (const b of books) { if (await hasDupe(db, b)) { dupes++; continue; } pages += (b.translation_state?.translatable ?? b.pages_count) - (b.translation_state?.translated ?? 0); }
@@ -543,7 +648,7 @@ async function count(db) {
 
 async function main() {
   const mode = process.argv[2];
-  if (!['pools', 'count', 'run', 'spot-check'].includes(mode)) { console.error('usage: siku-translate-lane.mjs pools | count | run [--apply] [--max-pages=1500] [--parallel=3] [--per-call=1] | spot-check [--force]'); process.exit(2); }
+  if (!['pools', 'count', 'run', 'spot-check', 'record-spot'].includes(mode)) { console.error('usage: siku-translate-lane.mjs pools | count | run [--apply] [--max-pages=1500] [--parallel=3] [--per-call=1] | spot-check [--force] | record-spot --dir=D [--evidence=PATH] [--apply]'); process.exit(2); }
   fs.mkdirSync(STATE_DIR, { recursive: true });
   if (mode === 'pools') { for (const p of readPools()) console.log(JSON.stringify({ pool: poolName(p), busy: p.busy, ...p.reading, gate: p.reading ? poolGate(p.reading) : null })); return; }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -552,6 +657,13 @@ async function main() {
   try {
     if (mode === 'count') await count(db);
     else if (mode === 'run') await runWave(db);
+    else if (mode === 'record-spot') {
+      const apply = process.argv.includes('--apply');
+      const r = await recordSpot(db, path.resolve(arg('dir', '')), { apply, evidence: arg('evidence', undefined), exposure: arg('evidence', undefined) ? 'unrecorded' : 'live' });
+      for (const row of r.rows) console.log(JSON.stringify({ book_id: row.book_id, run_id: row.run_id, pages_read: row.pages_read, verdict: row.verdict, findings: row.page_findings.length, changed: row.text_provenance.filter((e) => e.changed_since_check).map((e) => e.page_number) }));
+      log(`record-spot ${apply ? 'applied' : 'DRY RUN'}: ${r.rows.length} book rows, ${r.inserted} inserted, ${r.already} already held, ${r.failed.length} failed ${JSON.stringify(r.failed).slice(0, 800)}`);
+      if (r.failed.length) process.exitCode = 1;
+    }
     else await spotCheck(db, { force: process.argv.includes('--force'), n: Number(arg('n', SPOT_N)) });
   } finally { await client.close(); }
 }

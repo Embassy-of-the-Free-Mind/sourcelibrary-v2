@@ -8,7 +8,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 // identity and IP reach the route, and that nothing goes over the wire.
 
 vi.mock('@/lib/api-auth', () => ({ withApiAuth: (h: (...a: unknown[]) => unknown) => (req: unknown) => h(req, {}, IDENTITY) }));
-vi.mock('@/lib/mcp-usage', () => ({ logMcpToolCall: vi.fn(), logMcpInitialize: vi.fn() }));
+vi.mock('@/lib/mcp-usage', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/mcp-usage')>()),
+  logMcpToolCall: vi.fn(),
+  logMcpInitialize: vi.fn(),
+}));
 vi.mock('@/lib/api-usage', () => ({ getPagesServedLast24h: vi.fn(async () => 0), logApiUsage: vi.fn() }));
 vi.mock('@/lib/rate-limit', () => ({
   getClientIp: (r: Request) => r.headers.get('x-forwarded-for') || 'unknown',

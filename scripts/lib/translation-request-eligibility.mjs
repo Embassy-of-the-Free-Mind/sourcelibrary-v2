@@ -27,6 +27,8 @@
  * for scripts/batch/reader-request-lane.mjs (#7599), which honours `auto` on the subscription
  * CLIs ($0 API) with its own, larger ceiling: Derek's call on 2026-10-28 ("finish whichever
  * books they request"). The lane passes the two options below; every other gate is unchanged.
+ * For a book held for the Siku lane it also allows the hold, and the verdict only moves that book
+ * up a queue already approved to translate it (siku-translate-lane.mjs, #7690).
  */
 import { legacyPublication } from './publication.mjs';
 import { isHeld } from './pipeline-hold.mjs';

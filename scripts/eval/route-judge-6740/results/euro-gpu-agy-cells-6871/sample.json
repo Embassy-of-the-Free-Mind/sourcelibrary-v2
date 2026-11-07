@@ -1,0 +1,1982 @@
+{
+ "drawn_at": "2026-11-07T03:20:37.874Z",
+ "study": "euro-6871",
+ "cells": {
+  "fr19": {
+   "lang": "French",
+   "years": [
+    1800,
+    1929
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "69b4ccb8d5b6c3815e1a2235",
+     "book_id": "69b4ccb8d5b6c3815e1a218d",
+     "page_number": 168,
+     "year": 1860,
+     "hold": null,
+     "visible": true,
+     "provider": "allard_pierson",
+     "title": "Pescatorea: iconographie des orchidées"
+    },
+    {
+     "page_id": "6aa331610583d2ccd3f12cb5",
+     "book_id": "6aa331610583d2ccd3f12bfd",
+     "page_number": 184,
+     "year": 1802,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Rapports du physique et du moral de l'homme"
+    },
+    {
+     "page_id": "699047e612d83c216b7e8c6e",
+     "book_id": "699047e512d83c216b7e8c3f",
+     "page_number": 47,
+     "year": 1814,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Essai philosophique sur les probabilités"
+    },
+    {
+     "page_id": "6a26c621f9509ac03ee99a9a",
+     "book_id": "69c1bf97b82ba5d5bed96e05",
+     "page_number": 6,
+     "year": 1814,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Loge des Amis de la parfaite Union, Paris : Statuts et règlements pour la R. L. "
+    },
+    {
+     "page_id": "6a8f6259ddd2f57fe0f81ec8",
+     "book_id": "6a8f6259ddd2f57fe0f81dd7",
+     "page_number": 241,
+     "year": 1835,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Sur l'homme et le développement de ses facultés, ou Essai de physique sociale"
+    },
+    {
+     "page_id": "69e41f03d0364cb0bcf7a01c",
+     "book_id": "69e41f03d0364cb0bcf79e41",
+     "page_number": 475,
+     "year": 1893,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Nana"
+    },
+    {
+     "page_id": "6aa1d4d277169abff16212f7",
+     "book_id": "6aa1d4cf77169abff16211ce",
+     "page_number": 297,
+     "year": 1819,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Cérémonies usitées au Japon pour les mariages et les funérailles suivies de déta"
+    },
+    {
+     "page_id": "69c27108b82ba5d5beda2c02",
+     "book_id": "69c27107b82ba5d5beda2be2",
+     "page_number": 32,
+     "year": 1835,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "L' Art Royal et maçon: Signes, mots et attouchements des principaux grades de la"
+    },
+    {
+     "page_id": "69c1ba42b82ba5d5bed963f0",
+     "book_id": "69c1ba3bb82ba5d5bed963ad",
+     "page_number": 67,
+     "year": 1810,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Loge Sainte Solange. Bourges. 25 Avril 1785-9 Mai 1810"
+    },
+    {
+     "page_id": "6aa1d4c977169abff1620f7c",
+     "book_id": "6aa1d4c777169abff1620f52",
+     "page_number": 42,
+     "year": 1902,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le rituel du culte divin journalier en Egypte d'après les papyrus de Berlin et "
+    },
+    {
+     "page_id": "6a9f3fcb83c3b522416e6331",
+     "book_id": "6a9f3fcb83c3b522416e621d",
+     "page_number": 276,
+     "year": 1880,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Histoire générale des choses de la Nouvelle-Espagne"
+    },
+    {
+     "page_id": "69aea48440c3e9df6ecf6edd",
+     "book_id": "69aea48340c3e9df6ecf6eb0",
+     "page_number": 45,
+     "year": 1907,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Introduction à la paléographie musicale byzantine: Catalogue des manuscrits"
+    },
+    {
+     "page_id": "6a08a7b650cb4ea746a097a7",
+     "book_id": "6a08a7b650cb4ea746a094ed",
+     "page_number": 174,
+     "year": 1872,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Recueil général et complet des fabliaux des XIIIe et XIVe siècles, Vol. 1"
+    },
+    {
+     "page_id": "69b51ed3c35d928cea4efd1e",
+     "book_id": "69b51ed3c35d928cea4efbf0",
+     "page_number": 302,
+     "year": 1819,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Catalogue de la bibliotheque d'un amateur : avec notes bibliographiques, critiqu"
+    },
+    {
+     "page_id": "6a4ad84ad6371d99e7667d37",
+     "book_id": "6a4ad84ad6371d99e7667bc1",
+     "page_number": 374,
+     "year": 1916,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Droit des gens, ou Principes de la loi naturelle (facsimile reproduction of t"
+    },
+    {
+     "page_id": "69e3ff5bb142e5dd9d6afffd",
+     "book_id": "69e3ff5bb142e5dd9d6afe2f",
+     "page_number": 462,
+     "year": 1879,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "L'Heptaméron"
+    },
+    {
+     "page_id": "69aea6fd971abe996d21ae57",
+     "book_id": "69aea6fd971abe996d21ad4e",
+     "page_number": 265,
+     "year": 1908,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "L'Évolution créatrice"
+    },
+    {
+     "page_id": "69b51eb3768235dc65997782",
+     "book_id": "69b51eb3768235dc659976e0",
+     "page_number": 162,
+     "year": 1808,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Cimarosa : opéra comique en deux actes ; représenté pour la Iere fois à Paris su"
+    },
+    {
+     "page_id": "69af5946522dc3dfdf725bea",
+     "book_id": "69af5946522dc3dfdf725a23",
+     "page_number": 455,
+     "year": 1913,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Système du Monde: Histoire des doctrines cosmologiques de Platon à Copernic, "
+    },
+    {
+     "page_id": "6a08f5ad50bd891addfb95d3",
+     "book_id": "6a08f5ad50bd891addfb9545",
+     "page_number": 142,
+     "year": 1883,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Monsieur Nicolas, ou Le cœur humain dévoilé, Vol. V (1883)"
+    },
+    {
+     "page_id": "69bd95ecd9007d72ade0d334",
+     "book_id": "69bd95ecd9007d72ade0d241",
+     "page_number": 243,
+     "year": 1892,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Zend-Avesta: Traduction nouvelle, Tome III"
+    },
+    {
+     "page_id": "6a4a3ec5f0f4a3b75e90df9c",
+     "book_id": "6a4a3ec5f0f4a3b75e90de33",
+     "page_number": 361,
+     "year": 1809,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Dialogues des morts anciens et modernes"
+    },
+    {
+     "page_id": "69e41ed0d0364cb0bcf7977d",
+     "book_id": "69e41ed0d0364cb0bcf796a6",
+     "page_number": 215,
+     "year": 1900,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Religieuse"
+    },
+    {
+     "page_id": "6a08a2c943d85a6ece189700",
+     "book_id": "6a08a2c943d85a6ece1896bb",
+     "page_number": 69,
+     "year": 1871,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Mémoires de Jacques Casanova de Seingalt, Vol. 1"
+    },
+    {
+     "page_id": "69e41a328a8dae1074c534fd",
+     "book_id": "69e41a328a8dae1074c53464",
+     "page_number": 153,
+     "year": 1882,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Rideau levé, ou L'Éducation de Laure"
+    },
+    {
+     "page_id": "69b51edec35d928cea4f126c",
+     "book_id": "69b51edec35d928cea4f123c",
+     "page_number": 48,
+     "year": 1811,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Considérations sur la nécessité de rétablir le chant de l'église de Rome dans to"
+    },
+    {
+     "page_id": "6aa1d4de77169abff1621518",
+     "book_id": "6aa1d4db77169abff162143e",
+     "page_number": 218,
+     "year": 1921,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Traité des reliques, suivi de l'Excuse à messieurs les Nicodémites;"
+    },
+    {
+     "page_id": "69af5956569075d6ffc0725f",
+     "book_id": "69af5956569075d6ffc07222",
+     "page_number": 61,
+     "year": 1915,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Système du Monde: Histoire des doctrines cosmologiques de Platon à Copernic, "
+    },
+    {
+     "page_id": "6a09e90d2111a8b71cc38558",
+     "book_id": "6a09e90d2111a8b71cc3846f",
+     "page_number": 233,
+     "year": 1891,
+     "hold": null,
+     "visible": false,
+     "provider": "gallica",
+     "title": "Œuvres de Fermat, Tome II: Correspondance (incl. 1654 Pascal-Fermat letters)"
+    },
+    {
+     "page_id": "69c22c7db82ba5d5bed9b3f0",
+     "book_id": "69c22c7cb82ba5d5bed9b3da",
+     "page_number": 22,
+     "year": 1850,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Collection de pièces manuscrits et imprimées, concernant les malheurs arrivés au"
+    }
+   ]
+  },
+  "fr17": {
+   "lang": "French",
+   "years": [
+    1600,
+    1799
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "6a26c9cbd455331d79cc62c9",
+     "book_id": "69c1c09bb82ba5d5bed97014",
+     "page_number": 18,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Maître Anglais ou le Maître en Israel. Avec dessins. 1765"
+    },
+    {
+     "page_id": "6a908bf9582ccd8b63f8ef89",
+     "book_id": "6a908bf9582ccd8b63f8eebf",
+     "page_number": 202,
+     "year": 1680,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Dictionarium novum latinum et gallicum, ad usum … Delphini, authore mag. Petro D"
+    },
+    {
+     "page_id": "6a26cabbe1e9b2d7102621ee",
+     "book_id": "69c1c1c6b82ba5d5bed971f4",
+     "page_number": 14,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Chevalier d'Occident et d'Orient. Avec tableau"
+    },
+    {
+     "page_id": "6a243e090f0e4f405e632a3b",
+     "book_id": "6a243e090f0e4f405e632893",
+     "page_number": 424,
+     "year": 1669,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "gallica",
+     "title": "Les Oeuvres de M. Jean Belot,... contenant la chiromence, physionomie, l'art de "
+    },
+    {
+     "page_id": "6a090c3644b481aa5a37dc9b",
+     "book_id": "6a090c3644b481aa5a37dc51",
+     "page_number": 74,
+     "year": 1786,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Requête à joindre au Mémoire du Comte de Cagliostro (1786)"
+    },
+    {
+     "page_id": "6a26c6051511c0c65125e52a",
+     "book_id": "69c1c1f9b82ba5d5bed9723e",
+     "page_number": 6,
+     "year": 1744,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Chevalier Maître Ecossais Anglais"
+    },
+    {
+     "page_id": "6a26ca0e557cd195ea96fcdc",
+     "book_id": "69c1c0eab82ba5d5bed97090",
+     "page_number": 12,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Ecossais de Prusse ou le Chevalier de St. André; avec tableau. 1765"
+    },
+    {
+     "page_id": "69c26cd8b82ba5d5beda1d96",
+     "book_id": "69c26cd7b82ba5d5beda1d93",
+     "page_number": 3,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Parfait Maître Anglais"
+    },
+    {
+     "page_id": "6aa35ce7b8b2420aa5934e89",
+     "book_id": "6aa35ce7b8b2420aa5934e00",
+     "page_number": 137,
+     "year": 1793,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Les Aventures de Télémaque"
+    },
+    {
+     "page_id": "6a243ce80f0e4f405e62f612",
+     "book_id": "6a243ce80f0e4f405e62f50a",
+     "page_number": 264,
+     "year": 1773,
+     "hold": null,
+     "visible": true,
+     "provider": "gallica",
+     "title": "Chymie expérimentale et raisonnée. Tome 1 / , par M. Baumé,..."
+    },
+    {
+     "page_id": "6aa1d1ff77169abff161a892",
+     "book_id": "6aa1d1f977169abff161a6a3",
+     "page_number": 495,
+     "year": 1704,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Devotion au Sacré Coeur de N. S. Jesus-Christ. Par un P. de la Compagnie de J"
+    },
+    {
+     "page_id": "69bda0d7f6d63c919748b787",
+     "book_id": "69bda0d7f6d63c919748b44a",
+     "page_number": 829,
+     "year": 1751,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "e-rara",
+     "title": "Traité historique et dogmatique sur les apparitions, les visions & les révélatio"
+    },
+    {
+     "page_id": "6a8f61b0ddd2f57fe0f7f36e",
+     "book_id": "6a8f61b0ddd2f57fe0f7f353",
+     "page_number": 27,
+     "year": 1707,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Projet d'une dîme royale"
+    },
+    {
+     "page_id": "6a94392e45a4780cb83dbe8b",
+     "book_id": "6a94392e45a4780cb83dbdcc",
+     "page_number": 191,
+     "year": 1667,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Scaligerana"
+    },
+    {
+     "page_id": "6a0897c4ced7f688b87f0aac",
+     "book_id": "6a0897c4ced7f688b87f0978",
+     "page_number": 308,
+     "year": 1696,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "gallica",
+     "title": "De la génération de l'homme, ou Tableau de l'amour conjugal (Huitième édition)"
+    },
+    {
+     "page_id": "6a4a3e5cf0f4a3b75e90afe8",
+     "book_id": "6a4a3e5cf0f4a3b75e90adf0",
+     "page_number": 504,
+     "year": 1771,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Discours sur l'histoire universelle"
+    },
+    {
+     "page_id": "69c27077b82ba5d5beda2a18",
+     "book_id": "69c27076b82ba5d5beda2a0d",
+     "page_number": 11,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "5me Grade. Maître Parfait"
+    },
+    {
+     "page_id": "6a26d8b26be3d771538c45cd",
+     "book_id": "6a26d8b26be3d771538c45b1",
+     "page_number": 28,
+     "year": 1790,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Lanterne magique nationale"
+    },
+    {
+     "page_id": "69bd9e636120d54bd037cbd4",
+     "book_id": "69bd9e636120d54bd037cbbe",
+     "page_number": 22,
+     "year": 1620,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "e-rara",
+     "title": "Poème philosophic de la verité de la phisique mineralle ..."
+    },
+    {
+     "page_id": "6a9440547680120fac2509e1",
+     "book_id": "6a9440547680120fac25099c",
+     "page_number": 69,
+     "year": 1609,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "De officiis liber primus"
+    },
+    {
+     "page_id": "6a4a3e03f0f4a3b75e9085b5",
+     "book_id": "6a4a3e02f0f4a3b75e908517",
+     "page_number": 158,
+     "year": 1735,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Considérations sur les causes de la grandeur des Romains et de leur décadence"
+    },
+    {
+     "page_id": "69f67763cd2d0f3fe9acaef4",
+     "book_id": "69b419152b0edf3eaa2deba7",
+     "page_number": 164,
+     "year": 1650,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "Le devoilement des tableaux mistiques de l'antiquité: Guillaume de Paris (PH159)"
+    },
+    {
+     "page_id": "6a26ce6f9e92c14146f1acdb",
+     "book_id": "69c22e2bb82ba5d5bed9b776",
+     "page_number": 10,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Chevalier de la Triple Croix"
+    },
+    {
+     "page_id": "6a08dd92db33045508580170",
+     "book_id": "6a08dd92db330455085800f2",
+     "page_number": 126,
+     "year": 1668,
+     "hold": null,
+     "visible": true,
+     "provider": "gallica",
+     "title": "L'Escole des filles, ou La philosophie des dames, réimpression de la contrefaçon"
+    },
+    {
+     "page_id": "69bed06e6e375f0fb686f107",
+     "book_id": "69bed06d6e375f0fb686f0f9",
+     "page_number": 14,
+     "year": 1799,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": null,
+     "title": "Mémoire de F.A. Mesmer sur ses découvertes"
+    },
+    {
+     "page_id": "6a243c3e0f0e4f405e62d49c",
+     "book_id": "6a243c3e0f0e4f405e62d34b",
+     "page_number": 337,
+     "year": 1668,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "gallica",
+     "title": "Dictionnaire théologique, historique, poétique, cosmographique et chronologique."
+    },
+    {
+     "page_id": "6a26c90abf19ed8a52c7d868",
+     "book_id": "69c1bb7ab82ba5d5bed96637",
+     "page_number": 16,
+     "year": 1770,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Vraie maçonnerie d'adoption. Apprentisage. Compagnonage. Maîtrise. M. parfaite. "
+    },
+    {
+     "page_id": "6a26c82d7f2f8fae03bc1285",
+     "book_id": "69c22bddb82ba5d5bed9b20a",
+     "page_number": 7,
+     "year": 1778,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Système rectifié. Chevaliers bienfaisans de la Cité Sainte, rédigé au Convent de"
+    },
+    {
+     "page_id": "6ac27d29058764b16bdc3a2e",
+     "book_id": "6ac27d29058764b16bdc390b",
+     "page_number": 289,
+     "year": 1665,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Journal des voyages de Monsieur de Monconys … Première partie (Voyage de Portuga"
+    },
+    {
+     "page_id": "69b874f313506fe62959b926",
+     "book_id": "69b874f313506fe62959b8a4",
+     "page_number": 130,
+     "year": 1749,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "L'analyze des echecs"
+    }
+   ]
+  },
+  "es19": {
+   "lang": "Spanish",
+   "years": [
+    1800,
+    1929
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 27,
+   "pages": [
+    {
+     "page_id": "69ee941af2c6312502f6ac36",
+     "book_id": "69ee941af2c6312502f6ab06",
+     "page_number": 304,
+     "year": 1888,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Cuatro Libros de la Naturaleza y Virtudes de las Plantas y Animales de la Nueva "
+    },
+    {
+     "page_id": "6a9f3ffa83c3b522416e887c",
+     "book_id": "6a9f3ff983c3b522416e8754",
+     "page_number": 296,
+     "year": 1892,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "De las antiguas gentes del Perú"
+    },
+    {
+     "page_id": "69ee93b9f2c6312502f6a65a",
+     "book_id": "69ee93b9f2c6312502f6a526",
+     "page_number": 308,
+     "year": 1864,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Relation des choses de Yucatan de Diego de Landa"
+    },
+    {
+     "page_id": "6a9f4982d2c94fce8290fe8a",
+     "book_id": "6a9f4981d2c94fce8290fd49",
+     "page_number": 321,
+     "year": 1875,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de las Indias, Tomo III"
+    },
+    {
+     "page_id": "6a09ff88fa20006dbaba9d29",
+     "book_id": "6a09ff88fa20006dbaba9c29",
+     "page_number": 256,
+     "year": 1880,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de las Indias de Nueva España e Islas de Tierra Firme, Vol. 2"
+    },
+    {
+     "page_id": "6aa35d38e213def30d6c84f8",
+     "book_id": "6aa35d38e213def30d6c83fd",
+     "page_number": 251,
+     "year": 1916,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Sueños"
+    },
+    {
+     "page_id": "6a08a77750cb4ea746a08c60",
+     "book_id": "6a08a77750cb4ea746a08b2f",
+     "page_number": 305,
+     "year": 1899,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Celestina, tragicomedia de Calisto y Melibea (Vol. 2)"
+    },
+    {
+     "page_id": "6a08a76f50cb4ea746a089c7",
+     "book_id": "6a08a76f50cb4ea746a0885d",
+     "page_number": 362,
+     "year": 1899,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Celestina, tragicomedia de Calisto y Melibea (Vol. 1)"
+    },
+    {
+     "page_id": "6a9f3fb883c3b522416e55ea",
+     "book_id": "6a9f3fb883c3b522416e5476",
+     "page_number": 372,
+     "year": 1903,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Memoriales de Fray Toribio de Motolinía"
+    },
+    {
+     "page_id": "6a9f49e67a87de4db12b4b3d",
+     "book_id": "6a9f49e67a87de4db12b4a61",
+     "page_number": 220,
+     "year": 1875,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Grammaire de la langue nahuatl ou mexicaine, composée en 1547"
+    },
+    {
+     "page_id": "6a9f3fc583c3b522416e614e",
+     "book_id": "6a9f3fc583c3b522416e60b4",
+     "page_number": 154,
+     "year": 1830,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia general de las cosas de Nueva España, Vol. 3"
+    },
+    {
+     "page_id": "6a9f3fdd83c3b522416e71ad",
+     "book_id": "6a9f3fdd83c3b522416e70b6",
+     "page_number": 247,
+     "year": 1826,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia antigua de Mégico"
+    },
+    {
+     "page_id": "6a9f3f5883c3b522416e10ed",
+     "book_id": "6a9f3f5883c3b522416e10d0",
+     "page_number": 29,
+     "year": 1880,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Segunda parte de la Crónica del Perú: el señorío de los Incas"
+    },
+    {
+     "page_id": "6a09ff77fa20006dbaba97d4",
+     "book_id": "6a09ff77fa20006dbaba9727",
+     "page_number": 173,
+     "year": 1858,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de los Indios de la Nueva España (in Colección de documentos vol. 1)"
+    },
+    {
+     "page_id": "6a871012e4a1289bccee2c75",
+     "book_id": "6a871012e4a1289bccee2c58",
+     "page_number": 29,
+     "year": 1857,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Las historias del origen de los indios de esta provincia de Guatemala"
+    },
+    {
+     "page_id": "69f8c0f74c6a515115aedc15",
+     "book_id": "69f8c0f74c6a515115aedadd",
+     "page_number": 312,
+     "year": 1864,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Relation des choses de Yucatan de Diego de Landa (bilingual Spanish-French)"
+    },
+    {
+     "page_id": "6a9f3f6083c3b522416e15de",
+     "book_id": "6a9f3f6083c3b522416e15a7",
+     "page_number": 55,
+     "year": 1891,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Verdadera relación de la conquista del Perú"
+    },
+    {
+     "page_id": "6a09ff6efa20006dbaba96eb",
+     "book_id": "6a09ff6efa20006dbaba949c",
+     "page_number": 591,
+     "year": 1864,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Relation des choses de Yucatan de Diego de Landa — Spanish text + French transla"
+    },
+    {
+     "page_id": "6aed20f5005b9075bf16debd",
+     "book_id": "6aed20f5005b9075bf16de20",
+     "page_number": 157,
+     "year": 1892,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Idolatrías y supersticiones de los indios"
+    },
+    {
+     "page_id": "69f8c1030c0c281d4bd32405",
+     "book_id": "69f8c1030c0c281d4bd321fd",
+     "page_number": 520,
+     "year": 1867,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de Yucatán, Vol. 1"
+    },
+    {
+     "page_id": "6a08a79c50cb4ea746a093bb",
+     "book_id": "6a08a79c50cb4ea746a09174",
+     "page_number": 359,
+     "year": 1864,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Poetas castellanos anteriores al siglo XV (Janer ed., incl. Libro de Buen Amor)"
+    },
+    {
+     "page_id": "6a09ff80fa20006dbaba9b61",
+     "book_id": "6a09ff80fa20006dbaba99f6",
+     "page_number": 363,
+     "year": 1867,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de las Indias de Nueva España e Islas de Tierra Firme, Vol. 1"
+    },
+    {
+     "page_id": "6a9f3f9583c3b522416e3fec",
+     "book_id": "6a9f3f9583c3b522416e3e9b",
+     "page_number": 337,
+     "year": 1900,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Relaciones de Yucatán, Vol. 2"
+    },
+    {
+     "page_id": "6a9f3fc383c3b522416e604f",
+     "book_id": "6a9f3fc383c3b522416e5edd",
+     "page_number": 370,
+     "year": 1829,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia general de las cosas de Nueva España, Vol. 2"
+    },
+    {
+     "page_id": "6a9f3f9383c3b522416e3e02",
+     "book_id": "6a9f3f9383c3b522416e3cae",
+     "page_number": 340,
+     "year": 1898,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Relaciones de Yucatán, Vol. 1"
+    },
+    {
+     "page_id": "6a9f3fe483c3b522416e77d6",
+     "book_id": "6a9f3fe483c3b522416e766d",
+     "page_number": 361,
+     "year": 1836,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia antigua de Méjico, Vol. 2"
+    },
+    {
+     "page_id": "6a9f3fe183c3b522416e75ae",
+     "book_id": "6a9f3fe183c3b522416e74f4",
+     "page_number": 186,
+     "year": 1836,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia antigua de Méjico, Vol. 1"
+    }
+   ]
+  },
+  "es17": {
+   "lang": "Spanish",
+   "years": [
+    1600,
+    1799
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "6a08faa89c1b82475e15a0fe",
+     "book_id": "6a08faa89c1b82475e159f1d",
+     "page_number": 481,
+     "year": 1632,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia verdadera de la conquista de la Nueua España — Bernal Díaz del Castillo"
+    },
+    {
+     "page_id": "69c6562a5fd2dc1d93b446c8",
+     "book_id": "69c6562a5fd2dc1d93b44680",
+     "page_number": 72,
+     "year": 1703,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Arte de la lengua Mandarina — Earliest published Mandarin grammar"
+    },
+    {
+     "page_id": "6aa35c19e213def30d6c6f6f",
+     "book_id": "6aa35c19e213def30d6c6e77",
+     "page_number": 248,
+     "year": 1673,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Silva de varia lección"
+    },
+    {
+     "page_id": "6aa35cf7b8b2420aa59353ec",
+     "book_id": "6aa35cf7b8b2420aa593532b",
+     "page_number": 193,
+     "year": 1790,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Floresta española"
+    },
+    {
+     "page_id": "6a9f3fd283c3b522416e6ab7",
+     "book_id": "6a9f3fd283c3b522416e6a6a",
+     "page_number": 77,
+     "year": 1645,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Arte de la lengua mexicana con la declaración de los adverbios"
+    },
+    {
+     "page_id": "6a9f4966d2c94fce8290ef27",
+     "book_id": "6a9f4966d2c94fce8290ee2f",
+     "page_number": 248,
+     "year": 1615,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Segunda parte de los veinte y un libros rituales y monarquía indiana"
+    },
+    {
+     "page_id": "69ea0f5413a685002bb8dd6d",
+     "book_id": "69ea0f5413a685002bb8dc8a",
+     "page_number": 227,
+     "year": 1632,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia Verdadera de la Conquista de la Nueva España"
+    },
+    {
+     "page_id": "6aa35c1ae213def30d6c735a",
+     "book_id": "6aa35c1ae213def30d6c70dc",
+     "page_number": 638,
+     "year": 1621,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Refranes o proverbios en romance"
+    },
+    {
+     "page_id": "6a9f3f7083c3b522416e1ed2",
+     "book_id": "6a9f3f7083c3b522416e1e0a",
+     "page_number": 200,
+     "year": 1639,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Corónica moralizada del Orden de San Agustín en el Perú"
+    },
+    {
+     "page_id": "6a8ee24ac3ddcafe2180556a",
+     "book_id": "6a8ee24ac3ddcafe218054b3",
+     "page_number": 183,
+     "year": 1688,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Confusion de confusiones"
+    },
+    {
+     "page_id": "6a9f3f7583c3b522416e23c2",
+     "book_id": "6a9f3f7583c3b522416e228f",
+     "page_number": 307,
+     "year": 1723,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Florida del Inca: historia del adelantado Hernando de Soto"
+    },
+    {
+     "page_id": "6aa35d30e213def30d6c81b6",
+     "book_id": "6aa35d30e213def30d6c8192",
+     "page_number": 36,
+     "year": 1604,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Emblemas morales"
+    },
+    {
+     "page_id": "6a9f4963d2c94fce8290ec75",
+     "book_id": "6a9f4963d2c94fce8290eaaa",
+     "page_number": 459,
+     "year": 1615,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Primera parte de los veinte y un libros rituales y monarquía indiana"
+    },
+    {
+     "page_id": "6a09099444b481aa5a37d424",
+     "book_id": "6a09099444b481aa5a37d315",
+     "page_number": 271,
+     "year": 1712,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Prologo, y relacion de la vida de la Venerable Madre Sor Maria de Jesus de Agred"
+    },
+    {
+     "page_id": "6a09098944b481aa5a37d244",
+     "book_id": "6a09098944b481aa5a37d0d2",
+     "page_number": 370,
+     "year": 1708,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Mystica Ciudad de Dios, Milagro de su Omnipotencia y Abismo de la Gracia (Spanis"
+    },
+    {
+     "page_id": "6aa35c32b8b2420aa5933c8f",
+     "book_id": "6aa35c32b8b2420aa5933ae3",
+     "page_number": 428,
+     "year": 1610,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Emblemas morales"
+    },
+    {
+     "page_id": "6aa35cc0b8b2420aa59348c1",
+     "book_id": "6aa35cc0b8b2420aa593485a",
+     "page_number": 103,
+     "year": 1673,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Silva de varia lección"
+    },
+    {
+     "page_id": "695910f2ecb01322b306852b",
+     "book_id": "695910f2ecb01322b3068302",
+     "page_number": 553,
+     "year": 1608,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia natural y moral de las Indias"
+    },
+    {
+     "page_id": "6a9f3fd483c3b522416e6c32",
+     "book_id": "6a9f3fd483c3b522416e6b87",
+     "page_number": 171,
+     "year": 1759,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Compendio del arte de la lengua mexicana"
+    },
+    {
+     "page_id": "6a9f3fe883c3b522416e7a92",
+     "book_id": "6a9f3fe883c3b522416e7993",
+     "page_number": 255,
+     "year": 1746,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Idea de una nueva historia general de la América Septentrional"
+    },
+    {
+     "page_id": "6a9f3fdf83c3b522416e7352",
+     "book_id": "6a9f3fdf83c3b522416e728f",
+     "page_number": 195,
+     "year": 1684,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de la conquista de México, población y progresos de la América septentr"
+    },
+    {
+     "page_id": "69e786f56846fc56c491103e",
+     "book_id": "69e786f56846fc56c4910f97",
+     "page_number": 167,
+     "year": 1615,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Nueva Corónica y Buen Gobierno"
+    },
+    {
+     "page_id": "6a9f3f8083c3b522416e2d32",
+     "book_id": "6a9f3f8083c3b522416e2ce4",
+     "page_number": 78,
+     "year": 1639,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Conquista espiritual hecha por los religiosos de la Compañía de Jesús en las pro"
+    },
+    {
+     "page_id": "6aa35d19e213def30d6c8050",
+     "book_id": "6aa35d19e213def30d6c7f86",
+     "page_number": 202,
+     "year": 1787,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Aforismos"
+    },
+    {
+     "page_id": "6aa35cefb8b2420aa59350cd",
+     "book_id": "6aa35cefb8b2420aa5934f9d",
+     "page_number": 303,
+     "year": 1618,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Filosofía vulgar"
+    },
+    {
+     "page_id": "69e759c2095c302d3fdde102",
+     "book_id": "69e759c2095c302d3fdde0e6",
+     "page_number": 28,
+     "year": 1700,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "El burlador de Sevilla y convidado de piedra"
+    },
+    {
+     "page_id": "6aa35cddb8b2420aa5934c84",
+     "book_id": "6aa35cddb8b2420aa5934ae4",
+     "page_number": 416,
+     "year": 1604,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Audi filia"
+    },
+    {
+     "page_id": "6a9f3f9783c3b522416e4138",
+     "book_id": "6a9f3f9783c3b522416e4054",
+     "page_number": 228,
+     "year": 1701,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Historia de la conquista de la provincia de el Itzá"
+    },
+    {
+     "page_id": "6aa35c30e213def30d6c743f",
+     "book_id": "6aa35c30e213def30d6c7403",
+     "page_number": 60,
+     "year": 1628,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Sueños"
+    },
+    {
+     "page_id": "69b525ab29577f283b57a6f7",
+     "book_id": "69b525aa29577f283b57a690",
+     "page_number": 103,
+     "year": 1679,
+     "hold": null,
+     "visible": true,
+     "provider": "allard_pierson",
+     "title": "Las excelencias de los Hebreos /, Yshac Cardoso."
+    }
+   ]
+  },
+  "it19": {
+   "lang": "Italian",
+   "years": [
+    1800,
+    1929
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "6aa35c8db8b2420aa593437a",
+     "book_id": "6aa35c8db8b2420aa593436d",
+     "page_number": 13,
+     "year": 1856,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Fiore di virtù"
+    },
+    {
+     "page_id": "69c1138d37989a445aea1e74",
+     "book_id": "69c1138d37989a445aea1e33",
+     "page_number": 65,
+     "year": 1890,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Opere vol. I (Edizione Nazionale, Favaro)"
+    },
+    {
+     "page_id": "6ae3d0223b518c5ca291ca99",
+     "book_id": "6a19c83d04d3011b519d91b4",
+     "page_number": 68,
+     "year": 1893,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "l'Alfabeto apertoriale"
+    },
+    {
+     "page_id": "6953e47a77f38f6761bee9c3",
+     "book_id": "6953e47a77f38f6761bee83e",
+     "page_number": 389,
+     "year": 1920,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Dialogue Concerning Two Chief World Systems - German"
+    },
+    {
+     "page_id": "6a08f65d50bd891addfbb019",
+     "book_id": "6a08f65d50bd891addfbaf3a",
+     "page_number": 223,
+     "year": 1827,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Il Milione di Marco Polo — testo di lingua del secolo decimoterzo (1827)"
+    },
+    {
+     "page_id": "6a90dff81a02a5cb2d7303fe",
+     "book_id": "6a90dff81a02a5cb2d7303de",
+     "page_number": 32,
+     "year": 1848,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Pro Lucio Muraena, oratio, annotationibus illustrata"
+    },
+    {
+     "page_id": "69b51e31ff09e4fe943a9b49",
+     "book_id": "69b51e31ff09e4fe943a9a84",
+     "page_number": 197,
+     "year": 1819,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Della istoria d'Italia antica e moderna : con carte geografiche e tavole incise "
+    },
+    {
+     "page_id": "69bd93932d11455793b3f8ad",
+     "book_id": "69bd93932d11455793b3f766",
+     "page_number": 327,
+     "year": 1808,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Li Bassirilievi Antichi di Roma, Tomo I"
+    },
+    {
+     "page_id": "69c116af7398e38c603c4e8a",
+     "book_id": "69c116af7398e38c603c4e26",
+     "page_number": 100,
+     "year": 1904,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Opere vols. XIV-XIX: Carteggio (Edizione Nazionale)"
+    },
+    {
+     "page_id": "6a45cdc98355d631d121c04d",
+     "book_id": "6a45cdc98355d631d121bf4c",
+     "page_number": 257,
+     "year": 1855,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Novellae"
+    },
+    {
+     "page_id": "6ad82d458ddfc5d0064a3616",
+     "book_id": "6ad82d458ddfc5d0064a347e",
+     "page_number": 408,
+     "year": 1824,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Lezioni di commercio o sia di economia civile, vol. 1"
+    },
+    {
+     "page_id": "6991f3d40d82ea4dc111d238",
+     "book_id": "6991f3d40d82ea4dc111d0fd",
+     "page_number": 315,
+     "year": 1859,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Vite di uomini illustri del secolo XV"
+    },
+    {
+     "page_id": "69b51e31cf111105c4298410",
+     "book_id": "69b51e31cf111105c42982fe",
+     "page_number": 274,
+     "year": 1819,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Nuova Desrizione da Monumenti antici ed oggetti d'arte contenuti nel Vaticano e "
+    },
+    {
+     "page_id": "6a0b2c7d620b66ad8f234af3",
+     "book_id": "6a0b2c7d620b66ad8f2348ee",
+     "page_number": 517,
+     "year": 1841,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Trattato di Architettura Civile e Militare"
+    },
+    {
+     "page_id": "6a90d33dac6ee7328f80a9c7",
+     "book_id": "6a90d33dac6ee7328f80a957",
+     "page_number": 112,
+     "year": 1808,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Annaei Senecae tum Rhetoris tum Philosophi opera omnia"
+    },
+    {
+     "page_id": "6ad82d4a8ddfc5d0064a37bf",
+     "book_id": "6ad82d4a8ddfc5d0064a365b",
+     "page_number": 356,
+     "year": 1825,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Lezioni di commercio o sia di economia civile, vol. 2"
+    },
+    {
+     "page_id": "6a0b45ec1615109dc53b2072",
+     "book_id": "6a0b45ec1615109dc53b2009",
+     "page_number": 105,
+     "year": 1910,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le commedie di Giambattista Della Porta, Vol. I (Spampanato critical edition)"
+    },
+    {
+     "page_id": "69e748db49abba5e98281d88",
+     "book_id": "69e748db49abba5e98281c9b",
+     "page_number": 237,
+     "year": 1830,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "I Canti"
+    },
+    {
+     "page_id": "6ad82d4e8ddfc5d0064a38bb",
+     "book_id": "6ad82d4e8ddfc5d0064a37fa",
+     "page_number": 193,
+     "year": 1835,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Opere filosofiche e di economia politica, vol. 1 (includes Meditazioni sulla eco"
+    },
+    {
+     "page_id": "6a08f4d750bd891addfb7695",
+     "book_id": "6a08f4d750bd891addfb74e9",
+     "page_number": 428,
+     "year": 1866,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Vita di Benvenuto Cellini scritta da lui medesimo (Bianchi ed., 1866, Italian"
+    },
+    {
+     "page_id": "69b51e31768235dc6598db69",
+     "book_id": "69b51e31768235dc6598d9ba",
+     "page_number": 431,
+     "year": 1819,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Della istoria d'Italia antica e moderna : con carte geografiche e tavole incise "
+    },
+    {
+     "page_id": "69de98b71b234a773e439276",
+     "book_id": "69de98b71b234a773e43917f",
+     "page_number": 247,
+     "year": 1859,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Il Libro dell'Arte"
+    },
+    {
+     "page_id": "6a4438e6aa50a8e8f5051f3d",
+     "book_id": "6a4438e6aa50a8e8f5051df6",
+     "page_number": 327,
+     "year": 1839,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Istorie fiorentine, Volume 2"
+    },
+    {
+     "page_id": "6a76d558f28570a9bf4e7cb0",
+     "book_id": "6a76d558f28570a9bf4e7c6e",
+     "page_number": 66,
+     "year": 1863,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Vita e Frammenti di Saffo da Mitilene"
+    },
+    {
+     "page_id": "6a0b45f51615109dc53b2214",
+     "book_id": "6a0b45f51615109dc53b21a8",
+     "page_number": 108,
+     "year": 1911,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le commedie di Giambattista Della Porta, Vol. II (Spampanato critical edition)"
+    },
+    {
+     "page_id": "6991fb178ffe22e92ae4e7d9",
+     "book_id": "6991fb178ffe22e92ae4e7af",
+     "page_number": 42,
+     "year": 1859,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Storie Fiorentine dal 1378 al 1509"
+    },
+    {
+     "page_id": "6a4438deaa50a8e8f5051c77",
+     "book_id": "6a4438deaa50a8e8f5051b57",
+     "page_number": 288,
+     "year": 1838,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Istorie fiorentine, Volume 1"
+    },
+    {
+     "page_id": "69af1faa60e86dd0cd67e499",
+     "book_id": "69af1faa60e86dd0cd67e3e6",
+     "page_number": 179,
+     "year": 1897,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "De Rerum Natura (Giussani 1896 edition)"
+    },
+    {
+     "page_id": "69aead8366bcc9447837d9cc",
+     "book_id": "69aead8366bcc9447837d974",
+     "page_number": 88,
+     "year": 1908,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Scuola e filosofia: concetti fondamentali e saggi di pedagogia sulla scuola medi"
+    },
+    {
+     "page_id": "69b51e309a81ef7feb3d169b",
+     "book_id": "69b51e309a81ef7feb3d158e",
+     "page_number": 269,
+     "year": 1806,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Platone in Italia. T. 2"
+    }
+   ]
+  },
+  "it17": {
+   "lang": "Italian",
+   "years": [
+    1600,
+    1799
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "69b1ddc6a0e06b2a26951234",
+     "book_id": "69b1ddc6a0e06b2a2695119a",
+     "page_number": 154,
+     "year": 1668,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Osservazioni intorno alle vipere"
+    },
+    {
+     "page_id": "6a0b36491615109dc53af0fd",
+     "book_id": "6a0b36491615109dc53af097",
+     "page_number": 102,
+     "year": 1608,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Descrizione delle Feste nelle Reali Nozze di Cosimo de' Medici e Maria Maddalena"
+    },
+    {
+     "page_id": "6a0b45a11615109dc53b1a38",
+     "book_id": "6a0b45a11615109dc53b1951",
+     "page_number": 231,
+     "year": 1726,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Delle commedie di Giovanbattista De La Porta, Tomo III (L'Olimpia and others)"
+    },
+    {
+     "page_id": "6a08c61fe4e4b7b8793e9898",
+     "book_id": "6a08c61fe4e4b7b8793e985e",
+     "page_number": 58,
+     "year": 1673,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Rettorica Delle Puttane (Ferrante Pallavicino, Villafranca 1673)"
+    },
+    {
+     "page_id": "69b8748a13506fe62959a872",
+     "book_id": "69b8748a13506fe62959a82e",
+     "page_number": 68,
+     "year": 1617,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Trattato contra i giuochi delle carte e dadi prohibiti"
+    },
+    {
+     "page_id": "69b33685fe4656c3777f39fa",
+     "book_id": "69b33685fe4656c3777f39d9",
+     "page_number": 33,
+     "year": 1764,
+     "hold": null,
+     "visible": true,
+     "provider": "tu_delft",
+     "title": "Antichità d'Albano e di Castel Gandolfo"
+    },
+    {
+     "page_id": "6a90c9963822dc24e540bd18",
+     "book_id": "6a90c9963822dc24e540bcf8",
+     "page_number": 32,
+     "year": 1620,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Dottrina christiana breue composta per ordine di nostro signore papa Clemente 8."
+    },
+    {
+     "page_id": "6a0b34ef688e6a8e15f67251",
+     "book_id": "6a0b34ef688e6a8e15f67236",
+     "page_number": 27,
+     "year": 1637,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Trattato del legno fossile minerale nuovamente scoperto"
+    },
+    {
+     "page_id": "69905857172958904413597a",
+     "book_id": "6990585617295890441358e0",
+     "page_number": 154,
+     "year": 1754,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Trattato di musica secondo la vera scienza dell armonia"
+    },
+    {
+     "page_id": "6a0b2316620b66ad8f232a4e",
+     "book_id": "6a0b2316620b66ad8f23283a",
+     "page_number": 532,
+     "year": 1714,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "L'Idea della Architettura Universale"
+    },
+    {
+     "page_id": "6a0b45aa1615109dc53b1c3b",
+     "book_id": "6a0b45aa1615109dc53b1b5b",
+     "page_number": 224,
+     "year": 1726,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Delle commedie di Giovanbattista De La Porta, Tomo IV (La Sorella, La Tabernaria"
+    },
+    {
+     "page_id": "69b33682fe4656c3777f39d2",
+     "book_id": "69b33682fe4656c3777f3986",
+     "page_number": 76,
+     "year": 1778,
+     "hold": null,
+     "visible": true,
+     "provider": "tu_delft",
+     "title": "Vasi, candelabri, cippi, sarcofagi, tripodi, lucerne, ed ornamenti antichi"
+    },
+    {
+     "page_id": "69b51e8d768235dc65995c99",
+     "book_id": "69b51e8d768235dc65995ab5",
+     "page_number": 484,
+     "year": 1757,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Storia Letteraria D'Italia : divisa in tre libri. 11, Che contiene i Supplimenti"
+    },
+    {
+     "page_id": "6a0b45971615109dc53b18ac",
+     "book_id": "6a0b45971615109dc53b17c2",
+     "page_number": 234,
+     "year": 1726,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Delle commedie di Giovanbattista De La Porta, Tomo I (La Trappolaria, La Furiosa"
+    },
+    {
+     "page_id": "6a0b3557b8a02dd156f1dc6a",
+     "book_id": "6a0b3557b8a02dd156f1dbfb",
+     "page_number": 111,
+     "year": 1616,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Della Celeste Fisonomia, libri sei"
+    },
+    {
+     "page_id": "6a0b2e9f688e6a8e15f66d20",
+     "book_id": "6a0b2e9f688e6a8e15f66ce4",
+     "page_number": 60,
+     "year": 1615,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "L'Idea della Architettura Universale (1615 first edition)"
+    },
+    {
+     "page_id": "6a26fbf865df759218cd89fe",
+     "book_id": "6a26fbf865df759218cd89c0",
+     "page_number": 62,
+     "year": 1750,
+     "hold": null,
+     "visible": false,
+     "provider": "sbb",
+     "title": "Libro di Contropunto del Sig.r D. Michele Gabellone"
+    },
+    {
+     "page_id": "69b874ca13506fe62959b24f",
+     "book_id": "69b874ca13506fe62959b213",
+     "page_number": 60,
+     "year": 1690,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Dell'antica Pettia, overo che Palamede non è stato l'inventor degli scacchi"
+    },
+    {
+     "page_id": "69b3025b97fb03b3863b4d32",
+     "book_id": "69b3025b97fb03b3863b4b8f",
+     "page_number": 419,
+     "year": 1665,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Il Decamerone (Elzevir pocket)"
+    },
+    {
+     "page_id": "6aa7cf74fd6dd3b07d31d647",
+     "book_id": "6aa7cf74fd6dd3b07d31d602",
+     "page_number": 69,
+     "year": 1677,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Scienza e pratica d’arme (Leipzig edition, Italian with German)"
+    },
+    {
+     "page_id": "69b51e2c47b06ecd5818b3db",
+     "book_id": "69b51e2c47b06ecd5818b34a",
+     "page_number": 145,
+     "year": 1779,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "La Rete Di Vulcano : Poema Eroicomico. 2"
+    },
+    {
+     "page_id": "6aeb5a092167bdb5792e91db",
+     "book_id": "6aeb5a092167bdb5792e917b",
+     "page_number": 96,
+     "year": 1710,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Istoria de l'imperador de la Cina presentata al re di Francia dal padre Giovanni"
+    },
+    {
+     "page_id": "6a267e616c1f37c9c4f3c59f",
+     "book_id": "6a267e616c1f37c9c4f3c511",
+     "page_number": 142,
+     "year": 1750,
+     "hold": null,
+     "visible": true,
+     "provider": "slub_dresden",
+     "title": "L&#039; Astrologa - Mus.3264-F-500"
+    },
+    {
+     "page_id": "69dea1ce4d19ec2e9ba75562",
+     "book_id": "69dea1ce4d19ec2e9ba75548",
+     "page_number": 26,
+     "year": 1601,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Le Nuove Musiche"
+    },
+    {
+     "page_id": "6aa1d54077169abff16228f2",
+     "book_id": "6aa1d53f77169abff16228a1",
+     "page_number": 81,
+     "year": 1673,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Historia de riti Hebraici, vita, & osseruanza de gl'hebrei di questi tempi. Di L"
+    },
+    {
+     "page_id": "69b51e2befd8df28f2db1f63",
+     "book_id": "69b51e2befd8df28f2db1ece",
+     "page_number": 149,
+     "year": 1751,
+     "hold": null,
+     "visible": true,
+     "provider": "mdz",
+     "title": "Dissertazioni Sopra Le Antichità Italiane. 2"
+    },
+    {
+     "page_id": "6a426f4e175f31ca3ec5505c",
+     "book_id": "6a426f4e175f31ca3ec54fb5",
+     "page_number": 167,
+     "year": 1673,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "De Metallorum Transmutatione ad Joelem Langelottum, Serenissimi Principis Cimbri"
+    },
+    {
+     "page_id": "6a0b45e41615109dc53b1fa9",
+     "book_id": "6a0b45e41615109dc53b1f3e",
+     "page_number": 107,
+     "year": 1601,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Gli Duoi Fratelli Rivali, comedia"
+    },
+    {
+     "page_id": "69b8747113506fe62959a79c",
+     "book_id": "69b8747113506fe62959a718",
+     "page_number": 132,
+     "year": 1604,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Trattato dell'inuentione et arte liberale del gioco di scacchi"
+    },
+    {
+     "page_id": "6a0b3534688e6a8e15f67d55",
+     "book_id": "6a0b3534688e6a8e15f67cb9",
+     "page_number": 156,
+     "year": 1610,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Fantesca, comedia"
+    }
+   ]
+  }
+ },
+ "frame": {
+  "fr19": {
+   "books": 625,
+   "other_language_first": 0,
+   "unsplit_spread": 6,
+   "manuscript": 5,
+   "other_hold": {
+    "title-leaf-recitation-6297": 18,
+    "leaf-shift-5021": 1,
+    "paddle-print-6101": 2,
+    "by-eye-wrong-leaf-6420": 1,
+    "recitation-marker-english-7100": 2,
+    "wrong-leaf-blank-7866": 1,
+    "wrong-leaf-text-7517": 1,
+    "blank-leaf-invented-6056": 1,
+    "preview-stub-first-read-8181": 1,
+    "translate-cli-7075": 2,
+    "peiresc-awaits-derek-5811": 2,
+    "acquisition-wave-2026-10b": 1,
+    "aliveness-kb-cli-reads": 3,
+    "zh-histories-7546": 6,
+    "markets-cli-reads": 3,
+    "submarine-imports-7721": 5,
+    "maya-sources-7038": 1,
+    "agy-route-8038": 1
+   },
+   "sampled_before": 0,
+   "in_frame": 562,
+   "owed_by_counter": 35678,
+   "walked": 75,
+   "no_interior_unread": 45,
+   "no_image": 0
+  },
+  "fr17": {
+   "books": 961,
+   "other_language_first": 0,
+   "unsplit_spread": 2,
+   "manuscript": 76,
+   "other_hold": {
+    "title-leaf-recitation-6297": 5,
+    "invented-facing-column-7567": 2,
+    "summary-placeholder-6117": 1,
+    "leaf-shift-5021": 3,
+    "by-eye-wrong-leaf-6420": 1,
+    "preview-stub-first-read-8181": 5,
+    "wrong-leaf-screen-7866": 1,
+    "translate-cli-7075": 3,
+    "drebbel-creative-5811": 1,
+    "acquisition-wave-2026-10b": 29,
+    "magic-kb-cli-reads": 2,
+    "jcb-1600-8049": 5,
+    "ia-free-text-first-4966": 1
+   },
+   "sampled_before": 0,
+   "in_frame": 824,
+   "owed_by_counter": 43693,
+   "walked": 89,
+   "no_interior_unread": 59,
+   "no_image": 0
+  },
+  "es19": {
+   "books": 37,
+   "other_language_first": 0,
+   "unsplit_spread": 0,
+   "manuscript": 0,
+   "other_hold": {
+    "maya-sources-7038": 2,
+    "agy-route-8038": 1
+   },
+   "sampled_before": 0,
+   "in_frame": 34,
+   "owed_by_counter": 7463,
+   "walked": 34,
+   "no_interior_unread": 7,
+   "no_image": 0
+  },
+  "es17": {
+   "books": 73,
+   "other_language_first": 0,
+   "unsplit_spread": 0,
+   "manuscript": 3,
+   "other_hold": {
+    "title-leaf-recitation-6297": 1,
+    "acquisition-wave-2026-10b": 2
+   },
+   "sampled_before": 0,
+   "in_frame": 67,
+   "owed_by_counter": 14223,
+   "walked": 58,
+   "no_interior_unread": 28,
+   "no_image": 0
+  },
+  "it19": {
+   "books": 95,
+   "other_language_first": 0,
+   "unsplit_spread": 0,
+   "manuscript": 3,
+   "other_hold": {
+    "title-leaf-recitation-6297": 7,
+    "tca-wave2-contained-5274": 1,
+    "acquisition-wave-2026-10b": 1,
+    "maya-sources-7038": 1,
+    "leaf-shift-5021": 1
+   },
+   "sampled_before": 0,
+   "in_frame": 81,
+   "owed_by_counter": 6308,
+   "walked": 64,
+   "no_interior_unread": 34,
+   "no_image": 0
+  },
+  "it17": {
+   "books": 213,
+   "other_language_first": 0,
+   "unsplit_spread": 0,
+   "manuscript": 70,
+   "other_hold": {
+    "summary-placeholder-6117": 1,
+    "title-leaf-recitation-6297": 2,
+    "tca-wave2-contained-5274": 1,
+    "showthrough-invented-ocr-7201": 1,
+    "acquisition-wave-2026-10b": 3,
+    "aliveness-kb-cli-reads": 1,
+    "maya-sources-7038": 1,
+    "jcb-1600-8049": 1
+   },
+   "sampled_before": 0,
+   "in_frame": 132,
+   "owed_by_counter": 11644,
+   "walked": 54,
+   "no_interior_unread": 23,
+   "no_image": 1
+  }
+ }
+}

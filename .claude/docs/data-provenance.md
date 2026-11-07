@@ -519,6 +519,31 @@ This is non-negotiable. It applies to placeholder writes (blank-page markers, sa
 > fails a writer file that imports neither twin; `scripts/audit/provenance-coverage.mjs` fails a
 > page in production that lacks a required field.
 
+### Writer registry — what each lane stamps (checked 2026-09-30)
+
+"✓" = imports the provenance builder and passes the writer-guard test; "GAP" = listed in
+`data-provenance.md` §8. Re-check with `npx vitest run tests/unit/text-writers-use-provenance-builder.test.ts`
+and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over those.
+
+| Lane | Writer | `ocr.source` | Provenance |
+|---|---|---|---|
+| Gemini batch (orchestrator, `bulk-reocr-local.mjs`) | `scripts/workers/batch-collector.mjs`, `scripts/batch/collect-batch-results.mjs` | `batch_api` | ✓ `gemini-engine/1` |
+| Gemini realtime, hand-run | `scripts/batch/realtime-ocr.mjs` (`--realtime`, `--model=lite` only since #7075) | `ai` | ✓ |
+| Gemini CLI (agy, subscription): 3.8 Flash low in place of 3 Flash for the `FLASH_OCR_FROM` scripts and the ladder's flash tier | `scripts/batch/cli-ocr.mjs read` then `apply`; the held queue through `scripts/batch/cli-ocr-lane.mjs` | `ai` | ✓ `gemini-engine/1` (api `cli`, CLI name and version, prompt, image) |
+| Gemini realtime, Lambda / Vercel | `src/workers/ocr-processor-logic.ts`, `/api/books/[id]/batch-ocr-async` | `ai` / `batch_api` | ✓ (collect stamps `updated_at` as a string, #5228) |
+| Archive free text | `scripts/import/ia-ocr-ingest.mjs` | `ia_djvu` | ✓ `ia` block + `agreement_ref` (measured or `by_eye`) + ingest run |
+| Syriac Kraken | `scripts/lib/syriac-kraken-lane.mjs` | `kraken` | ✓ the reference shape |
+| Tibetan Yigdzin / BDRC | `scripts/maintenance/apply-reocr-verdicts.mjs` | per verdict | ✓ `engine` + `verdict` + revisions + sweep_log + book_events |
+| MinerU (ladder tier 3) | `scripts/workers/mineru-ocr-worker.mjs` | `mineru` | ✓ since PR #5280 — `specialist-engine/1` block (version, licence, run, image, `ladder` = the refusal stamps it follows), revisions, human-edit guard, sweep_log + book_events; `missingProvenance` checks it with the kraken/bdrc rule. Rows before 2026-09-30 (2,586) carry only a bare string. |
+| Opus two-read (German Kurrent MS, #6780) | `scripts/batch/claude-ocr-two-read.mjs apply` (`ocr.pipeline: claude-two-read-6780`) | `ai` | ✓ `anthropic` engine block (api `cli`); `input.two_read` = both reads' hashes, folded agreement, every dispute with its ruling; revisions, human-edit guard, sweep_log + book_events. The 40% overlap guard is lifted only for a stored flash-lite read on a book in `--replace-lite-books`. |
+| Opus one-read (Nahuatl / Maya, #6559) | `scripts/batch/claude-ocr.mjs` reads, `scripts/batch/cli-ocr.mjs apply` writes | `ai` | ✓ `anthropic` engine block (api `cli`) |
+| Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
+| Chinese guarded Paddle (held table + mixed residue, #6871 row 3) | `scripts/workers/paddle-zh-guarded-lane.mjs` (dry-run tested 2026-10-18; not applied) | `paddle`; `ai` on the Flash route | ✓ Paddle engine block (weights sha256, stack, serving, run, image sha256) or `gemini-engine/1` CLI block; `ocr.verdict` = the guard's verdict; first reads only, human-edit guard, revisions, sweep_log + book_events. Books stay held: their release is what queues paid translation |
+| Paddle split-leaf print (Chinese / Japanese, #6101) | `scripts/workers/paddle-print-lane.mjs apply` (`ocr.pipeline: paddle-print-2026-10`) | `paddle` | ✓ Paddle engine block (weights sha256, stack, serving, run) + `input.leaves` (crop box, ink, blank per leaf) + `replaced` (no_text / flash_lite / paddle_whole_spread); through `writePageText` (revision row with the whole prior field, `reason: reocr_paddle_print_6101`, `run_id`), human-edit guard, leaf blank/loop guards, sweep_log before and after, book_events. Books held `paddle-print-6101` before the first write |
+| GPU print, English 1800+ (#6871) | `scripts/workers/gpu-print-lane.mjs apply` (`ocr.pipeline: gpu-print-en-2026-10`) | `lightonocr` | ✓ engine block (model, HF snapshot, vLLM, host, GPU, decode, image URL + sha256); writes ONLY pages with no text in books under a GPU-lane hold (scans-only), kept; through `writePageText` (revision, CAS, run id); loop, blank, other-script, engine-commentary and transliteration guards; sweep_log + book_events. ocr-filler route `gpu-print-en` is OFF until reviewed |
+| Greek Kraken, Japanese NDL | eval only | — | — |
+| Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |
+
 ### Book-level (summary, reading_summary, index, chapters)
 
 > Any code path that overwrites `book.summary`, `book.reading_summary`, `book.index`, or `book.chapters` MUST call `createBookRevision(bookId, field)` first.
@@ -774,11 +799,11 @@ distinguish a disputed stamp from a live one (open on #3471).
 ### Auditing
 
 ```bash
-npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history
+npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts            # coverage / shape / contradicted / history / new writes (titles and authors, last 7 days; --days N)
 npx tsx --env-file=.env.production.local scripts/audit/field-provenance.ts --strict   # exit 1 on unmarked contradictions; 2 = could not measure
 ```
 
-Read-only, about 35 seconds. Run `--strict` after any sweep that touches a citation field, before
+Read-only, about 3 minutes. Run `--strict` after any sweep that touches a citation field, before
 calling the sweep done. It is a manual gate, not a PR check: a contradicted stamp is written by a
 sweep against production, so a red check would land on an unrelated PR whose author cannot act on
 it. The "contradicted" detector covers one field (`contributing_library`, using the same

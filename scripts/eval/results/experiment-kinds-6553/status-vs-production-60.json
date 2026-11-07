@@ -1,0 +1,422 @@
+[
+ {
+  "file": "2026-10-16-ocr-leaf-screen-before-opus-writes-6694.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Leaf screen brief and shared-words floor are in origin/main; cli-ocr applies the 40% shared-words guard. Page writes themselves are Mongo data.",
+  "evidence": "scripts/batch/ocr-convergence/SCREEN.md; scripts/batch/cli-ocr.mjs:63-82"
+ },
+ {
+  "file": "2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Hebrew/Aramaic/Arabic/Persian translation routes to full flash; Latin and vernaculars stay on lite.",
+  "evidence": "PR #5740 bc8a4b050; src/lib/types/ai-models.ts:121,168; scripts/lib/translate-core.mjs"
+ },
+ {
+  "file": "2026-10-06-edition-key-role-words-4444.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "editionSurname strips role-word groups like (ed.) in both TS and mjs; materialize-edition-keys script present.",
+  "evidence": "scripts/lib/identity-fields.mjs:91-100; src/lib/edition-key.ts:181"
+ },
+ {
+  "file": "2026-10-27-agy-ocr-pace-read-file-correct-lane-7558.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "cli-ocr-lane cron runs read-file-7558, per-call 4, per-call-arabic 1, concurrency 4, deadline 95 min.",
+  "evidence": "scripts/workers/crontab.production:354-357"
+ },
+ {
+  "file": "2026-10-03-printed-page-fit-4291.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Citations carry pages.printed_page; quote, package and journey routes pass it into generateCitations. Backfill itself is Mongo data.",
+  "evidence": "src/lib/citation.ts:24,233; src/app/api/books/[id]/quote/route.ts:60,288"
+ },
+ {
+  "file": "2026-09-30-duplicate-run-guard-grounded-in-the-source-the-57-5275.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "block-drift.mjs still has sourceRepeatsAcrossBoundary with fixtures and unit tests.",
+  "evidence": "scripts/lib/block-drift.mjs; tests/unit/block-drift.test.ts"
+ },
+ {
+  "file": "2026-09-30-does-the-adopted-english-archive-cohort-1880-1930-number-5124.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "ia-ocr-cohort.mjs carries the folio-exempt page gate rules, with unit tests.",
+  "evidence": "scripts/lib/ia-ocr-cohort.mjs:27-32; tests/unit/ia-ocr-cohort.test.ts"
+ },
+ {
+  "file": "2026-10-06-gpu-ocr-backlog-stress-canaries-and-first-ocr-guard-5660.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "scripts/lib/first-ocr-guard.mjs exists with unit tests and fixture.",
+  "evidence": "scripts/lib/first-ocr-guard.mjs; tests/unit/first-ocr-guard.test.ts"
+ },
+ {
+  "file": "2026-10-17-keyword-service-parity-6852.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Tantivy keyword service wired with off/shadow/serve modes; a later commit notes the build ships KEYWORD_SEARCH_MODE=serve (live env value not verifiable).",
+  "evidence": "src/lib/keyword-search.ts; commit 3b0c979fd (#6893); #6963"
+ },
+ {
+  "file": "2026-10-26-tibetan-flash-correct-wave2-6740.md",
+  "status": "adopted",
+  "verdict": "unverifiable",
+  "production_now": "Decision is a one-off Mongo write of 7,287 pages and a diff-QA pass; only the experiment write-ups and run records exist in repo.",
+  "evidence": "scripts/eval/experiments/2026-10-27-applied-under-derek-s-23-15z-rule-then-diff.md"
+ },
+ {
+  "file": "2026-11-02-detector-tasks-7611.md",
+  "status": "adopted",
+  "verdict": "unverifiable",
+  "production_now": "All-books pass #7896 is a one-off run; repo shows judged pages into book_checks (#7902) but not which Opus accept rule ran.",
+  "evidence": "PR #7902, #7932"
+ },
+ {
+  "file": "2026-10-18-within-book-keyword-service-2049.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Within-book search route imports keywordSearchMode/serveKeywordPages with off/shadow/serve modes and a fallback lane to Atlas.",
+  "evidence": "src/app/api/books/[id]/search/route.ts:15,158; src/lib/keyword-search.ts:41"
+ },
+ {
+  "file": "2026-10-06-site-nav-search-5945.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "src/lib/search/site-nav.ts exists; /api/search/unified imports rankNavMatches and runs a 'site-nav' lane.",
+  "evidence": "src/app/api/search/unified/route.ts:27,278"
+ },
+ {
+  "file": "2026-09-18-is-paddleocr-vl-1-6-an-acceptable-cost-lane-4925.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "OCR routing table routes chinese-siku-manuscript to PaddleOCR-VL; paddle-zh-lane.mjs writes it (hand-run on leased GPU, 1.57M pages).",
+  "evidence": "scripts/lib/ocr-routing-table.json:237-245"
+ },
+ {
+  "file": "2026-10-08-second-reader-harness-synthetic-check-6338.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "run-readers.sh refuses to run on a claude CLI without --restricted.",
+  "evidence": "scripts/eval/second-reader/run-readers.sh:32"
+ },
+ {
+  "file": "2026-10-20-image-search-clip-vs-siglip2-6871.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "SigLIP2-so400m re-embed queued on gex45 and used as GPU backfill; clip-server still serves CLIP-B/32 for query side.",
+  "evidence": "scripts/gpu/siglip2-6871/6455-siglip2-so400m-6871.sh:6"
+ },
+ {
+  "file": "2026-10-18-untranslated-grace-2049.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "UNTRANSLATED_GRACE_MS is 550 in concept-search.ts.",
+  "evidence": "src/lib/search/concept-search.ts:76"
+ },
+ {
+  "file": "2026-10-14-yigdzin-rest-withheld-and-unread-tibetan-4523.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Scope matcher fix for the Gemini Flash family and gate change merged; 76,197 pages carry the yigdzin-leaf rest run label.",
+  "evidence": "commit 7847557cc (#6709)"
+ },
+ {
+  "file": "2026-10-20-librarian-citation-fixer-6946.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Worker is dry-run, writes only librarian_citation_fixes, reads embassy_messages; nothing reads the output yet.",
+  "evidence": "scripts/workers/librarian-citation-fixer.ts:2-11,52,107"
+ },
+ {
+  "file": "2026-10-20-tibetan-guttered-pages-yigdzin-page-mode-6871.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Pages read to files via queue 80-tib-gutter-full-*; reads later applied to 40 held books after rights pass and eye check, as a Derek decision.",
+  "evidence": "PR #7464; scripts/eval/EXPERIMENTS.md:24914"
+ },
+ {
+  "file": "2026-10-07-script-run-reviewers-6174.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "scripts/eval/spot-check/run-reviewers.sh exists and the shelf-overview skill calls it in its reviewer step.",
+  "evidence": ".claude/skills/shelf-overview/SKILL.md:40"
+ },
+ {
+  "file": "2026-10-18-within-book-vector-books-2049.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Scoped page search (semanticPageSearchScoped) is used by the book search route and the Librarian; code present. The serve-mode env var is not readable from the repo.",
+  "evidence": "src/app/api/books/[id]/search/route.ts:388; src/lib/search/librarian-search.ts:327; PR #6974"
+ },
+ {
+  "file": "2026-11-03-wrong-leaf-cause-and-find-5021.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "No cron for wrong-leaf-fix is installed in the production crontab; the write-up is eval-only, so nothing contradicts it.",
+  "evidence": "scripts/workers/crontab.production (no wrong-leaf-fix entry)"
+ },
+ {
+  "file": "2026-09-28-which-cheap-model-draws-accurate-picture-boxes-seven-arms-4747.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Image extraction worker routes to the Batch API unless IMAGE_EXTRACTION_USE_BATCH is 'false'; flash model unchanged.",
+  "evidence": "scripts/workers/image-extract-worker.mjs:29; PR #5238"
+ },
+ {
+  "file": "2026-10-31-gloss-life-words-prompt-7458.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Translation prompt v21 landed as the default, with the flag-only life-word detector; no later revert or newer version found.",
+  "evidence": "4b54dea4c (#7859); scripts/lib/life-word-gloss.mjs:11"
+ },
+ {
+  "file": "2026-10-30-author-links-singletons-compound-7761.md",
+  "status": "adopted",
+  "verdict": "unverifiable",
+  "production_now": "Decision is a one-off Mongo data repair (author links, provenance runs); nothing in the repo can show whether the links still stand.",
+  "evidence": "none in repo; Mongo data"
+ },
+ {
+  "file": "2026-10-16-gemini4-opus1pp-maya-6559.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "15 Yucatec books were retranslated with Gemini 4 Argon Low plus a style line (PRs #6795, #6801), gated for word-by-word glossing. Kaqchikel-on-Opus is not shown in the repo.",
+  "evidence": "scripts/workers/needs/readable.md:101; needs/trustworthy.md:41"
+ },
+ {
+  "file": "2026-10-14-opus-vs-flash-translation-maya-6559.md",
+  "status": "adopted",
+  "verdict": "mismatch",
+  "production_now": "Yucatec lane moved to Gemini 4 Argon Low with a style line after this write-up, replacing 3.8 Flash Low as the Maya lane.",
+  "evidence": "scripts/workers/needs/readable.md:101 (PRs #6795, #6801); 2026-10-16-gemini4-opus1pp-maya-6559.md"
+ },
+ {
+  "file": "2026-10-28-enrich-agy-one-call-7628.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Cron runs enrich-worker --agy every 2 h with --max-calls-day=600; MAX_TURNS is 8, one-call-per-book agy lane present.",
+  "evidence": "scripts/workers/crontab.production:285; scripts/workers/lib/enrich-agy-lane.mjs:72"
+ },
+ {
+  "file": "2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md",
+  "status": "adopted",
+  "verdict": "match",
+  "production_now": "Routing table sends Syriac to the Kraken lane on Hetzner CPU, never Gemini; relaunch cron is installed.",
+  "evidence": "scripts/lib/ocr-routing-table.json:427; scripts/workers/crontab.production:226"
+ },
+ {
+  "file": "2026-10-22-seam-claude-tiers-7118.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "No Haiku screen; Sonnet fallback runs unscreened while agy is locked, capped at 1500 joins a day.",
+  "evidence": "scripts/workers/crontab.production:349"
+ },
+ {
+  "file": "2026-10-26-translation-prompt-v19-cognates-4741.md",
+  "status": "rejected",
+  "verdict": "unverifiable",
+  "production_now": "The live translation prompt (v13) is a Mongo prompts record, not in the repo; no cognate rule appears in code.",
+  "evidence": "src/lib/prompts.ts:119 (prompt loaded from DB)"
+ },
+ {
+  "file": "2026-10-04-kraken-latin-ft-5730.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Kraken is routed only for Syriac; Latin print stays on Flash-Lite with no Kraken lane.",
+  "evidence": "scripts/lib/ocr-routing-table.json:31,427"
+ },
+ {
+  "file": "2026-10-08-cli-arm-xl-365-6331.md",
+  "status": "rejected",
+  "verdict": "mismatch",
+  "production_now": "Flash OCR for Greek, Persian, Sanskrit, Arabic, Chinese runs only via the agy CLI since 2026-10-21; translation lanes on agy too.",
+  "evidence": "scripts/lib/ocr-routing-table.json:84,134,327; PR #7075, #7917"
+ },
+ {
+  "file": "2026-10-10-ocr-prereg-routing-6388.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Routing rows chinese-siku-manuscript (Paddle) and latin-script-print (Flash-Lite) are unchanged from the write-up's verdicts.",
+  "evidence": "scripts/lib/ocr-routing-table.json:31,327"
+ },
+ {
+  "file": "2026-10-27-tibetan-flash-pass-production-6560.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Routing table records the first volume gate failed (6/40 worse); nothing applied and the pass is stopped pending a new corrector.",
+  "evidence": "scripts/lib/ocr-routing-table.json:377"
+ },
+ {
+  "file": "2026-09-02-is-a-similarity-gate-a-workable-way-to-stop.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Prior-art guard is unconditional (needs a PRIOR ART line); the similarity list is advisory only.",
+  "evidence": ".claude/hooks/prior-art-guard.mjs:280-301"
+ },
+ {
+  "file": "2026-10-24-titlepage-guard-v3-fresh-draw-7201.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Guard v3 (imprint-guard-v3) is in the library; no sign of an unreviewed full imprint write run.",
+  "evidence": "scripts/lib/titlepage-imprint.mjs:30"
+ },
+ {
+  "file": "2026-10-27-flash-low-fresh-vs-lite-7517.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Latin-script print is still read by Flash-Lite Batch; the router route is lite>agy-flash-low (correction), not a fresh Flash-low read.",
+  "evidence": "scripts/lib/ocr-routing-table.json:31,984"
+ },
+ {
+  "file": "2026-09-11-which-languages-can-ocr-on-flash-lite-per-language-4729.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Latin-script languages (German, French, Dutch) stay on Flash-Lite; Persian, Sanskrit, Arabic, Ge'ez are on Flash.",
+  "evidence": "scripts/lib/ocr-routing-table.json:31,134"
+ },
+ {
+  "file": "2026-10-03-open-engine-print-5660.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Latin-script print stays on Gemini flash-lite; Greek print on 3 Flash (agy). Paddle is not a Latin or Greek print lane.",
+  "evidence": "scripts/lib/ocr-routing-table.json (latin-script-print, greek-print); scripts/eval/DECISIONS.md:47"
+ },
+ {
+  "file": "2026-11-04-near-blank-fix-5274.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Gate-failed state is the latest commit on main; near-blank pages stay withheld, no later commit overturns it.",
+  "evidence": "1b21a66ff (#8029), origin/main HEAD log shows no later 5274 near-blank write"
+ },
+ {
+  "file": "2026-10-26-tibetan-flash-correct-neyphug-tsha-6740.md",
+  "status": "rejected",
+  "verdict": "mismatch",
+  "production_now": "Neyphug rGyud Tsha pages carry the agy Flash-low correction (ocr.pipeline tib-correct-6560); 739 leaves were retranslated from it the next day.",
+  "evidence": "scripts/eval/experiments/2026-10-27-opus-retranslate-flash-corrected-tibetan-6948.md (frame + decision); 7aae20dc2 (#7495)"
+ },
+ {
+  "file": "2026-10-14-paddle-table-gemini-review-gate-6561.md",
+  "status": "rejected",
+  "verdict": "mismatch",
+  "production_now": "All 4,379 Opus-corrected Paddle table pages were served after Claude arbitrated the 23 Gemini-flagged pages; the Gemini gate was bypassed.",
+  "evidence": "3ec7e27d7 (#6744, 2026-10-16); scripts/eval/paddle-review-6561/README.md"
+ },
+ {
+  "file": "2026-10-23-zh-cheap-cascade-vs-flash-7202.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Siku translation lane reads every page with gemini-3.8-flash-low via agy; no cascade or Lite.",
+  "evidence": "scripts/batch/siku-translate-lane.mjs:109 (MODEL), :367"
+ },
+ {
+  "file": "2026-10-18-mongol-synth-score-5664.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "No 11-mongol-read task or second synthetic round; later work used real Kanjur columns (628 confirmed, real-column pilot).",
+  "evidence": "764f300e4 (#6960), d70da03c8 (#6977); git grep 11-mongol finds no task"
+ },
+ {
+  "file": "2026-09-29-does-image-preprocessing-binarise-contrast-deskew-upscale-crop-help-5250.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "No binarise/CLAHE/deskew/upscale step in OCR path; per-leaf crop (split leaves) remains the only image-side change.",
+  "evidence": "scripts/eval/DECISIONS.md; scripts/lib/ocr-routing-table.json (no preprocessing entries)"
+ },
+ {
+  "file": "2026-11-03-korean-ocr-cell-7982.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "No Korean row in the routing table; no re-read of Korean has been routed since the HOLD.",
+  "evidence": "ba7d10458 (#7994); scripts/lib/ocr-routing-table.json has no Korean entry"
+ },
+ {
+  "file": "2026-10-03-folio-markers-5678.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Chained-lane TRANSLATE_FOLIO_MARKERS still off; only the separate CLI lane (TRANSLATE_FOLIO_MARKERS_CLI, Latin-script, #7118) has markers on.",
+  "evidence": "scripts/eval/DECISIONS.md:105,107; scripts/batch/cli-translate.mjs:14"
+ },
+ {
+  "file": "2026-09-11-google-cloud-vision-as-a-cheaper-ocr-lane.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Cloud Vision appears only in eval scripts; it is in no routing table row and no production OCR lane.",
+  "evidence": "scripts/eval/google-vision-baseline.mjs; scripts/eval/DECISIONS.md:62 (never run, no key)"
+ },
+ {
+  "file": "2026-10-06-latin-print-r4-by-book-5924.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Latin print OCR row latin-script-print still reads with Gemini 3.1 Flash-Lite; open engines listed under not_adopted; GPU pero lane pilot failed, unscheduled (#7657).",
+  "evidence": "scripts/lib/ocr-routing-table.json (latin-script-print, not_adopted); PR #7657"
+ },
+ {
+  "file": "2026-09-30-mineru-on-the-english-reference-pages-peer-engine-tier-5182.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "refused-pages row: second try, then MinerU for English after 1820 as gap-filler only; Flash-Lite remains primary reader.",
+  "evidence": "scripts/lib/ocr-routing-table.json (refused-pages); scripts/batch/refused-pages.mjs:8-21"
+ },
+ {
+  "file": "2026-10-15-gemini-4-argon-low-translation-hardest-6729.md",
+  "status": "rejected",
+  "verdict": "mismatch",
+  "production_now": "Ancient Greek now routes to Gemini 3.8 Flash via agy (2026-10-25); Persian/Sanskrit/Chinese/Hebrew on Gemini 3 Flash row. Only Pali uses Opus. Opus is not the hard-language translator.",
+  "evidence": "scripts/lib/translation-routing-table.json rows greek-cli-gemini38, flash-measured, pali-cli-opus; commit 6f86318a3 (#7360)"
+ },
+ {
+  "file": "2026-10-04-seam-markers-confirm-5678.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Chained lane flag TRANSLATE_FOLIO_MARKERS is still opt-in ('1' only), off by default. Separate CLI lane uses markers on via TRANSLATE_FOLIO_MARKERS_CLI (#7118).",
+  "evidence": "scripts/lib/translate-batch-seam.mjs:157; scripts/eval/DECISIONS.md:105"
+ },
+ {
+  "file": "2026-10-07-clef-jev-token-readers-6184.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "No Clef or Jev reader wired into any tie-break or lane in src or scripts; nothing adopts them.",
+  "evidence": "git grep clef|jev origin/main -- src scripts/lib scripts/batch scripts/workers (no code hits)"
+ },
+ {
+  "file": "2026-10-13-sonnet-haiku-correct-vs-opus-6667.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Routing table lists Sonnet and Haiku as correctors under not_adopted: neither corrects as well as Opus (#6667).",
+  "evidence": "scripts/lib/ocr-routing-table.json not_adopted"
+ },
+ {
+  "file": "2026-10-28-latin-diffqa-three-way-vote-7591.md",
+  "status": "rejected",
+  "verdict": "mismatch",
+  "production_now": "Diff-QA route is not live, but the 'keep lite>opus' for latin-lite was overturned: router cell latin-lite/print now switches to agy-flash-low@4-read (set 2026-11-03).",
+  "evidence": "scripts/lib/ocr-routing-table.json router_cells latin-lite/print (table 2026-11-03-latin-v4-7263)"
+ },
+ {
+  "file": "2026-10-23-qwen-on-gex45-translation-pilot-6101.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Translation routing has no Qwen lane; Chinese goes to Gemini rows (flash-measured). Qwen weights were pruned from the box as not adopted.",
+  "evidence": "scripts/lib/translation-routing-table.json; scripts/workers/JOB-HOSTS.md:40"
+ },
+ {
+  "file": "2026-09-11-music-can-a-vlm-read-shaker-letteral-notation-first.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "Doctrine still says never batch a VLM over score pages; music scripts are only inventory, ground truth and eval, no bulk VLM transcription lane.",
+  "evidence": "origin/main:.claude/docs/music-notation.md:57; scripts/music/"
+ },
+ {
+  "file": "2026-10-18-maya-glyph-round2-6903.md",
+  "status": "rejected",
+  "verdict": "match",
+  "production_now": "/learn/maya rungs are numeral, day-sign, word; the glyph-caption rung is not added. Palenque work is held-out eval and offline replay only.",
+  "evidence": "src/lib/learn-maya.ts:17-24 (RUNGS); PR #7001"
+ }
+]

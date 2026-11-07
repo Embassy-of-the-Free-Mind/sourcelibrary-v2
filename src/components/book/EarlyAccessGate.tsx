@@ -1,5 +1,6 @@
 'use client';
 
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 
@@ -15,7 +16,7 @@ interface EarlyAccessGateProps {
  */
 export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAccessGateProps) {
   const { data: session } = useStableSession();
-  const isMember = (session?.user as any)?.membership != null;
+  const isMember = sessionHasMemberBenefits(session?.user);
 
   const until = new Date(membersOnlyUntil);
   const now = new Date();

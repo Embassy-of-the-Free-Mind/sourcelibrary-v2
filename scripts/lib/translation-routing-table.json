@@ -1,6 +1,6 @@
 {
-  "_doc": "PRIOR ART: scripts/lib/ocr-routing-table.json (the OCR side, by page kind, #6688; its `route` fields are read by ocr-routing.mjs since #7170). Before #7170 the translation policy lived only as two regexes in scripts/lib/translate-core.mjs and their TS twin in src/lib/types/ai-models.ts. This file is that policy, READ by both routers (getTranslateModelForBook): the first row whose `match` fits the book gives the engine, else `default`. A `language_prefix` matches the FIRST language label, case-insensitively, as a whole word, with any run of spaces for a space (\"greek\" matches \"Greek, Latin\" and not \"Latin; Greek\"); `optional_lead` words may stand before any prefix (\"Ancient Hebrew\"). A row is `channel: \"batch\"` (the default) or `channel: \"cli\"` (#7075). A batch row names one of the two Batch models (gemini-3.1-flash-lite, gemini-3-flash-preview). A cli row names a subscription reader (CLI_TRANSLATE_LANES in translation-routing.mjs: claude-opus-5-5, gemini-3.8-flash+agy-cli), carries `adoption` (the blind sample against the reader it replaces) and OVERLAYS the batch rows: the Batch routers never see it, and the pipeline orchestrator holds its books (CLI_TRANSLATE_HOLD) for scripts/batch/cli-translate-lane.mjs. Any other engine or channel fails the test. Changes are proposed by scripts/eval/estimator/routing/derive_routes.py and land as a reviewed edit of this file with the evidence that justifies them. tests/unit/translate-core-parity.test.ts pins the two routers to each other and to this file.",
-  "as_of": "2026-10-25",
+  "_doc": "PRIOR ART: scripts/lib/ocr-routing-table.json (the OCR side, by page kind, #6688; its `route` fields are read by ocr-routing.mjs since #7170). Before #7170 the translation policy lived only as two regexes in scripts/lib/translate-core.mjs and their TS twin in src/lib/types/ai-models.ts. This file is that policy, READ by both routers (getTranslateModelForBook): the first row whose `match` fits the book gives the engine, else `default`. A `language_prefix` matches the FIRST language label, case-insensitively, as a whole word, with any run of spaces for a space (\"greek\" matches \"Greek, Latin\" and not \"Latin; Greek\"); `optional_lead` words may stand before any prefix (\"Ancient Hebrew\"). A row is `channel: \"batch\"` (the default) or `channel: \"cli\"` (#7075). A batch row names one of the two Batch models (gemini-3.1-flash-lite, gemini-3-flash-preview). A cli row names a subscription reader (CLI_TRANSLATE_LANES in translation-routing.mjs: claude-opus-5-5, gemini-3.8-flash+agy-cli), carries `adoption` (the blind sample against the reader it replaces), may carry `per_call` (agy block reader, 1-4 pages a call, #7263) and OVERLAYS the batch rows (so a cli row that must not take BPH books says `unless: { providers: [\"bph\"] }`): the Batch routers never see it, and the pipeline orchestrator holds its books (CLI_TRANSLATE_HOLD) for scripts/batch/cli-translate-lane.mjs. Any other engine or channel fails the test. Changes are proposed by scripts/eval/estimator/routing/derive_routes.py and land as a reviewed edit of this file with the evidence that justifies them. tests/unit/translate-core-parity.test.ts pins the two routers to each other and to this file.",
+  "as_of": "2026-11-02",
   "issue": 7170,
   "default": {
     "engine": "gemini-3.1-flash-lite",
@@ -43,10 +43,95 @@
       ]
     },
     {
+      "id": "latin-cli-agy4",
+      "channel": "cli",
+      "match": { "language_prefix": ["latin"] },
+      "unless": { "providers": ["bph"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "per_call": 4,
+      "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
+      "evidence": [
+        {"issue": 7263, "n": "Latin print first translation, cell latin-tr-first/print (PR #7909): agy Flash-low@4 accepted 16/29 vs the served Flash-Lite lane 11/29, wrong text 11/29 vs 13/29, paired gained/lost 6/1; blind Opus judge with the page image open; 50,523 print pages waiting", "date": "2026-11-01"},
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+      ]
+    },
+    {
+      "id": "german-cli-agy4",
+      "channel": "cli",
+      "match": { "language_prefix": ["german"] },
+      "unless": { "providers": ["bph"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "per_call": 4,
+      "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
+      "evidence": [
+        {"issue": 7263, "n": "German print first translation, cell german-tr-first/print (PR #7909): agy Flash-low@4 accepted 22/30 vs the served Flash-Lite lane 20/30, wrong text 5/30 vs 9/30, paired gained/lost 4/2; blind Opus judge with the page image open; 41,964 print pages waiting", "date": "2026-11-01"},
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+      ]
+    },
+    {
+      "id": "italian-cli-agy4",
+      "channel": "cli",
+      "match": { "language_prefix": ["italian"] },
+      "unless": { "providers": ["bph"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "per_call": 4,
+      "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
+      "evidence": [
+        {"issue": 7263, "n": "Italian print first translation, cell italian-tr-first/print (PR #7909): agy Flash-low@4 accepted 13/16 vs the served Flash-Lite lane 11/16, wrong text 2/16 vs 4/16, paired gained/lost 3/1; blind Opus judge with the page image open; 4,706 print pages waiting", "date": "2026-11-01"},
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+      ]
+    },
+    {
+      "id": "french-cli-agy4",
+      "channel": "cli",
+      "match": { "language_prefix": ["french"] },
+      "unless": { "providers": ["bph"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "per_call": 4,
+      "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-02" },
+      "evidence": [
+        {"issue": 7263, "n": "French print first translation, cell french-tr-first/print (PR #7909): agy Flash-low@4 accepted 20/29 vs the served Flash-Lite lane 16/29, wrong text 5/29 vs 10/29, paired gained/lost 5/1; blind Opus judge with the page image open; 12,781 print pages waiting", "date": "2026-11-01"},
+        {"issue": 7263, "n": "Derek 2026-11-02: no 90% absolute gate; best agy/GPU route by loss, output labelled with its measured rate; hard floor = invented or wrong-leaf text. Manuscripts were not tested but cannot be excluded here: no book in the frame carries script_type (manuscript pages are 0.8-5.4% of those waiting)", "date": "2026-11-02"}
+      ]
+    },
+    {
       "id": "flash-measured",
       "match": { "optional_lead": ["ancient"], "language_prefix": ["greek", "hebrew", "heb", "aramaic", "arabic", "persian", "sanskrit", "pali", "chinese", "classical chinese"] },
       "engine": "gemini-3-flash-preview",
       "evidence": [{ "issue": 5695, "n": "191 pages judged against published human translations (Greek 75, Hebrew/Aramaic/Arabic/Persian 52, Sanskrit/Pali/Chinese 64)", "date": "2026-10-03" }]
+    },
+    {
+      "id": "everything-cli-agy",
+      "channel": "cli",
+      "match": { "any": true },
+      "unless": { "title_words": ["loeb"], "publisher_words": ["loeb", "heinemann"] },
+      "engine": "gemini-3.8-flash+agy-cli",
+      "per_call": 4,
+      "why": "Derek, 2026-11-06: \"no one should use lite\", \"everything on agy\", \"its just better and cheaper\". Every book no earlier cli row takes (Spanish, Dutch, Portuguese, the non-Latin scripts once on Batch Flash, BPH) translates on agy 3.8 Flash-low, 4 pages a call. Measured as a cell for Latin, German, Italian and French (rows above); for the rest the adoption sample is the nearest measured cell, and the nightly lane judge is the check.",
+      "adoption": { "sample": "scripts/eval/experiments/2026-11-01-eu-agy-translation-cell-7263.md", "replaces": "gemini-3.1-flash-lite", "date": "2026-11-06" },
+      "evidence": [
+        {"issue": 7263, "n": "European print first translation cells (PR #7909): agy Flash-low@4 against the served Flash-Lite lane, blind Opus judge with the page image open (Latin 16/29 vs 11/29 accepted, French 20/29 vs 16/29)", "date": "2026-11-01"},
+        {"issue": 8038, "n": "Derek 2026-11-06: everything on agy; the paid spend dial set to $0 the same day", "date": "2026-11-06"}
+      ]
+    }
+  ],
+  "_router_cells": "GENERATED by scripts/maintenance/router-routing-rows.mjs from scripts/eval/estimator/router-table/current.json (#7913): one row per cell of the live router table that binds a route, that route, the route's judged k/n, the build the decision comes from and any waiver. Do not edit: move the pointer in current.json and run the script with --write; tests/unit/router-routing-rows-7913.test.ts fails while this block and current.json disagree. getOcrModelForBook routes from this block in the OCR table (`reads`, #8283); lanes bind through routeCheck (scripts/lib/router-binding.mjs); translation's routers read `rows`, and tests/unit/router-bound-table.test.ts fails when they disagree with it.",
+  "router_cells": [
+    {
+      "cell": "german-tr-flash3/unknown",
+      "decision": "keep",
+      "route": "flash3",
+      "k_of_n": "13/19",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "german-tr-lite/unknown",
+      "decision": "keep",
+      "route": "flash-lite",
+      "k_of_n": "2/4",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
     }
   ]
 }

@@ -16,7 +16,7 @@ describe('ocrMeasure', () => {
     expect(m!.ci95[1]).toBeGreaterThanOrEqual(m!.accuracy);
     expect(m!.pages).toBeGreaterThanOrEqual(20);
     expect(m!.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(m!.href).toBe('/quality#pareto-latin');
+    expect(m!.href).toBe('/quality/record#pareto-latin');
   });
 
   it('says nothing for a chart that does not exist', () => {

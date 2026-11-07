@@ -1,0 +1,543 @@
+[
+  {
+    "book_id": "6a4bd575ce03c0929df13275",
+    "slot": 76,
+    "title": "Disquisitionem Iuridicam Inauguralem De Foenore Nautico (Feltz, 1700)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection is assigned. This is a Strasbourg-style law dissertation on maritime loans (foenus nauticum); it belongs in the general early-modern scholarship corpus, not an esoteric shelf.",
+    "rights_flag": null,
+    "structure_note": "24 pages, all with OCR and translation. Printed page numbers match the record (image 7 = p.5, 13 = p.11, 18 = p.16). The title string ends 'Ann. MDC' (truncated; published is 1700).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Covarruviam III. Variarum 2. numero 5. et sequentes",
+            "image": "Covarruv. III. Var. 2. num. 5. & seqq.",
+            "problem": "abbreviated legal citation silently expanded rather than transcribed",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "per legem 40. Digestorum Locati ... in lege 5. Digestorum hujus tituli ... exempli gratia",
+            "image": "per l.40.ff. Loc. ... in l.5.ff.h.t. ... e.g.",
+            "problem": "sigla expanded into words; the printed citation form is lost",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "mutuarium",
+            "image": "mutuatarium",
+            "problem": "word normalised",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "<margin>in Romanis legibus recepta.</margin>",
+            "image": "in Rom. ll. recepta.",
+            "problem": "marginal abbreviation expanded",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Vid. late hæc pertractans Covarruv. ...",
+            "english": "See <note>Covarruvias, *Variarum*, Book 3, ch. 2, number 5 and following</note>, who treats",
+            "problem": "the citation that is part of the running text is wrapped in a <note> tag, so a renderer that styles notes separately pulls it out of the sentence",
+            "severity": "minor",
+            "class": "T3"
+          }
+        ],
+        "other": [
+          {
+            "note": "the OCR's description of the decorative page-number ornament is shown as a <note> at the top of the translation",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Lex 26. §. 1. Codex de Usuris ... Novella 106 ... numero 91",
+            "image": "L.26.§.1.C. de Usuris ... Nov.106 ... num.91",
+            "problem": "sigla expanded rather than transcribed",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "fœnus legitimum",
+            "english": "legitimate lending",
+            "problem": "should be 'the lawful rate of interest'; the sense is recoverable from the next clause",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Cujac. ad African. pagina 346",
+            "image": "Cujac. ad African. p.346",
+            "problem": "'p.' expanded to 'pagina', while 'l. 3. C. h. t.' is left abbreviated on the same page",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "*l. 9. ibi: quamvis nemo vixerit ... pecuniae trajectitiae restituendae*",
+            "image": "only the quoted law text is italic; 'quod si vero', 'ex ipso rectae rationis dictamine constitutum est in' are roman",
+            "problem": "italic run spans author's prose and quotation, blurring what is quoted",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean, legible print. The OCR is right word for word but silently expands the legal sigla (l., ff., h.t., C.) on every page. The translation is faithful, with careful Digest/Code identifications. An expert would find nothing wrong on sight."
+  },
+  {
+    "book_id": "69c899d56c6f3cc53c85cfb2",
+    "slot": 44,
+    "title": "Sermonum ... ad populum (Hus, [Strassburg: Schott, ca. 1525])",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition is assigned. This is a pre-Reformation/Hussite polemic printed for the early Reformation; it fits a religious-history shelf.",
+    "rights_flag": null,
+    "structure_note": "The running heads on the sampled pages ('rum carnalium abominatione', 'De Sacerdotum & Monacho[rum]') belong to the tract 'De sacerdotum et monachorum carnalium abominatione', not to sermons 'ad populum'. The volume is probably a compilation, and the record title names only one of its works. 163 pages: 162 OCR, 159 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "quod esse fideles domini Ihesu successores",
+            "image": "q̄ esse fideles (= quam)",
+            "problem": "'quam' (than) misread as 'quod'; the translation recovers 'rather than'",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "sibi contrarios et corripientes",
+            "image": "sibi contrarios & se corripientes",
+            "problem": "'se' dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<header>... xiii</header>",
+            "image": "xiiij",
+            "problem": "folio number short by one",
+            "severity": "minor",
+            "class": "O7"
+          },
+          {
+            "ocr": "atque secure futura mercedem expectantes.",
+            "image": "atq; secure futurā mercedem expe-",
+            "problem": "hyphenated word at the foot completed from lookahead",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(no source on this page)",
+            "english": "<meta>continues from previous page: granting them lying papal bulls</meta>",
+            "problem": "continuity note refers to text not on this page; it cannot be checked here",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>A decorative initial letter D begins the paragraph.</meta>' left in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "in medio fumorum sacerdotum & clericorum",
+            "image": "in medio sum-morū sacerdotum & clericorum (= summorum)",
+            "problem": "'summorum' (the high priests) read as 'fumorum' (smoke); the translation says 'in the midst of the smoke of the priests'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Caput xxii.",
+            "image": "Caput xxiij.",
+            "problem": "chapter number wrong (23 read as 22); the translation says 'Chapter 22'",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Ante Reges & Præsides domini propter nomen meum",
+            "image": "Ante Reges & Præsides ducemini propter nomen meum",
+            "problem": "'ducemini' misread as 'domini'; the translation quietly restores the Vulgate",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "Hoc caput in exemplari apparet truncatum",
+            "image": "Hoc caput in exemplari apparebat truncatum",
+            "problem": "verb tense altered",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<columns>2</columns> ... <column-break/>",
+            "image": "a single text column; the strip at the right edge is the facing leaf",
+            "problem": "page tagged as two columns",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "in medio fumorum sacerdotum",
+            "english": "in the midst of the smoke of the priests",
+            "problem": "carries the OCR misreading; it should be 'among the high priests and clerics'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "a bare '<column-break/>' tag ends the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "quia in tolerantia spiritussancti in ipsis",
+            "image": "quia ob intolerantiā spiritussancti in ipsis",
+            "problem": "'ob intolerantiam' (because of the Holy Spirit's intolerance) read as 'in tolerantia'. This reverses the reason for the desolation, and the translation follows it ('Because the tolerance of the Holy Spirit in them ... is made desolate')",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "faciunt abominatione intolerabile de in domo dei",
+            "image": "faciūt abominationē intolerabilē deo in domo dei",
+            "problem": "'deo' garbled to 'de'; the translation loses 'to God'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "quibus adhuc uirentia",
+            "image": "q̄uis adhuc uirentia (= quamvis)",
+            "problem": "concessive 'although' read as 'quibus'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "amplius ns qui sunt",
+            "image": "amplius ĳs (= iis)",
+            "problem": "abbreviation misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<page-num>liii</page-num>",
+            "image": "liiij",
+            "problem": "folio number short by one",
+            "severity": "minor",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "quia in tolerantia spiritussancti in ipsis ... desolatur a spiritusancto",
+            "english": "Because the tolerance of the Holy Spirit in them ... is made desolate of the Holy Spirit",
+            "problem": "the image reads 'ob intolerantiam'; the English states the opposite cause (tolerance instead of intolerance) and reads confusingly",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the running-head fragment 'rum carnalium abominatione' is promoted to a heading, '### On the abomination of carnal things'",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A good scan, and the OCR is mostly sound. On abbreviation-heavy early print it makes meaning-changing misreads: 'fumorum' for 'summorum', a wrong chapter number, and 'in tolerantia' for 'ob intolerantiam', which reverses an argument. The translation follows these misreads fluently. The record title probably names only one work of a compilation."
+  },
+  {
+    "book_id": "6a4ba12edebad28d8e8dddbf",
+    "slot": 106,
+    "title": "Assertiones physiologicae de generica differentia partium humani corporis (Bokelius / Balber, Wittenberg)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Wittenberg disputation on Galen's Ars parva; it fits an early-modern medicine/science shelf.",
+    "rights_flag": null,
+    "structure_note": "The catalogue says place 'Berlin' and published 'Unknown', but the title says it was disputed at Wittenberg ('Berlin' is the holding library, SBB). The display title runs two names together ('CorneliusBalber'). Image 7 is a handwritten contents list of a bound volume of tracts (items 37–42), not part of this disputation: the record includes flyleaf matter from a volume of bound tracts. Only 13 of 22 pages are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>s.</margin> <margin>ia</margin> <margin>649</margin> <margin>id</margin> <margin>els</margin> <margin>is</margin>",
+            "image": "cut-off letters on the edge of the facing leaf at the left margin",
+            "problem": "fragments of the neighbouring page read as marginalia; they are carried into the translation",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "40. de Heine de mare.",
+            "image": "40. de Feine(?) de mare.",
+            "problem": "initial letter of the name is uncertain; it may be F",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "a handwritten later-owner contents list of a bound volume of tracts, served as page 7 of this disputation and translated as text",
+            "severity": "moderate",
+            "class": "I7"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "architectura",
+            "image": "archectura (printer's error)",
+            "problem": "silently corrected",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The printed theses are transcribed and translated accurately. The record is untidy: the catalogue has the wrong place (Berlin for Wittenberg), no date and a run-together display title. Flyleaf manuscript leaves from the bound volume are served as pages, and their neighbour-edge letter fragments are read as marginalia."
+  },
+  {
+    "book_id": "6a100a46f71729295096edcb",
+    "slot": 89,
+    "title": "Origenis opera omnia, Tomus primus (1743)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The De la Rue Latin edition of Origen (De principiis, Contra Celsum); patristic Platonism belongs among the library's adjacent traditions.",
+    "rights_flag": null,
+    "structure_note": "541 pages: 522 OCR, 517 translated. Printed page numbers match (image 142 = p.104, 276 = p.238, 407 = p.369).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 142,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 276,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Celfus ... Jefu ... Chriftum ... Theffalonicenfes",
+            "image": "Celſus, Jeſu, Chriſtum, Theſſalonicenſes",
+            "problem": "long s read as f in names throughout, while other words keep ſ correctly; this hurts search on 'Celsus' and 'Jesu'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quod dare locum possit suspicioni",
+            "image": "quod dare locum poſſit ſuſpicandi",
+            "problem": "word substituted",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Vita hominum infeatetur malis",
+            "image": "infeſtatur",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 407,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Dixi hoc futurum?",
+            "image": "Dixin hoc futurum?",
+            "problem": "interrogative particle dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Niceonti Plutarch.",
+            "image": "Nicreonti Plutarch.",
+            "problem": "name in footnote misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "e Aristocreonti.) Niceonti Plutarch. lib. de Virtute moral.",
+            "english": "e. To Aristocreon. Mentioned by Plutarch, in the book On Moral Virtue",
+            "problem": "the note's content, that Plutarch names the tyrant differently (Nicocreon), is dropped",
+            "severity": "moderate",
+            "class": "T13"
+          }
+        ],
+        "other": [
+          {
+            "note": "the footnotes a–f are rendered as <margin> blocks in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A dense two-column 1743 edition, read well. The text, apparatus and footnotes are all present and the translations are faithful. The weak points are long-s misread as f in names on one page and a footnote whose point (a variant name) is lost in English. Small type limits word-level certainty."
+  },
+  {
+    "book_id": "6a4a600c3f0b4659d1bc3283",
+    "slot": 58,
+    "title": "Theologica theoremata ex celebri illa D. Pauli ... (Stevartius / Katzmair, Ingolstadt 1597)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An Ingolstadt Counter-Reformation disputation (purgatory, against Calvin); it fits an early-modern theology shelf.",
+    "rights_flag": null,
+    "structure_note": "14 pages, all OCR'd and translated. The printed page numbers run 2, 3, 5 across images 4, 7 and 11. The gap between images 4 and 7 is wider than one printed page, so there may be interleaved blanks or plates; nothing looks broken.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Sanctissimae Trinitatis",
+            "image": "SS. Trinitatis",
+            "problem": "abbreviation expanded",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "Tridentina Synodus ... penetrauit",
+            "image": "Tridentina Sydonus (misprint) ... penetrarit",
+            "problem": "silent correction/normalisation",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "praeclarè D. Augustinus ... docuit",
+            "english": "As St. Augustine clearly taught, he showed that",
+            "problem": "verb doubled",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the signature 'A 3' and a bare '<meta>continues from previous page</meta>' appear in the translation body",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "[...]-henderit iustus iudex ædificasse, ignis pœna mulctandos apertè insinuat.",
+            "english": "He clearly implies that they must be punished by the pain of fire.",
+            "problem": "the clause 'whom the just judge [shall have found] to have built' is dropped",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean italic print, transcribed almost perfectly (a few silent expansions) and translated faithfully. The only real slip is a dropped clause at a page seam. Nothing an expert would flag on sight."
+  }
+]

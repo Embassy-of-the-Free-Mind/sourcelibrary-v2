@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
@@ -36,6 +37,7 @@ interface Props {
 
 export default async function EditCatalogEntryPage({ params }: Props) {
   const { tenant, ubn } = await params;
+  const room = await getRoomHref(tenant);
 
   // BPH-only in Phase 1. Other tenants get a notFound until we extend.
   if (tenant !== 'bph') notFound();
@@ -59,7 +61,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   // The form learns its mode from the `mode` prop below.
   if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['contributor']) {
     const h = await headers();
-    const referer = h.get('referer') || `/catalog/${encodeURIComponent(ubn)}`;
+    const referer = h.get('referer') || room(`/catalog/${encodeURIComponent(ubn)}`);
     redirect(referer);
   }
   const formMode: 'editor' | 'contributor' =
@@ -108,7 +110,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   const workKey = work.ubn || work.uuid || ubn;
 
   // A deleted record is not edited; its entry page carries the Restore button.
-  if (work.deleted_at) redirect(`/catalog/${encodeURIComponent(workKey)}`);
+  if (work.deleted_at) redirect(room(`/catalog/${encodeURIComponent(workKey)}`));
   const isAdmin = await isCatalogAdmin(session.user.email, platformRole, tenant);
   const displayTitle =
     (work.title as string | null) || (work.full_title as string | null) || `(untitled, ${work.shelf_mark || workKey})`;
@@ -117,7 +119,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <a
-          href={`/catalog/${encodeURIComponent(ubn)}`}
+          href={room(`/catalog/${encodeURIComponent(ubn)}`)}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Back to catalogue entry

@@ -3,7 +3,8 @@
  * follow that convention (IIIF, external hosts, anything unparseable).
  *
  * Normalises the two things that make one page look like two URLs:
- *   - variant suffix — `x.jpg`, `x-thumb.jpg`, `x-full.jpg`, `x-card.avif` are one image
+ *   - variant suffix — `x.jpg`, `x-thumb.jpg`, `x-full.jpg`, `x-card.avif`, `x-marked.jpg`,
+ *     `x-full-marked.jpg` are one image
  *   - zero padding across path families — `/archived/{b}/5.jpg` is the same
  *     page as `/pages/{b}/0005.jpg`
  *
@@ -17,7 +18,7 @@
 export function r2PageIdentity(url: string): string | null {
   const q = url.split('?')[0];
   if (!q.includes('images.sourcelibrary.org/')) return null;
-  const file = (q.split('/').pop() || '').replace(/-(?:thumb|full|card)(?=\.[a-z0-9]+$)/i, '').replace(/\.[a-z0-9]+$/i, '');
+  const file = (q.split('/').pop() || '').replace(/(?:-(?:thumb|full|card|marked))+(?=\.[a-z0-9]+$)/i, '').replace(/\.[a-z0-9]+$/i, '');
   if (!file) return null;
   const book = q.match(/\/(?:pages|archived|thumbnails|cropped)\/([^/]+)\//)?.[1];
   if (!book) return null;

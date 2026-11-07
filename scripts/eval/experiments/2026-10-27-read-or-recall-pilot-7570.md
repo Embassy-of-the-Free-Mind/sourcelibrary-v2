@@ -7,7 +7,7 @@ canons: []
 n_books: 162
 n_pages: 162
 verdict: "With the page image, both models read famous and obscure pages about equally well (Opus 0.91-0.99 accuracy on both; famous minus obscure between -0.05 and +0.04), so memory does not visibly inflate reading at full resolution. Without the image, Opus reproduces famous pages measurably better than matched obscure ones in Latin (R 0.15 [0.04, 0.28], all from canonical works: 0.31; RECITATION-refused pages 0.00), Hebrew (0.28 [0.12, 0.44]) and Sanskrit (0.14 [0.04, 0.24]), and in Greek once 4 mislabelled 'obscure' pages it recites are set aside (0.25 [0.08, 0.42]). Gemini 3.8 Flash low does so only in Hebrew (0.21 [0.08, 0.36]). Opus's Chinese 'gap' is an artefact of the cross-edition e-text key. 5 of 81 'obscure' pages are texts Opus recites from the name alone."
-status: undecided
+status: informational
 decision: "The preregistered rule says the full 10 x 50 run is justified (Opus shows a measurable gap in >= 2 scripts). Run it only redesigned: one key type for every page, an obscure label confirmed by a no-image probe as well as lookups, n-gram recall as the memory measure, and a degraded-image arm. At this pilot's cost it needs about 20x the Opus calls, so several account-weeks: Derek decides when (#7570)."
 superseded_by: null
 issue: 7570

@@ -52,7 +52,7 @@ function getFaqs(bookCount: string): FAQItem[] {
         <p>
           We start from <strong>high-resolution page images</strong> sourced directly
           from institutional IIIF servers (Bodleian, Gallica, Vatican, BSB Munich, etc.).
-          Our OCR uses Gemini vision models that read historical typefaces
+          Our OCR uses AI vision models that read historical typefaces
           (blackletter, early Roman type, polytonic Greek) directly from the image.
           The translation model then works from this fresh transcription with full page
           context, not from noisy pre-existing OCR.

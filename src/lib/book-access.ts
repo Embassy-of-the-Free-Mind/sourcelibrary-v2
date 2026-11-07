@@ -94,6 +94,41 @@ export async function findVisibleDuplicateKeeper(
   return { slug: keeper.slug, artworkSlug: artworkRedirectSlug(keeper) };
 }
 
+/** `keeper <id>` as stamped into deleted_reason by dedup sweeps, e.g. the #2209 artwork dedup. */
+const DELETED_KEEPER_RE = /\bdedup\b[^]*?\bkeeper ([0-9a-f]{24})\b/i;
+
+/**
+ * The visible keeper of a duplicate that was DELETED (not just hidden), looked up by
+ * the slug the dead URL carries. The #2209 artwork dedup moved 1,483 byte-identical
+ * Commons twins to `deleted_books`, and search engines and other sites still send
+ * readers to their old URLs, which 404'd. The keeper id is only in the reason text.
+ * Rights-related deletions never redirect.
+ */
+export async function findDeletedDuplicateKeeper(db: Db, slugs: string[]): Promise<DuplicateKeeper | null> {
+  const safe = slugs.filter(s => SAFE_SLUG_RE.test(s));
+  if (safe.length === 0) return null;
+  const rows = await db.collection('deleted_books')
+    .find({ slug: { $in: safe } }, { projection: { _id: 0, deleted_reason: 1 }, maxTimeMS: 3000 })
+    .limit(5)
+    .toArray();
+  for (const row of rows) {
+    const reason = typeof row.deleted_reason === 'string' ? row.deleted_reason : '';
+    if (RIGHTS_REASON_RE.test(reason)) continue;
+    const keeperId = reason.match(DELETED_KEEPER_RE)?.[1];
+    if (!keeperId) continue;
+    const found = await findBookForTenant(
+      db,
+      keeperId,
+      { _id: 0, id: 1, slug: 1, visible: 1, content_type: 1, resource_type: 1 },
+      null,
+    );
+    const keeper = found?.book as { slug?: string; visible?: boolean; content_type?: string; resource_type?: string } | undefined;
+    if (!keeper || keeper.visible !== true || !keeper.slug || !SAFE_SLUG_RE.test(keeper.slug)) continue;
+    return { slug: keeper.slug, artworkSlug: artworkRedirectSlug(keeper) };
+  }
+  return null;
+}
+
 /** True if the request carries the pipeline/Claude-Code CRON_SECRET bearer token. */
 export function hasCronAuth(request: Request): boolean {
   const secret = process.env.CRON_SECRET;

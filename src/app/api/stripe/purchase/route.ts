@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { stripe } from '@/lib/stripe';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
 import { PRICES, PurchaseType } from '@/lib/purchases';
 import { getDb } from '@/lib/mongodb';
 import { toUserId } from '@/lib/user-id';
@@ -9,7 +10,7 @@ import { toUserId } from '@/lib/user-id';
  * Create a Stripe Checkout session for a single-item purchase (book or image).
  */
 export async function POST(request: NextRequest) {
-  if (!stripe) {
+  if (!stripe || !downloadChargesEnabled()) {
     return NextResponse.json({ error: 'Payments not configured' }, { status: 503 });
   }
 

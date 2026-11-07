@@ -1,0 +1,637 @@
+[
+ {
+  "book_id": "b13-k",
+  "slot": 1,
+  "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "pone in duplum vini fortis",
+      "image": "pone in decipulo vrina ppata (decipulo urinae praeparatae)",
+      "problem": "ingredient changed: prepared urine read as strong wine",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut totum vis cinere solvatur",
+      "image": "vt to vis cinu extrahat (ut tota vis cinerum extrahatur)",
+      "problem": "verb misread; extraction becomes dissolution",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "funde calida super saepius faecem 3. calefac sanguinis aquae",
+      "image": "funde calida sup easde feces. 3o calefac eande aquam",
+      "problem": "'easdem' read as 'saepius', 'eandem' as 'sanguinis'; process step garbled",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "pone 3. partes cineris in sanguinis faecis lixivio",
+      "image": "pos. 2a pte cinerum in eand' q facisti lixivium",
+      "problem": "second part of the ashes read as three parts; procedure order lost",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "fac per omnia per 2. et 3. vice ad per 2. partes",
+      "image": "fac p oia ... sicut cu pa et 2a pte",
+      "problem": "ordinal sequence garbled into nonsense",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "tunc accipe sal communis partem",
+      "image": "tunc accipe sal com(m)une ppatum",
+      "problem": "'praeparatum' read as 'partem'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "colus in sal acetosi",
+      "image": "solue istum sal acetosum",
+      "problem": "'solve' read as 'colus'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "et hoc fac",
+      "image": "ad hoc facto",
+      "problem": "phrase misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "permitte infundi et quando fuerit finit distillare per silentium",
+      "image": "permitte infrigidari & qn frigidum fuit distilla istud p filtrum",
+      "problem": "cooling and filtering read as 'infundi' and 'per silentium'; instruction invented",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "aqua transstet",
+      "image": "aqua euanescat",
+      "problem": "'evanescat' misread",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 88,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Asadmon in Turba",
+      "image": "Agadmon in Turba",
+      "problem": "authority's name misread",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "alloogether",
+      "image": "alltogether",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "est philosophis ad imitationem",
+      "image": "ex philosophis ad imitationem",
+      "problem": "'ex' read as 'est'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 132,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "preserving his body for all accidental corruption",
+      "image": "preserving his body fro all accidentall corruption",
+      "problem": "'from' read as 'for'; sense of protection inverted",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "finis est written",
+      "image": "since it is written",
+      "problem": "'since it is' misread as Latin 'finis est'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quem prae-rire",
+      "image": "quem praete-rire",
+      "problem": "syllable dropped at line break",
+      "severity": "minor"
+     },
+     {
+      "ocr": "our 2 most necessary",
+      "image": "our 2 ☿ most necessary",
+      "problem": "mercury symbol dropped; the noun of the sentence is lost",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "out of the we",
+      "image": "out of them we",
+      "problem": "word truncated",
+      "severity": "minor"
+     },
+     {
+      "ocr": "certain liquid",
+      "image": "certain Liquor",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "both be of cosie price",
+      "image": "both be of easie price",
+      "problem": "'easie' read as 'cosie'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "& this vegetable &",
+      "image": "& this vegetable ☿",
+      "problem": "mercury symbol read as '&'",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "mans health in preserving",
+      "image": "mans health.* in preserving",
+      "problem": "reference mark for the margin note dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "'->…<-' centering markup in the reader text around the heading",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 17 (p.45) of the heavily abbreviated recipe is largely misread and partly invented (urine becomes wine, filtering becomes 'per silentium'); the two later English/Latin pages are read well, apart from the dropped mercury symbols on p.132."
+ },
+ {
+  "book_id": "b13-m",
+  "slot": 2,
+  "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "pone in duplum vini fortis",
+      "image": "pone in decipulo vrina ppata (decipulo urinae praeparatae)",
+      "problem": "ingredient changed: prepared urine read as strong wine",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut totum vis cinere solvatur",
+      "image": "vt to vis cinu extrahat (ut tota vis cinerum extrahatur)",
+      "problem": "verb misread; extraction becomes dissolution",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "funde calida super saepius faecem 3. calefac sanguinis aquae",
+      "image": "funde calida sup easde feces. 3o calefac eande aquam",
+      "problem": "'easdem' read as 'saepius', 'eandem' as 'sanguinis'; process step garbled",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "pone 3. partes cineris in sanguinis faecis lixivio",
+      "image": "pos. 2a pte cinerum in eand' q facisti lixivium",
+      "problem": "second part of the ashes read as three parts; procedure order lost",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "fac per omnia per 2. et 3. vice ad per 2. partes",
+      "image": "fac p oia ... sicut cu pa et 2a pte",
+      "problem": "ordinal sequence garbled into nonsense",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "tunc accipe sal communis partem",
+      "image": "tunc accipe sal com(m)une ppatum",
+      "problem": "'praeparatum' read as 'partem'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "colus in sal acetosi",
+      "image": "solue istum sal acetosum",
+      "problem": "'solve' read as 'colus'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "et hoc fac",
+      "image": "ad hoc facto",
+      "problem": "phrase misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "permitte infundi et quando fuerit finit distillare per silentium",
+      "image": "permitte infrigidari & qn frigidum fuit distilla istud p filtrum",
+      "problem": "cooling and filtering read as 'infundi' and 'per silentium'; instruction invented",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "aqua transstet",
+      "image": "aqua euanescat",
+      "problem": "'evanescat' misread",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 88,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "alloogether",
+      "image": "alltogether",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "est philosophis ad imitationem",
+      "image": "ex philosophis ad imitationem",
+      "problem": "'ex' read as 'est'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 132,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "preserving his body for all accidental corruption",
+      "image": "preserving his body fro all accidentall corruption",
+      "problem": "'from' read as 'for'; sense of protection inverted",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "finis est written",
+      "image": "since it is written",
+      "problem": "'since it is' misread as Latin 'finis est'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quem prae-rire",
+      "image": "quem praete-rire",
+      "problem": "syllable dropped at line break",
+      "severity": "minor"
+     },
+     {
+      "ocr": "our 2 most necessary",
+      "image": "our 2 ☿ most necessary",
+      "problem": "mercury symbol dropped; the noun of the sentence is lost",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "out of the we",
+      "image": "out of them we",
+      "problem": "word truncated",
+      "severity": "minor"
+     },
+     {
+      "ocr": "certain liquid",
+      "image": "certain Liquor",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "both be of cosie price",
+      "image": "both be of easie price",
+      "problem": "'easie' read as 'cosie'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "& this vegetable &",
+      "image": "& this vegetable ☿",
+      "problem": "mercury symbol read as '&'",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "mans health in preserving",
+      "image": "mans health.* in preserving",
+      "problem": "reference mark for the margin note dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "'->…<-' centering markup in the reader text around the heading",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 17 (p.45) of the heavily abbreviated recipe is largely misread and partly invented (urine becomes wine, filtering becomes 'per silentium'); the two later English/Latin pages are read well, apart from the dropped mercury symbols on p.132."
+ },
+ {
+  "book_id": "b13-r",
+  "slot": 3,
+  "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<unclear>positi calefacti</unclear>",
+      "image": "poci' calefti (probably 'potius calefacti' / 'praedicti calefacti')",
+      "problem": "hard abbreviation flagged unclear rather than resolved",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 88,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "est philosophis ad imitationem",
+      "image": "ex philosophis ad imitationem",
+      "problem": "'ex' read as 'est'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 132,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "there be <gloss>more</gloss> more mercuries",
+      "image": "there be ^more mercuries (one interlinear insertion)",
+      "problem": "inserted word given twice",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A sound reading of all three pages: the abbreviated Latin recipe on p.45 is expanded correctly, line by line, with one doubtful phrase honestly flagged, and the English/Latin pages are close to exact, keeping the ☿ symbols."
+ },
+ {
+  "book_id": "b13-t",
+  "slot": 4,
+  "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "pone in duplum vini fortis",
+      "image": "pone in decipulo vrina ppata (decipulo urinae praeparatae)",
+      "problem": "ingredient changed: prepared urine read as strong wine",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut totum vis cinere solvatur",
+      "image": "vt to vis cinu extrahat (ut tota vis cinerum extrahatur)",
+      "problem": "verb misread; extraction becomes dissolution",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "funde calida super saepius faecem 3. calefac sanguinis aquae",
+      "image": "funde calida sup easde feces. 3o calefac eande aquam",
+      "problem": "'easdem' read as 'saepius', 'eandem' as 'sanguinis'; process step garbled",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "pone 3. partes cineris in sanguinis faecis lixivio",
+      "image": "pos. 2a pte cinerum in eand' q facisti lixivium",
+      "problem": "second part of the ashes read as three parts; procedure order lost",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "fac per omnia per 2. et 3. vice ad per 2. partes",
+      "image": "fac p oia ... sicut cu pa et 2a pte",
+      "problem": "ordinal sequence garbled into nonsense",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "tunc accipe sal communis partem",
+      "image": "tunc accipe sal com(m)une ppatum",
+      "problem": "'praeparatum' read as 'partem'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "colus in sal acetosi",
+      "image": "solue istum sal acetosum",
+      "problem": "'solve' read as 'colus'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "et hoc fac",
+      "image": "ad hoc facto",
+      "problem": "phrase misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "permitte infundi et quando fuerit finit distillare per silentium",
+      "image": "permitte infrigidari & qn frigidum fuit distilla istud p filtrum",
+      "problem": "cooling and filtering read as 'infundi' and 'per silentium'; instruction invented",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "aqua transstet",
+      "image": "aqua euanescat",
+      "problem": "'evanescat' misread",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 88,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "vel unitate, Materia.",
+      "image": "vel unitate Materiæ.",
+      "problem": "case ending misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quin aberres",
+      "image": "quin aberret",
+      "problem": "verb ending misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "creatus est ex obscura",
+      "image": "creatus est* Ex obscura",
+      "problem": "reference mark for the Genesis margin note dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 132,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "preserving his body for all accidental corruption",
+      "image": "preserving his body fro all accidentall corruption",
+      "problem": "'from' read as 'for'; sense of protection inverted",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "finis est written",
+      "image": "since it is written",
+      "problem": "'since it is' misread as Latin 'finis est'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quem prae-rire",
+      "image": "quem praete-rire",
+      "problem": "syllable dropped at line break",
+      "severity": "minor"
+     },
+     {
+      "ocr": "our 2 most necessary",
+      "image": "our 2 ☿ most necessary",
+      "problem": "mercury symbol dropped; the noun of the sentence is lost",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "out of the we",
+      "image": "out of them we",
+      "problem": "word truncated",
+      "severity": "minor"
+     },
+     {
+      "ocr": "certain liquid",
+      "image": "certain Liquor",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "both be of cosie price",
+      "image": "both be of easie price",
+      "problem": "'easie' read as 'cosie'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "& this vegetable &",
+      "image": "& this vegetable ☿",
+      "problem": "mercury symbol read as '&'",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "mans health in preserving",
+      "image": "mans health.* in preserving",
+      "problem": "reference mark for the margin note dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "'->…<-' centering markup in the reader text around the heading",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 17 (p.45) of the heavily abbreviated recipe is largely misread and partly invented (urine becomes wine, filtering becomes 'per silentium'); the two later English/Latin pages are read well, apart from the dropped mercury symbols on p.132."
+ }
+]

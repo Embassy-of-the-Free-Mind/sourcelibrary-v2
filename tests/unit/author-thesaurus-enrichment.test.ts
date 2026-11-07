@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('@/lib/mongodb', () => ({ getDb: async () => ({}) }));
 
-import { withThesaurusEnrichment, type AuthorThesaurusDoc } from '@/lib/author-thesaurus';
+import { resolveAuthorSlugByName, withThesaurusEnrichment, type AuthorThesaurusDoc } from '@/lib/author-thesaurus';
 
 // #7786: the author page reads description and life dates from the legacy `entities` row, which
 // most thesaurus docs do not have. The thesaurus's Wikidata fields fill what that row lacks.
@@ -45,5 +45,25 @@ describe('withThesaurusEnrichment', () => {
     const e = withThesaurusEnrichment(null, { ...DOC, wikidata_birth_year: -106, wikidata_death_year: -43 })!;
     expect(e.wikidata_birth_date).toBeUndefined();
     expect(e.wikidata_death_date).toBeUndefined();
+  });
+});
+
+describe('resolveAuthorSlugByName (#8035)', () => {
+  const db = {
+    collection: () => ({
+      find: () => ({
+        toArray: async () => [
+          { slug: 'zhu-xi', canonical_name: 'Zhu Xi', variants: ['朱熹'] },
+          { slug: 'sun-wu', canonical_name: 'Sun Wu', variants: ['孫子'] },
+          { slug: 'sun-bin', canonical_name: 'Sun Bin', variants: ['孫子'] },
+        ],
+      }),
+    }),
+  };
+
+  it('finds the one doc answering to Han characters, and refuses a name two docs claim', async () => {
+    expect(await resolveAuthorSlugByName(db, '朱熹')).toBe('zhu-xi');
+    expect(await resolveAuthorSlugByName(db, '孫子')).toBeNull();
+    expect(await resolveAuthorSlugByName(db, '蔡元定')).toBeNull();
   });
 });

@@ -1,0 +1,166 @@
+[
+  {
+    "book_id": "b10-k",
+    "slot": 1,
+    "title": "Ars artium sive Ars magna cabalistica (PH337)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Latin manuscript of cabalistic arithmetic and combinatorics: gematria sums on Hebrew letters, 'Divisio Hebraica', cabalistic diagrams. It belongs on a Kabbalah or Christian-cabala shelf. No tradition or collection is given in the packet.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The written page numbers are 44 (record 50), 9 (record 95) and 54 (record 140), so the numbering goes back from 44 to 9 and then up to 54. All three numbers are plainly readable in the hand, so this is not a misread. The manuscript seems to have separately numbered sections, or the leaves are bound or scanned out of order; it needs checking. The catalogue date '1566' looks doubtful: page 95 cites 'Esch. Mezareph. C. 5.', a text known through Knorr von Rosenroth's Kabbala Denudata (1677–84), so this copy is probably later 17th or 18th century (I7). None of the three pages has a translation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 50,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>[Partial handwritten text visible on the right margin ... \"gu... 20... lo... a... an... Ar... de... vi... po... co... ti... a... ex... m... qu... vi... a... Al... di... in...\"]</margin>",
+            "image": "The right edge of the photograph shows line-starts from the facing leaf ('gu', 'Ec', 'Lo', 'a', 'az', 'An', 'De', 'us', 'po', 'co', 'ti', 'an', 'ex', 'm', 'qu', 'vi', 'ta', 'Al', 'su', 'ix'). They are not marginalia on this page, and several fragments are misread ('20', 'Ar', 'di', 'in').",
+            "problem": "the neighbouring leaf's text is transcribed as marginalia on this page",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "<sig>A2</sig>",
+            "image": "no signature mark on the page; the only mark at the foot is the catchword 'Ast' (bottom right)",
+            "problem": "signature invented; the real catchword 'Ast' is not transcribed",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "->Cellulae<- ... ->Angulus exterior<- (no 'Exteriores')",
+            "image": "'Cellule' plus 'Exteriores' (left grid, lower-left) and 'exteriores' (right grid, upside down at top right); the ring letters A B C D around both semicircles",
+            "problem": "the 'Exteriores' labels and the A–D letters on the semicircle rings are left out; the 'P' above Q and the label positions are flattened",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "No translation on this page; the packet's translation is null.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "si ne= gligatur 22. et initium fias a 2 occurrit tibi in summy 42. ... si incipias a 7 halebis ... si a 7. post. 11 a 7. 213 ... per saltus disponas numeros 22, et 7, et 17, et 27, et 8, et 6. ... Item 22, et 7, et 13, et 27 et 6 item 22, et 17, et 27, et 7",
+            "image": "The scribe writes Hebrew letters here, not Arabic numerals: 'negligatur א(?)', 'initium fiat a ב', 'in summa' followed by a Hebrew word, 'si incipias a ד', 'si a ה', 'si a ח', 'numeros א, et ד, et ח, et ז, et ט(?), et ו' and so on.",
+            "problem": "In a gematria passage, the Hebrew letters (the subject of the argument) are swapped for invented Arabic numbers. A reader would take them for computed values.",
+            "severity": "serious",
+            "class": "O10"
+          },
+          {
+            "ocr": "referunt summam פדק, 175",
+            "image": "a three-letter Hebrew word worth 175 (most likely קעה); פדק = 184",
+            "problem": "Hebrew word misread; it no longer sums to the 175 the text states",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "halebis summas similes Numen 169",
+            "image": "habebis summas similes Numeri 189 (the second digit reads as 8, not 6)",
+            "problem": "number probably misread; low confidence at this resolution",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "eamdem ad omni facile repe= riens summam",
+            "image": "eamdem ab omni facile repre= sentabit summam",
+            "problem": "main verb misread ('reperiens' for 'repraesentabit')",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quia excelsis numerum Alphabeticum hebraicum",
+            "image": "quia excedit numerum Alphabeticum hebraicum",
+            "problem": "verb misread; the reason given ('it exceeds the Hebrew alphabetic number') is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "scil. Radicum, quas uato= rum, et Cuborum",
+            "image": "scil. Radicum, Quadrato= rum, et Cuborum",
+            "problem": "'Quadratorum' (squares) garbled; one of the three divisor kinds is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "si quæsi= bus tuis ... superares ... detractas ... aurei numen fouet ... uidebe eis ... eueniret ... aperuis ... agnoscere possis",
+            "image": "si quaesi= tus tuus ... superaret ... detrahas ... aurei numeri foret ... uidere erit ... euenisset ... aperuit ... agnosci possunt",
+            "problem": "several small misreadings of the cursive",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "No translation on this page; the packet's translation is null.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Summa 36. ad 15. scilicet Duodecupla.",
+            "image": "Summa est 336. ad 28. scil. Duodecupla",
+            "problem": "Both terms of the ratio are wrong. 336:28 is twelvefold; 36:15 is not.",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Summa 30. ad 6 scilicet Tripla Supersextupertieri octavas.",
+            "image": "Summa 30. ad 8 scil. Tripla Supersextupartiens octavas",
+            "problem": "'8' read as '6'. 30:8 = 3 6/8, which is what the name describes; 30:6 is a plain fivefold. The ratio name is also garbled.",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "11. ad 7. Tripla.",
+            "image": "21. ad 7. Tripla.",
+            "problem": "'21' read as '11'; 11:7 is not triple",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Ejus examen erit sequens 24 ad 16. scilicet Sesquitertia. ... loco 4 ad 3 fuit in examine productus 24 ad 16 ... 4 ad 3 = 24 ad 16 ... sicuti est 24 ad 16",
+            "image": "24. ad 18. scil. Sesquitertia (all four times)",
+            "problem": "'18' read as '16' all four times. The worked check then claims 4:3 = 24:16, which is false (24:16 is sesquialtera), so the transcription makes the author's arithmetic look wrong.",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "semper ex earumdem additione aequalisatio proportionis procreatur ... Aequalis scilicet 50 ad 50 ... Nam consequentem primae proportionis scilicet, a qua ... collocabis, et sic expleta",
+            "image": "aequalitatis proportio procreatur ... Aequalitas scil. 50 ad 50 ... Nam consequens primae proportionis (illius scilicet, a qua ... collocabis, eritque sic expleta",
+            "problem": "minor misreadings and normalisations; 'illius' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "No translation on this page; the packet's translation is null.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A cabalistic-arithmetic manuscript in the right shelf, but the transcription cannot be trusted where it matters most: it turns Hebrew letters into invented Arabic numerals in a gematria passage, and it misreads the ratio numbers (336:28 as 36:15, 24:18 as 24:16) so the author's arithmetic looks wrong. The diagram page reads the facing leaf as marginalia, and none of the pages is translated."
+  }
+]

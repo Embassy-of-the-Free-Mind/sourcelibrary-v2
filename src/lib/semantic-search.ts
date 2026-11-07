@@ -1,5 +1,5 @@
 import { supabase, supabaseAdmin } from '@/lib/supabase';
-import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
+import { parseNavQuery, rankNavMatches, sitePageSnippet, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 import {
@@ -69,13 +69,13 @@ async function fetchQueryEmbedding(query: string): Promise<number[] | null> {
 
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${geminiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${geminiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           requests: [{
-            model: 'models/gemini-embedding-2-preview',
+            model: 'models/gemini-embedding-2',
             content: { parts: [{ text: query }] },
             outputDimensionality: 768,
           }],
@@ -194,7 +194,7 @@ export async function semanticSiteSearch(query: string, limit: number = 3): Prom
     url: row.url,
     page_type: row.page_type,
     title: row.title,
-    snippet: String(row.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    snippet: sitePageSnippet(row.text),
     similarity: Number(row.similarity) || 0,
   }));
 }
@@ -237,7 +237,7 @@ export async function navSiteSearch(query: string, limit = 3): Promise<NavSiteRe
     url: c.url,
     page_type: c.page_type,
     title: c.title,
-    snippet: String(c.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    snippet: sitePageSnippet(c.text),
     match: 'name' as const,
     coverage,
   }));
@@ -277,13 +277,13 @@ async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
   if (!geminiKey) return null;
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${geminiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${geminiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           requests: [{
-            model: 'models/gemini-embedding-2-preview',
+            model: 'models/gemini-embedding-2',
             content: { parts: [{ text: query }] },
             // No outputDimensionality — full 3072 dims for artwork_embeddings
           }],

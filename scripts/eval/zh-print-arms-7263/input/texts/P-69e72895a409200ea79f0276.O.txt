@@ -1,0 +1,19 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>五十八</page-num>
+<header><unclear>聊齋誌異新評</unclear> 雲翠仙</header>
+<sig>十之五八</sig>
+
+哉古今輕薄之人無有不翻覆之事而其所以易翻
+覆者即可於其蕩無行決之以此觀人思過半矣女
+之料才決之於膝行據足之際以為對越神明之地
+大庭廣眾之間而可以為此則亦何所不為乎不能
+為<unclear>遢</unclear>伎兒作婦此其精明若何果斷若何惜老媼夢
+夢墮奸謀而強拍然之行之草草迫以相隨乃汗腥
+猶留鬼皮始脫豺鼠子訖無香火之情儇薄兒竟作
+居奇之想至忍以同衾人賺作娼此大惡劇即殺却
+豈為過乎自無擇人之智又無從諫之明而止求神
+
+<vocab>雲翠仙, 輕薄, 翻覆, 奸謀, 豺鼠, 儇薄, 惡劇</vocab>

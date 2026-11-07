@@ -99,7 +99,10 @@ export const GET = withApiAuth(async (
       pages_count: 1, pages_translated: 1,
       // The stamped translation rung (#5287) — the reader's whole-book
       // download panel reads it instead of its own page arithmetic.
-      'translation_state.rung': 1, 'translation_state.english_original': 1,
+      'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1,
+      // The same panel offers the OCR formats only with `pages_ocr`, and the
+      // scan formats by imageAccessFor(), which reads `year` and these.
+      pages_ocr: 1, 'image_source.provider': 1, 'image_source.license': 1, 'image_source.rights_normalized': 1,
       // Per-language edition counters, so get_book can report `editions`
       // ({ en: 357, es: 357 }) rather than leaving an agent to discover a
       // Spanish edition by accident (#4095).

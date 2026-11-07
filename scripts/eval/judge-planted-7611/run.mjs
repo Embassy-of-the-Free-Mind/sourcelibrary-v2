@@ -29,6 +29,7 @@ import { claudeMeter, paceBlock } from '../lane-judge-sampler.mjs';
 import { plantError, unplant, scorePlant, bodyLines, PLANT_KINDS, ERROR_KINDS } from '../lib/plant-ocr-errors.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { wilson } from '../lib/agreement-stats.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
@@ -60,7 +61,7 @@ async function frame() {
   fs.mkdirSync(OUT, { recursive: true });
   const { c, db } = await mongo();
   try {
-    const recs = await db.collection('lane_judge_verdicts').find({ cell: { $in: Object.keys(CELLS) }, kind: { $in: ['item', 'draft'] }, script_type: 'print', 'verdict.accept': true },
+    const recs = await db.collection('lane_judge_verdicts').find(verdictQuery({ cell: { $in: Object.keys(CELLS) }, kind: { $in: ['item', 'draft'] }, script_type: 'print', 'verdict.accept': true }),
       { projection: { _id: 1, kind: 1, page_id: 1, book_id: 1, page_number: 1, cell: 1, route: 1, text_hash: 1, write: 1, image_url: 1, verdict: 1 } }).toArray();
     // The route-judge router tests (2026-10-26): pages whose STORED draft the judge accepted (fr-lite, de-lite, route lite).
     // No text hash was kept there, so a page counts only while its OCR is older than the verdict (unchanged since).

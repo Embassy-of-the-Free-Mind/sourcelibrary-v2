@@ -1,0 +1,102 @@
+[
+ {
+  "page_id": "6a3c6f9401fe4f593c1cd980",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR matches all 9 columns (小人之道淺近… to …仁而死者也者此). The English follows them closely, and the fanqie gloss 蹈徒報反 rendered as 'tu-bao reverse' is only a minor slip."
+ },
+ {
+  "page_id": "6a3c7a1301fe4f593c2144ea",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 5,
+  "from_ocr": true,
+  "verdict": "sense-error",
+  "note": "The OCR scrambled the two registers, so quotes went to the wrong headings. 1) Han Yu's 飛橋仄上駕漢 is given as 'resembles the Heavenly River', which is Xu Ling's 橫橋象天漢. 2) Xu Ling gets a made-up poem 'Crossing the Bridge'. 3) 躡菡萏 is given to an anonymous 'Chang'an Road' poem, but it belongs to Han Yu's 柳橋 line 初疑躡菡萏. 4) The author 許瑄 is dropped and 叢篁夾溪橋橋斷橫槎接 becomes 'Thatch binds the jade dragon'. 5) 古館曰烏鵲，橋因館得名 is reversed: the English says the hostel was named after the bridge."
+ },
+ {
+  "page_id": "6a3c7aea01fe4f593c21ae3c",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": true,
+  "verdict": "minor",
+  "note": "The leaf ends with 存只是存著這些子. The OCR adds 夫子吾負, which is not on the image, and the English carries it over as the fragment 'Master, I have wronged'. The rest is accurate."
+ },
+ {
+  "page_id": "6a3cbaa23dce6cfad749d69b",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR and English match all 8 columns (Yang She, Yang Ningshi, Yang Yanxun). The only small issues are 太子太保 as 'Grand Protector' and leaving out 學 in 少事青州王師範學."
+ },
+ {
+  "page_id": "6a3cbb643dce6cfad74a358a",
+  "wrong_leaf": false,
+  "invented": true,
+  "invented_quote": "and ceased <note>debt collection</note>, saying: \"Let this matter end here.\"",
+  "sense_errors": 0,
+  "from_ocr": true,
+  "verdict": "invented",
+  "note": "The last column of the image ends 餼國人粟戶一. The OCR tail 欠巳曰事巳焉 is not on the leaf, and the English turns it into a made-up clause with a quotation. 公子鮑 as 'Lord Bao' is minor."
+ },
+ {
+  "page_id": "6a3cbe86ec254ff6cae013cc",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "minor",
+  "note": "Leaf matches image (其兒孫避諱紛紜矣 ... 翻以能自); OCR is accurate. The margin label 卷下 is rendered as 'Volume Two', and 無頓狼狽者 is loosely glossed as 'abrupt disgrace or embarrassment in society'. Both are nuance only."
+ },
+ {
+  "page_id": "6a3cbf2ff9474f825c1665ec",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 0,
+  "from_ocr": false,
+  "verdict": "fine",
+  "note": "OCR matches all 8 columns. Numbers check out: 10,576,065,600 = 102840^2; 85907 + 2x102840 = 291587; +220320 = 511907. 三乘方 is correctly rendered as quartic. The ambiguous truncated 相減于四十 is reasonably rendered."
+ },
+ {
+  "page_id": "6a3cc002f9474f825c16d2e4",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "Leaf and OCR match the image. In Wu's comment 故稱蓋以疑之, the term 蓋 ('probably') is glossed as 'rarely', which is wrong: 'rarely' is 希 in the Analects line. The rest, including 征/伐, Fu, Feng, and the 箝 fanqie, is accurate."
+ },
+ {
+  "page_id": "6a3ce8a20a0011cb4bc0d539",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 2,
+  "from_ocr": false,
+  "verdict": "sense-error",
+  "note": "OCR matches the image. 公有司門西北面東上 / 私臣門東北面西上 is misparsed as 'northwest/northeast of the gate, facing north'. It should be 'west/east of the gate, facing north'. That puts both groups in the wrong place. The Zheng and Ao arguments are otherwise rendered correctly."
+ },
+ {
+  "page_id": "6a3ced284701a906f10ddf15",
+  "wrong_leaf": false,
+  "invented": false,
+  "invented_quote": "",
+  "sense_errors": 1,
+  "from_ocr": true,
+  "verdict": "sense-error",
+  "note": "The image shows 羊臐豕膮 (mutton and pork broths); OCR has 羊臁豕曉 and the English gives 'sheep, piglet, and suckling pig'. That is a garbled dish list that partly comes from the OCR. There are also minor slips: 豕 rendered as 'wild boar', and 有司徹 called 'Ceremonial Rites of the Master of Provisions'."
+ }
+]

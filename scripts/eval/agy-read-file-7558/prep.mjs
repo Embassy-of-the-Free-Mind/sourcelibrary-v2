@@ -20,7 +20,10 @@ import { MongoClient } from 'mongodb';
 import { makeRng } from '../lib/paired-stats.mjs';
 import { getPageSource } from '../../lib/page-image-url.mjs';
 
-export const ARMS = ['old1', 'new1', 'old4', 'new4'];
+// --arms=base,a,b (#8330) judges other arms on the same pages. With these, the plants go in a copy of the second arm's read.
+const ARMS = process.argv.find((a) => a.startsWith('--arms='))?.slice(7).split(',') ?? ['old1', 'new1', 'old4', 'new4'];
+const PLANT_ARM = ARMS.includes('new1') ? 'new1' : ARMS[1];
+const BLEED_ARM = ARMS.includes('old1') ? 'old1' : ARMS[0];
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const S = arg('scratch');
@@ -64,7 +67,7 @@ for (const b of books) {
     const versions = ARMS.map((arm) => ({ arm, text: read(arm, pg.page_id) || '(no transcription returned)' }));
     const c = controlFor.get(pg.page_id);
     if (c) {
-      const t = read('new1', pg.page_id);
+      const t = read(PLANT_ARM, pg.page_id);
       const lines = t.split('\n');
       if (c.kind === 'drop') {
         const body = bodyLines(t);
@@ -72,14 +75,14 @@ for (const b of books) {
         lines.splice(victim.i, 1);
         tamper[pg.page_id] = { kind: 'drop', line: victim.l };
       } else {
-        const moved = bodyLines(read('old1', c.next))[0].l;
+        const moved = bodyLines(read(BLEED_ARM, c.next))[0].l;
         const last = bodyLines(t).pop();
         lines.splice(last.i + 1, 0, moved);
         tamper[pg.page_id] = { kind: 'bleed', line: moved };
       }
       versions.push({ arm: 'CTL', text: lines.join('\n') });
     }
-    const letters = versions.length === 5 ? ['V', 'W', 'X', 'Y', 'Z'] : ['W', 'X', 'Y', 'Z'];
+    const letters = ['V', 'W', 'X', 'Y', 'Z'].slice(-versions.length);
     const order = shuffle(versions, rng);
     key[pg.page_id] = Object.fromEntries(order.map((v, i) => [letters[i], v.arm]));
     fs.writeFileSync(path.join(J, 'packets', `${pg.page_id}.json`), JSON.stringify({

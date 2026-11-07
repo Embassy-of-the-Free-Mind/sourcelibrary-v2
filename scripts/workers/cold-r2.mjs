@@ -24,6 +24,8 @@ const sdk = require('@aws-sdk/client-s3');
 const BUCKET = process.env.COLD_R2_BUCKET || 'sl-corpus-snapshots';
 const PART = 64 * 1024 * 1024;   // R2 wants every part but the last the same size
 const CONCURRENCY = 4;           // parts in flight: 256 MB of buffers at most
+const RANGE = 256 * 1024 * 1024; // one ranged GET at a time on read-back
+const MAX_FAILS = 6;             // failures in a row with no bytes read
 
 for (const k of ['R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY']) {
   if (!process.env[k]) { console.error(`cold-r2: ${k} is not set`); process.exit(2); }
@@ -75,16 +77,33 @@ async function put() {
   console.log(JSON.stringify({ key, bytes, sha256: h.digest('hex') }));
 }
 
+// R2 aborts one long GET partway through a large object ("Error aborted", then "premature end" in zstd): north90 and
+// poles-e on cloudlayer failed read-back twice each, and a 24 GB volume on gex45 on 2026-11-07. Originals survived, but
+// a folder that cannot be read back can never leave the disk. So read in ranges and resume at the exact byte that
+// failed. If-Match pins the ETag: a key that changed mid-read fails rather than splicing two objects.
 async function get() {
   const i = rest.indexOf('--sum-to'); const sumTo = i >= 0 ? rest[i + 1] : null;
-  const r = await s3.send(new sdk.GetObjectCommand({ Bucket: BUCKET, Key: key }));
-  const h = createHash('sha256'); let bytes = 0;
-  for await (const chunk of r.Body) {
-    h.update(chunk); bytes += chunk.length;
-    if (!process.stdout.write(chunk)) await new Promise((res) => process.stdout.once('drain', res));
+  const { ContentLength: total, ETag } = await s3.send(new sdk.HeadObjectCommand({ Bucket: BUCKET, Key: key }));
+  const h = createHash('sha256'); let bytes = 0, fails = 0, resumes = 0;
+  while (bytes < total) {
+    const end = Math.min(bytes + RANGE, total) - 1;
+    try {
+      const r = await s3.send(new sdk.GetObjectCommand({ Bucket: BUCKET, Key: key, Range: `bytes=${bytes}-${end}`, IfMatch: ETag }));
+      for await (const chunk of r.Body) {
+        h.update(chunk); bytes += chunk.length;
+        if (!process.stdout.write(chunk)) await new Promise((res) => process.stdout.once('drain', res));
+        fails = 0;   // the limit counts failures in a row with no progress, not across a long read
+      }
+      if (bytes <= end) throw new Error(`range ended at byte ${bytes}, expected ${end + 1}`);
+    } catch (e) {
+      if (e?.$metadata?.httpStatus === 412 || ++fails > MAX_FAILS) throw e;
+      resumes++;
+      console.error(`cold-r2 get ${key}: resuming at byte ${bytes} of ${total} (${e?.name || ''} ${e?.message || e})`);
+      await new Promise((res) => setTimeout(res, fails * 5000));
+    }
   }
   await new Promise((res) => process.stdout.end(res));
-  const out = JSON.stringify({ key, bytes, sha256: h.digest('hex') });
+  const out = JSON.stringify({ key, bytes, sha256: h.digest('hex'), resumes });
   if (sumTo) fs.writeFileSync(sumTo, out + '\n'); else console.error(out);
 }
 

@@ -1,0 +1,561 @@
+[
+ {
+  "book_id": "b02-k",
+  "slot": 1,
+  "title": "Conpotus (sic) magistri Roperti anglici linconiensis episcopi",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 17,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "poenitentes. no intellige paschales eidem anni et sequentes anni",
+      "image": "per concurrentes non intelligit concurrentes eiusdem anni sed sequentis anni",
+      "problem": "added top note garbled; the key term 'concurrentes' read as 'paschales'/'poenitentes'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "habet dies epactas tm. A. finitur est cyclus et quaxmeri",
+      "image": "habet de diebus concurrentibus tantum 7. finitus est cyclus istorum concurrentium",
+      "problem": "'concurrentes' rendered as 'epactas'/'quaxmeri' throughout the page; the numeral 7 (written like Λ) left as the letter 'A'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "uocant nlis solent",
+      "image": "vocatur numerus concurrens",
+      "problem": "non-words where the image is legible",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "G. q̃. 29.",
+      "image": "sed quia 28.",
+      "problem": "28 (the solar-cycle length) read as 29",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "<margin>produ- culato</margin>",
+      "image": "periodus .i. circulatio",
+      "problem": "marginal gloss garbled",
+      "severity": "moderate",
+      "class": "O12"
+     },
+     {
+      "ocr": "Quinque monos ... verse absent: 'reinet aporilte phot iulut. et q̃s monor. etes. sep vnit. etinil epea duos'",
+      "image": "retinent compotiste per hos versus. Quinque monos. tres. Sex unum. tetras epta duoque",
+      "problem": "the mnemonic verse for the regulars is unrecognisable",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "spleene integre lunationes",
+      "image": "compleantur integre lunationes 940",
+      "problem": "'compleantur' read as the non-word 'spleene' (repeated through the page); 940 dropped",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "fin autem dielem ignota est uni sedi et 3. diebus et 29. horis et 14. scrupulis et 33. secundis",
+      "image": "secundum Arzachelem quantitate unius secundi et 3 tertiis et 29 quartis et .. quintis et 14 sextis et 2 septimis",
+      "problem": "units invented (diebus, horis, scrupulis) and Arzachel's name lost: the stated quantity is wholly different",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "6939 dies et insuper 16. minuta",
+      "image": "6939 dies et insuper 44 minuta",
+      "problem": "44 read as 16; later '45 minutorum' as '24', '15' as '14'",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "remanet 16. anni ... in 16. annos ... 20. luner",
+      "image": "76 anni ... 940 lunationes",
+      "problem": "the conclusion of the argument (76 years = 940 lunations) lost; numbers wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "(one run-on paragraph)",
+      "image": "22 ruled lines with red paraphs at 'Igitur 76', 'Cum igitur', 'Similiter'",
+      "problem": "line and paragraph structure flattened",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 43,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "9. anno cycli 7. continuat illi 9. immediate 16. 7. 13. quod est 4.",
+      "image": "8 anno cicli et continuatur illi 8 immediate 16 et hec est ratio quod cum 8",
+      "problem": "8 read as 9 throughout ('9. anni inchoati', '9. priores annos'); the golden-number argument becomes wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "beyeus 8. annus cycli",
+      "image": "Sextus enim annus cicli",
+      "problem": "'Sextus enim' read as 'beyeus 8.'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "vii nocte 3. ut inpedio loco stinuent",
+      "image": "unde necesse est ut in predicto loco contineantur",
+      "problem": "abbreviations turned into non-words throughout",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "embolos et 1. embolismus anni et embolismus in ea embos sequitur",
+      "image": "embolismalem 8 anni et embolismalem xi nam embolismalis septimi iam preterit",
+      "problem": "clause garbled; numbers lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Line-by-line but largely unreadable Latin: abbreviations become non-words, the key terms (concurrentes, compleantur) are misread throughout, and the numerals the computus argument rests on (28, 44, 76, 940, the 8-year span) are wrong. A computist could not use it."
+ },
+ {
+  "book_id": "b02-m",
+  "slot": 2,
+  "title": "Conpotus (sic) magistri Roperti anglici linconiensis episcopi",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 17,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "poenitentes. no intellige paschales eidem anni et sequentes anni",
+      "image": "per concurrentes non intelligit concurrentes eiusdem anni sed sequentis anni",
+      "problem": "added top note garbled; the key term 'concurrentes' read as 'paschales'/'poenitentes'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "habet dies epactas tm. A. finitur est cyclus et quaxmeri",
+      "image": "habet de diebus concurrentibus tantum 7. finitus est cyclus istorum concurrentium",
+      "problem": "'concurrentes' rendered as 'epactas'/'quaxmeri' throughout the page; the numeral 7 (written like Λ) left as the letter 'A'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "uocant nlis solent",
+      "image": "vocatur numerus concurrens",
+      "problem": "non-words where the image is legible",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "G. q̃. 29.",
+      "image": "sed quia 28.",
+      "problem": "28 (the solar-cycle length) read as 29",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "<margin>produ- culato</margin>",
+      "image": "periodus .i. circulatio",
+      "problem": "marginal gloss garbled",
+      "severity": "moderate",
+      "class": "O12"
+     },
+     {
+      "ocr": "Quinque monos ... verse absent: 'reinet aporilte phot iulut. et q̃s monor. etes. sep vnit. etinil epea duos'",
+      "image": "retinent compotiste per hos versus. Quinque monos. tres. Sex unum. tetras epta duoque",
+      "problem": "the mnemonic verse for the regulars is unrecognisable",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "spleene integre lunationes",
+      "image": "compleantur integre lunationes 940",
+      "problem": "'compleantur' read as the non-word 'spleene' (repeated through the page); 940 dropped",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "fin autem dielem ignota est uni sedi et 3. diebus et 29. horis et 14. scrupulis et 33. secundis",
+      "image": "secundum Arzachelem quantitate unius secundi et 3 tertiis et 29 quartis et .. quintis et 14 sextis et 2 septimis",
+      "problem": "units invented (diebus, horis, scrupulis) and Arzachel's name lost: the stated quantity is wholly different",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "6939 dies et insuper 16. minuta",
+      "image": "6939 dies et insuper 44 minuta",
+      "problem": "44 read as 16; later '45 minutorum' as '24', '15' as '14'",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "remanet 16. anni ... in 16. annos ... 20. luner",
+      "image": "76 anni ... 940 lunationes",
+      "problem": "the conclusion of the argument (76 years = 940 lunations) lost; numbers wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "(one run-on paragraph)",
+      "image": "22 ruled lines with red paraphs at 'Igitur 76', 'Cum igitur', 'Similiter'",
+      "problem": "line and paragraph structure flattened",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 43,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "9. anno cycli 7. continuat illi 9. immediate 16. 7. 13. quod est 4.",
+      "image": "8 anno cicli et continuatur illi 8 immediate 16 et hec est ratio quod cum 8",
+      "problem": "8 read as 9 throughout ('9. anni inchoati', '9. priores annos'); the golden-number argument becomes wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "beyeus 8. annus cycli",
+      "image": "Sextus enim annus cicli",
+      "problem": "'Sextus enim' read as 'beyeus 8.'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "vii nocte 3. ut inpedio loco stinuent",
+      "image": "unde necesse est ut in predicto loco contineantur",
+      "problem": "abbreviations turned into non-words throughout",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "embolos et 1. embolismus anni et embolismus in ea embos sequitur",
+      "image": "embolismalem 8 anni et embolismalem xi nam embolismalis septimi iam preterit",
+      "problem": "clause garbled; numbers lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Line-by-line but largely unreadable Latin: abbreviations become non-words, the key terms (concurrentes, compleantur) are misread throughout, and the numerals the computus argument rests on (28, 44, 76, 940, the 8-year span) are wrong. A computist could not use it."
+ },
+ {
+  "book_id": "b02-r",
+  "slot": 3,
+  "title": "Conpotus (sic) magistri Roperti anglici linconiensis episcopi",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 17,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "erat enim in illo anno prima dies marcii 4 feria. propter hoc est 4 regularis marcii",
+      "image": "prima dies marcii ч feria ... ч regularis marcii (the hand's 5; its 4 is the looped form)",
+      "problem": "March regular read as 4; the hand's 5 (and the standard regular of March) is 5",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Attribuitur autem cuilibet mensi",
+      "image": "Attribuitur autem unicuique mensi",
+      "problem": "word substituted, same sense",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "secundum Arza-chelem continetur unum secundum",
+      "image": "secundum Arzachelem quantitate unius secundi",
+      "problem": "small misreading, sense kept",
+      "severity": "minor"
+     },
+     {
+      "ocr": "et licet nimis sit paruus error in principio computationibus tamen patet continuus accidit error propter temporis longitudinem",
+      "image": "et licet in hoc sit paruus error in principio computationis tamen patet quantus accidit error per temporis longitudinem",
+      "problem": "several small misreadings in one sentence",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<margin>4</margin>",
+      "image": "a single mark in the left margin",
+      "problem": "marginal mark read as a numeral, low confidence",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 43,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Item autem formauit huius aureum numerum et collocare",
+      "image": "Item autem formandi(?) huius aureum numerum et collocandi(?)",
+      "problem": "last line uncertain, flagged as <unclear>",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A usable, expanded reading: the abbreviations are resolved into grammatical Latin and the computus numbers (28, 44/45 minutes, 235, 76 years, 940 lunations, 2920 days) come out right and agree with the arithmetic. Slips are small, with one numeral error (March regular 4 for 5); uncertain readings are marked."
+ },
+ {
+  "book_id": "b02-t",
+  "slot": 4,
+  "title": "Conpotus (sic) magistri Roperti anglici linconiensis episcopi",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 17,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "praecedentem. non intelliges praesentem eidem anni sed sequentem annum",
+      "image": "per concurrentes non intelligit concurrentes eiusdem anni sed sequentis anni",
+      "problem": "key term misread; 'concurrentes'/'pro concurrente' become 'praesentem', 'epactas', 'recurrentium' throughout",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "habet de diebus epactarum tantum · A ·",
+      "image": "habet de diebus concurrentibus tantum 7",
+      "problem": "concurrentes read as epactae (a different computus quantity); 7 left as the letter 'A'",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "minimum numerus quem ambo numerando · A · et · Q ·",
+      "image": "minimus numerus quem omnes numerant 7 et 4",
+      "problem": "the factors 7 and 4 of 28 lost",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "uocatus multis solerem",
+      "image": "vocatur numerus concurrens",
+      "problem": "non-sense reading",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Cum enim in illo anno primus dies martii per feriam",
+      "image": "erat enim in illo anno prima dies marcii 5 feria",
+      "problem": "the March weekday number dropped",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "regularis martii est 3 · quia eius littera prima est · b ·",
+      "image": "regularis maii est 3 quia eius littera prima est b",
+      "problem": "May read as March: the regular for March given as 3",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "septembris · A · ... decembris · A ·",
+      "image": "septembris 7 ... decembris 7",
+      "problem": "the numeral 7 given as the letter A",
+      "severity": "moderate",
+      "class": "O7"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta>catchword: annus bissextilis</meta>, but 'annus bisextilis' is the first line of the main text, not a catchword",
+      "severity": "moderate",
+      "class": "O11"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": ".234. lunationes (four times)",
+      "image": "235 lunationes",
+      "problem": "235 read as 234 (the hand's 5 read as 4)",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "6939. dies et insuper .24. minuta",
+      "image": "6939 dies et insuper 44 minuta",
+      "problem": "44 read as 24; later 45 read as 24, and 15 as 14",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "ter. 19. haberent .4. annos bissextiles",
+      "image": "ter 19 habentes 5 annos bissextiles",
+      "problem": "5 leap years read as 4, which destroys the argument",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Igitur .16. anni ... adequent. 920. lunationibus ... accidat ut .40. lune",
+      "image": "Igitur 76 anni ... adequantur 940 lunationibus ... accidat 940 lune",
+      "problem": "76 read as 16, 940 as 920 or 40: the conclusion of the chapter is wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "secundum ultimum numerum",
+      "image": "secundum kalendarium nostrum",
+      "problem": "misread",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quinto .19. anni",
+      "image": "quarto 19 anni",
+      "problem": "quarto read as quinto",
+      "severity": "moderate",
+      "class": "O7"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 43,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "et his 3 · quod cum 4 · annus",
+      "image": "et hec est ratio quod cum 8 annus",
+      "problem": "'ratio' read as 3 and 8 as 4",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Bissextus · n · annus cycli epactarum",
+      "image": "Sextus enim annus cicli epactarum",
+      "problem": "'Sextus enim' read as 'Bissextus n'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "illi inmediate · 12 ·",
+      "image": "illi immediate 13",
+      "problem": "13 read as 12 (twice)",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "signatur permanente lune",
+      "image": "signante primationem lune",
+      "problem": "misread term",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "sit embolismus vi · nam embolismus sextus",
+      "image": "embolismalem xi nam embolismalis septimi",
+      "problem": "which embolism has passed is misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "· 2 · dicitur numeri",
+      "image": "2 aurei numeri",
+      "problem": "'aurei' read as 'dicitur'",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Recognisable Latin and mostly the right words in the right order, but the technical vocabulary drifts (concurrentes become epactae) and most of the numerals the computus argument rests on are wrong (234, 24, 16, 920, May read as March). An expert would not trust a figure in it."
+ }
+]
