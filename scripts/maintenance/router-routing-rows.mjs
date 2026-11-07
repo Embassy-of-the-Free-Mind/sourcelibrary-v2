@@ -97,9 +97,9 @@ export function routeLabel(route) {
 /** One cell of the doc table: the route, marked when the evidence has not decided it. */
 function cellText(row) {
   if (!row) return '—';
-  const undecided = !decided(row);
+  const bound = boundRoute(row);
   const byDefault = /^(keep|switch) \(default:/.test(row.decision || '');
-  return `${routeLabel(row.route)}${undecided ? ' †' : byDefault ? ' *' : ''}`;
+  return `${routeLabel(bound || row.route)}${!bound ? ' †' : byDefault ? ' *' : ''}`;
 }
 
 /** The generated section of routing.md, markers included: one row per language/source, one column per script type. */
