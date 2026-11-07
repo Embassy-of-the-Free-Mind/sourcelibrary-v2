@@ -11,6 +11,9 @@ const state = vi.hoisted(() => ({
   status: 200,
   books: [] as Record<string, unknown>[],
   pages: [] as Record<string, unknown>[],
+  pictures: [] as Record<string, unknown>[],
+  galleryUrls: [] as string[],
+  galleryStatus: 200,
 }));
 
 vi.mock('@/app/api/search/route', () => ({
@@ -21,6 +24,14 @@ vi.mock('@/app/api/search/route', () => ({
     return NextResponse.json({ results });
   },
 }));
+vi.mock('@/app/api/gallery/route', () => ({
+  GET: async (req: Request) => {
+    state.galleryUrls.push(req.url);
+    if (state.galleryStatus !== 200) return NextResponse.json({ error: 'limit' }, { status: state.galleryStatus });
+    return NextResponse.json({ items: state.pictures, total: state.pictures.length });
+  },
+}));
+vi.mock('@/lib/api-auth', () => ({ withApiAuth: (handler: unknown) => handler }));
 vi.mock('@/lib/dataset/api-keys', () => ({ validateApiKey: async () => null }));
 vi.mock('@/lib/crawler-verify', () => ({ provableClaimIn: () => null, verifyCrawlerClaim: async () => 'unknown' }));
 
@@ -36,6 +47,12 @@ const call = (q: string | null, ua = CLAUDE) => GET(new NextRequest(
 
 beforeEach(() => {
   state.urls = [];
+  state.galleryUrls = [];
+  state.galleryStatus = 200;
+  state.pictures = [
+    { source: 'illustration', pageId: 'p7', bookId: 'b1', pageNumber: 7, detectionIndex: 1, bookTitle: 'De secretis', author: 'Suchten', year: '1570', description: 'A dragon', extractedUrl: 'https://images.sourcelibrary.org/gallery/b1/p7-1.jpg', thumbnailUrl: 'https://images.sourcelibrary.org/gallery/b1/p7-1-card.jpg' },
+    { source: 'artwork', pageId: 'artwork-a1', bookId: 'a1', pageNumber: 0, link: '/artwork/dragon', bookTitle: 'Dragon', year: 1863, description: 'Another <b>dragon</b>', imageUrl: 'https://images.sourcelibrary.org/artwork/dragon.jpg' },
+  ];
   state.status = 200;
   state.books = [{ type: 'book', book_id: 'b1', slug: 'de-secretis', title: 'De secretis', display_title: 'On Secrets', author: 'Suchten', published: '1570', snippet: 'About antimony', snippet_type: 'summary' }];
   state.pages = [{ type: 'page', book_id: 'b1', slug: 'de-secretis', title: 'De secretis', page_id: 'p99', page_number: 99, snippet: 'Archeus. Before that', snippet_type: 'translation' }];
@@ -149,5 +166,56 @@ describe('/search/text', () => {
     expect(res.status).toBe(400);
     expect(state.urls).toHaveLength(0);
     expect(await res.text()).toContain('/search/text?q=YOUR+WORDS');
+  });
+});
+
+describe('pictures', () => {
+  const pictures = (q: string, ua = CLAUDE) => GET(new NextRequest(
+    `https://sourcelibrary.org/search/text?q=${encodeURIComponent(q)}&pictures=1`,
+    { headers: { 'user-agent': ua } },
+  ));
+  const CHROME = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
+  const fromProxy = async (url: string, ua: string) => (await proxy(new NextRequest(url, {
+    headers: { host: 'sourcelibrary.org', 'user-agent': ua, 'accept-language': 'en', 'sec-fetch-mode': 'navigate' },
+  })))?.headers.get('x-middleware-rewrite') ?? '';
+
+  it('gives each kind of picture the right link and says the description is AI', async () => {
+    const html = await (await pictures('dragon')).text();
+    expect(html).toContain('https://sourcelibrary.org/gallery/image/p7-1');
+    expect(html).toContain('https://sourcelibrary.org/artwork/dragon');
+    expect(html).not.toContain('gallery/image/artwork-');
+    expect(html).toContain('illustration on page 7');
+    expect(html).toContain('[AI description]');
+    expect(html).toContain('https://images.sourcelibrary.org/gallery/b1/p7-1.jpg');
+  });
+
+  it('escapes stored text and the query', async () => {
+    const html = await (await pictures('<script>x</script>')).text();
+    expect(html).not.toContain('<script>x');
+    expect(html).not.toContain('<b>dragon</b>');
+  });
+
+  it('asks for a short list, spread across books, and runs no text search', async () => {
+    await pictures('dragon');
+    expect(state.galleryUrls[0]).toContain('limit=12');
+    expect(state.galleryUrls[0]).toContain('maxPerBook=2');
+    expect(state.urls).toEqual([]);
+  });
+
+  it('a search for words links to pictures and does not fetch them', async () => {
+    const html = await (await call('dragon')).text();
+    expect(html).toContain('pictures=1');
+    expect(state.galleryUrls).toEqual([]);
+  });
+
+  it('says so when the limit is reached', async () => {
+    state.galleryStatus = 429;
+    expect((await pictures('dragon')).status).toBe(429);
+  });
+
+  it('sends a fetcher from /gallery?q= here, and leaves a person and a bare /gallery alone', async () => {
+    expect(await fromProxy('https://sourcelibrary.org/gallery?q=dragon', CLAUDE)).toContain('/search/text?q=dragon&pictures=1');
+    expect(await fromProxy('https://sourcelibrary.org/gallery?q=dragon', CHROME)).not.toContain('/search/text');
+    expect(await fromProxy('https://sourcelibrary.org/gallery', CLAUDE)).not.toContain('/search/text');
   });
 });

@@ -18,7 +18,9 @@ You are probably working with someone who has a question about the past. You can
 
 **5. Send the person to the page.** A `short_url` opens the exact page beside its scan.
 
-**6. Pictures.** `https://sourcelibrary.org/gallery` is for people. An assistant with the connector below can also search the illustrations.
+**6. Pictures.** `https://sourcelibrary.org/search/text?q=YOUR+WORDS&pictures=1` returns illustrations and artworks as a readable page, each with its link, its book or artwork, and the image file. Use a plain word for what is shown, in English. The descriptions are AI-written.
+
+**7. Search by meaning.** When the words are unknown, `https://sourcelibrary.org/api/search/semantic?q=YOUR+IDEA&limit=5` returns books close in meaning, with an AI summary of each. Use it to find a book, then search inside that book for the author's words.
 
 ### Quote and link
 
@@ -40,7 +42,7 @@ Someone asking what an old book says wants the author's words, and usually canno
 
 ### Going further
 
-- **Connector:** for longer research and image search, a person can add `https://sourcelibrary.org/api/mcp` in Claude, ChatGPT or Grok. Steps: https://sourcelibrary.org/connect
+- **Connector:** for longer research, a picture viewer inside the chat and finer image filters, a person can add `https://sourcelibrary.org/api/mcp` in Claude, ChatGPT or Grok. Steps: https://sourcelibrary.org/connect
 - **Limits:** anonymous use covers ordinary reading. A free account at https://sourcelibrary.org/auth/signin gives a higher daily limit.
 - **Bulk use:** whole-corpus reading and AI training are not covered here. See Licensing below.
 
