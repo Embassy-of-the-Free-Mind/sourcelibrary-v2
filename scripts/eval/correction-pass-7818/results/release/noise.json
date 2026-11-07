@@ -1,0 +1,17 @@
+{
+ "n": 30,
+ "accept": {
+  "n": 30,
+  "observed": 0.9666666666666667,
+  "kappa": 0.8695652173913043,
+  "ac1": 0.9552572706935123,
+  "positive_a": 0.8666666666666667,
+  "positive_b": 0.8333333333333334
+ },
+ "accept_flips": [
+  "j9d07f83554af"
+ ],
+ "fidelity_exact": 27,
+ "fidelity_wkappa": 0.8760330578512396,
+ "wrong_text_agree": 30
+}

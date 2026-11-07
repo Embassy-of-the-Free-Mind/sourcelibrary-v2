@@ -1,0 +1,91 @@
+{
+ "issue": 7499,
+ "rule": "reads with more than 150 characters inside <meta> (text a reader never sees)",
+ "at": "2026-10-27",
+ "arms": {
+  "flash38-plain": {
+   "reads": 132,
+   "meta_gt150": 0,
+   "mean_leak_chars": 0,
+   "p6545_reads": 132,
+   "p6545_leak": 0
+  },
+  "flash38-v13": {
+   "reads": 132,
+   "meta_gt150": 1,
+   "mean_leak_chars": 160,
+   "p6545_reads": 132,
+   "p6545_leak": 1
+  },
+  "flash38-v13b": {
+   "reads": 50,
+   "meta_gt150": 0,
+   "mean_leak_chars": 0,
+   "p6545_reads": 50,
+   "p6545_leak": 0
+  },
+  "flash38-v20": {
+   "reads": 132,
+   "meta_gt150": 0,
+   "mean_leak_chars": 0,
+   "p6545_reads": 132,
+   "p6545_leak": 0
+  },
+  "lite-plain": {
+   "reads": 365,
+   "meta_gt150": 0,
+   "mean_leak_chars": 0,
+   "p6545_reads": 132,
+   "p6545_leak": 0
+  },
+  "lite-v13": {
+   "reads": 365,
+   "meta_gt150": 51,
+   "mean_leak_chars": 760,
+   "p6545_reads": 132,
+   "p6545_leak": 22
+  },
+  "lite-v13b": {
+   "reads": 365,
+   "meta_gt150": 50,
+   "mean_leak_chars": 544,
+   "p6545_reads": 132,
+   "p6545_leak": 21
+  },
+  "lite-v20": {
+   "reads": 365,
+   "meta_gt150": 3,
+   "mean_leak_chars": 221,
+   "p6545_reads": 132,
+   "p6545_leak": 1
+  },
+  "opus-plain": {
+   "reads": 132,
+   "meta_gt150": 0,
+   "mean_leak_chars": 0,
+   "p6545_reads": 132,
+   "p6545_leak": 0
+  },
+  "opus-v13": {
+   "reads": 132,
+   "meta_gt150": 75,
+   "mean_leak_chars": 300,
+   "p6545_reads": 132,
+   "p6545_leak": 75
+  },
+  "opus-v13b": {
+   "reads": 50,
+   "meta_gt150": 29,
+   "mean_leak_chars": 293,
+   "p6545_reads": 50,
+   "p6545_leak": 29
+  },
+  "opus-v20": {
+   "reads": 145,
+   "meta_gt150": 32,
+   "mean_leak_chars": 304,
+   "p6545_reads": 132,
+   "p6545_leak": 32
+  }
+ }
+}

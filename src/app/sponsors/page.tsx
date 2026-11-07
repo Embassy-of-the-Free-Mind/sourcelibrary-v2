@@ -194,7 +194,7 @@ export default async function SponsorsPage() {
             actually shaped Renaissance thought have never been read in English. They wrote in
             Latin, and modern publishing never caught up. The same is true for Sanskrit, Classical
             Arabic, Hebrew, and Tibetan. We&apos;re working through them, book by book, with
-            AI-assisted translation and scholarly review, all published openly under CC BY-SA.
+            AI-assisted translation and scholarly review, all published openly under CC BY-NC-SA.
           </p>
         </div>
       </section>
@@ -306,7 +306,7 @@ export default async function SponsorsPage() {
           </div>
 
           <p className="text-sm text-stone-500 leading-relaxed mt-6 max-w-3xl">
-            Translations are published under CC BY-SA. Membership doesn&apos;t buy exclusivity.
+            Translations are published under CC BY-NC-SA. Membership doesn&apos;t buy exclusivity.
             It buys an explicit grant for commercial use, a working channel into translation
             priorities, and permanent recognition for the company that helped pay to bring the
             corpus into the open.

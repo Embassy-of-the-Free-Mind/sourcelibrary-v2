@@ -1,0 +1,722 @@
+[
+ {
+  "slot": 9,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0be184adf2ffb52f729b9",
+  "book_url": "https://sourcelibrary.org/book/6ae0be184adf2ffb52f729b9",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0be184adf2ffb52f729b9",
+   "title": "前漢書·卷六~卷七 (Hanshu, Siku Quanshu, vol. 3 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 124,
+   "pages_ocr": 122,
+   "pages_translated": 122,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 124,
+   "distinct_page_numbers": 124,
+   "duplicate_records": 0,
+   "pages_with_ocr": 122,
+   "pages_translated": 122,
+   "with_printed_number": 39,
+   "printed_backsteps": 11,
+   "printed_repeats": 28,
+   "pages_count_field": 124,
+   "pages_translated_field": 122
+  },
+  "run": [
+   16,
+   44,
+   64,
+   107
+  ],
+  "pages": [
+   {
+    "page_number": 16,
+    "page_id": "6ae0be184adf2ffb52f729cb",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0be184adf2ffb52f729b9/16.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n二\n卜\n巳\n人\n<page-num>二</page-num>\n<page-num>三</page-num>\n<header>卷六</header>\n龍淵宮則宮不在長安之西矣又漢章帝賜尚書韓稜\n龍淵劒孟說是也淬音干內反○劉攽曰予謂救決河\n起龍淵宮各自一事非因救河且起宮也顏疑當云龍\n淵廟按景帝紀起德陽廟亦云德陽宮寧可復謂非德\n陽廟乎此龍淵宮\n應如黃圖所說是\n四年冬魏其侯竇嬰有罪棄市\n師古曰以\n黨灌夫也\n春三月乙卯\n丞相蚡薨夏四月隕霜殺草五月地震赦天下\n五年春正月河間王德薨夏發巴蜀治南夷道又發卒\n萬人治鴈門阻險\n師古曰所以為固用止匈奴之冦\n劉攽曰予謂治險阻者通道令平易\n以便伐\n匈奴耳\n秋七月大風拔木乙巳皇后陳氏廢捕為巫蠱",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>the Longyuan Palace, then the palace was not located west of Chang'an. Furthermore, when Emperor Zhang of Han bestowed upon Shangshu Han Leng the Longyuan sword, Meng Kang's explanation was correct. The character <term>cui</term> <gloss>to quench</gloss> is pronounced gan-nei fan.\" Liu Ban remarked: \"In my opinion, halting the Yellow River breach and erecting the Longyuan Palace were two distinct events; the construction of the palace was not undertaken simply on account of repairing the river breach. Yan Shigu suspected that it ought to say Longyuan Shrine; yet according to the Annals of Emperor Jing, when the Deyang Shrine was established, it was also referred to as the Deyang Palace. How could one ever claim that it was not the Deyang Shrine? This Longyuan Palace should indeed be as stated in the Sanfu Huangtu.\"\n\nIn the fourth year, in winter, Dou Ying, the Marquis of Weiqi, was found guilty of a crime and executed in the public marketplace.\n\n<note>Yan Shigu noted: \"This was because he had formed a faction with Guan Fu.\"</note>\n\nIn spring, in the third month, on the day <term>yimao</term> <gloss>day 52 of the sexagenary cycle</gloss>, Chancellor Tian Fen died. In summer, in the fourth month, frost fell and killed the grasses. In the fifth month, an earthquake occurred. An amnesty was granted to all under Heaven.\n\nIn the fifth year, in spring, in the first month, Liu De, King of Hejian, died. In summer, troops were dispatched from Ba and Shu to construct the road to the Southern Barbarians. In addition, ten thousand soldiers were mobilized to fortify and open the strategic defiles of Yanmen.\n\n<note>Yan Shigu noted: \"This was done to strengthen defenses in order to halt the incursions of the Xiongnu.\" Liu Ban remarked: \"In my opinion, repairing the strategic defiles meant opening the roads to make them level and easy to traverse, solely to facilitate launching campaigns against the Xiongnu.\"</note>\n\nIn autumn, in the seventh month, a great gale uprooted trees. On the day <term>yisi</term> <gloss>day 42 of the sexagenary cycle</gloss>, Empress Chen was deposed, and those who practiced witchcraft were arrested.\n\n<summary>Yan Shigu and Liu Ban comment on the location of Longyuan Palace, after which Dou Ying is executed, Chancellor Tian Fen dies, King Liu De passes away, military roads and passes are fortified against the Xiongnu, and Empress Chen is deposed amid witchcraft investigations.</summary>\n<keywords>Hanshu, Emperor Wu, Longyuan Palace, Liu Ban, Yan Shigu, Dou Ying, Marquis of Weiqi, Guan Fu, Tian Fen, frost, earthquake, Liu De, King of Hejian, Ba, Shu, Southern Barbarians, Yanmen, Xiongnu, Empress Chen, witchcraft</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 44,
+    "page_id": "6ae0be184adf2ffb52f729e7",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0be184adf2ffb52f729b9/44.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n只\n巳\n元\n<page-num>二</page-num>\n言\n<header>卷六</header>\n與正月戊子陽陵園火夏四月雨雹\n師古曰雨\n音于具反\n關東郡\n國十餘饑人相食常山王舜薨子敦嗣立有罪廢徙房\n陵\n四年冬十月行幸雍祠五畤賜民爵一級女子百户牛\n酒行自夏陽東幸汾隂\n師古曰夏陽馮翊之縣也\n汾隂屬河東汾音扶云反\n十一\n月甲子立后土祠于汾隂\n脽上\n蘇林曰脽音誰如淳曰\n脽者河之東岸特堆掘\n長四五里廣二里餘高十餘丈汾隂縣治脽之上后土\n祠在縣西汾在脽之北西流與河合師古曰二說皆是\n也脽者以其形高起如人尻脽故以名云一說此臨汾\n水之上地本名鄰音與葵同彼鄉人呼葵音如誰故轉",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "金\n只\n巳\n元\n<page-num>2</page-num>\n言\n<header>Scroll Six</header>\n\nIn the first month, on the day <term>wuzi</term>, a fire broke out at the Yangling Mausoleum Park. In summer, in the fourth month, it hailed.\n\n<note>Yan Shigu stated: \"The character for rain or hail falling <term>yu</term> is pronounced with the fanqie phonetic of yu and ju inverted.\"</note>\n\nMore than ten commanderies and kingdoms east of Hangu Pass suffered famine, and people ate one another. Shun, King of Changshan, died; his son Dun succeeded to the throne, but committed a crime, was deposed, and was banished to Fangling.\n\nIn the fourth year <note>113 BCE</note>, in winter, in the tenth month, the Emperor traveled to Yong to sacrifice at the Five Altars. He bestowed one rank of nobility upon each male head of household, and one hundred families of women were granted an ox and wine. He proceeded from Xiayang, traveling east to visit Fenyin.\n\n<note>Yan Shigu stated: \"Xiayang is a county of Fengyi. Fenyin belongs to Hedong. The character Fen is pronounced with the fanqie phonetic of fu and yun inverted.\"</note>\n\nIn the eleventh month, on the day <term>jiazi</term>, an altar to the <term>Houtu</term> <gloss>Earth Goddess</gloss> was established on the bank of the Fen River at <term>Chui</term>.\n\n<note>Su Lin stated: \"The character Chui is pronounced shui.\"</note>\n\n<note>Ru Chun stated: \"Chui refers to a mound rising abruptly on the east bank of the Yellow River, four or five li long, over two li wide, and more than a hundred feet high. The county seat of Fenyin was governed atop the Chui mound. The altar to Houtu lies west of the county. The Fen River lies north of the Chui mound and flows west to merge with the Yellow River.\"</note>\n\n<note>Yan Shigu stated: \"Both explanations are correct. Chui takes its name from its high, bulging shape resembling a person's buttocks and rump. Another explanation is that this place overlooked the Fen River and was originally named Lin, which sounds the same as kui. The local people pronounced kui like shui, which caused the name to shift.\"</note>\n\n<summary>This page records portents and natural disasters including a fire at Yangling and severe famine east of the pass leading to cannibalism, followed by Emperor Wu's imperial tour to Yong, his sacrifices at the Five Altars, and the establishment of the imperial altar to the Earth Goddess Houtu at Chui in Fenyin.</summary>\n<keywords>Hanshu, Scroll Six, Emperor Wu, Yangling fire, hail, famine, cannibalism, King of Changshan, Fangling exile, Yong sacrifices, Five Altars, Xiayang, Fenyin, Houtu altar, Chui, Yan Shigu, Su Lin, Ru Chun</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 64,
+    "page_id": "6ae0be184adf2ffb52f729fb",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0be184adf2ffb52f729b9/64.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n匕\n巳\n辰\n人\n<page-num>三</page-num>\n亡\n<header>卷六</header>\n廼遣使說之單于使來死京師匈奴寇邊遣拔胡將軍\n郭昌屯朔方\n五年冬行南巡狩至于盛唐\n文頴曰案地理志不得疑\n當在廬江左右縣名也韋\n昭曰在南郡師\n古曰韋說是也\n望祀虞舜于九嶷\n應劭曰舜葬蒼梧九\n嶷山名今在零陵營\n道文頴曰九嶷山半在蒼梧半在零陵如淳曰舜葬九\n嶷九嶷在蒼梧馮乘縣故或云舜葬蒼梧也師古曰文\n說是也嶷音疑其山九峯形勢相似故曰九嶷山○宋\n祁曰舊本是也下有九字嶷字下無音疑字刊誤據史\n館本\n改\n登灊天柱山\n應劭曰灊音若潛南嶽霍山在灊灊\n縣名屬廬江文頴曰天柱山在灊縣\n南有祠灊音岑師古曰\n灊音與潛同應說是\n自尋陽浮江親射蛟江中獲之",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>He then dispatched an envoy to persuade him. The Chanyu's envoy arrived but died at the capital. The Xiongnu raided the border, so General Who Plucks the Hu Guo Chang was dispatched to garrison Shuofang.\n\nIn the winter of the fifth year <note>106 BCE</note>, the Emperor embarked on an inspection tour southward, arriving at Shengtang.\n\n<note>Wen Ying stated: \"According to the 'Treatise on Geography,' there is no such county name. I suspect it should be located near Lujiang.\" Wei Zhao stated: \"It is located in Nanjun.\" Yan Shigu stated: \"Wei's explanation is correct.\"</note>\n\nFrom afar, he offered sacrifice to Shun of Yu at Mount Jiuyi.\n\n<note>Ying Shao stated: \"Shun was buried at Cangwu. Jiuyi is the name of a mountain, now located in Yingdao of Lingling.\" Wen Ying stated: \"Mount Jiuyi lies half in Cangwu and half in Lingling.\" Ru Chun stated: \"Shun was buried at Jiuyi, and Jiuyi is located in Fengcheng County of Cangwu; hence it is sometimes said that Shun was buried at Cangwu.\" Yan Shigu stated: \"Wen's explanation is correct. The character <term>yi</term> <gloss>嶷</gloss> is pronounced like <term>yi</term> <gloss>疑, doubt</gloss>. The mountain has nine peaks whose forms and appearances closely resemble one another, which is why it is called Mount Jiuyi <gloss>Nine Doubts Mountain</gloss>.\" Song Qi stated: \"In old editions, after 'is correct' there was the character 'Nine,' and beneath 'yi' there was no pronunciation gloss for 'yi.' The text was corrected according to the Imperial History Office edition.\"</note>\n\nHe climbed Mount Tianzhu in Qian.\n\n<note>Ying Shao stated: \"The character <term>qian</term> <gloss>灊</gloss> is pronounced like <term>qian</term> <gloss>潛, submerged</gloss>. Mount Huo, the Southern Sacred Peak, is located in Qian. Qian is the name of a county belonging to Lujiang.\" Wen Ying stated: \"Mount Tianzhu is in the south of Qian County, where a shrine is situated. The character <term>qian</term> is pronounced <term>cen</term>.\" Yan Shigu stated: \"The character <term>qian</term> is pronounced the same as <term>qian</term> <gloss>潛</gloss>. Ying's explanation is correct.\"</note>\n\nFrom Xunyang, he floated down the Yangtze River and shot a river dragon with his own hands in the midst of the river, capturing it.\n\n<summary>Emperor Wu dispatches Guo Chang to defend Shuofang against Xiongnu incursions, conducts an imperial progress southward to Shengtang, performs distant sacrifices to Emperor Shun at Mount Jiuyi, ascends Mount Tianzhu in Qian, and personally hunts a river dragon while sailing on the Yangtze River from Xunyang.</summary>\n<keywords>Emperor Wu, Han dynasty, Hanshu, Ban Gu, Xiongnu, Chanyu, Guo Chang, Shuofang, Shengtang, Mount Jiuyi, Emperor Shun, Cangwu, Mount Tianzhu, Qian County, Lujiang, Xunyang, Yangtze River, river dragon, Yan Shigu, Ying Shao, Wen Ying, Ru Chun, Wei Zhao, Song Qi</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 107,
+    "page_id": "6ae0be184adf2ffb52f72a26",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0be184adf2ffb52f729b9/107.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n聞而憐之立煖為泗水王相内史皆下獄三月賜郡國\n所選有行義者涿郡韓福等五人帛人五十匹遣歸詔\n曰朕閔勞以官職之事\n鄧展曰閔哀韓福等不\n忍勞役以官職之事\n其務脩\n孝弟以教鄉里令郡縣常以正月賜羊酒有不幸者賜\n衣被一襲祠以中牢\n師古曰幸者吉而免凶也故死謂\n之不幸一襲一稱也猶今言一副\n也中牢即少\n牢謂羊豕也\n武都氐人反\n師古曰氐\n音丁奚反\n遣執金吾馬適建\n龍頟侯韓増\n師古曰姓馬適名建也龍頟漢書本或作\n雒字功臣侯表云弓高壯侯韓頽當子詭\n封龍雒侯元鼎五年坐酎金免後元元年詭弟子増紹\n封龍雒侯而荀悦漢紀龍雒皆為頟字崔浩曰雒音洛\n前漢書\n次定曰事人三等",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>When the Emperor heard of it, he took pity on him, established Luan as King of Sishui, and had the Chancellor and Senior Scribe cast into prison. In the third month, silk fabric was bestowed upon those selected by the commanderies and kingdoms for conduct and righteousness, including Han Fu of Zhuo Commandery and four others, fifty bolts per person, and they were sent home. An edict declared: \"We regret to wear them out with the burdens of official duties.\"\n\n<note>Deng Zhan states: \"The Emperor took pity and felt grief for Han Fu and the others, and could not bear to wear them out with labor and service in official duties.\"</note>\n\n\"Let them devote themselves to cultivating filial piety and brotherly respect in order to instruct their local communities. Let the commanderies and counties regularly grant them sheep and wine in the first month. If any among them meets with misfortune, grant them a single suit of clothing and quilts, and sacrifice to them with a <term>zhonglao</term> <gloss>secondary sacrificial offering of sheep and pig</gloss>.\"\n\n<note>Yan Shigu states: \"Fortunate means auspicious and avoiding misfortune; hence death is referred to as misfortune. A suit refers to a complete set, like saying a pair or set today. The <term>zhonglao</term> is the lesser offering <term>shaolao</term>, referring to a sheep and a pig.\"</note>\n\nThe Di people of Wudu rebelled.\n\n<note>Yan Shigu states: \"The character <term>Di</term> has the fanqie pronunciation of <term>ding</term> and <term>xi</term>.\"</note>\n\nThe Commander of the Capital Gendarmes <term>Zhi Jinwu</term> Ma Shi Jian and Marquis of Long'e Han Zeng were dispatched.\n\n<note>Yan Shigu states: \"The surname was Mashi and the personal name was Jian. For Long'e, editions of the Hanshu sometimes write the character <term>Luo</term>. The Table of Meritorious Officials and Marquises states that Han Tuodang, Marquis Zhuang of Gonggao, had a son named Gui who was enfeoffed as Marquis of Longluo. In the fifth year of the Yuanding era he was stripped of rank due to the gold offering offense. In the first year of the Houyuan era, Gui's younger brother's son Zeng succeeded to the enfeoffment as Marquis of Longluo. Xun Yue's Han Annals uses the character <term>E</term> for all instances of Longluo. Cui Hao says that <term>luo</term> is pronounced like <term>luo</term>.\"</note>\n\n<note>Former Han Annals commentary by Ciding: \"...serving others has three grades...\"</note>\n\n<summary>Emperor Zhao restores the Kingdom of Sishui for the posthumous prince Luan, punishes negligent officials, rewards virtuous elders with stipends, and dispatches generals to quell a Di rebellion in Wudu.</summary>\n<keywords>Emperor Zhao, Sishui, Luan, Han Fu, Zhuo Commandery, filial piety, zhonglao, Wudu, Di rebellion, Ma Shi Jian, Han Zeng, Long'e, Yan Shigu, Deng Zhan</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0c0ce4adf2ffb52f73d64",
+  "book_url": "https://sourcelibrary.org/book/6ae0c0ce4adf2ffb52f73d64",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0c0ce4adf2ffb52f73d64",
+   "title": "前漢書·卷六十七~卷六十八 (Hanshu, Siku Quanshu, vol. 39 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 118,
+   "pages_ocr": 115,
+   "pages_translated": 113,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 118,
+   "distinct_page_numbers": 118,
+   "duplicate_records": 0,
+   "pages_with_ocr": 115,
+   "pages_translated": 113,
+   "with_printed_number": 30,
+   "printed_backsteps": 7,
+   "printed_repeats": 22,
+   "pages_count_field": 118,
+   "pages_translated_field": 113
+  },
+  "run": [
+   11,
+   31,
+   84,
+   110
+  ],
+  "pages": [
+   {
+    "page_number": 11,
+    "page_id": "6ae0c0ce4adf2ffb52f73d71",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0ce4adf2ffb52f73d64/11.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n將交刃而誓致民志也\n師古曰欲致民\n勇志使不奔比\n建又何疑焉建\n繇是顯名後為渭城令治甚有聲值昭帝幼皇后父上\n官將軍安與帝姊盖主私夫丁外人相善外人驕恣怨\n故京兆尹樊福使客射殺之客臧公主廬吏不敢捕渭\n城令建將吏卒圍捕盖主聞之與外人上官將軍多從\n奴客往犇射追吏\n師古曰犇古奔字也\n奔走赴之而射也\n吏散走主使僕\n射劾渭城令游徼傷主家奴建報亡它坐\n服虔曰言游\n徼奉公無它\n坐也。劉攽\n曰多令字\n盖主怒使人上書告建侵辱長公主射甲\n次字曰字十八字\n前漢書",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>...took solemn oaths when about to cross blades, desiring to arouse the valiant resolve of the people.\" <note>Yan Shigu states: \"This means wanting to arouse the valiant resolve of the people so that they would not flee. Compared to Hu Jian's actions, what doubt could there be?\"</note>\n\nFrom this, Hu Jian became famous. Later, he served as Magistrate of Weicheng <note>original: \"渭城令\"</note>, where his governance earned great renown. It happened that Emperor Zhao was young, and General Shangguan An, father of the Empress, was on friendly terms with Ding Wairen, the paramour of the Emperor's elder sister, the Eldest Princess Gai. Ding Wairen was arrogant and unrestrained; bearing a grudge against Fan Fu, the former Intendant of the Capital, he sent a retainer to shoot and kill him. The retainer hid in the residence of the Princess, and the magistrates dared not arrest him. Hu Jian, Magistrate of Weicheng, led officers and soldiers to surround and arrest him. When Princess Gai heard of it, she, Ding Wairen, and General Shangguan went with a large entourage of slaves and retainers, rushing on horseback and shooting at the pursuing officers. <note>Yan Shigu states: \"*Ben* </note><note>original: '犇'</note> is an ancient form of *ben* <note>original: '奔'</note>, meaning running forward in haste to shoot.\"\n\nThe officers scattered and fled. Princess Gai sent an archer-attendant to indict the Weicheng patrol officer for injuring slaves of the Princess's household. Hu Jian reported that there was no other crime committed. <note>Fu Qian states: \"This means the patrol officer was performing public duty and had committed no other crime.\" Liu Ban states: \"The character *ling* <gloss>magistrate</gloss> is superfluous here.\"</note>\n\nPrincess Gai was enraged and sent someone to submit a memorial to the throne, accusing Hu Jian of insulting the Eldest Princess and shooting at <unclear>次字曰字十八字</unclear>\n\n*Book of the Former Han*\n\n<summary>Hu Jian gains renown for his principled conduct and later confronts Princess Gai and Ding Wairen as Magistrate of Weicheng, fearlessly attempting to arrest a murderer sheltering in the imperial princess's mansion.</summary>\n<keywords>Hu Jian, Hanshu, Weicheng, Princess Gai, Ding Wairen, Shangguan An, Fan Fu, Yan Shigu, Fu Qian, Han dynasty</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 31,
+    "page_id": "6ae0c0ce4adf2ffb52f73d85",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0ce4adf2ffb52f73d64/31.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n之家也親親之道全之為右\n師古曰務全\n安之此為上\n當與之賢師\n良傅教以忠孝之道今廼尊寵其位授以魁柄\n師古曰\n以斗為\n喻也斗\n身為魁\n使之驕逆至於夷滅\n師古曰夷平\n也謂平除之\n此失親親之\n大者也自霍光之賢不能為子孫慮故權臣易世則危\n書曰毋若火始庸庸\n師古曰周書洛誥之辭也庸庸微\n小貌也言火始微小不早撲滅則\n至熾盛大臣貴擅亦\n當早圖黜其權也\n埶陵於君權隆於主然後防之亦\n亡及巳\n師古曰巳\n語終辭\n上遂不納成帝久亡繼嗣福以為宜\n建三統封孔子之世以為殷後復上書曰臣聞不在其\n首兵書\n古",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>families. In the way of loving relatives, preserving them whole is foremost. <note>Yan Shigu comments: \"Striving to preserve them in security and peace is the highest priority.\"</note> One ought to grant them worthy teachers and good tutors to instruct them in the way of loyalty and filial piety. Yet now they are honored and doted upon in high positions, and entrusted with supreme authority <note>Yan Shigu comments: \"This uses the Big Dipper constellation as an analogy: the body of the Dipper is the bowl, while the handle controls direction. Giving them the handle means granting executive power.\"</note>, causing them to become arrogant and rebellious until they are exterminated. <note>Yan Shigu comments: \"'Yi' means to level, referring to wiping them out completely.\"</note> This is the greatest failure in loving relatives. Even a man of Huo Guang's worthiness could not plan for his descendants; therefore, when powerful ministers pass authority to the next generation, danger inevitably follows.\n\nThe Classic of History says: \"Do not let it be like a fire that starts small and faint.\" <note>Yan Shigu comments: \"These are words from the 'Luo Announcement' <term>Luo gao</term> in the Book of Zhou <term>Zhou shu</term>. 'Yongyong' describes something minute and faint. It means that if a fire begins small and is not extinguished early, it will blaze up fiercely. When high ministers monopolize power, one must likewise plan early to strip them of their authority.\"</note> When their power overawes the sovereign and their authority surpasses that of the ruler, attempting to prevent disaster afterward will be too late. <note>Yan Shigu comments: \"'Yi' is a final particle marking the conclusion of the statement.\"</note>\n\nThe Emperor ultimately did not accept this memorial. Emperor Cheng had long been without an heir, and Mei Fu believed it was fitting to establish the Three Successions and enfeoff the descendants of Confucius as heirs of the Yin dynasty. He again submitted a memorial, stating: \"Your servant has heard that when one does not occupy the position...\"\n<unclear>首兵書古</unclear>\n\n<summary>Mei Fu cautions Emperor Cheng that overindulging maternal consort families without moral guidance leads directly to arrogance and destruction, urging the early curbing of ministerial power before it overtakes the throne, and later advocates honoring ancient lineages to secure imperial succession.</summary>\n<keywords>Hanshu, Mei Fu, Emperor Cheng, imperial consorts, Huo Guang, Book of Documents, Luo Announcement, Three Successions, Confucius, Yan Shigu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 84,
+    "page_id": "6ae0c0ce4adf2ffb52f73dba",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0ce4adf2ffb52f73d64/84.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n人\n卫\n厂\n今\n<page-num>三十</page-num>\n<header>卷六十八</header>\n月復出光姊壻給事中光祿大夫張朔為蜀郡太守羣\n孫壻中郎將王漢為武威太守頃之復徙光長女壻長\n樂衞尉鄧廣漢為少府更以禹為大司馬冠小冠亡印\n綬罷其右將軍屯兵官屬特使禹官名與光俱大司馬\n者\n蘇林曰特但也〇宋祁曰使禹\n官名字刪官字名下當添為字\n又收范眀友度遼將\n軍印綬但為光祿勲及光中女壻趙平為散騎騎都尉\n光祿大夫將屯兵又牧平騎都尉印綬諸領胡越騎羽\n林及兩宮衞將屯兵悉易以所親信許史子弟代之禹",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\n<unclear>Jin</unclear>\n<unclear>Ren</unclear>\n<unclear>Wei</unclear>\n<unclear>Chang</unclear>\n<unclear>Jin</unclear>\n\n# Page Thirty\n\n### Scroll Sixty-Eight\n\nIn that month, Huo Guang's brother-in-law, Palace Attendant and Grand Palace Grandee Zhang Shuo, was also sent out to serve as Grand Administrator of Shu Commandery. His granddaughter's husband, General of the Household Wang Han, was appointed Grand Administrator of Wuwei. Soon after, he again reassigned Huo Guang's eldest daughter's husband, Commandant of the Guards of the Changle Palace Deng Guanghan, to serve as Privy Purse. \n\nHe further appointed Huo Yu as Commander-in-Chief, wearing a small cap without seal and ribbons, and dismissed his right-flank garrison command and subordinate officials. The purpose of giving Huo Yu the official title of Commander-in-Chief alongside Huo Guang was specifically to disarm his authority.\n\n<gloss>Su Lin says: \"<term>Te</term> <gloss>specifically</gloss> means merely.\" Song Qi says: \"Regarding the phrase 'making Yu's official title' <note>original: \"使禹官名字\"</note>, the character <term>guan</term> <gloss>office</gloss> should be deleted, and below the word <term>ming</term> <gloss>name</gloss> the character <term>wei</term> <gloss>to serve as</gloss> should be added.\"</gloss>\n\nHe also seized the seal and ribbon of General of Du Liao from Fan Mingyou, keeping him merely as Superintendent of the Imperial Household. Furthermore, Huo Guang's second daughter's husband, Zhao Ping, who held the titles of Cavalier Attendant, Commandant of Cavalry, and Grand Palace Grandee commanding garrison troops, had his seal and ribbon as Commandant of Cavalry confiscated. \n\nAll those who commanded the Hu and Yue cavalry, the Feathered Forest Imperial Guards, and the garrison troops of the two palaces were thoroughly replaced with trusted sons and younger brothers of the Xu and Shi clans. Huo Yu\n\n<summary>Emperor Xuan systematically strips the Huo family of their military commands, sending Huo Guang's sons-in-law to distant commanderies and replacing palace guard commanders with trusted relatives from the Xu and Shi imperial in-law clans.</summary>\n<keywords>Huo Yu, Emperor Xuan, Huo Guang, Zhang Shuo, Wang Han, Deng Guanghan, Fan Mingyou, Zhao Ping, Changle Palace, Commander-in-Chief, Du Liao General, Feathered Forest, Xu clan, Shi clan, Han dynasty, Hanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 110,
+    "page_id": "6ae0c0ce4adf2ffb52f73dd4",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0ce4adf2ffb52f73d64/110.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金八刀刀今二\n<header>卷六十八</header>\n贊曰霍光以結髮內侍起於階闥之間確然秉志誼形\n於主\n師古曰\n形見也\n受襁褓之託任漢室之寄當廟堂擁幼君\n摧燕王仆上官\n師古曰仆\n頓也音赴\n因權制敵以成其忠處廢置\n之際臨大節而不可奪遂匡國家安社稷擁昭立宣光\n為師保雖周公阿衡何以加此\n師古曰阿衡伊尹官號\n也阿倚也衡平也言天\n下所倚羣\n下取平也\n然光不學亡術闇於大理隂妻邪謀\n晉灼曰\n不揚其\n過\n也\n立女為后湛溺盈溢之欲以增顛覆之禍\n師古曰湛\n讀曰沈\n死財三年宗族誅夷\n師古曰財\n與纔同\n哀哉昔霍叔封於晉\n師\n古",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<unclear>金八刀刀今二</unclear>\n# Scroll 68\n\nThe Appraisement states:\nHuo Guang, from the time he bound his hair <note>that is, from his coming of age</note>, served within the inner palace, rising from between the steps and private entry doors. Steadfastly he held to his resolve, and his rectitude was made manifest to the Sovereign\n<gloss>Shigu says: \"'Manifest' <note>形 <term>xing</term></note> means displayed to sight.\"</gloss>.\nHe received the charge over the infant in swaddling clothes <note>Emperor Zhao</note>, and bore the sacred trust of the Han ruling house. Taking charge at the ancestral court, he sheltered and protected the child sovereign; he crushed the King of Yan and struck down the House of Shangguan\n<gloss>Shigu says: \"'Struck down' <note>仆 <term>pu</term></note> means to overturn or bring down; it is pronounced <term>fu</term>.\"</gloss>.\nRelying upon his authority to subdue enemies, he brought his loyalty to full fruition. Positioned in the midst of depositions and enthronements, he faced great tests of principle and could not be swayed from his integrity. Thereupon he preserved the state and gave peace to the altars of earth and grain: supporting Emperor Zhao and setting Emperor Xuan upon the throne, Guang served as their supreme teacher and protector. Even the Duke of Zhou or <term>A-heng</term> <gloss>the Chancellor 伊尹 Yi Yin</gloss>—how could they have surpassed him?\n<gloss>Shigu says: \"'<term>A-heng</term>' was the official title of Yi Yin. '<term>A</term>' means to lean upon; '<term>heng</term>' means balanced and fair. This signifies that he was the one upon whom all under Heaven leaned, and from whom the multitudes below received balance.\"</gloss>\nYet Guang lacked formal learning and had no mastery of statecraft, remaining blind to universal moral principles. When his wife harbored depraved and wicked schemes\n<gloss>Jin Zhuo says: \"He did not expose or condemn her wrongdoing.\"</gloss>,\nhe installed his daughter as empress, sinking deep into overflowing desires and thereby multiplying the disasters of ruin and collapse\n<gloss>Shigu says: \"'<term>Zhan</term>' <note>湛</note> is read as '<term>chen</term>' <note>沈, meaning submerged or drowned</note>.\"</gloss>.\nAfter his death, in barely three years, his clan and lineage were utterly exterminated\n<gloss>Shigu says: \"'<term>Cai</term>' <note>財</note> is the same as '<term>cai</term>' <note>纔, meaning barely or merely</note>.\"</gloss>.\nHow lamentable indeed! In ancient times, Huo Shu was enfeoffed in Jin\n<gloss>Shigu</gloss>\n\n<summary>Ban Gu appraises the career of Huo Guang, praising his steadfast loyalty in guiding young emperors and saving the dynasty, while lamenting his lack of moral learning and failure to control his family's ambitions, which brought about their annihilation.</summary>\n<keywords>Huo Guang, Emperor Zhao, Emperor Xuan, King of Yan, Shangguan, Duke of Zhou, A-heng, Yi Yin, Yan Shigu, Jin Zhuo, Huo Shu, Ban Gu, Hanshu, Scroll 68, Zan</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 11,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0c1e14adf2ffb52f74326",
+  "book_url": "https://sourcelibrary.org/book/6ae0c1e14adf2ffb52f74326",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0c1e14adf2ffb52f74326",
+   "title": "前漢書·卷九十~卷九十二 (Hanshu, Siku Quanshu, vol. 50 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 144,
+   "pages_ocr": 142,
+   "pages_translated": 136,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 144,
+   "distinct_page_numbers": 144,
+   "duplicate_records": 0,
+   "pages_with_ocr": 142,
+   "pages_translated": 136,
+   "with_printed_number": 26,
+   "printed_backsteps": 10,
+   "printed_repeats": 18,
+   "pages_count_field": 144,
+   "pages_translated_field": 136
+  },
+  "run": [
+   13,
+   55,
+   99,
+   113
+  ],
+  "pages": [
+   {
+    "page_number": 13,
+    "page_id": "6ae0c1e14adf2ffb52f74335",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1e14adf2ffb52f74326/13.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<page-num>三</page-num>\n<page-num>八</page-num>\n<page-num>三</page-num>\n<header>卷九十</header>\n中大夫與張湯論定律令作見知吏傳相監司以法盡\n自此始禹為人廉裾\n師古曰裾亦傲\n也讀與倨同\n為史以來舍無食\n客公卿相造請\n師古曰造\n音千到反\n禹終不行報謝務在絕知友\n賔客之請\n師古曰以此意告報公卿○劉敞曰報謝\n當屬上句言公卿造請禹而禹終不詣之\n孤\n立行一意而巳見法輒取亦不覆案求官屬隂罪\n師古\n曰不\n見知者無\n所搜求也\n嘗中廢巳為廷尉始條侯以禹賊深及禹為\n少府九卿酷急至晚節事益多吏務為嚴峻而禹治加\n緩名為平王溫舒等後起治峻禹禹以老徙為燕相\n宋",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Palace Grandee. Together with Zhang Tang, he established and fixed statutes and ordinances. They formulated the statute on officials failing to report known crimes, allowing supervisors to oversee and control one another. That official punishment was carried to its absolute extreme began with this.\n\nYu was by nature incorruptible and austere.\n\n<note>Shigu states: \"Ju\" </note><note>original: 裾</note> also means arrogant and aloof. It is read identically to \"ju\" <note>original: 倨</note>.\n\nEver since he became an official, his residence never accommodated visiting guests. When the high ministers and nobility paid visits to invite him to their residences,\n\n<note>Shigu states: \"Zao\" </note><note>original: 造</note> has the phonetic reading given by the fanqie spelling qian-dao.\n\nYu in the end never returned their calls or expressed gratitude. His goal lay entirely in severing requests from acquaintances, friends, and guests.\n\n<note>Shigu states: He used this principle to report back to the high ministers. Liu Chang states: \"Returning calls and expressing gratitude\" properly belongs to the upper sentence, meaning that when high ministers paid visits to invite Yu, Yu in the end never went to them.</note>\n\nHe stood alone and pursued a single course, nothing more. Whenever he witnessed a breach of the law, he seized upon it immediately, yet he also never investigated thoroughly to unearth the secret misdeeds of subordinate officials.\n\n<note>Shigu states: Concerning those crimes that were not directly witnessed or known, he conducted no search or pursuit.</note>\n\nHe was once dismissed midway, but later was appointed Commandant of Justice. Earlier, the Marquis of Tiao <note>Zhou Yafu</note> had considered Yu's severity deeply ingrained. By the time Yu became Privy Counselor and rose to the Nine Ministers, his methods were harsh and pressing. Toward his later years, administrative affairs grew increasingly numerous, and officials strove for severe rigor. Yu's administration, by contrast, grew more lenient, and he gained renown for fairness. Wang Wenshu and others who arose later governed with even greater harshness than Yu. Because of his old age, Yu was transferred to become Chancellor of Yan.\n\nSong\n\n<summary>Zhao Yu collaborates with Zhang Tang to institute strict statutes on official surveillance, governs with severe austerity while refusing all private patronage, and later softens his harsh methods toward the end of his career before being transferred to Yan in his old age.</summary>\n<keywords>Hanshu, Ban Gu, Zhao Yu, Zhang Tang, Yan Shigu, Liu Chang, Song Qi, Palace Grandee, legal ordinances, mutual surveillance, Commandant of Justice, Privy Counselor, Nine Ministers, Wang Wenshu, Chancellor of Yan</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 55,
+    "page_id": "6ae0c1e14adf2ffb52f7435f",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1e14adf2ffb52f74326/55.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n金\n金\n金\n金\n卷九卜\n汙坐臧慎毋然賞四子皆至郡守長子立為京兆尹皆\n尚威嚴有治辯名\n贊曰自郅都以下皆以酷烈為聲然都抗直引是非争\n大體張湯以知阿邑人主與俱上下\n蘇林曰邑音人相\n悒納之悒師古曰\n如蘇氏之說邑字音烏合反然今之書本或作色字此\n言阿諛觀人主顏色而上下也其義兩通〇宋祁曰李\n竒阿音烏蕭該案漢書\n作阿媚人主者傳寫誤\n時辯當否國家頼其便趙禹据\n法守正\n師古曰\n据音據\n杜周從諛以少言為重張湯死後罔密\n事叢\n師古曰叢\n謂衆也\n濡以耗廢\n師古曰濡漸也耗\n亂也音莫報反\n九卿奉職",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>charges of corruption; be careful not to do so!\"\n\nShang's four sons all reached the rank of Grand Administrator. His eldest son, Li, served as Intendant of the Capital. All valued prestige and severity, and gained renown for administrative ability and eloquence.\n\nThe Appraisal states: From Zhi Du downward, all gained renown for harsh cruelty. Yet Zhi Du was unbendingly straightforward, pointing out right and wrong and contending over fundamental principles of state. Zhang Tang, through his intelligence, flattered and accommodated the sovereign, rising and falling in harmony with his mood.\n<note>Su Lin says: The character for \"accommodate\" </note><note>original: \"邑\"</note> has the pronunciation of the character in \"distressed acceptance\" <note>original: \"悒\"</note>. Yan Shigu says: According to Master Su's explanation, the character 邑 is pronounced *wu-he* <note>Wu-he fan: archaic fanqie phonetic spelling</note>. However, current editions sometimes write the character for \"countenance\" or \"expression\" <note>original: \"色\"</note>. This means flattering and observing the sovereign's facial expressions to rise or descend accordingly. Both interpretations are viable. Song Qi says: Li Qi notes that *a* <note>original: \"阿\"</note> is pronounced *wu*. Xiao Gai examines the Hanshu and notes that texts reading \"flattered and seduced the sovereign\" <note>original: \"阿媚人主\"</note> represent clerical copying errors.\nAt timely moments he argued appropriateness, and the state relied on his expediency. Zhao Yu based himself upon the laws and preserved uprightness.\n<note>Yan Shigu says: The character for \"based upon\" </note><note>original: \"据\"</note> is pronounced and read as \"to rely upon\" <note>original: \"據\"</note>.\nDu Zhou practiced sycophancy, regarding speaking little as grave solemnity. After Zhang Tang's death, the legal net grew tight and state affairs piled up in thickets.\n<note>Yan Shigu says: \"Thickets\" </note><note>original: \"叢\"</note> means numerous.\nOfficials drifted into sluggishness, waste, and decay.\n<note>Yan Shigu says: \"Drifted\" </note><note>original: \"濡\"</note> means gradually sinking in. \"Decay\" <note>original: \"耗\"</note> means disorder; it is pronounced *mo-bao* <note>archaic phonetic gloss</note>.\nThe Nine Ministers merely fulfilled their formal duties,\n\n<summary>Ban Gu concludes the account of Yin Shang and opens his appraisal of the harsh officials, contrasting Zhi Du's principled boldness with Zhang Tang's calculated compliance, Zhao Yu's strict legalism, and Du Zhou's taciturn sycophancy which led to administrative stagnation.</summary>\n<keywords>Hanshu, Ban Gu, Yan Shigu, Zhi Du, Zhang Tang, Zhao Yu, Du Zhou, Yin Shang, cruel officials, Western Han dynasty, Nine Ministers</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 99,
+    "page_id": "6ae0c1e14adf2ffb52f7438b",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1e14adf2ffb52f74326/99.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n虞卿棄國捐君以周窮交魏齊之厄\n師古曰魏齊虞卿\n之交也將為范雎\n所殺卿\n救之也\n信陵無忌竊符矯命戮將專師以赴平原之急\n師古曰秦兵圍趙趙相平原君告急於無忌無忌因如\n姬以竊兵符矯魏僖侯命代晉鄙為將而令朱亥鋋殺\n晉鄙遂率兵救趙秦\n兵以郤而趙得全\n皆以取重諸侯顯名天下搤擊而\n游談者以四豪為稱首\n師古曰搤捉持也擊古手腕字\n也四豪即魏信陵以下也搤音\n戹\n於是背公死黨之議成守職奉上之義廢矣及至漢\n興禁網疏闊未之匡改也\n師古曰\n匡正也\n是故代相陳豨從車\n千乘而吳濞淮南皆招賔客以千數外戚大臣魏其武\n次宅四重三寸",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Yu Qing abandoned his state and gave up his rank to relieve his impoverished friend Wei Qi in his distress.\n\n<note>Yan Shigu comments: Wei Qi was a friend of Yu Qing. When Wei Qi was about to be killed by Fan Ju, Yu Qing went to rescue him.</note>\n\nLord Xinling, Wuji, stole the military tally, faked the ruler's command, executed the general, and usurped command of the army in order to rush to the rescue of Lord Pingyuan in his crisis.\n\n<note>Yan Shigu comments: The troops of Qin were besieging Zhao. The chancellor of Zhao, Lord Pingyuan, sent an urgent appeal to Wuji. Wuji used Lady Ru to steal the military tally, forged King Anxi of Wei's decree to replace Jin Bi as commanding general, and ordered Zhu Hai to strike and kill Jin Bi with an iron hammer. He then led the troops to rescue Zhao. The Qin army retreated, and Zhao was preserved intact.</note>\n\nAll of them thereby gained prestige among the feudal lords and made their names renowned across the realm. Those who clasped their wrists and engaged in wandering debate took the Four Lords as their foremost champions.\n\n<note>Yan Shigu comments: <term>E</term> <gloss>to clasp / grip</gloss> means to grasp and hold. <term>Ji</term> <gloss>wrist</gloss> was an ancient character for the wrist of the hand. The Four Lords refers to Lord Xinling of Wei and the others mentioned above. The character <term>e</term> has the pronunciation of the character meaning hardship or distress.</note>\n\nThereupon, discussions that turned one's back on the public interest in devotion to factional coteries flourished, while the duty of performing one's official post and revering superiors fell into ruin. When it came to the rise of the Han dynasty, the net of legal prohibitions was wide and loose, and this conduct was not yet corrected or reformed.\n\n<note>Yan Shigu comments: <term>Kuang</term> <gloss>to rectify / correct</gloss> means to make right.</note>\n\nFor this reason, Chen Xi, chancellor of the state of Dai, travelled with a retinue of a thousand carriages; Liu Pi of Wu and the King of Huainan each recruited guests and retainers numbering in the thousands. Among imperial relatives and senior ministers, the Marquis of Weiqi and the Marquis of Wu'an...\n\n<summary>This page recounts how prominent Warring States figures like Yu Qing and Lord Xinling sacrificed civic order to aid friends, establishing a culture of factional loyalty that persisted unchecked into the early Han dynasty.</summary>\n<keywords>Book of the Former Han, Hanshu, Ban Gu, Yan Shigu, Yu Qing, Wei Qi, Lord Xinling, Lord Pingyuan, Fan Ju, Jin Bi, Chen Xi, Liu Pi, Marquis of Weiqi, Marquis of Wu'an, Youxia, factionalism</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 113,
+    "page_id": "6ae0c1e14adf2ffb52f74399",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1e14adf2ffb52f74326/113.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n接轂至成帝初石顯坐專權擅埶免官徙歸故郡\n〇宋\n祁曰\n越本無\n徙字\n顯貲巨萬當去留牀席器物數百萬直\n〇宋祁\n曰留字\n下當有\n其字\n欲以與章章不受賔客或問其故章歎曰吾以\n布衣見哀於石君\n師古曰言為\n石顯所哀憐\n石君家破不能有以安\n也\n師古曰言\n力不能救\n而受其財物此為石氏之禍萬氏反當以\n為福耶諸公以是服而稱之河平中王尊為京兆尹捕\n擊豪俠殺章及箭張回\n服虔曰作箭\n者姓張名回\n酒市趙君都賈子\n光\n服虔曰酒\n市中人也\n皆長安名豪報仇怨養刺客者也\n次定四等十三与\n<header>前漢書</header>\n<page-num>九</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>bumper to bumper. In the early years of Emperor Cheng, Shi Xian was dismissed from office and banished back to his home commandery for monopolizing power and usurping authority.\n\n<note>Song Qi remarks: The Yue edition lacks the character \"banished\" </note><note>original: \"徙\"</note>.\n\nXian possessed wealth in the tens of millions. When he was about to depart, he left behind bedding, mats, and utensils worth several millions.\n\n<note>Song Qi remarks: Below the character \"left\" </note><note>original: \"留\"</note>, the character \"his\" <note>original: \"其\"</note> should be present.\n\nHe wished to give them to Zhang, but Zhang would not accept them. When guests asked him the reason, Zhang sighed and said: \"As a commoner, I was treated with favor by Lord Shi.\n\n<note>Yan Shigu comments: This means he was treated with kindness and pity by Shi Xian.</note>\n\nNow that Lord Shi's family is ruined, I have no means to keep him safe.\n\n<note>Yan Shigu comments: This means he lacked the power to rescue him.</note>\n\nYet if I were to accept his wealth and property, when this has brought catastrophe upon the Shi clan, could the Wan clan perversely regard it as good fortune?\" The dignitaries admired and praised him for this. During the Heping era <note>28–25 BCE</note>, Wang Zun became Governor of the Capital. He arrested and struck down knights-errant, killing Zhang along with Zhang Hui the arrow-maker,\n\n<note>Fu Qian comments: The arrow-maker's surname was Zhang and his given name was Hui.</note>\n\nZhao Jundu of the wine market, and Jia Ziguang.\n\n<note>Fu Qian comments: A man of the wine market.</note>\n\nAll of them were prominent local magnates of Chang'an who avenged personal grudges and harbored assassins.\n\n<note>Editorial note: 次定四等十三与</note>\n# 前漢書\n9\n\n<summary>Following the fall of his patron Shi Xian, Wan Zhang prudently refuses Xian's parting wealth, winning widespread admiration before ultimately being executed during Governor Wang Zun's crackdown on Chang'an knights-errant.</summary>\n<keywords>Wan Zhang, Shi Xian, Emperor Cheng, Wang Zun, Governor of the Capital, knights-errant, Song Qi, Yan Shigu, Fu Qian, Chang'an</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 12,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0c1f34adf2ffb52f74449",
+  "book_url": "https://sourcelibrary.org/book/6ae0c1f34adf2ffb52f74449",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0c1f34adf2ffb52f74449",
+   "title": "前漢書·卷九十四上~卷九十五 (Hanshu, Siku Quanshu, vol. 52 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 146,
+   "pages_ocr": 145,
+   "pages_translated": 144,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 146,
+   "distinct_page_numbers": 146,
+   "duplicate_records": 0,
+   "pages_with_ocr": 145,
+   "pages_translated": 144,
+   "with_printed_number": 19,
+   "printed_backsteps": 5,
+   "printed_repeats": 11,
+   "pages_count_field": 146,
+   "pages_translated_field": 144
+  },
+  "run": [
+   11,
+   40,
+   100,
+   114
+  ],
+  "pages": [
+   {
+    "page_number": 11,
+    "page_id": "6ae0c1f34adf2ffb52f74456",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1f34adf2ffb52f74449/11.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n萬衣被七十七襲\n師古曰一稱為一襲猶今人之言一\n副衣服也〇宋祁曰注文之字服字\n當\n刪\n錦繡綺縠雜帛八千匹絮六千斤禮畢使使者道單\n于先行宿長平\n師古曰道讀曰導長平\n涇水上坂也觧在宣紀\n上自甘泉宿池\n陽宮上登長平詔單于毋謁\n師古曰不\n令拜也\n其左右當户之\n羣臣皆得列觀及諸蠻夷君長王侯數萬咸迎於渭橋\n下夾道陳上登渭橋咸稱萬歲單于就邸留月餘遣歸\n國單于自請願留居光祿塞下\n師古曰即徐自\n為所築者也\n有急保\n漢受降城\n師古曰保守\n也於此自守\n漢遣長樂衛尉髙昌侯董忠車",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>hundred thousand coins; seventy-seven suits of clothing; <note>original: \"師古曰一稱為一襲猶今人之言一副衣服也〇宋祁曰注文之字服字當刪\" Yan Shigu notes: One cheng is one xi, like what modern people call a complete suit of clothing. Song Qi notes: In the commentary, the character 'fu' of 'wen zhi zi fu zi' should be deleted.</note> eight thousand bolts of embroidered, patterned, and plain polychrome silks; and six thousand catties of silk floss. \n\nWhen the ceremonies concluded, an envoy was dispatched to guide the Chanyu ahead to spend the night at Changping. <note>original: \"師古曰道讀曰導長平涇水上坂也觧在宣紀\" Yan Shigu notes: The character 'dao' is read as 'dao' <gloss>to guide</gloss>. Changping is an uphill slope above the Jing River; it is explained in the Annals of Emperor Xuan.</note>\n\nThe Emperor traveled from Ganquan to spend the night at Chiyang Palace. When the Emperor ascended Changping, an imperial edict instructed the Chanyu not to make a formal prostration. <note>original: \"師古曰不令拜也\" Yan Shigu notes: He was not ordered to prostrate.</note>\n\nHis ministers, including the Left and Right Danghu officials, were all permitted to stand in ranks to view the proceedings. Tens of thousands of monarchs, chiefs, kings, and marquises of the various barbarian tribes all gathered to welcome him beneath Wei Bridge, arrayed in ranks lining both sides of the roadway. When the Emperor ascended Wei Bridge, all cried out \"Long live the Emperor!\" \n\nThe Chanyu retired to his official residence, where he remained for over a month before being sent back to his state. The Chanyu personally petitioned, wishing to remain and reside below the Guanglu Pass, <note>original: \"師古曰即徐自為所築者也\" Yan Shigu notes: That is, the fortification constructed by Xu Ziwei.</note> and in times of emergency to seek protection at the Han Shouxiang fortress. <note>original: \"師古曰保守也於此自守\" Yan Shigu notes: 'Bao' means to protect and hold; here he would defend himself.</note>\n\nThe Han dispatched Commandant of the Changle Palace Guards and Marquis of Gaochang Dong Zhong, together with General of Carriages\n\n<summary>Following the bestowal of vast gifts of coin, fine silks, and clothing, Huhanye Chanyu is guided to Changping and excused from prostrating before the Han Emperor. Tens of thousands of barbarian leaders welcome the Emperor at Wei Bridge, after which the Chanyu requests permission to settle near Guanglu Pass and defend Shouxiang Fortress.</summary>\n<keywords>Huhanye Chanyu, Han Emperor, Changping, Ganquan, Chiyang Palace, Danghu, Wei Bridge, Guanglu Pass, Xu Ziwei, Shouxiang Fortress, Dong Zhong, Yan Shigu, Han diplomacy</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "6ae0c1f34adf2ffb52f74473",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1f34adf2ffb52f74449/40.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n一反已上\n二言\n卷九十匹下\n喙音許\n穢反\n至本始之初匈奴有桀心\n師古曰桀堅也\n言其起立不順\n欲掠\n烏孫侵公主廼發五將之師十五萬騎獵其南而長羅\n侯以烏孫五萬騎震其西皆至質而還\n師古曰質信\n也謂所期處\n時\n鮮有所獲\n師古曰鮮少\n也音先踐反\n徒奮揚威武明漢兵若雷風耳\n雖空行空反尚誅兩將軍故北狄不服中國未得髙枕\n安寢也逮至元康神爵之間大化神明鴻恩溥洽而匈\n奴内亂五單于争立曰逐呼韓邪攜國歸死扶伏稱臣\n師古曰伏\n音蒲北反\n然尚羈縻之計不顓制\n師古曰顓與專同專\n制謂以為臣妾也",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<note>Yan Shigu says: ...the pronunciation is like the character <term>yi</term> combined with <term>fan</term>, as noted above. The two characters are combined.</note>\n\n### Volume 94, Part 2\n\n<note>Yan Shigu says: The character <term>hui</term> <gloss>beak/jaw</gloss> is pronounced like <term>xu</term> combined with <term>hui</term> <gloss>fan</gloss>.</note>\n\nBy the beginning of the Benshi reign <note>73–70 BCE</note>, the Xiongnu harbored treacherous and recalcitrant ambitions.\n\n<note>Yan Shigu says: <term>Jie</term> <gloss>obstinate/stubborn</gloss> means hard and rebellious. It signifies that they arose in disobedience.</note>\n\nThey wished to plunder the Wusun and violate the Han princess. Thereupon, five generals were dispatched leading an expeditionary army of 150,000 cavalry to hunt down the enemy across the south, while the Marquis of Changluo led 50,000 cavalry from the Wusun to strike awe throughout their western border. Both forces reached their agreed rendezvous points and returned.\n\n<note>Yan Shigu says: <term>Zhi</term> <gloss>pledge/rendezvous</gloss> means good faith; it refers to the appointed place.</note>\n\nAt that time, they captured little.\n\n<note>Yan Shigu says: <term>Xian</term> <gloss>rare</gloss> means few; it is pronounced like <term>xian</term> combined with <term>jian</term> <gloss>fan</gloss>.</note>\n\nThey merely displayed their martial prowess and manifested the might of Han forces like thunder and wind. Although they marched out and returned empty-handed, two generals were nevertheless executed for their failures. Therefore, the northern barbarians did not submit, and the Central Plains could not yet rest easy on high pillows.\n\nWhen it came to the Yuankang and Shenjue eras <note>65–58 BCE</note>, great spiritual virtue and majestic grace spread widely, while internal turmoil erupted within the Xiongnu. Five Chanyu competed for the throne. Rizhu and Huhanye brought their state to submit in desperation, prostrating themselves and declaring themselves subjects.\n\n<note>Yan Shigu says: <term>Fu</term> <gloss>prostrate</gloss> is pronounced like <term>pu</term> combined with <term>bei</term> <gloss>fan</gloss>.</note>\n\nYet the Han court still maintained the strategy of loose rein <note>jimi</note>, not assuming arbitrary and total control over them.\n\n<note>Yan Shigu says: The character <term>zhuan</term> is identical with <term>zhuan</term> <gloss>monopolize/dominate</gloss>. <term>Zhuanzhi</term> <gloss>exclusive control</gloss> refers to reducing them completely to subjects and bondservants.</note>\n\n<summary>Following minor frontier campaigns against the Xiongnu during the Benshi reign, internal civil war fractured the Xiongnu under five rival Chanyu, prompting Huhanye to submit to Han authority under the loose-rein policy.</summary>\n<keywords>Hanshu, Xiongnu, Wusun, Huhanye Chanyu, Benshi, Yuankang, Shenjue, Yan Shigu, Jimi policy</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 100,
+    "page_id": "6ae0c1f34adf2ffb52f744af",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1f34adf2ffb52f74449/100.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金定正亡人全言\n<header>卷九十五</header>\n示之皆釋兵降\n師古曰\n釋解也\n鉤町王禹漏卧侯俞震恐入粟\n千斛牛羊勞吏士立還歸郡興妻父翁指與興子邪務\n收餘兵迫脅旁二十二邑反至冬立奏募諸夷與都尉\n長史分將攻翁指等翁指據阸為壘立使奇兵絕其饟\n道縱反間以誘其衆\n師古曰間\n音居莧反\n都尉萬年曰兵久不決\n費不可共\n師古曰共\n讀曰供\n引兵獨進敗走趨立營\n師古曰趨\n讀曰趣趣\n向\n也\n立怒叱戲下令格之\n師古曰戲音許宜反又音\n麾解在高紀及灌夫傳\n都尉\n復還戰立引兵救之時天大旱立攻絕其水道蠻夷共",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to display to them.\" When it was displayed to them, all laid down their weapons and surrendered.\n<gloss>Shigu says: Shi <note>original: \"釋\"</note> means to loosen or lay down.</gloss>\nKing Yu of Gouding and Marquis Yu of Louwo were shaken with terror. They presented a thousand <term>hu</term> <gloss>a dry measure of grain, roughly equal to ten pecks</gloss> of grain, along with oxen and sheep, to feast the officers and soldiers. Chen Li then returned to his commandery seat.\n\nHowever, King Xing's father-in-law, Wengzhi, together with Xing's son Xiequ, gathered the remnant troops and coerced twenty-two neighboring settlements into rebellion. When winter arrived, Li submitted a memorial requesting permission to recruit men from various non-Han tribes. Together with the Commandant and the Senior Clerk, they divided commands to attack Wengzhi and his confederates. Wengzhi took advantage of a defile to construct defensive ramparts. Li dispatched surprise troops to cut off their grain-supply routes, and used counter-espionage to entice and divide their host.\n<gloss>Shigu says: Jian <note>original: \"間\"</note> is pronounced jian in fanqie, here meaning espionage or creating dissension.</gloss>\n\nCommandant Wannian said: \"The military campaign has dragged on without resolution, and the expenditures cannot be supplied.\"\n<gloss>Shigu says: Gong <note>original: \"共\"</note> is read as gong <note>original: \"供\", meaning to supply or support</note>.</gloss>\nHe led his troops forward alone, but suffered defeat and fled back toward Li's camp.\n<gloss>Shigu says: Qu <note>original: \"趨\"</note> is read as qu <note>original: \"趣\"</note>. Qu means to head toward.</gloss>\nLi shouted in anger at his headquarters retinue and ordered them to block and strike him down.\n<gloss>Shigu says: Xi <note>original: \"戲\"</note> is pronounced xi in fanqie, and is also pronounced hui, referring to the general's flag or headquarters retinue, as explained in the Annals of Emperor Gaozu and the Biography of Guan Fu.</gloss>\nThe Commandant turned back around to fight again, and Li led his forces to rescue him. At that time, a great drought occurred. Li attacked and cut off their water sources. The various non-Han tribes jointly\n\n<summary>Following King Xing's execution, neighboring leaders submit, but Xing's relatives incite a rebellion of twenty-two settlements. Chen Li mobilizes non-Han forces and isolates the rebels by severing their food and water supplies despite a blundering insubordinate subordinate.</summary>\n<keywords>Hanshu, Ban Gu, Yan Shigu, Chen Li, Yelang, King Yu, Gouding, Louwo, Wengzhi, Xiequ, Commandant Wannian, Zangke, counter-espionage</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 114,
+    "page_id": "6ae0c1f34adf2ffb52f744bd",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1f34adf2ffb52f74449/114.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n矢\n口\n下\n人\n人\n<page-num>一</page-num>\n言\n<header>卷九十五</header>\n助曰國新被寇使者行矣胡方日夜裝入見天子助去\n後其大臣諫胡曰漢興兵誅郢亦行以驚動南粵且先\n王言事天子期毋失禮要之不可以怵好語入見\n師古\n曰怵\n誘也不可被誘怵以好語\n而入漢朝也怵音先聿反\n入見則不得復歸亡國之埶\n也於是胡稱病竟不入見後十餘歲胡實病甚太子嬰\n齊請歸胡薨諡曰文王嬰齊嗣立即臧其先武帝文帝\n璽\n李奇曰去\n其僭號\n嬰齊在長安時取邯鄲摎氏女\n師古曰摎\n音居虬反\n生子興及即位上書請立摎氏女為后興為嗣漢數使",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Volume 95</header>\n\nZhu said: \"Our state has only recently suffered invasion. The envoy should depart; Hu is even now preparing day and night to enter the capital and have audience with the Son of Heaven.\"\n\nAfter Zhu departed, his ministers remonstrated with Hu, saying: \"The Han raised an army to execute Ying, but in truth they also acted to intimidate Southern Yue. Moreover, the late king stated that in serving the Son of Heaven, one should strive not to fail in protocol, but the crucial point is that one must not be seduced by flattering words into entering the capital for an audience.\"\n<gloss>Shigu says: \"Chu\" means to entice or induce. It means one must not be enticed and persuaded by sweet words to enter the Han court. The character is pronounced like the fanqie of xian and yu.</gloss>\n\"If you enter the capital for an audience, you will never be able to return; this would be the circumstance that brings ruin to our state.\"\n\nThereupon Hu claimed illness and ultimately did not go to the capital for an audience. More than ten years later, Hu fell genuinely and gravely ill. Crown Prince Yingqi requested permission to return home. When Hu died, he was given the posthumous title King Wen.\n\nYingqi succeeded to the throne. He immediately concealed the imperial seals of his predecessors, the Martial Emperor <note>Zhao Tuo</note> and the Civil Emperor <note>Zhao Hu</note>.\n<gloss>Li Qi says: He discarded their usurped imperial titles.</gloss>\n\nDuring his time in Chang'an, Yingqi had taken a woman of the Jiu clan from Handan as his wife.\n<gloss>Shigu says: Jiu is pronounced like the fanqie of ju and qiu.</gloss>\nShe bore a son named Xing. When Yingqi ascended the throne, he submitted a memorial requesting that the woman of the Jiu clan be established as queen and that Xing be made his heir. The Han repeatedly sent envoys\n\n<summary>Ministers convince King Hu of Southern Yue not to visit the Han court out of fear he will be detained, leading him to feign illness until his death, whereupon his heir Zhao Yingqi assumes the throne, conceals the former royal usurpation seals, and seeks Han recognition for his northern wife and son.</summary>\n<keywords>Zhao Hu, Yan Zhu, King Wen of Southern Yue, Zhao Yingqi, Zhao Xing, Jiu clan, Handan, Hanshu, Siku Quanshu, Yan Shigu, Li Qi, Western Han</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 13,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0c1554adf2ffb52f74035",
+  "book_url": "https://sourcelibrary.org/book/6ae0c1554adf2ffb52f74035",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0c1554adf2ffb52f74035",
+   "title": "前漢書·卷七十八~卷八十 (Hanshu, Siku Quanshu, vol. 44 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 114,
+   "pages_ocr": 113,
+   "pages_translated": 112,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 114,
+   "distinct_page_numbers": 114,
+   "duplicate_records": 0,
+   "pages_with_ocr": 113,
+   "pages_translated": 112,
+   "with_printed_number": 47,
+   "printed_backsteps": 13,
+   "printed_repeats": 39,
+   "pages_count_field": 114,
+   "pages_translated_field": 112
+  },
+  "run": [
+   6,
+   30,
+   85,
+   103
+  ],
+  "pages": [
+   {
+    "page_number": 6,
+    "page_id": "6ae0c1564adf2ffb52f7403d",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1554adf2ffb52f74035/6.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n御史大夫魏相\n○宋祁曰浙\n本無及字\n除望之為屬察廉為大行\n治禮丞時大將軍光薨子禹復為大司馬兄子山領尚\n書\n師古曰霍山去病之孫\n今云兄子者轉寫誤爾\n親屬皆宿衞內侍地節三年\n夏京師雨雹望之因是上疏願賜清閒之宴口陳災異\n之意\n師古曰間\n讀曰閑\n宣帝自在民間聞望之名曰此東海蕭\n生邪下少府宋畸問狀\n師古曰畸\n音居宜反\n無有所諱望之對以\n為春秋昭公三年大雨雹是時季氏專權卒逐昭公鄉\n使魯君察於天變宜亡此害\n師古曰鄉讀曰\n嚮亡讀曰無\n今陛下以\n欠巳曰之巳書\n<header>前漢書</header>\n<page-num>三</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Imperial Counselor Wei Xiang <note>Song Qi notes: The Zhejiang edition lacks the character *ji* <gloss>and</gloss>.</note> appointed Wangzhi as an aide, and recommended him for honesty and integrity, leading to his appointment as Assistant to the Grand Master of Ceremonies in Charge of Rituals <term>Daxing Zhili Cheng</term>. \n\nAt that time, General-in-Chief Huo Guang had passed away. His son Yu again became Grand Minister of War <term>Da Sima</term>, while his elder brother's son Shan took charge of the Secretariat <term>Shangshu</term> <note>Yan Shigu notes: Huo Shan was the grandson of Huo Qubing. Referring to him now as an elder brother's son is merely a scribal error in transmission.</note>. All their relatives served in the imperial night watch and as inner palace attendants. \n\nIn the summer of the third year of Dijie <note>67 BCE</note>, hailstones fell in the capital. Taking advantage of this, Wangzhi submitted a memorial expressing his wish to be granted a leisure audience in private, so that he might explain in person the meaning of this celestial calamity. <note>Yan Shigu notes: *Jian* <gloss>interval</gloss> is read as *xian* <gloss>leisure</gloss>.</note>\n\nEmperor Xuan, who had personally heard of Wangzhi's reputation while he was living among the common people, remarked: \"Is this not Scholar Xiao from Donghai?\" The Emperor referred the matter to Privy Counselor Song Ji to inquire into the circumstances. <note>Yan Shigu notes: *Ji* is pronounced with the fanqie phonetic *ju-yi*.</note> \n\nHe told Wangzhi to conceal nothing. Wangzhi responded, arguing: \"In the third year of Duke Zhao in the *Spring and Autumn Annals*, heavy hail fell. At that time the Ji lineage had usurped power and eventually expelled Duke Zhao. If the ruler of Lu had observed and understood this celestial sign earlier, he could have averted such disaster. <note>Yan Shigu notes: *Xiang* is read as *xiang* <gloss>formerly</gloss>. *Wang* is read as *wu* <gloss>without / avert</gloss>.</note> Now Your Majesty has...\"\n\n<unclear>欠巳曰之巳書</unclear>\n<header>Book of the Former Han</header>\n<page-num>3</page-num>\n\n<summary>Xiao Wangzhi is recommended by Wei Xiang and appointed Assistant to the Grand Master of Ceremonies; following a hailstorm in 67 BCE, he appeals to Emperor Xuan to explain the portent, cautioning against the monopolization of power by the Huo family.</summary>\n<keywords>Xiao Wangzhi, Wei Xiang, Huo Guang, Huo Yu, Huo Shan, Emperor Xuan of Han, portents, hailstorm, Spring and Autumn Annals, Duke Zhao, Ji family, Han dynasty</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 30,
+    "page_id": "6ae0c1564adf2ffb52f74055",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1554adf2ffb52f74035/30.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n召乃留乎\n師古曰問望之立意當趣如管晏而止為欲\n恢廓其道日昃不食追周召之蹟然後已乎\n撫讀曰模\n其字從木\n若管晏而休則下走將歸延陵之臯\n應劭曰\n下走僕\n也張晏曰吳公子札食邑延陵薄吳王之行弃國而耕\n於臯澤朋云望之所為若但如管晏則不處漢朝將歸\n會稽尋延陵之軌隱耕臯澤之中也\n師古曰下走者自謙言趨走之役也\n修農圃之疇\n師古\n曰美\n田曰\n疇\n畜雞種黍竢見二子没齒而已矣\n師古曰論語云\n子路從而後遇\n丈人以救荷蓧止子路宿殺雞為黍而食之見其二子\n焉明日子路行以告子曰隱者也使子路反見之至則\n行矣朋之所云蓋謂此也竢古俟字也俟\n待也没齒終身也蓧草器也音徒釣反\n如將軍昭然\n度行積思塞邪枉之險蹊宣中庸之常政\n師古曰度行\n度越常檢而\n<header>前漢書</header>\n<page-num>十九</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and Duke of Shao, only to pause there?\n<gloss>Yan Shigu states: 'This asks whether Xiao Wangzhi's intent was merely to reach the level of Guan Zhong and Yan Ying and stop there, or whether he desired to broadly expand his Way, forgetting to eat even as the sun declined, pursuing the footsteps of the Duke of Zhou and the Duke of Shao before concluding.'</gloss>\n<gloss>The character <term>撫</term> is read as <term>模</term> <gloss>pattern/model</gloss>. Its character takes the wood radical.</gloss>\nIf you stop at the level of Guan Zhong and Yan Ying, then this humble servant will return to the marshlands of Yanling,\n<gloss>Ying Shao states: '<term>下走</term> <gloss>humble servant, literally \"running servant\"</gloss> means a servant.' Zhang Yan states: 'Prince Jizi of Wu held the appanage of Yanling. Despising the conduct of the King of Wu, he abandoned the state and plowed among the marshlands. Zheng Peng means that if what Xiao Wangzhi achieves is merely like Guan Zhong and Yan Ying, he will not remain at the Han court, but will return to Kuaiji, follow the path of Yanling, and retire to farm among the marshes.' Yan Shigu states: '<term>下走</term> is a self-deprecating expression signifying the menial service of running errands.'</gloss>\ncultivating the plots of farm and garden,\n<gloss>Yan Shigu states: 'Fine arable land is called <term>疇</term> <gloss>field plots</gloss>.'</gloss>\nraising chickens, planting millet, waiting to meet his two sons, and ending my days there.\n<gloss>Yan Shigu states: 'The Analects says: \"Zilu, following behind, met an old man carrying a basket with a staff. The old man kept Zilu overnight, killed a chicken, prepared millet for him to eat, and introduced his two sons to him. The next day, Zilu departed and told Confucius. Confucius said: 'He is a recluse.' He sent Zilu back to see him, but when Zilu arrived, the old man had already departed.\" What Zheng Peng says here refers to this episode. The character <term>竢</term> is the ancient form of <term>俟</term> <gloss>to wait</gloss>. <term>没齒</term> means to the end of one's life. A <term>蓧</term> is a bamboo grass-carrying implement, pronounced as a fanqie of tu and diao.'</gloss>\nIf you, General, can act with shining clarity,\ntranscending ordinary limits in conduct, gathering deep contemplation to block the treacherous pathways of wicked crookedness, and proclaiming the enduring governance of the Golden Mean,\n<gloss>Yan Shigu states: '<term>度行</term> <gloss>transcending conduct</gloss> means rising far above ordinary standards and rules...'</gloss>\n\n<summary>Zheng Peng continues his letter urging Xiao Wangzhi to surpass Guan Zhong and emulate the Duke of Zhou, declaring he will otherwise retire to farm in seclusion like the ancient recluses.</summary>\n<keywords>Hanshu, Xiao Wangzhi, Zheng Peng, Yan Shigu, Ying Shao, Zhang Yan, Yanling, Jizi of Wu, Zilu, Confucius, Golden Mean</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 85,
+    "page_id": "6ae0c1564adf2ffb52f7408c",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1554adf2ffb52f74035/85.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n求朝王不納其言後光欲至長安辭王復言願盡力與\n博共為王求朝王即日至長安可因平陽侯\n〇宋祁曰\n陽字疑作\n陵\n字\n光得王欲求朝語馳使人語博博知王意動復遺王\n書曰博幸得肺腑\n師古曰自云\n於王有親也\n數進愚䇿未見省察北\n游燕趙欲循行郡國求幽隱之士聞齊有駟先生者善\n為司馬兵法大將之材也博得謁見承閒進問五帝三\n王究竟要道卓爾非世俗之所知\n師古曰卓爾高逺貌\n也自言見駟先生問\n以要道知\n其髙逺也\n今邊境不安天下騷動微此人其莫能安也\n欠巳曰言曰言\n<header>前漢書</header>\n<page-num>三</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to request an imperial audience, but the King did not accept his words. Later, when Guang was about to go to Chang'an, he took leave of the King and again said that he was willing to exert all his efforts together with Bo to seek an imperial audience for the King. Once the King arrived in Chang'an, he could rely on the Marquis of Pingyang.\n\nSong Qi remarks:\nThe character <term>yang</term> <note>original: \"陽\"</note> is suspected to be the character <term>ling</term> <note>original: \"陵\"</note>.\n\nGuang obtained the King's words expressing his desire to request an imperial audience, and he galloped a messenger to report them to Bo. Bo knew that the King's intentions had been swayed, and again sent a letter to the King, saying:\n\n\"I, Bo, have been fortunate enough to gain intimate access as a close relation;\n\nShigu remarks:\nHe spoke of himself as having kinship with the King.\n\nand have repeatedly presented humble strategies, yet they have not met with examination. Traveling north through Yan and Zhao, I wished to tour the commanderies and feudal kingdoms in search of men of secluded virtue. I heard that in Qi there is a Master Si who is skilled at the military arts of the Minister of War <note>referring to the Sima Fa, the ancient military treatise</note> and possesses the talent of a great general. I was granted an audience with him, taking advantage of a moment of leisure to inquire about the ultimate essential Way of the Five Emperors and Three Kings. It was lofty and sublime, not something known by the worldly ordinary.\n\nShigu remarks:\n<term>Zhuo'er</term> <gloss>lofty and sublime</gloss> <note>original: \"卓爾\"</note> describes an appearance of great height and distance. Bo stated of himself that he met Master Si and questioned him about the essential Way, and thus came to know his lofty sublimity.\n\nNow the frontiers are not at peace and all under Heaven is agitated. Without this man, there is none who can bring peace.\"\n\n<unclear>欠巳曰言曰言</unclear>\n# Book of Han\n->Three<-\n\n<summary>Zhang Guang convinced the King of Huaiyang to seek an imperial audience, and Zhang Bo wrote to the King recommending Master Si of Qi as an exceptional military and statecraft talent essential for stabilizing the empire.</summary>\n<keywords>Book of Han, Hanshu, Ban Gu, Yan Shigu, Song Qi, Zhang Bo, Zhang Guang, King Xian of Huaiyang, Marquis of Pingyang, Marquis of Pingling, Master Si, military strategy, Five Emperors, Three Kings</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 103,
+    "page_id": "6ae0c1564adf2ffb52f7409e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c1554adf2ffb52f74035/103.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n道王者輒以名聞\n師古曰\n道音導\n宇立二十年元帝崩宇謂中\n謁者信等曰漢大臣議天子少弱未能治天下以為我\n知文法建欲使我輔佐天子\n師古曰建\n謂立其議\n我見尚書晨夜\n極苦使我為之不能也今暑熱縣官年少\n張晏曰不敢\n指斥成帝謂\n之縣\n官也\n持服恐無處所\n如淳曰言不從道\n冀如昌邑王也\n我危得之\n孟康\n曰危\n殆也我殆得為天子也師古曰\n危者猶今之言險不得之矣\n比至下宇凡三哭\n張晏\n曰下\n下棺也師古曰比音\n必寐反下音胡稼反\n飲酒食肉妻妾不離側又姬朐臑\n故親幸後疏逺\n服虔曰朐音劬臑音\n奴溝反又音奴臬反\n數歎息呼天宇聞\n<header>前漢書</header>\n次三曰取人焉\n<page-num>十</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>or guide the King, report their names at once.\"\n\n<note>Yan Shigu remarks: \"'Guide' </note><note>original: \"道\"</note><note> is pronounced as dao </note><note>original: \"導\"</note><note>.\"</note>\n\nAfter Yu had been on the throne for twenty years, Emperor Yuan passed away. Yu said to the Palace Attendant Xin and others: \"The great ministers of the Han are discussing that the Son of Heaven is young and frail, unable to govern the empire. They consider that I understand the laws and statutes, and they wish to establish me to assist and guide the Son of Heaven.\"\n\n<note>Yan Shigu remarks: \"'Establish' </note><note>original: \"建\"</note><note> means to set forth that proposal.\"</note>\n\n\"I observe that the Master of Writing suffers extreme hardship day and night; if they make me do it, I could not endure it. Now, in this intense summer heat, the County Magistrate is young—\"\n\n<note>Zhang Yan remarks: \"He did not dare refer directly to Emperor Cheng, and thus called him the 'County Magistrate' </note><note>original: \"縣官\"</note><note>, which refers to the imperial court.\"</note>\n\n\"—and observing mourning rites, he likely has no place to sustain himself.\"\n\n<note>Ru Chun remarks: \"This means that not following moral duty, he hoped he might be deposed like King Changyi.\"</note>\n\n\"I almost attained it!\"\n\n<note>Meng Kang remarks: \"'Almost' </note><note>original: \"危\"</note><note> means nearly. It means: 'I almost got to be the Son of Heaven!' Yan Shigu remarks: \"'Dangerous' </note><note>original: \"危\"</note><note> here is like saying in present-day speech that by a narrow margin, he did not obtain it.\"</note>\n\nBy the time the coffin was lowered into the tomb, Yu had wept only three times in all.\n\n<note>Zhang Yan remarks: \"'Lowered' </note><note>original: \"下\"</note><note> means lowering the coffin into the tomb.\" Yan Shigu remarks: \"The character for 'by the time' </note><note>original: \"比\"</note><note> is read as bi; the character for 'lowered' </note><note>original: \"下\"</note><note> is read as xia.\"</note>\n\nHe drank wine, ate meat, and kept his wives and concubines constantly by his side. Furthermore, his consort Qu'nao had formerly been favored, but later grew distant;\n\n<note>Fu Qian remarks: \"'Qu' </note><note>original: \"朐\"</note><note> is pronounced as qu; 'nao' </note><note>original: \"臑\"</note><note> is read as nou, and alternatively as nie.\"</note>\n\nshe repeatedly sighed and cried out to Heaven. When Yu heard this,\n\n<summary>King Yu of Dongping boasts of his potential to govern following Emperor Yuan's death, shows callous disregard during the imperial mourning period, and indulges in pleasures while alienating his former favorite consort.</summary>\n<keywords>Hanshu, Ban Gu, King Yu of Dongping, Emperor Yuan, Emperor Cheng, imperial mourning, Master of Writing, Zhang Yan, Ru Chun, Meng Kang, Yan Shigu, Fu Qian</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 14,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0c03d4adf2ffb52f739d2",
+  "book_url": "https://sourcelibrary.org/book/6ae0c03d4adf2ffb52f739d2",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0c03d4adf2ffb52f739d2",
+   "title": "前漢書·卷五十三~卷五十四 (Hanshu, Siku Quanshu, vol. 32 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 120,
+   "pages_ocr": 116,
+   "pages_translated": 113,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 120,
+   "distinct_page_numbers": 120,
+   "duplicate_records": 0,
+   "pages_with_ocr": 116,
+   "pages_translated": 113,
+   "with_printed_number": 37,
+   "printed_backsteps": 10,
+   "printed_repeats": 29,
+   "pages_count_field": 120,
+   "pages_translated_field": 113
+  },
+  "run": [
+   2,
+   60,
+   89,
+   100
+  ],
+  "pages": [
+   {
+    "page_number": 2,
+    "page_id": "6ae0c03d4adf2ffb52f739d6",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c03d4adf2ffb52f739d2/2.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n欽\n定\n四\n庫\n全\n書\n史部\n前漢書卷五十四\n詳校官侍讀臣陳萬青\n洗馬臣王坦修覆勘\n總校官進士臣朱鈐\n校對官主事臣陳文樞\n謄錄監生臣曹錫璜",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "欽\n定\n四\n庫\n全\n書\n<note>original: \"欽定四庫全書\"</note> <term>Qinding Siku Quanshu</term> <gloss>Imperially Commissioned Complete Library in Four Sections</gloss>\n\n史部\n<term>Shi Bu</term> <gloss>History Division</gloss>\n\n前漢書卷五十四\n<term>Qian Han Shu</term> <gloss>Book of the Former Han</gloss>, Volume 54\n\n詳校官侍讀臣陳萬青\nDetailed Verification Official, Reader-in-Waiting, your humble servant Chen Wanqing\n\n洗馬臣王坦修覆勘\nDirector of the Palace Secretariat, your humble servant Wang Tanxiu, Reviewed and Checked\n\n總校官進士臣朱鈐\nChief Verification Official, Metropolitan Graduate, your humble servant Zhu Qian\n\n校對官主事臣陳文樞\nProofreading Official, Director, your humble servant Chen Wenshu\n\n謄錄監生臣曹錫璜\nTranscription Official, Imperial Academy Student, your humble servant Cao Xihuang\n\n<summary>Front matter and editorial colophon for Volume 54 of the Book of the Former Han within the Imperially Commissioned Complete Library in Four Sections (Siku Quanshu), listing the Imperial officials responsible for detailed verification, checking, chief review, proofreading, and transcription.</summary>\n<keywords>Siku Quanshu, Complete Library in Four Sections, Qian Han Shu, Book of the Former Han, History Division, colophon, imperial officials, Chen Wanqing, Wang Tanxiu, Zhu Qian, Chen Wenshu, Cao Xihuang</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 60,
+    "page_id": "6ae0c03d4adf2ffb52f73a10",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c03d4adf2ffb52f739d2/60.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金父\n人\n今\n<page-num>一</page-num>\n巨\n<header>卷五十四</header>\n鵰者也巳縛之上山望匈奴數千騎見廣以為誘騎驚\n上山陳\n師古曰為陳\n以待廣也\n廣之百騎皆大恐欲馳還走廣曰\n我去大軍數十里今如此走匈奴追射我立盡今我留\n匈奴必以我為大軍之誘不我擊\n師古曰不我擊\n不敢擊我也\n廣令\n曰前未到匈奴陳二里所止令曰皆下馬觧鞍騎曰虜\n多如是觧鞍即急奈何廣曰彼虜以我為走今觧鞍以\n示不去用堅其意\n師古曰示以堅\n牢令敵意知之\n有白馬將出護兵\n師\n古\n曰將之乘白馬者\n也護謂監視之\n廣上馬與十餘騎奔射殺白馬將而",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\n<unclear>金父 人 今</unclear>\n<unclear>一 巨</unclear>\n# Volume 54\n\neagle shooters. Having bound him, Li Guang mounted the hill and looked out, sighting several thousand Xiongnu horsemen. Upon seeing Guang, the Xiongnu mistook them for decoy cavalry, took alarm, and ascended a hill to draw up in battle array.\n<gloss>Yan Shigu remarks: \"They formed battle array to await Guang.\"</gloss>\nGuang's hundred horsemen were all greatly frightened and wished to wheel their mounts around and flee back. Guang said: \"We are several tens of li away from our main army. If we flee like this now, the Xiongnu will pursue and shoot us down, and we will be wiped out immediately. But if we remain now, the Xiongnu will certainly assume we are a decoy for our main army and will not attack us.\"\n<gloss>Yan Shigu remarks: \"'Will not attack us' means they will not dare to attack us.\"</gloss>\nGuang issued orders saying, \"Advance!\" Before reaching the Xiongnu battle formation, at a distance of about two li, he halted and commanded, \"Everyone dismount and loosen saddles!\" The horsemen said, \"The enemy are so numerous as this; if we loosen our saddles and an emergency arises, what shall we do?\" Guang said: \"Those bandits think we are going to flee. Now, by loosening saddles to show that we have no intention of leaving, we will solidify their conviction.\"\n<gloss>Yan Shigu remarks: \"Showing firmness and resolve causes the enemy's mind to perceive it.\"</gloss>\nThere was a general riding a white horse who came out to oversee the troops.\n<gloss>Yan Shigu remarks: \"This refers to a general mounted on a white horse. 'Oversee' <note>hu</note> means to inspect and monitor them.\"</gloss>\nGuang mounted his horse and, galloping forth with ten or more horsemen, shot and killed the white-horse general, and then\n\n<summary>Surrounded by thousands of Xiongnu cavalry, Li Guang boldly orders his hundred horsemen to dismount and unloose their saddles to convince the enemy they are bait for an ambush, then rides out to kill a commander on a white horse.</summary>\n<keywords>Book of Former Han, Li Guang, Xiongnu, military strategy, psychological warfare, white horse general, Yan Shigu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 89,
+    "page_id": "6ae0c03d4adf2ffb52f73a2d",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c03d4adf2ffb52f739d2/89.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n道窮士張空拳\n文頴曰拳弓弩拳也師古曰拳\n字與豢同音去權反又音眷\n冒白刃\n北首爭死敵\n師古曰冒犯也北首北嚮也冒音莫北反\n首音式救反○宋祁曰南浙兩本冒音莫\n尅反首音式授反淳化本冒音\n莫到反首音式受反當從南浙\n得人之死力雖古名將\n不過也身雖陷敗然其所摧敗亦足暴於天下\n師古曰\n所摧敗\n敗匈奴之兵\n也暴猶章也\n彼之不死宜欲得當以報漢也\n師古曰言\n欲立功以\n當其\n罪也\n初上遣貳師大軍出財令陵為助兵\n師古曰財與\n纔同謂淺也\n僅也史傳通用\n字他皆類此\n及陵與單于相值而貳師功少上以遷\n誣罔欲沮貳師為陵游說\n師古曰沮謂毀\n壞之音才呂反\n下遷腐刑久\n<header>前漢書</header>\n<header>次定四庫全書</header>\n<page-num>十七</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>the road was cut off, and the soldiers stretched empty bows,\n\n<gloss>Wen Ying remarks: \"'Fist' <term>quan</term> means the grip of a bow or crossbow.\" Yan Shigu remarks: \"The character <term>quan</term> has the same pronunciation as <term>huan</term> <gloss>to rear or feed</gloss>, pronounced in the departing tone as <term>qu-quan</term> in <term>fanqie</term>, and also pronounced <term>juan</term>.\"</gloss>\n\nbraving naked blades,\n\nfacing north to strive and die fighting the enemy.\n\n<gloss>Yan Shigu remarks: \"'Braving' <term>mao</term> means to defy or risk. 'Facing north' <term>beishou</term> means facing northward. <term>Mao</term> is pronounced <term>mo-bei</term> in <term>fanqie</term>, and <term>shou</term> is pronounced <term>shi-jiu</term> in <term>fanqie</term>. Song Qi remarks: 'In both the Southern and Zhejiang editions, <term>mao</term> is pronounced <term>mo-ke</term> in <term>fanqie</term>, and <term>shou</term> is pronounced <term>shi-shou</term> in <term>fanqie</term>. The Chunhua edition gives <term>mao</term> as <term>mo-dao</term> in <term>fanqie</term> and <term>shou</term> as <term>shi-shou</term> in <term>fanqie</term>. The Southern and Zhejiang editions should be followed.'\"</gloss>\n\nTo obtain men's utmost devotion unto death, even famous generals of antiquity could not surpass him! Although he fell into defeat, the destruction he wreaked upon the enemy is sufficient to make his deeds manifest across the realm.\n\n<gloss>Yan Shigu remarks: \"'The destruction he wreaked' refers to defeating the soldiers of the Xiongnu. 'Make manifest' <term>bao</term> means to display clearly.\"</gloss>\n\nHis not dying must surely be because he wished to find an opportunity to repay Han.\"\n\n<gloss>Yan Shigu remarks: \"This means he wished to establish merit in order to offset his crime.\"</gloss>\n\nEarlier, His Majesty had dispatched the Grand General of Ershi on a campaign, and had merely ordered Ling to act as auxiliary support.\n\n<gloss>Yan Shigu remarks: \"'Merely' <term>cai</term> is identical to <term>cai</term> <gloss>just / only</gloss>, meaning slight or barely. It is commonly interchanged in historical biographies, and other instances are similar to this.\"</gloss>\n\nWhen Ling encountered the <term>Chanyu</term> <gloss>supreme ruler of the Xiongnu</gloss>, Ershi had achieved little merit. The Emperor considered that Qian was slandering and deceiving, seeking to undermine Ershi while lobbying on Ling's behalf.\n\n<gloss>Yan Shigu remarks: \"'Undermine' <term>ju</term> means to tear down or ruin, pronounced <term>cai-lü</term> in <term>fanqie</term>.\"</gloss>\n\nHe remanded Qian to castration, and for a long time\n\n<summary>Sima Qian impassionedly praises Li Ling's desperate last stand and ability to win soldiers' supreme devotion, arguing that Ling surrendered only to seek an opportunity to repay Han. Emperor Wu suspects Sima Qian of defaming General Ershi to defend Li Ling, and sentences him to castration.</summary>\n<keywords>Sima Qian, Li Ling, Emperor Wu of Han, General of Ershi, Li Guangli, Chanyu, Xiongnu, castration, Yan Shigu, Wen Ying, Song Qi, Hanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 100,
+    "page_id": "6ae0c03d4adf2ffb52f73a38",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c03d4adf2ffb52f739d2/100.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n人\n正\n尼\n今\n三\n巷五十四\n為人臣子不顧恩義畔主背親為降虜於蠻夷何以女\n為見\n師古曰言何\n用見女為也\n且單于信女使决人死生不平心持\n正反欲鬬兩主觀禍敗南越殺漢使者屠為九郡宛王\n殺漢使者頭縣北闕朝鮮殺漢使者即時誅滅獨匈奴\n未耳若知我不降明\n師古曰若汝也言汝\n知我不肯降明矣\n欲令兩國相\n攻匈奴之禍從我始矣律知武終不可脅白單于單于\n愈益欲降之廼幽武置大窖中\n師古曰舊米粟之窖\n而空者也音工孝反\n絕\n不飲食\n師古曰飲音於\n禁反食讀曰飲\n天雨雪武臥齧雪與旃毛并咽",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>were a subject and son of Han, yet you disregarded grace and duty, rebelled against your sovereign, turned your back on your parents, and became a captive slave among the barbarians. What use have I of seeing you?\n\n<gloss>Yan Shigu says: \"This means, 'What need do I have to see you?'\"</gloss>\n\nFurthermore, the <term>Chanyu</term> <gloss>supreme ruler of the Xiongnu</gloss> trusts you to decide matters of life and death for men. Yet you do not maintain an equitable heart to uphold justice; instead, you seek to pit the two rulers against each other, watching for disaster and defeat!\n\nWhen Southern Yue killed a Han envoy, they were slaughtered and divided into nine commanderies. When the King of Dayuan killed a Han envoy, his head was hung at the northern gate of the capital. When Chaoxian killed a Han envoy, they were instantly exterminated. Only the Xiongnu have not yet met this fate. You know well that I will not surrender, and it is obvious\n\n<gloss>Yan Shigu says: \"若 <term>ruo</term> means 'you'. It means, 'It is obvious that you know I am unwilling to surrender.'\"</gloss>\n\nthat you wish to make the two nations attack one another. The catastrophe of the Xiongnu will begin with me!\"\n\nLu knew that Wu could never be coerced, and reported this to the Chanyu. The Chanyu only desired all the more to force his surrender. Thereupon, he confined Wu and placed him in a great cellar,\n\n<gloss>Yan Shigu says: \"This refers to an old, empty pit for storing grain and millet.\"</gloss>\n\ncompletely depriving him of food and drink.\n\n<gloss>Yan Shigu says: \"The pronunciation and reading indicate fasting from drink and food.\"</gloss>\n\nSky and snow rained down. Wu lay there, chewing snow and swallowing it down together with the felt wool of his garments.\n\n<summary>Su Wu rebukes Wei Lu for his treason and warns that executing Han envoys brings annihilation, leading the Chanyu to imprison Wu in an icy cellar without sustenance where he survives by eating snow and felt.</summary>\n<keywords>Su Wu, Wei Lu, Chanyu, Han dynasty, Southern Yue, Dayuan, Chaoxian, loyalty, starvation, cellar</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 15,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0c0884adf2ffb52f73bfa",
+  "book_url": "https://sourcelibrary.org/book/6ae0c0884adf2ffb52f73bfa",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0c0884adf2ffb52f73bfa",
+   "title": "前漢書·卷六十二~卷六十三 (Hanshu, Siku Quanshu, vol. 36 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 122,
+   "pages_ocr": 121,
+   "pages_translated": 118,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 122,
+   "distinct_page_numbers": 122,
+   "duplicate_records": 0,
+   "pages_with_ocr": 121,
+   "pages_translated": 118,
+   "with_printed_number": 34,
+   "printed_backsteps": 11,
+   "printed_repeats": 24,
+   "pages_count_field": 122,
+   "pages_translated_field": 118
+  },
+  "run": [
+   27,
+   44,
+   81,
+   93
+  ],
+  "pages": [
+   {
+    "page_number": 27,
+    "page_id": "6ae0c0884adf2ffb52f73c17",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0884adf2ffb52f73bfa/27.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n盡太初故言至麟\n而止張說是也\n自黃帝始\n師古曰遷之書序衆篇各\n别有辭班氏以其文多故\n略而不載但取最後一首故此單目盡於六十九至惟\n漢繼五帝末流之後乃言第七十讀者不詳其意或於\n目中加云叙傳第\n七十此大妄矣\n五帝本紀第一夏本紀第二殷本紀\n第三周本紀第四秦本紀第五始皇本紀第六項羽本\n紀第七髙祖本紀第八吕后本紀第九孝文本紀第十\n孝景本紀第十一今上本紀第十二三代世表第一十\n二諸侯年表第二六國年表第三秦楚之際月表第四\n漢諸侯年表第五髙祖功臣年表第六惠景間功臣年\n<header>前漢書</header>\n<page-num>十三</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>...preface says: 'It concluded in the Taichu era.' Therefore, stating that it stopped at the capture of the unicorn is correct, as Zhang Yan says.\"\n\nBeginning from the Yellow Emperor:\n\n<note>Shigu says: \"In Qian's book, the prefaces to the various chapters each have their own separate text. Master Ban </note><note>Ban Gu</note> considered the text too lengthy, so he omitted it and did not record it, taking only the final piece. Therefore, this singular table of contents ends at chapter sixty-nine. Only when reaching the phrase 'Han succeeded the latter branches of the Five Emperors' does it mention chapter seventy. Readers who do not understand his intent sometimes add to the table of contents: 'Historical Preface, number seventy.' This is a great error!\"\n\n\"Basic Annals of the Five Emperors, First\"; \"Basic Annals of the Xia, Second\"; \"Basic Annals of the Yin, Third\"; \"Basic Annals of the Zhou, Fourth\"; \"Basic Annals of Qin, Fifth\"; \"Basic Annals of the First Emperor, Sixth\"; \"Basic Annals of Xiang Yu, Seventh\"; \"Basic Annals of Gaozu, Eighth\"; \"Basic Annals of Empress Lü, Ninth\"; \"Basic Annals of Filial Emperor Wen, Tenth\"; \"Basic Annals of Filial Emperor Jing, Eleventh\"; \"Basic Annals of the Present Emperor, Twelfth\"; \"Genealogical Tables of the Three Dynasties, First\"; \"Chronological Tables of the Twelve Feudal Lords, Second\"; \"Chronological Tables of the Six States, Third\"; \"Monthly Tables of the Interregnum between Qin and Chu, Fourth\"; \"Tables of the Feudal Lords of Han, Fifth\"; \"Tables of the Meritorious Officials under Gaozu, Sixth\"; \"Chronological Tables of the Meritorious Officials during the Reigns of Hui and Jing,\n\n<header>Book of the Former Han</header>\n<page-num>Thirteen</page-num>\n\n<summary>Yan Shigu comments on the structure of Sima Qian's chapter prefaces and explains why Ban Gu truncated the table of contents, refuting later additions before listing the sequence of the Basic Annals and the opening Chronological Tables of the Records of the Grand Historian.</summary>\n<keywords>Sima Qian, Yan Shigu, Ban Gu, Records of the Grand Historian, Hanshu, Basic Annals, Chronological Tables, Five Emperors, Gaozu, Xiang Yu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 44,
+    "page_id": "6ae0c0884adf2ffb52f73c28",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0884adf2ffb52f73bfa/44.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n全一\n仁人\n巨\n厄\n人\n<page-num>一</page-num>\n言\n<header>卷六十二</header>\n之歡然僕觀其為人自竒士事親孝與士信臨財廉取\n予義分別有讓恭儉下人\n師古曰下\n音胡亞反\n嘗思奮不顧身以\n狥國家之急\n師古曰狥\n從也營也\n其素所畜積也\n師古曰畜\n讀曰蓄\n僕以\n為有國士之風夫人臣出萬死不顧一生之計赴公家\n之難斯巳竒矣今舉事壹不當而全軀保妻子之臣隨\n而媒孽其短\n臣瓚曰媒謂遘合㑹之孽謂為生其罪舋\n也師古曰媒如媒娉之媒孽如麴孽之孽\n一曰齊人謂\n麴餅為媒也\n僕誠私心痛之且李陵提步卒不滿五千\n深踐戎馬之地足歴王庭垂餌虎口橫挑彊胡\n師古曰\n挑音誂",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>yet I observed his character and regarded him as truly an extraordinary man. He served his parents with filial piety, kept faith with fellow gentlemen, showed integrity when facing wealth, maintained righteousness in taking and giving, observed distinctions with deference, and was humble, frugal, and self-effacing before others.\n\n<note>Yan Shigu stated: \"'Xia' <gloss>below/lower</gloss> is pronounced hu-ya <gloss>xià</gloss>.\"</note>\n\nHe constantly thought of exerting himself without regard for his own safety in order to hasten to the urgent needs of the state.\n\n<note>Yan Shigu stated: \"'Xun' <gloss>to devote/sacrifice</gloss> means to follow or to strive for.\"</note>\n\nThis was what he had accumulated within his character all along.\n\n<note>Yan Shigu stated: \"'Xu' is read as xu <gloss>accumulate/cherish</gloss>.\"</note>\n\nI considered him to possess the bearing of a champion of the realm. Now, when a subject devises a plan facing ten thousand deaths without a single thought for his own survival, rushing to the perils of the public interest, this is already extraordinary. Yet when a single undertaking proves amiss, officials who merely preserve their own bodies and safeguard their wives and children promptly seize upon his shortcomings to foster and exaggerate them.\n\n<note>Chen Zan stated: \"'Mei' means to bring together and conspire; 'nie' means to give rise to crime and offense.\" Yan Shigu stated: \"'Mei' is like the matchmaker in marriage negotiations; 'nie' is like yeast or leaven. Another explanation states that the people of Qi refer to yeast cakes as 'mei'.\"</note>\n\nIn my heart I truly lamented this. Furthermore, Li Ling led foot soldiers numbering fewer than five thousand, penetrating deep into the territory of war horses and cavalry. His feet traversed the royal court of the Chanyu; he hung bait before the tiger's mouth and boldly challenged the formidable barbarians.\n\n<note>Yan Shigu stated: \"'Tiao' <gloss>provoke/challenge</gloss> is pronounced tiao.\"</note>\n\n<summary>Sima Qian praises the character, filial piety, humility, and selfless devotion of Li Ling, defending his military bravery and lamenting how self-serving officials at court fabricated and magnified his faults after his lone setback.</summary>\n<keywords>Hanshu, Sima Qian, Letter to Ren An, Li Ling, filial piety, national crisis, Chen Zan, Yan Shigu, Xiongnu, Chanyu court</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 81,
+    "page_id": "6ae0c0884adf2ffb52f73c4d",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0884adf2ffb52f73bfa/81.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n言貪暴而無仁義也甿\n庶人薰音勲鬻音育\n朕命將率徂征厥罪\n師古曰\n徂徃也\n萬\n夫長千夫長三十有二帥\n張晏曰時所獲三十二帥也\n○宋祁曰别本三十並作三\n千\n誤\n降旗奔師\n如淳曰昆邪王偃\n其旗鼓而来降也\n薰鬻徙域\n張晏曰匈奴\n徙東○劉奉\n世曰匈奴\n徙漠奴\n北州以妥\n孟康曰古綏字也臣瓚曰妥安也\n師古曰瓚說是也妥音他果反\n悉爾心毋作怨毋作棐德\n服虔曰棐薄也師古曰\n棐古匪字也匪非也\n毋廼\n廢備\n師古曰禦邊\n之備不可廢\n非敎士不得從徵\n張晏曰士不素\n習不得應召\n王\n其戒之旦壯大就國為人辯略博學經書雜說好星歷\n數術倡優射獵之事招致遊士及衛太子敗齊懷王又",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>they are greedy and violent, possessing neither benevolence nor righteousness. <term>Meng</term> <gloss>common folk</gloss> refers to the common people. <term>Xun</term> is pronounced like <term>xun</term> <gloss>fragrant</gloss>, and <term>yu</term> is pronounced like <term>yu</term> <gloss>nourish</gloss>.\n\n\"We ordered our generals and commanders to set forth on a punitive expedition against their crimes. <note>Yan Shigu notes: \"Cu\" </note><note>original: \"徂\"</note> means to go. Thirty-two commanders of ten-thousand and commanders of one-thousand surrendered their banners and rushed to our army. <note>Zhang Yan notes: These were the thirty-two commanders captured at that time. Song Qi notes: Another edition writes \"thirty\" together as \"three thousand,\" which is an error. Ru Chun notes: King Hunye lowered his banners and drums and came to surrender.</note> The Xunyu migrated away from their domain, <note>Zhang Yan notes: The Xiongnu moved east. Liu Fengshi notes: The Xiongnu moved into the Gobi Desert.</note> and the northern provinces were pacified. <note>Meng Kang notes: \"Tuo\" </note><note>original: \"妥\"</note> is the ancient character for \"sui\" <note>original: \"綏\", peace</note>. Chen Zan notes: \"Tuo\" means peaceful. Yan Shigu notes: Zan's explanation is correct. \"Tuo\" is pronounced with the fanqie of <term>ta</term> and <term>guo</term>.\n\n\"Exert your whole heart, harbor no resentment, and commit no wicked deeds. <note>Fu Qian notes: \"Fei\" </note><note>original: \"棐\"</note> means slight. Yan Shigu notes: \"Fei\" <note>original: \"棐\"</note> is the ancient character for \"fei\" <note>original: \"匪\"</note>, meaning wrong or not. Do not neglect defensive preparations. <note>Yan Shigu notes: The defenses for guarding the borders must not be abandoned.</note> Uninstructed soldiers shall not be conscripted on campaign. <note>Zhang Yan notes: Soldiers who have not been regularly trained may not answer the levy.</note> May the King take heed!\"\n\nWhen Dan grew into full adulthood, he assumed governance of his princely state. In character, he possessed eloquence and strategic cunning, and was widely learned in the canonical classics and assorted doctrines. He took pleasure in astrology, calendrical divination, numerology, theatrical performers, and archery and hunting, thereby gathering together wandering scholars and knights-errant. When Crown Prince Wei was defeated, King Huai of Qi having also\n\n<summary>The investiture patent to King Dan of Yan concludes with reminders of past military victories over the Xiongnu and strict warnings to maintain border defenses and train conscripts; it then introduces King Dan's character, broad learning, and penchant for astrology and wandering scholars.</summary>\n<keywords>King Dan of Yan, Han investiture patent, Xiongnu, King Hunye, Yan Shigu, Zhang Yan, border defense, Liu Dan, Crown Prince Wei, King Huai of Qi</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 93,
+    "page_id": "6ae0c0884adf2ffb52f73c59",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0c0884adf2ffb52f73bfa/93.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n之召相平曰事敗遂發兵乎平曰左將軍巳死百姓皆\n知之不可發也王憂懣\n師古曰懣音滿又音\n悶解在司馬遷傳\n置酒萬載\n宫㑹賓客羣臣妃妾坐飲王自歌曰歸空城兮狗不吠\n雞不鳴橫術何廣廣兮固知國中之無人\n蘇林曰廣音\n曠臣瓚曰術\n道路也師古曰廣讀如本字此\n歌意言身死之後國當空也\n華容夫人起舞曰髮紛\n紛兮窴渠\n孟康曰窴音羃髮歴羃挂岸也臣瓚曰窴\n塞溝渠師古曰瓚說是也窴音徒千反\n骨\n籍籍兮亡居\n師古曰籍籍從\n橫皃也居處也\n母求死子兮妻求死夫裴\n回兩渠間兮君子獨安居\n師古曰置酒之宮池沼所在\n其間有渠故即其所見以為\n欠巳四月壬申\n<header>前漢書</header>\n<page-num>十九</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>this, he summoned Chancellor Ping and said: \"The plot has failed. Shall we dispatch troops?\"\n\nPing replied: \"The Left General is already dead, and all the common people know of it. Troops cannot be sent forth.\"\n\nThe King was filled with distress and despair.\n\n<note>Yan Shigu notes: \"Despair\" (men 懣) is pronounced man, and also men; its explanation appears in the biography of Sima Qian.</note>\n\nHe set out wine at the Wanzai Palace, gathering his guests, high officials, and concubines to sit and drink. The King sang himself:\n\n\"Return to an empty city!\nDogs do not bark,\nRoosters do not crow.\nThe cross-streets, how broad and wide!\nTruly I know that in this kingdom, there is no one left.\"\n\n<note>Su Lin notes: Guang (廣) is pronounced like kuang (曠, desolate).</note>\n\n<note>Chen Zan notes: Shu (術) means thoroughfares and roads.</note>\n\n<note>Yan Shigu notes: Guang is read in its original sense. The meaning of this song is that after his death, the kingdom will be empty and desolate.</note>\n\nLady Huarong arose and danced, singing:\n\n\"Hair in tangled disarray,\nfilling the ditches!\n\n<note>Meng Kang notes: Tian (窴) is pronounced like mi (羃); it means strands of tangled hair clinging to the canal banks. Chen Zan notes: Tian means filling and blocking up drainage ditches. Yan Shigu notes: Zan's explanation is correct. Tian is pronounced as tu-qian in fanqie spelling.</note>\n\nBones strewn in confusion,\nwith nowhere to rest!\n\n<note>Yan Shigu notes: Jiji (籍籍) describes crisscrossing confusion and scattering. Ju (居) means a dwelling place.</note>\n\nMothers seek their dead sons,\nWives seek their dead husbands.\nPacing back and forth between the two canals,\nWhere can a noble lord dwell in peace?\"\n\n<note>Yan Shigu notes: In the palace where wine was served, there were ponds and pools with canals running between them. Thus, she took what she saw before her eyes as a metaphor for the scene.</note>\n\n<unclear>欠巳四月壬申</unclear>\n<note>Header in original text: Book of the Former Han</note>\n<note>Page number: Nineteen</note>\n\n<summary>King Dan of Yan learns that his co-conspirators in the capital have been executed, and upon realizing the rebellion is doomed, he hosts a sorrowful farewell banquet where he and Lady Huarong sing lamentations of utter devastation.</summary>\n<keywords>King Dan of Yan, Chancellor Ping, Shangguan Jie, Lady Huarong, Wanzai Palace, Han dynasty, Hanshu, lamentation, Yan Shigu, Chen Zan</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 16,
+  "stratum": "zh-hanshu",
+  "book_id": "6ae0bdda4adf2ffb52f72939",
+  "book_url": "https://sourcelibrary.org/book/6ae0bdda4adf2ffb52f72939",
+  "tradition": "zh-hanshu",
+  "book": {
+   "id": "6ae0bdda4adf2ffb52f72939",
+   "title": "前漢書·卷二~卷五 (Hanshu, Siku Quanshu, vol. 2 of 57)",
+   "author": "班固 (Ban Gu)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 125,
+   "pages_ocr": 119,
+   "pages_translated": 117,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 125,
+   "distinct_page_numbers": 125,
+   "duplicate_records": 0,
+   "pages_with_ocr": 119,
+   "pages_translated": 117,
+   "with_printed_number": 41,
+   "printed_backsteps": 15,
+   "printed_repeats": 33,
+   "pages_count_field": 125,
+   "pages_translated_field": 117
+  },
+  "run": [
+   10,
+   55,
+   88,
+   100
+  ],
+  "pages": [
+   {
+    "page_number": 10,
+    "page_id": "6ae0bdda4adf2ffb52f72945",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bdda4adf2ffb52f72939/10.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n之\n家\n乙亥夕而不見隴西地震夏旱郃陽侯仲薨\n師古曰\n高帝之\n兄吳王\n濞父也\n秋七月辛未相國何薨\n師古曰\n蕭何也\n三年春發長安六百里內男女十四萬六千人城長安\n三十日罷\n鄭氏曰城一\n面故速罷\n以宗室女爲公主嫁匈奴單于\n夏五月立閩越君搖爲東海王\n應劭曰搖越王勾踐之\n苗裔也帥百越之兵助\n高祖故封東海在吳郡東南濱\n海云師古曰即今泉州是其地\n六月發諸侯王列侯徒\n隸二萬人城長安秋七月都廐災南越王趙佗稱臣奉\n貢\n師古曰佗\n音徒何反\n次定曰事全焉\n五\n2023年1月1日",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>household.\n\nOn the day <term>yihai</term>, the moon was eclipsed in the evening and was not seen. An earthquake occurred in Longxi. In summer, there was a drought. Zhong, the Marquis of Heyang, died.\n\n<gloss>Yan Shigu stated: 'He was an elder brother of Emperor Gaozu and the father of Liu Pi, the King of Wu.'</gloss>\n\nIn autumn, in the seventh month, on the day <term>xinwei</term>, Chancellor of State Xiao He died.\n\n<gloss>Yan Shigu stated: 'This refers to Xiao He.'</gloss>\n\nIn the third year, in spring, 146,000 men and women from within six hundred <term>li</term> <gloss>Chinese miles</gloss> of Chang'an were conscripted to build the city walls of Chang'an. After thirty days, the work was halted.\n\n<gloss>Master Zheng stated: 'Only one side of the city wall was built; therefore, the work ceased quickly.'</gloss>\n\nA daughter of the imperial clan was designated as a princess and given in marriage to the <term>Chanyu</term> <gloss>supreme ruler</gloss> of the Xiongnu.\n\nIn summer, in the fifth month, Yao, the ruler of Minyue, was established as the King of Donghai.\n\n<gloss>Ying Shao stated: 'Yao was a descendant of Goujian, King of Yue. He led the troops of the Hundred Yue tribes to assist Emperor Gaozu; therefore, he was enfeoffed with Donghai. Donghai lay southeast of Wu Commandery, bordering the sea.' Yan Shigu stated: 'This is the modern region of Quanzhou.'</gloss>\n\nIn the sixth month, twenty thousand convict laborers and bondservants belonging to the tributary kings and full marquises were mobilized to build the city walls of Chang'an. In autumn, in the seventh month, a fire broke out in the metropolitan stables. Zhao Tuo, the King of Nanyue, declared himself a vassal and offered tribute.\n\n<gloss>Yan Shigu stated: 'Tuo is pronounced with the fanqie spelling tu-he.' Ci Ding stated: 'The affair was thus brought to completion.'</gloss>\n\n<unclear>五 2023年1月1日</unclear>\n\n<summary>In the second and third years of Emperor Hui, natural omens, noble deaths including Chancellor Xiao He, and construction of Chang'an's city walls occur alongside regional enfeoffments and diplomacy with the Xiongnu and southern kingdoms.</summary>\n<keywords>Emperor Hui, Longxi earthquake, Marquis of Heyang, Xiao He, Chang'an wall construction, Xiongnu marriage alliance, Minyue, King of Donghai, Zhao Tuo, Nanyue</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 55,
+    "page_id": "6ae0bdda4adf2ffb52f72972",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bdda4adf2ffb52f72939/55.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>金定匹唐全書</header>\n<header>卷四</header>\n<page-num>二</page-num>\n祁曰越本\n專作傳\n非所以憂天下也朕甚不取\n師古曰不取猶\n言不用此為善\n也有司固請曰古者殷周有國治安皆且千歲\n師古曰\n治安言\n治理而且安寧\n也治音丈吏反\n有天下者莫長焉\n師古曰言上古以來\n國祚長久無及殷周\n者\n也\n用此道也\n師古曰所以能爾者\n以承嗣相傳故也\n立嗣必子所從來逺\n矣高帝始平天下建諸侯為帝者太祖諸侯王列侯始\n受國者亦皆為其國祖子孫繼嗣世世不絕天下之大\n義也故高帝設之以撫海內\n師古曰設置立\n也謂立此法也\n今釋宜建\n師古曰釋捨也\n宜建為適嗣\n而更選於諸侯宗室非高帝之志也更",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\n<note>Song Qi stated: \"The Yue edition writes <term>zhuan</term> <gloss>focus/devote exclusively</gloss> as <term>chuan</term> <gloss>transmit</gloss>.\"</note>\nThis is not the way to care for All Under Heaven, and We certainly do not approve of it.\"\n<note>Yan Shigu stated: \"<term>Bu qu</term> <gloss>do not approve/take</gloss> is like saying that one does not consider this to be good.\"</note>\n\nThe officials firmly petitioned, saying: \"In ancient times, the rulers of Yin and Zhou possessed states that enjoyed peace and order for nearly a thousand years;\n<note>Yan Shigu stated: \"<term>Zhi'an</term> <gloss>peace and order</gloss> means governing and achieving tranquility. The pronunciation of <term>zhi</term> is the fan of <term>zhang</term> and <term>li</term> <gloss>pronounced zhì</gloss>.\"</note>\namong those who held All Under Heaven, none lasted longer than them.\n<note>Yan Shigu stated: \"This means that from high antiquity onward, in longevity of dynastic fortune, none equaled Yin and Zhou.\"</note>\nThey accomplished this by following this way.\n<note>Yan Shigu stated: \"The reason they were able to do so was because of the hereditary succession from father to son.\"</note>\nEstablishing an heir apparent must prioritize the son; the origin of this practice lies deep in the distant past. When Emperor Gaozu first pacified All Under Heaven, he established the feudal lords. As the emperor, he was the Grand Ancestor; the feudal kings and ranked marquises who first received their domains were also each the founding ancestors of their states. For their sons and grandsons to succeed to the inheritance, generation after generation without interruption, is the great principle of All Under Heaven. Therefore, Emperor Gaozu established this institution to pacify all within the seas.\n<note>Yan Shigu stated: \"<term>She</term> <gloss>established</gloss> means to set up. It refers to establishing this law.\"</note>\nNow, to abandon the proper heir\n<note>Yan Shigu stated: \"<term>Shi</term> <gloss>abandon</gloss> means to discard. <term>Yi jian</term> <gloss>the proper heir</gloss> refers to the legitimate heir.\"</note>\nand instead select from among the feudal lords and the imperial clan was not the intention of Emperor Gaozu. Furthermore,\n\n<summary>Officials petition Emperor Wen to designate his son as heir apparent, citing the thousand-year stability of the Yin and Zhou dynasties achieved through direct succession. They argue that hereditary succession from father to son was the foundational law established by Emperor Gaozu to secure the empire.</summary>\n<keywords>Emperor Wen of Han, Emperor Gaozu, succession, heir apparent, Yin dynasty, Zhou dynasty, ancestral lineage, Yan Shigu, Song Qi</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 88,
+    "page_id": "6ae0bdda4adf2ffb52f72993",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bdda4adf2ffb52f72939/88.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n哭臨宮殿中殿中當臨者皆以旦夕各十五舉音禮畢\n罷非旦夕臨時禁無得擅哭臨以下\n師古曰為下棺也\n音義與高紀同\n服大紅十五日小紅十四日纖七日釋服\n服虔曰皆當\n言大功小功\n布也纖細布衣也應劭曰紅者中祥大祥以紅為領緣\n纖者禪也凡三十六日而釋服矣此以日易月也晉灼\n曰漢書例以紅為功也師古曰紅與功同服晉二說是\n也此喪制者文帝自率已意創而為之非有取於周禮\n也何為以日易月乎三年之喪其實二十七月豈有三\n十六月之文禪又無七月也應氏既失之於前而近代\n學者因循謬說未之思也○劉攽曰文帝制此喪服斷\n自巳葬之後其未葬之前則服斬衰漢諸帝自崩至葬\n有百餘日者未葬則服不除矣翟方進傳後母終既葬\n三十六日起視事此其證也說者遂以日易月又不通\n<header>前漢書</header>\n<page-num>二十四</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to wail and weep in the palace halls. Those in the palace whose duty it is to mourn and wail shall do so each morning and evening, raising their voices fifteen times in wailing; when the ritual is completed,\nthey shall cease. Except at the designated hours of morning and evening mourning, it is forbidden to wail without authorization. Once the coffin has descended into the grave,\n<note>Yan Shigu stated: \"This means lowering the coffin into the tomb.\"</note>\n<note>The phonetic reading and meaning are identical to those in the Annals of Emperor Gaozu.</note>\nthe mourners shall wear greater coarse hemp for fifteen days, lesser coarse hemp for fourteen days, and fine hemp for seven days, after which they shall discard their mourning garments.\n<note>Fu Qian stated: \"These all should properly be called <term>dagong</term> <gloss>greater mourning of coarse cloth</gloss> and <term>xiaogong</term> <gloss>lesser mourning of coarse cloth</gloss>. <term>Xian</term> <gloss>fine hemp</gloss> refers to garments of fine cloth.\" Ying Shao stated: \"<term>Hong</term> <gloss>red/coarse cloth</gloss> refers to using red cloth for the collars and borders during the intermediate sacrifice of auspiciousness and the great sacrifice of auspiciousness. <term>Xian</term> <gloss>fine hemp</gloss> means unlined garments. In total, thirty-six days elapse before shedding mourning garments; this represents substituting days for months.\" Jin Zhuo stated: \"It is standard practice in the Book of Han to use <term>hong</term> <gloss>red</gloss> in place of <term>gong</term> <gloss>coarse mourning cloth</gloss>.\" Yan Shigu stated: \"<term>Hong</term> <gloss>red</gloss> and <term>gong</term> <gloss>coarse mourning cloth</gloss> are identical; the two explanations of Fu and Jin are correct. This mourning regulation was created by Emperor Wen following his own personal judgment; it was not derived from the Rites of Zhou. Why should it be regarded as substituting days for months? The three-year mourning period in fact spans twenty-seven months; where is there any text prescribing thirty-six months? Furthermore, unlined garments do not involve a period of seven months. Master Ying erred first in this regard, and subsequent scholars blindly followed this fallacious theory without examining it.\" Liu Ban stated: \"The mourning attire instituted by Emperor Wen was strictly reckoned from the time after the burial took place. Prior to the burial, mourners wore untrimmed sackcloth <term>zhancui</term>. For the various emperors of Han, the time from demise to burial frequently exceeded one hundred days; so long as the burial had not taken place, mourning garments were not shed. In the biography of Zhai Fangjin, when his stepmother died, he returned to attend to official business thirty-six days after her burial had been completed; this serves as proof. Commentators who subsequently claimed this was substituting days for months were likewise misguided.\"</note>\n\n<summary>Emperor Wen's testamentary edict establishes strict parameters for palace wailing and defines mourning attire periods lasting thirty-six days after burial, prompting detailed commentary on whether this abbreviated mourning substituted days for months.</summary>\n<keywords>Emperor Wen of Han, testamentary edict, mourning rituals, dagong, xiaogong, xian, Yan Shigu, Fu Qian, Ying Shao, Jin Zhuo, Liu Ban, Hanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 100,
+    "page_id": "6ae0bdda4adf2ffb52f7299f",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bdda4adf2ffb52f72939/100.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n孝惠廟酎奏文始五行之舞孝文皇帝臨天下通關梁\n不異逺方\n張晏曰孝文十二年除\n關不用傳令逺近若一\n除誹謗去肉刑賞賜\n長老收恤孤獨以遂羣生\n師古曰遂\n成也達也\n減耆欲不受獻\n師\n古\n曰耆讀\n曰嗜\n罪人不帑\n蘇林曰刑不及妻子\n師古曰帑讀與孥同\n不誅無罪不私\n其利也除宮刑出美人重絕人之世也朕既不敏弗能\n勝識\n師古曰敏材智速\n疾也勝識盡知之\n此皆上世之所不及而孝文皇\n帝親行之\n師古曰上世謂\n古昔之帝王也\n德厚侔天地利澤施四海\n師\n古\n曰侔等\n也音牟\n靡不獲福明象乎日月而廟樂不稱朕甚懼焉\n<header>欽定四庫全書</header>\n<header>前漢書</header>\n<page-num>二</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>in the ancestral temple of Emperor Xiaohui, at the offering of the sacrificial wine, perform the dances of Wenshi <gloss>Cultural Origin</gloss> and the Five Phases.\n\nWhen Emperor Xiaowen ruled over all under Heaven, he opened the passes and bridges, treating distant regions no differently than those near.\n\n<gloss>Zhang Yan states: \"In the twelfth year of Emperor Xiaowen, the border passes were abolished and travel passes were no longer used, so that both near and far were treated as one.\"</gloss>\n\nHe abolished laws against defamation and removed mutilating corporal punishments. He bestowed gifts upon the elderly, and cared for orphans and the childless, thereby fulfilling the lives of all living beings.\n\n<gloss>Yan Shigu states: \"<term>Sui</term> <gloss>to fulfill</gloss> means to accomplish and to bring to fruition.\"</gloss>\n\nHe curtailed his desires and refused tributary offerings.\n\n<gloss>Yan Shigu states: \"<term>Qi</term> is read as <term>shi</term> <gloss>desire / indulgence</gloss>.\"</gloss>\n\nHe did not condemn the wives and children of criminals.\n\n<gloss>Su Lin states: \"Punishment did not extend to wives and children.\" Yan Shigu states: \"<term>Tang</term> is pronounced the same as <term>nu</term> <gloss>wife and children</gloss>.\"</gloss>\n\nHe did not execute the innocent, nor did he treat the empire's revenues as personal gain. He abolished castration and sent home the palace maidens, showing deep reluctance to sever a person's lineage. I am lacking in wisdom and incapable of comprehending all his virtues.\n\n<gloss>Yan Shigu states: \"<term>Min</term> <gloss>quick-witted</gloss> means intelligence and swift understanding. <term>Shengshi</term> <gloss>comprehend fully</gloss> means to know completely.\"</gloss>\n\nThese were deeds that earlier rulers could not achieve, yet Emperor Xiaowen carried them out in person.\n\n<gloss>Yan Shigu states: \"Earlier rulers refers to sovereign kings of antiquity.\"</gloss>\n\nHis virtue was as profound as Heaven and Earth, and his benevolence spread across the four seas. None failed to receive his blessings. His brightness resembled that of the sun and moon, yet the music of his ancestral temple does not match his greatness. I am deeply apprehensive.\"\n\n<summary>Emperor Jing praises the virtuous governance and compassionate legal reforms of Emperor Xiaowen, expressing concern that the ancestral temple music fails to honor his achievements adequately.</summary>\n<keywords>Emperor Jing, Emperor Xiaowen, legal reforms, corporal punishment, ancestral temple music, Wenshi dance, Five Phases dance, Hanshu, Yan Shigu, Zhang Yan, Su Lin</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

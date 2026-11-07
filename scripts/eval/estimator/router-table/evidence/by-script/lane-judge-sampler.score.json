@@ -1,0 +1,465 @@
+{
+ "source": "lane-judge-sampler (#7611)",
+ "generated_at": "2026-11-02T04:20:09.643Z",
+ "of": "scripts/eval/estimator/router-table/evidence/lane-judge-sampler.score.json",
+ "cells": {
+  "french-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 15,
+     "books": 15,
+     "accept": "14/15",
+     "wrong_text_pages": "0/15",
+     "classes_k_of_n": {
+      "O16": "4/15",
+      "O11": "3/15",
+      "E2": "3/15",
+      "O6": "2/15",
+      "T6": "1/15",
+      "O14": "1/15",
+      "O8": "1/15"
+     },
+     "script_basis": {
+      "page": 15
+     }
+    }
+   }
+  },
+  "french-lite|manuscript": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 2,
+     "books": 2,
+     "accept": "2/2",
+     "wrong_text_pages": "0/2",
+     "classes_k_of_n": {
+      "O6": "2/2",
+      "E2": "2/2"
+     },
+     "script_basis": {
+      "page": 2
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 20,
+     "books": 20,
+     "accept": "16/20",
+     "wrong_text_pages": "1/20",
+     "classes_k_of_n": {
+      "O8": "11/20",
+      "O6": "7/20",
+      "E2": "5/20",
+      "O13": "2/20",
+      "O11": "2/20",
+      "O16": "2/20",
+      "O14": "1/20",
+      "O7": "1/20",
+      "I3": "1/20",
+      "O5": "1/20",
+      "O12": "1/20",
+      "D1": "1/20"
+     },
+     "script_basis": {
+      "page": 20
+     }
+    }
+   }
+  },
+  "italian-lite|print": {
+   "routes": {
+    "lighton>agy-flash-low": {
+     "n": 36,
+     "books": 9,
+     "accept": "31/36",
+     "wrong_text_pages": "3/36",
+     "classes_k_of_n": {
+      "O8": "17/36",
+      "E2": "9/36",
+      "O11": "8/36",
+      "O16": "7/36",
+      "O6": "6/36",
+      "D1": "6/36",
+      "O7": "3/36",
+      "O12": "3/36",
+      "O5": "2/36",
+      "T6": "2/36",
+      "O1": "1/36",
+      "O14": "1/36",
+      "I4": "1/36"
+     },
+     "script_basis": {
+      "page": 36
+     }
+    }
+   }
+  },
+  "latin-blank|print": {
+   "routes": {
+    "pero>agy-flash-low-written": {
+     "n": 72,
+     "books": 4,
+     "accept": "35/72",
+     "wrong_text_pages": "31/72",
+     "classes_k_of_n": {
+      "O6": "40/72",
+      "E2": "26/72",
+      "O8": "26/72",
+      "O7": "19/72",
+      "O5": "15/72",
+      "O12": "14/72",
+      "O14": "12/72",
+      "O1": "9/72",
+      "O16": "5/72",
+      "O17": "5/72",
+      "O11": "5/72",
+      "O4": "4/72",
+      "D1": "3/72",
+      "T6": "2/72",
+      "O13": "1/72",
+      "O3": "1/72"
+     },
+     "script_basis": {
+      "page": 72
+     }
+    }
+   }
+  },
+  "latin-gpu-7263|print": {
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 121,
+     "books": 20,
+     "accept": "102/121",
+     "wrong_text_pages": "15/121",
+     "classes_k_of_n": {
+      "O6": "41/121",
+      "O8": "40/121",
+      "E2": "33/121",
+      "O16": "17/121",
+      "O12": "10/121",
+      "O14": "8/121",
+      "O11": "8/121",
+      "O7": "7/121",
+      "D1": "7/121",
+      "O5": "4/121",
+      "T6": "4/121",
+      "O1": "3/121",
+      "O17": "2/121",
+      "O13": "2/121",
+      "O3": "2/121",
+      "I4": "1/121",
+      "O15": "1/121",
+      "O2": "1/121"
+     },
+     "script_basis": {
+      "page": 121
+     }
+    }
+   }
+  },
+  "latin-lite|print": {
+   "routes": {
+    "pero>agy-flash-low": {
+     "n": 40,
+     "books": 10,
+     "accept": "32/40",
+     "wrong_text_pages": "6/40",
+     "classes_k_of_n": {
+      "E2": "13/40",
+      "O8": "10/40",
+      "O6": "10/40",
+      "O12": "9/40",
+      "O11": "7/40",
+      "D1": "6/40",
+      "O7": "4/40",
+      "O5": "3/40",
+      "O10": "2/40",
+      "T6": "2/40",
+      "O16": "1/40",
+      "O13": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  },
+  "study-7866/latin-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 65,
+     "books": 14,
+     "accept": "47/65",
+     "wrong_text_pages": "13/65",
+     "classes_k_of_n": {
+      "O6": "34/65",
+      "O8": "29/65",
+      "E2": "23/65",
+      "O16": "14/65",
+      "O11": "8/65",
+      "O5": "8/65",
+      "T6": "7/65",
+      "O7": "6/65",
+      "O10": "4/65",
+      "O12": "4/65",
+      "I1": "2/65",
+      "O1": "2/65",
+      "O3": "1/65",
+      "O9": "1/65",
+      "O2": "1/65",
+      "O15": "1/65",
+      "O14": "1/65",
+      "D1": "1/65",
+      "O4": "1/65"
+     },
+     "script_basis": {
+      "page": 65
+     }
+    }
+   }
+  },
+  "study-7866/latin-flash3|manuscript": {
+   "routes": {
+    "3flash": {
+     "n": 3,
+     "books": 2,
+     "accept": "0/3",
+     "wrong_text_pages": "2/3",
+     "classes_k_of_n": {
+      "O6": "2/3",
+      "O8": "2/3",
+      "O16": "2/3",
+      "O12": "1/3",
+      "O5": "1/3",
+      "E2": "1/3",
+      "O11": "1/3"
+     },
+     "script_basis": {
+      "page": 3
+     }
+    }
+   }
+  },
+  "study-7866/latin-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 45,
+     "books": 9,
+     "accept": "29/45",
+     "wrong_text_pages": "12/45",
+     "classes_k_of_n": {
+      "O6": "19/45",
+      "O8": "15/45",
+      "E2": "7/45",
+      "O16": "6/45",
+      "I1": "4/45",
+      "O5": "4/45",
+      "O11": "4/45",
+      "T6": "4/45",
+      "O12": "4/45",
+      "O7": "2/45",
+      "D1": "1/45",
+      "O3": "1/45",
+      "O10": "1/45"
+     },
+     "script_basis": {
+      "page": 45
+     }
+    }
+   }
+  },
+  "study-7866/latin-lite|print": {
+   "routes": {
+    "lite": {
+     "n": 22,
+     "books": 6,
+     "accept": "9/22",
+     "wrong_text_pages": "8/22",
+     "classes_k_of_n": {
+      "O6": "19/22",
+      "E2": "10/22",
+      "O5": "8/22",
+      "O8": "6/22",
+      "O11": "4/22",
+      "O16": "4/22",
+      "O12": "3/22",
+      "O7": "3/22",
+      "O14": "2/22",
+      "T6": "1/22",
+      "O17": "1/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    }
+   }
+  },
+  "study-7866/latin-lite|manuscript": {
+   "routes": {
+    "lite": {
+     "n": 5,
+     "books": 1,
+     "accept": "1/5",
+     "wrong_text_pages": "4/5",
+     "classes_k_of_n": {
+      "O6": "4/5",
+      "O12": "2/5",
+      "O16": "2/5",
+      "O8": "2/5",
+      "T6": "1/5",
+      "O13": "1/5",
+      "O5": "1/5",
+      "E2": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "study-7866/none|print": {
+   "routes": {
+    "lite": {
+     "n": 9,
+     "books": 2,
+     "accept": "7/9",
+     "wrong_text_pages": "1/9",
+     "classes_k_of_n": {
+      "O6": "8/9",
+      "O7": "1/9",
+      "O8": "1/9",
+      "O14": "1/9",
+      "O11": "1/9",
+      "O15": "1/9",
+      "E2": "1/9",
+      "O16": "1/9"
+     },
+     "script_basis": {
+      "page": 9
+     }
+    }
+   }
+  },
+  "study-7866/russian-flash3|print": {
+   "routes": {
+    "3flash": {
+     "n": 10,
+     "books": 2,
+     "accept": "9/10",
+     "wrong_text_pages": "0/10",
+     "classes_k_of_n": {
+      "O11": "2/10",
+      "O8": "2/10",
+      "E2": "2/10",
+      "O16": "1/10"
+     },
+     "script_basis": {
+      "page": 10
+     }
+    }
+   }
+  },
+  "study-7866/russian-flash3|unknown": {
+   "routes": {
+    "3flash": {
+     "n": 5,
+     "books": 1,
+     "accept": "5/5",
+     "wrong_text_pages": "0/5",
+     "classes_k_of_n": {
+      "E2": "1/5",
+      "O8": "1/5",
+      "O11": "1/5"
+     },
+     "script_basis": {
+      "page": 5
+     }
+    }
+   }
+  },
+  "study-7866/zh-paddle-dice-lt090|manuscript": {
+   "routes": {
+    "paddle": {
+     "n": 278,
+     "books": 58,
+     "accept": "181/278",
+     "wrong_text_pages": "64/278",
+     "classes_k_of_n": {
+      "O11": "136/278",
+      "O6": "119/278",
+      "O12": "61/278",
+      "O16": "48/278",
+      "O5": "36/278",
+      "E2": "29/278",
+      "O7": "19/278",
+      "O8": "18/278",
+      "O1": "10/278",
+      "O4": "7/278",
+      "O17": "6/278",
+      "O10": "2/278",
+      "T4": "1/278",
+      "I4": "1/278",
+      "O14": "1/278"
+     },
+     "script_basis": {
+      "page": 278
+     }
+    }
+   }
+  },
+  "zh-siku-first-tr|print": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 8,
+     "books": 8,
+     "accept": "7/8",
+     "wrong_text_pages": "0/8",
+     "classes_k_of_n": {
+      "O6": "5/8",
+      "T10": "4/8",
+      "E2": "3/8",
+      "O16": "1/8",
+      "D1": "1/8"
+     },
+     "script_basis": {
+      "page": 8
+     }
+    }
+   }
+  },
+  "zh-siku-first-tr|manuscript": {
+   "routes": {
+    "agy-flash-low@1": {
+     "n": 22,
+     "books": 22,
+     "accept": "13/22",
+     "wrong_text_pages": "6/22",
+     "classes_k_of_n": {
+      "T10": "12/22",
+      "O6": "12/22",
+      "E2": "10/22",
+      "T9": "3/22",
+      "T5": "2/22",
+      "T8": "2/22",
+      "O7": "2/22",
+      "T3": "1/22",
+      "D1": "1/22",
+      "O11": "1/22",
+      "O5": "1/22",
+      "O17": "1/22",
+      "O4": "1/22",
+      "T7": "1/22",
+      "O12": "1/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    }
+   }
+  }
+ }
+}

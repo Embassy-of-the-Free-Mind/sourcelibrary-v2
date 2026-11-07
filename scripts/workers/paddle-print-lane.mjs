@@ -38,13 +38,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { recountBook } from '../lib/page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
+import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import {
-  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
+  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
   storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
   fallbackRoute,
 } from '../lib/paddle-print-lane.mjs';
@@ -146,7 +146,7 @@ async function census() {
     for (let i = 0; i < cand.length; i += 100) {
       const chunk = cand.slice(i, i + 100);
       const rows = await P.aggregate([
-        { $match: { book_id: { $in: chunk.map((b) => b.id) }, page_number: { $gt: 0 } } },
+        { $match: { book_id: { $in: chunk.map((b) => b.id) }, ...VISIBLE_PAGE_MATCH } },
         { $project: {
           _id: 0, book_id: 1, w: '$image_width', h: '$image_height',
           src: '$ocr.source', model: '$ocr.model', pipeline: '$ocr.pipeline', edited_by: '$ocr.edited_by', edited_at: '$ocr.edited_at',
@@ -221,13 +221,15 @@ async function plan() {
   const tally = { books: 0, pages: 0, keep: {}, no_image: 0, skipped_books: [] };
   await withMongo(async (db) => {
     for (const bid of ids) {
-      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1 } });
+      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { tally.skipped_books.push({ bid, why: 'not_found' }); continue; }
+      // split before read (#7605): two leaves read here still land on ONE page record, uncitable and stranded by the split
+      if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && book.pipeline_auto.hold.reason !== HOLD_REASON) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
       // canary by eye 2026-10-23: on kanji-katakana print Paddle reads katakana as look-alike kanji (ヲ→之, ス→入)
       // and invented a garbled near-repeat line; #7184 measured Chinese only. Japanese stays out of this lane.
       if (laneLanguage(book.language) === 'Japanese') { tally.skipped_books.push({ bid, why: 'japanese' }); continue; }
-      const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gt: 0 } }, { projection: {
+      const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH }, { projection: {
         id: 1, page_number: 1, image_width: 1, image_height: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1,
         photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
       } }).sort({ page_number: 1 }).toArray();
@@ -243,7 +245,7 @@ async function plan() {
       if (!rows.length) { tally.skipped_books.push({ bid, why: 'nothing_to_read' }); continue; }
       if (!APPLY) { log(`${bid} would hold and plan ${rows.length}/${pages.length} pages | ${String(book.title).slice(0, 50)}`); tally.books++; tally.pages += rows.length; continue; }
       // the hold BEFORE anything else: an OCR write on a released book otherwise queues paid gap-fill translation
-      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { engine: PADDLE.model, planned_pages: rows.length } });
+      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: PADDLE.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); log(`${bid} hold: ${h.outcome} — not planned`); continue; }
       fs.writeFileSync(planFile(book.id), JSON.stringify({
         bid: book.id, title: book.title, language: book.language, provider: book.image_source?.provider || null,
@@ -454,8 +456,9 @@ async function apply() {
     const P = db.collection('pages'), B = db.collection('books');
     for (const { bid, pages: prepped } of ready) {
       const pl = readJson(planFile(bid));
-      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1 } });
+      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { log(`${bid} not found — skipping`); continue; }
+      if (isUnsplitSpread(book)) { log(`${bid} needs_splitting — split it first, not written (#7605)`); continue; }
       // the hold is the lane's guarantee that no paid re-translation follows the write
       if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { log(`${bid} NOT held for ${HOLD_REASON} — refusing to write`); totals.not_held++; continue; }
       const language = laneLanguage(book.language);

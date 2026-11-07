@@ -23,7 +23,7 @@ import { MongoClient } from 'mongodb';
 const OUT = process.argv[2];
 if (!OUT) { console.error('usage: princeton-maya-enumerate-6559.mjs <out-dir>'); process.exit(1); }
 const DPUL = 'https://dpul.princeton.edu/mesoamerican/catalog';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function getJson(url) {

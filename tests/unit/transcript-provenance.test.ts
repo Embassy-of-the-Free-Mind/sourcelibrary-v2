@@ -19,6 +19,8 @@ import {
   modelDisplayName,
   pageTextSource,
   isUnreviewedMachineTranslation,
+  textProducedAt,
+  datedProvenanceLabel,
 } from '@/lib/text-provenance';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Page } from '@/lib/types';
@@ -31,13 +33,13 @@ function page(ocr: Record<string, unknown> | undefined): Pick<Page, 'ocr'> {
 }
 
 describe('transcriptProvenance', () => {
-  it('Kraken lane (#4883): names the Syriac model by route, never the bare model id', () => {
+  it('Kraken lane (#4883): the drawer credits the Syriac model by route; the chip says machine transcription', () => {
     const ms = transcriptProvenance(page({ model: 'sophro-mhiro', data: 'x', engine: { name: 'kraken', model: 'sophro-mhiro', route: 'manuscript' } }));
     expect(ms).toEqual({ kind: 'kraken', route: 'manuscript' });
     expect(transcriptProvenanceLabel(ms!, en, 'full')).toContain('Sophro Mhiro');
     const pr = transcriptProvenance(page({ model: 'omnisyr', data: 'x', engine: { name: 'kraken', model: 'omnisyr', route: 'print' } }));
     expect(pr).toEqual({ kind: 'kraken', route: 'print' });
-    expect(transcriptProvenanceLabel(pr!, en, 'short')).toBe('omnisyr (Kraken)');
+    expect(transcriptProvenanceLabel(pr!, en, 'short')).toBe('Machine transcription');
     expect(transcriptProvenanceLabel(pr!, es, 'full')).toContain('siríaco impreso');
   });
 
@@ -117,10 +119,12 @@ describe('transcriptProvenanceLabel — header chip and drawer never disagree', 
     });
   }
 
-  it('Archive OCR short form names the engine; full form is the drawer sentence', () => {
+  it('Archive OCR names the Archive as the source, not its engine (#7263)', () => {
     const prov = transcriptProvenance(page({ source: 'ia_djvu', model: 'ia-ocr/0.0.13', data: 'x', language: 'English' }))!;
-    expect(transcriptProvenanceLabel(prov, en, 'short')).toBe('Internet Archive OCR · ia-ocr/0.0.13');
-    expect(transcriptProvenanceLabel(prov, en, 'full')).toBe("Read from the scan by the Internet Archive's OCR (ia-ocr/0.0.13)");
+    expect(transcriptProvenanceLabel(prov, en, 'short')).toBe('Internet Archive OCR');
+    expect(transcriptProvenanceLabel(prov, en, 'full')).toBe("Read from the scan by the Internet Archive's OCR");
+    const dated = transcriptProvenance(page({ source: 'ia_djvu', model: 'ia-djvu', data: 'x', language: 'English', ia: { engine: 'ABBYY FineReader 11.0', ocr_date: new Date('2014-06-01T00:00:00Z') } }))!;
+    expect(transcriptProvenanceLabel(dated, en, 'full')).toBe("Read from the scan by the Internet Archive's OCR (2014)");
   });
 
   it('the Archive chip tooltip names the numbers failure mode and shows agreement only when measured', () => {
@@ -128,10 +132,42 @@ describe('transcriptProvenanceLabel — header chip and drawer never disagree', 
     expect(en.transcriptChipIaTitle(0.964)).toContain('96%');
   });
 
-  it('model short form is the display name; full form keeps the exact id', () => {
+  it('model: says what kind of text it is, never which model (#7263)', () => {
     const prov = transcriptProvenance(page({ source: 'ai', model: 'gemini-3.1-flash-lite-preview', data: 'x', language: 'Latin' }))!;
-    expect(transcriptProvenanceLabel(prov, en, 'short')).toBe('Gemini 3.1 Flash-Lite');
-    expect(transcriptProvenanceLabel(prov, en, 'full')).toBe('Read from the scan by gemini-3.1-flash-lite-preview');
+    expect(transcriptProvenanceLabel(prov, en, 'short')).toBe('Machine transcription');
+    expect(transcriptProvenanceLabel(prov, en, 'full')).toBe('Machine transcription of the scan');
+  });
+
+  it('manual: a hand correction of a machine reading says so; the model is not named', () => {
+    const corrected = transcriptProvenance(page({ source: 'manual', model: 'gemini-2.5-flash', data: 'x', language: 'Latin' }))!;
+    expect(transcriptProvenanceLabel(corrected, en, 'full')).toBe('Machine transcription, corrected by hand');
+    const byHand = transcriptProvenance(page({ source: 'manual', data: 'x', language: 'Latin' }))!;
+    expect(transcriptProvenanceLabel(byHand, en, 'full')).toBe('Transcribed by hand');
+    expect(transcriptProvenanceLabel(transcriptProvenance(page({ source: 'manual', model: 'human', data: 'x', language: 'Latin' }))!, en, 'full'))
+      .toBe('Transcribed by hand');
+  });
+
+  // Every locale, every machine-made kind: no vendor or model name reaches the reader (#7263).
+  // The Kraken drawer sentence is the one exception, by design: it credits scholarly Syriac models.
+  it('no locale names a vendor model on a machine-made page', () => {
+    const VENDOR = /gemini|flash|claude|opus|sonnet|gpt|mistral|paddle|mineru|abbyy|finereader|ia-ocr/i;
+    const machineKinds: Array<Record<string, unknown>> = [
+      { source: 'ai', model: 'gemini-3.1-flash-lite-preview', data: 'x', language: 'Latin' },
+      { source: 'ai', model: 'claude-opus-5-5', data: 'x', language: 'Latin' },
+      { source: 'manual', model: 'gemini-2.5-flash', data: 'x', language: 'Latin' },
+      { source: 'ia_djvu', model: 'ia-ocr/0.0.13', data: 'x', language: 'English', ia: { engine: 'ABBYY FineReader 11.0', ocr_date: new Date('2014-06-01') } },
+      { model: 'omnisyr', data: 'x', engine: { name: 'kraken', model: 'omnisyr', route: 'print' } },
+    ];
+    for (const loc of ['en', 'es', 'la', 'nl', 'zh'] as const) {
+      const t = getReaderStrings(loc).info;
+      expect(t.machineTranslation).not.toMatch(VENDOR);
+      expect(t.machineTranslationEdited).not.toMatch(VENDOR);
+      for (const ocr of machineKinds) {
+        const prov = transcriptProvenance(page(ocr))!;
+        expect(transcriptProvenanceLabel(prov, t, 'short')).not.toMatch(VENDOR);
+        if (prov.kind !== 'kraken') expect(transcriptProvenanceLabel(prov, t, 'full')).not.toMatch(VENDOR);
+      }
+    }
   });
 
   it('corpus short form', () => {
@@ -222,5 +258,63 @@ describe('isUnreviewedMachineTranslation', () => {
     expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-3-flash-preview', source: 'source-column', language: 'English' }))).toBe(false);
     expect(isUnreviewedMachineTranslation(tr({ data: '', model: 'gemini-3-flash-preview', source: 'ai', language: 'English' }))).toBe(false);
     expect(isUnreviewedMachineTranslation(tr(undefined))).toBe(false);
+  });
+});
+
+// #7263: the reader says WHEN a machine text was produced, and shows no date rather than a guessed one.
+describe('textProducedAt', () => {
+  const at = new Date('2026-03-15T12:00:00Z');
+  const later = new Date('2026-07-01T00:00:00Z');
+  const pg = (o: Record<string, unknown>) => o as unknown as Pick<Page, 'ocr' | 'translation' | 'split_from'>;
+  const ocr = (x: Record<string, unknown>) => pg({ ocr: { data: 'x', language: 'Latin', model: 'gemini-3-flash-preview', source: 'ai', ...x } });
+  const tr = (x: Record<string, unknown>) => pg({ translation: { data: 'x', language: 'English', model: 'gemini-3-flash-preview', source: 'ai', ...x } });
+
+  it('prefers the run date, and falls back on updated_at', () => {
+    expect(textProducedAt(ocr({ updated_at: later, engine: { run: { at } } }), 'ocr')).toEqual(at);
+    expect(textProducedAt(ocr({ updated_at: at }), 'ocr')).toEqual(at);
+    expect(textProducedAt(tr({ updated_at: at }), 'translation')).toEqual(at);
+  });
+
+  it('reads the ISO strings a client-side page turn carries', () => {
+    expect(textProducedAt(ocr({ updated_at: at.toISOString() }), 'ocr')).toEqual(at);
+  });
+
+  it('no date when the record has none, or an unusable one', () => {
+    expect(textProducedAt(pg({}), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({}), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ updated_at: 'not a date' }), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ updated_at: new Date(0) }), 'ocr')).toBeNull();
+  });
+
+  it('a person’s edit dates from edited_at, never from a machine stamp', () => {
+    expect(textProducedAt(tr({ updated_at: later, edited_at: at, edited_by: 'A' }), 'translation')).toEqual(at);
+    expect(textProducedAt(tr({ updated_at: later, edited_by: 'A' }), 'translation')).toBeNull();
+    expect(textProducedAt(ocr({ source: 'manual', updated_at: later }), 'ocr')).toBeNull();
+  });
+
+  it('a split leaf without a run date: updated_at may be the swap, so no date', () => {
+    expect(textProducedAt({ ...tr({ updated_at: later }), split_from: 'p' }, 'translation')).toBeNull();
+    expect(textProducedAt({ ...tr({ updated_at: later, engine: { run: { at } } }), split_from: 'p' }, 'translation')).toEqual(at);
+  });
+
+  it('texts we did not produce take no date: Archive OCR, corpus, e-text, a corpus or manual translation', () => {
+    expect(textProducedAt(ocr({ source: 'ia_djvu', updated_at: at }), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ source: 'corpus', model: 'etcsl-corpus', updated_at: at }), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ source: 'sefaria', updated_at: at, text_source: { name: 'Sefaria', license: 'CC0' } }), 'ocr')).toBeNull();
+    expect(textProducedAt(tr({ source: 'corpus', model: 'etcsl-corpus', updated_at: at }), 'translation')).toBeNull();
+    expect(textProducedAt(tr({ source: 'manual', updated_at: at }), 'translation')).toBeNull();
+  });
+
+  it('every locale prints the month and keeps the label, in UTC', () => {
+    const words = { en: 'March 2026', es: 'marzo de 2026', la: 'mense Martio 2026', nl: 'maart 2026', zh: '2026年3月' } as const;
+    for (const loc of ['en', 'es', 'la', 'nl', 'zh'] as const) {
+      const t = getReaderStrings(loc).info;
+      expect(t.producedMonth(at)).toBe(words[loc]);
+      expect(t.producedMonth(new Date('2026-04-01T00:00:00Z'))).not.toBe(words[loc]);
+      expect(datedProvenanceLabel(t.machineTranscript, at, t)).toContain(t.machineTranscript);
+      expect(datedProvenanceLabel(t.machineTranscript, at, t)).toContain(words[loc]);
+      expect(datedProvenanceLabel(t.machineTranscript, null, t)).toBe(t.machineTranscript);
+      expect(t.machineDraftNoticeDated(words[loc])).toContain(words[loc]);
+    }
   });
 });

@@ -24,7 +24,7 @@ async function getMembers(): Promise<MemberProfile[]> {
         { 'membership.joined': true },
         { 'membership.active': true },
       ],
-      'membership.profile.visible': { $ne: false },
+      'membership.profile.visible': true,
     },
     {
       projection: {

@@ -109,6 +109,8 @@ const chunks = (arr, n) => {
 const KNOWN_GENERATED = new Set([
   'search_norm', 'title_norm', 'author_norm', 'editor_norm',
   'place_norm', 'printer_norm', 'publisher_norm', 'shelf_mark_norm',
+  // Filing order, scripts/migration/add-bph-filing-sort-columns.sql (2026-11-06).
+  'author_sort', 'title_sort',
 ]);
 
 async function main() {

@@ -1,0 +1,31 @@
+{
+ "stored": {
+  "read": 0,
+  "stored": 24,
+  "why": {},
+  "below_40pct_floor": 0,
+  "print_only_skip": 0,
+  "put_back": 0,
+  "pages_put_back": 0
+ },
+ "agyread": {
+  "read": 24,
+  "stored": 0,
+  "why": {},
+  "below_40pct_floor": 0,
+  "print_only_skip": 0,
+  "put_back": 0,
+  "pages_put_back": 0
+ },
+ "liteopus": {
+  "read": 21,
+  "stored": 3,
+  "why": {
+   "corrector: unchanged": 3
+  },
+  "below_40pct_floor": 0,
+  "print_only_skip": 0,
+  "put_back": 0,
+  "pages_put_back": 0
+ }
+}

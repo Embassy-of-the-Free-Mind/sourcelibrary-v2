@@ -1,0 +1,37 @@
+{
+ "scored_at": "2026-11-04T15:34:58.087Z",
+ "cells": {
+  "fr": {
+   "lang": "French",
+   "route": "lighton>agy-flash-low",
+   "drawn": 30,
+   "books": 23,
+   "written": 27,
+   "judged": 27,
+   "accepted": 26,
+   "wrong_text": 1,
+   "p_acc_ge_08": 0.984,
+   "all_drawn_accepted": "26/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "2/2",
+   "decision": "PASS: schedule",
+   "why": null
+  },
+  "pt": {
+   "lang": "Portuguese",
+   "route": "lighton>agy-flash-low",
+   "drawn": 0,
+   "books": 0,
+   "written": 0,
+   "judged": 0,
+   "accepted": 0,
+   "wrong_text": 0,
+   "p_acc_ge_08": 0.2,
+   "all_drawn_accepted": "0/0",
+   "wrong_page_controls": "0/0",
+   "planted_caught": "0/0",
+   "decision": "HOLD",
+   "why": "under 10 judged; P(acc>=0.8) 0.2; wrong-page control"
+  }
+ }
+}

@@ -1,0 +1,1278 @@
+{
+ "generated_at": "2026-11-03T09:52:00.688Z",
+ "pages": 30,
+ "items": 116,
+ "calls": {
+  "main": 116,
+  "controls": 14,
+  "unparsed": 0,
+  "list_usd_equiv": 10.79
+ },
+ "instrument": {
+  "wrong_page": [
+   {
+    "id": "w-stored-0",
+    "arm": "stored",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-agy-flash-low-read-0",
+    "arm": "agy-flash-low-read",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-agy-flash-low-read-1",
+    "arm": "agy-flash-low-read",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-stored-1",
+    "arm": "stored",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-paddle-vl-0",
+    "arm": "paddle-vl",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-paddle-vl-1",
+    "arm": "paddle-vl",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-qwen3-vl-8b-0",
+    "arm": "qwen3-vl-8b",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   },
+   {
+    "id": "w-qwen3-vl-8b-1",
+    "arm": "qwen3-vl-8b",
+    "accept": false,
+    "fidelity": 1,
+    "passed": true
+   }
+  ],
+  "wrong_page_passed": "8/8",
+  "planted": [
+   {
+    "id": "p-0-k6a6d895c775f",
+    "kind": "D",
+    "arms": [
+     "paddle-vl"
+    ],
+    "accept": false,
+    "caught": true
+   },
+   {
+    "id": "p-1-k9d78cc7109bf",
+    "kind": "S",
+    "arms": [
+     "paddle-vl"
+    ],
+    "accept": false,
+    "caught": true
+   },
+   {
+    "id": "p-3-kdca43ec86b75",
+    "kind": "S",
+    "arms": [
+     "agy-flash-low-read"
+    ],
+    "accept": false,
+    "caught": true
+   },
+   {
+    "id": "p-2-kc9bb62b34cad",
+    "kind": "D",
+    "arms": [
+     "agy-flash-low-read"
+    ],
+    "accept": false,
+    "caught": true
+   },
+   {
+    "id": "p-4-k834a6067d617",
+    "kind": "D",
+    "arms": [
+     "stored"
+    ],
+    "accept": false,
+    "caught": true
+   },
+   {
+    "id": "p-5-k5602a6296a53",
+    "kind": "S",
+    "arms": [
+     "paddle-vl"
+    ],
+    "accept": false,
+    "caught": true
+   }
+  ],
+  "planted_caught": "6/6",
+  "plants_run": true,
+  "valid": true
+ },
+ "arms": {
+  "stored": {
+   "usable": "30/30",
+   "judged": "30/30",
+   "accept": "2/30",
+   "accept_mean": 0.094,
+   "accept_weighted": {
+    "est": 0.086,
+    "ci95": [
+     0,
+     0.218
+    ]
+   },
+   "wrong_text_pages": "25/30",
+   "invented_pages": "3/30",
+   "fidelity_mean": 2.8,
+   "wrong_text_defects": 96,
+   "misleads_defects": 107,
+   "p_acc_ge_080": 0,
+   "p_acc_ge_090": 0,
+   "hard_floor_p": 0.993,
+   "blocked": true,
+   "classes_k_of_n": {
+    "O6": "23/30",
+    "O5": "13/30",
+    "O12": "8/30",
+    "O8": "8/30",
+    "O4": "7/30",
+    "O7": "5/30",
+    "T10": "4/30",
+    "E2": "4/30",
+    "O16": "3/30",
+    "O17": "3/30",
+    "O1": "3/30",
+    "O11": "2/30",
+    "D1": "2/30",
+    "O10": "2/30",
+    "O13": "1/30",
+    "O14": "1/30",
+    "O18": "1/30",
+    "I3": "1/30"
+   }
+  },
+  "agy-flash-low-read": {
+   "usable": "30/30",
+   "judged": "30/30",
+   "accept": "3/30",
+   "accept_mean": 0.125,
+   "accept_weighted": {
+    "est": 0.127,
+    "ci95": [
+     0,
+     0.289
+    ]
+   },
+   "wrong_text_pages": "25/30",
+   "invented_pages": "4/30",
+   "fidelity_mean": 2.767,
+   "wrong_text_defects": 86,
+   "misleads_defects": 97,
+   "p_acc_ge_080": 0,
+   "p_acc_ge_090": 0,
+   "hard_floor_p": 0.999,
+   "blocked": true,
+   "classes_k_of_n": {
+    "O6": "24/30",
+    "O5": "10/30",
+    "O8": "7/30",
+    "O16": "7/30",
+    "E2": "6/30",
+    "O12": "5/30",
+    "O7": "4/30",
+    "O1": "4/30",
+    "O18": "3/30",
+    "O10": "3/30",
+    "O11": "2/30",
+    "O17": "2/30",
+    "D1": "2/30",
+    "O13": "1/30",
+    "T4": "1/30",
+    "O14": "1/30",
+    "O4": "1/30",
+    "O2": "1/30",
+    "I3": "1/30"
+   }
+  },
+  "paddle-vl": {
+   "usable": "26/30",
+   "judged": "26/30",
+   "accept": "5/30",
+   "accept_mean": 0.188,
+   "accept_weighted": {
+    "est": 0.226,
+    "ci95": [
+     0.058,
+     0.411
+    ]
+   },
+   "wrong_text_pages": "17/30",
+   "invented_pages": "2/30",
+   "fidelity_mean": 3.077,
+   "wrong_text_defects": 77,
+   "misleads_defects": 79,
+   "p_acc_ge_080": 0,
+   "p_acc_ge_090": 0,
+   "hard_floor_p": 0.943,
+   "blocked": true,
+   "classes_k_of_n": {
+    "O6": "21/30",
+    "O5": "7/30",
+    "O12": "6/30",
+    "O7": "5/30",
+    "E2": "4/30",
+    "O8": "3/30",
+    "O17": "3/30",
+    "O4": "3/30",
+    "O10": "3/30",
+    "O11": "2/30",
+    "O2": "1/30",
+    "O1": "1/30",
+    "I3": "1/30"
+   }
+  },
+  "qwen3-vl-8b": {
+   "usable": "30/30",
+   "judged": "30/30",
+   "accept": "2/30",
+   "accept_mean": 0.094,
+   "accept_weighted": {
+    "est": 0.086,
+    "ci95": [
+     0,
+     0.218
+    ]
+   },
+   "wrong_text_pages": "23/30",
+   "invented_pages": "3/30",
+   "fidelity_mean": 2.8,
+   "wrong_text_defects": 89,
+   "misleads_defects": 68,
+   "p_acc_ge_080": 0,
+   "p_acc_ge_090": 0,
+   "hard_floor_p": 0.992,
+   "blocked": true,
+   "classes_k_of_n": {
+    "O6": "25/30",
+    "O5": "16/30",
+    "O4": "9/30",
+    "O7": "5/30",
+    "O8": "4/30",
+    "O12": "4/30",
+    "E2": "4/30",
+    "O10": "3/30",
+    "O17": "2/30",
+    "O1": "2/30",
+    "O13": "1/30",
+    "I4": "1/30",
+    "O14": "1/30",
+    "T1": "1/30",
+    "D1": "1/30",
+    "O2": "1/30",
+    "I3": "1/30"
+   }
+  }
+ },
+ "decision1": {
+  "candidates": [],
+  "blocked": [
+   "paddle-vl",
+   "qwen3-vl-8b",
+   "agy-flash-low-read"
+  ],
+  "pick": null,
+  "clears_floor": false,
+  "note": "HOLD (hard floor): every candidate is blocked by invented / wrong-leaf pages"
+ },
+ "decision2": {
+  "contrasts": [],
+  "passing": [],
+  "reread_arm": null,
+  "reread_scope": [],
+  "recommend": false,
+  "note": "no candidate: every one is blocked by the hard floor"
+ },
+ "if_floor_ignored": {
+  "decision1": {
+   "candidates": [
+    "paddle-vl",
+    "qwen3-vl-8b",
+    "agy-flash-low-read"
+   ],
+   "blocked": [
+    "paddle-vl",
+    "qwen3-vl-8b",
+    "agy-flash-low-read"
+   ],
+   "best_by_mean": "paddle-vl",
+   "cheaper_checks": [],
+   "pick": "paddle-vl",
+   "clears_floor": false,
+   "note": "no arm clears the floor (NEEDS-ENGINE flag; policy-1102 rule 1: does not block the pick for unread pages)"
+  },
+  "decision2": {
+   "contrasts": [
+    {
+     "arm": "paddle-vl",
+     "counts": {
+      "both": 1,
+      "a": 4,
+      "b": 1,
+      "none": 24
+     },
+     "p": 0.89,
+     "wrong_text_pages": 17,
+     "stored_wrong_text_pages": 25,
+     "passes": false
+    },
+    {
+     "arm": "qwen3-vl-8b",
+     "counts": {
+      "both": 1,
+      "a": 1,
+      "b": 1,
+      "none": 27
+     },
+     "p": 0.5,
+     "wrong_text_pages": 23,
+     "stored_wrong_text_pages": 25,
+     "passes": false
+    },
+    {
+     "arm": "agy-flash-low-read",
+     "counts": {
+      "both": 1,
+      "a": 2,
+      "b": 1,
+      "none": 26
+     },
+     "p": 0.689,
+     "wrong_text_pages": 25,
+     "stored_wrong_text_pages": 25,
+     "passes": false
+    }
+   ],
+   "passing": [],
+   "reread_arm": null,
+   "reread_scope": [],
+   "recommend": false
+  }
+ },
+ "by_stratum": {
+  "hangul/manuscript": {
+   "pages": 4,
+   "stored": {
+    "accept": "0/4",
+    "wrong_text_pages": "4/4"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/4",
+    "wrong_text_pages": "4/4"
+   },
+   "paddle-vl": {
+    "accept": "0/4",
+    "wrong_text_pages": "2/4"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/4",
+    "wrong_text_pages": "4/4"
+   }
+  },
+  "hangul/print": {
+   "pages": 2,
+   "stored": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   },
+   "paddle-vl": {
+    "accept": "0/2",
+    "wrong_text_pages": "1/2"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   }
+  },
+  "hanja/manuscript": {
+   "pages": 11,
+   "stored": {
+    "accept": "1/11",
+    "wrong_text_pages": "8/11"
+   },
+   "agy-flash-low-read": {
+    "accept": "1/11",
+    "wrong_text_pages": "9/11"
+   },
+   "paddle-vl": {
+    "accept": "2/11",
+    "wrong_text_pages": "7/11"
+   },
+   "qwen3-vl-8b": {
+    "accept": "1/11",
+    "wrong_text_pages": "8/11"
+   }
+  },
+  "hanja/print": {
+   "pages": 11,
+   "stored": {
+    "accept": "1/11",
+    "wrong_text_pages": "9/11"
+   },
+   "agy-flash-low-read": {
+    "accept": "2/11",
+    "wrong_text_pages": "8/11"
+   },
+   "paddle-vl": {
+    "accept": "3/11",
+    "wrong_text_pages": "5/11"
+   },
+   "qwen3-vl-8b": {
+    "accept": "1/11",
+    "wrong_text_pages": "7/11"
+   }
+  },
+  "mixed/manuscript": {
+   "pages": 2,
+   "stored": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   },
+   "paddle-vl": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/2",
+    "wrong_text_pages": "2/2"
+   }
+  }
+ },
+ "by_eye": {
+  "hangul/manuscript": {
+   "pages": 4,
+   "stored": {
+    "accept": "0/4",
+    "wrong_text_pages": "4/4"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/4",
+    "wrong_text_pages": "4/4"
+   },
+   "paddle-vl": {
+    "accept": "0/4",
+    "wrong_text_pages": "2/4"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/4",
+    "wrong_text_pages": "4/4"
+   }
+  },
+  "hangul/print": {
+   "pages": 1,
+   "stored": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "paddle-vl": {
+    "accept": "0/1",
+    "wrong_text_pages": "0/1"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   }
+  },
+  "hanja/manuscript": {
+   "pages": 11,
+   "stored": {
+    "accept": "1/11",
+    "wrong_text_pages": "8/11"
+   },
+   "agy-flash-low-read": {
+    "accept": "1/11",
+    "wrong_text_pages": "9/11"
+   },
+   "paddle-vl": {
+    "accept": "1/11",
+    "wrong_text_pages": "7/11"
+   },
+   "qwen3-vl-8b": {
+    "accept": "1/11",
+    "wrong_text_pages": "9/11"
+   }
+  },
+  "hanja/print": {
+   "pages": 11,
+   "stored": {
+    "accept": "1/11",
+    "wrong_text_pages": "9/11"
+   },
+   "agy-flash-low-read": {
+    "accept": "2/11",
+    "wrong_text_pages": "8/11"
+   },
+   "paddle-vl": {
+    "accept": "4/11",
+    "wrong_text_pages": "5/11"
+   },
+   "qwen3-vl-8b": {
+    "accept": "1/11",
+    "wrong_text_pages": "6/11"
+   }
+  },
+  "mixed+siddham/print": {
+   "pages": 1,
+   "stored": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "paddle-vl": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   }
+  },
+  "mixed/manuscript": {
+   "pages": 1,
+   "stored": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "paddle-vl": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   }
+  },
+  "mixed/print": {
+   "pages": 1,
+   "stored": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "paddle-vl": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/1",
+    "wrong_text_pages": "1/1"
+   }
+  }
+ },
+ "by_eye_form": {
+  "manuscript": {
+   "pages": 16,
+   "stored": {
+    "accept": "1/16",
+    "wrong_text_pages": "13/16"
+   },
+   "agy-flash-low-read": {
+    "accept": "1/16",
+    "wrong_text_pages": "14/16"
+   },
+   "paddle-vl": {
+    "accept": "1/16",
+    "wrong_text_pages": "10/16"
+   },
+   "qwen3-vl-8b": {
+    "accept": "1/16",
+    "wrong_text_pages": "14/16"
+   }
+  },
+  "print": {
+   "pages": 14,
+   "stored": {
+    "accept": "1/14",
+    "wrong_text_pages": "12/14"
+   },
+   "agy-flash-low-read": {
+    "accept": "2/14",
+    "wrong_text_pages": "11/14"
+   },
+   "paddle-vl": {
+    "accept": "4/14",
+    "wrong_text_pages": "7/14"
+   },
+   "qwen3-vl-8b": {
+    "accept": "1/14",
+    "wrong_text_pages": "9/14"
+   }
+  }
+ },
+ "by_stored_engine": {
+  "stored-3flash": {
+   "pages": 21,
+   "stored": {
+    "accept": "2/21",
+    "wrong_text_pages": "16/21"
+   },
+   "agy-flash-low-read": {
+    "accept": "3/21",
+    "wrong_text_pages": "16/21"
+   },
+   "paddle-vl": {
+    "accept": "3/21",
+    "wrong_text_pages": "12/21"
+   },
+   "qwen3-vl-8b": {
+    "accept": "2/21",
+    "wrong_text_pages": "15/21"
+   }
+  },
+  "stored-lite": {
+   "pages": 9,
+   "stored": {
+    "accept": "0/9",
+    "wrong_text_pages": "9/9"
+   },
+   "agy-flash-low-read": {
+    "accept": "0/9",
+    "wrong_text_pages": "9/9"
+   },
+   "paddle-vl": {
+    "accept": "2/9",
+    "wrong_text_pages": "5/9"
+   },
+   "qwen3-vl-8b": {
+    "accept": "0/9",
+    "wrong_text_pages": "8/9"
+   }
+  }
+ },
+ "study_cells": {
+  "korean-7982/stored": {
+   "n": 30,
+   "books": 30,
+   "unit": "characters",
+   "chars": 12689,
+   "fidelity_mean": 2.8,
+   "wrong_text_per_1k": 7.566,
+   "misleads_per_1k": 8.433,
+   "accept": "2/30"
+  },
+  "korean-7982/agy-flash-low-read": {
+   "n": 30,
+   "books": 30,
+   "unit": "characters",
+   "chars": 11802,
+   "fidelity_mean": 2.767,
+   "wrong_text_per_1k": 7.287,
+   "misleads_per_1k": 8.219,
+   "accept": "3/30"
+  },
+  "korean-7982/paddle-vl": {
+   "n": 26,
+   "books": 26,
+   "unit": "characters",
+   "chars": 8642,
+   "fidelity_mean": 3.077,
+   "wrong_text_per_1k": 8.91,
+   "misleads_per_1k": 9.141,
+   "accept": "5/30"
+  },
+  "korean-7982/qwen3-vl-8b": {
+   "n": 30,
+   "books": 30,
+   "unit": "characters",
+   "chars": 41177,
+   "fidelity_mean": 2.8,
+   "wrong_text_per_1k": 2.161,
+   "misleads_per_1k": 1.651,
+   "accept": "2/30"
+  }
+ },
+ "paired_vs_stored": {
+  "paddle-vl": {
+   "counts": {
+    "both": 1,
+    "a": 4,
+    "b": 1,
+    "none": 24
+   },
+   "p": 0.89
+  },
+  "qwen3-vl-8b": {
+   "counts": {
+    "both": 1,
+    "a": 1,
+    "b": 1,
+    "none": 27
+   },
+   "p": 0.5
+  },
+  "agy-flash-low-read": {
+   "counts": {
+    "both": 1,
+    "a": 2,
+    "b": 1,
+    "none": 26
+   },
+   "p": 0.689
+  }
+ },
+ "per_page": [
+  {
+   "page_id": "69f3258d52a77bb28fdb4c5f",
+   "book": "69f3258d52a77bb28fdb49dc",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "A f4 wt0",
+   "agy-flash-low-read": "A f4 wt0",
+   "paddle-vl": "- f4 wt0",
+   "qwen3-vl-8b": "- f3 wt1"
+  },
+  {
+   "page_id": "69f3279552a77bb28fdb73da",
+   "book": "69f3279552a77bb28fdb739b",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f3 wt4",
+   "agy-flash-low-read": "- f3 wt2",
+   "paddle-vl": "- f3 wt1",
+   "qwen3-vl-8b": "- f4 wt1"
+  },
+  {
+   "page_id": "69f327d552a77bb28fdb7ba1",
+   "book": "69f327d552a77bb28fdb7aa1",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f2 wt8",
+   "agy-flash-low-read": "- f1 wt2",
+   "paddle-vl": "- f3 wt5",
+   "qwen3-vl-8b": "- f1 wt4"
+  },
+  {
+   "page_id": "69f33d44876dd827cbc5bd0f",
+   "book": "69f33d44876dd827cbc5bc2a",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f3 wt1",
+   "agy-flash-low-read": "- f3 wt0",
+   "paddle-vl": "- f3 wt0",
+   "qwen3-vl-8b": "- f3 wt0"
+  },
+  {
+   "page_id": "69f33f13876dd827cbc61209",
+   "book": "69f33f13876dd827cbc611f8",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f4 wt1",
+   "agy-flash-low-read": "- f4 wt1",
+   "paddle-vl": "- f4 wt1",
+   "qwen3-vl-8b": "- f4 wt0"
+  },
+  {
+   "page_id": "69f32800876dcf55533d7245",
+   "book": "69f32800876dcf55533d71b2",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f3 wt5",
+   "agy-flash-low-read": "- f3 wt1",
+   "paddle-vl": "- f3 wt5",
+   "qwen3-vl-8b": "- f2 wt1"
+  },
+  {
+   "page_id": "69f33bc1876dd827cbc59465",
+   "book": "69f33bc1876dd827cbc593cd",
+   "stratum": "hanja/print",
+   "eye": "hanja/manuscript",
+   "w": 2180.7,
+   "stored": "- f3 wt1",
+   "agy-flash-low-read": "- f3 wt1",
+   "paddle-vl": "- f3 wt0",
+   "qwen3-vl-8b": "- f2 wt2"
+  },
+  {
+   "page_id": "69f33e77876dd827cbc5f0be",
+   "book": "69f33e77876dd827cbc5eef8",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f4 wt0",
+   "agy-flash-low-read": "- f3 wt2",
+   "paddle-vl": "- f3 wt1",
+   "qwen3-vl-8b": "- f3 wt2"
+  },
+  {
+   "page_id": "69f326df52a77bb28fdb6b27",
+   "book": "69f326df52a77bb28fdb6ae6",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f4 wt1",
+   "agy-flash-low-read": "- f4 wt1",
+   "paddle-vl": "A f5 wt0",
+   "qwen3-vl-8b": "- f4 wt0"
+  },
+  {
+   "page_id": "69f324f252a77bb28fdb3a52",
+   "book": "69f324f252a77bb28fdb3a26",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f2 wt1",
+   "agy-flash-low-read": "- f3 wt5",
+   "paddle-vl": "A f5 wt0",
+   "qwen3-vl-8b": "- f3 wt2"
+  },
+  {
+   "page_id": "69f33e5f876dd827cbc5e4f8",
+   "book": "69f33e5f876dd827cbc5e35c",
+   "stratum": "hanja/print",
+   "eye": "hanja/print",
+   "w": 2180.7,
+   "stored": "- f4 wt2",
+   "agy-flash-low-read": "A f4 wt0",
+   "paddle-vl": "A f5 wt0",
+   "qwen3-vl-8b": "A f4 wt0"
+  },
+  {
+   "page_id": "69f33df1876dd827cbc5d1c5",
+   "book": "69f33df1876dd827cbc5cb4c",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/print",
+   "w": 3125,
+   "stored": "- f3 wt1",
+   "agy-flash-low-read": "- f3 wt1",
+   "paddle-vl": "A f4 wt0",
+   "qwen3-vl-8b": "- f4 wt0"
+  },
+  {
+   "page_id": "69f33f0b876dd827cbc6102c",
+   "book": "69f33f0b876dd827cbc60eac",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f3 wt5",
+   "agy-flash-low-read": "- f3 wt3",
+   "paddle-vl": "none",
+   "qwen3-vl-8b": "- f2 wt4"
+  },
+  {
+   "page_id": "69f3292caeeee0fa38c654d8",
+   "book": "69f3292caeeee0fa38c653ee",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f3 wt4",
+   "agy-flash-low-read": "- f3 wt1",
+   "paddle-vl": "- f4 wt0",
+   "qwen3-vl-8b": "- f4 wt0"
+  },
+  {
+   "page_id": "69f33bba876dd827cbc59333",
+   "book": "69f33bba876dd827cbc5925d",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f3 wt0",
+   "agy-flash-low-read": "- f3 wt2",
+   "paddle-vl": "- f3 wt4",
+   "qwen3-vl-8b": "- f3 wt7"
+  },
+  {
+   "page_id": "69f3247352a77bb28fdb31c4",
+   "book": "69f3247352a77bb28fdb3102",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f4 wt0",
+   "agy-flash-low-read": "A f4 wt0",
+   "paddle-vl": "- f3 wt2",
+   "qwen3-vl-8b": "- f4 wt1"
+  },
+  {
+   "page_id": "69f32935aeeee0fa38c65557",
+   "book": "69f32935aeeee0fa38c654ea",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f3 wt3",
+   "agy-flash-low-read": "- f2 wt12",
+   "paddle-vl": "- f2 wt13",
+   "qwen3-vl-8b": "- f2 wt5"
+  },
+  {
+   "page_id": "69f33ce1876dd827cbc5b065",
+   "book": "69f33ce1876dd827cbc5afe3",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f3 wt9",
+   "agy-flash-low-read": "- f3 wt3",
+   "paddle-vl": "- f3 wt3",
+   "qwen3-vl-8b": "- f3 wt3"
+  },
+  {
+   "page_id": "69f3259f52a77bb28fdb57c7",
+   "book": "69f3259f52a77bb28fdb55c5",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "A f4 wt0",
+   "agy-flash-low-read": "- f4 wt0",
+   "paddle-vl": "A f5 wt0",
+   "qwen3-vl-8b": "A f5 wt0"
+  },
+  {
+   "page_id": "69f33f3c876dd827cbc6150b",
+   "book": "69f33f3c876dd827cbc6148a",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f2 wt5",
+   "agy-flash-low-read": "- f2 wt8",
+   "paddle-vl": "- f1 wt2",
+   "qwen3-vl-8b": "- f2 wt8"
+  },
+  {
+   "page_id": "69f33c18876dd827cbc59dc4",
+   "book": "69f33c18876dd827cbc59bd4",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f3 wt1",
+   "agy-flash-low-read": "- f3 wt5",
+   "paddle-vl": "- f3 wt4",
+   "qwen3-vl-8b": "- f3 wt5"
+  },
+  {
+   "page_id": "69f3275b52a77bb28fdb71da",
+   "book": "69f3275b52a77bb28fdb7153",
+   "stratum": "hanja/manuscript",
+   "eye": "hanja/manuscript",
+   "w": 2450.9,
+   "stored": "- f2 wt11",
+   "agy-flash-low-read": "- f3 wt6",
+   "paddle-vl": "- f2 wt8",
+   "qwen3-vl-8b": "- f3 wt5"
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb590e",
+   "book": "69f325ae52a77bb28fdb58e9",
+   "stratum": "hangul/manuscript",
+   "eye": "hangul/manuscript",
+   "w": 403.8,
+   "stored": "- f1 wt4",
+   "agy-flash-low-read": "- f2 wt6",
+   "paddle-vl": "- f1 wt3",
+   "qwen3-vl-8b": "- f2 wt6"
+  },
+  {
+   "page_id": "69f33e53876dd827cbc5e309",
+   "book": "69f33e53876dd827cbc5e2f2",
+   "stratum": "hangul/manuscript",
+   "eye": "hangul/manuscript",
+   "w": 403.7,
+   "stored": "- f2 wt3",
+   "agy-flash-low-read": "- f2 wt7",
+   "paddle-vl": "none",
+   "qwen3-vl-8b": "- f3 wt6"
+  },
+  {
+   "page_id": "69f3253252a77bb28fdb410c",
+   "book": "69f3253252a77bb28fdb3fb2",
+   "stratum": "hangul/manuscript",
+   "eye": "hangul/manuscript",
+   "w": 404,
+   "stored": "- f2 wt5",
+   "agy-flash-low-read": "- f1 wt2",
+   "paddle-vl": "- f2 wt11",
+   "qwen3-vl-8b": "- f3 wt1"
+  },
+  {
+   "page_id": "69f32966aeeee0fa38c6586e",
+   "book": "69f32966aeeee0fa38c65856",
+   "stratum": "hangul/manuscript",
+   "eye": "hangul/manuscript",
+   "w": 403.8,
+   "stored": "- f3 wt6",
+   "agy-flash-low-read": "- f2 wt6",
+   "paddle-vl": "none",
+   "qwen3-vl-8b": "- f3 wt4"
+  },
+  {
+   "page_id": "69e014d747b76785d4ec829f",
+   "book": "69e014d647b76785d4ec821c",
+   "stratum": "hangul/print",
+   "eye": "mixed+siddham/print",
+   "w": 195,
+   "stored": "- f1 wt4",
+   "agy-flash-low-read": "- f3 wt2",
+   "paddle-vl": "- f2 wt5",
+   "qwen3-vl-8b": "- f2 wt5"
+  },
+  {
+   "page_id": "69f3249752a77bb28fdb3556",
+   "book": "69f3249752a77bb28fdb3541",
+   "stratum": "hangul/print",
+   "eye": "hangul/print",
+   "w": 118,
+   "stored": "- f1 wt3",
+   "agy-flash-low-read": "- f1 wt2",
+   "paddle-vl": "none",
+   "qwen3-vl-8b": "- f1 wt5"
+  },
+  {
+   "page_id": "69f33781876dd827cbc52318",
+   "book": "69f33781876dd827cbc522e3",
+   "stratum": "mixed/manuscript",
+   "eye": "mixed/print",
+   "w": 90,
+   "stored": "- f2 wt5",
+   "agy-flash-low-read": "- f2 wt2",
+   "paddle-vl": "- f2 wt5",
+   "qwen3-vl-8b": "- f1 wt5"
+  },
+  {
+   "page_id": "6a08fd545271a4d704d309c8",
+   "book": "6a08fd545271a4d704d309ba",
+   "stratum": "mixed/manuscript",
+   "eye": "mixed/manuscript",
+   "w": 90,
+   "stored": "- f3 wt3",
+   "agy-flash-low-read": "- f2 wt3",
+   "paddle-vl": "- f2 wt4",
+   "qwen3-vl-8b": "- f1 wt6"
+  }
+ ],
+ "notes": {
+  "69f3258d52a77bb28fdb4c5f": {
+   "stored": "All the printed text is here in order and reads correctly, but 兵部 is a later handwritten addition shown as if it were a printed note, and the 記 label above the frame is placed in the middle of the text.",
+   "agy-flash-low-read": "All entries (十六年 to 二十年) are present in order with the correct text and names. The only issues are small ones: the 記 header is placed in the middle of the text, a 三 that may not be on the page appears in the 正統 note, and the handwritten 兵部 insertion is not marked as an addition.",
+   "paddle-vl": "The text is complete and in the right order, with the small interlinear reign-year notes kept. One misread character (領 for 頒) changes what the envoys did with the accession edict, and the small marginal gloss 兵部 is missing.",
+   "qwen3-vl-8b": "The interlinear regnal-year notes are cut short (宣德九年 becomes 宣德, and 正統…年 loses its year), and 郎 is missing from 郎中, so the envoy's title is wrong. The marginal 兵部 is merged into the text without being marked."
+  },
+  "69f3279552a77bb28fdb73da": {
+   "stored": "Mostly faithful linked-verse text, but 廿載 is given as 十載, 凡 as 兒, 慵 as 庸, and the two iteration signs (渺渺, 溪溪) are wrongly rendered as 乙 glosses.",
+   "agy-flash-low-read": "The page and its order are right, but two rhyme words are misread (懇 should be 蹤, 墉 should be 慵), which breaks the -ong rhyme of these linked verses.",
+   "paddle-vl": "Mostly correct, but it reads the repetition marks as 之, turns 國泰 into 國恭 and 廿載 into 十載.",
+   "qwen3-vl-8b": "This is a close, complete reading of the linked verse with every line in order, but one number is wrong: the page's 廿載 (twenty years) is given as 十載 (ten years), and the speaker mark 雲 is written 云 throughout."
+  },
+  "69f327d552a77bb28fdb7ba1": {
+   "stored": "The main-text lines are mostly right, but the small-print notes on Hosŏ, Haesŏ and Kwansŏ are garbled: clauses are left out, a phrase is repeated, and several amounts are wrong. The 給代 total is also wrongly put inside a nested gloss.",
+   "agy-flash-low-read": "Instead of a transcription, the reader sees an English error message from an AI content filter. None of the page's Classical Chinese text on 均廳 replacement payments and sums of money is given.",
+   "paddle-vl": "The main lines are mostly correct, but the small double-column notes misread 關 as 閱, 嶺南 as 廣南, 北 as 此 and 馱 as 貳, and they get the capital share wrong (14,694 where the page has 14,690 兩 9 錢).",
+   "qwen3-vl-8b": "Only the first line or two roughly match the page. After that the text repeats one phrase hundreds of times, so most of the page's columns and their amounts never appear."
+  },
+  "69f33d44876dd827cbc5bd0f": {
+   "stored": "Most names are right, but 李夏賓 appears as 李夏賞, and the 李夏苾 to 李日采 line is placed one generation too high in the chart.",
+   "agy-flash-low-read": "All the names are there and nearly all are read correctly, but the last entries 子李夏苾 and 子李日采 sit one generation too high in the table. The small 見署 note is rendered as 婿.",
+   "paddle-vl": "Most of the genealogy is there in reading order, but two sons' names are given as 起米 and 斗米 instead of 起采 and 斗采, and 夏賔 is given as 夏賞. The heading 垂 is also missing.",
+   "qwen3-vl-8b": "Every name on the leaf is there and correctly read, but the tier-by-tier, right-to-left order of the genealogy grid is scrambled (李汝新, 女朴 and 子李夏苾 are out of place), so the line of descent is misrepresented."
+  },
+  "69f33f13876dd827cbc61209": {
+   "stored": "The body text matches the page column by column, but the source of the 大舜/察邇言 passage is given as 史籀 when the page reads 史搢臣, and the first source note sits in the wrong place.",
+   "agy-flash-low-read": "The main text matches the leaf in every passage, but the attributions have two errors: the second passage's author is given as 史籀臣 where the page prints 史搢臣, and the first source title loses its final 書 (傳家必備書).",
+   "paddle-vl": "All ten columns are present and in order, but 纔好責人 is misread as 緩好責人, which changes the sense, Shi Jinchen's name is garbled as 史摺臣, and the inline source note 傳家必備書 appears as stray lines of text.",
+   "qwen3-vl-8b": "All eleven lines of the main text match the leaf. The only error is the first line's source citation, which drops its last character 書 and so gives the title as 傳家必備 instead of 傳家必備書."
+  },
+  "69f32800876dcf55533d7245": {
+   "stored": "There are many misread characters (稂→根, 蟊→蠢, 後→凌, 因→罔, 賀→質, 繼→結, 說→記, 齎→齊), and 嗟乎 is missing, so the text often doesn't match the image.",
+   "agy-flash-low-read": "Most of the essay is right, but line 2 has 凌 for 後, line 3 has 周 for 因, line 5 drops 其, and line 6 turns 魏若亡則 into 魏亡已則, so the transcription doesn't match the leaf in four places.",
+   "paddle-vl": "All ten lines are present and in the right order, but five characters are misread. In each case the page reads 後, 並, 漢, 誅 and 歿, and each misreading changes the meaning of its sentence.",
+   "qwen3-vl-8b": "The last line has a string of characters added after 也惜哉謹論 that aren't on this side of the leaf (they're ink showing through from the other side), and a few characters are misread (浚 for 後, 役 for 歿)."
+  },
+  "69f33bc1876dd827cbc59465": {
+   "stored": "The Chinese running text (problem, answer, method) reads correctly column by column, but every rod-numeral coefficient and both boxed tianyuan equations are garbled or only described, so the mathematics of the page cannot be followed from the transcription.",
+   "agy-flash-low-read": "The answer gives the height as 37 chi where the page reads 27. 與 is misread as 此 twice. Two 'cancel to get the equation' phrases are moved out of order, so the working reads wrong. None of the counting-rod coefficients are transcribed.",
+   "paddle-vl": "The words are mostly right, but the counting-rod diagrams and inline rod numbers are gone, and the text around both diagrams is in the wrong order, so the working steps read out of sequence.",
+   "qwen3-vl-8b": "Only the first line of the page is there. After it comes a long run of repeated circles, and the rest of the text on this leaf (a pyramid-volume calculation, then a cone problem with its answer and method) is missing."
+  },
+  "69f33e77876dd827cbc5f0be": {
+   "stored": "All ten columns are present and in order. One character is misread (銛 instead of 餂 in line 5), and the small inserted 稍 in line 9 is merged into the text without being marked.",
+   "agy-flash-low-read": "All ten lines are present and in order, but a reader comparing with the image would see 箴 where the page has 藏, 詰 for 餂, 肺腑 for 肺腸, and blank spaces where the repetition marks in 蕩蕩平平 should be.",
+   "paddle-vl": "Line 7 loses the 蕩蕩平平 repetition. Lines 4 and 5 misread 邪 as 邢 and 餂 as 餡.",
+   "qwen3-vl-8b": "Lines 4, 5 and 7 differ from the leaf: 邪人 appears as 邢人, 餂 as 餖, and 蕩蕩平平 has lost one 蕩. The small inserted 稍 in line 9 is run into the text without marking."
+  },
+  "69f326df52a77bb28fdb6b27": {
+   "stored": "Faithful, complete transcription of all ten columns except one misread character: 叔季 is given as the meaningless 叔李.",
+   "agy-flash-low-read": "All ten columns are there in order and match the leaf, except column 6: the page's 解散 ('breaking apart') is given as 辭敬, a misreading that changes the meaning.",
+   "paddle-vl": "All ten columns are in order and match the leaf, including the longer third column written on a pasted correction slip; differences are only character variants such as 觧 and 巳.",
+   "qwen3-vl-8b": "All ten columns are present and in order, and the text matches the leaf except for the first phrase, where 尹之所志 has been misread as 尹之祈志."
+  },
+  "69f324f252a77bb28fdb3a52": {
+   "stored": "A whole column of the page, column 3 (相壅潰…而困終), is missing, so the text jumps from 河嶽或 straight to 銷毀; the 天/地 parallel in column 4–5 also drops 而 twice and misreads 隤 as 潰.",
+   "agy-flash-low-read": "All ten lines are there and in order, but five characters are wrong: 因 is read as 固 twice, 所 as 而, 隤 as 聵, and a 下 that is not on the page appears in line 9.",
+   "paddle-vl": "All ten columns of the page match the image, in order, with no characters left out or added.",
+   "qwen3-vl-8b": "The key phrase 所恃 ('that on which it relies') is twice garbled to a bare 時 ('time'), and 慮所不出 becomes 慮而不出, which distorts the argument about what heaven and earth depend on."
+  },
+  "69f33e5f876dd827cbc5e4f8": {
+   "stored": "All ten columns are present and in order, and the reverential spacing before 聖心, 丹宸, 邦慶 and 東宮 is kept. A reader would trip on two misread characters, 故令 for 政令 and 侯志 for 徯志, which change the sense.",
+   "agy-flash-low-read": "All ten lines are present and in order, and almost every character matches. Two characters differ from the page: 俟 for 傒(徯) in line 7, and 蓐 at the end of line 8 where the page seems to have 兹; there are also some needless uncertainty brackets.",
+   "paddle-vl": "All ten columns appear in the right order with the right characters. The only differences from the page are spelling variants, such as 㢤 for 哉 in 豈不休㢤, and the honorific spaces before 聖 and 丹扆 being closed up, which is a spacing convention.",
+   "qwen3-vl-8b": "All ten columns are present and in order, and the raised-honorific breaks (聖心, 聖明, 邦慶, 東宮) are kept as running text; the only slip is 俟 for 徯 in column 7."
+  },
+  "69f33df1876dd827cbc5d1c5": {
+   "stored": "The layout and line order match the page, but three characters are misread: 太學 is given as 大學, 論解 as 諭解, and Prince Gucheon's personal name 睟 as 曄.",
+   "agy-flash-low-read": "The page's last two columns (the 龜川君 poem passage) appear at the top as 'margin' instead of after 伏閣抗, and 刑判 is misread as 判判.",
+   "paddle-vl": "All ten columns are there, in order and complete; the only slip is in column 2, where 如其 ('his') was read as 如某 ('so-and-so'), which slightly changes how Luo Shangzhi's praise reads.",
+   "qwen3-vl-8b": "All ten columns are present and in order, but two single-character misreads (鮮 for 觧, 某 for 其) garble the passage on defending Songgang and Luo Shangzhi's praise."
+  },
+  "69f33f0b876dd827cbc6102c": {
+   "stored": "The overall layout is right, but many names and office titles are misread (武科 as 萬科, 直長 as 眞宅, 翊 as 綱, 和世 as 邦世), and 庶 is dropped from 庶女, so the family entries would mislead a reader.",
+   "agy-flash-low-read": "This mostly follows the page's genealogy, but one column (父判官尚夏) is missing, a son is named 春華 when the page has 泰華, and several clan seats and father-in-law details are misread.",
+   "paddle-vl": null,
+   "qwen3-vl-8b": "The text is buried under about 30 copies of the same block and cuts off mid-word, and the ancestor entries at the top right are missing."
+  },
+  "69f3292caeeee0fa38c654d8": {
+   "stored": "All ten lines are present and in order, but there is one added character (知) and several misread words (嫁幕 for 旅幕, 返葵 for 返葬, 檠着栳), which spoil key phrases of the testimony.",
+   "agy-flash-low-read": "All ten lines are present and in order, but a witness's name is consistently wrong (金文守 is given as 金文字), one character is added (何), and 想→知, 今→令 and 葬→葵 are misread.",
+   "paddle-vl": "All ten lines are complete and in order, but the verb 挽 (restrain) is given as 梲 three times and 粧撰 as 旌撰, so the description of the bystander stepping in and the 'do not fabricate' warning come out garbled.",
+   "qwen3-vl-8b": "All ten lines are complete and in order. Two characters are misread: 毆鬪 is given as 駭闘 and 粧撰 as 旌撰. The first one obscures the assault charge at the centre of this interrogation record."
+  },
+  "69f33bba876dd827cbc59333": {
+   "stored": "All ten lines are there in the right order, but there are several misreadings: 公覲 is given as 以觀, 貽書 as 始書, 乞辭 as 乞辨 and 歸覲 as 歸觀. These blur who acts and what is done in the passage about the official's elderly mother and his attempts to resign.",
+   "agy-flash-low-read": "All ten lines are there in order, but many characters are misread (提督學, 震塘, 始書, 旌檮, 與化, 事叨, 沒), and line 9 is garbled where 之何其 is dropped.",
+   "paddle-vl": "All ten lines are present and in order, but several cursive characters are misread (提掌 for 提學, 崇娛, 恥/何 for 以, 鉅 for 旋, 革契), which damages titles and the sense in places.",
+   "qwen3-vl-8b": "All ten lines are there in the right order, but about a dozen cursive misreads (中廂, 泰判, 辭戰 twice, 昔, 分, 少人, 之惑) put wrong words in the text, so it is not reliable as published."
+  },
+  "69f3247352a77bb28fdb31c4": {
+   "stored": "The line order is complete and correct. But several single characters are misread, most clearly 欲 for 衆 in 衆証并作, and a few others are doubtful or normalised (躬 for 身, 音 for 旨?, 天 in 進天清文敬).",
+   "agy-flash-low-read": "All 12 lines are present, in order, and the text is nearly right. Two characters are misread: 前 for 言 in line 3, and 躬 for 身 in line 4.",
+   "paddle-vl": "Most of the text matches the page, but the king's reply marker 答曰今爾 comes out as nonsense (登四今角), 不言 is misread as 不危, and two repetition marks are read as 之.",
+   "qwen3-vl-8b": "The text runs complete and in order, but one character is wrong: 所害病 should be 所當病, which changes the sense of the medical metaphor, and one 之 is missing from 讜直之言."
+  },
+  "69f32935aeeee0fa38c65557": {
+   "stored": "The headings and the general layout are right, but the text is full of misreads (names, 白鳥, 醉吟), there is a numeral error in the peach anecdote (four for five), the 張渾狄兼謨 column is missing, and the 三洗髓 and 摩銅狄 entries are mixed up.",
+   "agy-flash-low-read": "There are many misread characters and personal names, several phrases and a whole Su Shi passage are missing, Japanese kana has been inserted into the verse lines, and '近五百年' is given as '近千年'.",
+   "paddle-vl": "Every line of the page is there and in order, but almost every entry has misread characters. Several numbers are wrong (three thousand years becomes three; five hundred becomes fifty thousand), seventy-eight and eighty are dropped, and headings and personal names are garbled past recognition.",
+   "qwen3-vl-8b": "The 同甲會 block is printed twice, several glosses and verse lines are missing, and the right-hand poetic phrases are moved after the section heading, so the text doesn't match the leaf."
+  },
+  "69f33ce1876dd827cbc5b065": {
+   "stored": "The text follows the page's column order and is complete, but many characters are misread, which garbles the Dong Zhongshu quotation and several clauses about the 小學 (e.g. 江革 for 沿革, 漢使 for 漢儒, 古其其心 for 古無其書).",
+   "agy-flash-low-read": "Every line is there and in order, but a reader would hit many misread characters, including nonsense like 孔子之酒 and 據陸德文, an inverted 古無其書, and a spurious 'seven'. These garble the examination-essay text beyond casual use.",
+   "paddle-vl": "Every line is present and in order, but there are many character misreads, and ditto marks are turned into 之. In places, such as the Dong Zhongshu quotation, 漢儒 and 古無其書, the text no longer reads correctly against the image.",
+   "qwen3-vl-8b": "The 14 lines are complete and in order, but the Dong Zhongshu passage and several key clauses are misread, including 古無其書 rendered as 古有其書, so the sense is distorted in places."
+  },
+  "69f3259f52a77bb28fdb57c7": {
+   "stored": "Almost every line matches the leaf, including the interlinear note 王名未補 and the doubled 捺印. The only wording slip is the dropped 第 in the Western date 第十一月十二日.",
+   "agy-flash-low-read": "The text matches the page line by line, but the small note after 西班牙女王 should read 王名未補 (name not yet filled in), not 未繡.",
+   "paddle-vl": "Every line of Article 24 and the dating block matches the leaf. The only differences are that the red circle punctuation is left out and the small note 王名未補 sits on its own lines instead of being marked as an interlinear note.",
+   "qwen3-vl-8b": "Every line matches the leaf in order, including both 1869 dates, 明治元年戊辰九月廿八日 and the small two-column note 王名未繕 after 女王, which the candidate gives inline. The candidate adds full stops where the page has red circle marks, which is a convention choice, not an error."
+  },
+  "69f33f3c876dd827cbc6150b": {
+   "stored": "The main generational names are mostly there, but the office and marriage annotations are often misread or missing, and the lower tiers are scrambled, so the lineage details can't be trusted against the image.",
+   "agy-flash-low-read": "This is a genealogy table, and the candidate has scrambled its generations: names are moved between tiers, two tiers are merged, wives' notes are attached to the wrong people, and several names are misread or invented, so the lineage it shows is wrong.",
+   "paddle-vl": "Only the first dozen lines resemble the page. After that the same block of names repeats over and over and cuts off mid-word, and most of the genealogy chart is missing.",
+   "qwen3-vl-8b": "Only a few fragments of the first registers are real. After them the 'transcription' is the same two lines, 李文進 and 女, repeated hundreds of times, and most of the genealogy (eight of eleven registers in whole or part) is missing."
+  },
+  "69f33c18876dd827cbc59dc4": {
+   "stored": "The text and line breaks are otherwise faithful, but the second poem's title names the wrong place (女邊 where the page has 安邊, Anbyeon), and 側 is misread as 似 in the 望海寺 poem.",
+   "agy-flash-low-read": "The layout and most characters are right, but several single-character misreads (汝 for 安 in the title, 閑 for 關, 去世 for 去任, an added 蝠, 趺員 for 負) change the text of Yi Ju's poem and the title of the next poem.",
+   "paddle-vl": "The text and line order are complete. Four single characters are misread (塚 for 塔, 仙 for 似, 閔 for 關, 或 for 戎), and each one changes or breaks the sense of its line in the two regulated-verse poems.",
+   "qwen3-vl-8b": "Every line is there and in order, but five characters are misread, including two that read 'pass' (關) as 闕 or 閩. These errors break the sense of the lines in the 望海寺 poem and in 次安邊樓題."
+  },
+  "69f3275b52a77bb28fdb71da": {
+   "stored": "Much of the text is lost or misread: ingredient lists are invented and duplicated, doses and preparation instructions are dropped, and several key words are garbled (養→卷, 發→卷, 四苓散→茯苓湯).",
+   "agy-flash-low-read": "The main text broadly follows the leaf, but several doses are wrong (十五丸 for 十丸, 壹錢 for 五錢, the 柴苓湯 amounts), 以發痘瘡 has become 以瘥痘瘡, and invented text sits inside an <unclear> tag.",
+   "paddle-vl": "Every line of the page is present and in order, but there are many meaning-changing misreads: 熱 is read as 起 throughout, several drug names and doses are wrong, the heading 諸方 sits in the middle of the text, and the 紫苓湯 recipe has a duplicated number.",
+   "qwen3-vl-8b": "The running text mostly follows the page, but the item numbers (119, 120, 121) are wrong. The ingredient lists for 四順清涼飲 and 柴苓湯 substitute 黃芩 for other drugs and leave some out, and several words are misread (芍藥 as 為業, 後 as 液, 皆 as 治)."
+  },
+  "69f325ae52a77bb28fdb590e": {
+   "stored": "Apart from a few fragments (비록, 사나희는 소환의, 못된 집의, 이 화), the published text doesn't match the cursive columns on the image. A reader comparing the two would find the transcription is mostly invented, modernised moral prose.",
+   "agy-flash-low-read": "Only the first syllables of the first two columns (뵈/비…, 계집 안ᄒᆡᄂᆞᆫ) and the word ᄉᆞ나희 match the cursive leaf. The rest of the 14 lines is fluent-looking invented text that full of repeated phrases.",
+   "paddle-vl": "The page is about 14 columns of cursive Hangul, but the transcription is repetitive Chinese-character nonsense that has nothing to do with the leaf.",
+   "qwen3-vl-8b": "All 14 columns are there in the right order, but most syllables are misread or garbled, and Chinese characters that are not on the page (到期, 由, 田, 男) have been added to a cursive Hangul text, so it can't be used as a reading of this leaf."
+  },
+  "69f33e53876dd827cbc5e309": {
+   "stored": "All 15 lines are there in order, but the hero's title 한림 is garbled as '한 븨이' throughout, two faint passages are filled with invented text inside unclear tags, and several names and phrases are misread, so the transcription can't be trusted against the image.",
+   "agy-flash-low-read": "All 16 columns are present and in the right order, but several spans (columns 2, 4, 11, 12 and 15) are garbled or invented, and one span has Hanja (少春) that is not on the page. A reader could not trust the text without checking it against the image.",
+   "paddle-vl": null,
+   "qwen3-vl-8b": "All 16 columns are present and in the right order, but most columns contain many syllable misreads. Key words such as 진인, 노인, 단약, 인간 and 천상 are garbled or wrong, so the text can't be relied on without the image."
+  },
+  "69f3253252a77bb28fdb410c": {
+   "stored": "All 11 lines are there in the right order, but nearly every line has misread syllables. Some change the sense, e.g. 직인 for 적딘 (enemy camp) and 척봉 for 적봉, so the text can't be trusted next to the image.",
+   "agy-flash-low-read": "Beside a full page of handwritten Korean narrative (beginning 확은다영장을가리여…), the reader sees an AI-service error message and no transcription.",
+   "paddle-vl": "All 11 lines are there in the right order, but nearly every line is garbled, with Arabic numerals (9, 2) dropped into the text. The narrative of the river crossing and the capture of 박영신 can't be read from it.",
+   "qwen3-vl-8b": "All 11 lines are there in the right order, but so many syllables are misread, the arae-a especially, that much of the text doesn't make sense and some spots change the meaning (for example '후퇴', and the speech in line 6)."
+  },
+  "69f32966aeeee0fa38c6586e": {
+   "stored": "All ten lines are there in the right order, but many words are misread or garbled (흉녕ᄒᆞᆫ 긔셰, 텬디간의 용납디, 부ᄌᆞ, 형뎨, 관치), so a reader comparing it with the leaf would find whole phrases that don't match.",
+   "agy-flash-low-read": "The first two lines roughly follow the leaf. From line 3 on, the transcription often departs from the image, with invented phrases ('도적', '피를 흘리니', '백셩을') in place of what the page says.",
+   "paddle-vl": null,
+   "qwen3-vl-8b": "All ten lines are present and in order, but many characters are misread into words the page doesn't have (돌씨, 김이, 용법, 필근, 혈원, 백호년, 편산피), and the last line especially is garbled."
+  },
+  "69e014d747b76785d4ec829f": {
+   "stored": "Apart from the first heading line, the transcription is blank: the Siddham seed syllables, the five-wheel glosses, 眞心種子 and the closing 召請諸佛菩薩及眷屬眞言 line are all missing, and a long run of empty line breaks fills the space instead.",
+   "agy-flash-low-read": "Most of the layout is right, but the north seed syllable is given as 唵 where the page has 唅, the second Hangul reading line is garbled and short one syllable, and 鑁 is swapped for variant forms.",
+   "paddle-vl": "Most of this page is large Siddham syllables, and the transcription leaves them all out. What remains is a scattered, partly invented list of the small Chinese glosses. Only the last line, 召請諸佛菩薩及眷屬真言, is right.",
+   "qwen3-vl-8b": "All four Siddham columns are dropped or turned into made-up Chinese characters, and the 真心種子 line is copied five times while its small glosses are partly lost."
+  },
+  "69f3249752a77bb28fdb3556": {
+   "stored": "Apart from a few opening syllables, the transcription has nothing to do with the image: one phrase is repeated line after line in place of 15 columns of Hangul prose, and the red handwritten notes are left out.",
+   "agy-flash-low-read": "Instead of the Korean text, the reader sees an English Gemini error message with links; none of the dense hangul columns on the page are transcribed.",
+   "paddle-vl": null,
+   "qwen3-vl-8b": "Only the first few syllables match the page. The rest is invented text, then one phrase repeated hundreds of times; most of the leaf and the red-ink additions are missing."
+  },
+  "69f33781876dd827cbc52318": {
+   "stored": "Nearly every line of the dharani is garbled, with misread hanja, two Hangul lines duplicated and one dropped, and 主 changed to 地 in a heading. The two-page spread is also presented as one page with two columns.",
+   "agy-flash-low-read": "The spread is read with the left half-leaf's sections in reverse order and placed before the right half-leaf, so the mantra continuations end up under the wrong headings. The Hangul readings are scattered, and several characters are dropped or misread.",
+   "paddle-vl": "Only the first four columns of the right-hand page are roughly there, and even they have misread characters. After that the text turns into hundreds of repeated 叟. The Hangul readings come out as nonsense hanja, and the left page of the spread is missing entirely.",
+   "qwen3-vl-8b": "Only the first few lines of the right-hand page are transcribed, with misreadings; after that one mantra line repeats hundreds of times and the left-hand page is missing entirely."
+  },
+  "6a08fd545271a4d704d309c8": {
+   "stored": "All ten columns are present and in order, but the Korean particles and endings are rewritten throughout, and several words are misread. One misreading inverts the meaning (好치 못타라 for 好好라). The text can't be published beside the image without correction.",
+   "agy-flash-low-read": "The Hanja skeleton broadly follows the page, but a reader would find most Hangul endings (하 and others) and the repeat marks missing, and several characters misread (畵物 for 毒物, 蝦凍 for 毁渠), so the grammar and parts of the sense are unreliable.",
+   "paddle-vl": "Most of the Chinese characters are right, but almost every Korean particle and ending is garbled into Chinese characters, there are misreads like 無盡物 for 毒物 and 自切 for 自幼, and the column breaks in the middle and end of the page are wrong.",
+   "qwen3-vl-8b": "Only the first few lines resemble the page, and even those lose all the hangul. The rest is one invented phrase looped hundreds of times that ends mid-word, so the last five lines of the leaf are missing."
+  }
+ }
+}

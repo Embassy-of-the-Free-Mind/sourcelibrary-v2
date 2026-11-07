@@ -50,7 +50,7 @@ function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys
 function call(prompt, cwd) {
   return new Promise((resolve) => {
     const t0 = Date.now();
-    const child = spawn('/usr/bin/claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn(process.env.CLAUDE_BIN || 'claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
@@ -88,7 +88,7 @@ async function main() {
       let r, verdict = null;
       for (let attempt = 0; attempt < 2 && !verdict; attempt++) {
         r = await call(judgePrompt(p), cwd);
-        if (/usage limit|limit reached|hit your limit|out of extra usage/i.test(r.text + r.err)) { stop = `usage limit: ${(r.text || r.err).slice(0, 200)}`; break; }
+        if (/usage limit|limit reached|hit your limit|hit your session limit|out of extra usage/i.test(r.text + r.err)) { stop = `usage limit: ${(r.text || r.err).slice(0, 200)}`; break; }
         verdict = r.is_error ? null : parseVerdict(r.text);
         if (verdict && !p.versions.every((v) => verdict.versions?.[v.label])) verdict = null;
       }

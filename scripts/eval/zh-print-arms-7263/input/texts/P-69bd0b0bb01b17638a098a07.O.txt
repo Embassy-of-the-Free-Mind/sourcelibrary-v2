@@ -1,0 +1,38 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>三</page-num>
+<page-num>四</page-num>
+<header>首楞嚴經要解卷十三</header>
+<meta>Opening of two block-printed pages, right page first. Fold labels: 撰述 at right edge, 支那 at left edge.</meta>
+
+->戒根清淨願行精誠乃能感應<-
+
+### △四結壇軌則二 一阿難詳問
+阿難白佛言世尊我蒙如來無上悲誨心已開悟自
+知修證無學道成末法修行建立道場云何結界合
+佛世尊清淨軌則
+
+請問結壇軌則之詳也言自知修證等者知呪力
+冥資聖果可期也
+
+### △二佛慈詳答五 一壇場用度
+佛告阿難若末世人願立道場先取雪山大力白牛
+食其山中肥膩香草此牛唯飲雪山清水其糞微細
+
+<column-break/>
+
+可取其糞和合栴檀以泥其地若非雪山其牛臭穢
+不堪塗地別於平原穿去地皮五尺已下取其黃土
+和上栴檀沉水蘇合薰陸鬱金白膠青木零陵甘松
+及雞舌香以此十種細羅為粉合土成泥以塗場地
+法王法言即事即理法不孤起事無唐設如華嚴
+一字法門書海墨而不盡五位行相即世諦以彰
+明凡所設施必有取像則此壇場用度無非表法
+也山為高土雪山純淨上信也大力白牛純淨大
+根也香草淨水妙善淨智也茹退充實遺餘也上
+栴檀為十香之首十度之總萬行之冠也原為平
+
+<vocab>阿難, 世尊, 道場, 結界, 雪山, 白牛, 栴檀, 沉水, 蘇合, 薰陸, 鬱金, 白膠, 青木, 零陵, 甘松, 雞舌香, 華嚴</vocab>

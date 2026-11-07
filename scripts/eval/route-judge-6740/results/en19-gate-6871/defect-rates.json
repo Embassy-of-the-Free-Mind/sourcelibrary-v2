@@ -1,0 +1,18 @@
+{
+ "issue": 6871,
+ "measured": "2026-11-07",
+ "note": "en19 gate: written pilot pages judged, blind Opus, up to 2 pages a book (12 books); bare guarded LightOnOCR-3-1B, no agy pass",
+ "study_cells": {
+  "en19": {
+   "route": "lighton-bare-guarded",
+   "draws": [
+    "gate"
+   ],
+   "pages": 30,
+   "words": 14883,
+   "misleads_per_1k": 1.48,
+   "wrong_text_per_1k": 0.4,
+   "fidelity_mean": 4.23
+  }
+ }
+}

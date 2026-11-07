@@ -1,0 +1,156 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill_all.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#5924 (2026-10-23/24, PRs on #5924), scripts/eval/flash-reread-5924/results/{step-c,oc-step-c2,oc-step-c3,fc-step-c4,fc-step-c5}.json: 10 visible Latin books 1500-1800 (>= 70% lite pages), 25 spread body pages each; one blind Opus reader per book per packet. The route-judge pilot's 30 Latin pages and the router tests' Latin lite>agy-flash-low reads are drawn from these books (book group 5924-latin in rules.json).",
+ "judge": "claude-opus-5-5 subagent readers, C-TASK.md: misleading / flawed / sound against the image, two texts a packet",
+ "mapping": "wrong_text = misleading or not this leaf; accept = not misleading; every judged reading of a route counts (n = readings); readings copied from an earlier step are skipped",
+ "cells": {
+  "la-lite-250": {
+   "task": "ocr",
+   "lang": "Latin",
+   "pages": 250,
+   "routes": {
+    "lite": {
+     "served": "the stored Flash-Lite text (incl. the long-s pass)",
+     "n": 690,
+     "books": 10,
+     "accept": "421/690",
+     "wrong_text_pages": "269/690",
+     "classes_k_of_n": {
+      "O6": "387/690",
+      "O8": "360/690",
+      "O11": "203/690",
+      "O5": "189/690",
+      "O12": "86/690",
+      "O1": "53/690",
+      "I4": "34/690",
+      "O7": "31/690",
+      "I1": "25/690",
+      "O3": "24/690",
+      "O4": "16/690",
+      "O13": "3/690"
+     },
+     "wrong_text_classes": {
+      "O6": "194/690",
+      "O5": "127/690",
+      "O8": "84/690",
+      "O11": "47/690",
+      "O12": "37/690",
+      "O1": "31/690",
+      "I4": "25/690",
+      "I1": "25/690",
+      "O7": "21/690",
+      "O4": "11/690",
+      "O3": "3/690",
+      "O13": "1/690"
+     },
+     "readings": {
+      "step-c:L": 250,
+      "oc-step-c2:L": 209,
+      "fc-step-c4:L": 231
+     }
+    },
+    "agy-flash-low-read": {
+     "served": "cli-ocr.mjs read, agy gemini-3.8-flash-low, one page a call, no draft",
+     "n": 500,
+     "books": 10,
+     "accept": "448/500",
+     "wrong_text_pages": "52/500",
+     "classes_k_of_n": {
+      "O8": "295/500",
+      "O11": "120/500",
+      "O6": "117/500",
+      "O5": "32/500",
+      "O12": "30/500",
+      "O1": "22/500",
+      "O7": "16/500",
+      "O3": "10/500",
+      "O4": "2/500",
+      "D1": "2/500",
+      "O15": "1/500",
+      "I4": "1/500"
+     },
+     "wrong_text_classes": {
+      "O6": "34/500",
+      "O5": "21/500",
+      "O8": "17/500",
+      "O11": "15/500",
+      "O1": "11/500",
+      "O7": "4/500",
+      "O12": "4/500",
+      "O15": "1/500"
+     },
+     "readings": {
+      "step-c:F": 250,
+      "oc-step-c3:F": 250
+     }
+    },
+    "lite>opus-correct": {
+     "served": "correct.mjs --model=opus --per-call=10 over the lite text (lite served on contain)",
+     "n": 750,
+     "books": 10,
+     "accept": "659/750",
+     "wrong_text_pages": "91/750",
+     "classes_k_of_n": {
+      "O8": "146/750",
+      "O11": "59/750",
+      "O6": "48/750",
+      "I4": "33/750",
+      "O5": "19/750",
+      "O7": "14/750",
+      "O3": "10/750",
+      "O12": "8/750",
+      "O10": "2/750",
+      "O1": "1/750",
+      "O9": "1/750"
+     },
+     "wrong_text_classes": {
+      "I4": "33/750",
+      "O7": "9/750",
+      "O6": "6/750",
+      "O8": "4/750",
+      "O11": "2/750"
+     },
+     "readings": {
+      "oc-step-c2:O": 250,
+      "oc-step-c3:O": 250,
+      "fc-step-c5:O": 250
+     }
+    },
+    "lite>agy-flash-low": {
+     "served": "cli-ocr.mjs read --correct-prompt (the #5924 one-page template the lane uses), agy gemini-3.8-flash-low",
+     "n": 500,
+     "books": 10,
+     "accept": "405/500",
+     "wrong_text_pages": "95/500",
+     "classes_k_of_n": {
+      "O6": "183/500",
+      "O8": "144/500",
+      "O11": "79/500",
+      "O3": "42/500",
+      "O5": "39/500",
+      "O12": "24/500",
+      "O1": "22/500",
+      "O7": "12/500",
+      "O10": "2/500",
+      "O13": "1/500",
+      "O9": "1/500"
+     },
+     "wrong_text_classes": {
+      "O6": "56/500",
+      "O5": "17/500",
+      "O8": "16/500",
+      "O11": "13/500",
+      "O3": "8/500",
+      "O7": "4/500",
+      "O12": "2/500",
+      "O1": "1/500"
+     },
+     "readings": {
+      "fc-step-c4:FC": 250,
+      "fc-step-c5:FC": 250
+     }
+    }
+   }
+  }
+ }
+}

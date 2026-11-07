@@ -127,13 +127,13 @@ const CANONS: Canon[] = [
       english: (
         <>
           Against 84000&rsquo;s published translations of the same folio sides, the English stored on the pages has a
-          reversed statement on 6.2 pages per 100 by either of two blind Claude Opus judges (95% CI 4.1–9.2), and 3.4
+          reversed statement on 6.2 pages per 100 by either of two blind AI judges (95% CI 4.1–9.2), and 3.4
           by both (1.9–5.8); 99.2% of sides score 4 or more out of 5 (n = 354 sides, 4 October 2026). This replaces the
           first test&rsquo;s 4.4 per 100 on 113 sides; the larger sample is newer.
           <S href={SRC.tengyurStored} /> The 354 sides come from the 8 texts 84000 has published that we could align,
           none of them Madhyamaka or Pramāṇa.
           <span className="block mt-2">
-            On 150 pages drawn at random from all 116,703 drafted pages, two blind Claude Opus reviewers reading the
+            On 150 pages drawn at random from all 116,703 drafted pages, two blind AI reviewers reading the
             Tibetan rated 75% of pages as needing only light edits [69–82], and found a reversed statement or a wrong
             speaker, agent or referent on 38 pages per 100 [23–50], after adjusting for the share of their findings
             that held up when checked by eye (4 October 2026).
@@ -166,7 +166,7 @@ const CANONS: Canon[] = [
     textRef: 'Esukhia’s typed Derge e-text',
     englishRef: 'none for the texts we drafted',
     reading: { state: 'typed', label: 'typed by people' },
-    english: { state: 'none', label: '6 pages, by Claude' },
+    english: { state: 'none', label: '6 pages, by an AI reviewer' },
     scholar: NO_SCHOLAR,
     priority: true,
     card: {
@@ -177,7 +177,7 @@ const CANONS: Canon[] = [
           October counts 38,188; the later count is after a repair run.
           <S href={SRC.kangyurRun} />
           <span className="block mt-2">
-            A different edition, the Bhutanese manuscript Kangyur we also hold, is read by BDRC&rsquo;s Yigdzin model.
+            A different edition, the Bhutanese manuscript Kangyur we also hold, is read by a Tibetan model from BDRC.
             Against the Derge e-text its reading matches a median 94.7% of syllables (n = 100 pages, 1 October 2026),
             repeating an earlier draw of 65 pages at 95.0%.
             <S href={SRC.kangyurOcr} />
@@ -187,7 +187,7 @@ const CANONS: Canon[] = [
       english: (
         <>
           We drafted English only for the 40 texts 84000 lists as Not Begun (1,835 pages), so by design no published
-          translation exists to judge it against. Claude read six pages beside the Tibetan and scored them 4, 4, 4, 3,
+          translation exists to judge it against. An AI reviewer read six pages beside the Tibetan and scored them 4, 4, 4, 3,
           3, 3 out of 5 (4 October 2026).
           <S href={SRC.kangyurEye} />
         </>
@@ -234,7 +234,7 @@ const CANONS: Canon[] = [
         <>
           On 22 Chinese pages judged against published translations (Legge, Giles, Gemmell and others), the
           English scores 3.75 out of 5 [3.43–4.07]; 64% of pages score 4 or more [43–80], and 18 pages per 100 have a
-          reversed statement [7–39]. Two blind Claude Opus judges, 3–4 October 2026. The pages are printed editions of
+          reversed statement [7–39]. Two blind AI judges, 3–4 October 2026. The pages are printed editions of
           well-known Buddhist and Confucian works, not the CBETA-fitted Chan books.
           <S href={SRC.synthesis} />
         </>
@@ -249,8 +249,8 @@ const CANONS: Canon[] = [
       ),
       shown: (
         <>
-          No canon-specific warning. Since 4 October 2026 new Chinese translations use Gemini Flash in place of
-          Flash-Lite, which cut reversed statements in this sample; pages already served are not yet retranslated.
+          No canon-specific warning. Since 4 October 2026 new Chinese translations use the mid-tier model in place of
+          the lightest model, which cut reversed statements in this sample; pages already served are not yet retranslated.
           <S href={SRC.synthesis} />
         </>
       ),
@@ -285,7 +285,7 @@ const CANONS: Canon[] = [
         <>
           On 15 pages judged against SuttaCentral&rsquo;s translations (Sujato, Brahmali; CC0), the English scores 3.67
           out of 5 [3.23–4.07]; 60% of pages score 4 or more [36–80], and 13 per 100 have a reversed statement [4–38].
-          Two blind Claude Opus judges, 3–4 October 2026.
+          Two blind AI judges, 3–4 October 2026.
           <S href={SRC.synthesis} />
         </>
       ),
@@ -321,7 +321,7 @@ const CANONS: Canon[] = [
         <>
           On 27 pages judged against public-domain translations (Thibaut, Bühler, Colebrooke and others), the English
           scores 3.50 out of 5 [3.19–3.80]; 52% of pages score 4 or more [34–69], and 11 per 100 have a reversed
-          statement [4–28]. Two blind Claude Opus judges, 3–4 October 2026. An earlier check of 18 pages scored higher
+          statement [4–28]. Two blind AI judges, 3–4 October 2026. An earlier check of 18 pages scored higher
           (mean 4.06)<S href={SRC.readiness} />; this one is newer and larger.
           <S href={SRC.synthesis} />
         </>
@@ -357,7 +357,7 @@ const CANONS: Canon[] = [
       english: (
         <>
           On 15 Hebrew pages judged against published translations, the English scores 3.80 out of 5 [3.43–4.13]; 73%
-          of pages score 4 or more [48–89], and 13 per 100 have a reversed statement [4–38]. Two blind Claude Opus
+          of pages score 4 or more [48–89], and 13 per 100 have a reversed statement [4–38]. Two blind AI
           judges, 3–4 October 2026.
           <S href={SRC.synthesis} /> Across the Hebrew, Arabic and Persian sample, the 12 pages of Kabbalah and
           mysticism scored 3.04, against 4.00 for scripture, liturgy and law.
@@ -403,7 +403,7 @@ const CANONS: Canon[] = [
         <>
           Judged against published translations: Arabic 3.50 out of 5 [3.05–3.93] on 20 pages, 50% scoring 4 or more
           [30–70], 15 reversed statements per 100 [5–36]; Persian 2.96 [2.46–3.42] on 12 pages, 17% at 4 or more [5–45],
-          33 reversals per 100 [14–61]. Two blind Claude Opus judges, 3–4 October 2026. The pages were drawn from Arabic
+          33 reversals per 100 [14–61]. Two blind AI judges, 3–4 October 2026. The pages were drawn from Arabic
           and Persian books in general, not Sufi texts alone.
           <S href={SRC.synthesis} />
         </>
@@ -827,7 +827,7 @@ function TengyurSections({ corrections }: { corrections: { received: number; rev
         <S href={SRC.tengyurRandom} />
       </p>
       <p className="mt-4 text-base border-l-2 border-amber-700/40 pl-3">
-        <strong>The reviewers are AI, not scholars.</strong> Two Claude Opus reviewers, each blind to the other, read
+        <strong>The reviewers are AI, not scholars.</strong> Two AI reviewers, each blind to the other, read
         every page. When their findings were checked by eye, {TQ.reviewers.precision_pct}% held up
         {ci(TQ.reviewers.precision_ci)}; they found {TQ.reviewers.planted_recall_pct}% of errors we planted; their page
         verdicts agreed with a κ of {TQ.reviewers.kappa.toFixed(2)}. No person who reads Tibetan has reviewed these
@@ -955,7 +955,7 @@ export default async function CanonQualityPage() {
 
         <Section id="canons" title="Canon by canon">
           <p className="mb-6 text-base text-stone-600">
-            Scores out of 5 are the mean of two blind Claude Opus judges, each scoring how faithful our English is to the
+            Scores out of 5 are the mean of two blind AI judges, each scoring how faithful our English is to the
             source, with a published translation beside it as a guide; 4 means minor slips only. Brackets are 95%
             confidence intervals. A rate judged against a reference covers only the texts that have one, which are
             usually the better-known works, so for the rest of a canon it is likely an upper bound.
@@ -1040,7 +1040,7 @@ export default async function CanonQualityPage() {
               <S href={SRC.ceilingText} />
             </li>
             <li>
-              <strong>The judges are models of one family.</strong> All judges and reviewers here are Claude Opus. Planted
+              <strong>The judges are models of one family.</strong> All judges and reviewers here are from one model family. Planted
               controls (a wrong page, a planted reversal, a duplicate) were mixed into every judged run on this page and were
               caught, which shows the judges are not blind to those faults; it does not measure what they miss.
             </li>

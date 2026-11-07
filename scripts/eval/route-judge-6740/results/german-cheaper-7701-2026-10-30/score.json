@@ -1,0 +1,1715 @@
+{
+ "scored_at": "2026-10-30T18:40:26.577Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled",
+ "strata": {
+  "all": {
+   "n_drawn": 30,
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "21/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "21/24",
+      "wrong_text": "0/24",
+      "invented_or_wrong_leaf": "0/24",
+      "p_acc_ge_080": 0.766,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 5,
+      "more than one transcription header": 1
+     },
+     "agy_calls_per_page": 0.968,
+     "calls": {
+      "calls": 214,
+      "pages": 221,
+      "per_page": 0.968
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.0012,
+     "wrong_text_pages": [],
+     "eligible": false
+    },
+    "agy-flash-low@8": {
+     "all_drawn": {
+      "accept": "18/30",
+      "wrong_text": "1/30"
+     },
+     "written": {
+      "accept": "18/22",
+      "wrong_text": "1/22",
+      "invented_or_wrong_leaf": "0/22",
+      "p_acc_ge_080": 0.502,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 6,
+      "more than one transcription header": 2
+     },
+     "agy_calls_per_page": 0.814,
+     "calls": {
+      "calls": 180,
+      "pages": 221,
+      "per_page": 0.814
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00118,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a26db4c05d7c1d9b108c6c5",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Theobald den 20ten November ankommen — page reads 30ten November (Fraktur 3), not 20ten"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "lighton": {
+     "all_drawn": {
+      "accept": "13/30",
+      "wrong_text": "10/30"
+     },
+     "written": {
+      "accept": "13/30",
+      "wrong_text": "10/30",
+      "invented_or_wrong_leaf": "0/30",
+      "p_acc_ge_080": 0,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {},
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 0.892,
+     "usd_per_accepted_page": 0.0002,
+     "wrong_text_pages": [
+      {
+       "page_id": "69b6ba938566c8381463223d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Axiomibus — page has 'Fluxionibus'",
+        "O6: werlen doch senige — page has 'werden doch jenige'"
+       ]
+      },
+      {
+       "page_id": "6a2679fa6c1f37c9c4f2cc01",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: andere mit Kosen — page reads 'Kotzen' (vomiting); the remedy is lost"
+       ]
+      },
+      {
+       "page_id": "6a26c938aad44c98627f0993",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Listen / Küncke — page reads 'Räncke' (intrigues)",
+        "O6: im Garge verborgenen — page reads 'Sarge' (coffin)",
+        "O6: dem Zörnin Seyfried — page reads 'Hörnin Seyfried' (Horned Siegfried)",
+        "O6: feinesweges nach dem tödten Buchstaben — page reads 'keinesweges nach dem todten'; 'feinesweges' loses the negation",
+        "O6: drieren Theile — page reads 'dritten Theile'",
+        "O6: zu erfangen — page reads 'erlangen'"
+       ]
+      },
+      {
+       "page_id": "6a4940bbf36483abc5bbc93d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: eine Vor-\nsehung — page reads 'Vor-setzung' (arrangement), not 'Vorsehung' (providence)"
+       ]
+      },
+      {
+       "page_id": "6a493adbf36483abc5bba182",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: eine dicke zuffe finden — page has Lufft (air); 'zuffe' is not a word, and the error repeats throughout"
+       ]
+      },
+      {
+       "page_id": "6a26d210f5273a8d907a260b",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: anders wohin weg versehet worden — the page reads 'versetzet' (moved), not 'versehet'",
+        "O6: kleinern Nixe — the page reads 'Ritze' (cracks); 'Nixe' means water sprites",
+        "O12: Verg-Spra-nicht che und — the side note 'Berg-Sprache und' is garbled and mixed into the main text with the catchword 'nicht'"
+       ]
+      },
+      {
+       "page_id": "6a26d8fd774aa3596e88c658",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: mehr oder weniger seine Sandarten — page has 'feine' (fine); long-s/f misread",
+        "O6: Straubsand — page has 'Staubsand'",
+        "O6: die Hiffe mitzutheilen — page has 'Hitze' (heat)",
+        "O6: der geringste Stoff — page has 'Stoß' (blow)",
+        "O6: in seinen Sand verwandelt — page has 'feinen Sand'"
+       ]
+      },
+      {
+       "page_id": "6a26db4c05d7c1d9b108c6c5",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Um das Kafest trafen sie zu Prag ein. — The page reads 'Lu-/kasfest' (Lukasfest). The 'Lu-' before the line break was dropped, so the feast day that dates the arrival is lost."
+       ]
+      },
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Rot mit eine schwache Ring / Hauptweh. — page reads 'einē schwartzē Ring' (black ring), not 'schwache' (weak)",
+        "O6: die Küh ist gut — page reads 'die Ruh ist gut' (rest), not 'Küh' (cows)"
+       ]
+      },
+      {
+       "page_id": "6a26cba55ac5aecc53cec42b",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: verürteten Schafe — the page has 'verirrten' (strayed); the candidate gives a non-word"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "pero": {
+     "all_drawn": {
+      "accept": "11/30",
+      "wrong_text": "8/30"
+     },
+     "written": {
+      "accept": "11/29",
+      "wrong_text": "8/29",
+      "invented_or_wrong_leaf": "1/29",
+      "p_acc_ge_080": 0,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "no GPU draft": 1
+     },
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 0.32,
+     "usd_per_accepted_page": 0.00008,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a453286d202169083a37578",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: dz man die zelen gepot balte — page reads 'zehen gepot' (ten commandments); the number word is garbled into 'zelen'",
+        "O6: die got dē berren an — page reads 'dē hertzen' (the heart), not 'berren'"
+       ]
+      },
+      {
+       "page_id": "69b6ba938566c8381463223d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Auxionibus — page reads 'fluxionibus'",
+        "O6: vngu=\nlen — page reads 'vngu-ten' (ungute)"
+       ]
+      },
+      {
+       "page_id": "6a26d2bff5273a8d907a62ed",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: 3. Scheid-Waſſer q. v. — the recipe sign ℞ is read as the numeral 3",
+        "O7: 12. Saubern Stahl — the recipe sign ℞ is read as the numeral 12, which looks like a quantity"
+       ]
+      },
+      {
+       "page_id": "6a2679fa6c1f37c9c4f2cc01",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: andere mit Konzen — page reads 'Kotzen' (vomiting); 'Konzen' is not a word"
+       ]
+      },
+      {
+       "page_id": "6a26b88661b3857ed05a64d8",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: ſochuna — page reads 'kochung' (ab-kochung)",
+        "O6: ſanfftee Ier wer — page reads 'sanfftes Fewer'"
+       ]
+      },
+      {
+       "page_id": "6a493adbf36483abc5bba182",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: beyMacht gefallen — page reads 'bey Nacht' (snow fallen by night)"
+       ]
+      },
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O17: ſo hebt man denſelben Tag an zu zeh=\nAm 20. Bos/ man thut groſſen Kranck=\nlen/iſ — Both two-column sections are interleaved line by line, so the sentences in each column are cut up and run into e"
+       ]
+      },
+      {
+       "page_id": "69aec6aca1e0be599604f2bb",
+       "face": "antiqua",
+       "written": true,
+       "defects": []
+      },
+      {
+       "page_id": "6a26cb3d5ac5aecc53cea44e",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O6: eine Seisſe etwa — page reads 'Weiſſe' (white); candidate's 'Seisſe' suggests soap or is a non-word"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "lighton>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "20/30",
+      "wrong_text": "2/30"
+     },
+     "written": {
+      "accept": "20/25",
+      "wrong_text": "2/25",
+      "invented_or_wrong_leaf": "0/25",
+      "p_acc_ge_080": 0.421,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "a diff-guard flag spans a tag": 2,
+      "a diff-guard flag is not a like-for-like substitution": 2,
+      "corrector": 1
+     },
+     "agy_calls_per_page": 0.33,
+     "calls": {
+      "calls": 37,
+      "pages": 112,
+      "per_page": 0.33
+     },
+     "gpu_secs_per_page": 0.892,
+     "usd_per_accepted_page": 0.00056,
+     "wrong_text_pages": [
+      {
+       "page_id": "6aa35e2ce213def30d6caf1f",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O7: | 1236 | 1148 | 138 | — In the last data row of table 3 the page prints x = 1286, not 1236. The page's own value fits the row: 1286 − 1148 = 138."
+       ]
+      },
+      {
+       "page_id": "69bd9c2f46b01553e33c0483",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O5: Der Vorwand dient nicht allein zur rationalisierenden Verdeckung des Spermaverla — The transcription stops after line 8. The rest of the page is missing: the end of the paragraph ('sondern auch zu",
+        "O12: Der Vorwand dient nicht allein zur rationalisierenden Verdeckung des Spermaverla — The footnote '1) Eigentlich sind es vier.' is missing, along with its marker at 'drei1)'.",
+        "O15: <<<BEGIN>>>\nUNCHANGED — Leftover pipeline markers sit in the text where the rest of the page should be."
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "pero>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "17/30",
+      "wrong_text": "2/30"
+     },
+     "written": {
+      "accept": "17/22",
+      "wrong_text": "2/22",
+      "invented_or_wrong_leaf": "0/22",
+      "p_acc_ge_080": 0.306,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 1,
+      "a diff-guard flag is not a like-for-like substitution": 6,
+      "not read": 1
+     },
+     "agy_calls_per_page": 0.414,
+     "calls": {
+      "calls": 46,
+      "pages": 111,
+      "per_page": 0.414
+     },
+     "gpu_secs_per_page": 0.32,
+     "usd_per_accepted_page": 0.00069,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Am 30. Bös/ und gar beſorglich. — page reads 'Am 19.'; day 19 is missing from the table and day 30 appears twice"
+       ]
+      },
+      {
+       "page_id": "69bd9c2f46b01553e33c0483",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O5: es ist ja von einer Tasche (Vagina) die Rede. Der — Transcription stops mid-sentence after line 10. The rest of the page is missing: the end of the first paragraph ('Bruder — Fleischer produziert…",
+        "O12: es ist ja von einer Tasche (Vagina) die Rede. Der — Footnote '1) Eigentlich sind es vier.' is dropped"
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "agy-flash-low@8|agy-flash-low@4": {
+     "n": 21,
+     "books": 21,
+     "both": 17,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 3,
+     "p_a_within_008": 0.757,
+     "rule": "P(acc_agy-flash-low@8 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "lighton|agy-flash-low@4": {
+     "n": 24,
+     "books": 24,
+     "both": 9,
+     "a_only": 1,
+     "b_only": 12,
+     "neither": 2,
+     "p_a_within_008": 0.006,
+     "rule": "P(acc_lighton >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "pero|agy-flash-low@4": {
+     "n": 23,
+     "books": 23,
+     "both": 7,
+     "a_only": 2,
+     "b_only": 13,
+     "neither": 1,
+     "p_a_within_008": 0.009,
+     "rule": "P(acc_pero >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "lighton>agy-flash-low@4|agy-flash-low@4": {
+     "n": 20,
+     "books": 20,
+     "both": 13,
+     "a_only": 2,
+     "b_only": 4,
+     "neither": 1,
+     "p_a_within_008": 0.491,
+     "rule": "P(acc_lighton>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "pero>agy-flash-low@4|agy-flash-low@4": {
+     "n": 19,
+     "books": 19,
+     "both": 13,
+     "a_only": 1,
+     "b_only": 5,
+     "neither": 0,
+     "p_a_within_008": 0.202,
+     "rule": "P(acc_pero>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 4,
+    "caught": 4,
+    "detail": [
+     {
+      "face": "fraktur",
+      "kind": "B",
+      "route": "agy-flash-low@8",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "fraktur",
+      "kind": "D",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "antiqua",
+      "kind": "D",
+      "route": "pero",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "antiqua",
+      "kind": "E",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "replaces": [],
+    "voided": false,
+    "why": "routes that replace agy-flash-low@4 by RULE.md 2, cheapest per accepted page"
+   }
+  },
+  "fraktur": {
+   "n_drawn": 18,
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "13/18",
+      "wrong_text": "0/18"
+     },
+     "written": {
+      "accept": "13/15",
+      "wrong_text": "0/15",
+      "invented_or_wrong_leaf": "0/15",
+      "p_acc_ge_080": 0.649,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 3
+     },
+     "agy_calls_per_page": 0.968,
+     "calls": {
+      "calls": 214,
+      "pages": 221,
+      "per_page": 0.968
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00117,
+     "wrong_text_pages": [],
+     "eligible": false
+    },
+    "agy-flash-low@8": {
+     "all_drawn": {
+      "accept": "12/18",
+      "wrong_text": "1/18"
+     },
+     "written": {
+      "accept": "12/15",
+      "wrong_text": "1/15",
+      "invented_or_wrong_leaf": "0/15",
+      "p_acc_ge_080": 0.409,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 3
+     },
+     "agy_calls_per_page": 0.814,
+     "calls": {
+      "calls": 180,
+      "pages": 221,
+      "per_page": 0.814
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00106,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a26db4c05d7c1d9b108c6c5",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Theobald den 20ten November ankommen — page reads 30ten November (Fraktur 3), not 20ten"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "lighton": {
+     "all_drawn": {
+      "accept": "2/18",
+      "wrong_text": "10/18"
+     },
+     "written": {
+      "accept": "2/18",
+      "wrong_text": "10/18",
+      "invented_or_wrong_leaf": "0/18",
+      "p_acc_ge_080": 0,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {},
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 0.892,
+     "usd_per_accepted_page": 0.00077,
+     "wrong_text_pages": [
+      {
+       "page_id": "69b6ba938566c8381463223d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Axiomibus — page has 'Fluxionibus'",
+        "O6: werlen doch senige — page has 'werden doch jenige'"
+       ]
+      },
+      {
+       "page_id": "6a2679fa6c1f37c9c4f2cc01",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: andere mit Kosen — page reads 'Kotzen' (vomiting); the remedy is lost"
+       ]
+      },
+      {
+       "page_id": "6a26c938aad44c98627f0993",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Listen / Küncke — page reads 'Räncke' (intrigues)",
+        "O6: im Garge verborgenen — page reads 'Sarge' (coffin)",
+        "O6: dem Zörnin Seyfried — page reads 'Hörnin Seyfried' (Horned Siegfried)",
+        "O6: feinesweges nach dem tödten Buchstaben — page reads 'keinesweges nach dem todten'; 'feinesweges' loses the negation",
+        "O6: drieren Theile — page reads 'dritten Theile'",
+        "O6: zu erfangen — page reads 'erlangen'"
+       ]
+      },
+      {
+       "page_id": "6a4940bbf36483abc5bbc93d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: eine Vor-\nsehung — page reads 'Vor-setzung' (arrangement), not 'Vorsehung' (providence)"
+       ]
+      },
+      {
+       "page_id": "6a493adbf36483abc5bba182",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: eine dicke zuffe finden — page has Lufft (air); 'zuffe' is not a word, and the error repeats throughout"
+       ]
+      },
+      {
+       "page_id": "6a26d210f5273a8d907a260b",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: anders wohin weg versehet worden — the page reads 'versetzet' (moved), not 'versehet'",
+        "O6: kleinern Nixe — the page reads 'Ritze' (cracks); 'Nixe' means water sprites",
+        "O12: Verg-Spra-nicht che und — the side note 'Berg-Sprache und' is garbled and mixed into the main text with the catchword 'nicht'"
+       ]
+      },
+      {
+       "page_id": "6a26d8fd774aa3596e88c658",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: mehr oder weniger seine Sandarten — page has 'feine' (fine); long-s/f misread",
+        "O6: Straubsand — page has 'Staubsand'",
+        "O6: die Hiffe mitzutheilen — page has 'Hitze' (heat)",
+        "O6: der geringste Stoff — page has 'Stoß' (blow)",
+        "O6: in seinen Sand verwandelt — page has 'feinen Sand'"
+       ]
+      },
+      {
+       "page_id": "6a26db4c05d7c1d9b108c6c5",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Um das Kafest trafen sie zu Prag ein. — The page reads 'Lu-/kasfest' (Lukasfest). The 'Lu-' before the line break was dropped, so the feast day that dates the arrival is lost."
+       ]
+      },
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Rot mit eine schwache Ring / Hauptweh. — page reads 'einē schwartzē Ring' (black ring), not 'schwache' (weak)",
+        "O6: die Küh ist gut — page reads 'die Ruh ist gut' (rest), not 'Küh' (cows)"
+       ]
+      },
+      {
+       "page_id": "6a26cba55ac5aecc53cec42b",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: verürteten Schafe — the page has 'verirrten' (strayed); the candidate gives a non-word"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "pero": {
+     "all_drawn": {
+      "accept": "3/18",
+      "wrong_text": "7/18"
+     },
+     "written": {
+      "accept": "3/18",
+      "wrong_text": "7/18",
+      "invented_or_wrong_leaf": "0/18",
+      "p_acc_ge_080": 0,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {},
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 0.32,
+     "usd_per_accepted_page": 0.00018,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a453286d202169083a37578",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: dz man die zelen gepot balte — page reads 'zehen gepot' (ten commandments); the number word is garbled into 'zelen'",
+        "O6: die got dē berren an — page reads 'dē hertzen' (the heart), not 'berren'"
+       ]
+      },
+      {
+       "page_id": "69b6ba938566c8381463223d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Auxionibus — page reads 'fluxionibus'",
+        "O6: vngu=\nlen — page reads 'vngu-ten' (ungute)"
+       ]
+      },
+      {
+       "page_id": "6a26d2bff5273a8d907a62ed",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: 3. Scheid-Waſſer q. v. — the recipe sign ℞ is read as the numeral 3",
+        "O7: 12. Saubern Stahl — the recipe sign ℞ is read as the numeral 12, which looks like a quantity"
+       ]
+      },
+      {
+       "page_id": "6a2679fa6c1f37c9c4f2cc01",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: andere mit Konzen — page reads 'Kotzen' (vomiting); 'Konzen' is not a word"
+       ]
+      },
+      {
+       "page_id": "6a26b88661b3857ed05a64d8",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: ſochuna — page reads 'kochung' (ab-kochung)",
+        "O6: ſanfftee Ier wer — page reads 'sanfftes Fewer'"
+       ]
+      },
+      {
+       "page_id": "6a493adbf36483abc5bba182",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: beyMacht gefallen — page reads 'bey Nacht' (snow fallen by night)"
+       ]
+      },
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O17: ſo hebt man denſelben Tag an zu zeh=\nAm 20. Bos/ man thut groſſen Kranck=\nlen/iſ — Both two-column sections are interleaved line by line, so the sentences in each column are cut up and run into e"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "lighton>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "11/18",
+      "wrong_text": "0/18"
+     },
+     "written": {
+      "accept": "11/14",
+      "wrong_text": "0/14",
+      "invented_or_wrong_leaf": "0/14",
+      "p_acc_ge_080": 0.352,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "a diff-guard flag spans a tag": 2,
+      "a diff-guard flag is not a like-for-like substitution": 2
+     },
+     "agy_calls_per_page": 0.33,
+     "calls": {
+      "calls": 37,
+      "pages": 112,
+      "per_page": 0.33
+     },
+     "gpu_secs_per_page": 0.892,
+     "usd_per_accepted_page": 0.00061,
+     "wrong_text_pages": [],
+     "eligible": false
+    },
+    "pero>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "9/18",
+      "wrong_text": "1/18"
+     },
+     "written": {
+      "accept": "9/13",
+      "wrong_text": "1/13",
+      "invented_or_wrong_leaf": "0/13",
+      "p_acc_ge_080": 0.128,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 1,
+      "a diff-guard flag is not a like-for-like substitution": 4
+     },
+     "agy_calls_per_page": 0.414,
+     "calls": {
+      "calls": 46,
+      "pages": 111,
+      "per_page": 0.414
+     },
+     "gpu_secs_per_page": 0.32,
+     "usd_per_accepted_page": 0.00078,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Am 30. Bös/ und gar beſorglich. — page reads 'Am 19.'; day 19 is missing from the table and day 30 appears twice"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "kraken": {
+     "all_drawn": {
+      "accept": "0/18",
+      "wrong_text": "17/18"
+     },
+     "written": {
+      "accept": "0/18",
+      "wrong_text": "17/18",
+      "invented_or_wrong_leaf": "0/18",
+      "p_acc_ge_080": 0,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {},
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 2.771,
+     "usd_per_accepted_page": null,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a453286d202169083a37578",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: dz man die zelen gexotbalee — page reads 'zehen gepot halte' (keep the Ten Commandments); the numeral 'zehen' is garbled into 'zelen'",
+        "O6: d; iſt zorß fteud uhtawrü — page reads 'dz ist zorn freud vñ trawrn'; the list of desires is unreadable",
+        "O6: dag er ene dar zü frig — page reads 'das er vns dar zu helff'; the verb 'helff' is lost",
+        "O6: Sſtro 6 hrilig alenae Fniche — page reads '(N)Estro dē heilig altvat' spricht'; the speech verb and name are lost",
+        "O6: die fünfſe erbchhüßen die geſebzuht erſten — page reads 'Die fünfft etlich künen die geschrifft versten'; the sense (understanding Scripture) is lost",
+        "O5: zungé ebe\nDen-Die fünfſe — the word 'kan' at the start of the last line is dropped"
+       ]
+      },
+      {
+       "page_id": "69b6ba938566c8381463223d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: n4 — page number 134 misread"
+       ]
+      },
+      {
+       "page_id": "6a26d2def5273a8d907a680a",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O11: Beiniele,\nSin — running head 'des Vitriols.' and page number 81 are garbled into words that aren't on the page",
+        "O5: p undbarDa — section number '§. 19.' is missing and the opening line 'Doch zeiget hierinn der Spiritus und das Oel' is unreadable",
+        "O6: weichmmunne wmehr een⸗ — 'des Vitriols (als welches nur eine mehr con-' is garbled",
+        "O5:  Spremewein ge⸗ — 'centrirte Portion des Spiritus ist) eine weit ge-' is mostly lost",
+        "O6: er eeeeihpodernurüvenbas Sapine — 'über sein eigen Saltz, oder nur über das Caput' is garbled",
+        "O6: mowicdnieſen Weg ſchrei⸗ — 'mortuum cohobirt wird. Diesen Weg schrei-' is garbled",
+        "O6: eſchonöfftere betobn Agn⸗ — 'tet zu seinem Ziele der schon öffters belobte Agri-' is garbled",
+        "O6: mticheenimmt be Spirichm⸗ — 'Schule ist: Nemlich, er nimmt den Spiritum,' is garbled",
+        "O6: Meereu gettttben iſt gieſſer ſer⸗ — 'nigten Vitriole heraus getrieben ist, giesset sol-' is garbled",
+        "O6: enen gpſomit geeneinen Aaſ⸗ — 'chen auf sein eigen Saltz, so mit gemeinen Was-' is garbled",
+        "O6: einnonecsolnioner undi Ces⸗ — 'durch öfftere Calcinationes, Solutiones und Coa-' is garbled",
+        "O6: Sdaeiſt eimer ſangwierigen pine — 'es darinn vermittelst einer langwierigen Dige-' is garbled",
+        "O6: iunon ſchender er vendenenUin⸗ — 'stion auf, die Solution scheidet er von denen Un-' is garbled",
+        "O6: DemundneDeilileticnane une Re⸗ — 'het er vermittelst einer Destillation aus einer Re-' is garbled",
+        "O6: ueetein  ec dch uhiienrenrr — 'schöne Röthe extrahirt; den gefärbten Spiritum' is garbled"
+       ]
+      },
+      {
+       "page_id": "6a26d2bff5273a8d907a62ed",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: 8˙(●) 64 — the running head is an ornament around (o); there is no '64' on the page",
+        "O6: inmein Glteß( beit er leichelich Richſet( verwab\nrin ſeg. Siheke. — nonsense for 'und in ein Glaß/ weil er leichtlich flieſſet/ verwah-ren ſoll. Glücke.'",
+        "O6: ob SalsHarnd\nNolst. eires apernur bat. — nonsense for 'ob Salz/Harn/ Volat. vires aperitiv hat.'"
+       ]
+      },
+      {
+       "page_id": "6a26d1b1f5273a8d907a00b3",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O5: ſen, und GOtt gab ein groß Heyl.\nUnd dieſe drey — section heading '§. 9.' between the paragraphs silently dropped"
+       ]
+      },
+      {
+       "page_id": "6a2679fa6c1f37c9c4f2cc01",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Frählinge, zod — page number 369 read as 'zod'; also 'Frühlings' misread",
+        "O6: ſowirder verzehrei wieder ober Wind — 'verzehret/ wie der ober Wind' garbled into 'wieder'",
+        "O6: verzchrtwerdent alseiner der ein Cſecht augleſchen\nohneingemachten Ceib — should be 'verzehrt werden/ als einer der ein Liecht außleschet/ ohn eingemachten Leib'"
+       ]
+      },
+      {
+       "page_id": "6a26b88661b3857ed05a64d8",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: Diuz⸗\ndarkeit) — should be 'Nutz-barkeit/'",
+        "O6: wirde 1 ſ10 — should be 'wirdt / ſo'; spurious numerals",
+        "O6: Darumömußein ſanfftce Zawereinge⸗ — should be 'Darumb muß ein ſanfftes Fewer ein ge-'"
+       ]
+      },
+      {
+       "page_id": "6a26c938aad44c98627f0993",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Anne 16zo. 16zi. 16za. — page reads 'Anno 1630. 1631. 1632.'",
+        "O7: an. 16f5. — page reads 'an. 1656.'",
+        "O7: an. 110 4. — page reads 'an. 1704.'",
+        "O6: Alix und sfricz — Asiæ und Africæ",
+        "O6: Zervog Ernſten oder dem 5örnin Seyfried — Hertzog Ernsten / Hörnin Seyfried",
+        "O6: Endemich mit — Indem ich mit",
+        "O6: Leichttichmnd auch in cepie, em outser Salpeter um bereiten; inaleichum mie dea — last line garbled: 'leichtlich/und auch in copia, ein gutter Salpeter zu bereiten; ingleichen wie der'"
+       ]
+      },
+      {
+       "page_id": "6a4940bbf36483abc5bbc93d",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Proportioniſt 1. 2.%. 8. 16zu. Ge.nc. — page has 1.2.4.8.16.32.64.ꝛc.; 32 and 64 are lost and 4 is garbled",
+        "O7: Als wennich amit: diusdire ſo — page: Als wenn ich 2 mit 1 diuidire",
+        "O7: pndſagee malemachen z. dieſe⸗ — page: vnd sage 2 mal 2 machen 4. diese 4",
+        "O6: Dadtuidtreich⸗ mie n.undſagedarnach — page: Da diuidire ich 3 mit 1. vnd sage darnach",
+        "O7: gmalz ſeynd v. und weiterz malgſeynday.z malzy ſeynd 8r. — page: 3 mal 3 seynd 9. vnd weiter 3 mal 9 seynd 27. 3 mal 27 seynd 81.",
+        "O7: wiehiezuſcher u. z..; 6. J.8.p. ꝛc. — page: wie hie zu sehen: 1.2.3.4.5.6.7.8.9.ꝛc.",
+        "O7: ucgee 16. ſomacheicheine Linm lwelchem s gleiche — page: 1.2.3.4.5.6. so mache ich eine Lini/ welche in 8 gleiche"
+       ]
+      },
+      {
+       "page_id": "6a493adbf36483abc5bba182",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O5: Gleichergeſtalt iſts auch mie dem Rädel — The section number '15.' at the top of the page is missing.",
+        "O1:  eleee ren Sirie( *. ie — Garbage stands in for the line 'Mineralia in dem Meer, so wol als die im festen Erdreich, ihr besonders'.",
+        "O6: von Rotur rein uns Fruber) — Should read 'von Natur rein und sauber'.",
+        "O6: Mineralten Kben und Erhalter — Should read 'Mineralien/Leben und Erhalter'."
+       ]
+      },
+      {
+       "page_id": "6a26d210f5273a8d907a260b",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O12: ner Gang zer\nccurnert. — rest of the marginal note is garbled ('trümmert' becomes 'ccurnert') and placed in the middle of the text, splitting 'wür-de'"
+       ]
+      },
+      {
+       "page_id": "6a26d8fd774aa3596e88c658",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: 89 — page number is 653",
+        "O10: Sandarach, Sandatge, Sandaragnz, Ee in — should read 'Sandarach. Sandaraca. Sandaraque. Es ist'",
+        "O6: zuſammeihän⸗\ngendem Senbiheluctzen, und dicſt dcd ſche Lart — should read 'zusammenhängenden Sandtheilchen, und diese sind sehr hart'"
+       ]
+      },
+      {
+       "page_id": "6a26db4c05d7c1d9b108c6c5",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: J.C.us. — the margin year J.C.1433. is lost",
+        "O7: die z. Prager Artikel — the numeral 4. is read as 'z.'",
+        "O7: die z. Gottesgelehrten — the numeral 4. is read as 'z.'",
+        "O7: der „. Artikel — the numeral 4. is read as a quotation mark",
+        "O6: Batteimt einimnt Slaſn gedt ihett Intunt. Enchtane 1dgt ſde Sstte in — footnote line is gibberish; it should read 'Bartoſſek beſtimmt dieſe Zeit ihrer Ankunft. Cochläus läßt ſie dafür um'"
+       ]
+      },
+      {
+       "page_id": "6a26cbab5ac5aecc53cec6f0",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O11: as dem heit., Gtauben ic. Gy. Stiet⸗ 1t — running head 'ob dem heil. Glauben ic. (19. Brief.) 71' is garbled; the letter number and the page number are lost",
+        "O7: a. Den 1f. No legte — page reads '2. Den 15. Nov.'; the paragraph number, day and month are garbled",
+        "O7: 6. Den 1s. dits unmm halb V. Mittagsmachte — page reads '3. Den 12. dito um halb 2.'; the paragraph number, date and hour are all wrong",
+        "O7: Sackden 1F. dits — burial date is 'den 15. dito' on the page",
+        "O6: D repten Set 8 — the last text line 'Ach was Muht! welches ist besser bey GOtt im' is replaced with gibberish"
+       ]
+      },
+      {
+       "page_id": "6a495080b9cd91959af3b84f",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: AlſolehreCouanz. ver⸗geſst.lul. Clar.L.ſta. g.sdlenoch. dgurtit. — citation garbled; page has 'Couar.1.var.resol.Iul.Clar.§.fin.q.55.Menoch.de arbit.'",
+        "O7: Binst. de cenfe m aleeene lz. — should be 'Binsf. de confes. malef. concl.7'; numeral lost",
+        "O7: I. Der trAp,. 16. Iul.Clar.Menoch Binsf. in a. conel.⸗. — page has '1.var.c.2.n.16 ... in 2.concl.6'",
+        "O6: lihg. contreg a. Gr. eungfs CinuminLpreſent, C.debugui — page has 'lib.9.controu.c.61.contra Cinum in l.praesent.C.de his qui'",
+        "O6: 1 d Breleſtomgongizut Felinum inh. aſferte depreſtumpt. — page has 'ad Ecclesiam confugiunt. Felinum in c.afferte de praesumpt.'",
+        "O7: Clar .5 iing.⸗F — page has 'Clar.§.fin.q.55'",
+        "O7: derenfe'malefin g.gonelg. Uib.z.Dafn — page has 'de confes.malef.in 2.concl.7.lib.3.Dan'",
+        "O7: Archidespigelkemzn. g.e. — page has 'Archid.cap.vellem 22.q.2.'"
+       ]
+      },
+      {
+       "page_id": "6a26c948aad44c98627f0a34",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: Am 1g. Böszund garbeſorglich. — the page has Am 19.; day numbers are misread all through (Ama., Amaz., Amz., Amg., Amy., Amie., Amts., Amrj. etc. for 2, 3, 9, 7, 10, 16, 17 and others)",
+        "O7: Am 1z.Gutmanwird geſchickt am Leibe. — the page has 12 and 13, but both appear as '1z'",
+        "O7: Sie fahen ſich an den az. Heumonats, — the dog-day dates are 23 Heumonats and 24 Augusti, but the candidate has 'az.' and 'ag.'",
+        "O6: g. Speiß Wint iſt eine Aazeſgung ſeher — the page has '8. Weiß Blut ist eine Anzeigung zeher'",
+        "O7: v. Schwarg und ſchdumig oder eiteriggrz.Dickchart un zehes Blucziſ eine Anzei⸗ — items 7 and 13 are garbled and merged",
+        "O1: Dotedenchrtateit undtaite Eiüg. — nonsense in place of 'böse Feuchtigkeit und kalte Flüß'",
+        "O1: Ge te⸗ — trailing text that is not on the page"
+       ]
+      },
+      {
+       "page_id": "6a26cba55ac5aecc53cec42b",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O7: 962 — page number is 1264",
+        "O7: 4z. Und wo die Liebe — paragraph numbers 23–28 misread as 4z, a4, Ng, 46, 4%, 48",
+        "O6: eine Biaur⸗ſaure Ardeit — should be 'Blut-saure Arbeit'",
+        "O6: Schadenge⸗\nſephs bekhmmert und das Elend der Verirtien — should be 'Schaden Jo-sephs bekümmert ... verirrten'",
+        "O7: à. oder zeins ſind — should be '2. oder 3. eins sind'",
+        "O6: angenehm P iwie jelgtit\nIhm aber die Kegel — should be 'angenehm: wir zeigten ihm aber die Regel'",
+        "O5: cn en Sin eng — last line 'Feuer in seiner Seelen bewahren müsse, daß es' is turned into gibberish",
+        "O11: 4 — catchword 'nicht' rendered as '4'"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "kraken>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "0/18",
+      "wrong_text": "1/18"
+     },
+     "written": {
+      "accept": "0/3",
+      "wrong_text": "1/3",
+      "invented_or_wrong_leaf": "0/3",
+      "p_acc_ge_080": 0.002,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "only 23% of its words are in the GPU draft": 1,
+      "a diff-guard flag is not a like-for-like substitution": 12,
+      "reply wrapper": 1,
+      "cli exit -9": 1
+     },
+     "agy_calls_per_page": 0.529,
+     "calls": {
+      "calls": 37,
+      "pages": 70,
+      "per_page": 0.529
+     },
+     "gpu_secs_per_page": 2.771,
+     "usd_per_accepted_page": null,
+     "wrong_text_pages": [
+      {
+       "page_id": "6a26da7a05d7c1d9b10872b5",
+       "face": "fraktur",
+       "written": true,
+       "defects": [
+        "O6: 1! Wenzesla! — decorated drop-cap 'Ha!' misread as '1!'; the interjection 'Ha' is lost and a stray numeral is shown"
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "agy-flash-low@8|agy-flash-low@4": {
+     "n": 14,
+     "books": 14,
+     "both": 11,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 2,
+     "p_a_within_008": 0.635,
+     "rule": "P(acc_agy-flash-low@8 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "lighton|agy-flash-low@4": {
+     "n": 15,
+     "books": 15,
+     "both": 2,
+     "a_only": 0,
+     "b_only": 11,
+     "neither": 2,
+     "p_a_within_008": 0.001,
+     "rule": "P(acc_lighton >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "pero|agy-flash-low@4": {
+     "n": 15,
+     "books": 15,
+     "both": 1,
+     "a_only": 1,
+     "b_only": 12,
+     "neither": 1,
+     "p_a_within_008": 0.002,
+     "rule": "P(acc_pero >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "lighton>agy-flash-low@4|agy-flash-low@4": {
+     "n": 11,
+     "books": 11,
+     "both": 7,
+     "a_only": 1,
+     "b_only": 2,
+     "neither": 1,
+     "p_a_within_008": 0.542,
+     "rule": "P(acc_lighton>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "pero>agy-flash-low@4|agy-flash-low@4": {
+     "n": 12,
+     "books": 12,
+     "both": 7,
+     "a_only": 1,
+     "b_only": 4,
+     "neither": 0,
+     "p_a_within_008": 0.238,
+     "rule": "P(acc_pero>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "kraken|agy-flash-low@4": {
+     "n": 15,
+     "books": 15,
+     "both": 0,
+     "a_only": 0,
+     "b_only": 13,
+     "neither": 2,
+     "p_a_within_008": 0,
+     "rule": "P(acc_kraken >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "kraken>agy-flash-low@4|agy-flash-low@4": {
+     "n": 2,
+     "books": 2,
+     "both": 0,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 1,
+     "p_a_within_008": 0.367,
+     "rule": "P(acc_kraken>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "face": "fraktur",
+      "kind": "B",
+      "route": "agy-flash-low@8",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "fraktur",
+      "kind": "D",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "replaces": [],
+    "voided": false,
+    "why": "routes that replace agy-flash-low@4 by RULE.md 2, cheapest per accepted page"
+   }
+  },
+  "antiqua": {
+   "n_drawn": 12,
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "8/12",
+      "wrong_text": "0/12"
+     },
+     "written": {
+      "accept": "8/9",
+      "wrong_text": "0/9",
+      "invented_or_wrong_leaf": "0/9",
+      "p_acc_ge_080": 0.622,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 2,
+      "more than one transcription header": 1
+     },
+     "agy_calls_per_page": 0.968,
+     "calls": {
+      "calls": 214,
+      "pages": 221,
+      "per_page": 0.968
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00126,
+     "wrong_text_pages": [],
+     "eligible": false
+    },
+    "agy-flash-low@8": {
+     "all_drawn": {
+      "accept": "6/12",
+      "wrong_text": "0/12"
+     },
+     "written": {
+      "accept": "6/7",
+      "wrong_text": "0/7",
+      "invented_or_wrong_leaf": "0/7",
+      "p_acc_ge_080": 0.496,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 3,
+      "more than one transcription header": 2
+     },
+     "agy_calls_per_page": 0.814,
+     "calls": {
+      "calls": 180,
+      "pages": 221,
+      "per_page": 0.814
+     },
+     "gpu_secs_per_page": null,
+     "usd_per_accepted_page": 0.00142,
+     "wrong_text_pages": [],
+     "eligible": false
+    },
+    "lighton": {
+     "all_drawn": {
+      "accept": "11/12",
+      "wrong_text": "0/12"
+     },
+     "written": {
+      "accept": "11/12",
+      "wrong_text": "0/12",
+      "invented_or_wrong_leaf": "0/12",
+      "p_acc_ge_080": 0.766,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {},
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 0.892,
+     "usd_per_accepted_page": 0.00009,
+     "wrong_text_pages": [],
+     "eligible": false
+    },
+    "pero": {
+     "all_drawn": {
+      "accept": "8/12",
+      "wrong_text": "1/12"
+     },
+     "written": {
+      "accept": "8/11",
+      "wrong_text": "1/11",
+      "invented_or_wrong_leaf": "1/11",
+      "p_acc_ge_080": 0.204,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "no GPU draft": 1
+     },
+     "agy_calls_per_page": 0,
+     "calls": null,
+     "gpu_secs_per_page": 0.32,
+     "usd_per_accepted_page": 0.00005,
+     "wrong_text_pages": [
+      {
+       "page_id": "69aec6aca1e0be599604f2bb",
+       "face": "antiqua",
+       "written": true,
+       "defects": []
+      },
+      {
+       "page_id": "6a26cb3d5ac5aecc53cea44e",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O6: eine Seisſe etwa — page reads 'Weiſſe' (white); candidate's 'Seisſe' suggests soap or is a non-word"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "lighton>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "9/12",
+      "wrong_text": "2/12"
+     },
+     "written": {
+      "accept": "9/11",
+      "wrong_text": "2/11",
+      "invented_or_wrong_leaf": "0/11",
+      "p_acc_ge_080": 0.44,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "corrector": 1
+     },
+     "agy_calls_per_page": 0.33,
+     "calls": {
+      "calls": 37,
+      "pages": 112,
+      "per_page": 0.33
+     },
+     "gpu_secs_per_page": 0.892,
+     "usd_per_accepted_page": 0.0005,
+     "wrong_text_pages": [
+      {
+       "page_id": "6aa35e2ce213def30d6caf1f",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O7: | 1236 | 1148 | 138 | — In the last data row of table 3 the page prints x = 1286, not 1236. The page's own value fits the row: 1286 − 1148 = 138."
+       ]
+      },
+      {
+       "page_id": "69bd9c2f46b01553e33c0483",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O5: Der Vorwand dient nicht allein zur rationalisierenden Verdeckung des Spermaverla — The transcription stops after line 8. The rest of the page is missing: the end of the paragraph ('sondern auch zu",
+        "O12: Der Vorwand dient nicht allein zur rationalisierenden Verdeckung des Spermaverla — The footnote '1) Eigentlich sind es vier.' is missing, along with its marker at 'drei1)'.",
+        "O15: <<<BEGIN>>>\nUNCHANGED — Leftover pipeline markers sit in the text where the rest of the page should be."
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "pero>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "8/12",
+      "wrong_text": "1/12"
+     },
+     "written": {
+      "accept": "8/9",
+      "wrong_text": "1/9",
+      "invented_or_wrong_leaf": "0/9",
+      "p_acc_ge_080": 0.627,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "not read": 1,
+      "a diff-guard flag is not a like-for-like substitution": 2
+     },
+     "agy_calls_per_page": 0.414,
+     "calls": {
+      "calls": 46,
+      "pages": 111,
+      "per_page": 0.414
+     },
+     "gpu_secs_per_page": 0.32,
+     "usd_per_accepted_page": 0.00059,
+     "wrong_text_pages": [
+      {
+       "page_id": "69bd9c2f46b01553e33c0483",
+       "face": "antiqua",
+       "written": true,
+       "defects": [
+        "O5: es ist ja von einer Tasche (Vagina) die Rede. Der — Transcription stops mid-sentence after line 10. The rest of the page is missing: the end of the first paragraph ('Bruder — Fleischer produziert…",
+        "O12: es ist ja von einer Tasche (Vagina) die Rede. Der — Footnote '1) Eigentlich sind es vier.' is dropped"
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "agy-flash-low@8|agy-flash-low@4": {
+     "n": 7,
+     "books": 7,
+     "both": 6,
+     "a_only": 0,
+     "b_only": 0,
+     "neither": 1,
+     "p_a_within_008": 0.783,
+     "rule": "P(acc_agy-flash-low@8 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "lighton|agy-flash-low@4": {
+     "n": 9,
+     "books": 9,
+     "both": 7,
+     "a_only": 1,
+     "b_only": 1,
+     "neither": 0,
+     "p_a_within_008": 0.722,
+     "rule": "P(acc_lighton >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "pero|agy-flash-low@4": {
+     "n": 8,
+     "books": 8,
+     "both": 6,
+     "a_only": 1,
+     "b_only": 1,
+     "neither": 0,
+     "p_a_within_008": 0.703,
+     "rule": "P(acc_pero >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "lighton>agy-flash-low@4|agy-flash-low@4": {
+     "n": 9,
+     "books": 9,
+     "both": 6,
+     "a_only": 1,
+     "b_only": 2,
+     "neither": 0,
+     "p_a_within_008": 0.511,
+     "rule": "P(acc_lighton>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "pero>agy-flash-low@4|agy-flash-low@4": {
+     "n": 7,
+     "books": 7,
+     "both": 6,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0,
+     "p_a_within_008": 0.488,
+     "rule": "P(acc_pero>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "face": "antiqua",
+      "kind": "D",
+      "route": "pero",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "antiqua",
+      "kind": "E",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "replaces": [],
+    "voided": false,
+    "why": "routes that replace agy-flash-low@4 by RULE.md 2, cheapest per accepted page"
+   }
+  }
+ },
+ "decision": {
+  "pooled_pick": "agy-flash-low@4",
+  "by_face": {
+   "fraktur": {
+    "route": "agy-flash-low@4",
+    "veto": false
+   },
+   "antiqua": {
+    "route": "agy-flash-low@4",
+    "veto": false
+   }
+  }
+ }
+}

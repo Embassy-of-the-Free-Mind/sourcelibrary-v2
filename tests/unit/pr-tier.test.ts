@@ -184,3 +184,28 @@ describe('pr-tier: interface strings in another language are public copy (#6403)
   });
 });
 
+describe('pr-tier: a very large PR is held for a human read (#8353)', () => {
+  const lines = (n: number) => Array.from({ length: n }, (_, i) => `const v${i} = ${i};`);
+  const run = (file: string, n: number) => {
+    const view = JSON.stringify({ number: 1, title: 'x', author: { login: 'JDerekLomas' }, labels: [], files: [{ path: file }], comments: [] });
+    const diff = diffOf(file, lines(n));
+    return classifyPR(1, (cmd: string) => (cmd.startsWith('gh pr view') ? view : diff)).result;
+  };
+
+  it('over the threshold holds, with the count in the reason', () => {
+    const r = run('src/lib/big.ts', 4001);
+    expect(r.tier).toBe('HOLD');
+    expect(r.reasons.map((x: { reason: string }) => x.reason).join('\n')).toMatch(/very large PR: 4001 added lines/);
+  });
+
+  it('under the threshold stays auto', () => {
+    expect(run('src/lib/ok.ts', 3999).tier).toBe('AUTO');
+  });
+
+  it('a huge PR that is all data, results or lockfile stays auto (negative control)', () => {
+    for (const f of ['src/data/big.json', 'scripts/eval/results/x/out.json', 'package-lock.json', 'tests/fixtures/x.json', 'scripts/eval/experiments/x.md']) {
+      expect(run(f, 9000).tier, f).toBe('AUTO');
+    }
+  });
+});
+

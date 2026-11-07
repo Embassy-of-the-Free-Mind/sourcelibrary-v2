@@ -192,16 +192,16 @@ export const LANES = [
     reason: 'It holds every book itself (paddle-print-6101) before its first write, and selects them by that hold. The GEX45 is rented by the month ($0 a page); the queue runs one task at a time under /root/gpu.lock.' },
 
   // ── subscription lanes (#7301): routed by the routing tables, budgeted in quota, never the paid API ──────────
-  { name: 'agy-flash-ocr', serves: 'ocr', files: ['scripts/batch/cli-ocr.mjs', 'scripts/lib/agy-cli.mjs'],
-    selects: 'books the OCR router holds for it (CLI_FLASH_OCR_HOLD: the flash families of ocr-routing-table.json), and page lists by hand',
-    trigger: 'one-off claude-job runs with their own page lists (book list recorded per job until R6); no standing runner yet (#7089)',
+  { name: 'agy-flash-ocr', serves: 'ocr', files: ['scripts/batch/cli-ocr.mjs', 'scripts/batch/cli-ocr-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'books the OCR router holds for it (CLI_FLASH_OCR_HOLD: the flash families of ocr-routing-table.json); Flash-Lite drafts of visible German/French books for `cli-ocr-lane.mjs correct` (#7558); and page lists by hand',
+    trigger: 'cron on gex45, one line a pool: cli-ocr-lane.mjs latin-first (#7263: Latin re-read, then the German/French correction, then the rest of Latin). cron on main every 2 h: cli-ocr-lane.mjs run (:10, #7089) and cli-ocr-lane.mjs correct (:50, stops at the agy quota floor, #7558); one-off claude-job runs with their own page lists (book list recorded per job until R6)',
     budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
     stamps: [{ field: 'ocr', call_site: 'scripts/batch/cli-ocr.mjs', engine: 'gemini' }],
     routes: { hold: 'ocr-flash-cli-7075' },
     reason: 'Runs named page lists, often of books held FOR it (the hold is the router\'s queue). A locked model is never called (agy-cli.mjs → model-limits.mjs agyBlocked): the run sleeps to the quoted reset, it never falls to the API. No pause check: a person or a job is the switch.', gap: true },
-  { name: 'agy-flash-translate', serves: 'translate', files: ['scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/batch/siku-translate-lane.mjs', 'scripts/lib/agy-cli.mjs'],
-    selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming gemini-3.8-flash+agy-cli), the held Siku Quanshu cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660, kept held, siku-translate-lane.mjs, #5600), and page lists by hand',
-    trigger: 'cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); one-off claude-job runs (book list recorded per job until R6)',
+  { name: 'agy-flash-translate', serves: 'translate', files: ['scripts/batch/cli-translate.mjs', 'scripts/batch/cli-translate-lane.mjs', 'scripts/batch/siku-translate-lane.mjs', 'scripts/batch/reader-request-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'books the translation router holds for it (CLI_TRANSLATE_HOLD, `channel: "cli"` rows naming gemini-3.8-flash+agy-cli), the held Siku Quanshu cohort (paddle-zh-5600-ocr-only / gpu-backlog-5660, kept held, siku-translate-lane.mjs, #5600; a book with an open reader request goes first, #7690), books a reader asked for (open translation-request feedback rows passing translation-request-eligibility.mjs; reader-request-lane.mjs OCRs their missing pages first and emails the reader, #7599), and page lists by hand',
+    trigger: 'cron on gex45 hourly: cli-translate-lane.mjs stale (#7263: re-translation after the Latin re-read). cron on main every 2 h: cli-translate-lane.mjs (#7075) and siku-translate-lane.mjs (#5600, its own per-pool weekly floor from agy /quota); reader-request-lane.mjs every 2 h on the second agy pool (#7599); one-off claude-job runs (book list recorded per job until R6)',
     budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: false, pause: null,
     stamps: [{ field: 'translation', call_site: 'scripts/batch/cli-translate.mjs', engine: 'gemini' }],
     routes: { hold: 'translate-cli-7075', engines: ['gemini-3.8-flash+agy-cli'] },
@@ -250,6 +250,11 @@ export const LANES = [
   { name: 'enrich-worker-batch', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs', 'scripts/workers/lib/enrich-batch-lane.mjs'],
     selects: 'live translated books past the realtime statuses with no summary / index / chapters (#2141), reads then translated pages', trigger: 'cron, 15 min collect + 6 h admit',
     budget: 'dial (scoped)', respectsHold: 'marker', pause: 'enrich' },
+  { name: 'agy-flash-enrich', serves: 'enrich', files: ['scripts/workers/lib/enrich-agy-lane.mjs', 'scripts/lib/agy-cli.mjs'],
+    selects: 'the batch lane\'s gap (live translated books past the realtime statuses with no summary / index / chapters), reads then translated pages; each book claimed in enrich_batch_books before its call so the API batch lane skips it, and handed back to it on failure (#7628)',
+    trigger: 'cron on main every 2 h: enrich-worker.mjs --agy (#7628), Gemini 3.8 Flash low, one conversation per book; stops at its daily request cap (about a quarter of one agy pool\'s week, Derek 2026-10-28), at the pool\'s quota floor (cli-ocr-lane.mjs quotaFloor) and at the first quota reply',
+    budget: 'quota-share', quota: { meter: 'agy', share: 0.4 }, respectsHold: 'marker', pause: 'enrich',
+    reason: 'Its model calls are the subscription CLI only. The writes it shares with the API lanes (finishEnrichBook) still upsert the book and page embeddings through the embedding API, as every enrich lane does: that is the embedding step, not a fallback for the enrichment call.' },
 
   // ── images ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-images', serves: 'images', files: [ORCH],
@@ -283,6 +288,11 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/eval/quality-dashboard/build.mjs', reason: 'report: reads book and page counts, writes only its dashboard file and ops_reports' },
+  { file: 'scripts/eval/quality-dashboard/trends.mjs', reason: 'report: reads book and page counts, writes only its own daily trend rows; no book or page writes' },
+  { file: 'scripts/maintenance/rebuild-human-read-count-5048.mjs', reason: 'metadata: recomputes books.human_read_count from analytics_events, no step work (#5048); daily cron' },
+  { file: 'scripts/maintenance/router-board-push.mjs', reason: 'report: reads the router table and repo crontabs, writes only ops_reports router-board:latest for /admin/router (#7913); the write libs come in through the lane constants router-binding.mjs imports from cli-ocr-lane.mjs' },
+  { file: 'scripts/eval/lane-judge-sampler.mjs', reason: 'measurement: reads pages/books/page_revisions, writes only lane_judge_verdicts, lane_judge_runs and ops_reports (#7611); the write libs come in through the lane constants it imports from cli-ocr-lane.mjs' },
   { file: 'scripts/maintenance/backfill-printed-page-4291.mjs', reason: 'metadata: pages.printed_page fitted per book, no step work (#4291); daily cron --ocr-since=26h' },
   { file: 'scripts/workers/sync-worker.mjs', reason: 'the stamp writer: counters, translation_state and pipeline_next (#5477); does no step work' },
   { file: 'scripts/workers/scheduler.mjs', reason: 'launcher; its stalled-image-job drain clears job bookkeeping, not steps' },
@@ -296,6 +306,7 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/backfill-author-canonical-links.mjs', reason: 'metadata: author canonical links' },
   { file: 'scripts/maintenance/classify-text-role.mjs', reason: 'metadata: books.text_role' },
   { file: 'scripts/maintenance/fix-broken-image-thumb.mjs', reason: 'display: thumbnail URLs' },
+  { file: 'scripts/maintenance/rehost-walled-covers.mjs', reason: 'display: cover URLs moved from walled hosts to the R2 copy of the same page (#5448)' },
   { file: 'scripts/maintenance/seam-repair-6742/lean.mjs', reason: 'repair: minimal edge edits to served page translations at broken page joins, through writePageTranslation with a revision per page and an undo (#6742); no step work, skips held books; nightly cron, stops at the account\'s 60% weekly' },
   { file: 'scripts/maintenance/cover-frame-backfill.mjs', reason: 'display: books.thumbnail_frame (card crop), no step work (#6010); weekly cron' },
   { file: 'scripts/maintenance/mark-stale-translations.mjs', reason: 'marker: pages.translation_stale (#4927). Not a lane, but it is ACTUATION — the paid translate lanes read it' },
@@ -308,7 +319,6 @@ export const EXEMPT = [
   { file: 'scripts/maintenance/daily-digest.mjs', reason: 'read-only digest (#5441): reads usage stores, runs and logs, sends one message; imports RUNS_COLLECTION from translate-batch-seam.mjs, whose module also exports writers' },
   { file: 'scripts/audit/pipeline-next-step-audit.mjs', reason: 'read-only audit of books.pipeline_next (#5478); writes only its ops_reports row; imports nextStep() from pipeline-next-step.mjs, whose module also exports writers' },
   { file: 'scripts/audit/english-served-divergence.mjs', reason: 'read-only audit of the English served on English-original leaves (#7100); writes nothing; imports isEnglishOriginal() from page-counts.mjs, whose module also exports writers' },
-  { file: 'scripts/audit/routing-drift.mjs', reason: 'read-only audit of DECISIONS.md against the routers (#5871); opens no database; imports the translation router from translate-core.mjs, whose module also exports writers' },
   { file: 'scripts/maintenance/prewarm-browse.mjs', reason: 'read-only; imports read helpers from page-counts.mjs' },
   { file: 'scripts/workers/enrichment-snapshot.mjs', reason: 'read-only snapshot; imports read helpers from page-counts.mjs' },
   { file: 'scripts/workers/stage-coverage-snapshot.mjs', reason: 'read-only snapshot; imports read helpers from page-counts.mjs' },
@@ -335,21 +345,23 @@ export const CRONTAB_SNAPSHOTS = [
  * name the lane they drive. A new off-repo line that is neither here nor in a lane's `cron` fails the test.
  */
 export const OFF_REPO_CRON = [
+  { match: '/root/tengyur-cli-6361/watchdog.sh', reason: 'tends the #6361 Tengyur CLI driver; removes itself at DONE-STAGE2' },
+  { match: '/usr/local/bin/climits', reason: 'reads Claude subscription limits, no step work' },
+  { match: '/root/agy-quota/meter.py', reason: 'meter for the agy quota (#6331, #6375): passive, makes no model calls' },
+  { match: '/root/bin/box.sh', reason: 'job plumbing: pushes limits across the box mesh' },
+  { match: '/root/bin/sync-concepts.sh', reason: 'not book or page work: syncs the concept knowledge bases' },
+  { match: '/root/restic-transcripts.sh', reason: 'box backup of session transcripts, no step work' },
   { match: '/root/moltbook-', reason: 'not Source Library (moltbook)' },
   { match: '/root/restic-backup.sh', reason: 'box backup, no step work' },
   { match: '/root/bin/claude-job.sh', reason: 'job plumbing: starts or resumes headless jobs (a copy of scripts/workers/claude-job.sh); the work each job does is the lane it runs' },
   { match: '/root/bin/claude-rc.sh', reason: 'job plumbing: remote-control session at boot' },
   { match: '/root/bin/agy-wal-checkpoint.py', reason: 'disk: a copy of scripts/workers/agy-wal-checkpoint.py (#6223)' },
   { match: '/root/disk-alarm.sh', reason: 'disk: fallback copy of scripts/workers/disk-alarm.sh' },
+  { match: '/root/bin/atlas-egress-meter.sh', reason: 'cost alarm: hand-placed copy of scripts/workers/atlas-egress-meter.sh, the cron fallback until the checkout has it; counts bytes from Atlas, no step work (#5189)' },
+  { match: '/root/bin/disk-steward.sh', reason: 'disk: hand-placed copy of scripts/workers/disk-steward.sh, the cron fallback until the checkout has cold-r2.mjs (#6223)' },
   { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
-  { match: '/root/translate300/driver.mjs', reason: 'hand driver (#5467) of translate-chained; retired by R6 (#5825)' },
-  { match: '/root/translate-next/driver.mjs', reason: 'hand driver (#5467) of translate-chained; retired by R6 (#5825)' },
-  { match: '/root/claude-jobs/chain-translate-next.sh', reason: 'starts the translate-next-5467 hand driver; retired with it by R6 (#5825)' },
   { match: '/root/leaf-break/fullrun-4523-watchdog.sh', reason: 'watchdog of the #4523 Tibetan re-OCR driver (Yigdzin, specialist); remove when DONE-4523 exists' },
-  { match: '/root/tib-step2/tend.py', reason: 'tends the #5320 Tibetan step-2 job; remove when step 2 is done' },
-  { match: '/root/tibetan-reocr/relaunch.sh', reason: 'NOT A REGISTERED LANE YET: relaunches the Tibetan Yigdzin re-OCR reads on main (#4523, routing row `tibetan`); its pages are written by hand through scripts/maintenance/apply-reocr-verdicts.mjs after adjudication. Remove when the re-OCR is done, or register it if it becomes standing' },
-  { match: '/root/tibetan-eval/relaunch_reacquire.sh', reason: 'relaunches the British Library image re-acquisition (#4646): images, no model spend; remove when reacquire-done.txt is complete' },
-  { match: '/root/jobs/siglip2-6871/code-full/siglip2-requeue.sh', reason: 'queues the next SigLIP2 page-embedding chunk on the gex45 GPU queue when nothing else is pending (#6871 row 8); an installed copy of scripts/gpu/siglip2-6871/siglip2-requeue.sh. Writes embedding shards, no page text' },
+  { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
 ];
 
 /**

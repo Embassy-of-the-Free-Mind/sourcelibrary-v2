@@ -1,0 +1,348 @@
+[
+ {
+  "item": "cf6be3176b65",
+  "slot": "c0",
+  "control": {
+   "kind": "wrong_image_other_book"
+  },
+  "base_book": "69e7abd75f1a22ab19a9f388",
+  "base_page": 284
+ },
+ {
+  "item": "bda81bea4171",
+  "slot": "c1",
+  "control": {
+   "kind": "wrong_image_other_book"
+  },
+  "base_book": "695583cd5336c55c8910f690",
+  "base_page": 716
+ },
+ {
+  "item": "df3d44fe9794",
+  "slot": "c2",
+  "control": {
+   "kind": "wrong_image_other_book"
+  },
+  "base_book": "6a2032949a93dd6051b495fe",
+  "base_page": 156
+ },
+ {
+  "item": "0126b8912021",
+  "slot": "c3",
+  "control": {
+   "kind": "wrong_image_other_book"
+  },
+  "base_book": "6a08fd6925e3a402b23b3e60",
+  "base_page": 16
+ },
+ {
+  "item": "ad098fc529c4",
+  "slot": "c4",
+  "control": {
+   "kind": "wrong_image_other_book"
+  },
+  "base_book": "69bda0b1f6d63c9197489c7b",
+  "base_page": 63
+ },
+ {
+  "item": "b34c47d32400",
+  "slot": "c5",
+  "control": {
+   "kind": "neighbour_text"
+  },
+  "base_book": "6a4a68a2d1c07a59a75109ac",
+  "base_page": 8
+ },
+ {
+  "item": "1d31f624ead2",
+  "slot": "c6",
+  "control": {
+   "kind": "neighbour_text"
+  },
+  "base_book": "69804b9530e286f1b1c3a22f",
+  "base_page": 78
+ },
+ {
+  "item": "86fd01cf9b2d",
+  "slot": "c7",
+  "control": {
+   "kind": "neighbour_text"
+  },
+  "base_book": "6a4eae578112cac04007b588",
+  "base_page": 16
+ },
+ {
+  "item": "9aa06daba042",
+  "slot": "c8",
+  "control": {
+   "kind": "neighbour_text"
+  },
+  "base_book": "6a4f0ce6e39e71f6b6e3d922",
+  "base_page": 10
+ },
+ {
+  "item": "6e9d686e7856",
+  "slot": "c9",
+  "control": {
+   "kind": "neighbour_text"
+  },
+  "base_book": "699246c1bc722ec0ee81311f",
+  "base_page": 391
+ },
+ {
+  "item": "056a60073eaf",
+  "slot": "c10",
+  "control": {
+   "kind": "shift_run"
+  },
+  "base_book": "695272feab34727b1f048676",
+  "base_page": 92
+ },
+ {
+  "item": "bf666c53578f",
+  "slot": "c11",
+  "control": {
+   "kind": "shift_run"
+  },
+  "base_book": "6952d19977f38f6761bc5eb1",
+  "base_page": 163
+ },
+ {
+  "item": "f0f7ae952d4d",
+  "slot": "c12",
+  "control": {
+   "kind": "shift_run"
+  },
+  "base_book": "6a4e414d96ab5938408e5cce",
+  "base_page": 12
+ },
+ {
+  "item": "37d02e4c8ec8",
+  "slot": "c13",
+  "control": {
+   "kind": "shift_run"
+  },
+  "base_book": "6a3c642a39b4508b04e24bab",
+  "base_page": 122
+ },
+ {
+  "item": "d8c138a3efa1",
+  "slot": "c14",
+  "control": {
+   "kind": "shift_run"
+  },
+  "base_book": "69af119823aa4b6749dc34ee",
+  "base_page": 60
+ },
+ {
+  "item": "f879aef762cd",
+  "slot": "c15",
+  "control": {
+   "kind": "english_neighbour"
+  },
+  "base_book": "69b99e9576b9bab2de21a0bc",
+  "base_page": 271
+ },
+ {
+  "item": "8811c22ce723",
+  "slot": "c16",
+  "control": {
+   "kind": "english_neighbour"
+  },
+  "base_book": "69e009e038e6b96e05869dda",
+  "base_page": 16
+ },
+ {
+  "item": "c5b0cea9d37e",
+  "slot": "c17",
+  "control": {
+   "kind": "english_neighbour"
+  },
+  "base_book": "69b1de95ca46fa60ea1edcdc",
+  "base_page": 516
+ },
+ {
+  "item": "567c29019eff",
+  "slot": "c18",
+  "control": {
+   "kind": "english_neighbour"
+  },
+  "base_book": "69c1bc388522835be8461f58",
+  "base_page": 92
+ },
+ {
+  "item": "7723a6924020",
+  "slot": "c19",
+  "control": {
+   "kind": "english_neighbour"
+  },
+  "base_book": "69c866746c6f3cc53c856409",
+  "base_page": 257
+ },
+ {
+  "item": "3b0d17f43eb0",
+  "slot": "c20",
+  "control": {
+   "kind": "english_other_book"
+  },
+  "base_book": "69ae9bcff3bd47924cacc93e",
+  "base_page": 186
+ },
+ {
+  "item": "963a0d1d59a1",
+  "slot": "c21",
+  "control": {
+   "kind": "english_other_book"
+  },
+  "base_book": "6a0854f949638a50931c0e5b",
+  "base_page": 248
+ },
+ {
+  "item": "3cc4806c98ba",
+  "slot": "c22",
+  "control": {
+   "kind": "english_other_book"
+  },
+  "base_book": "69f33013876dd827cbc46318",
+  "base_page": 135
+ },
+ {
+  "item": "b324e8d218fe",
+  "slot": "c23",
+  "control": {
+   "kind": "english_other_book"
+  },
+  "base_book": "69b6b9ac8566c8381462c1b5",
+  "base_page": 418
+ },
+ {
+  "item": "79140eb16bc6",
+  "slot": "c24",
+  "control": {
+   "kind": "english_other_book"
+  },
+  "base_book": "69b303365facc83a9a3d96e4",
+  "base_page": 115
+ },
+ {
+  "item": "d26979367e65",
+  "slot": "c25",
+  "control": {
+   "kind": "order_backward"
+  },
+  "base_book": "69c838976c6f3cc53c84f0a6",
+  "base_page": 931
+ },
+ {
+  "item": "53d8a4f9cdf9",
+  "slot": "c26",
+  "control": {
+   "kind": "order_backward"
+  },
+  "base_book": "69c818c66c6f3cc53c8491c4",
+  "base_page": 116
+ },
+ {
+  "item": "9db38c9c3545",
+  "slot": "c27",
+  "control": {
+   "kind": "order_backward"
+  },
+  "base_book": "69557ef457e3b773024f4d2a",
+  "base_page": 150
+ },
+ {
+  "item": "0d2352587374",
+  "slot": "c28",
+  "control": {
+   "kind": "order_backward"
+  },
+  "base_book": "69aea4d90fefd7831dcda7c1",
+  "base_page": 532
+ },
+ {
+  "item": "3aeae2b0bd24",
+  "slot": "c29",
+  "control": {
+   "kind": "order_backward"
+  },
+  "base_book": "6a504eb478825bd7fdd9e519",
+  "base_page": 63
+ },
+ {
+  "item": "57c53f6c793c",
+  "slot": "c30",
+  "control": {
+   "kind": "two_leaves"
+  },
+  "base_book": "69ef332572c1376fdf2afc37",
+  "base_page": 22
+ },
+ {
+  "item": "8d1be9a503c6",
+  "slot": "c31",
+  "control": {
+   "kind": "two_leaves"
+  },
+  "base_book": "697e23ca56a65c90a0e5beba",
+  "base_page": 606
+ },
+ {
+  "item": "2c5d573c59e0",
+  "slot": "c32",
+  "control": {
+   "kind": "two_leaves"
+  },
+  "base_book": "69a5d8a2a63a00aaae8aa96b",
+  "base_page": 96
+ },
+ {
+  "item": "1a8ebb07ab9b",
+  "slot": "c33",
+  "control": {
+   "kind": "two_leaves"
+  },
+  "base_book": "69b2f480f9f1ad2b3b153131",
+  "base_page": 591
+ },
+ {
+  "item": "3c716a8c46d2",
+  "slot": "c34",
+  "control": {
+   "kind": "number_stamp",
+   "stamp": 692
+  },
+  "base_book": "69b2ff9f5545150b61b48a35",
+  "base_page": 555
+ },
+ {
+  "item": "9f064062911d",
+  "slot": "c35",
+  "control": {
+   "kind": "number_stamp",
+   "stamp": 191
+  },
+  "base_book": "69dbc7ad1040d1d5e20932a0",
+  "base_page": 54
+ },
+ {
+  "item": "f1febd8a558f",
+  "slot": "c36",
+  "control": {
+   "kind": "number_stamp",
+   "stamp": 336
+  },
+  "base_book": "697e23ca05adde1df98f104f",
+  "base_page": 199
+ },
+ {
+  "item": "6a898940919a",
+  "slot": "c37",
+  "control": {
+   "kind": "number_stamp",
+   "stamp": 159
+  },
+  "base_book": "69c1bb308522835be845d5d5",
+  "base_page": 22
+ }
+]

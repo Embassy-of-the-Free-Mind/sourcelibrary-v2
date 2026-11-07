@@ -1,0 +1,140 @@
+[
+  {
+    "book_id": "b06-k", "slot": 1, "title": "De proprietatibus rerum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 131, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "transitus spiritus animalis ad inferiora sensus atque motus", "image": "trāsit⁹ spūs aīal' ad īstrā sēsus atqꝫ motus", "problem": "abbreviation for 'instrumenta' (organs of sense and motion) expanded as 'inferiora'", "severity": "moderate", "class": "O6" },
+          { "ocr": "et si virtus vite regitiua impeditur omnis talis spasmus", "image": "ꝛ ꝟt⁹ vite regitiua impedit. oīs talis spasm⁹", "problem": "'si' added; turns a main clause into a condition", "severity": "minor" },
+          { "ocr": "Ex istis enim causis aliis denegatur", "image": "Ex istis ei causꝭ ꝛ aliis denegatur", "problem": "'et' dropped", "severity": "minor" },
+          { "ocr": "pacutas febres", "image": "pacutas febres (= per acutas)", "problem": "abbreviation left unexpanded inside otherwise expanded text", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 260, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "infructuosis conserte", "image": "infructuosis ↄsite (= consite)", "problem": "consite (planted) read as conserte", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 388, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Uitis dicta a vinciendo", "image": "Uitis dr̄ a vinciēdo", "problem": "dicitur rendered as dicta", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, fully expanded reading of all three pages. Every heading, the column order and the guide letters are right. The only meaning-level slip is 'inferiora' for 'instrumenta' on p. 131; the rest are one-word slips."
+  },
+  {
+    "book_id": "b06-m", "slot": 2, "title": "De proprietatibus rerum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 131, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "contractio . mo doque ictum voluntarium auferens retardans. Ta lisquelis contractio", "image": "ↄctio .mo/tū volūtariū auferēs ꝛ retardās. Ta/lis ↄctio", "problem": "'motum' garbled into 'modoque ictum', 'Talis' into 'Talisquelis'; definition of spasm corrupted", "severity": "moderate", "class": "O6" },
+          { "ocr": "bene scilicet signo declaratur", "image": "hec scꝫ signa declarant", "problem": "'these signs declare it' misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "et fit vite regitiua impedita", "image": "ꝛ ꝟt⁹ vite regitiua impedit", "problem": "'virtus' (the faculty that is impeded) dropped", "severity": "moderate", "class": "O6" },
+          { "ocr": "anteriores nerui plus pectus contrahunt", "image": "anteriores nerui ꝟsus pect⁹ ↄhunt", "problem": "'versus' read as 'plus'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Paralisis est lesio partis humani corporis partim cum diminutione", "image": "Paralisis est lesio ptis hūani corporis cū diminutōe", "problem": "'partim' not on the page", "severity": "minor" },
+          { "ocr": "Uniuersalis est que recte mediam partem corporis hominis infirmat;", "image": "q̄ recte mediam ptē occupat hoīs infirmāt'", "problem": "'occupat' dropped, 'corporis' added, 'infirmantis' made a verb", "severity": "moderate", "class": "O6" },
+          { "ocr": "in principio prodest calidum lac", "image": "in pnci/pio ↄfert calidū lac", "problem": "'confert' replaced by synonym 'prodest'", "severity": "minor" },
+          { "ocr": "ditate astringente / astrictiuis / prouenientibus / Alias hoc medicinas", "image": "ↄstringēte / ↄstrictiuis / ↄuenietib⁹ / Alias ꝟo", "problem": "con- abbreviation and 'vero' misread several times", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "Question marks left in the reader text: 'epitetkanus?', 'epytrostenus?'", "severity": "minor" },
+                   { "note": "Line-end breaks kept without hyphens, so words are split in the running text ('mo doque', 'ali as', 'fe bris')", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 260, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "latitantes sponde insidiant ... post suas spondas", "image": "latitan/tes pde insidiant̄ ... post suas pdas", "problem": "'prede/predas' (prey) misread twice as nonsense 'sponde/spondas'", "severity": "moderate", "class": "O6" },
+          { "ocr": "leo foveam sponte sua ingreditur", "image": "leo foueā pde grā ingreditur", "problem": "'prede gratia' (for the sake of prey) replaced by 'sponte sua' (of its own accord); fluent but not on the page", "severity": "moderate", "class": "O8" },
+          { "ocr": "eo quod patris tenebris", "image": "eo q̄ atris tenebris", "problem": "'atris' read as 'patris'", "severity": "moderate", "class": "O6" },
+          { "ocr": "fere siluestres liberi et in aliis locis", "image": "liberi⁹ q̄ in aliis locis", "problem": "'liberius quam' read as 'liberi et'; the comparison is lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "talia loca quis sint solitaria / locus heremiticus quis multum habet", "image": "q̄uis (quamuis)", "problem": "'quamuis' read as 'quis' twice", "severity": "moderate", "class": "O6" },
+          { "ocr": "dicunt / deserunt / nuncupant / euagant / commorant / modulant / insidiant / speculant / diuidunt", "image": "dicunt̄ / deserunt̄ / nuncupant̄ ...", "problem": "passive -tur abbreviation dropped throughout, so the verbs read as active", "severity": "moderate", "class": "O6" },
+          { "ocr": "terra deuii et terroris ... vie sunt deuii calles", "image": "terra deuiū ꝛ erroris ... vie sunt deuie calles", "problem": "erroris → terroris; deuie → deuii", "severity": "minor" },
+          { "ocr": "Ezechielem. rir.", "image": "Ezech. xix.", "problem": "chapter numeral xix misread", "severity": "minor", "class": "O7" },
+          { "ocr": "ne exeat → necreat; a latere ad → a laterread", "image": "ne exeat; a late/re ad", "problem": "run-together garbles", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 388, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "transmittit ad hoc sufficiez", "image": "trāsmittit ad ꝟge sufficiē", "problem": "'ad virge superficiem' lost; sense broken", "severity": "moderate", "class": "O6" },
+          { "ocr": "Nam flos insensibiliter desuga egre diens ... Fuga itaque non pficit", "image": "de ꝟga egre/diens ... ꝟga itaqꝫ nō pficit", "problem": "'virga' misread as 'desuga' / 'Fuga'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Aliqui dicit virgultum viri darium ... viridis tamen per plantas", "image": "Aliqñ dicit̄ virgultū viri/dariū ... viridis ꝛ amen⁹. plantis", "problem": "'aliquando' and 'amenus' misread; 'tamen per' invented", "severity": "moderate", "class": "O6" },
+          { "ocr": "vt vue liberum acrem purum capiant", "image": "vt vue liberi⁹ aerem purū capiāt", "problem": "'aerem' read as 'acrem'", "severity": "moderate", "class": "O6" },
+          { "ocr": "pastinaze est fimovel terra pinguivite pasce re ... Item cil puenit popinatio", "image": "pastinare est fimo vel terra pingui vitē pascere ... Itē eis ↄuenit pāpinatio", "problem": "passage left as raw garble while the rest is expanded", "severity": "moderate", "class": "O6" },
+          { "ocr": "a pango glos. ti.", "image": "a pango gis. xi.", "problem": "misread", "severity": "minor" },
+          { "ocr": "Item virga recte debet esse erecta", "image": "Item virga ex se debet esse erecta", "problem": "misread", "severity": "minor" },
+          { "ocr": "Habet calor naturalis", "image": "Nā calor naturalis", "problem": "misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<image-desc> tags inline in the body text, one describing a 'Small initial V rubricated' that is not on the page (there is only a blank initial space with a guide letter)", "severity": "moderate", "class": "O15" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Mostly readable, but every page has several meaning-changing misreadings ('sponte sua' for 'prede gratia', 'patris' for 'atris', passive endings dropped, garbled passages). There are also stray '?' marks, split words and an invented image description in the text."
+  },
+  {
+    "book_id": "b06-r", "slot": 3, "title": "De proprietatibus rerum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 131, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Spasmus est neruorum uiolenta actio motus uoluntarii auferens retardans. Laicque ista sectio puenit", "image": "Spasm⁹ est neruoꝝ violēta ↄctio .motū volūtariū auferēs ꝛ retardās. Talis ↄctio ꝓuenit", "problem": "definition garbled (contractio → actio, Talis contractio → Laicque ista sectio)", "severity": "moderate", "class": "O6" },
+          { "ocr": "qui ipsa format. uiret et digitus contrahicat aut recuruat", "image": "q̄ vix ꝟba formāt. vix etiā digitos cō/plicāt aut recuruāt", "problem": "nonsense; 'scarcely form words' lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "et tetan qn in his tribus non est pfecta cura", "image": "ꝛ tetan⁹ qñ / scꝫ anteriores ꝛ posteriores ↄtionē patiūt. / in his trib⁹", "problem": "full line defining tetanus dropped", "severity": "serious", "class": "O5" },
+          { "ocr": "inobedient redde/ Logruis igit medicinis", "image": "inobedienti⁹ redde/ret. et ideo pdicto mō caute est pcedendū / Cōgruis", "problem": "line dropped ('and so one must proceed cautiously')", "severity": "serious", "class": "O5" },
+          { "ocr": "Cap. XII. / Cap. XIII. / Cap. XIIII. De passionib oculorum.", "image": "De spasmo Cap. XII. / De paralisi. Ca. XIII / De passionib⁹ oculoꝝ Ca. XIIII", "problem": "chapter titles 'De spasmo' and 'De paralisi' dropped", "severity": "moderate", "class": "O11" },
+          { "ocr": "Un o2 iamboz spasmum et colerico", "image": "Unde dr̄ in amphoꝝ. spasm⁹ ex colerico", "problem": "unexpanded raw glyph-garble mixed with expanded text throughout the page", "severity": "moderate", "class": "O6" },
+          { "ocr": "nimia naue desiccato et substantiali buiditas voluptode", "image": "nimia nāe desiccatōe ꝛ substātialis hūiditatis ↄsūptōe", "problem": "garble", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<image-desc> says 'Decorative initial A at the beginning of the text'; there is no initial, only blank spaces with guide letters", "severity": "moderate", "class": "O15" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 260, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Un beremite dicunt hoies deserta dominu sequestrantes", "image": "Uñ heremite dicunt̄ hoīes deserta soli/tudinis appetētes. se ab aspectu hominū se/questrātes", "problem": "line skip: 'solitudinis appetentes se ab aspectu' dropped", "severity": "serious", "class": "O5" },
+          { "ocr": "Fouea aut intra fouea a late rad modum cistule preparat.", "image": "Fouea aūt intra foueā a late/re ad modū spelunce fodit̄ i qua cauea que/dam ponit̄ que ad modū cistule preparat̄.", "problem": "line dropped; the pit-within-a-pit with a cage is lost", "severity": "serious", "class": "O5" },
+          { "ocr": "latibulum ... in ca vernis manentiu in quibus", "image": "in ca/uernis manentiū latibulū in quibus", "problem": "'latibulum' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "et ideo speculando antru dicit", "image": "ꝛ ideo spec⁹ a speculando antrū dicit̄", "problem": "'specus a' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "talia loca huis sint ... huis metu habet", "image": "q̄uis ... q̄uis mltū habet", "problem": "quamuis/multum misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "Deberemo / beremite / becherem / vitaliter / querisant / Brego / Auribiles", "image": "De heremo / heremite / hec herem⁹ / vsualiter / ↄuersant̄ / Grego / fluxibiles", "problem": "many letter-level misreads, some meaning-changing", "severity": "moderate", "class": "O6" },
+          { "ocr": "super Ezechiel. Leo", "image": "super Ezech. xix. Leo", "problem": "chapter reference dropped", "severity": "minor", "class": "O7" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 388, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "...coercetur. <column-break/> sum pullulat", "image": "De virgulto Capitulū CLXXVI. Virgultū a virga est dictū ... pcisum rur/", "problem": "whole chapter heading and the first 8 lines of 'De virgulto' at the foot of column 1 dropped; column 2 opens on an orphaned 'sum pullulat'", "severity": "serious", "class": "O5" },
+          { "ocr": "Corticem habet propter arboris lignum posse", "image": "Corticē habet ꝓ pel/le arbor. lignū ꝓ osse", "problem": "bark-as-skin, wood-as-bone analogy garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "Nascit aut ramulos et fructus", "image": "Nascit̄ aūt tam flos q̄ fruct⁹", "problem": "'flos' (flower) became 'ramulos'", "severity": "moderate", "class": "O6" },
+          { "ocr": "maritime evenit ... Item evenit eis puratio ... Item eis evenit fossio", "image": "maxime ↄueniūt ... Itē ↄuenit eis putatio", "problem": "'conuenit' read as 'evenit' throughout", "severity": "moderate", "class": "O6" },
+          { "ocr": "Item eis evenit popinatio est pinos. id est folia supplua devite amouere et vrue. Visi sunt folia supplua devite non obum bzate", "image": "Est aūt pampinare pam/pinos. i. folia supflua de vite amouere vt vue / liberi⁹ aerem purū capiāt. ꝛ foliis nō obum/brate", "problem": "line dropped and a phrase repeated in its place", "severity": "serious", "class": "O5" },
+          { "ocr": "quere in litera D. / Devite Ca. LXXVII", "image": "quere in lr̄a O. / De vite Ca. CLXXVII", "problem": "letter O read as D; chapter number missing C", "severity": "moderate", "class": "O7" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<page-num>172</page-num> and a catchword 'te' are recorded; neither is on the page (only a mirrored show-through header at the top)", "severity": "moderate", "class": "O16" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Not usable as a reading text. It mixes raw abbreviations with garbled expansions, and silently drops lines on every page, including a whole chapter opening on p. 388. It also invents page furniture (an initial, a page number, a catchword)."
+  }
+]

@@ -22,6 +22,8 @@ export interface KeyRequestDoc {
   organization: string | null;
   use_case: string;
   requested_tier: string;
+  /** The terms version agreed to when asking. Absent on requests from before 2026-11-04. */
+  terms_version?: string;
   status: 'pending' | 'approving' | 'approved' | 'denied';
   created_at: Date;
 }
@@ -64,7 +66,7 @@ export async function reviewKeyRequest(
   const name = pending.organization ? `${pending.name} · ${pending.organization}` : pending.name;
   let minted;
   try {
-    minted = await generateApiKey(pending.email, tier, name);
+    minted = await generateApiKey(pending.email, tier, name, { termsVersion: pending.terms_version });
   } catch (e) {
     await col.updateOne({ _id, status: 'approving' }, { $set: { status: 'pending' } });
     throw e;

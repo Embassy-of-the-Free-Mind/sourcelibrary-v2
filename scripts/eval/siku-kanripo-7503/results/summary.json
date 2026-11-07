@@ -1,0 +1,2985 @@
+{
+ "all": {
+  "pages": 3015,
+  "text_pages": 2914,
+  "aligned": 2612,
+  "aligned_share_of_text_pages": 0.896,
+  "median_cer": 0.027,
+  "median_cer_ci_by_book": [
+   0.02,
+   0.036
+  ],
+  "mean_cer": 0.036,
+  "cer_gt_0_1": 139,
+  "cer_gt_0_1_share": 0.053,
+  "cer_gt_0_1_wilson": [
+   0.045245271412826804,
+   0.06249881908791392
+  ],
+  "cer_gt_0_25": 6,
+  "cer_ge_0_5": 1,
+  "per_book": [
+   {
+    "book_id": "6a3c6e7e01fe4f593c1c35dd",
+    "title": "儀禮析疑·卷一~卷二 (vol 1)",
+    "n": 117,
+    "median_cer": 0.013,
+    "gt_0_1": 2
+   },
+   {
+    "book_id": "6a3cba213dce6cfad7499c52",
+    "title": "本草乘雅半偈·卷七 (vol 7)",
+    "n": 122,
+    "median_cer": 0.02,
+    "gt_0_1": 2
+   },
+   {
+    "book_id": "6a3c75dc39b4508b04e5e2ac",
+    "title": "傳信適用方·卷上 (vol 1)",
+    "n": 121,
+    "median_cer": 0.04,
+    "gt_0_1": 3
+   },
+   {
+    "book_id": "6a3c767401fe4f593c1fb25a",
+    "title": "樂書·卷一百四十九~卷一百五十五 (vol 22)",
+    "n": 93,
+    "median_cer": 0.04,
+    "gt_0_1": 14
+   },
+   {
+    "book_id": "6a3c74c339b4508b04e593bc",
+    "title": "萬姓統譜·卷三十七~卷三十九 (vol 13)",
+    "n": 141,
+    "median_cer": 0.04,
+    "gt_0_1": 7
+   },
+   {
+    "book_id": "6a3cbcc3ec254ff6cadf2e44",
+    "title": "禮書綱目·卷三十三~卷三十五 (vol 15)",
+    "n": 125,
+    "median_cer": 0.014,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3ce7ab0a0011cb4bc0a847",
+    "title": "詩總聞·卷八~卷十 (vol 12)",
+    "n": 132,
+    "median_cer": 0.05,
+    "gt_0_1": 14
+   },
+   {
+    "book_id": "6a3c800801fe4f593c21f140",
+    "title": "童溪易傳·卷一~卷三 (vol 1)",
+    "n": 118,
+    "median_cer": 0.023,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c70de01fe4f593c1d5b26",
+    "title": "管子補注·卷八~卷十 (vol 3)",
+    "n": 145,
+    "median_cer": 0.027,
+    "gt_0_1": 1
+   },
+   {
+    "book_id": "6a3c6c0c01fe4f593c1afc3e",
+    "title": "疑耀·卷四~卷五 (vol 3)",
+    "n": 143,
+    "median_cer": 0.015,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c6ad6af3c49b59c5eaa11",
+    "title": "日講四書解義·卷二十二~卷二十三 (vol 14)",
+    "n": 161,
+    "median_cer": 0.034,
+    "gt_0_1": 9
+   },
+   {
+    "book_id": "6a3c6f2201fe4f593c1c9538",
+    "title": "簡端錄·卷一~卷三 (vol 1)",
+    "n": 141,
+    "median_cer": 0.01,
+    "gt_0_1": 4
+   },
+   {
+    "book_id": "6a3ce8230a0011cb4bc0c42c",
+    "title": "六家詩名物疏·提要上~提要下 (vol 1)",
+    "n": 152,
+    "median_cer": 0.045,
+    "gt_0_1": 15
+   },
+   {
+    "book_id": "6a3c67f9af3c49b59c5d53b9",
+    "title": "山堂肆考·卷十二~卷十四 (vol 6)",
+    "n": 179,
+    "median_cer": 0.055,
+    "gt_0_1": 39
+   },
+   {
+    "book_id": "6a3c6c4339b4508b04e47ebd",
+    "title": "日知錄·卷二十~卷二十一 (vol 12)",
+    "n": 173,
+    "median_cer": 0.018,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c716e01fe4f593c1d78cb",
+    "title": "御纂朱子全書·卷三十九~卷四十 (vol 83)",
+    "n": 183,
+    "median_cer": 0.016,
+    "gt_0_1": 3
+   },
+   {
+    "book_id": "6a3c711839b4508b04e51b03",
+    "title": "格物通·卷九十~卷九十四 (vol 19)",
+    "n": 176,
+    "median_cer": 0.02,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c6c2701fe4f593c1b0da1",
+    "title": "通雅·卷四十一~卷四十三 (vol 22)",
+    "n": 190,
+    "median_cer": 0.057,
+    "gt_0_1": 26
+   }
+  ],
+  "unaligned_by_class": {
+   "proofreader-slip": 31,
+   "no-kanripo-repo": 110,
+   "right-leaf-low-dice": 3,
+   "kanripo-lacks-these-juan": 142,
+   "multi-leaf-image": 2,
+   "kaozheng-notes": 2,
+   "kanripo-duplicated-leaf": 5,
+   "kanripo-leaf-empty": 1,
+   "diagram": 6
+  },
+  "kanripo_change": {
+   "pages": 2023,
+   "chars_kanripo": 310178,
+   "char_edits_total": 7624,
+   "edits_per_page_median": 3,
+   "edits_per_100_chars": 2.458,
+   "pages_identical": 236,
+   "single_char_substitutions": 4646,
+   "distinct_single_char_pairs": 1198,
+   "top_runs_paddle_to_kanripo": [
+    [
+     "巳→已",
+     259
+    ],
+    [
+     "宮→宫",
+     151
+    ],
+    [
+     "曰→日",
+     146
+    ],
+    [
+     "內→内",
+     145
+    ],
+    [
+     "傳→𫝊",
+     74
+    ],
+    [
+     "虛→虚",
+     72
+    ],
+    [
+     "絕→絶",
+     63
+    ],
+    [
+     "將→将",
+     52
+    ],
+    [
+     "剌→刺",
+     50
+    ],
+    [
+     "顏→顔",
+     48
+    ],
+    [
+     "微→㣲",
+     47
+    ],
+    [
+     "溫→温",
+     46
+    ],
+    [
+     "稅→税",
+     46
+    ],
+    [
+     "巳→己",
+     43
+    ],
+    [
+     "橫→横",
+     40
+    ],
+    [
+     "丈→文",
+     37
+    ],
+    [
+     "祿→禄",
+     36
+    ],
+    [
+     "寬→寛",
+     35
+    ],
+    [
+     "瓜→𤓰",
+     33
+    ],
+    [
+     "點→㸃",
+     33
+    ],
+    [
+     "徵→徴",
+     31
+    ],
+    [
+     "毀→毁",
+     30
+    ],
+    [
+     "黑→黒",
+     30
+    ],
+    [
+     "隱→隠",
+     30
+    ],
+    [
+     "〇→",
+     30
+    ],
+    [
+     "強→强",
+     29
+    ],
+    [
+     "已→己",
+     28
+    ],
+    [
+     "間→閒",
+     28
+    ],
+    [
+     "呂→吕",
+     26
+    ],
+    [
+     "冥→㝠",
+     25
+    ],
+    [
+     "穀→榖",
+     24
+    ],
+    [
+     "益→葢",
+     24
+    ],
+    [
+     "參→叄",
+     24
+    ],
+    [
+     "游→㳺",
+     24
+    ],
+    [
+     "壽→夀",
+     22
+    ],
+    [
+     "弘→𢎞",
+     22
+    ],
+    [
+     "乾→亁",
+     22
+    ],
+    [
+     "苟→茍",
+     21
+    ],
+    [
+     "懷→懐",
+     20
+    ],
+    [
+     "歲→歳",
+     20
+    ]
+   ]
+  }
+ },
+ "pilot": {
+  "pages": 2926,
+  "text_pages": 2904,
+  "aligned": 2611,
+  "aligned_share_of_text_pages": 0.899,
+  "median_cer": 0.027,
+  "median_cer_ci_by_book": [
+   0.02,
+   0.036
+  ],
+  "mean_cer": 0.036,
+  "cer_gt_0_1": 139,
+  "cer_gt_0_1_share": 0.053,
+  "cer_gt_0_1_wilson": [
+   0.04526266688632315,
+   0.06252262844162988
+  ],
+  "cer_gt_0_25": 6,
+  "cer_ge_0_5": 1,
+  "per_book": [
+   {
+    "book_id": "6a3c6e7e01fe4f593c1c35dd",
+    "title": "儀禮析疑·卷一~卷二 (vol 1)",
+    "n": 117,
+    "median_cer": 0.013,
+    "gt_0_1": 2
+   },
+   {
+    "book_id": "6a3cba213dce6cfad7499c52",
+    "title": "本草乘雅半偈·卷七 (vol 7)",
+    "n": 122,
+    "median_cer": 0.02,
+    "gt_0_1": 2
+   },
+   {
+    "book_id": "6a3c75dc39b4508b04e5e2ac",
+    "title": "傳信適用方·卷上 (vol 1)",
+    "n": 121,
+    "median_cer": 0.04,
+    "gt_0_1": 3
+   },
+   {
+    "book_id": "6a3c767401fe4f593c1fb25a",
+    "title": "樂書·卷一百四十九~卷一百五十五 (vol 22)",
+    "n": 92,
+    "median_cer": 0.04,
+    "gt_0_1": 14
+   },
+   {
+    "book_id": "6a3c74c339b4508b04e593bc",
+    "title": "萬姓統譜·卷三十七~卷三十九 (vol 13)",
+    "n": 141,
+    "median_cer": 0.04,
+    "gt_0_1": 7
+   },
+   {
+    "book_id": "6a3cbcc3ec254ff6cadf2e44",
+    "title": "禮書綱目·卷三十三~卷三十五 (vol 15)",
+    "n": 125,
+    "median_cer": 0.014,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3ce7ab0a0011cb4bc0a847",
+    "title": "詩總聞·卷八~卷十 (vol 12)",
+    "n": 132,
+    "median_cer": 0.05,
+    "gt_0_1": 14
+   },
+   {
+    "book_id": "6a3c800801fe4f593c21f140",
+    "title": "童溪易傳·卷一~卷三 (vol 1)",
+    "n": 118,
+    "median_cer": 0.023,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c70de01fe4f593c1d5b26",
+    "title": "管子補注·卷八~卷十 (vol 3)",
+    "n": 145,
+    "median_cer": 0.027,
+    "gt_0_1": 1
+   },
+   {
+    "book_id": "6a3c6c0c01fe4f593c1afc3e",
+    "title": "疑耀·卷四~卷五 (vol 3)",
+    "n": 143,
+    "median_cer": 0.015,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c6ad6af3c49b59c5eaa11",
+    "title": "日講四書解義·卷二十二~卷二十三 (vol 14)",
+    "n": 161,
+    "median_cer": 0.034,
+    "gt_0_1": 9
+   },
+   {
+    "book_id": "6a3c6f2201fe4f593c1c9538",
+    "title": "簡端錄·卷一~卷三 (vol 1)",
+    "n": 141,
+    "median_cer": 0.01,
+    "gt_0_1": 4
+   },
+   {
+    "book_id": "6a3ce8230a0011cb4bc0c42c",
+    "title": "六家詩名物疏·提要上~提要下 (vol 1)",
+    "n": 152,
+    "median_cer": 0.045,
+    "gt_0_1": 15
+   },
+   {
+    "book_id": "6a3c67f9af3c49b59c5d53b9",
+    "title": "山堂肆考·卷十二~卷十四 (vol 6)",
+    "n": 179,
+    "median_cer": 0.055,
+    "gt_0_1": 39
+   },
+   {
+    "book_id": "6a3c6c4339b4508b04e47ebd",
+    "title": "日知錄·卷二十~卷二十一 (vol 12)",
+    "n": 173,
+    "median_cer": 0.018,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c716e01fe4f593c1d78cb",
+    "title": "御纂朱子全書·卷三十九~卷四十 (vol 83)",
+    "n": 183,
+    "median_cer": 0.016,
+    "gt_0_1": 3
+   },
+   {
+    "book_id": "6a3c711839b4508b04e51b03",
+    "title": "格物通·卷九十~卷九十四 (vol 19)",
+    "n": 176,
+    "median_cer": 0.02,
+    "gt_0_1": 0
+   },
+   {
+    "book_id": "6a3c6c2701fe4f593c1b0da1",
+    "title": "通雅·卷四十一~卷四十三 (vol 22)",
+    "n": 190,
+    "median_cer": 0.057,
+    "gt_0_1": 26
+   }
+  ],
+  "unaligned_by_class": {
+   "proofreader-slip": 30,
+   "no-kanripo-repo": 102,
+   "right-leaf-low-dice": 3,
+   "kanripo-lacks-these-juan": 142,
+   "multi-leaf-image": 2,
+   "kaozheng-notes": 2,
+   "kanripo-duplicated-leaf": 5,
+   "kanripo-leaf-empty": 1,
+   "diagram": 6
+  },
+  "kanripo_change": {
+   "pages": 2023,
+   "chars_kanripo": 310178,
+   "char_edits_total": 7624,
+   "edits_per_page_median": 3,
+   "edits_per_100_chars": 2.458,
+   "pages_identical": 236,
+   "single_char_substitutions": 4646,
+   "distinct_single_char_pairs": 1198,
+   "top_runs_paddle_to_kanripo": [
+    [
+     "巳→已",
+     259
+    ],
+    [
+     "宮→宫",
+     151
+    ],
+    [
+     "曰→日",
+     146
+    ],
+    [
+     "內→内",
+     145
+    ],
+    [
+     "傳→𫝊",
+     74
+    ],
+    [
+     "虛→虚",
+     72
+    ],
+    [
+     "絕→絶",
+     63
+    ],
+    [
+     "將→将",
+     52
+    ],
+    [
+     "剌→刺",
+     50
+    ],
+    [
+     "顏→顔",
+     48
+    ],
+    [
+     "微→㣲",
+     47
+    ],
+    [
+     "溫→温",
+     46
+    ],
+    [
+     "稅→税",
+     46
+    ],
+    [
+     "巳→己",
+     43
+    ],
+    [
+     "橫→横",
+     40
+    ],
+    [
+     "丈→文",
+     37
+    ],
+    [
+     "祿→禄",
+     36
+    ],
+    [
+     "寬→寛",
+     35
+    ],
+    [
+     "瓜→𤓰",
+     33
+    ],
+    [
+     "點→㸃",
+     33
+    ],
+    [
+     "徵→徴",
+     31
+    ],
+    [
+     "毀→毁",
+     30
+    ],
+    [
+     "黑→黒",
+     30
+    ],
+    [
+     "隱→隠",
+     30
+    ],
+    [
+     "〇→",
+     30
+    ],
+    [
+     "強→强",
+     29
+    ],
+    [
+     "已→己",
+     28
+    ],
+    [
+     "間→閒",
+     28
+    ],
+    [
+     "呂→吕",
+     26
+    ],
+    [
+     "冥→㝠",
+     25
+    ],
+    [
+     "穀→榖",
+     24
+    ],
+    [
+     "益→葢",
+     24
+    ],
+    [
+     "參→叄",
+     24
+    ],
+    [
+     "游→㳺",
+     24
+    ],
+    [
+     "壽→夀",
+     22
+    ],
+    [
+     "弘→𢎞",
+     22
+    ],
+    [
+     "乾→亁",
+     22
+    ],
+    [
+     "苟→茍",
+     21
+    ],
+    [
+     "懷→懐",
+     20
+    ],
+    [
+     "歲→歳",
+     20
+    ]
+   ]
+  }
+ },
+ "sequence_flags": {
+  "unaligned-page": 30,
+  "extra-pages": 16,
+  "unaligned-run": 10,
+  "leaves-skipped": 2
+ },
+ "out_of_sequence_pages": 0,
+ "same_leaf_pairs": 0,
+ "key_not_book_scoped": 0,
+ "screen_agreement": {
+  "agree": 2612,
+  "compared": 2612
+ },
+ "unaligned_pages": [
+  {
+   "book_id": "6a3c6e7e01fe4f593c1c35dd",
+   "pn": 2,
+   "pilot": true,
+   "chars": 62,
+   "dice": 0.152,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 1,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 2,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 3,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 4,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 5,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 6,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 7,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 8,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 9,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 10,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 11,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 12,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 13,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 14,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 15,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 16,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 17,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 18,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 19,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 20,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 21,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 22,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 23,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 24,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 25,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 26,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 27,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 28,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 29,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 30,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 31,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 32,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 33,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 34,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 35,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 36,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 37,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 38,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 39,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 40,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 41,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 42,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 43,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 44,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 45,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 46,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 47,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 48,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 49,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 50,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 51,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 52,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 53,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 54,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 55,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 56,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 57,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 58,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 59,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 60,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 61,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 62,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 63,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 64,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 65,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 66,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 67,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 68,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 69,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 70,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 71,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 72,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 73,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 74,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 75,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 76,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 77,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 78,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 79,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 80,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 81,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 82,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 83,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 84,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 85,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 86,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 87,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 88,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 89,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 90,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 91,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 92,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 93,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 94,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 95,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 96,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 97,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 98,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 99,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 100,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 101,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 102,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 103,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 104,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 105,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 106,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 107,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 108,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 109,
+   "pilot": true,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "pn": 110,
+   "pilot": false,
+   "dice": null,
+   "class": "no-kanripo-repo"
+  },
+  {
+   "book_id": "6a3cba213dce6cfad7499c52",
+   "pn": 2,
+   "pilot": true,
+   "chars": 54,
+   "dice": 0.233,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c75dc39b4508b04e5e2ac",
+   "pn": 2,
+   "pilot": true,
+   "chars": 56,
+   "dice": 0.148,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c767401fe4f593c1fb25a",
+   "pn": 2,
+   "pilot": true,
+   "chars": 34,
+   "dice": 0.455,
+   "class": "right-leaf-low-dice"
+  },
+  {
+   "book_id": "6a3c767401fe4f593c1fb25a",
+   "pn": 3,
+   "pilot": true,
+   "chars": 20,
+   "dice": 0.5,
+   "class": "right-leaf-low-dice"
+  },
+  {
+   "book_id": "6a3c767401fe4f593c1fb25a",
+   "pn": 28,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.212,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c74c339b4508b04e593bc",
+   "pn": 2,
+   "pilot": true,
+   "chars": 62,
+   "dice": 0.177,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3cbcc3ec254ff6cadf2e44",
+   "pn": 2,
+   "pilot": true,
+   "chars": 64,
+   "dice": 0.171,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 2,
+   "pilot": true,
+   "chars": 63,
+   "dice": 0.146,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 3,
+   "pilot": true,
+   "chars": 92,
+   "dice": 0.112,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 4,
+   "pilot": true,
+   "chars": 121,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 5,
+   "pilot": true,
+   "chars": 152,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 6,
+   "pilot": true,
+   "chars": 132,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 7,
+   "pilot": true,
+   "chars": 95,
+   "dice": 0.044,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 8,
+   "pilot": true,
+   "chars": 125,
+   "dice": 0.03,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 9,
+   "pilot": true,
+   "chars": 117,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 10,
+   "pilot": true,
+   "chars": 151,
+   "dice": 0.025,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 11,
+   "pilot": true,
+   "chars": 128,
+   "dice": 0.026,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 12,
+   "pilot": true,
+   "chars": 109,
+   "dice": 0.045,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 13,
+   "pilot": true,
+   "chars": 132,
+   "dice": 0.041,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 14,
+   "pilot": true,
+   "chars": 100,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 15,
+   "pilot": true,
+   "chars": 168,
+   "dice": 0.036,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 16,
+   "pilot": true,
+   "chars": 93,
+   "dice": 0.167,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 17,
+   "pilot": true,
+   "chars": 121,
+   "dice": 0.049,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 18,
+   "pilot": true,
+   "chars": 148,
+   "dice": 0.044,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 19,
+   "pilot": true,
+   "chars": 109,
+   "dice": 0.052,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 20,
+   "pilot": true,
+   "chars": 106,
+   "dice": 0.021,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 21,
+   "pilot": true,
+   "chars": 106,
+   "dice": 0.037,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 22,
+   "pilot": true,
+   "chars": 141,
+   "dice": 0.041,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 23,
+   "pilot": true,
+   "chars": 139,
+   "dice": 0.04,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 24,
+   "pilot": true,
+   "chars": 131,
+   "dice": 0.028,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 25,
+   "pilot": true,
+   "chars": 137,
+   "dice": 0.023,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 26,
+   "pilot": true,
+   "chars": 134,
+   "dice": 0.045,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 27,
+   "pilot": true,
+   "chars": 117,
+   "dice": 0.021,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 28,
+   "pilot": true,
+   "chars": 100,
+   "dice": 0.03,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 29,
+   "pilot": true,
+   "chars": 110,
+   "dice": 0.028,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 30,
+   "pilot": true,
+   "chars": 95,
+   "dice": 0.031,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 31,
+   "pilot": true,
+   "chars": 105,
+   "dice": 0.027,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 32,
+   "pilot": true,
+   "chars": 73,
+   "dice": 0.03,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 33,
+   "pilot": true,
+   "chars": 86,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 34,
+   "pilot": true,
+   "chars": 112,
+   "dice": 0.023,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 35,
+   "pilot": true,
+   "chars": 158,
+   "dice": 0.029,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 36,
+   "pilot": true,
+   "chars": 121,
+   "dice": 0.031,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 37,
+   "pilot": true,
+   "chars": 132,
+   "dice": 0.029,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 38,
+   "pilot": true,
+   "chars": 117,
+   "dice": 0.027,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 39,
+   "pilot": true,
+   "chars": 141,
+   "dice": 0.024,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 40,
+   "pilot": true,
+   "chars": 136,
+   "dice": 0.038,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 41,
+   "pilot": true,
+   "chars": 133,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 42,
+   "pilot": true,
+   "chars": 94,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 43,
+   "pilot": true,
+   "chars": 122,
+   "dice": 0.035,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 44,
+   "pilot": true,
+   "chars": 145,
+   "dice": 0.026,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 45,
+   "pilot": true,
+   "chars": 166,
+   "dice": 0.05,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 46,
+   "pilot": true,
+   "chars": 88,
+   "dice": 0.043,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 47,
+   "pilot": true,
+   "chars": 146,
+   "dice": 0.058,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 48,
+   "pilot": true,
+   "chars": 94,
+   "dice": 0.054,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 49,
+   "pilot": true,
+   "chars": 65,
+   "dice": 0.058,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 50,
+   "pilot": true,
+   "chars": 116,
+   "dice": 0.045,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 51,
+   "pilot": true,
+   "chars": 74,
+   "dice": 0.062,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 52,
+   "pilot": true,
+   "chars": 114,
+   "dice": 0.035,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 53,
+   "pilot": true,
+   "chars": 74,
+   "dice": 0.028,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 54,
+   "pilot": true,
+   "chars": 111,
+   "dice": 0.12,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 55,
+   "pilot": true,
+   "chars": 124,
+   "dice": 0.107,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 56,
+   "pilot": true,
+   "chars": 88,
+   "dice": 0.044,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 57,
+   "pilot": true,
+   "chars": 140,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 58,
+   "pilot": true,
+   "chars": 136,
+   "dice": 0.031,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 59,
+   "pilot": true,
+   "chars": 119,
+   "dice": 0.056,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 60,
+   "pilot": true,
+   "chars": 83,
+   "dice": 0.05,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 61,
+   "pilot": true,
+   "chars": 92,
+   "dice": 0.041,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 62,
+   "pilot": true,
+   "chars": 82,
+   "dice": 0.054,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 63,
+   "pilot": true,
+   "chars": 130,
+   "dice": 0.04,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 64,
+   "pilot": true,
+   "chars": 131,
+   "dice": 0.088,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 65,
+   "pilot": true,
+   "chars": 30,
+   "dice": 0.059,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 67,
+   "pilot": true,
+   "chars": 65,
+   "dice": 0.153,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 68,
+   "pilot": true,
+   "chars": 138,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 69,
+   "pilot": true,
+   "chars": 88,
+   "dice": 0.044,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 70,
+   "pilot": true,
+   "chars": 115,
+   "dice": 0.084,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 71,
+   "pilot": true,
+   "chars": 81,
+   "dice": 0.267,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 72,
+   "pilot": true,
+   "chars": 91,
+   "dice": 0.033,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 73,
+   "pilot": true,
+   "chars": 83,
+   "dice": 0.04,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 74,
+   "pilot": true,
+   "chars": 86,
+   "dice": 0.036,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 75,
+   "pilot": true,
+   "chars": 84,
+   "dice": 0.032,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 76,
+   "pilot": true,
+   "chars": 94,
+   "dice": 0.088,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 77,
+   "pilot": true,
+   "chars": 113,
+   "dice": 0.063,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 78,
+   "pilot": true,
+   "chars": 96,
+   "dice": 0.036,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 79,
+   "pilot": true,
+   "chars": 112,
+   "dice": 0.038,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 80,
+   "pilot": true,
+   "chars": 103,
+   "dice": 0.038,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 81,
+   "pilot": true,
+   "chars": 90,
+   "dice": 0.037,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 82,
+   "pilot": true,
+   "chars": 127,
+   "dice": 0.054,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 83,
+   "pilot": true,
+   "chars": 123,
+   "dice": 0.026,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 84,
+   "pilot": true,
+   "chars": 104,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 85,
+   "pilot": true,
+   "chars": 135,
+   "dice": 0.038,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 86,
+   "pilot": true,
+   "chars": 101,
+   "dice": 0.044,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 87,
+   "pilot": true,
+   "chars": 101,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 88,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 89,
+   "pilot": true,
+   "chars": 41,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 90,
+   "pilot": true,
+   "chars": 122,
+   "dice": 0.046,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 91,
+   "pilot": true,
+   "chars": 76,
+   "dice": 0.037,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 92,
+   "pilot": true,
+   "chars": 74,
+   "dice": 0.046,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 93,
+   "pilot": true,
+   "chars": 124,
+   "dice": 0.09,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 94,
+   "pilot": true,
+   "chars": 51,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 95,
+   "pilot": true,
+   "chars": 88,
+   "dice": 0.069,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 96,
+   "pilot": true,
+   "chars": 111,
+   "dice": 0.033,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 97,
+   "pilot": true,
+   "chars": 118,
+   "dice": 0.047,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 98,
+   "pilot": true,
+   "chars": 101,
+   "dice": 0.133,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 99,
+   "pilot": true,
+   "chars": 93,
+   "dice": 0.272,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 100,
+   "pilot": true,
+   "chars": 57,
+   "dice": 0.043,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 101,
+   "pilot": true,
+   "chars": 116,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 102,
+   "pilot": true,
+   "chars": 94,
+   "dice": 0.06,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 103,
+   "pilot": true,
+   "chars": 147,
+   "dice": 0.039,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 104,
+   "pilot": true,
+   "chars": 78,
+   "dice": 0.027,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 105,
+   "pilot": true,
+   "chars": 67,
+   "dice": 0.041,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 106,
+   "pilot": true,
+   "chars": 55,
+   "dice": 0.05,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 107,
+   "pilot": true,
+   "chars": 103,
+   "dice": 0.053,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 108,
+   "pilot": true,
+   "chars": 76,
+   "dice": 0.069,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 109,
+   "pilot": true,
+   "chars": 113,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 110,
+   "pilot": true,
+   "chars": 109,
+   "dice": 0.078,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 111,
+   "pilot": true,
+   "chars": 92,
+   "dice": 0.033,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 112,
+   "pilot": true,
+   "chars": 84,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 113,
+   "pilot": true,
+   "chars": 77,
+   "dice": 0.049,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 114,
+   "pilot": true,
+   "chars": 78,
+   "dice": 0.039,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 115,
+   "pilot": true,
+   "chars": 94,
+   "dice": 0.037,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 116,
+   "pilot": true,
+   "chars": 114,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 117,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.027,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 118,
+   "pilot": true,
+   "chars": 63,
+   "dice": 0.069,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 119,
+   "pilot": true,
+   "chars": 89,
+   "dice": 0.043,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 120,
+   "pilot": true,
+   "chars": 101,
+   "dice": 0.046,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 121,
+   "pilot": true,
+   "chars": 91,
+   "dice": 0.025,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 122,
+   "pilot": true,
+   "chars": 43,
+   "dice": 0.026,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 123,
+   "pilot": true,
+   "chars": 86,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 124,
+   "pilot": true,
+   "chars": 114,
+   "dice": 0.06,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 125,
+   "pilot": true,
+   "chars": 103,
+   "dice": 0.032,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 126,
+   "pilot": true,
+   "chars": 106,
+   "dice": 0.069,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 127,
+   "pilot": true,
+   "chars": 105,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 128,
+   "pilot": true,
+   "chars": 52,
+   "dice": 0.029,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 129,
+   "pilot": true,
+   "chars": 103,
+   "dice": 0.027,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 130,
+   "pilot": true,
+   "chars": 125,
+   "dice": 0.033,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 131,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.048,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 132,
+   "pilot": true,
+   "chars": 92,
+   "dice": 0.038,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 133,
+   "pilot": true,
+   "chars": 79,
+   "dice": 0.039,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 134,
+   "pilot": true,
+   "chars": 88,
+   "dice": 0.03,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 135,
+   "pilot": true,
+   "chars": 98,
+   "dice": 0.044,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 136,
+   "pilot": true,
+   "chars": 107,
+   "dice": 0.06,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 137,
+   "pilot": true,
+   "chars": 71,
+   "dice": 0.049,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 138,
+   "pilot": true,
+   "chars": 76,
+   "dice": 0.042,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 139,
+   "pilot": true,
+   "chars": 80,
+   "dice": 0.034,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 140,
+   "pilot": true,
+   "chars": 104,
+   "dice": 0.039,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 141,
+   "pilot": true,
+   "chars": 93,
+   "dice": 0.169,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 142,
+   "pilot": true,
+   "chars": 96,
+   "dice": 0.03,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 143,
+   "pilot": true,
+   "chars": 93,
+   "dice": 0.033,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "pn": 144,
+   "pilot": true,
+   "chars": 86,
+   "dice": 0.039,
+   "class": "kanripo-lacks-these-juan"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 2,
+   "pilot": true,
+   "chars": 27,
+   "dice": 0.267,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 113,
+   "pilot": true,
+   "chars": 584,
+   "dice": 0.435,
+   "class": "multi-leaf-image"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 114,
+   "pilot": true,
+   "chars": 398,
+   "dice": 0.453,
+   "class": "multi-leaf-image"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 118,
+   "pilot": true,
+   "chars": 132,
+   "dice": 0.594,
+   "class": "right-leaf-low-dice"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 143,
+   "pilot": true,
+   "chars": 124,
+   "dice": 0.069,
+   "class": "kaozheng-notes"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 144,
+   "pilot": true,
+   "chars": 118,
+   "dice": 0.157,
+   "class": "kaozheng-notes"
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "pn": 145,
+   "pilot": true,
+   "chars": 24,
+   "dice": 0.021,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c800801fe4f593c21f140",
+   "pn": 2,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.156,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c800801fe4f593c21f140",
+   "pn": 87,
+   "pilot": true,
+   "chars": 46,
+   "dice": 0.053,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c70de01fe4f593c1d5b26",
+   "pn": 2,
+   "pilot": true,
+   "chars": 56,
+   "dice": 0.133,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c70de01fe4f593c1d5b26",
+   "pn": 99,
+   "pilot": true,
+   "chars": 50,
+   "dice": 0.185,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6c0c01fe4f593c1afc3e",
+   "pn": 2,
+   "pilot": true,
+   "chars": 49,
+   "dice": 0.118,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6c0c01fe4f593c1afc3e",
+   "pn": 73,
+   "pilot": true,
+   "chars": 49,
+   "dice": 0.078,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6ad6af3c49b59c5eaa11",
+   "pn": 2,
+   "pilot": true,
+   "chars": 66,
+   "dice": 0.224,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6ad6af3c49b59c5eaa11",
+   "pn": 79,
+   "pilot": true,
+   "chars": 67,
+   "dice": 0.222,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 2,
+   "pilot": true,
+   "chars": 51,
+   "dice": 0.125,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 11,
+   "pilot": true,
+   "chars": 90,
+   "dice": 0.122,
+   "class": "kanripo-duplicated-leaf"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 12,
+   "pilot": true,
+   "chars": 142,
+   "dice": 0.087,
+   "class": "kanripo-leaf-empty"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 19,
+   "pilot": true,
+   "chars": 106,
+   "dice": 0.097,
+   "class": "kanripo-duplicated-leaf"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 20,
+   "pilot": true,
+   "chars": 123,
+   "dice": 0.095,
+   "class": "kanripo-duplicated-leaf"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 87,
+   "pilot": true,
+   "chars": 117,
+   "dice": 0.093,
+   "class": "kanripo-duplicated-leaf"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 88,
+   "pilot": true,
+   "chars": 125,
+   "dice": 0.128,
+   "class": "kanripo-duplicated-leaf"
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "pn": 107,
+   "pilot": true,
+   "chars": 59,
+   "dice": 0.113,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3ce8230a0011cb4bc0c42c",
+   "pn": 2,
+   "pilot": true,
+   "chars": 58,
+   "dice": 0.125,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3ce8230a0011cb4bc0c42c",
+   "pn": 83,
+   "pilot": true,
+   "chars": 59,
+   "dice": 0.154,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c67f9af3c49b59c5d53b9",
+   "pn": 74,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.176,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6c4339b4508b04e47ebd",
+   "pn": 2,
+   "pilot": true,
+   "chars": 51,
+   "dice": 0.179,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6c4339b4508b04e47ebd",
+   "pn": 81,
+   "pilot": true,
+   "chars": 52,
+   "dice": 0.211,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 2,
+   "pilot": true,
+   "chars": 22,
+   "dice": 0.552,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 61,
+   "pilot": true,
+   "chars": 33,
+   "dice": 0.038,
+   "class": "diagram"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 63,
+   "pilot": true,
+   "chars": 56,
+   "dice": 0.084,
+   "class": "diagram"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 64,
+   "pilot": true,
+   "chars": 76,
+   "dice": 0.06,
+   "class": "diagram"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 65,
+   "pilot": true,
+   "chars": 230,
+   "dice": 0.059,
+   "class": "diagram"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 73,
+   "pilot": true,
+   "chars": 50,
+   "dice": 0.161,
+   "class": "diagram"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 74,
+   "pilot": true,
+   "chars": 48,
+   "dice": 0.167,
+   "class": "diagram"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 103,
+   "pilot": true,
+   "chars": 27,
+   "dice": 0.128,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 104,
+   "pilot": false,
+   "chars": 21,
+   "dice": 0.571,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "pn": 199,
+   "pilot": true,
+   "chars": 27,
+   "dice": 0.128,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c711839b4508b04e51b03",
+   "pn": 38,
+   "pilot": true,
+   "chars": 54,
+   "dice": 0.203,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c711839b4508b04e51b03",
+   "pn": 145,
+   "pilot": true,
+   "chars": 60,
+   "dice": 0.185,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6c2701fe4f593c1b0da1",
+   "pn": 2,
+   "pilot": true,
+   "chars": 53,
+   "dice": 0.175,
+   "class": "proofreader-slip"
+  },
+  {
+   "book_id": "6a3c6c2701fe4f593c1b0da1",
+   "pn": 117,
+   "pilot": true,
+   "chars": 59,
+   "dice": 0.159,
+   "class": "proofreader-slip"
+  }
+ ]
+}

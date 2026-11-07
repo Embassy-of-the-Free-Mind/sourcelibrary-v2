@@ -2,7 +2,7 @@
 
 **Read this when:** writing or running any bulk import, archiving sweep, or
 source enumeration; or choosing between `/api/import/*` and a `*-direct.mjs`
-script.
+script; **or adding a recurring job on a Hetzner box that reads from Mongo.**
 
 ---
 
@@ -62,6 +62,30 @@ queries from Hetzner were unaffected. It also ties the job's life to a laptop li
 Check where you are before starting a long job — `hostname` and
 `curl -s https://api.ipify.org` — and say so in the report. "Where did this run"
 is not a detail; it decides who pays and whether the source will answer.
+
+## Hetzner reads from Atlas are billed by the gigabyte
+
+Moving work off Vercel moves its database reads onto Atlas's **Internet** line:
+every byte Atlas sends to a non-AWS host costs **$0.09/GB** (Vercel in `fra1` is
+same-region, $0.01). October 2026: **7,283 GB, $655**, up from 1,702 GB in
+September, built from many jobs that each looked cheap. The largest was an hourly
+sweep reading ~3 GB per run to change 5 pages in two weeks. Nobody saw it until
+the invoice (#5189).
+
+- **Before adding a recurring job that reads Mongo, multiply bytes per run by runs
+  per month**, and write that figure in the cron comment. A job reading more than
+  ~1 GB a run must earn its cadence: run it as often as its *findings* arrive,
+  not as often as it is cheap to schedule. Measure per-run bytes with
+  `scripts/audit/atlas-egress-sample.mjs`.
+- **Project, filter server-side, and read only what changed** (an indexed
+  `updated_at` window), with a full pass at most daily.
+- **Wire compression is on** (`compressors=zlib` in `MONGODB_URI` on every box,
+  2026-11-01; ~2.5–3.5× on page text). `mongodump` ignores it, so a full dump
+  ships uncompressed: back up from an Atlas snapshot export, not a weekly full
+  dump over the internet.
+- **The meter**: `scripts/workers/atlas-egress-meter.sh` counts every byte each
+  box receives from Atlas and pages ntfy when a box passes 40 GB in a day.
+  When it pages, the sampler finds the reader.
 
 ## The exception
 

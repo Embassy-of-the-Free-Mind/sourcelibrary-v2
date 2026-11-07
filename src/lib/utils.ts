@@ -157,6 +157,15 @@ export function getBookThumbnailUrl(
   // onError → placeholder swap never happens). Screens against the same host
   // list the CSP img-src is built from; notably rejects `archive.org/download/`
   // URLs, which 302 to un-allowlisted `ia*.us.archive.org` hosts.
+  //
+  // Except: an IA BookReader cover (`archive.org/download/<id>/page/nN/…`) has a
+  // small stand-in on an allowed host — IA's own item thumbnail. Measured
+  // 2026-10-29: the BookReader URL ignores its size parameter (full, pct:15 and
+  // 400, all returned the 1060px master), while /services/img/<id> is 180px and
+  // 5–22 KB. Soft on a 2x screen, but a real cover beats a typographic placeholder
+  // on ~6.4K visible books until their covers are rehosted on R2.
+  const ia = raw.match(/^https:\/\/archive\.org\/download\/([^/?#]+)\/page\//);
+  if (ia) return `https://archive.org/services/img/${ia[1]}`;
   if (raw.startsWith('http') && !isBrowserRenderableImageUrl(raw)) return null;
 
   // Wikimedia Commons images: serve the upload.wikimedia.org CDN URL as-is.
@@ -168,6 +177,13 @@ export function getBookThumbnailUrl(
   // legacy books still reference these; new imports rehost to R2.
   if (raw.includes('upload.wikimedia.org/wikipedia/commons/')) {
     return raw;
+  }
+
+  // Munich's IIIF server honours a size in the URL. Covers imported from it ask for
+  // the whole scan (345 KB, measured on bsb11426583), which leaves a card blank on a
+  // weak phone connection. 400px wide fills any card at 2x.
+  if (raw.startsWith('https://api.digitale-sammlungen.de/iiif/image/')) {
+    return raw.replace('/full/full/0/', '/full/400,/0/');
   }
 
   if (!raw.includes('images.sourcelibrary.org/')) return raw;

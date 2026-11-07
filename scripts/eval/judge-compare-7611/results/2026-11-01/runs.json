@@ -1,0 +1,121 @@
+[
+ {
+  "at": "2026-11-02T00:14:57.372Z",
+  "judge": "flash-medium",
+  "repeat": false,
+  "calls": 540,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6869557499885559,
+   "fiveHour": 0.9532049894332886
+  },
+  "quota_after": {
+   "weekly": 0.6713992953300476,
+   "fiveHour": 0.9737424254417419
+  },
+  "claude": {}
+ },
+ {
+  "at": "2026-11-02T00:15:58.418Z",
+  "judge": "flash-medium",
+  "repeat": false,
+  "calls": 1,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6709606647491455,
+   "fiveHour": 0.9829592704772949
+  },
+  "quota_after": {
+   "weekly": 0.6709191203117371,
+   "fiveHour": 0.9827929735183716
+  },
+  "claude": {}
+ },
+ {
+  "at": "2026-11-02T00:24:22.978Z",
+  "judge": "flash-medium",
+  "repeat": true,
+  "calls": 30,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6705348491668701,
+   "fiveHour": 0.9795493483543396
+  },
+  "quota_after": {
+   "weekly": 0.6668015718460083,
+   "fiveHour": 0.9780305027961731
+  },
+  "claude": {}
+ },
+ {
+  "at": "2026-11-02T00:00:00.000Z",
+  "judge": "flash-high",
+  "repeat": false,
+  "calls": 33,
+  "stop": "killed by hand to restart at concurrency 6 (readings: start from the log, after = the restarted run's start)",
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6668015718460083,
+   "fiveHour": 0.9780305027961731
+  },
+  "quota_after": {
+   "weekly": 0.6650314927101135,
+   "fiveHour": 0.956095278263092
+  },
+  "manual": true
+ },
+ {
+  "at": "2026-11-02T02:59:45.301Z",
+  "judge": "flash-high",
+  "repeat": false,
+  "calls": 507,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6650314927101135,
+   "fiveHour": 0.956095278263092
+  },
+  "quota_after": {
+   "weekly": 0.6311632394790649,
+   "fiveHour": 0.8332181572914124
+  },
+  "claude": {}
+ },
+ {
+  "at": "2026-11-02T03:03:21.193Z",
+  "judge": "flash-high",
+  "repeat": false,
+  "calls": 2,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6311632394790649,
+   "fiveHour": 0.8332181572914124
+  },
+  "quota_after": {
+   "weekly": 0.6309111714363098,
+   "fiveHour": 0.8322097659111023
+  },
+  "claude": {}
+ },
+ {
+  "at": "2026-11-02T03:14:24.415Z",
+  "judge": "flash-high",
+  "repeat": true,
+  "calls": 30,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.6309111714363098,
+   "fiveHour": 0.8322097659111023
+  },
+  "quota_after": {
+   "weekly": 0.6289799213409424,
+   "fiveHour": 0.8188743591308594
+  },
+  "claude": {}
+ }
+]

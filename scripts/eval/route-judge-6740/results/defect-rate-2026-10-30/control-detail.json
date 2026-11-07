@@ -1,0 +1,1822 @@
+[
+{
+"source": "route-judge",
+"run": "cheap-routes-7701-2026-10-29",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "cheap-routes-7701-2026-10-29",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "cheap-routes-7701-2026-10-29",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "cheap-routes-7701-2026-10-29",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "cheap-routes-7701-2026-10-29",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "cheap-routes-7701-2026-10-29",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "en-pre1800-gpu-6871-2026-10-30",
+"lang": "English",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "en-pre1800-gpu-6871-2026-10-30",
+"lang": "English",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "route-judge",
+"run": "german-cheaper-7701-2026-10-30",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "german-cheaper-7701-2026-10-30",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "german-cheaper-7701-2026-10-30",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "german-cheaper-7701-2026-10-30",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": true,
+"severity": "cosmetic",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "swap",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "letter",
+"hit": true,
+"severity": "cosmetic",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": true,
+"severity": "cosmetic",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "swap",
+"hit": true,
+"severity": "misleads",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "letter",
+"hit": true,
+"severity": "cosmetic",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": true,
+"severity": "cosmetic",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "swap",
+"hit": true,
+"severity": "misleads",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "letter",
+"hit": false,
+"severity": null,
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "pilot-2026-10-26",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": false,
+"severity": null,
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": true,
+"severity": "cosmetic",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "swap",
+"hit": true,
+"severity": "misleads",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "letter",
+"hit": true,
+"severity": "misleads",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": false,
+"severity": null,
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "swap",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "letter",
+"hit": false,
+"severity": null,
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "swap",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "letter",
+"hit": true,
+"severity": "cosmetic",
+"accept": true,
+"fidelity": 4
+},
+{
+"source": "route-judge",
+"run": "tibetan-30-2026-10-27",
+"lang": "Tibetan",
+"kind": "vowel",
+"hit": true,
+"severity": "cosmetic",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": false,
+"severity": null,
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": false,
+"severity": null,
+"accept": true,
+"fidelity": 5
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "misleads",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "Latin",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "German",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "E",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "D",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 2
+},
+{
+"source": "judge-planted-7611",
+"run": "judge-planted-7611",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "lane-judge-sampler",
+"run": "lane:lane-judge-20261030025002",
+"lang": "German",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "lane-judge-sampler",
+"run": "lane:lane-judge-20261030025002",
+"lang": "German",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 3
+},
+{
+"source": "lane-judge-sampler",
+"run": "lane:lane-judge-20261030025002",
+"lang": "French",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "lane-judge-sampler",
+"run": "lane:lane-judge-20261030025002",
+"lang": "French",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "lane-judge-sampler",
+"run": "lane:lane-judge-20261030025002",
+"lang": "Latin",
+"kind": "B",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+},
+{
+"source": "lane-judge-sampler",
+"run": "lane:lane-judge-20261030025002",
+"lang": "Latin",
+"kind": "C",
+"hit": true,
+"severity": "wrong_text",
+"accept": false,
+"fidelity": 4
+}
+]

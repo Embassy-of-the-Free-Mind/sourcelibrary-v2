@@ -235,11 +235,11 @@ async function processBook(book, db) {
       pdfSize = await downloadPdf(pdfUrl, pdfPath);
     } catch (err) {
       console.log(`    [FAIL] PDF download: ${err.message?.slice(0, 100)}`);
-      // Mark pages as failed so we don't retry forever
+      // Record the failure on the pages; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
       if (err.message?.includes('403') || err.message?.includes('404')) {
         await db.collection(pagesCol).updateMany(
           { book_id: book.id, archived_photo: { $exists: false } },
-          { $set: { archived_photo: `failed:${err.message.slice(0, 50)}` } }
+          { $set: { 'archive_metadata.last_failure_reason': err.message.slice(0, 50), 'archive_metadata.last_failure_at': new Date() } }
         );
       }
       stats.booksFailed++;

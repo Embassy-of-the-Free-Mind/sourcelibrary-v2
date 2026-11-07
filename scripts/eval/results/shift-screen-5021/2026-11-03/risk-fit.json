@@ -1,0 +1,272 @@
+{
+ "labelled": 1173,
+ "positives": 862,
+ "missing": -4,
+ "models": {
+  "all": {
+   "intercept": -5.61,
+   "odds": {
+    "block_era": {
+     "or": 4.41,
+     "coef": 1.48,
+     "labelled_with": 917
+    },
+    "v1_v6": {
+     "or": 4.01,
+     "coef": 1.39,
+     "labelled_with": 108
+    },
+    "single_page_lane": {
+     "or": 1.12,
+     "coef": 0.12,
+     "labelled_with": 57
+    },
+    "multi_page_block": {
+     "or": 7.51,
+     "coef": 2.02,
+     "labelled_with": 1092
+    },
+    "pos_in_block_ge2": {
+     "or": 2.98,
+     "coef": 1.09,
+     "labelled_with": 888
+    },
+    "odd_page_earlier_in_block": {
+     "or": 0.98,
+     "coef": -0.02,
+     "labelled_with": 70
+    },
+    "absorbing_page_earlier_in_block": {
+     "or": 34.1,
+     "coef": 3.53,
+     "labelled_with": 543
+    },
+    "absorbs_own_plus_next": {
+     "or": 0.47,
+     "coef": -0.76,
+     "labelled_with": 40
+    },
+    "length_collapse": {
+     "or": 6.12,
+     "coef": 1.81,
+     "labelled_with": 78
+    },
+    "length_swell": {
+     "or": 0.49,
+     "coef": -0.72,
+     "labelled_with": 74
+    },
+    "number_vote_neighbour": {
+     "or": 2.7,
+     "coef": 0.99,
+     "labelled_with": 925
+    },
+    "number_vote_own": {
+     "or": 0.11,
+     "coef": -2.22,
+     "labelled_with": 28
+    },
+    "name_vote_neighbour": {
+     "or": 5.92,
+     "coef": 1.78,
+     "labelled_with": 85
+    },
+    "in_gappy_run": {
+     "or": 6.8,
+     "coef": 1.92,
+     "labelled_with": 1035
+    },
+    "flash_lite_31": {
+     "or": 0.26,
+     "coef": -1.35,
+     "labelled_with": 648
+    }
+   }
+  },
+  "no_number_vote": {
+   "intercept": -3.04,
+   "odds": {
+    "block_era": {
+     "or": 4.87,
+     "coef": 1.58,
+     "labelled_with": 917
+    },
+    "v1_v6": {
+     "or": 4.92,
+     "coef": 1.59,
+     "labelled_with": 108
+    },
+    "single_page_lane": {
+     "or": 1.14,
+     "coef": 0.13,
+     "labelled_with": 57
+    },
+    "multi_page_block": {
+     "or": 8.52,
+     "coef": 2.14,
+     "labelled_with": 1092
+    },
+    "pos_in_block_ge2": {
+     "or": 2.96,
+     "coef": 1.08,
+     "labelled_with": 888
+    },
+    "odd_page_earlier_in_block": {
+     "or": 0.92,
+     "coef": -0.08,
+     "labelled_with": 70
+    },
+    "absorbing_page_earlier_in_block": {
+     "or": 16.4,
+     "coef": 2.8,
+     "labelled_with": 543
+    },
+    "absorbs_own_plus_next": {
+     "or": 0.38,
+     "coef": -0.97,
+     "labelled_with": 40
+    },
+    "length_collapse": {
+     "or": 6,
+     "coef": 1.79,
+     "labelled_with": 78
+    },
+    "length_swell": {
+     "or": 0.42,
+     "coef": -0.88,
+     "labelled_with": 74
+    },
+    "name_vote_neighbour": {
+     "or": 2.11,
+     "coef": 0.75,
+     "labelled_with": 85
+    },
+    "flash_lite_31": {
+     "or": 0.22,
+     "coef": -1.53,
+     "labelled_with": 648
+    }
+   }
+  }
+ },
+ "univariate": {
+  "block_era": {
+   "or": 3.83,
+   "pos_with": 732,
+   "neg_with": 185
+  },
+  "v1_v6": {
+   "or": 1.62,
+   "pos_with": 88,
+   "neg_with": 20
+  },
+  "single_page_lane": {
+   "or": 0.02,
+   "pos_with": 3,
+   "neg_with": 54
+  },
+  "multi_page_block": {
+   "or": 82.56,
+   "pos_with": 859,
+   "neg_with": 233
+  },
+  "pos_in_block_ge2": {
+   "or": 6.96,
+   "pos_with": 742,
+   "neg_with": 146
+  },
+  "odd_page_earlier_in_block": {
+   "or": 0.77,
+   "pos_with": 48,
+   "neg_with": 22
+  },
+  "absorbing_page_earlier_in_block": {
+   "or": 17.75,
+   "pos_with": 519,
+   "neg_with": 24
+  },
+  "absorbs_own_plus_next": {
+   "or": 0.21,
+   "pos_with": 15,
+   "neg_with": 25
+  },
+  "length_collapse": {
+   "or": 3.18,
+   "pos_with": 70,
+   "neg_with": 8
+  },
+  "length_swell": {
+   "or": 0.26,
+   "pos_with": 33,
+   "neg_with": 41
+  },
+  "number_vote_neighbour": {
+   "or": 2.74,
+   "pos_with": 722,
+   "neg_with": 203
+  },
+  "number_vote_own": {
+   "or": 0.01,
+   "pos_with": 0,
+   "neg_with": 28
+  },
+  "name_vote_neighbour": {
+   "or": 4.06,
+   "pos_with": 78,
+   "neg_with": 7
+  },
+  "in_gappy_run": {
+   "or": 3.63,
+   "pos_with": 796,
+   "neg_with": 239
+  },
+  "flash_lite_31": {
+   "or": 0.78,
+   "pos_with": 462,
+   "neg_with": 186
+  }
+ },
+ "pages_scored": 5527679,
+ "top_share": {
+  "all": {
+   "top1%": {
+    "cut": 0.68783,
+    "positives_in": 735,
+    "of": 862,
+    "share": 0.85
+   },
+   "top5%": {
+    "cut": 0.26503,
+    "positives_in": 856,
+    "of": 862,
+    "share": 0.99
+   },
+   "top10%": {
+    "cut": 0.09535,
+    "positives_in": 858,
+    "of": 862,
+    "share": 1
+   }
+  },
+  "no_number_vote": {
+   "top1%": {
+    "cut": 0.95166,
+    "positives_in": 446,
+    "of": 862,
+    "share": 0.52
+   },
+   "top5%": {
+    "cut": 0.85321,
+    "positives_in": 550,
+    "of": 862,
+    "share": 0.64
+   },
+   "top10%": {
+    "cut": 0.69211,
+    "positives_in": 723,
+    "of": 862,
+    "share": 0.84
+   }
+  }
+ }
+}

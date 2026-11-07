@@ -1,0 +1,76 @@
+{
+ "issue": 6871,
+ "measured": "2026-11-07",
+ "note": "written pages judged; one page a book; blind Opus",
+ "study_cells": {
+  "fr19": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell",
+    "cell2"
+   ],
+   "pages": 32,
+   "words": 9776,
+   "misleads_per_1k": 0.61,
+   "wrong_text_per_1k": 0.31,
+   "fidelity_mean": 4.56
+  },
+  "fr17": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell",
+    "cell2"
+   ],
+   "pages": 29,
+   "words": 8515,
+   "misleads_per_1k": 0.7,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.79
+  },
+  "es19": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 24,
+   "words": 7658,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0.26,
+   "fidelity_mean": 4.71
+  },
+  "es17": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell",
+    "cell2"
+   ],
+   "pages": 30,
+   "words": 13104,
+   "misleads_per_1k": 0.69,
+   "wrong_text_per_1k": 0.08,
+   "fidelity_mean": 4.37
+  },
+  "it19": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 21,
+   "words": 7335,
+   "misleads_per_1k": 0.27,
+   "wrong_text_per_1k": 2.45,
+   "fidelity_mean": 4.57
+  },
+  "it17": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "cell"
+   ],
+   "pages": 19,
+   "words": 5255,
+   "misleads_per_1k": 1.33,
+   "wrong_text_per_1k": 0.19,
+   "fidelity_mean": 4.37
+  }
+ }
+}

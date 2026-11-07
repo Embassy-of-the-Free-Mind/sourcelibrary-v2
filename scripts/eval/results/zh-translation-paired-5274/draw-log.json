@@ -1,0 +1,41 @@
+{
+ "seed": 20261104,
+ "at": "2026-11-04T11:01:31.990Z",
+ "excluded_books": {
+  "prior-sample": 172,
+  "held": 85,
+  "ditto-family": 694
+ },
+ "frame": {
+  "prose_books": 385,
+  "prose_pages": 15595,
+  "reference_books": 335,
+  "reference_pages": 31555,
+  "books_with_human_edits_excluded": 0
+ },
+ "visits": {
+  "reference": 37,
+  "prose": 40,
+  "reference_no_page": 1,
+  "prose_no_page": 4
+ },
+ "page_exclusions": {
+  "short_ocr": 674,
+  "not_paddle": 598,
+  "page_type": 77,
+  "near_empty_leaf": 84
+ },
+ "han_floor": {
+  "pages": 4505,
+  "pass": 4421,
+  "pass_share": 0.9814
+ },
+ "filled": {
+  "reference": 30,
+  "prose": 30
+ },
+ "spare": {
+  "reference": 6,
+  "prose": 6
+ }
+}

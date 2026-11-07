@@ -26,11 +26,11 @@ import path from 'path';
 import { generateScholarlyPdf, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
 import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
-import { screenBookPages } from '../lib/modern-intrusion.mjs';
+import { IMPRINT_PAGES, screenBookPages, screenImprint } from '../lib/modern-intrusion.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const LICENSE = 'CC-BY-SA-4.0';
+const LICENSE = 'CC-BY-NC-SA-4.0';
 const GEMINI_MODEL = 'gemini-3-flash-preview';
 const DELAY_BETWEEN_MINTS_MS = 3000;
 const DELAY_BETWEEN_FRONT_MATTER_MS = 1000;
@@ -75,7 +75,7 @@ const LANG_MAP = {
 const LICENSE_MAP = {
   'CC0-1.0': 'cc-zero',
   'CC-BY-4.0': 'cc-by-4.0',
-  'CC-BY-SA-4.0': 'cc-by-sa-4.0',
+  'CC-BY-NC-SA-4.0': 'cc-by-sa-4.0',
   'CC-BY-NC-4.0': 'cc-by-nc-4.0',
   'CC-BY-NC-SA-4.0': 'cc-by-nc-sa-4.0',
 };
@@ -94,7 +94,7 @@ const LICENSE_MAP = {
  *
  * Identifying ourselves is also just correct behaviour toward a public repository.
  */
-const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (+https://sourcelibrary.org; team@sourcelibrary.org)';
+const ZENODO_USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 function zenodoHeaders(extra = {}) {
   return { 'Authorization': `Bearer ${process.env.ZENODO_ACCESS_TOKEN}`, 'User-Agent': ZENODO_USER_AGENT, ...extra };
@@ -708,6 +708,14 @@ async function main() {
       const pages = await db.collection('pages')
         .find({ book_id: b.id, 'translation.data': { $exists: true, $ne: '' } }, { projection: { page_number: 1, 'translation.data': 1 } })
         .toArray();
+      const frontMatter = await db.collection('pages')
+        .find({ book_id: b.id, page_number: { $lte: IMPRINT_PAGES } }, { projection: { page_number: 1, 'ocr.data': 1 } })
+        .toArray();
+      const imprints = screenImprint(frontMatter);
+      if (imprints.length) {
+        console.log(`HOLD ${b.id} ${(b.display_title || b.title || '').slice(0, 60)} — modern imprint on p.${imprints.map(i => i.page_number).join(', p.')} (${[...new Set(imprints.flatMap(i => i.hits.map(h => h.marker)))].join(', ')}). Read the colophon.`);
+        continue;
+      }
       const flagged = screenBookPages(b, pages);
       if (!flagged.length) { screened.push(b); continue; }
       console.log(`HOLD ${b.id} ${(b.display_title || b.title || '').slice(0, 60)} — modern intrusion on p.${flagged.map(f => f.page_number).join(', p.')} (${[...new Set(flagged.flatMap(f => f.hits.map(h => h.marker)))].join(', ')}). Read it: node scripts/audit/detect-modern-intrusion.mjs --book-id ${b.id}`);

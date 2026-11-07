@@ -1,0 +1,662 @@
+{
+ "seed": 50213,
+ "n": 30,
+ "alloc": {
+  "bph|ocr-ok": 1,
+  "bph|reread": 3,
+  "default|ocr-ok": 3,
+  "default|reread": 1,
+  "flash-measured|ocr-ok": 1,
+  "flash-measured|reread": 1,
+  "french-cli-agy4|ocr-ok": 1,
+  "french-cli-agy4|reread": 1,
+  "german-cli-agy4|ocr-ok": 1,
+  "german-cli-agy4|reread": 1,
+  "greek-cli-gemini38|ocr-ok": 2,
+  "greek-cli-gemini38|reread": 1,
+  "italian-cli-agy4|ocr-ok": 1,
+  "italian-cli-agy4|reread": 1,
+  "latin-cli-agy4|ocr-ok": 5,
+  "latin-cli-agy4|reread": 5,
+  "pali-cli-opus|reread": 1
+ },
+ "pages": [
+  {
+   "page_id": "69f67393c48d7166638d3a14",
+   "book_id": "69c833d26c6f3cc53c84e345",
+   "page": 81,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-03T06:26:31.746Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "Daemonomania pistoriana. Magica et cabalistica morborum curandorum ratio",
+   "lane_row": "bph",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": null
+  },
+  {
+   "page_id": "69f71b9bcd7ba97af00935c5",
+   "book_id": "69c82bb66c6f3cc53c84cbe7",
+   "page": 574,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-03T20:06:40.030Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "Critica sacra, de sacri codicis partitione, editionibus variis, linguis originalibus & ill",
+   "lane_row": "bph",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": "leaf-shift-5021"
+  },
+  {
+   "page_id": "69af23c7c6df16b7172aa4f8",
+   "book_id": "69af23c7c6df16b7172aa4d8",
+   "page": 32,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-02T04:03:23.563Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Russian",
+   "title": "Исторія Государства Россійскаго. Т.5",
+   "lane_row": "default",
+   "engine": "gemini-3.1-flash-lite",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": null
+  },
+  {
+   "page_id": "69af23c1c6df16b7172aa3ad",
+   "book_id": "69af23c1c6df16b7172aa2b2",
+   "page": 251,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-02T18:33:01.301Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Russian",
+   "title": "Исторія Государства Россійскаго. Т.1",
+   "lane_row": "default",
+   "engine": "gemini-3.1-flash-lite",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 5,
+   "hold": null
+  },
+  {
+   "page_id": "69af23807c27d4b637fef26c",
+   "book_id": "69af23807c27d4b637fef246",
+   "page": 38,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-02T05:24:28.558Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Russian",
+   "title": "Полное собраніе сочиненій Н.Г. Чернышевскаго. Т.5",
+   "lane_row": "default",
+   "engine": "gemini-3.1-flash-lite",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69924f345976b55115ffd34e",
+   "book_id": "69924f345976b55115ffd2cb",
+   "page": 131,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-01T01:39:36.609Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Greek",
+   "title": "Apollodorus: The Library, Vol. 1",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 3,
+   "hold": "title-leaf-recitation-6297"
+  },
+  {
+   "page_id": "699068a8249ce014347d71d4",
+   "book_id": "699068a7249ce014347d715a",
+   "page": 122,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-08T17:10:07.456Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "French",
+   "title": "Théorie analytique de la chaleur",
+   "lane_row": "french-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69de0b324a4b38a1e32c8deb",
+   "book_id": "69de0b324a4b38a1e32c8dd3",
+   "page": 24,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-06T12:30:08.509Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "French",
+   "title": "L'Onanisme: Dissertation sur les maladies produites par la masturbation",
+   "lane_row": "french-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "6a100a22f71729295096e211",
+   "book_id": "6a100a22f71729295096e0ac",
+   "page": 357,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-27T14:02:32.997Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "German",
+   "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spal",
+   "lane_row": "german-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "6aa7348b38e15c149514cab4",
+   "book_id": "6aa7348b38e15c149514c8ec",
+   "page": 456,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-09-14T01:07:03.893Z",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "ocr_first": true,
+   "language": "German",
+   "title": "Drei Monate in der libyschen Wüste",
+   "lane_row": "german-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "6993890ece153870659465c6",
+   "book_id": "6993890ece15387065946496",
+   "page": 304,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-03T16:05:28.677Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Greek",
+   "title": "Corpus Hermeticum and Plotinus, Enneads",
+   "lane_row": "greek-cli-gemini38",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 36,
+   "hold": null
+  },
+  {
+   "page_id": "69b21f344522d8c1db3be38c",
+   "book_id": "69b21f344522d8c1db3be18c",
+   "page": 512,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-03T16:55:09.446Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Greek",
+   "title": "Plutarchi Vitae, Vol. 2 (Didot, Greek/Latin)",
+   "lane_row": "greek-cli-gemini38",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "6a4438e6aa50a8e8f5051e80",
+   "book_id": "6a4438e6aa50a8e8f5051df6",
+   "page": 138,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-06-30T22:17:29.344Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Italian",
+   "title": "Istorie fiorentine, Volume 2",
+   "lane_row": "italian-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69e419ef8a8dae1074c52330",
+   "book_id": "69e419ef8a8dae1074c5218d",
+   "page": 419,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-06T19:08:51.329Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Italian",
+   "title": "Il Filocolo",
+   "lane_row": "italian-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "6a08528e49638a50931baaec",
+   "book_id": "6a08528e49638a50931baaad",
+   "page": 63,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-30T15:44:05.427Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Latin",
+   "title": "L. Coelii Lactantii Firmiani Diuinarum institutionum libri septem proxime castigati, et au",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "698fb93e6b95eeda7d2d37ff",
+   "book_id": "698fb93d6b95eeda7d2d36ff",
+   "page": 256,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-12T09:44:32.429Z",
+   "ocr_model": "gemini-3.8-flash-low",
+   "ocr_first": false,
+   "language": "Latin",
+   "title": "Daemonolatreiae Libri Tres",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 6,
+   "hold": null
+  },
+  {
+   "page_id": "6a084f7215c643eb1af44b4f",
+   "book_id": "6a084f7215c643eb1af44a85",
+   "page": 202,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-27T15:07:02.554Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Latin",
+   "title": "Ex XIIII. T. Liuii decadibus. Prima, tertia, quarta, in qua præter fragmenta III, & X libr",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "6a51d66d36168466635965f7",
+   "book_id": "6a51d66d361684666359655d",
+   "page": 154,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-09-01T18:28:03.893Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Latin",
+   "title": "De Casibus Conscientiae Libri III : In festorum dierum Praelectionibus Anglice traditi [et",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69b00ea8312120db3b489194",
+   "book_id": "69b00ea8312120db3b489116",
+   "page": 126,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-03-28T12:28:22.476Z",
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "language": "Latin",
+   "title": "L. Annaei Senecae Opera Philosophica, Vol. 2",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69bd9d416120d54bd03746f2",
+   "book_id": "69bd9d416120d54bd037457f",
+   "page": 371,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-08T05:46:11.302Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "Henrici Cornelii Agrippae ab Nettesheym De incertitudine et vanitate scientiarum declamati",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "leaf-shift-5021"
+  },
+  {
+   "page_id": "69dbcba21040d1d5e20b9b2e",
+   "book_id": "69dbcba21040d1d5e20b9ade",
+   "page": 80,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-27T10:06:47.495Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "Speculum vitae humanae",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "leaf-shift-5021"
+  },
+  {
+   "page_id": "69bd9f1cf6d63c919747f6ee",
+   "book_id": "69bd9f1cf6d63c919747f65e",
+   "page": 144,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-19T13:02:24.714Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "Reconditorium ac reclusorium opulentiae sapientiaeque numinis mundi magni, cui deditur in ",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 3,
+   "hold": null
+  },
+  {
+   "page_id": "69af0cfc067c0c26ee26cd63",
+   "book_id": "69af0cfc067c0c26ee26cd3c",
+   "page": 39,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-12T07:17:31.860Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "Exercitationes Anatomicae de Generatione Animalium",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69de99071b234a773e439cc2",
+   "book_id": "69de99071b234a773e439b52",
+   "page": 368,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-07T05:11:53.273Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Pali",
+   "title": "Jatakatthavannana (Jataka with Commentary), Vol. 1",
+   "lane_row": "pali-cli-opus",
+   "engine": "claude-opus-5-5",
+   "channel": "cli",
+   "reader": "opus",
+   "reads": 0,
+   "hold": "leaf-shift-5021"
+  },
+  {
+   "page_id": "69f695bf4234ab44a1b2df48",
+   "book_id": "69c882d86c6f3cc53c859611",
+   "page": 247,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-03T12:18:35.233Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": false,
+   "language": "German",
+   "title": "Pandora: das ist, die edlest Gab Gottes",
+   "lane_row": "bph",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": null
+  },
+  {
+   "page_id": "69f6adfb29fb368c7a69dd31",
+   "book_id": "690c2476e0787282ad5930dd",
+   "page": 208,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-04T06:24:32.101Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "German",
+   "title": "Lebensbeschreibungen berühmter Männer aus den Zeiten der Wiederherstellung der Wissenschaf",
+   "lane_row": "bph",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": null
+  },
+  {
+   "page_id": "6ab5a6b86122fe9080c04373",
+   "book_id": "6ab5a6b76122fe9080c042e4",
+   "page": 143,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-09-25T01:02:01.026Z",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "ocr_first": true,
+   "language": "Dutch",
+   "title": "Iournael gehouden op de reyse ende wederkomste van Oost-Indien",
+   "lane_row": "default",
+   "engine": "gemini-3.1-flash-lite",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69b2f4a2f9f1ad2b3b154d72",
+   "book_id": "69b2f4a2f9f1ad2b3b1548b3",
+   "page": 1215,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-10T20:18:03.472Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Hebrew",
+   "title": "Thesaurus linguae sanctae (Pagnini Hebrew dictionary)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "english-page-shift-5021"
+  },
+  {
+   "page_id": "69dbc9f21040d1d5e20a7fd1",
+   "book_id": "69dbc9f21040d1d5e20a7f28",
+   "page": 169,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-05-01T17:44:29.757Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Latin",
+   "title": "De christiana religione",
+   "lane_row": "latin-cli-agy4",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 0,
+   "hold": null
+  },
+  {
+   "page_id": "69938d895d28b693146d044e",
+   "book_id": "69938d895d28b693146d0231",
+   "page": 541,
+   "src": [
+    "flag"
+   ],
+   "state": "served",
+   "tr_at": "2026-04-12T17:43:12.096Z",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "ocr_first": true,
+   "language": "Greek",
+   "title": "Alexias (Reifferscheid Critical Edition)",
+   "lane_row": "greek-cli-gemini38",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "channel": "cli",
+   "reader": "agy",
+   "reads": 1,
+   "hold": null
+  }
+ ],
+ "replaced": [
+  {
+   "page_id": "69f5390f2fdc4b32929e6ca1",
+   "class": "bph|ocr-ok",
+   "state": "not-translatable"
+  },
+  {
+   "page_id": "69f6ab6edf4bee3dc2387778",
+   "class": "bph|reread",
+   "state": "ocr-refused"
+  },
+  {
+   "page_id": "69e729b4a409200ea79f11a1",
+   "class": "default|reread",
+   "state": "ocr-refused"
+  },
+  {
+   "page_id": "69e961542beefe2f6f72b195",
+   "class": "flash-measured|reread",
+   "state": "ocr-refused"
+  },
+  {
+   "page_id": "699389190f04c37dcfa607ff",
+   "class": "greek-cli-gemini38|reread",
+   "state": "ocr-refused"
+  },
+  {
+   "page_id": "69dbcb491040d1d5e20b5653",
+   "class": "latin-cli-agy4|reread",
+   "state": "ocr-refused"
+  },
+  {
+   "page_id": "699389f2ce153870659483d5",
+   "class": "greek-cli-gemini38|reread",
+   "state": "ocr-refused"
+  }
+ ]
+}

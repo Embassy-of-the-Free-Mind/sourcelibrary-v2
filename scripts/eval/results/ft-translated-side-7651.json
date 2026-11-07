@@ -1,0 +1,1846 @@
+{
+ "issue": 7651,
+ "built": "2026-10-28T20:23:11.792Z",
+ "frame": "visible && pages_count>0 && pages_translated>0 && language group != English",
+ "frame_books": 22031,
+ "english_excluded": 2391,
+ "translated_live_all": 24422,
+ "instruments": {
+  "fresh": "#7598 Sonnet claude -p, latest row per book since 2026-10-27; priority-tier draw (never-searched first) — NOT uniform",
+  "r5_tier1": "round 5 Tier-1 grounded gemini-3-flash-preview, 2026-08-31, weighted by round-5 stratum design weights; Tier-1 over-claims firsts by +12–14pp in non-western strata vs the oracle",
+  "cards": "reviewed work cards; drained in seeded random tranches over the focus queue (>50% OCR and translated) plus targeted rounds — NOT uniform"
+ },
+ "post_stratified_no_prior_books_fresh": 13071,
+ "total": {
+  "books": 22031,
+  "works": 16878,
+  "fresh": {
+   "n": 2082,
+   "no_prior": 1216,
+   "prior": 672,
+   "partial": 158,
+   "unclear": 36,
+   "rate_no_prior": 0.5840537944284342,
+   "ci": [
+    0.5627459844857443,
+    0.6050519921199577
+   ]
+  },
+  "r5_tier1": {
+   "n": 490,
+   "rate_no_prior_weighted": 0.41310266142340013
+  },
+  "cards": {
+   "n": 1699,
+   "no_prior": 1045,
+   "prior": 593,
+   "not_single": 61,
+   "rate_no_prior": 0.6150676868746321
+  }
+ },
+ "by_group": {
+  "latin": {
+   "books": 9242,
+   "works": 7519,
+   "fresh": {
+    "n": 943,
+    "no_prior": 614,
+    "prior": 266,
+    "partial": 55,
+    "unclear": 8,
+    "rate_no_prior": 0.6511134676564156,
+    "ci": [
+     0.6201351409522142,
+     0.6808655755351052
+    ]
+   },
+   "r5_tier1": {
+    "n": 141,
+    "rate_no_prior_weighted": 0.43078536699649767
+   },
+   "cards": {
+    "n": 673,
+    "no_prior": 420,
+    "prior": 222,
+    "not_single": 31,
+    "rate_no_prior": 0.6240713224368499
+   }
+  },
+  "chinese": {
+   "books": 2519,
+   "works": 686,
+   "fresh": {
+    "n": 273,
+    "no_prior": 227,
+    "prior": 17,
+    "partial": 28,
+    "unclear": 1,
+    "rate_no_prior": 0.8315018315018315,
+    "ci": [
+     0.7825694350468522,
+     0.871234039575459
+    ]
+   },
+   "r5_tier1": {
+    "n": 43,
+    "rate_no_prior_weighted": 0.2993261602880014
+   },
+   "cards": {
+    "n": 40,
+    "no_prior": 20,
+    "prior": 18,
+    "not_single": 2,
+    "rate_no_prior": 0.5
+   }
+  },
+  "german": {
+   "books": 2684,
+   "works": 2359,
+   "fresh": {
+    "n": 212,
+    "no_prior": 147,
+    "prior": 47,
+    "partial": 14,
+    "unclear": 4,
+    "rate_no_prior": 0.6933962264150944,
+    "ci": [
+     0.6283447322150303,
+     0.751563496782531
+    ]
+   },
+   "r5_tier1": {
+    "n": 39,
+    "rate_no_prior_weighted": 0.41851131740931796
+   },
+   "cards": {
+    "n": 165,
+    "no_prior": 79,
+    "prior": 79,
+    "not_single": 7,
+    "rate_no_prior": 0.47878787878787876
+   }
+  },
+  "fr_it_es_nl": {
+   "books": 2126,
+   "works": 1829,
+   "fresh": {
+    "n": 207,
+    "no_prior": 87,
+    "prior": 95,
+    "partial": 19,
+    "unclear": 6,
+    "rate_no_prior": 0.42028985507246375,
+    "ci": [
+     0.35509821129486624,
+     0.48838618647103954
+    ]
+   },
+   "r5_tier1": {
+    "n": 46,
+    "rate_no_prior_weighted": 0.30434782608695643
+   },
+   "cards": {
+    "n": 225,
+    "no_prior": 101,
+    "prior": 119,
+    "not_single": 5,
+    "rate_no_prior": 0.4488888888888889
+   }
+  },
+  "greek": {
+   "books": 1094,
+   "works": 801,
+   "fresh": {
+    "n": 124,
+    "no_prior": 18,
+    "prior": 88,
+    "partial": 14,
+    "unclear": 4,
+    "rate_no_prior": 0.14516129032258066,
+    "ci": [
+     0.09383581399995203,
+     0.21781235060374507
+    ]
+   },
+   "r5_tier1": {
+    "n": 24,
+    "rate_no_prior_weighted": 0.3333333333333332
+   },
+   "cards": {
+    "n": 216,
+    "no_prior": 133,
+    "prior": 78,
+    "not_single": 5,
+    "rate_no_prior": 0.6157407407407407
+   }
+  },
+  "he_ar_fa_syr": {
+   "books": 679,
+   "works": 627,
+   "fresh": {
+    "n": 61,
+    "no_prior": 33,
+    "prior": 21,
+    "partial": 6,
+    "unclear": 1,
+    "rate_no_prior": 0.5409836065573771,
+    "ci": [
+     0.4172382993581416,
+     0.6598726911171089
+    ]
+   },
+   "r5_tier1": {
+    "n": 22,
+    "rate_no_prior_weighted": 0.45454545454545453
+   },
+   "cards": {
+    "n": 56,
+    "no_prior": 16,
+    "prior": 37,
+    "not_single": 3,
+    "rate_no_prior": 0.2857142857142857
+   }
+  },
+  "other": {
+   "books": 3687,
+   "works": 3436,
+   "fresh": {
+    "n": 262,
+    "no_prior": 90,
+    "prior": 138,
+    "partial": 22,
+    "unclear": 12,
+    "rate_no_prior": 0.3435114503816794,
+    "ci": [
+     0.28864215686465927,
+     0.40290348535236026
+    ]
+   },
+   "r5_tier1": {
+    "n": 175,
+    "rate_no_prior_weighted": 0.4920573717327707
+   },
+   "cards": {
+    "n": 422,
+    "no_prior": 300,
+    "prior": 111,
+    "not_single": 11,
+    "rate_no_prior": 0.7109004739336493
+   }
+  }
+ },
+ "by_period": {
+  "<1500": {
+   "books": 2402,
+   "works": 1611,
+   "fresh": {
+    "n": 237,
+    "no_prior": 88,
+    "prior": 117,
+    "partial": 28,
+    "unclear": 4,
+    "rate_no_prior": 0.37130801687763715,
+    "ci": [
+     0.3123056353495706,
+     0.4344158612689539
+    ]
+   },
+   "r5_tier1": {
+    "n": 86,
+    "rate_no_prior_weighted": 0.38881818173228233
+   },
+   "cards": {
+    "n": 184,
+    "no_prior": 64,
+    "prior": 109,
+    "not_single": 11,
+    "rate_no_prior": 0.34782608695652173
+   }
+  },
+  "1500s": {
+   "books": 4051,
+   "works": 3270,
+   "fresh": {
+    "n": 396,
+    "no_prior": 201,
+    "prior": 170,
+    "partial": 22,
+    "unclear": 3,
+    "rate_no_prior": 0.5075757575757576,
+    "ci": [
+     0.45849883810182024,
+     0.5565071042513516
+    ]
+   },
+   "r5_tier1": {
+    "n": 90,
+    "rate_no_prior_weighted": 0.38097732612168506
+   },
+   "cards": {
+    "n": 431,
+    "no_prior": 248,
+    "prior": 166,
+    "not_single": 17,
+    "rate_no_prior": 0.5754060324825986
+   }
+  },
+  "1600s": {
+   "books": 5489,
+   "works": 4770,
+   "fresh": {
+    "n": 535,
+    "no_prior": 346,
+    "prior": 144,
+    "partial": 35,
+    "unclear": 10,
+    "rate_no_prior": 0.6467289719626168,
+    "ci": [
+     0.6053103059113716,
+     0.6860554683718314
+    ]
+   },
+   "r5_tier1": {
+    "n": 98,
+    "rate_no_prior_weighted": 0.4166419716682388
+   },
+   "cards": {
+    "n": 365,
+    "no_prior": 218,
+    "prior": 138,
+    "not_single": 9,
+    "rate_no_prior": 0.5972602739726027
+   }
+  },
+  "1700s": {
+   "books": 3906,
+   "works": 3512,
+   "fresh": {
+    "n": 239,
+    "no_prior": 158,
+    "prior": 52,
+    "partial": 20,
+    "unclear": 9,
+    "rate_no_prior": 0.6610878661087866,
+    "ci": [
+     0.5989506855921566,
+     0.7181284310007171
+    ]
+   },
+   "r5_tier1": {
+    "n": 102,
+    "rate_no_prior_weighted": 0.585460455557886
+   },
+   "cards": {
+    "n": 529,
+    "no_prior": 379,
+    "prior": 135,
+    "not_single": 15,
+    "rate_no_prior": 0.7164461247637051
+   }
+  },
+  "1800s": {
+   "books": 2200,
+   "works": 1873,
+   "fresh": {
+    "n": 232,
+    "no_prior": 84,
+    "prior": 110,
+    "partial": 32,
+    "unclear": 6,
+    "rate_no_prior": 0.3620689655172414,
+    "ci": [
+     0.30293674972160745,
+     0.4256946706893804
+    ]
+   },
+   "r5_tier1": {
+    "n": 64,
+    "rate_no_prior_weighted": 0.37976952187172663
+   },
+   "cards": {
+    "n": 222,
+    "no_prior": 116,
+    "prior": 98,
+    "not_single": 8,
+    "rate_no_prior": 0.5225225225225225
+   }
+  },
+  "1900+": {
+   "books": 1242,
+   "works": 1109,
+   "fresh": {
+    "n": 123,
+    "no_prior": 37,
+    "prior": 68,
+    "partial": 15,
+    "unclear": 3,
+    "rate_no_prior": 0.3008130081300813,
+    "ci": [
+     0.22680566759840015,
+     0.38688573963708106
+    ]
+   },
+   "r5_tier1": {
+    "n": 33,
+    "rate_no_prior_weighted": 0.198722364694588
+   },
+   "cards": {
+    "n": 106,
+    "no_prior": 43,
+    "prior": 61,
+    "not_single": 2,
+    "rate_no_prior": 0.4056603773584906
+   }
+  },
+  "unknown": {
+   "books": 2741,
+   "works": 1408,
+   "fresh": {
+    "n": 320,
+    "no_prior": 302,
+    "prior": 11,
+    "partial": 6,
+    "unclear": 1,
+    "rate_no_prior": 0.94375,
+    "ci": [
+     0.9128452535442355,
+     0.9641266981753704
+    ]
+   },
+   "r5_tier1": {
+    "n": 17,
+    "rate_no_prior_weighted": 0.5414085399943223
+   },
+   "cards": {
+    "n": 20,
+    "no_prior": 18,
+    "prior": 2,
+    "not_single": 0,
+    "rate_no_prior": 0.9
+   }
+  }
+ },
+ "cells": {
+  "fr_it_es_nl|1700s": {
+   "books": 540,
+   "works": 494,
+   "fresh": {
+    "n": 44,
+    "no_prior": 17,
+    "prior": 23,
+    "partial": 4,
+    "unclear": 0,
+    "rate_no_prior": 0.38636363636363635,
+    "ci": [
+     0.25720998886701985,
+     0.5337669015379832
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.16666666666666666
+   },
+   "cards": {
+    "n": 64,
+    "no_prior": 22,
+    "prior": 39,
+    "not_single": 3,
+    "rate_no_prior": 0.34375
+   },
+   "basis": "measured",
+   "est_no_prior_books": 209
+  },
+  "fr_it_es_nl|1600s": {
+   "books": 571,
+   "works": 527,
+   "fresh": {
+    "n": 60,
+    "no_prior": 32,
+    "prior": 24,
+    "partial": 3,
+    "unclear": 1,
+    "rate_no_prior": 0.5333333333333333,
+    "ci": [
+     0.40893208671135106,
+     0.65372298459012
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.16666666666666666
+   },
+   "cards": {
+    "n": 81,
+    "no_prior": 49,
+    "prior": 31,
+    "not_single": 1,
+    "rate_no_prior": 0.6049382716049383
+   },
+   "basis": "measured",
+   "est_no_prior_books": 305
+  },
+  "latin|1600s": {
+   "books": 3005,
+   "works": 2761,
+   "fresh": {
+    "n": 297,
+    "no_prior": 237,
+    "prior": 38,
+    "partial": 17,
+    "unclear": 5,
+    "rate_no_prior": 0.797979797979798,
+    "ci": [
+     0.7486442440113211,
+     0.8397052395707368
+    ]
+   },
+   "r5_tier1": {
+    "n": 27,
+    "rate_no_prior_weighted": 0.5857513400651098
+   },
+   "cards": {
+    "n": 183,
+    "no_prior": 116,
+    "prior": 62,
+    "not_single": 5,
+    "rate_no_prior": 0.6338797814207651
+   },
+   "basis": "measured",
+   "est_no_prior_books": 2398
+  },
+  "german|1500s": {
+   "books": 381,
+   "works": 325,
+   "fresh": {
+    "n": 24,
+    "no_prior": 14,
+    "prior": 5,
+    "partial": 5,
+    "unclear": 0,
+    "rate_no_prior": 0.5833333333333334,
+    "ci": [
+     0.3883433764938864,
+     0.7553265275346177
+    ]
+   },
+   "r5_tier1": {
+    "n": 13,
+    "rate_no_prior_weighted": 0.47793154373193486
+   },
+   "cards": {
+    "n": 20,
+    "no_prior": 6,
+    "prior": 13,
+    "not_single": 1,
+    "rate_no_prior": 0.3
+   },
+   "basis": "thin",
+   "est_no_prior_books": 222
+  },
+  "latin|1500s": {
+   "books": 2683,
+   "works": 2212,
+   "fresh": {
+    "n": 266,
+    "no_prior": 149,
+    "prior": 106,
+    "partial": 11,
+    "unclear": 0,
+    "rate_no_prior": 0.5601503759398496,
+    "ci": [
+     0.5000627211430856,
+     0.6185253690550158
+    ]
+   },
+   "r5_tier1": {
+    "n": 43,
+    "rate_no_prior_weighted": 0.33766558676065084
+   },
+   "cards": {
+    "n": 328,
+    "no_prior": 210,
+    "prior": 103,
+    "not_single": 15,
+    "rate_no_prior": 0.6402439024390244
+   },
+   "basis": "measured",
+   "est_no_prior_books": 1503
+  },
+  "fr_it_es_nl|1500s": {
+   "books": 470,
+   "works": 395,
+   "fresh": {
+    "n": 52,
+    "no_prior": 21,
+    "prior": 25,
+    "partial": 4,
+    "unclear": 2,
+    "rate_no_prior": 0.40384615384615385,
+    "ci": [
+     0.28159535424282284,
+     0.5393266823750391
+    ]
+   },
+   "r5_tier1": {
+    "n": 18,
+    "rate_no_prior_weighted": 0.38888888888888873
+   },
+   "cards": {
+    "n": 38,
+    "no_prior": 9,
+    "prior": 28,
+    "not_single": 1,
+    "rate_no_prior": 0.23684210526315788
+   },
+   "basis": "measured",
+   "est_no_prior_books": 190
+  },
+  "german|1600s": {
+   "books": 871,
+   "works": 779,
+   "fresh": {
+    "n": 63,
+    "no_prior": 47,
+    "prior": 13,
+    "partial": 1,
+    "unclear": 2,
+    "rate_no_prior": 0.746031746031746,
+    "ci": [
+     0.6265857791515483,
+     0.8371972541690185
+    ]
+   },
+   "r5_tier1": {
+    "n": 8,
+    "rate_no_prior_weighted": 0.7186347510025038
+   },
+   "cards": {
+    "n": 49,
+    "no_prior": 28,
+    "prior": 20,
+    "not_single": 1,
+    "rate_no_prior": 0.5714285714285714
+   },
+   "basis": "measured",
+   "est_no_prior_books": 650
+  },
+  "greek|<1500": {
+   "books": 283,
+   "works": 231,
+   "fresh": {
+    "n": 27,
+    "no_prior": 5,
+    "prior": 18,
+    "partial": 2,
+    "unclear": 2,
+    "rate_no_prior": 0.18518518518518517,
+    "ci": [
+     0.0818058657428532,
+     0.36699056505191746
+    ]
+   },
+   "r5_tier1": {
+    "n": 9,
+    "rate_no_prior_weighted": 0.11111111111111112
+   },
+   "cards": {
+    "n": 42,
+    "no_prior": 12,
+    "prior": 28,
+    "not_single": 2,
+    "rate_no_prior": 0.2857142857142857
+   },
+   "basis": "thin",
+   "est_no_prior_books": 52
+  },
+  "greek|1500s": {
+   "books": 236,
+   "works": 200,
+   "fresh": {
+    "n": 29,
+    "no_prior": 7,
+    "prior": 20,
+    "partial": 1,
+    "unclear": 1,
+    "rate_no_prior": 0.2413793103448276,
+    "ci": [
+     0.12218268185062131,
+     0.4210795221832869
+    ]
+   },
+   "r5_tier1": {
+    "n": 3,
+    "rate_no_prior_weighted": 0.6666666666666666
+   },
+   "cards": {
+    "n": 47,
+    "no_prior": 19,
+    "prior": 28,
+    "not_single": 0,
+    "rate_no_prior": 0.40425531914893614
+   },
+   "basis": "thin",
+   "est_no_prior_books": 57
+  },
+  "greek|unknown": {
+   "books": 18,
+   "works": 18,
+   "fresh": {
+    "n": 0,
+    "no_prior": 0,
+    "prior": 0,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "r5_tier1": {
+    "n": 1,
+    "rate_no_prior_weighted": 0
+   },
+   "cards": {
+    "n": 2,
+    "no_prior": 1,
+    "prior": 1,
+    "not_single": 0,
+    "rate_no_prior": 0.5
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 3
+  },
+  "he_ar_fa_syr|<1500": {
+   "books": 141,
+   "works": 131,
+   "fresh": {
+    "n": 10,
+    "no_prior": 1,
+    "prior": 7,
+    "partial": 2,
+    "unclear": 0,
+    "rate_no_prior": 0.1,
+    "ci": [
+     0.01787574951572113,
+     0.4041563854975721
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.5000000000000001
+   },
+   "cards": {
+    "n": 21,
+    "no_prior": 8,
+    "prior": 12,
+    "not_single": 1,
+    "rate_no_prior": 0.38095238095238093
+   },
+   "basis": "thin",
+   "est_no_prior_books": 14
+  },
+  "other|1600s": {
+   "books": 584,
+   "works": 561,
+   "fresh": {
+    "n": 73,
+    "no_prior": 10,
+    "prior": 60,
+    "partial": 2,
+    "unclear": 1,
+    "rate_no_prior": 0.136986301369863,
+    "ci": [
+     0.07614307799620813,
+     0.23412635939187332
+    ]
+   },
+   "r5_tier1": {
+    "n": 48,
+    "rate_no_prior_weighted": 0.10416666666666655
+   },
+   "cards": {
+    "n": 34,
+    "no_prior": 2,
+    "prior": 30,
+    "not_single": 2,
+    "rate_no_prior": 0.058823529411764705
+   },
+   "basis": "measured",
+   "est_no_prior_books": 80
+  },
+  "latin|<1500": {
+   "books": 1526,
+   "works": 939,
+   "fresh": {
+    "n": 166,
+    "no_prior": 70,
+    "prior": 76,
+    "partial": 19,
+    "unclear": 1,
+    "rate_no_prior": 0.42168674698795183,
+    "ci": [
+     0.349167457937409,
+     0.4977487274965482
+    ]
+   },
+   "r5_tier1": {
+    "n": 47,
+    "rate_no_prior_weighted": 0.44680851063829796
+   },
+   "cards": {
+    "n": 96,
+    "no_prior": 34,
+    "prior": 55,
+    "not_single": 7,
+    "rate_no_prior": 0.3541666666666667
+   },
+   "basis": "measured",
+   "est_no_prior_books": 643
+  },
+  "he_ar_fa_syr|1600s": {
+   "books": 81,
+   "works": 74,
+   "fresh": {
+    "n": 5,
+    "no_prior": 2,
+    "prior": 1,
+    "partial": 2,
+    "unclear": 0,
+    "rate_no_prior": 0.4,
+    "ci": [
+     0.1176182311592533,
+     0.769280067791163
+    ]
+   },
+   "r5_tier1": {
+    "n": 1,
+    "rate_no_prior_weighted": 1
+   },
+   "cards": {
+    "n": 3,
+    "no_prior": 2,
+    "prior": 1,
+    "not_single": 0,
+    "rate_no_prior": 0.6666666666666666
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 44
+  },
+  "latin|1700s": {
+   "books": 647,
+   "works": 578,
+   "fresh": {
+    "n": 47,
+    "no_prior": 33,
+    "prior": 9,
+    "partial": 4,
+    "unclear": 1,
+    "rate_no_prior": 0.7021276595744681,
+    "ci": [
+     0.5602205595363459,
+     0.8134891584898374
+    ]
+   },
+   "r5_tier1": {
+    "n": 11,
+    "rate_no_prior_weighted": 0.5983492837736397
+   },
+   "cards": {
+    "n": 59,
+    "no_prior": 31,
+    "prior": 28,
+    "not_single": 0,
+    "rate_no_prior": 0.5254237288135594
+   },
+   "basis": "measured",
+   "est_no_prior_books": 454
+  },
+  "chinese|<1500": {
+   "books": 127,
+   "works": 87,
+   "fresh": {
+    "n": 11,
+    "no_prior": 4,
+    "prior": 3,
+    "partial": 4,
+    "unclear": 0,
+    "rate_no_prior": 0.36363636363636365,
+    "ci": [
+     0.15166223614131383,
+     0.6462032231083628
+    ]
+   },
+   "r5_tier1": {
+    "n": 8,
+    "rate_no_prior_weighted": 0
+   },
+   "cards": {
+    "n": 10,
+    "no_prior": 4,
+    "prior": 5,
+    "not_single": 1,
+    "rate_no_prior": 0.4
+   },
+   "basis": "thin",
+   "est_no_prior_books": 46
+  },
+  "chinese|1700s": {
+   "books": 192,
+   "works": 114,
+   "fresh": {
+    "n": 20,
+    "no_prior": 16,
+    "prior": 0,
+    "partial": 3,
+    "unclear": 1,
+    "rate_no_prior": 0.8,
+    "ci": [
+     0.5839782779742401,
+     0.9193436467288
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.16666666666666669
+   },
+   "cards": {
+    "n": 9,
+    "no_prior": 2,
+    "prior": 7,
+    "not_single": 0,
+    "rate_no_prior": 0.2222222222222222
+   },
+   "basis": "thin",
+   "est_no_prior_books": 154
+  },
+  "he_ar_fa_syr|1500s": {
+   "books": 64,
+   "works": 60,
+   "fresh": {
+    "n": 4,
+    "no_prior": 2,
+    "prior": 2,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.5,
+    "ci": [
+     0.15003570882017148,
+     0.8499642911798285
+    ]
+   },
+   "r5_tier1": {
+    "n": 2,
+    "rate_no_prior_weighted": 0.5
+   },
+   "cards": {
+    "n": 7,
+    "no_prior": 0,
+    "prior": 7,
+    "not_single": 0,
+    "rate_no_prior": 0
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 35
+  },
+  "other|<1500": {
+   "books": 149,
+   "works": 141,
+   "fresh": {
+    "n": 6,
+    "no_prior": 2,
+    "prior": 3,
+    "partial": 0,
+    "unclear": 1,
+    "rate_no_prior": 0.3333333333333333,
+    "ci": [
+     0.09676933255921683,
+     0.7000116786584712
+    ]
+   },
+   "r5_tier1": {
+    "n": 10,
+    "rate_no_prior_weighted": 0.4
+   },
+   "cards": {
+    "n": 13,
+    "no_prior": 3,
+    "prior": 10,
+    "not_single": 0,
+    "rate_no_prior": 0.23076923076923078
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 51
+  },
+  "other|1800s": {
+   "books": 662,
+   "works": 613,
+   "fresh": {
+    "n": 67,
+    "no_prior": 24,
+    "prior": 31,
+    "partial": 10,
+    "unclear": 2,
+    "rate_no_prior": 0.3582089552238806,
+    "ci": [
+     0.2539788838135447,
+     0.47781712305247737
+    ]
+   },
+   "r5_tier1": {
+    "n": 24,
+    "rate_no_prior_weighted": 0.5742371739914361
+   },
+   "cards": {
+    "n": 35,
+    "no_prior": 13,
+    "prior": 21,
+    "not_single": 1,
+    "rate_no_prior": 0.37142857142857144
+   },
+   "basis": "measured",
+   "est_no_prior_books": 237
+  },
+  "he_ar_fa_syr|1700s": {
+   "books": 96,
+   "works": 95,
+   "fresh": {
+    "n": 5,
+    "no_prior": 4,
+    "prior": 1,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.8,
+    "ci": [
+     0.3755282641185388,
+     0.9637768390302125
+    ]
+   },
+   "r5_tier1": {
+    "n": 3,
+    "rate_no_prior_weighted": 0.6666666666666666
+   },
+   "cards": {
+    "n": 9,
+    "no_prior": 3,
+    "prior": 5,
+    "not_single": 1,
+    "rate_no_prior": 0.3333333333333333
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 52
+  },
+  "other|1500s": {
+   "books": 112,
+   "works": 110,
+   "fresh": {
+    "n": 11,
+    "no_prior": 4,
+    "prior": 7,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.36363636363636365,
+    "ci": [
+     0.15166223614131383,
+     0.6462032231083628
+    ]
+   },
+   "r5_tier1": {
+    "n": 2,
+    "rate_no_prior_weighted": 1
+   },
+   "cards": {
+    "n": 5,
+    "no_prior": 2,
+    "prior": 2,
+    "not_single": 1,
+    "rate_no_prior": 0.4
+   },
+   "basis": "thin",
+   "est_no_prior_books": 41
+  },
+  "latin|unknown": {
+   "books": 983,
+   "works": 981,
+   "fresh": {
+    "n": 120,
+    "no_prior": 117,
+    "prior": 2,
+    "partial": 0,
+    "unclear": 1,
+    "rate_no_prior": 0.975,
+    "ci": [
+     0.9290687625956524,
+     0.9914619799012145
+    ]
+   },
+   "r5_tier1": {
+    "n": 0,
+    "rate_no_prior_weighted": null
+   },
+   "cards": {
+    "n": 11,
+    "no_prior": 11,
+    "prior": 0,
+    "not_single": 0,
+    "rate_no_prior": 1
+   },
+   "basis": "measured",
+   "est_no_prior_books": 958
+  },
+  "other|1900+": {
+   "books": 613,
+   "works": 567,
+   "fresh": {
+    "n": 65,
+    "no_prior": 22,
+    "prior": 32,
+    "partial": 8,
+    "unclear": 3,
+    "rate_no_prior": 0.3384615384615385,
+    "ci": [
+     0.23533338768646592,
+     0.4596185018686867
+    ]
+   },
+   "r5_tier1": {
+    "n": 18,
+    "rate_no_prior_weighted": 0.3128104895632402
+   },
+   "cards": {
+    "n": 20,
+    "no_prior": 4,
+    "prior": 16,
+    "not_single": 0,
+    "rate_no_prior": 0.2
+   },
+   "basis": "measured",
+   "est_no_prior_books": 207
+  },
+  "other|unknown": {
+   "books": 55,
+   "works": 55,
+   "fresh": {
+    "n": 1,
+    "no_prior": 1,
+    "prior": 0,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 1,
+    "ci": [
+     0.20654329147389294,
+     1
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.5000000000000001
+   },
+   "cards": {
+    "n": 2,
+    "no_prior": 1,
+    "prior": 1,
+    "not_single": 0,
+    "rate_no_prior": 0.5
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 19
+  },
+  "other|1700s": {
+   "books": 1512,
+   "works": 1427,
+   "fresh": {
+    "n": 39,
+    "no_prior": 27,
+    "prior": 5,
+    "partial": 2,
+    "unclear": 5,
+    "rate_no_prior": 0.6923076923076923,
+    "ci": [
+     0.535784513844354,
+     0.8143424655401694
+    ]
+   },
+   "r5_tier1": {
+    "n": 67,
+    "rate_no_prior_weighted": 0.8031374881652623
+   },
+   "cards": {
+    "n": 318,
+    "no_prior": 275,
+    "prior": 36,
+    "not_single": 7,
+    "rate_no_prior": 0.8647798742138365
+   },
+   "basis": "measured",
+   "est_no_prior_books": 1047
+  },
+  "german|unknown": {
+   "books": 35,
+   "works": 35,
+   "fresh": {
+    "n": 3,
+    "no_prior": 2,
+    "prior": 1,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.6666666666666666,
+    "ci": [
+     0.2076549551264879,
+     0.9385096847238394
+    ]
+   },
+   "r5_tier1": {
+    "n": 0,
+    "rate_no_prior_weighted": null
+   },
+   "cards": {
+    "n": 1,
+    "no_prior": 1,
+    "prior": 0,
+    "not_single": 0,
+    "rate_no_prior": 1
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 24
+  },
+  "he_ar_fa_syr|1800s": {
+   "books": 213,
+   "works": 203,
+   "fresh": {
+    "n": 29,
+    "no_prior": 23,
+    "prior": 4,
+    "partial": 1,
+    "unclear": 1,
+    "rate_no_prior": 0.7931034482758621,
+    "ci": [
+     0.6160955339174228,
+     0.9015406348441479
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.16666666666666669
+   },
+   "cards": {
+    "n": 12,
+    "no_prior": 3,
+    "prior": 8,
+    "not_single": 1,
+    "rate_no_prior": 0.25
+   },
+   "basis": "thin",
+   "est_no_prior_books": 169
+  },
+  "german|1800s": {
+   "books": 307,
+   "works": 283,
+   "fresh": {
+    "n": 25,
+    "no_prior": 15,
+    "prior": 8,
+    "partial": 2,
+    "unclear": 0,
+    "rate_no_prior": 0.6,
+    "ci": [
+     0.40739127785127344,
+     0.7659694233580909
+    ]
+   },
+   "r5_tier1": {
+    "n": 5,
+    "rate_no_prior_weighted": 0.2
+   },
+   "cards": {
+    "n": 22,
+    "no_prior": 3,
+    "prior": 18,
+    "not_single": 1,
+    "rate_no_prior": 0.13636363636363635
+   },
+   "basis": "thin",
+   "est_no_prior_books": 184
+  },
+  "german|1700s": {
+   "books": 899,
+   "works": 822,
+   "fresh": {
+    "n": 80,
+    "no_prior": 61,
+    "prior": 11,
+    "partial": 6,
+    "unclear": 2,
+    "rate_no_prior": 0.7625,
+    "ci": [
+     0.6585901502919855,
+     0.8423544881691125
+    ]
+   },
+   "r5_tier1": {
+    "n": 9,
+    "rate_no_prior_weighted": 0.2861224300079017
+   },
+   "cards": {
+    "n": 62,
+    "no_prior": 34,
+    "prior": 24,
+    "not_single": 4,
+    "rate_no_prior": 0.5483870967741935
+   },
+   "basis": "measured",
+   "est_no_prior_books": 685
+  },
+  "fr_it_es_nl|1800s": {
+   "books": 305,
+   "works": 265,
+   "fresh": {
+    "n": 28,
+    "no_prior": 8,
+    "prior": 14,
+    "partial": 3,
+    "unclear": 3,
+    "rate_no_prior": 0.2857142857142857,
+    "ci": [
+     0.15253815848329969,
+     0.470596357370175
+    ]
+   },
+   "r5_tier1": {
+    "n": 11,
+    "rate_no_prior_weighted": 0.27272727272727276
+   },
+   "cards": {
+    "n": 29,
+    "no_prior": 12,
+    "prior": 17,
+    "not_single": 0,
+    "rate_no_prior": 0.41379310344827586
+   },
+   "basis": "thin",
+   "est_no_prior_books": 87
+  },
+  "german|<1500": {
+   "books": 70,
+   "works": 49,
+   "fresh": {
+    "n": 9,
+    "no_prior": 5,
+    "prior": 4,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.5555555555555556,
+    "ci": [
+     0.2666473457440297,
+     0.811224570528086
+    ]
+   },
+   "r5_tier1": {
+    "n": 1,
+    "rate_no_prior_weighted": 1
+   },
+   "cards": {
+    "n": 8,
+    "no_prior": 3,
+    "prior": 5,
+    "not_single": 0,
+    "rate_no_prior": 0.375
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 49
+  },
+  "fr_it_es_nl|<1500": {
+   "books": 106,
+   "works": 90,
+   "fresh": {
+    "n": 8,
+    "no_prior": 1,
+    "prior": 6,
+    "partial": 1,
+    "unclear": 0,
+    "rate_no_prior": 0.125,
+    "ci": [
+     0.02241690886329617,
+     0.4708948057698615
+    ]
+   },
+   "r5_tier1": {
+    "n": 5,
+    "rate_no_prior_weighted": 0.4
+   },
+   "cards": {
+    "n": 13,
+    "no_prior": 5,
+    "prior": 8,
+    "not_single": 0,
+    "rate_no_prior": 0.38461538461538464
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 45
+  },
+  "latin|1800s": {
+   "books": 303,
+   "works": 256,
+   "fresh": {
+    "n": 34,
+    "no_prior": 7,
+    "prior": 23,
+    "partial": 4,
+    "unclear": 0,
+    "rate_no_prior": 0.20588235294117646,
+    "ci": [
+     0.1034939602235132,
+     0.3679871610821398
+    ]
+   },
+   "r5_tier1": {
+    "n": 9,
+    "rate_no_prior_weighted": 0.33333333333333337
+   },
+   "cards": {
+    "n": 40,
+    "no_prior": 24,
+    "prior": 13,
+    "not_single": 3,
+    "rate_no_prior": 0.6
+   },
+   "basis": "measured",
+   "est_no_prior_books": 62
+  },
+  "german|1900+": {
+   "books": 121,
+   "works": 117,
+   "fresh": {
+    "n": 8,
+    "no_prior": 3,
+    "prior": 5,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.375,
+    "ci": [
+     0.13684175946152105,
+     0.6942621454161981
+    ]
+   },
+   "r5_tier1": {
+    "n": 3,
+    "rate_no_prior_weighted": 0
+   },
+   "cards": {
+    "n": 10,
+    "no_prior": 6,
+    "prior": 4,
+    "not_single": 0,
+    "rate_no_prior": 0.6
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 84
+  },
+  "greek|1600s": {
+   "books": 71,
+   "works": 65,
+   "fresh": {
+    "n": 10,
+    "no_prior": 1,
+    "prior": 7,
+    "partial": 1,
+    "unclear": 1,
+    "rate_no_prior": 0.1,
+    "ci": [
+     0.01787574951572113,
+     0.4041563854975721
+    ]
+   },
+   "r5_tier1": {
+    "n": 2,
+    "rate_no_prior_weighted": 0.5
+   },
+   "cards": {
+    "n": 25,
+    "no_prior": 21,
+    "prior": 4,
+    "not_single": 0,
+    "rate_no_prior": 0.84
+   },
+   "basis": "thin",
+   "est_no_prior_books": 7
+  },
+  "fr_it_es_nl|1900+": {
+   "books": 133,
+   "works": 111,
+   "fresh": {
+    "n": 15,
+    "no_prior": 8,
+    "prior": 3,
+    "partial": 4,
+    "unclear": 0,
+    "rate_no_prior": 0.5333333333333333,
+    "ci": [
+     0.3011663015105079,
+     0.7519077474025355
+    ]
+   },
+   "r5_tier1": {
+    "n": 0,
+    "rate_no_prior_weighted": null
+   },
+   "cards": {
+    "n": 13,
+    "no_prior": 4,
+    "prior": 9,
+    "not_single": 0,
+    "rate_no_prior": 0.3076923076923077
+   },
+   "basis": "thin",
+   "est_no_prior_books": 71
+  },
+  "chinese|unknown": {
+   "books": 1636,
+   "works": 306,
+   "fresh": {
+    "n": 194,
+    "no_prior": 182,
+    "prior": 7,
+    "partial": 5,
+    "unclear": 0,
+    "rate_no_prior": 0.9381443298969072,
+    "ci": [
+     0.8950075659637614,
+     0.9642657112438634
+    ]
+   },
+   "r5_tier1": {
+    "n": 9,
+    "rate_no_prior_weighted": 0.6666666666666666
+   },
+   "cards": {
+    "n": 4,
+    "no_prior": 4,
+    "prior": 0,
+    "not_single": 0,
+    "rate_no_prior": 1
+   },
+   "basis": "measured",
+   "est_no_prior_books": 1535
+  },
+  "he_ar_fa_syr|1900+": {
+   "books": 71,
+   "works": 70,
+   "fresh": {
+    "n": 6,
+    "no_prior": 1,
+    "prior": 5,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.16666666666666666,
+    "ci": [
+     0.03005258587173032,
+     0.563509436563646
+    ]
+   },
+   "r5_tier1": {
+    "n": 3,
+    "rate_no_prior_weighted": 0.3333333333333333
+   },
+   "cards": {
+    "n": 10,
+    "no_prior": 0,
+    "prior": 10,
+    "not_single": 0,
+    "rate_no_prior": 0
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 38
+  },
+  "he_ar_fa_syr|unknown": {
+   "books": 13,
+   "works": 13,
+   "fresh": {
+    "n": 2,
+    "no_prior": 0,
+    "prior": 1,
+    "partial": 1,
+    "unclear": 0,
+    "rate_no_prior": 0,
+    "ci": [
+     0,
+     0.6576280471103807
+    ]
+   },
+   "r5_tier1": {
+    "n": 1,
+    "rate_no_prior_weighted": 1
+   },
+   "cards": {
+    "n": 0,
+    "no_prior": 0,
+    "prior": 0,
+    "not_single": 0,
+    "rate_no_prior": null
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 7
+  },
+  "chinese|1800s": {
+   "books": 141,
+   "works": 57,
+   "fresh": {
+    "n": 11,
+    "no_prior": 4,
+    "prior": 1,
+    "partial": 6,
+    "unclear": 0,
+    "rate_no_prior": 0.36363636363636365,
+    "ci": [
+     0.15166223614131383,
+     0.6462032231083628
+    ]
+   },
+   "r5_tier1": {
+    "n": 4,
+    "rate_no_prior_weighted": 0.25
+   },
+   "cards": {
+    "n": 3,
+    "no_prior": 2,
+    "prior": 1,
+    "not_single": 0,
+    "rate_no_prior": 0.6666666666666666
+   },
+   "basis": "thin",
+   "est_no_prior_books": 51
+  },
+  "chinese|1600s": {
+   "books": 306,
+   "works": 77,
+   "fresh": {
+    "n": 27,
+    "no_prior": 17,
+    "prior": 1,
+    "partial": 9,
+    "unclear": 0,
+    "rate_no_prior": 0.6296296296296297,
+    "ci": [
+     0.442289046234463,
+     0.7846771293206314
+    ]
+   },
+   "r5_tier1": {
+    "n": 6,
+    "rate_no_prior_weighted": 0.6478033014664795
+   },
+   "cards": {
+    "n": 7,
+    "no_prior": 3,
+    "prior": 3,
+    "not_single": 1,
+    "rate_no_prior": 0.42857142857142855
+   },
+   "basis": "thin",
+   "est_no_prior_books": 193
+  },
+  "chinese|1500s": {
+   "books": 105,
+   "works": 60,
+   "fresh": {
+    "n": 10,
+    "no_prior": 4,
+    "prior": 5,
+    "partial": 1,
+    "unclear": 0,
+    "rate_no_prior": 0.4,
+    "ci": [
+     0.16817758120350967,
+     0.6873304525498135
+    ]
+   },
+   "r5_tier1": {
+    "n": 9,
+    "rate_no_prior_weighted": 0.11111111111111112
+   },
+   "cards": {
+    "n": 9,
+    "no_prior": 4,
+    "prior": 5,
+    "not_single": 0,
+    "rate_no_prior": 0.4444444444444444
+   },
+   "basis": "thin",
+   "est_no_prior_books": 42
+  },
+  "fr_it_es_nl|unknown": {
+   "books": 1,
+   "works": 1,
+   "fresh": {
+    "n": 0,
+    "no_prior": 0,
+    "prior": 0,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "r5_tier1": {
+    "n": 0,
+    "rate_no_prior_weighted": null
+   },
+   "cards": {
+    "n": 0,
+    "no_prior": 0,
+    "prior": 0,
+    "not_single": 0,
+    "rate_no_prior": null
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 0
+  },
+  "greek|1900+": {
+   "books": 197,
+   "works": 165,
+   "fresh": {
+    "n": 16,
+    "no_prior": 2,
+    "prior": 11,
+    "partial": 3,
+    "unclear": 0,
+    "rate_no_prior": 0.125,
+    "ci": [
+     0.034976749337057134,
+     0.3602333143674828
+    ]
+   },
+   "r5_tier1": {
+    "n": 4,
+    "rate_no_prior_weighted": 0.25
+   },
+   "cards": {
+    "n": 45,
+    "no_prior": 25,
+    "prior": 19,
+    "not_single": 1,
+    "rate_no_prior": 0.5555555555555556
+   },
+   "basis": "thin",
+   "est_no_prior_books": 25
+  },
+  "greek|1800s": {
+   "books": 269,
+   "works": 215,
+   "fresh": {
+    "n": 38,
+    "no_prior": 3,
+    "prior": 29,
+    "partial": 6,
+    "unclear": 0,
+    "rate_no_prior": 0.07894736842105263,
+    "ci": [
+     0.02721410139426493,
+     0.2079967892026529
+    ]
+   },
+   "r5_tier1": {
+    "n": 5,
+    "rate_no_prior_weighted": 0.6000000000000001
+   },
+   "cards": {
+    "n": 91,
+    "no_prior": 63,
+    "prior": 26,
+    "not_single": 2,
+    "rate_no_prior": 0.6923076923076923
+   },
+   "basis": "measured",
+   "est_no_prior_books": 21
+  },
+  "latin|1900+": {
+   "books": 95,
+   "works": 75,
+   "fresh": {
+    "n": 13,
+    "no_prior": 1,
+    "prior": 12,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": 0.07692307692307693,
+    "ci": [
+     0.013710066379696323,
+     0.3331453392824736
+    ]
+   },
+   "r5_tier1": {
+    "n": 4,
+    "rate_no_prior_weighted": 0
+   },
+   "cards": {
+    "n": 10,
+    "no_prior": 3,
+    "prior": 6,
+    "not_single": 1,
+    "rate_no_prior": 0.3
+   },
+   "basis": "thin",
+   "est_no_prior_books": 7
+  },
+  "chinese|1900+": {
+   "books": 12,
+   "works": 11,
+   "fresh": {
+    "n": 0,
+    "no_prior": 0,
+    "prior": 0,
+    "partial": 0,
+    "unclear": 0,
+    "rate_no_prior": null,
+    "ci": [
+     null,
+     null
+    ]
+   },
+   "r5_tier1": {
+    "n": 1,
+    "rate_no_prior_weighted": 0
+   },
+   "cards": {
+    "n": 2,
+    "no_prior": 2,
+    "prior": 0,
+    "not_single": 0,
+    "rate_no_prior": 1
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 10
+  },
+  "greek|1700s": {
+   "books": 20,
+   "works": 20,
+   "fresh": {
+    "n": 4,
+    "no_prior": 0,
+    "prior": 3,
+    "partial": 1,
+    "unclear": 0,
+    "rate_no_prior": 0,
+    "ci": [
+     0,
+     0.48990002040399916
+    ]
+   },
+   "r5_tier1": {
+    "n": 0,
+    "rate_no_prior_weighted": null
+   },
+   "cards": {
+    "n": 14,
+    "no_prior": 12,
+    "prior": 2,
+    "not_single": 0,
+    "rate_no_prior": 0.8571428571428571
+   },
+   "basis": "carried_from_group",
+   "est_no_prior_books": 3
+  }
+ }
+}

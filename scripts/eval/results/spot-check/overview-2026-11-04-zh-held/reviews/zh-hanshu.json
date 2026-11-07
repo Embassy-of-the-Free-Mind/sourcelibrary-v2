@@ -1,0 +1,1179 @@
+[
+  {
+    "book_id": "6ae0be184adf2ffb52f729b9",
+    "slot": 9,
+    "title": "前漢書·卷六~卷七 (Hanshu, Siku Quanshu, vol. 3 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of the Hanshu with Yan Shigu's commentary and the Song Qi / Liu Ban notes; juan 6–7 (Annals of Emperor Wu and Emperor Zhao), which the four pages confirm.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 28 and printed_backsteps 11 are what Siku half-leaves produce (the folio number is shared by the a/b sides of each leaf and restarts at each juan); the pages run in order through juan 6 into juan 7. 2 of 124 pages have no OCR, probably covers or blanks. Paddle reads the garbled 欽定四庫全書 margin as stray single characters (金 只 巳 元 …) and wrong <page-num> tags on every page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "淬音干內反",
+            "image": "淬音千內反",
+            "problem": "千 read as 干 in the fanqie of 淬, carried into the translation as 'gan-nei fan'",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "二 / 卜 / 巳 / 人 / <page-num>二</page-num> / <page-num>三</page-num>",
+            "image": "the 欽定四庫全書 margin title",
+            "problem": "the margin title read as four stray characters and two invented page numbers",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "地本名鄰音與葵同",
+            "image": "地本名鄈音與葵同",
+            "problem": "鄈 (kui) read as 鄰; the translation then says the place 'was originally named Lin, which sounds the same as kui', which makes no sense",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "與正月戊子",
+            "image": "之與 (small) 正月戊子",
+            "problem": "the small 之 of the commentary carried over from the previous page dropped",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "賜民爵一級女子百户牛酒",
+            "english": "one hundred families of women were granted an ox and wine",
+            "problem": "the grant is an ox and wine to women for every hundred households; 'one hundred families of women' is a misreading of the construction",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "師古曰雨音于具反",
+            "english": "pronounced with the fanqie phonetic of yu and ju inverted",
+            "problem": "'inverted' mistranslates 反 (the fanqie marker); it reads as a different sound rule",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the stray OCR characters '金 只 巳 元 <page-num>2</page-num> 言' are copied to the top of the English pane, so the reader sees a row of meaningless characters and a page number 2 above the translation",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 64,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "金 / 匕 / 巳 / 辰 / 人 / <page-num>三</page-num> / 亡",
+            "image": "the 欽定四庫全書 margin title",
+            "problem": "the margin title read as stray characters and a page number (not carried into the English)",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 107,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "前漢書 / 次定曰事人三等",
+            "image": "the margin: 欽定四庫全書 … 前漢書 … 七",
+            "problem": "the margin title 欽定四庫全書 garbled into a sentence that reads like a commentator ('次定 said …'), and the folio number 七 lost",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "立煖為泗水王",
+            "english": "established Luan as King of Sishui",
+            "problem": "煖 is Xuan, not Luan (wrong pinyin for the king's name, repeated in the summary)",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "the garbled margin is translated as a commentary note: 'Former Han Annals commentary by Ciding: \"...serving others has three grades...\"'. There is no commentator Ciding and no such statement on the leaf.",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text is the Hanshu juan 6–7 with its commentary, read well on all four pages, and the English is careful with Yan Shigu's notes. But the garbled Siku margin title leaks into the reader view: as a row of stray characters on p.44 and, on p.107, as an invented commentary by a nonexistent 'Ciding'.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      16,
+      64
+    ],
+    "reader_summary": "This is the Siku Quanshu manuscript of Ban Gu's Hanshu, juan 6–7 (Annals of Emperors Wu and Zhao), with Yan Shigu's commentary and the Song notes of Song Qi and Liu Ban. The transcription is of the right text and largely accurate, including the small double-column commentary. The English follows text and commentary closely, but you should know that the margin title sometimes comes through as stray characters, and once as an invented commentator's note, and that the odd name or construction is misread."
+  },
+  {
+    "book_id": "6ae0c0ce4adf2ffb52f73d64",
+    "slot": 10,
+    "title": "前漢書·卷六十七~卷六十八 (Hanshu, Siku Quanshu, vol. 39 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Hanshu juan 67-68 (biographies of Hu Jian, Mei Fu; Huo Guang) with Yan Shigu, Su Lin, Song Qi, Liu Ban notes; belongs on a Hanshu/Chinese histories shelf.",
+    "rights_flag": null,
+    "structure_note": "Page records 118, OCR 115, translated 113, so a few leaves untranslated. The printed backsteps (7) and repeats (22) are very likely misreads, not page-order faults: Paddle emits junk <page-num> tags read off the garbled 欽定四庫全書 header strip (e.g. p84 tagged '三十', which is not printed on the leaf). The four pages I read run in order and match their juan headers (卷六十八 on 84 and 110).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次字曰字十八字",
+            "image": "(nothing; the margin has 前漢書 and the leaf number 五)",
+            "problem": "junk line invented from the margin/header strip, appended as the last line of the text",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "師古曰欲致民勇志使不奔比 建又何疑焉",
+            "english": "<note>Yan Shigu states: \"This means wanting to arouse the valiant resolve of the people so that they would not flee. Compared to Hu Jian's actions, what doubt could there be?\"</note>",
+            "problem": "the main-text sentence 建又何疑焉 is pulled into Yan Shigu's note and 比 (for 奔北, 'flee in defeat') is rendered 'compared to', so the body text loses a sentence and the commentary gains an invented clause",
+            "severity": "moderate",
+            "class": "T4"
+          },
+          {
+            "source": "劾渭城令游徼傷主家奴",
+            "english": "to indict the Weicheng patrol officer for injuring slaves",
+            "problem": "drops the magistrate (令) as an accused party, silently adopting Liu Ban's emendation",
+            "severity": "minor"
+          },
+          {
+            "source": "主使僕射劾",
+            "english": "Princess Gai sent an archer-attendant to indict",
+            "problem": "僕射 is her household steward, not an archer",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the junk OCR string surfaces in the English as '<unclear>次字曰字十八字</unclear>', and a note is broken across two tags (\"*Ben* </note><note>original: '犇'</note> is an ancient form…\") so commentary text spills into the body",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "首兵書\n古",
+            "image": "(nothing; margin has 前漢書 and the leaf number)",
+            "problem": "junk margin read appended as text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "師古曰以斗為喻也斗身為魁",
+            "english": "This uses the Big Dipper constellation as an analogy: the body of the Dipper is the bowl, while the handle controls direction. Giving them the handle means granting executive power.",
+            "problem": "the second half of the gloss ('the handle controls direction… executive power') is not in Yan Shigu's note; added explanation presented as his words",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "junk margin string shown in the English as '<unclear>首兵書古</unclear>'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 84,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\n人\n卫\n厂\n今\n<page-num>三十</page-num>",
+            "image": "欽定四庫全書 (header strip); no page number 三十 on the leaf",
+            "problem": "header read as five junk characters and an invented page number",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "又牧平騎都尉印綬",
+            "image": "又收平騎都尉印綬",
+            "problem": "收 misread as 牧 (the same glyph is read correctly earlier as 又收范眀友); translation recovers it",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "特使禹官名與光俱大司馬者",
+            "english": "The purpose of giving Huo Yu the official title of Commander-in-Chief alongside Huo Guang was specifically to disarm his authority.",
+            "problem": "'to disarm his authority' is an interpretation added to a sentence that only says the title was merely nominal, the same as Guang's",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the English opens with five '<unclear>Jin/Ren/Wei/Chang/Jin</unclear>' lines and invented headings '# Page Thirty' and '### Scroll Sixty-Eight' made from the junk header read",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 110,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金八刀刀今二",
+            "image": "欽定四庫全書 (header strip)",
+            "problem": "header read as junk text",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "隂妻邪謀",
+            "english": "When his wife harbored depraved and wicked schemes",
+            "problem": "drops the verb: Ban Gu says Huo Guang concealed (陰) his wife's wicked plot, which is what Jin Zhuo's note ('He did not expose her wrongdoing') glosses; the English makes the wife the subject and loses the charge against Guang",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "English opens with '<unclear>金八刀刀今二</unclear>' and an invented heading '# Scroll 68'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right text, cleanly transcribed in the main columns and commentary; the English is mostly faithful but every page carries junk header reads shown as <unclear> lines or fake headings, and two pages misplace or misstate a clause (p11 main text absorbed into a note; p110 'concealed his wife's plot' lost).",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [],
+    "reader_summary": "This is the Siku Quanshu manuscript copy of Hanshu juan 67–68 (Hu Jian, Mei Fu, Huo Guang and the appraisal), with Yan Shigu's and Song editors' notes, and the transcription is of the right leaves with few misreads. The English follows the text and its notes closely enough to read, but a reader will meet junk header characters and invented headings on most pages and an occasional clause moved into or out of the commentary, so check a passage against the Chinese before quoting it."
+  },
+  {
+    "book_id": "6ae0c1e14adf2ffb52f74326",
+    "slot": 11,
+    "title": "前漢書·卷九十~卷九十二 (Hanshu, Siku Quanshu, vol. 50 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Hanshu juan 90-92 (Harsh Officials, Wandering Knights) with Yan Shigu, Su Lin, Fu Qian, Song Qi, Liu Chang notes.",
+    "rights_flag": null,
+    "structure_note": "144 records, 142 with OCR, 136 translated (6 OCR'd leaves untranslated). Backsteps (10) and repeats (18) are most likely the junk <page-num> tags Paddle reads off the header strip (p13 carries three: 三, 八, 三), not a page-order fault; the sampled leaves run in order with matching juan headers (卷九十 on 13 and 55).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>三</page-num>\n<page-num>八</page-num>\n<page-num>三</page-num>",
+            "image": "欽定四庫全書 header strip; no such page numbers",
+            "problem": "three invented page-number tags from the header",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "以老徙為燕相\n宋",
+            "image": "以老徙為燕相○宋",
+            "problem": "circle separator before the Song Qi note dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "禹為人廉裾",
+            "english": "Yu was by nature incorruptible and austere.",
+            "problem": "裾 (=倨) is 'arrogant', as the very next note says; 'austere' softens it",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "notes are split across tags so commentary spills into the body text: '<note>Shigu states: \"Ju\" </note><note>original: 裾</note> also means arrogant and aloof.'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 55,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金\n金\n金\n金\n金\n卷九卜",
+            "image": "欽定四庫全書 header; 卷九十",
+            "problem": "header read as five 金 lines; juan label misread",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "濡以耗廢",
+            "english": "Officials drifted into sluggishness, waste, and decay.",
+            "problem": "adds a subject ('officials') the text does not name",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "same split-note markup: '<note>Su Lin says: The character for \"accommodate\" </note><note>original: \"邑\"</note> has the pronunciation…' — gloss text falls outside the note",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 99,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次宅四重三寸",
+            "image": "(nothing; margin has 前漢書 and leaf number 二)",
+            "problem": "junk line invented from the margin, appended as the last line",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "朱亥鋋殺晉鄙",
+            "image": "朱亥鎚殺晉鄙",
+            "problem": "鎚 (hammer) read 鋋 (spear); the English still says 'iron hammer'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "虞卿棄國捐君",
+            "english": "Yu Qing abandoned his state and gave up his rank",
+            "problem": "捐君 is 'forsook his lord', not his rank",
+            "severity": "minor"
+          },
+          {
+            "source": "矯魏僖侯命",
+            "english": "forged King Anxi of Wei's decree",
+            "problem": "the leaf writes 僖侯; the English silently normalises to King Anxi",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次定四等十三与",
+            "image": "欽定四庫全書 (header strip)",
+            "problem": "header read as a junk line in the body",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "the junk header read is presented as apparatus: '<note>Editorial note: 次定四等十三与</note>', followed by a heading '# 前漢書' and a bare '9'",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "note": "split-note markup again ('<note>Song Qi remarks: The Yue edition lacks the character \"banished\" </note><note>original: \"徙\"</note>.')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right text, accurately transcribed including the small double-column notes, and a faithful English that keeps the commentary; what a reader sees on sight is junk header reads, an invented 'Editorial note', and notes broken across tags.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      99
+    ],
+    "reader_summary": "This is the Siku Quanshu manuscript copy of Hanshu juan 90–92, the Harsh Officials and Wandering Knights chapters, with Yan Shigu's and later Song editors' notes. The transcription is of the right leaves and the English is close and keeps the commentary, but the header strip is read as junk lines (once labelled an 'Editorial note'), and notes are broken in the display. Warn that these lines are machine noise, not part of the text."
+  },
+  {
+    "book_id": "6ae0c1f34adf2ffb52f74449",
+    "slot": 12,
+    "title": "前漢書·卷九十四上~卷九十五 (Hanshu, Siku Quanshu, vol. 52 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of the Hanshu (Xiongnu zhuan; Xi'nan yi / Liang Yue / Chaoxian zhuan) with Yan Shigu's commentary; belongs on a Hanshu / Chinese histories shelf. The 'universallibrary' collection tag is generic.",
+    "rights_flag": null,
+    "structure_note": "146 records, 145 OCR, 144 translated; the 5 backsteps and 11 repeats on only 19 printed numbers look like misread or junk page-num tags (Paddle reads the garbled 欽定四庫全書 border and folio numerals as page numbers, e.g. a spurious <page-num>一</page-num> on p.114), not a scan splice. Pages sampled are in order and are the right leaves.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "宋祁曰注文之字服字當刪",
+            "english": "Song Qi notes: In the commentary, the character 'fu' of 'wen zhi zi fu zi' should be deleted.",
+            "problem": "Song Qi says the characters 之 and 服 in the commentary should be deleted; the English garbles it into a nonsense phrase",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "萬",
+            "english": "hundred thousand coins",
+            "problem": "only 萬 is on this page; 'hundred thousand coins' is supplied from the previous page (plausible, unmarked)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "each Yan Shigu note opens with 'original: \"…\"' and the full Chinese, so the reader's English pane carries raw Chinese strings",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "一反已上 / 二言 / 卷九十匹下",
+            "image": "running header 卷九十四下 and the 欽定四庫全書 border; nothing of '一反已上 二言' is in the text block",
+            "problem": "border and header garble emitted as body lines at the head of the text",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "一反已上 / 二言 (OCR junk)",
+            "english": "<note>Yan Shigu says: ...the pronunciation is like the character yi combined with fan, as noted above. The two characters are combined.</note>",
+            "problem": "junk header lines translated into a Yan Shigu note that is not on the page",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "卷九十匹下 (running header)",
+            "english": "### Volume 94, Part 2",
+            "problem": "the running header becomes a section heading in mid-chapter",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "source": "喙音許穢反",
+            "english": "pronounced like xu combined with hui <gloss>fan</gloss>",
+            "problem": "fanqie 反 glossed as if it were a meaning 'fan'; same on several notes",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented heading '### Volume 94, Part 2' and an invented Yan Shigu note at the top of the English",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 100,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金定正亡人全言",
+            "image": "欽定四庫全書 border",
+            "problem": "garbled border emitted as a body line",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "興子邪務",
+            "english": "Xing's son Xiequ",
+            "problem": "邪務 romanised Xiequ (Xiewu/Yewu)",
+            "severity": "moderate"
+          },
+          {
+            "source": "師古曰間音居莧反 / 戲音許宜反",
+            "english": "Jian is pronounced jian in fanqie / Xi is pronounced xi in fanqie",
+            "problem": "fanqie spellings dropped from the glosses",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [
+          {
+            "note": "commentary wrapped in <gloss> with nested <note>original: \"釋\"</note>; nested tags may render oddly",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 114,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金 / 矢 / 口 / 下 / 人 / 人 / <page-num>一</page-num> / 言",
+            "image": "欽定四庫全書 border, no folio 一",
+            "problem": "border read as eight junk lines and a false page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "(謂)助曰國新被寇使者行矣胡方日夜裝入見天子",
+            "english": "Zhu said: \"Our state has only recently suffered invasion. The envoy should depart; Hu is even now preparing day and night to enter the capital…\"",
+            "problem": "the speaker is King Hu addressing the envoy Yan Zhu (謂助曰, 謂 on the previous leaf); the English makes the Han envoy say it, so Hu's promise to go to court is put in Zhu's mouth",
+            "severity": "serious",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "<header>Volume 95</header> opens the English",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription of the main text and Yan Shigu notes is accurate on all four leaves; the English is fluent and mostly faithful but invents a Yan Shigu note out of header junk (p.40) and flips a speaker across a page seam (p.114).",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      11,
+      100
+    ],
+    "reader_summary": "This is the Siku Quanshu manuscript of Hanshu juan 94–95 (the Xiongnu and the southwestern peoples, Southern Yue), with Yan Shigu's notes. The transcription is of the right text and reads almost character for character. The English follows the text closely, but at page tops it sometimes turns header debris into fake notes or headings, and at page breaks it can attribute speech to the wrong person, so check the Chinese before you quote."
+  },
+  {
+    "book_id": "6ae0c1554adf2ffb52f74035",
+    "slot": 13,
+    "title": "前漢書·卷七十八~卷八十 (Hanshu, Siku Quanshu, vol. 44 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript of Hanshu juan 78–80 (Xiao Wangzhi; Feng Fengshi; the sons of Emperor Xuan / Yuan) with Yan Shigu and earlier commentators; belongs with the Hanshu. 'universallibrary' tag is generic.",
+    "rights_flag": null,
+    "structure_note": "114 records, 113 OCR, 112 translated. 13 backsteps and 39 repeats over 47 printed numbers: the OCR tags a folio numeral (often a misread one, e.g. <page-num>三</page-num> on both p.6 and p.85, <page-num>十</page-num> where the leaf reads 十三) on every leaf, so repeats are expected; this is misreading of folio numbers across juan, not a splice. Sampled pages are the right leaves and in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "欠巳曰之巳書",
+            "image": "欽定四庫全書 border",
+            "problem": "border read as a body line",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "少府宋畸",
+            "english": "Privy Counselor Song Ji",
+            "problem": "少府 is the Privy Treasurer / Minister of the Lesser Treasury",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the junk line is shown in the English as <unclear>欠巳曰之巳書</unclear>, followed by <header>Book of the Former Han</header> and <page-num>3</page-num>",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "撫讀曰模其字從木",
+            "image": "橅讀曰模其字從木",
+            "problem": "the glossed character has the wood radical (the note says so); OCR normalised it to 撫, so the note contradicts itself",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "丈人以救荷蓧",
+            "image": "丈人以杖荷蓧",
+            "problem": "杖 'staff' misread as 救 (translation still gives 'staff')",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "撫讀曰模其字從木",
+            "english": "The character 撫 is read as 模 … Its character takes the wood radical.",
+            "problem": "carries the OCR misread, so the English gloss is self-contradictory",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 85,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "欠巳曰言曰言",
+            "image": "欽定四庫全書 border",
+            "problem": "border read as a body line",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "English ends with <unclear>欠巳曰言曰言</unclear>, an invented heading '# Book of Han' and a centring marker '->Three<-' in the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 103,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次三曰取人焉 / <page-num>十</page-num>",
+            "image": "border; folio reads 十三",
+            "problem": "junk body line and truncated folio number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "我危得之 孟康曰危殆也我殆得為天子也 師古曰危者猶今之言險不得之矣",
+            "english": "\"I almost attained it!\" … Yan Shigu: by a narrow margin, he did not obtain it",
+            "problem": "Liu Yu is hoping aloud that he may yet become emperor (危 = 殆, 'I might well get it'); the English makes it a past near-miss, changing the sense of his treasonous remark",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "持服恐無處所",
+            "english": "observing mourning rites, he likely has no place to sustain himself",
+            "problem": "'恐無處所' insinuates the young emperor may not survive the mourning; the English is vague, though Ru Chun's note recovers the sense",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "each commentary is split into fragments: <note>Yan Shigu remarks: \"'Guide' </note><note>original: \"道\"</note><note> is pronounced …</note>, so one note renders as several broken boxes",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription is accurate, commentary included; the English is faithful on three of four leaves and garbles one loaded remark on p.103. The English pane on several leaves shows raw border junk, stray headers and broken note markup.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      30
+    ],
+    "reader_summary": "This is the Siku Quanshu manuscript of Hanshu juan 78–80, from Xiao Wangzhi's biography to Emperor Xuan's sons, with Yan Shigu and the earlier commentators. The Chinese text is the right text and reads cleanly. The English is careful and keeps the commentary, but the reader pane carries header debris and broken note markup, and a few nuanced lines are off."
+  },
+  {
+    "book_id": "6ae0c03d4adf2ffb52f739d2",
+    "slot": 14,
+    "title": "前漢書·卷五十三~卷五十四 (Hanshu, Siku Quanshu, vol. 32 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of Ban Gu's Hanshu with Yan Shigu commentary; pages 60 and 89 are 卷54 (Li Guang / Li Ling, Sima Qian's intercession), page 100 is Su Wu — all as the title says.",
+    "rights_flag": null,
+    "structure_note": "120 records, 116 with OCR, 113 translated: 4 pages without OCR and 3 more untranslated. The 10 printed backsteps over only 37 recognised printed numbers look mostly like misread furniture: Paddle tags junk header strokes as <page-num> (page 60 gets 一, page 100 gets none) and reads the 卷 label as 巷 (p.100). One real reset is expected where 卷54 begins its own leaf count. Page 2 is the volume front leaf: it reads 卷五十四 with a small 三 beside it (卷53–54), and the OCR drops the 三.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "前漢書卷五十四",
+            "image": "前漢書卷五十四 with a small 三 beside the 四 (vols 53–54)",
+            "problem": "the second chapter number is dropped, so the front leaf reads as 卷54 only",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "洗馬臣王坦修覆勘",
+            "english": "Director of the Palace Secretariat, your humble servant Wang Tanxiu, Reviewed and Checked",
+            "problem": "洗馬 is the Librarian of the Heir Apparent (太子洗馬), not a director of the Palace Secretariat",
+            "severity": "moderate"
+          },
+          {
+            "source": "前漢書卷五十四",
+            "english": "Book of the Former Han, Volume 54",
+            "problem": "卷 rendered 'Volume'; the small 三 is lost, so the volume's span (chapters 53–54) is misstated",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation pane echoes the Chinese line by line (欽/定/四/庫/全/書, every colophon line) and shows a visible '<note>original: \"欽定四庫全書\"</note>' before the English",
+            "severity": "moderate",
+            "class": "T2"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 60,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金父 / 人 / 今 / <page-num>一</page-num> / 巨",
+            "image": "the garbled 欽定四庫全書 header column",
+            "problem": "header strokes read as text lines and as a page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "師古曰示以堅牢令敵意知之",
+            "english": "Showing firmness and resolve causes the enemy's mind to perceive it.",
+            "problem": "loose rendering of Yan Shigu's gloss (showing that they are firmly fixed so the enemy understands it)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Reader text opens with '<unclear>金父 人 今</unclear>' and '<unclear>一 巨</unclear>' (header junk), then an invented heading '# Volume 54' mid-sentence",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<header>次定四庫全書</header> <page-num>十七</page-num>",
+            "image": "欽定四庫全書 … 十七",
+            "problem": "欽 read as 次 in the furniture",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "初上遣貳師大軍出財令陵為助兵",
+            "english": "His Majesty had dispatched the Grand General of Ershi on a campaign",
+            "problem": "'Grand General of Ershi' for 貳師大軍 (the Ershi general's main army); meaning kept",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 100,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "食讀曰飲",
+            "image": "食讀曰飤",
+            "problem": "飤 (to feed) misread as 飲, which destroys Yan Shigu's reading gloss",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "巷五十四",
+            "image": "卷五十四",
+            "problem": "chapter label misread, with header junk lines (金/人/正/尼/今/三) above it",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "師古曰飲音於禁反食讀曰飤",
+            "english": "The pronunciation and reading indicate fasting from drink and food.",
+            "problem": "the gloss (飲 is read yìn, 'give to drink'; 食 is read as 飤, 'give to eat') is replaced by a vague paraphrase",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "天雨雪",
+            "english": "Sky and snow rained down.",
+            "problem": "雨 is a verb here: 'it snowed'",
+            "severity": "minor"
+          },
+          {
+            "source": "與旃毛并咽",
+            "english": "together with the felt wool of his garments",
+            "problem": "'of his garments' added",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The right text, transcribed well, and the main text is translated faithfully. Some pages show markup junk: header strokes as <unclear>, an invented '# Volume 54' heading, and an echoed front leaf. Commentary glosses are sometimes paraphrased away.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      89
+    ],
+    "reader_summary": "This volume is the Siku Quanshu manuscript of Hanshu chapters 53–54, including the biographies of Li Guang, Li Ling and Su Wu with Yan Shigu's commentary, and the transcription is of the right text with only furniture slips. The English of the main narrative can be trusted. Treat the renderings of the phonetic glosses with caution, and expect header junk and stray tags on some pages."
+  },
+  {
+    "book_id": "6ae0c0884adf2ffb52f73bfa",
+    "slot": 15,
+    "title": "前漢書·卷六十二~卷六十三 (Hanshu, Siku Quanshu, vol. 36 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu Hanshu. Pages 27 and 44 are 卷62 (Sima Qian: the Shiji table of contents, the letter to Ren An); pages 81 and 93 are 卷63 (Liu Dan, King of Yan). This matches the title.",
+    "rights_flag": null,
+    "structure_note": "122 records, 121 with OCR, 118 translated: 3 OCR'd pages are untranslated. The 11 backsteps over only 34 recognised printed numbers are largely misread furniture: page 93's leaf is 十五 on the image but tagged <page-num>十九</page-num>. One real reset is expected where 卷63 starts.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Broken note markup: '<note>Shigu says: \"In Qian's book … Master Ban </note><note>Ban Gu</note> considered the text too lengthy…' — the note closes mid-sentence, so the rest of Yan Shigu's comment runs on as main text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "全一 / 仁人 / 巨 / 厄 / 人 / <page-num>一</page-num> / 言",
+            "image": "the garbled 欽定四庫全書 header column",
+            "problem": "header strokes read as text and as a page number (not carried into the English)",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 81,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "○劉奉 / 世曰匈奴 / 徙漠奴",
+            "image": "○劉奉世曰匈奴徙漠… (small double column, hard to read at this resolution)",
+            "problem": "the end of Liu Fengshi's note reads oddly ('徙漠奴'); I cannot confirm the character from the image",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "招致遊士",
+            "english": "gathering together wandering scholars and knights-errant",
+            "problem": "'knights-errant' added",
+            "severity": "minor"
+          },
+          {
+            "source": "降旗奔師",
+            "english": "surrendered their banners and rushed to our army",
+            "problem": "free, but carries Ru Chun's sense of lowering the banners and coming over",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Commentary markup broken repeatedly: '<note>Yan Shigu notes: \"Cu\" </note><note>original: \"徂\"</note> means to go.', with the same pattern for 妥 and 棐. Commentary spills into the main text and 'original:' notes are visible",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 93,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "欠巳四月壬申",
+            "image": "(not on this leaf — the last small column ends …即其所見以為)",
+            "problem": "a line not on the page is appended at the end",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "<page-num>十九</page-num>",
+            "image": "十五",
+            "problem": "leaf number misread",
+            "severity": "minor",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "君子獨安居",
+            "english": "Where can a noble lord dwell in peace?",
+            "problem": "a defensible reading of 獨 as 'how'; the alternative, 'the lord alone dwells at ease', is lost",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Reader text ends with '<unclear>欠巳四月壬申</unclear>' plus visible 'Header in original text…' and 'Page number: Nineteen' notes",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The right text, with good transcription of the main text and commentary, and a faithful English of both the narrative and the songs. On two of four pages the commentary notes are split by broken <note> tags, so gloss text runs into the narrative, and one page ends with a stray line that is not on the leaf.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      44
+    ],
+    "reader_summary": "This volume is the Siku Quanshu manuscript of Hanshu chapters 62–63: Sima Qian's biography with his letter to Ren An, and the King of Yan. The transcription is of the right text with few slips. The English is faithful, but on some pages broken note tags make Yan Shigu's commentary read as part of Ban Gu's text, so a reader must check what is narrative and what is gloss."
+  },
+  {
+    "book_id": "6ae0bdda4adf2ffb52f72939",
+    "slot": 16,
+    "title": "前漢書·卷二~卷五 (Hanshu, Siku Quanshu, vol. 2 of 57)",
+    "tradition": "zh-hanshu",
+    "shelf_fit": "fits",
+    "shelf_note": "Siku Quanshu manuscript copy of the Hanshu juan 2–5 (Annals of Emperors Hui, Empress Lü, Wen, Jing), with Yan Shigu's commentary; the pages match.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 33 and printed_backsteps 15 fit Siku half-leaves (shared folio numbers on a/b sides, folios restarting at each of four juan). 6 of 125 pages have no OCR and 8 no translation; the gaps were not inspected. On p.10 Paddle invented a date '2023年1月1日' at the foot of the page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "次定曰事全焉",
+            "image": "the margin title 欽定四庫全書",
+            "problem": "the margin title garbled into a commentary-like sentence ('次定 said: the affair is complete') and placed after Yan Shigu's note",
+            "severity": "serious",
+            "class": "O11"
+          },
+          {
+            "ocr": "五 / 2023年1月1日",
+            "image": "folio number 五 only",
+            "problem": "a modern date invented at the foot of the page",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "之 / 家",
+            "image": "之家 (small, end of the previous commentary)",
+            "problem": "read as two lone characters at the start; harmless",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "乙亥夕而不見",
+            "english": "On the day yihai, the moon was eclipsed in the evening and was not seen.",
+            "problem": "the subject is the two dragons seen in a well at Lanling (previous page), which disappeared by the evening of yihai; the moon and the eclipse are invented",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "次定曰事全焉",
+            "english": "Ci Ding stated: 'The affair was thus brought to completion.'",
+            "problem": "a garbled margin title translated as a statement by an invented commentator 'Ci Ding'",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<unclear>五 2023年1月1日</unclear>' shown in the English pane",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 55,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<header>金定匹唐全書</header>",
+            "image": "欽定四庫全書",
+            "problem": "margin title misread; not carried into the English",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 88,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "紅者中祥大祥以紅為領緣",
+            "english": "Hong <gloss>red/coarse cloth</gloss> …",
+            "problem": "the gloss 'red' for 紅 sits awkwardly, since the commentary itself says 紅 here stands for 功 (mourning cloth); the translation of the argument is right",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 100,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "師古曰帑讀與孥同",
+            "english": "Tang is pronounced the same as nu",
+            "problem": "帑 is romanised 'Tang' (its other reading) in a note that says it is read nu; minor inconsistency",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "all commentary on this page is wrapped in <gloss> rather than <note>, unlike other pages; it may render as inline glosses",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Three of the four pages are accurate in both text and commentary, and the English is good enough to quote. But p.10 has a fabricated moon eclipse in the translation, a commentator invented from the margin title, and an OCR-invented 2023 date.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      55,
+      88,
+      100
+    ],
+    "reader_summary": "This is the Siku Quanshu manuscript of the Hanshu, juan 2–5 (the annals of Emperors Hui, Wen and Jing and of Empress Lü), with Yan Shigu's commentary. The transcription is of the right text and mostly exact, and the English of the edicts and the commentary debates (on mourning dress, for example) is careful. Some pages are spoiled by the margin title turning into an invented commentator, and on one page the English invents an event (a moon eclipse) that the text does not mention."
+  }
+]

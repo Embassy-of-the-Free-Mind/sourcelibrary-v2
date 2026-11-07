@@ -13,7 +13,7 @@ export const maxDuration = 60;
 
 const TITLE = 'Source Library：历史文献图书馆';
 const DESCRIPTION =
-  'Source Library 将古籍数字化、转录并翻译。一万多种以中文写成的书籍，可在此对照原书影像阅读原文。';
+  'Source Library 将古籍数字化、转录并翻译。一万多册以中文写成的书籍，可在此对照原书影像阅读原文。';
 
 export const metadata: Metadata = {
   title: TITLE,

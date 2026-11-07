@@ -1,0 +1,37 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>加<unclear>[damaged — about 7 characters]</unclear>青蛙神</header>
+<page-num>六十六</page-num>
+<meta>Red mark in the fold column after the leaf number: 四之六十六</meta>
+
+<margin>
+而輕怒予
+使彼得爲
+口實以取
+勞民傷財
+女亦自返
+蛙之怒亦
+足以爲鑒
+矣然怒而
+知解女亦
+自此和柔
+人之輕爲
+蛙怒而不
+能如蛙自
+解者應知
+愧矣
+</margin>
+
+哀之始憤而歸父母聞之大懼失色至夜神示夢於近
+村使爲壻家營宅及明賫材鳩工共爲崑生建造辭之
+不止日數百人相屬於道不數日第舍一新牀幕器具
+悉備焉修除甫竟十娘已至登堂謝過言詞溫婉轉身
+向崑生展笑舉家變怨爲喜自此十娘性益和居二年
+無間言十娘最惡蛇崑生戲函小蛇紿使啟之十娘色
+變詬崑生崑生亦轉笑生嗔惡相抵十娘曰今番不待
+相迫逐請從此絶遂出門去薛翁大恐杖崑生請罪於
+神幸不禍之亦寂無音積有年餘崑生念十娘頗自悔
+
+<vocab>崑生, 十娘, 薛翁, 青蛙神</vocab>

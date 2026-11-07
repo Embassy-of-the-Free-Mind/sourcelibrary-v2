@@ -21,7 +21,7 @@ import { makeBookDoc } from './lib/book-docs.mjs';
 
 const GETTY_API = 'https://data.getty.edu/museum/collection';
 const GETTY_IIIF = 'https://media.getty.edu/iiif/image';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const THUMB_WIDTH = 600;
 const MIN_DIMENSION = 800;

@@ -1,0 +1,614 @@
+{
+ "generated_at": "2026-10-28T11:55:41.002Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 97,
+  "unparsed": 0,
+  "list_usd_equiv": 7.4
+ },
+ "meter": null,
+ "cells": {
+  "latin-lite": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "books": 15739,
+    "books_walked": 128,
+    "held_or_hidden": 0,
+    "no_eligible_page": 98,
+    "rule": "visible Latin books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>agy-flash-low+diffqa": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served (the stored draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "7/30",
+     "accept_rate": 0.23,
+     "accept_ci": {
+      "ci95": [
+       0.1,
+       0.4
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "22/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.567,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O5": "10/30",
+      "O6": "8/30",
+      "O7": "4/30",
+      "O1": "3/30",
+      "O4": "3/30",
+      "O14": "2/30",
+      "O17": "2/30",
+      "O10": "1/30",
+      "I5": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "22/30",
+      "O5": "17/30",
+      "O16": "7/30",
+      "O11": "7/30",
+      "E2": "7/30",
+      "O7": "7/30",
+      "O8": "6/30",
+      "O12": "4/30",
+      "O1": "3/30",
+      "O17": "3/30",
+      "O4": "3/30",
+      "O14": "2/30",
+      "O10": "2/30",
+      "T6": "1/30",
+      "I5": "1/30",
+      "O15": "1/30"
+     },
+     "fidelity_mean": 3.07,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "Be eo aut quod est hoc quidez esse longe vite aialiu. hoc autem breuis vite. rc.",
+       "severity": "wrong_text",
+       "what": "The question block at the foot of column 1 is missing (the red C initial, 'Circa initium libri de longitudine et breuitate vite mouetur talis questio Utrum humidum et calidum sint causa longe vite...', 'Et arguitur quod non...', 'Ans patet...'), so column 2's 'ctionis' has nothing to continue from"
+      },
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "astrolo gi pnt iudicare de pluuijs et hois.",
+       "severity": "wrong_text",
+       "what": "Drops 'et frigoribus. et medici de sanitate vel morte' and joins 'pluuijs' to 'hois'"
+      },
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "si cognouimus ipsos cum eis pnt fieri cur curre se currere du currunt.",
+       "severity": "wrong_text",
+       "what": "Garbles 'sed cognoscimus ipsos in seipsis cum presentes sunt sicut cognoscimus sortem currere dum currit'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "gemini-3.1-flash-lite (route-costs.json)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00634
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    },
+    "lite>agy-flash-low": {
+     "served": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+     "n": 28,
+     "books": 28,
+     "accept": "17/28",
+     "accept_rate": 0.61,
+     "accept_ci": {
+      "ci95": [
+       0.429,
+       0.786
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_pages": "7/28",
+     "wrong_text_ci": {
+      "ci95": [
+       0.107,
+       0.429
+      ],
+      "unit": "book",
+      "units": 28
+     },
+     "wrong_text_classes": {
+      "O6": "5/28",
+      "O8": "1/28",
+      "O5": "1/28",
+      "O7": "1/28"
+     },
+     "classes_k_of_n": {
+      "O6": "16/28",
+      "O8": "9/28",
+      "O5": "7/28",
+      "E2": "5/28",
+      "O11": "4/28",
+      "O16": "2/28",
+      "D1": "2/28",
+      "O7": "2/28",
+      "O17": "1/28",
+      "T6": "1/28",
+      "O10": "1/28",
+      "O12": "1/28"
+     },
+     "fidelity_mean": 4.07,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "quod non ex diuinationis intelli gitur",
+       "severity": "wrong_text",
+       "what": "page reads 'nomine diuinationis' (noīe); 'non ex' is a misread"
+      },
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "quia calidum flammat humidum",
+       "severity": "wrong_text",
+       "what": "page reads 'consumit' (ꝯsumit), not 'flammat'"
+      },
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "assignet veras causas et propter quas longitudinis",
+       "severity": "wrong_text",
+       "what": "page reads 'et vniuersales' (vl'es), not 'propter quas'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_share": 0.00000225,
+      "basis": "draft + one agy gemini-3.8-flash-low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00244,
+      "agy_share": 0.00000371
+     },
+     "counts": true,
+     "contain_answers": "1/29",
+     "contain_reasons": [
+      "CONTAIN: The image is a composite strip of multiple manuscript openings and pages showing music theory and mensural notation (Kyrie, Gloria), which cannot be transcribed as a single page."
+     ],
+     "unchanged": "0/28",
+     "skipped": 1
+    },
+    "agy-flash-low": {
+     "served": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+     "n": 22,
+     "books": 22,
+     "accept": "14/22",
+     "accept_rate": 0.64,
+     "accept_ci": {
+      "ci95": [
+       0.455,
+       0.818
+      ],
+      "unit": "book",
+      "units": 22
+     },
+     "wrong_text_pages": "7/22",
+     "wrong_text_ci": {
+      "ci95": [
+       0.136,
+       0.5
+      ],
+      "unit": "book",
+      "units": 22
+     },
+     "wrong_text_classes": {
+      "O6": "4/22",
+      "O4": "1/22",
+      "O7": "1/22",
+      "I4": "1/22",
+      "I5": "1/22",
+      "O18": "1/22",
+      "O14": "1/22"
+     },
+     "classes_k_of_n": {
+      "O6": "12/22",
+      "E2": "9/22",
+      "O8": "9/22",
+      "O12": "3/22",
+      "O5": "2/22",
+      "O7": "2/22",
+      "O11": "2/22",
+      "D1": "1/22",
+      "O4": "1/22",
+      "O9": "1/22",
+      "T6": "1/22",
+      "O10": "1/22",
+      "I4": "1/22",
+      "I5": "1/22",
+      "I2": "1/22",
+      "O18": "1/22",
+      "O14": "1/22",
+      "O16": "1/22"
+     },
+     "fidelity_mean": 3.82,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69c8006e6c6f3cc53c843f4c:71",
+       "quote": "primum motiuus deceptio est sine causa apparente",
+       "severity": "wrong_text",
+       "what": "page reads 'primum motiuum est'; the word 'deceptio' is not on the page"
+      },
+      {
+       "page": "69dbcad01040d1d5e20aeefd:208",
+       "quote": "quod cometa etiam non est calide et sicce",
+       "severity": "wrong_text",
+       "what": "page reads 'cometa est nature calide et sicce'; the candidate turns it into a negation, reversing the thesis"
+      },
+      {
+       "page": "69b51e0dcf111105c4296270:120",
+       "quote": "et mutabilia eodemque modo se semper habentia",
+       "severity": "wrong_text",
+       "what": "page reads 'immortaliaque et immutabilia' ('ꝛ i/mutabilia' across the line break); the candidate's 'mutabilia' reverses the sense"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.00000225,
+      "basis": "one agy gemini-3.8-flash-low call, no draft"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000354
+     },
+     "counts": true,
+     "contain_answers": "0/22",
+     "contain_reasons": [],
+     "unchanged": "0/22",
+     "skipped": 8
+    },
+    "lite>agy-flash-low+diffqa": {
+     "served": "CONFIRMATION frame, rules frozen at round 2 before this frame was drawn: cli-ocr apply guards, then latin-diffqa-7591 (fresh agy flash-low read as the vote, agy flash-high span judge, revert only on evidence); a page the guards refuse serves the draft; not served",
+     "n": 30,
+     "books": 30,
+     "accept": "11/30",
+     "accept_rate": 0.37,
+     "accept_ci": {
+      "ci95": [
+       0.2,
+       0.533
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "15/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.333,
+       0.667
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O5": "7/30",
+      "O6": "6/30",
+      "O1": "3/30",
+      "O14": "2/30",
+      "O4": "2/30",
+      "O17": "1/30",
+      "O7": "1/30",
+      "O10": "1/30",
+      "I5": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "21/30",
+      "O5": "12/30",
+      "O16": "7/30",
+      "E2": "7/30",
+      "O8": "6/30",
+      "O7": "5/30",
+      "O11": "5/30",
+      "O12": "4/30",
+      "O1": "3/30",
+      "O4": "3/30",
+      "T6": "2/30",
+      "O14": "2/30",
+      "O17": "2/30",
+      "O10": "2/30",
+      "I5": "1/30",
+      "O15": "1/30",
+      "D1": "1/30"
+     },
+     "fidelity_mean": 3.3,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "Be eo aut quod est hoc quidez esse longe vite aialiu. hoc autem breuis vite. rc.",
+       "severity": "wrong_text",
+       "what": "The question block at the foot of column 1 is missing (the red C initial, 'Circa initium libri de longitudine et breuitate vite mouetur talis questio Utrum humidum et calidum sint causa longe vite...', 'Et arguitur quod non...', 'Ans patet...'), so column 2's 'ctionis' has nothing to continue from"
+      },
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "astrolo gi pnt iudicare de pluuijs et hois.",
+       "severity": "wrong_text",
+       "what": "Drops 'et frigoribus. et medici de sanitate vel morte' and joins 'pluuijs' to 'hois'"
+      },
+      {
+       "page": "69dbccc50f8c5edf20f4d158:505",
+       "quote": "si cognouimus ipsos cum eis pnt fieri cur curre se currere du currunt.",
+       "severity": "wrong_text",
+       "what": "Garbles 'sed cognoscimus ipsos in seipsis cum presentes sunt sicut cognoscimus sortem currere dum currit'"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "agy_calls": 2.733,
+      "agy_share": 0.00000615,
+      "basis": "draft + 2.733 agy calls a page, measured on this run (agy-diffqa)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00404,
+      "agy_calls": 7.45,
+      "agy_share": 0.0000168
+     },
+     "counts": true,
+     "contain_answers": "0/30",
+     "contain_reasons": [],
+     "unchanged": "0/30",
+     "skipped": 0
+    }
+   },
+   "made_worse": {
+    "lite -> lite>agy-flash-low": {
+     "pairs": 28,
+     "identical_text": 0,
+     "fidelity_diff": 0.89,
+     "fidelity_diff_ci": [
+      0.607,
+      1.214
+     ],
+     "worse": "1/28",
+     "better": "20/28",
+     "accept_lost": "1/28",
+     "accept_gained": "11/28",
+     "wrong_text_added": "0/28",
+     "worse_pages": [
+      {
+       "page": "6a42bc8d5207af7c42f70f1f:35",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The transcription matches the page line by line, with one exception: the Athanasius quotation in §29 has 'seruares' where the page prints 'seruaret'."
+      }
+     ]
+    },
+    "lite -> agy-flash-low": {
+     "pairs": 22,
+     "identical_text": 0,
+     "fidelity_diff": 0.68,
+     "fidelity_diff_ci": [
+      0.318,
+      1.091
+     ],
+     "worse": "1/22",
+     "better": "13/22",
+     "accept_lost": "1/22",
+     "accept_gained": "9/22",
+     "wrong_text_added": "0/22",
+     "worse_pages": [
+      {
+       "page": "69b51e329a81ef7feb3d194a:61",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The text follows the page line by line, but a few words are misread or swapped: 'per prophetam' for 'per os prophetae', 'plerumque' for 'persaepe', 'Deferemusque' for 'Deseremus', 'struemus' for 'struere'. Some of these change the sense."
+      }
+     ]
+    },
+    "lite -> lite>agy-flash-low+diffqa": {
+     "pairs": 30,
+     "identical_text": 19,
+     "fidelity_diff": 0.23,
+     "fidelity_diff_ci": [
+      0.1,
+      0.4
+     ],
+     "worse": "1/30",
+     "better": "7/30",
+     "accept_lost": "1/30",
+     "accept_gained": "5/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "6a42bc8d5207af7c42f70f1f:35",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "The transcription matches the page line by line, with one exception: the Athanasius quotation in §29 has 'seruares' where the page prints 'seruaret'."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "latin-lite",
+   "route": "lite",
+   "page_id": "69b4c14b779e2e78e20e76b7",
+   "book_id": "69b4c14b779e2e78e20e7605",
+   "page_number": 178,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Et singulae colligebantur suis locis permixtis, vnde et aliae collectae",
+     "severity": "wrong_text",
+     "what": "The first lines are a vernacular-looking cursive ('zu fünffen… gestallt…'). This Latin clause is invented and is not on the page."
+    },
+    {
+     "class": "O14",
+     "quote": "A grid of squares containing numbers and dots representing mathematical ratios or weights.",
+     "severity": "wrong_text",
+     "what": "The weight-mark grid (10–40, 100–400, 1000–4000, 10000–40000, 100000–400000, 1000000–4000000) is described, not transcribed."
+    },
+    {
+     "class": "O17",
+     "quote": "| 1 | Vna marcha crassa subdiuiditur in 16. lob. horum in 4. drach. |",
+     "severity": "wrong_text",
+     "what": "Invented table: the prose line is put into cells next to the dose numbers."
+    },
+    {
+     "class": "O4",
+     "quote": "Vna marcha crassa subdiuiditur in 16. lob. horum in 4. drach. 2. in 4. minut. 1. num. in 2. obulos.",
+     "severity": "wrong_text",
+     "what": "The marcha sentence appears twice, once in the table and again as prose."
+    },
+    {
+     "class": "O5",
+     "quote": "Marca fina aurifabror. 3. grana. 12. 3. numi 12. 1. marcha 16. lob.",
+     "severity": "wrong_text",
+     "what": "The two subdivision schemes (1 2 3 6 12 grana / numi; granula, grana, carat 1 2 … 6 12 24 = 1 marca) are collapsed, and the carat column is lost."
+    }
+   ],
+   "note": "The page's diagrams are described rather than transcribed, a table is invented and its text duplicated, the opening lines are fabricated, and much of the Latin is garbled throughout, so this isn't a usable transcription."
+  },
+  {
+   "cell": "latin-lite",
+   "route": "lite",
+   "page_id": "6a4b738d998fdd30218fac07",
+   "book_id": "6a4b738d998fdd30218fabb9",
+   "page_number": 26,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "Ad lectorem, si quid in hisce animaduerteris, quod aut minus recte aut minus commode se habeat, id velim pro tuo candore",
+     "severity": "wrong_text",
+     "what": "invented 'to the reader' paragraph; no such text is on the leaf"
+    },
+    {
+     "class": "O1",
+     "quote": "VI. Quod si quis, vel ex hoc, vel ex alio, quod in hisce defendi non est, Christiani artem",
+     "severity": "wrong_text",
+     "what": "invented §VI; the page's §VI reads 'Quod superest, Deum ex corde veneror & rogo, ut Orthodoxiam suam clementer inter nos defendat…'"
+    },
+    {
+     "class": "O5",
+     "quote": "VI. Quod si quis",
+     "severity": "wrong_text",
+     "what": "dropped the top paragraph (end of the previous section, '…Spiritus Sanctus…') and §V 'Atq; ita constat… Lutherum & orthodoxos reliquos recte & irrefragabiliter Gratiam Paulinam defendisse… exemplo Jesuitae nostri patet'"
+    },
+    {
+     "class": "O5",
+     "quote": "->SOLI<-",
+     "severity": "wrong_text",
+     "what": "dropped 'Hoc faxit propter nominis sui gloriam.' and 'AMEN.' just before the closing formula"
+    }
+   ],
+   "note": "Apart from the closing 'SOLI DEO GLORIA! FINIS.', none of the transcription matches the leaf, which shows mirror-reversed text: the end of a section, §V on Luther defending the Pauline doctrine of grace against the Jesuit, §VI as a closing prayer for orthodoxy, 'Hoc faxit…' and 'AMEN'."
+  },
+  {
+   "cell": "latin-lite",
+   "route": "lite",
+   "page_id": "69f33683876dd827cbc50af6",
+   "book_id": "69f33683876dd827cbc50aed",
+   "page_number": 9,
+   "defects": [
+    {
+     "class": "I5",
+     "quote": "This transcription covers the provided manuscript images",
+     "severity": "wrong_text",
+     "what": "the image is a strip of six openings at thumbnail size, not one page, and the candidate treats it as many separate images"
+    },
+    {
+     "class": "O1",
+     "quote": "Proportio dupla est quando maior numerus ad minorem comparatur qui continet eum bis. ut duo ad unum.",
+     "severity": "wrong_text",
+     "what": "the text cannot be read at this resolution; the tidy textbook definitions of proportions are invented and match nothing visible"
+    },
+    {
+     "class": "O1",
+     "quote": "Proportio multiplex superpartiens est quando maior numerus ad minorem comparatur qui continet eum bis et aliquam partem. ut quinque ad duo.",
+     "severity": "wrong_text",
+     "what": "fabricated 'Image 3' text; openings 2 and 3 look like the same scan, yet they get different invented text"
+    },
+    {
+     "class": "O14",
+     "quote": "The remaining sections consist of polyphonic musical notation for a Mass setting",
+     "severity": "wrong_text",
+     "what": "the music and its text underlay are summarised instead of transcribed"
+    }
+   ],
+   "note": "The image is a tiny, unreadable strip of six openings, mostly music. The candidate gives invented textbook definitions of proportions and only describes the music, so none of it can be trusted as this page's text."
+  }
+ ]
+}

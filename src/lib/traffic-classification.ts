@@ -32,8 +32,10 @@ const AI_TRAINER = /gptbot|ccbot|claudebot|anthropic-ai|google-extended|bytespid
 // Traditional search-engine indexers.
 const SEARCH_CRAWLER = /googlebot|googleother|bingbot|bingpreview|slurp|duckduckbot|baiduspider|yandexbot|applebot|seznambot|sogou|exabot/i;
 
-// Everything else automated: SEO tools, scrapers, monitors, generic libraries.
-const OTHER_BOT = /ahrefs|semrush|mj12bot|dotbot|petalbot|dataforseo|screaming frog|bot\b|crawler|spider|headlesschrome|lightpanda|python-requests|curl|wget|axios|go-http-client|java\/|okhttp|scrapy|httpclient/i;
+// Everything else automated: SEO tools, scrapers, monitors, generic libraries,
+// and link-preview fetchers whose UA has no "bot" (facebookexternalhit was
+// stored as human; #8151).
+const OTHER_BOT = /ahrefs|semrush|mj12bot|dotbot|petalbot|dataforseo|screaming frog|bot\b|crawler|spider|headlesschrome|lightpanda|python-requests|curl|wget|axios|go-http-client|java\/|okhttp|scrapy|httpclient|facebookexternalhit|facebookcatalog|whatsapp\/|skypeuripreview|embedly|iframely/i;
 
 export function classifyTraffic(
   userAgent: string | null | undefined,

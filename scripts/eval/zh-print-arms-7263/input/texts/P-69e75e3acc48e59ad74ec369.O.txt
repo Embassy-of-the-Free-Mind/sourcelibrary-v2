@@ -1,0 +1,27 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>五</page-num>
+<header>笠翁詩集 卷之五 目次</header>
+<sig>芥子園</sig>
+
+活虎行
+
+廣陵肆中書所見
+
+前過十八灘行
+
+後過十八灘行
+
+月夜聽兩侍兒並吹橫笛歌
+
+次韻和家仁熟送予之荊南
+
+鍾山篇贈白子雲
+
+行路難
+
+儋州行贈何主洛使君
+
+<vocab>笠翁詩集, 卷之五, 目次, 活虎行, 廣陵, 十八灘, 橫笛歌, 鍾山篇, 行路難, 儋州, 芥子園</vocab>

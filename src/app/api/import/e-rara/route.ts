@@ -12,6 +12,7 @@ import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { normalizeMarcAuthor } from '@/lib/marc-utils';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -113,7 +114,7 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch OAI metadata to get full record info and verify ID
     const oaiUrl = `https://www.e-rara.ch/oai?verb=GetRecord&identifier=oai:www.e-rara.ch:${numericId}&metadataPrefix=oai_dc`;
-    const oaiRes = await fetch(oaiUrl);
+    const oaiRes = await outboundFetch(oaiUrl);
 
     let metadata: OAIMetadata = {};
     if (oaiRes.ok) {
@@ -128,9 +129,8 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch IIIF manifest
     const manifestUrl = `https://www.e-rara.ch/i3f/v21/${numericId}/manifest`;
-    const manifestRes = await fetch(manifestUrl, {
+    const manifestRes = await outboundFetch(manifestUrl, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
         'Accept': 'application/json, application/ld+json',
       }
     });

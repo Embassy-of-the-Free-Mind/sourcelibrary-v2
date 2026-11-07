@@ -1,0 +1,62 @@
+{
+ "campaign": "zh-histories-refs-7546",
+ "collections": [],
+ "BOOKS": [
+  {
+   "id": "lesmmoireshisto05chgoog",
+   "title": "Les Mémoires historiques de Se-ma Ts'ien, Tome I (chapitres I–IV)",
+   "author": "Sima Qian; Chavannes, Édouard (trans.)",
+   "year": 1895,
+   "lang": "French",
+   "note": "#7546 reference translation for eval (not served as our translation). Title page: TOME PREMIER, Paris, Ernest Leroux, 1895. Translates Shiji juan 1-4. Chavannes d. 1918: PD."
+  },
+  {
+   "id": "lesmmoireshisto01chgoog",
+   "title": "Les Mémoires historiques de Se-ma Ts'ien, Tome II (chapitres V–XII)",
+   "author": "Sima Qian; Chavannes, Édouard (trans.)",
+   "year": 1897,
+   "lang": "French",
+   "note": "#7546 reference translation for eval. Title page: TOME SECOND (chapitres V-XII), Paris, Ernest Leroux, 1897. Translates Shiji juan 5-12. Chavannes d. 1918: PD."
+  },
+  {
+   "id": "lesmmoireshisto02chgoog",
+   "title": "Les Mémoires historiques de Se-ma Ts'ien, Tome IV (chapitres XXXI–XLII)",
+   "author": "Sima Qian; Chavannes, Édouard (trans.)",
+   "year": 1901,
+   "lang": "French",
+   "note": "#7546 reference translation for eval. Title page: TOME QUATRIÈME (chapitres XXXI-XLII), Paris, Ernest Leroux, 1901. Translates Shiji juan 31-42. Chavannes d. 1918: PD."
+  },
+  {
+   "id": "lesmmoireshisto06chgoog",
+   "title": "Les Mémoires historiques de Se-ma Ts'ien, Tome V (chapitres XLIII–XLVII)",
+   "author": "Sima Qian; Chavannes, Édouard (trans.)",
+   "year": 1905,
+   "lang": "French",
+   "note": "#7546 reference translation for eval. Title page: TOME CINQUIÈME, Paris, Ernest Leroux, 1905. Translates Shiji juan 43-47. Chavannes d. 1918: PD."
+  },
+  {
+   "id": "tungpao00unkngoog",
+   "title": "T'oung pao, série II, vol. 8 (1907) — incl. Chavannes, \"Les pays d'Occident d'après le Heou Han chou\"",
+   "author": "Chavannes, Édouard; Cordier, Henri (eds.)",
+   "year": 1907,
+   "lang": "French",
+   "note": "#7546 reference translation for eval. T'oung pao 2e série vol. 8, Leiden: Brill, 1907. Chavannes' article translates Hou Hanshu juan 88 (Xiyu zhuan). Pre-1931: US PD; Chavannes d. 1918."
+  },
+  {
+   "id": "journalasiatiqu65fragoog",
+   "title": "Journal asiatique, janvier–février 1894 — incl. C. de Harlez, \"Koue-yü (Discours des royaumes)\" (suite)",
+   "author": "Harlez, Charles de (trans.); Société asiatique",
+   "year": 1894,
+   "lang": "French",
+   "note": "#7546 reference translation for eval. Journal asiatique, Jan-Feb 1894, opens with de Harlez's Koue-yü (Guoyu) translation, continued from 1893 (the 1893 part is not on IA). de Harlez d. 1899: PD."
+  },
+  {
+   "id": "bub_gb_wAlXAAAAcAAJ",
+   "title": "Zur Geschichte des Zwischenreiches von Han (1869)",
+   "author": "Pfizmaier, August (trans.)",
+   "year": 1869,
+   "lang": "German",
+   "note": "#7546 reference translation for eval. Offprint from Sitzungsberichte der phil.-hist. Classe der kais. Akademie der Wissenschaften, Wien, Bd. 61 (Feb 1869), S. 275ff. Translates Hou Hanshu biographies of Liu Xuan, Liu Penzi, Wang Chang, Liu Yong, Li Xian, Zhang Bu, Peng Chong, Lu Fang (juan 11-12). Pfizmaier d. 1887: PD."
+  }
+ ]
+}
