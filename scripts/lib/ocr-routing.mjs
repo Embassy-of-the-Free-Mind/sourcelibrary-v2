@@ -85,7 +85,7 @@ export const GREEK_FLASH_FROM = new Date('2026-10-02T00:00:00Z');
 /**
  * The same exception, extended to the scripts where lite OCR is measured to hurt the
  * English (#5700 A5, job reocr-lift-5700, PR #5760; routing doc
- * .claude/docs/ocr-engine-routing.md). A flash re-read of a lite-read page lifted judged
+ * .claude/docs/routing.md). A flash re-read of a lite-read page lifted judged
  * translation fidelity by Persian +1.00, Sanskrit +0.75, Pali +0.58, Arabic +0.39 (1–5
  * scale, against published translations). Ge'ez failed the #4729 agreement bar
  * (0.47, 9/20 catastrophic). The scope is the same as Greek: visible books, and books
@@ -278,7 +278,7 @@ export function apiOcrModelForBook(book, opts) {
  * experiment behind it. One lookup for a session about to OCR a book, and the source of the
  * "Who reads which page" section on /quality. The rows live in ocr-routing-table.json beside this
  * file and nowhere else: the table in scripts/eval/ocr-routing/README.md is generated from it
- * (scripts/eval/build-routing-table.mjs) and tests/unit/ocr-routing-table.test.ts checks each row's
+ * (scripts/maintenance/router-routing-rows.mjs) and tests/unit/ocr-routing-table.test.ts checks each row's
  * `code` claim against getOcrModelForBook above or the lane file it names.
  *
  * Its prose RECORDS what the evidence settled. `router_cells` routes (generated, #8283), and the refused-pages `route` gives the

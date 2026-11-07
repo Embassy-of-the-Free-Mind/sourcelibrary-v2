@@ -1,5 +1,7 @@
 # Which OCR to use — the lane decision tree
 
+**Snapshot of 2026-11-06, not doctrine: the lane decision tree, merged into `.claude/docs/routing.md` (#8283). Routes are decided in the router table. Kept for the evidence and history.**
+
 PRIOR ART: `scripts/eval/DECISIONS.md` — the per-stratum ledger of what was MEASURED and what
 Derek decided (evidence per language × period); `scripts/lib/ocr-routing.mjs` — the one
 router in code (Latin script → lite, else flash, `OCR_LITE_ONLY` override); the RECITATION

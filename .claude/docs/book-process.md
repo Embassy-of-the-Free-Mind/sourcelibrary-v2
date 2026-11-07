@@ -48,7 +48,7 @@ The router table decides (`scripts/eval/estimator/router-table/rules.json`, #674
 - **Opus for hard scripts, Flash for the bulk.** Claude runs only through the subscriptions (`claude -p`), never the API. The only Gemini model allowed on the paid API is `gemini-3.1-flash-lite`. Every other Gemini model runs through `agy` on the subscriptions.
 - **One page per leaf** before OCR or translation.
 - **Keep and reuse every paid read.** A lane applies kept reads before it buys new ones (#7469).
-- **A lane without provenance does not run.** Every writer records its source, engine and prompt (`ocr-lane-decision-tree.md`).
+- **A lane without provenance does not run.** Every writer records its source, engine and prompt (`routing.md`).
 
 ## Where quota comes from
 
@@ -65,7 +65,7 @@ The live levels of all three are on the generated page.
 | What runs right now, on which box, how many pages a day | https://sourcelibrary.org/admin/pipeline/now |
 | What work is left, by step | https://sourcelibrary.org/admin/pipeline (`pipeline-next-step-audit.mjs`) |
 | Which headless Claude jobs are running | https://sourcelibrary.org/admin/work |
-| Choosing an OCR lane for a book | `ocr-lane-decision-tree.md` |
+| Choosing an OCR or translation route for a book | `routing.md` |
 | Pipeline status fields and holds | `invariants/pipeline-status-truth.md` |
 | Spend controls | `invariants/spend-controls.md` |
 | Placing a job on a box | `scripts/workers/JOB-HOSTS.md` |

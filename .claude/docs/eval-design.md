@@ -69,7 +69,7 @@ Added 2026-10-01. A reader asks one thing of a served page: *does this English s
 | Link | Typical failure | Accuracy (reference) | Screen (agreement, stability) | Judged | Human reader of the original |
 |---|---|---|---|---|---|
 | 1. Leaf: the image shown is the leaf transcribed | wrong leaf (#4790, #5311) | none | three-read signature, 7 of 7 (#5313) | **blind**: the judge sees no image | yes |
-| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/DECISIONS.md`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
+| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/estimator/router-table/`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
 | 3. Translation: the English says what the text says | omission, invention, inversion | Tibetan vs 84000 only (§8) | none | corpus audit + monthly rerun (#5274); quality round 1 (#5438) | yes |
 
 What follows from the table:
@@ -244,7 +244,7 @@ A run is **done** when all four are true, and the EXPERIMENTS entry links each:
 2. `scripts/eval/experiments/<date>-<slug>.md` exists — one new file per entry, in the existing format (date · question · design · result · replicated? · artifact); `EXPERIMENTS.md` is generated from these on `main` and is never edited in a PR (#5436) — plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
 3. The dashboard JSON is regenerated (`benchmark-dashboard-data.mjs`) and the cell shows the run.
 4. The issue has the result posted, with the cell id.
-5. `scripts/eval/DECISIONS.md` (the ledger: one row per stratum × question — evidence, rule output, who decided and when, applied-in PR, re-measure trigger) has the row added or updated in the same PR. `EXPERIMENTS.md` is what was measured; `DECISIONS.md` is what we now do.
+5. A result that bears on a route reaches the router table as evidence (`rules.json`, `.claude/docs/routing.md`). `EXPERIMENTS.md` is what was measured; the table is what we now do. `scripts/eval/DECISIONS.md` is history and takes no new rows.
 
 Checks (follow-up issues; design here):
 - **Stranded-results check** (weekly, Hetzner or Actions): for every worktree in `.claude/worktrees/`, untracked or unpushed files under `scripts/eval/results/` or `scripts/eval/store/` older than 3 days → one issue comment on the run's issue, or a new `eval` issue if none. Two paid studies sat two weeks in dead worktrees.
@@ -269,7 +269,7 @@ A fix is **done** when the next review window's rate for that class falls, not w
 1. A cell reaches the grade its decision needs (§3.3) with a paired result (§7) and its five worst pages read by eye (#4735 rule 5).
 2. The session opens an issue **proposing** the change (routing constant, specialist lane, withholding rule), quoting the cell id, the paired table, the noise floor and the cost delta per year. It does **not** change `LATIN_SCRIPT_LANGUAGES` (`scripts/lib/translate-core.mjs`, imported by `scripts/lib/ocr-routing.mjs`, parity pinned by `tests/unit/translate-core-parity.test.ts`), an allowlist, or a lane.
 3. **Derek signs off** on any spend-affecting or reader-facing change (a comment on that issue). Settled decisions (Syriac → Kraken lane, #4883; translation non-Latin → lite, #4762) are not reopened by a new cell unless the cell is decision-grade and the issue says what changed.
-4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too. The ledger row in `scripts/eval/DECISIONS.md` moves from PENDING to DECIDED with the date and the PR.
+4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too. A route changes by the router table, not by a ledger row (`.claude/docs/routing.md`).
 5. After the change, the stability loop watches the affected stratum for 30 days (a free signal; not a quality claim).
 6. The store is never read by a production lane; a job that wants to act on eval evidence goes through steps 2–4. Writing to a store a job reads is actuation (`ingest_is_actuation`).
 

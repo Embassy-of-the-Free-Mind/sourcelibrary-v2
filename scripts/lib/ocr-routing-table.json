@@ -1,5 +1,5 @@
 {
-  "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (the per-stratum ledger: what was measured and who decided, one row per question, 80+ rows), .claude/docs/ocr-engine-routing.md (a generated per-LANGUAGE table of what the Gemini router does), .claude/docs/ocr-lane-decision-tree.md (the operator's tree for a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/eval/build-routing-table.mjs), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. It RECORDS routing; it does not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
+  "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (history), .claude/docs/routing.md (the router table's four routes per cell, and what to do with a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/maintenance/router-routing-rows.mjs --write), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. It RECORDS routing; it does not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
   "as_of": "2026-10-26",
   "issue": 6688,
   "fields": {
@@ -457,7 +457,7 @@
       "stored": null,
       "status": "settled",
       "routed": "yes",
-      "production": "The RECITATION ladder (ocr-lane-decision-tree.md, branch 3): lite again, flash (= lite under OCR_LITE_ONLY, ocrEscalationModel), scripts/workers/mineru-ocr-worker.mjs (1820+ only: before that it reads the long s as f), ia-ocr-ingest under a by-eye verdict, then by eye.",
+      "production": "The RECITATION ladder (.claude/docs/routing.md): lite again, flash (= lite under OCR_LITE_ONLY, ocrEscalationModel), scripts/workers/mineru-ocr-worker.mjs (1820+ only: before that it reads the long s as f), ia-ocr-ingest under a by-eye verdict, then by eye.",
       "route": {
         "fallback": [
           {

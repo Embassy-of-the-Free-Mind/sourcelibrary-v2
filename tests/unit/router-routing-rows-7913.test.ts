@@ -10,18 +10,28 @@ import fs from 'node:fs';
 import path from 'node:path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { plan, cellRows, withCellRows, isTranslationCell, KEY } from '../../scripts/maintenance/router-routing-rows.mjs';
+import { plan, cellRows, withCellRows, isTranslationCell, routeLabel, KEY } from '../../scripts/maintenance/router-routing-rows.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { effectiveMode, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
 
 const ROOT = path.resolve(__dirname, '../..');
 
-describe('router_cells is generated from current.json', () => {
-  it('both routing tables carry exactly what current.json gives', () => {
+describe('router_cells and the doc tables are generated from current.json', () => {
+  it('both routing tables and both doc tables carry exactly what the router table gives', () => {
     for (const [f, x] of Object.entries(plan() as Record<string, { current: string; wanted: string }>)) {
       expect(x.current, `${f}: run node scripts/maintenance/router-routing-rows.mjs --write`).toBe(x.wanted);
     }
+  });
+
+  it('routeLabel names the four routes and flags anything else', () => {
+    expect(routeLabel('agy-flash-low@4-read')).toBe('agy');
+    expect(routeLabel('agy-flash-low@4>agy-flash-low@4-written')).toBe('agy');
+    expect(routeLabel('pero>agy-flash-low')).toBe('pero>agy');
+    expect(routeLabel('gpu2>agy-flash-low+diff')).toBe('gpu2>agy');
+    expect(routeLabel('opus-cli')).toBe('Opus');
+    expect(routeLabel('paddle>opus')).toBe('paddle>Opus');
+    expect(routeLabel('flash-lite')).toBe('flash-lite (off menu)');
   });
 
   it('every decided cell of the live table has one row, in the table of its task', () => {
