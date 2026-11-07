@@ -20,7 +20,9 @@ reader → Cloudflare → Worker ──(bucket/staff, GET, no session)──► 
 | `sl-web-deploy.timer` | Runs the deploy every 5 min; a no-op unless `release` moved |
 | `sl-web@.service`, `sl-web.slice` | `next start -p <port> -H localhost`, four instances, 5 GB each, 24 GB together |
 | `Caddyfile` | Secret check, `/book/*` and `/_box/_next/static/*` only, Host pinned, client identity mapped |
-| `guard.cjs` | Write guard preloaded into every Next process (from #8374) until the scoped Mongo user exists |
+| `guard.cjs` | Write guard preloaded into every Next process (from #8374) until the scoped Mongo user exists; also counts Mongo round trips |
+| `guard-control.mjs`, `sl-web-guard-control` | Positive control: 12 writes and sockets must be refused and one read allowed |
+| `stage0-check.mjs` | Loopback stage-0 check through Caddy: assets, secret, tenant host, redirect origin, page cache |
 
 ## Bring-up
 
@@ -40,18 +42,24 @@ For the loopback-only stage-0 check, set `SL_BOX_SITE=box1.sourcelibrary.org:844
 - **The build reads no production data.** `GUARD_MODE=build` refuses every socket except loopback. Book routes generate on demand (`generateStaticParams` returns `[]`), so the box needs no data at build time, and pages that do prerender data are never served here.
 - **Assets under `/_box`** (trap 1): `SL_ASSET_PREFIX=/_box`, so box pages ask for `/_box/_next/static/*`, which the Worker routes here. A separate asset host would be blocked by the site's CSP (`'self'` only) and need CORS for fonts. Caddy serves those files from `/srv/sl-web/static`, which keeps every build of the last 7 days, so a tab holding the previous release's HTML still finds its chunks.
 - **Client identity** (trap 2): the Worker sends `X-SL-Client-IP` / `X-SL-Client-Country`. Caddy turns them into `CF-Connecting-IP` / `CF-IPCountry` and `X-Forwarded-For`, and strips every client-writable identity header. The app reads only those, because `SL_BOX_CLIENT_IDENTITY=cloudflare`.
+- **No ISR cache on the box.** A compile-only build marks every route on demand, so book landing pages answer `private, no-store` and render on every hit (measured: about 22 Mongo round trips and 134 KB each). The box therefore cannot serve a stale page that a `revalidatePath` on Vercel would have cleared (trap 6). The price is Atlas reads. Production's landing pages are cached at the Cloudflare edge (`cdn-cache-control: public, max-age=86400`); the box's are not.
 - **Same commit as production:** the timer builds `origin/release`, which is what Vercel builds (#7008). A build takes about 4–5 minutes here. Until it finishes, the box serves the previous release, as Vercel does during its build.
 
 ## Trap 3: the box's own Mongo user (needs Derek, or the Atlas owner)
 
 Until it exists, the box uses the shared URI with `readPreference=secondary` and the
 write guard refuses every write. The guard log shows what a reader render tries to write,
-and those writes are what the role below allows. Measured on the box and in #8374:
+and those writes are what the role below allows. Measured on the box (2026-11-07, 129
+renders: 17 `api_usage` inserts, each process's `createIndexes` retried after refusal, nothing
+else) and in #8374 (the same, plus 5 `analytics_agent_requests` updates from agent traffic):
 
 | Collection | Write | From |
 |---|---|---|
 | `api_usage` | `insert`, `createIndex` (idempotent, once per process) | `src/lib/api-usage.ts` |
 | `analytics_agent_requests` | `update` with upsert | `src/lib/agent-requests.ts` |
+
+Pageviews and events are written by the browser through `/api/track` and `/api/analytics/*`,
+which stay on Vercel, so the box needs no write on those collections.
 
 Proposed Atlas custom role `sl-web-reader` (Database Access → Custom Roles), on database `bookstore`:
 
