@@ -7,7 +7,7 @@ canons: []
 n_books: 30
 n_pages: 30
 verdict: "PASS — 25/26 written pages accepted, 0 wrong text, P(acc>=0.8)=0.981; 26/30 drawn pages written (87%)"
-status: decided
+status: undecided
 decision: "The route carries over to manifest-only French 1800-1929 books (e-rara, NB, IA). At scale agy quota, not fetch, GPU or storage, is the limit: 1.13M calls is 43-343 weeks of pools."
 defect_rates: "scripts/eval/route-judge-6740/results/euro-manifest-sample-6871/defect-rates.json"
 feeds: route
