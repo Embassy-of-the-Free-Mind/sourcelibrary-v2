@@ -31,5 +31,5 @@ export function bookAssistantGuide(book: { id?: string; slug?: string; pages_cou
   // the book page on 10 of 10 questions and still quoted the book itself on about 3: /read
   // is 60K-220K characters, more than a fetch tool keeps, so the model got a digest. A
   // short page of matching passages fits (/book/<slug>/search/text, #8276).
-  return `${LEAD} this page describes the book, and the text is elsewhere. Passages in this book that match some words, with page links and citations: ${bookUrl}/search/text?q=YOUR+WORDS. The text and citation of one page: ${BASE}/api/books/${id}/quote?page=N. The whole book as one long document: ${bookUrl}/read. ${HOW_TO}`;
+  return `${LEAD} this page describes the book, and the text is elsewhere. Passages in this book that match some words, with page links and citations: ${bookUrl}/search/text?q=YOUR+WORDS. Each passage links to its page, where a reader can check a quotation against the scan. The text and citation of one page: ${BASE}/api/books/${id}/quote?page=N. The whole book as one long document: ${bookUrl}/read. ${HOW_TO}`;
 }
