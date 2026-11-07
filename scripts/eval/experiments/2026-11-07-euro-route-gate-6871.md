@@ -7,7 +7,7 @@ canons: []
 n_books: 44
 n_pages: 60
 verdict: "Both cells pass on new pages: Spanish 28/30 accepted, 1 wrong text (3.3%), P 0.962; French 29/30, 0 wrong text, P 0.992, plants 2/2. 0 marker residue."
-status: decided
+status: adopted
 decision: "Spanish route on (cron :45); French route on, ranked after Spanish (cron :15). One pool, .agy-milo."
 feeds: route
 superseded_by: null
