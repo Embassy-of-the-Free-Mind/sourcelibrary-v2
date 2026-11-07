@@ -4,7 +4,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
-import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
+import { isHiddenBook, findVisibleDuplicateKeeper, findDeletedDuplicateKeeper } from '@/lib/book-access';
 import { pickArtworkRecord } from '@/lib/artwork-slug';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { jsonLdHtml } from '@/lib/json-ld';
@@ -166,7 +166,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ArtworkPage({ params }: PageProps) {
   const { slug } = await params;
   const data = await getArtwork(slug);
-  if (!data) notFound();
+  if (!data) {
+    // A deleted dedup twin (#2209): send the old URL to the copy the dedup kept.
+    const keeper = await findDeletedDuplicateKeeper(await getReadDb(), [slug, `art-${slug}`]);
+    if (keeper) permanentRedirect(keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}` : `/book/${keeper.slug}`);
+    notFound();
+  }
   if ('hiddenId' in data) {
     const keeper = data.hiddenId ? await findVisibleDuplicateKeeper(await getReadDb(), data.hiddenId) : null;
     if (keeper) permanentRedirect(keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}` : `/book/${keeper.slug}`);
