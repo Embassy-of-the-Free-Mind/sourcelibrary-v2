@@ -10,7 +10,7 @@ import os from 'os';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON, armcEuroSkip, ARMC_EURO_CELLS, ARMC_EURO_LANE, dropBookImagesIfDone } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON, armcEuroSkip, ARMC_EURO_CELLS, ARMC_EURO_LANE, dropBookImagesIfDone, armcHandSkip, ARMC_EURO_PROBE } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { LANES } from '../../scripts/eval/lane-judge-sampler.mjs';
@@ -153,6 +153,32 @@ describe('dropBookImagesIfDone (#6871 disk guard)', () => {
     expect(dropBookImagesIfDone(P, pl, new Set(['p1', 'p2']))).toBe(true);
     expect(fs.existsSync(path.join(P.drafts, 'b1', 'img'))).toBe(false);
     expect(fs.existsSync(path.join(P.drafts, 'b1', 'p1.json'))).toBe(true);
+    fs.rmSync(L, { recursive: true, force: true });
+  });
+});
+
+describe('armcHandSkip (#6871: a catalogued-print manuscript costs a probe, not a chunk)', () => {
+  const hw = { why: 'corrector tags the page <script>handwritten</script>: the GPU-draft route is print only' };
+  const mixed = { why: 'corrector tags the page <script>mixed</script>: the GPU-draft route is print only' };
+  const ok = { why: 'written' };
+  it('skips a book when half or more of a probe-sized chunk is handwritten or mixed', () => {
+    expect(ARMC_EURO_PROBE).toBe(4);
+    expect(armcHandSkip([hw, mixed, ok, ok])).toBe('corrector tagged 2/4 pages handwritten or mixed');
+    expect(armcHandSkip([hw, hw, hw, hw])).toMatch(/4\/4/);
+  });
+  it('keeps a book with fewer hand tags, or a chunk under the probe size', () => {
+    expect(armcHandSkip([hw, ok, ok, ok])).toBeNull();
+    expect(armcHandSkip([hw, hw, hw])).toBeNull();
+    expect(armcHandSkip([])).toBeNull();
+  });
+  it('drops a skipped book\'s staged images even with pages not ledgered', () => {
+    const L = fs.mkdtempSync(path.join(os.tmpdir(), 'armc-euro-'));
+    const P = armcPaths(L);
+    expect(P.booksSkipped).toBe(path.join(L, 'armc-books-skipped.jsonl'));
+    fs.mkdirSync(path.join(P.drafts, 'b1', 'img'), { recursive: true });
+    const pl = { bid: 'b1', pages: [{ id: 'p1', pn: 1 }, { id: 'p2', pn: 2 }] };
+    expect(dropBookImagesIfDone(P, pl, new Set(['p1']), { skipped: true })).toBe(true);
+    expect(fs.existsSync(path.join(P.drafts, 'b1', 'img'))).toBe(false);
     fs.rmSync(L, { recursive: true, force: true });
   });
 });

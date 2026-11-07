@@ -207,6 +207,8 @@
  *   `--frame=euro --cell=es19|fr19` (#6871): 1800-1929 Spanish or French print with page records, unheld or held
  *        scans-only only (ARMC_EURO_CELLS, armcEuroSkip); UNREAD pages; written as the first-read frame writes, stamped
  *        ARMC_EURO_LANE; holds stay. One lane dir a cell (/root/jobs/euro-<cell>-6871).
+ *        A book not read yet is probed with ARMC_EURO_PROBE pages; one the corrector tags half or more handwritten or
+ *        mixed goes to <lane>/armc-books-skipped.jsonl and is planned and read no more (armcHandSkip).
  *   Disk guards (#6871; any frame, on the cron lines of the euro frame): --min-free-g=G (plan, fetch and armc refuse to
  *        start under G GB free on the root disk), armc-fetch --max-lane-gb=G (stage no more images than keep the lane dir
  *        under G GB), and the euro frame drops a book's img/ once every page planned for it is ledgered.
@@ -977,7 +979,7 @@ export function armcDraftText(t) {
   return t.trim();
 }
 /** The lane dir's files (see ARMC in the header). */
-export const armcPaths = (L) => ({ plan: path.join(L, 'plan'), drafts: path.join(L, 'drafts'), stage: path.join(L, 'stage'), ledger: path.join(L, 'armc-ledger.jsonl'), claims: path.join(L, 'claims-armc'), contain: path.join(L, 'armc-contain-claims.jsonl'), runs: path.join(L, 'armc-runs.jsonl') });
+export const armcPaths = (L) => ({ plan: path.join(L, 'plan'), drafts: path.join(L, 'drafts'), stage: path.join(L, 'stage'), ledger: path.join(L, 'armc-ledger.jsonl'), claims: path.join(L, 'claims-armc'), contain: path.join(L, 'armc-contain-claims.jsonl'), runs: path.join(L, 'armc-runs.jsonl'), booksSkipped: path.join(L, 'armc-books-skipped.jsonl') });
 const readJson = (f, d = null) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
 /** Planned pages with no draft file yet (what the GPU chunk drafts; what ocr-filler.sh counts as pages left). */
 export function armcUndrafted(L) {
@@ -1152,6 +1154,16 @@ async function armcEuroPages(db, book, ids = null) {
   return ids || !spreadReason(book, pages) ? pages : [];
 }
 
+// #6871: a catalogue's "French print" can be a bound manuscript (the euro pilot: 41 of 210 French pages tagged
+// handwritten, 14 books with none written). A book the euro frame has not read yet is probed with ARMC_EURO_PROBE pages;
+// if the corrector tags half or more of a chunk handwritten or mixed, the book is skipped from then on (planned and read
+// no more), as the gpu-correct and first-read lanes skip theirs. Rows carry page_id = the book id, as theirs do.
+export const ARMC_EURO_PROBE = 4;
+/** Why a book should be skipped after a chunk's ledger rows (a sentence), or null. */
+export function armcHandSkip(rows) {
+  const hand = rows.filter((r) => /<script>\s*(handwrit|mixed)/i.test(String(r.why ?? ''))).length;
+  return rows.length >= ARMC_EURO_PROBE && hand * 2 >= rows.length ? `corrector tagged ${hand}/${rows.length} pages handwritten or mixed` : null;
+}
 /** Root disk free, in GB (the disk guard: a lane dir's images fill the box's root, #6223). */
 export const rootFreeGb = (dir = '/') => { const s = fs.statfsSync(dir); return (s.bavail * s.bsize) / 1e9; };
 /** Bytes under a dir (the lane cap). */
@@ -1161,9 +1173,9 @@ export function dirBytes(d) {
   for (const e of ents) { const f = path.join(d, e.name); if (e.isDirectory()) n += dirBytes(f); else if (e.isFile()) { try { n += fs.statSync(f).size; } catch { /* gone */ } } }
   return n;
 }
-/** Drop a book's staged images once every page planned for it is ledgered (drafts, ledger and results stay). */
-export function dropBookImagesIfDone(P, pl, ledger) {
-  if (!pl?.pages?.length || !pl.pages.every((pg) => ledger.has(pg.id))) return false;
+/** Drop a book's staged images once every page planned for it is ledgered, or the book is skipped (drafts, ledger and results stay). */
+export function dropBookImagesIfDone(P, pl, ledger, { skipped = false } = {}) {
+  if (!pl?.pages?.length || (!skipped && !pl.pages.every((pg) => ledger.has(pg.id)))) return false;
   const img = path.join(P.drafts, pl.bid, 'img');
   if (!fs.existsSync(img)) return false;
   fs.rmSync(img, { recursive: true, force: true });
@@ -1266,7 +1278,7 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMP
   const AHEAD = Number(arg('ahead') || Math.max(Number(arg('ahead-min') || 600), recent));
   const PER_BOOK = Number(arg('per-book') || 0), PER_LANG = Number(arg('books-per-lang') || Infinity);
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
-  const NOT = new Set((arg('skip-books') || '').split(',').filter(Boolean));
+  const NOT = new Set([...(arg('skip-books') || '').split(',').filter(Boolean), ...(CELL ? readLedger(P.booksSkipped) : [])]);
   let room = AHEAD - open;
   console.log(`armc-plan: ${open} pages planned and not ledgered, horizon ${AHEAD} (${recent} ledgered in 48 h): room for ${Math.max(0, room)}`);
   if (room <= 0) return;
@@ -1392,10 +1404,11 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct', C
   let budget = MAX, stop = null, bi = 0;
   const tally = { written: 0, unchanged: 0, contain: 0, put_back_all: 0, put_back_unsafe: 0, no_draft: 0, out_of_frame: 0, other: 0, agy_calls: 0, pages_flagged: 0, put_back: 0, books: 0 };
   const ledgerRow = (r) => { fs.appendFileSync(P.ledger, JSON.stringify({ ...r, at: new Date().toISOString() }) + '\n'); ledger.add(r.page_id); };
+  const skippedBooks = EU ? readLedger(P.booksSkipped) : new Set();   // rows carry page_id = the book id
   const nextChunk = async () => {
     while (bi < order.length) {
       const pl = order[bi++], b = books.get(pl.bid);
-      if (!claimBook(P.claims, b.id, ME)) continue;
+      if (skippedBooks.has(b.id) || !claimBook(P.claims, b.id, ME)) continue;
       held.add(b.id);
       ledgerTail(P.ledger, ledger, tailState);
       const drafted = pl.pages.filter((pg) => !ledger.has(pg.id) && fs.existsSync(path.join(P.drafts, b.id, `${pg.id}.json`)));
@@ -1421,7 +1434,9 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct', C
       const env = CHILD_ENV, pool = POOL;
       const release = () => { releaseBookClaim(P.claims, book.id); held.delete(book.id); };
       if (budget <= 0) { release(); stop ??= 'page budget spent'; break; }
-      const take = c.drafted.slice(0, Math.min(CHUNK, budget));
+      // euro: a book with nothing ledgered yet is probed first (ARMC_EURO_PROBE pages), so a manuscript costs a few calls
+      const probe = EU && !plan.pages.some((pg) => ledger.has(pg.id));
+      const take = c.drafted.slice(0, Math.min(probe ? ARMC_EURO_PROBE : CHUNK, budget));
       budget -= take.length;
       tally.books++;
       const tag = CONCURRENCY > 1 ? `[${book.id.slice(-6)}] ` : '';
@@ -1468,16 +1483,20 @@ async function armcRun(db, P, arg, ledger, tailState, SKIP, FRAME = 'correct', C
         tally.pages_flagged += sum.diff_guard?.pages_flagged ?? 0; tally.put_back += sum.diff_guard?.put_back ?? 0;
       } else if (!APPLY) { release(); continue; }
       const written = new Set(sum.written_page_ids || []);
+      const chunkRows = [];
       for (const p of take) {
         const pre = unsent.get(p.id);
         const why = pre ? pre[1] : written.has(p.id) ? 'written' : sum.skipped_pages?.[p.id] ?? 'not_read';
         const k = pre ? pre[0] : why === 'written' ? 'written' : /UNCHANGED/.test(why) ? 'unchanged' : /CONTAIN/.test(why) ? 'contain' : /put back by the diff guard/.test(why) ? 'put_back_all' : /put-back cannot be spliced|put-back changed/.test(why) ? 'put_back_unsafe' : 'other';
         tally[k]++;
         ledgerRow({ page_id: p.id, book_id: book.id, page_number: p.pn, lang: plan.lang, outcome: k, why, run: sum.run ?? null });
+        chunkRows.push({ why });
       }
       // ledgered: the images and the read workspaces are not needed again (the draft json stays, a few KB a page)
       for (const p of take) { fs.rmSync(path.join(dir, `ws-${p.id}`), { recursive: true, force: true }); fs.rmSync(path.join(imgDir, `${p.id}.jpg`), { force: true }); }
       if (EU) dropBookImagesIfDone(P, plan, ledger);
+      const hand = EU && armcHandSkip(chunkRows);
+      if (hand) { skippedBooks.add(book.id); fs.appendFileSync(P.booksSkipped, JSON.stringify({ page_id: book.id, why: hand, at: new Date().toISOString() }) + '\n'); dropBookImagesIfDone(P, plan, ledger, { skipped: true }); console.log(`${tag}  book skipped from now on: ${hand}`); }
       release();
       console.log(`${tag}  ${JSON.stringify(tally)}`);
     }
