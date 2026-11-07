@@ -10,8 +10,12 @@ is how the table is validated. `scripts/eval/ocr-routing/README.md` is the page-
 ## The one place routes are decided
 
 The router table, `scripts/eval/estimator/router-table/`: `rules.json` holds the evidence and the rule, `build.py` builds a
-dated table, and `current.json` names the table that is live. Lanes read it through `scripts/lib/router-binding.mjs`. A cell is
-language or source × script type. To change a route, add evidence and rebuild. No other file decides a route, including this one.
+dated table, and `current.json` names the table that is live. A cell is language or source × script type. To change a route,
+add evidence: the nightly `lane-judge-sampler.mjs` rebuild moves `current.json` through a PR it opens, and reverting that PR is the
+rollback. No other file decides a route, including this one.
+
+Lanes read it through `scripts/lib/router-binding.mjs`, and the OCR router through `router_cells` in `ocr-routing-table.json`. The
+translation routers read their hand rows; `tests/unit/router-bound-table.test.ts` fails when either router disagrees with the table.
 
 ## The four routes
 
