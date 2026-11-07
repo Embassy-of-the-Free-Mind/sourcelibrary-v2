@@ -38,7 +38,7 @@ const CONTROL_ENGLISH = { ...L118_ENGLISH, id: 'control-322', book_id: CONTROL_B
 const CONTROL_GREEK = { ...L118_GREEK, id: 'control-321', book_id: CONTROL_BOOK.id };
 
 // ── A minimal in-memory Mongo (same shape as english-original-serve.test.ts) ──
-const store: Record<string, Doc[]> = { books: [], pages: [] };
+const store: Record<string, Doc[]> = { books: [], pages: [], chapter_texts: [] };
 function get(doc: Doc, path: string): unknown {
   return path.split('.').reduce<unknown>((v, k) => (v && typeof v === 'object' ? (v as Doc)[k] : undefined), doc);
 }
@@ -50,16 +50,40 @@ function matches(doc: Doc, filter: Doc): boolean {
     if (cond && typeof cond === 'object' && !Array.isArray(cond)) {
       const c = cond as Doc;
       if ('$in' in c) return (c.$in as unknown[]).map(String).includes(String(v));
-      if ('$gte' in c || '$lte' in c || '$gt' in c || '$lt' in c || '$exists' in c || '$nin' in c || '$ne' in c) return true;
+      // Ranges as Mongo reads them, so a door that asks for the wrong pages is seen to.
+      if ('$gte' in c || '$lte' in c || '$gt' in c || '$lt' in c) {
+        if (typeof v !== 'number') return false;
+        return (!('$gte' in c) || v >= (c.$gte as number)) && (!('$lte' in c) || v <= (c.$lte as number))
+          && (!('$gt' in c) || v > (c.$gt as number)) && (!('$lt' in c) || v < (c.$lt as number));
+      }
+      if ('$exists' in c || '$nin' in c || '$ne' in c) return true;
       return String(v) === String(cond);
     }
     return v === cond || String(v) === String(cond);
   });
 }
-function cursor(docs: Doc[]) {
+// An inclusion projection as Mongo applies it, so a door that leaves a field
+// out of its projection is seen to (review of af03c609, finding 1).
+function applyProjection(doc: Doc, proj?: Record<string, unknown>): Doc {
+  const keep = Object.entries(proj || {}).filter(([, v]) => v === 1 || v === true).map(([k]) => k);
+  if (!keep.length) return doc;
+  const out: Doc = {};
+  for (const path of keep) {
+    const v = get(doc, path);
+    if (v === undefined) continue;
+    const keys = path.split('.');
+    let o = out;
+    for (const k of keys.slice(0, -1)) o = (o[k] ??= {}) as Doc;
+    o[keys[keys.length - 1]] = structuredClone(v);
+  }
+  return out;
+}
+function cursor(docs: Doc[], initial?: Record<string, unknown>) {
+  let proj = initial;
   const c = {
-    project: () => c, sort: () => c, limit: () => c, skip: () => c, maxTimeMS: () => c,
-    toArray: async () => docs.map((d) => structuredClone(d)),
+    project: (p: Record<string, unknown>) => { proj = p; return c; },
+    sort: () => c, limit: () => c, skip: () => c, maxTimeMS: () => c,
+    toArray: async () => docs.map((d) => applyProjection(structuredClone(d), proj)),
   };
   return c;
 }
@@ -69,7 +93,8 @@ const fakeDb = {
       const d = (store[name] || []).find((x) => matches(x, filter));
       return d ? structuredClone(d) : null;
     },
-    find: (filter: Doc = {}) => cursor((store[name] || []).filter((x) => matches(x, filter))),
+    find: (filter: Doc = {}, opts?: { projection?: Record<string, unknown> }) =>
+      cursor((store[name] || []).filter((x) => matches(x, filter)), opts?.projection),
     aggregate: () => cursor([]),
     countDocuments: async () => 0,
     updateOne: async () => ({}),
@@ -82,12 +107,22 @@ vi.mock('@/lib/mongodb', () => ({
   getReadDb: async () => fakeDb,
   default: Promise.resolve({ db: () => fakeDb }),
 }));
-vi.mock('@/lib/auth', () => ({ auth: async () => null }));
+vi.mock('@/lib/auth', () => ({ auth: vi.fn(async () => null) }));
+// The page package (a signed-in member's download): no cap, no scan fetch.
+vi.mock('@/lib/membership-status', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/membership-status')>()),
+  sessionHasMemberBenefits: () => true,
+}));
+vi.mock('@/lib/purchases', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/purchases')>()),
+  classifyImageAccess: async () => 'blocked', hasPurchased: async () => false,
+}));
 // /book/[id]/read: the request-side gates, off (a reader in a browser, no tenant).
 vi.mock('next/headers', () => ({ headers: async () => new Headers() }));
 vi.mock('@/lib/tenant-context', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/lib/tenant-context')>()),
   getTenantContext: async () => null,
+  resolveTenantId: async (slug: string) => (slug === 'loeb-room' ? 'tenant-loeb' : null),
 }));
 vi.mock('@/lib/tenant-catalog-books', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/lib/tenant-catalog-books')>()),
@@ -112,6 +147,7 @@ vi.mock('@/lib/auth-helpers', () => ({
 beforeEach(() => {
   store.books = [L118_BOOK, LATIN_BOOK, CONTROL_BOOK] as unknown as Doc[];
   store.pages = [L118_GREEK, L118_ENGLISH, LATIN_LATIN, LATIN_ENGLISH, CONTROL_GREEK, CONTROL_ENGLISH] as unknown as Doc[];
+  store.chapter_texts = [];
 });
 
 const stripMarks = (s: unknown) => String(s ?? '').replace(/[​-‏⁠-⁤﻿]/g, '');
@@ -467,3 +503,166 @@ describe('flow EPUB on a Loeb: each passage once', () => {
     expect(r.flow.translationCredit).toBeNull();
   });
 });
+
+// ── Review of af03c609 (PR #8326, 2026-11-07): every door, on a flagged book ──
+// L118 is catalogued Greek, so the #7100 English-edition branches do not fire on
+// it; each door below once served the rewording, or credited it to us.
+describe('every door on a flagged, Greek-catalogued Loeb (L118)', () => {
+  const RUN = fixtures.l118_run as unknown as { pages: PageFx[]; book_chapters: Doc[] };
+  // Scan 22: the preface (printed xvii), English, with no original facing it.
+  const PREFACE = RUN.pages.find((p) => p.page_number === 22)!;
+  const PREFACE_REWORDED = 'This page concludes the critique';
+  const text = async (book: { id: string }, qs: string) => {
+    const { GET } = await import('@/app/api/books/[id]/text/route');
+    return GET(new NextRequest(`https://sourcelibrary.org/api/books/${book.id}/text?${qs}`), { params: Promise.resolve({ id: book.id }) });
+  };
+
+  it('/text content=translation (MCP get_book_text) never serves the rewording, and says where Godley is', async () => {
+    const res = await text(L118_BOOK, 'content=translation');
+    const body = await res.json();
+    expect(JSON.stringify(body)).not.toContain(REWORDING);
+    expect(body.pages.find((p: Doc) => p.page_number === 322)).toBeUndefined();
+    expect(body.pages.find((p: Doc) => p.page_number === 321)?.translation).toBeTruthy();
+    expect(body.facing_translation_note).toContain('A. D. Godley');
+    const plain = await (await text(L118_BOOK, 'content=translation&format=plain')).text();
+    expect(stripMarks(plain)).not.toContain(REWORDING);
+    expect(plain).toContain('Facing-page edition');
+    // The control still serves it: the test can see the rewording when it is there.
+    expect(stripMarks(JSON.stringify(await (await text(CONTROL_BOOK, 'content=translation')).json()))).toContain(REWORDING);
+  });
+
+  it('/text chapter=N is read from its pages, not the materialized chapter text that carries the rewording', async () => {
+    store.books = store.books.map((b) => (b.id === L118_BOOK.id ? { ...b, chapters: RUN.book_chapters } : b));
+    // As materialize-chapters stitches it, from each leaf's stored translation:
+    // production holds this for 8 flagged Loebs (the rewording on 61–206 leaves each).
+    store.chapter_texts = [{
+      book_id: L118_BOOK.id, chapter_index: 2, title: 'Book IV', level: 1, pageStart: 221, pageEnd: 447,
+      text: `${L118_GREEK.translation.data}\n\n${L118_ENGLISH.translation.data}`, ocr_text: `${L118_GREEK.ocr.data}\n\n${L118_ENGLISH.ocr.data}`,
+    }];
+    for (const qs of ['chapter=2', 'chapter=2&content=translation', 'chapter=2&format=plain']) {
+      const res = await text(L118_BOOK, qs);
+      expect(res.status).toBe(200);
+      const out = stripMarks(await res.text());
+      expect(out).not.toContain(REWORDING);
+      if (!qs.includes('content=translation')) expect(out.replace(/\s+/g, ' ')).toContain(GODLEY);
+    }
+    // The range is the chapter's (`books.chapters` stores pageNumber/endPage): Book III's leaves stay out.
+    store.pages.push({ ...L118_GREEK, id: 'l118-p30', page_number: 30 } as unknown as Doc);
+    const body = await (await text(L118_BOOK, 'chapter=2')).json();
+    expect(body.chapter).toMatchObject({ pageStart: 221, pageEnd: 447 });
+    expect(body.pages.map((p: Doc) => p.page_number)).toEqual([321, 322]);
+  });
+
+  it('the page package ships Godley as the leaf\'s text, no rewording, no "trans. Source Library"', async () => {
+    const { auth } = await import('@/lib/auth');
+    vi.mocked(auth).mockResolvedValue({ user: { id: 'reader-1' } } as never);
+    try {
+      const { GET } = await import('@/app/api/books/[id]/pages/[pageId]/package/route');
+      const files = async (book: { id: string }, pageId: string) => {
+        const res = await GET(new NextRequest(`https://sourcelibrary.org/api/books/${book.id}/pages/${pageId}/package`), { params: Promise.resolve({ id: book.id, pageId }) });
+        expect(res.status).toBe(200);
+        return readZip(Buffer.from(await res.arrayBuffer()));
+      };
+      const zip = await files(L118_BOOK, L118_ENGLISH.id);
+      expect(zip['translation.txt']).toBeUndefined();
+      expect(zip['transcription.txt'].replace(/\s+/g, ' ')).toContain(GODLEY);
+      const all = Object.values(zip).join('\n');
+      expect(stripMarks(all)).not.toContain(REWORDING);
+      expect(all).not.toContain('trans. Source Library');
+      expect(all).not.toContain('Translated by Source Library');
+      expect(zip['README.txt']).toContain('Loeb translation · A. D. Godley, 1921');
+      // The Greek leaf keeps our translation, credited to us; the control is unchanged.
+      expect(stripMarks((await files(L118_BOOK, L118_GREEK.id))['translation.txt'])).toBeTruthy();
+      expect(stripMarks((await files(CONTROL_BOOK, CONTROL_ENGLISH.id))['translation.txt'])).toContain(REWORDING);
+    } finally {
+      vi.mocked(auth).mockResolvedValue(null as never);
+    }
+  });
+
+  it('/quote on an unpaired English leaf says the words are the edition\'s, never "the source\'s own"', async () => {
+    store.pages.push(PREFACE as unknown as Doc);
+    const { GET } = await import('@/app/api/books/[id]/quote/route');
+    const res = await GET(new NextRequest(`https://sourcelibrary.org/api/books/${L118_BOOK.id}/quote?page=22`), { params: Promise.resolve({ id: L118_BOOK.id }) });
+    const body = await res.json();
+    expect(body.quote.text_source).toBe('ocr_original');
+    expect(body.quote.facing).toBeUndefined();
+    expect(body.quote.transcription_note).toContain('no original-language leaf facing it');
+    expect(body.quote.transcription_note).toContain('A. D. Godley');
+    expect(body.quote.transcription_note).not.toContain('needs no translation');
+    expect(JSON.stringify(body)).not.toContain(PREFACE_REWORDED);
+  });
+
+  it('the tenant /quote: the translator\'s note, paired or not, and no "trans. Source Library"', async () => {
+    const T = 'tenant-loeb';
+    store.books = [{ ...L118_BOOK, tenantId: T }] as unknown as Doc[];
+    store.pages = [L118_GREEK, L118_ENGLISH, PREFACE].map((p) => ({ ...p, tenantId: T })) as unknown as Doc[];
+    const { GET } = await import('@/app/api/[tenant]/books/[id]/quote/route');
+    const quote = async (page: number) => (await GET(
+      new NextRequest(`https://sourcelibrary.org/api/loeb-room/books/${L118_BOOK.id}/quote?page=${page}`),
+      { params: Promise.resolve({ tenant: 'loeb-room', id: L118_BOOK.id }) },
+    )).json();
+    const paired = await quote(322);
+    expect(paired.quote.text_source).toBe('ocr_original');
+    expect(paired.quote.transcription_note).toContain('A. D. Godley');
+    expect(paired.quote.transcription_note).toContain('facing the original text');
+    expect(JSON.stringify(paired)).not.toContain('Source Library 20');
+    expect(JSON.stringify(paired)).not.toContain('Translated by Source Library');
+    expect(JSON.stringify(paired)).not.toContain(REWORDING);
+    const unpaired = await quote(22);
+    expect(unpaired.quote.transcription_note).toContain('no original-language leaf facing it');
+    // The Greek leaf is our translation, and says so.
+    expect(JSON.stringify(await quote(321))).toContain('Source Library');
+  });
+
+  it('the reader page\'s JSON-LD names Godley as translator of the English leaf, Source Library of the Greek', async () => {
+    const { buildPageJsonLd } = await import('@/lib/page-json-ld');
+    const { serveEnglishOriginalPage } = await import('@/lib/english-original-text');
+    const work = (book: Doc, page: PageFx) => {
+      const ld = buildPageJsonLd(book as never, serveEnglishOriginalPage({ ...page, seo_indexable: true }, book) as never, 'u', 'b');
+      return (ld!['@graph'] as Doc[])[0];
+    };
+    const en = work(L118_BOOK, L118_ENGLISH);
+    expect(en.translator).toEqual({ '@type': 'Person', name: 'A. D. Godley' });
+    expect(en.inLanguage).toBe('en');
+    expect(String(en.text)).toContain('meanly-living');
+    expect(work(L118_BOOK, L118_GREEK).translator).toEqual({ '@type': 'Organization', name: 'Source Library' });
+    expect(work(CONTROL_BOOK, CONTROL_ENGLISH).translator).toEqual({ '@type': 'Organization', name: 'Source Library' });
+  });
+
+  it('/read ?view=pages keeps a chapter heading and its Contents anchor when the chapter opens on a Greek leaf', async () => {
+    // Production: Book III opens on scan 25, the Greek leaf of the opening 25|26.
+    store.books = store.books.map((b) => (b.id === L118_BOOK.id ? { ...b, chapters: RUN.book_chapters } : b));
+    store.pages = RUN.pages as unknown as Doc[];
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { default: LinearReadPage } = await import('@/app/book/[id]/read/page');
+    const html = renderToStaticMarkup(await LinearReadPage({ params: Promise.resolve({ id: L118_BOOK.id }), searchParams: Promise.resolve({ view: 'pages' }) }));
+    expect(html).not.toContain('id="h-p25"');
+    expect(html).toContain('id="p25"');
+    expect(html).toMatch(/href="[^"]*#p25"/);
+    expect(html.match(/<h2[^>]*>Book III<\/h2>/g)).toHaveLength(1);
+  });
+});
+
+/** The files of a ZIP (deflate or stored), read from its central directory. */
+function readZip(buf: Buffer): Record<string, string> {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const zlib = require('node:zlib') as typeof import('node:zlib');
+  const eocd = buf.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06]));
+  const count = buf.readUInt16LE(eocd + 10);
+  let at = buf.readUInt32LE(eocd + 16);
+  const out: Record<string, string> = {};
+  for (let i = 0; i < count; i++) {
+    const method = buf.readUInt16LE(at + 10);
+    const size = buf.readUInt32LE(at + 20);
+    const nameLen = buf.readUInt16LE(at + 28);
+    const extraLen = buf.readUInt16LE(at + 30);
+    const commentLen = buf.readUInt16LE(at + 32);
+    const local = buf.readUInt32LE(at + 42);
+    const name = buf.subarray(at + 46, at + 46 + nameLen).toString('utf8');
+    const dataAt = local + 30 + buf.readUInt16LE(local + 26) + buf.readUInt16LE(local + 28);
+    const data = buf.subarray(dataAt, dataAt + size);
+    out[name] = (method === 8 ? zlib.inflateRawSync(data) : data).toString('utf8');
+    at += 46 + nameLen + extraLen + commentLen;
+  }
+  return out;
+}

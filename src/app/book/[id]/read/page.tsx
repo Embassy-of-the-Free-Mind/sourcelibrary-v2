@@ -45,6 +45,7 @@
 import { readerPageListFilter, isReaderListedPage } from '@/lib/reader-pages';
 import { primeHuntPayloads } from '@/lib/hunt-payloads';
 import type { Metadata } from 'next';
+import { Fragment, type ReactNode } from 'react';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -363,7 +364,19 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   };
 
   // One page on its own: the page-by-page view, and any leaf of a Loeb without a facing page (#8321).
-  const pageSection = (p: (typeof open)[number]) => {
+  // `carried`: leaves just before it that this lane leaves out, whose chapter
+  // headings and `#p<n>` anchors (the Contents links) must still be in the page.
+  const carriedHeads = (carried: number[]) => carried.map(m => (
+    <Fragment key={`c${m}`}>
+      <span id={`p${m}`} />
+      {chapterAt.get(m)?.map((c, i) => (
+        <Heading key={i} level={2} className="font-display text-2xl mb-4">
+          {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
+        </Heading>
+      ))}
+    </Fragment>
+  ));
+  const pageSection = (p: (typeof open)[number], carried: number[] = []) => {
     const n = p.page_number;
     const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
     const translationHtml = pageHtml(translationRaw, pageLevel);
@@ -404,6 +417,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
 
     return (
       <section key={p.id} id={`p${n}`} aria-labelledby={`h-p${n}`} className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
+        {carriedHeads(carried)}
         {chapterAt.get(n)?.map((c, i) => (
           <Heading key={i} level={2} className="font-display text-2xl mb-4">
             {c.title}{c.original && <span className="text-muted text-lg" lang={originalLang}> · {c.original}</span>}
@@ -640,7 +654,19 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
             </section>
           );
         })}
-        {view === 'pages' && open.filter(p => !outOfLane(p)).map(p => pageSection(p))}
+        {view === 'pages' && (() => {
+          // A Loeb (#8321): a leaf outside this lane is left out, but its chapter
+          // heading and anchor move to the next leaf shown.
+          const out: ReactNode[] = [];
+          let carried: number[] = [];
+          for (const p of open) {
+            if (outOfLane(p)) { carried.push(p.page_number); continue; }
+            out.push(pageSection(p, carried));
+            carried = [];
+          }
+          if (carried.length) out.push(<div key="carried-tail" className="mt-10">{carriedHeads(carried)}</div>);
+          return out;
+        })()}
         {gateFrom !== null && (
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
             <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>

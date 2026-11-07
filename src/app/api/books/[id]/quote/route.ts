@@ -5,7 +5,7 @@ import { generateCitations, type Citation } from '@/lib/citation';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
-import { findFacingPartner, facingTranslationNote, facingTranslationOf, type FacingPartner } from '@/lib/facing-translation';
+import { findFacingPartner, facingTranslationNote, facingTranslationOf, hasPublishedFacingTranslation, type FacingPartner } from '@/lib/facing-translation';
 import { stripEditorialWrappers, stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
 import { resolveQuoteText, containsMarginalia, MARGINALIA_NOTE, OCR_ORIGINAL_NOTE, ORIGINAL_LANGUAGE_NOTE, SOURCE_COLUMN_NOTE, type QuoteTextSource } from '@/lib/quote-text';
 import { languageCode, toBcp47 } from '@/lib/language-normalize';
@@ -331,9 +331,13 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         ...(quotable.source === 'ocr_original'
           ? {
               // The printed English of a Loeb is the translator's, not the author's (#8321).
+              // Keyed on the flag, not on a found pair: an unpaired English leaf
+              // of a Loeb is still not the author's own words.
               transcription_note: facing?.role === 'translation'
                 ? facingTranslationNote(book)
-                : quotable.lang === 'en' ? OCR_ORIGINAL_NOTE : ORIGINAL_LANGUAGE_NOTE,
+                : quotable.lang === 'en' && hasPublishedFacingTranslation(book)
+                  ? facingTranslationNote(book, { paired: false })
+                  : quotable.lang === 'en' ? OCR_ORIGINAL_NOTE : ORIGINAL_LANGUAGE_NOTE,
             }
           : {}),
         ...(quotable.source === 'source_column' ? { transcription_note: SOURCE_COLUMN_NOTE } : {}),

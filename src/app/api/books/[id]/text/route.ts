@@ -19,6 +19,7 @@ import { traceRefFor } from '@/lib/trace-ref';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { serveEnglishOriginalPage, isEnglishOriginalBook, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
+import { facingTranslationLabel, hasPublishedFacingTranslation } from '@/lib/facing-translation';
 
 // This route serves quotable page text (get_book_text tells agents to "copy
 // verbatim from the translation field"), so it MUST strip the AI editorial
@@ -53,6 +54,18 @@ const ENGLISH_EDITION_TEXT_NOTE =
   'English edition: the text printed on its English leaves is the reading text, served as `ocr` '
   + '(an AI transcription of the scan, period spelling kept). Those leaves carry no `translation`; '
   + 'quote the `ocr` text as the author\'s own words. Leaves in another language keep their translation.';
+
+/**
+ * Said once per response on a facing-page edition (a Loeb, #8321): its English
+ * leaves print the published translation, which is served as `ocr`; the stored
+ * text over them was a model's rewording and is never served.
+ */
+function facingEditionTextNote(book: object): string {
+  return `Facing-page edition (${facingTranslationLabel(book)}): its English leaves print the published `
+    + 'translation opposite the original, served as `ocr` (an AI transcription of the scan) with no `translation`; '
+    + 'request content=both or content=ocr to read it, and attribute those words to the translator. '
+    + 'The original-language leaves carry Source Library\'s own AI translation.';
+}
 
 /**
  * GET /api/books/[id]/text
@@ -145,6 +158,7 @@ export const GET = withApiAuth(async (
 
     const resolvedBookId = book.id || bookId;
     const englishEdition = isEnglishOriginalBook(book);
+    const facingEdition = hasPublishedFacingTranslation(book);
 
     // Bot gating: non-trusted bots get the first 20% of pages from any book.
     // When METERED_READER=1 the same clamp applies to anonymous humans
@@ -244,25 +258,32 @@ export const GET = withApiAuth(async (
     // An English edition takes the same page-range route (#7100): its
     // materialized chapter text was stitched from `translation.data`, which on
     // an English leaf is a model's rewording, so the chapter is served from its
-    // pages, each resolved to the transcription.
+    // pages, each resolved to the transcription. So does a facing-page edition
+    // (#8321): 8 Loebs' stored chapters carry the rewording of their English leaves.
     let localizedChapterRange: { from: number; to: number; title?: string } | null = null;
     //
     // A clamped or windowed caller takes it too: a stored chapter can run past its
     // limit (a one-chapter book is the whole book), and pages can be cut (#8098).
-    if (chapterParam !== null && (isLocalized || englishEdition || botPageLimit !== undefined || partnerWindow !== undefined)) {
+    if (chapterParam !== null && (isLocalized || englishEdition || facingEdition || botPageLimit !== undefined || partnerWindow !== undefined)) {
       const chapterIndex = parseInt(chapterParam);
       const withChapters = await db.collection('books').findOne(
         { id: resolvedBookId }, { projection: { chapters: 1, reading_summary: 1, pages_count: 1 } });
       const ch = withChapters?.chapters?.[chapterIndex];
       if (!ch) return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+      // `books.chapters` stores `pageNumber`/`endPage` (24,582 books, none with
+      // `pageStart`, 2026-11-07); `pageStart`/`pageEnd` are chapter_texts' names.
+      // Reading only the latter left the range open: the whole book was served.
+      const chStart: number | undefined = ch.pageStart ?? ch.pageNumber;
+      const chEnd: number | undefined = ch.pageEnd ?? ch.endPage ?? chStart;
+      if (typeof chStart !== 'number') return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
       // Bot page limit: block chapters that start beyond the accessible range
-      if (botPageLimit !== undefined && ch.pageStart > botPageLimit) {
+      if (botPageLimit !== undefined && chStart > botPageLimit) {
         return NextResponse.json(
           botGateResponse({ ...book, ...withChapters, id: resolvedBookId }),
           { status: 200, headers: { 'Cache-Control': NO_SHARED_CACHE } }
         );
       }
-      localizedChapterRange = { from: ch.pageStart, to: ch.pageEnd ?? ch.pageStart, title: ch.titleEn || ch.title };
+      localizedChapterRange = { from: chStart, to: chEnd ?? chStart, title: ch.titleEn || ch.title };
     }
 
     if (chapterParam !== null && !localizedChapterRange) {
@@ -412,8 +433,8 @@ export const GET = withApiAuth(async (
     }
     if (includeMetadata) projection.columns = 1;
     // The per-page English-original test reads the OCR, so a translation-only
-    // export of an English edition still needs it (it is not emitted).
-    if (englishEdition) projection['ocr.data'] = 1;
+    // export of an English edition or a Loeb still needs it (it is not emitted).
+    if (englishEdition || facingEdition) projection['ocr.data'] = 1;
 
     const pages = (await db.collection('pages')
       .find(pageFilter)
@@ -444,6 +465,7 @@ export const GET = withApiAuth(async (
       lines.push(`# ${book.author} (${book.published || 'n.d.'})`);
       lines.push(`# Language: ${book.language}`);
       if (englishEdition) lines.push(`# ${ENGLISH_EDITION_TEXT_NOTE}`);
+      if (facingEdition) lines.push(`# ${facingEditionTextNote(book)}`);
       if (isLocalized) lines.push(`# Translation edition requested: ${requestedLang} (pages without one are marked [Translation — en])`);
       if (localizedChapterRange) lines.push(`# Chapter: ${localizedChapterRange.title ?? chapterParam} (pages ${localizedChapterRange.from}–${localizedChapterRange.to})`);
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
@@ -527,6 +549,7 @@ export const GET = withApiAuth(async (
       ...(noticeRef ? { attribution: attributionMeta(noticeRef) } : {}),
       content_type: content,
       ...(englishEdition ? { english_edition_note: ENGLISH_EDITION_TEXT_NOTE } : {}),
+      ...(facingEdition ? { facing_translation_note: facingEditionTextNote(book) } : {}),
       // What was asked for, and what the pages actually carry. A caller that
       // requested `es` and got 40 English pages back must be able to see it
       // without diffing the text.
@@ -545,8 +568,8 @@ export const GET = withApiAuth(async (
           pageEnd: localizedChapterRange.to,
           note: isLocalized
             ? `Chapter text is materialized in English only; this "${requestedLang}" response is assembled from the chapter's page range.`
-            : englishEdition
-              ? 'English edition: this chapter is assembled from its pages\' transcriptions, not the materialized chapter text.'
+            : englishEdition || facingEdition
+              ? `${englishEdition ? 'English edition' : 'Facing-page edition'}: this chapter is assembled from its pages\' transcriptions, not the materialized chapter text.`
               : 'This chapter is assembled from the pages of its range that this call may read.',
         },
       } : {}),

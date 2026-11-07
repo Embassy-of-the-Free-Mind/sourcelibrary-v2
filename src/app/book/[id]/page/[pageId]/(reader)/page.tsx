@@ -8,12 +8,12 @@ import Reader2C from '@/components/reader-v2/Reader2C';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { buildPageJsonLd } from '@/lib/page-json-ld';
 import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
-import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
 import { findFacingPartner } from '@/lib/facing-translation';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
 import { localePath, type Locale } from '@/lib/locale-path';
@@ -29,51 +29,6 @@ import { getPrintedNumbers } from '@/lib/printed-numbers';
 import { ocrMeasure } from '@/lib/ocr-measure';
 import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
 import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChapterPageIds, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
-
-// Schema.org structured data for a translated page, so it surfaces as a
-// citable scholarly work in web search (#2822). Only emitted for indexable
-// pages (same seo_indexable gate as robots, #2688) — structured data on a
-// noindex page is wasted. The excerpt is wrapper-stripped (the #2232 invariant:
-// never expose editorial <meta>/<summary>/… blocks as page text).
-// isPartOf carries the book's URL and a BreadcrumbList names it, so a search
-// engine that indexes a page is pointed at the book's front page (contents and
-// summary) as the parent: the page is the way in, the book is the place.
-function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: string): Record<string, unknown> | null {
-  if ((page as unknown as { seo_indexable?: boolean }).seo_indexable !== true) return null;
-  const bookTitle = book.display_title || book.title;
-  const raw = page.translation?.data || page.ocr?.data || '';
-  const clean = stripEditorialWrappers(raw).trim();
-  const excerpt = clean.length > 500 ? clean.slice(0, 497) + '…' : clean;
-  const work = {
-    '@type': 'CreativeWork',
-    name: `${bookTitle}, Page ${page.page_number}`,
-    url: pageUrl,
-    inLanguage: book.language || undefined,
-    datePublished: book.published || undefined,
-    author: book.author ? { '@type': 'Person', name: book.author } : undefined,
-    ...(isEnglishOriginalBook(book) ? {} : { translator: { '@type': 'Organization', name: 'Source Library' } }),
-    isPartOf: {
-      '@type': 'Book',
-      '@id': bookUrl,
-      url: bookUrl,
-      name: bookTitle,
-      ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
-      ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
-    },
-    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-    isAccessibleForFree: true,
-    ...(excerpt ? { text: excerpt } : {}),
-  };
-  const breadcrumb = {
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Source Library', item: 'https://sourcelibrary.org' },
-      { '@type': 'ListItem', position: 2, name: bookTitle, item: bookUrl },
-      { '@type': 'ListItem', position: 3, name: `Page ${page.page_number}`, item: pageUrl },
-    ],
-  };
-  return { '@context': 'https://schema.org', '@graph': [work, breadcrumb] };
-}
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;

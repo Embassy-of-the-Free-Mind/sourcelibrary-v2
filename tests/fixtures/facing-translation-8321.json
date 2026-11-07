@@ -123,7 +123,7 @@
   },
   "_provenance": "Copied from production bookstore.books / bookstore.pages on 2026-11-07 (#8321). Never edited toward a verdict.",
   "l118_run": {
-    "_note": "L118 scans 22-30 and 36-40 as stored on 2026-11-07 (id, page_number, ocr.data, printed_page): preface leaves, then openings; scan 37 carries a misread printed number, so 37/38 do not pair.",
+    "_note": "L118 scans 22-30 and 36-40 as stored on 2026-11-07 (id, page_number, ocr.data, printed_page): preface leaves, then openings; scan 37 carries a misread printed number, so 37/38 do not pair. Scan 22 also carries its stored translation.data, and book_chapters is books.chapters of L118 (both as stored on 2026-11-07, for the unpaired-leaf quote and the Contents anchors).",
     "pages": [
       {
         "id": "69937cdbc970b9f8351dd289",
@@ -143,6 +143,9 @@
           "fitter": "fitPrintedPages/v1",
           "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
           "at": "2026-10-03T23:38:13.859Z"
+        },
+        "translation": {
+          "data": "<meta>This page concludes the critique of Herodotus’s account of the Scythian campaign and begins an analysis of the Persian administrative lists. It transitions from discussing the \"Moral Tale\" aspect of the narrative to the technicalities of the Persian tribute-paying districts.</meta>\n\n### INTRODUCTION TO BOOKS III AND IV\n\nhearers would not trouble themselves much about such details. In short, it must be confessed that Herodotus’ reputation as a serious historian must rest on other foundations than his account of Darius’ <note>Darius I (c. 550–486 BCE): The third Persian \"King of Kings,\" who organized the empire into administrative provinces and commissioned famous monumental inscriptions.</note> Scythian campaign.¹\n\nHerodotus’ list of the tribute-paying divisions of the Persian Empire is not a geographical document. Obviously it is drawn from some such source as the three extant inscriptions (at Behistun <note>Behistun: A massive rock relief in modern Iran containing a trilingual inscription that was crucial to deciphering cuneiform script.</note>, Persepolis, and Naksh-i-Rustam) in which Darius enumerated the constituent parts of his empire; but it differs from these in that the numerical order of the units is not determined by their local position. It has indeed geographical importance in so far as the grouping of tribes for purposes of taxation naturally implies their local vicinity; but it is in no sense a description of the various units under Darius’ rule; nor can we even infer that these districts and groups of districts are in all cases separate <term>satrapies<note>A satrapy was a province of the ancient Persian Empire, governed by a satrap who collected taxes and maintained order for the King.</note></term> or governorships. That, apparently, is precluded by the occasional association of countries which could not have formed a single governorship, for instance, the Parthians, Chorasmians, Sogdi, and Arii, who compose the sixteenth district; while the Bactrians and Sacae <note>Sacae: A Persian term for the Scythian nomads of Central Asia, distinguished here as a specific administrative group.</note>, belonging here to separate tax-paying\n\n---\n\n¹ For a detailed discussion of the various problems suggested by Book IV the reader is referred to the long and elaborate Introduction to Dr. Macan’s edition of Herodotus, Books IV, V, VI.\n\n<summary>The author argues that Herodotus's historical value lies beyond his inaccurate Scythian geography and examines his Persian tribute lists as administrative rather than purely geographical records. These lists are compared to official royal inscriptions at sites like Behistun.</summary>\n<keywords>Herodotus, Darius the Great, Scythia, Persian Empire, Behistun Inscription, Persepolis, satrapies, tribute lists, taxation, Dr. Macan</keywords>"
         }
       },
       {
@@ -380,6 +383,32 @@
           "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
           "at": "2026-10-03T23:38:13.859Z"
         }
+      }
+    ],
+    "book_chapters": [
+      {
+        "title": "Introduction to Books III and IV",
+        "pageId": "69937cdbc970b9f8351dd27f",
+        "pageNumber": 12,
+        "level": 1,
+        "confidence": "high",
+        "endPage": 24
+      },
+      {
+        "title": "Book III",
+        "pageId": "69937cdbc970b9f8351dd28c",
+        "pageNumber": 25,
+        "level": 1,
+        "confidence": "high",
+        "endPage": 220
+      },
+      {
+        "title": "Book IV",
+        "pageId": "69937cdbc970b9f8351dd350",
+        "pageNumber": 221,
+        "level": 1,
+        "confidence": "high",
+        "endPage": 447
       }
     ]
   }

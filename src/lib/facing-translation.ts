@@ -125,11 +125,24 @@ export function facingTranslationLabel(book: BookLike, seriesLabel = 'Loeb trans
  * What a caller citing a flagged book's English leaf has to be told: these are
  * the published translator's words, printed facing the original — not ours,
  * and not the author's.
+ *
+ * `paired: false` is an English leaf with no original facing it (an
+ * introduction, a note, or a pair the printed numbers do not confirm): the
+ * words are still the edition's, never the ancient author's, but we cannot say
+ * which leaf they translate.
  */
-export function facingTranslationNote(book: BookLike): string {
+export function facingTranslationNote(book: BookLike, { paired = true }: { paired?: boolean } = {}): string {
   const f = facingTranslationOf(book);
   const who = f?.translator ? `${f.translator}'s` : 'the published';
   const when = f?.year ? ` (${f.year})` : '';
+  if (!paired) {
+    return `This book is a ${f?.series === 'loeb' ? 'Loeb ' : ''}facing-page edition: its English leaves print ${who} `
+      + `translation${when} opposite the original text. This English leaf has no original-language leaf facing it, `
+      + 'so it may be the translator\'s or editor\'s own introduction or notes. The quotable text is the transcription '
+      + 'of the printed English, served as `original` (text_source: "ocr_original"): an AI transcription of the scan, '
+      + 'uncorrected. Attribute the wording to the edition\'s translator or editor, never to the ancient author and '
+      + 'never to Source Library.';
+  }
   return `This leaf is ${who} English translation${when}, printed in this ${f?.series === 'loeb' ? 'Loeb ' : ''}edition `
     + 'facing the original text. The quotable text is the transcription of the printed English, served as `original` '
     + '(text_source: "ocr_original"): an AI transcription of the scan, uncorrected. Attribute the wording to the '
