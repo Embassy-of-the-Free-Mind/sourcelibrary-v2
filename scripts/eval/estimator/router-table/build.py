@@ -18,6 +18,9 @@ menu_default and the judge-validity gate. What other rules would have done is de
 Writes <as_of>.json and .md beside this file (--name: <name>.json/.md). A route's evidence is the pilot cell's route
 (`pilot`) plus every entry of its `evidence` list ({score, cell, route[, use: name_check]}), pooled as k of n (the posterior and the wrong-text gate scale each source by its books / pages); a route listed with no entry takes the k/n of its defect verdicts. `--before`
 shows each cell's earlier decision beside the new one. Every parameter is in rules.json.
+A '-written' route (the pages the route wrote; a refused page stays scans-only) is scored over the pages DRAWN (#8111):
+each of its evidence entries carries `written_of_drawn` ('written/drawn' in that test) and its judged pages scale by
+drawn / written, refusals not accepted; an entry without one is refused (over_drawn).
 
 VALIDATION (#7263; .claude/docs/router-optimization-paper.md). V1: the prior mean of every route is the partially pooled
 logit of #7878 (rules.json prior.pooled; pooled_prior.py writes the means). V2: in a stratum where the judge prefers its
@@ -159,6 +162,22 @@ def pool_sources(xs, cluster, inv_classes=()):
 
 
 UNSPLIT = set()  # evidence sources with no by-script file (expand_by_script): they enter /unknown only
+NO_SHARE = set()  # '-written' evidence with no written_of_drawn (#8111): refused, never pooled
+
+
+def over_drawn(y, wd):
+    """A '-written' source scored over the pages DRAWN (#8111; router paper "Failures count"). Its k/n counts only the
+    pages the route wrote; wd = 'written/drawn' in the test it came from. A page the route refused is not accepted and
+    not wrong text (it stays scans-only), so the judged pages scale by drawn / written: n, wrong-text and books (one
+    page a book) grow, k does not. A by-script cut takes the unsplit test's share. Exact where the cut is the test."""
+    w, dn = map(int, wd.split('/'))
+    n = int(y['accept'].split('/')[1])
+    if w <= 0: return dict(y, accept=f"0/{dn}", wrong_text_pages=f"0/{dn}", books=dn, classes_k_of_n={}, written_of_drawn=wd)
+    if n <= 0: return y
+    s = dn / w; nt = round(n * s)
+    rescale = lambda v: f"{v.split('/')[0]}/{nt}"
+    return dict(y, accept=rescale(y['accept']), wrong_text_pages=rescale(y['wrong_text_pages']), books=max(y['books'], round(y['books'] * s)),
+                classes_k_of_n={c: rescale(v) for c, v in y['classes_k_of_n'].items()}, written_of_drawn=wd)
 
 
 def expand_by_script(P):
@@ -446,8 +465,17 @@ def main():
             if e.get('use') == 'name_check':  # a page whose accepted text drops a name the image prints is wrong text too
                 nc = y['name_check']; y['accept'] = nc['accept_after_name_check']
                 w0, n0 = map(int, y['wrong_text_pages'].split('/')); y['wrong_text_pages'] = f"{w0 + nc['with_name_error']}/{n0}"
+            if e['route'].endswith('-written'):
+                wd = e.get('written_of_drawn') or y.get('written_of_drawn')
+                if not wd:
+                    NO_SHARE.add(f"{e['score']} {e['cell'].split('|')[0]} {e['route']}"); continue
+                y = over_drawn(y, wd)
             xs.append(y)
-        return pool_sources(xs, P['cluster_by_book'], (P.get('hard_floor') or {}).get('classes', ()))
+        x = pool_sources(xs, P['cluster_by_book'], (P.get('hard_floor') or {}).get('classes', ()))
+        wds = [y['written_of_drawn'] for y in xs if y.get('written_of_drawn')]
+        if x and wds:   # the share of drawn pages the route wrote, over its tests (#8111)
+            x['written_of_drawn'] = '/'.join(str(sum(int(v.split('/')[i]) for v in wds)) for i in (0, 1))
+        return x
 
     rows = []
     for cell in P['cells']:
@@ -458,7 +486,8 @@ def main():
             (a0, b0), _ = prior(cell, r); a, b = a0, b0
             d = DR.get(cell['id'], {}).get(r['id'])
             # a route listed with no evidence entry (a test it was measured in reached only the store): its verdicts' k/n
-            x = evidence(cell, r) or (d and d.get('accept') and pool_sources([dict(d, _group=None)], P['cluster_by_book'], (P.get('hard_floor') or {}).get('classes', ())))
+            # never for a '-written' route: its verdicts count only the pages it wrote (#8111)
+            x = evidence(cell, r) or (not r['id'].endswith('-written') and d and d.get('accept') and pool_sources([dict(d, _group=None)], P['cluster_by_book'], (P.get('hard_floor') or {}).get('classes', ())))
             k = n = w = None; wrate = None; top = []
             if x:
                 (k, n), w = map(int, x['accept'].split('/')), int(x['wrong_text_pages'].split('/')[0])
@@ -470,7 +499,7 @@ def main():
                            _bar=P['switch'].get('bar') == 'opus' and st['channel'] == 'claude' and not st.get('candidate') and not (cell.get('script') == 'manuscript' and P['switch'].get('bar_scope') == 'print'), candidate=bool(st.get('candidate')), points=st.get('points'), points_flat=st0.get('points'),
                            size=None if not sp else {k: round(v, 5) for k, v in sp.items()}, tested=bool(x), prior=[round(a0, 2), round(b0, 2)], prior_model=dict(zip(('mean', 'basis'), pb[cell['id'], r['id']])),
                            prior_pooled=pbp.get((cell['id'], r['id'])), eff=x and [round(v, 4) for v in x['eff']],
-                           k=k, n=n, wrong=w, wrate=wrate, top=top, judge_planted=x and x.get('judge_planted'), mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
+                           k=k, n=n, written_of_drawn=x and x.get('written_of_drawn'), wrong=w, wrate=wrate, top=top, judge_planted=x and x.get('judge_planted'), mean=m, ci90=[q(dr, .05), q(dr, .95)], var=a * b / ((a + b) ** 2 * (a + b + 1)),
                            p80=sum(v >= P['hold']['acc'] for v in dr) / N, share=share(st), units=units_per_page(st), _d=dr,
                            cost=None if not st['channel'] else [units_per_page(st) / q(dr, p) for p in (.95, .5, .05)],
                            api=None if st['api_usd'] is None else st['api_usd'] / m,
@@ -545,6 +574,10 @@ def main():
     split_txt = ('' if not UNSPLIT else "**Not split by script type** (no by-script file; their pages enter the `/unknown` cells only until "
                  "scripts/eval/router-next-7263/ evidence_pages.py, classify-evidence.mjs and split_evidence.py are rerun): " + ', '.join(f'`{u}`' for u in sorted(UNSPLIT)) + '.')
     if UNSPLIT: print('WARNING: evidence not split by script type, in /unknown only:', ', '.join(sorted(UNSPLIT)))
+    share_txt = ("**'-written' rows are scored over the pages drawn** (#8111): a page the route refused counts as not accepted, so acceptance and the cost per accepted page are over the pages tried. "
+                 "Each '-written' evidence entry carries `written_of_drawn` (rules.json, or the score file); "
+                 + ("refused, with none: " + ', '.join(f'`{u}`' for u in sorted(NO_SHARE)) + '.' if NO_SHARE else 'none is refused for lacking it.'))
+    if NO_SHARE: print("WARNING: '-written' evidence with no written_of_drawn, refused (#8111):", ', '.join(sorted(NO_SHARE)))
     H = P.get('hard_floor') or {}
     hf = [r for r in rows if r['hard_floor_blocked']]
     wms = sorted({R['misleads_usd'], *R['misleads_usd_sensitivity']})
@@ -554,12 +587,13 @@ def main():
            f"Gate 2, the floor: P(acc >= acc_live - {R['accept_floor']['within']}) >= {R['accept_floor']['p']}, paired where judged on the same pages. "
            f"Pick: lowest price per raw page + ${R['misleads_usd']:g} x words/1000 x (misleads + {R['wrong_text_weight']} x wrong text), labels deflated by the re-check (misleads x {CAL['misleads']}, wrong text x {CAL['wrong_text']}); a pick that moves across ${wms[0]:g}-${wms[-1]:g} is HOLD. "
            f"Fees: {fee_src}; dollars are not committed. Opus lanes: {lanes}.", '',
-           f"**Around it.** *Hard floor*: a route is blocked when P(invented or wrong-leaf rate > {H.get('rate', 0):g}) >= {H.get('p', 0):g}, with at least {H.get('min_pages', 0)} such page seen. *Menu* (#8283): an undecided cell takes the plainest agy route that passes the floor, never the incumbent. *Judge validity* (V2): below. A person's `planned` decision and a `held` cell stand.", '', size_txt, '', split_txt, '',
+           f"**Around it.** *Hard floor*: a route is blocked when P(invented or wrong-leaf rate > {H.get('rate', 0):g}) >= {H.get('p', 0):g}, with at least {H.get('min_pages', 0)} such page seen. *Menu* (#8283): an undecided cell takes the plainest agy route that passes the floor, never the incumbent. *Judge validity* (V2): below. A person's `planned` decision and a `held` cell stand.", '', size_txt, '', split_txt, '', share_txt, '',
            '| cell | pages waiting | current | route | lane | acceptance [90%] | wrong text | defects per 1,000 words: misleads / wrong text (books) | cost per accepted page | weeks to clear | decision |', '|' + '---|' * 11]
     for row in rows:
         for j, r in enumerate(row['routes']):
             acc = (f"**{r['k']}/{r['n']}** → {r['mean']:.2f} [{r['ci90'][0]:.2f}, {r['ci90'][1]:.2f}]" if r['tested']
                    else f"UNTESTED: prior {r['mean']:.2f} [{r['ci90'][0]:.2f}, {r['ci90'][1]:.2f}]")
+            if r.get('written_of_drawn'): acc += f"; over the drawn pages: it wrote {r['written_of_drawn']}"
             if r.get('judge_planted'): acc += f"; judge caught {r['judge_planted']['caught']} planted" + (' (judge-unvalidated)' if r['judge_planted'].get('validated') is False else '')
             d = r.get('defects')
             dcol = f"{d['misleads_per_1k_posterior'][1]:.2f} / {d['wrong_text_per_1k_posterior'][1]:.2f} ({d['books']})" if d else '—'
