@@ -1135,8 +1135,10 @@ export const ARMC_EURO_CELLS = Object.freeze({
   es19: { lang: 'es', language: 'Spanish', code: 'spa', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test: 23/23 written accepted with #8296, 0 wrong text, P 0.995; gate on new pages 28/30, 1 wrong text, P 0.962' },
   fr19: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test, two draws: 28/30 written accepted with #8296, 0 wrong text, P 0.962; gate on new pages 29/30, 0 wrong text, P 0.992', skipFirstRead: true },
   // English 1800-1929 beyond the gpu-print-en frame (#6871, Derek 2026-11-07): GPU draft > agy, not a bare GPU read. The
-  // books gpu-print-en planned are its own (their unread pages are its rejects): skipPlannedIn keeps them out.
-  en19: { lang: 'en', language: 'English', code: 'eng', years: [1800, 1929], route: LO_ROUTE, lane: 'gpu-agy-first-read-en-6871', skipPlannedIn: '/root/jobs/gpu-print-6871/plan', evidence: '#6871 2026-10-29 print1800 engine lanes (LightOnOCR drafts for agy Flash, use c) and the en19 pilot gate (scripts/eval/experiments/2026-11-07-en1800-gpu-agy-widen-6871.md)' },
+  // books gpu-print-en planned are its own (their unread pages are its rejects): skipPlannedIn keeps them out. statuses:
+  // only books the pipeline has finished with (a free book `archiving` or `archive_complete` is about to be read by the
+  // pipeline's own OCR, and this lane places no hold), or held scans-only.
+  en19: { lang: 'en', language: 'English', code: 'eng', years: [1800, 1929], route: LO_ROUTE, lane: 'gpu-agy-first-read-en-6871', skipPlannedIn: '/root/jobs/gpu-print-6871/plan', statuses: ['complete', 'ocr_complete', 'needs_attention', 'parked', 'failed', HOLD_STATUS], evidence: '#6871 2026-10-29 print1800 engine lanes (LightOnOCR drafts for agy Flash, use c) and the en19 pilot gate (scripts/eval/experiments/2026-11-07-en1800-gpu-agy-widen-6871.md)' },
   // The French 1800+ pages Flash-Lite refused, already read on the GPU (job gpu-steward-20261106, gpu-print-read.py):
   // planned only by armc-import from those reads (importOnly), corrected and written as the other cells are. The
   // visible-unread lane is the one that refused them, so no skipFirstRead.
@@ -1161,6 +1163,7 @@ export function armcEuroSkip(book, cell, { skipPlannedIn = null } = {}) {
   if (isUnsplitSpread(book)) return 'unsplit spread (needs_splitting)';
   if (manuscriptReason(book)) return 'manuscript';
   if (C.skipFirstRead && !firstReadSkip(book, { languages: [C.code] })) return 'read by the visible-unread first-read lane';
+  if (C.statuses && !C.statuses.includes(book.pipeline_auto?.status)) return `pipeline status ${book.pipeline_auto?.status ?? 'none'} (the pipeline reads it)`;
   const planned = skipPlannedIn ?? C.skipPlannedIn;
   if (planned && fs.existsSync(path.join(planned, `${book.id}.json`))) return 'planned by gpu-print-en';
   return null;
