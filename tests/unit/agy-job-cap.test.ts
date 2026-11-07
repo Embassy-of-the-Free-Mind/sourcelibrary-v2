@@ -34,6 +34,18 @@ describe('agy per-job ledger and heavy-model cap', () => {
     expect(ledgerGate('gemini-4-argon-high', { dir, cap: 3, job: 'fl-reocr', now: new Date('2026-10-23T00:01:00Z') })).toBeNull();
   });
 
+  it('stops any job, on any model, at its daily share of the shared account (#6740)', () => {
+    fs.mkdirSync(path.join(root, 'share'));
+    const d2 = path.join(root, 'share', 'jobs');
+    for (let k = 0; k < 4; k++) expect(ledgerGate('gemini-3.8-flash-low', { dir: d2, jobCap: 4, job: 'tib', now })).toBeNull();
+    expect(ledgerGate('gemini-3.8-flash-low', { dir: d2, jobCap: 4, job: 'tib', now })).toMatch(/daily share of 4/);
+    // the refusal is not recorded, so the count stays at the cap; another job keeps its own share
+    expect(jobCallsToday('tib', { dir: d2, now, heavyOnly: false })).toBe(4);
+    expect(ledgerGate('gemini-3.8-flash-low', { dir: d2, jobCap: 4, job: 'bench', now })).toBeNull();
+    // a new UTC day starts at zero
+    expect(ledgerGate('gemini-3.8-flash-low', { dir: d2, jobCap: 4, job: 'tib', now: new Date('2026-10-23T00:01:00Z') })).toBeNull();
+  });
+
   it('does nothing where there is no ledger home (a laptop)', () => {
     expect(ledgerGate('gemini-4-argon-high', { dir: path.join(root, 'missing', 'jobs'), cap: 0, job: 'x', now })).toBeNull();
   });
