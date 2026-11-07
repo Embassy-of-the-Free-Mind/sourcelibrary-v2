@@ -175,3 +175,60 @@ export async function laneRouteCheck(served, { mode = 'warn', page, stampDir = '
   }
   return findings;
 }
+
+/**
+ * #8111: the write share a '-written' route showed in its tests, from rules.json: every evidence entry of the route in
+ * the cell (`<base>/<script>` reads the base cell) that carries written_of_drawn, summed. null when none does.
+ */
+export function testWriteShare(rules, cell, route) {
+  const c = rules.cells?.find((x) => x.id === cell.split('/')[0]);
+  const r = c?.routes?.find((x) => x.id === route);
+  const wds = (r?.evidence || []).map((e) => e.written_of_drawn).filter(Boolean);
+  if (!wds.length) return null;
+  const [written, drawn] = [0, 1].map((i) => wds.reduce((t, v) => t + Number(v.split('/')[i]), 0));
+  return { written, drawn };
+}
+
+/**
+ * A lane ledger (jsonl, one row a page tried, `outcome: 'written'` when the page was written): pages tried and written.
+ * `lang` keeps the rows of one language (rows with no lang are kept: a one-language lane writes none). A page that
+ * got OCR from elsewhere before the read (`has_ocr_now`) was not the route's to write and is left out.
+ */
+export function ledgerYield(text, { lang = null, sinceIso = null } = {}) {
+  let tried = 0, written = 0;
+  for (const line of text.split('\n')) {
+    if (!line.trim()) continue;
+    let r; try { r = JSON.parse(line); } catch { continue; }
+    if ((lang && r.lang && r.lang !== lang) || (sinceIso && r.at && r.at < sinceIso) || r.outcome === 'has_ocr_now') continue;
+    tried++; if (r.outcome === 'written') written++;
+  }
+  return { tried, written };
+}
+
+/** P(X >= a), X ~ Binomial(n, x): the regularized incomplete beta I_x(a, n - a + 1) for integer a. */
+function binomUpper(n, a, x) {
+  let p = 0, term = Math.pow(1 - x, n);
+  for (let k = 0; k <= n; k++) { if (k >= a) p += term; term *= ((n - k) / (k + 1)) * (x / (1 - x)); }
+  return p;
+}
+/** The q quantile of Beta(a, b), integer a, b, by bisection. */
+export function betaQuantile(a, b, q) {
+  let lo = 0, hi = 1;
+  for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (binomUpper(a + b - 1, a, m) < q) lo = m; else hi = m; }
+  return (lo + hi) / 2;
+}
+
+/**
+ * #8111: a '-written' route's production yield against its tests. The tests' write share (written / drawn) has the
+ * posterior Beta(1 + written, 1 + drawn - written); the lane's yield is FLAGGED when it falls below that posterior's
+ * `q` quantile over at least `minTried` pages (arm C: 18/30 written in its test, 4,708 of 28,104 in the lane).
+ * Status: yield-low | yield-ok | yield-unmeasured (too few pages tried) | no-test-share.
+ */
+export function checkYield(test, prod, { q = 0.01, minTried = 200 } = {}) {
+  if (!test) return { status: 'no-test-share', prod };
+  const floor = betaQuantile(1 + test.written, 1 + test.drawn - test.written, q);
+  const share = prod.tried ? prod.written / prod.tried : null;
+  const base = { test: `${test.written}/${test.drawn}`, prod: `${prod.written}/${prod.tried}`, prod_share: share, floor: Math.round(floor * 1000) / 1000 };
+  if (prod.tried < minTried) return { ...base, status: 'yield-unmeasured' };
+  return { ...base, status: share < floor ? 'yield-low' : 'yield-ok' };
+}

@@ -388,5 +388,26 @@ class Menu(unittest.TestCase):
         self.assertTrue(B.menu_default({'current': 'agy'}, 'keep (UNTESTED)', [], [agy], self.PM)[0].startswith('keep (default'))
 
 
+class OverDrawn(unittest.TestCase):
+    """#8111: a '-written' source is scored over the pages drawn; a refused page is not accepted and not wrong text."""
+    y = dict(accept='18/18', wrong_text_pages='0/18', books=18, classes_k_of_n={'O8': '5/18'})
+
+    def test_arm_c(self):
+        x = B.over_drawn(self.y, '18/30')
+        self.assertEqual((x['accept'], x['wrong_text_pages'], x['books'], x['classes_k_of_n']), ('18/30', '0/30', 30, {'O8': '5/30'}))
+
+    def test_by_script_cut_takes_the_test_share(self):
+        x = B.over_drawn(dict(self.y, accept='9/10', wrong_text_pages='1/10', books=10), '18/30')
+        self.assertEqual((x['accept'], x['wrong_text_pages']), ('9/17', '1/17'))
+
+    def test_nothing_written(self):
+        self.assertEqual(B.over_drawn(dict(self.y, accept='0/0', wrong_text_pages='0/0', books=0), '0/18')['accept'], '0/18')
+
+    def test_pooled_mean_falls(self):
+        pw = B.pool_sources([self.y], True); pt = B.pool_sources([B.over_drawn(self.y, '18/30')], True)
+        self.assertGreater(pw['eff'][0] / pw['eff'][1], pt['eff'][0] / pt['eff'][1])
+        self.assertAlmostEqual(pt['eff'][0] / pt['eff'][1], 0.6)
+
+
 if __name__ == '__main__':
     unittest.main()
