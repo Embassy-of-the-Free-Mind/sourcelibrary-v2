@@ -40,7 +40,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   canonGoldClusters, identicalTitleClusters, containmentCandidates,
-  editionConflictClusters, unionMergeClusters,
+  editionConflictClusters, unionMergeClusters, loadSplitPairs, splitPairIn,
 } from '../lib/work-merge-lib.mjs';
 import { norm as normTitle } from '../lib/work-identity-util.mjs';
 // Dynamic import: node (24+) type-strips the .ts natively, but a STATIC import
@@ -126,16 +126,18 @@ async function main() {
   const canonSlugByWorkId = new Map();
   for (const w of CANON_WORKS) for (const id of w.workIds) if (!canonSlugByWorkId.has(id)) canonSlugByWorkId.set(id, w.slug);
 
-  const { merges, demoted } = unionMergeClusters([...gold, ...identical, ...editionConflicts], canonSlugByWorkId, inbound);
+  // a reviewed split (#8293) is never rejoined: demoted from HIGH, never queued
+  const splitPairs = await loadSplitPairs(db);
+  const { merges, demoted } = unionMergeClusters([...gold, ...identical, ...editionConflicts], canonSlugByWorkId, inbound, splitPairs);
 
   // ── MEDIUM lane (queue) ──
-  // Skip pairs already unified by a HIGH merge.
+  // Skip pairs already unified by a HIGH merge, and pairs a reviewed split separated.
   const finalRoot = new Map();
   for (const m of merges) for (const id of m.ids) finalRoot.set(id, m.winner);
   const candidates = containmentCandidates(reps).filter((p) => {
     const ra = finalRoot.get(p.a) || p.a;
     const rb = finalRoot.get(p.b) || p.b;
-    return ra !== rb;
+    return ra !== rb && !splitPairIn([ra, rb], splitPairs) && !splitPairIn([p.a, p.b], splitPairs);
   });
 
   // ── plan ──
@@ -151,7 +153,7 @@ async function main() {
     console.log(`  keep ${m.winner}  [${m.sources.join(', ')}]\n    + ${m.losers.join('\n    + ')}   "${(rep?.title || '').slice(0, 48)}"`);
   }
   if (demoted.length) {
-    console.log('\nDEMOTED (span ≥2 canon entries — review by hand):');
+    console.log('\nDEMOTED (span ≥2 canon entries, or rejoin a reviewed split — not written):');
     for (const d of demoted) console.log(`  ${d.ids.join(' + ')}  (${d.reason})`);
   }
   console.log('\nsample MEDIUM queue pairs:');

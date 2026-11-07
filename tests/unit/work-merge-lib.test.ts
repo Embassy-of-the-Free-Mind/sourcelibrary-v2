@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import {
   rankFormat, pickWinner, canonGoldClusters, identicalTitleKey,
   identicalTitleClusters, containmentPair, containmentCandidates,
-  editionConflictClusters, unionMergeClusters,
+  editionConflictClusters, unionMergeClusters, splitPairsFromRows, splitPairIn,
 } from '../../scripts/lib/work-merge-lib.mjs';
 import { CANON_WORKS, canonWorkForWorkId } from '@/lib/canon-works';
 
@@ -235,6 +235,44 @@ describe('unionMergeClusters', () => {
     expect(merges).toHaveLength(0);
     expect(demoted).toHaveLength(1);
     expect(demoted[0].reason).toContain('iliad');
+  });
+});
+
+describe('split memory (#8293)', () => {
+  const rows = [
+    // Q1 kept its stayers; one group moved to an existing id, one to a new id
+    { work_id: 'Q1', moves: [{ to: 'local:a:x:other' }, { to: 'Q9' }], reverted_at: null },
+    // a reverted split records nothing
+    { work_id: 'local:a:y:a', moves: [{ to: 'local:a:y:b' }], reverted_at: new Date() },
+  ];
+  const pairs = splitPairsFromRows(rows);
+
+  it('records every pair among the source and its destinations, not reverted rows', () => {
+    expect(splitPairIn(['Q1', 'local:a:x:other'], pairs)).toEqual(['Q1', 'local:a:x:other']);
+    expect(splitPairIn(['Q9', 'local:a:x:other'], pairs)).not.toBeNull(); // two destinations are different works too
+    expect(splitPairIn(['local:a:x:other', 'Q1'], pairs)).not.toBeNull(); // order-free
+    expect(splitPairIn(['local:a:y:a', 'local:a:y:b'], pairs)).toBeNull();
+    expect(splitPairIn(['Q1', 'Q2'], pairs)).toBeNull();
+    expect(splitPairIn(['Q1', 'local:a:x:other'], new Set())).toBeNull();
+  });
+
+  it('unionMergeClusters demotes a union that rejoins a split, transitively too', () => {
+    const { merges, demoted } = unionMergeClusters([
+      { source: 'identical-title', ids: ['Q1', 'local:a:x:mid'] },
+      { source: 'edition-conflict', ids: ['local:a:x:mid', 'local:a:x:other'] },
+      { source: 'identical-title', ids: ['Q5', 'local:a:z:q'] },
+    ], new Map(), undefined, pairs);
+    expect(merges.map((m) => m.winner)).toEqual(['Q5']);
+    expect(demoted).toHaveLength(1);
+    expect(demoted[0].reason).toContain('reviewed split');
+  });
+
+  it('without split pairs the same union merges (control)', () => {
+    const { merges } = unionMergeClusters([
+      { source: 'identical-title', ids: ['Q1', 'local:a:x:mid'] },
+      { source: 'edition-conflict', ids: ['local:a:x:mid', 'local:a:x:other'] },
+    ]);
+    expect(merges).toHaveLength(1);
   });
 });
 

@@ -1,6 +1,8 @@
 /**
  * work-merge-lib.mjs — pure cluster-detection + merge-planning logic for
- * work_id consolidation (#3759). No I/O here: everything is unit-testable.
+ * work_id consolidation (#3759). No I/O here (except loadSplitPairs, one read):
+ * everything is unit-testable. Every merge writer must refuse a reviewed split
+ * pair — splitPairIn() / unionMergeClusters(..., splitPairs) (#8293).
  *
  * Three detection lanes, two confidence tiers:
  *  - canon gold seeds (HIGH): the hand-verified workIds arrays in
@@ -243,7 +245,42 @@ export function editionConflictClusters(clusters, { titleVariants, inbound }) {
   return out;
 }
 
-export function unionMergeClusters(clusters, canonSlugByWorkId = new Map(), inbound) {
+// ── split memory (#8293) ────────────────────────────────────────────────────
+/**
+ * A reviewed split (`work_id_splits`, written by apply-reviewed-work-splits.mjs)
+ * says its source id and every destination are DIFFERENT works. No merge lane
+ * may put any two of them back under one id: an identical-title or LLM lane
+ * re-proposes exactly the fusion the reader undid (generic titles, Tesla
+ * patents). Every merge writer checks here — one place, one rule.
+ * A reverted row (reverted_at set) records nothing.
+ */
+const pairKey = (a, b) => (a < b ? `${a}\u0000${b}` : `${b}\u0000${a}`);
+
+export function splitPairsFromRows(rows) {
+  const pairs = new Set();
+  for (const r of rows || []) {
+    if (r.reverted_at) continue;
+    const ids = [...new Set([r.work_id, ...(r.moves || []).map((m) => m.to)].filter(Boolean))];
+    for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) pairs.add(pairKey(ids[i], ids[j]));
+  }
+  return pairs;
+}
+
+/** The first recorded split pair inside `ids` ([a, b]), or null. */
+export function splitPairIn(ids, pairs) {
+  if (!pairs?.size) return null;
+  const u = [...new Set(ids.filter(Boolean))];
+  for (let i = 0; i < u.length; i++) for (let j = i + 1; j < u.length; j++) if (pairs.has(pairKey(u[i], u[j]))) return [u[i], u[j]];
+  return null;
+}
+
+/** The one I/O helper here: every live split pair, for the merge writers to pass in. */
+export async function loadSplitPairs(db) {
+  return splitPairsFromRows(await db.collection('work_id_splits')
+    .find({ reverted_at: null }, { projection: { work_id: 1, moves: 1, reverted_at: 1 } }).toArray());
+}
+
+export function unionMergeClusters(clusters, canonSlugByWorkId = new Map(), inbound, splitPairs) {
   const parent = new Map();
   const find = (x) => {
     while (parent.get(x) !== x) { parent.set(x, parent.get(parent.get(x))); x = parent.get(x); }
@@ -278,6 +315,9 @@ export function unionMergeClusters(clusters, canonSlugByWorkId = new Map(), inbo
     };
     plan.losers = ids.filter((i) => i !== plan.winner);
     if (slugs.size >= 2) { demoted.push({ ...plan, reason: `spans canon entries: ${[...slugs].join(', ')}` }); continue; }
+    // checked on the UNION, so a transitive A~C~B cannot rejoin a split A|B either
+    const split = splitPairIn(ids, splitPairs);
+    if (split) { demoted.push({ ...plan, reason: `rejoins a reviewed split (#8293): ${split.join(' | ')}` }); continue; }
     merges.push(plan);
   }
   return { merges, demoted };
