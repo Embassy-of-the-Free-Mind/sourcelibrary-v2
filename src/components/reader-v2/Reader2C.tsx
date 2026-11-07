@@ -65,7 +65,7 @@ import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
 import { useFacingPartner } from './useFacingPartner';
-import { FacingPaneHeader, FacingEnglishLeafNote, SourceLibraryTranslationNote, withFacingEnglish, FacingOpening, openingOf, openingPagesLabel } from './FacingTranslation';
+import { FacingPaneHeader, FacingEnglishLeafNote, SourceLibraryTranslationNote, withFacingEnglish, withOwnEnglish, FacingScanTabs, openingOf, openingPagesLabel } from './FacingTranslation';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -2713,6 +2713,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     ? { ...r.currentPage, translation: { ...(r.currentPage.translation ?? {}), data: pinnedTranslation } } as Page
     : loebShown && facing
     ? withFacingEnglish(r.currentPage, facing)
+    : facing?.role === 'translation'
+    ? withOwnEnglish(r.currentPage)
     : r.currentPage;
 
   // page_read feeds analytics_events, which the admin book-insights and
@@ -3530,22 +3532,24 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     ? r.settings.translationLang : null;
   // Named for history: true while the pane shows any non-English edition.
   const showingSpanish = showingEdition != null;
-  // The book lying open (#8321): on a facing-page edition a paired leaf shows
-  // as its whole opening, both scans and both texts. Editing, a pinned
-  // citation and a Spanish edition keep the one-leaf desk they work on.
+  // A facing-page edition (#8321) keeps the reader's own panes, so Scan, OCR,
+  // Roman and English all work: the scan on the left, the printed English once
+  // on the right. The opening only names the counter and lets the scan pane
+  // show either printed page. Editing, a pinned citation and a Spanish edition
+  // stay on the one leaf they work on.
   const opening = !editing && !showingSpanish && pinnedTranslation == null ? openingOf(r.currentPage, facing) : null;
   const openingPages = opening ? openingPagesLabel(opening, t.facing.openingPages) : null;
-  // Per layout, not from isDesktop: both layouts are in the DOM, one hidden by CSS.
-  const openingView = (stacked: boolean) => opening && (
-    <FacingOpening
-      book={r.book}
+  // Which leaf of the opening the scan pane shows; a page turn goes back to the current one.
+  const [scanOtherLeaf, setScanOtherLeaf] = useState<{ on: string } | null>(null);
+  const otherLeaf = opening && scanOtherLeaf?.on === r.currentPageId && facing ? facing.page : null;
+  const otherScan = otherLeaf ? resolveScanUrls(otherLeaf) : null;
+  const scanSrcOverride = witnessSrc ?? otherScan?.display ?? undefined;
+  const scanNativeOverride = witnessNativeSrc ?? otherScan?.native ?? undefined;
+  const scanTabs = opening && (
+    <FacingScanTabs
       opening={opening}
-      currentId={r.currentPageId}
-      settings={r.settings}
-      showOurs={showOurTranslation}
-      onToggleOurs={() => setShowOurTranslation((v) => !v)}
-      onSelectLeaf={(id) => r.goToPage(id)}
-      stacked={stacked}
+      shownId={otherLeaf ? otherLeaf.id : r.currentPageId}
+      onShow={(id) => setScanOtherLeaf(id === r.currentPageId ? null : { on: r.currentPageId })}
     />
   );
 
@@ -3563,7 +3567,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   const traceActive = traceOn && traceEligible;
   const traceDisabledReason = traceShown && showingSpanish ? t.panes.traceEnglishOnly : undefined;
 
-  const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data;
+  const translitEligible = hasNonLatinScript(r.book.language) && !!r.currentPage.ocr?.data && facing?.role !== 'translation';
   const deepzoomManifest = (r.currentPage as unknown as { deepzoom?: DeepZoomManifest }).deepzoom;
   const [deepzoomInline, setDeepzoomInline] = useState(false);
 
@@ -3976,7 +3980,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          {openingView(false) || (<>
           {scanPaneShown && (
             <section
               data-scan-pane
@@ -4004,6 +4007,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 }
               >
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
+                {scanTabs}
               </PaneHeader>
               {/* `relative` because PageDeepZoomButton positions its control
                   and its inline viewer against the nearest positioned parent:
@@ -4022,8 +4026,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
-                  srcOverride={witnessSrc}
-                  nativeSrcOverride={witnessNativeSrc}
+                  srcOverride={scanSrcOverride}
+                  nativeSrcOverride={scanNativeOverride}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                   onNaturalSize={onScanNaturalSize}
                   onEdgePageTurn={onScanEdgeTurn}
@@ -4186,7 +4190,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPage.id} className="rv2-page-in" data-page-pending={pagePending ? '' : undefined}>
-                    {!paired && !showingSpanish && !loebShown && <MachineDraftLine page={displayPage} book={r.book} />}
+                    {!paired && !showingSpanish && !loebShown && facing?.role !== 'translation' && <MachineDraftLine page={displayPage} book={r.book} />}
                     {!paired && !showingSpanish && facing?.role === 'original' && !loebShown && <SourceLibraryTranslationNote />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     <MissingPagesLine gaps={scanGaps} pageNumber={r.currentPage.page_number} />
@@ -4196,9 +4200,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
                       : showingSpanish
                       ? <SpanishProse page={r.currentPage} lang={showingEdition ?? 'es'} settings={r.settings} baseSize={18.5} suppressBlockquote={quotesDisagree} />
-                      : facing?.role === 'translation'
-                      ? <FacingEnglishLeafNote facing={facing} onGo={() => r.goToPage(facing.page.id)} />
-                      : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={18.5} />}
+                      : <>
+                        {facing?.role === 'translation' && <FacingEnglishLeafNote facing={facing} onGo={() => r.goToPage(facing.page.id)} />}
+                        <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={facing?.role === 'translation' ? { ...r.book, language: 'English' } : r.book} kind="translation" settings={r.settings} baseSize={18.5} />
+                      </>}
                     <PageProblemReport page={r.currentPage} book={r.book} measure={ocrMeasure} />
                   </div>
                 </div>
@@ -4206,12 +4211,10 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             </section>
           )}
 
-          </>)}
-
           {/* With no scan on screen, the page turns sit at the panes' edges
               instead (see ScanPageTurns); the left one steps clear of an open
               drawer. <main> does not scroll, so they hold still. */}
-          {(!scanPaneShown || opening) && (
+          {!scanPaneShown && (
             <ScanPageTurns
               onPrev={prevPage ? r.goPrev : undefined}
               onNext={nextPage ? r.goNext : undefined}
@@ -4414,7 +4417,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           {/* The floating bar's share of the column. Fixed, so the reading
               area never changes size and the text never shifts. */}
           <div className="shrink-0" style={{ height: PHONE_BAR_H }} aria-hidden="true" />
-          {openingView(true) || (<>
           {r.views.scan && !scan.display && !witness && (
             /* No facsimile: one quiet line instead of a scan-sized empty bed.
                The full-height placeholder read as an image that failed to
@@ -4431,6 +4433,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             <section data-reader-section="image" style={{ background: SURFACE.scanBed }}>
               <div className="h-[34px] flex items-center justify-between pl-4 pr-1 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>{witness ? t.panes.tabletWitness : t.panes.originalScan}</CapsLabel>
+                {scanTabs}
                 <ScanControls
                   compact
                   zoom={scanZoom}
@@ -4464,8 +4467,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
                   wheelZooms={false} onMaxZoom={setScanZoomMax}
-                  srcOverride={witnessSrc}
-                  nativeSrcOverride={witnessNativeSrc}
+                  srcOverride={scanSrcOverride}
+                  nativeSrcOverride={scanNativeOverride}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
                   onNaturalSize={onScanNaturalSize}
                   onEdgePageTurn={onScanEdgeTurn}
@@ -4590,7 +4593,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                     )}
                   </p>
                 )}
-                {!paired && !showingSpanish && !loebShown && <MachineDraftLine page={displayPage} book={r.book} />}
+                {!paired && !showingSpanish && !loebShown && facing?.role !== 'translation' && <MachineDraftLine page={displayPage} book={r.book} />}
                 {!paired && !showingSpanish && facing?.role === 'original' && !loebShown && <SourceLibraryTranslationNote />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     <MissingPagesLine gaps={scanGaps} pageNumber={r.currentPage.page_number} />
@@ -4600,15 +4603,14 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                   : showingSpanish
                   ? <SpanishProse page={r.currentPage} lang={showingEdition ?? 'es'} settings={r.settings} baseSize={16} suppressBlockquote={quotesDisagree} />
-                  : facing?.role === 'translation'
-                  ? <FacingEnglishLeafNote facing={facing} onGo={() => r.goToPage(facing.page.id)} />
-                  : <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={r.book} kind="translation" settings={r.settings} baseSize={16} />}
+                  : <>
+                        {facing?.role === 'translation' && <FacingEnglishLeafNote facing={facing} onGo={() => r.goToPage(facing.page.id)} />}
+                        <ReaderProse suppressBlockquote={quotesDisagree} page={displayPage} book={facing?.role === 'translation' ? { ...r.book, language: 'English' } : r.book} kind="translation" settings={r.settings} baseSize={16} />
+                      </>}
                 <PageProblemReport key={r.currentPageId} page={r.currentPage} book={r.book} measure={ocrMeasure} />
               </div>
             </section>
           )}
-
-          </>)}
 
           {/* Fills whatever is left when the page is short, in the last
               visible pane's colour, so no white band shows above the pager */}
@@ -4843,7 +4845,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           onNext={r.goNext}
           hasPrev={!!prevPage}
           hasNext={!!nextPage}
-          srcOverride={witnessNativeSrc}
+          srcOverride={scanNativeOverride}
           altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
         />
       )}
