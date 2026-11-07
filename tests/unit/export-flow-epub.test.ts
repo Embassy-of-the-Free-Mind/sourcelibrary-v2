@@ -40,6 +40,15 @@ describe('footnotesFor', () => {
     const para = footnotesFor('<p>the way to them?</p>\n<p><span class="margin">[a]</span> <span class="margin">[b]</span></p>\n<p>Next.</p>', { n: 0 });
     expect(para).toMatch(/the way to them\? <a epub:type="noteref"[^>]*>1<\/a> <a epub:type="noteref"[^>]*>2<\/a>\s*<\/p>\n<p>Next\.<\/p>/);
   });
+  it('joins a footnote number with no text before it to the text after it (Olaus Magnus, after a heading)', () => {
+    const afterHeading = footnotesFor('<h3>CHAPTER I.</h3>\n<p><span class="note">[woodcut]</span></p>\n<p>Biarmia, therefore</p>', { n: 0 });
+    expect(afterHeading).toMatch(/<h3>CHAPTER I\.<\/h3>\n<p><a epub:type="noteref"[^>]*>1<\/a> Biarmia, therefore<\/p>/);
+    const headOfPara = footnotesFor('<p><a class="page-marker" id="p101" href="x">11</a><span class="margin">[a]</span><br/>Finmarchia is</p>', { n: 0 });
+    expect(headOfPara).toMatch(/<p><a class="page-marker"[^>]*>11<\/a><a epub:type="noteref"[^>]*>1<\/a> Finmarchia is<\/p>/);
+    // A number before a heading has nowhere quiet to go: it stays.
+    const beforeHeading = footnotesFor('<p><span class="note">[x]</span></p>\n<h3>Next</h3>', { n: 0 });
+    expect(beforeHeading).toMatch(/<p><a epub:type="noteref"[^>]*>1<\/a><\/p>\n<h3>/);
+  });
   it('leaves a section without notes untouched', () => {
     expect(footnotesFor('<p>Plain.</p>', { n: 0 })).toBe('<p>Plain.</p>');
   });

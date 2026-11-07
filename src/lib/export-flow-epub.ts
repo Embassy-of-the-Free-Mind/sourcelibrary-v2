@@ -80,7 +80,11 @@ export function footnotesFor(html: string, seq: { n: number }): string {
     // A marginal note set on a line or paragraph of its own leaves its number stranded there; it belongs at the end
     // of the text it sat beside (Hariri, 2026-10-22: "^11 ^12" alone between paragraphs).
     .replace(/(?:<br\/>\s*)+((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)(?=<br\/>|<\/p>)/g, ' $1')
-    .replace(/<\/p>\s*<p>\s*((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>/g, ' $1</p>');
+    .replace(/<\/p>\s*<p>\s*((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>/g, ' $1</p>')
+    // With no text before it (after a heading, at a section's start) or at the head of a paragraph, it joins the text
+    // after it instead: a lone number on a line of its own is clutter on a 6-inch screen (#8333: 542 in Olaus Magnus).
+    .replace(/<p>\s*((?:<a class="page-marker"[^>]*>[^<]*<\/a>\s*)?)((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)(?:<br\/>\s*)+/g, '<p>$1$2 ')
+    .replace(/<p>\s*((?:<a class="page-marker"[^>]*>[^<]*<\/a>\s*)?)((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>\s*<p>/g, '<p>$1$2 ');
   return notes.length ? `${body}\n<section class="footnotes"><h3>Notes</h3>\n${notes.join('\n')}\n</section>` : body;
 }
 
