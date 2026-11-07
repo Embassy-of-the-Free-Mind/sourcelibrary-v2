@@ -133,6 +133,49 @@ export function nextOcr(priorOcr, set) {
   return { ...kept, ...mine };
 }
 
+/**
+ * What the apply does about a book's hold, given how many pages it will write (#7249 review 2). A book held for
+ * another reason is refused; an unheld book is held only when a page will be written, so a book whose pages are all
+ * skipped is not taken out of its pipeline for nothing.
+ * @returns {'keep'|'refuse'|'hold'|'none'}
+ */
+export function holdAction(book, nWrites) {
+  const h = book?.pipeline_auto?.hold;
+  if (h) return HOLD_REASONS.includes(h.reason) ? 'keep' : 'refuse';
+  return nWrites > 0 ? 'hold' : 'none';
+}
+
+/** writePageText results a later run should retry: the page changed under us, so the book is not checkpointed. */
+export const RETRY_STATUSES = new Set(['conflict', 'prior_changed']);
+
+/**
+ * Write one book's planned pages. Each page is re-read immediately before its write (#7249 review 3, 4): the `ocr`
+ * object is built from the page as it is NOW, not as routing read it a book's worth of writes ago, so a key another
+ * lane stamped in between (a fail_* stamp, ocr.lane, a verdict) is kept; and the human-edit test is this lane's
+ * isHumanEdited, which counts `edited_at` (casFilter does not). expect_prior_hash null: a page that gained text
+ * since is refused (prior_changed).
+ * @returns {{ landed: object[], results: { w: object, status: string }[], retry: boolean }}
+ */
+export async function writeBookPages(db, writes, { runId, now }) {
+  const P = db.collection('pages');
+  const landed = [], results = [];
+  for (const w of writes) {
+    const fresh = await P.findOne({ id: w.p.id }, { projection: { id: 1, book_id: 1, ocr: 1 } });
+    const why = !fresh ? 'page_gone' : fresh.book_id !== w.p.book_id ? 'wrong_book' : isHumanEdited(fresh.ocr) ? 'human_edited' : fresh.ocr?.data ? 'already_read' : null;
+    if (why) { results.push({ w, status: `fresh_${why}` }); continue; }
+    const res = await writePageText(db, w.p.id, 'ocr', nextOcr(fresh.ocr, w.set), { by: CALL_SITE, reason: REVISION_REASON, run_id: runId, revision_source: REVISION_SOURCE, expect_prior_hash: null, now });
+    results.push({ w, status: res.status });
+    if (res.status === 'written') landed.push(w);
+  }
+  return { landed, results, retry: results.some((r) => RETRY_STATUSES.has(r.status)) };
+}
+
+/** The checkpoint line for a finished book, or null when a later run must come back to it (#7249 review 5). */
+export function checkpointRow(bookId, runId, { truncated = false, pending = false, retry = false, written = 0 }, at = new Date()) {
+  if (truncated || pending || retry) return null;
+  return { book_id: bookId, write_run: runId, written, at: at.toISOString() };
+}
+
 /** The guard's verdict on the page, as `ocr.verdict` (the shape apply-reocr-verdicts.mjs writes). */
 export function verdictBlock(rec, route, run, flash, now) {
   const g = rec.guard || {};
@@ -227,16 +270,7 @@ async function main() {
       let book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, visible: 1, pipeline_auto: 1 } });
       if (!book) { console.log(`${bid} not found: skipped`); T.books_refused++; continue; }
       if (EXCLUDED_WORKS.test(book.title || '')) { console.log(`${bid} is an excluded work: refusing | ${book.title}`); T.books_refused++; continue; }
-      // HOLD BEFORE WRITE: the hold is what keeps paid re-translation from following the write; it stays on
-      if (!book.pipeline_auto?.hold) {
-        if (!APPLY) { T.would_hold++; console.log(`${bid} carries no hold: --apply holds it (${APPLY_HOLD.reason}) before writing`); }
-        else {
-          const h = await holdBook(db, bid, APPLY_HOLD);
-          book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, visible: 1, pipeline_auto: 1 } });
-          if (h.outcome === 'held') T.books_held_now++;
-          if (!HOLD_REASONS.includes(book.pipeline_auto?.hold?.reason)) { console.log(`${bid} hold failed (${h.outcome}): refusing`); T.books_refused++; continue; }
-        }
-      } else if (!HOLD_REASONS.includes(book.pipeline_auto.hold.reason)) { console.log(`${bid} held for ${book.pipeline_auto.hold.reason}, not ${HOLD_REASONS.join(' / ')}: refusing`); T.books_refused++; continue; }
+      if (holdAction(book, 0) === 'refuse') { console.log(`${bid} held for ${book.pipeline_auto.hold.reason}, not ${HOLD_REASONS.join(' / ')}: refusing`); T.books_refused++; continue; }
       const pages = await P.find({ id: { $in: recs.map((r) => r.page_id) } }, { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, translation: 1 } }).toArray();
       const byId = new Map(pages.map((p) => [p.id, p]));
       const workTitle = workTitleOf(book.title);
@@ -287,36 +321,51 @@ async function main() {
           after: Object.fromEntries(Object.entries(w.set).map(([k, val]) => [k, val])) });
       }
       const nP = writes.filter((w) => w.route === 'PADDLE').length, nF = writes.length - nP;
-      if (!APPLY) { T.would_write += writes.length; console.log(`${bid} would write ${writes.length}/${recs.length} (${nP} Paddle, ${nF} Flash) | ${String(book.title).slice(0, 40)}`); continue; }
+      // HOLD BEFORE WRITE: the hold is what keeps paid re-translation from following the write; it stays on. Only a
+      // book with a page to write is held (#7249 review 2).
+      const hold = holdAction(book, writes.length);
+      if (!APPLY) {
+        if (hold === 'hold') { T.would_hold++; console.log(`${bid} carries no hold: --apply holds it (${APPLY_HOLD.reason}) before writing`); }
+        T.would_write += writes.length; console.log(`${bid} would write ${writes.length}/${recs.length} (${nP} Paddle, ${nF} Flash) | ${String(book.title).slice(0, 40)}`); continue;
+      }
+      let retry = false, modified = 0;
       if (writes.length) {
+        if (hold === 'hold') {
+          const h = await holdBook(db, bid, APPLY_HOLD);
+          book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, visible: 1, pipeline_auto: 1 } });
+          if (h.outcome === 'held') T.books_held_now++;
+          if (!HOLD_REASONS.includes(book.pipeline_auto?.hold?.reason)) { console.log(`${bid} hold failed (${h.outcome}): refusing`); T.books_refused++; continue; }
+        }
         // sweep-log BEFORE the write: a crash mid-book still leaves the intent on record
         await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'first_ocr_start', detail: { issue: LANE_ISSUE, run: run.run, write_run: runId, planned: writes.length, paddle: nP, flash: nF } });
         // one page_revisions row per page (writePageText: prior state 'absent', source REVISION_SOURCE, run_id for
-        // revert-run.mjs), compare-and-set on the empty prior, and the human-edit guard in the update filter
-        let modified = 0;
-        const landed = [];
-        for (const w of writes) {
-          const res = await writePageText(db, w.p.id, 'ocr', nextOcr(w.p.ocr, w.set), { by: CALL_SITE, reason: REVISION_REASON, run_id: runId, revision_source: REVISION_SOURCE, now });
-          if (res.status === 'written') { modified++; landed.push(w); } else { T.conflicts++; skip(`write_${res.status}`, w.rec); }
-        }
+        // revert-run.mjs), compare-and-set on the empty prior, and the human-edit guard in the update filter; each
+        // page re-read just before its write
+        const out = await writeBookPages(db, writes, { runId, now });
+        const landed = out.landed;
+        retry = out.retry; modified = landed.length;
+        for (const r of out.results) if (r.status !== 'written') { if (RETRY_STATUSES.has(r.status)) T.conflicts++; skip(`write_${r.status}`, r.w.rec); }
+        const lP = landed.filter((w) => w.route === 'PADDLE').length, lF = modified - lP;
         // a blocked-translation flag set by an earlier failure does not apply to the new text
         await P.updateMany({ id: { $in: landed.map((w) => w.p.id) }, 'translation.health_blocked': { $exists: true } }, { $unset: { 'translation.health_blocked': '', 'translation.health_blocked_at': '' } });
         T.written += modified;
         const stale = await markTranslationsStale(db, landed.map((w) => ({ id: w.p.id, text: w.text })), now, LANE);
         T.stale_marked += stale;
         const { after: counts } = await recountBook(db, bid, { reason: LANE, now });
-        await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'first_ocr', detail: { issue: LANE_ISSUE, run: run.run, write_run: runId, engine: PADDLE.model, revision: run.engine.revision, pages_written: modified, paddle: nP, flash: nF, translations_marked_stale: stale, downstream: DOWNSTREAM_NOTE } });
+        await recordSweepAction(db, { sweep: LANE, book_id: bid, action: 'first_ocr', detail: { issue: LANE_ISSUE, run: run.run, write_run: runId, engine: PADDLE.model, revision: run.engine.revision, pages_written: modified, paddle: lP, flash: lF, translations_marked_stale: stale, downstream: DOWNSTREAM_NOTE } });
         await db.collection('book_events').updateOne(
           { book_id: bid, type: BOOK_EVENT },
           { $setOnInsert: { book_id: bid, type: BOOK_EVENT, at: now, source: LANE, 'details.issue': LANE_ISSUE, 'details.engine': PADDLE.model, 'details.repo': PADDLE.repo },
             $set: { 'details.last_apply_at': now, 'details.run': run.run, 'details.write_run': runId, 'details.pages_ocr_after': counts?.pages_ocr ?? null, 'details.downstream': DOWNSTREAM_NOTE },
-            $inc: { 'details.pages_written': modified, 'details.paddle': nP, 'details.flash': nF } },
+            $inc: { 'details.pages_written': modified, 'details.paddle': lP, 'details.flash': lF } },
           { upsert: true },
         );
-        console.log(`${bid} wrote ${modified}/${writes.length} (${nP} Paddle, ${nF} Flash; stale ${stale}) | ${String(book.title).slice(0, 40)}`);
+        console.log(`${bid} wrote ${modified}/${writes.length} (${lP} Paddle, ${lF} Flash; stale ${stale}${retry ? '; changed under us, not checkpointed' : ''}) | ${String(book.title).slice(0, 40)}`);
       }
-      // a book cut short by --limit-pages, or with Flash pages not yet read, is not done: a later run picks them up
-      if (CHECKPOINT && !truncated && !pending) fs.appendFileSync(CHECKPOINT, JSON.stringify({ book_id: bid, write_run: runId, written: writes.length, at: new Date().toISOString() }) + '\n');
+      // a book cut short by --limit-pages, with Flash pages not yet read, or with a page that changed under its write,
+      // is not done: a later run picks them up (the already_read skip keeps that safe). `written` = what landed.
+      const cp = CHECKPOINT && checkpointRow(bid, runId, { truncated, pending, retry, written: modified });
+      if (cp) fs.appendFileSync(CHECKPOINT, JSON.stringify(cp) + '\n');
     }
     T.failed_reads = failedRows.length;
     if (APPLY && failedRows.length) T.failed_reads_stamped = (await recordFailedReads(db, failedRows)).stamped;
