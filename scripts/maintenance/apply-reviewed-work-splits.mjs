@@ -78,7 +78,7 @@ async function dryRun() {
   const names = async (field) => {
     const s = new Set();
     const pipe = [{ $match: { [field]: { $exists: true, $ne: null } } }, { $project: { v: `$${field}` } }, ...(field === 'work_id_aliases' ? [{ $unwind: '$v' }] : []), { $group: { _id: '$v' } }];
-    for await (const d of books.aggregate(pipe, { allowDiskUse: true })) s.add(d._id);
+    for await (const d of books.aggregate(pipe, { allowDiskUse: true, batchSize: 5000 })) s.add(d._id);
     return s;
   };
   const taken = { ids: await names('work_id'), slugs: await names('work_slug'), aliases: await names('work_id_aliases') };

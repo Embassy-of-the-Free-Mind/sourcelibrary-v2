@@ -12,6 +12,7 @@
 //   node --env-file=… split-read.mjs check <reviewed.jsonl> OUT/clusters.json   # every row names real books and a real target
 import fs from 'fs';
 import { MongoClient } from 'mongodb';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const readJsonl = f => fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l));
 const PROJ = { _id: 0, id: 1, title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1, pages_count: 1, visible: 1, work_id: 1, work_id_source: 1, work_id_aliases: 1, work_slug: 1, work_title: 1 };
@@ -60,9 +61,9 @@ async function pages(id, from = 1, to = 6) {
 
 async function image(id, n, dir) {
   const { c, d } = await db();
-  const p = await d.collection('pages').findOne({ book_id: id, page_number: +n }, { projection: { archived_photo: 1, photo: 1 } });
+  const p = await d.collection('pages').findOne({ book_id: id, page_number: +n }, { projection: { cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, archived_photo: 1, photo_original: 1, photo: 1 } });
   await c.close();
-  const url = p?.archived_photo || p?.photo; if (!url) { console.log('no image'); return; }
+  const url = p && getPageSource(p); if (!url) { console.log('no image'); return; }
   const r = await fetch(url); if (!r.ok) { console.log(`fetch ${r.status} ${url}`); return; }
   fs.mkdirSync(dir, { recursive: true }); const f = `${dir}/${id}-p${n}.jpg`; fs.writeFileSync(f, Buffer.from(await r.arrayBuffer())); console.log(f);
 }
