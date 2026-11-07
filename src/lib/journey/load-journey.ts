@@ -24,7 +24,7 @@ import { isHiddenBook } from '@/lib/book-access';
 import { generateCitations } from '@/lib/citation';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import { readerPageUrl } from '@/lib/slugify';
-import { transcriptProvenance, isUnreviewedMachineTranslation, modelDisplayName, translationCorpus } from '@/lib/text-provenance';
+import { transcriptProvenance, isUnreviewedMachineTranslation, translationCorpus } from '@/lib/text-provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { hashAlignmentText, WORD_ALIGNMENT_VERSION, type WordAlignmentData } from '@/lib/word-alignment';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -107,10 +107,7 @@ function currentAlignment(page: Page & { word_alignment?: WordAlignmentData }): 
 function readByLabel(page: Page): { readBy: string; readByModel: boolean } {
   const prov = transcriptProvenance(page);
   switch (prov?.kind) {
-    case 'model': {
-      const name = modelDisplayName(prov.model);
-      return { readBy: /^gemini/i.test(prov.model) ? 'Gemini' : name, readByModel: true };
-    }
+    case 'model': return { readBy: 'a machine', readByModel: true };
     case 'ia': return { readBy: 'the Internet Archive’s own OCR of the scan', readByModel: false };
     case 'manual': return { readBy: 'a transcription made by hand', readByModel: false };
     case 'corpus': return { readBy: prov.corpus.name, readByModel: false };

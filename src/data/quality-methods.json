@@ -34,7 +34,7 @@
     },
     {
       "id": "judge-family",
-      "rule": "We test whether an AI judge favours translations made by its own model family. In October 2026 we found no measurable bias: compared with an Opus judge, a Gemini Pro judge rated Gemini's translations 0.16 points higher (on a 1 to 5 scale) in one round and 0.06 lower in a second, and neither differs from zero beyond chance. We still use a judge from another family where it costs nothing, and keep measuring, but we do not refuse a judge for its family.",
+      "rule": "We test whether an AI judge favours translations made by its own model family. In October 2026 we found no measurable bias: compared with a judge from another family, a judge from the translator's own family rated its translations 0.16 points higher (on a 1 to 5 scale) in one round and 0.06 lower in a second, and neither differs from zero beyond chance. We still use a judge from another family where it costs nothing, and keep measuring, but we do not refuse a judge for its family.",
       "source": "scripts/eval/experiments/2026-10-12-pro-opus-correction-hardest-languages-6545.md"
     },
     {
@@ -68,7 +68,7 @@
       "cadence": "monthly, from 2026-10-31",
       "latest": { "date": "2026-10-31", "headline": "57% of live books usable (95% CI 49–64%). In the other 43%, about 20,600 books, two or more of the five pages had text that was wrong, missing, added or from another page. This is the headline figure on the Quality Center", "source": "scripts/eval/experiments/2026-10-31-confidence-validation-7866.md" },
       "on_finding": "Pages carrying another page's text are withheld the same day (6 pages in 2 books on 2026-10-31). The weak books are listed for re-reading, and a re-read is kept only after a check against the page image.",
-      "blind_to": "The English translation, and any person's judgment: the reviewer is an AI model (Claude Opus), which agrees with people's transcriptions well on printed pages and much less well on manuscripts (#7263, 2026-11-01)",
+      "blind_to": "The English translation, and any person's judgment: the reviewer is an AI model, which agrees with people's transcriptions well on printed pages and much less well on manuscripts (#7263, 2026-11-01)",
       "issue": 7866,
       "status": "running"
     },
@@ -121,7 +121,7 @@
       "kind": "accuracy",
       "scope": "Kanripo (Chinese classics), CBETA, VRI (Pali); more editions to follow",
       "cadence": "per study; phase 1 running",
-      "latest": { "date": "2026-10-05", "headline": "Kanripo screen on the PaddleOCR reading: 6.6% of 992,881 pages flagged as disagreeing", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5600" },
+      "latest": { "date": "2026-10-05", "headline": "Kanripo screen on one machine reading: 6.6% of 992,881 pages flagged as disagreeing", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5600" },
       "on_finding": "Flagged pages are listed; not yet held from translation (proposed in #5915).",
       "blind_to": "Genuine textual variants between editions, until the by-eye floor is measured",
       "issue": 5935,

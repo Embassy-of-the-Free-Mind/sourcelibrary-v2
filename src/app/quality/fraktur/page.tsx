@@ -95,11 +95,11 @@ const CER_PASS_ROWS: BarRow[] = CER_7818.rows.map((r) => ({
 
 const P = PASS_7818;
 const PASS_ROWS: BarRow[] = [
-  { label: 'Flash-Lite draft', v: (100 * P.accepted.draft) / P.pages, lo: P.accepted.draftCi[0], hi: P.accepted.draftCi[1], note: `${P.accepted.draft} of ${P.pages} pages` },
+  { label: 'Lightest-model draft', v: (100 * P.accepted.draft) / P.pages, lo: P.accepted.draftCi[0], hi: P.accepted.draftCi[1], note: `${P.accepted.draft} of ${P.pages} pages` },
   { label: 'After the correction pass (served)', v: (100 * P.accepted.served) / P.pages, lo: P.accepted.servedCi[0], hi: P.accepted.servedCi[1], note: `${P.accepted.served} of ${P.pages} pages`, strong: true },
 ];
 const WRONG_ROWS: BarRow[] = [
-  { label: 'Flash-Lite draft', v: (100 * P.wrongText.draft) / P.pages, note: `${P.wrongText.draft} of ${P.pages} pages` },
+  { label: 'Lightest-model draft', v: (100 * P.wrongText.draft) / P.pages, note: `${P.wrongText.draft} of ${P.pages} pages` },
   { label: 'After the correction pass (served)', v: (100 * P.wrongText.served) / P.pages, note: `${P.wrongText.served} of ${P.pages} pages`, strong: true },
 ];
 
@@ -139,7 +139,7 @@ export default function FrakturPage() {
           </p>
           <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mt-2">Reading Fraktur: where it stands</h1>
           <p className="text-lg text-stone-700 leading-relaxed mt-4">
-            Into the nineteenth century most German books were printed in Fraktur, a blackletter type. Gemini reads it:
+            Into the nineteenth century most German books were printed in Fraktur, a blackletter type. Our current reading model reads it:
             against human transcriptions it got 0.5% to 1.5% of characters wrong (two sets, 29 and 40 pages), and the
             engine that now reads new German pages was accepted by an AI reviewer on 13 of 15 Fraktur pages. The three
             open engines we tested the same way on our own machines were accepted on at most 3 of 18 Fraktur pages, though one of them read
@@ -204,7 +204,7 @@ export default function FrakturPage() {
         <Section id="engines" title="Which engines can read it">
           <p>
             On 30 October 2026 we gave the same 18 Fraktur pages and 12 Antiqua pages, from 30 different German books, to
-            four engines (<Issue n={DRAW_7701.issue} />). Claude Opus, an AI reviewer, saw each page image beside each text,
+            four engines (<Issue n={DRAW_7701.issue} />). An AI reviewer saw each page image beside each text,
             without being told which engine wrote it, and accepted a text when a reader would be served by publishing it as
             that page: every line, in order, the right words and numerals, with spelling conventions set aside.
           </p>
@@ -219,25 +219,25 @@ export default function FrakturPage() {
             measure="of pages accepted by the AI reviewer"
             source={
               <>
-                Opus judge, blind, 30 October 2026; 16 wrong-page controls all refused and 4 of 4 planted errors caught.
-                Gemini wrote 15 of the 18 Fraktur and 9 of the 12 Antiqua pages (the rest were in blocks cut short), so its
-                bars count the pages it wrote. Kraken was run on Fraktur only. Record:{' '}
+                AI judge, blind, 30 October 2026; 16 wrong-page controls all refused and 4 of 4 planted errors caught.
+                The current reading model wrote 15 of the 18 Fraktur and 9 of the 12 Antiqua pages (the rest were in blocks cut short), so its
+                bars count the pages it wrote. The free open engine was run on Fraktur only. Record:{' '}
                 <Rec path={RECORDS.draw7701}>2026-10-30-german-cheaper-first-reads-7701.md</Rec>.
               </>
             }
           />
           <p>
-            Fraktur is what separates the engines. Gemini 3.8 Flash, which reads the German pages we have not yet
+            Fraktur is what separates the engines. The current reading model, which reads the German pages we have not yet
             transcribed, was accepted on 13 of the 15 Fraktur pages it wrote, with no page carrying words the page does not
-            print. On Antiqua, LightOnOCR, a small open model, was accepted on 11 of 12; on Fraktur, on 2 of 18, and 10 of
-            its Fraktur pages had wrong words. PERO-OCR was accepted on 3 of 18 Fraktur pages, and a Kraken model trained
+            print. On Antiqua, a small open model was accepted on 11 of 12; on Fraktur, on 2 of 18, and 10 of
+            its Fraktur pages had wrong words. Open engine G was accepted on 3 of 18 Fraktur pages, and a free open engine's model trained
             on Fraktur newspapers on none of 18, with wrong text on 17.
           </p>
           <p>
             The errors of the open engines are mostly real German words in place of the printed ones, which a reader cannot
             catch without the scan: <em>Sarge</em> read as <em>Garge</em>, <em>Kotzen</em> (vomiting) as <em>Kosen</em>, the
-            Kraken model&rsquo;s <em>zehen gepot halte</em> as <em>zelen gexotbalee</em>. PERO read the recipe sign ℞ as
-            &ldquo;3&rdquo; or &ldquo;12&rdquo;, which looks like a quantity. Gemini&rsquo;s Fraktur pages carried no wrong
+            free open engine&rsquo;s <em>zehen gepot halte</em> as <em>zelen gexotbalee</em>. Open engine G read the recipe sign ℞ as
+            &ldquo;3&rdquo; or &ldquo;12&rdquo;, which looks like a quantity. The current reading model&rsquo;s Fraktur pages carried no wrong
             text in this test. In an earlier one, on 20 Fraktur pages from 5 books read four ways, it was judged usable on
             20 of 20 in two runs and 19 of 20 in the other two; the one miss was <em>Leyter</em> read as <em>Leyer</em>{' '}
             (<Rec path={RECORDS.perCall7522}>record, 27 October</Rec>).
@@ -265,7 +265,7 @@ export default function FrakturPage() {
             measure="of characters differ from the typed transcription (median page)"
             source={
               <>
-                {CER_5660.dates}, one page per book (<Issue n={CER_5660.issue} />). Kraken&rsquo;s generic print model scored{' '}
+                {CER_5660.dates}, one page per book (<Issue n={CER_5660.issue} />). The free open engine&rsquo;s generic print model scored{' '}
                 {CER_5660.krakenGeneric.toFixed(1)}% on the same pages and is off this scale. Records:{' '}
                 <Rec path={RECORDS.paddle5660}>2026-10-03-open-engine-print-5660.md</Rec>,{' '}
                 <Rec path={RECORDS.bakeoff5660}>2026-10-04-ocr-bakeoff-round-3-5660.md</Rec>.
@@ -284,30 +284,30 @@ export default function FrakturPage() {
             measure="of characters differ from the proofread transcription (average page)"
             source={
               <>
-                31 October 2026 (<Issue n={CER_7818.issue} />). PERO&rsquo;s median page was {CER_7818.peroMedian}%; a few pages it
+                31 October 2026 (<Issue n={CER_7818.issue} />). Open engine G&rsquo;s median page was {CER_7818.peroMedian}%; a few pages it
                 failed raise its average. Record: <Rec path={RECORDS.correction7818}>2026-10-31-correction-pass-paired-7818.md</Rec>.
               </>
             }
           />
           <p>
-            Gemini Flash-Lite, the engine that read much of the German already in the library, had a median of 0.5% of
+            Our lightest model, the engine that read much of the German already in the library, had a median of 0.5% of
             characters wrong on the first set, the lowest of the eight engines. On the second set its average was 1.5%, and
             the correction pass described below brought it to 1.1% (a difference of 0.4 points, 95% interval 0.2 to 0.6).
-            The same pass, run over PERO&rsquo;s reading, brought PERO from 8.8% to 1.4%.
+            The same pass, run over Open engine G&rsquo;s reading, brought it from 8.8% to 1.4%.
           </p>
           <p>
             <strong className="text-stone-900">What these numbers leave out.</strong> The Wikisource transcriptions modernise
             the letters: none of the 40 German pages had a single long s. So the scoring folds the long s into s, and also
             case, accents, u and v, i and j, and punctuation. A figure of 1% therefore counts wrong and missing words and
             letters; it does not count a long s printed as s, or an e-umlaut printed as ö. Character error and the
-            reviewer can also disagree: PERO&rsquo;s median page was 1.9% wrong, yet the reviewer accepted only 6 of its 40
+            reviewer can also disagree: Open engine G&rsquo;s median page was 1.9% wrong, yet the reviewer accepted only 6 of its 40
             pages, because a few wrong words in the wrong place are enough for it to turn a page down.
           </p>
         </Section>
 
         <Section id="correction" title="What the correction pass does on the pages we serve">
           <p>
-            Much of the German in the library was first read by Gemini Flash-Lite. A second pass gives Gemini 3.8 Flash the page
+            Much of the German in the library was first read by our lightest model. A second pass gives the current reading model the page
             image and that draft and asks it to correct the draft. By 30 October the pass had processed{' '}
             {num(P.frame.pages)} German pages in {P.frame.books} books. To see what it changed, we drew one of those pages
             from each of {P.pages} books at random and had the same AI reviewer judge the draft and the served text, blind
@@ -372,7 +372,7 @@ export default function FrakturPage() {
             </li>
             <li>
               <strong className="text-stone-900">What comes next.</strong> The engine comparison names its next test:
-              LightOnOCR alone on at least 30 Antiqua pages, since 12 is too few to rely on (<Issue n={DRAW_7701.issue} />).
+              the small open model alone on at least 30 Antiqua pages, since 12 is too few to rely on (<Issue n={DRAW_7701.issue} />).
               Measuring the error in the human references themselves is <Issue n={6552} />.
             </li>
           </ul>

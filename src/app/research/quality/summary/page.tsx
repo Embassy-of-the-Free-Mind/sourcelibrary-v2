@@ -346,7 +346,7 @@ export default function QualitySummaryPage() {
             </div>
             <div>
               <dt className="text-primary font-semibold">How reliable the judge is</dt>
-              <dd className="text-secondary m-0">Claude Opus against Claude Sonnet on 107 pages: sound/defective κ 0.56 (0.32–0.76), AC1 0.85; on the 1–5 scale, quadratic-weighted κ 0.73 (0.60–0.83). Blinded controls in every audit: 15/15 swapped translations rated 2 or lower, 15/15 translations with the middle third removed flagged as omission (each 80–100%); 11/15 repeats given the identical rating. An audit whose controls fail is discarded.</dd>
+              <dd className="text-secondary m-0">One AI judge against a second on 107 pages: sound/defective κ 0.56 (0.32–0.76), AC1 0.85; on the 1–5 scale, quadratic-weighted κ 0.73 (0.60–0.83). Blinded controls in every audit: 15/15 swapped translations rated 2 or lower, 15/15 translations with the middle third removed flagged as omission (each 80–100%); 11/15 repeats given the identical rating. An audit whose controls fail is discarded.</dd>
             </div>
             <div>
               <dt className="text-primary font-semibold">Accuracy, agreement, judged</dt>
@@ -365,7 +365,7 @@ export default function QualitySummaryPage() {
                 <tr className="text-left text-muted border-b border-light">
                   <th className="py-1 pr-2 font-medium">Language</th>
                   <th className="py-1 pr-2 font-medium text-right">Share of pages</th>
-                  <th className="py-1 pr-2 font-medium">Character error (Flash-Lite) · books</th>
+                  <th className="py-1 pr-2 font-medium">Character error (lightest model) · books</th>
                   <th className="py-1 pr-2 font-medium">Rated faithful by the judge · books</th>
                   <th className="py-1 font-medium">What is missing</th>
                 </tr>
@@ -389,7 +389,7 @@ export default function QualitySummaryPage() {
             </table>
           </div>
           <p className="text-[11px] text-muted mt-1.5 leading-snug">
-            Character error: median against a published e-text, one page per book; Flash-Lite has read every new page since 11 September 2026. Faithful: share of one-page-per-book samples Claude Opus rated 4 or 5 of 5, with the 95% Wilson interval ({byLanguage.translation_books} books, pooled audits). Under 30 books a figure is exploratory (grey).
+            Character error: median against a published e-text, one page per book; the lightest model has read every new page since 11 September 2026. Faithful: share of one-page-per-book samples an AI judge rated 4 or 5 of 5, with the 95% Wilson interval ({byLanguage.translation_books} books, pooled audits). Under 30 books a figure is exploratory (grey).
           </p>
           <MethodLinks links={[['The language grid', `${PAPER}#by-language`], ['What an error rate looks like', `${PAPER}#error-ladder`], ['Engines', `${PAPER}#engines`], ['Decisions', `${PAPER}#decisions`]]} />
         </section>
@@ -408,7 +408,7 @@ export default function QualitySummaryPage() {
             </li>
             <li className="border-l-2 border-accent-rust pl-2.5">
               <div className="text-primary font-semibold text-xs">Within a script, transcription error falls with the book&rsquo;s date.</div>
-              <div className="text-xs text-secondary">Greek on Flash-Lite: {cer(g15?.median ?? null)} for 1500s books (n = {g15?.n}), {cer(g17?.median ?? null)} for the 1700s (n = {g17?.n}), {cer(g18?.median ?? null)} for the 1800s (n = {g18?.n}). Latin script: {cer(l16?.median ?? null)} in the 1600s (n = {l16?.n}), {cer(l18?.median ?? null)} in the 1800s (n = {l18?.n}). Flash shows the same slope ({cer(f15?.median ?? null)} to {cer(f18?.median ?? null)} in Greek). The 1800s pages lean on clean reference editions, so part of this is selection.</div>
+              <div className="text-xs text-secondary">Greek on the lightest model: {cer(g15?.median ?? null)} for 1500s books (n = {g15?.n}), {cer(g17?.median ?? null)} for the 1700s (n = {g17?.n}), {cer(g18?.median ?? null)} for the 1800s (n = {g18?.n}). Latin script: {cer(l16?.median ?? null)} in the 1600s (n = {l16?.n}), {cer(l18?.median ?? null)} in the 1800s (n = {l18?.n}). The mid-tier model shows the same slope ({cer(f15?.median ?? null)} to {cer(f18?.median ?? null)} in Greek). The 1800s pages lean on clean reference editions, so part of this is selection.</div>
             </li>
             <li className="border-l-2 border-accent-rust pl-2.5">
               <div className="text-primary font-semibold text-xs">Above 1,500 px, bigger scans do not read better.</div>
@@ -427,7 +427,7 @@ export default function QualitySummaryPage() {
           </div>
 
           <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-2">
-            <h3 className="text-sm text-primary font-semibold m-0">Transcription: median character error, Flash-Lite, against a published text (log scale)</h3>
+            <h3 className="text-sm text-primary font-semibold m-0">Transcription: median character error, lightest model, against a published text (log scale)</h3>
             <Legend series={O_SERIES} />
           </div>
           <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 print:grid-cols-3 mb-2">
@@ -494,7 +494,7 @@ export default function QualitySummaryPage() {
           </div>
 
           <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-2">
-            <h3 className="text-sm text-primary font-semibold m-0">Transcription: median character error, Flash-Lite, against a published text (log scale)</h3>
+            <h3 className="text-sm text-primary font-semibold m-0">Transcription: median character error, lightest model, against a published text (log scale)</h3>
             <Legend series={O_SERIES} />
           </div>
           <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 print:grid-cols-3 mb-2">
