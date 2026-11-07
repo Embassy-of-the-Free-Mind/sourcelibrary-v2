@@ -110,7 +110,7 @@ describe('cli-ocr-lane.mjs armc --frame=first-read (#7701: Latin arm c on unread
   it('stamps its own lane, Latin only', () => {
     expect(lane.ARMC_FIRST_READ_LANE).toBe('pero-agy-first-read-7701');
     expect(lane.ARMC_FIRST_READ_LANGS).toEqual(['la']);
-    expect(run).toContain("LANE_ID = EU ? ARMC_EURO_LANE : CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
+    expect(run).toContain("LANE_ID = EU ? armcEuroLane(CELL) : CF ? ARMC_CAMPAIGN_LANE : FR ? ARMC_FIRST_READ_LANE : ARMC_LANE");
     expect(run).toContain('`--lane=${LANE_ID}`');
   });
 

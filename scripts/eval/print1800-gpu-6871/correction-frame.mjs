@@ -32,7 +32,7 @@ await withMongo(async (db) => {
   const cur = db.collection('pages').find(
     { 'ocr.source': 'lightonocr', 'ocr.engine.corrected': { $ne: true }, 'ocr.pipeline': { $in: PIPELINES }, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false } },
     { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.pipeline': 1, 'ocr.language': 1, 'ocr.engine.input': 1 } },
-  ).sort({ book_id: 1, page_number: 1 });
+  ).sort({ book_id: 1, page_number: 1 }).batchSize(1000);
   let bid = null, ids = [], draft = null;
   const flush = () => {
     if (!bid || !ids.length) return;
