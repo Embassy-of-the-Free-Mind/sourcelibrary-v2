@@ -1163,7 +1163,7 @@ export function armcEuroSkip(book, cell, { skipPlannedIn = null } = {}) {
   return null;
 }
 /** The euro frame's pages of a book: UNREAD, no human edit, in page order; [] for a possible unsplit spread. */
-async function armcEuroPages(db, book, ids = null) {
+export async function armcEuroPages(db, book, ids = null) {
   const pages = await db.collection('pages').find({ book_id: book.id, ...UNREAD, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false }, 'ocr.source': { $ne: 'manual' }, ...(ids && { id: { $in: ids } }) }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
   return ids || !spreadReason(book, pages) ? pages : [];
 }
