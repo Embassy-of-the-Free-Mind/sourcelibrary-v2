@@ -160,6 +160,67 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 | 2026-10 | 103 | 83.3 (74.5–91.8) | 3.1 | 14.8 (7–24.2) | 12.6 | 14.6 | 9.6 | 87.7 / 76.3 | 15/15 · 15/15 · 15/15 within 1 · draw 2026-10-01, judged late on 2026-10-30 (#5274 wave 2) |
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-11-07 · Which live work_id clusters must be split, and how? (#8293)
+<!-- PRIOR ART: 2026-11-07-work-id-overmerge-audit-8291.md measured a sample of the same routes with the same instrument (overmerge-audit.mjs, reused unchanged here, with a census subcommand added); scripts/maintenance/apply-verified-work-merges.mjs is the merge writer whose backup/sweep_log shape the split writer copies; scripts/lib/work-id-remint.mjs already knew a split writes no alias for the old id. -->
+
+**Why.** #8291 estimated that about 8% of the clusters in two routes join different works. That figure came from a sample. Splitting needs a list: every cluster, which books leave, and where each goes.
+
+**Frame.** This uses the #8291 frame, reproduced exactly. The census covers every not-yet-judged cluster in two routes: model merge with no second judge (1,868 new plus the 119 #8291 read, so 1,987) and legacy seed (169). Nothing was stratified. Read-only throughout: no `work_id` changed on production.
+
+**Gate, read before any result.** A new planted set, `overmerge-planted-8293.jsonl` (seed `overmerge-8293-2026-11-07`): 30 easy, 30 hard and 30 known-good controls, each read first. Result: **60/60 caught [94–100]**, and the strict count is also 60/60. Controls: 30/30 `all_same_work`, with 0 false alarms. Passed.
+
+**Judge.** `overmerge-audit.mjs census` uses `claude -p --model sonnet` on the subscription with the prompt unchanged: 347 calls, 0 failures. Model route: same 1,104, unsure 121, volume-or-part 259, different 115, container 269. Legacy route: same 24, volume-or-part 69, different 21, container 4, unsure 1.
+
+**Read.** The read list was 603 clusters and 3,056 books (466 hidden). It holds the 531 the census flagged, the 28 rows #8291 confirmed, 19 Tesla patent clusters and 31 `local:n::` empty-author keys. Eight Opus readers worked with `split-read.mjs` (record packet, OCR pages, page images, existing-work lookup). For each different-work call they named the odd books and their destination, and labelled the evidence. Only image-opened claims are called by eye. I then read all 127 clear splits myself, and they hold. The weakest are same-subject disputations by different respondents (Burckhardt *de tutelis*, Zwinger *de resurrectione*), and I kept them as clear.
+
+| label | clusters | books in them |
+|---|---|---|
+| different work, clear | 127 | 711 (256 move) |
+| different work, arguable | 31 | 150 (35 move) |
+| container (listed, none split) | 283 | 1,653 |
+| volume or part (listed, none split) | 32 | 158 |
+| same work | 118 | 353 |
+| undecided | 12 | 31 |
+
+Evidence for the clear calls: 101 from the record, 23 from OCR text, 3 from the image. For the arguable calls: 19 record, 9 OCR, 3 image. By route, clear/arguable: model 89/25, legacy 16/3, Wikidata 4/1, title+author 17/2 (Tesla and `local:n::`), second-judged 1. Tesla: 17 different work, 2 same. `local:n::`: 2 different work, 28 same, 1 container. Of the 28 #8291-confirmed rows, 27 were confirmed and 1 is undecided. A reader noted six QIDs whose Wikidata item names a different work than the books carrying it (Q108374728, Q135214551, Q1242501, Q15715550, Q110965843, Q1230444). They are covered in the next section.
+
+**Writer.** `scripts/maintenance/apply-reviewed-work-splits.mjs`, with the pure planner in `scripts/lib/work-split-plan.mjs` and tests in `tests/unit/work-split-plan.test.ts`. It runs as a dry run by default. The dry run writes the plan with a full before-document backup of every moving book. `--apply <plan>` re-reads every carrier and refuses a cluster whose ids, slugs or aliases have changed. It logs one row per cluster to its own collection, `work_id_splits`, and one `sweep_log` row per book; `--revert <sweep>` undoes them. It does not log to `work_id_merges`, because every reader of that collection treats a row as winner ← losers: the overmerge audit and the admin merge count would both count a split as a merge.
+
+**Alias rule.** The source id stays with the books that do not move. It never becomes an alias on a moved book: `workAliasTarget` runs before the editions query and has no liveness check, so one such alias would redirect every stayer's address. An alias the stayers hold, or the stayers' live slug, is dropped from the moved books. An alias only moved books hold goes to the moved group with most holders. Moved books get `work_id_source: work-split:reviewed`, which the nightly `--remint-local` leaves alone (it rewrites `local-mint` only).
+
+**The six wrong-Wikidata clusters, applied.** Derek's inbox note (10:28Z) asked for these six to be fixed and applied, and only these. First I re-checked every id on the Wikidata API. Q108374728 (Bywater *Poetics*) and Q135214551 (Loeb *Letters to Friends*) are P31 Q3331189 edition items, not works. Every target is a work class with the right P50. Rows: `split-wikidata-six-8293.jsonl`. Sweep: `wikidata-six-work-splits-2026-11-07`.
+- Q108374728 is dissolved. *De partibus* goes to Q1180725, the Aldine *Mechanica* to Q2337123, and the two MSS, the Aristotle/Ptolemy/Hero codex and Works vol. 2 each get their own local id.
+- Q135214551 is dissolved. Offices 1755 and Ethical Writings go to Q1180721, Tusculan 1894 to Q1233156, and the three Orationes to `local:a:cicero:orations`. Rhetorica ×2 get a new `local:a:cicero:opera-rhetorica`. VLF 12 B gets its own id. Phil. Works vol. 1 (1523) goes to the existing *De philosophia* vol. 1 id. The three Manutius 1583 volumes (Opera tomus 8/9) go to `local:a:cicero:ciceronis-opera-tullii`, which already holds 1583 Opera vols 2–10.
+- Q1242501: 21 *De officiis* editions go to Q1180721, and the slug `cicero-de-officiis` goes with them. The VLF 70 codex goes to its own local id, not Q1180721, because it holds Topica, Boethius, Macrobius and Seneca but no *De officiis*. That departs from the note. The Somnium-only books stay and are retitled (`cicero-somnium-scipionis`).
+- Q15715550: the Arithmetica books go to Q131310260 with their slug. The *musica* MS stays and is retitled.
+- Q110965843: all three Apologeticus books go to Q4780426. `/work/Q110965843` now redirects there.
+- Q1230444: BPG 74 C (led by the Argonautica) stays and is retitled *Argonautica Orphica*. The hymns ×3 go to Q1313790, and the collected Orphica ×3 to `local:a:orpheus:orphica`, with `homer-orphica` kept as an alias that redirects.
+
+In total 57 books moved and 4 stayers were retitled. Three silent (`under_review`) FT cards were copied to the destination that took most of the books (Q1242501→Q1180721, Q15715550→Q131310260, Q110965843→Q4780426); none was moved. Three pending `work_merge_queue` rows were set to `superseded`. I revalidated 107 paths and synced `books_catalog`, then checked the Supabase counts. Every live page answered 200. Four ids return 404 on purpose, because we hold neither the *Poetics* nor the *Letters*: Q108374728, Q135214551, `aristotle-on-the-art-of-poetry` and `cicero-the-letters-to-his-friends`. Some slugs carry another author's surname (`callimachus-orphic-hymns`, `homer-argonautica-orphica`). The nightly `assign-work-slugs.mjs` builds them from the bylines, so that is a byline problem, not a split one.
+
+*Incident.* The first `--apply` crashed after cluster Q108374728 had moved (6 books plus their `sweep_log` rows). The cause was a `const mainDest` used before its declaration (TDZ). I wrote that cluster's `work_id_splits` row by hand from the plan, with a `note`, and fixed the code by making it a function declaration. On the re-run, the identity check skipped Q108374728, as designed. I revalidated that cluster's paths by hand. So `--apply` is not transactional across clusters, but it can be re-run safely.
+
+**The general case, report only (#8325).** I scanned every QID `work_id` on `books` against Wikidata P31 (`qid-nonwork-scan-8293.jsonl`): 96 QIDs on 454 books are not plain work items. 80 are edition/translation items (322 books), 4 are not a work (47), 4 are physical manuscripts (30), 5 need a translated-work check (46), 2 have no P31 (7) and 1 is a redirect (2). Q108375225 (Ogle *De partibus*) is one of them. None was fixed here.
+
+**Dry run, clear list (after the six).** The run reads 127 rows and yields 125 clusters. It refuses 2, Q108374728 and Q135214551, which no book carries any more. 242 books move, 24 of them not visible (25 `hidden`), in 172 groups: 44 go to an existing work_id and 128 to new ids (0 restored retired ids). 2 aliases are kept on moved books and 66 dropped; the source id is aliased 0 times. With arguable rows: 154 clusters, 282 books, 4 refused.
+
+**Settled-card gate.** 23 of the source ids carry a SETTLED first-translation card (15 `prior_exists`, 5 `no_prior_known`, 3 `not_a_single_work`; 34 moving books). Moving books from under a settled public claim changes what it covers. So `--apply` refuses those clusters unless it is given `--allow-settled-cards`. The default apply is **102 clusters, 208 books** (24 hidden, 104 new ids). With the flag it is 125 clusters, 242 books.
+
+**Readers that notice** (clear list):
+- `/work/[id]` (`src/app/work/[id]/page.tsx`, ISR 6h): 295 work paths to revalidate.
+- `/book` work siblings (`src/lib/work-siblings.ts`, ISR 24h): 218 book pages.
+- The nightly `assign-work-slugs.mjs` re-slugs by work_id; the writer sets the slug itself.
+- `books_catalog` (`scripts/workers/sync-books-catalog.mjs`, incremental on `updated_at`): needs a sync after apply.
+- First-translation cards (`work_translation_history`, keyed by work_id): 91 sit on source ids, 23 of them settled (gated, above). Moved books leave them. Apply copies a silent card to a destination that takes most of the books.
+- `src/lib/canon-works.ts`: 2 canon entries name a source id (`aristotle-metaphysics`, `Q172891`). Their pages keep the stayers only.
+- `work_merge_queue`: 20 pending pairs were computed on fused clusters; apply sets them to `superseded`.
+- Orchestrator copy-dedup (`scripts/workers/lib/work-copy-dedup.mjs`, every 2 min): 19 moved books that a stayer stood in for become eligible for processing. That is up to 3,955 pages of OCR and 10,858 pages in all, i.e. **spend**. Most of them are `parked` or `archive_complete`.
+- Sitemap and works index: 10 new multi-edition works appear.
+- Search work grouping (`src/lib/work-grouping.ts`): follows the new ids.
+- Embeddings and author pages: no effect.
+
+**Not done here.** Apart from the six, nothing was applied. `merge-work-clusters.mjs` (identical-title and edition-conflict lanes) has no memory of splits and could rejoin a split pair; a guard that reads `work_id_splits` is a follow-up. Closing `llm-verify-work-merges.mjs --apply`, the path that left these 1,987 clusters unjudged, is in its own PR, #8313.
+
 ## 2026-11-07 · How many live work_id clusters hold more than one work, per way the cluster was made? (#8291)
 <!-- PRIOR ART: scripts/eval/work-recall/merge-precision.mjs judges PROPOSED merge groups and cannot sample live clusters or plant errors; gap-validation-cluster-audit.mjs and work-grouping-check.mjs audit USTC clusters and the phase-11 graph, not books.work_id; 2026-10-30-verified-work-merges-7761.md measured the merge lane before it applied, this measures what is live afterwards. -->
 
@@ -662,6 +723,109 @@ in French and shows up only on a draw from the unread books themselves.
 (pipeline `gpu-agy-first-read-euro-6871`, a revision a page, only on pages with no text and no human edit). No hold
 was released. Rejected and unwritten pages stay unread. 155 page verdicts are recorded through
 `recordPageVerdicts()` under method `euro-gpu-agy-cell-6871`.
+
+## 2026-11-07 · English 1800-1929 widened past gpu-print-en, and the French lite refusals written: bare guarded GPU reads, stamped for a later agy pass (#6871)
+
+Part of #6871.
+
+PRIOR ART: `2026-10-29-print1800-gpu-engine-lanes-6871.md` (97 typed English 1800+ pages: lite 0.27% vs LightOnOCR
+0.12% median folded CER, catastrophic 17 vs 0), the 2026-11-06 French refusal read (job gpu-steward-20261106, PR
+#8290: 770 read, 627 past the guards, 10/10 usable by eye; `2026-11-06-fr-refusals-gpu-read-6871.md`) and
+`2026-11-07-euro-route-gate-6871.md` (the gate this one copies). The writer is the gpu-print lane
+(`scripts/workers/gpu-print-lane.mjs`), generalised with a language profile (`LANGS` of `scripts/lib/gpu-print-lane.mjs`);
+no new lane.
+
+### Route
+The brief asked for GPU draft > agy (Derek 2026-11-06: four routes, agy, GPU>agy, Opus, GPU>Opus). Derek changed it on
+2026-11-07 (~10:45Z, job inbox): **"well we can use ocr gpu until we later correct"**: a bare guarded LightOnOCR-3-1B
+read is the route where the bare read passed its own test (English 1800-1929 print, the 10-29 record; the French
+lite refusals, guards plus 10/10 by eye), and every such page is stamped so a later agy correction pass can find it.
+The first 22 French pages went through agy before that note (12 written, stamp `gpu-agy-first-read-fr-refusal-6871`);
+the run stopped there.
+
+**The stamp** (what a correction pass selects on): `ocr.source: 'lightonocr'`, `ocr.pipeline` the lane's profile
+(`gpu-print-fr-2026-11`, `gpu-print-en19-2026-11`; the live 10-29 lane is `gpu-print-en-2026-10`) and
+`ocr.engine.corrected: false`. The frame: `scripts/eval/print1800-gpu-6871/correction-frame.mjs` (planned, not
+scheduled).
+
+Guards (unchanged, `pageVerdict`): GPU loop guard, ≥ 30 word characters, ≤ 3 letters of a non-Latin script, no engine
+commentary line, ≤ 15 ‰ transliteration letters. Writes: only pages with no text and no human edit, through
+`writePageText` (revision row, CAS), book held for the lane (a free book is held `gpu-print-6871` before the GPU reads
+it and released when its planned pages are done; a scans-only hold stays), not `pipeline_auto.held` (checked again at
+apply). $0: the GPU box only.
+
+### Part A: French lite refusals (`--lang fr`, book rule `fr19r`)
+The 2026-11-06 reads (`/root/jobs/fr-refusals-6871` on gex45: manifest, out/, runs/) linked into a lane dir of this job
+(`/root/jobs/gpu-print-fr19r-6871`), planned with `plan --lang fr --from-manifest` (only pages already read, image
+source unchanged) under `armcEuroSkip(book, 'fr19r')`: French, parsed year 1800-1929, page records, not held or held
+scans-only only, not `pipeline_auto.held`, not a manuscript, not an unsplit spread. Pages: no text and no human edit
+(the lite refusal stamp `ocr.recitation_blocked` is no text: these are the pages lite refused). Five written pages
+read back from Mongo; five opened by eye against the image (Opus).
+
+### Part B: English 1800-1929 (`--lang en19`, book rule `en19`)
+**Frame** (`armcEuroSkip(book, 'en19')`; count `scripts/eval/print1800-gpu-6871/en19-frame-census.mjs`):
+- First language English; parsed `year` 1800-1929 (no year, no book; nothing copyrighted).
+- Page records exist (no manifest-only book; nothing materialized); not an unsplit spread; not a manuscript.
+- Not `pipeline_auto.held`; not held, or held only `scans-only-publish-7270`. Every containment, quality, campaign or
+  lane hold keeps the book out (`acquisition-wave-2026-10b` is a campaign hold: "Derek or the #6553 planner releases
+  them").
+- Not a book gpu-print-en planned (its unread pages are that lane's rejects).
+- Pipeline status `complete`, `ocr_complete`, `needs_attention`, `parked`, `failed` or `held`: a free book `archiving`
+  or `archive_complete` is about to be read by the pipeline's own OCR.
+- Pages: no text and no human edit.
+
+**Gate** (fixed before judging; the #8049 rule, unchanged):
+1. **Pilot** through the real lane: `gpu-print-lane.mjs plan --lang en --cell en19 --max-pages 17` (pages spread through
+   each book), `gpu-print-gpu.sh` through /root/gpu-queue, `apply --lang en19 --apply`. About 300 pages over every book
+   in frame.
+2. **Draw**: up to 30 WRITTEN pilot pages, seeded (salt `6871-gate-en19`), one per book, then a second page of a book
+   already drawn (`euro-route-gate-6871/draw.mjs --cell=en19 --applied=<lane dir>`). The frame has fewer than 30 books,
+   so the second round fills the draw.
+3. **Judge**: blind Opus against the image (`judge.mjs judge`), with 2 wrong-page controls (`run.mjs packet
+   --study=en19-6871`). **No planted errors: the planter (`scripts/eval/lib/plant-ocr-errors.mjs`) knows la/de/fr only.**
+4. **Rule**: at least 10 judged; wrong text ≤ 4%; P(acc ≥ 0.8) ≥ 0.9 under Beta(1+k, 1+n−k) over the judged written
+   pages; every wrong-page control rejected (fidelity ≤ 2).
+5. **Also counted**, not part of the rule: the share of pilot pages the guards refused; GPU pages an hour.
+6. **Pass**: the widened route runs over the rest of the frame (a second lane dir, every page). **Fail**: the route stays
+   off; judge-accepted pilot pages stay written, every other pilot page written is reverted (`revert-run.mjs`) and stays
+   unread.
+7. Verdicts: `recordPageVerdicts()` under method `gpu-print-6871` (`scripts/eval/methods/gpu-print-6871.md`).
+
+### Results
+
+**French (Part A).** 48 books in the 2026-11-06 manifest. 39 planned (548 pages); 9 out by rule: nothing left to read
+(2), `title-leaf-recitation-6297`, `preview-stub-first-read-8181`, `translate-cli-7075` (2), manuscript (2),
+`peiresc-awaits-derek-5811`. Applied: **419 pages written in 35 books**; the guards refused 129 (other script 102,
+early loop 21, transliteration 6). 25 lane holds released (the lane's own, #7833). The steward counted 479 with no
+conflicting hold; the 627 guard-passing reads include books out by rule (manuscripts, other holds) and 12 pages agy
+had written before Derek's note. Five read back from Mongo (`ocr.pipeline gpu-print-fr-2026-11`, `ocr.source
+lightonocr`, `ocr.engine.corrected false`, a revision row each). Five opened by eye against the image (Opus): 4
+accept, 1 minor (Voltaire letters: spelling modernised, *écouler* read as *écouter*), 0 wrong text.
+
+**English (Part B), frame.** 100 books / 18,104 pages pass the book rule before pipeline status; 27 books / 2,223
+pages are idle (15,881 pages are `archiving`/`archive_complete`, which the pipeline's own OCR reads next). Held out,
+pages: `ia-free-text-first-4966` 31,497; `acquisition-wave-2026-10b` 19,687 (campaign); submarine 4,138; magic-kb
+2,203; planned by gpu-print-en 38,554; manuscript 2,391; manifest-only 697,134. About 8.7M English pages have no
+parsed year and are outside. Widening opens **2,223 pages** today, not hundreds of thousands: the unread English
+1800+ print is manifest-only or held.
+
+**English gate.** Pilot 26 books / 278 pages; GPU about 80 pages a minute (~4,800/h). Written 95 (12 books);
+refused: read error 136 (HTTP 403 from archive.org on 8 lending-restricted books), other script 30, textless 13,
+loop 3, transliteration 1. Judged 30 written pages (12 books, one then a second page a book): **21/30 accepted, 3
+wrong text (10%), P(acc ≥ 0.8) 0.075: FAIL.** Fidelity mean 4.23; 0.40 wrong text and 1.48 misleads per 1,000 words.
+Wrong-page controls 2/2 rejected. Defects: the Latin side of a Latin-English text misread (*omitteram*, *videtur*),
+a damaged page with no gap marker, a family tree redrawn wrong, 376 for 370, names, index columns interleaved. The
+10-29 record measured typed body text; this frame's leftovers are the harder pages (bilingual, tables, indexes,
+genealogies). Verdicts recorded with `recordPageVerdicts()` under `gpu-print-6871` (12 rows, one per book).
+74 written pilot pages not accepted were reverted (`revert-run.mjs`, run `gpu-print-en19-2026-11/lo-20261107T110501Z`;
+0 still stamped); the 21 accepted stay. The route stays off (filler row `gpu-print-en19-6871` is `off`).
+
+One pilot book, `thoughtforms00besarich`, is a 1941 printing that our record dates 1901: a year check the frame
+relies on can be wrong.
+
+**Correction frame** (planned, not scheduled): `correction-frame.mjs` counts 145,693 uncorrected GPU pages
+(`gpu-print-en-2026-10` 145,253 in 1,376 books; `gpu-print-fr-2026-11` 419 in 35; `gpu-print-en19-2026-11` 21 in
+10). At about 3,300 agy calls a week a pool and one page a call, that is about 44 pool-weeks.
 
 ## 2026-11-07 · Does agy OCR need its ~60 tools? (#8330)
 
