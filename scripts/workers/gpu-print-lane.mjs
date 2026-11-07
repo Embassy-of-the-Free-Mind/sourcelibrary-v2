@@ -47,7 +47,8 @@
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/gpu-print-lane.mjs frame
  * Options: --dir <lane dir> (default $LANE_DIR or /root/jobs/gpu-print-6871)  --book <id>  --books <file>  --limit N
  *   --lang en|fr (default $LANE_LANG or en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
- *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
+  *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
+ *   --max-pages N (plan: N pages spread through each book, for a pilot)
  * French (#6871, Derek 2026-11-07): the French 1800+ pages Flash-Lite refused, read by the GPU steward, written bare:
  *   LANE_DIR=/root/jobs/gpu-print-fr19r-6871 (manifest.tsv, out/ and runs/ from the steward's reads)
  *   gpu-print-lane.mjs plan --lang fr --books <ids> --from-manifest --apply; then apply --lang fr --apply
@@ -184,6 +185,9 @@ async function plan() {
         if (inManifest && inManifest.get(p.id) !== src) { tally.image_changed = (tally.image_changed || 0) + 1; continue; }
         rows.push({ pid: p.id, pn: p.page_number, src, why: p.ocr?.model || (p.ocr?.recitation_count ? 'refused' : 'never_read') });
       }
+      // --max-pages N (a pilot): N pages spread through the book; the rest stay unread for a later lane dir to plan
+      const cap = Number(arg('--max-pages', 0)) || 0;
+      if (cap && rows.length > cap) { const all = rows.splice(0); for (let i = 0; i < cap; i++) rows.push(all[Math.floor((i * all.length) / cap)]); }
       // every page has text or a human edit: final. Pages still waiting for an image may be archived later: retried.
       if (!rows.length) { if (noImage) tally.skipped_books.push({ bid, why: 'no_image' }); else finalSkip(bid, 'nothing_to_read'); continue; }
       if (!APPLY) { log(`${bid} would ${isHeld(book) ? "plan" : "hold and plan"} ${rows.length} pages | ${String(book.title).slice(0, 50)}`); tally.books++; tally.pages += rows.length; continue; }
