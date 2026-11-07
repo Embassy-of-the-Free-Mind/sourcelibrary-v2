@@ -21,6 +21,7 @@
  *   ROUTE_JUDGE_WEEKLY_MAX=999 node judge.mjs judge --out=DIR   (judge.mjs, unchanged; Opus through claude -p)
  *   node run.mjs plant    --out=DIR ; judge again               2 planted items a cell
  *   node run.mjs score    --out=DIR                             RULE.md's measures → DIR/score.json
+ *   node run.mjs pooled   --out=DIR,DIR2                        a first and second draw scored together → DIR/pooled.json
  *   node --env-file=… run.mjs apply   --out=DIR [--apply]       write each test page's ACCEPTED read (first reads only,
  *                                                               holds kept); a rejected page stays unread
  * Read-only except `apply --apply`.
@@ -42,7 +43,16 @@ const J = (f) => JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8'));
 const W = (f, x) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(x, null, 1));
 const jsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const CLI_OCR = path.join(ROOT, 'scripts/batch/cli-ocr.mjs');
-const LANE = 'gpu-agy-first-read-jcb-8049';
+// --study=euro-6871 (#6871): the same route and stages over French, Spanish and Italian print of 1600-1799 and
+// 1800-1929 drawn from Mongo (drawEuro), not the JCB tiers file. Everything else (read, written, packet, plant, score,
+// apply) is shared; the salts, lane id, job name and apply reason come from the study.
+const STUDY = arg('study') || 'jcb-8049';
+const STUDIES = {
+  'jcb-8049': { salt: '8049', lane: 'gpu-agy-first-read-jcb-8049', job: 'jcb-1600-8049-cell', reason: '#8049 JCB pre-1600 cell test' },
+  'euro-6871': { salt: '6871', lane: 'gpu-agy-first-read-euro-6871', job: 'euro-1800-cells-6871', reason: '#6871 French/Spanish/Italian 1600-1929 cell test' },
+};
+const ST = STUDIES[STUDY]; if (!ST) throw new Error(`--study must be one of ${Object.keys(STUDIES).join(', ')}`);
+const LANE = ST.lane;
 const MODEL = 'gemini-3.8-flash-low';   // cli-ocr-lane.mjs CORRECT_MODEL
 const TEMPLATE = { file: 'scripts/eval/euro-gpu-correct-7567/prompts/agy-0601ef30e816f7a7.txt', hash: '0601ef30e816f7a7' };   // GPU_TEMPLATE
 const N = Number(arg('n') || 30);
@@ -59,6 +69,13 @@ export const CELLS = {
   // its book; only the drawn page is judged).
   la4: { lang: 'Latin', engine: 'none', perCall: 4 },
 };
+// #6871 cells: language (the book's first language, ISO 639-3) and the parsed `year` range, both ends included.
+const EURO_CELLS = {
+  fr19: { lang: 'French', code: 'fra', years: [1800, 1929], engine: 'lo' }, fr17: { lang: 'French', code: 'fra', years: [1600, 1799], engine: 'lo' },
+  es19: { lang: 'Spanish', code: 'spa', years: [1800, 1929], engine: 'lo' }, es17: { lang: 'Spanish', code: 'spa', years: [1600, 1799], engine: 'lo' },
+  it19: { lang: 'Italian', code: 'ita', years: [1800, 1929], engine: 'lo' }, it17: { lang: 'Italian', code: 'ita', years: [1600, 1799], engine: 'lo' },
+};
+if (STUDY === 'euro-6871') { for (const k of Object.keys(CELLS)) delete CELLS[k]; Object.assign(CELLS, EURO_CELLS); }
 const routeOf = (cell) => (CELLS[cell].engine === 'none' ? `agy-flash-low@${CELLS[cell].perCall}` : `${CELLS[cell].engine === 'pero' ? 'pero' : 'lighton'}>agy-flash-low`);
 const corrDir = (cell) => path.join(OUT, 'corr', cell);
 
@@ -75,8 +92,71 @@ function armcDraftText(t) {
 
 async function mongo() { const { MongoClient } = await import('mongodb'); const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); return c; }
 
+/**
+ * #6871 frame (drawEuro): a printed book whose first language is the cell's, with a parsed `year` in the cell's range
+ * (no year, no book), whose page records exist (pages_state not manifest_only: a lazy book has no page docs, and making
+ * them is a state change this test does not make), not an unsplit spread (needs_splitting and not split_completed), not
+ * a manuscript (cli-ocr-lane manuscriptReason), and not held, or held only scans-only-publish-7270 (a publishing hold
+ * with no lane of its own). Other holds belong to a lane, a campaign, a containment or a person, and are counted, not
+ * drawn. One page a book: a page with no text and no human edit, between 5% and 95% of the book, seeded.
+ */
+const EURO_HOLDS_DRAWN = new Set(['scans-only-publish-7270']);
+async function drawEuro() {
+  const { getPageSource } = await import('../../../lib/page-image-url.mjs');
+  const { isHeld, isUnsplitSpread } = await import('../../../lib/pipeline-hold.mjs');
+  const { manuscriptReason, firstReadLanguage, UNREAD } = await import('../../../batch/cli-ocr-lane.mjs');
+  const { hasNoText, isHumanEdited } = await import('../../../lib/gpu-print-lane.mjs');
+  const c = await mongo(), db = c.db('bookstore');
+  const sample = { drawn_at: new Date().toISOString(), study: STUDY, cells: {}, frame: {} };
+  fs.mkdirSync(path.join(OUT, 'img'), { recursive: true });
+  const EX = arg('exclude-from') ? new Set(Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((x) => x.pages.map((p) => p.book_id))) : new Set();
+  for (const [cell, C] of Object.entries(CELLS).filter(([k]) => !arg('cells') || arg('cells').split(',').includes(k))) {
+    const all = await db.collection('books').find({ language: { $regex: `^${C.lang}` }, year: { $gte: C.years[0], $lte: C.years[1] }, pages_count: { $gt: 0 }, 'pages_state.state': { $nin: ['manifest_only', 'materializing'] } },
+      { projection: { id: 1, title: 1, published: 1, language: 1, year: 1, pages_count: 1, pages_ocr: 1, image_source: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1, visible: 1 } }).toArray();
+    const t = { books: all.length, other_language_first: 0, unsplit_spread: 0, manuscript: 0, other_hold: {}, sampled_before: 0, in_frame: 0, owed_by_counter: 0, walked: 0, no_interior_unread: 0, no_image: 0 };
+    const frame = [];
+    for (const b of all) {
+      if (firstReadLanguage(b) !== C.code) { t.other_language_first++; continue; }
+      if (isUnsplitSpread(b)) { t.unsplit_spread++; continue; }
+      if (manuscriptReason(b)) { t.manuscript++; continue; }
+      const hold = isHeld(b) ? b.pipeline_auto.hold.reason : (b.pipeline_auto?.held === true ? 'held-flag' : null);
+      if (hold && !EURO_HOLDS_DRAWN.has(hold)) { t.other_hold[hold] = (t.other_hold[hold] ?? 0) + 1; continue; }
+      if (EX.has(b.id)) { t.sampled_before++; continue; }
+      t.in_frame++; t.owed_by_counter += Math.max(0, b.pages_count - (b.pages_ocr || 0));
+      frame.push({ ...b, hold });
+    }
+    frame.sort((a, b) => h(`${ST.salt}-${cell}-${a.id}`).localeCompare(h(`${ST.salt}-${cell}-${b.id}`)));
+    const picks = [];
+    for (const b of frame) {
+      if (picks.length >= N) break;
+      t.walked++;
+      const unread = (await db.collection('pages').find({ book_id: b.id, ...UNREAD }, { projection: { _id: 0, id: 1, page_number: 1, ocr: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1, crop: 1 } }).sort({ page_number: 1 }).toArray())
+        .filter((p) => hasNoText(p.ocr) && !isHumanEdited(p.ocr) && p.page_number > 0.05 * b.pages_count && p.page_number <= 0.95 * b.pages_count);
+      if (!unread.length) { t.no_interior_unread++; continue; }
+      const rng = makeRng(parseInt(h(`${ST.salt}-${cell}-${b.id}-page`).slice(0, 8), 16));
+      const p = unread[Math.floor(rng() * unread.length)];
+      const img = path.join(OUT, 'img', `${p.id}.jpg`);
+      if (!fs.existsSync(img)) {
+        const r = await fetch(getPageSource(p)).catch(() => null);
+        if (!r?.ok) { t.no_image++; console.log(`  ${cell} ${p.id}: no image (${r?.status})`); continue; }
+        fs.writeFileSync(img, Buffer.from(await r.arrayBuffer()));
+        await new Promise((res) => setTimeout(res, 500));
+      }
+      picks.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, year: b.year, hold: b.hold, visible: !!b.visible, provider: b.image_source?.provider ?? null, title: String(b.title || '').slice(0, 80) });
+    }
+    sample.cells[cell] = { lang: C.lang, years: C.years, engine: C.engine, route: routeOf(cell), books: picks.length, pages: picks };
+    sample.frame[cell] = t;
+    const st = path.join(OUT, 'stage', C.engine); fs.mkdirSync(st, { recursive: true });
+    for (const x of picks) { try { fs.linkSync(path.join(OUT, 'img', `${x.page_id}.jpg`), path.join(st, `${x.page_id}.jpg`)); } catch (e) { if (e.code !== 'EEXIST') throw e; } }
+    console.log(`${cell} ${C.lang} ${C.years.join('-')}: ${picks.length} pages from ${t.in_frame} books in frame (${t.owed_by_counter} pages owed by counter)`, JSON.stringify(t));
+  }
+  await c.close();
+  W('sample.json', sample);
+}
+
 /** draw: tiers A/B only (what will be read); A: an interior page, B: a page the screen hit. Unread pages only. */
 async function draw() {
+  if (STUDY === 'euro-6871') return drawEuro();
   const { getPageSource } = await import('../../../lib/page-image-url.mjs');
   const tiers = jsonl(arg('tiers') || path.join(process.env.JOB_SCRATCH || '.', 's5/tiers/tiers-abc.jsonl')).filter((t) => t.tier === 'A' || t.tier === 'B');
   const c = await mongo(), db = c.db('bookstore');
@@ -85,7 +165,7 @@ async function draw() {
   // --exclude-from=<an earlier sample.json>: a second draw for a cell whose written n was too small, from NEW books
   const EX = arg('exclude-from') ? new Set(Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id))) : new Set();
   for (const [cell, C] of Object.entries(CELLS).filter(([c]) => !arg('cells') || arg('cells').split(',').includes(c))) {
-    const books = tiers.filter((t) => t.language === C.lang && !EX.has(t.book_id)).sort((a, b) => h(`8049-${a.book_id}`).localeCompare(h(`8049-${b.book_id}`)));
+    const books = tiers.filter((t) => t.language === C.lang && !EX.has(t.book_id)).sort((a, b) => h(`${ST.salt}-${a.book_id}`).localeCompare(h(`${ST.salt}-${b.book_id}`)));
     const picks = [];
     for (let round = 0; picks.length < N && round < 3; round++) {
       for (const t of books) {
@@ -94,7 +174,7 @@ async function draw() {
         const n = pages.length; if (n < 8) continue;
         let idx = t.tier === 'B' && t.ocr_idx?.length ? t.ocr_idx.filter((i) => i >= 2 && i < n - 2) : [];
         if (!idx.length) idx = Array.from({ length: n }, (_, i) => i).filter((i) => i >= Math.floor(0.2 * n) && i <= Math.floor(0.8 * n));
-        const rng = makeRng(parseInt(h(`8049-${t.book_id}-${round}`).slice(0, 8), 16));
+        const rng = makeRng(parseInt(h(`${ST.salt}-${t.book_id}-${round}`).slice(0, 8), 16));
         const p = pages[idx[Math.floor(rng() * idx.length)]];
         if (!p || p.ocr?.data || picks.some((x) => x.page_id === p.id)) continue;
         const img = path.join(OUT, 'img', `${p.id}.jpg`);
@@ -143,7 +223,7 @@ function read() {
       const dir = corrDir(cell); fs.mkdirSync(dir, { recursive: true });
       const idf = path.join(dir, 'page-ids.json'); fs.writeFileSync(idf, JSON.stringify(s.cells[cell].read_ids));
       console.log(`${cell}: reading ${s.cells[cell].read_ids.length} pages, ${CELLS[cell].perCall} a call`);
-      const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'read', `--page-ids-file=${idf}`, `--out=${dir}`, `--model=${MODEL}`, `--per-call=${CELLS[cell].perCall}`, '--job=jcb-1600-8049-cell', '--stop-on-quota', `--concurrency=${arg('concurrency') || 2}`], { cwd: ROOT, env: process.env, stdio: 'inherit' });
+      const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'read', `--page-ids-file=${idf}`, `--out=${dir}`, `--model=${MODEL}`, `--per-call=${CELLS[cell].perCall}`, `--job=${ST.job}`, '--stop-on-quota', `--concurrency=${arg('concurrency') || 2}`], { cwd: ROOT, env: process.env, stdio: 'inherit' });
       if (r.status !== 0) console.log(`${cell}: read exit ${r.status}`);
       continue;
     }
@@ -152,7 +232,7 @@ function read() {
     const dir = corrDir(cell); fs.mkdirSync(dir, { recursive: true });
     const idf = path.join(dir, 'page-ids.json'); fs.writeFileSync(idf, JSON.stringify(ids));
     console.log(`${cell}: reading ${ids.length} pages`);
-    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'read', `--page-ids-file=${idf}`, `--out=${dir}`, `--model=${MODEL}`, `--correct-prompt=${tpl}`, `--lane=${LANE}`, `--gpu-draft=${path.join(OUT, `drafts-${cell}.json`)}`, `--image-dir=${path.join(OUT, 'img')}`, '--job=jcb-1600-8049-cell', '--stop-on-quota', `--concurrency=${arg('concurrency') || 2}`], { cwd: ROOT, env: process.env, stdio: 'inherit' });
+    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'read', `--page-ids-file=${idf}`, `--out=${dir}`, `--model=${MODEL}`, `--correct-prompt=${tpl}`, `--lane=${LANE}`, `--gpu-draft=${path.join(OUT, `drafts-${cell}.json`)}`, `--image-dir=${path.join(OUT, 'img')}`, `--job=${ST.job}`, '--stop-on-quota', `--concurrency=${arg('concurrency') || 2}`], { cwd: ROOT, env: process.env, stdio: 'inherit' });
     if (r.status !== 0) console.log(`${cell}: read exit ${r.status}`);
   }
 }
@@ -161,7 +241,7 @@ function dryApply(cell, ids) {
   const guard = CELLS[cell].engine === 'none' ? [] : ['--diff-guard=gpu-draft'];
   const dir = corrDir(cell), emit = path.join(dir, 'written-dry.jsonl'), only = path.join(dir, 'only-drawn.json');
   fs.rmSync(emit, { force: true }); fs.writeFileSync(only, JSON.stringify(ids));
-  const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${dir}`, `--only=${only}`, '--reason=#8049 JCB pre-1600 cell test (dry run)', `--emit-written=${emit}`, ...guard, '--print-only'], { cwd: ROOT, env: process.env, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${dir}`, `--only=${only}`, `--reason=${ST.reason} (dry run)`, `--emit-written=${emit}`, ...guard, '--print-only'], { cwd: ROOT, env: process.env, encoding: 'utf8' });
   if (r.status !== 0) throw new Error(`apply ${cell}: exit ${r.status}\n${r.stderr?.slice(-2000)}`);
   const sum = JSON.parse(fs.readFileSync(path.join(dir, 'apply-summary-dry.json'), 'utf8'));
   return { rows: new Map(jsonl(emit).map((x) => [x.page_id, x.text])), skipped: sum.skipped_pages || {}, diff_guard: sum.diff_guard ?? null };
@@ -200,14 +280,14 @@ async function packet() {
   for (const cell of Object.keys(s.cells).filter((c) => wr[c])) {
     const ok = s.cells[cell].pages.filter((sp) => wr[cell][sp.page_id]?.text);
     for (const sp of ok) add(cell, sp, 'item', wr[cell][sp.page_id].text);
-    const rng = makeRng(parseInt(h(`wp-8049-${cell}`).slice(0, 8), 16));
+    const rng = makeRng(parseInt(h(`wp-${ST.salt}-${cell}`).slice(0, 8), 16));
     for (let i = 0; i < 2 && new Set(ok.map((x) => x.book_id)).size > 2; i++) {
       const a = ok[Math.floor(rng() * ok.length)]; let b = a;
       while (b.book_id === a.book_id) b = ok[Math.floor(rng() * ok.length)];
       add(cell, a, 'wrong_page', wr[cell][b.page_id].text, { other: b.page_id });
     }
   }
-  W('packet.json', { built_at: new Date().toISOString(), items: shuffled([...items.values()], 'pk-8049') });
+  W('packet.json', { built_at: new Date().toISOString(), items: shuffled([...items.values()], `pk-${ST.salt}`) });
   W('key.json', key);
   console.log(`${items.size} items to judge (${key.filter((k) => k.kind === 'wrong_page').length} wrong-page controls)`);
 }
@@ -221,7 +301,7 @@ function plant() {
   for (const cell of Object.keys(CELLS)) {
     // the planter knows Latin, German and French only: the other cells carry no plants (the judge's sensitivity is measured on those three)
     if (!langCode(CELLS[cell].lang)) { console.log(`${cell}: no planter for ${CELLS[cell].lang}, none planted`); continue; }
-    const acc = shuffled(key.filter((k) => k.cell === cell && k.kind === 'item' && V.get(k.judged_as)?.accept), `plant-8049-${cell}`);
+    const acc = shuffled(key.filter((k) => k.cell === cell && k.kind === 'item' && V.get(k.judged_as)?.accept), `plant-${ST.salt}-${cell}`);
     let got = 0;
     for (const k of acc) {
       if (got >= 2) break;
@@ -238,7 +318,7 @@ function plant() {
     }
     console.log(`${cell}: ${got} planted`);
   }
-  pk.items = shuffled(pk.items, 'pk-8049-planted');
+  pk.items = shuffled(pk.items, `pk-${ST.salt}-planted`);
   W('packet.json', pk); W('key.json', key);
 }
 
@@ -270,6 +350,47 @@ function score() {
   W('score.json', out);
 }
 
+/**
+ * pooled --out=DIR,DIR2: the rule over a first draw and its second draw together (new books only, so one page a book
+ * still holds), per cell. `marker_guard` scores the same pages with every read whose written text carries a
+ * <<<BEGIN>>>/<<<END>>> marker counted as unwritten — what unwrapRead refuses since #8296 — reported beside the rule's
+ * own figure, never in place of it. Writes pooled.json into the first DIR.
+ */
+function pooled() {
+  const dirs = String(arg('out')).split(',').map((d) => path.resolve(d));
+  const rd = (d, f) => JSON.parse(fs.readFileSync(path.join(d, f), 'utf8'));
+  const marker = /<<<\s*(?:BEGIN|END)\s*>>>/;
+  const out = { scored_at: new Date().toISOString(), dirs, cells: {} };
+  const cells = [...new Set(dirs.flatMap((d) => Object.keys(rd(d, 'sample.json').cells)))];
+  for (const cell of cells) {
+    const per = dirs.filter((d) => rd(d, 'sample.json').cells[cell]).map((d) => {
+      const V = new Map(jsonl(path.join(d, 'verdicts-opus.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r.verdict]));
+      const items = new Map(rd(d, 'packet.json').items.map((i) => [i.id, i]));
+      return { V, items, rows: rd(d, 'key.json').filter((k) => k.cell === cell), drawn: rd(d, 'sample.json').cells[cell].pages.length };
+    });
+    const measure = (guard) => {
+      let n = 0, acc = 0, wrong = 0, wpN = 0, wpRej = 0, wpBad = 0, plN = 0, plC = 0, drawn = 0, cut = 0;
+      for (const { V, items, rows, drawn: dn } of per) {
+        drawn += dn;
+        for (const k of rows) {
+          const v = V.get(k.judged_as); if (!v) continue;
+          if (k.kind === 'item') { if (guard && marker.test(items.get(k.judged_as)?.text || '')) { cut++; continue; } n++; if (v.accept) acc++; if (wt(v)) wrong++; }
+          if (k.kind === 'wrong_page') { wpN++; if (!v.accept) wpRej++; if (v.accept || (v.fidelity ?? 0) > 2) wpBad++; }
+          if (k.kind === 'planted') { plN++; if (!v.accept || (v.defects || []).length) plC++; }
+        }
+      }
+      const P = betaP(acc, n, 0.8, parseInt(h(`s-${cell}`).slice(0, 8), 16));
+      const ok = n >= 10 && wrong / n <= 0.04 && P >= 0.9 && wpN > 0 && !wpBad && !(plN >= 2 && plC === 0);
+      return { drawn, judged: n, accepted: acc, wrong_text: wrong, p_acc_ge_08: P, wrong_page_controls: `${wpRej}/${wpN}`, planted_caught: `${plC}/${plN}`, ...(guard && { marker_reads_refused: cut }), decision: ok ? 'PASS' : 'HOLD',
+        why: ok ? null : [n < 10 && 'under 10 judged', n && wrong / n > 0.04 && `wrong text ${wrong}/${n}`, P < 0.9 && `P(acc>=0.8) ${P}`, (!wpN || wpBad) && 'wrong-page control', plN >= 2 && !plC && 'plants missed'].filter(Boolean).join('; ') };
+    };
+    out.cells[cell] = { draws: per.length, rule: measure(false), marker_guard: measure(true) };
+    const r = out.cells[cell].rule, g = out.cells[cell].marker_guard;
+    console.log(`${cell} (${per.length} draw${per.length > 1 ? 's' : ''}): ${r.accepted}/${r.judged} accepted, wrong ${r.wrong_text}, P ${r.p_acc_ge_08} → ${r.decision}${r.why ? ` (${r.why})` : ''} | marker guard: ${g.accepted}/${g.judged}, wrong ${g.wrong_text}, P ${g.p_acc_ge_08} → ${g.decision}${g.why ? ` (${g.why})` : ''}`);
+  }
+  fs.writeFileSync(path.join(dirs[0], 'pooled.json'), JSON.stringify(out, null, 1));
+}
+
 /** apply: each test page's read the judge ACCEPTED, through the lane's GPU-draft guards (first reads only; holds kept). */
 function apply() {
   const key = J('key.json'), V = verdicts(), s = J('sample.json');
@@ -277,9 +398,51 @@ function apply() {
     const ids = key.filter((k) => k.cell === cell && k.kind === 'item' && V.get(k.judged_as)?.accept).map((k) => k.page_id);
     if (!ids.length) continue;
     const only = path.join(corrDir(cell), 'accepted.json'); fs.writeFileSync(only, JSON.stringify(ids));
-    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${corrDir(cell)}`, `--only=${only}`, '--reason=#8049 JCB pre-1600 cell test: judge-accepted reads', ...(CELLS[cell].engine === 'none' ? [] : ['--diff-guard=gpu-draft']), '--print-only', ...(process.argv.includes('--apply') ? ['--apply'] : [])], { cwd: ROOT, env: process.env, encoding: 'utf8' });
+    const r = spawnSync(process.execPath, ['--no-warnings', CLI_OCR, 'apply', `--out=${corrDir(cell)}`, `--only=${only}`, `--reason=${ST.reason}: judge-accepted reads`, ...(CELLS[cell].engine === 'none' ? [] : ['--diff-guard=gpu-draft']), '--print-only', ...(process.argv.includes('--apply') ? ['--apply'] : [])], { cwd: ROOT, env: process.env, encoding: 'utf8' });
     console.log(`${cell}: ${ids.length} accepted → apply exit ${r.status}${r.status ? `\n${r.stderr?.slice(-800)}` : ''}`);
   }
+}
+
+/**
+ * record --out=DIR[,DIR2] [--apply]: every judged ITEM (not a control or a plant) as a recordPageVerdicts() page, method
+ * euro-gpu-agy-cell-6871 (scripts/eval/methods/). Dry run unless --apply. Serious: not accepted, or a wrong_text / misleads
+ * defect; minor: accepted with cosmetic defects only.
+ */
+async function record() {
+  const METHOD = 'euro-gpu-agy-cell-6871';
+  if (STUDY !== 'euro-6871') throw new Error('record is for --study=euro-6871 (its method file)');
+  const { recordPageVerdicts, readMethod } = await import('../../../lib/book-checks.mjs');
+  const dirs = String(arg('out')).split(',').map((d) => path.resolve(d));
+  const verdicts = [];
+  let model = null;
+  for (const dir of dirs) {
+    const key = JSON.parse(fs.readFileSync(path.join(dir, 'key.json'), 'utf8'));
+    const items = new Map(JSON.parse(fs.readFileSync(path.join(dir, 'packet.json'), 'utf8')).items.map((i) => [i.id, i]));
+    const V = new Map(jsonl(path.join(dir, 'verdicts-opus.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r]));
+    for (const k of key.filter((x) => x.kind === 'item' && V.has(x.judged_as))) {
+      const r = V.get(k.judged_as), v = r.verdict; model ??= r.model;
+      const bad = (v.defects || []).filter((d) => d.severity === 'wrong_text' || d.severity === 'misleads');
+      const serious = !v.accept || bad.length > 0;
+      // recordPageVerdicts' kinds (book-checks.mjs), from the judge's page-error-taxonomy class; the severity rides along
+      const kindOf = (cls) => (cls === 'O5' ? 'omission' : /^O(6|7|8)$/.test(cls) ? 'misread' : 'other');
+      const errors = serious ? (bad.length ? bad.map((d) => ({ stage: 'ocr', class: d.class, kind: kindOf(d.class), severity: d.severity, problem: `${d.what ?? ''}: "${String(d.quote ?? '').slice(0, 200)}"` }))
+        : [{ stage: 'ocr', kind: 'other', severity: 'not_accepted', problem: String(v.reader_note || 'the judge did not accept the page').slice(0, 600) }]) : [];
+      verdicts.push({ page_id: k.page_id, outcome: serious ? 'serious' : (v.defects || []).length ? 'minor' : 'clean', page_verdict: serious ? 'fix' : (v.defects || []).length ? 'caveat' : 'show',
+        verdict: `${k.cell} accept=${v.accept} fidelity=${v.fidelity}`, note: v.reader_note, defects: v.defects || [], errors, judged: { ocr: items.get(k.judged_as)?.text ?? '', translation: '' } });
+    }
+  }
+  const c = await mongo();
+  try {
+    const res = await recordPageVerdicts(c.db('bookstore'), {
+      method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `${ST.job}-${new Date().toISOString().slice(0, 10)}`, checked_at: new Date(),
+      selection: 'random', stages: ['ocr'], reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },
+      evidence_path: 'scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/', reader_warning: false, exposure: 'unrecorded',
+      note: 'One unread page of the book read by LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image (#6871 cell test), judged blind by Opus against the image.',
+      frame: { route: 'lighton>agy-flash-low', study: STUDY, pages: verdicts.length },
+      verdicts,
+    }, { apply: process.argv.includes('--apply') });
+    console.log(`record: ${verdicts.length} pages → rows ${res.rows.length}, inserted ${res.inserted}, already ${res.already}, failed ${res.failed.length}${res.failed.length ? ` ${JSON.stringify(res.failed.slice(0, 5))}` : ''}`);
+  } finally { await c.close(); }
 }
 
 /** fallback --out=DIR --from=D1,D2: the la pages D1..Dn's GPU-draft route did not WRITE, as cell la4; each with the next
@@ -300,6 +463,6 @@ async function fallback() {
   console.log(`la4: ${pages.length} drawn pages, ${read_ids.length} to read`);
 }
 
-const STAGES = { draw, collect, read, written, packet, plant, score, apply, fallback };
+const STAGES = { draw, collect, read, written, packet, plant, score, pooled, apply, fallback, record };
 if (!STAGES[STAGE]) { console.error(`stage must be one of ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
 await STAGES[STAGE]();
