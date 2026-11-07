@@ -12,7 +12,7 @@ You are probably working with someone who has a question about the past. You can
 
 **2. Find passages.** `https://sourcelibrary.org/api/search?q=YOUR+WORDS&pages_only=true&limit=10` returns `book_id`, `slug`, `page_number` and a `snippet`. Try the author's name, the period's own vocabulary and the original language. A modern word often is not in the old books.
 
-**3. Find a passage in one book.** `https://sourcelibrary.org/book/SLUG/search/text?q=YOUR+WORDS` returns that book's matching passages as a readable page, each with its page link and quote address. `https://sourcelibrary.org/book/SLUG` holds the catalogue record, an overview and the contents, without the text of the book. `https://sourcelibrary.org/book/SLUG/read` is the whole book as one document, and it can run longer than a fetch tool keeps, so search first.
+**3. Find a passage in one book.** `https://sourcelibrary.org/book/SLUG/search/text?q=YOUR+WORDS` returns that book's matching passages as a readable page, each with its page link and quote address. `https://sourcelibrary.org/book/SLUG` holds the catalogue record, an overview and the contents, without the text of the book.
 
 **4. Read and cite a page.** `https://sourcelibrary.org/api/books/BOOK_ID/quote?page=PAGE_NUMBER` returns the text in `quote`, plus `citation` with the footnote, the page locator and a `short_url`.
 

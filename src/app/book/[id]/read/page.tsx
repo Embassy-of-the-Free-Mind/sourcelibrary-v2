@@ -54,7 +54,9 @@ import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { isHiddenBook } from '@/lib/book-access';
 import { isBot, isTrustedBot } from '@/lib/bot-gate';
+import { NextRequest } from 'next/server';
 import { logBotRead } from '@/lib/bot-reads';
+import { checkReadBudget, chargeRead } from '@/lib/read-budget';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { freeMaxPage } from '@/lib/free-preview';
 import { markForExport } from '@/lib/provenance';
@@ -220,7 +222,12 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const exempt = !!(ctx?.id || ctx?.isEmbedded);
   const untrustedBot = !exempt && isBot(request) && !(await isTrustedBot(request));
   const meteredAnon = !exempt && !untrustedBot && (await isMeteredAnonRequest(request));
-  const clampAt = untrustedBot || meteredAnon ? freeMaxPage(pagesCount) : undefined;
+  // A whole book is a handful of requests here, so it shares the bulk budget (src/lib/read-budget.ts).
+  const readStart = Date.now();
+  const meter = exempt || untrustedBot
+    ? null
+    : await checkReadBudget(new NextRequest(request.url, { headers: h }));
+  const clampAt = untrustedBot || meteredAnon || meter?.overBudget ? freeMaxPage(pagesCount) : undefined;
 
   const pagesRaw = await db.collection('pages')
     .find(readerPageListFilter(bookId), { projection: PAGE_PROJECTION, maxTimeMS: 15000 })
@@ -257,6 +264,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const partCount = Math.max(1, Math.ceil(pages.length / PART_SIZE));
   if (part > partCount) notFound();
   const slice = pages.slice((part - 1) * PART_SIZE, part * PART_SIZE);
+  chargeRead(meter, slice.filter(p => clampAt === undefined || p.page_number <= clampAt).length, Date.now() - readStart);
   if (!exempt && isBot(request)) {
     const sliceTo = slice[slice.length - 1].page_number;
     logBotRead(request, {
