@@ -19,7 +19,7 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { pageExportImageUrl, fetchAndCompressImage } from '@/lib/export-page-images';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import { AI_TRAINING_NOTICE } from '@/lib/license-info';
-import { transcriptProvenance, transcriptProvenanceLabel, translationCorpus } from '@/lib/text-provenance';
+import { transcriptProvenance, transcriptProvenanceLabel, translationCorpus, textProducedAt, datedProvenanceLabel } from '@/lib/text-provenance';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { serveEnglishOriginalPage, servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
 import { facingTranslationLabel, hasPublishedFacingTranslation } from '@/lib/facing-translation';
@@ -143,7 +143,7 @@ function buildReadme(opts: {
   lines.push('PROVENANCE');
   lines.push(
     prov
-      ? `Transcription: ${transcriptProvenanceLabel(prov, info, 'full')}`
+      ? `Transcription: ${datedProvenanceLabel(transcriptProvenanceLabel(prov, info, 'full'), textProducedAt(page, 'ocr'), info)}`
       : page.ocr?.data ? 'Transcription: included.' : 'Transcription: not yet produced.'
   );
   lines.push(
@@ -159,8 +159,8 @@ function buildReadme(opts: {
         : !page.translation.model
           ? 'Translation: included.'
           : page.translation.edited_by || page.translation.edited_at
-          ? `Translation: ${info.machineTranslationEdited}`
-          : `Translation: ${info.machineTranslation}`
+          ? `Translation: ${datedProvenanceLabel(info.machineTranslationEdited, textProducedAt(page, 'translation'), info)}`
+          : `Translation: ${datedProvenanceLabel(info.machineTranslation, textProducedAt(page, 'translation'), info)}`
   );
   lines.push('');
 

@@ -56,7 +56,7 @@ import {
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
   SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine, MissingPagesLine, PrintedPageBox,
 } from './ReaderV2Bits';
-import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
+import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, textProducedAt, datedProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { QualityWarnings } from '@/lib/book-warnings';
 import type { ScanGaps } from '@/lib/scan-gaps';
@@ -1632,7 +1632,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {/* Same helper as the pane-header chip (#5186): one source of truth. */}
-                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.machineTranscript}
+                  {prov ? datedProvenanceLabel(transcriptProvenanceLabel(prov, t, 'full'), textProducedAt(page, 'ocr'), t) : t.machineTranscript}
                   {/* An open e-text's licence is the reader's to check (#5571). */}
                   {prov?.kind === 'text_source' && (prov.source.licenseUrl || prov.source.url) && (
                     <>
@@ -1651,7 +1651,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {trCorpus
                     ? t.corpusTranslation(trCorpus.name)
-                    : page.translation.edited_by || page.translation.edited_at ? t.machineTranslationEdited : t.machineTranslation}
+                    : datedProvenanceLabel(page.translation.edited_by || page.translation.edited_at ? t.machineTranslationEdited : t.machineTranslation, textProducedAt(page, 'translation'), t)}
                   {isUnreviewedMachineTranslation(page) && (
                     <span className="block mt-0.5" style={{ color: 'var(--accent-gold-dark)' }}>{t.machineDraftNotice}</span>
                   )}

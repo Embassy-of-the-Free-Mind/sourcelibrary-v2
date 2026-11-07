@@ -11,7 +11,7 @@ import { getPageImageUrl } from '@/lib/page-image-url';
 import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '@/lib/page-frame';
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
-import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
+import { transcriptProvenance, transcriptProvenanceLabel, textProducedAt, datedProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
 import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality';
 import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
@@ -112,7 +112,7 @@ export function CorpusChip({ corpus }: { corpus: CorpusInfo }) {
  * failure mode — the Archive's engines misread numbers, which is how a
  * re-read of *The Book of Clevelanders* came to be needed.
  */
-export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) {
+export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr' | 'translation' | 'split_from'> }) {
   const t = getReaderStrings(useLocale()).info;
   const prov = transcriptProvenance(page);
   if (!prov) return null;
@@ -120,14 +120,15 @@ export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) 
   // narrow pane this chip truncates, and a truncated licence is no licence (#5571).
   if (prov.kind === 'text_source') return null;
   const isArchive = prov.kind === 'ia';
+  const at = textProducedAt(page, 'ocr');
   return (
     <span
       data-transcript-provenance={prov.kind}
-      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em] cursor-help truncate max-w-[14rem]"
+      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em] cursor-help truncate max-w-[18rem]"
       style={{ color: isArchive ? 'var(--accent-gold-dark)' : 'var(--text-faint)' }}
-      title={isArchive ? t.transcriptChipIaTitle(prov.agreement) : transcriptProvenanceLabel(prov, t, 'full')}
+      title={isArchive ? t.transcriptChipIaTitle(prov.agreement) : datedProvenanceLabel(transcriptProvenanceLabel(prov, t, 'full'), at, t)}
     >
-      {transcriptProvenanceLabel(prov, t, 'short')}
+      {datedProvenanceLabel(transcriptProvenanceLabel(prov, t, 'short'), at, t)}
     </span>
   );
 }
@@ -167,15 +168,16 @@ export function TextSourceLine({ page }: { page: Pick<Page, 'ocr'> }) {
  * goes wrong there, with a link to the method (#6120). The numbers come from
  * src/data/tengyur-section-quality.json, generated from the #5829 review.
  */
-export function MachineDraftLine({ page, book }: { page: Pick<Page, 'translation'>; book?: Pick<Book, 'title'> }) {
+export function MachineDraftLine({ page, book }: { page: Pick<Page, 'ocr' | 'translation' | 'split_from'>; book?: Pick<Book, 'title'> }) {
   const locale = useLocale();
   const strings = getReaderStrings(locale);
   const t = strings.info;
   if (!isUnreviewedMachineTranslation(page)) return null;
   const note = tengyurNoteSentences(book, strings.tengyurNote, locale);
+  const at = textProducedAt(page, 'translation');
   return (
     <p data-machine-draft="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
-      {t.machineDraftNotice}
+      {at ? t.machineDraftNoticeDated(t.producedMonth(at)) : t.machineDraftNotice}
       {note && (
         <span data-tengyur-note="" className="block mt-1" style={{ color: 'var(--text-secondary)' }}>
           {note.join(' ')}{' '}
