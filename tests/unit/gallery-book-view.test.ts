@@ -66,6 +66,12 @@ describe('the gallery page', () => {
     expect(client).toContain("const matchesServer = bookId ? true :");
   });
 
+  it('never clears the server pictures on first load, or shows an error over them', () => {
+    expect(client).toContain('if (!keepServerItems) setAllItems([]);');
+    expect(client).toContain('if (keepServerItems) return;');
+    expect(client).toMatch(/keepServerItems = isInitialLoad && !hasNonBookFilters/);
+  });
+
   it('keeps the page number in the cache key, or page 2 would serve page 1', () => {
     expect(src).toMatch(/'gallery-initial-v3', tenantId \|\| 'main', bookId \|\| 'all', String\(page\)/);
   });

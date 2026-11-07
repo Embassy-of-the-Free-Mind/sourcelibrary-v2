@@ -192,13 +192,17 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
       setIsInitialLoad(false);
       return;
     }
+    // On first load with no filter the server ignored, its pictures stay up. Clearing them
+    // first left a crawler, which robots.txt keeps off /api/, a red error and no pictures:
+    // Search Console called the book view a soft 404.
+    const keepServerItems = isInitialLoad && !hasNonBookFilters && bookId === initialBookId && initialData.items.length > 0;
     if (isInitialLoad) setIsInitialLoad(false);
 
     // Drop the previous filter's results the moment the filter set changes.
     // Keeping them meant a zero-result filter rendered "No images found"
     // alongside leftover items and a live "Load more" from the old query
     // (#3605) — two inconsistent pieces of state in one view.
-    setAllItems([]);
+    if (!keepServerItems) setAllItems([]);
 
     // Only the newest request may write state. Two fetches can overlap when
     // filters change quickly, and an older one resolving last used to restore
@@ -237,6 +241,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
         setAllItems(firstPage);
       } catch (e) {
         if (requestId !== fetchSeqRef.current) return;
+        if (keepServerItems) return;
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
       } finally {
         if (requestId === fetchSeqRef.current) setLoading(false);
