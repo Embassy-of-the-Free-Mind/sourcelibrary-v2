@@ -243,6 +243,16 @@ const nextConfig: NextConfig = {
         has: [{ type: 'host', value: '.*\\.vercel\\.app' }],
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
+      // A search results URL is an empty shell to a crawler: the results come from
+      // /api/search, which robots.txt disallows, so Google reports it as a Soft 404.
+      // A header because the page is a client component and cannot read the query
+      // in its metadata. `/search` itself stays indexable. Not robots.txt: Google
+      // only sees a noindex on a page it may fetch (#8368).
+      {
+        source: '/:locale(es|la|zh)?/search',
+        has: [{ type: 'query', key: 'q' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      },
       // The private spend report (#5225) is behind a named allow-list, but a
       // sign-in redirect is still a URL a crawler can record. Belt and braces
       // with the page's `metadata.robots`; robots.txt already disallows /admin/.
