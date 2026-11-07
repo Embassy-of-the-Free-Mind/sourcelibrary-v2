@@ -31,6 +31,20 @@
  *                     corrector swaps one wrong attribution for another.
  *   NO_NAME           no personal name detected. Silence, not innocence.
  *
+ * PLACEHOLDER SCOPE (#7660). `--placeholder-authors` reads the titles of books
+ * with NO author_id and a placeholder byline (Unknown, [s.n.], Not Known, NA,
+ * empty…). There is no catalogued author to protect, so SELF_NAMED does not
+ * apply, and `--proposals-out=<file>` writes the rows that pass every gate below
+ * in the shape `scripts/maintenance/apply-byline-proposals-3894.mjs` applies:
+ *   exactly one author-role capture · not an editor-only page · the capture
+ *   resolves through `nominativise` to ONE thesaurus person, corroborated by the
+ *   given name · that person's own canonical name carries the surname stem (a
+ *   compound VARIANT is a trapdoor: "Bernardini Baldi" reached Hero of Alexandria
+ *   through an editor variant) · the title is not ABOUT the person (epitaph,
+ *   life, funeral oration) · not an Indic catalogue title ("Shri Shri Candi").
+ * Measured 2026-10-28 over 112,890 placeholder books: 2,215 name someone in an
+ * author position, 103 pass the gates, and by eye 96 are right.
+ *
  * Read-only. Writes nothing. Exits 1 when AUTHOR_ON_PAGE is non-empty.
  *
  * Usage:
@@ -43,9 +57,20 @@ import { MongoClient } from 'mongodb';
 import { namesOnTitlePage } from '../lib/title-page-attribution.mjs';
 import { sameNameForm } from '../lib/name-equivalence.mjs';
 import { nominativise } from '../lib/nominativise.mjs';
+import { foldOrtho } from '../lib/name-equivalence.mjs';
+import { stripEnding, PRECISION_ENDINGS } from '../lib/latin-morphology.mjs';
+import { writeFileSync } from 'node:fs';
 
 const JSON_OUT = process.argv.includes('--json');
 const ALL_AUTHORS = process.argv.includes('--all-authors');
+const PLACEHOLDER = process.argv.includes('--placeholder-authors');
+const PROPOSALS_OUT = (process.argv.find((a) => a.startsWith('--proposals-out=')) || '').split('=')[1] || null;
+/** A byline that names nobody. Matched on the whole string. */
+const PLACEHOLDER_AUTHOR = /^\s*(?:unknown|\[?s\.\s?n\.?\]?|not known|not traceable|n\/?a|not available|anonym\w*(?: \w+)?|anon\.?|none|-+)?\s*$/i;
+/** A title ABOUT the person its genitive head names, not by them. */
+const ABOUT_THE_PERSON = /\b(?:epitaph|vita\b|vitae\b|leben|life of|oratio funebris|in obitum|memoriae|laudatio|elogi|parentatio|programma)/i;
+/** Providers whose catalogue titles are not title-page transcriptions in a Latin script. */
+const NOT_TRANSCRIPTION = new Set(['museumsofindia']);
 const LIMIT = Number((process.argv.find((a) => a.startsWith('--limit=')) || '--limit=0').split('=')[1]);
 const log = (...a) => { if (!JSON_OUT) console.log(...a); };
 
@@ -93,21 +118,28 @@ await mc.connect();
 const db = mc.db('bookstore');
 const books = db.collection('books');
 
-const query = ALL_AUTHORS
-  ? { author: { $type: 'string', $ne: '' }, title: { $type: 'string' } }
-  : { author: PRINTER_DYNASTY, title: { $type: 'string' } };
+const query = PLACEHOLDER
+  ? { author_id: { $in: [null, undefined] }, content_type: { $ne: 'artwork' }, resource_type: { $exists: false }, title: { $type: 'string' } }
+  : ALL_AUTHORS
+    ? { author: { $type: 'string', $ne: '' }, title: { $type: 'string' } }
+    : { author: PRINTER_DYNASTY, title: { $type: 'string' } };
 
 const total = await books.countDocuments(query);
-log(`══ title-page attribution ${ALL_AUTHORS ? '(ALL authors — noisy)' : '(printer dynasties)'} ══\n`);
+log(`══ title-page attribution ${PLACEHOLDER ? '(placeholder bylines, no author_id)' : ALL_AUTHORS ? '(ALL authors — noisy)' : '(printer dynasties)'} ══\n`);
 log(`  books in scope: ${total.toLocaleString()}`);
 
 const buckets = { AUTHOR_ON_PAGE: [], EDITOR_ONLY: [], SELF_NAMED: [], NO_NAME: [] };
 
 const cursor = books.find(query, {
-  projection: { id: 1, title: 1, author: 1, author_id: 1, published: 1, year: 1, visible: 1, 'ai_metadata.author': 1 },
+  projection: { id: 1, title: 1, author: 1, author_id: 1, published: 1, year: 1, visible: 1, 'ai_metadata.author': 1, 'image_source.provider': 1 },
 }).batchSize(1000);
 
+let placeholderBooks = 0;
 for await (const b of cursor) {
+  if (PLACEHOLDER) {
+    if (!PLACEHOLDER_AUTHOR.test(b.author == null ? '' : String(b.author))) continue;
+    placeholderBooks++;
+  }
   const names = namesOnTitlePage(b.title);
   const row = {
     id: b.id || b._id.toString(),
@@ -119,6 +151,7 @@ for await (const b of cursor) {
     // Where enrichment also has an opinion, showing it makes review faster —
     // but this audit never depends on it, which is the whole point.
     ai_says: b.ai_metadata?.author ?? null,
+    provider: b.image_source?.provider ?? null,
   };
 
   // A printer who names himself on his own title page is not misattributed.
@@ -128,7 +161,7 @@ for await (const b of cursor) {
   // (Estienne/Stephanus — no shared letters, so no orthographic rule can reach
   // it), and a declined form anywhere in the title (Auli Gellii for Aulus
   // Gellius, where the stems are too short for the prefix rule).
-  const selfNamed = names.some((n) => sameNameForm(n.name, b.author))
+  const selfNamed = !PLACEHOLDER && names.some((n) => sameNameForm(n.name, b.author))
     || sameNameForm(String(b.title ?? '').slice(0, 240), b.author)
     || namedInTitle(b.title, b.author);
   if (selfNamed) { buckets.SELF_NAMED.push(row); continue; }
@@ -149,6 +182,7 @@ for await (const b of cursor) {
   // "Nicolaus Clenardus" — the trap that nearly caught the item-2 pass.
   row.needs_nominative = authorRole[0].marker === 'genitive-head';
   row.other_names = names.slice(1).map((n) => `${n.name} (${n.role})`);
+  row.author_captures = authorRole.length;
   row.ai_agrees = row.ai_says ? sameNameForm(row.ai_says, row.proposed) : null;
   buckets.AUTHOR_ON_PAGE.push(row);
 }
@@ -166,19 +200,47 @@ const candCache = new Map();
 async function findCandidates(stem) {
   if (candCache.has(stem)) return candCache.get(stem);
   const rx = new RegExp(stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-  const docs = await authorsCol.find({ $or: [{ canonical_name: rx }, { variants: rx }, { _id: rx }] },
+  // Placeholder scope WRITES what this returns, so tombstones and non-persons are out.
+  const docs = await authorsCol.find({ $or: [{ canonical_name: rx }, { variants: rx }, { _id: rx }], ...(PLACEHOLDER ? { merged_into: { $exists: false }, is_person: { $ne: false } } : {}) },
     { projection: { _id: 1, canonical_name: 1, variants: 1 }, limit: 25 }).toArray();
   candCache.set(stem, docs);
   return docs;
 }
 for (const r of q) {
-  if (!r.needs_nominative) continue;
+  // In placeholder scope every capture is looked up: "auctore Leonhardo Eulero" is an ablative.
+  if (!r.needs_nominative && !PLACEHOLDER) continue;
   const hit = await nominativise(r.proposed, findCandidates);
   if (!hit) continue;
   r.nominative = hit.nominative;
   r.nominative_slug = hit.slug;
   r.nominative_ambiguous = hit.ambiguous;
+  r.nominative_corroborated = hit.corroborated_by_given_name;
+  r.nominative_surname = hit.matched_on;
   if (hit.ambiguous) r.nominative_alternatives = hit.alternatives;
+}
+
+if (PROPOSALS_OUT) {
+  const stems = (s) => foldOrtho(s).split(' ').filter((w) => w.length >= 4).map((w) => stripEnding(w, PRECISION_ENDINGS, 4));
+  const why = (r) => r.author_captures !== 1 ? 'more than one author-role capture'
+    : !r.nominative ? 'no thesaurus person'
+      : r.nominative_ambiguous ? 'ambiguous person'
+        : !r.nominative_corroborated ? 'surname only, no given name agrees'
+          : !stems(r.nominative).includes(r.nominative_surname) ? 'surname only on a variant, not the canonical name'
+            : ABOUT_THE_PERSON.test(r.title) ? 'title is about the person'
+              : NOT_TRANSCRIPTION.has(r.provider) ? 'catalogue title is not a transcription'
+                : null;
+  const proposals = q.map((r) => ({
+    book_id: r.id, status: why(r) ? 'GATED' : 'READY', gated_because: why(r),
+    current: { author: r.catalogued ?? null }, title: r.title,
+    proposed: { author: r.nominative ?? null, author_id: why(r) ? null : r.nominative_slug, catalogued_role: 'placeholder' },
+    evidence: { page: null, quoted_line: r.title, as_printed: r.proposed, wikidata: null, marker: r.proposed_via },
+  }));
+  writeFileSync(PROPOSALS_OUT, JSON.stringify({
+    run: 'title-text-placeholder-7660', provenance_source: 'title-text-attribution-v1',
+    method: 'catalogue title read by scripts/lib/title-page-attribution.mjs, author-role capture nominativised against the authors thesaurus, hand-reviewed (#7660)',
+    generated_at: new Date().toISOString(), placeholder_books: placeholderBooks, proposals,
+  }, null, 1));
+  log(`  proposals: ${proposals.filter((p) => p.status === 'READY').length} READY of ${proposals.length} -> ${PROPOSALS_OUT}`);
 }
 
 q.sort((a, b) => String(a.catalogued).localeCompare(String(b.catalogued)));

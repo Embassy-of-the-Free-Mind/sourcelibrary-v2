@@ -181,3 +181,4 @@ scripts/import/*-ledger.jsonl
 # Python bytecode (the estimator builders import provenance.py, #6740)
 __pycache__/
 *.pyc
+scripts/maintenance/output/

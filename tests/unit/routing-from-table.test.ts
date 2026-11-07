@@ -1,8 +1,9 @@
 /**
- * #7170: the OCR and translation routers READ their tables. This pins three things:
+ * #7170: the translation routers READ their table, and the OCR refusal lane its `refused-pages` row (getOcrModelForBook reads
+ * the router table since #8283: tests/unit/router-bound-table.test.ts). This pins three things:
  *   - the router follows the table (an edited table routes differently, with no code change);
  *   - a malformed table fails loudly (at import, and so in this test), never routing to lite by accident;
- *   - an absent route falls back to the pinned constants (OCR) or the default row (translation).
+ *   - an absent route falls back to the default row.
  * What each route SHOULD be is the table's business and its evidence's; tests/unit/ocr-routing-table.test.ts and
  * translate-core-parity.test.ts hold the rows to the evidence and the two routers to each other.
  */
@@ -11,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   OCR_ROUTING_TABLE, OCR_MODEL_FLASH, OCR_MODEL_LITE, FLASH_OCR_FROM, FLASH_OCR_INCLUDES_HIDDEN,
-  FLASH_OCR_FROM_FALLBACK, flashFamiliesFromTable, isFlashOcrBook, getOcrModelForBook, ocrRefusalFallback,
+  isFlashOcrBook, getOcrModelForBook, ocrRefusalFallback,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/ocr-routing.mjs';
@@ -23,27 +24,14 @@ import {
 import { translateEngineFor, validateTranslationTable, prefixRegex, translateLaneForBook, tableRowFor, cliBookFilter, CLI_TRANSLATE_LANES } from '../../scripts/lib/translation-routing.mjs';
 import { getTranslateModelForBook as getTranslateModelForBookTs } from '../../src/lib/types/ai-models';
 
-type Route = { engine: string; default?: boolean; families?: Record<string, { from: string; hidden?: boolean }> };
-type Row = { id: string; route?: Route };
+type Row = { id: string };
 const clone = <T,>(x: T): T => JSON.parse(JSON.stringify(x));
 const LANGUAGE_OF: Record<string, string> = { grc: 'Greek', fas: 'Persian', san: 'Sanskrit', pli: 'Pali', ara: 'Arabic', gez: "Ge'ez", zho: 'Chinese' };
 const OLD = new Date('2020-01-01');
 const ROOT = path.resolve(__dirname, '../..');
 
-describe('OCR: getOcrModelForBook reads the `route` fields of ocr-routing-table.json', () => {
-  const routed = (OCR_ROUTING_TABLE.rows as Row[]).filter((r) => r.route?.families);
-
-  it('every family the table routes is what the router exports, with its date and hidden flag', () => {
-    expect(routed.length).toBeGreaterThanOrEqual(3);
-    const fams = routed.flatMap((r) => Object.entries(r.route!.families!));
-    expect(Object.keys(FLASH_OCR_FROM).sort()).toEqual(fams.map(([f]) => f).sort());
-    for (const [f, spec] of fams) {
-      expect([f, (FLASH_OCR_FROM[f] as Date).toISOString().slice(0, 10)]).toEqual([f, spec.from]);
-      expect([f, FLASH_OCR_INCLUDES_HIDDEN.has(f)]).toEqual([f, spec.hidden === true]);
-    }
-  });
-
-  it('a visible book in each routed family reads on flash; an old hidden one only where the table says hidden', () => {
+describe('OCR: the legacy label, and the refusal lane reading its row', () => {
+  it('a visible book in each routed family reads on flash; an old hidden one only where hidden is set', () => {
     for (const f of Object.keys(FLASH_OCR_FROM)) {
       const language = LANGUAGE_OF[f];
       expect([f, !!language]).toEqual([f, true]);
@@ -51,23 +39,6 @@ describe('OCR: getOcrModelForBook reads the `route` fields of ocr-routing-table.
       expect([f, isFlashOcrBook({ language, visible: false, created_at: OLD })]).toEqual([f, FLASH_OCR_INCLUDES_HIDDEN.has(f)]);
     }
     expect(getOcrModelForBook({ language: 'Latin', visible: true, created_at: OLD }, { liteOnly: true })).toBe(OCR_MODEL_LITE);
-  });
-
-  it('an edited table routes differently with no code change', () => {
-    const t = clone(OCR_ROUTING_TABLE);
-    const greek = t.rows.find((r: Row) => r.id === 'greek-print');
-    greek.route.families.heb = { from: '2026-11-01', hidden: true };
-    delete greek.route.families.grc;
-    const got = flashFamiliesFromTable(t);
-    expect(got.from.heb.toISOString()).toBe('2026-11-01T00:00:00.000Z');
-    expect(got.hidden.has('heb')).toBe(true);
-    expect(got.from.grc).toBeUndefined();
-  });
-
-  it('with no family route anywhere it keeps the pinned fallback', () => {
-    const t = clone(OCR_ROUTING_TABLE);
-    for (const r of t.rows) delete r.route;
-    expect(flashFamiliesFromTable(t).from).toBe(FLASH_OCR_FROM_FALLBACK);
   });
 
   it('the refusal fallback is never Gemini, names a lane file that exists, and was adopted from a proposal file', () => {
@@ -82,13 +53,6 @@ describe('OCR: getOcrModelForBook reads the `route` fields of ocr-routing-table.
     expect(/^gemini/.test(route.otherwise!)).toBe(false);
     expect(ocrRefusalFallback('greek').engine).toBe(route.fallback!.find((f) => f.chart === 'greek')!.engine);
     expect(ocrRefusalFallback('no-such-chart').engine).toBe(route.otherwise);
-  });
-
-  it('a malformed route throws instead of routing', () => {
-    const bad = (edit: (rows: Row[]) => void) => { const t = clone(OCR_ROUTING_TABLE); edit(t.rows); return () => flashFamiliesFromTable(t); };
-    expect(bad((rows) => { rows.find((r) => r.id === 'greek-print')!.route!.engine = 'claude-opus-5-5'; })).toThrow(/can only route/);
-    expect(bad((rows) => { rows.find((r) => r.id === 'greek-print')!.route!.families!.grc.from = '2 Oct'; })).toThrow(/bad date/);
-    expect(bad((rows) => { rows.find((r) => r.id === 'chinese-print')!.route!.families!.grc = { from: '2026-10-02' }; })).toThrow(/two rows/);
   });
 });
 
@@ -139,18 +103,41 @@ describe('Translation: both routers read translation-routing-table.json', () => 
     expect([lane.channel, lane.engine, lane.reader, lane.row.id]).toEqual(['cli', 'claude-opus-5-5', 'scripts/batch/claude-translate.mjs', 'pali-test']);
     expect(translateEngineFor(t, { language: 'Pali' })).toBe(MODEL_FLASH);
     expect(tableRowFor(t, { language: 'Pali' })?.id).toBe('flash-measured');
-    expect(translateLaneForBook(t, { language: 'Hebrew' })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH });
-    expect(translateLaneForBook(t, { language: 'Spanish' })).toMatchObject({ channel: 'batch', engine: MODEL_LITE, row: null });
+    // Since 2026-11-06 (everything-cli-agy) every other book is cli too; the Batch engine underneath is unchanged.
+    expect(translateLaneForBook(t, { language: 'Hebrew' })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+    expect(translateEngineFor(t, { language: 'Hebrew' })).toBe(MODEL_FLASH);
+    expect(translateLaneForBook(t, { language: 'Spanish' })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+    expect(translateEngineFor(t, { language: 'Spanish' })).toBe(MODEL_LITE);
+  });
+
+  // Derek 2026-11-06: "no one should use lite", "everything on agy". The catch-all is the last cli row.
+  it('every book translates on agy, except a Loeb (printed English facing: the agy read copied it, #7075)', () => {
+    const t = TRANSLATION_ROUTING_TABLE;
+    for (const language of ['Spanish', 'Dutch', 'Portuguese', 'Hebrew', 'Arabic', 'Sanskrit', 'Tibetan', 'Old French', '', 'Unknown']) {
+      expect([language, translateLaneForBook(t, { language }).channel]).toEqual([language, 'cli']);
+    }
+    expect(translateLaneForBook(t, { language: 'Latin', image_source: { provider: 'bph' } })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+    expect(translateLaneForBook(t, { language: 'Hebrew', title: 'Josephus (Loeb Classical Library)' }).channel).toBe('batch');
+    const last = (t.rows as { channel?: string; id: string }[]).filter((r) => r.channel === 'cli').at(-1);
+    expect(last?.id).toBe('everything-cli-agy');
+    // A cli row after the catch-all is unreachable, and match.any is cli-only.
+    const after = clone(TRANSLATION_ROUTING_TABLE); after.rows.push(cliRow({ id: 'after-catch-all' }));
+    expect(() => validateTranslationTable(after, [MODEL_FLASH, MODEL_LITE])).toThrow(/unreachable/);
+    const batchAny = clone(TRANSLATION_ROUTING_TABLE); batchAny.rows.unshift({ id: 'batch-any', match: { any: true }, engine: MODEL_LITE, evidence: [{ issue: 1 }] });
+    expect(() => validateTranslationTable(batchAny, [MODEL_FLASH, MODEL_LITE])).toThrow(/only on a cli row/);
+    // cliBookFilter (the orchestrator's Phase 4 selector) now selects every book that is not a Loeb.
+    const f = cliBookFilter(t) as { $or: Record<string, unknown>[] };
+    expect(f.$or.some((c) => !('language' in c) && !('image_source.provider' in c))).toBe(true);
   });
 
   // #7075 (2026-10-25): Greek and Ancient Greek go to the agy reader; every other flash-measured language stays on Batch.
-  it('the live table sends Greek to the agy cli lane and leaves the rest of flash-measured on Batch', () => {
+  it('the live table sends Greek to its own agy cli row; the rest of flash-measured reaches agy by the catch-all', () => {
     const t = TRANSLATION_ROUTING_TABLE;
     for (const language of ['Greek', 'Ancient Greek', 'Greek, Latin']) {
-      expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli' });
+      expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id: 'greek-cli-gemini38' } });
       expect(translateEngineFor(t, { language })).toBe(MODEL_FLASH);
     }
-    for (const language of ['Hebrew', 'Arabic', 'Sanskrit']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    for (const language of ['Hebrew', 'Arabic', 'Sanskrit']) expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
     // "Latin; Greek" is not Greek (first label); it is Latin, and Latin has its own cli row since #7263.
     expect(translateLaneForBook(t, { language: 'Latin; Greek' })).toMatchObject({ channel: 'cli', row: { id: 'latin-cli-agy4' } });
     expect(translateLaneForBook(t, { language: 'Pali' })).toMatchObject({ channel: 'cli', engine: 'claude-opus-5-5' });
@@ -182,11 +169,14 @@ describe('Translation: both routers read translation-routing-table.json', () => 
       expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', engine: 'gemini-3.8-flash+agy-cli', row: { id, per_call: 4 } });
       expect(translateEngineFor(t, { language })).toBe(MODEL_LITE);
     }
+    // BPH skips the language rows (their `unless`) and, since 2026-11-06, reaches agy by the catch-all; its Batch row
+    // is still what a Batch caller would get.
     for (const language of ['Latin', 'German', 'Latin. French. English']) {
-      expect(translateLaneForBook(t, { language, image_source: { provider: 'bph' } })).toMatchObject({ channel: 'batch', engine: MODEL_FLASH, row: { id: 'bph' } });
+      expect(translateLaneForBook(t, { language, image_source: { provider: 'bph' } })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
+      expect(tableRowFor(t, { language, image_source: { provider: 'bph' } })?.id).toBe('bph');
     }
-    // Not the tested cells: other first labels, and the Greek row keeps its own reader (no per_call).
-    for (const language of ['Old French', 'Middle High German', 'Neo-Latin', 'Spanish']) expect(translateLaneForBook(t, { language }).channel).toBe('batch');
+    // Not the tested cells: other first labels reach agy by the catch-all; the Greek row keeps its own reader (no per_call).
+    for (const language of ['Old French', 'Middle High German', 'Neo-Latin', 'Spanish']) expect(translateLaneForBook(t, { language })).toMatchObject({ channel: 'cli', row: { id: 'everything-cli-agy' } });
     expect(translateLaneForBook(t, { language: 'Greek, Latin' }).row.id).toBe('greek-cli-gemini38');
     expect(translateLaneForBook(t, { language: 'Greek' }).row.per_call).toBeUndefined();
   });

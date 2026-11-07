@@ -23,6 +23,7 @@ import { galleryFilter } from '@/lib/gallery-scope';
 import { fetchAndCompressImage } from '@/lib/export-page-images';
 import { EPub, type Options } from 'epub-gen-memory';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { facingTranslationLabel, facingTranslationOf, leafRole } from '@/lib/facing-translation';
 
 export const PAGES_PER_SECTION = 40;
 /** At ~40 KB each, 400 illustrations (Fludd's Utriusque cosmi has 402) keep the EPUB near 16 MB: inside Send to
@@ -44,11 +45,12 @@ export const FLOW_EPUB_CSS = `
 
 interface FlowBookDoc {
   id: string;
-  chapters?: Array<{ title?: string; titleEn?: string; pageNumber?: number; confidence?: string }>;
+  chapters?: Array<{ title?: string; titleEn?: string; pageNumber?: number; level?: number; confidence?: string }>;
   thumbnail?: string | null;
   thumbnail_blob?: string | null;
   image_display?: string | null;
   image_thumb?: string | null;
+  facing_translation?: unknown;
 }
 interface FlowPageDoc {
   id: string;
@@ -56,6 +58,7 @@ interface FlowPageDoc {
   page_type?: string;
   translation?: { data?: string } | null;
   ocr?: { data?: string } | null;
+  printed_page?: { label?: unknown } | null;
 }
 
 /**
@@ -77,8 +80,43 @@ export function footnotesFor(html: string, seq: { n: number }): string {
     // A marginal note set on a line or paragraph of its own leaves its number stranded there; it belongs at the end
     // of the text it sat beside (Hariri, 2026-10-22: "^11 ^12" alone between paragraphs).
     .replace(/(?:<br\/>\s*)+((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)(?=<br\/>|<\/p>)/g, ' $1')
-    .replace(/<\/p>\s*<p>\s*((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>/g, ' $1</p>');
+    .replace(/<\/p>\s*<p>\s*((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>/g, ' $1</p>')
+    // With no text before it (after a heading, at a section's start) or at the head of a paragraph, it joins the text
+    // after it instead: a lone number on a line of its own is clutter on a 6-inch screen (#8333: 542 in Olaus Magnus).
+    .replace(/<p>\s*((?:<a class="page-marker"[^>]*>[^<]*<\/a>\s*)?)((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)(?:<br\/>\s*)+/g, '<p>$1$2 ')
+    .replace(/<p>\s*((?:<a class="page-marker"[^>]*>[^<]*<\/a>\s*)?)((?:<a epub:type="noteref"[^>]*>\d+<\/a>\s*)+)<\/p>\s*<p>/g, '<p>$1$2 ');
   return notes.length ? `${body}\n<section class="footnotes"><h3>Notes</h3>\n${notes.join('\n')}\n</section>` : body;
+}
+
+/** Editorial blocks and one-line tags a page opens with: not text, so not the page's first line. */
+const EDITORIAL_BLOCK = /<(meta|summary|keywords|vocab|scan-quality|warning|script)\b[^>]*>[\s\S]*?<\/\1>/g;
+const TAG_LINE = /^<(page-num|language|page-type|header|sig|folio|columns)\b[^>]*>[\s\S]*?<\/\1>$|^<(?:page-type|language|columns)\b[^>]*\/?>$/;
+/** A heading, or a line that is wholly bold or centred: how a translation sets a running head it carried over. */
+const HEADING_LIKE = /^#{1,6}\s+\S|^(?:->)?\s*\*\*[^*]{2,120}\*\*\s*(?:<-)?$|^->.{2,120}<-$/;
+const isHeadingLike = (line: string) => HEADING_LIKE.test(line) && line.replace(/<(note|gloss)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/[#*\->< ]/g, '').length <= 80;
+const contentLines = (text: string) => text.replace(EDITORIAL_BLOCK, m => '\n'.repeat(m.split('\n').length - 1)).split('\n')
+  .map((l, i) => ({ i, l: l.replace(/[\u200b-\u200f\u2060-\u2064\ufeff]/g, '').trim() }))
+  .filter(x => x.l && !TAG_LINE.test(x.l));
+
+/**
+ * The page's running head, when the translation carried it over as its first line (#8333). The transcription tags
+ * page furniture (`<header>LIBER DECIMVS</header>`, `<page-num>231</page-num>`) and the export drops those tags, but a
+ * translation often sets the header as a heading of its own ("# BOOK TEN", "->**HERODOTUS**<-"), so a running head
+ * opened every page of the EPUB and broke the sentence running across it (Olaus Magnus: 143 of 915 pages).
+ * The transcription is the witness: a header is dropped only when the OCR tags one AND the translation has one more
+ * heading-like line than the OCR's own text, the extra one being the first. A chapter title at the top of a page is
+ * in both texts, so the counts match and it stays (measured on Olaus, 2026-11-07: 143 dropped, all running heads;
+ * 132 kept, all chapter titles). Export only: the stored text keeps every line (#7118).
+ */
+export function dropCarriedRunningHead(translation: string, ocr: string | null | undefined): string {
+  if (!ocr || !/<header\b[^>]*>[\s\S]*?<\/header>/.test(ocr)) return translation;
+  const tl = contentLines(translation);
+  if (!tl.length || !isHeadingLike(tl[0].l)) return translation;
+  const ocrHeads = contentLines(ocr).filter(x => isHeadingLike(x.l)).length;
+  if (tl.filter(x => isHeadingLike(x.l)).length <= ocrHeads) return translation;
+  const lines = translation.split('\n');
+  lines.splice(tl[0].i, 1);
+  return lines.join('\n');
 }
 
 /** A page's heading levels mapped, in order of depth, onto h3, h4, … (h6 at most): no level skipped. */
@@ -90,8 +128,11 @@ export function rankHeadings(html: string): string {
 
 const escapeHtml =(s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+/** One section of the EPUB; `children` are its chapters, listed under it in the contents (two levels at most). */
+export interface FlowSection { title: string; content: string; children?: { title: string; anchor: string }[] }
+
 export interface FlowEpub {
-  chapters: { title: string; content: string }[];
+  chapters: FlowSection[];
   imagesTotal: number;
   imagesIncluded: number;
   /** One sentence for the front matter when the illustrations are not all there; null when they are. */
@@ -99,6 +140,8 @@ export interface FlowEpub {
   /** The book's own cover as a local JPEG for the EPUB builder (`file://…`), or null: only when the scans may be
    *  redistributed, like the illustrations. Without one a Kindle library shows a grey placeholder. */
   cover: string | null;
+  /** On a facing-page edition (a Loeb, #8321), who the English is by, for the title page; null otherwise. */
+  translationCredit: string | null;
   /** Removes the temporary image files. Call after the EPUB is built. */
   cleanup: () => void;
 }
@@ -160,20 +203,37 @@ export async function buildFlowEpub(
   const readable = pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && p.page_number >= 0);
   const figures = await stageFigures(db, book.id, new Set(readable.map(p => p.page_number)), opts.baseUrl, opts.includeImages);
 
+  // A facing-page edition (a Loeb, #8321) prints its own English on the leaf opposite each original leaf. Each
+  // text keeps its lane, as in /read, so no passage reads twice: the translation is the published English leaves'
+  // own words (never our AI English of the Greek or Latin leaves), the original the Greek or Latin leaves alone.
+  // A leaf out of the lane keeps its page marker and its plates, which join the next page's.
+  const facing = facingTranslationOf(book);
+  const role = (p: FlowPageDoc) => (facing ? leafRole(p.ocr?.data) : null);
+  const outOfLane = (p: FlowPageDoc) => !!facing && role(p) === (opts.text === 'translation' ? 'original' : 'translation');
+  // In the translation lane a Loeb's English leaf is its own words, and so is a leaf whose stored English was
+  // withheld (#7100: a title page, the short last page of the introduction, the index head): it is English already,
+  // and "not yet translated" would be false.
+  const printedEnglish = (p: FlowPageDoc) => !!facing && opts.text === 'translation'
+    && (role(p) === 'translation' || !p.translation?.data);
   const flowPage = (p: FlowPageDoc): FlowPage => {
-    const raw = opts.text === 'translation'
-      ? (p.translation?.data ? markForExport(p.translation.data, book.id) : '')
+    const raw = outOfLane(p) ? ''
+      : opts.text === 'translation' && !printedEnglish(p)
+      ? (p.translation?.data ? markForExport(dropCarriedRunningHead(p.translation.data, p.ocr?.data), book.id) : '')
       : (p.ocr?.data || '');
     // A page's own headings sit below the section's <h2>, ranked in the order the page uses them (h3, h4, …):
     // translators pick #-levels freely ("#" then "###"), and a heading that skips a level breaks the heading
     // navigation e-readers and screen readers rely on (the probe found 143 skips in 12 books).
     const html = raw.trim() ? rankHeadings(markdownToHtml(raw)) : '';
-    return { n: p.page_number, html: html && html !== '<p></p>' ? html : null, href: `${opts.baseUrl}/book/${book.id}?page=${p.page_number}`, figures: figures.byPage.get(p.page_number) };
+    // The number printed on the page where the book's numbering vouches for one, as in /read: the book's own
+    // references ("see p. 279", its index) and a citation then find the page. The scan number stays in the link.
+    const label = typeof p.printed_page?.label === 'string' && p.printed_page.label.trim() ? p.printed_page.label.trim() : undefined;
+    return { n: p.page_number, html: html && html !== '<p></p>' ? html : null, href: `${opts.baseUrl}/book/${book.id}?page=${p.page_number}`, figures: figures.byPage.get(p.page_number), label };
   };
   // A transcribed page with no translation yet says so, once per run ("Pages 45–52 are not yet translated"),
   // instead of vanishing: the reader would otherwise take the gap for the book (no silent skips). It stands as
   // its own block, so no sentence runs across it.
-  const untranslated = (p: FlowPageDoc) => opts.text === 'translation' && !p.translation?.data && !!p.ocr?.data?.trim();
+  const untranslated = (p: FlowPageDoc) => opts.text === 'translation' && !outOfLane(p) && !printedEnglish(p)
+    && !p.translation?.data && !!p.ocr?.data?.trim();
   const flowPages = (list: FlowPageDoc[]): FlowPage[] => list.map((p, i) => {
     const fp = flowPage(p);
     if (!untranslated(p) || (i > 0 && untranslated(list[i - 1]))) return fp;
@@ -185,10 +245,18 @@ export async function buildFlowEpub(
   });
 
   // Sections: the book's chapters when it has them (low-confidence ones are guesses), else even runs of pages.
-  const starts = (book.chapters || [])
+  const usable = (book.chapters || [])
     .filter(c => typeof c.pageNumber === 'number' && c.confidence !== 'low' && (c.titleEn || c.title))
-    .map(c => ({ page: c.pageNumber as number, title: (c.titleEn || c.title) as string }))
+    .map(c => ({ page: c.pageNumber as number, title: (c.titleEn || c.title) as string, level: typeof c.level === 'number' ? c.level : 1 }))
     .sort((a, b) => a.page - b.page);
+  // A book with parts AND chapters (Olaus Magnus: 22 books, 769 chapters) is cut at its top level, and the chapters
+  // under each part become nested contents entries that link to the chapter's page. 793 sections in one flat list is
+  // a contents nobody scrolls; Kindle shows two levels (Kindle Publishing Guidelines 5.2, #8333).
+  const topLevel = Math.min(...usable.map(c => c.level));
+  const tops = usable.filter(c => c.level === topLevel);
+  const nested = tops.length >= 2 && tops.length < usable.length;
+  const starts = nested ? tops : usable;
+  const subs = nested ? usable.filter(c => c.level !== topLevel) : [];
   const sections: { title: string; pages: FlowPageDoc[] }[] = [];
   for (const p of readable) {
     const chapter = starts.find(c => c.page === p.page_number);
@@ -197,15 +265,18 @@ export async function buildFlowEpub(
     sections[sections.length - 1].pages.push(p);
   }
   const seq = { n: 0 };
-  const chapters = sections
+  const chapters: FlowSection[] = sections
     .map(s => {
       const first = s.pages[0].page_number, last = s.pages[s.pages.length - 1].page_number;
       const title = s.title || (first === last ? `Page ${first}` : `Pages ${first}–${last}`);
       // Page numbers as an edition marks a page break, "|198" on the line: e-readers ignore most CSS, and a bare
       // raised number would read as one of the footnote calls.
       const body = footnotesFor(joinPagesHtml(flowPages(s.pages)), seq)
-        .replace(/(<a class="page-marker"[^>]*>)(\d+)<\/a>/g, '$1|$2</a>');
-      return { title, content: `${s.title ? `<h2>${escapeHtml(s.title)}</h2>\n` : ''}${body}` };
+        .replace(/(<a class="page-marker"[^>]*>)([^<]+)<\/a>/g, '$1|$2</a>');
+      // Every page carries its marker (id "p<n>"), so a chapter's entry lands on the page where it begins.
+      const children = subs.filter(c => c.page >= first && c.page <= last && body.includes(`id="p${c.page}"`))
+        .map(c => ({ title: c.title, anchor: `p${c.page}` }));
+      return { title, content: `${s.title ? `<h2>${escapeHtml(s.title)}</h2>\n` : ''}${body}`, ...(children.length ? { children } : {}) };
     })
     // Any content at all — a section of untranslated pages is its "not yet translated" note, not nothing.
     .filter(c => /<p[\s>]|<figure|<table|<ul/.test(c.content));
@@ -235,6 +306,9 @@ export async function buildFlowEpub(
     imagesTotal: figures.total,
     imagesIncluded: figures.included,
     imagesNote,
+    translationCredit: facing && opts.text === 'translation'
+      ? `${facingTranslationLabel(book)}: the published English, printed facing the original, transcribed from the scan. Source Library's AI translation is not included.`
+      : null,
     cover: cover ? `file://${cover}` : null,
     cleanup: () => {
       if (figures.dir) fs.rmSync(figures.dir, { recursive: true, force: true });
@@ -245,6 +319,7 @@ export async function buildFlowEpub(
 
 type ZipFile = { async(kind: 'string'): Promise<string> };
 type EpubZip = { file(path: string): ZipFile | null; file(path: string, data: string): unknown; generateAsync(o: object): Promise<Buffer> };
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const escapeXml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 /**
@@ -259,17 +334,18 @@ const escapeXml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').
  */
 export async function renderFlowEpub(
   options: Options,
-  chapters: { title: string; content: string }[],
+  chapters: FlowSection[],
   meta: { hasImages: boolean; sourceUrl: string },
 ): Promise<Buffer> {
-  const book = new EPub({ ...options, prependChapterTitles: false, numberChaptersInTOC: false }, chapters);
+  const book = new EPub({ ...options, prependChapterTitles: false, numberChaptersInTOC: false }, chapters.map(({ children: _c, ...c }) => c));
   await book.render();
   const inner = book as unknown as { zip: EpubZip; content: Array<{ filename: string; content: string }> };
   const zip = inner.zip;
 
   const pages: { n: string; href: string }[] = [];
   for (const ch of inner.content) {
-    for (const m of ch.content.matchAll(/<a class="page-marker" id="p(\d+)"/g)) pages.push({ n: m[1], href: `${ch.filename}#p${m[1]}` });
+    // The page list names each page as its marker does (the printed number, else the scan's), without the bar.
+    for (const m of ch.content.matchAll(/<a class="page-marker" id="p(\d+)"[^>]*>\|?([^<]+)<\/a>/g)) pages.push({ n: m[2], href: `${ch.filename}#p${m[1]}` });
   }
   const start = (inner.content[1] ?? inner.content[0]).filename;
   const nav = [
@@ -279,8 +355,34 @@ export async function renderFlowEpub(
     '</ol></nav>',
     pages.length ? `<nav epub:type="page-list" id="page-list" hidden="hidden"><h2>Pages</h2><ol>${pages.map(p => `<li><a href="${p.href}">${p.n}</a></li>`).join('')}</ol></nav>` : '',
   ].join('\n');
-  const toc = await zip.file('OEBPS/toc.xhtml')?.async('string');
-  if (toc) zip.file('OEBPS/toc.xhtml', toc.replace('</body>', `${nav}\n</body>`));
+  // A section's chapters, nested under it in both contents (the nav a Kindle reads, and the NCX older readers use).
+  const nest = chapters.map((c, i) => ({ file: inner.content[i]?.filename, children: c.children || [] }))
+    .filter(n => n.file && n.children.length && inner.content.length === chapters.length);
+  let toc = await zip.file('OEBPS/toc.xhtml')?.async('string');
+  if (toc) {
+    for (const n of nest) {
+      const list = n.children.map(c => `<li><a href="${n.file}#${c.anchor}">${escapeXml(c.title)}</a></li>`).join('');
+      toc = toc.replace(new RegExp(`(<a href="${escapeRegExp(n.file as string)}">[\\s\\S]*?</a>)(\\s*</li>)`), `$1<ol>${list}</ol>$2`);
+    }
+    zip.file('OEBPS/toc.xhtml', toc.replace('</body>', `${nav}\n</body>`));
+  }
+  let ncx = nest.length ? await zip.file('OEBPS/toc.ncx')?.async('string') : null;
+  if (ncx) {
+    for (const n of nest) {
+      const points = n.children.map((c, j) => `<navPoint id="sub_${n.file?.replace(/\W/g, '_')}_${j}" class="chapter"><navLabel><text>${escapeXml(c.title)}</text></navLabel><content src="${n.file}#${c.anchor}"/></navPoint>`).join('');
+      ncx = ncx.replace(new RegExp(`(<content src="${escapeRegExp(n.file as string)}"/>)(\\s*</navPoint>)`), `$1${points}$2`);
+    }
+    // playOrder runs through every navPoint in reading order, nested ones included; two chapters that begin on the
+    // same page share one target, and the NCX then requires them to share its playOrder.
+    let order = 0;
+    const orderOf = new Map<string, number>();
+    ncx = ncx.replace(/<navPoint ([^>]*)>(\s*<navLabel>[\s\S]*?<\/navLabel>\s*<content src="([^"]*)")/g, (_m, attrs: string, rest: string, src: string) => {
+      if (!orderOf.has(src)) orderOf.set(src, ++order);
+      return `<navPoint ${attrs.replace(/\s*playOrder="\d+"/, '')} playOrder="${orderOf.get(src)}">${rest}`;
+    })
+      .replace(/<meta name="dtb:depth" content="\d+"\/>/, '<meta name="dtb:depth" content="2"/>');
+    zip.file('OEBPS/toc.ncx', ncx);
+  }
 
   const feature = (f: string) => `<meta property="schema:accessibilityFeature">${f}</meta>`;
   const a11y = [

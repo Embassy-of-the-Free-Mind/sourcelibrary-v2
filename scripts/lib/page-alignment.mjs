@@ -143,6 +143,35 @@ export function readerVisibleShift(pages) {
 }
 
 /**
+ * May an image repair finish a book whose text was already moved (#8266)?
+ *
+ * repair-bulkjp2-text-shift.mjs moved text on 8 books and left the images for later, under
+ * `archive_metadata.jp2_text_shift_awaiting_image_rearchive`. The timing test above cannot judge
+ * such a book: its OCR timestamps predate the move, and on Lingua Aegyptiaca they said the text
+ * had read the shifted image when it had not. So the witness is a person: slots whose source
+ * leaf was opened and showed the stored text, one near each end of the repaired range.
+ *
+ * @param {{archive_metadata?: object}} book
+ * @param {number[]} byEye slots opened against the source leaf
+ * @param {number[]} slots page numbers the repair would rewrite
+ * @returns {{ok: boolean, reason?: string}}
+ */
+export function halfRepairWitness(book, byEye, slots) {
+  if (book?.archive_metadata?.jp2_text_shift_awaiting_image_rearchive !== true) {
+    return { ok: false, reason: 'book is not awaiting an image re-archive' };
+  }
+  if (!slots.length) return { ok: false, reason: 'no pages to repair' };
+  const from = Math.min(...slots), to = Math.max(...slots), third = (to - from) / 3;
+  const inRange = (byEye || []).filter(n => Number.isInteger(n) && n >= from && n <= to);
+  const nearStart = inRange.some(n => n <= from + third);
+  const nearEnd = inRange.some(n => n >= to - third);
+  if (!nearStart || !nearEnd) {
+    return { ok: false, reason: `needs an opened slot in the first and last third of ${from}-${to}` };
+  }
+  return { ok: true };
+}
+
+/**
  * Was this page's text stranded by an IMAGE repair (#5309)?
  *
  * repair-bulk-jp2-offset.mjs (#3368) re-archived shifted bulk-JP2 images from

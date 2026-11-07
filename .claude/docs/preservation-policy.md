@@ -140,7 +140,7 @@ own retention, and no script may run a bare `restic forget`** — always `--tag 
 | `bph_works` (+ revisions, pending changes) | 4 layers incl. revisions + daily JSON export | `bph-catalogue-disaster-recovery.md` | daily | — |
 | Supabase (managed) | Supabase managed backups | Supabase | daily, 8 retained, **PITR off** | — |
 | Claude Code transcripts, all four boxes | `/root/restic-transcripts.sh` on each box (#7673) | `transcripts` | nightly 02:30 | **never pruned** |
-| **R2 objects (~21.7 TB)** | `cold-copy-r2.mjs` → AWS S3 Glacier Deep Archive, one tar per book + manifest (#7708) — **written and dry-run tested; not yet running** (bucket pending) | AWS | — | Object Lock |
+| **R2 objects (~34.6 TB, `system_config.storage_stats`)** | `cold-copy-r2.mjs` → Scaleway Glacier, one tar per book + manifest (#7708). **In progress as of 2026-11-05:** EFM/BPH (3.6 TB), `masters` and the restic repo are sent; `rest` (most images) starts after the watermark backfill (#4406) | `sourcelibrary-cold-efm`, ~EUR 0.0025/GB-month | once per unit; a changed book is re-sent | Object Lock, governance, 10 years |
 
 Each weekly database backup is checked by **reading it back**, not by the job exiting 0:
 the script `restic dump`s the snapshot it just wrote and pipes it through
@@ -181,7 +181,7 @@ source /root/.config/restic-hetzner.env          # then `restic snapshots --tag 
 #               one table: restic dump <id> supabase.sql | sed -n '/^COPY public.<t> /,/^\\\.$/p'
 # transcripts:  restic restore <id> --target /tmp/r --include /root/.claude/projects/<project>
 # bph_works:    see bph-catalogue-disaster-recovery.md
-# R2 (cold):    restore the tar from Deep Archive (bulk tier, ≤48 h), then `tar -xf`; members are
+# R2 (cold):    `aws s3api restore-object` on the tar from Scaleway Glacier, wait, then `tar -xf`; members are
 #               named by their R2 key, and <tar>.manifest.json (STANDARD class) lists key, size,
 #               ETag and SHA-256 for each, so the restore can be checked before re-uploading.
 ```
@@ -194,12 +194,14 @@ principle 2. Verified by restore rehearsal, not by the job exiting 0: read the s
 back out of restic, `gzip -t` the whole stream, confirm the mongodump magic
 `6de29981`.
 
-**The gap that is still open: R2 has no second copy.** Tier-1 and tier-2 objects are
-re-acquirable in principle; tier-0 (BPH, Kloss, Allard Pierson) is not. A bucket-level
-accident is currently unrecoverable for those. `scripts/maintenance/cold-copy-r2.mjs`
-(#7708) is the mover — EFM/BPH first (`archive/` JP2 masters, then every prefix of books with
-`image_source.provider: 'bph'`, then a `bph_works` export), then the other masters, the restic
-repo, and the rest of R2. Until it has run, no bytes have moved.
+**R2's second copy is partly built, not finished.** Tier-0 (BPH, Kloss, Allard Pierson) is what
+cannot be re-acquired. As of 2026-11-05, `scripts/maintenance/cold-copy-r2.mjs` (#7708) has sent to
+Scaleway Glacier the EFM/BPH material (`archive/` JP2 masters and every prefix of BPH books, 3.6 TB,
+under a 10-year governance lock) and the `masters` group (`books/`, `uploads/`, `page-masters/`,
+`masters/`, `artwork/*-full*`). The `rest` group, most page images, is NOT copied yet: it waits for the
+watermark backfill (#4406), because a book whose files changed is re-sent, and each re-send stays
+locked for 10 years. Until `rest` finishes, a bucket-level accident loses those images. Progress and
+the restore proof are on #7708.
 
 **Unverified: MongoDB Atlas cluster snapshots.** The cluster is dedicated (MongoDB
 9.0.0 Enterprise), and Atlas enables Cloud Backup by default on dedicated tiers — but

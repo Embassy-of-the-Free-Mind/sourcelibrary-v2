@@ -72,7 +72,7 @@ export default function ParetoPage() {
         <section id="translation" className="mt-14 scroll-mt-16">
           <h2 className="font-serif text-3xl md:text-4xl text-stone-900">Translation</h2>
           <p className="text-lg text-stone-700 mt-2 max-w-3xl">
-            Turning that text into English, scored on the 1 to 5 fidelity scale by blind AI judges (Claude Opus) against
+            Turning that text into English, scored on the 1 to 5 fidelity scale by blind AI judges against
             published translations. No translation run timed its pages, so these charts are by price only.
           </p>
           <div className="mt-3"><ChartLegend m={TRANSLATION} /></div>
@@ -92,7 +92,7 @@ export default function ParetoPage() {
           </p>
           <p>
             <strong className="text-stone-900">Translation.</strong> Fidelity is a mean score from 1 to 5 given by blind
-            Claude Opus judges, who read our English beside a published human translation of the page. It is model-judged:
+            AI judges, who read our English beside a published human translation of the page. It is model-judged:
             the judges have not yet been checked against human ratings (<a href={`${GH}issues/6203`} className={LINK}>#6203</a>).
             Scores from different judging rounds are never compared.
           </p>
@@ -121,18 +121,17 @@ export default function ParetoPage() {
             its pages is listed under the chart as not measured; no time is estimated.
           </p>
           <p>
-            <strong className="text-stone-900">Price.</strong> Dollars billed per 1,000 pages: Gemini at its metered Batch
+            <strong className="text-stone-900">Price.</strong> Dollars billed per 1,000 pages: our general models at their metered Batch
             rate, other APIs at their billed rate, rented GPUs at the whole rental shared by running time. An engine we run
             on a subscription bills nothing; it is placed at the API price for the same requests, for comparison only, and
             marked &dagger; and &ldquo;$0 billed&rdquo;. An engine with no price on record is listed under the chart instead.
           </p>
           <p>
             <strong className="text-stone-900">Available today.</strong> Judged per model, by the route we can run it on,
-            not the route it was measured on: Claude measured through the API runs on the Claude subscription, and a Gemini
-            model measured on the paid API runs on the Antigravity command-line tool when the tool still offers it. The rules
-            come from the repository (the paid Gemini API runs Flash-Lite only for new work; Claude only on the Claude
-            subscription; open models on a leased GPU; Tesseract is not used) and from a recorded list of the models the
-            command-line tool offers. The engine in use is what production runs, on the route production runs it on.
+            not the route it was measured on: a model measured through a paid API may run on a subscription or a
+            command-line tool when that is still offered. The rules come from the repository (the paid API runs only the
+            lightest model for new work; open models run on a leased GPU; one open engine is not used) and from a recorded
+            list of the models the command-line tool offers. The engine in use is what production runs, on the route production runs it on.
             Each engine&rsquo;s row names its source.
           </p>
           <div>

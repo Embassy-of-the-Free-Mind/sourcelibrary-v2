@@ -91,7 +91,7 @@ src/app/api/import/sbb/route.ts 1  # rewritten in a #6215 copy PR; --tighten aft
 src/app/api/learn/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/lexicon/lookup/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/locus/route.ts 4  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/api/mcp/route.ts 112  # MCP tool descriptions and tool-result text written for a model
+src/app/api/mcp/route.ts 113  # MCP tool descriptions and tool-result text written for a model; +1 #8321: the facing-translation citation template, the same "> — [Author]" render line as the three above it
 src/app/api/me/avatar/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/nde/dataset/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/openapi/route.ts 21  # rewritten in a #6215 copy PR; --tighten after it merges

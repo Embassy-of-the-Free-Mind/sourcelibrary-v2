@@ -9,14 +9,15 @@ import GalleryClient from '@/components/gallery/GalleryClient';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
+import { BOOK_VIEW_PAGE_SIZE, bookViewHref, bookViewPageLinks, parseBookViewPage } from '@/lib/gallery-book-view';
 
 // Per-tenant cached wrappers. The DB work runs at most once per revalidate
-// window per (tenant, bookId) — warm requests skip Mongo entirely. tenantId is
-// part of the cache key, so tenant isolation is preserved.
-const getGalleryInitial = (tenantId: string | null, bookId?: string) =>
+// window per (tenant, bookId, page) — warm requests skip Mongo entirely. tenantId
+// is part of the cache key, so tenant isolation is preserved.
+const getGalleryInitial = (tenantId: string | null, bookId?: string, page = 1) =>
   unstable_cache(
-    () => fetchInitialGalleryData(tenantId, bookId),
-    ['gallery-initial-v2', tenantId || 'main', bookId || 'all'],
+    () => fetchInitialGalleryData(tenantId, bookId, page),
+    ['gallery-initial-v3', tenantId || 'main', bookId || 'all', String(page)],
     { revalidate: 3600 },
   )();
 
@@ -32,7 +33,7 @@ export const revalidate = 3600; // ISR: rebuild every hour (unfiltered landing o
 const GALLERY_TITLE = 'Image Gallery | Source Library';
 const GALLERY_DESCRIPTION = 'Browse illustrations, engravings, woodcuts, alchemical emblems, and diagrams extracted from rare historical texts, searchable by subject, technique, and period.';
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: GALLERY_TITLE,
   description: GALLERY_DESCRIPTION,
   alternates: {
@@ -57,6 +58,33 @@ export const metadata: Metadata = {
 
 interface GalleryPageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
+
+/** The one book a request is for, and which page of its pictures. */
+function bookViewFrom(params: Record<string, string | string[] | undefined>) {
+  const raw = params.bookId ?? params.book;
+  const bookId = typeof raw === 'string' && raw ? raw : undefined;
+  return { bookId, page: bookId ? parseBookViewPage(params.page) : 1 };
+}
+
+/**
+ * One book's pictures are their own page, and a crawler's way to them: declaring
+ * /gallery as canonical called this a duplicate of a page with none of its links.
+ * An id with no pictures keeps the plain metadata.
+ */
+export async function generateMetadata({ searchParams }: GalleryPageProps): Promise<Metadata> {
+  const { bookId, page } = bookViewFrom((await searchParams) ?? {});
+  if (!bookId) return metadata;
+  const data = await getGalleryInitial((await headers()).get('x-tenant-id'), bookId, page);
+  if (!data.bookInfo || data.items.length === 0) return metadata;
+  const title = `Illustrations from ${data.bookInfo.title}${page > 1 ? `, page ${page}` : ''} | Source Library`;
+  return {
+    ...metadata,
+    title,
+    alternates: { canonical: bookViewHref(bookId, page) },
+    openGraph: { ...metadata.openGraph, title, url: bookViewHref(bookId, page) },
+    twitter: { ...metadata.twitter, title },
+  };
 }
 
 /**
@@ -94,20 +122,33 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
   const h = await headers();
   const tenantId = h.get('x-tenant-id');
   const params = (await searchParams) ?? {};
-  const bookIdParam = params.bookId ?? params.book;
-  const bookId = typeof bookIdParam === 'string' ? bookIdParam : undefined;
+  const { bookId, page } = bookViewFrom(params);
 
   const [initialData, bookCollections] = await Promise.all([
-    getGalleryInitial(tenantId, bookId),
+    getGalleryInitial(tenantId, bookId, page),
     getGalleryBookCollections(tenantId),
   ]);
+  const pageLinks = bookId ? bookViewPageLinks(initialData.total ?? 0, page) : [];
 
   return (
-    <GalleryClient
-      initialData={initialData}
-      bookCollections={bookCollections}
-      initialBookId={bookId}
-    />
+    <>
+      <GalleryClient
+        initialData={initialData}
+        bookCollections={bookCollections}
+        initialBookId={bookId}
+      />
+      {/* The pagination on screen is buttons, which a crawler cannot follow. Same device
+          as the citation line on reader pages: for machines, and no second control. */}
+      {pageLinks.length > 0 && (
+        <nav aria-label="All pages of this book's pictures" className="sr-only">
+          {pageLinks.map(n => (
+            <a key={n} href={bookViewHref(bookId as string, n)} aria-current={n === page ? 'page' : undefined}>
+              Pictures, page {n}
+            </a>
+          ))}
+        </nav>
+      )}
+    </>
   );
 }
 
@@ -140,10 +181,11 @@ function GalleryShell() {
  * When `bookId` is provided we drop the per-book rank cap so all of that
  * book's images show up immediately, and we resolve bookInfo for the header.
  */
-async function fetchInitialGalleryData(tenantId: string | null, bookId?: string): Promise<GalleryResponse> {
+async function fetchInitialGalleryData(tenantId: string | null, bookId?: string, page = 1): Promise<GalleryResponse> {
   try {
     const db = await getReadDb();
-    const limit = 48;
+    const limit = bookId ? BOOK_VIEW_PAGE_SIZE : 48;
+    const offset = (page - 1) * limit;
     const minQuality = 0.7;
     const maxPerBook = 1000; // uncapped: variety comes from the book_rank sort
 
@@ -211,7 +253,8 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
     const [items, total, bookInfo] = await Promise.all([
       db.collection('gallery_images')
         .find(filter, { projection: { _id: 0 } })
-        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1, detection_index: 1 })
+        .skip(offset)
         .limit(limit)
         .toArray(),
       db.collection('gallery_images').countDocuments(filter),
@@ -244,7 +287,7 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
       items: mappedItems,
       total,
       limit,
-      offset: 0,
+      offset,
       bookInfo,
       filters: {
         types: typesResult.map(t => t._id as string).filter(Boolean),

@@ -1,0 +1,454 @@
+{
+ "issue": 8140,
+ "seed": 81402,
+ "frame_books": 11838,
+ "books_looked": 33,
+ "rule": "Siku (vol N, no contributing library), non-Buddhist; one Paddle page per book, page_number>1, >=100 Han in body, no table",
+ "drawn_at": "2026-11-04T15:51:46.961Z",
+ "pages": [
+  {
+   "slug": "4967b1-p56",
+   "book_id": "6a3cb9c13dce6cfad74967b1",
+   "page_id": "6a3cb9c13dce6cfad74967e9",
+   "page_number": 56,
+   "title": "說文解字·卷五上~卷五下 (vol 13)",
+   "subjects": [
+    "四庫全書薈要",
+    "經部",
+    "小學類",
+    "漢"
+   ],
+   "chars": 115,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cb9c13dce6cfad74967b1/56.jpg"
+  },
+  {
+   "slug": "0f1f0a-p31",
+   "book_id": "6a3cefb44701a906f10f1f0a",
+   "page_id": "6a3cefb44701a906f10f1f29",
+   "page_number": 31,
+   "title": "御定淵鑑類函·卷一百二十一~卷一百二十二 (vol 473)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "類書類",
+    "清"
+   ],
+   "chars": 166,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cefb44701a906f10f1f0a/31.jpg"
+  },
+  {
+   "slug": "1c144b-p52",
+   "book_id": "6a3c6e4801fe4f593c1c144b",
+   "page_id": "6a3c6e4801fe4f593c1c153e",
+   "page_number": 52,
+   "title": "禮經會元·卷三上~卷三下 (vol 7)",
+   "subjects": [
+    "四庫全書薈要",
+    "经部",
+    "禮類",
+    "宋"
+   ],
+   "chars": 168,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6e4801fe4f593c1c144b/52.jpg"
+  },
+  {
+   "slug": "0f0487-p156",
+   "book_id": "6a3cef854701a906f10f0487",
+   "page_id": "6a3cef854701a906f10f0523",
+   "page_number": 156,
+   "title": "御定淵鑑類函·卷五十二 (vol 427)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "類書類",
+    "清"
+   ],
+   "chars": 164,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cef854701a906f10f0487/156.jpg"
+  },
+  {
+   "slug": "05379d-p148",
+   "book_id": "6a3ceb1a95fcd4556305379d",
+   "page_id": "6a3ceb1b95fcd45563053831",
+   "page_number": 148,
+   "title": "墨池編·卷二 (vol 2)",
+   "subjects": [
+    "四庫全書",
+    "子部",
+    "藝術類",
+    "宋"
+   ],
+   "chars": 168,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3ceb1a95fcd4556305379d/148.jpg"
+  },
+  {
+   "slug": "5cbc46-p137",
+   "book_id": "6a3c66a0af3c49b59c5cbc46",
+   "page_id": "6a3c66a0af3c49b59c5cbcd0",
+   "page_number": 137,
+   "title": "周易口義·卷二~卷三 (vol 8)",
+   "subjects": [
+    "四庫全書薈要",
+    "经部",
+    "易類",
+    "宋"
+   ],
+   "chars": 121,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c66a0af3c49b59c5cbc46/137.jpg"
+  },
+  {
+   "slug": "1f683b-p87",
+   "book_id": "6a3c759901fe4f593c1f683b",
+   "page_id": "6a3c759901fe4f593c1f6893",
+   "page_number": 87,
+   "title": "御覽經史講義·卷十四 (vol 46)",
+   "subjects": [
+    "四庫全書薈要",
+    "集部",
+    "秦議類",
+    "清"
+   ],
+   "chars": 100,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c759901fe4f593c1f683b/87.jpg"
+  },
+  {
+   "slug": "e3f40c-p22",
+   "book_id": "6a3c6a2439b4508b04e3f40c",
+   "page_id": "6a3c6a2439b4508b04e3f422",
+   "page_number": 22,
+   "title": "集韻·卷三 (vol 3)",
+   "subjects": [
+    "四庫全書",
+    "經部",
+    "小學類",
+    "宋"
+   ],
+   "chars": 298,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6a2439b4508b04e3f40c/22.jpg"
+  },
+  {
+   "slug": "1cc285-p14",
+   "book_id": "6a3c6f6901fe4f593c1cc285",
+   "page_id": "6a3c6f6901fe4f593c1cc293",
+   "page_number": 14,
+   "title": "古微書·卷一~卷三 (vol 1)",
+   "subjects": [
+    "四庫全書",
+    "經部",
+    "五經總義類",
+    "明"
+   ],
+   "chars": 168,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6f6901fe4f593c1cc285/14.jpg"
+  },
+  {
+   "slug": "dfc0fd-p6",
+   "book_id": "6a3cbdfbec254ff6cadfc0fd",
+   "page_id": "6a3cbdfbec254ff6cadfc103",
+   "page_number": 6,
+   "title": "證治準繩·卷一百一 (vol 84)",
+   "subjects": [
+    "四庫全書",
+    "子部",
+    "醫家類",
+    "明"
+   ],
+   "chars": 152,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cbdfbec254ff6cadfc0fd/6.jpg"
+  },
+  {
+   "slug": "e29187-p20",
+   "book_id": "6a3c64af39b4508b04e29187",
+   "page_id": "6a3c64af39b4508b04e2919b",
+   "page_number": 20,
+   "title": "御定佩文韻府·卷八十三之一 (vol 607)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "類書類",
+    "清"
+   ],
+   "chars": 383,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c64af39b4508b04e29187/20.jpg"
+  },
+  {
+   "slug": "1c3ec0-p29",
+   "book_id": "6a3c6e9201fe4f593c1c3ec0",
+   "page_id": "6a3c6e9201fe4f593c1c3edd",
+   "page_number": 29,
+   "title": "禮經本義·卷八~卷九 (vol 4)",
+   "subjects": [
+    "四庫全書",
+    "經部",
+    "禮類",
+    "清"
+   ],
+   "chars": 249,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6e9201fe4f593c1c3ec0/29.jpg"
+  },
+  {
+   "slug": "0f3572-p31",
+   "book_id": "6a3ceff34701a906f10f3572",
+   "page_id": "6a3ceff34701a906f10f3591",
+   "page_number": 31,
+   "title": "東坡易傳·卷一~卷二 (vol 1)",
+   "subjects": [
+    "四庫全書薈要",
+    "经部",
+    "易類",
+    "宋"
+   ],
+   "chars": 131,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3ceff34701a906f10f3572/31.jpg"
+  },
+  {
+   "slug": "90c0bd-p111",
+   "book_id": "6a3cc30faf74b230c690c0bd",
+   "page_id": "6a3cc30faf74b230c690c12c",
+   "page_number": 111,
+   "title": "潛夫論·卷五~卷十 (vol 4)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "雜家類",
+    "漢"
+   ],
+   "chars": 169,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cc30faf74b230c690c0bd/111.jpg"
+  },
+  {
+   "slug": "1e5e0b-p97",
+   "book_id": "6a3c732401fe4f593c1e5e0b",
+   "page_id": "6a3c732401fe4f593c1e5ee9",
+   "page_number": 97,
+   "title": "欽定春秋傳說彙纂·卷七 (vol 31)",
+   "subjects": [
+    "四庫全書薈要",
+    "经部",
+    "春秋類",
+    "清"
+   ],
+   "chars": 221,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c732401fe4f593c1e5e0b/97.jpg"
+  },
+  {
+   "slug": "0f0b67-p66",
+   "book_id": "6a3cef904701a906f10f0b67",
+   "page_id": "6a3cef904701a906f10f0ba9",
+   "page_number": 66,
+   "title": "御定淵鑑類函·卷六十九 (vol 439)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "類書類",
+    "清"
+   ],
+   "chars": 162,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cef904701a906f10f0b67/66.jpg"
+  },
+  {
+   "slug": "db29ae-p1328",
+   "book_id": "6a3c6be7c4e8626320db29ae",
+   "page_id": "6a3c6be7c4e8626320db2ede",
+   "page_number": 1328,
+   "title": "四書講義困勉錄 (vol 2)",
+   "subjects": [],
+   "chars": 457,
+   "image_url": "https://images.sourcelibrary.org/pages/6a3c6be7c4e8626320db29ae/1328.jpg"
+  },
+  {
+   "slug": "21c4a2-p5",
+   "book_id": "6a3c7b1d01fe4f593c21c4a2",
+   "page_id": "6a3c7b1d01fe4f593c21c4a7",
+   "page_number": 5,
+   "title": "管子·卷八~卷十 (vol 10)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "法家類"
+   ],
+   "chars": 178,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c7b1d01fe4f593c21c4a2/5.jpg"
+  },
+  {
+   "slug": "90afa4-p77",
+   "book_id": "6a3cc2f3af74b230c690afa4",
+   "page_id": "6a3cc2f3af74b230c690aff1",
+   "page_number": 77,
+   "title": "毛詩注疏·毛詩譜上 (vol 48)",
+   "subjects": [
+    "四庫全書薈要",
+    "經部",
+    "漢",
+    "唐"
+   ],
+   "chars": 234,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cc2f3af74b230c690afa4/77.jpg"
+  },
+  {
+   "slug": "1b5b3a-p11",
+   "book_id": "6a3c6ce001fe4f593c1b5b3a",
+   "page_id": "6a3c6ce001fe4f593c1b5b45",
+   "page_number": 11,
+   "title": "世醫得效方·卷九 (vol 7)",
+   "subjects": [
+    "四庫全書",
+    "子部",
+    "醫家類",
+    "元"
+   ],
+   "chars": 127,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6ce001fe4f593c1b5b3a/11.jpg"
+  },
+  {
+   "slug": "4948f3-p93",
+   "book_id": "6a3cb9873dce6cfad74948f3",
+   "page_id": "6a3cb9873dce6cfad7494951",
+   "page_number": 93,
+   "title": "羣經音辨·卷二~卷五 (vol 2)",
+   "subjects": [
+    "四庫全書",
+    "經部",
+    "小學類",
+    "宋"
+   ],
+   "chars": 227,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cb9873dce6cfad74948f3/93.jpg"
+  },
+  {
+   "slug": "df1e8b-p86",
+   "book_id": "6a3cbca5ec254ff6cadf1e8b",
+   "page_id": "6a3cbca5ec254ff6cadf1ee1",
+   "page_number": 86,
+   "title": "禮書·卷一~卷四 (vol 1)",
+   "subjects": [
+    "四庫全書",
+    "經部",
+    "禮類",
+    "宋"
+   ],
+   "chars": 186,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cbca5ec254ff6cadf1e8b/86.jpg"
+  },
+  {
+   "slug": "5e7f4a-p122",
+   "book_id": "6a3c6a91af3c49b59c5e7f4a",
+   "page_id": "6a3c6a91af3c49b59c5e8076",
+   "page_number": 122,
+   "title": "儀禮集釋·卷六~卷七 (vol 3)",
+   "subjects": [
+    "四庫全書",
+    "經部",
+    "禮類",
+    "宋"
+   ],
+   "chars": 112,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6a91af3c49b59c5e7f4a/122.jpg"
+  },
+  {
+   "slug": "e4f700-p149",
+   "book_id": "6a3c708d39b4508b04e4f700",
+   "page_id": "6a3c708d39b4508b04e4f795",
+   "page_number": 149,
+   "title": "禮記集說·卷一百十~卷一百十一 (vol 137)",
+   "subjects": [
+    "四庫全書薈要",
+    "经部",
+    "禮類",
+    "宋"
+   ],
+   "chars": 160,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c708d39b4508b04e4f700/149.jpg"
+  },
+  {
+   "slug": "210933-p131",
+   "book_id": "6a3c798f01fe4f593c210933",
+   "page_id": "6a3c798f01fe4f593c2109b6",
+   "page_number": 131,
+   "title": "喻林·卷三~卷五 (vol 2)",
+   "subjects": [
+    "四庫全書",
+    "子部",
+    "類書類",
+    "明"
+   ],
+   "chars": 130,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c798f01fe4f593c210933/131.jpg"
+  },
+  {
+   "slug": "157140-p124",
+   "book_id": "6a3c5fb4879008ba7e157140",
+   "page_id": "6a3c5fb4879008ba7e1571bc",
+   "page_number": 124,
+   "title": "圖書編·卷九十七~卷九十八 (vol 78)",
+   "subjects": [
+    "四庫全書",
+    "子部",
+    "類書類",
+    "明"
+   ],
+   "chars": 166,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c5fb4879008ba7e157140/124.jpg"
+  },
+  {
+   "slug": "e53a28-p37",
+   "book_id": "6a3c715039b4508b04e53a28",
+   "page_id": "6a3c715039b4508b04e53a4d",
+   "page_number": 37,
+   "title": "御纂朱子全書·卷六十一 (vol 54)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "儒家類",
+    "清"
+   ],
+   "chars": 155,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c715039b4508b04e53a28/37.jpg"
+  },
+  {
+   "slug": "e25b86-p50",
+   "book_id": "6a3c644539b4508b04e25b86",
+   "page_id": "6a3c644539b4508b04e25bb8",
+   "page_number": 50,
+   "title": "御定佩文韻府·卷五十八之一 (vol 501)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "類書類",
+    "清"
+   ],
+   "chars": 346,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c644539b4508b04e25b86/50.jpg"
+  },
+  {
+   "slug": "1b906e-p5",
+   "book_id": "6a3c6d3c01fe4f593c1b906e",
+   "page_id": "6a3c6d3c01fe4f593c1b9073",
+   "page_number": 5,
+   "title": "黃氏日抄·卷七十三~卷七十五 (vol 41)",
+   "subjects": [
+    "四庫全書",
+    "子部",
+    "儒家類",
+    "宋"
+   ],
+   "chars": 168,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c6d3c01fe4f593c1b906e/5.jpg"
+  },
+  {
+   "slug": "e28ee7-p12",
+   "book_id": "6a3c64ab39b4508b04e28ee7",
+   "page_id": "6a3c64ab39b4508b04e28ef4",
+   "page_number": 12,
+   "title": "御定佩文韻府·卷八十二之二 (vol 602)",
+   "subjects": [
+    "四庫全書薈要",
+    "子部",
+    "類書類",
+    "清"
+   ],
+   "chars": 397,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3c64ab39b4508b04e28ee7/12.jpg"
+  }
+ ]
+}

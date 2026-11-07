@@ -224,6 +224,47 @@ export function modelDisplayName(model: string): string {
 }
 
 /**
+ * The date a page's machine-made text was produced, or null when the record does not
+ * say (#7263, Derek 2026-11-04: "only give dates of when it was run"). Null is an
+ * answer; a guessed date is not (data-provenance.md rule 5).
+ *
+ * `engine.run.at` is the run itself, but only rows written since #4613 have it (8% of
+ * OCR, 26% of translation, 584 random books, 2026-11-05). Older rows fall back on the
+ * field's `updated_at`, which held up as a month: within 7 days of `run.at` on all 3,816
+ * rows carrying both, and on none of 1,372 older records was it moved by a repair sweep.
+ * Not every source gets one:
+ * - a person's edit dates from `edited_at`, or goes undated: `updated_at` may be the machine's;
+ * - a split leaf without a run date: the swap stamps `updated_at` (split-stage.mjs `swapStamps`);
+ * - e-texts, corpora and the Archive's OCR: we did not make them, and `updated_at` is our import.
+ */
+export function textProducedAt(
+  page: Pick<Page, 'ocr' | 'translation'> & Partial<Pick<Page, 'split_from'>>,
+  field: 'ocr' | 'translation',
+): Date | null {
+  const rec = field === 'ocr' ? page.ocr : page.translation;
+  if (!rec) return null;
+  const valid = (v: unknown): Date | null => {
+    if (!v) return null;
+    const d = new Date(v as string | Date);
+    return Number.isFinite(d.getTime()) && d.getTime() > 0 ? d : null;
+  };
+  if (rec.edited_at || rec.edited_by) return valid(rec.edited_at);
+  if (field === 'ocr') {
+    const kind = transcriptProvenance(page)?.kind;
+    if (kind !== 'model' && kind !== 'kraken') return null;
+  } else if (!isUnreviewedMachineTranslation(page)) {
+    return null;
+  }
+  const engine = rec.engine as { run?: { at?: unknown } } | undefined;
+  return valid(engine?.run?.at) ?? (page.split_from ? null : valid(rec.updated_at));
+}
+
+/** A provenance label with its month when the record has one; the bare label when it does not. */
+export function datedProvenanceLabel(label: string, at: Date | null, t: ReaderStrings['info']): string {
+  return at ? t.producedLabel(label, t.producedMonth(at)) : label;
+}
+
+/**
  * The words for a provenance, short (pane-header chip) or full (drawer
  * sentence). One function, two lengths — so the two surfaces cannot disagree.
  * `t` is the reader's `info` strings for the current locale.

@@ -74,6 +74,7 @@ model with a method effect may pool them, because it estimates that difference i
 | [retranslation-gate](retranslation-gate.md) | Opus reviewer, blind A/B | yes | 5 random + 2 extreme volumes of a run, 3 consecutive pages |
 | [hide-broken-text](hide-broken-text.md) | session acting on a check | inherits | the pages of the check that led to the hide |
 | [lane-spot-check](lane-spot-check.md) | Opus judge | yes | random, up to one page per book, from a lane's latest writes |
+| [plate-reread-check](plate-reread-check.md) | Opus judge, blind | yes | picked: named map and plate pages re-read after a held Flash read |
 
 A lane or job that reads pages against their images records them with `recordPageVerdicts()`
 (`scripts/lib/book-checks.mjs`): every page read, clean ones too, the hash of the text judged, and how the pages were chosen.

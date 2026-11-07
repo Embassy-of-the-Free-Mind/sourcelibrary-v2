@@ -416,7 +416,7 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `${absent ? `No page of this book prints these words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift): this book most likely does not contain what you are looking for. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
+    tip: `${absent ? `No page of this book prints these exact words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift). Matching here is by spelling, so this does not show the book lacks a name or term: it may be printed in another spelling or Latin case (Zalmoxis, Zamolxis, Zalmoxen). Try those forms before saying the book does not contain it. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
@@ -768,6 +768,26 @@ function ocrOriginalQuote(result: Record<string, unknown>): boolean {
   return quote?.text_source === 'ocr_original';
 }
 
+// A facing-page edition (a Loeb, #8321). Its English leaf is the PUBLISHED
+// translator's words — not the author's, and not ours — and its original leaf
+// has the printed English on the page opposite. `quote.facing` names that leaf.
+const FACING_TRANSLATION_TIP =
+  'This page is the PUBLISHED English translation printed facing the original in this edition (see ' +
+  '`facing`, which names the original-language leaf and the translator). The verbatim text is in `original`. ' +
+  'Copy it exactly and attribute it to the translator, never to the ancient author as their own English and ' +
+  'never to Source Library. Render as:\n' +
+  '> [exact text, verbatim]\n' +
+  '> — [Author], trans. [facing.translator], [citation.locator]. [citation_link]';
+const FACING_ORIGINAL_TIP =
+  'This edition prints a published English translation facing this leaf: `facing.page` / `facing.url` name ' +
+  'it. To quote the translator\'s words, call get_quote on that page; the translation on this response is ' +
+  'Source Library\'s own.';
+
+function facingRole(result: Record<string, unknown>): 'original' | 'translation' | null {
+  const facing = (result.quote as Record<string, unknown> | undefined)?.facing as { role?: unknown } | undefined;
+  return facing?.role === 'original' || facing?.role === 'translation' ? facing.role : null;
+}
+
 // The requested edition IS on the leaf — a bilingual manuscript whose parallel
 // column is already in that language. The words are the historical translator's
 // (Ximenez's Spanish of 1701, Sahagun's of 1577), not ours, and their period
@@ -855,7 +875,12 @@ async function getQuote(args: Record<string, unknown>, caller?: McpCaller) {
   const baseHint = continuityHint(continuity, Number(args.page));
   const hint = baseHint && inExtract ? baseHint + EXTRACT_SPAN_WARNING : baseHint;
 
-  const tips = [ocrOriginalQuote(result) ? OCR_ORIGINAL_TIP : QUOTE_TIP];
+  // `facing.role` is what the OTHER leaf is: 'original' means this one is the printed English.
+  const facingOther = facingRole(result);
+  const tips = [ocrOriginalQuote(result)
+    ? (facingOther === 'original' ? FACING_TRANSLATION_TIP : OCR_ORIGINAL_TIP)
+    : QUOTE_TIP];
+  if (facingOther === 'translation') tips.push(FACING_ORIGINAL_TIP);
   if (sourceColumnQuote(result)) tips.push(SOURCE_COLUMN_TIP);
   if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);

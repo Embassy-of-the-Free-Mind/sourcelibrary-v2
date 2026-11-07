@@ -1,0 +1,769 @@
+{
+ "drawn_at": "2026-11-07T03:58:29.632Z",
+ "study": "euro-6871",
+ "cells": {
+  "fr19": {
+   "lang": "French",
+   "years": [
+    1800,
+    1929
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "69c1c08cb82ba5d5bed96fd2",
+     "book_id": "69c1c084b82ba5d5bed96fa1",
+     "page_number": 49,
+     "year": 1853,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Systemes et grades maçonniques"
+    },
+    {
+     "page_id": "69ac5f617f20875486da4bc1",
+     "book_id": "69ac5f617f20875486da4963",
+     "page_number": 606,
+     "year": 1901,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Oeuvres complètes, Tome 9: Correspondance 1685-1690"
+    },
+    {
+     "page_id": "6adf07a6c5aa6caa4c3720a9",
+     "book_id": "6adf07a6c5aa6caa4c37205c",
+     "page_number": 77,
+     "year": 1920,
+     "hold": null,
+     "visible": false,
+     "provider": "internet_archive",
+     "title": "Œuvres de Ruysbroeck l'Admirable: L'Ornement des noces spirituelles; L'Anneau ou"
+    },
+    {
+     "page_id": "69593291b91a6184ea943d1c",
+     "book_id": "69593291b91a6184ea943bbe",
+     "page_number": 350,
+     "year": 1860,
+     "hold": null,
+     "visible": true,
+     "provider": "gallica",
+     "title": "Histoire de la magie"
+    },
+    {
+     "page_id": "6ae3cfaf2bf69f0e54e42c08",
+     "book_id": "6a1994424365011ebd7c09ed",
+     "page_number": 77,
+     "year": 1850,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "Les trois livres de la Sacrée Magie"
+    },
+    {
+     "page_id": "6a26cbfac556007b34ffebc7",
+     "book_id": "69c22bb3b82ba5d5bed9b19e",
+     "page_number": 21,
+     "year": 1800,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Rite de York : Grade de Passé Maître. Royal Master [3e grade du Chapitre de Roya"
+    },
+    {
+     "page_id": "69c2698bb82ba5d5beda1383",
+     "book_id": "69c2698ab82ba5d5beda1376",
+     "page_number": 13,
+     "year": 1818,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Proces-Verbal d'inspection d'un manuscrit portant la date du 24 Juin 1535. Conte"
+    },
+    {
+     "page_id": "69aead3466bcc9447837d2b8",
+     "book_id": "69aead3466bcc9447837d1de",
+     "page_number": 218,
+     "year": 1841,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Oeuvres philosophiques de Maine de Biran"
+    },
+    {
+     "page_id": "6aa35df4e213def30d6ca609",
+     "book_id": "6aa35df4e213def30d6ca518",
+     "page_number": 241,
+     "year": 1867,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Les rêves et les moyens de les diriger"
+    },
+    {
+     "page_id": "69f66fa408437576039a237d",
+     "book_id": "69c88cfc6c6f3cc53c85adc2",
+     "page_number": 93,
+     "year": 1835,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "Trinité-Principe. Compendium"
+    },
+    {
+     "page_id": "6a356eac87fae58c35bbcbbd",
+     "book_id": "6a356eac87fae58c35bbcacc",
+     "page_number": 241,
+     "year": 1845,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Du hachisch et de l'aliénation mentale"
+    },
+    {
+     "page_id": "69ac5f757f20875486da5146",
+     "book_id": "69ac5f757f20875486da50e7",
+     "page_number": 95,
+     "year": 1910,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Oeuvres complètes, Tome 12: Travaux mathématiques 1652-1656"
+    },
+    {
+     "page_id": "69c28b90b82ba5d5beda6eba",
+     "book_id": "69c28b8db82ba5d5beda6e92",
+     "page_number": 40,
+     "year": 1840,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Frankreich u. sein Hochgradwesen. 8. Sûpr. Conseils et l'Ecossisme."
+    },
+    {
+     "page_id": "6a26d60d2da313c4b615d5d6",
+     "book_id": "69c1a7f3b82ba5d5bed93716",
+     "page_number": 10,
+     "year": 1802,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Minutes de lettres écrites par le frêre Lasserez à diverses loges, dont il était"
+    },
+    {
+     "page_id": "69b00093ea029321151e5252",
+     "book_id": "69b00089ea029321151e51ba",
+     "page_number": 152,
+     "year": 1818,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Les Oeuvres d'Euclide, Vol. 3"
+    },
+    {
+     "page_id": "69c27530b82ba5d5beda3642",
+     "book_id": "69c2752eb82ba5d5beda3620",
+     "page_number": 34,
+     "year": 1820,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Rit de Misraim. Tuileur du 67 à 90me et dernier grade"
+    },
+    {
+     "page_id": "6a08a2cf43d85a6ece189a64",
+     "book_id": "6a08a2cf43d85a6ece1898a6",
+     "page_number": 446,
+     "year": 1871,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Mémoires de Jacques Casanova de Seingalt, Vol. 2"
+    },
+    {
+     "page_id": "69b4ccacd5b6c3815e1a1e74",
+     "book_id": "69b4ccacd5b6c3815e1a1bfd",
+     "page_number": 631,
+     "year": 1807,
+     "hold": null,
+     "visible": true,
+     "provider": "allard_pierson",
+     "title": "Histoire naturelle des promerops et des guêpiers"
+    },
+    {
+     "page_id": "6994495a185a84ef595ac5cc",
+     "book_id": "6994495a185a84ef595ac2f5",
+     "page_number": 727,
+     "year": 1867,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Collection des historiens anciens et modernes de l Armenie"
+    },
+    {
+     "page_id": "6a9528c6d5f269de866d54c7",
+     "book_id": "6a9528c6d5f269de866d54a2",
+     "page_number": 37,
+     "year": 1891,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Siasset namèh: traité de gouvernement"
+    },
+    {
+     "page_id": "6a26ca79098217a48c3a31e1",
+     "book_id": "69c1ad38b82ba5d5bed946a9",
+     "page_number": 5,
+     "year": 1800,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "discours, ou une instruction au grade d'Elu. : Un discours à la réception d'un M"
+    },
+    {
+     "page_id": "69de11bd86e6d59321ba12d1",
+     "book_id": "69de11bd86e6d59321ba120e",
+     "page_number": 195,
+     "year": 1895,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Supplément au catalogue de l'oeuvre gravé de Félicien Rops"
+    },
+    {
+     "page_id": "69e41a448a8dae1074c53947",
+     "book_id": "69e41a448a8dae1074c537d3",
+     "page_number": 372,
+     "year": 1873,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Mademoiselle de Maupin"
+    },
+    {
+     "page_id": "69c1bb4bb82ba5d5bed96600",
+     "book_id": "69c1bb4ab82ba5d5bed965fe",
+     "page_number": 2,
+     "year": 1810,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Formules de réception aux divers grades"
+    },
+    {
+     "page_id": "6a08f57850bd891addfb8cd6",
+     "book_id": "6a08f57850bd891addfb8c25",
+     "page_number": 177,
+     "year": 1862,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Lettres de Madame de Sévigné, de sa famille et de ses amis, Vol. I (1862-67 ed.)"
+    },
+    {
+     "page_id": "69aea6ea908d44888b7a7599",
+     "book_id": "69aea6ea908d44888b7a74ca",
+     "page_number": 98,
+     "year": 1893,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La chimie au moyen âge, Tome I: Essai sur la transmission de la science antique"
+    },
+    {
+     "page_id": "6a8f61c8ddd2f57fe0f7fd33",
+     "book_id": "6a8f61c8ddd2f57fe0f7fcd7",
+     "page_number": 92,
+     "year": 1821,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Du système industriel"
+    },
+    {
+     "page_id": "6955770857e3b773024f2fae",
+     "book_id": "6955770857e3b773024f2e57",
+     "page_number": 343,
+     "year": 1873,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Pythagore et la philosophie pythagoricienne (avec fragments de Philolaüs et Arch"
+    },
+    {
+     "page_id": "69c25d97b82ba5d5bed9fe61",
+     "book_id": "69c25d95b82ba5d5bed9fe5e",
+     "page_number": 3,
+     "year": 1850,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Delineationes et descript. crucium siglorum. Deutsche Uebers. de l'Explication d"
+    },
+    {
+     "page_id": "69aea8871cbf28a363a4ff05",
+     "book_id": "69aea8871cbf28a363a4fecc",
+     "page_number": 57,
+     "year": 1893,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "De la division du travail social"
+    }
+   ]
+  },
+  "fr17": {
+   "lang": "French",
+   "years": [
+    1600,
+    1799
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "6a0b44031615109dc53b02d5",
+     "book_id": "6a0b44031615109dc53b0208",
+     "page_number": 204,
+     "year": 1754,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Observations d'histoire naturelle, faites avec le microscope"
+    },
+    {
+     "page_id": "6a26ce21f294c32292d494f6",
+     "book_id": "69c1c2d4b82ba5d5bed973d1",
+     "page_number": 9,
+     "year": 1765,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Histoire et catéchisme du grade de Fendeur. 1765"
+    },
+    {
+     "page_id": "6985e2360b6b22060d2fc2c5",
+     "book_id": "6985ca6d9d0a51f652882363",
+     "page_number": 136,
+     "year": 1767,
+     "hold": null,
+     "visible": false,
+     "provider": "bph",
+     "title": "Les plus secrets mystères des hauts grades de la maçonnerie dévoilés"
+    },
+    {
+     "page_id": "69c27020b82ba5d5beda28f6",
+     "book_id": "69c2701fb82ba5d5beda28db",
+     "page_number": 27,
+     "year": 1783,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Maçonnerie Rouge, de l'Orient de Rouen, 1783. 1. Petit Architecte. 2. Grand Arch"
+    },
+    {
+     "page_id": "6a0b43fc1615109dc53b0139",
+     "book_id": "6a0b43fc1615109dc53b00f9",
+     "page_number": 64,
+     "year": 1718,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Descriptions et Usages de plusieurs nouveaux microscopes (Vol. 1)"
+    },
+    {
+     "page_id": "6a26cdb43409b3a11e6f9629",
+     "book_id": "69c1c19cb82ba5d5bed971b4",
+     "page_number": 23,
+     "year": 1750,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Prine de Jérusalem, Chef de la Maçonnerie et Chevalier Elu. 45e de Misraïm"
+    },
+    {
+     "page_id": "6a26c5eecd22b7da341708d0",
+     "book_id": "69c1beedb82ba5d5bed96cde",
+     "page_number": 11,
+     "year": 1760,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Constitution, ou Statut pour les Francs-Maçons, fait à Francfort a/M. 8.11.5760"
+    },
+    {
+     "page_id": "6a26d29bf5273a8d907a5a21",
+     "book_id": "6a26d29bf5273a8d907a59ed",
+     "page_number": 52,
+     "year": 1749,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Description complete ou Second Avertissement sur les Grands Globes Terrestres Et"
+    },
+    {
+     "page_id": "69b874e513506fe62959b7d8",
+     "book_id": "69b874e513506fe62959b7a7",
+     "page_number": 49,
+     "year": 1741,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Essai sur le jeu des echecs"
+    },
+    {
+     "page_id": "69c26c23b82ba5d5beda1b52",
+     "book_id": "69c26c1fb82ba5d5beda1b34",
+     "page_number": 30,
+     "year": 1787,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Cahiers d'instruction pour les trois premiers Grades, donnés par le Grand Orient"
+    },
+    {
+     "page_id": "69a683ae256d25f466059111",
+     "book_id": "69a683ae256d25f4660590f2",
+     "page_number": 31,
+     "year": 1739,
+     "hold": null,
+     "visible": true,
+     "provider": "gallica",
+     "title": "Architecture hydraulique, tome second, première partie"
+    },
+    {
+     "page_id": "69aea40d9d2eb853bde3594e",
+     "book_id": "69aea40c9d2eb853bde35834",
+     "page_number": 282,
+     "year": 1762,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Du contrat social, ou Principes du droit politique"
+    },
+    {
+     "page_id": "6988ae474d75732095a46da1",
+     "book_id": "6988a59e193b008ee3811520",
+     "page_number": 35,
+     "year": 1722,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "Les secrets les plus cachés de la philosophie des anciens"
+    },
+    {
+     "page_id": "6a08dda6db330455085804df",
+     "book_id": "6a08dda6db330455085803d9",
+     "page_number": 262,
+     "year": 1749,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Les Bijoux indiscrets (Denis Diderot, 1749)"
+    },
+    {
+     "page_id": "6a09dd2324d4d312f5c30eb1",
+     "book_id": "6a09dd2324d4d312f5c30e82",
+     "page_number": 47,
+     "year": 1672,
+     "hold": null,
+     "visible": true,
+     "provider": "gallica",
+     "title": "Le Jeu royal de la paume"
+    },
+    {
+     "page_id": "6a29c8ce31e3615cd1c499cc",
+     "book_id": "6a29c8ce31e3615cd1c4991d",
+     "page_number": 175,
+     "year": 1667,
+     "hold": null,
+     "visible": true,
+     "provider": "gallica",
+     "title": "L'escole des filles, ou La philosophie des dames (1667)"
+    },
+    {
+     "page_id": "6ae3ca4af684e5d2aa49c157",
+     "book_id": "6a1b0be4a29c84456a72d97f",
+     "page_number": 21,
+     "year": 1642,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "La transmutation des métaux"
+    },
+    {
+     "page_id": "69b525a929577f283b57a531",
+     "book_id": "69b525a929577f283b57a4d5",
+     "page_number": 92,
+     "year": 1673,
+     "hold": null,
+     "visible": true,
+     "provider": "allard_pierson",
+     "title": "Advis fidelle aux veritables Hollandois :, touchant ce qui s'est passé dans les "
+    },
+    {
+     "page_id": "69b874e013506fe62959b5b1",
+     "book_id": "69b874e013506fe62959b4e7",
+     "page_number": 202,
+     "year": 1730,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Académie universelle des jeux"
+    },
+    {
+     "page_id": "6a26c4b5447919818ace08ce",
+     "book_id": "69c1c1e8b82ba5d5bed97226",
+     "page_number": 3,
+     "year": 1766,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Université maçonnique (Esquisse). Diplôme du 1er au 6me grade. 1766"
+    },
+    {
+     "page_id": "69bda0fef6d63c919748c729",
+     "book_id": "69bda0fef6d63c919748c2d6",
+     "page_number": 1107,
+     "year": 1758,
+     "hold": null,
+     "visible": true,
+     "provider": "e-rara",
+     "title": "Les  fables egyptiennes et grecques dévoilées & réduites au même principe, avec "
+    },
+    {
+     "page_id": "6ae3c378a96732505adad881",
+     "book_id": "6a19f95ccd0460578dff96c1",
+     "page_number": 58,
+     "year": 1785,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "Lettre en réponse par un philosophe à une dame de ... Touchant le grand oeuvre"
+    },
+    {
+     "page_id": "6a26d2d5cfab19f21c05a24d",
+     "book_id": "69c1bb26b82ba5d5bed965bd",
+     "page_number": 25,
+     "year": 1774,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Supreme Grade du Tabernacle, ou les Parfaits Elus"
+    },
+    {
+     "page_id": "69c28ad8b82ba5d5beda6d95",
+     "book_id": "69c28ad5b82ba5d5beda6d6f",
+     "page_number": 38,
+     "year": 1766,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Frankreich u. sein Hochgradwesen. 1. Tschoudy ad interim."
+    },
+    {
+     "page_id": "69f6b1484f6efa942398ef5e",
+     "book_id": "69c89cb16c6f3cc53c85d634",
+     "page_number": 46,
+     "year": 1790,
+     "hold": null,
+     "visible": true,
+     "provider": "bph",
+     "title": "L'Homme de desir"
+    },
+    {
+     "page_id": "6a26c9a5c0b7d3b66a5b0c3d",
+     "book_id": "69c1c093b82ba5d5bed97008",
+     "page_number": 7,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Maître Anglais par curiosité. 1765"
+    },
+    {
+     "page_id": "6a26c636861cbd2978a30647",
+     "book_id": "69c22d93b82ba5d5bed9b68e",
+     "page_number": 4,
+     "year": 1775,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Catechisme du grade d'Apprentif. Catéchisme du grade de Compagnon"
+    },
+    {
+     "page_id": "6a26bfddcfa550e7322e5d27",
+     "book_id": "69c1bb3cb82ba5d5bed965e9",
+     "page_number": 4,
+     "year": 1780,
+     "hold": null,
+     "visible": false,
+     "provider": "cmc_kloss",
+     "title": "Chevalier de l'Aigle, ou de Rose-Croix"
+    },
+    {
+     "page_id": "6a26d2cdf5273a8d907a646e",
+     "book_id": "6a26d2cdf5273a8d907a6451",
+     "page_number": 29,
+     "year": 1749,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "mdz",
+     "title": "Description complete ou Second Avertissemment sur les Grands Globes Terrestres e"
+    },
+    {
+     "page_id": "6aa1d58577169abff1624372",
+     "book_id": "6aa1d58477169abff1624231",
+     "page_number": 321,
+     "year": 1611,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Les pseaumes de David mis en rime françoise par Clement Marot et Theodore de Bez"
+    }
+   ]
+  },
+  "es17": {
+   "lang": "Spanish",
+   "years": [
+    1600,
+    1799
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 5,
+   "pages": [
+    {
+     "page_id": "6a9f3f7f83c3b522416e2b93",
+     "book_id": "6a9f3f7e83c3b522416e2a63",
+     "page_number": 304,
+     "year": 1640,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Arte y bocabulario de la lengua guaraní"
+    },
+    {
+     "page_id": "6a9f3f7a83c3b522416e2704",
+     "book_id": "6a9f3f7a83c3b522416e2584",
+     "page_number": 384,
+     "year": 1733,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "La Araucana, partes primera a quinta"
+    },
+    {
+     "page_id": "6a9f3f8383c3b522416e2ee6",
+     "book_id": "6a9f3f8383c3b522416e2dbd",
+     "page_number": 297,
+     "year": 1646,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Histórica relación del Reyno de Chile"
+    },
+    {
+     "page_id": "6a9f3f7c83c3b522416e27ae",
+     "book_id": "6a9f3f7c83c3b522416e2726",
+     "page_number": 136,
+     "year": 1639,
+     "hold": "scans-only-publish-7270",
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Tesoro de la lengua guaraní"
+    },
+    {
+     "page_id": "6a0909a044b481aa5a37d5bc",
+     "book_id": "6a0909a044b481aa5a37d564",
+     "page_number": 88,
+     "year": 1738,
+     "hold": null,
+     "visible": true,
+     "provider": "internet_archive",
+     "title": "Vida de Sta. Catalina de Genova, con un Breve Compendio y Explicacion del Dialog"
+    }
+   ]
+  }
+ },
+ "frame": {
+  "fr19": {
+   "books": 625,
+   "other_language_first": 0,
+   "unsplit_spread": 6,
+   "manuscript": 5,
+   "other_hold": {
+    "title-leaf-recitation-6297": 18,
+    "leaf-shift-5021": 1,
+    "paddle-print-6101": 2,
+    "by-eye-wrong-leaf-6420": 1,
+    "recitation-marker-english-7100": 2,
+    "wrong-leaf-blank-7866": 1,
+    "wrong-leaf-text-7517": 1,
+    "blank-leaf-invented-6056": 1,
+    "preview-stub-first-read-8181": 1,
+    "translate-cli-7075": 2,
+    "peiresc-awaits-derek-5811": 2,
+    "acquisition-wave-2026-10b": 1,
+    "aliveness-kb-cli-reads": 3,
+    "zh-histories-7546": 6,
+    "markets-cli-reads": 3,
+    "submarine-imports-7721": 5,
+    "maya-sources-7038": 1,
+    "agy-route-8038": 1
+   },
+   "sampled_before": 30,
+   "in_frame": 532,
+   "owed_by_counter": 30474,
+   "walked": 114,
+   "no_interior_unread": 84,
+   "no_image": 0
+  },
+  "fr17": {
+   "books": 961,
+   "other_language_first": 0,
+   "unsplit_spread": 2,
+   "manuscript": 76,
+   "other_hold": {
+    "title-leaf-recitation-6297": 5,
+    "invented-facing-column-7567": 2,
+    "summary-placeholder-6117": 1,
+    "leaf-shift-5021": 3,
+    "by-eye-wrong-leaf-6420": 1,
+    "preview-stub-first-read-8181": 5,
+    "wrong-leaf-screen-7866": 1,
+    "translate-cli-7075": 3,
+    "drebbel-creative-5811": 1,
+    "acquisition-wave-2026-10b": 29,
+    "magic-kb-cli-reads": 2,
+    "jcb-1600-8049": 5,
+    "ia-free-text-first-4966": 1
+   },
+   "sampled_before": 30,
+   "in_frame": 794,
+   "owed_by_counter": 36746,
+   "walked": 148,
+   "no_interior_unread": 118,
+   "no_image": 0
+  },
+  "es17": {
+   "books": 73,
+   "other_language_first": 0,
+   "unsplit_spread": 0,
+   "manuscript": 3,
+   "other_hold": {
+    "title-leaf-recitation-6297": 1,
+    "acquisition-wave-2026-10b": 2
+   },
+   "sampled_before": 30,
+   "in_frame": 37,
+   "owed_by_counter": 2538,
+   "walked": 37,
+   "no_interior_unread": 32,
+   "no_image": 0
+  }
+ }
+}

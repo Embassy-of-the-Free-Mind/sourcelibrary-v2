@@ -19,6 +19,8 @@ import {
   modelDisplayName,
   pageTextSource,
   isUnreviewedMachineTranslation,
+  textProducedAt,
+  datedProvenanceLabel,
 } from '@/lib/text-provenance';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Page } from '@/lib/types';
@@ -256,5 +258,63 @@ describe('isUnreviewedMachineTranslation', () => {
     expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-3-flash-preview', source: 'source-column', language: 'English' }))).toBe(false);
     expect(isUnreviewedMachineTranslation(tr({ data: '', model: 'gemini-3-flash-preview', source: 'ai', language: 'English' }))).toBe(false);
     expect(isUnreviewedMachineTranslation(tr(undefined))).toBe(false);
+  });
+});
+
+// #7263: the reader says WHEN a machine text was produced, and shows no date rather than a guessed one.
+describe('textProducedAt', () => {
+  const at = new Date('2026-03-15T12:00:00Z');
+  const later = new Date('2026-07-01T00:00:00Z');
+  const pg = (o: Record<string, unknown>) => o as unknown as Pick<Page, 'ocr' | 'translation' | 'split_from'>;
+  const ocr = (x: Record<string, unknown>) => pg({ ocr: { data: 'x', language: 'Latin', model: 'gemini-3-flash-preview', source: 'ai', ...x } });
+  const tr = (x: Record<string, unknown>) => pg({ translation: { data: 'x', language: 'English', model: 'gemini-3-flash-preview', source: 'ai', ...x } });
+
+  it('prefers the run date, and falls back on updated_at', () => {
+    expect(textProducedAt(ocr({ updated_at: later, engine: { run: { at } } }), 'ocr')).toEqual(at);
+    expect(textProducedAt(ocr({ updated_at: at }), 'ocr')).toEqual(at);
+    expect(textProducedAt(tr({ updated_at: at }), 'translation')).toEqual(at);
+  });
+
+  it('reads the ISO strings a client-side page turn carries', () => {
+    expect(textProducedAt(ocr({ updated_at: at.toISOString() }), 'ocr')).toEqual(at);
+  });
+
+  it('no date when the record has none, or an unusable one', () => {
+    expect(textProducedAt(pg({}), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({}), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ updated_at: 'not a date' }), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ updated_at: new Date(0) }), 'ocr')).toBeNull();
+  });
+
+  it('a person’s edit dates from edited_at, never from a machine stamp', () => {
+    expect(textProducedAt(tr({ updated_at: later, edited_at: at, edited_by: 'A' }), 'translation')).toEqual(at);
+    expect(textProducedAt(tr({ updated_at: later, edited_by: 'A' }), 'translation')).toBeNull();
+    expect(textProducedAt(ocr({ source: 'manual', updated_at: later }), 'ocr')).toBeNull();
+  });
+
+  it('a split leaf without a run date: updated_at may be the swap, so no date', () => {
+    expect(textProducedAt({ ...tr({ updated_at: later }), split_from: 'p' }, 'translation')).toBeNull();
+    expect(textProducedAt({ ...tr({ updated_at: later, engine: { run: { at } } }), split_from: 'p' }, 'translation')).toEqual(at);
+  });
+
+  it('texts we did not produce take no date: Archive OCR, corpus, e-text, a corpus or manual translation', () => {
+    expect(textProducedAt(ocr({ source: 'ia_djvu', updated_at: at }), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ source: 'corpus', model: 'etcsl-corpus', updated_at: at }), 'ocr')).toBeNull();
+    expect(textProducedAt(ocr({ source: 'sefaria', updated_at: at, text_source: { name: 'Sefaria', license: 'CC0' } }), 'ocr')).toBeNull();
+    expect(textProducedAt(tr({ source: 'corpus', model: 'etcsl-corpus', updated_at: at }), 'translation')).toBeNull();
+    expect(textProducedAt(tr({ source: 'manual', updated_at: at }), 'translation')).toBeNull();
+  });
+
+  it('every locale prints the month and keeps the label, in UTC', () => {
+    const words = { en: 'March 2026', es: 'marzo de 2026', la: 'mense Martio 2026', nl: 'maart 2026', zh: '2026年3月' } as const;
+    for (const loc of ['en', 'es', 'la', 'nl', 'zh'] as const) {
+      const t = getReaderStrings(loc).info;
+      expect(t.producedMonth(at)).toBe(words[loc]);
+      expect(t.producedMonth(new Date('2026-04-01T00:00:00Z'))).not.toBe(words[loc]);
+      expect(datedProvenanceLabel(t.machineTranscript, at, t)).toContain(t.machineTranscript);
+      expect(datedProvenanceLabel(t.machineTranscript, at, t)).toContain(words[loc]);
+      expect(datedProvenanceLabel(t.machineTranscript, null, t)).toBe(t.machineTranscript);
+      expect(t.machineDraftNoticeDated(words[loc])).toContain(words[loc]);
+    }
   });
 });

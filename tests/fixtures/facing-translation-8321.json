@@ -1,0 +1,415 @@
+{
+  "l118": {
+    "book": {
+      "id": "69937cdac970b9f8351dd273",
+      "title": "The Persian Wars II: Books 3-4 (Loeb L118)",
+      "display_title": "The Histories, Books 3-4",
+      "author": "Herodotus",
+      "language": "Greek",
+      "published": "Unknown",
+      "pages_count": 447,
+      "year": 1921,
+      "slug": "the-persian-wars-ii-books-3-4-loeb-l118-herodotus",
+      "visible": true,
+      "translation_state": {
+        "english_original": false
+      },
+      "facing_translation": {
+        "source": "published",
+        "series": "loeb",
+        "translator": "A. D. Godley",
+        "year": 1921,
+        "pairing": "next-leaf-consecutive-printed",
+        "detected_at": "2026-11-07T10:47:08.407Z",
+        "detector": "loeb-facing-census/v1",
+        "pairs": 198
+      }
+    },
+    "pages": [
+      {
+        "id": "69937cdbc970b9f8351dd3b4",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 321,
+        "ocr": {
+          "data": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>296</page-num>\n<header>HERODOTUS</header>\n<meta>Digitized by Google watermark at bottom right</meta>\n\nἄνω πρὸς τὸν οὐρανὸν ἀπειλέουσι τῷ θεῷ, οὐδένα ἄλλον θεὸν νομίζοντες εἶναι εἰ μὴ τὸν σφέτερον.\n\n95. Ὡς δὲ ἐγὼ πυνθάνομαι τῶν τὸν Ἑλλήσποντον οἰκεόντων Ἑλλήνων καὶ Πόντον, τὸν Σάλμοξιν τοῦτον ἐόντα ἄνθρωπον δουλεῦσαι ἐν Σάμῳ, δουλεῦσαι δὲ Πυθαγόρῃ τῷ Μνησάρχου, ἐνθεῦτεν δὲ αὐτὸν γενόμενον ἐλεύθερον χρήματα κτήσασθαι μεγάλα, κτησάμενον δὲ ἀπελθεῖν ἐς τὴν ἑωυτοῦ. ἅτε δὲ κακοβίων τε ἐόντων τῶν Θρηίκων καὶ ὑπαφρονεστέρων, τὸν Σάλμοξιν τοῦτον ἐπιστάμενον δίαιτάν τε Ἰάδα καὶ ἤθεα βαθύτερα ἢ κατὰ Θρήικας, οἷα Ἕλλησί τε ὁμιλήσαντα καὶ Ἑλλήνων οὐ τῷ ἀσθενεστάτῳ σοφιστῇ Πυθαγόρῃ, κατασκευάσασθαι ἀνδρεῶνα, ἐς τὸν πανδοκεύοντα τῶν ἀστῶν τοὺς πρώτους καὶ εὐωχέοντα ἀναδιδάσκειν ὡς οὔτε αὐτὸς οὔτε οἱ συμπόται αὐτοῦ οὔτε οἱ ἐκ τούτων αἰεὶ γινόμενοι ἀποθανέονται, ἀλλ’ ἥξουσι ἐς χῶρον τοῦτον ἵνα αἰεὶ περιεόντες ἕξουσι τὰ πάντα ἀγαθά. ἐν ᾧ δὲ ἐποίεε τὰ καταλεχθέντα καὶ ἔλεγε ταῦτα, ἐν τούτῳ κατάγαιον οἴκημα ἐποιέετο. ὡς δέ οἱ παντελέως εἶχε τὸ οἴκημα, ἐκ μὲν τῶν Θρηίκων ἠφανίσθη, καταβὰς δὲ κάτω ἐς τὸ κατάγαιον οἴκημα διαιτᾶτο ἐπ’ ἔτεα τρία· οἱ δέ μιν ἐπόθεόν τε καὶ ἐπένθεον ὡς τεθνεῶτα. τετάρτῳ δὲ ἔτεϊ ἐφάνη τοῖσι Θρήιξι, καὶ οὕτω πιθανά σφι ἐγένετο τὰ ἔλεγε ὁ Σάλμοξις. ταῦτα φασί μιν ποιῆσαι.\n\n96. Ἐγὼ δὲ περὶ μὲν τούτου καὶ τοῦ καταγαίου οἰκήματος οὔτε ἀπιστέω οὔτε ὦν πιστεύω τι λίην, δοκέω δὲ πολλοῖσι ἔτεσι πρότερον τὸν Σάλμοξιν τοῦτον γενέσθαι Πυθαγόρεω εἴτε δὲ\n\n<vocab>Herodotus, Salmoxis, Pythagoras, Thracians, Samos, immortality, underground chamber</vocab>"
+        },
+        "page_type": "text",
+        "translation": {
+          "data": "<meta>This page continues the account of the Getae, a Thracian people who believe in immortality. The previous page ended with a description of their ritual sacrifice, where they hurl a chosen messenger onto spear-points to communicate with their god, Salmoxis.</meta>\n\n<page-num>296</page-num>\n\n->**HERODOTUS**<-\n\n...upward toward the sky they shoot arrows and threaten the god, believing that there is no other god but their own.\n\n95. Now, according to what I have heard from the Greeks who live by the Hellespont and the Black Sea, this Salmoxis <note>Also spelled Zalmoxis; he is a legendary figure who served as both a social reformer and a deity for the Getae.</note> was actually a mortal man who lived as a slave in Samos; he was a slave to Pythagoras, the son of Mnesarchus. After gaining his freedom there and acquiring great wealth, he returned to his own country. Because the Thracians led such impoverished lives and were somewhat simple-minded, this Salmoxis—who was well-acquainted with the Ionian <note>The Ionians were known for their intellectual advancements and luxury compared to the \"barbarian\" tribes.</note> way of life and possessed deeper customs than the Thracians, having associated with Greeks and especially with Pythagoras (a teacher <note>original: \"sophistē,\" which at this time referred to a master of wisdom or a philosopher rather than the later negative connotation of a \"sophist.\"</note> of no small reputation)—had a hall built for men. In this hall, he would host the leading citizens and, while entertaining them with banquets, he would teach them that neither he, nor his guests, nor any of their descendants would ever truly die, but would instead go to a place where they would live forever and possess every good thing. While he was carrying out these activities and speaking these words, he was meanwhile constructing an underground chamber. When the chamber was completely finished, he vanished from the sight of the Thracians; he went down into the underground room and lived there for three years. The Thracians longed for him and mourned him as if he were dead, but in the fourth year, he reappeared to them, and in this way they came to believe the things Salmoxis had told them. This is the story of what he did.\n\n96. As for me, I neither disbelieve the story of this man and his underground chamber, nor do I believe it entirely; however, I suspect that this Salmoxis lived many years before Pythagoras. But whether...\n\n<summary>Herodotus records a Greek tradition claiming the Thracian god Salmoxis was actually a former slave of Pythagoras who used a hidden chamber to fake his death and resurrection, thereby tricking the Thracians into believing in immortality.</summary>\n\n<keywords>Herodotus, Salmoxis, Zalmoxis, Pythagoras, Getae, Thracians, Samos, immortality, afterlife, underground chamber, Greek mythology, religious history</keywords>"
+        },
+        "printed_page": {
+          "label": "296",
+          "numbering": "arabic"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd3b5",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 322,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>297</page-num>\n<header>BOOK IV. 94-96</header>\n\nThracians shoot arrows skyward as a threat to the god, believing in no other god but their own.\n\n95. For myself, I have been told by the Greeks who dwell beside the Hellespont and Pontus that this Salmoxis was a man who was once a slave in Samos, his master being Pythagoras son of Mnesarchus; presently, after being freed and gaining great wealth, he returned to his own country. Now the Thracians were a meanly-living and simple-witted folk, but this Salmoxis knew Ionian usages and a fuller way of life than the Thracian; for he had consorted with Greeks, and moreover with one of the greatest Greek teachers, Pythagoras; wherefore he made himself a hall, where he entertained and feasted the chief among his countrymen, and taught them that neither he nor his guests nor any of their descendants should ever die, but that they should go to a place where they would live for ever and have all good things. While he was doing as I have said and teaching this doctrine, he was all the while making him an underground chamber. When this was finished, he vanished from the sight of the Thracians, and descended into the underground chamber, where he lived for three years, the Thracians wishing him back and mourning him for dead; then in the fourth year he appeared to the Thracians, and thus they came to believe what Salmoxis had told them. Such is the Greek story about him.\n\n96. For myself, I neither disbelieve nor fully believe the tale about Salmoxis and his underground chamber; but I think that he lived many years before Pythagoras; and whether there was a man called\n\n<meta>Digitized by Google</meta>\n\n<vocab>Thracians, Salmoxis, Pythagoras, Mnesarchus, Samos, Hellespont, Pontus, Ionian, immortality, underground chamber</vocab>"
+        },
+        "page_type": "text",
+        "translation": {
+          "data": "<meta>This page continues the account of the Getae (a Thracian tribe) and their belief in immortality. It specifically transitions from their ritual practices to a Greek rationalization of their god, Salmoxis, as a former student of Pythagoras.</meta>\n\n<page-num>297</page-num>\n\n<header>BOOK IV. 94-96</header>\n\nThracians shoot arrows skyward as a threat to the god, believing in no other god but their own.\n\n95. For myself, I have been told by the Greeks who dwell beside the Hellespont <note>The narrow strait connecting the Aegean Sea to the Sea of Marmara, now known as the Dardanelles.</note> and the Pontus <note>original: \"Pontos,\" referring to the Black Sea.</note> that this Salmoxis was actually a human being who was once a slave in Samos; his master was Pythagoras, the son of Mnesarchus <note>The famous Greek philosopher and mathematician known for his theories on the transmigration of souls.</note>. Eventually, after being granted his freedom and accumulating great wealth, he returned to his own country. Now, the Thracians were a people who lived quite simply and were somewhat naive, but this Salmoxis had become acquainted with Ionian <note>Referring to the Greek inhabitants of Ionia, who were regarded as the most intellectually advanced and culturally sophisticated of the Greeks.</note> customs and a more refined way of life than what was found in Thrace. Because he had associated with Greeks—and specifically with one of the most powerful Greek teachers, Pythagoras—he commissioned the building of a hall. In this hall, he would entertain and provide banquets for the leading citizens of his country. During these feasts, he would teach them that neither he, nor his guests, nor any of their descendants would ever truly die; instead, they would go to a place where they would live forever in a state of total blessedness. While he was hosting these gatherings and teaching this doctrine, he was secretly constructing an underground chamber. When it was finished, he vanished from the sight of the Thracians and descended into this subterranean room. He lived there for three years, while the Thracians missed him and mourned him as if he were dead. Then, in the fourth year, he appeared to the Thracians again, and in this way, they came to believe the things Salmoxis had told them. Such is the story the Greeks tell about him.\n\n96. As for me, I do not entirely disbelieve the tale of Salmoxis and his underground chamber, nor do I fully believe it; however, I suspect that he lived many years before the time of Pythagoras. But whether there was a man named\n\n<meta>The text cuts off here, continuing the discussion of Salmoxis's nature on the following page.</meta>\n\n<summary>Herodotus records a Greek legend claiming the Thracian god Salmoxis was actually a former slave of Pythagoras who used a trick with an underground chamber to convince his people of their immortality.</summary>\n<keywords>Salmoxis, Zalmoxis, Pythagoras, Thracians, Getae, Samos, immortality, Ionian culture, folklore, rationalization</keywords>"
+        },
+        "printed_page": {
+          "label": "297",
+          "numbering": "arabic"
+        }
+      }
+    ]
+  },
+  "latin": {
+    "book": {
+      "id": "69ac9be7dc7bbeb920621588",
+      "slug": "de-senectute-de-amicitia-de-divinatione-cicero",
+      "title": "De Senectute, De Amicitia, De Divinatione",
+      "display_title": "On Old Age, On Friendship, On Divination",
+      "author": "Cicero",
+      "language": "Latin",
+      "published": "1923",
+      "pages_count": 584,
+      "visible": true,
+      "year": 1923,
+      "translation_state": {
+        "english_original": false
+      },
+      "facing_translation": {
+        "source": "published",
+        "series": "loeb",
+        "translator": "William Armistead Falconer",
+        "year": 1923,
+        "pairing": "next-leaf-consecutive-printed",
+        "detected_at": "2026-11-07T10:47:08.407Z",
+        "detector": "loeb-facing-census/v1",
+        "pairs": 234
+      }
+    },
+    "pages": [
+      {
+        "id": "69ac9be7dc7bbeb9206215b0",
+        "book_id": "69ac9be7dc7bbeb920621588",
+        "page_number": 40,
+        "ocr": {
+          "data": "<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>28</page-num>\n<header>CICERO</header>\n\nexcipient anni consequentes. Anno ante me censorem mortuus est, novem annis post meum consulatum, cum consul iterum me consule creatus esset. Num igitur, si ad centesimum annum vixisset, senectutis eum suae paeniteret? Nec enim excursione nec saltu, nec eminus hastis aut comminus gladiis uteretur, sed consilio ratione sententia, quae nisi essent in senibus, non summum consilium maiores nostri appellassent senatum. Apud Lacedaemonios quidem ei, qui amplissimum magistratum gerunt, ut sunt, sic etiam nominantur, senes. Quod si legere aut audire voletis externa, maximas res publicas ab adulescentibus labefactatas, a senibus sustentatas et restitutas reperietis.\n\nCedo qui vestram rem publicam tantam amisistis tam cito? sic enim percontantur<note>1 ut est after percontantur in MSS., generally omitted by editors.</note> in Naevi poetae Lupo.<note>2 Lupo Ribbeck, Bennett, Mommsen; Ludo MSS.</note> Respondentur et alia et hoc in primis :\n\nproveniebant oratores novi, stulti adulescentuli.\n\nTemeritas est videlicet florentis aetatis, prudentia senescentis.\n\nVII. At memoria minuitur. Credo, nisi eam exerceas, aut etiam si sis natura tardior. Themistocles omnium civium perceperat nomina; num igitur\n\n---\n\n<note>1 Senatus, an assembly of senes, or elders.</note>\n<note>2 The citizens of Athens (native males, over 20, having the franchise) were then probably about 20,000.</note>\n\n<vocab>Cicero, senectus, senatus, Lacedaemonii, res publica, Themistocles, memoria, prudentia</vocab>"
+        },
+        "page_type": "text",
+        "translation": {
+          "data": "# CICERO\n\nyears will follow in succession. He died the year before I was censor, nine years after my consulship, when he had been elected consul a second time while I was consul. If, therefore, he had lived to his hundredth year, would he regret his old age? He would not be using it for running, leaping, throwing spears from a distance, or fighting hand-to-hand with swords, but for counsel, reason, and opinion—qualities which, if they were not found in old men, our ancestors would not have called their highest deliberative body the <term>senatus</term> <gloss>senate, derived from the word for \"old men\"</gloss>. Among the Lacedaemonians, indeed, those who hold the highest magistracy are called, as they are in fact, elders. If you wish to read or hear of foreign affairs, you will find that the greatest states have been weakened by the young and sustained and restored by the old.\n\n\"How, pray, have you lost your great state so quickly?\"\nSo they ask in the *Lupus* <gloss>Wolf</gloss> of the poet Naevius. They receive various answers, but this one in particular:\n\n\"New orators were coming forth, silly young lads.\"\n\nRashness is the mark of the blooming age, prudence that of the aging.\n\nVII. But it is said that memory is diminished. I believe it, unless you exercise it, or if you are naturally somewhat dull. Themistocles had learned the names of all the citizens; do you think, then, that..."
+        },
+        "printed_page": {
+          "label": "28",
+          "numbering": "arabic"
+        }
+      },
+      {
+        "id": "69ac9be7dc7bbeb9206215b1",
+        "book_id": "69ac9be7dc7bbeb920621588",
+        "page_number": 41,
+        "ocr": {
+          "data": "<language>English</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>29</page-num>\n<header>DE SENECTUTE, vi. 19—vii. 21</header>\n\nyear will receive his memory and pass it on. He died in the year before I was censor, nine years after I was consul; and while I was holding the latter office he was elected consul for the second time. If, then, he had lived to his hundredth year, would he be repenting of his old age? No, for he would not be employing his time in running and in leaping, or in long-distance throwing of the spear, or in hand-to-hand sword-play, but he would be engaged in using reflection, reason, and judgement. If these mental qualities were not characteristic of old men our fathers would not have called their highest deliberative body the \"senate.\"<note>1</note> Among the Lacedaemonians, for example, those who fill their chief magistracies are called \"elders,\" as they are in fact. And indeed, if you care to read or hear foreign history, you will find that the greatest states have been overthrown by the young and sustained and restored by the old.\n\nHow lost you, pray, your mighty state so soon?\n\nfor such is the question put in a play entitled the *Wolf*, by the poet Naevius. Several answers are given, but the one chiefly in point is this:\n\n> Through swarms of green, declaiming, silly lads.\n\nTrue enough, for rashness is the product of the budding-time of youth, prudence of the harvest-time of age.\n\nVII. But, it is alleged, the memory is impaired. Of course, if you do not exercise it, or also if you are by nature somewhat dull. Themistocles had learned the names of all the citizens of Athens<note>2</note> by heart; do you think, then, that after he became\n\n<vocab>De Senectute, Cicero, senate, Lacedaemonians, Naevius, Themistocles, Athens, memory, youth, age, prudence</vocab>"
+        },
+        "page_type": "text",
+        "translation": {
+          "data": "# DE SENECTUTE, vi. 19—vii. 21\n\nyear will receive his memory and pass it on. He died in the year before I was censor, nine years after I was consul; and while I was holding the latter office he was elected consul for the second time. If, then, he had lived to his hundredth year, would he be repenting of his old age? No, for he would not be employing his time in running and in leaping, or in long-distance throwing of the spear, or in hand-to-hand sword-play, but he would be engaged in using reflection, reason, and judgement. If these mental qualities were not characteristic of old men our fathers would not have called their highest deliberative body the \"senate.\"<note>1</note> Among the Lacedaemonians, for example, those who fill their chief magistracies are called \"elders,\" as they are in fact. And indeed, if you care to read or hear foreign history, you will find that the greatest states have been overthrown by the young and sustained and restored by the old.\n\nHow lost you, pray, your mighty state so soon?\n\nfor such is the question put in a play entitled the *Wolf*, by the poet Naevius. Several answers are given, but the one chiefly in point is this:\n\n> Through swarms of green, declaiming, silly lads.\n\nTrue enough, for rashness is the product of the budding-time of youth, prudence of the harvest-time of age.\n\nVII. But, it is alleged, the memory is impaired. Of course, if you do not exercise it, or also if you are by nature somewhat dull. Themistocles had learned the names of all the citizens of Athens<note>2</note> by heart; do you think, then, that after he became\n\n<note>1 Senatus, an assembly of senes, or elders.</note>\n<note>2 The citizens of Athens (native males, over 20, having the franchise) were then probably about 20,000.</note>"
+        },
+        "printed_page": {
+          "label": "29",
+          "numbering": "arabic"
+        }
+      }
+    ]
+  },
+  "_provenance": "Copied from production bookstore.books / bookstore.pages on 2026-11-07 (#8321). Never edited toward a verdict.",
+  "l118_run": {
+    "_note": "L118 scans 22-30 and 36-40 as stored on 2026-11-07 (id, page_number, ocr.data, printed_page): preface leaves, then openings; scan 37 carries a misread printed number, so 37/38 do not pair. Scan 22 also carries its stored translation.data, and book_chapters is books.chapters of L118 (both as stored on 2026-11-07, for the unpaired-leaf quote and the Contents anchors).",
+    "pages": [
+      {
+        "id": "69937cdbc970b9f8351dd289",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 22,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>preface</page-type>\n<page-num>xvii</page-num>\n<header>INTRODUCTION TO BOOKS III AND IV</header>\n<meta>Digitized by Google</meta>\n\nhearers would not trouble themselves much about such details. In short, it must be confessed that Herodotus’ reputation as a serious historian must rest on other foundations than his account of Darius’ Scythian campaign.¹\n\nHerodotus’ list of the tribute-paying divisions of the Persian Empire is not a geographical document. Obviously it is drawn from some such source as the three extant inscriptions (at Behistun, Persepolis, and Naksh-i-Rustam) in which Darius enumerated the constituent parts of his empire; but it differs from these in that the numerical order of the units is not determined by their local position. It has indeed geographical importance in so far as the grouping of tribes for purposes of taxation naturally implies their local vicinity; but it is in no sense a description of the various units under Darius’ rule; nor can we even infer that these districts and groups of districts are in all cases separate “satrapies” or governorships. That, apparently, is precluded by the occasional association of countries which could not have formed a single governorship, for instance, the Parthians, Chorasmians, Sogdi, and Arii, who compose the sixteenth district; while the Bactrians and Sacae, belonging here to separate tax-paying\n\n---\n\n¹ For a detailed discussion of the various problems suggested by Book IV the reader is referred to the long and elaborate Introduction to Dr. Macan’s edition of Herodotus, Books IV, V, VI.\n\n<vocab>Herodotus, Darius, Scythian campaign, Persian Empire, Behistun, Persepolis, Naksh-i-Rustam, satrapies, Parthians, Chorasmians, Sogdi, Arii, Bactrians, Sacae, Dr. Macan</vocab>"
+        },
+        "printed_page": {
+          "label": "xvii",
+          "numbering": "roman",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 13,
+          "fit_share": 1,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        },
+        "translation": {
+          "data": "<meta>This page concludes the critique of Herodotus’s account of the Scythian campaign and begins an analysis of the Persian administrative lists. It transitions from discussing the \"Moral Tale\" aspect of the narrative to the technicalities of the Persian tribute-paying districts.</meta>\n\n### INTRODUCTION TO BOOKS III AND IV\n\nhearers would not trouble themselves much about such details. In short, it must be confessed that Herodotus’ reputation as a serious historian must rest on other foundations than his account of Darius’ <note>Darius I (c. 550–486 BCE): The third Persian \"King of Kings,\" who organized the empire into administrative provinces and commissioned famous monumental inscriptions.</note> Scythian campaign.¹\n\nHerodotus’ list of the tribute-paying divisions of the Persian Empire is not a geographical document. Obviously it is drawn from some such source as the three extant inscriptions (at Behistun <note>Behistun: A massive rock relief in modern Iran containing a trilingual inscription that was crucial to deciphering cuneiform script.</note>, Persepolis, and Naksh-i-Rustam) in which Darius enumerated the constituent parts of his empire; but it differs from these in that the numerical order of the units is not determined by their local position. It has indeed geographical importance in so far as the grouping of tribes for purposes of taxation naturally implies their local vicinity; but it is in no sense a description of the various units under Darius’ rule; nor can we even infer that these districts and groups of districts are in all cases separate <term>satrapies<note>A satrapy was a province of the ancient Persian Empire, governed by a satrap who collected taxes and maintained order for the King.</note></term> or governorships. That, apparently, is precluded by the occasional association of countries which could not have formed a single governorship, for instance, the Parthians, Chorasmians, Sogdi, and Arii, who compose the sixteenth district; while the Bactrians and Sacae <note>Sacae: A Persian term for the Scythian nomads of Central Asia, distinguished here as a specific administrative group.</note>, belonging here to separate tax-paying\n\n---\n\n¹ For a detailed discussion of the various problems suggested by Book IV the reader is referred to the long and elaborate Introduction to Dr. Macan’s edition of Herodotus, Books IV, V, VI.\n\n<summary>The author argues that Herodotus's historical value lies beyond his inaccurate Scythian geography and examines his Persian tribute lists as administrative rather than purely geographical records. These lists are compared to official royal inscriptions at sites like Behistun.</summary>\n<keywords>Herodotus, Darius the Great, Scythia, Persian Empire, Behistun Inscription, Persepolis, satrapies, tribute lists, taxation, Dr. Macan</keywords>"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd28a",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 23,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>preface</page-type>\n<page-num>xviii</page-num>\n<meta>Digitized by Google watermark at bottom right</meta>\n\n# INTRODUCTION TO BOOKS III AND IV\n\nunits, appear in other passages in Herodotus as subjects of a single satrapy. What the historian gives us in Book III is simply a statistical list of Darius' revenues and the sources from which they were drawn.\n\n<vocab>Herodotus, satrapy, Darius, Book III, Book IV</vocab>"
+        },
+        "printed_page": {
+          "label": "xviii",
+          "numbering": "roman",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 13,
+          "fit_share": 1,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd28b",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 24,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>9</page-num>\n<sig>B</sig>\n<meta>Digitized by Google; Stanford Library perforated stamp; Vol. II. indicator</meta>\n\n# HERODOTUS\n\n## BOOK III\n\n<vocab>Herodotus, Book III</vocab>"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd28c",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 25,
+        "ocr": {
+          "data": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>2</page-num>\n<meta>Digitized by Google watermark diagonally across the page</meta>\n\n# ΗΡΟΔΟΤΟΥ ΙΣΤΟΡΙΑΙ\n\n## Γ\n\n1. Ἐπὶ τοῦτον δὴ τὸν Ἄμασιν Καμβύσης ὁ Κύρου ἐστρατεύετο, ἄγων καὶ ἄλλους τῶν ἦρχε καὶ Ἑλλήνων Ἴωνάς τε καὶ Αἰολέας, δι’ αἰτίην τοιήνδε. πέμψας Καμβύσης ἐς Αἴγυπτον κήρυκα αἴτεε Ἄμασιν θυγατέρα, αἴτεε δὲ ἐκ βουλῆς ἀνδρὸς Αἰγυπτίου, ὃς μεμφόμενος Ἄμασιν ἔπρηξε ταῦτα ὅτι μιν ἐξ ἁπάντων τῶν ἐν Αἰγύπτῳ ἰητρῶν ἀποσπάσας ἀπὸ γυναικός τε καὶ τέκνων ἔκδοτον ἐποίησε ἐς Πέρσας, ὅτε Κῦρος πέμψας παρὰ Ἄμασιν αἴτεε ἰητρὸν ὀφθαλμῶν ὃς εἴη ἄριστος τῶν ἐν Αἰγύπτῳ. ταῦτα δὴ ἐπιμεμφόμενος ὁ Αἰγύπτιος ἐνῆγε τῇ συμβουλῇ κελεύων αἰτέειν τὸν Καμβύσεα Ἄμασιν θυγατέρα, ἵνα ἢ δοὺς ἀνιῷτο ἢ μὴ δοὺς Καμβύσῃ ἀπέχθοιτο. ὁ δὲ Ἄμασις τῇ δυνάμι τῶν Περσέων ἀχθόμενος καὶ ἀρρωδέων οὐκ εἶχε οὔτε δοῦναι οὔτε ἀρνήσασθαι· εὖ γὰρ ἠπίστατο ὅτι οὐκ ὡς γυναῖκά μιν ἔμελλε Καμβύσης ἕξειν ἀλλ’ ὡς παλλακήν. ταῦτα δὴ ἐκλογιζόμενος ἐποίησε τάδε. ἦν Ἀπρίεω τοῦ προτέρου βασιλέος θυγάτηρ κάρτα μεγάλη τε καὶ εὐειδὴς μούνη τοῦ οἴκου λελειμμένη, οὔνομα δέ οἱ\n\n<vocab>Ἡρόδοτος, Ἄμασις, Καμβύσης, Κῦρος, Αἴγυπτος, Πέρσαι, Ἀπρίης</vocab>"
+        },
+        "printed_page": {
+          "label": "2",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd28d",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 26,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>3</page-num>\n<sig>B 2</sig>\n<meta>Digitized by Google watermark at bottom right; catchword/signature B 2</meta>\n\n# HERODOTUS\n\n## BOOK III\n\n1. It was against this Amasis that Cambyses led an army of his subjects, Ionian and Aeolian Greeks among them. $^1$ This was his reason: Cambyses sent a herald to Egypt asking Amasis for his daughter; and this he did by the counsel of a certain Egyptian, who devised it by reason of a grudge that he bore against Amasis, because when Cyrus sent to Amasis asking for the best eye-doctor in Egypt the king had chosen this man out of all the Egyptian physicians and sent him perforce to Persia away from his wife and children. With this grudge in mind he moved Cambyses by his counsel to ask Amasis for his daughter, that Amasis might be grieved if he gave her, or Cambyses' enemy if he refused her. So Amasis was sorely afraid of the power of Persia, and could neither give his daughter nor deny her; for he knew well that Cambyses would make her not his queen but his mistress. Reasoning thus he bethought him of a very tall and fair damsel called Nitetis, daughter of the former king Apries, and all that was left of that\n\n---\n\n$^1$ The received date is 525 B.C.\n\n<vocab>Herodotus, Amasis, Cambyses, Ionian, Aeolian, Egypt, Cyrus, Persia, Nitetis, Apries</vocab>"
+        },
+        "printed_page": {
+          "label": "3",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd28e",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 27,
+        "ocr": {
+          "data": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>4</page-num>\n<header>HERODOTUS</header>\n\nἦν Νίτητις· ταύτην δὴ τὴν παῖδα ὁ Ἄμασις κοσμήσας ἐσθῆτί τε καὶ χρυσῷ ἀποπέμπει ἐς Πέρσας ὡς ἑωυτοῦ θυγατέρα. μετὰ δὲ χρόνον ὥς μιν ἠσπάζετο πατρόθεν ὀνομάζων, λέγει πρὸς αὐτὸν ἡ παῖς “Ὦ βασιλεῦ, διαβεβλημένος ὑπὸ Ἀμάσιος οὐ μανθάνεις. ὃς ἐμὲ σοὶ κόσμῳ ἀσκήσας ἀπέπεμψε ὡς ἑωυτοῦ θυγατέρα διδούς, ἐοῦσαν τῇ ἀληθείῃ Ἀπρίεω, τὸν ἐκεῖνος ἐόντα ἑωυτοῦ δεσπότεα μετ’ Αἰγυπτίων ἐπαναστὰς ἐφόνευσε.” τοῦτο δὴ τὸ ἔπος καὶ αὕτη ἡ αἰτίη ἐγγενομένη ἤγαγε Καμβύσεα τὸν Κύρου μεγάλως θυμωθέντα ἐπ’ Αἴγυπτον.\n\n2. Οὕτω μέν νυν λέγουσι Πέρσαι. Αἰγύπτιοι δὲ οἰκηιοῦνται Καμβύσεα, φάμενοί μιν ἐκ ταύτης δὴ τῆς Ἀπρίεω θυγατρὸς γενέσθαι· Κῦρον γὰρ εἶναι τὸν πέμψαντα παρὰ Ἄμασιν ἐπὶ τὴν θυγατέρα, ἀλλ’ οὐ Καμβύσεα. λέγοντες δὲ ταῦτα οὐκ ὀρθῶς λέγουσι. οὐ μὲν οὐδὲ λέληθε αὐτούς (εἰ γὰρ τινὲς καὶ ἄλλοι, τὰ Περσέων νόμιμα ἐπιστέαται καὶ Αἰγύπτιοι) ὅτι πρῶτα μὲν νόθον οὔ σφι νόμος ἐστὶ βασιλεῦσαι γνησίου παρεόντος, αὖτις δὲ ὅτι Κασσανδάνης τῆς Φαρνάσπεω θυγατρὸς ἦν παῖς Καμβύσης, ἀνδρὸς Ἀχαιμενίδεω, ἀλλ’ οὐκ ἐκ τῆς Αἰγυπτίης. ἀλλὰ παρατράπουσι τὸν λόγον προσποιεύμενοι τῇ Κύρου οἰκίῃ συγγενέες εἶναι.\n\n3. Καὶ ταῦτα μὲν ὧδε ἔχει. λέγεται δὲ καὶ ὅδε λόγος, ἐμοὶ μὲν οὐ πιθανός, ὡς τῶν Περσίδων γυναικῶν ἐσελθοῦσά τις παρὰ τὰς Κύρου γυναῖκας, ὡς εἶδε τῇ Κασσανδάνῃ παρεστεῶτα τέκνα εὐειδέα τε καὶ μεγάλα, πολλῷ ἐχρᾶτο τῷ ἐπαίνῳ ὑπερθωμάζουσα, ἡ δὲ Κασσανδάνη ἐοῦσα τοῦ Κύρου γυνὴ εἶπε τάδε. “Τοιῶνδε μέντοι ἐμὲ παίδων μητέρα\n\n<vocab>Herodotus, Amasis, Nitetis, Cambyses, Cyrus, Apries, Cassandane, Pharnaspes, Achaemenid, Persians, Egyptians</vocab>"
+        },
+        "printed_page": {
+          "label": "4",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd28f",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 28,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>5</page-num>\n<header>BOOK III. 1-3</header>\n\nfamily; Amasis decked her out with raiment and golden ornaments and sent her to the Persians as if she were his own daughter. But after a while, the king greeting her as the daughter of Amasis, the damsel said, “King, you know not how Amasis has deceived you: he decked me out with ornaments and sent me to you to pass for his own daughter; but I am in truth the daughter of his master Apries, whom he and other Egyptians rebelled against and slew.” It was these words and this reason that prevailed with Cambyses to lead him in great anger against Egypt.\n\n2. This is the Persian story. But the Egyptians claim Cambyses for their own; they say that he was the son of this daughter of Apries, and that it was Cyrus, not Cambyses, who sent to Amasis for his daughter. But this tale is false. Nay, they are well aware (for the Egyptians have a truer knowledge than any men of the Persian law) firstly, that no bastard may be king of Persia if there be a son born in lawful wedlock; and secondly, that Cambyses was born not of the Egyptian woman but of Cassandane, daughter of Pharnaspes, an Achaemenid. But they so twist the story because they would claim kinship with the house of Cyrus.\n\n3. So much for this matter. There is another tale too, which I do not believe:—that a certain Persian lady came to visit Cyrus’ wives, and greatly praised and admired the fair and tall children who stood by Cassandane. Then Cassandane, Cyrus’ wife, said, “Ay, yet though I be the mother of such children\n\n<meta>Digitized by Google</meta>\n\n<vocab>Amasis, Persians, Apries, Egyptians, Cambyses, Egypt, Cyrus, Cassandane, Pharnaspes, Achaemenid</vocab>"
+        },
+        "printed_page": {
+          "label": "5",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd290",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 29,
+        "ocr": {
+          "data": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>6</page-num>\n<header>HERODOTUS</header>\n\nἐοῦσαν Κῦρος ἐν ἀτιμίῃ ἔχει, τὴν δὲ ἀπ’ Αἰγύπτου ἐπίκτητον ἐν τιμῇ τίθεται.” τὴν μὲν ἀχθομένην τῇ Νιτήτι εἰπεῖν ταῦτα, τῶν δέ οἱ παίδων τὸν πρεσβύτερον εἰπεῖν Καμβύσεα “Τοιγάρ τοι ὦ μῆτερ, ἐπεὰν ἐγὼ γένωμαι ἀνήρ, Αἰγύπτου τὰ μὲν ἄνω κάτω θήσω, τὰ δὲ κάτω ἄνω.” ταῦτα εἰπεῖν αὐτὸν ἔτεα ὡς δέκα κου γεγονότα, καὶ τὰς γυναῖκας ἐν θώματι γενέσθαι· τὸν δὲ διαμνημονεύοντα οὕτω δή, ἐπείτε ἀνδρώθη καὶ ἔσχε τὴν βασιληίην, ποιήσασθαι τὴν ἐπ’ Αἴγυπτον στρατηίην.\n\n4. Συνήνεικε δὲ καὶ ἄλλο τι τοιόνδε πρῆγμα γενέσθαι ἐς τὴν ἐπιστράτευσιν ταύτην. ἦν τῶν ἐπικούρων Ἀμάσιος ἀνὴρ γένος μὲν Ἁλικαρνησσεύς, οὔνομα δέ οἱ Φάνης, καὶ γνώμην ἱκανὸς καὶ τὰ πολεμικὰ ἄλκιμος. οὗτος ὁ Φάνης μεμφόμενός κού τι Ἀμάσι ἐκδιδρήσκει πλοίῳ ἐξ Αἰγύπτου, βουλόμενος Καμβύσῃ ἐλθεῖν ἐς λόγους. οἷα δὲ ἐόντα αὐτὸν ἐν τοῖσι ἐπικούροισι λόγου οὐ σμικροῦ ἐπιστάμενόν τε τὰ περὶ Αἴγυπτον ἀτρεκέστατα, μεταδιώκει ὁ Ἄμασις σπουδὴν ποιεύμενος ἑλεῖν, μεταδιώκει δὲ τῶν εὐνούχων τὸν πιστότατον ἀποστείλας τριήρεϊ κατ’ αὐτόν, ὃς αἱρέει μιν ἐν Λυκίῃ, ἑλὼν δὲ οὐκ ἀνήγαγε ἐς Αἴγυπτον· σοφίῃ γάρ μιν περιῆλθε ὁ Φάνης· καταμεθύσας γὰρ τοὺς φυλάκους ἀπαλλάσσετο ἐς Πέρσας. ὁρμημένῳ δὲ στρατεύεσθαι Καμβύσῃ ἐπ’ Αἴγυπτον καὶ ἀπορέοντι τὴν ἔλασιν, ὅκως τὴν ἄνυδρον διεκπερᾷ, ἐπελθὼν φράζει μὲν καὶ τὰ ἄλλα τὰ Ἀμάσιος πρήγματα, ἐξηγέεται δὲ καὶ τὴν ἔλασιν, ὧδε παραινέων, πέμψαντα παρὰ τὸν Ἀραβίων βασιλέα δέεσθαι τὴν διέξοδόν οἱ ἀσφαλέα παρασχεῖν.\n\n5. Μούνη δὲ ταύτῃ εἰσὶ φανεραὶ ἐσβολαὶ ἐς\n\n<vocab>Κῦρος, Καμβύσης, Ἄμασις, Φάνης, Αἴγυπτος, Ἁλικαρνησσεύς, Πέρσαι, Λυκίη</vocab>"
+        },
+        "printed_page": {
+          "label": "6",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd291",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 30,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>7</page-num>\n<header>BOOK III. 3-5</header>\n\nCyrus dishonours me and honours this newcomer from Egypt.” So she spoke in her bitterness against Nitetis; and Cambyses, the eldest of her sons, said, “Then, mother, when I am grown a man, I will turn all Egypt upside down.” When he said this he was about ten years old, and the women marvelled at him; but he kept it in mind, and it was thus that when he grew up and became king, he made the expedition against Egypt.\n\n4. It chanced also that another thing befell tending to this expedition. There was among Amasis’ foreign soldiers one Phanes, a Halicarnassian by birth, a man of sufficient judgment and valiant in war. This Phanes had some grudge against Amasis, and fled from Egypt on shipboard that he might have an audience of Cambyses. Seeing that he was a man much esteemed among the foreign soldiery and had an exact knowledge of all Egyptian matters, Amasis was zealous to take him, and sent a trireme with the trustiest of his eunuchs to pursue him. This eunuch caught him in Lycia but never brought him back to Egypt; for Phanes was too clever for him, and made his guards drunk and so escaped to Persia. There he found Cambyses prepared to set forth against Egypt, but in doubt as to his march, how he should cross the waterless desert; so Phanes showed him what was Amasis’ condition and how he should march; as to this, he counselled Cambyses to send and ask the king of the Arabians for a safe passage.\n\n5. Now the only manifest way of entry into Egypt\n\n<meta>Digitized by Google</meta>\n\n<vocab>Cyrus, Egypt, Nitetis, Cambyses, Amasis, Phanes, Halicarnassian, trireme, Lycia, Persia, Arabians</vocab>"
+        },
+        "printed_page": {
+          "label": "7",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd297",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 36,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>13</page-num>\n<header>BOOK III. 9-11</header>\n\nless credible tale also, since they tell it. There is a great river in Arabia called Corys, issuing into the sea called Red. From this river (it is said) the king of the Arabians carried water by a duct of sewn ox-hides and other hides of a length sufficient to reach to the dry country; and he had great tanks dug in that country to receive and keep the water. It is a twelve days' journey from the river to that desert. By three ducts (they say) he led the water to three several places.\n\n10. Psammenitus, son of Amasis, was encamped by the mouth of the Nile called Pelusian, awaiting Cambyses. For when Cambyses marched against Egypt he found Amasis no longer alive; he had died after reigning forty-four years, in which no great misfortune had befallen him; and being dead he was embalmed and laid in the burial-place built for himself in the temple. While his son Psammenitus was king of Egypt, the people saw a most wonderful sight, namely, rain at Thebes of Egypt, where, as the Thebans themselves say, there had never been rain before, nor since to my lifetime; for indeed there is no rain at all in the upper parts of Egypt; but at that time a drizzle of rain fell at Thebes.<note>This refers to the footnote at the bottom of the page.</note>\n\n11. Now the Persians having crossed the waterless country and encamped near the Egyptians with intent to give battle, the foreign soldiery of the Egyptian, Greeks and Carians, devised a plan to punish Phanes,\n\n---\n\n> ¹ In modern times there is sometimes a little rain at Thebes (Luxor); very little and very seldom.\n\n<meta>Digitized by Google</meta>\n<vocab>Corys, Red Sea, Arabians, Psammenitus, Amasis, Pelusian, Cambyses, Egypt, Thebes, Persians, Greeks, Carians, Phanes, Luxor</vocab>"
+        },
+        "printed_page": {
+          "label": "13",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd298",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 37,
+        "ocr": {
+          "data": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>1</page-num>\n<header>HERODOTUS</header>\n<sig>I 4</sig>\n<meta>Digitized by Google. Handwritten correction/strikethrough in line 11.</meta>\n\nτῷ Φάνῃ ὅτι στρατὸν ἤγαγε ἐπ’ Αἴγυπτον ἀλλόθροον, μηχανῶνται πρῆγμα ἐς αὐτὸν τοιόνδε. ἦσαν τῷ Φάνῃ παῖδες ἐν Αἰγύπτῳ καταλελειμμένοι· τοὺς ἀγαγόντες ἐς τὸ στρατόπεδον καὶ ἐς ὄψιν τοῦ πατρὸς κρητῆρα ἐν μέσῳ ἔστησαν ἀμφοτέρων τῶν στρατοπέδων, μετὰ δὲ ἀγινέοντες κατὰ ἕνα ἕκαστον τῶν παίδων ἔσφαζον ἐς τὸν κρητῆρα· διὰ πάντων δὲ διεξελθόντες τῶν παίδων οἶνόν τε καὶ ὕδωρ ἐσεφόρεον ἐς αὐτόν, ἐμπιόντες δὲ τοῦ αἵματος πάντες οἱ ἐπίκουροι οὕτω δὴ συνέβαλον. <insert><note>Handwritten correction/strikethrough over text</note>μάχης</insert> δὲ γενομένης καρτερῆς καὶ πεσόντων ἐξ ἀμφοτέρων τῶν στρατοπέδων πλήθεϊ πολλῶν ἐτράποντο οἱ Αἰγύπτιοι.\n\n12. Θῶμα δὲ μέγα εἶδον πυθόμενος παρὰ τῶν ἐπιχωρίων· τῶν γὰρ ὀστέων περικεχυμένων χωρὶς ἑκατέρων τῶν ἐν τῇ μάχῃ ταύτῃ πεσόντων (χωρὶς μὲν γὰρ τῶν Περσέων ἐκέετο τὰ ὀστέα, ὡς ἐχωρίσθη κατ’ ἀρχάς, ἑτέρωθι δὲ τῶν Αἰγυπτίων), αἱ μὲν τῶν Περσέων κεφαλαί εἰσι ἀσθενέες οὕτω ὥστε, εἰ θέλεις ψήφῳ μούνῃ βαλεῖν, διατετρανέεις, αἱ δὲ τῶν Αἰγυπτίων οὕτω δή τι ἰσχυραί, μόγις ἂν λίθῳ παίσας διαρρήξειας. αἴτιον δὲ τούτου τόδε ἔλεγον, καὶ ἐμέ γ’ εὐπετέως ἔπειθον, ὅτι Αἰγύπτιοι μὲν αὐτίκα ἀπὸ παιδίων ἀρξάμενοι ξυρῶνται τὰς κεφαλάς καὶ πρὸς τὸν ἥλιον παχύνεται τὸ ὀστέον. τὠυτὸ δὲ τοῦτο καὶ τοῦ μὴ φαλακροῦσθαι αἴτιόν ἐστί· Αἰγυπτίων γὰρ ἄν τις ἐλαχίστους ἴδοιτο φαλακροὺς πάντων ἀνθρώπων. τούτοισι μὲν δὴ τοῦτο ἐστὶ αἴτιον ἰσχυρὰς φορέειν τὰς κεφαλάς, τοῖσι δὲ Πέρσῃσι ὅτι ἀσθενέας φορέουσι τὰς κεφαλάς αἴτιον τόδε· σκητροφέουσι ἐξ ἀρχῆς πίλους τιάρας φορέοντες. ταῦτα μέν\n\n<vocab>Herodotus, Phanes, Egypt, Persians, battle, skulls, osteology, customs</vocab>"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd299",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 38,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>15</page-num>\n<header>BOOK III. 11-12</header>\n<meta>Digitized by Google</meta>\n\nbeing wroth with him for leading a stranger army into Egypt. Phanes had left sons in Egypt; these they brought to the camp, into their father's sight, and set a great bowl between the two armies; then they brought the sons one by one and cut their throats over the bowl. When all the sons were killed, they poured into the bowl wine and water, and the foreign soldiery drank of this and thereafter gave battle. The fight waxed hard, and many of both armies fell; but at length the Egyptians were routed.\n\n12. I saw there a strange thing, of which the people of the country had told me. The bones of those slain on either side in this fight lying scattered separately (for the Persian bones lay in one place and the Egyptian in another, where the armies had first separately stood), the skulls of the Persians are so brittle that if you throw no more than a pebble it will pierce them, but the Egyptian skulls are so strong that a blow of a stone will hardly break them. And this, the people said (which for my own part I readily believed), is the reason of it: the Egyptians shave their heads from childhood, and the bone thickens by exposure to the sun. This also is the reason why they do not grow bald; for nowhere can one see so few bald heads as in Egypt. Their skulls then are strong for this reason; and the cause of the Persian skulls being weak is that they shelter their heads through their lives with the felt hats (called tiaras) which they wear. Such is the truth of this matter. I saw\n\n<vocab>Phanes, Egypt, Persians, skulls, tiaras, battle, baldness</vocab>"
+        },
+        "printed_page": {
+          "label": "15",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd29a",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 39,
+        "ocr": {
+          "data": "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>16</page-num>\n<header>HERODOTUS</header>\n<meta>Digitized by Google watermark at bottom right</meta>\n\n<insert>νυν τοιαῦτα</insert> <unclear><s>¶</s></unclear> εἶδον δὲ καὶ ἄλλα ὅμοια τούτοισι ἐν\nΠαπρήμι τῶν ἅμα Ἀχαιμένεϊ τῷ Δαρείου διαφθα-\nρέντων ὑπὸ Ἰνάρω τοῦ Λίβυος.\n<margin>¶</margin> 13. Οἱ δὲ Αἰγύπτιοι ἐκ τῆς μάχης ὡς ἐτρά-\nποντο, ἔφευγον οὐδενὶ κόσμῳ· κατειληθέντων δὲ\nἐς Μέμφιν, ἔπεμπε ἀνὰ ποταμὸν Καμβύσης νέα\nΜυτιληναίην κήρυκα ἄγουσαν ἄνδρα Πέρσην, ἐς\nὁμολογίαν προκαλεόμενος Αἰγυπτίους. οἳ δὲ\nἐπείτε τὴν νέα εἶδον ἐσελθοῦσαν ἐς τὴν Μέμφιν,\nἐκχυθέντες ἁλέες ἐκ τοῦ τείχεος τήν τε νέα διέ-\nφθειραν καὶ τοὺς ἄνδρας κρεουργηδὸν διασπάσαν-\nτες ἐφόρεον ἐς τὸ τεῖχος. καὶ Αἰγύπτιοι μὲν μετὰ\nτοῦτο πολιορκεύμενοι χρόνῳ παρέστησαν. <insert>¶</insert> Οἱ δὲ\nπροσεχέες Λίβυες δείσαντες τὰ περὶ τὴν Αἴγυπτον\nγεγονότα παρέδοσαν σφέας αὐτοὺς ἀμαχητὶ καὶ\nφόρον τε ἐτάξαντο καὶ δῶρα ἔπεμπον. ὣς δὲ\nΚυρηναῖοι καὶ Βαρκαῖοι, δείσαντες ὁμοίως καὶ οἱ\nΛίβυες, τοιαῦτα ἐποίησαν. Καμβύσης δὲ τὰ μὲν\nπαρὰ Λιβύων ἐλθόντα δῶρα φιλοφρόνως ἐδέξατο·\nτὰ δὲ παρὰ Κυρηναίων ἀπικόμενα μεμφθείς, ὡς\nἐμοὶ δοκέει, ὅτι ἦν ὀλίγα· ἔπεμψαν γὰρ δὴ πεν-\nτακοσίας μνέας ἀργυρίου οἱ Κυρηναῖοι· ταύτας\nδρασσόμενος αὐτοχειρίῃ διέσπειρε τῇ στρατιῇ.\n<margin>¶</margin> 14. Ἡμέρῃ δὲ δεκάτῃ ἀπ’ ἧς παρέλαβε τὸ\nτεῖχος τὸ ἐν Μέμφι Καμβύσης, κατίσας ἐς τὸ\nπροάστειον ἐπὶ λύμῃ τὸν βασιλέα τῶν Αἰγυπτίων\nΨαμμήνιτον, βασιλεύσαντα μῆνας ἕξ, τοῦτον\nκατίσας σὺν ἄλλοισι Αἰγυπτίοισι διεπειρᾶτο\nαὐτοῦ τῆς ψυχῆς ποιέων τοιάδε· στείλας αὐτοῦ\nτὴν θυγατέρα ἐσθῆτι δουληίῃ ἐξέπεμπε ἐπ’ ὕδωρ\nἔχουσαν ὑδρήιον, συνέπεμπε δὲ καὶ ἄλλας παρ-\nθένους ἀπολέξας ἀνδρῶν τῶν πρώτων, ὁμοίως\n\n<vocab>Herodotus, Historiarum, Cambyses, Memphis, Egypt, Cyrene, Libyans, Psammenitus</vocab>"
+        },
+        "printed_page": {
+          "label": "16",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      },
+      {
+        "id": "69937cdbc970b9f8351dd29b",
+        "book_id": "69937cdac970b9f8351dd273",
+        "page_number": 40,
+        "ocr": {
+          "data": "<language>English</language>\n<page-type>text</page-type>\n<page-num>17</page-num>\n<header>BOOK III. 12—14</header>\n<sig>VOL. II. C</sig>\n<meta>Digitized by Google</meta>\n\ntoo the skulls of those Persians at Papremis who were slain with Darius' son Achaemenes by Inaros the Libyan, and they were like the others.\n\n13. After their rout in the battle the Egyptians fled in disorder ; and they being driven into Memphis, Cambyses sent a Persian herald up the river in a ship of Mytilene to invite them to an agreement. But when they saw the ship coming to Memphis, they sallied out all together from their walls, destroyed the ship, tore the crew asunder (like butchers) and carried them within the walls. So the Egyptians were besieged, and after a good while yielded ; but the neighbouring Libyans, affrighted by what had happened in Egypt, surrendered unresisting, laying tribute on themselves and sending gifts ; and so too, affrighted like the Libyans, did the people of Cyrene and Barca. Cambyses received in all kindness the gifts of the Libyans ; but he seized what came from Cyrene and scattered it with his own hands among his army. This he did, as I think, to mark his displeasure at the littleness of the gift ; for the Cyrenaeans had sent five hundred silver minae.\n\n14. On the tenth day after the surrender of the walled city of Memphis, Cambyses took Psammenitus king of Egypt, who had reigned for six months, and set him down in the outer part of the city with other Egyptians, to do him despite ; having so done he made trial of Psammenitus' spirit, as I shall show. He dressed the king's daughter in slave's attire and sent her with a vessel to fetch water, in company with other maidens dressed as she was, chosen from\n\n<vocab>Persians, Papremis, Darius, Achaemenes, Inaros, Libyan, Egyptians, Memphis, Cambyses, Mytilene, Cyrene, Barca, silver minae, Psammenitus</vocab>"
+        },
+        "printed_page": {
+          "label": "17",
+          "numbering": "arabic",
+          "rate": 1,
+          "method": "read",
+          "source": "tag",
+          "run_len": 234,
+          "fit_share": 0.97,
+          "fitter": "fitPrintedPages/v1",
+          "run": "backfill-printed-page-4291@2026-10-03T23:13:59.867Z",
+          "at": "2026-10-03T23:38:13.859Z"
+        }
+      }
+    ],
+    "book_chapters": [
+      {
+        "title": "Introduction to Books III and IV",
+        "pageId": "69937cdbc970b9f8351dd27f",
+        "pageNumber": 12,
+        "level": 1,
+        "confidence": "high",
+        "endPage": 24
+      },
+      {
+        "title": "Book III",
+        "pageId": "69937cdbc970b9f8351dd28c",
+        "pageNumber": 25,
+        "level": 1,
+        "confidence": "high",
+        "endPage": 220
+      },
+      {
+        "title": "Book IV",
+        "pageId": "69937cdbc970b9f8351dd350",
+        "pageNumber": 221,
+        "level": 1,
+        "confidence": "high",
+        "endPage": 447
+      }
+    ]
+  }
+}

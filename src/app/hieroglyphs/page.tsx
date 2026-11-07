@@ -4,7 +4,7 @@ import evalData from '../../../scripts/output/hieroglyph-eval.json';
 export const metadata: Metadata = {
   title: 'Hieroglyph OCR Eval | Source Library',
   description:
-    'Side-by-side evaluation of Gemini AI hieroglyphic OCR against Budge\'s Egyptian Reading Book (1896).',
+    'Side-by-side evaluation of AI hieroglyphic OCR against Budge\'s Egyptian Reading Book (1896).',
 };
 
 interface EvalEntry {
@@ -94,7 +94,7 @@ export default function HieroglyphEvalPage() {
           </h1>
           <p className="text-base mb-2" style={{ color: 'var(--text-muted)' }}>
             {entries.length} pages from Budge&apos;s <em>Egyptian Reading Book for Beginners</em> (1896).
-            Comparing direct OCR vs. describe-each-glyph approach (Gemini 3 Flash Preview).
+            Comparing direct OCR vs. describe-each-glyph approach.
           </p>
           <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
             Left: original scan. Middle: direct OCR (whole-line). Right: describe-each

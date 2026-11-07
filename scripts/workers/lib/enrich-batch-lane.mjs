@@ -160,10 +160,12 @@ export async function hasWithheldPages(db, bookId) {
 }
 
 /** Re-checked at write time: a book may have been held or had a translation withheld since submit. */
-export async function stillEligible(db, bookId) {
+export async function stillEligible(db, bookId, { withheld = true } = {}) {
   const book = await db.collection('books').findOne({ id: bookId, ...NOT_HELD, 'pipeline_auto.status': { $ne: 'held' } }, { projection: { _id: 1 } });
   if (!book) return 'held or missing';
-  if (await hasWithheldPages(db, bookId)) return 'translation withheld';
+  // `withheld: false`: a chapters-only read (enrich-agy-lane --retry-empty-chapters) reads the heading list, not the
+  // English text whose holes the withheld check guards the summary and index against.
+  if (withheld && await hasWithheldPages(db, bookId)) return 'translation withheld';
   return null;
 }
 

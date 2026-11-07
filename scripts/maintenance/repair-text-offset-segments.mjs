@@ -28,7 +28,12 @@
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/repair-text-offset-segments.mjs \
- *     --book <id> --segments "1-79:+1,80-4162:+3" --issue 7949 [--apply]
+ *     --book <id> --segments "1-79:+1,80-4162:+3" --issue 7949 [--apply] [--no-purge]
+ *
+ * After the write it asks the site to re-render the book (POST /api/admin/revalidate-book/<id>,
+ * which also purges the book's landing URLs from Cloudflare), so readers stop getting the
+ * pre-repair text from a cached render (#8277). --apply refuses to start without
+ * CRON_SECRET or REVALIDATE_SECRET unless --no-purge is given.
  */
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
@@ -46,6 +51,12 @@ const MIN_ALIGNED = Number(flag('min-aligned', '0.95'));
 const SOURCE = flag('source', `shift-repair-segments-${ISSUE}`);
 const BACKUP_DIR = flag('backup-dir', 'scripts/output/text-shift-backups');
 const APPLY = args.includes('--apply');
+const NO_PURGE = args.includes('--no-purge');
+const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET || process.env.CRON_SECRET;
+if (APPLY && !NO_PURGE && !REVALIDATE_SECRET) {
+  console.error('[REFUSE] no CRON_SECRET / REVALIDATE_SECRET to re-render the book after the repair (#8277) — run with the production env, or pass --no-purge');
+  process.exit(1);
+}
 // Finish only the Supabase step of a repair already written to Mongo (e.g. it ran without
 // SUPABASE_DB_URL). Valid only while page_translations is untouched: moves are recomputed from
 // the spec, and each row's embedding is permuted from the row of the slot its text came from.
@@ -248,5 +259,10 @@ try {
   await syncMirrors(pages, moves);
   if (process.env.SUPABASE_DB_URL) await db.collection('book_events').updateOne({ book_id: BOOK, type: 'text_shift_repair', 'details.segments': SPEC }, { $set: { 'details.mirrors_synced_at': new Date() } });
   if (!process.env.SUPABASE_DB_URL) console.log('  [WARN] mirrors NOT synced: re-run from the main checkout under secret-lover with --mirrors-only');
-  console.log('[OK] applied — re-run scripts/audit/canvas-label-alignment.mjs --book, eye 5 leaves, purge the book on Cloudflare');
+  if (!NO_PURGE) {
+    // Re-render + Cloudflare purge of the book's landing URLs, as shift-repairs-5803-driver.mjs does.
+    const r = await fetch(`https://sourcelibrary.org/api/admin/revalidate-book/${BOOK}`, { method: 'POST', headers: { 'x-revalidate-secret': REVALIDATE_SECRET } }).catch((e) => ({ ok: false, status: e.message }));
+    console.log(r.ok ? '  book re-rendered and its landing URLs purged' : `  [WARN] revalidate-book failed (${r.status}) — readers may see the old text until the cache expires; re-run that POST by hand`);
+  }
+  console.log('[OK] applied — re-run scripts/audit/canvas-label-alignment.mjs --book, eye 5 leaves');
 } finally { await client.close(); }

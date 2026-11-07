@@ -19,6 +19,7 @@ import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
+import { bookAssistantGuide } from '@/lib/assistant-guide';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush, Eye } from 'lucide-react';
@@ -100,7 +101,7 @@ import AuthorName from '@/components/AuthorName';
 import { localePath, PREFIXED_LOCALES, hasBookPageForEveryBook, type Locale } from '@/lib/locale-path';
 import { OG_LOCALE } from '@/lib/og-locale';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
-import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
+import { localizedAuthor, localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
@@ -1873,9 +1874,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   {lang === 'zh' && heroByline.role === 'author' && bylineDynasty(catalogueRow, book.author) && <span>【{bylineDynasty(catalogueRow, book.author)}】</span>}
                   {embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                     <Link href={authorUrl(book.author, book.author_id)!} className="hover:opacity-80 transition-opacity">
-                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />}
+                      {heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />}
                     </Link>
-                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={book.author} lang={lang} />)}
+                  ) : (heroByline.role === 'editor' ? <>{t.editedBy} <AuthorName author={heroByline.editor} lang={lang} /></> : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />)}
                   {/* The name stays clickable and searchable — a byline is how a
                       reader REACHES a book, and for the Bhutanese manuscript
                       volumes the monastery is the only handle they have. What
@@ -2241,12 +2242,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     {heroByline.role === 'author' ? (
                       embedPolicy.enableBookCollectionNavigation && authorUrl(book.author, book.author_id) ? (
                         <Link href={authorUrl(book.author, book.author_id)!} className="hover:text-white transition-colors">
-                          <AuthorName author={book.author} lang={lang} />
+                          <AuthorName author={localizedAuthor(book, lang)} lang={lang} />
                         </Link>
-                      ) : <AuthorName author={book.author} lang={lang} />
+                      ) : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />
                     ) : heroByline.role === 'editor' ? (
                       <span>edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
-                    ) : <AuthorName author={book.author} lang={lang} />}
+                    ) : <AuthorName author={localizedAuthor(book, lang)} lang={lang} />}
                     {heroByline.role === 'author' && heroByline.editor && (
                       <span className="text-stone-400 text-sm"> · edited by <AuthorName author={heroByline.editor} lang={lang} /></span>
                     )}
@@ -3009,8 +3010,17 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
     }
   }
 
+  // Main site in English only: a reading room must not link to the whole library.
+  const assistantGuide = !ctx && lang === 'en'
+    ? bookAssistantGuide(
+        earlyBook as unknown as { id?: string; slug?: string; pages_count?: number },
+        (earlyBook as { _id?: { toString(): string } })._id?.toString() ?? id,
+      )
+    : null;
+
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"} lang={lang === 'en' ? undefined : lang}>
+      {assistantGuide && <p className="sr-only">{assistantGuide}</p>}
       {/* Sends a carried `?lang=xx` on to the `/xx` edition when this book has
           one, and sweeps the retired reading-language localStorage key. The
           language of a page is in its URL; nothing is recorded. See

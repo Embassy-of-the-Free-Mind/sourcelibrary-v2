@@ -11,7 +11,7 @@ run_one() {  # $1 = packet path
   [ -s "$out" ] && return 0
   [ -f "$W/LIMIT" ] && return 3
   for try in 1 2 3; do
-    cat "$HERE/JUDGE-PROMPT.md" "$p" | (cd /tmp && env -u ANTHROPIC_API_KEY timeout 900 "${CLAUDE_BIN:-$HOME/.local/bin/claude}" -p --model opus --allowedTools "") > "$W/out/.log-$base" 2>&1
+    cat "$HERE/JUDGE-PROMPT.md" "$p" | (cd /tmp && env -u ANTHROPIC_API_KEY timeout 900 "${CLAUDE_BIN:-$HOME/.local/bin/claude}" -p --model opus --restricted --tools '' --strict-mcp-config --no-session-persistence) > "$W/out/.log-$base" 2>&1
     if grep -oE '\{"verdict".*\}' "$W/out/.log-$base" | tail -1 > "$out.tmp" && [ -s "$out.tmp" ] && node -e 'JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"))' "$out.tmp" 2>/dev/null; then
       mv "$out.tmp" "$out"; return 0; fi
     rm -f "$out.tmp"

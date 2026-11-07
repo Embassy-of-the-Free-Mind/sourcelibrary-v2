@@ -49,6 +49,8 @@ Operational reference for pipeline monitoring, debugging, and processing. **The 
 
 ## OCR lanes — which producer, which lane, which model (#4729, measured 2026-09-11)
 
+Producers and prices as measured then. Which route a page gets is the router table's call → `.claude/docs/routing.md`.
+
 The model is the BOOK's, decided by one router in three faces (`getModelForBook` TS,
 `getOcrModelForBook` / `getTranslateModelForBook` .mjs; parity pinned by
 `tests/unit/translate-core-parity.test.ts`): Latin-script allowlist → `gemini-3.1-flash-lite`,

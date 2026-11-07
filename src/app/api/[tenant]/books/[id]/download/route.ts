@@ -3,6 +3,8 @@ import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
@@ -374,6 +376,7 @@ async function generateEpubDownload(
     ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
     <p><strong>Content:</strong> ${contentLabel}</p>
     ${flow ? '<p>The text runs on across pages; the small raised numbers mark where each printed page begins and link to it, with its scan.</p>' : ''}
+    ${flow?.translationCredit ? `<p><strong>Translation:</strong> ${flow.translationCredit}</p>` : ''}
     ${flow?.imagesNote ? `<p>${flow.imagesNote}</p>` : ''}
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
@@ -429,9 +432,12 @@ async function generateEpubDownload(
     <p>From Source Library. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
-    <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
+    ${flow?.translationCredit
+      // A Loeb (#8321): the English is the published translation, not ours, and carries no mark of ours.
+      ? `<p><em>${flow.translationCredit}</em></p>`
+      : `<p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
-    by Source Library. It does not identify you or track your usage.</em></p>
+    by Source Library. It does not identify you or track your usage.</em></p>`}
   `;
   chapters.push({ title: 'About This Edition', content: colophon });
 
@@ -2487,7 +2493,7 @@ async function downloadGET(request: NextRequest, { params }: RouteParams) {
     // Member-or-purchased gate applies ONLY to premium formats (#3290). NC-free
     // image formats bypass this too (charging for an NC scan would cross the
     // commercial line).
-    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    if (isPremiumFormat(format) && downloadChargesEnabled() && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
@@ -2508,7 +2514,7 @@ async function downloadGET(request: NextRequest, { params }: RouteParams) {
         return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
       }
     } else if (userId && !isPremiumFormat(format)) {
-      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isMember = sessionHasMemberBenefits(session?.user);
       const isExemptEditor = await isInnerCircle();
       const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
       if (!isMember && !isExemptEditor && !isPurchased) {

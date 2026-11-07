@@ -6,6 +6,7 @@ import { ChevronDown, Download, LayoutGrid, List } from 'lucide-react';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
+import SortSelect from '@/components/search-kit/SortSelect';
 import FilterChips from '@/components/search-kit/FilterChips';
 import DidYouMean, { useRescue } from '@/components/search-kit/DidYouMean';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
@@ -543,10 +544,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
             <Download className="w-3.5 h-3.5" aria-hidden /> CSV
           </a>
           <Link href="/catalog/scholar" className="hidden md:inline text-xs text-muted hover:text-primary mr-1" title="Minimal bibliographic view for researchers">Scholar view</Link>
-          <select value={s.sort} onChange={(e) => run({ ...s, sort: e.target.value as CatalogSort })} aria-label="Sort"
-            className="h-9 sm:h-[38px] w-[132px] sm:w-auto border border-border-medium bg-white px-2.5 sm:px-3 text-base sm:text-sm text-primary">
-            {sortOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-          </select>
+          <SortSelect value={s.sort} options={sortOptions} onChange={(v) => run({ ...s, sort: v as CatalogSort })} />
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-pressed={s.view === 'grid'} aria-label="Grid" onClick={() => run({ ...s, view: 'grid' }, { keepPage: true })}
               className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${s.view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>

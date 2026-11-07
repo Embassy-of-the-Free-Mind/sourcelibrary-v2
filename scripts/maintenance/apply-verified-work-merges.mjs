@@ -19,7 +19,7 @@
  *   slug    = the winner's commonest work_slug; a moved book's old slug becomes an alias
  * Skipped (listed, not written): a work_id claimed by two groups in this run; two
  * different authority ids (QID / kr: / catalog:) in one group — those disagree on
- * identity and need a person.
+ * identity and need a person; two ids a reviewed split separated (work_id_splits, #8293).
  *
  *   node --env-file=.env.production.local scripts/maintenance/apply-verified-work-merges.mjs <approved.json>...          # dry run
  *   node --env-file=.env.production.local scripts/maintenance/apply-verified-work-merges.mjs <approved.json>... --apply
@@ -28,7 +28,7 @@
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
-import { pickWinner } from '../lib/work-merge-lib.mjs';
+import { pickWinner, loadSplitPairs, splitPairIn } from '../lib/work-merge-lib.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const APPLY = process.argv.includes('--apply');
@@ -50,6 +50,7 @@ const PROJ = { _id: 0, id: 1, work_id: 1, work_title: 1, work_id_source: 1, work
 const now = new Map();
 for (let i = 0; i < groupIds.length; i += 2000) for (const b of await books.find({ id: { $in: groupIds.slice(i, i + 2000) } }, { projection: PROJ }).toArray()) now.set(b.id, b);
 
+const splitPairs = await loadSplitPairs(db);
 const claims = new Map(); // work_id -> group index
 const plan = [], skipped = [];
 groups.forEach((g, gi) => {
@@ -57,6 +58,8 @@ groups.forEach((g, gi) => {
   const wids = [...new Set(cur.map((b) => b.work_id).filter(Boolean))];
   const auth = wids.filter(isAuthority);
   if (auth.length > 1) { skipped.push({ g, why: `two authority ids ${auth.join(' + ')}` }); return; }
+  const split = splitPairIn(wids, splitPairs);
+  if (split) { skipped.push({ g, why: `rejoins a reviewed split (#8293) ${split.join(' | ')}` }); return; }
   const clash = wids.find((w) => claims.has(w));
   if (clash) { skipped.push({ g, why: `${clash} also in group ${claims.get(clash)}` }); return; }
   if (wids.length < 2 && !cur.some((b) => !b.work_id)) return; // already one work

@@ -7,7 +7,7 @@ import { describe, it, expect } from 'vitest';
 import { routerBoard, cronLanes, routeEvidence } from '../../scripts/maintenance/router-board-push.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { driftReport } from '../../scripts/audit/router-table-drift.mjs';
+import { driftReport } from '../../scripts/maintenance/router-board-push.mjs';
 import { ageMin, daysLeft, splitCells, type RouterCell } from '@/lib/router-board';
 
 const row = (id: string, decision: string, route: string, pages = 0, extra: object = {}) => ({

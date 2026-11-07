@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Keeps the display-mark backfill running (#4406). Every 10 min from cron, on gex45.
+# Keeps the display-mark backfill running (#4406). Every 10 min from cron, on cloudlayer (gex45 until 2026-11-07).
 # PRIOR ART: scripts/maintenance/gpu-lease-watchdog.mjs stops rented GPUs when output stops; this restarts
 # local shards. scripts/workers/disk-alarm.sh is where the ntfy pattern comes from.
 #

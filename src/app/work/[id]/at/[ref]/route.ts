@@ -20,6 +20,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { canonWork } from '@/lib/canon-works';
 import { parseLocusQuery, type LocusSystem } from '@/lib/locus';
 import { findWorkByHead } from '@/lib/locus-works';
+import { publicUrl } from '@/lib/public-origin';
 
 interface AnchorDoc {
   book_id: string;
@@ -41,7 +42,7 @@ export async function GET(
   const refStr = decodeURIComponent(rawRef);
 
   const canon = canonWork(id);
-  const workUrl = new URL(`/work/${encodeURIComponent(id)}`, request.url);
+  const workUrl = publicUrl(`/work/${encodeURIComponent(id)}`, request);
   if (!canon?.locus) return NextResponse.redirect(workUrl, 307);
 
   const miss = () => {
@@ -84,7 +85,7 @@ export async function GET(
   const witness = [...hits].sort((a, b) => rank(a) - rank(b))[0];
 
   return NextResponse.redirect(
-    new URL(`/book/${witness.book_slug || witness.book_id}/page-number/${witness.page_number}`, request.url),
+    publicUrl(`/book/${witness.book_slug || witness.book_id}/page-number/${witness.page_number}`, request),
     307
   );
 }

@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
@@ -29,6 +28,12 @@ const nextConfig: NextConfig = {
     // nothing to .next/cache/turbopack, so the reset never comes. Cost: the
     // ~40s a warm compile used to save. Re-measure before turning it back on.
     turbopackFileSystemCacheForBuild: false,
+    // Prerender workers, set by hand because the default follows the machine.
+    // Each worker queries production Atlas. On the 8-core Enhanced machine the
+    // default of 7 timed out the /works prerender and failed 1 build of 2,
+    // where the 3 workers of the 4-core machine hit the same timeouts and
+    // finished (#8364).
+    cpus: 3,
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
   // pdfkit must stay an unbundled runtime require: bundling it rewrites
@@ -282,6 +287,12 @@ const nextConfig: NextConfig = {
         source: '/fonts/google/:file',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
+      // The covers image behind the /about and homepage walls. Versioned file name,
+      // so a new image is a new URL and this one can be cached for good.
+      {
+        source: '/about/covers-atlas.v1.avif',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
@@ -364,7 +375,9 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/gallery/:path*',
-        missing: [{ type: 'header', key: 'rsc' }],
+        // Not with `q`: the proxy sends assistant fetchers from /gallery?q= to a pictures
+        // view, and a person's cached copy would answer them first for a day (#8161).
+        missing: [{ type: 'header', key: 'rsc' }, { type: 'query', key: 'q' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
@@ -468,6 +481,21 @@ const nextConfig: NextConfig = {
       // note was replaced by the document itself (PR #4991), then given its
       // own name.
       { source: '/partners', destination: '/ai-partners', permanent: true },
+      // The in-site Rithmomachia game departed from the 1563 rules it cites; the
+      // corrected game is a standalone app (#7821). Apex and www only: a tenant
+      // host serves global routes directly and must never redirect off its
+      // subdomain (tenant-lockdown.md). Temporary, so /rithmomachia stays the
+      // address to hand out if the game moves.
+      ...[
+        { source: '/rithmomachia', hash: '' },
+        { source: '/rithmomachia/guide', hash: '#rules' },
+        { source: '/rithmomachia/scenarios', hash: '#learn' },
+      ].map(({ source, hash }) => ({
+        source,
+        has: [{ type: 'host' as const, value: '(www\\.)?sourcelibrary\\.org' }],
+        destination: `https://rithmomachia-game.vercel.app/${hash}`,
+        permanent: false,
+      })),
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       // Choreia renamed to its main idea (2026-10-19).
@@ -732,4 +760,6 @@ const withAnalytics = (config: typeof nextConfig) =>
       })
     : config;
 
-export default withBotId(withAnalytics(nextConfig));
+// botid's withBotId wrapper was removed in #8374: it only added rewrites to
+// api.vercel.com/bot-protection, and nothing in src/ ever called checkBotId.
+export default withAnalytics(nextConfig);

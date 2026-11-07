@@ -1,6 +1,6 @@
 import { Book, TranslationEdition } from '@/lib/types';
 import { CONTENT_LICENSE } from '@/lib/license-info';
-import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from './schema-utils';
+import { BASE_URL, getLicenseUrl, imageRightsFields } from './schema-utils';
 import { formatAuthor } from '@/lib/utils';
 import { jsonLdHtml } from '@/lib/json-ld';
 import { institutionalByline, bylineClaimsAuthorship } from '@/lib/corporate-bylines';
@@ -112,11 +112,11 @@ export default function SchemaOrgMetadata({
       genre: book.categories,
       about: book.categories.map(c => ({ '@type': 'Thing', name: c })),
     }),
-    copyrightNotice: `Public domain. Original published ${book.published || 'before 1900'}.`,
-    license: PUBLIC_DOMAIN_MARK_URL,
     usageInfo: `${baseUrl}/licensing`,
-    acquireLicensePage: `${baseUrl}/book/${bookPath}`,
-    creditText: book.image_source?.attribution || `Digitized by ${book.image_source?.provider_name || 'Internet Archive'}`,
+    ...imageRightsFields(book.image_source, {
+      published: book.published,
+      licensePage: `${baseUrl}/book/${bookPath}`,
+    }),
   };
 
   // Extract translator info from edition contributors or default to AI

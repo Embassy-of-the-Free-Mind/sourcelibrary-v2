@@ -1014,14 +1014,16 @@ export async function proxy(request: NextRequest) {
   // assistant reading for a person gets the same search as readable HTML (#8161).
   // A name is enough, because a forged one gets nothing /api/search does not give,
   // with the same limits. Everyone else keeps the page served from cache.
+  // /gallery has the same gap, and /gallery?q= served the default wall whatever the words.
   if (
     !tenant
-    && pathname === '/search'
+    && (pathname === '/search' || pathname === '/gallery')
     && request.nextUrl.searchParams.get('q')
     && namesUserFetchAgent(request.headers.get('user-agent'))
   ) {
     const url = request.nextUrl.clone();
     url.pathname = '/search/text';
+    if (pathname === '/gallery') url.searchParams.set('pictures', '1');
     return NextResponse.rewrite(url);
   }
 

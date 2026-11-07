@@ -11,7 +11,7 @@ import path from 'node:path';
 import { checkBinding, servedByFirstRead, servedByCorrect, servedByReread, servedByArmcFirstRead, loadCurrentTable } from '../../scripts/lib/router-binding.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { servedByCrontab } from '../../scripts/audit/router-binding.mjs';
+import { servedByCrontab } from '../../scripts/maintenance/router-board-push.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { FIRST_READ_PER_CALL_LANGUAGES, FIRST_READ_PER_CALL_BY_LANGUAGE, firstReadPerCall } from '../../scripts/batch/cli-ocr-lane.mjs';
