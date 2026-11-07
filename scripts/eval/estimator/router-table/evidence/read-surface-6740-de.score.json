@@ -1,0 +1,72 @@
+{
+ "generated_by": "scripts/eval/read-surface-6740/confirm.mjs evidence --cell=de-surface (#6740; no model calls in this step)",
+ "provenance": "#6740 read-surface German confirmation (job read-surface-2-6740): judge.mjs draw --cells=de-surface (30 new German books in the first-read lane frame, era-stratified 17/11/2, the #7701 draws and the Latin confirmation left out), correct (agy gemini-3.8-flash-low, default pool; read@4 on the 4-page piece, read@8 on the block); written = each route as the lane would write it; Opus judge blind against the served image, wrong-page and planted controls (read-surface-6740/confirm-de/RULE.md)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image",
+ "cells": {
+  "de-surface": {
+   "task": "ocr",
+   "lang": "German",
+   "frame": {
+    "books_in_frame": 3041,
+    "books_left_out": 240,
+    "books_walked": 30,
+    "spread_wait": 0,
+    "no_interior_unread": 0,
+    "no_ocr_books": 1547,
+    "era_quota": {
+     "before 1700": 17,
+     "1700s": 11,
+     "1800 on": 2
+    },
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 8"
+   },
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 25,
+     "books": 25,
+     "accept": "17/25",
+     "wrong_text_pages": "5/25",
+     "classes_k_of_n": {
+      "O6": "15/25",
+      "O8": "14/25",
+      "E2": "6/25",
+      "O7": "3/25",
+      "T6": "2/25",
+      "O16": "2/25",
+      "O10": "1/25",
+      "O11": "1/25",
+      "O12": "1/25"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-written": {
+     "n": 25,
+     "books": 25,
+     "accept": "22/25",
+     "wrong_text_pages": "2/25",
+     "classes_k_of_n": {
+      "O8": "15/25",
+      "O6": "13/25",
+      "E2": "5/25",
+      "O16": "4/25",
+      "O7": "2/25",
+      "O10": "1/25",
+      "T6": "1/25",
+      "O12": "1/25"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-written|agy-flash-low@4-written": {
+     "n": 25,
+     "books": 25,
+     "both": 17,
+     "a_only": 5,
+     "b_only": 0,
+     "neither": 3
+    }
+   }
+  }
+ }
+}

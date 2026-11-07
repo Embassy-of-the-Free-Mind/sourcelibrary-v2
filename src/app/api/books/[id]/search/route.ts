@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
 import { serveEnglishOriginalPage, servesTranscriptionInsteadOfTranslation, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
@@ -246,7 +247,8 @@ export async function GET(
           }
           if (!usedAtlas) pages = await db.collection('pages').aggregate([
             buildPageSearchStage(trimmedQuery, bookId, { nameVariants }),
-            { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
+            // Not a repeat capture (#5056): its leaf is already a hit.
+            { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES }, ...NOT_REPEAT_CAPTURE } },
             // NO { $sort: { page_number: 1 } }, { $limit: 50 }. Atlas returns in
             // score order; re-sorting by page number threw that away and then
             // cut at 50, so on a long book the cap was spent inside the front
@@ -276,6 +278,7 @@ export async function GET(
           const regexFilter: Record<string, unknown> = {
             book_id: bookId,
             page_type: { $nin: NON_CONTENT_PAGE_TYPES },
+            ...NOT_REPEAT_CAPTURE,
             $or: [
               { 'ocr.data': { $regex: regex } },
               { 'translation.data': { $regex: regex } }

@@ -1,0 +1,302 @@
+[
+ {
+  "file": "2026-10-28-latin-diffqa-three-way-vote-7591.md",
+  "classifier_kind": "route-choice",
+  "my_kind": "route-choice",
+  "kind_verdict": "agree",
+  "classifier_feeds": "route",
+  "my_feeds": "route",
+  "feeds_verdict": "agree",
+  "note": "Diff-QA route vs lite>agy-flash-low on latin-lite cell; gate failed."
+ },
+ {
+  "file": "2026-10-19-librarian-cite-ids-6946.md",
+  "classifier_kind": "product-test",
+  "my_kind": "product-test",
+  "kind_verdict": "agree",
+  "classifier_feeds": "product-surface",
+  "my_feeds": "product-surface",
+  "feeds_verdict": "agree",
+  "note": "Librarian cite-by-ID arms; flags off."
+ },
+ {
+  "file": "2026-10-24-notes-as-anchored-layer-5942.md",
+  "classifier_kind": "prompt-test",
+  "my_kind": "prompt-test",
+  "kind_verdict": "agree",
+  "classifier_feeds": "prompt",
+  "my_feeds": "prompt",
+  "feeds_verdict": "agree",
+  "note": "S vs T prompt same model; Part A parser is secondary (storage/product)."
+ },
+ {
+  "file": "2026-10-23-whish147-kraken-line-model.md",
+  "classifier_kind": "capability-probe",
+  "my_kind": "capability-probe",
+  "kind_verdict": "agree",
+  "classifier_feeds": "nothing",
+  "my_feeds": "nothing",
+  "feeds_verdict": "agree",
+  "note": "Can our own Kraken model read one manuscript; proposals only."
+ },
+ {
+  "file": "2026-10-20-tibetan-guttered-pages-yigdzin-page-mode-6871.md",
+  "classifier_kind": "route-choice",
+  "my_kind": "route-choice",
+  "kind_verdict": "agree",
+  "classifier_feeds": "route",
+  "my_feeds": "route",
+  "feeds_verdict": "agree",
+  "note": "Page vs bands mode plus write rule for refused Tibetan cell."
+ },
+ {
+  "file": "2026-10-18-zh-guarded-paddle-prereg-6871.md",
+  "classifier_kind": "plan-prereg",
+  "my_kind": "plan-prereg",
+  "kind_verdict": "agree",
+  "classifier_feeds": "plan",
+  "my_feeds": "plan",
+  "feeds_verdict": "agree",
+  "note": "Preregistration only."
+ },
+ {
+  "file": "2026-10-24-opus-translate-tibetan-sanskrit-gate-6948.md",
+  "classifier_kind": "route-choice",
+  "my_kind": "route-choice",
+  "kind_verdict": "agree",
+  "classifier_feeds": "route",
+  "my_feeds": "route",
+  "feeds_verdict": "agree",
+  "note": "Gate for Opus translation lane; heavy audit component but decision is lane."
+ },
+ {
+  "file": "2026-10-18-zh-residue-bakeoff-prereg-6871.md",
+  "classifier_kind": "plan-prereg",
+  "my_kind": "plan-prereg",
+  "kind_verdict": "agree",
+  "classifier_feeds": "plan",
+  "my_feeds": "plan",
+  "feeds_verdict": "agree",
+  "note": "Preregistration only."
+ },
+ {
+  "file": "2026-10-20-librarian-citation-fixer-6946.md",
+  "classifier_kind": "product-test",
+  "my_kind": "product-test",
+  "kind_verdict": "agree",
+  "classifier_feeds": "product-surface",
+  "my_feeds": "product-surface",
+  "feeds_verdict": "agree",
+  "note": "Offline citation fixer for Librarian answers; detector-calibration a weak second."
+ },
+ {
+  "file": "2026-11-04-near-blank-fix-5274.md",
+  "classifier_kind": "route-choice",
+  "my_kind": "repair-log",
+  "kind_verdict": "defensible",
+  "classifier_feeds": "route",
+  "my_feeds": "data-repair",
+  "feeds_verdict": "wrong",
+  "note": "Containment-repair gate (prompt line on/off) plus #5021 repair log; frontmatter says not a router cell."
+ },
+ {
+  "file": "2026-10-17-keyword-service-parity-6852.md",
+  "classifier_kind": "search-retrieval",
+  "my_kind": "search-retrieval",
+  "kind_verdict": "agree",
+  "classifier_feeds": "product-surface",
+  "my_feeds": "product-surface",
+  "feeds_verdict": "agree",
+  "note": "Tantivy vs Atlas keyword lane parity and latency."
+ },
+ {
+  "file": "2026-09-24-can-jev-typesafe-s-typed-decision-model-screen-pages.md",
+  "classifier_kind": "detector-calibration",
+  "my_kind": "capability-probe",
+  "kind_verdict": "defensible",
+  "classifier_feeds": "detector-threshold",
+  "my_feeds": "nothing",
+  "feeds_verdict": "defensible",
+  "note": "Can a new model screen instruction pages; curation screen, no gate wired."
+ },
+ {
+  "file": "2026-10-03-greek-served-english-vs-published-translations-5695-t2.md",
+  "classifier_kind": "quality-audit",
+  "my_kind": "quality-audit",
+  "kind_verdict": "agree",
+  "classifier_feeds": "route",
+  "my_feeds": "route",
+  "feeds_verdict": "agree",
+  "note": "Served Greek audit; decision was Flash routing. published-figure also fair."
+ },
+ {
+  "file": "2026-10-27-correct-vs-reread-wave1-prereg-7568.md",
+  "classifier_kind": "plan-prereg",
+  "my_kind": "plan-prereg",
+  "kind_verdict": "agree",
+  "classifier_feeds": "plan",
+  "my_feeds": "plan",
+  "feeds_verdict": "agree",
+  "note": "Preregistration only."
+ },
+ {
+  "file": "2026-09-30-translation-corpus-audit-how-faithful-is-a-random-served-5274.md",
+  "classifier_kind": "quality-audit",
+  "my_kind": "quality-audit",
+  "kind_verdict": "agree",
+  "classifier_feeds": "published-figure",
+  "my_feeds": "published-figure",
+  "feeds_verdict": "agree",
+  "note": "Random served-page fidelity audit."
+ },
+ {
+  "file": "2026-10-06-glm-digit-repair-4686.md",
+  "classifier_kind": "route-choice",
+  "my_kind": "route-choice",
+  "kind_verdict": "agree",
+  "classifier_feeds": "route",
+  "my_feeds": "route",
+  "feeds_verdict": "agree",
+  "note": "Kraken+GLM digit merge gated for refused-pages lane."
+ },
+ {
+  "file": "2026-10-04-tengyur-stored-draft-vs-84000-5797.md",
+  "classifier_kind": "quality-audit",
+  "my_kind": "quality-audit",
+  "kind_verdict": "agree",
+  "classifier_feeds": "published-figure",
+  "my_feeds": "published-figure",
+  "feeds_verdict": "agree",
+  "note": "Stored draft vs reference; sets the label's rate."
+ },
+ {
+  "file": "2026-10-31-confidence-validation-7866.md",
+  "classifier_kind": "detector-calibration",
+  "my_kind": "judge-validity",
+  "kind_verdict": "defensible",
+  "classifier_feeds": "detector-threshold",
+  "my_feeds": "plan",
+  "feeds_verdict": "defensible",
+  "note": "Tests whether a proxy score predicts quality; outcome is more testing. Also a 43% audit."
+ },
+ {
+  "file": "2026-10-18-librarian-speed-6904.md",
+  "classifier_kind": "prompt-test",
+  "my_kind": "product-test",
+  "kind_verdict": "wrong",
+  "classifier_feeds": "prompt",
+  "my_feeds": "product-surface",
+  "feeds_verdict": "wrong",
+  "note": "Main lever is thinkingLevel LOW; outcome is Librarian latency. Not a prompt-only test."
+ },
+ {
+  "file": "2026-10-26-siglip2-full-page-run-spotcheck-fetch-6871.md",
+  "classifier_kind": "search-retrieval",
+  "my_kind": "search-retrieval",
+  "kind_verdict": "agree",
+  "classifier_feeds": "product-surface",
+  "my_feeds": "product-surface",
+  "feeds_verdict": "agree",
+  "note": "Image retrieval spot check plus throughput fix; cost-throughput secondary."
+ },
+ {
+  "file": "2026-10-19-maya-palenque-suggester-6903-6945.md",
+  "classifier_kind": "capability-probe",
+  "my_kind": "capability-probe",
+  "kind_verdict": "agree",
+  "classifier_feeds": "nothing",
+  "my_feeds": "nothing",
+  "feeds_verdict": "agree",
+  "note": "Glyph reading and suggester no-go; product-surface arguable."
+ },
+ {
+  "file": "2026-10-04-ocr-tags-only-pass-5830.md",
+  "classifier_kind": "route-choice",
+  "my_kind": "route-choice",
+  "kind_verdict": "agree",
+  "classifier_feeds": "route",
+  "my_feeds": "route",
+  "feeds_verdict": "agree",
+  "note": "Tags-only pass options and cost for an open-engine lane."
+ },
+ {
+  "file": "2026-10-18-gex45-capability-card-6871.md",
+  "classifier_kind": "cost-throughput",
+  "my_kind": "cost-throughput",
+  "kind_verdict": "agree",
+  "classifier_feeds": "plan",
+  "my_feeds": "plan",
+  "feeds_verdict": "agree",
+  "note": "Speed and VRAM only; prices queue in GPU-days."
+ },
+ {
+  "file": "2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md",
+  "classifier_kind": "quality-audit",
+  "my_kind": "route-choice",
+  "kind_verdict": "defensible",
+  "classifier_feeds": "published-figure",
+  "my_feeds": "route",
+  "feeds_verdict": "defensible",
+  "note": "Fresh engine runs vs reference, flash vs lite per cell; not served text."
+ },
+ {
+  "file": "2026-09-05-a-fabrication-detector-that-needs-no-reference-track-c-4523.md",
+  "classifier_kind": "detector-calibration",
+  "my_kind": "detector-calibration",
+  "kind_verdict": "agree",
+  "classifier_feeds": "detector-threshold",
+  "my_feeds": "detector-threshold",
+  "feeds_verdict": "agree",
+  "note": "Reference-free fabrication detector validated."
+ },
+ {
+  "file": "2026-10-30-translation-gap-counts-pace-clustering-7778.md",
+  "classifier_kind": "quality-audit",
+  "my_kind": "census",
+  "kind_verdict": "wrong",
+  "classifier_feeds": "published-figure",
+  "my_feeds": "published-figure",
+  "feeds_verdict": "agree",
+  "note": "Counts untranslated works and pace; no served-text quality judged."
+ },
+ {
+  "file": "2026-10-27-opus-retranslate-flash-corrected-tibetan-6948.md",
+  "classifier_kind": "repair-log",
+  "my_kind": "repair-log",
+  "kind_verdict": "agree",
+  "classifier_feeds": "data-repair",
+  "my_feeds": "data-repair",
+  "feeds_verdict": "agree",
+  "note": "738 pages written, by-eye check, one contained."
+ },
+ {
+  "file": "2026-11-01-judge-calibration-7866-bar-7263.md",
+  "classifier_kind": "judge-validity",
+  "my_kind": "judge-validity",
+  "kind_verdict": "agree",
+  "classifier_feeds": "published-figure",
+  "my_feeds": "published-figure",
+  "feeds_verdict": "agree",
+  "note": "Calibrates judge; corrects the 43% figure. judge-rule also fair."
+ },
+ {
+  "file": "2026-10-24-write-guard-truncation-5055.md",
+  "classifier_kind": "detector-calibration",
+  "my_kind": "detector-calibration",
+  "kind_verdict": "agree",
+  "classifier_feeds": "invariant-guard",
+  "my_feeds": "detector-threshold",
+  "feeds_verdict": "defensible",
+  "note": "Write guard tuned and wired into writers; either feed fits."
+ },
+ {
+  "file": "2026-10-06-random-book-spot-check-canon-shelves-5914.md",
+  "classifier_kind": "quality-audit",
+  "my_kind": "quality-audit",
+  "kind_verdict": "agree",
+  "classifier_feeds": "data-repair",
+  "my_feeds": "published-figure",
+  "feeds_verdict": "defensible",
+  "note": "Spot check; 55 books hidden and headline reframed; both feeds real."
+ }
+]

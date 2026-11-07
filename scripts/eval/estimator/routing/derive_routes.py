@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # PRIOR ART: scripts/eval/estimator/planner/planner_v0.py — ranks which TEST to run next by expected loss and value
 # per quota point; it reads the estimators but proposes no routing and does not know what the routers do today (its
-# incumbents are a hand map, stale for Chinese print since #7075). scripts/eval/build-routing-table.mjs renders the OCR
-# table for people; scripts/audit/routing-drift.mjs compares the routers with the hand-written ledger. None turns the
+# incumbents are a hand map, stale for Chinese print since #7075). None turns the
 # posteriors into a routing proposal checked against the tables the routers now read (#7170).
 """
 derive_routes — what the estimators say each routing-table row should be, as a reviewable proposal (#7170).

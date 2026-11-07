@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { provenanceUpdate, normalizeProvenance, ProvenanceError, isStampContradicted } from '@/lib/field-provenance';
+import { provenanceUpdate, normalizeProvenance, ProvenanceError, isStampContradicted, isNewWriteStamp } from '@/lib/field-provenance';
 import * as twin from '../../scripts/lib/field-provenance.mjs';
 
 // The bibliographic provenance layer had 81 hand-rolling writers, 164 distinct
@@ -85,6 +85,27 @@ describe('isStampContradicted', () => {
     ).toBe(false);
     // An admin edit claims no upstream method — it may legitimately hold anything.
     expect(isStampContradicted({ source: 'admin_edit' }, 'Internet Archive', isPlaceholder)).toBe(false);
+  });
+});
+
+describe('isNewWriteStamp', () => {
+  const since = new Date('2026-10-28T00:00:00Z');
+  const stamp = (e: Record<string, unknown>) => e as unknown as Parameters<typeof isNewWriteStamp>[0];
+
+  it('counts a stamp dated inside the window, stored as a Date or as a string', () => {
+    expect(isNewWriteStamp(stamp({ source: 'x', date: new Date('2026-10-30T00:00:00Z') }), since)).toBe(true);
+    expect(isNewWriteStamp(stamp({ source: 'x', date: '2026-10-30' }), since)).toBe(true);
+  });
+  it('does not count an older stamp, an undated one, or none', () => {
+    expect(isNewWriteStamp(stamp({ source: 'x', date: '2026-10-27T23:59:59Z' }), since)).toBe(false);
+    expect(isNewWriteStamp(stamp({ source: 'x' }), since)).toBe(false);
+    expect(isNewWriteStamp(stamp({ source: 'x', date: 'not a date' }), since)).toBe(false);
+    expect(isNewWriteStamp(undefined, since)).toBe(false);
+  });
+  it('does not count a reconstructed stamp: it attests a stored value, it wrote nothing', () => {
+    const date = new Date('2026-10-30T00:00:00Z');
+    expect(isNewWriteStamp(stamp({ source: 'x', date, reconstructed: true }), since)).toBe(false);
+    expect(isNewWriteStamp(stamp({ source: 'x', date, method: 'reconstructed_match' }), since)).toBe(false);
   });
 });
 

@@ -41,6 +41,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import fs from 'node:fs';
 import { assertBookScopedKey } from '../lib/r2-key.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -305,7 +306,7 @@ async function main() {
   // ── 2. images ──
   for (const b of built) for (const k of b.kids) {
     await put(k.keys.full, k.leafBuf);
-    await put(k.keys.display, k.leafBuf); // 1536 px wide: the full crop IS the display image
+    await put(k.keys.display, await markDisplay(k.leafBuf, { bookId: BOOK_ID, pageNumber: k.doc.page_number })); // 1536 px wide: the full crop IS the display image
     await put(k.keys.thumb, k.thumbBuf);
   }
 

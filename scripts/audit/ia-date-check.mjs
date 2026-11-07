@@ -33,7 +33,7 @@ const args = process.argv.slice(2);
 const cmd = args[0];
 const opt = (k, d) => { const a = args.find((x) => x.startsWith(`--${k}=`)); return a ? a.split('=').slice(1).join('=') : d; };
 const DIR = opt('dir', 'scratch');
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact j.d.lomas@tudelft.nl; IA date check #5458)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) ia-date-check-#5458';
 const FIELDS = 'identifier,title,creator,date,year,publicdate,addeddate,publisher,imagecount,collection,language,ppi,isbn,edition,volume,scanner,sponsor,contributor,scanningcenter,subject,mediatype';
 const QUERIES = {
   arabic: 'language:(ara OR ar OR arabic) AND mediatype:texts',

@@ -1,0 +1,643 @@
+{
+ "books": 24859,
+ "frames": {
+  "rest": {
+   "books": 18338,
+   "flagged": 1068,
+   "A": 292,
+   "B": 776,
+   "strict": 911,
+   "nameOnly": 831,
+   "tr_pages": 4681661,
+   "silent_pages": 2815895
+  },
+  "caseless": {
+   "books": 6521,
+   "flagged": 96,
+   "A": 18,
+   "B": 78,
+   "strict": 69,
+   "nameOnly": 23,
+   "tr_pages": 1055260,
+   "silent_pages": 914476
+  }
+ },
+ "all": {
+  "all": {
+   "books": 24859,
+   "flagged": 1164,
+   "A": 310,
+   "B": 854,
+   "strict": 980,
+   "nameOnly": 854,
+   "tr_pages": 5736921,
+   "silent_pages": 3730371
+  }
+ },
+ "era": {
+  "block v10/v11": {
+   "books": 10548,
+   "flagged": 821,
+   "A": 233,
+   "B": 588,
+   "strict": 692,
+   "nameOnly": 619,
+   "tr_pages": 2976663,
+   "silent_pages": 1901897
+  },
+  "v12+": {
+   "books": 8773,
+   "flagged": 139,
+   "A": 38,
+   "B": 101,
+   "strict": 119,
+   "nameOnly": 53,
+   "tr_pages": 1130400,
+   "silent_pages": 871455
+  },
+  "single-page (v1-v6)": {
+   "books": 4989,
+   "flagged": 202,
+   "A": 39,
+   "B": 163,
+   "strict": 167,
+   "nameOnly": 181,
+   "tr_pages": 1590866,
+   "silent_pages": 931659
+  },
+  "none": {
+   "books": 549,
+   "flagged": 2,
+   "A": 0,
+   "B": 2,
+   "strict": 2,
+   "nameOnly": 1,
+   "tr_pages": 38992,
+   "silent_pages": 25360
+  }
+ },
+ "frame_era": {
+  "rest / block v10/v11": {
+   "books": 9299,
+   "flagged": 779,
+   "A": 221,
+   "B": 558,
+   "strict": 658,
+   "nameOnly": 611,
+   "tr_pages": 2685759,
+   "silent_pages": 1676598
+  },
+  "rest / single-page (v1-v6)": {
+   "books": 4475,
+   "flagged": 181,
+   "A": 39,
+   "B": 142,
+   "strict": 154,
+   "nameOnly": 172,
+   "tr_pages": 1501793,
+   "silent_pages": 873664
+  },
+  "rest / v12+": {
+   "books": 4448,
+   "flagged": 107,
+   "A": 32,
+   "B": 75,
+   "strict": 98,
+   "nameOnly": 47,
+   "tr_pages": 463621,
+   "silent_pages": 248009
+  },
+  "caseless / v12+": {
+   "books": 4325,
+   "flagged": 32,
+   "A": 6,
+   "B": 26,
+   "strict": 21,
+   "nameOnly": 6,
+   "tr_pages": 666779,
+   "silent_pages": 623446
+  },
+  "caseless / block v10/v11": {
+   "books": 1249,
+   "flagged": 42,
+   "A": 12,
+   "B": 30,
+   "strict": 34,
+   "nameOnly": 8,
+   "tr_pages": 290904,
+   "silent_pages": 225299
+  },
+  "caseless / single-page (v1-v6)": {
+   "books": 514,
+   "flagged": 21,
+   "A": 0,
+   "B": 21,
+   "strict": 13,
+   "nameOnly": 9,
+   "tr_pages": 89073,
+   "silent_pages": 57995
+  },
+  "caseless / none": {
+   "books": 433,
+   "flagged": 1,
+   "A": 0,
+   "B": 1,
+   "strict": 1,
+   "nameOnly": 0,
+   "tr_pages": 8504,
+   "silent_pages": 7736
+  },
+  "rest / none": {
+   "books": 116,
+   "flagged": 1,
+   "A": 0,
+   "B": 1,
+   "strict": 1,
+   "nameOnly": 1,
+   "tr_pages": 30488,
+   "silent_pages": 17624
+  }
+ },
+ "language": {
+  "Latin": {
+   "books": 9246,
+   "flagged": 521,
+   "A": 124,
+   "B": 397,
+   "strict": 448,
+   "nameOnly": 486,
+   "tr_pages": 1941790,
+   "silent_pages": 1202907
+  },
+  "Chinese": {
+   "books": 2818,
+   "flagged": 36,
+   "A": 6,
+   "B": 30,
+   "strict": 18,
+   "nameOnly": 10,
+   "tr_pages": 347116,
+   "silent_pages": 315512
+  },
+  "German": {
+   "books": 2686,
+   "flagged": 165,
+   "A": 66,
+   "B": 99,
+   "strict": 151,
+   "nameOnly": 89,
+   "tr_pages": 671687,
+   "silent_pages": 360074
+  },
+  "English": {
+   "books": 2310,
+   "flagged": 76,
+   "A": 26,
+   "B": 50,
+   "strict": 62,
+   "nameOnly": 73,
+   "tr_pages": 723111,
+   "silent_pages": 390513
+  },
+  "Tibetan": {
+   "books": 1569,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 318279,
+   "silent_pages": 315388
+  },
+  "Greek": {
+   "books": 1073,
+   "flagged": 99,
+   "A": 36,
+   "B": 63,
+   "strict": 73,
+   "nameOnly": 47,
+   "tr_pages": 439849,
+   "silent_pages": 287384
+  },
+  "French": {
+   "books": 906,
+   "flagged": 49,
+   "A": 9,
+   "B": 40,
+   "strict": 42,
+   "nameOnly": 36,
+   "tr_pages": 319507,
+   "silent_pages": 198982
+  },
+  "Italian": {
+   "books": 576,
+   "flagged": 26,
+   "A": 3,
+   "B": 23,
+   "strict": 23,
+   "nameOnly": 62,
+   "tr_pages": 153662,
+   "silent_pages": 115022
+  },
+  "Dutch": {
+   "books": 564,
+   "flagged": 28,
+   "A": 8,
+   "B": 20,
+   "strict": 26,
+   "nameOnly": 16,
+   "tr_pages": 149085,
+   "silent_pages": 70839
+  },
+  "Sumerian": {
+   "books": 383,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 6578,
+   "silent_pages": 5954
+  },
+  "Sanskrit": {
+   "books": 329,
+   "flagged": 25,
+   "A": 7,
+   "B": 18,
+   "strict": 23,
+   "nameOnly": 5,
+   "tr_pages": 97746,
+   "silent_pages": 48652
+  },
+  "Arabic": {
+   "books": 260,
+   "flagged": 6,
+   "A": 1,
+   "B": 5,
+   "strict": 6,
+   "nameOnly": 3,
+   "tr_pages": 56195,
+   "silent_pages": 45974
+  },
+  "Korean": {
+   "books": 256,
+   "flagged": 7,
+   "A": 0,
+   "B": 7,
+   "strict": 5,
+   "nameOnly": 0,
+   "tr_pages": 52318,
+   "silent_pages": 47687
+  },
+  "Russian": {
+   "books": 241,
+   "flagged": 59,
+   "A": 9,
+   "B": 50,
+   "strict": 52,
+   "nameOnly": 6,
+   "tr_pages": 99023,
+   "silent_pages": 69874
+  },
+  "Hebrew": {
+   "books": 229,
+   "flagged": 4,
+   "A": 1,
+   "B": 3,
+   "strict": 4,
+   "nameOnly": 2,
+   "tr_pages": 59919,
+   "silent_pages": 52116
+  },
+  "Japanese": {
+   "books": 143,
+   "flagged": 3,
+   "A": 0,
+   "B": 3,
+   "strict": 3,
+   "nameOnly": 0,
+   "tr_pages": 18828,
+   "silent_pages": 16704
+  },
+  "Spanish": {
+   "books": 98,
+   "flagged": 7,
+   "A": 3,
+   "B": 4,
+   "strict": 6,
+   "nameOnly": 9,
+   "tr_pages": 25562,
+   "silent_pages": 17314
+  },
+  "Classical Chinese": {
+   "books": 86,
+   "flagged": 1,
+   "A": 0,
+   "B": 1,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 7399,
+   "silent_pages": 6502
+  },
+  "Syriac": {
+   "books": 80,
+   "flagged": 2,
+   "A": 1,
+   "B": 1,
+   "strict": 2,
+   "nameOnly": 0,
+   "tr_pages": 7661,
+   "silent_pages": 3011
+  },
+  "Armenian": {
+   "books": 65,
+   "flagged": 9,
+   "A": 2,
+   "B": 7,
+   "strict": 8,
+   "nameOnly": 0,
+   "tr_pages": 28925,
+   "silent_pages": 22050
+  },
+  "Latin-German": {
+   "books": 61,
+   "flagged": 1,
+   "A": 0,
+   "B": 1,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 10548,
+   "silent_pages": 7231
+  },
+  "Persian": {
+   "books": 54,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 1,
+   "tr_pages": 11343,
+   "silent_pages": 9759
+  },
+  "Egyptian hieroglyphs": {
+   "books": 51,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 1504,
+   "silent_pages": 473
+  },
+  "Nahuatl": {
+   "books": 49,
+   "flagged": 1,
+   "A": 1,
+   "B": 0,
+   "strict": 1,
+   "nameOnly": 0,
+   "tr_pages": 10003,
+   "silent_pages": 7370
+  },
+  "Yucatec Maya": {
+   "books": 35,
+   "flagged": 1,
+   "A": 0,
+   "B": 1,
+   "strict": 1,
+   "nameOnly": 0,
+   "tr_pages": 5442,
+   "silent_pages": 3754
+  }
+ },
+ "script": {
+  "Latin": {
+   "books": 17932,
+   "flagged": 949,
+   "A": 257,
+   "B": 692,
+   "strict": 809,
+   "nameOnly": 819,
+   "tr_pages": 4316446,
+   "silent_pages": 2542977
+  },
+  "Han": {
+   "books": 3150,
+   "flagged": 42,
+   "A": 6,
+   "B": 36,
+   "strict": 22,
+   "nameOnly": 6,
+   "tr_pages": 401013,
+   "silent_pages": 366397
+  },
+  "Tibetan": {
+   "books": 1568,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 318787,
+   "silent_pages": 315838
+  },
+  "Greek": {
+   "books": 850,
+   "flagged": 74,
+   "A": 27,
+   "B": 47,
+   "strict": 59,
+   "nameOnly": 16,
+   "tr_pages": 347694,
+   "silent_pages": 246233
+  },
+  "Arabic": {
+   "books": 354,
+   "flagged": 5,
+   "A": 1,
+   "B": 4,
+   "strict": 5,
+   "nameOnly": 1,
+   "tr_pages": 67888,
+   "silent_pages": 57703
+  },
+  "Devanagari": {
+   "books": 316,
+   "flagged": 24,
+   "A": 8,
+   "B": 16,
+   "strict": 22,
+   "nameOnly": 4,
+   "tr_pages": 83915,
+   "silent_pages": 40091
+  },
+  "Hebrew": {
+   "books": 269,
+   "flagged": 5,
+   "A": 1,
+   "B": 4,
+   "strict": 5,
+   "nameOnly": 2,
+   "tr_pages": 68939,
+   "silent_pages": 62474
+  },
+  "Cyrillic": {
+   "books": 256,
+   "flagged": 62,
+   "A": 9,
+   "B": 53,
+   "strict": 55,
+   "nameOnly": 6,
+   "tr_pages": 106036,
+   "silent_pages": 74611
+  },
+  "Japanese": {
+   "books": 127,
+   "flagged": 2,
+   "A": 0,
+   "B": 2,
+   "strict": 2,
+   "nameOnly": 0,
+   "tr_pages": 18267,
+   "silent_pages": 16854
+  },
+  "Syriac": {
+   "books": 18,
+   "flagged": 1,
+   "A": 1,
+   "B": 0,
+   "strict": 1,
+   "nameOnly": 0,
+   "tr_pages": 5171,
+   "silent_pages": 4446
+  },
+  "Hangul": {
+   "books": 12,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 1167,
+   "silent_pages": 1161
+  },
+  "none": {
+   "books": 7,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 1598,
+   "silent_pages": 1586
+  }
+ },
+ "model": {
+  "gemini-3-flash-preview": {
+   "books": 8707,
+   "flagged": 294,
+   "A": 67,
+   "B": 227,
+   "strict": 247,
+   "nameOnly": 121,
+   "tr_pages": 2366881,
+   "silent_pages": 1534295
+  },
+  "gemini-3.1-flash-lite": {
+   "books": 7450,
+   "flagged": 298,
+   "A": 76,
+   "B": 222,
+   "strict": 258,
+   "nameOnly": 273,
+   "tr_pages": 1085984,
+   "silent_pages": 689460
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "books": 6770,
+   "flagged": 553,
+   "A": 164,
+   "B": 389,
+   "strict": 464,
+   "nameOnly": 455,
+   "tr_pages": 2067166,
+   "silent_pages": 1316210
+  },
+  "gemini-3.8-flash-low": {
+   "books": 1223,
+   "flagged": 12,
+   "A": 1,
+   "B": 11,
+   "strict": 8,
+   "nameOnly": 4,
+   "tr_pages": 146131,
+   "silent_pages": 132774
+  },
+  "etcsl-corpus": {
+   "books": 381,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 5837,
+   "silent_pages": 5729
+  },
+  "claude-opus-5-5": {
+   "books": 286,
+   "flagged": 6,
+   "A": 2,
+   "B": 4,
+   "strict": 2,
+   "nameOnly": 0,
+   "tr_pages": 53075,
+   "silent_pages": 43715
+  },
+  "gemini-4-argon-low": {
+   "books": 29,
+   "flagged": 1,
+   "A": 0,
+   "B": 1,
+   "strict": 1,
+   "nameOnly": 0,
+   "tr_pages": 3847,
+   "silent_pages": 2256
+  },
+  "gemini-2.5-flash": {
+   "books": 10,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 1,
+   "tr_pages": 7895,
+   "silent_pages": 5828
+  },
+  "none": {
+   "books": 2,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 93,
+   "silent_pages": 93
+  },
+  "tla-manual": {
+   "books": 1,
+   "flagged": 0,
+   "A": 0,
+   "B": 0,
+   "strict": 0,
+   "nameOnly": 0,
+   "tr_pages": 12,
+   "silent_pages": 11
+  }
+ },
+ "gappy_not_strict": 184,
+ "strict_books": 980,
+ "runs": 1805,
+ "run_pages": 5664,
+ "runs_strict_shape": 1451,
+ "runs_with_tail": 14
+}

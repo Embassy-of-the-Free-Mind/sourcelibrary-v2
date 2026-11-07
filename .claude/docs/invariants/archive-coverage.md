@@ -48,6 +48,13 @@ masters** — measured 1361×2517 written by `archive-acquired.ts` (which resize
 nothing before `storagePut`), 2370×3816 written by the pipeline. Same key
 shape, two different meanings, and neither is 1200px.
 
+**That key shape also leaked masters to readers (#4406).** `archive-acquired.ts` and the manifest
+ledger wrote the master there, and `display-backfill`, finding a file at the display key, pointed
+`display_photo` at it: unmarked, full-resolution, on about 12% of pages sampled 2026-11-04. A master
+now goes under `archived/`; a page whose master already sits at the canonical key gets its variant
+at `pages/<book>/NNNN-marked.jpg` (`displayKeyFor()`), and that master is never overwritten.
+`tests/unit/provenance-writers.test.ts` fails on a writer that skips the mark.
+
 So a path-based classifier is guessing, and every guess has been optimistic.
 `classifyPageRecord()` therefore returns `MASTER_OR_DERIVATIVE` — an honest
 "cannot tell from here" — and only the dimensional check returns a verdict.

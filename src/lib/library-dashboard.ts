@@ -42,7 +42,7 @@ export const RATES = { ocr: [0.00106, 0.00138], tr: [0.00058, 0.00174] } as cons
 export interface LibraryDashboard {
   generatedAt: Date | string;
   elapsedSec: number;
-  totals: { live: Totals; all: Totals; readableLive: number; readableAll: number; held: number; feedbackOpen: number; visibleCollections: number };
+  totals: { live: Totals; all: Totals; readableLive: number; readableAll: number; held: number; /** Held as not acquired (manifest-only catalogue records, #7860); absent before 2026-10-31, when `held` included them. */ notAcquired?: number; feedbackOpen: number; visibleCollections: number };
   byLanguage: LanguageRow[];
   noLanguage: number;
   byCentury: CenturyRow[];

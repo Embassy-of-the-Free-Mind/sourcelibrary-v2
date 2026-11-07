@@ -1,0 +1,38 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>五十五</page-num>
+<header>大宗師 莊子旁注卷一</header>
+<meta>Foot of the block-centre strip: 思訓堂</meta>
+
+<margin>讓國自沉</margin>
+<margin>扣馬餓死</margin>
+<margin>被髮請囚</margin>
+也。若狐不偕。務光。伯夷。叔齊。箕子。胥餘。紀他。
+<margin>此皆遭讒諂以為人役而失其自得者</margin>
+<margin>句法</margin>
+<gloss>陀</gloss>申徒狄。是役人之役。適人之適。而不自適
+<margin>第四又總論全體大用</margin>
+<margin>中立不倚</margin>
+<margin>自視歉然<unclear>果</unclear></margin>
+其適者也。古之真人。其狀義而不朋。若不足
+<margin>以卑承人</margin>
+<margin>自然之貌</margin>
+<margin>有德<unclear>胸</unclear>而無圭角</margin>
+<margin>大也</margin>
+<margin>實若虛</margin>
+而不承。與乎其觚。而不堅也。張乎其虛而不
+<margin>喜貌</margin>
+<margin>似喜而不喜</margin>
+<margin>下也</margin>
+<margin>悶然而後應意</margin>
+華也。邴邴<gloss>丙</gloss>乎其似喜乎。崔乎其不得已乎
+<margin>聚也</margin>
+<margin>即粹然見於面也</margin>
+<margin>容受</margin>
+<margin>即虛室吉祥止止也</margin>
+<margin>與人同世而不可犯也</margin>
+滀<gloss>蓄</gloss>乎。進我色也。與乎止我德也。厲乎其似
+
+<vocab>莊子, 大宗師, 讓國, 伯夷, 叔齊, 箕子, 胥餘, 紀他, 申徒狄, 真人</vocab>

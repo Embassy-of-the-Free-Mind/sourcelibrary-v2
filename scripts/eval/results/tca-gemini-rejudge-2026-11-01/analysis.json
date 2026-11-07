@@ -1,0 +1,1585 @@
+{
+  "at": "2026-11-01T20:19:55.798Z",
+  "wave2": "scripts/eval/results/translation-corpus-audit-wave2-2026-10-30",
+  "run": "scripts/eval/results/tca-gemini-rejudge-2026-11-01",
+  "judges": [
+    "gemini-flash-low",
+    "gemini-3.8-flash",
+    "gemini-4-argon-medium"
+  ],
+  "n_main": 365,
+  "spread_flagged": [
+    "a8d7515a7b",
+    "3024125a36",
+    "d61e5e722e",
+    "1365c1f037",
+    "4d8413f3e4",
+    "f7e30b3cb5",
+    "11a9d610bb",
+    "ed8c72f6a8",
+    "1416df15f1",
+    "7954ece5b9",
+    "ce3e51ad92",
+    "2df5f771f7",
+    "46e51befce",
+    "ca3dad37e8",
+    "368192097c",
+    "8d84b401cd",
+    "c6a8a5ba56",
+    "394e943bb6",
+    "0edf1c4dd1",
+    "6f3b8c94d6",
+    "c8acda474c",
+    "20b2fe267c",
+    "3e9ed66992",
+    "9c41618182",
+    "c0a92bd2d5",
+    "9279207eda",
+    "3e57053dca",
+    "dbebf45af1",
+    "99e0c888b0",
+    "9044cc3901",
+    "c9408e81ad",
+    "e57ac15434",
+    "7ef116a3d7"
+  ],
+  "gate": {
+    "opus": {
+      "pass": true,
+      "checks": {
+        "swap": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": true
+        },
+        "drop": {
+          "n": 15,
+          "rate": 0.9333333333333333,
+          "need": 0.8666666666666667,
+          "pass": true
+        },
+        "repeat": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": true
+        }
+      }
+    },
+    "gemini-flash-low": {
+      "pass": false,
+      "checks": {
+        "swap": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": true
+        },
+        "drop": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.8666666666666667,
+          "pass": true
+        },
+        "repeat": {
+          "n": 15,
+          "rate": 0.8666666666666667,
+          "need": 0.9333333333333333,
+          "pass": false
+        }
+      }
+    },
+    "gemini-3.8-flash": {
+      "pass": true,
+      "checks": {
+        "swap": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": true
+        },
+        "drop": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.8666666666666667,
+          "pass": true
+        },
+        "repeat": {
+          "n": 15,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": true
+        }
+      }
+    },
+    "gemini-4-argon-medium": {
+      "pass": false,
+      "checks": {
+        "swap": {
+          "n": 5,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": false
+        },
+        "drop": {
+          "n": 5,
+          "rate": 1,
+          "need": 0.8666666666666667,
+          "pass": false
+        },
+        "repeat": {
+          "n": 5,
+          "rate": 1,
+          "need": 0.9333333333333333,
+          "pass": false
+        }
+      }
+    }
+  },
+  "headline": {
+    "opus": {
+      "n": 365,
+      "gate_pass": true,
+      "ge4_lang_x_arm": {
+        "est": 86.3,
+        "ci": [
+          81.3,
+          90.9
+        ],
+        "n": 365
+      },
+      "major_lang_x_arm": {
+        "est": 13.6,
+        "ci": [
+          9,
+          18.7
+        ],
+        "n": 365
+      },
+      "ge4_lang": {
+        "est": 87.1,
+        "ci": [
+          82.7,
+          91.1
+        ],
+        "n": 365
+      },
+      "major_lang": {
+        "est": 12.8,
+        "ci": [
+          8.9,
+          17.1
+        ],
+        "n": 365
+      },
+      "fid5_share": 49.9,
+      "major_share": 15.6,
+      "ocr_wrong_leaf_n": 6
+    },
+    "gemini-flash-low": {
+      "n": 365,
+      "gate_pass": false,
+      "ge4_lang_x_arm": {
+        "est": 90.3,
+        "ci": [
+          85.6,
+          94.1
+        ],
+        "n": 365
+      },
+      "major_lang_x_arm": {
+        "est": 8.7,
+        "ci": [
+          5.1,
+          13.1
+        ],
+        "n": 365
+      },
+      "ge4_lang": {
+        "est": 91.3,
+        "ci": [
+          87.8,
+          94.5
+        ],
+        "n": 365
+      },
+      "major_lang": {
+        "est": 7.9,
+        "ci": [
+          4.9,
+          11.2
+        ],
+        "n": 365
+      },
+      "fid5_share": 71.8,
+      "major_share": 10.7,
+      "ocr_wrong_leaf_n": 5,
+      "opus_minus_judge": {
+        "ge4_lang_x_arm": {
+          "est": -4,
+          "ci": [
+            -9.1,
+            1.4
+          ]
+        },
+        "major_lang_x_arm": {
+          "est": 4.9,
+          "ci": [
+            0.2,
+            9.6
+          ]
+        }
+      }
+    },
+    "gemini-3.8-flash": {
+      "n": 365,
+      "gate_pass": true,
+      "ge4_lang_x_arm": {
+        "est": 90.4,
+        "ci": [
+          86,
+          94.1
+        ],
+        "n": 365
+      },
+      "major_lang_x_arm": {
+        "est": 9,
+        "ci": [
+          5.4,
+          13.4
+        ],
+        "n": 365
+      },
+      "ge4_lang": {
+        "est": 91.1,
+        "ci": [
+          87.5,
+          94.2
+        ],
+        "n": 365
+      },
+      "major_lang": {
+        "est": 8.6,
+        "ci": [
+          5.5,
+          12.2
+        ],
+        "n": 365
+      },
+      "fid5_share": 60.5,
+      "major_share": 12.3,
+      "ocr_wrong_leaf_n": 4,
+      "opus_minus_judge": {
+        "ge4_lang_x_arm": {
+          "est": -4.1,
+          "ci": [
+            -9.3,
+            0.5
+          ]
+        },
+        "major_lang_x_arm": {
+          "est": 4.6,
+          "ci": [
+            -0.1,
+            9.3
+          ]
+        }
+      }
+    },
+    "gemini-4-argon-medium": {
+      "n": 25,
+      "gate_pass": false,
+      "subset_only": true,
+      "ge4_share": 56,
+      "major_share": 40,
+      "fid5_share": 20,
+      "ocr_wrong_leaf_n": 3
+    }
+  },
+  "reliability": {
+    "gemini-flash-low": {
+      "all": {
+        "pair": [
+          "opus",
+          "gemini-flash-low"
+        ],
+        "n": 365,
+        "exact": 61.4,
+        "within1": 96.2,
+        "mean_a_minus_b": -0.255,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.526,
+            "ci": [
+              0.435,
+              0.609
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "fidelity (ordinal): α 0.53 [0.44, 0.61], 365 books — not settled"
+          },
+          "fidelity_ge4": {
+            "alpha": 0.53,
+            "ci": [
+              0.389,
+              0.65
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "fidelity_ge4 (nominal): α 0.53 [0.39, 0.65], 365 books — not settled"
+          },
+          "major_defect": {
+            "alpha": 0.521,
+            "ci": [
+              0.379,
+              0.646
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "major_defect (nominal): α 0.52 [0.38, 0.65], 365 books — not settled"
+          },
+          "omission": {
+            "alpha": 0.53,
+            "ci": [
+              0.399,
+              0.65
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "omission (nominal): α 0.53 [0.40, 0.65], 365 books — not settled"
+          },
+          "invention": {
+            "alpha": 0.501,
+            "ci": [
+              0.341,
+              0.638
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "invention (nominal): α 0.50 [0.34, 0.64], 365 books — not settled"
+          },
+          "ocr_misread": {
+            "alpha": 0.544,
+            "ci": [
+              0.438,
+              0.642
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.54 [0.44, 0.64], 365 books — not settled"
+          }
+        }
+      },
+      "no_spread": {
+        "pair": [
+          "opus",
+          "gemini-flash-low"
+        ],
+        "n": 335,
+        "exact": 60.6,
+        "within1": 95.8,
+        "mean_a_minus_b": -0.257,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.541,
+            "ci": [
+              0.447,
+              0.628
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "fidelity (ordinal): α 0.54 [0.45, 0.63], 335 books — not settled"
+          },
+          "fidelity_ge4": {
+            "alpha": 0.523,
+            "ci": [
+              0.392,
+              0.646
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "fidelity_ge4 (nominal): α 0.52 [0.39, 0.65], 335 books — not settled"
+          },
+          "major_defect": {
+            "alpha": 0.514,
+            "ci": [
+              0.385,
+              0.644
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "major_defect (nominal): α 0.51 [0.39, 0.64], 335 books — not settled"
+          },
+          "omission": {
+            "alpha": 0.538,
+            "ci": [
+              0.41,
+              0.657
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "omission (nominal): α 0.54 [0.41, 0.66], 335 books — not settled"
+          },
+          "invention": {
+            "alpha": 0.522,
+            "ci": [
+              0.363,
+              0.661
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "invention (nominal): α 0.52 [0.36, 0.66], 335 books — not settled"
+          },
+          "ocr_misread": {
+            "alpha": 0.534,
+            "ci": [
+              0.423,
+              0.634
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.53 [0.42, 0.63], 335 books — not settled"
+          }
+        }
+      },
+      "subset": {
+        "pair": [
+          "opus",
+          "gemini-flash-low"
+        ],
+        "n": 25,
+        "exact": 12,
+        "within1": 44,
+        "mean_a_minus_b": -0.16,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.095,
+            "ci": [
+              -0.312,
+              0.422
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "fidelity (ordinal): α 0.10 [−0.31, 0.42], 25 books — not settled"
+          },
+          "fidelity_ge4": {
+            "alpha": -0.114,
+            "ci": [
+              -0.499,
+              0.251
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "fidelity_ge4 (nominal): α −0.11 [−0.50, 0.25], 25 books — not settled"
+          },
+          "major_defect": {
+            "alpha": -0.099,
+            "ci": [
+              -0.499,
+              0.276
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "major_defect (nominal): α −0.10 [−0.50, 0.28], 25 books — not settled"
+          },
+          "omission": {
+            "alpha": 0.347,
+            "ci": [
+              -0.081,
+              0.72
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "omission (nominal): α 0.35 [−0.08, 0.72], 25 books — not settled"
+          },
+          "invention": {
+            "alpha": 0.2,
+            "ci": [
+              -0.225,
+              0.602
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "invention (nominal): α 0.20 [−0.23, 0.60], 25 books — not settled"
+          },
+          "ocr_misread": {
+            "alpha": 0.451,
+            "ci": [
+              0.058,
+              0.763
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.45 [0.06, 0.76], 25 books — not settled"
+          }
+        }
+      }
+    },
+    "gemini-3.8-flash": {
+      "all": {
+        "pair": [
+          "opus",
+          "gemini-3.8-flash"
+        ],
+        "n": 365,
+        "exact": 70.1,
+        "within1": 98.4,
+        "mean_a_minus_b": -0.129,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.675,
+            "ci": [
+              0.606,
+              0.742
+            ],
+            "n": 365,
+            "verdict": "tentative",
+            "line": "fidelity (ordinal): α 0.68 [0.61, 0.74], 365 books — tentative"
+          },
+          "fidelity_ge4": {
+            "alpha": 0.709,
+            "ci": [
+              0.597,
+              0.806
+            ],
+            "n": 365,
+            "verdict": "tentative",
+            "line": "fidelity_ge4 (nominal): α 0.71 [0.60, 0.81], 365 books — tentative"
+          },
+          "major_defect": {
+            "alpha": 0.704,
+            "ci": [
+              0.589,
+              0.808
+            ],
+            "n": 365,
+            "verdict": "tentative",
+            "line": "major_defect (nominal): α 0.70 [0.59, 0.81], 365 books — tentative"
+          },
+          "omission": {
+            "alpha": 0.69,
+            "ci": [
+              0.58,
+              0.784
+            ],
+            "n": 365,
+            "verdict": "tentative",
+            "line": "omission (nominal): α 0.69 [0.58, 0.78], 365 books — tentative"
+          },
+          "invention": {
+            "alpha": 0.519,
+            "ci": [
+              0.358,
+              0.653
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "invention (nominal): α 0.52 [0.36, 0.65], 365 books — not settled"
+          },
+          "ocr_misread": {
+            "alpha": 0.609,
+            "ci": [
+              0.514,
+              0.697
+            ],
+            "n": 365,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.61 [0.51, 0.70], 365 books — not settled"
+          }
+        }
+      },
+      "no_spread": {
+        "pair": [
+          "opus",
+          "gemini-3.8-flash"
+        ],
+        "n": 335,
+        "exact": 70.1,
+        "within1": 98.2,
+        "mean_a_minus_b": -0.131,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.695,
+            "ci": [
+              0.617,
+              0.765
+            ],
+            "n": 335,
+            "verdict": "tentative",
+            "line": "fidelity (ordinal): α 0.69 [0.62, 0.77], 335 books — tentative"
+          },
+          "fidelity_ge4": {
+            "alpha": 0.705,
+            "ci": [
+              0.591,
+              0.805
+            ],
+            "n": 335,
+            "verdict": "tentative",
+            "line": "fidelity_ge4 (nominal): α 0.70 [0.59, 0.80], 335 books — tentative"
+          },
+          "major_defect": {
+            "alpha": 0.7,
+            "ci": [
+              0.589,
+              0.801
+            ],
+            "n": 335,
+            "verdict": "tentative",
+            "line": "major_defect (nominal): α 0.70 [0.59, 0.80], 335 books — tentative"
+          },
+          "omission": {
+            "alpha": 0.688,
+            "ci": [
+              0.584,
+              0.782
+            ],
+            "n": 335,
+            "verdict": "tentative",
+            "line": "omission (nominal): α 0.69 [0.58, 0.78], 335 books — tentative"
+          },
+          "invention": {
+            "alpha": 0.564,
+            "ci": [
+              0.406,
+              0.708
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "invention (nominal): α 0.56 [0.41, 0.71], 335 books — not settled"
+          },
+          "ocr_misread": {
+            "alpha": 0.614,
+            "ci": [
+              0.521,
+              0.701
+            ],
+            "n": 335,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.61 [0.52, 0.70], 335 books — not settled"
+          }
+        }
+      },
+      "subset": {
+        "pair": [
+          "opus",
+          "gemini-3.8-flash"
+        ],
+        "n": 25,
+        "exact": 48,
+        "within1": 92,
+        "mean_a_minus_b": -0.28,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.756,
+            "ci": [
+              0.47,
+              0.891
+            ],
+            "n": 25,
+            "verdict": "tentative",
+            "line": "fidelity (ordinal): α 0.76 [0.47, 0.89], 25 books — tentative"
+          },
+          "fidelity_ge4": {
+            "alpha": 0.451,
+            "ci": [
+              0.058,
+              0.763
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "fidelity_ge4 (nominal): α 0.45 [0.06, 0.76], 25 books — not settled"
+          },
+          "major_defect": {
+            "alpha": 0.529,
+            "ci": [
+              0.149,
+              0.841
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "major_defect (nominal): α 0.53 [0.15, 0.84], 25 books — not settled"
+          },
+          "omission": {
+            "alpha": 0.75,
+            "ci": [
+              0.437,
+              1
+            ],
+            "n": 25,
+            "verdict": "tentative",
+            "line": "omission (nominal): α 0.75 [0.44, 1.00], 25 books — tentative"
+          },
+          "invention": {
+            "alpha": 0.602,
+            "ci": [
+              -0.043,
+              1
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "invention (nominal): α 0.60 [−0.04, 1.00], 25 books — not settled"
+          },
+          "ocr_misread": {
+            "alpha": 0.319,
+            "ci": [
+              -0.081,
+              0.673
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.32 [−0.08, 0.67], 25 books — not settled"
+          }
+        }
+      }
+    },
+    "gemini-4-argon-medium": {
+      "all": {
+        "pair": [
+          "opus",
+          "gemini-4-argon-medium"
+        ],
+        "n": 25,
+        "exact": 60,
+        "within1": 100,
+        "mean_a_minus_b": -0.24,
+        "measures": {
+          "fidelity": {
+            "alpha": 0.862,
+            "ci": [
+              0.693,
+              0.934
+            ],
+            "n": 25,
+            "verdict": "reliable",
+            "line": "fidelity (ordinal): α 0.86 [0.69, 0.93], 25 books — reliable"
+          },
+          "fidelity_ge4": {
+            "alpha": 0.686,
+            "ci": [
+              0.364,
+              0.921
+            ],
+            "n": 25,
+            "verdict": "tentative",
+            "line": "fidelity_ge4 (nominal): α 0.69 [0.36, 0.92], 25 books — tentative"
+          },
+          "major_defect": {
+            "alpha": 0.686,
+            "ci": [
+              0.364,
+              0.921
+            ],
+            "n": 25,
+            "verdict": "tentative",
+            "line": "major_defect (nominal): α 0.69 [0.36, 0.92], 25 books — tentative"
+          },
+          "omission": {
+            "alpha": 0.759,
+            "ci": [
+              0.451,
+              1
+            ],
+            "n": 25,
+            "verdict": "tentative",
+            "line": "omission (nominal): α 0.76 [0.45, 1.00], 25 books — tentative"
+          },
+          "invention": {
+            "alpha": 0.755,
+            "ci": [
+              0.336,
+              1
+            ],
+            "n": 25,
+            "verdict": "tentative",
+            "line": "invention (nominal): α 0.76 [0.34, 1.00], 25 books — tentative"
+          },
+          "ocr_misread": {
+            "alpha": 0.214,
+            "ci": [
+              -0.207,
+              0.584
+            ],
+            "n": 25,
+            "verdict": "not settled",
+            "line": "ocr_misread (nominal): α 0.21 [−0.21, 0.58], 25 books — not settled"
+          }
+        }
+      }
+    }
+  },
+  "alpha_diff": {
+    "gemini-3.8-flash − gemini-flash-low": {
+      "fidelity": {
+        "n": 365,
+        "est": 0.15,
+        "ci": [
+          0.072,
+          0.229
+        ]
+      },
+      "fidelity_ge4": {
+        "n": 365,
+        "est": 0.179,
+        "ci": [
+          0.066,
+          0.3
+        ]
+      },
+      "major_defect": {
+        "n": 365,
+        "est": 0.183,
+        "ci": [
+          0.067,
+          0.312
+        ]
+      }
+    }
+  },
+  "reliability_gemini_pairs": {
+    "gemini-flash-low|gemini-3.8-flash": {
+      "pair": [
+        "gemini-flash-low",
+        "gemini-3.8-flash"
+      ],
+      "n": 365,
+      "exact": 71.8,
+      "within1": 97.3,
+      "mean_a_minus_b": 0.126,
+      "measures": {
+        "fidelity": {
+          "alpha": 0.65,
+          "ci": [
+            0.563,
+            0.727
+          ],
+          "n": 365,
+          "verdict": "not settled",
+          "line": "fidelity (ordinal): α 0.65 [0.56, 0.73], 365 books — not settled"
+        },
+        "fidelity_ge4": {
+          "alpha": 0.655,
+          "ci": [
+            0.521,
+            0.768
+          ],
+          "n": 365,
+          "verdict": "not settled",
+          "line": "fidelity_ge4 (nominal): α 0.65 [0.52, 0.77], 365 books — not settled"
+        },
+        "major_defect": {
+          "alpha": 0.651,
+          "ci": [
+            0.515,
+            0.769
+          ],
+          "n": 365,
+          "verdict": "not settled",
+          "line": "major_defect (nominal): α 0.65 [0.51, 0.77], 365 books — not settled"
+        },
+        "omission": {
+          "alpha": 0.537,
+          "ci": [
+            0.406,
+            0.659
+          ],
+          "n": 365,
+          "verdict": "not settled",
+          "line": "omission (nominal): α 0.54 [0.41, 0.66], 365 books — not settled"
+        },
+        "invention": {
+          "alpha": 0.586,
+          "ci": [
+            0.4,
+            0.738
+          ],
+          "n": 365,
+          "verdict": "not settled",
+          "line": "invention (nominal): α 0.59 [0.40, 0.74], 365 books — not settled"
+        },
+        "ocr_misread": {
+          "alpha": 0.492,
+          "ci": [
+            0.393,
+            0.592
+          ],
+          "n": 365,
+          "verdict": "not settled",
+          "line": "ocr_misread (nominal): α 0.49 [0.39, 0.59], 365 books — not settled"
+        }
+      }
+    },
+    "gemini-flash-low|gemini-4-argon-medium": {
+      "pair": [
+        "gemini-flash-low",
+        "gemini-4-argon-medium"
+      ],
+      "n": 25,
+      "exact": 24,
+      "within1": 60,
+      "mean_a_minus_b": -0.08,
+      "measures": {
+        "fidelity": {
+          "alpha": 0.11,
+          "ci": [
+            -0.316,
+            0.49
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "fidelity (ordinal): α 0.11 [−0.32, 0.49], 25 books — not settled"
+        },
+        "fidelity_ge4": {
+          "alpha": 0.215,
+          "ci": [
+            -0.184,
+            0.584
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "fidelity_ge4 (nominal): α 0.21 [−0.18, 0.58], 25 books — not settled"
+        },
+        "major_defect": {
+          "alpha": 0.205,
+          "ci": [
+            -0.207,
+            0.584
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "major_defect (nominal): α 0.20 [−0.21, 0.58], 25 books — not settled"
+        },
+        "omission": {
+          "alpha": 0.319,
+          "ci": [
+            -0.081,
+            0.673
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "omission (nominal): α 0.32 [−0.08, 0.67], 25 books — not settled"
+        },
+        "invention": {
+          "alpha": 0.336,
+          "ci": [
+            -0.14,
+            0.755
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "invention (nominal): α 0.34 [−0.14, 0.76], 25 books — not settled"
+        },
+        "ocr_misread": {
+          "alpha": 0.279,
+          "ci": [
+            -0.143,
+            0.66
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "ocr_misread (nominal): α 0.28 [−0.14, 0.66], 25 books — not settled"
+        }
+      }
+    },
+    "gemini-3.8-flash|gemini-4-argon-medium": {
+      "pair": [
+        "gemini-3.8-flash",
+        "gemini-4-argon-medium"
+      ],
+      "n": 25,
+      "exact": 76,
+      "within1": 96,
+      "mean_a_minus_b": 0.04,
+      "measures": {
+        "fidelity": {
+          "alpha": 0.887,
+          "ci": [
+            0.713,
+            0.973
+          ],
+          "n": 25,
+          "verdict": "reliable",
+          "line": "fidelity (ordinal): α 0.89 [0.71, 0.97], 25 books — reliable"
+        },
+        "fidelity_ge4": {
+          "alpha": 0.759,
+          "ci": [
+            0.448,
+            1
+          ],
+          "n": 25,
+          "verdict": "tentative",
+          "line": "fidelity_ge4 (nominal): α 0.76 [0.45, 1.00], 25 books — tentative"
+        },
+        "major_defect": {
+          "alpha": 0.837,
+          "ci": [
+            0.563,
+            1
+          ],
+          "n": 25,
+          "verdict": "reliable",
+          "line": "major_defect (nominal): α 0.84 [0.56, 1.00], 25 books — reliable"
+        },
+        "omission": {
+          "alpha": 0.682,
+          "ci": [
+            0.347,
+            0.921
+          ],
+          "n": 25,
+          "verdict": "tentative",
+          "line": "omission (nominal): α 0.68 [0.35, 0.92], 25 books — tentative"
+        },
+        "invention": {
+          "alpha": 0.512,
+          "ci": [
+            -0.089,
+            1
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "invention (nominal): α 0.51 [−0.09, 1.00], 25 books — not settled"
+        },
+        "ocr_misread": {
+          "alpha": 0.602,
+          "ci": [
+            -0.043,
+            1
+          ],
+          "n": 25,
+          "verdict": "not settled",
+          "line": "ocr_misread (nominal): α 0.60 [−0.04, 1.00], 25 books — not settled"
+        }
+      }
+    }
+  },
+  "self_preference": {
+    "gemini-flash-low": {
+      "judge_a": "opus",
+      "judge_b": "gemini-flash-low",
+      "n_claude": 54,
+      "n_gemini": 311,
+      "fidelity": {
+        "claude_gap": -0.13,
+        "gemini_gap": -0.277,
+        "did": 0.147,
+        "ci": [
+          -0.03,
+          0.342
+        ]
+      },
+      "ge4_share": {
+        "claude_gap": -0.019,
+        "gemini_gap": -0.045,
+        "did": 0.026,
+        "ci": [
+          -0.051,
+          0.098
+        ]
+      },
+      "major_share": {
+        "claude_gap": -0.019,
+        "gemini_gap": -0.055,
+        "did": 0.036,
+        "ci": [
+          -0.042,
+          0.109
+        ]
+      },
+      "fidelity_matched": {
+        "cells": 15,
+        "did": 0.16,
+        "ci": [
+          -0.02,
+          0.345
+        ]
+      }
+    },
+    "gemini-3.8-flash": {
+      "judge_a": "opus",
+      "judge_b": "gemini-3.8-flash",
+      "n_claude": 54,
+      "n_gemini": 311,
+      "fidelity": {
+        "claude_gap": -0.074,
+        "gemini_gap": -0.138,
+        "did": 0.064,
+        "ci": [
+          -0.065,
+          0.183
+        ]
+      },
+      "ge4_share": {
+        "claude_gap": 0,
+        "gemini_gap": -0.039,
+        "did": 0.039,
+        "ci": [
+          0.006,
+          0.071
+        ]
+      },
+      "major_share": {
+        "claude_gap": 0,
+        "gemini_gap": -0.039,
+        "did": 0.039,
+        "ci": [
+          0.006,
+          0.071
+        ]
+      },
+      "fidelity_matched": {
+        "cells": 15,
+        "did": 0.068,
+        "ci": [
+          -0.064,
+          0.196
+        ]
+      }
+    }
+  },
+  "disputed": [
+    {
+      "n": 1,
+      "id": "53eba5b610",
+      "language": "Greek",
+      "opus": 4,
+      "flash_low": 1,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 4,
+        "gemini-flash-low": 1,
+        "gemini-3.8-flash": 5,
+        "gemini-4-argon-medium": 5
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithfully translates the provided Greek source text throughout with high accuracy, but evaluating strictly against source text.",
+        "gemini-3.8-flash": "Complete and faithful translation of the Greek text with no omissions or inventions.",
+        "gemini-4-argon-medium": "Complete and accurate translation of the entire Greek source text as transcribed, including the opening lines, marginalia, and the full passage from Plato's Apology (21c–24b)."
+      }
+    },
+    {
+      "n": 2,
+      "id": "a1be80bcb2",
+      "language": "Tibetan",
+      "opus": 5,
+      "flash_low": 2,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 5,
+        "gemini-flash-low": 2,
+        "gemini-3.8-flash": 4,
+        "gemini-4-argon-medium": 4
+      },
+      "reasons": {
+        "gemini-flash-low": "Line 1 in transcription is a severe garble/hallucination replacing line 1 of the leaf, which translation papers over with fluent nonsense, while lines 2-7 are translated accurately.",
+        "gemini-3.8-flash": "Omits 'ལ་དུ་' (laḍḍu/sweetmeats) from the list of forbidden foods; otherwise faithfully translates the transcribed source text",
+        "gemini-4-argon-medium": "Faithfully translates the source text including its garbled opening line; minor slips on initial གསུམ་, ལ་དུ་ (laḍḍu), and གནས་ངན་ལེན (dauṣṭhulya)."
+      }
+    },
+    {
+      "n": 3,
+      "id": "cf92626d76",
+      "language": "Chinese",
+      "opus": 5,
+      "flash_low": 2,
+      "right": "split",
+      "side": "split",
+      "scores": {
+        "opus": 5,
+        "gemini-flash-low": 2,
+        "gemini-3.8-flash": 5,
+        "gemini-4-argon-medium": 5
+      },
+      "reasons": {
+        "gemini-flash-low": "Transliterates the entire page into pinyin instead of translating it into English, relegating the English text to house notes",
+        "gemini-3.8-flash": "Faithfully renders instrument score headings, tablature/pitch glosses with lyrics in pinyin, and provides accurate English translation in notes; matches source throughout.",
+        "gemini-4-argon-medium": "Accurately translates the headings and poem lyrics ('東門之池，可以漚紵 / 彼美淑姬，可與晤語') while romanising each syllable, scale degree, and gongche sign in place to preserve the score alignment."
+      }
+    },
+    {
+      "n": 4,
+      "id": "5357b9fcbd",
+      "language": "Greek",
+      "opus": 5,
+      "flash_low": 2,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 5,
+        "gemini-flash-low": 2,
+        "gemini-3.8-flash": 5,
+        "gemini-4-argon-medium": 5
+      },
+      "reasons": {
+        "gemini-flash-low": "Transfers star descriptions faithfully from source Greek but invents identical tabular coordinate values (24, 1/3, 44, 1/3, 1, 4) down the entirety of both tables.",
+        "gemini-3.8-flash": "Faithful and complete translation of all table entries, anatomical descriptions, and coordinates as given in the source text.",
+        "gemini-4-argon-medium": "Faithfully translates all table headers, stellar descriptions, Greek numerals, and notes from the transcribed source text."
+      }
+    },
+    {
+      "n": 5,
+      "id": "fb4d166c33",
+      "language": "Japanese",
+      "opus": 2,
+      "flash_low": 4,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 2,
+        "gemini-flash-low": 4,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 2
+      },
+      "reasons": {
+        "gemini-flash-low": "Correctly tracks the mechanism and mercury flow of the automaton, but mistranslates 首 (neck/head) as 'cylinder' and はりぬき as 'lid'.",
+        "gemini-3.8-flash": "Invents diagram descriptions in notes; inverts warning about small hole; misidentifies neck as cylinder and mangles flipping mechanism description.",
+        "gemini-4-argon-medium": "Repeatedly mistranslates key mechanics and fabricates bogus romaji terms: drops 'making in papier-mâché' (はりぬきにして), renders 'when the chest bends back' as 'align with the hole in the chest', renders 首 (neck/head) as 'cylinder', turns 'if small, mercury [garbled: does not pass]; test to determine' into 'if just right, mercury will fall steadily, drop by drop', and mistranslates the final clause about the head becoming heavy and flipping the doll from belly-up to belly-down."
+      }
+    },
+    {
+      "n": 6,
+      "id": "e86406e2a9",
+      "language": "Hebrew",
+      "opus": 4,
+      "flash_low": 2,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 4,
+        "gemini-flash-low": 2,
+        "gemini-3.8-flash": 5,
+        "gemini-4-argon-medium": 5
+      },
+      "reasons": {
+        "gemini-flash-low": "Source is a litany of praise phrases (signs 68 and 69) which translation systematically expands into full copular assertions ('is the preciousness...'); otherwise matches Hebrew attributes listed in transcription.",
+        "gemini-3.8-flash": "Faithful translation of the Hebrew source text as transcribed, translating every line accurately.",
+        "gemini-4-argon-medium": "Faithfully translates both section headers and all 24 lines of the transcribed Hebrew text."
+      }
+    },
+    {
+      "n": 7,
+      "id": "0d9b5a6e26",
+      "language": "Tibetan",
+      "opus": 4,
+      "flash_low": 2,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 4,
+        "gemini-flash-low": 2,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 4
+      },
+      "reasons": {
+        "gemini-flash-low": "Translates the text accurately section by section but in reverse page/leaf order (leaf 3 -> leaf 2 -> leaf 1).",
+        "gemini-3.8-flash": "Translates the three leaves in reverse order (leaf 3, then 2, then 1) and papers over OCR garble 'མ་ཀློང་' as 'He did not falter'; otherwise faithful to source text.",
+        "gemini-4-argon-medium": "translates all three leaves accurately including OCR's སྔ་བརྒྱད་ ('eight earlier'), but reverses the order of the three <leaf-break/> sections and renders ཁྱུང་གི་ཤམྦུ་ཅན་ as 'Garuda garment'"
+      }
+    },
+    {
+      "n": 8,
+      "id": "4ab28b7b9c",
+      "language": "Tibetan",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "unsettled",
+      "side": "unsettled",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 4,
+        "gemini-4-argon-medium": 3
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithfully translates the OCR text line by line, including terms, condition clauses, and closing formula; trailing OCR noise correctly ignored.",
+        "gemini-3.8-flash": "Faithfully renders the source OCR text clause by clause; minor mistranslation of གནོད་ལ་ as 'in the joints' and རྫོག་སྟོ as 'manifestation'.",
+        "gemini-4-argon-medium": "mistranslates མིག་སེ་རོ (eyes are yellow) as 'eyes must be watched', གནོད་ as 'joints', and རྫོག་སྟོ (is completed) as 'it is the manifestation', and smooths the OCR-garbled middle clause into fluent prose; otherwise follows source"
+      }
+    },
+    {
+      "n": 9,
+      "id": "7b0cd73b41",
+      "language": "Japanese",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "unsettled",
+      "side": "unsettled",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 5,
+        "gemini-4-argon-medium": 4
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithfully translates the provided Japanese source text sentence by sentence without omissions or inventions.",
+        "gemini-3.8-flash": "Faithful and complete translation capturing all clauses and nuances of the source text without errors.",
+        "gemini-4-argon-medium": "renders お仕合 (fortunate) as 'To his misfortune', misreads 若い子供の風うへに置事もいや as 'unpleasant to see a young man', and smooths over 暮がたりなり; otherwise = source"
+      }
+    },
+    {
+      "n": 10,
+      "id": "6ccbdcc374",
+      "language": "Hebrew",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 4,
+        "gemini-4-argon-medium": 4
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithful translation of the halakhic source text across all three columns without omissions or inventions.",
+        "gemini-3.8-flash": "Papers over garbled 'נפ' ביתר חולין' as Talmudic chapter 'Kol HaBasar', misreads 'שבופין' as bake, and translates 'אבי העזרי' as 'my father, the Avi HaEzri'; otherwise follows source closely.",
+        "gemini-4-argon-medium": "Faithfully translates the three columns of rabbinic Hebrew, but papers over several OCR corruptions (e.g. 'נפ' ביתר חולין' rendered as 'in the chapter Kol HaBasar', 'מדיש' rendered as 'from the dish'), omits 'אוניה' twice, and mistranslates 'קולה' (peels) and 'בחוש'."
+      }
+    },
+    {
+      "n": 11,
+      "id": "bfef3a4a94",
+      "language": "Sanskrit",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "unsettled",
+      "side": "unsettled",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 3,
+        "gemini-4-argon-medium": 3
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithfully translates all astrological houses, travel queries, and planetary associations from the source transcription without omission or invention.",
+        "gemini-3.8-flash": "Smooths over severely corrupted OCR passages into confident astrological prose not supported by the source text, and omits a short clause; otherwise recovers the main astrological meanings.",
+        "gemini-4-argon-medium": "Captures the main astrological topics on both folios, but smooths several spans of severe OCR garble into confident guesswork, misconstrues 'एतेषाम् अन्यतमे' in v. 52 so 'another's wife' is restricted to the Sun, and omits a clause on travel."
+      }
+    },
+    {
+      "n": 12,
+      "id": "75a963a5f2",
+      "language": "Greek",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 4,
+        "gemini-4-argon-medium": 4
+      },
+      "reasons": {
+        "gemini-flash-low": "faithfully translates the transcribed Greek source text throughout without notable defects",
+        "gemini-3.8-flash": "Follows the transcription closely despite heavy OCR garble, with only minor slips and omissions of garbled words; second half is translated very accurately.",
+        "gemini-4-argon-medium": "Faithfully translates the OCR text (including its misreadings) except for smoothing over several garbled OCR spans, rendering μῖϛον as 'custom', and omitting 'τούϛι μέν νυν ὑπ' Αἰγυπτίων λεγομένοιϛι'."
+      }
+    },
+    {
+      "n": 13,
+      "id": "de3204af00",
+      "language": "Chinese",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "unsettled",
+      "side": "unsettled",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 4,
+        "gemini-4-argon-medium": 4
+      },
+      "reasons": {
+        "gemini-flash-low": "Accurately translates and organizes every character and radical listed in the source text into tabular format with correct meanings.",
+        "gemini-3.8-flash": "Faithfully translates the OCR character-radical table except for omitting '本' and misparsing '字存' as an explanatory note.",
+        "gemini-4-argon-medium": "Omits 本 and misparses 桜字/本肉奔 into a spurious '肉' radical row; misreads the two character entries 字存 under 子部 as '<note>This character is preserved</note>'; otherwise faithfully renders the transcribed character index."
+      }
+    },
+    {
+      "n": 14,
+      "id": "cfdd57497d",
+      "language": "Latin",
+      "opus": 3,
+      "flash_low": 5,
+      "right": "opus (closer)",
+      "side": "opus",
+      "scores": {
+        "opus": 3,
+        "gemini-flash-low": 5,
+        "gemini-3.8-flash": 4,
+        "gemini-4-argon-medium": 3
+      },
+      "reasons": {
+        "gemini-flash-low": "Accurately renders the source text across all entries, faithfully following the OCR abbreviations and transcription without invention or omission.",
+        "gemini-3.8-flash": "Accurate translation throughout; minor slips in 'Stercus adib' ('Goat dung') and 'ex ribus' ('fat'), with garbled OCR text appropriately marked as [unclear].",
+        "gemini-4-argon-medium": "Marks many OCR corruptions with [unclear], but papers over several garbled spans with fluent guesses (e.g. 'nactū auuūm̄', 'nutritiūō aisolocante', 'diuit̃ z mlō. pino z lotho lenī'), drops a few garbled clauses, and mistranslates a few phrases ('adurit̃', 'ap̄ aliō ā galieno')."
+      }
+    },
+    {
+      "n": 15,
+      "id": "785ecdc0f1",
+      "language": "Hebrew",
+      "opus": 2,
+      "flash_low": 1,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 2,
+        "gemini-flash-low": 1,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 2
+      },
+      "reasons": {
+        "gemini-flash-low": "The source transcription is from a completely different folio/leaf than image.jpg (Ch. 3 Halakha 11 / Ch. 4 Halakha 1 vs. Ch. 4 Halakhot 2–4).",
+        "gemini-3.8-flash": "Substantial omission: truncates 'סליק פירקא' commentary and entirely drops the 'עמודי ירושלים חנינא' commentary section.",
+        "gemini-4-argon-medium": "Truncates the second half of Mareh HaPanim and the entire Amudei Yerushalayim section, heavily abridges the commentary, and mistranslates ויותר ('forfeited') as 'it is permitted', reversing the dispute between R. Yochanan and Resh Lakish."
+      }
+    },
+    {
+      "n": 16,
+      "id": "974ae0ae78",
+      "language": "Italian",
+      "opus": 1,
+      "flash_low": 2,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 1,
+        "gemini-flash-low": 2,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 2
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithfully translates the publisher label text, but invents four paragraphs of anatomical notes about the spine and nerves not present in the source.",
+        "gemini-3.8-flash": "Translates the publisher label faithfully, but invents extensive anatomical notes on nerves and the spinal cord with no counterpart in source.",
+        "gemini-4-argon-medium": "translates the French publication label accurately, then invents four paragraphs and margin notes of anatomical text on nerves and the cervical spine absent from the source"
+      }
+    },
+    {
+      "n": 17,
+      "id": "64e631dc91",
+      "language": "Sanskrit",
+      "opus": 2,
+      "flash_low": 3,
+      "right": "tie",
+      "side": "tie",
+      "scores": {
+        "opus": 2,
+        "gemini-flash-low": 3,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 2
+      },
+      "reasons": {
+        "gemini-flash-low": "Translates verse lines and essential commentary for verses 6 and 7, but completely drops the preceding lines of text/commentary before the colophon and Sāyaṇa's grammatical notes",
+        "gemini-3.8-flash": "omits the opening commentary paragraph, Śrautasūtra ritual citations, and extensive grammatical analysis throughout; translates only verses and simplified paraphrase",
+        "gemini-4-argon-medium": "Omits the entire opening paragraph, both sūtra citations, all grammatical/accentual commentary, the padapāṭha lines, and 'mahe/mahate' in verse 7 and its gloss."
+      }
+    },
+    {
+      "n": 18,
+      "id": "369d2b577c",
+      "language": "Japanese",
+      "opus": 2,
+      "flash_low": 3,
+      "right": "tie",
+      "side": "tie",
+      "scores": {
+        "opus": 2,
+        "gemini-flash-low": 3,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 3
+      },
+      "reasons": {
+        "gemini-flash-low": "Faithfully translates items ①–㊿ and (1344), but replaces entries (51)–(1343) with an interpretive summary note.",
+        "gemini-3.8-flash": "omits repeated formula items (51) through (1343) of 'の三の三', summarizing them in a note instead of translating; otherwise follows source",
+        "gemini-4-argon-medium": "Translates ①–㊿ literally from the degenerate OCR source, but collapses entries (51)–(1343) into a <note> that invents an unsupported philological explanation and completes truncated '(1344)の' as 'Of three of three.'"
+      }
+    },
+    {
+      "n": 19,
+      "id": "b883cdf746",
+      "language": "Hebrew",
+      "opus": 2,
+      "flash_low": 3,
+      "right": "opus",
+      "side": "opus",
+      "scores": {
+        "opus": 2,
+        "gemini-flash-low": 3,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 2
+      },
+      "reasons": {
+        "gemini-flash-low": "Translates the Hebrew column well, but completely drops the parallel Targum column and replaces it with verses (Lev 23:43-44) from the next page.",
+        "gemini-3.8-flash": "Entire second column (Targum Onkelos) is omitted, and translation imports Leviticus 23:43-44 not present in the source text",
+        "gemini-4-argon-medium": "Translates the first column (Hebrew Leviticus 23:32b–42) accurately, but completely omits the second column (Aramaic Targum Onkelos) and invents Leviticus 23:43–44 in its place."
+      }
+    },
+    {
+      "n": 20,
+      "id": "7209ac2836",
+      "language": "Italian",
+      "opus": 2,
+      "flash_low": 3,
+      "right": "tie",
+      "side": "tie",
+      "scores": {
+        "opus": 2,
+        "gemini-flash-low": 3,
+        "gemini-3.8-flash": 2,
+        "gemini-4-argon-medium": 2
+      },
+      "reasons": {
+        "gemini-flash-low": "omits the opening paragraph/sentences describing the attacks on the Romans at the river and ditch (~1400 killed); remainder is translated faithfully",
+        "gemini-3.8-flash": "drops the entire opening passage (~8 lines, from 'tando gli impacciavano' through 'insieme col caporale'); the remainder faithfully translates the source",
+        "gemini-4-argon-medium": "Omits the opening two sentences (~75 words, over a quarter of the page) recounting the river skirmishes, the killing of the Tribune, and the 1,400 Romans killed at the trench; otherwise = source."
+      }
+    }
+  ],
+  "disputed_tally": {
+    "gemini-flash-low": {
+      "judged": 20,
+      "opus_side": {
+        "n": 12,
+        "agree": 0,
+        "exact_opus": 0
+      },
+      "tie": {
+        "n": 3,
+        "agree": 3
+      },
+      "other": 5
+    },
+    "gemini-3.8-flash": {
+      "judged": 20,
+      "opus_side": {
+        "n": 12,
+        "agree": 10,
+        "exact_opus": 4
+      },
+      "tie": {
+        "n": 3,
+        "agree": 3
+      },
+      "other": 5
+    },
+    "gemini-4-argon-medium": {
+      "judged": 20,
+      "opus_side": {
+        "n": 12,
+        "agree": 11,
+        "exact_opus": 6
+      },
+      "tie": {
+        "n": 3,
+        "agree": 3
+      },
+      "other": 5
+    }
+  }
+}

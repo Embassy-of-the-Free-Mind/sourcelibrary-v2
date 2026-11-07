@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Metadata } from 'next';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
@@ -51,6 +52,7 @@ interface MembershipRow {
 
 export default async function CatalogTeamPage({ params }: Props) {
   const { tenant } = await params;
+  const room = await getRoomHref(tenant);
   if (tenant !== 'bph') notFound();
 
   const session = await auth();
@@ -75,7 +77,7 @@ export default async function CatalogTeamPage({ params }: Props) {
   const effectiveRole = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
 
   if (ROLE_LEVEL[effectiveRole] < ROLE_LEVEL['editor']) {
-    redirect('/catalog');
+    redirect(room('/catalog'));
   }
 
   // Pull all tenant memberships, plus user names from `users` so we can show
@@ -115,7 +117,7 @@ export default async function CatalogTeamPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={room('/catalog')}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Catalogue

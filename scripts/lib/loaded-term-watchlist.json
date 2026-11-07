@@ -1,0 +1,130 @@
+{
+  "_comment": "Loaded-term watchlist (#7475). Each class pairs a SOURCE term that is neutral, positive or technical with the loaded English word an intermediary language tends to carry in (daimon -> 'demon' via Latin/German/French and the KJV; wu -> 'sorcery'). Read by scripts/lib/loaded-terms.mjs. Regexes run on NFD-folded, mark-stripped, lowercased text (so δαίμων is matched as δαιμων, vidyā as vidya). 'gloss' is the transliteration whose presence next to the English word means the translator kept the term, so the page is not flagged. 'sense' is the instruction a retranslation would carry (#7402 recipe). A hit is a work list, never an authority: 'demon' is right where the source means an evil spirit (Lactantius's own prose). 'languages'/'not_languages' scope a class by the book's language field; books whose language is English are never screened. Folding strips only U+0300-036F combining marks (Latin/Greek accents), never Devanagari vowel signs, and folds final sigma to σ. 'skip_collections': a book in any of these is not screened for the class — measured 2026-10-27 (#7475): in Christian and demonology books the author means an evil spirit (or a witch), so 'demon'/'sorcery' is faithful and every such hit in the first by-eye sample of 20 was a false positive. 'exempt_before': an English qualifier right before the loaded word ('evil demons' for mali daemones) means the source itself marks the spirit as evil, so 'demon' is faithful.",
+  "version": 1,
+  "classes": [
+    {
+      "id": "daimon-greek",
+      "source": "δαιμ(ων|ον|οσ|ονι)",
+      "loaded": "\\b(demon|demons|demonic|devil|devils|fiend|fiends)\\b",
+      "gloss": "daimon|daimones|daemon|daemones|daimonion",
+      "sense": "Greek daimon: a divine power or guardian spirit, not an evil one, unless the context is Christian and plainly hostile. Render 'daimon' (or 'divinity'/'guardian spirit'), never 'demon'/'devil'.",
+      "skip_collections": [
+        "demonology",
+        "theological-demonology",
+        "witch-trial-literature",
+        "witches-sabbath",
+        "global-demonology",
+        "christianity",
+        "theology",
+        "sacred-texts"
+      ],
+      "exempt_before": "\\b(evil|wicked|unclean|impure|malign|malignant|foul|hostile|fallen)\\s+(\\w+\\s+){0,3}$"
+    },
+    {
+      "id": "daemon-latin",
+      "source": "\\bd(ae|æ|e)mon(e|es|is|ibus|um|em|i|ia|iis|iorum|iacus)?\\b",
+      "loaded": "\\b(demon|demons|demonic|devil|devils|fiend|fiends)\\b",
+      "gloss": "daimon|daimones|daemon|daemones|dæmon",
+      "sense": "Latin daemon in a Platonist, Hermetic or Agrippan context: the guardian or intermediary spirit. Render 'daemon'. Keep 'demon' only where the author means an evil spirit.",
+      "languages": [
+        "Latin"
+      ],
+      "skip_collections": [
+        "demonology",
+        "theological-demonology",
+        "witch-trial-literature",
+        "witches-sabbath",
+        "global-demonology",
+        "christianity",
+        "theology",
+        "sacred-texts"
+      ],
+      "exempt_before": "\\b(evil|wicked|unclean|impure|malign|malignant|foul|hostile|fallen)\\s+(\\w+\\s+){0,3}$"
+    },
+    {
+      "id": "daemon-vernacular",
+      "source": "\\bd(a|æ|e)mon(en|s|es|i|io|ios|ium)?\\b|\\bdaemon(en)?\\b",
+      "loaded": "\\b(demon|demons|demonic|devil|devils|fiend|fiends)\\b",
+      "gloss": "daimon|daimones|daemon|daemones|dæmon",
+      "sense": "A German/French/Italian scholar's Dämon/démon glossing Greek daimon: render 'daimon'. If the author uses the word for an evil spirit, 'demon' is faithful.",
+      "not_languages": [
+        "Latin",
+        "Greek"
+      ],
+      "skip_collections": [
+        "demonology",
+        "theological-demonology",
+        "witch-trial-literature",
+        "witches-sabbath",
+        "global-demonology",
+        "christianity",
+        "theology",
+        "sacred-texts"
+      ],
+      "exempt_before": "\\b(evil|wicked|unclean|impure|malign|malignant|foul|hostile|fallen)\\s+(\\w+\\s+){0,3}$"
+    },
+    {
+      "id": "gui-chinese",
+      "source": "鬼",
+      "loaded": "\\b(demon|demons|demonic|devil|devils|fiend|fiends)\\b",
+      "gloss": "\\(gui\\)|\\bgui \\(|\\(kuei\\)|kuei \\(",
+      "sense": "Chinese 鬼 gui: a ghost or spirit of the dead. Render 'ghost'/'spirit'; 'demon' only for a malevolent being the text marks as such.",
+      "exempt_before": "\\b(evil|wicked|unclean|impure|malign|malignant|foul|hostile|fallen)\\s+(\\w+\\s+){0,3}$"
+    },
+    {
+      "id": "wu-chinese",
+      "source": "巫|覡",
+      "loaded": "\\b(sorcery|sorcerer|sorcerers|sorceress|witch|witches|witchcraft|wizard|wizards|warlock)\\b",
+      "gloss": "\\(wu\\)|\\bwu \\(|shaman|spirit.medium",
+      "sense": "Chinese 巫 wu: a spirit-medium or ritual specialist. Render 'spirit-medium'/'shaman', not 'sorcerer'/'witch'."
+    },
+    {
+      "id": "shu-chinese",
+      "source": "幻術|法術|方術|蠱|術",
+      "loaded": "\\b(magic|magical|magician|magicians|sorcery|sorcerer|sorcerers|witchcraft|wizardry)\\b",
+      "gloss": "\\((huan)?shu\\)|\\(fangshu\\)|\\(gu\\)",
+      "sense": "Chinese 術/幻術/方術: an art, technique or art of illusion; 蠱 gu: poison-magic. Render the art literally ('art of illusion', 'techniques') unless the text means magic."
+    },
+    {
+      "id": "veneficium-latin",
+      "source": "\\bvenefic|\\bmalefic",
+      "loaded": "\\b(sorcery|sorcerer|sorcerers|sorceress|witch|witches|witchcraft|wizard|wizards)\\b",
+      "gloss": "veneficium|maleficium|malefici|venefici",
+      "sense": "Latin veneficium is poisoning; maleficium/maleficus is harm-doing, evil-doing. Render the act ('poisoning', 'harmful deeds') unless the text itself is about witches as such.",
+      "skip_collections": [
+        "demonology",
+        "theological-demonology",
+        "witch-trial-literature",
+        "witches-sabbath",
+        "global-demonology",
+        "christianity",
+        "theology",
+        "sacred-texts"
+      ]
+    },
+    {
+      "id": "magus",
+      "source": "(?<!\\p{L})μαγ(οσ|οι|ου|ων|ε|ουσ|οισ)(?!\\p{L})|\\bmag(us|i|orum|os|um)\\b",
+      "loaded": "\\b(magician|magicians|sorcerer|sorcerers|wizard|wizards|conjurer|conjurers)\\b",
+      "gloss": "\\bmagus\\b|\\bmagi\\b|\\bmagos\\b",
+      "sense": "Greek magos / Latin magus: a Persian priest or wise man (the Magi). Render 'magus'/'wise man', not 'magician'/'sorcerer', unless the text means a wonder-worker.",
+      "skip_collections": [
+        "demonology",
+        "theological-demonology",
+        "witch-trial-literature",
+        "witches-sabbath",
+        "global-demonology",
+        "christianity",
+        "theology",
+        "sacred-texts"
+      ]
+    },
+    {
+      "id": "vidya-maya-sanskrit",
+      "source": "\\bvidya|\\bmaya\\b|\\bmayay|विद्य|माया|मायय",
+      "loaded": "\\b(magic|magical|magician|magicians|sorcery|witchcraft|wizardry)\\b",
+      "gloss": "vidya|vidyā|maya|māyā",
+      "sense": "Sanskrit vidyā: knowledge, a science or spell-science; māyā: a god's creative power or illusion. Render 'knowledge'/'power'/'illusion', not 'magic'."
+    }
+  ]
+}

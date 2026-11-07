@@ -1,0 +1,520 @@
+{
+ "generated_at": "2026-11-03T09:55:13.279Z",
+ "frame": "the drawn pages whose book is LIVE (visible, pages_count > 0): 28 of the 30 (the 2 hidden books are left out); one page a book; the STORED read as served",
+ "books": 28,
+ "rubric": "scripts/eval/confidence-7866/regrade.mjs gradeOf / bucketOf on the same Opus judgePrompt verdict (#7866 rubric); rates per 1,000 by route-judge-6740/defect-rate.mjs words() (the unit /quality uses)",
+ "grades": {
+  "fit_to_quote": {
+   "k": 1,
+   "n": 28,
+   "share": 0.036,
+   "wilson95": [
+    0.006,
+    0.177
+   ]
+  },
+  "fit_to_read": {
+   "k": 0,
+   "n": 28,
+   "share": 0,
+   "wilson95": [
+    0,
+    0.121
+   ]
+  },
+  "search_only": {
+   "k": 4,
+   "n": 28,
+   "share": 0.143,
+   "wilson95": [
+    0.057,
+    0.315
+   ]
+  },
+  "wrong_span": {
+   "k": 15,
+   "n": 28,
+   "share": 0.536,
+   "wilson95": [
+    0.358,
+    0.705
+   ]
+  },
+  "from_elsewhere": {
+   "k": 0,
+   "n": 28,
+   "share": 0,
+   "wilson95": [
+    0,
+    0.121
+   ]
+  },
+  "mostly_wrong": {
+   "k": 6,
+   "n": 28,
+   "share": 0.214,
+   "wilson95": [
+    0.102,
+    0.395
+   ]
+  },
+  "not_this_page": {
+   "k": 2,
+   "n": 28,
+   "share": 0.071,
+   "wilson95": [
+    0.02,
+    0.226
+   ]
+  }
+ },
+ "buckets": {
+  "says_what_the_page_says": {
+   "k": 1,
+   "n": 28,
+   "share": 0.036,
+   "wilson95": [
+    0.006,
+    0.177
+   ]
+  },
+  "misleads_somewhere": {
+   "k": 4,
+   "n": 28,
+   "share": 0.143,
+   "wilson95": [
+    0.057,
+    0.315
+   ]
+  },
+  "text_not_on_the_page": {
+   "k": 23,
+   "n": 28,
+   "share": 0.821,
+   "wilson95": [
+    0.644,
+    0.921
+   ]
+  }
+ },
+ "accept": {
+  "k": 2,
+  "n": 28,
+  "share": 0.071,
+  "wilson95": [
+   0.02,
+   0.226
+  ]
+ },
+ "words": 5971,
+ "severe_per_1k": 32.658,
+ "wrong_text_per_1k": 15.408,
+ "misleads_per_1k": 17.25,
+ "by_stored_engine": {
+  "stored-3flash": {
+   "n": 21,
+   "says_what_the_page_says": "1/21",
+   "text_not_on_the_page": "16/21"
+  },
+  "stored-lite": {
+   "n": 7,
+   "says_what_the_page_says": "0/7",
+   "text_not_on_the_page": "7/7"
+  }
+ },
+ "unweighted_note": "k/n over one page a book, not weighted to pages (the draw floors hangul and mixed books); the HT-weighted accept over all 30 is in score.json",
+ "pages": [
+  {
+   "page_id": "69f3258d52a77bb28fdb4c5f",
+   "book": "69f3258d52a77bb28fdb49dc",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "search_only",
+   "bucket": "misleads_somewhere",
+   "accept": true,
+   "fidelity": 4,
+   "words": 196,
+   "wrong_text": 0,
+   "misleads": 1,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f3279552a77bb28fdb73da",
+   "book": "69f3279552a77bb28fdb739b",
+   "stratum": "hanja/print",
+   "stored": "stored-lite",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 176,
+   "wrong_text": 4,
+   "misleads": 3,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f327d552a77bb28fdb7ba1",
+   "book": "69f327d552a77bb28fdb7aa1",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "mostly_wrong",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 2,
+   "words": 253,
+   "wrong_text": 8,
+   "misleads": 1,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f33d44876dd827cbc5bd0f",
+   "book": "69f33d44876dd827cbc5bc2a",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 88,
+   "wrong_text": 1,
+   "misleads": 1,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f33f13876dd827cbc61209",
+   "book": "69f33f13876dd827cbc611f8",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 4,
+   "words": 242,
+   "wrong_text": 1,
+   "misleads": 1,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f32800876dcf55533d7245",
+   "book": "69f32800876dcf55533d71b2",
+   "stratum": "hanja/print",
+   "stored": "stored-lite",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 216,
+   "wrong_text": 5,
+   "misleads": 5,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f33bc1876dd827cbc59465",
+   "book": "69f33bc1876dd827cbc593cd",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 214,
+   "wrong_text": 1,
+   "misleads": 6,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f33e77876dd827cbc5f0be",
+   "book": "69f33e77876dd827cbc5eef8",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "search_only",
+   "bucket": "misleads_somewhere",
+   "accept": false,
+   "fidelity": 4,
+   "words": 212,
+   "wrong_text": 0,
+   "misleads": 1,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f326df52a77bb28fdb6b27",
+   "book": "69f326df52a77bb28fdb6ae6",
+   "stratum": "hanja/print",
+   "stored": "stored-lite",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 4,
+   "words": 238,
+   "wrong_text": 1,
+   "misleads": 0,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f33e5f876dd827cbc5e4f8",
+   "book": "69f33e5f876dd827cbc5e35c",
+   "stratum": "hanja/print",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 4,
+   "words": 206,
+   "wrong_text": 2,
+   "misleads": 0,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f33df1876dd827cbc5d1c5",
+   "book": "69f33df1876dd827cbc5cb4c",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 243,
+   "wrong_text": 1,
+   "misleads": 2,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f33f0b876dd827cbc6102c",
+   "book": "69f33f0b876dd827cbc60eac",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 299,
+   "wrong_text": 5,
+   "misleads": 6,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f3292caeeee0fa38c654d8",
+   "book": "69f3292caeeee0fa38c653ee",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 292,
+   "wrong_text": 4,
+   "misleads": 2,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f33bba876dd827cbc59333",
+   "book": "69f33bba876dd827cbc5925d",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "search_only",
+   "bucket": "misleads_somewhere",
+   "accept": false,
+   "fidelity": 3,
+   "words": 227,
+   "wrong_text": 0,
+   "misleads": 4,
+   "cosmetic": 2
+  },
+  {
+   "page_id": "69f3247352a77bb28fdb31c4",
+   "book": "69f3247352a77bb28fdb3102",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "search_only",
+   "bucket": "misleads_somewhere",
+   "accept": false,
+   "fidelity": 4,
+   "words": 309,
+   "wrong_text": 0,
+   "misleads": 3,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f32935aeeee0fa38c65557",
+   "book": "69f32935aeeee0fa38c654ea",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 651,
+   "wrong_text": 3,
+   "misleads": 17,
+   "cosmetic": 2
+  },
+  {
+   "page_id": "69f33ce1876dd827cbc5b065",
+   "book": "69f33ce1876dd827cbc5afe3",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 302,
+   "wrong_text": 9,
+   "misleads": 5,
+   "cosmetic": 2
+  },
+  {
+   "page_id": "69f3259f52a77bb28fdb57c7",
+   "book": "69f3259f52a77bb28fdb55c5",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "fit_to_quote",
+   "bucket": "says_what_the_page_says",
+   "accept": true,
+   "fidelity": 4,
+   "words": 161,
+   "wrong_text": 0,
+   "misleads": 0,
+   "cosmetic": 2
+  },
+  {
+   "page_id": "69f33f3c876dd827cbc6150b",
+   "book": "69f33f3c876dd827cbc6148a",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "mostly_wrong",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 2,
+   "words": 284,
+   "wrong_text": 5,
+   "misleads": 8,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f33c18876dd827cbc59dc4",
+   "book": "69f33c18876dd827cbc59bd4",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 56,
+   "wrong_text": 1,
+   "misleads": 1,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f3275b52a77bb28fdb71da",
+   "book": "69f3275b52a77bb28fdb7153",
+   "stratum": "hanja/manuscript",
+   "stored": "stored-lite",
+   "grade": "mostly_wrong",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 2,
+   "words": 352,
+   "wrong_text": 11,
+   "misleads": 5,
+   "cosmetic": 2
+  },
+  {
+   "page_id": "69f325ae52a77bb28fdb590e",
+   "book": "69f325ae52a77bb28fdb58e9",
+   "stratum": "hangul/manuscript",
+   "stored": "stored-3flash",
+   "grade": "not_this_page",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 1,
+   "words": 159,
+   "wrong_text": 4,
+   "misleads": 3,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69f33e53876dd827cbc5e309",
+   "book": "69f33e53876dd827cbc5e2f2",
+   "stratum": "hangul/manuscript",
+   "stored": "stored-3flash",
+   "grade": "mostly_wrong",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 2,
+   "words": 196,
+   "wrong_text": 3,
+   "misleads": 6,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f3253252a77bb28fdb410c",
+   "book": "69f3253252a77bb28fdb3fb2",
+   "stratum": "hangul/manuscript",
+   "stored": "stored-3flash",
+   "grade": "mostly_wrong",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 2,
+   "words": 27,
+   "wrong_text": 5,
+   "misleads": 6,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f32966aeeee0fa38c6586e",
+   "book": "69f32966aeeee0fa38c65856",
+   "stratum": "hangul/manuscript",
+   "stored": "stored-lite",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 102,
+   "wrong_text": 6,
+   "misleads": 4,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "69e014d747b76785d4ec829f",
+   "book": "69e014d647b76785d4ec821c",
+   "stratum": "hangul/print",
+   "stored": "stored-lite",
+   "grade": "not_this_page",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 1,
+   "words": 7,
+   "wrong_text": 4,
+   "misleads": 0,
+   "cosmetic": 1
+  },
+  {
+   "page_id": "69f33781876dd827cbc52318",
+   "book": "69f33781876dd827cbc522e3",
+   "stratum": "mixed/manuscript",
+   "stored": "stored-lite",
+   "grade": "mostly_wrong",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 2,
+   "words": 133,
+   "wrong_text": 5,
+   "misleads": 8,
+   "cosmetic": 0
+  },
+  {
+   "page_id": "6a08fd545271a4d704d309c8",
+   "book": "6a08fd545271a4d704d309ba",
+   "stratum": "mixed/manuscript",
+   "stored": "stored-3flash",
+   "grade": "wrong_span",
+   "bucket": "text_not_on_the_page",
+   "accept": false,
+   "fidelity": 3,
+   "words": 130,
+   "wrong_text": 3,
+   "misleads": 4,
+   "cosmetic": 3
+  }
+ ]
+}

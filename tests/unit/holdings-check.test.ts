@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { candidateFromInput, ourBookRef, rankingTokens, titleCoverage, summarize } from '@/lib/holdings-check';
+import { candidateFromInput, ourBookRef, rankingTokens, titleCoverage, summarize, sameAuthorAnyScript, nameTokens } from '@/lib/holdings-check';
 import { sourceFingerprints } from '@/lib/dedup';
 
 describe('ourBookRef', () => {
@@ -51,5 +51,28 @@ describe('near-title ranking', () => {
 describe('summarize', () => {
   it('says new when nothing matched', () => {
     expect(summarize('new', [])).toMatch(/^New/);
+  });
+});
+
+describe('names and titles outside the Latin script (#8084)', () => {
+  it('keeps Han, Greek and Arabic name words', () => {
+    expect(nameTokens('李時珍')).toEqual(['李時珍']);
+    expect(nameTokens('Ali ibn Nasr al-Katib (علي بن نصر الكاتب)')).toContain('الكاتب');
+  });
+
+  it('matches a Han author inside a catalogue form, and not a different name', () => {
+    expect(sameAuthorAnyScript('李時珍', '(明)李時珍撰')).toBe(true);
+    expect(sameAuthorAnyScript('司馬遷', '司馬遷 (Sima Qian)')).toBe(true);
+    expect(sameAuthorAnyScript('司馬遷', '司馬貞')).toBe(false);
+  });
+
+  it('still matches Latin surnames, and an Arabic particle is not a name', () => {
+    expect(sameAuthorAnyScript('Sima Qian', '司馬遷 (Sima Qian)')).toBe(true);
+    expect(sameAuthorAnyScript('محمد بن موسى', 'علي بن نصر الكاتب')).toBe(false);
+  });
+
+  it('counts a Han title contained in a longer catalogue title', () => {
+    expect(titleCoverage('本草綱目', '本草綱目·卷上之中').coverage).toBe(1);
+    expect(titleCoverage('本草綱目', '普濟方').coverage).toBe(0);
   });
 });

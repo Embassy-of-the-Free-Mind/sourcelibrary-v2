@@ -13,7 +13,8 @@ import path from 'node:path';
 import { wilson } from '../lib/agreement-stats.mjs';
 import { FAULTS } from '../ocr-per-call-7522/judge.mjs';
 
-const ARMS = ['old1', 'new1', 'old4', 'new4'];   // prep.mjs's arms (importing it would run it)
+// prep.mjs's arms (importing it would run it); --arms=base,a,b as prep got them (#8330): each is paired against the first.
+const ARMS = process.argv.find((a) => a.startsWith('--arms='))?.slice(7).split(',') ?? ['old1', 'new1', 'old4', 'new4'];
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const S = arg('scratch');
 const J = path.join(S, 'judge');
@@ -56,5 +57,5 @@ for (const arm of ARMS) {
 const pair = (a, b) => { let worse = 0, better = 0; for (const pid of Object.keys(key)) { const x = byArm[a][pid], y = byArm[b][pid]; if (!x || !y) continue; if (x.usable && !y.usable) worse++; if (!x.usable && y.usable) better++; } return { new_worse: worse, new_better: better }; };
 console.log(JSON.stringify({
   status: nCaught >= 3 ? 'result' : 'probe_broken', controls_caught: `${nCaught}/${controls.length}`, controls,
-  arms, paired: { '1/call old→new': pair('old1', 'new1'), '4/call old→new': pair('old4', 'new4') },
+  arms, paired: ARMS.includes('old1') ? { '1/call old→new': pair('old1', 'new1'), '4/call old→new': pair('old4', 'new4') } : Object.fromEntries(ARMS.slice(1).map((a) => [`${ARMS[0]}→${a}`, pair(ARMS[0], a)])),
 }, null, 1));

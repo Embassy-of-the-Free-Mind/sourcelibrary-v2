@@ -35,7 +35,7 @@ for (const g of inScope) {
   }
   if (!rows.length) continue;
   if (APPLY) {
-    const h = await holdBook(db, g.id, { reason: 'gpu-backlog-5660', issue: 5660, release: 'first OCR (Yigdzin) of these Tibetan pages was job gpu-backlog-5660 (#5660, OCR only); translation is its own priced decision', source: 'gpu-backlog-5660', detail: { engine: 'bdrc-yigdzin-v1' } });
+    const h = await holdBook(db, g.id, { reason: 'gpu-backlog-5660', issue: 5660, release: 'first OCR (Yigdzin) of these Tibetan pages was job gpu-backlog-5660 (#5660, OCR only); translation is its own priced decision', release_when: { kind: 'decision', ref: 'release gpu-backlog-5660' }, source: 'gpu-backlog-5660', detail: { engine: 'bdrc-yigdzin-v1' } });
     tally.holds[h.outcome] = (tally.holds[h.outcome] || 0) + 1;
     if (!['held', 'already_held', 'held_other_reason'].includes(h.outcome)) continue;
   }

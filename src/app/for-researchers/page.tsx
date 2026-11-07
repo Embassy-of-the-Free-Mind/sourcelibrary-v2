@@ -105,7 +105,7 @@ export default function ForResearchersPage() {
         <div className="bg-white rounded-xl border border-border-light p-6 mb-4">
           <p className="text-sm text-muted mb-3">General citation format</p>
           <p className="font-mono text-sm text-primary leading-relaxed">
-            [Author], <em>[Title]</em>, trans. Source Library AI (Gemini, [year]),
+            [Author], <em>[Title]</em>, trans. Source Library AI ([year]),
             sourcelibrary.org/book/[slug], p. [N].
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function ForResearchersPage() {
           <p className="text-sm text-muted mb-3">Example</p>
           <p className="font-mono text-sm text-primary leading-relaxed">
             Agrippa, Heinrich Cornelius. <em>De Occulta Philosophia</em>, trans. Source Library AI
-            (Gemini, 2026), sourcelibrary.org/book/de-occulta-philosophia-agrippa, p. 42.
+            (2026), sourcelibrary.org/book/de-occulta-philosophia-agrippa, p. 42.
           </p>
         </div>
 
@@ -132,7 +132,7 @@ export default function ForResearchersPage() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-16">
           <div className="space-y-4 text-stone-800 text-[15px] leading-relaxed">
             <p>
-              <strong>These are AI translations.</strong> They are produced by Google Gemini models
+              <strong>These are AI translations.</strong> They are produced by AI models
               reading directly from page scans. They have not been reviewed by human translators
               on a per-book basis. They are designed to make texts <em>accessible</em>, not to replace
               critical editions.

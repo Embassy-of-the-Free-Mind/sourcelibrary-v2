@@ -46,7 +46,8 @@ const RELEASE = 'the copy named in hold.detail.kept turns out not to be the same
 // title-only reasons are kept only when the page counts agree, which is the same-edition signature.
 const STRONG: HoldingReason[] = ['same_source_object', 'same_iiif_manifest', 'same_edition', 'same_edition_year_unknown',
   'same_work_same_year', 'title_author_near_same_year', 'related_copy'];
-const IF_PAGES_AGREE: HoldingReason[] = ['same_work', 'title_author_near', 'near_title'];
+// same_edition_volume_unknown: one side names no volume, so only agreeing page counts say it is the same one (#7624).
+const IF_PAGES_AGREE: HoldingReason[] = ['same_work', 'title_author_near', 'near_title', 'same_edition_volume_unknown'];
 
 const MIN_PAGE_RATIO = 0.85;
 const arg = (k: string, d: string | null = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -198,7 +199,7 @@ async function decide(db: Db, dir: string, apply: boolean) {
   const outcomes: Record<string, number> = {};
   for (const h of holds) {
     const r = await holdBook(db, h.hold.id, {
-      reason: HOLD_REASON, issue: 4285, release: RELEASE, source: 'pre-ocr-duplicate-screen',
+      reason: HOLD_REASON, issue: 4285, release: RELEASE, release_when: { kind: 'test', ref: 'title pages of this copy and hold.detail.kept read by eye: not the same printing' }, source: 'pre-ocr-duplicate-screen',
       detail: { kept: h.kept.id, why: h.why, median_inliers: h.median_inliers },
     }, { dryRun: !apply });
     outcomes[r.outcome] = (outcomes[r.outcome] || 0) + 1;

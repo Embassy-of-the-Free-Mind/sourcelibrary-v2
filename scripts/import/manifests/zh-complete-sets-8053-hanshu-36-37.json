@@ -1,0 +1,19 @@
+{
+ "campaign": "zh-complete-sets-8053",
+ "collections": [],
+ "issue": 8053,
+ "sweep": "zh-complete-sets-8053-import",
+ "work_id_source": "kanripo-catalog:8053",
+ "hold_release": "#8053: fills 漢書 juan 36 (from leaf 36b) and juan 37, which the 欽定四庫全書 copy of the Four Histories (#7546) lacks. ANOTHER COPY: IA files it under 摛澡堂四庫全書薈要, not the copy the other 57 volumes come from. OCR by the Paddle SKQS lane on gex45 ($0); translation and release are Derek's decision with the rest of the set; release with --to ocr_complete (never --to queued, which re-reads with Gemini)",
+ "BOOKS": [
+  {
+   "id": "06079788.cn",
+   "title": "前漢書·卷三十六~卷三十七 (Hanshu, Siku Quanshu Huiyao copy, juan 36-37)",
+   "author": "班固 (Ban Gu)",
+   "year": 1778,
+   "lang": "Chinese",
+   "work_id": "kr:KR2a0007",
+   "note": "#8053 fills the gap in the Four Histories 漢書 (#7546): the 欽定四庫全書 copy's vol. 25 ends at juan 36 leaf 36a and no volume holds juan 37. This volume is ANOTHER COPY: IA files it as 摛澡堂四庫全書薈要·史部·正史類 (本书100卷，拆分成56册), item 06079788.cn of run 06073027-06079820, while the other 57 volumes are the 欽定四庫全書 run 06058710-807. Its content was checked by eye on the leaves (2026-11-04): n3 is juan 36 leaf 2 (楚元王交 … 丘嫂), n75 is juan 36 leaf 38 (劉向's memorial on the Wang clan), n128 ends 前漢書卷三十七考證 (田叔傳). It repeats juan 36 leaves 1-36a, which the other copy holds. IA's creator field (范蔚宗) is wrong; the author is 班固. Year: the 摛澡堂 Huiyao copy, c. 1778."
+  }
+ ]
+}

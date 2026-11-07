@@ -1,0 +1,74 @@
+[
+  {
+    "book_id": "b19-r", "slot": 1, "title": "Collection of Rosicrucian and Alchemical Texts (PH255)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century Latin manuscript of alchemical processes (antimony regulus, 'Mercurii mediante Arsenico nostro praeparatio', 'Explicatio dubiorum ... super hoc Regulo', a citation of Philaletha) belongs on an alchemy/Rosicrucian shelf; tradition field is null and no collections are given in the packet.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. None of the three pages has a translation, so a reader gets only the transcription. Pages 78, 154 and 232 are each a single verso in the same hand; nothing suggests a splice or a wrong work.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "non enim purificatus Regulus unicum est in terris reperibile solvens", "image": "noẽ etenim purificatus Regulus unicum (nostrum etenim purificatus Regulus)", "problem": "the abbreviation for 'nostrum' read as 'non'; the claim 'our purified Regulus is the only solvent on earth' becomes 'a purified Regulus is NOT the only solvent', so the sense is reversed", "severity": "serious", "class": "O6" },
+          { "ocr": "huic merito Regulo non solventis Ursi nomen tribuitur", "image": "hinc merito Regulo noŝ Solventis Ursi nomen tribuitur", "problem": "'nostro' read as 'non' again; the name 'our Solvent' turns into a negation", "severity": "moderate", "class": "O6" },
+          { "ocr": "sum novum antimonialem, per jam vero minera comparatum quem novum facies, aut denes aquilatus", "image": "♁um novum antimonialem, per ▽am vero mineralem preparatum ☿ium novum efficies, aut decies aquilatus", "problem": "alchemical symbols (♁, ▽ = aquam, ☿) dropped or read as 'sum'/'jam'/'quem'; 'mineralem preparatum' read as 'minera comparatum'", "severity": "moderate", "class": "O6" },
+          { "ocr": "spiritu rectificati non spiritu spiritu martialis partes duas", "image": "℞ ... ut ante docuimus :// rectificati noẽ ♁ri ♁ii martialis partes duas", "problem": "the substance symbols in the recipe (♁ regulus of martial antimony) are rendered as a repeated 'spiritu spiritu', and 'nostri' as 'non'; the reader cannot tell what is to be combined", "severity": "serious", "class": "O6" },
+          { "ocr": "in suam suam et fluxum transmutet", "image": "in naturam suam et fluxum transmutet (naãm suam)", "problem": "'naturam' replaced by a duplicated 'suam'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Superfunde jam calidam", "image": "Superfunde ▽am calidam (aquam calidam)", "problem": "water symbol read as 'jam'", "severity": "moderate", "class": "O6" },
+          { "ocr": "sine humidi radicalis nota coitura", "image": "sine humidi radicalis [struck-out word] laesura/caitura", "problem": "a struck-out word is transcribed as text without marking the deletion", "severity": "minor" },
+          { "ocr": "(nothing)", "image": "left-margin mark 'B |' beside lines 5–6", "problem": "marginal mark dropped", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "no translation exists for this page; the reader sees only the Latin transcription", "severity": "moderate", "class": "other:no-translation" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 154,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "et ad 6 lot[iones] O[lei] et paucam quantitatem O[lei] fusi", "image": "5 vel 6 lot ⦶i et paucam quantitatem ⊖ fusi", "problem": "the dose '5 vel 6 lot' (5 or 6 Loth, a weight) becomes '6 lot[iones]' (washings), and the symbols for nitre and salt are both expanded as 'O[lei]' (oil): the ingredient and the quantity are both wrong, presented as editorial expansions", "severity": "serious", "class": "O7" },
+          { "ocr": "fluentibus inuice ut ante et 6 lot[iones] O[lei] cum modica O[lei] quantitate", "image": "fluentibus invice ut ante 5 vel 6 lot ⦶i, cum modica ⊖is quantitate", "problem": "same: '5 vel' dropped, nitre and salt turned into oil", "severity": "serious", "class": "O7" },
+          { "ocr": "hunc gum et rubeum gem ... Gem vero rubeum ... hunc gum et gem", "image": "hunc ♁um et rubeum ⊖em ... ⊖em vero rubeum", "problem": "antimony and salt symbols rendered as the non-words 'gum'/'gem'", "severity": "moderate", "class": "O6" },
+          { "ocr": "habbis gum splendentem ut C[rystallum] mollem", "image": "habbis ♁um splendentem ut C mollem", "problem": "bracketed expansion 'C[rystallum]' is the model's guess, not on the page (a soft, fusible 'C' is more likely cera)", "severity": "moderate", "class": "O8" },
+          { "ocr": "ad augmentationem O[lei] et Cogitationem [?] magno cum emolumento servit", "image": "ad augmentationem ⦶i et fixationemque/coagulationemque ☿ii magno cum emolumento servit", "problem": "'Cogitationem' is a misreading and the ☿ii (mercury) symbol is dropped", "severity": "moderate", "class": "O6" },
+          { "ocr": "1mo A[ntimonium] et O[leum]: Sis et tri in chaos coniunguntur, hoc est enim ac necessarium opus, quia vero necdum genitalia, sed ad eam massam", "image": "1mo ♀: ⊖: et ☿: ♁is et ♁ii in chaos coniunguntur, hoc est unum ac necessarium opus, quia vero necdum ☿ialia, sed ad unam massam", "problem": "three principles (sulphur, salt, mercury) collapsed to 'Antimonium et Oleum' with invented expansions; 'unum' read as 'enim', 'mercurialia' as 'genitalia', 'unam' as 'eam'", "severity": "serious", "class": "O6" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "no translation exists for this page", "severity": "moderate", "class": "other:no-translation" },
+          { "note": "bracketed expansions O[lei], C[rystallum], A[ntimonium] read as editorial apparatus but are guesses, and several are wrong", "severity": "serious", "class": "O8" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 232,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "<columns>2</columns> ... <column-break/> suis =nua / puris =Aa bene abso / pure aurea. ille a pe / et =bed vivo pure Aurea / vul magi et. fail / eum quod minr Sabe vivo arec", "image": "the leaf is single-column; these are the clipped line-ends of the facing page visible at the right edge", "problem": "the neighbouring leaf's edge strip is transcribed as a second column of this page: text not on the page", "severity": "serious", "class": "I4" },
+          { "ocr": "dum em. digeritur et maturiatur absque purificatione a vero magis quam suum coagulare debet", "image": "dum autem digeritur et maturatur atque purificatur, a vero mago ☿ium suum coagulare debet", "problem": "'atque purificatur' (and is purified) read as 'absque purificatione' (without purification): sense reversed; 'mago' (the true magus) read as 'magis', ☿ium as 'quam'", "severity": "serious", "class": "O6" },
+          { "ocr": "Quamuis iam Rege nostri optimè purificatus et purissimus coagulati", "image": "quamvis autem Regulus noster optime purificatus ☿ii purissimi coagulati", "problem": "mercury symbol dropped and the construction garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "tanquam fus externus quam custodit", "image": "tanquam fur externus ☿ium custodit", "problem": "'fur' (thief) read 'fus'; mercury symbol read 'quam' — the Philalethes quotation loses its sense", "severity": "moderate", "class": "O6" },
+          { "ocr": "Purgatio et cum Ferro ... Mars purgat suum ... Vera et purgatio ... Reguli et et Purificatio ... Recipe et electi ... addendo unciam 1 et dimidia et recentis, denuo cum et statu", "image": "Purgatio ♁ii cum ♂ro ... Mars purgat ♁ium ... vera ♁ii purgatio ... Reguli ♁ii Pa Purificatio ... ℞ ♁ii electi ... unciam 1½ ♁ii recentis, denuo cum ⊕ sinato", "problem": "nearly every substance symbol is collapsed to 'et' (or 'suum'), so the recipes no longer say what is purified or added", "severity": "serious", "class": "O6" },
+          { "ocr": "(nothing)", "image": "pencil note in a later hand under the heading: 'V.p. Sequ: 7. ubi ... nomin:'", "problem": "later-hand pencil note dropped (acceptable, but unmarked)", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "no translation exists for this page", "severity": "moderate", "class": "other:no-translation" },
+          { "note": "garbled fragments from the facing leaf ('vul magi et. fail', 'eum quod minr Sabe vivo arec') appear as a second column in the reader", "severity": "serious", "class": "I4" }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right leaves and a well-photographed, legible manuscript, but the transcription does not handle the alchemical symbols: they are dropped, read as words ('et', 'gum', 'jam'), or expanded wrongly (nitre and salt as 'O[lei]'). Doses and two key statements are reversed ('non' for 'nostrum', 'absque purificatione' for 'atque purificatur'), the facing leaf's edge is read as a column, and no page has a translation. An expert would flag it on sight."
+  }
+]

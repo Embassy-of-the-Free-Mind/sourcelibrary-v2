@@ -1,4 +1,5 @@
 import archiver from 'archiver';
+import { translationCorpus } from '@/lib/text-provenance';
 import sharp from 'sharp';
 import type { Db } from 'mongodb';
 import { resolveHoldingCopy } from '@/lib/holding-library';
@@ -27,7 +28,7 @@ export interface KdpEpubOptions {
   introduction?: string;
   /** Translation methodology note (optional). */
   methodology?: string;
-  /** SPDX/CC license id for the copyright page (default CC-BY-SA-4.0). */
+  /** SPDX/CC license id for the copyright page (default CC-BY-NC-SA-4.0). */
   license?: string;
   /**
    * Pre-generated cover JPEG to embed as the EPUB cover-image. Pass the same
@@ -317,7 +318,7 @@ export async function generateKdpEpub(
   const now = new Date().toISOString().split('T')[0];
   const modified = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
   const uuid = `urn:uuid:${book.id}`;
-  const license = options?.license || 'CC-BY-SA-4.0';
+  const license = options?.license || 'CC-BY-NC-SA-4.0';
 
   const translatedPages = pages.filter(p => p.translation?.data);
 
@@ -585,11 +586,8 @@ ${section('People', idx!.people)}${section('Places', idx!.places)}${section('Con
 
       // ── Colophon ──
       const translatedCount = translatedPages.length;
-      const models = new Set<string>();
-      for (const p of pages) {
-        if (p.translation?.model) models.add(p.translation.model);
-        if (p.ocr?.model) models.add(p.ocr.model);
-      }
+      // Named by kind, not model (#7263); a corpus edition's English is not AI's.
+      const aiTranslated = pages.some(p => p.translation?.data && p.translation.model && !translationCorpus(p));
       const provider = book.image_source?.provider_name || book.image_source?.provider;
       // Imprint place: resolve the stated/asserted/conjectural family, not the
       // bare import-tier column (#4043).
@@ -614,7 +612,7 @@ ${section('People', idx!.people)}${section('Places', idx!.places)}${section('Con
     <div class="colophon-section">
       <h2>Translation</h2>
       <p><span class="colophon-label">Pages Translated:</span> ${translatedCount} of ${pages.length}</p>
-      ${models.size > 0 ? `<p><span class="colophon-label">AI Models:</span> ${escapeXml(Array.from(models).join(', '))}</p>` : ''}
+      ${aiTranslated ? `<p><span class="colophon-label">Translation:</span> AI translation, made from a transcription of the scans</p>` : ''}
       <p><span class="colophon-label">Generated:</span> ${now}</p>
       <p><span class="colophon-label">License:</span> ${escapeXml(license)}</p>
     </div>

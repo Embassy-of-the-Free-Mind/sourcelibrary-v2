@@ -33,6 +33,13 @@
  *   # Sink C (#2564) — harvest priors found by the grounded FT enumeration:
  *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --from-enum <enum.jsonl>           # dry-run
  *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --from-enum <enum.jsonl> --apply
+ *
+ *   # Sink D (#7598) — linked prior credits on book pages (books.prior_translation with a url),
+ *   # written by the fresh prior-translation search and its held-conflict step. Each one is a link
+ *   # that loaded and a named translation, so it is a better row than an sl_ft_llm_claim. Label
+ *   # sl_prior_credit_linked: SL-origin, so the translation layer keeps it out of external priors.
+ *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --from-credits [--since 2026-10-27]           # dry-run
+ *   node scripts/enrichment/harvest-ft-into-translation-catalogs.mjs --from-credits --apply
  */
 
 import { MongoClient } from 'mongodb';
@@ -253,6 +260,37 @@ async function harvestFromEnum(db, file, dryRun, limit) {
   if (errorSamples.length) console.log('  Error samples:\n   ' + errorSamples.join('\n   '));
 }
 
+// ── Linked prior credits → catalog (Sink D, issue #7598) ────────────
+
+async function harvestFromCredits(db, since, dryRun, limit) {
+  const books = await db.collection('books').find(
+    { 'prior_translation.url': { $regex: '^https?://' }, 'prior_translation.verified_at': { $gte: since } },
+    { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, prior_translation: 1 } },
+  ).toArray();
+  const skipReasons = { english_source: 0, junk_translator: 0, original_author: 0, author_eq_translator: 0 };
+  const rows = [];
+  for (const b of books) {
+    const p = b.prior_translation;
+    const row = buildRow(b, {
+      english_title: p.work_title,
+      translator: (p.translators || []).join('; ') || null,
+      pub_year: p.year ? String(p.year) : null,
+      publisher: p.publisher || null,
+      completeness: p.scope || 'unknown',
+      source_url: p.url,
+    }, 'sl_prior_credit_linked', skipReasons);
+    if (row) rows.push(row);
+  }
+  if (limit) rows.splice(limit);
+  console.log(`Credited books since ${since}: ${books.length}; candidate sl_prior_credit_linked rows: ${rows.length}`);
+  console.log(`  skipped (guards): ${JSON.stringify(skipReasons)}`);
+  for (const r of rows.slice(0, 5)) console.log(`  ${r.canonical_author} / "${(r.english_title || '').slice(0, 55)}" by ${r.translator || '?'} (${r.pub_year || '?'})`);
+  if (dryRun) { console.log('\nDry-run complete. Re-run with --apply to write.'); return; }
+  const counts = { inserted: 0, skipped_existing: 0, error: 0 };
+  for (const row of rows) counts[(await processRow(row)).result]++;
+  console.log(`\nDone. inserted=${counts.inserted}, skipped_existing=${counts.skipped_existing}, errors=${counts.error}`);
+}
+
 // ── Supabase ────────────────────────────────────────────────────────
 
 async function existingRowId(row) {
@@ -311,10 +349,12 @@ async function main() {
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : null;
   const fromEnumIdx = args.indexOf('--from-enum');
   const fromEnum = fromEnumIdx >= 0 ? args[fromEnumIdx + 1] : null;
+  const fromCredits = args.includes('--from-credits');
+  const since = args.includes('--since') ? args[args.indexOf('--since') + 1] : '2026-10-27';
 
   console.log('=== Harvest FT findings → translation_catalogs ===');
   console.log('Mode:', dryRun ? 'DRY RUN' : 'APPLYING');
-  console.log('Source:', fromEnum ? `enumeration output (${fromEnum})` : 'Mongo translation_verification');
+  console.log('Source:', fromCredits ? 'books.prior_translation (linked credits)' : fromEnum ? `enumeration output (${fromEnum})` : 'Mongo translation_verification');
   console.log('Dedup strategy: per-row SELECT before INSERT');
   if (limit) console.log('Per-pass limit:', limit);
   console.log();
@@ -322,6 +362,12 @@ async function main() {
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 3, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db(MONGODB_DB);
+
+  if (fromCredits) {
+    await harvestFromCredits(db, since, dryRun, limit);
+    await client.close();
+    return;
+  }
 
   // Sink C (#2564): harvest priors found by the grounded FT enumeration.
   if (fromEnum) {

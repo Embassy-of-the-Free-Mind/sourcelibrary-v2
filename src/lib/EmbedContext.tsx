@@ -59,3 +59,16 @@ export function useEmbedHref(): (href: string) => string {
         return withEmbedNamespace(href, embedPrefix);
     };
 }
+
+/**
+ * A search result's link, for the surface it renders on. /embed/<tenant> has a
+ * reader but no /guide route, so a page hit opens the page itself. Elsewhere the
+ * href passes through.
+ */
+export function useRoomResultHref(): (href: string) => string {
+    const embedHref = useEmbedHref();
+    return (href: string) => {
+        if (embedHref(href) === href) return href;
+        return embedHref(href.replace(/\/guide\?page=(\d+)$/, '/page-number/$1'));
+    };
+}

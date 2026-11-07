@@ -1,0 +1,153 @@
+[
+  {
+    "book_id": "b05-k", "slot": 1, "title": "Horae beatae Mariae virginis (use of Paris)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>\ndicat. O\nnobis qui\nabrenunci\n… cramen\ntous.\n</margin>", "image": "these are the cut-off line ends of the FACING leaf visible at the left edge of the photograph; they are not on this page", "problem": "neighbour-leaf strip transcribed as this page's marginalia (25 garbled fragments, e.g. 'cum.byn', 'a. 64')", "severity": "serious", "class": "I4" },
+          { "ocr": "(no page-num)", "image": "pencil folio '35' lower left", "problem": "folio number not recorded", "severity": "minor" },
+          { "ocr": "(frieze omitted)", "image": "pseudo-inscription 'VORSTVONLCAFGRSTVORLVEFNOEVOEY' on the frieze", "problem": "decorative lettering not transcribed (pseudo-text, harmless)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>\nne patre nos\nomnes atque\nas <unclear>einar</unclear>\n… me liberem\nmum.\n</margin>", "image": "line ends of the facing leaf at the left edge ('gne patre nos', 'omnes adpi[s]', 'tua ineffabili', 'me liberemur')", "problem": "neighbour-leaf strip transcribed as marginalia of this page", "severity": "serious", "class": "I4" },
+          { "ocr": "<image-desc … type=\"engraving\">", "image": "a hand-painted illumination", "problem": "miniature tagged as an engraving", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>h deum. et pa\npossis ab omni … ndum. amen</margin>", "image": "line ends of the facing Latin leaf at the left edge", "problem": "neighbour-leaf strip transcribed as this page's margin; also makes the page's <language> 'Latin, Middle French' when the page is French only", "severity": "serious", "class": "I4" },
+          { "ocr": "**O**ut a par moy", "image": "Tout a par moy (illuminated initial T)", "problem": "initial misread as O; first word becomes 'Out'; image-desc also calls it an 'O'", "severity": "moderate", "class": "O6" },
+          { "ocr": "boye", "image": "voye", "problem": "v misread as b", "severity": "minor" },
+          { "ocr": "rauope", "image": "rauoye", "problem": "y misread as p", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The scroll texts are read essentially right (bar the 'Out' for 'Tout' initial on p.14), but on every page this reader transcribes the facing leaf's cut-off line ends as a garbled <margin> block, putting text that is not on the page into the reader view."
+  },
+  {
+    "book_id": "b05-m", "slot": 2, "title": "Horae beatae Mariae virginis (use of Paris)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "VORSTVONZCHFORSTVORLVEFNOEVOEY", "image": "VORSTVONLCAFGRSTVORLVEFNOEVOEY", "problem": "a few letters of the decorative pseudo-inscription misread", "severity": "minor" },
+          { "ocr": "annunciabit", "image": "annūtiabit (annuntiabit)", "problem": "spelling normalised to -ci-", "severity": "minor", "class": "O8" },
+          { "ocr": "<image-desc … type=\"woodcut\">", "image": "a hand-painted illumination", "problem": "miniature tagged as a woodcut", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<page-num>51</page-num>", "image": "pencil folio '57' lower left", "problem": "folio number misread", "severity": "minor", "class": "O7" },
+          { "ocr": "annunciabit", "image": "annuntiabit", "problem": "spelling normalised", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<image-desc … type=\"woodcut\">", "image": "a hand-painted illumination", "problem": "miniature tagged as a woodcut", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean: all three scroll texts are right, with only a normalised 'annunciabit', a misread pencil folio (51 for 57) and woodcut/engraving type tags on painted miniatures."
+  },
+  {
+    "book_id": "b05-r", "slot": 3, "title": "Horae beatae Mariae virginis (use of Paris)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the page's only real text is wrapped in an <insert> tag rather than given as body text, and the frieze pseudo-letters are given as an insert too (flagged as pseudo-inscription in a note)", "severity": "minor", "class": "O11" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "(no page-num)", "image": "pencil folio '57' lower left", "problem": "folio number not recorded", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "ung", "image": "vng", "problem": "u/v normalised (the same reader keeps 'rauoye' as written)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "scroll text given as a single <insert> rather than body text", "severity": "minor", "class": "O11" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The most faithful of the readings: exact text on all three pages and correct folios where given, with only a habit of wrapping the main text in <insert> tags."
+  },
+  {
+    "book_id": "b05-t", "slot": 4, "title": "Horae beatae Mariae virginis (use of Paris)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "VORSTVONLCHFORSTVOKLVEFNOEVOEY", "image": "VORSTVONLCAFGRSTVORLVEFNOEVOEY", "problem": "a few letters of the decorative pseudo-inscription misread", "severity": "minor" },
+          { "ocr": "annunciabit", "image": "annuntiabit", "problem": "spelling normalised", "severity": "minor", "class": "O8" },
+          { "ocr": "(no page-num)", "image": "pencil folio '35'", "problem": "folio number not recorded", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<page-num>51</page-num>", "image": "pencil folio '57'", "problem": "folio number misread", "severity": "minor", "class": "O7" },
+          { "ocr": "annunciabit", "image": "annuntiabit", "problem": "spelling normalised", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "ravoye", "image": "rauoye", "problem": "u/v normalised", "severity": "minor" },
+          { "ocr": "<image-desc … type=\"engraving\">", "image": "a hand-painted illumination", "problem": "miniature tagged as an engraving", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean: correct scroll texts on all three pages, with minor slips (a normalised 'annunciabit', pencil folio 51 for 57, a few pseudo-inscription letters)."
+  }
+]

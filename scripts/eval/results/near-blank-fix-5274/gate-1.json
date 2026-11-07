@@ -1,0 +1,942 @@
+{
+ "seed": 52740,
+ "n": 30,
+ "alloc": {
+  "三才圖會": 10,
+  "武備志": 7,
+  "植物名實圖考": 6,
+  "other": 7
+ },
+ "prompt_line": null,
+ "pages": [
+  {
+   "page_id": "6992cdb243713c66ea63808f",
+   "book_id": "6992cdb243713c66ea638041",
+   "page": 78,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(四十六)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 3,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cdf381c9d7efb84d0efd",
+   "book_id": "6992cdf281c9d7efb84d0ee0",
+   "page": 29,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(六十四)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce7577d26f932177720c",
+   "book_id": "6992ce7477d26f9321776f6a",
+   "page": 40,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(九十九)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce8a673ee1e40e320f7e",
+   "book_id": "6992ce8a673ee1e40e320f60",
+   "page": 30,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(一百五)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce7177d26f9321776ecd",
+   "book_id": "6992ce7177d26f9321776eb3",
+   "page": 26,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(九十八)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce60673ee1e40e320496",
+   "book_id": "6992ce60673ee1e40e320488",
+   "page": 14,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(九十三)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cd3f43713c66ea6359cd",
+   "book_id": "6992cd3e43713c66ea63598e",
+   "page": 63,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(十四)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cd5643713c66ea635e19",
+   "book_id": "6992cd5543713c66ea635de5",
+   "page": 52,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(二十)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cdb443713c66ea638138",
+   "book_id": "6992cdb443713c66ea63812e",
+   "page": 9,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(二十三)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cdbc43713c66ea6384a3",
+   "book_id": "6992cdbc43713c66ea6383f4",
+   "page": 89,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(二十五)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce4600291c2fcb634157",
+   "book_id": "6992ce4500291c2fcb634100",
+   "page": 87,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(五十二)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce582960dc4e5cea9261",
+   "book_id": "6992ce582960dc4e5cea91f3",
+   "page": 27,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(五十六)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce3b3ea667fbac8288eb",
+   "book_id": "6992ce3a3ea667fbac8288d4",
+   "page": 23,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(五十)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce4a2960dc4e5cea8fd4",
+   "book_id": "6992ce4a2960dc4e5cea8f7d",
+   "page": 87,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(五十三)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 3,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cefff7519cdd65044b6a",
+   "book_id": "6992cefff7519cdd65044b57",
+   "page": 19,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "植物名實圖考",
+   "language": "Chinese",
+   "title": "植物名實圖考(二)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cff5f5b4f75c1a4c9cc0",
+   "book_id": "6992cff5f5b4f75c1a4c9c50",
+   "page": 112,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "搜神記",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992f412c8c6ac61574e754c",
+   "book_id": "6992f412c8c6ac61574e753f",
+   "page": 13,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "臺灣番社風俗 (Taiwan Fanshe Fengsu: Customs of Taiwans Indigenous People)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "served-audit-6691"
+  },
+  {
+   "page_id": "6992cd7943713c66ea636b2c",
+   "book_id": "6992cd7943713c66ea636b07",
+   "page": 37,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(三十)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cabdd4d545ae73fee984",
+   "book_id": "6992cabdd4d545ae73fee906",
+   "page": 126,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "易象圖說 (Yixiang Tushu: Illustrated Explanation of Yi Hexagram Images)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ca83d4d545ae73fee385",
+   "book_id": "6992ca83d4d545ae73fee34e",
+   "page": 55,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "救荒本草 (Jiuhuang Bencao: Famine Relief Herbal) Vol 1",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 4,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cdee81c9d7efb84d0e29",
+   "book_id": "6992cdee81c9d7efb84d0dee",
+   "page": 59,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "武備志",
+   "language": "Chinese",
+   "title": "武備志(三十四)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 3,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992f3eec8c6ac61574e72b6",
+   "book_id": "6992f3eec8c6ac61574e72a1",
+   "page": 21,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "名山圖",
+   "language": "Chinese",
+   "title": "名山圖 (Mingshan Tu: Famous Mountains of China)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "near-blank-invented-5274"
+  },
+  {
+   "page_id": "6992cdc443713c66ea638736",
+   "book_id": "6992cdc343713c66ea63870c",
+   "page": 42,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(五十一)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ca5fd4d545ae73fedfe3",
+   "book_id": "6992ca5fd4d545ae73fedf66",
+   "page": 125,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "欽定儀象考成 (Imperial Astronomical Instruments Survey) Vols 1-3",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-excluded"
+  },
+  {
+   "page_id": "6992cf0e284cdd19fef46f79",
+   "book_id": "6992cf0e284cdd19fef46f38",
+   "page": 65,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "植物名實圖考",
+   "language": "Chinese",
+   "title": "植物名實圖考(六)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cfdaf5b4f75c1a4c9aa6",
+   "book_id": "6992cfdaf5b4f75c1a4c9a6b",
+   "page": 59,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "新刻出像增補搜神記",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 2,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce7f673ee1e40e320cda",
+   "book_id": "6992ce7f673ee1e40e320caa",
+   "page": 48,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(一百二)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ce542960dc4e5cea91ad",
+   "book_id": "6992ce542960dc4e5cea9195",
+   "page": 24,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(九十)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992cdb943713c66ea638309",
+   "book_id": "6992cdb943713c66ea6382fd",
+   "page": 12,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "三才圖會",
+   "language": "Chinese",
+   "title": "三才圖會(四十八)",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 0,
+   "hold": "paddle-zh-6388-ocr-only"
+  },
+  {
+   "page_id": "6992ca5bd4d545ae73fede45",
+   "book_id": "6992ca5ad4d545ae73fedda0",
+   "page": 165,
+   "src": [
+    "near-blank-invented"
+   ],
+   "state": "withheld",
+   "tr_at": null,
+   "ocr_model": "gemini-3-flash-preview",
+   "ocr_first": false,
+   "family": "other",
+   "language": "Chinese",
+   "title": "幾何原本 (Jihe Yuanben: Euclids Elements in Chinese) Vol 1",
+   "lane_row": "flash-measured",
+   "engine": "gemini-3-flash-preview",
+   "channel": "batch",
+   "reader": "agy",
+   "reads": 1,
+   "hold": "paddle-zh-6388-ocr-only"
+  }
+ ],
+ "replaced": [
+  {
+   "page_id": "6992ce83673ee1e40e320d87",
+   "class": "三才圖會",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992ce7f673ee1e40e320cf2",
+   "class": "三才圖會",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992ce4f2960dc4e5cea90b9",
+   "class": "武備志",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf6ef5b4f75c1a4c8e34",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf3af5b4f75c1a4c84ba",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf0e284cdd19fef46f49",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf5bf5b4f75c1a4c8b8b",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf88f5b4f75c1a4c9282",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cbda018b80967354bf0e",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "book needs_splitting and is not split: split it first (split-book.mjs --gutter-only / split-pecha.mjs), #7605"
+  },
+  {
+   "page_id": "6992ce9c77d26f93217774e4",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cbe4018b80967354c3e1",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "69d9fb2a290e8006e23c3a50",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "69e8b25c2ff2a8dc09e77765",
+   "class": "other",
+   "state": "ocr-refused"
+  },
+  {
+   "page_id": "6992cdc043713c66ea63859e",
+   "class": "三才圖會",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cea677d26f9321777575",
+   "class": "武備志",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf073158e1eeeea7f941",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf78f5b4f75c1a4c9013",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf8cf5b4f75c1a4c92e7",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf45f5b4f75c1a4c870d",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf12284cdd19fef47018",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "69e788094a6785cfd60ceb67",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (skip-type)"
+  },
+  {
+   "page_id": "6992cbe8018b80967354c597",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cabbd4d545ae73fee904",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992ce66673ee1e40e32084e",
+   "class": "三才圖會",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf0e284cdd19fef46f63",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf3af5b4f75c1a4c84b8",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf6ef5b4f75c1a4c8e83",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "699998894310a671394526d1",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6a3ceb1f95fcd45563053b78",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf073158e1eeeea7f90e",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf45f5b4f75c1a4c86e5",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf12284cdd19fef4702b",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992ca59d4d545ae73fedd34",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf3af5b4f75c1a4c8484",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf78f5b4f75c1a4c9015",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf073158e1eeeea7f909",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf12284cdd19fef47054",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf3af5b4f75c1a4c84ac",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf45f5b4f75c1a4c86d5",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf073158e1eeeea7f930",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf12284cdd19fef47047",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf3af5b4f75c1a4c847a",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cf073158e1eeeea7f949",
+   "class": "植物名實圖考",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992ce273ea667fbac828582",
+   "class": "三才圖會",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992c906453c7175dc1bccb9",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  },
+  {
+   "page_id": "6992cdac43713c66ea637e53",
+   "class": "other",
+   "state": "not-translatable",
+   "why": "not translatable (no-body)"
+  }
+ ],
+ "filled_from_other": [
+  {
+   "for": "植物名實圖考",
+   "page_id": "6992ce7f673ee1e40e320cda",
+   "class": "三才圖會"
+  },
+  {
+   "for": "植物名實圖考",
+   "page_id": "6992ce542960dc4e5cea91ad",
+   "class": "三才圖會"
+  },
+  {
+   "for": "fill-to",
+   "page_id": "6992ce273ea667fbac828582",
+   "class": "三才圖會"
+  },
+  {
+   "for": "fill-to",
+   "page_id": "6992c906453c7175dc1bccb9",
+   "class": "other"
+  }
+ ]
+}

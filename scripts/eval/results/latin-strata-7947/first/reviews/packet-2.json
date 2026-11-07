@@ -1,0 +1,737 @@
+[
+  {
+    "book_id": "69dbc9c01040d1d5e20a5f41",
+    "slot": 28,
+    "title": "Quaestiones selectae abbreviatae et ordinatae per alphabetum super quattuor libris Sententiarum Petri Lombardi Quodlibetisque Metaphysicae et De Anima. Ed: Johannes de Colonia",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "1477 incunable of Scotist scholastic questions (Sentences, Metaphysics, De anima); scholastic theology and natural philosophy, adjacent to the library's early-modern-knowledge holdings. No collection is given.",
+    "rights_flag": null,
+    "structure_note": "785 of 788 pages translated; manuscript foliation (85, 163, 283) and signatures (i2, h, p) agree with the OCR page-num tags. Nothing structural stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 199,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "fine ordine sacerdotii",
+            "image": "ſine ordine ſacerdotii",
+            "problem": "long-s 'sine' (without) read as 'fine'; the translation says 'end of the order of the priesthood'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "per alios et fit si digne uel recte. deinde eat benedictione digne poscenti et indigno ministru",
+            "image": "p alios etiā fit. ſ; nō digne uel recte. deꝰ enī dat bñdictionē digne poſcenti p indignū miniſtrū",
+            "problem": "'sed non digne vel recte. Deus enim dat benedictionem ... per indignum ministrum' (it is done through others too, but NOT worthily; for God gives the blessing to the worthy asker THROUGH an unworthy minister) became 'it is done if worthily or rightly. Then let him go with the blessing ... and to the unworthy minister': negation lost and God dropped, so the doctrine is reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "sed potestate est auctoritas",
+            "image": "ſ; pcellēti q ē auctās",
+            "problem": "'sed (de) precellenti, que est auctoritas' misread as 'potestate'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "colubum uel mel colube",
+            "image": "colūbam uł membꝰ colūbe",
+            "problem": "'per columbam vel membrum columbe' garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ueteris testamenti. quindecimo",
+            "image": "ueteris teſtamēti. q. xi.",
+            "problem": "question 11 rendered as fifteenth",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Ad quartum per ex quarto articulo quod formam una clauis ... ut rideat sibi materia ... formalia opposita potestas",
+            "image": "Ad 4m p3 ex 4o articło q̄ ſm unā op. clauis ... ut rñdeat ſibi mā ... ſm aliā op. ptās clauis",
+            "problem": "'secundum unam opinionem ... secundum aliam opinionem' read as 'formam una' / 'formalia opposita'; 'respondeat' read as 'rideat' — the translation then says 'that the matter may smile upon him' and 'the formally opposed power'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Tunc celum sit animatum ... habet nobilissima foras",
+            "image": "Trū celū ſit aiatū. q̄ ſic. q̄ nobiliſſimū corꝰ hab3 nobiliſſimā formā",
+            "problem": "'Tertio (queritur utrum) celum sit animatum ... formam' read as 'Tunc' and 'foras' throughout; translation renders 'most noble souls' and 'a right and left soul'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "quod ea est effectia totalis ... per id per celum. quod diceretur reducat in deum et fuga miserorum",
+            "image": "q̄ ē cā effectiua totał ... q̄ ad ip3 celū. q̄ dicer̄ q̄ reducat̄ in deū ē fuga miſerorum",
+            "problem": "'causa effectiva' read as 'ea effectia'; 'quam ad ipsum celum' and 'est fuga' garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "in omnibus epistolis pauci inuenies",
+            "image": "in oībꝰ epłis pauli ñ inuenies",
+            "problem": "'epistolis Pauli non invenies' read as 'pauci'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "per alios et fit si digne uel recte. deinde eat benedictione digne poscenti et indigno ministru",
+            "english": "it is done if worthily or rightly. Then let him go with the blessing to the one worthily asking, and to the unworthy minister",
+            "problem": "built on the OCR misreading; the source's claim that God blesses through an unworthy minister is lost and the opposite implied",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "quod ea est effectia totalis alicuius animati est animatum. et ca effectia totalis non potest esse innobilior suo effectu",
+            "english": "that which is the total effect of some animated thing is animated, and that total effect cannot be less noble than its effect",
+            "problem": "cause turned into effect: the argument is that the total efficient CAUSE of a living thing cannot be less noble than its effect",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ut rideat sibi materia",
+            "english": "that the matter may smile upon him",
+            "problem": "absurd literal rendering of a misread 'respondeat'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "sed potestate est auctoritas sententiandi",
+            "english": "but power is the authority of sentencing",
+            "problem": "fluent over a misread clause",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 395,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "quod non permittebant homines curari de puteo et sabbato et mira alia",
+            "image": "q̄ nō pmittebant hoīes curari in ſabbato. & ouē uel bouē trahebant de puteo i ſabbato & m̄ta alia",
+            "problem": "a line dropped: 'they did not allow men to be healed on the Sabbath, yet drew a sheep or ox out of a pit on the Sabbath' became 'healed of the pit'",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "per gestae diaboli et uxoris",
+            "image": "p ſuggeſtiōe diaboli & uxoris",
+            "problem": "'per suggestionem' misread as 'per gestae'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "sed aut necessitate tamen ans quod ans continges",
+            "image": "ſ; nō aūt neceſſitatē tā aūs q̄ aūs fuit ꝯtinges",
+            "problem": "'sed non necessitate antecedentis, quia antecedens fuit contingens' garbled; the negation is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "multi quod sibi tenentur",
+            "image": "multū g̃ ſibi tenemur",
+            "problem": "'multum ergo sibi tenemur' (we are much bound to him) misread as 'multi'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Ad secundum dicendum quod plus loquitur",
+            "image": "Ad 2m dicendū q̄ phs loquit̄",
+            "problem": "'philosophus' (Aristotle) read as 'plus'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Ans. aut potest saluari",
+            "image": "Aliť aūt poteſt ſaluari",
+            "problem": "'Aliter' read as 'Ans.'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "quod homo peccauit per gestae diaboli et uxoris",
+            "english": "because man sinned through the deeds of the devil and his wife",
+            "problem": "the wife (Eve, Adam's wife) becomes the devil's wife; the text invents a wife for the devil",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "quod non permittebant homines curari de puteo et sabbato",
+            "english": "they did not permit men to be healed of the pit and on the Sabbath",
+            "problem": "carries the dropped line; the gospel contrast (sheep or ox drawn out of a pit) is lost and nonsense left",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "multi quod sibi tenentur",
+            "english": "Many <note>say</note> that they are held to it",
+            "problem": "invents a speaker ('Many say'); source says we are much beholden to him",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "quod uoles iudeos ab eorum erroribus reuocare",
+            "english": "You wish to recall the Jews from their errors",
+            "problem": "'quia volens' (because [he], wishing) rendered as a second-person statement",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "quis de omni specie ceciderit aliqua species aut humana tota cecidit",
+            "english": "because from every species some fell, or the entire human species fell",
+            "problem": "'quamvis ... species autem humana tota cecidit' (although some fell from every species, the human species fell entirely) turned into an alternative",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "inline <note> insertions ('<note>say</note>', '<note>Response:</note>', '<note>there is the</note>') interleave supplied words in the reader text",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 591,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "communi discordia",
+            "image": "de cōmuni ꝯcordia",
+            "problem": "'concordia' (common agreement) read as 'discordia'; the translation says the sons divided the land 'by common discord'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "tum propter pacifica conuersationem que tunc male et cupide occuparet",
+            "image": "tū pp pacificā ꝯuerſatiōnē tū pp neccīam ſuſtentatiōnē. q̄ tūc malꝰ & cupidꝰ occuparet",
+            "problem": "the second reason 'tum propter necessariam sustentationem' dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "Ideo politia agere. 2° politia",
+            "image": "Ideo politia ariſ. 2o polit.",
+            "problem": "reference to Aristotle, Politics II garbled into 'politia agere'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "3° scio est ista auctoritas est duplex ... 4° scio est ista. prima diuisio",
+            "image": "5a ꝯcłō ē iſta ... 6a ꝯcłō eſt iſta",
+            "problem": "fifth and sixth conclusions numbered 3 and 4, duplicating earlier numbers; 'conclusio' read throughout as 'scio'",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "politica autem reuocata est super extraneos",
+            "image": "politica aūt q̄ eſt ſup extraneos",
+            "problem": "'que est' read as 'reuocata est'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "sustentatione. 2° scio est ista innocentie communis usus rerum plus valuit ad utrunque illorum distinctio dominiorum. que nullum tunc occupasset quod fuisset alii necessarium etc.",
+            "english": "(nothing)",
+            "problem": "the whole opening paragraph (in the state of innocence common use was worth more than divided ownership, since no one would have taken what another needed) is silently left out; the translation starts at the second paragraph",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "uel ipsi de communi discordia inter se diuiserunt",
+            "english": "or they themselves divided them by common discord among themselves",
+            "problem": "carries the 'discordia' misreading; source says by common agreement",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "fortiores etiam bellatores priuaret alios propriis rebus suis",
+            "english": "he deprived the stronger warriors also of their own property",
+            "problem": "subject and object swapped: the stronger warriors would deprive others",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "politica autem reuocata est super extraneos",
+            "english": "But political authority, if it is revoked over outsiders",
+            "problem": "fluent over a misreading; source: political authority, which is over outsiders",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation pane begins with a raw '<page-num>283</page-num>' tag and ends with <summary>/<keywords> blocks and inline <term> tags; if the renderer does not strip them the reader sees markup",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real 1477 Scotus incunable on the right leaves, but flash-lite reads the heavy abbreviations poorly: each page has a meaning-reversing misreading (God's blessing through an unworthy minister lost, 'concordia' read as 'discordia', the devil given a wife) and p.591's translation drops its opening paragraph. Not citable as it stands."
+  },
+  {
+    "book_id": "69b4ccd0d5b6c3815e1a26fb",
+    "slot": 65,
+    "title": "Moninckx Atlas, vol. 2",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "1686–1709 watercolour florilegium of the Amsterdam Hortus Medicus (Moninckx), with Latin polynomials and Dutch names; early modern botany, fits early modern science.",
+    "rights_flag": null,
+    "structure_note": "Each record is a two-page opening (text leaf + plate), consistently, with plate numbers 11, 29, 30 agreeing with the page-num tags. Image 13 is a 1000 px thumbnail while 31–32 are 10,526 px masters, so resolution varies across the book.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Mozingo van Acosia.",
+            "image": "Mozingo van Acosta.",
+            "problem": "Cristóbal Acosta's name misread; translation repeats 'Acosia'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "type=\"engraving\"",
+            "image": "hand-coloured watercolour drawing",
+            "problem": "image description tags the drawing as an engraving",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Mozingo van Acosia.",
+            "english": "Mozingo of Acosia.",
+            "problem": "carries the misread authority name",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 32,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean: the short Latin and Dutch plant names are transcribed and translated correctly against the plates, with one misread authority name (Acosta → 'Acosia'). Showable."
+  },
+  {
+    "book_id": "69b51eb4768235dc659977b1",
+    "slot": 97,
+    "title": "Artificium artis generalis - BSB Clm 28951",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Lullian Ars text in a Gothic cursive manuscript (BSB Clm 28951); Lullism belongs with the library's combinatorial and esoteric holdings.",
+    "rights_flag": null,
+    "structure_note": "196 pages, 192 OCR'd, 187 translated, so a handful are untranslated. 'published: Unknown' could be filled from the BSB catalogue. Foliation 24 and 73 agree with the OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Pavis in<unclear>t</unclear>u no het opacione pductiua s fructiua",
+            "image": "[op]atōis intrīc nō het opacionē pductiuā ſ; fructiuā",
+            "problem": "the OCR is a semi-diplomatic string of unexpanded abbreviations ('ctnahter', 'cushber p'etan', 'sliendme') rather than readable Latin; the first word is misread",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "solanificare martunificare",
+            "image": "Johanificare martinificare",
+            "problem": "Lull's individual examples (Peter-, John-, Martin-ifying) misread; with 'petrificare' the series now reads as 'petrifying'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<image-desc ...>Decorative initial 'P' at the beginning of the text.</image-desc>",
+            "image": "no decorated initial; the page begins mid-sentence",
+            "problem": "invented decorative initial",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "qua iflmt cushber p'etan actual sua sliendme",
+            "english": "insofar as it influences every entity by its own actuality",
+            "problem": "fluent translation over unexpanded garble, with no uncertainty mark; 'similitudinem' lost",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "petrificare solanificare martunificare",
+            "english": "petrifying, solanifying, martunifying",
+            "problem": "reader is told of 'petrifying' (turning to stone) where Lull means the individual Peter",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>Decorative initial 'P'</meta>' heads the translation, describing an initial that is not on the page",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 98,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "sic causa infinita est principium efficiens quae facit de nihilo angelum ipsum angelum",
+            "image": "ſic cā infinita ē pncipiū efficiens quia facit de ptibꝰ angeli ipm angelum",
+            "problem": "'de partibus angeli' (from the angel's parts — the mode 'from being into being') normalised to 'de nihilo', creation from nothing, contradicting the mode it illustrates",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "Sequitur ulterius scienda miratio de causa et eius specie",
+            "image": "Sequitur q̄liter ē facienda mixtio de cā cū ſuis ſpēbꝰ",
+            "problem": "'how the mixing of cause with its species is to be done' read as 'wonder'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Et possumus conside-rare illud modo",
+            "image": "Et poſſumꝰ ꝯſiderare tribꝰ modis",
+            "problem": "'three modes' lost",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "sicut per tunc de filiam panis in corpus Christi",
+            "image": "ſic pſbr̄ ... de ſbām panis in corpus xpī",
+            "problem": "the priest (presbiter) and 'substantiam' garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "facit per sola fructu",
+            "image": "ficulnea folia fructꝰ",
+            "problem": "'the fig tree [makes] leaves and fruit' garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "sicut deo occiden-do hominem substantiae",
+            "image": "ſic deo occidendo hoīem ſubitanee",
+            "problem": "'subitanee' (suddenly) read as 'substantiae'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "quae facit de nihilo angelum ipsum angelum",
+            "english": "which makes from nothing the angel, that angel himself",
+            "problem": "carries the normalisation; the doctrinal point is changed",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "castus pnat se castitate humi-liando se de luxuria",
+            "english": "the chaste man, he punishes himself from luxury by humbling himself",
+            "problem": "the example of mode 2 (being into non-being: a chaste man deprives himself of chastity by lowering himself to lust) inverted into an act of penance",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "forma de iris et apes facit et praedices mundi",
+            "english": "the form of the iris and the bees makes, and the preachers of the moral world",
+            "problem": "fluent nonsense over garble with no uncertainty mark",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "sicut deo occiden-do hominem substantiae",
+            "english": "just as God, by killing the man of substance",
+            "problem": "carries the misread",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 147,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "utrum bonitas sit deus, quod bonitas deus ... utrum magnitudo sit deus, quod est magnitudo deus ... quod est concordantia deus",
+            "image": "vtr bonitas ſit drns quid ē bonitas drns ... vtr magnitudo ſit drns ... quid eſt ꝯcordancia drns",
+            "problem": "'durans' (Lull's principle of duration: 'whether goodness is enduring') read every time as 'deus', so the page asks 'whether goodness is God', 'whether concordance is God' — theological claims not on the page",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "utrum duratio sit deus, quod est concordantia deus",
+            "image": "vtr ꝯcordā ſit bona quid ē ꝯcordā bona vtr ꝯcordā ſit magna quid eſt ꝯcordā magna vtr ꝯcordā ſit drns quid eſt ꝯcordancia drns",
+            "problem": "the concordantia questions (two lines) dropped and merged into one",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "in qualibet camera fiunt quaestiones et ubi et cetera sunt verbi quaestiones",
+            "image": "in qualibet camera fiūt xxiiij q̄ones et ubi eſt k. fiūt xxxvj q̄ones",
+            "problem": "the counts (24 questions per chamber, 36 where K is) lost",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Et hec demonstrationes purificae et omnis",
+            "image": "Et hec demoſtraciones pnt fieri 4or mois",
+            "problem": "'can be made in four modes' read as 'purificae et omnis'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Supnaliter duratio infinita est finitam",
+            "image": "Supnālr dra infinita creat finitam",
+            "problem": "'creat' (creates) read as 'est'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "utrum bonitas sit deus ... quod est concordantia deus",
+            "english": "whether goodness be God ... whether magnitude be God ... that concordance is God",
+            "problem": "the reader is told Lull asks whether goodness and concordance are God; the page asks whether they endure",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Supnaliter duratio infinita est finitam",
+            "english": "Supernaturally: infinite duration is [the] finite",
+            "problem": "source: infinite duration creates finite duration",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "et corpus augitur",
+            "english": "and the body is augmented",
+            "problem": "'coniungitur' (soul and body are joined) read as 'augmented'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right leaves, but this Gothic-cursive Lull is beyond flash-lite: the abbreviations are read as garble or normalised toward the expected (durans → deus, de partibus → de nihilo), and the translations stay fluent over it. An expert would flag p.147's 'whether goodness is God' series on sight."
+  },
+  {
+    "book_id": "69f33925876dd827cbc5481b",
+    "slot": 37,
+    "title": "Statutes on the governance of the Royal Hospital and Chapel of the Savoy, 1523",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Statutes of Henry VII's Savoy hospital (a manuscript of 1523): English institutional and charitable history, outside the library's esoteric and early-science traditions. No collection is given to justify it.",
+    "rights_flag": null,
+    "structure_note": "88 pages, 83 translated. The OCR page-num tags follow marginal marks ('a3' read as 43; the chapter number '22' read as a page number), not a foliation, but this is cosmetic.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>De officio divino vel in minimo fraudetur.</margin>",
+            "image": "left margin carries only a paragraph mark; this phrase is a line of the main text",
+            "problem": "a marginal note invented by copying a line of the body",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "<page-num>43</page-num>",
+            "image": "'a3' at the foot (a signature)",
+            "problem": "signature read as page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "the invented margin note is translated and shown as a marginal heading",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 43,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "in hospitali predicto",
+            "image": "in hoſpitii predcō",
+            "problem": "hospitio/hospitali",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 64,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "numerum lectorum vacuorum",
+            "image": "numerū lector̄ tunc vacuor̄",
+            "problem": "'tunc' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean and readable: the Savoy statutes are transcribed and translated faithfully, with one copied-in margin note. Its place on this shelf is doubtful, but not its quality."
+  },
+  {
+    "book_id": "69f338cc876dd827cbc5431d",
+    "slot": 35,
+    "title": "Ad illustriss. p. Ven. Paulum Nanum Taruisii Praetorem praefectu[m]que liber",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Neo-Latin encomiastic elegiacs to Paolo Nani, Venetian praetor of Treviso (Lignamine, c.1510): humanist occasional verse, not alchemy, Hermetica or early science. No collection is given.",
+    "rights_flag": null,
+    "structure_note": "50 pages, 48 translated; manuscript page numbers 9 and 15 and signature 'biii' agree with the OCR.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ne me crudelibus infere bellis",
+            "image": "ne me crudelibus inſere bellis",
+            "problem": "long-s 'insere' read as 'infere'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Et rigidos mores ingeniumque ferox",
+            "image": "Et rigidos mores ingenium que gr[a]tie (overwritten, partly illegible)",
+            "problem": "the end of the line is a scribal correction; 'ferox' is not legible on the leaf and may be supplied",
+            "severity": "minor"
+          },
+          {
+            "ocr": "follo latitans",
+            "image": "foſſo latitans",
+            "problem": "'fosso' read as 'follo'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Me lepus, et follo latitans que Cuniculus antro / Plus animi, & passus rectia ceruus habet",
+            "english": "The hare, and the rabbit hiding in a hollow cave, / Has more heart, and the deer has more steps.",
+            "problem": "'Me' (than me) dropped: the poet says even a hare, a rabbit and a netted stag have more spirit than he; the comparison and the point of the stanza are lost, and 'passus retia' (that has suffered nets) becomes 'more steps'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<meta>Decorative black square initials ...</meta>' and <summary>/<keywords> blocks in the translation pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "P ratores",
+            "image": "P ... rætores (drop-cap P + rætores = Prætores)",
+            "problem": "'Praetores' given as 'Pratores'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean humanist-hand manuscript of praise poems, accurately transcribed and translated apart from one lost comparison on p.14 (the 'me' in 'Me lepus'). Good text, doubtful shelf."
+  }
+]

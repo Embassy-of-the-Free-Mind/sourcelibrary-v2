@@ -14,6 +14,7 @@
  * via /api/iiif/{bookId}/canvas/{pageNumber}/{ocr|translation}.
  */
 
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getPartnerByProvider, type LibraryPartner } from '@/lib/library-partners';
@@ -24,6 +25,7 @@ import { API_LIMITS } from '@/lib/api-limits';
 import { extractImageService } from '@/lib/iiif-image-service';
 import { iiifCanvasId } from '@/lib/iiif-refs';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+import { displayedImageRights, libraryRightsUri } from '@/lib/types/image-source';
 
 /** The manifest's `summary` reads `index.bookSummary.brief` and nothing else off the index (#5184). */
 const MANIFEST_INDEX_FIELDS: readonly BookIndexProjectionField[] = ['bookSummary'];
@@ -218,7 +220,8 @@ export async function GET(
     const pagesLight = await db
       .collection('pages')
       .aggregate([
-        { $match: { book_id: id } },
+        // A repeat capture (#5056) is not a canvas; its leaf is already one.
+        { $match: { book_id: id, ...NOT_REPEAT_CAPTURE } },
         { $sort: { page_number: 1 } },
         {
           $project: {
@@ -356,7 +359,7 @@ export async function GET(
       label: { en: ['License'] },
       value: {
         en: [
-          'Original texts: public domain. OCR, translations and annotations: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, attribution: Source Library (https://sourcelibrary.org).',
+          'Original texts: public domain. OCR, translations and annotations: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>, attribution: Source Library (https://sourcelibrary.org).',
         ],
       },
     });
@@ -381,9 +384,15 @@ export async function GET(
     // The CC BY-SA claim on our OCR/translation layer lives in the License
     // metadata row — IIIF `rights` takes exactly one URI, and the facsimile
     // images are the manifest's primary content.
+    // The holding library's own statement wins when we have read one (#7771): a
+    // Gallica book's stored `publicdomain` is an importer default, while BnF
+    // states NoC-NC. A library that gave only its terms of use yields no URI,
+    // and then `rights` is omitted rather than defaulted to the PDM.
     const license = book.image_source?.license || book.license;
-    const rightsUri =
-      resolveRights(license) || 'http://creativecommons.org/publicdomain/mark/1.0/';
+    const statedUri = libraryRightsUri(book.image_source);
+    const rightsUri = statedUri !== undefined
+      ? statedUri
+      : resolveRights(license) || 'http://creativecommons.org/publicdomain/mark/1.0/';
 
     // Attribution — always credit the digitizing institution. Prefer an explicit
     // attribution string when stored; otherwise build one from the institution
@@ -391,7 +400,7 @@ export async function GET(
     const institutionName =
       resolvePartner(book.image_source?.provider)?.name || book.image_source?.provider_name;
     const attribution =
-      book.image_source?.attribution ||
+      displayedImageRights(book.image_source).credit ||
       (institutionName
         ? `Digitized by ${institutionName}. Re-hosted with AI-generated OCR and translation by Source Library.`
         : 'Re-hosted with AI-generated OCR and translation by Source Library.');

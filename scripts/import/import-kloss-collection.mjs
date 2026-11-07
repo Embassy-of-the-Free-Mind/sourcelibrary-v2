@@ -169,7 +169,7 @@ async function importRecord(db, record, index, total) {
     console.log('  Downloading PDF...');
     const pdfRes = await fetch(pdfUrl, {
       signal: AbortSignal.timeout(180000), // 3 min for large PDFs
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
+      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
     });
 
     if (!pdfRes.ok) {

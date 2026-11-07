@@ -1,0 +1,4686 @@
+{
+ "method": "judged-pages v1",
+ "source": "lane_judge_verdicts",
+ "run_id": "lane-judge-20261030025002",
+ "written_at": "2026-11-01T19:26:46.627Z",
+ "books": [
+  {
+   "book_id": "69b6370c1c1c21a373830cd8",
+   "title": "Breviarium secundum usum insignis Ecclesie collegiate Beate Marie viriginis de Belna Eduensis dyocesis",
+   "pages": [
+    {
+     "page_number": 12,
+     "page_id": "69b6370c1c1c21a373830ce4",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:53:26.984Z",
+     "text": "015f81f2b89e8d22",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "iii d f Albini",
+        "severity": "cosmetic",
+        "what": "the day-number cell on the page reads 'j' (day 1), not 'f'"
+       },
+       {
+        "class": "E2",
+        "quote": "Semiduplex ex fusi",
+        "severity": "cosmetic",
+        "what": "the rubric's last word looks like 'fun' (abbreviated, partly cut off), not 'fusi'"
+       }
+      ],
+      "reader_note": "This is a faithful transcription of the March calendar. All 31 rows and their golden numbers, ferial letters, Roman dates and feasts are present and in order. The only slip is that the first row's day cell reads 'f' where the page has 'j', and one rubric ending is slightly misread."
+     }
+    },
+    {
+     "page_number": 13,
+     "page_id": "69b6370c1c1c21a373830ce5",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:53:46.438Z",
+     "text": "019a2b3378f35b11",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "xvij c vij kalendas xxv <image-desc size=\"small\" type=\"symbol\" significance=\"low\">pilcrow</image-desc>Leta. ma.",
+        "severity": "wrong_text",
+        "what": "The faint red entry for St Mark's feast ('Marci euã. d.') before 'Leta. ma.' on 25 April is left out."
+       },
+       {
+        "class": "O8",
+        "quote": "Georgij martyris. Semiduplex. ex fundatione",
+        "severity": "misleads",
+        "what": "The page reads 'Semissolē' (semisolemne), but the candidate gives 'Semiduplex', a different feast rank."
+       },
+       {
+        "class": "O6",
+        "quote": "Tibur. valerij: et maximi martyrum. Duplex.",
+        "severity": "misleads",
+        "what": "The page has the rank 'D.M.' (duplex maius?), which is flattened to plain 'Duplex'. The red abbreviation before 'Tibur.' is also dropped."
+       },
+       {
+        "class": "O6",
+        "quote": "Vitalis martyris. Duplex.",
+        "severity": "misleads",
+        "what": "The page has 'D.M.', which is expanded to plain 'Duplex', so the rank changes."
+       },
+       {
+        "class": "O5",
+        "quote": "duplex fundatione: fit die sequenti",
+        "severity": "cosmetic",
+        "what": "The second 'ex' ('dupl. ex fundatiōe') is left out."
+       }
+      ],
+      "reader_note": "The April calendar's columns and numbering are right, but St Mark's feast on 25 April is missing, and several feast ranks are changed (Semiduplex for semisolemne, Duplex for D.M.)."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "69b6370c1c1c21a373830ce6",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:54:01.925Z",
+     "text": "9ab1cb542a843700",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Nobilis flos servit.",
+        "severity": "wrong_text",
+        "what": "The heading reads 'Mihi flos servit.'"
+       },
+       {
+        "class": "O6",
+        "quote": "Semiffolenne cum fundatione.",
+        "severity": "cosmetic",
+        "what": "Long s read as f; the page has 'Semissolenne'."
+       },
+       {
+        "class": "O6",
+        "quote": "et theodorim. Duplex.",
+        "severity": "misleads",
+        "what": "'theodori m.' (martyrum) is run together into a garbled name."
+       },
+       {
+        "class": "O8",
+        "quote": "Gordiani. et epimachij martyrum. Duplex.",
+        "severity": "cosmetic",
+        "what": "Here and on several other feasts the page's 'D. M.' (duplex maius) is reduced to plain 'Duplex', so the grade is levelled."
+       }
+      ],
+      "reader_note": "The May calendar table matches the page row by row, numerals included, but the heading verse is wrong ('Nobilis' for 'Mihi'), and a few feast grades and words are garbled or flattened."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b64a1a18b87551bfc62c16",
+   "title": "Desyderii Erasmi Roterodami, de duplici Copia Verborum ac rerum Commentarii duo",
+   "pages": [
+    {
+     "page_number": 14,
+     "page_id": "69b64a1a18b87551bfc62c24",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:54:13.924Z",
+     "text": "b64f600cfb80742f",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Quatenus vt,Qz.qui.",
+        "severity": "wrong_text",
+        "what": "page reads 'Qz vt,Qz.qui.' (quam ut, quam qui); the first 'Qz' was turned into the different word 'Quatenus'"
+       },
+       {
+        "class": "O6",
+        "quote": "Plus & plusque.",
+        "severity": "misleads",
+        "what": "page has 'pluſq̄' (plusquam); 'plusque' drops the abbreviation and reads as a different word"
+       },
+       {
+        "class": "O7",
+        "quote": "<sig>iij</sig>",
+        "severity": "cosmetic",
+        "what": "the signature on the page reads 'iiij', not 'iij'"
+       }
+      ],
+      "reader_note": "A faithful two-column index of chapters 69–104 with folio references, except that the 'Qz vt, Qz qui' entry is wrongly expanded to 'Quatenus' and 'plusquam' is given as 'plusque'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b64aa018b87551bfc67af1",
+   "title": "Elucidarius vel vocabularius poeticus",
+   "pages": [
+    {
+     "page_number": 2,
+     "page_id": "69b64aa018b87551bfc67af3",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:54:27.870Z",
+     "text": "9bb7bfabc2463dac",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "comunibus",
+        "severity": "cosmetic",
+        "what": "page has 'cõmunibus'; the abbreviation is only half expanded (should be 'communibus')"
+       },
+       {
+        "class": "D1",
+        "quote": "# Elucidarius vel vo\ncabularius",
+        "severity": "cosmetic",
+        "what": "heading markup splits the words 'vocabularius' and 'hebraicorum' across the heading and body lines"
+       },
+       {
+        "class": "E2",
+        "quote": "composed of four compartments enclosing the title text, featuring winged putti, foliage",
+        "severity": "cosmetic",
+        "what": "border has more than four blocks, and the description leaves out the two fantastic beasts at the top and the red hand-colouring"
+       }
+      ],
+      "reader_note": "The title text is complete and in the right order, with the abbreviations expanded. The only slips are the half-expanded 'comunibus', a heading that breaks words in the middle, and a loose description of the woodcut border."
+     }
+    },
+    {
+     "page_number": 7,
+     "page_id": "69b64aa018b87551bfc67af8",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:54:42.856Z",
+     "text": "f12836cd71545acf",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Aeson Eſitei filiꝰ",
+        "severity": "misleads",
+        "what": "the father's name is printed 'Critei' (Cretheus); 'Eſitei' is a misread"
+       },
+       {
+        "class": "O6",
+        "quote": "fortiſſimꝰ grecoꝝ ꝑ achil/lẽ",
+        "severity": "misleads",
+        "what": "the page has 'pꝰ' (post, 'after Achilles'), not 'ꝑ' (per, 'through')"
+       },
+       {
+        "class": "E2",
+        "quote": "oppidũ ſicẽlie",
+        "severity": "cosmetic",
+        "what": "the page has 'ſicilie'; a stray tilde has been added"
+       },
+       {
+        "class": "E2",
+        "quote": "Aliõ eodem tꝑe",
+        "severity": "cosmetic",
+        "what": "the abbreviation is misread; the page reads 'Aliꝰ' (alius)"
+       }
+      ],
+      "reader_note": "This is a complete, faithful two-column transcription of entries Aesculapius through Alba. The only errors are a few small abbreviation and letter misreads, such as 'Eſitei' for Critei and 'ꝑ' for 'pꝰ' (post) in the Aiax entry."
+     }
+    },
+    {
+     "page_number": 8,
+     "page_id": "69b64aa018b87551bfc67af9",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:55:00.284Z",
+     "text": "8be87d32ecd22b2f",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "poeta lyricus mythilenus",
+        "severity": "cosmetic",
+        "what": "page reads 'mythileus'; the transcription normalises it to the expected form"
+       },
+       {
+        "class": "O8",
+        "quote": "inter colchos",
+        "severity": "cosmetic",
+        "what": "page has 'colchū' (colchum); the transcription gives the plural 'colchos'"
+       },
+       {
+        "class": "O8",
+        "quote": "Alcmena electrionis filia",
+        "severity": "cosmetic",
+        "what": "page prints 'electionis'; the transcription silently corrects it to 'electrionis'"
+       },
+       {
+        "class": "O6",
+        "quote": "**Alcman** vel alcmeon filius amphiarai",
+        "severity": "cosmetic",
+        "what": "page reads 'Alcman⁹' (Alcmanus); the abbreviation is dropped, so the headword repeats the one above"
+       }
+      ],
+      "reader_note": "This is a faithful, complete reading of both columns, with the header and signature right. A few spellings are quietly normalised: mythileus, colchum, electionis and Alcmanus become the expected forms."
+     }
+    },
+    {
+     "page_number": 11,
+     "page_id": "69b64aa018b87551bfc67afc",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:55:11.534Z",
+     "text": "6355dc879070ef95",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I compared both columns line by line with the image and found no omissions, additions or meaning-changing misreadings. The candidate expands the abbreviations (e.g. 'phs' becomes 'philosophus', 'dr' becomes 'dicitur'), which is a spelling convention, not an error. The strip of the next leaf showing at the right edge was correctly left out."
+     }
+    },
+    {
+     "page_number": 13,
+     "page_id": "69b64aa018b87551bfc67afe",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:55:31.515Z",
+     "text": "6887c15f1d8f2f8e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Aricia fuit urbs italie prope albanum",
+        "severity": "misleads",
+        "what": "page reads 'vrbs i latio' (in Latium), not 'italie'"
+       },
+       {
+        "class": "O6",
+        "quote": "que Dariura patre rex factus",
+        "severity": "misleads",
+        "what": "garbled; the page has 'Darius a patre rex factus'"
+       },
+       {
+        "class": "E2",
+        "quote": "arte sua grandem pecuniam pe\nmeruit",
+        "severity": "cosmetic",
+        "what": "'p' abbreviation (promeruit) given as stray 'pe'"
+       },
+       {
+        "class": "E2",
+        "quote": "caspi\num mare prensa",
+        "severity": "cosmetic",
+        "what": "page has the abbreviation for 'protensa'"
+       },
+       {
+        "class": "E2",
+        "quote": "Postea laccusatus",
+        "severity": "cosmetic",
+        "what": "the printed bracket mark was read as an 'l'"
+       },
+       {
+        "class": "E2",
+        "quote": "Qui cum ita\nliam profectus",
+        "severity": "cosmetic",
+        "what": "page has 'Qui i(n) italiam'"
+       }
+      ],
+      "reader_note": "The page is complete and in the right order, with a few misreads, the main ones being 'italie' for 'in latio' under Aricia and the garbled 'Dariura' under Artoxerxes."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "69b64aa018b87551bfc67aff",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:55:47.056Z",
+     "text": "3b301a2474880d81",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "I4",
+        "quote": "<margin>oppido sibi credito. A. sed ⁊ Arbacẽ in medũ profectũ grauidũ accusauit regem reliquos hortat⁹</margin>",
+        "severity": "wrong_text",
+        "what": "The cut-off strip of the facing page in the left gutter is transcribed as this page's marginal notes. The phrases are largely invented, since only word fragments are visible there."
+       },
+       {
+        "class": "O1",
+        "quote": "<margin>sat Durstiko Dux itinerẽ</margin>",
+        "severity": "wrong_text",
+        "what": "Readings made up from illegible fragments of the neighbouring page (also 'q̄ uerba canonicorũ p̄dicat', 'q̃ scripsit admittendũ ⁊ p̃dicatorẽ' and others)"
+       },
+       {
+        "class": "O6",
+        "quote": "Egina ut patet supra",
+        "severity": "cosmetic",
+        "what": "The page reads 'Egina de q[ua] supra'."
+       },
+       {
+        "class": "O6",
+        "quote": "Ascanius filius Eenee",
+        "severity": "cosmetic",
+        "what": "The page reads 'Aenee'. The same misreading appears later as 'patrem Eenee'."
+       }
+      ],
+      "reader_note": "The two main columns are transcribed faithfully, but a dozen 'marginal notes' are invented from the strip of the facing page showing in the gutter. This page has no marginalia."
+     }
+    },
+    {
+     "page_number": 15,
+     "page_id": "69b64aa018b87551bfc67b00",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:56:03.417Z",
+     "text": "cf0083cad805c227",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "<unclear>Ata</unclear>la<unclear>n</unclear>ta Iasij.",
+        "severity": "misleads",
+        "what": "The page starts mid-entry with 'lia Iasij' (the end of 'filia'). The headword 'Atalanta' is not printed on this page; it was supplied from expectation."
+       },
+       {
+        "class": "O6",
+        "quote": "Scenei regis in scyro insula",
+        "severity": "cosmetic",
+        "what": "The page reads 'Cenei', not 'Scenei'."
+       },
+       {
+        "class": "O6",
+        "quote": "Vbi at-\ntelane comedie",
+        "severity": "cosmetic",
+        "what": "The page has 'Vn[de]' abbreviated, not 'Vbi'."
+       },
+       {
+        "class": "E2",
+        "quote": "pro permutandis cay-\nptiuus",
+        "severity": "cosmetic",
+        "what": "Garbled word: the page reads 'ca-ptiuis'."
+       },
+       {
+        "class": "E2",
+        "quote": "comedan-\ndos",
+        "severity": "cosmetic",
+        "what": "The page reads 'comeden-dos'."
+       }
+      ],
+      "reader_note": "The text follows the page closely in both columns. The main issue is that the opening headword 'Atalanta' was supplied, though only 'lia Iasij' is printed. There are also a few small misreadings: Scenei for Cenei, Vbi for Vnde, cayptiuus for captiuis, and comedandos for comedendos."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b64caf18b87551bfc7794e",
+   "title": "Guilielmi Postelli Baren. Doleriensis de Originibus seu de Hebraicae linguae et gentis antiquitate deque variarum linguarum affinitate liber ...",
+   "pages": [
+    {
+     "page_number": 1,
+     "page_id": "69b64caf18b87551bfc7794f",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:56:13.657Z",
+     "text": "cf6e10abceeb2a7d",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<language>German</language>",
+        "severity": "cosmetic",
+        "what": "The page is multilingual: a Latin title, then German, English, French and Italian text. It is not German only."
+       },
+       {
+        "class": "O16",
+        "quote": "<page-type>title-page</page-type>",
+        "severity": "cosmetic",
+        "what": "This is the digitizer's e-rara cover sheet, not the book's printed title page."
+       },
+       {
+        "class": "E2",
+        "quote": "the letter e in red circle",
+        "severity": "cosmetic",
+        "what": "The logo is a plain red letter e with no circle around it."
+       }
+      ],
+      "reader_note": "This is a complete, accurate copy of the e-rara cover sheet (title, author, imprint, shelf mark, DOI and the four-language terms of use). Only the self-reported tags are slightly off."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6813970c69d645a71d60d",
+   "title": "Azoth, sive aureliae occcultae philosophorum, materiam primam, et decantatum illum lapidem philosophorum filiis hermetis solide, perspicue &amp; dilucide explicantes, per aenigma philosophicum, colloquium parabolicum, tabulam smaragdinam hermetis, symbola, parabolas &amp; figuras Saturni, F. Basilii Vicentini",
+   "pages": [
+    {
+     "page_number": 9,
+     "page_id": "69b6813970c69d645a71d616",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:56:29.710Z",
+     "text": "52eb836548088de0",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "fine refponfo",
+        "severity": "misleads",
+        "what": "long s (ſ) transcribed as 'f' throughout (fe, effet, fine for sine), applied inconsistently ('est' vs 'eft')"
+       }
+      ],
+      "reader_note": "All the text of the page is there in order, but the long s is typed as 'f' throughout, so words like 'fine' (for sine) and 'effet' (for esset) look like misspellings or other words."
+     }
+    },
+    {
+     "page_number": 10,
+     "page_id": "69b6813970c69d645a71d617",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:56:38.120Z",
+     "text": "bb1f81f7365c0907",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read the page line by line and the transcription matches it: the running head, page number 1, headpiece, PARS PRIMA, the speakers' names, all three speeches, signature A and the catchword 'con-' are all there, in order, with the wording right."
+     }
+    },
+    {
+     "page_number": 11,
+     "page_id": "69b6813970c69d645a71d618",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:56:46.079Z",
+     "text": "3297383bd65468d8",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This matches the page line by line: the running head, the page number 2, all four speeches between Senior and Adolphus, and the catchword 'hoc'. I found no word errors, omissions or additions."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b69f6c080b19f98fd110a0",
+   "title": "Codicillus seu vade mecum Raymundi Lulli ... in quo fontes alchimicae artis ac philosophiae reconditioris uberrime traduntur",
+   "pages": [
+    {
+     "page_number": 2,
+     "page_id": "69b69f6c080b19f98fd110a2",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:57:01.214Z",
+     "text": "e6b8759c89d15ae1",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O14",
+        "quote": "inscribed within the oval border",
+        "severity": "cosmetic",
+        "what": "The device's motto (CVNCTA … TEMPORE) and the initials I B are described as present but not transcribed."
+       },
+       {
+        "class": "E2",
+        "quote": "*in quo fontes Alchimicæ artis*",
+        "severity": "cosmetic",
+        "what": "Lines set in roman type on the page are marked as italic."
+       }
+      ],
+      "reader_note": "This is a faithful transcription of the 1651 Rouen (Berthelin) title page of Lull's Codicillus, with all title, edition, imprint and date lines correct. The only gaps are that the printer's device motto isn't transcribed and the 'in quo fontes…' lines are marked italic when they're printed in roman."
+     }
+    },
+    {
+     "page_number": 3,
+     "page_id": "69b69f6c080b19f98fd110a3",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:57:10.453Z",
+     "text": "8aad24eed7715056",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "Blank verso; the faint reversed title page is show-through from the other side, and the strip of the facing printed page at the right edge is correctly left out."
+     }
+    },
+    {
+     "page_number": 5,
+     "page_id": "69b69f6c080b19f98fd110a5",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:57:18.997Z",
+     "text": "b06449b8e9bccfda",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I checked it line by line against the image and found no errors. The text, the chapter heading, the two 'Alias' marginal variants and the closing word 'Nec' all match the page in the right order, and the strip of the facing page wasn't picked up."
+     }
+    },
+    {
+     "page_number": 9,
+     "page_id": "69b69f6c080b19f98fd110a9",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:57:28.203Z",
+     "text": "79adcf28c42c562f",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "<image-desc size=\"small\" type=\"symbol\" significance=\"low\">handwritten astronomical/alchemical symbol for Mercury with a vertical bracket encompassing the paragraph</image-desc>",
+        "severity": "cosmetic",
+        "what": "the reader's handwritten underlining of the sulfur/mercury lines is not recorded; the Mercury symbol and bracket are described correctly"
+       }
+      ],
+      "reader_note": "The printed text matches the page line for line, including the italic rubric and the CAPVT V heading. The only loss is that the margin entry describes the reader's Mercury symbol and bracket but leaves out their underlining."
+     }
+    },
+    {
+     "page_number": 12,
+     "page_id": "69b69f6c080b19f98fd110ac",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:57:39.423Z",
+     "text": "b73aaef4061cca8a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "natura instante.\n\n<margin>Principia naturalia successiua.</margin>\nHoc autem intelligas",
+        "severity": "cosmetic",
+        "what": "adds a paragraph break before 'Hoc autem' where the page runs on in one paragraph; the gloss was moved there"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Alias vel temperantur ad inuicem,</margin>",
+        "severity": "cosmetic",
+        "what": "the side-gloss belongs beside 'tempera-mentum ad inuicem' (lines 3–6) but is placed at the top of the page; its words are correct"
+       }
+      ],
+      "reader_note": "The text matches the page word for word, including the two side-notes, the italic chapter title and the opening of Caput VI. The only differences are an added paragraph break before 'Hoc autem' and side-notes placed ahead of the text instead of beside the lines they gloss."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "69b69f6c080b19f98fd110ae",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:57:48.691Z",
+     "text": "20c963ea2620aab3",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "per instrumenta prædicta",
+        "severity": "cosmetic",
+        "what": "page prints 'instrumeta' (abbreviation/misprint); candidate silently expanded it"
+       }
+      ],
+      "reader_note": "A faithful, complete transcription of the chapter VII heading and text; the only difference is that the page's 'instrumeta' has been quietly expanded to 'instrumenta'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6b41196dc15d4a16dd5c8",
+   "title": "Passiones Animæ",
+   "pages": [
+    {
+     "page_number": 6,
+     "page_id": "69b6b41196dc15d4a16dd5ce",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:58:00.197Z",
+     "text": "000a19294c4ed50b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "succincte",
+        "severity": "cosmetic",
+        "what": "round s here, but the page has long s 'ſuccincte' and long s is kept everywhere else"
+       },
+       {
+        "class": "D1",
+        "quote": "*DOMINE,*",
+        "severity": "cosmetic",
+        "what": "the salutation is roman small capitals on the page but is marked as italic"
+       }
+      ],
+      "reader_note": "This is a faithful, complete transcription of the preface and the opening of the first letter. The only slips are one long s printed as a round s and the salutation shown in italic instead of small capitals."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6e82af8a84d859cde5ba3",
+   "title": "D. Iohannis Henrici Pott chem. et medic. Profess. S.S. Pruss Sodal. Exercitationes chymicae : de sulphuribus metallorum, de auripigmento, de solutione corporum particulari, de terra foliata tartari, de acido vitrioli vinoso et de acido nitri vinoso sparsim hactenus editae, iam vero collectae restitutae a mendis repurgatae, variisque notis, experimentis et discussionibus ab autore adauctae, illustratae",
+   "pages": [
+    {
+     "page_number": 6,
+     "page_id": "69b6e82af8a84d859cde5ba9",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:58:08.988Z",
+     "text": "463fefa48e32f4eb",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "DE SOLUTIONE CORPORUM PARTICULARI",
+        "severity": "cosmetic",
+        "what": "The page's line break PARTI-/CULARI is silently joined into one line; the wording is unchanged"
+       }
+      ],
+      "reader_note": "A faithful transcription of Pott's 1738 Berlin title page. All the text, the shelfmark NP 883 and the date match the image; only the hyphenated line break in PARTICULARI was closed up."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b634361c1c21a37381e47c",
+   "title": "[Lilium musicae planae]",
+   "pages": [
+    {
+     "page_number": 3,
+     "page_id": "69b634361c1c21a37381e47f",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:58:28.640Z",
+     "text": "8182497f63d55bb0",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Vnes alsatie",
+        "severity": "misleads",
+        "what": "the page reads \"Omnes alsatie\"; \"Vnes\" is not a word"
+       },
+       {
+        "class": "O6",
+        "quote": "Vheus graue horridum",
+        "severity": "cosmetic",
+        "what": "the page reads \"Heus\"; a stray V was added"
+       },
+       {
+        "class": "O6",
+        "quote": "prougabuntur",
+        "severity": "wrong_text",
+        "what": "the page reads \"promulgabimus\" (we will publish); the candidate has a garbled word in the wrong person and tense"
+       },
+       {
+        "class": "O6",
+        "quote": "Vtrozunque",
+        "severity": "cosmetic",
+        "what": "the r rotunda was read as z; the page reads \"Utrorumque\""
+       }
+      ],
+      "reader_note": "Most of the page is read faithfully, but a few words are garbled: \"Vnes\" should be \"Omnes\", \"Vheus\" should be \"Heus\" and \"prougabuntur\" should be \"promulgabimus\"."
+     }
+    },
+    {
+     "page_number": 4,
+     "page_id": "69b634361c1c21a37381e480",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:58:46.015Z",
+     "text": "8d03ddb2281a9e1a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "fertur secundus",
+        "severity": "misleads",
+        "what": "the abbreviation 'sec⁹' on the page means 'secus' (beside), not 'secundus'"
+       },
+       {
+        "class": "O6",
+        "quote": "et de-\ncensque",
+        "severity": "cosmetic",
+        "what": "the page's 'ꝯde-censque' is 'condecensque'; the con-/com- sign was read as 'et'"
+       },
+       {
+        "class": "O6",
+        "quote": "cognomentorum per derivationem",
+        "severity": "cosmetic",
+        "what": "the page has 'cognometo' (cognomento), not a genitive plural"
+       },
+       {
+        "class": "O6",
+        "quote": "plationeque",
+        "severity": "misleads",
+        "what": "the 'pro' abbreviation was dropped; the page reads 'prolationeque'"
+       }
+      ],
+      "reader_note": "This is a complete and accurate transcription of the page in order, with a few slips in expanding abbreviations ('secundus' for 'secus', 'plationeque' for 'prolationeque', 'et decens' for 'condecens')."
+     }
+    },
+    {
+     "page_number": 5,
+     "page_id": "69b634361c1c21a37381e481",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:58:59.377Z",
+     "text": "dae7d7ddda66dfaa",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<sig>A 3</sig>",
+        "severity": "misleads",
+        "what": "signature tag added, but no signature is printed on this verso page"
+       },
+       {
+        "class": "O8",
+        "quote": "Ypathemeson",
+        "severity": "cosmetic",
+        "what": "page prints 'Hipathemeson'; changed to the standard Y- spelling"
+       },
+       {
+        "class": "O8",
+        "quote": "Ypatheipathon",
+        "severity": "cosmetic",
+        "what": "page prints 'Hipatheipathon'; changed to the standard Y- spelling"
+       },
+       {
+        "class": "O11",
+        "quote": "->Apud latinos<-",
+        "severity": "cosmetic",
+        "what": "caption sits under the left column of the scale but is placed at the end of the right column"
+       }
+      ],
+      "reader_note": "Complete and accurate reading of the chapter text, Greek scale names and Boethius note; the only real slip is an 'A 3' signature tag that isn't on the page."
+     }
+    },
+    {
+     "page_number": 8,
+     "page_id": "69b634361c1c21a37381e484",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:59:13.591Z",
+     "text": "b8e2a019ff3f1078",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "D1",
+        "quote": "<insert>Γ</insert> greco",
+        "severity": "cosmetic",
+        "what": "The printed gamma sits in the line of text, so it is not an insertion. The insert markup is misapplied."
+       },
+       {
+        "class": "O11",
+        "quote": "<insert>bmolles</insert>",
+        "severity": "cosmetic",
+        "what": "The labels in the printed ut/re/mi diagram at the foot of the page are tagged as insertions. They are part of the original typesetting."
+       },
+       {
+        "class": "O8",
+        "quote": "positone",
+        "severity": "cosmetic",
+        "what": "The page has positiōe (positione). The abbreviation is expanded inconsistently and a letter is dropped."
+       }
+      ],
+      "reader_note": "The text matches the page line by line. The only problems are that the gamma and the diagram labels at the bottom are wrongly marked as insertions, and one word ('positone') is slightly misspelled."
+     }
+    },
+    {
+     "page_number": 10,
+     "page_id": "69b634361c1c21a37381e486",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:59:25.795Z",
+     "text": "4bb94fd684c0b9df",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "vt initium mittat blandicie secundus",
+        "severity": "misleads",
+        "what": "page reads 'initiat' (with abbreviation), not 'mittat'"
+       },
+       {
+        "class": "O6",
+        "quote": "materiam prorse referente",
+        "severity": "cosmetic",
+        "what": "page reads 'reserante' (long s), not 'referente'"
+       },
+       {
+        "class": "O8",
+        "quote": "tam facile",
+        "severity": "cosmetic",
+        "what": "page prints 'fatile'; silently corrected"
+       }
+      ],
+      "reader_note": "All lines of this page are present and in order. One verb is misread: the candidate has 'mittat' where the page has 'initiat'. Two other small differences: the candidate has 'referente' where the page has 'reserante', and it silently corrects the page's misprint 'fatile' to 'facile'."
+     }
+    },
+    {
+     "page_number": 11,
+     "page_id": "69b634361c1c21a37381e487",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:59:39.670Z",
+     "text": "6e8582405c58f693",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "aggressus in proximam notam",
+        "severity": "misleads",
+        "what": "page reads 'ꝯfinē notā' (confinem notam), not 'proximam'"
+       },
+       {
+        "class": "O8",
+        "quote": "semiditonus referens in se semitonium",
+        "severity": "misleads",
+        "what": "page prints 'reserans', normalised to 'referens'"
+       },
+       {
+        "class": "O14",
+        "quote": "Musical staff notation showing Unisonus with notes on the same pitch line",
+        "severity": "cosmetic",
+        "what": "notated examples described, not transcribed; only the captions are given"
+       }
+      ],
+      "reader_note": "The text is complete and in order, but two words differ from the print: 'proximam' should be 'confinem', and 'referens' should be 'reserans'. The music examples appear only as descriptions."
+     }
+    },
+    {
+     "page_number": 13,
+     "page_id": "69b634361c1c21a37381e489",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T02:59:51.543Z",
+     "text": "520200bd11589aaa",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "specie prius dicta",
+        "severity": "cosmetic",
+        "what": "page has 'speciē … dictā' (speciem … dictam); the abbreviation marks were dropped and the case changed"
+       },
+       {
+        "class": "O8",
+        "quote": "septima nuncupamur",
+        "severity": "cosmetic",
+        "what": "page has 'septimā' (septimam); the abbreviation mark was dropped"
+       },
+       {
+        "class": "E2",
+        "quote": "labelled Ditonus cum diapenthe and Diapason",
+        "severity": "cosmetic",
+        "what": "the 'Ditonus cum diapenthe' label belongs to the diagram beside 'Grauius sonans', but it was put in the Octauus diagram block"
+       }
+      ],
+      "reader_note": "The text reads faithfully, line by line. Only a couple of abbreviated case endings are flattened, and one diagram label is attached to the next diagram."
+     }
+    },
+    {
+     "page_number": 15,
+     "page_id": "69b634361c1c21a37381e48b",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:00:07.480Z",
+     "text": "6189efcc17e00ba3",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O3",
+        "quote": "Ffaut. Gſolre. Alamire. Bfabmi. Cſolfaut. Dlaſolre.\nElami. Ffaut.",
+        "severity": "wrong_text",
+        "what": "The page lists eight keys: Cfaut, Bsolre (likely Dsolre), Elami, Ffaut, elami, ffaut, ccsolfa, ddlasol. The candidate replaces this with a different, textbook-style list of keys, and the line breaks shift as a result."
+       },
+       {
+        "class": "O6",
+        "quote": "Verumque grandeuo ſaltu",
+        "severity": "misleads",
+        "what": "The page reads \"Plerumque\" (usually), not \"Verumque\"."
+       },
+       {
+        "class": "O8",
+        "quote": "extra mutationem",
+        "severity": "cosmetic",
+        "what": "The page has the misprint \"mutatationem\"; the candidate silently corrects it."
+       },
+       {
+        "class": "O8",
+        "quote": "itidem habebit",
+        "severity": "cosmetic",
+        "what": "The page spells it \"ittidem\"; the candidate normalises it."
+       },
+       {
+        "class": "O8",
+        "quote": "aſcenſum et deſcenſum cuiuſuis",
+        "severity": "cosmetic",
+        "what": "The page reads \"ascensum descensumque\"; the candidate drops the -que and adds \"et\"."
+       }
+      ],
+      "reader_note": "The list of the eight changing keys in the first rule is not the page's list: a standard list was put in its place. Also, \"Plerumque\" is misread as \"Verumque\"."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b63b371c1c21a37384a796",
+   "title": "[Enchiridion utriusque musicae practicae]",
+   "pages": [
+    {
+     "page_number": 8,
+     "page_id": "69b63b371c1c21a37384a79e",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:00:17.252Z",
+     "text": "02337210224ecda6",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "depicting a man holding a staff and a round object or wheel",
+        "severity": "cosmetic",
+        "what": "the woodcut figure looks more like a child or putto holding a staff with a banner; the description is loose but harmless"
+       }
+      ],
+      "reader_note": "The text matches the page word for word and in order, with abbreviations such as 'nūc', 'indicauim⁹' and 'q̄' silently expanded; only the description of the woodcut initial is a little loose."
+     }
+    },
+    {
+     "page_number": 15,
+     "page_id": "69b63b371c1c21a37384a7a5",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:00:31.711Z",
+     "text": "baeb2313540a289f",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Que linias o[mn]es tranſcendit / et dicitur genera.vna",
+        "severity": "cosmetic",
+        "what": "the page reads 'lineas'. The end after 'genera.' is unclear on the page, and 'vna' is a guess given without any uncertainty mark."
+       },
+       {
+        "class": "O12",
+        "quote": "Figura-\nru[m] Sim-\npliciu[m],\nalia di-\ncitur.",
+        "severity": "cosmetic",
+        "what": "this caption sits under the bottom row of notes, but it is placed before the list of note names, so its position on the page is lost."
+       },
+       {
+        "class": "O14",
+        "quote": "[Musical notes: Maxima, Longa, Brevis, Semibrevis, Minima, Semiminima, Fusa, Semifusa]",
+        "severity": "cosmetic",
+        "what": "both rows of notes get the same eight-note description. The top row is different: it seems to start with Longa and has no Maxima."
+       }
+      ],
+      "reader_note": "All the text on the page is here (the title, the sideways margin note, the upside-down caption, the note names and the 'pausa' caption). The notes and rests are described in brackets rather than drawn, the margin note has one small misreading ('linias' for 'lineas'), and the bottom caption is slightly out of place."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b63c911c1c21a37385457d",
+   "title": "Rerum musicarum opusculum rarum ac insigne : totius eius negotii rationem mira industria &amp; brevitate complectens, iam recens publicatum",
+   "pages": [
+    {
+     "page_number": 1,
+     "page_id": "69b63c911c1c21a37385457e",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:00:40.060Z",
+     "text": "e1448a8ec757a4a8",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<page-type>title-page</page-type>",
+        "severity": "cosmetic",
+        "what": "this is a modern e-rara digitisation cover sheet, not the book's title page"
+       },
+       {
+        "class": "O16",
+        "quote": "<language>German</language>",
+        "severity": "cosmetic",
+        "what": "the sheet is in four languages (German, English, French, Italian) plus a Latin title"
+       }
+      ],
+      "reader_note": "This is e-rara's cover sheet, and the text is transcribed completely and accurately. The only problems are in the self-reported tags: it is labelled a title page in German, but it is a digitisation cover sheet in four languages."
+     }
+    },
+    {
+     "page_number": 8,
+     "page_id": "69b63c911c1c21a373854585",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:00:48.284Z",
+     "text": "5567e605c188271b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Numerus impar secundus & compositus.",
+        "severity": "cosmetic",
+        "what": "printer's misprint 'Numetus' silently corrected to 'Numerus'; 'cōpositus' expanded"
+       },
+       {
+        "class": "O11",
+        "quote": "<sig>4</sig>",
+        "severity": "cosmetic",
+        "what": "the printed '4' at the foot is the page number, which is already tagged as page-num, so tagging it again as a signature duplicates it"
+       }
+      ],
+      "reader_note": "All the index entries for chapters I–IIII are there and in order, with only small silent fixes to spelling and abbreviations."
+     }
+    },
+    {
+     "page_number": 10,
+     "page_id": "69b63c911c1c21a373854587",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:01:02.470Z",
+     "text": "dddcf1b52739d227",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Symphoniæ, preter græca nomina",
+        "severity": "cosmetic",
+        "what": "page has 'Symphonie … greca'; candidate adds æ here and in 'perfectæ quæ', 'imperfectæ', 'diuiſæ', 'quædam'"
+       },
+       {
+        "class": "O8",
+        "quote": "Cauſa, quare antiquitas",
+        "severity": "cosmetic",
+        "what": "page misprints 'antiqnitas'; candidate silently corrects it"
+       },
+       {
+        "class": "O6",
+        "quote": "decem & ſepte alioquin ſunt",
+        "severity": "cosmetic",
+        "what": "page has 'ſeptẽ' (septem); candidate drops the tilde, leaving the non-word 'ſepte'"
+       }
+      ],
+      "reader_note": "This is a complete, faithful reading of both index columns. Its only departures are small spelling normalisations, a silently corrected misprint ('antiqnitas') and 'ſepte' written for 'ſeptẽ'."
+     }
+    },
+    {
+     "page_number": 12,
+     "page_id": "69b63c911c1c21a373854589",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:01:11.660Z",
+     "text": "d1cbd7b9d2401835",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Boëtio",
+        "severity": "cosmetic",
+        "what": "page prints 'Boætio'; the candidate normalises it to 'Boëtio'"
+       },
+       {
+        "class": "O8",
+        "quote": "Aristoxeno",
+        "severity": "cosmetic",
+        "what": "the accent in 'Aristoxéno' is dropped"
+       }
+      ],
+      "reader_note": "All lines in both columns and the closing list of authors are present, in order; the only differences are expanded abbreviations and slightly modernised spelling of 'Boætio'."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "69b63c911c1c21a37385458b",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:01:22.388Z",
+     "text": "2a08fe732fae0ca7",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "Decorated initial I on a dark stippled background with foliate motifs",
+        "severity": "cosmetic",
+        "what": "the initial is a large textured roman I with no background or foliage, so the description overstates it"
+       }
+      ],
+      "reader_note": "A complete, faithful reading of the page in order: heading, body text, all marginal notes (Boethius, Plutarch, Pliny), the closing tailpiece paragraph and signature A, with abbreviations silently expanded (quandoquidem, instrumentalem, salutem)."
+     }
+    },
+    {
+     "page_number": 15,
+     "page_id": "69b63c911c1c21a37385458c",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:01:36.017Z",
+     "text": "a23269c3ba3aecfc",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "ratione harmonica expendit",
+        "severity": "cosmetic",
+        "what": "the page prints the misprint 'harmoniaca'; the candidate silently corrected it to 'harmonica'"
+       }
+      ],
+      "reader_note": "This is a faithful transcription of the Ramist-style music tree. It covers every branch in reading order, from Musica naturalis and its mundana and humana branches to artificialis, with its geometrica (metrice, rythmus, melos) and harmonica (sono, modo, modulatione, consonantia) branches. The only change is one tacitly corrected misprint ('harmoniaca' to 'harmonica')."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6462b18b87551bfc414ff",
+   "title": "[De monochordo]",
+   "pages": [
+    {
+     "page_number": 3,
+     "page_id": "69b6462b18b87551bfc41502",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:01:52.767Z",
+     "text": "39abcab9604fa46a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "quos eius uſus ex",
+        "severity": "cosmetic",
+        "what": "page reads 'de', not 'ex' (same sense)"
+       },
+       {
+        "class": "O6",
+        "quote": "vberiorque ex",
+        "severity": "misleads",
+        "what": "page has a single abbreviated word (vberius/verisilius), with no '-que' enclitic"
+       },
+       {
+        "class": "O8",
+        "quote": "proprii autoris",
+        "severity": "cosmetic",
+        "what": "page spells it 'actoris'; the candidate normalises it to 'autoris'"
+       }
+      ],
+      "reader_note": "All 28 lines are present and in order, and the marginal letters D and E are kept. There are only small slips: 'ex' should be 'de', 'vberiorque' is a misread of one abbreviated word, and 'actoris' was normalised to 'autoris'."
+     }
+    },
+    {
+     "page_number": 5,
+     "page_id": "69b6462b18b87551bfc41504",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:02:08.804Z",
+     "text": "8d5c4d506ff061d2",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "statim vota perficere volentis",
+        "severity": "misleads",
+        "what": "page reads 'voci' (the voice), not 'vota' (wishes)"
+       },
+       {
+        "class": "O6",
+        "quote": "ut per ipsum quisquis in",
+        "severity": "cosmetic",
+        "what": "page has abbreviated 'q̄', i.e. 'qui', which agrees with the plural 'cupiunt'"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>1</margin>",
+        "severity": "cosmetic",
+        "what": "the red marginal mark is a letter (i/j), not the numeral 1"
+       },
+       {
+        "class": "O8",
+        "quote": "videamus",
+        "severity": "cosmetic",
+        "what": "page prints 'videammus'"
+       }
+      ],
+      "reader_note": "A complete and mostly accurate expansion of the abbreviated text, but one word is misread: 'vota' should be 'voci' in line 2. The second red marginal letter is given as the numeral '1'."
+     }
+    },
+    {
+     "page_number": 7,
+     "page_id": "69b6462b18b87551bfc41506",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:02:27.904Z",
+     "text": "b2deb1fa905dc0fd",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Rogavitque puritatem meam",
+        "severity": "misleads",
+        "what": "the abbreviation 'p(ar)uitatē' most likely reads parvitatem (the usual humble 'my littleness'), not puritatem ('my purity')"
+       },
+       {
+        "class": "O6",
+        "quote": "explanari per ipsum",
+        "severity": "cosmetic",
+        "what": "the abbreviated form 'explanaē' more likely expands to explanare; the sense is barely affected"
+       },
+       {
+        "class": "E2",
+        "quote": "per monocordii breves",
+        "severity": "cosmetic",
+        "what": "uncertain expansion of 'monocorō brez' (perhaps monocordi breve); the sense is unaffected"
+       }
+      ],
+      "reader_note": "All 28 lines are here, in order, and the expansions are sound, but 'puritatem meam' is probably a misread of parvitatem meam (the author speaking humbly of 'my littleness'), and two other abbreviations are expanded loosely."
+     }
+    },
+    {
+     "page_number": 8,
+     "page_id": "69b6462b18b87551bfc41507",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:02:45.310Z",
+     "text": "f0568c37d47876ac",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "nes. Hec itaque probatio in presenti negocio non",
+        "severity": "cosmetic",
+        "what": "the second red marginal letter ('n') beside the last line is missing; only the 'a)' mark is tagged"
+       },
+       {
+        "class": "O16",
+        "quote": "<sig>A</sig>",
+        "severity": "cosmetic",
+        "what": "no signature mark is printed on this leaf, but the candidate tags 'A' at both the head and the foot"
+       },
+       {
+        "class": "O8",
+        "quote": "habetur institutis · de gra",
+        "severity": "cosmetic",
+        "what": "the abbreviation 'insti.' is silently expanded"
+       },
+       {
+        "class": "O6",
+        "quote": "ita se habēnt",
+        "severity": "cosmetic",
+        "what": "the page's abbreviated verb (probably habeant/haberent) is rendered as a doubtful form"
+       }
+      ]
+     }
+    },
+    {
+     "page_number": 9,
+     "page_id": "69b6462b18b87551bfc41508",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:03:03.450Z",
+     "text": "1cf27fa3a311e734",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Quocirca",
+        "severity": "misleads",
+        "what": "page abbreviates 'Quaē' (Quare); expanded to a different conjunction, same sense"
+       },
+       {
+        "class": "O6",
+        "quote": "Hinc",
+        "severity": "cosmetic",
+        "what": "page appears to read 'Hic'; small difference, sense survives"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Φ</margin>",
+        "severity": "cosmetic",
+        "what": "the margin mark is a paragraph-type sign beside line 18, given as Φ and placed at the top"
+       }
+      ],
+      "reader_note": "This is a faithful, complete expansion of the abbreviated incunable text. A close reader might notice 'Quocirca' where the page has 'Quare', and the margin sign rendered as Φ and placed at the top instead of beside line 18."
+     }
+    },
+    {
+     "page_number": 10,
+     "page_id": "69b6462b18b87551bfc41509",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:03:25.754Z",
+     "text": "0766ef0d96bd6bb8",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "Quinta utilitas",
+        "severity": "wrong_text",
+        "what": "page reads 'Quarta' (fourth), not fifth"
+       },
+       {
+        "class": "O6",
+        "quote": "et hec eſt hec",
+        "severity": "misleads",
+        "what": "page reads 'de qua est hec'"
+       },
+       {
+        "class": "O6",
+        "quote": "velint paucas",
+        "severity": "wrong_text",
+        "what": "page reads 'post paucas'"
+       },
+       {
+        "class": "O6",
+        "quote": "per modicum de uſu",
+        "severity": "misleads",
+        "what": "page reads 'paulatim'/'partim' (pſtim), not 'per modicum'"
+       },
+       {
+        "class": "O6",
+        "quote": "et cantionibus",
+        "severity": "cosmetic",
+        "what": "page reads 'de cantionibus'"
+       },
+       {
+        "class": "O6",
+        "quote": "quas\nnon plene cognoſcis utcumque",
+        "severity": "wrong_text",
+        "what": "page reads 'et si non plene cognoscis vim'"
+       },
+       {
+        "class": "O6",
+        "quote": "qui a te ſactus",
+        "severity": "cosmetic",
+        "what": "should be 'factus'; the 'et' before 'a te' is also dropped"
+       },
+       {
+        "class": "O6",
+        "quote": "Rurſum ymmo talis exercitacio",
+        "severity": "misleads",
+        "what": "page reads 'Quin ymmo hec exercitacio'"
+       },
+       {
+        "class": "O6",
+        "quote": "ymo et\nguido abbas in ſuo micrologo dicit · quod pueris",
+        "severity": "misleads",
+        "what": "page reads 'ut dominus guido abbas ... dicit de pueris'"
+       },
+       {
+        "class": "O6",
+        "quote": "qui quin=\nque vocum · imitacione cordarum · et notarum pervius uſu",
+        "severity": "wrong_text",
+        "what": "page reads 'quod quidam eorum imitacione corde et notarum eius usu'; 'quinque vocum' is invented"
+       },
+       {
+        "class": "O6",
+        "quote": "informaverat et exercitaverat",
+        "severity": "cosmetic",
+        "what": "page has 'informavit et exercitavit'"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>P</margin>\n<margin>Q</margin>",
+        "severity": "misleads",
+        "what": "the third marginal letter 'R' is dropped, and the letters are grouped at the top instead of placed by their lines"
+       }
+      ],
+      "reader_note": "The opening lines are accurate, but the second half has many misreads. 'Quinta' should be 'Quarta', and 'quinque vocum' is invented. Several connectives are wrong and the margin letter R is missing, so the text does not match the image."
+     }
+    },
+    {
+     "page_number": 11,
+     "page_id": "69b6462b18b87551bfc4150a",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:03:45.887Z",
+     "text": "adc8834a404f0b9e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "oumir ipsis incipientibus pro propter omnimodo solum",
+        "severity": "misleads",
+        "what": "abbreviated phrase garbled; 'oumir' is not a word and 'pro propter omnimodo' is a doubtful expansion of 'p o ꝓpom̄i'"
+       },
+       {
+        "class": "O6",
+        "quote": "se perprobis",
+        "severity": "misleads",
+        "what": "the page has 'se ꝓbz' (probet); 'perprobis' is not a word"
+       },
+       {
+        "class": "O6",
+        "quote": "per sui habilitacione",
+        "severity": "cosmetic",
+        "what": "the page has the ꝓ (pro) abbreviation, not per"
+       },
+       {
+        "class": "O15",
+        "quote": "<meta>continuado</meta>",
+        "severity": "cosmetic",
+        "what": "a stray note repeating the last word, left inside the transcription"
+       }
+      ],
+      "reader_note": "The page is complete and in order, but one abbreviated phrase in line 7 ('oumir … pro propter omnimodo') and the word 'perprobis' in line 13 are misread nonsense."
+     }
+    },
+    {
+     "page_number": 12,
+     "page_id": "69b6462b18b87551bfc4150b",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:04:06.046Z",
+     "text": "71d8c0615f12ca15",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Multum valet ad hoc ipsum monocordum",
+        "severity": "misleads",
+        "what": "the marginal guide letter T and the visible '-ãtũ' point to 'Tantum valet', not 'Multum'"
+       },
+       {
+        "class": "O6",
+        "quote": "a sono clavis respondentis",
+        "severity": "cosmetic",
+        "what": "the page reads 'correspõdẽtis' (correspondentis)"
+       },
+       {
+        "class": "E2",
+        "quote": "claves monoor=",
+        "severity": "cosmetic",
+        "what": "typo: the page has 'monocor='"
+       }
+      ],
+      "reader_note": "This is a faithful, complete reading of all 28 lines, but the paragraph that opens 'Tantum valet' (the guide letter T is in the margin) is given as 'Multum valet', and there are two small slips: 'respondentis' should be 'correspondentis', and 'monoor' should be 'monocor'."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "69b6462b18b87551bfc4150d",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:04:23.010Z",
+     "text": "9122bb42c783016b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "qui saltem rectam de hoc habere norunt iu=",
+        "severity": "cosmetic",
+        "what": "the page's abbreviation 'rcm' with 'iudicium' should expand to 'rectum'; 'rectam' doesn't agree grammatically, but the sense is clear"
+       }
+      ],
+      "reader_note": "All 28 lines are here, in order. The abbreviations are expanded correctly, and the red marginal letters x and y are placed in the right spots. The only slip is 'rectam' where the page means 'rectum' (iudicium)."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6477c18b87551bfc4cb92",
+   "title": "[Flores musicae]",
+   "pages": [
+    {
+     "page_number": 7,
+     "page_id": "69b6477c18b87551bfc4cb99",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:04:34.206Z",
+     "text": "6faa5b9348810677",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O3",
+        "quote": "Moderni apposuerunt <image-desc size=\"small\" type=\"symbol\" significance=\"high\">Square musical note icon representing ut</image-desc> ut · re · mi · fa · sol · la",
+        "severity": "wrong_text",
+        "what": "The page reads 'Moderni apposuerunt Γ ut & b & b & alia' (gamma-ut, the two b signs, and other things). The candidate swaps in the familiar hexachord syllables and describes the Γ as a note icon."
+       }
+      ],
+      "reader_note": "A reader would find that the 'Moderni apposuerunt' entry lists ut re mi fa sol la, but the page names the gamma-ut and the b signs, so the moderns' additions are misstated. All the other entries and their marginal letters match the page."
+     }
+    },
+    {
+     "page_number": 9,
+     "page_id": "69b6477c18b87551bfc4cb9b",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:04:47.798Z",
+     "text": "770ecfa1abf85844",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O1",
+        "quote": "querite regnum dei P",
+        "severity": "cosmetic",
+        "what": "On the page this line runs out at 'regnū ōi' and no gathering letter is visible. The 'P' looks supplied by the transcriber, probably to fill the alphabetical sequence."
+       }
+      ],
+      "reader_note": "This is a faithful, complete transcription of the table of contents. Every entry and its signature-letter reference is in order, with abbreviations and the '7' (et) sign expanded. The only doubtful point is the 'P' reference on the Neuma primi toni line, which isn't clearly visible on the page."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "69b6477c18b87551bfc4cba0",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:01.660Z",
+     "text": "2ab55f7b7ed0a123",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "pro se et sibi omissis",
+        "severity": "misleads",
+        "what": "The page has 'ɔmissis', where ɔ stands for con/com, so the word is 'commissis' (entrusted), not 'omissis' (omitted). This changes the sense."
+       },
+       {
+        "class": "E2",
+        "quote": "Salomon cantocorum .ij.",
+        "severity": "cosmetic",
+        "what": "Typo for 'canticorum' (the page has 'cāticoꝝ'). The book reference is still clear."
+       }
+      ],
+      "reader_note": "The text is complete and in order, but 'commissis' is misread as 'omissis', and 'canticorum' has a typo ('cantocorum')."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b64a6c18b87551bfc650fc",
+   "title": "Isagoge in musicen Henrici Glareani Helvetii poe. lau : e quibusque bonis authoribus Latinis &amp; Graecis ad studiosorum utilitatem multo labore elaborata : ad Falconem Coss. urbis Aventicensis",
+   "pages": [
+    {
+     "page_number": 4,
+     "page_id": "69b64a6c18b87551bfc65100",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:10.533Z",
+     "text": "4b99070920125cfd",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This is a faithful and complete reading of the Caput I opening. The heading, the woodcut initial M, all the body lines in order, the signature A 2 and the catchword 'ratus,' are all there. Abbreviations are expanded quietly and consistently (que, quod, quo, -ntur), which follows the library's convention."
+     }
+    },
+    {
+     "page_number": 8,
+     "page_id": "69b64a6c18b87551bfc65104",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:24.163Z",
+     "text": "6e591c5574c34b62",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "quiſcumque",
+        "severity": "cosmetic",
+        "what": "page has 'quicũq;' (quicumque), with no s"
+       }
+      ],
+      "reader_note": "This is a faithful, complete reading with abbreviations expanded. Both tuning diagrams match the page (2304/2748/2916/3072 and 2304/2916/2994/3072). The only slip is 'quiſcumque' where the page has 'quicumque'."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6997a080b19f98fcfab39",
+   "title": "Rudimenta musices figuralis : nova facilitate sic adornata ut paucissimae regulae sufficere possint : in gratiam huius artis Tyronum illustris scholae &amp; academ. Basil",
+   "pages": [
+    {
+     "page_number": 3,
+     "page_id": "69b6997a080b19f98fcfab3c",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:31.155Z",
+     "text": "8aad24eed7715056",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This is a blank leaf. The faint reversed lettering is a title page showing through from the other side, and the strip of text at the right edge belongs to the next leaf. The candidate correctly marks the page as blank and transcribes neither."
+     }
+    },
+    {
+     "page_number": 5,
+     "page_id": "69b6997a080b19f98fcfab3e",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:39.147Z",
+     "text": "bcda795dbd2e2343",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<sig>Ex</sig>",
+        "severity": "cosmetic",
+        "what": "\"Ex\" at the foot of the page is a catchword, not a signature mark"
+       },
+       {
+        "class": "O14",
+        "quote": "Musical diagram illustrating a five-line staff (Systema minus) with lines numbered 1 to 5",
+        "severity": "cosmetic",
+        "what": "staff diagram is described instead of transcribed, and the 'Systema minus' label is the transcriber's inference, not a label on the page"
+       }
+      ],
+      "reader_note": "The text matches the page line for line. The only problems are that the catchword \"Ex\" is tagged as a signature and the staff diagram is described rather than transcribed."
+     }
+    },
+    {
+     "page_number": 8,
+     "page_id": "69b6997a080b19f98fcfab41",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:46.898Z",
+     "text": "ca1e31c429d4259e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O14",
+        "quote": "Musical notation showing examples of blackened notes and their analysis on two staves labeled Exemplum and Analyſis",
+        "severity": "cosmetic",
+        "what": "The example is one staff split into two sections, not two staves; music is described, not transcribed, as the convention allows."
+       }
+      ],
+      "reader_note": "The text matches the page line for line, including section numbers, the NOTA, the chapter heading and the B 4 signature; the music examples are described rather than transcribed."
+     }
+    },
+    {
+     "page_number": 9,
+     "page_id": "69b6997a080b19f98fcfab42",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:05:57.569Z",
+     "text": "26e6820b717679e6",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O2",
+        "quote": "(tタクu ordinario nihil immutato)",
+        "severity": "misleads",
+        "what": "the page's 'tactu' has been turned into Japanese katakana; the Latin word is lost"
+       }
+      ],
+      "reader_note": "The transcription matches the page line by line, except that one word in the Admonitio, 'tactu', shows up as stray katakana ('tタクu')."
+     }
+    },
+    {
+     "page_number": 12,
+     "page_id": "69b6997a080b19f98fcfab45",
+     "lane": "pero-agy-flash-low-7263",
+     "route": "pero>agy-flash-low",
+     "judged_at": "2026-10-30T03:06:03.740Z",
+     "text": "05e128fd4e15ae8a",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "The transcription matches the page. It has both numbered rules (4: Custos, 5: Pausa Generalis), the captions under the staff (simplici Tactu / Tripla / Sesquialtera) and the two closing sentences, all in order. The music examples and the tailpiece are rightly described as images, and none of the cropped neighbouring page at the left edge has crept in."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6c48d8566c83814664da9",
+   "title": "[Harmonia Macrocosmica, Seu, Atlas Universalis Et Novus, Totius Universi Creati Cosmographiam Generalem, Et Novam Exhibens] : [In quâ Omnium Totius Mundi Orbium Harmonica Constructio, secundum diversas di- versorum Authorum opiniones, ut &amp; Uranometria, seu totus Orbis Coelaestis, ac Planetarum Theoriae, &amp; Terrestris Globus, tam Planis &amp; Scenographicis Iconibus, quam Descriptionibus novis ab oculos ponuntur]",
+   "pages": [
+    {
+     "page_number": 7,
+     "page_id": "69b6c48d8566c83814664db0",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:06:22.275Z",
+     "text": "c9a3d141e05086c5",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "SEV ZODIACVS",
+        "severity": "wrong_text",
+        "what": "The zodiac-band title on the page reads ECLIP·TICA SEV ZO·DIA·CVS, spread round the band. The candidate drops ECLIPTICA, leaving a fragment that starts with 'SEV'."
+       },
+       {
+        "class": "O5",
+        "quote": "SEPTEM\nPLANETARVM\nORBES",
+        "severity": "misleads",
+        "what": "The column of planet symbols (☽ ☿ ♀ ☉ ♂ ♃ ♄) in the lower right of the spheres is dropped, along with the separate inverted 'CIRCVLVS' label on the left."
+       },
+       {
+        "class": "O5",
+        "quote": "Apud GERARDVM VALK et PETRVM SCHENK, Amstelodami.",
+        "severity": "cosmetic",
+        "what": "The plate number '1' at the bottom right is omitted."
+       },
+       {
+        "class": "O14",
+        "quote": "Flanked by elaborate cartouches supported by cherubs and figures",
+        "severity": "cosmetic",
+        "what": "The supporters are winged female caryatids, not cherubs. The small inscriptions on the central globe are not transcribed or marked as illegible."
+       },
+       {
+        "class": "E2",
+        "quote": "mundus sublunariselementa",
+        "severity": "cosmetic",
+        "what": "Two vocab terms are run together (typo in the metadata)."
+       }
+      ],
+      "reader_note": "Most labels are correct and the zodiac signs are in the right order, but the band title has lost 'ECLIPTICA' and reads only 'SEV ZODIACVS', and the planet-symbol column and plate number are missing."
+     }
+    },
+    {
+     "page_number": 10,
+     "page_id": "69b6c48d8566c83814664db3",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:06:47.644Z",
+     "text": "36a904f93ce79408",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "ZODIACI",
+        "severity": "misleads",
+        "what": "the ecliptic band reads SIVE ZODIACVS (ZODI…ACVS); the candidate has ZODIACI, a different word, and drops SIVE"
+       },
+       {
+        "class": "O5",
+        "quote": "<insert>AEQVATOR</insert>\n\n<insert>AEQVINOCTIALIS</insert>",
+        "severity": "misleads",
+        "what": "the SEV between them is missing, so 'Aequator seu Aequinoctialis' is split into two unrelated labels"
+       },
+       {
+        "class": "O5",
+        "quote": "<insert>SOLSTITIORVM</insert>",
+        "severity": "misleads",
+        "what": "COLVRVS SOLSTITIORVM (split COLV/RVS and SOLSTI/TIORVM on the page) appears only as SOLSTITIORVM; the COLVRVS part is missing"
+       },
+       {
+        "class": "O14",
+        "quote": "<insert>COLVRVS AEQVI</insert>\n\n<insert>NOCTIORVM</insert>",
+        "severity": "misleads",
+        "what": "the outer arc reads MERIDIANVS SIVE COLVRVS AEQVINOCTIORVM; it is broken into pieces, SIVE is dropped and MERIDIANVS is listed on its own at the end"
+       },
+       {
+        "class": "O5",
+        "quote": "<insert>LVNA ☽</insert>",
+        "severity": "misleads",
+        "what": "the labels on the terrestrial globe are left out (AFRICA, INDIA, OCEANVS, the Tropicus Capricorni marking, the antarctic land label)"
+       },
+       {
+        "class": "O8",
+        "quote": "Prostant Amstelodami apud GERARDUM VALK",
+        "severity": "cosmetic",
+        "what": "the imprint reads Amstelædami; the candidate normalises it to Amstelodami"
+       },
+       {
+        "class": "O16",
+        "quote": "A double-hemisphere celestial and terrestrial sphere",
+        "severity": "cosmetic",
+        "what": "the plate shows a single armillary sphere around one globe, not a double hemisphere"
+       }
+      ],
+      "reader_note": "The title, imprint and main circle labels are there, but the phrases split across the rings are broken up and their SIVE/SEV links dropped, ZODIACVS is misread as ZODIACI, and the labels on the globe are missing."
+     }
+    },
+    {
+     "page_number": 16,
+     "page_id": "69b6c48d8566c83814664db9",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:07:30.866Z",
+     "text": "9112f43e179acb5e",
+     "verdict": {
+      "accept": false,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "ZODIACVS",
+        "severity": "wrong_text",
+        "what": "Most of the zodiac band text is missing: the twelve sign names (ARIES, TAVRVS, GEMINI, CANCER, LEO, VIRGO, LIBRA, SCORPIVS, SAGITTARIVS, CAPRICORNVS, AQVARIVS, PISCES), the band legend (ORBIS SIGNIFER sive ZODIACVS…, FIRMAMENTVM) and the SIGNA prefixes. The band is reduced to a few isolated words."
+       },
+       {
+        "class": "O5",
+        "quote": "SE CIRCA SOLEM MOVEVTIS CIRCVLVS",
+        "severity": "wrong_text",
+        "what": "The long circle legend is cut short: the words naming Venus and Mercury after 'SOLEM' are dropped."
+       },
+       {
+        "class": "O6",
+        "quote": "MOVEVTIS",
+        "severity": "cosmetic",
+        "what": "Typo for MOVENTIS."
+       },
+       {
+        "class": "O1",
+        "quote": "SOL",
+        "severity": "misleads",
+        "what": "No 'SOL' label is engraved on the page. The sun is shown only as a face."
+       },
+       {
+        "class": "O6",
+        "quote": "DODECATEMORIVM",
+        "severity": "misleads",
+        "what": "The plate reads DODECATEMORION (the band shows 'DOD ECA TEMORION'), so this is normalised."
+       },
+       {
+        "class": "O17",
+        "quote": "AVTVMNALIA\nHYBERNA\nVERNA\nÆSTIVA",
+        "severity": "misleads",
+        "what": "The seasonal labels are pulled out of their places and order in the circular band, and the 'SIGNA' before each one is lost."
+       },
+       {
+        "class": "O5",
+        "quote": "PETRUM SCHENK.",
+        "severity": "cosmetic",
+        "what": "The small plate number at the lower right isn't recorded."
+       }
+      ],
+      "reader_note": "The title and imprint are right, but most of the zodiac band text (the twelve sign names and the band legend) is missing, the long legend for the Earth's circle is cut short, and a 'SOL' label appears that isn't on the plate."
+     }
+    },
+    {
+     "page_number": 22,
+     "page_id": "69b6c48d8566c83814664dbf",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:07:50.229Z",
+     "text": "df2bba3b3cb52543",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "CIRCVLVS VENERIS\nCIRCVLVS MERCVRII",
+        "severity": "wrong_text",
+        "what": "The small inscriptions round the Earth and Sun are left out: the lunar circle and the circle text reading 'CENTRUM ORBIUM TRIUM SUPERIORUM PLANETARUM'. The lower Sun-system's 'VENUS / MERCURIUS' is also missing."
+       },
+       {
+        "class": "O1",
+        "quote": "SOL ☉\nVENVS ♀\nMERCVRIVS ☿\nLVNA ☽\nTERRA",
+        "severity": "misleads",
+        "what": "A tidy list of planet names with symbols that the plate doesn't show as separate labels. It looks reconstructed from what such a chart usually has, not read from this one."
+       },
+       {
+        "class": "O14",
+        "quote": "CIRCVLVS SATVRNI\nCIRCVLVS IOVIS\nCIRCVLVS MARTIS",
+        "severity": "cosmetic",
+        "what": "The curved ring labels are regrouped into lists instead of following how they sit on the plate. Acceptable for a chart, but it loses where each label is."
+       },
+       {
+        "class": "O8",
+        "quote": "SATVRNVS ♄\nIVPITER ♃\nMARS ♂",
+        "severity": "misleads",
+        "what": "The planet symbols are attached to every name in a standard set. On the plate they appear only with some of the ring labels."
+       }
+      ],
+      "reader_note": "The title cartouches, the Valk & Schenk imprint, the zodiac names and the bottom 'SYSTEMA PLANETARVM…' block are right. The small inscriptions in the middle of the chart are partly missing and partly replaced by a generic planet list."
+     }
+    },
+    {
+     "page_number": 25,
+     "page_id": "69b6c48d8566c83814664dc2",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:08:08.986Z",
+     "text": "e0517d63aa8042d2",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "SCENOGRAPHIA MVNDANÆ COMPAGIS BRAHEÆ",
+        "severity": "cosmetic",
+        "what": "the cartouche reads BRAHEA, not BRAHEÆ"
+       },
+       {
+        "class": "O5",
+        "quote": "<insert>AXIS MVNDI</insert>",
+        "severity": "wrong_text",
+        "what": "the labels ÆQVATOR and MERIDIANVS, written large around the sphere, are left out"
+       },
+       {
+        "class": "O1",
+        "quote": "<insert>CIRCVLVS ZODIACI</insert>",
+        "severity": "misleads",
+        "what": "the page reads 'SIVE ZODIACI'/'ZODIACI'; 'CIRCVLVS ZODIACI' does not appear"
+       },
+       {
+        "class": "O6",
+        "quote": "<insert>MAR DI INDIA</insert>",
+        "severity": "misleads",
+        "what": "the globe shows 'MAR DI' and 'LYBIA'; 'INDIA' cannot be read on the page, and the other globe names are left out"
+       },
+       {
+        "class": "O5",
+        "quote": "<insert>SEPTENTRIO</insert>",
+        "severity": "cosmetic",
+        "what": "the degree numbers on the outer graduated rim are left out"
+       },
+       {
+        "class": "O8",
+        "quote": "<insert>AQVARIVS ♒</insert>",
+        "severity": "misleads",
+        "what": "zodiac names are listed from the standard sequence; several, such as Aquarius, Pisces and Libra, cannot be read under the shading, and the page splits names like 'ARI ES' and 'TAV RVS'"
+       },
+       {
+        "class": "E2",
+        "quote": "two putti unfurl a banner",
+        "severity": "cosmetic",
+        "what": "the image description is inaccurate: eagles with putti hold the drapery"
+       }
+      ],
+      "reader_note": "The title and the main circle labels are captured, but the transcription leaves out ÆQVATOR, MERIDIANVS, the globe names and the rim degrees, and it reports some labels the page does not show, such as 'CIRCVLVS ZODIACI' and 'INDIA'."
+     }
+    },
+    {
+     "page_number": 28,
+     "page_id": "69b6c48d8566c83814664dc5",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:08:27.295Z",
+     "text": "a98998d680fb8133",
+     "verdict": {
+      "accept": false,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "Stella IOVIS percurrit annis 12 in medio eius pervagatur. Latitudinem",
+        "severity": "wrong_text",
+        "what": "Most of the text on the circular orbit bands is left out (Jupiter, Mars, Venus, Mercury, Moon and Sun passages); only fragments are given"
+       },
+       {
+        "class": "O14",
+        "quote": "<insert>Circulus Veneris</insert>",
+        "severity": "misleads",
+        "what": "Text running around the circles is chopped into labels in no reading order and loses its link to the matching orbit"
+       },
+       {
+        "class": "O6",
+        "quote": "SOL peragit circulum suum in 365 diebus et 6 horis, cuius pars altissima Gemini humillima Sagittarius et habet absidem in Arietis parte 23: In medio Zodiaci flexuoso tramite means cuius Sublimitas in Signo Leonis est; humilitas in Aquario. apsis altissima in Capricorno parte 28.",
+        "severity": "wrong_text",
+        "what": "Text from the Sun, Mercury/Moon and Mars bands is merged into one invented Sun passage"
+       },
+       {
+        "class": "O6",
+        "quote": "Circumit orbem suum diebus 338. attollitur in Capricorno deprimitur in Cancro",
+        "severity": "misleads",
+        "what": "Stands alone with no planet named; on the page it belongs to an inner orbit band, and the wording is partly guessed"
+       },
+       {
+        "class": "O6",
+        "quote": "nec aliud iter in Corpione. deprimi-",
+        "severity": "misleads",
+        "what": "Misreads 'in Scorpione' as 'in Corpione' and joins unrelated words from the zodiac band"
+       },
+       {
+        "class": "O6",
+        "quote": "Zodiaci suas non amplius partes. cuius circuli pars altissima in Virgine, humillima in Piscibus esse videtur. Apsis eius est in Cancri parte 15. Fit Stationaria in triquetro: Latitudines",
+        "severity": "misleads",
+        "what": "Saturn-band text is spliced together and phrases in between are dropped"
+       },
+       {
+        "class": "O8",
+        "quote": "## ORBIVM MVNDI",
+        "severity": "cosmetic",
+        "what": "The title reads 'ORBIVM MVN' on the plate; the candidate silently completes it as 'MVNDI'"
+       },
+       {
+        "class": "O1",
+        "quote": "peragit cursum suum diebus 27 et 8 horis",
+        "severity": "misleads",
+        "what": "Moon fragment is put together loosely; the band's other wording is not reproduced"
+       }
+      ],
+      "reader_note": "This is a volvelle planisphere with long Latin texts running around the orbit bands. The candidate gives the title cartouches but reduces the orbit texts to scrambled, partly misattributed fragments, and most of that text is missing."
+     }
+    },
+    {
+     "page_number": 37,
+     "page_id": "69b6c48d8566c83814664dce",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:08:50.821Z",
+     "text": "81a03c65db08e878",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "<insert>MERIDIES</insert>",
+        "severity": "wrong_text",
+        "what": "The globe's geographic labels are missing: Mare Arabicum, Indicum, India, America Septentrionalis, Nova Hollandia, Terra Australis Incognita, Mare Tartaricum, Circulus Aequinoctialis/Arcticus/Antarcticus, Tropicus."
+       },
+       {
+        "class": "O5",
+        "quote": "<insert>TRIGINTA GRADVVM.</insert>",
+        "severity": "misleads",
+        "what": "The SEXAGINTA GRADVVM circle labels are dropped, and so are the band labels MERIDIANVS, POLVS MERIDIANVS and the COLVRVS SOLSTITIORVM/ÆQVINOCTIORVM wording."
+       },
+       {
+        "class": "O6",
+        "quote": "<insert>I Z O D I A C V S</insert>",
+        "severity": "misleads",
+        "what": "Garbled: the band reads ZODIACVS (plus pieces of other words); the leading 'I' is invented."
+       },
+       {
+        "class": "O6",
+        "quote": "<insert>TROPICVS CANCER</insert>",
+        "severity": "misleads",
+        "what": "The page has TROPICVS CANCRI. The zodiac sign CANCER, on the band, is not given as its own label."
+       },
+       {
+        "class": "O1",
+        "quote": "<insert>AXIS TROPICORVM</insert>",
+        "severity": "wrong_text",
+        "what": "This label does not appear on the plate."
+       },
+       {
+        "class": "O6",
+        "quote": "<insert>COLVRVS SEV AXIS GLOBI</insert>",
+        "severity": "misleads",
+        "what": "Separate band labels (COLVRVS SEV…, AXIS GLOBI) are merged into one invented phrase."
+       },
+       {
+        "class": "O1",
+        "quote": "<insert>TROPICVS HYBERNVS VEL CAPRICORNI</insert>",
+        "severity": "misleads",
+        "what": "Only TROPICVS … CAPRICORNI is visible; HYBERNVS VEL looks supplied."
+       },
+       {
+        "class": "O12",
+        "quote": "<insert>NADIR</insert>",
+        "severity": "cosmetic",
+        "what": "The engraver's signature 'A. van Luyck f.' near NADIR is omitted."
+       },
+       {
+        "class": "O11",
+        "quote": "# SITVS CIRCVLIS CIRCVN=",
+        "severity": "cosmetic",
+        "what": "The two-cartouche title is rendered as two headings; the text itself is correct."
+       }
+      ],
+      "reader_note": "The title, imprint and main circle names are right, but many plate labels are missing (all the geography, SEXAGINTA GRADVVM, MERIDIANVS), and some labels are garbled or invented (AXIS TROPICORVM, I ZODIACVS, TROPICVS CANCER)."
+     }
+    },
+    {
+     "page_number": 52,
+     "page_id": "69b6c48d8566c83814664ddd",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:14:42.777Z",
+     "text": "5355305aba8decb1",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "<insert>AXIS ZODIACI</insert>",
+        "severity": "wrong_text",
+        "what": "Several large engraved circle labels are missing entirely: ÆQVATOR, ZODIACVS, TROPICVS CANCRI, TROPICVS CAPRICORNI, and COLVRVS ÆQVINOCTIORVM (seen as 'TIORVM' / reversed 'AEQVINOC')."
+       },
+       {
+        "class": "O6",
+        "quote": "COLVRVS SEV AXIS GLOBI TERRAQVEI",
+        "severity": "misleads",
+        "what": "The page reads 'COLVRVS SEV / AXIS GLOBI' beside the aequinoctiorum colure. 'TERRAQVEI' is not visible, and the separate labels are merged into one invented line."
+       },
+       {
+        "class": "O6",
+        "quote": "MARE DI INDIA",
+        "severity": "cosmetic",
+        "what": "The globe reads 'MAR DI ... INDIA'."
+       },
+       {
+        "class": "O8",
+        "quote": "Gemini ♊",
+        "severity": "cosmetic",
+        "what": "Zodiac glyphs are added to every sign name. Most do not appear as glyphs on the band, and Libra, Virgo, Leo and Cancer are hidden or barely legible on the far side of the band."
+       },
+       {
+        "class": "E2",
+        "quote": "<insert>SOL :</insert>",
+        "severity": "cosmetic",
+        "what": "'SOL:' ends the ring legend 'COLVRVS SOLSTITIORVM SEV MERIDIANVS SOL:' but is split off as a separate label."
+       },
+       {
+        "class": "O12",
+        "quote": "<insert>ZENITH</insert>",
+        "severity": "cosmetic",
+        "what": "Place names on the globe and minor ring text are not transcribed."
+       }
+      ],
+      "reader_note": "The title, imprint and many labels are correct, but major circle labels (Aequator, Zodiacus, both Tropics, the equinoctial colure) are missing, and one colure label is merged and partly invented."
+     }
+    },
+    {
+     "page_number": 55,
+     "page_id": "69b6c48d8566c83814664de0",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:15:03.789Z",
+     "text": "850a8ed01e0b2a64",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "LINEA MEDIARVM LONGITVDINVM.",
+        "severity": "wrong_text",
+        "what": "the large arc lettering LVNA CRESCENS / LVNA DECRESCENS and the vertical LINEA APSIDVM are left out entirely"
+       },
+       {
+        "class": "O5",
+        "quote": "**Lineæ et Centra:**",
+        "severity": "wrong_text",
+        "what": "drops the ECCENTRICI / EPICYCLVS DEFERENS arc labels, the DISTANTIA LVNÆ AB APOGEO DVPLVM ELONGATIONIS A SOLE line and the ÆQVATIO ARGVMENTI MAXIMA side labels"
+       },
+       {
+        "class": "O6",
+        "quote": "PERIGÆVM ECCENTRICI.\n\nEPICYCLVS II.",
+        "severity": "misleads",
+        "what": "Epicycle I's lower label reads PERIGÆVM EPICYCLI, not ECCENTRICI; its APOGÆVM EPICYCLI label is also missing"
+       },
+       {
+        "class": "O5",
+        "quote": "NOVILVNIVM CONIVNCTIO.",
+        "severity": "misleads",
+        "what": "shortened from NOVILVNIVM LVNÆ CONIVNCTIO CVM SOLE; likewise PLENILVNIVM LVNÆ SOLI OPPOSITIO"
+       },
+       {
+        "class": "O5",
+        "quote": "EPICYCLVS V.\nAPOGÆVM ECCENTRICI.",
+        "severity": "misleads",
+        "what": "Epicycle V's PERIGÆVM EPICYCLI and APOGÆVM EPICYCLI labels are omitted"
+       },
+       {
+        "class": "O14",
+        "quote": "two smaller auxiliary diagrams at the lower left and lower right",
+        "severity": "misleads",
+        "what": "the two inset diagrams are described but their labels (LVNA APOGÆA, LVNA PERIGÆA, CENTRVM TERRÆ, ECCENTRICVS) are not transcribed"
+       },
+       {
+        "class": "O7",
+        "quote": "XI. GRAD. XII MINVT.",
+        "severity": "cosmetic",
+        "what": "the plate reads 'XI GRAD XII MIN', abbreviated"
+       },
+       {
+        "class": "E2",
+        "quote": "♉ II. TAURUS",
+        "severity": "cosmetic",
+        "what": "the Taurus glyph is read a second time as the numeral 'II.'"
+       },
+       {
+        "class": "O5",
+        "quote": "->Apud GERARDVM VALK et PETRVM SCHENK, Amstelodami.<-",
+        "severity": "cosmetic",
+        "what": "the small engraver's signature under Sagittarius is omitted"
+       }
+      ],
+      "reader_note": "The title, the zodiac, the two daily-motion arcs, the epicycle numbers and the imprint are correct, but much of the plate's lettering is missing: LVNA CRESCENS/DECRESCENS, LINEA APSIDVM and the inset labels. One epicycle label also says 'eccentrici' where the plate says 'epicycli'."
+     }
+    },
+    {
+     "page_number": 67,
+     "page_id": "69b6c48d8566c83814664dec",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:15:17.488Z",
+     "text": "f26a4b9ea58e2dbe",
+     "verdict": {
+      "accept": false,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "HÆMISPHÆRIUM STELLATUM BOREALE CUM ANTIQVO.",
+        "severity": "wrong_text",
+        "what": "The two banners actually read HÆMISPHÆRIUM STELLATUM BOREALE ANTIQVUM; 'CUM ANTIQVO' is not on the page"
+       },
+       {
+        "class": "O1",
+        "quote": "Mons Mænalus",
+        "severity": "wrong_text",
+        "what": "This Hevelian constellation is not labelled on this antique-style map"
+       },
+       {
+        "class": "O1",
+        "quote": "Canes Venatici",
+        "severity": "wrong_text",
+        "what": "Not labelled on the plate"
+       },
+       {
+        "class": "O1",
+        "quote": "Vulpecula",
+        "severity": "wrong_text",
+        "what": "Not labelled on the plate"
+       },
+       {
+        "class": "O1",
+        "quote": "Cor Caroli",
+        "severity": "wrong_text",
+        "what": "Not labelled on the plate"
+       },
+       {
+        "class": "O4",
+        "quote": "Cancer",
+        "severity": "misleads",
+        "what": "Cancer is repeated in the figure-label list after already appearing in the zodiac list"
+       },
+       {
+        "class": "O5",
+        "quote": "Ursa Minor\nDraco",
+        "severity": "misleads",
+        "what": "Visible labels are left out, e.g. Corvus, Cetus, Apes/Musca, Circulus Zodiaci, Æquinoctialis, Colurus"
+       },
+       {
+        "class": "O17",
+        "quote": "<insert>\nAntinous",
+        "severity": "cosmetic",
+        "what": "Labels are given as a list that does not follow their positions on the map"
+       }
+      ],
+      "reader_note": "The title is misread ('CUM ANTIQVO' instead of 'ANTIQVUM'), and the constellation list adds several Hevelian names that are not on this plate while leaving out labels that are visible."
+     }
+    },
+    {
+     "page_number": 70,
+     "page_id": "69b6c48d8566c83814664def",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:15:37.266Z",
+     "text": "bbdb4257d1381665",
+     "verdict": {
+      "accept": false,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O3",
+        "quote": "Pegasus",
+        "severity": "wrong_text",
+        "what": "The label list looks like a standard list of northern constellations rather than the plate's own legends. Pegasus, Andromeda, Perseus, Auriga, Sagittarius and Libra can't be confirmed as labels on this plate."
+       },
+       {
+        "class": "O5",
+        "quote": "Ursa Major",
+        "severity": "wrong_text",
+        "what": "Most of the plate's labels are left out: the secondary Latin and Arabic-style names under each figure, Antinous, Canis Minor, Argo, Lupus, the equinoctial label, VIRGO, the ZVR/MAR DEL/AMERI place names on the terrestrial map, and others."
+       },
+       {
+        "class": "O8",
+        "quote": "Ophiuchus",
+        "severity": "misleads",
+        "what": "Labels are given in modern standard forms, not as engraved (for example the plate reads 'Serpentarius' and 'Calsiopeia/Cassiopeia'). The spellings and the order of the list don't follow the plate."
+       },
+       {
+        "class": "O12",
+        "quote": "PHIA",
+        "severity": "misleads",
+        "what": "The small cursive inscription under PHIA on the right-hand banner is left out."
+       },
+       {
+        "class": "O16",
+        "quote": "Hemisphaerium Stellatum Boreale cum subiecto Hemisphaerio Terrestri",
+        "severity": "misleads",
+        "what": "The image description quotes a title that isn't on the page."
+       },
+       {
+        "class": "O5",
+        "quote": "Corvus",
+        "severity": "cosmetic",
+        "what": "The plate number at the bottom right is left out."
+       }
+      ],
+      "reader_note": "The two-banner title is read correctly, but the label list is a generic set of constellation names: it misses most of the plate's legends and includes names that can't be confirmed on this plate."
+     }
+    },
+    {
+     "page_number": 73,
+     "page_id": "69b6c48d8566c83814664df2",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:15:50.208Z",
+     "text": "735cbbeb0bac9dec",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O14",
+        "quote": "Hand-colored celestial and terrestrial planisphere depicting the Northern Hemisphere with constellations",
+        "severity": "misleads",
+        "what": "Constellation and place labels on the map (e.g. Cepheus, Cassiopeia, America Septentrionalis, Canis minor, Mare) are only described, not transcribed"
+       },
+       {
+        "class": "O6",
+        "quote": "GERARDUM VALK. *C. P.*",
+        "severity": "cosmetic",
+        "what": "The privilege abbreviation after VALK seems to read 'C. Priv.', not 'C. P.'"
+       }
+      ],
+      "reader_note": "Both title cartouches are transcribed correctly: 'Hæmisphærium Boreale / Hæmisphærio[um] Stellat. cum subiecto terrestri', sold at Amsterdam by Schenk and Valk. The many small labels inside the map are left out, though."
+     }
+    },
+    {
+     "page_number": 79,
+     "page_id": "69b6c48d8566c83814664df8",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:16:12.737Z",
+     "text": "e95aa4866657041f",
+     "verdict": {
+      "accept": false,
+      "fidelity": 2,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "STELLÆ",
+        "severity": "wrong_text",
+        "what": "The cartouche reads STELLA- (the start of STELLA-TI, continued as 'TI ET' in the left cartouche), not STELLÆ, so the title is broken"
+       },
+       {
+        "class": "O16",
+        "quote": "Haemisphaerium Scenographicum Coeli Australis Stellae Terraeque",
+        "severity": "misleads",
+        "what": "The title in the image description is wrong; the plate reads Haemisphaerium Scenographicum Australe Coeli Stellati et Terrae"
+       },
+       {
+        "class": "O1",
+        "quote": "CYGNI",
+        "severity": "wrong_text",
+        "what": "A northern constellation name that does not appear on this southern plate"
+       },
+       {
+        "class": "O6",
+        "quote": "PISCIS LARTIS",
+        "severity": "misleads",
+        "what": "A garbled label that matches nothing legible on the plate"
+       },
+       {
+        "class": "O1",
+        "quote": "SAGITTARIUS\nSCORPIO",
+        "severity": "misleads",
+        "what": "Capitalised labels that are not legible on the plate; the list looks reconstructed from expectation rather than read"
+       },
+       {
+        "class": "O5",
+        "quote": "Hydrus\nGrus\nToucan\nPavo",
+        "severity": "misleads",
+        "what": "Legible labels are left out, e.g. Indus, Phoenix, Fluvius Eridanus, Columba and Piscis Austr."
+       },
+       {
+        "class": "O5",
+        "quote": "Amstelodami apud",
+        "severity": "cosmetic",
+        "what": "The imprint seems to begin with a word (probably 'Prostant') that was dropped"
+       },
+       {
+        "class": "O14",
+        "quote": "Andromeda\nPerseus\nTriangulum",
+        "severity": "misleads",
+        "what": "Map labels are given as a loose list, not in any spatial or reading order, which mixes read and assumed names"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69b6c88a31b7f0d07f500bfe",
+   "title": "Dissertatio Mathematica, De Metamorphosibvs Proportionvm Continvarvm, Scilet Arithm. Geometr. &amp; Vtrivsqve Harmonicae : Qvae Rectore Magnificentissimo, Serenissimo Principe Ac Domino, Dn. Gvilielmo Henrico, Dvce Saxoniæ, Jvliaci, Cliviæ, Montivm &amp; Reliqva, Annvente Inclyta Facvltate Philosophica Jenensi",
+   "pages": [
+    {
+     "page_number": 14,
+     "page_id": "69b6c88a31b7f0d07f500c0c",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:09:04.438Z",
+     "text": "bd336901cf88f5e2",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "*xx* † *aax*. 2*aax*. *aax* † *aaaaaa*",
+        "severity": "wrong_text",
+        "what": "the page has aaax in all three terms (xx † aaax. 2aaax. aaax † aaaaaa); the candidate drops one 'a' each time, so the formula is wrong"
+       },
+       {
+        "class": "O4",
+        "quote": "2ax*ax*",
+        "severity": "wrong_text",
+        "what": "the page reads '2ax.'; 'ax' is repeated, which garbles the middle term"
+       },
+       {
+        "class": "O6",
+        "quote": "Primus ſit harmonicus",
+        "severity": "cosmetic",
+        "what": "the page reads 'fit', not 'ſit'"
+       },
+       {
+        "class": "O6",
+        "quote": "Primus harmonicus ſit ſumma",
+        "severity": "cosmetic",
+        "what": "the page reads 'fit', not 'ſit'"
+       },
+       {
+        "class": "O8",
+        "quote": "*Contraharmonicam*",
+        "severity": "cosmetic",
+        "what": "the page misprints 'Contrabarmonicam'; the candidate silently corrects it"
+       }
+      ],
+      "reader_note": "The prose is right, but the formula lines for Methods III and IV are wrong: 'aax' should be 'aaax', and '2ax' is garbled as '2ax*ax*'."
+     }
+    },
+    {
+     "page_number": 19,
+     "page_id": "69b6c88a31b7f0d07f500c11",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:09:16.167Z",
+     "text": "b50502c84acfe080",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "2rd*rd*.",
+        "severity": "wrong_text",
+        "what": "The page reads '2rd.' as the middle term of the harmonic proportion. The candidate adds an extra 'rd', which changes the formula."
+       },
+       {
+        "class": "O7",
+        "quote": "*arrrdd* † 2*rrdd*.",
+        "severity": "misleads",
+        "what": "The first coefficient on the page is the numeral 2 ('2rrrdd'). The candidate misreads it as the letter 'a'."
+       },
+       {
+        "class": "D1",
+        "quote": "<-\\",
+        "severity": "cosmetic",
+        "what": "A stray backslash line break follows the centred formula lines."
+       }
+      ],
+      "reader_note": "The prose and Method II/III formulas match the page, but the problem statement's middle term has an extra 'rd' ('2rdrd' instead of '2rd'), and Method I's first term starts with 'a' where the page has the numeral 2."
+     }
+    },
+    {
+     "page_number": 28,
+     "page_id": "69b6c88a31b7f0d07f500c1a",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:09:24.197Z",
+     "text": "eccb7dfd386a5b15",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "I read the page line by line and the transcription matches it: every line is there, in order, and every algebraic term (2yy 2yn 2nn; yynn — 2ynnn † nnnn …; nn. yn † nn. yy † 2yn † nn.) is correct. The page number, the signature D 2 and the catchword MO- are recorded correctly."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "69bf61c276287c6679d5f4d7",
+   "title": "Terentius: Comoediae cum commentariis",
+   "pages": [
+    {
+     "page_number": 1,
+     "page_id": "69bf61c276287c6679d5f4d8",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:09:37.795Z",
+     "text": "0bbd7014205f6374",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "OE 2",
+        "severity": "cosmetic",
+        "what": "label shows Œ ligature, rendered as OE"
+       }
+      ],
+      "reader_note": "A book spine with the two titles, the Terence and Sallust contents, a shelfmark label and LUGDUNI 1495, all transcribed faithfully."
+     }
+    },
+    {
+     "page_number": 5,
+     "page_id": "69bf61c276287c6679d5f4dc",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:09:45.318Z",
+     "text": "3e9578873da3f93d",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O16",
+        "quote": "<script>printed</script>",
+        "severity": "cosmetic",
+        "what": "script tagged as printed although the leaf has no text"
+       }
+      ],
+      "reader_note": "This is a marbled-paper pastedown with no text. The candidate correctly leaves the transcription empty and just describes the pattern."
+     }
+    },
+    {
+     "page_number": 22,
+     "page_id": "69bf61c276287c6679d5f4ed",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:10:14.037Z",
+     "text": "a38bd685e423502b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "E2",
+        "quote": "Primum hec pudice vitam parce ac duriter agebat\ncat qui vilis est:a crasso filo conte=",
+        "severity": "cosmetic",
+        "what": "The two columns (Terence's text and the commentary beside it) are interleaved line by line, so neither reads straight through; each line is complete and in order."
+       },
+       {
+        "class": "O6",
+        "quote": "(ita vt sit)",
+        "severity": "cosmetic",
+        "what": "The page reads 'ita vt fit', not 'sit'."
+       },
+       {
+        "class": "O6",
+        "quote": "aduerbin tpcationē significare",
+        "severity": "misleads",
+        "what": "Garbled: the page has 'aduerbium et precationem'."
+       },
+       {
+        "class": "O6",
+        "quote": "quis eam potius",
+        "severity": "cosmetic",
+        "what": "The page reads 'quis est ea potitus'."
+       },
+       {
+        "class": "O6",
+        "quote": "Jam id nomen",
+        "severity": "cosmetic",
+        "what": "The page reads 'Nam', not 'Jam'."
+       },
+       {
+        "class": "O6",
+        "quote": "vsum signi",
+        "severity": "cosmetic",
+        "what": "The page reads 'vsum et signum'."
+       },
+       {
+        "class": "O6",
+        "quote": "Si autem a symbolo",
+        "severity": "cosmetic",
+        "what": "The page reads 'Cum autem'."
+       },
+       {
+        "class": "O1",
+        "quote": "dicebant inquirendo vna cum rogan=",
+        "severity": "misleads",
+        "what": "This span sits under the repair patch and looks partly guessed; the uncertainty isn't marked inline."
+       },
+       {
+        "class": "O6",
+        "quote": "qui veste vili induatur",
+        "severity": "cosmetic",
+        "what": "The page reads 'quod veste' (q̄ abbreviation)."
+       }
+      ],
+      "reader_note": "All the text is here and mostly right. But the main text and the commentary are interleaved line by line, a few abbreviations are misexpanded, and the words under the repair patch at lower right look partly guessed."
+     }
+    },
+    {
+     "page_number": 23,
+     "page_id": "69bf61c276287c6679d5f4ee",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:10:30.479Z",
+     "text": "ac0bc45ca01144ca",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Ibi.i.apud Ebryfidē",
+        "severity": "misleads",
+        "what": "Chrysis's name is misread as 'Ebryfidē' twice in the lower commentary; the page has Chryſidē"
+       },
+       {
+        "class": "O6",
+        "quote": "Enrabat diligenter",
+        "severity": "misleads",
+        "what": "misread for 'Curabat', the word the gloss explains"
+       },
+       {
+        "class": "O6",
+        "quote": "ꝯſerere.Inde officr  Pliū. Eon=\nffictatio",
+        "severity": "misleads",
+        "what": "garbled: the page has 'Inde ꝯflict' plu.' and 'Con=flictatio'"
+       },
+       {
+        "class": "O6",
+        "quote": "Lenauit cum ſocijs",
+        "severity": "cosmetic",
+        "what": "initial C misread as L (Cenauit), unlike the main text, which reads it correctly"
+       },
+       {
+        "class": "E2",
+        "quote": "poſſim aliquid mali pati",
+        "severity": "cosmetic",
+        "what": "the page seems to read 'poſſum mali pati'; 'aliquid' looks added and the verb form differs"
+       }
+      ],
+      "reader_note": "The play text and both commentary blocks are complete and in order. The bottom commentary has misread names and words (Ebryfidē, Enrabat) and a few gaps marked unclear where the paper is damaged."
+     }
+    },
+    {
+     "page_number": 26,
+     "page_id": "69bf61c276287c6679d5f4f1",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:10:48.197Z",
+     "text": "3e19a385ae790ade",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "nunc cum mihi id est in nullo doli",
+        "severity": "misleads",
+        "what": "the page has 'nihil' (nibil), not 'mihi'; misread in the commentary column"
+       },
+       {
+        "class": "E2",
+        "quote": "philomenam primi id est tunc primum",
+        "severity": "cosmetic",
+        "what": "the page reads 'primum' (pzimū), not 'primi'"
+       },
+       {
+        "class": "E2",
+        "quote": "omnibus membris id est omnibus viribus",
+        "severity": "cosmetic",
+        "what": "the page has 'h' est' (hoc est), not 'id est'"
+       },
+       {
+        "class": "E2",
+        "quote": "tute id tum te prescripsisti",
+        "severity": "cosmetic",
+        "what": "the page reads 'tute id tumet' / 'tum et'; word division is uncertain"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>id est que oportunitas",
+        "severity": "cosmetic",
+        "what": "the left commentary column is the main gloss text set beside the play text, not a margin; the order of the content is kept"
+       }
+      ],
+      "reader_note": "All the text and commentary is there in a readable order; there are a few small misreads in the commentary column, the most notable being 'mihi' for 'nihil'."
+     }
+    },
+    {
+     "page_number": 34,
+     "page_id": "69bf61c276287c6679d5f4f9",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:11:03.995Z",
+     "text": "fb40b334c327b369",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "visa Miside dixit. o Misis optantis adventum aut repente percussi.",
+        "severity": "wrong_text",
+        "what": "The page reads 'o Misis salve. Mi. o optantis est adventum'. The candidate drops 'salve. Mi. o' and 'est', so it merges Pamphilus's greeting with Mysis's reply."
+       },
+       {
+        "class": "O11",
+        "quote": "<sig>ii.</sig>",
+        "severity": "misleads",
+        "what": "There is no signature mark on this leaf, so this signature is invented."
+       },
+       {
+        "class": "O6",
+        "quote": "aut me Siſidē loqui",
+        "severity": "misleads",
+        "what": "The page has 'Misidē' (Misidem); the candidate reads it as 'Sisidem', which is not a real name form."
+       },
+       {
+        "class": "O6",
+        "quote": "subdit: a est articulus",
+        "severity": "cosmetic",
+        "what": "The page has the et-sign ('& est'), not 'a'."
+       },
+       {
+        "class": "O6",
+        "quote": "hic dicit eum",
+        "severity": "cosmetic",
+        "what": "The text is partly obscured by a stain; it most likely reads 'cum', not 'eum'."
+       }
+      ],
+      "reader_note": "Near the end of the commentary, the exchange of greetings between Pamphilus and Mysis ('salve. Mi. o … est') is missing. The candidate also adds a signature mark 'ii.' that does not appear on the leaf."
+     }
+    },
+    {
+     "page_number": 37,
+     "page_id": "69bf61c276287c6679d5f4fc",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:11:21.305Z",
+     "text": "474a8c772117ecff",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O4",
+        "quote": "raro inueniatur ita .i. sic postquam spes est",
+        "severity": "wrong_text",
+        "what": "The first line of the side commentary column is appended to the top commentary block and then given again at the start of the <margin> block, so it appears twice."
+       },
+       {
+        "class": "O6",
+        "quote": "La. llibil volo aliud nisi Philomenam",
+        "severity": "misleads",
+        "what": "The page reads 'Ca. Nihil volo'. The speaker label for Carinus and the word 'Nihil' are garbled."
+       },
+       {
+        "class": "O6",
+        "quote": "adeo ad te et adcote",
+        "severity": "misleads",
+        "what": "The page reads 'adeo ad te et adeo te'. 'adcote' is not a word."
+       },
+       {
+        "class": "E2",
+        "quote": "laboraretqui est",
+        "severity": "cosmetic",
+        "what": "The punctuation between 'laborare' and 'qui' has been read as a letter, running the two words together."
+       },
+       {
+        "class": "E2",
+        "quote": "nibil est",
+        "severity": "cosmetic",
+        "what": "Typo for 'nihil'."
+       },
+       {
+        "class": "O6",
+        "quote": "credo quam supple impetrabo",
+        "severity": "cosmetic",
+        "what": "The abbreviation on the page stands for 'quod', not 'quam'."
+       }
+      ],
+      "reader_note": "Main text and commentary are complete and in order, but one commentary line is printed twice where the top block meets the side column, and the side column has a few garbled readings ('La. llibil', 'adcote')."
+     }
+    },
+    {
+     "page_number": 44,
+     "page_id": "69bf61c276287c6679d5f503",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:19:54.913Z",
+     "text": "00e3c9e62d20b365",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "crede mihi hoc nunc patrem tuum esse permutaturum",
+        "severity": "wrong_text",
+        "what": "page reads 'nunquam' (never), not 'nunc'; the gloss loses its negation"
+       },
+       {
+        "class": "O6",
+        "quote": "hic nunc non dubitat : qui te ducturum neges",
+        "severity": "misleads",
+        "what": "page has 'quin' (abbreviated qui͂), not 'qui'"
+       },
+       {
+        "class": "O6",
+        "quote": "si dices te ducere Sbilomenā.comutare sba dicit Donatus",
+        "severity": "misleads",
+        "what": "page reads 'Philomenā. comutare v̾ba (verba)'; the name and the word are garbled"
+       },
+       {
+        "class": "O6",
+        "quote": "me supplet non deserturum",
+        "severity": "misleads",
+        "what": "page has the abbreviation 'sup.', not the word 'supplet'"
+       },
+       {
+        "class": "O6",
+        "quote": "darem sibi bāc fidē",
+        "severity": "cosmetic",
+        "what": "page reads 'hāc' (hanc), not 'bāc'"
+       },
+       {
+        "class": "E2",
+        "quote": "ex loco solo .1. deserto",
+        "severity": "cosmetic",
+        "what": "digit '1' typed for the abbreviation '.i.'"
+       },
+       {
+        "class": "T6",
+        "quote": "non omutaturũte=\ncum unum verbum",
+        "severity": "cosmetic",
+        "what": "'ꝯmutaturū te-/cum' run together, with the con- abbreviation dropped"
+       },
+       {
+        "class": "O6",
+        "quote": "ne senciat te esse tristem",
+        "severity": "cosmetic",
+        "what": "page reads 'sentiat'"
+       }
+      ],
+      "reader_note": "The page's text and order are mostly right, but the commentary has 'nunc' where the page says 'nunquam' (never), and 'Sbilomenā… sba' is garbled for 'Philomenā… verba', along with several smaller misreadings."
+     }
+    },
+    {
+     "page_number": 57,
+     "page_id": "69bf61c276287c6679d5f510",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:20:09.569Z",
+     "text": "c439e3c7c48285ea",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "lec quid de me nunc faciam scio",
+        "severity": "cosmetic",
+        "what": "the page reads 'Nec'; the initial was misread"
+       },
+       {
+        "class": "O6",
+        "quote": "est ironia persequitur",
+        "severity": "misleads",
+        "what": "the page has 'et hec (τ h') ironia prosequitur'"
+       },
+       {
+        "class": "O6",
+        "quote": "vel irati vto",
+        "severity": "cosmetic",
+        "what": "garbled word before 'furcifer' (the page has 'vis' or similar)"
+       },
+       {
+        "class": "O6",
+        "quote": "baud de te vlcisci",
+        "severity": "cosmetic",
+        "what": "the blackletter 'haud' was read as 'baud'"
+       }
+      ],
+      "reader_note": "This is a faithful, complete read of the Andria page: the commentary header, the two columns (Terence's text and the gloss), and the closing commentary block are all here in order, with only a few small letter-level misreadings."
+     }
+    },
+    {
+     "page_number": 80,
+     "page_id": "69bf61c276287c6679d5f527",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:20:48.989Z",
+     "text": "d59bcfe4e4fc2104",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O1",
+        "quote": "<sig>c</sig>",
+        "severity": "misleads",
+        "what": "There is no signature mark visible at the foot of this leaf, so this one appears to be invented."
+       },
+       {
+        "class": "O6",
+        "quote": "Ca. Num. interrogat numquid",
+        "severity": "misleads",
+        "what": "The page has the abbreviation 'i.' (id est), and the candidate expands it as 'interrogat', a word that is not printed."
+       },
+       {
+        "class": "O6",
+        "quote": "felici=\ntate clatinc respicere",
+        "severity": "misleads",
+        "what": "The page reads 'elati ne respicere'. The candidate garbles this into the non-word 'clatinc'."
+       },
+       {
+        "class": "O6",
+        "quote": "quis prepã. Chremes.",
+        "severity": "cosmetic",
+        "what": "The opening abbreviation 'quis p?. pã.' is misread and run together."
+       }
+      ],
+      "reader_note": "The main verse, the production notice and the bottom commentary on sponsalia are all transcribed faithfully. A reader would notice a couple of garbled words in the side commentary ('clatinc', 'prepã') and a signature 'c' that the page doesn't show."
+     }
+    },
+    {
+     "page_number": 81,
+     "page_id": "69bf61c276287c6679d5f528",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:22:41.348Z",
+     "text": "15a75735cdf2f244",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "fietur.i.concordabitur",
+        "severity": "misleads",
+        "what": "page reads 'getur' (the end of transigetur), not 'fietur'"
+       },
+       {
+        "class": "O6",
+        "quote": "Phedriā cū thaide textmerciū habere",
+        "severity": "wrong_text",
+        "what": "page has 'ꝯmerciū' (commercium); 'textmerciū' is garbled"
+       },
+       {
+        "class": "O7",
+        "quote": "qđ vulgo 62 Inſa ludis",
+        "severity": "wrong_text",
+        "what": "page reads 'dr̃ luſa' (dicitur lusa); the numeral 62 is invented"
+       },
+       {
+        "class": "O6",
+        "quote": "pnũchuerūt yoce tgeſell corporis",
+        "severity": "wrong_text",
+        "what": "page reads 'pnũciauerūt voce ⁊ geſtu corporis'"
+       },
+       {
+        "class": "O6",
+        "quote": "Biniſre ſerrane",
+        "severity": "misleads",
+        "what": "page reads 'Siniſtre'"
+       },
+       {
+        "class": "O6",
+        "quote": "nā ciꝰ ſoroz",
+        "severity": "cosmetic",
+        "what": "page reads 'eiꝰ'"
+       },
+       {
+        "class": "E2",
+        "quote": "i.Ibo\nnorē",
+        "severity": "cosmetic",
+        "what": "'i bo|norē' (in honorem) is rendered as 'Ibo', and a stray line break is carried over"
+       }
+      ],
+      "reader_note": "Overall, the text is complete and in the right order. However, there are several garbled readings in the commentary, including 'textmerciū', '62 Inſa' and 'yoce tgeſell', and one invented numeral, so the transcription doesn't match the page image in places."
+     }
+    },
+    {
+     "page_number": 82,
+     "page_id": "69bf61c276287c6679d5f529",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:23:02.754Z",
+     "text": "62692bdadd3d6104",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "eunuchi vitiati stupro puellam",
+        "severity": "misleads",
+        "what": "page reads 'vitiat .i. stuprat puellam' (verb + gloss), not a participle and a noun"
+       },
+       {
+        "class": "O6",
+        "quote": "meretrici\nilli luditur",
+        "severity": "misleads",
+        "what": "page reads 'meretricij . illuditur'; the word is wrongly split into 'illi luditur'"
+       },
+       {
+        "class": "E2",
+        "quote": "neqz �c\nmercedis habebitur",
+        "severity": "misleads",
+        "what": "a replacement character stands where the page has 'quicquam'"
+       },
+       {
+        "class": "E2",
+        "quote": "acceptoc.Outuū",
+        "severity": "cosmetic",
+        "what": "garbled; the page has 'acceptoque. Mutuum'"
+       },
+       {
+        "class": "E2",
+        "quote": "ad kenitatē",
+        "severity": "cosmetic",
+        "what": "misreading of 'lenitatem'"
+       },
+       {
+        "class": "E2",
+        "quote": "claulit",
+        "severity": "cosmetic",
+        "what": "misreading of 'clausit'"
+       },
+       {
+        "class": "O8",
+        "quote": "Phedria id est rogatus",
+        "severity": "cosmetic",
+        "what": "the page's abbreviation '.i.' is expanded to 'id est' in some places but not others"
+       }
+      ],
+      "reader_note": "The commentary, both arguments and the start of the prologue are all there and in order, but a few garbled words in the left-column commentary (Outuū, kenitatē, a replacement character, 'illi luditur', 'vitiati stupro') would make a careful reader stumble."
+     }
+    },
+    {
+     "page_number": 105,
+     "page_id": "69bf61c276287c6679d5f540",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:23:23.839Z",
+     "text": "6ffa09be5ff4344c",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Eb. Mon est profecto",
+        "severity": "cosmetic",
+        "what": "speaker 'Ch.' misread as 'Eb.' and 'Non' as 'Mon'"
+       },
+       {
+        "class": "O6",
+        "quote": "malum recidet in ne",
+        "severity": "cosmetic",
+        "what": "'in me' misread as 'in ne'"
+       },
+       {
+        "class": "E2",
+        "quote": "Ptēptá deſpectā",
+        "severity": "cosmetic",
+        "what": "garbled abbreviation; the page has 'ꝯtēptā' (contemptam) despectam"
+       },
+       {
+        "class": "O6",
+        "quote": "vtar vel prouerbium natum est",
+        "severity": "cosmetic",
+        "what": "'vn̄' (unde) read as 'vel'"
+       },
+       {
+        "class": "O6",
+        "quote": "Sunt etiam alibi a pul-",
+        "severity": "cosmetic",
+        "what": "gloss opening probably 'Sicut' (abbreviated), not 'Sunt'"
+       },
+       {
+        "class": "O6",
+        "quote": "batuiter",
+        "severity": "cosmetic",
+        "what": "'batuit'' = batuitur"
+       }
+      ],
+      "reader_note": "A complete, correctly ordered reading of the play text, the commentary and the side gloss, with a few minor misreads such as 'Mon' for 'Non' and 'in ne' for 'in me'."
+     }
+    },
+    {
+     "page_number": 119,
+     "page_id": "69bf61c276287c6679d5f54e",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:23:42.586Z",
+     "text": "a731fc8525d944d2",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O4",
+        "quote": "sedens expectans siquid imperent mihi ipse noticie puelle. Donatus legit spectans .i. desiderans vel aspiciens.",
+        "severity": "wrong_text",
+        "what": "This sentence appears once on the page, at the start of the full-width block after the column ends at 'sto.i.erect' suz no'. The candidate prints it twice: at the end of the side column and again at the start of the bottom block."
+       },
+       {
+        "class": "O6",
+        "quote": "Antiphilus, tum equidem .i. certe",
+        "severity": "misleads",
+        "what": "The page has the abbreviated speaker mark 'An' followed by 'eqdem.i.certe'. 'Antiphilus, tum' is invented."
+       },
+       {
+        "class": "O6",
+        "quote": "Antiphilio, tum equidem",
+        "severity": "misleads",
+        "what": "The speaker mark 'An ti' (Antipho) is wrongly expanded as 'Antiphilio'."
+       },
+       {
+        "class": "O6",
+        "quote": "quasi quamvis non sum hominis operatione eius",
+        "severity": "misleads",
+        "what": "The page reads 'qsi q nō suz hō i [ope]ratōe ei'' (quasi quod non sum homo in operatione eius). The candidate changes the sense."
+       },
+       {
+        "class": "O6",
+        "quote": "rursus Var. interpretatur",
+        "severity": "cosmetic",
+        "what": "The page reads 'et ut Var.'"
+       },
+       {
+        "class": "O6",
+        "quote": "furi solleptum erat",
+        "severity": "cosmetic",
+        "what": "Misreads the page's 'solitum/solaptum'."
+       }
+      ],
+      "reader_note": "The text is complete and in order, except that one sentence of commentary ('sedens expectans … aspiciens') is printed twice, and the speaker mark 'An.' is wrongly expanded as Antiphilio/Antiphilus."
+     }
+    }
+   ]
+  },
+  {
+   "book_id": "6ad854f929618b77649acae8",
+   "title": "De harmonia musicorum instrumentorum opus",
+   "pages": [
+    {
+     "page_number": 4,
+     "page_id": "6ad8550729618b77649acaec",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:11:36.390Z",
+     "text": "5f23464f035da042",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "C.z3. Fo.z",
+        "severity": "misleads",
+        "what": "the page has Fo.25 (as in the next entry, which also starts on Fo.25); the folio number is cut short to a meaningless 'z'"
+       },
+       {
+        "class": "O7",
+        "quote": "C.zo. Fo.22",
+        "severity": "cosmetic",
+        "what": "the printed 2 is read as the letter z in 'C.zo' and 'C.z3', but as 2 everywhere else"
+       },
+       {
+        "class": "O8",
+        "quote": "tetrachordi Hypaton chromatici generis",
+        "severity": "cosmetic",
+        "what": "the page misprints 'Hyparon'; the candidate silently corrects it"
+       }
+      ],
+      "reader_note": "The text of the index is complete and in order, but one folio reference (chapter 23, which should be Fo.25) appears as 'Fo.z', and some chapter numbers are written with a 'z' in place of 2."
+     }
+    },
+    {
+     "page_number": 7,
+     "page_id": "6ad8550729618b77649acaef",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:11:51.190Z",
+     "text": "7412104e54f4029a",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "C.1. Fo.96",
+        "severity": "misleads",
+        "what": "page reads C.15; a digit is missing"
+       },
+       {
+        "class": "O7",
+        "quote": "C.12. Fo.98",
+        "severity": "misleads",
+        "what": "page reads C.18, not C.12, so it duplicates the Musae entry's chapter number"
+       },
+       {
+        "class": "O7",
+        "quote": "C.9. Fo.99",
+        "severity": "misleads",
+        "what": "page reads C.19; a digit is missing"
+       },
+       {
+        "class": "O7",
+        "quote": "C.zo. Fo.I00",
+        "severity": "cosmetic",
+        "what": "OCR letter-for-digit swaps for C.20 and Fo.100"
+       },
+       {
+        "class": "O7",
+        "quote": "C.1I. Fo.90",
+        "severity": "cosmetic",
+        "what": "I written for the digit 1 in C.11"
+       },
+       {
+        "class": "O11",
+        "quote": "Woodcut printer's device or emblem",
+        "severity": "cosmetic",
+        "what": "the device is a faint mirror-image bleed-through from the other side of the leaf, not printed on this page"
+       }
+      ],
+      "reader_note": "The index text and folio numbers match the page, but four chapter numbers are wrong (C.15, C.18, C.19, C.20 appear as C.1, C.12, C.9, C.zo), so a reader looking up chapters would be misdirected."
+     }
+    },
+    {
+     "page_number": 12,
+     "page_id": "6ad8550729618b77649acaf4",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:12:04.875Z",
+     "text": "9e2d64e5418af30f",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Hic itaque harmoniae principium Coccianus uocis casus",
+        "severity": "misleads",
+        "what": "the page has 'Cócinnus' (concinnus, 'harmonious'); 'Coccianus' looks like the name of a cited author"
+       },
+       {
+        "class": "O6",
+        "quote": "non absurde soni extensionum nomine appellantur",
+        "severity": "cosmetic",
+        "what": "the page reads 'appellitantur'"
+       },
+       {
+        "class": "E2",
+        "quote": "quũ neqa grauari",
+        "severity": "cosmetic",
+        "what": "stray 'a' in 'neqa'; the page has 'neq;' (neque)"
+       }
+      ],
+      "reader_note": "A close and complete transcription, but 'Coccianus' is a misreading of 'concinnus' that reads like a named authority, and the word 'appellitantur' has been changed to 'appellantur'."
+     }
+    },
+    {
+     "page_number": 14,
+     "page_id": "6ad8550729618b77649acaf6",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:12:18.862Z",
+     "text": "91ab5d381254380e",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "uno & codẽ modo",
+        "severity": "cosmetic",
+        "what": "the page reads 'eodē' (eodem), but the candidate has 'codẽ', which is not a word"
+       },
+       {
+        "class": "O6",
+        "quote": "inuicem coniungunt sensuique accomodant",
+        "severity": "misleads",
+        "what": "the page's abbreviation marks give passive 'coniunguntur … accommodantur'; the candidate drops them and turns both verbs active"
+       },
+       {
+        "class": "O11",
+        "quote": "<sig>A</sig>",
+        "severity": "cosmetic",
+        "what": "the faint 'A iii' at the foot is ink showing through from the other side of the leaf, not this page's signature"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Boetius.</margin>\nInteruallum",
+        "severity": "cosmetic",
+        "what": "the 'Boetius.' side note sits beside the last line on the page but is placed before the paragraph's first line"
+       }
+      ]
+     }
+    },
+    {
+     "page_number": 16,
+     "page_id": "6ad8550729618b77649acaf8",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:12:29.704Z",
+     "text": "594162949a15fd59",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "codẽ tẽpore",
+        "severity": "cosmetic",
+        "what": "the page reads 'eodē' (eodem); the candidate has 'codẽ'"
+       },
+       {
+        "class": "O8",
+        "quote": "has quidem pythagoras",
+        "severity": "cosmetic",
+        "what": "the page misprints 'pytharoras'; the candidate silently corrects it"
+       },
+       {
+        "class": "E2",
+        "quote": "CDifferũt quoq Interualla",
+        "severity": "cosmetic",
+        "what": "the paragraph mark is rendered as the letter C and fused to the word; abbreviations are expanded in some places and kept in others"
+       },
+       {
+        "class": "O6",
+        "quote": "theorice nostrae",
+        "severity": "cosmetic",
+        "what": "the page reads 'theoricæ'"
+       }
+      ],
+      "reader_note": "This is a faithful line-by-line reading of the page, with its marginal notes in place. The only slips are small spelling and abbreviation inconsistencies: 'codẽ' should be 'eodem', and the printer's error 'pytharoras' has been silently corrected."
+     }
+    },
+    {
+     "page_number": 20,
+     "page_id": "6ad8550729618b77649acafc",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:12:39.599Z",
+     "text": "880ebda005e4b400",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This is a faithful, complete reading of the main text and all five marginal glosses. It even keeps printer's forms like 'panetes' and 'diezéugtico'. The paragraph breaks at the ¶ marks are the library's layout, since on the page the ¶ marks run inline."
+     }
+    },
+    {
+     "page_number": 21,
+     "page_id": "6ad8550729618b77649acafd",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:12:52.398Z",
+     "text": "322d3e8f650dd71e",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "->7048 CHypate hypaton<-",
+        "severity": "wrong_text",
+        "what": "page reads 2048, not 7048"
+       },
+       {
+        "class": "O7",
+        "quote": "->z304 Proslambanomene<-",
+        "severity": "misleads",
+        "what": "the 2-shaped numeral is given as the letter z; page reads 2304"
+       },
+       {
+        "class": "E2",
+        "quote": "CHypate hypaton",
+        "severity": "cosmetic",
+        "what": "paragraph mark given as the letter C here but as ¶ everywhere else"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Trite hyperboleõ</margin>",
+        "severity": "cosmetic",
+        "what": "margin note placed one line below the line it sits beside"
+       }
+      ],
+      "reader_note": "The prose and margin notes are faithful, but in the ratio table the first two numbers are garbled: 2304 appears as \"z304\" and 2048 as \"7048\"."
+     }
+    },
+    {
+     "page_number": 22,
+     "page_id": "6ad8550729618b77649acafe",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:13:01.620Z",
+     "text": "8bfcd12ba618753d",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "¶ Nete diezeugmenon",
+        "severity": "cosmetic",
+        "what": "page misprints 'diezeumenon'; candidate silently corrects it"
+       },
+       {
+        "class": "O8",
+        "quote": "rationis consideratione",
+        "severity": "cosmetic",
+        "what": "page reads 'cōsyderatione'; spelling normalised to 'consideratione'"
+       }
+      ],
+      "reader_note": "The text, table numerals, heading and marginal notes are complete and in order. The only differences are two small silent spelling regularisations, 'diezeugmenon' and 'consideratione'."
+     }
+    },
+    {
+     "page_number": 27,
+     "page_id": "6ad8550729618b77649acb03",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:13:11.144Z",
+     "text": "fccf05d9ebb26807",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "excedit numero . 2992 .",
+        "severity": "wrong_text",
+        "what": "page reads 2592 (7776 − 5184); 2992 breaks the arithmetic"
+       },
+       {
+        "class": "O7",
+        "quote": "numerus . 124 . excedere",
+        "severity": "wrong_text",
+        "what": "page reads numerus .5184. (4608 + 576); 124 is not on the page"
+       }
+      ],
+      "reader_note": "The prose, margin notes and diagram match the page, but two numbers in the worked proportions are wrong: 2992 should be 2592 and 124 should be 5184, so the arithmetic no longer adds up."
+     }
+    },
+    {
+     "page_number": 28,
+     "page_id": "6ad8550729618b77649acb04",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:13:20.553Z",
+     "text": "c66d83078862ab7c",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "videlicet. Iz.Hæc",
+        "severity": "wrong_text",
+        "what": "the page reads 512 (one eighth of 4096); the candidate garbles it as 'Iz'"
+       },
+       {
+        "class": "O7",
+        "quote": "numerum. 3882. dupla proportione",
+        "severity": "wrong_text",
+        "what": "the page has 3888 (half of 7776); 3882 breaks the double ratio"
+       },
+       {
+        "class": "O7",
+        "quote": "832. &. 3838. sesqualteram",
+        "severity": "wrong_text",
+        "what": "the page has 5832 & 3888; the first figure is truncated and the second misread, so the 3:2 ratio is lost"
+       }
+      ],
+      "reader_note": "The prose and marginalia are read faithfully, but four of the numbers are wrong: 512, 3888, 5832 and 3888 again. The page's ratios are built on those numbers, so its arithmetic no longer works."
+     }
+    },
+    {
+     "page_number": 34,
+     "page_id": "6ad8550729618b77649acb0a",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:13:40.879Z",
+     "text": "691cf2b2711bdcb3",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "diateſſaron dimenſio ſeſqualtera dimenſio ſeſquitertia",
+        "severity": "wrong_text",
+        "what": "two separate arc labels are merged and garbled; the page reads 'diatessarõ sesquiterna dimensio' and 'diapente coso[n]ãtia sesqualtera dimensio'"
+       },
+       {
+        "class": "O6",
+        "quote": "diatente coſonãtia",
+        "severity": "misleads",
+        "what": "misreads 'diapẽte' and drops its 'sesqualtera dimensio' qualifier"
+       },
+       {
+        "class": "O6",
+        "quote": "diapente aeq̃ſita ſeſqualtera",
+        "severity": "misleads",
+        "what": "the page reads 'diapẽte acquisita ses[qualtera]'; 'aequisita' is also a misreading of 'acquisita'"
+       },
+       {
+        "class": "O5",
+        "quote": "tonus\ndiateſſaron\ndiapente",
+        "severity": "misleads",
+        "what": "'diatessaron' occurs three times on the arcs and 'tonus' twice on the diagonal bands; each is given only once"
+       },
+       {
+        "class": "O14",
+        "quote": "<insert>\ntonus\ndiateſſaron",
+        "severity": "misleads",
+        "what": "the arc labels are given as an unordered list with no link to the notes each arc spans"
+       },
+       {
+        "class": "O17",
+        "quote": "| | <insert>ſeumi ma9</insert> | | |",
+        "severity": "cosmetic",
+        "what": "the interval labels sit between the note rows on the page but are put inside rows, and the semitone rows are laid out unevenly"
+       },
+       {
+        "class": "E2",
+        "quote": "ſeumi min9",
+        "severity": "cosmetic",
+        "what": "spurious 'u': the page reads 'semi min'"
+       },
+       {
+        "class": "O8",
+        "quote": "Integrum Syſtema harmonicum diatonici generis",
+        "severity": "cosmetic",
+        "what": "'harmonicū' expanded silently"
+       }
+      ],
+      "reader_note": "The note names, numbers and letters are right, but the arc labels are garbled, merged or missing (e.g. 'diatente coſonãtia', a fused sesqualtera/sesquitertia label), so the interval ratios on the arcs can't be trusted."
+     }
+    },
+    {
+     "page_number": 35,
+     "page_id": "6ad8550729618b77649acb0b",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:13:52.284Z",
+     "text": "f7ecb2d4aed6ad2c",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "Paranetem hyporboleon",
+        "severity": "cosmetic",
+        "what": "abbreviated 'hypboleon' (p-bar) expanded as 'hyporboleon' instead of 'hyperboleon'; same at 'Netem hyporboleon'"
+       },
+       {
+        "class": "O8",
+        "quote": "A Trite diezeugmenon ad Triten hyperboleon",
+        "severity": "cosmetic",
+        "what": "page misprint 'diezeumeno' silently corrected to 'diezeugmenon'"
+       }
+      ],
+      "reader_note": "This is a faithful transcription of the whole chapter. It includes the twelve diatessaron positions, the three species and all three marginal notes, and it correctly leaves out the show-through from the next leaf. The only slips are small abbreviation expansions ('hyporboleon'), and they mislead no one."
+     }
+    },
+    {
+     "page_number": 36,
+     "page_id": "6ad8550729618b77649acb0c",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:14:02.678Z",
+     "text": "7dbadc8e92d8c714",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "Fit enim a Proslambanomene ad hypate meson",
+        "severity": "cosmetic",
+        "what": "The small letter labels (A, B, C, D, E, F, G, aa…) printed above the note names throughout both chapters are left out"
+       },
+       {
+        "class": "O8",
+        "quote": "Quattuor species habet Diapente.",
+        "severity": "cosmetic",
+        "what": "The marginal note reads 'Quatuor' on the page and was normalised to 'Quattuor'"
+       }
+      ],
+      "reader_note": "The text of chapters xii and xiii matches the page closely, with abbreviations expanded. The small letter labels printed above the note names are missing."
+     }
+    },
+    {
+     "page_number": 37,
+     "page_id": "6ad8550729618b77649acb0d",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:14:20.562Z",
+     "text": "7fbed19df52e0a1f",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "fit quindecim chordarum numerositate diapason ipsa conformis",
+        "severity": "misleads",
+        "what": "page reads dative 'numerositati' (conformis to the number), not 'numerositate'"
+       },
+       {
+        "class": "O6",
+        "quote": "perfectum systema dicitur quam dia",
+        "severity": "misleads",
+        "what": "the abbreviation is ꝙ = 'quod' (the same sign is expanded 'quod' earlier), not 'quam'; this changes the clause at the page break"
+       },
+       {
+        "class": "E2",
+        "quote": "CSecũda",
+        "severity": "cosmetic",
+        "what": "paragraph mark ¶ rendered as a stray 'C' joined to the word, the only one left in"
+       },
+       {
+        "class": "O13",
+        "quote": "<sig>A 4</sig>",
+        "severity": "cosmetic",
+        "what": "'A4' is a small handwritten mark above 'ad', not a printed signature"
+       }
+      ],
+      "reader_note": "A complete and accurate read of the page with its marginal notes. The only real slips are 'numerositate' for 'numerositati' and 'quam' for the 'quod' abbreviation in the last line."
+     }
+    },
+    {
+     "page_number": 44,
+     "page_id": "6ad8550729618b77649acb14",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:16:28.254Z",
+     "text": "86ce249c0a598058",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "| apo | 2492 | Paranete hyperboleon. | to |",
+        "severity": "wrong_text",
+        "what": "the page has 2592 (2304 × 9/8), not 2492"
+       },
+       {
+        "class": "O7",
+        "quote": "| se | 6456 / 6561 | | |",
+        "severity": "wrong_text",
+        "what": "the page has 6472 56/81 above 6561; the numeral is misread and the fraction is dropped"
+       },
+       {
+        "class": "D1",
+        "quote": "| apo | 3456 | Paranete diezeugmenõ | t)\n\n2\n\nge | 3888 |",
+        "severity": "misleads",
+        "what": "table broken mid-row: the 'to' cell is garbled, a stray '2' is inserted, and 'ge' replaces 'apo' for the 3888 row"
+       },
+       {
+        "class": "O14",
+        "quote": "interval arcs (labeled Te. hyperboleon, Te. diezeug., Te. meson, Te. hypaton, To., etc.)",
+        "severity": "cosmetic",
+        "what": "the arc labels for tetrachords and tones are only described, not placed against the rows they span"
+       }
+      ],
+      "reader_note": "The heading and pitch names are right, but two string-length numerals are wrong (2492 should be 2592; 6456 should be 6472 56/81) and the table breaks apart around Paranete/Trite diezeugmenon."
+     }
+    },
+    {
+     "page_number": 46,
+     "page_id": "6ad8550729618b77649acb16",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:16:39.281Z",
+     "text": "52ede51604c78f99",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Sin pentachordo quod diatonice",
+        "severity": "cosmetic",
+        "what": "The drop cap S is followed by 'I in', so the page reads 'Si in'. The candidate merged this into 'Sin'."
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Tertia ſpecies diapentes in grauiſſimo pentachordo monſtrata</margin>",
+        "severity": "cosmetic",
+        "what": "The marginal notes for the third and fourth species, and the 'Diapente diatonica' note, are each placed one paragraph too early. On the page they sit beside the Tertia, Quarta and closing passages."
+       }
+      ],
+      "reader_note": "The text is complete and accurate. The opening 'Si in' is run together as 'Sin', and three marginal notes are attached one paragraph above where they appear on the page."
+     }
+    },
+    {
+     "page_number": 47,
+     "page_id": "6ad8550729618b77649acb17",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:17:03.879Z",
+     "text": "ad29e7be1bde397e",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O5",
+        "quote": "tonus\nParhýpate hýpaton\nhýpate hýpaton\nſemitonus",
+        "severity": "wrong_text",
+        "what": "The second diagram has three 'tonus' arcs and one 'semito' arc. The candidate gives only two 'tonus', so one interval label is missing."
+       },
+       {
+        "class": "O17",
+        "quote": "Lýchanos hypaton\nſemitonus\nParhýpate hypaton",
+        "severity": "misleads",
+        "what": "In the first diagram the semitone sits between Parhypate and Hypate hypaton, and the arc between Lichanos and Parhypate is a 'tonus'. The candidate puts the semitone in the wrong place."
+       },
+       {
+        "class": "O14",
+        "quote": "intervals marked in brackets on the left (tonus, semitonus, tonus)",
+        "severity": "misleads",
+        "what": "The descriptions of the first and second diagrams list only three intervals. Each diagram shows four, and the order given for the first is wrong."
+       },
+       {
+        "class": "O17",
+        "quote": "Hypate hypaton\ntonus\ntonus",
+        "severity": "cosmetic",
+        "what": "In the third and fourth diagrams, the 'tonus' that belongs between Parhypate and Hypate hypaton is listed after Hypate hypaton. Labels are not placed between the pitches they span."
+       }
+      ],
+      "reader_note": "The headings and pitch names are right, but the interval labels are not reliable: the second diagram is missing a 'tonus', and the first puts the semitone in the wrong place, so the species read wrongly."
+     }
+    },
+    {
+     "page_number": 50,
+     "page_id": "6ad8550729618b77649acb1a",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:17:16.821Z",
+     "text": "0ed935008d47c139",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "minoris unius multiplicati per minorem",
+        "severity": "cosmetic",
+        "what": "the print has the misprint 'mutiplicati', which the candidate silently corrects"
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>f\n3 2\n— —\n6 4</margin>",
+        "severity": "cosmetic",
+        "what": "the margin figure for f is placed after its paragraph rather than beside the lines it stands next to; its contents are correct"
+       }
+      ],
+      "reader_note": "All the lines are there in order, with the right numbers and the right marginal figures for f, g and h. The only differences from the print are small spelling regularisations and where the margin figures sit."
+     }
+    },
+    {
+     "page_number": 67,
+     "page_id": "6ad8550729618b77649acb2b",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:17:29.542Z",
+     "text": "aa4b4338caf2eaf3",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "proportione. z56. ad. 243.",
+        "severity": "cosmetic",
+        "what": "The print has z56 and z43 in both places. The candidate keeps the 'z' in 256 but writes 243, so the numerals are inconsistent with each other."
+       },
+       {
+        "class": "E2",
+        "quote": "necz minus",
+        "severity": "cosmetic",
+        "what": "The abbreviation neq; (neque) is written as 'necz'. The 'neque' that follows a few words later is written out in full."
+       },
+       {
+        "class": "E2",
+        "quote": "in pportiõe.",
+        "severity": "cosmetic",
+        "what": "This abbreviation is left as printed, while the same abbreviations elsewhere are expanded."
+       }
+      ],
+      "reader_note": "The transcription is complete and in order, and matches the page closely. The only flaws are small inconsistencies in how abbreviations and the 'z' form of 2 are handled."
+     }
+    },
+    {
+     "page_number": 68,
+     "page_id": "6ad8550729618b77649acb2c",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:17:40.890Z",
+     "text": "47ce1d4292ba7f02",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "<margin>Tertia chorda tetrachordi ennharmonici ſubtrahitur in locum ſecundæ",
+        "severity": "cosmetic",
+        "what": "second side-note is placed after the body text, not beside the Tertia/Rursus lines it glosses; its misprint 'subtrahi enr i locũ' is silently corrected"
+       }
+      ],
+      "reader_note": "The text matches the page line by line. Abbreviations such as .n., nãq, q̃ and ꝙ are silently expanded, and the second marginal note sits after the text instead of beside the passage it glosses."
+     }
+    },
+    {
+     "page_number": 69,
+     "page_id": "6ad8550729618b77649acb2d",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:17:54.670Z",
+     "text": "6d66eb39085603e5",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": ",ſ,zo2.et cõcreſcit numerus.7984",
+        "severity": "wrong_text",
+        "what": "page reads 208 (half of 416, and 7776+208=7984); the candidate gives 202"
+       },
+       {
+        "class": "O7",
+        "quote": "eſt.zo8.At numero 7776",
+        "severity": "misleads",
+        "what": "the page's '2'-form is given as the letter 'z', so the numeral 208 reads as 'zo8'"
+       },
+       {
+        "class": "O6",
+        "quote": "ſit depꝓſa",
+        "severity": "cosmetic",
+        "what": "the page has dep̄ssa (deprессa abbreviation); the 'ꝓ' sign is the wrong abbreviation"
+       }
+      ],
+      "reader_note": "The text is faithful overall, but in the last line the half-difference is given as 202 where the page says 208, which breaks the arithmetic (7776+208=7984)."
+     }
+    },
+    {
+     "page_number": 70,
+     "page_id": "6ad8550729618b77649acb2e",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:18:08.374Z",
+     "text": "fbeea07b48c7f3dd",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "quum numeros .8192. & .7934.",
+        "severity": "wrong_text",
+        "what": "The page prints .7984., which is the arithmetic mean of 8192 and 7776 and so central to the argument. The candidate has .7934."
+       },
+       {
+        "class": "O8",
+        "quote": "Proprietas Aryth\nmeticæ medieta\ntis.",
+        "severity": "cosmetic",
+        "what": "The margin note prints 'metycæ' and 'medieta us'. The candidate silently changes these to 'meticæ' and 'medietatis'."
+       },
+       {
+        "class": "E2",
+        "quote": "Si ad dieſium diſpoſiti hypaton tetrachordi conſiderationem intenderis : ambas ipſas ſecundum Arythmeticam proportionalitatem mediatas atque productas\neſſe",
+        "severity": "cosmetic",
+        "what": "Several printed lines are run together. The page's line breaks after the decorated initial S are not kept."
+       }
+      ],
+      "reader_note": "The text and diagram labels are accurate, except that the second number in the closing line reads 7934 where the page has 7984, which breaks the arithmetic-mean example."
+     }
+    },
+    {
+     "page_number": 71,
+     "page_id": "6ad8550729618b77649acb2f",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:18:24.843Z",
+     "text": "9554603e652db08c",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "hi.n.ſnnt. j1z.&.499",
+        "severity": "misleads",
+        "what": "the page has 512 (printed 5ız); the candidate gives the garbled 'j1z'"
+       },
+       {
+        "class": "O7",
+        "quote": "numeri.1z.ad.\n499",
+        "severity": "wrong_text",
+        "what": "the page has 512.ad.499; the candidate drops the 5 and gives 12"
+       },
+       {
+        "class": "O7",
+        "quote": "qua numerus.21.ad.64.custoditur",
+        "severity": "wrong_text",
+        "what": "the page has 81 ad 64 (the ditone, two sesquioctaves); the candidate gives 21"
+       },
+       {
+        "class": "O7",
+        "quote": "proportio.21.ad\n64.super.17.partiens",
+        "severity": "wrong_text",
+        "what": "81 misread as 21 again, so the ratio no longer agrees with super 17"
+       },
+       {
+        "class": "O8",
+        "quote": "ad parhypaten hypaton ennharmonicam",
+        "severity": "cosmetic",
+        "what": "the page's misprint 'pahypaten' is silently corrected"
+       }
+      ],
+      "reader_note": "The words are faithful, but key numbers are wrong: 512 comes out as 'j1z' and '12', and 81:64 comes out as 21:64, which breaks the arithmetic of the ratios."
+     }
+    },
+    {
+     "page_number": 75,
+     "page_id": "6ad8550729618b77649acb33",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:18:36.337Z",
+     "text": "0819d5b5e7b9ec2b",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Tetra. hyperboloe.",
+        "severity": "cosmetic",
+        "what": "the arc label reads 'Te. hyperboles.' (hyperboleon); the candidate garbles it"
+       },
+       {
+        "class": "O6",
+        "quote": "Tediezzeugmen.",
+        "severity": "cosmetic",
+        "what": "the page reads 'Te. diezeugmen.'; the candidate drops the point and doubles the z"
+       },
+       {
+        "class": "E2",
+        "quote": "tetrachorderum",
+        "severity": "cosmetic",
+        "what": "typo: the page has 'tetrachorduм' (tetrachordorum), as in the other headings"
+       },
+       {
+        "class": "O8",
+        "quote": "enharmonici generis",
+        "severity": "cosmetic",
+        "what": "the page spells it 'ennharmonici'; the candidate silently normalises it"
+       }
+      ],
+      "reader_note": "The interval grid is transcribed correctly: to./se., tri. se./se. and dito./di. for each tetrachord, plus the disjunct tones. Only the two upper arc labels are garbled, and there is a typo in the first column heading."
+     }
+    },
+    {
+     "page_number": 77,
+     "page_id": "6ad8550729618b77649acb35",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:18:50.041Z",
+     "text": "706ef2985079f0c8",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "d\n&",
+        "severity": "cosmetic",
+        "what": "the 'D e' pair in the left letter column (next to Paramese) is garbled as 'd &'"
+       },
+       {
+        "class": "O17",
+        "quote": "tonus\ntonus\nsemitonium",
+        "severity": "cosmetic",
+        "what": "the interval labels, the left letters and the note names are given as separate lists, so the diagram's row alignment is lost. The two vertical 'ton⁹'/'Tonus' labels are folded into the lists."
+       }
+      ],
+      "reader_note": "All note names, interval labels, the title, the folio number XXXV and the signature E iii are present and in order. The diagram's layout is flattened into lists, and one letter pair in the left column is garbled."
+     }
+    },
+    {
+     "page_number": 78,
+     "page_id": "6ad8550729618b77649acb36",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:19:04.987Z",
+     "text": "803b0f99c77abe43",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O11",
+        "quote": "<page-num>VXXX</page-num>",
+        "severity": "misleads",
+        "what": "The page has no printed number. 'VXXX' is the mirror image of 'XXXV' showing through from the other side of the leaf, not a folio number on this page."
+       },
+       {
+        "class": "O8",
+        "quote": "Quod Generibus Chromatico",
+        "severity": "cosmetic",
+        "what": "The print reads 'Genetibus' (a misprint); the candidate silently corrects it."
+       },
+       {
+        "class": "O8",
+        "quote": "ut Briennius asserit",
+        "severity": "cosmetic",
+        "what": "The body text reads 'Brienius'; the candidate uses the margin spelling 'Briennius'."
+       },
+       {
+        "class": "O8",
+        "quote": "Secundam ut Parhypaten hypaton",
+        "severity": "cosmetic",
+        "what": "The print reads 'Pathypaten'; the candidate silently corrects it."
+       }
+      ],
+      "reader_note": "The text of both chapters and all marginal notes is complete and in order, with abbreviations expanded and a few misprints silently corrected. The page number given is really mirrored show-through from the other side of the leaf."
+     }
+    },
+    {
+     "page_number": 79,
+     "page_id": "6ad8550729618b77649acb37",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:19:17.219Z",
+     "text": "b119f94c1a7718c4",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [],
+      "reader_note": "This is a faithful, complete reading of the page. All main-text lines are present and in order, and the ratios 75:74 and 74:73 are correct. Abbreviations are expanded (e.g. pportiõe → proportione, qnq → quandoque). The side notes are kept in the order they appear, with the Pondere note grouped beside the Anselmus/senses block."
+     }
+    },
+    {
+     "page_number": 80,
+     "page_id": "6ad8550729618b77649acb38",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:19:31.115Z",
+     "text": "10c976fcd8c6dfa7",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "Rursus 3 ad 34",
+        "severity": "wrong_text",
+        "what": "page reads 35 ad 34; numeral truncated to 3"
+       },
+       {
+        "class": "O7",
+        "quote": "36 . ad . 31 .",
+        "severity": "wrong_text",
+        "what": "page reads 36 ad 35; misread as 31"
+       },
+       {
+        "class": "E2",
+        "quote": "ad . 3z.",
+        "severity": "cosmetic",
+        "what": "the page's '3z' form of 32 is kept here but shown as '3Z' elsewhere, inconsistent with the normalised 32 used earlier"
+       },
+       {
+        "class": "E2",
+        "quote": "diefibus",
+        "severity": "cosmetic",
+        "what": "long s misread as f (diesibus), twice"
+       }
+      ],
+      "reader_note": "The text reads well, but in the series of dieses (32–36) the printed ratios 35:34 and 36:35 come out as '3 ad 34' and '36 ad 31', which makes the arithmetic nonsense."
+     }
+    },
+    {
+     "page_number": 84,
+     "page_id": "6ad8550729618b77649acb3c",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:21:03.897Z",
+     "text": "1cb2c29874f8be03",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "Damnat insuper a Ptholomeo",
+        "severity": "cosmetic",
+        "what": "The page has the abbreviation 'Damnat'' for Damnatur (passive). The candidate dropped the abbreviation mark and wrote the active 'Damnat', which is ungrammatical here. The sense can still be recovered from 'a Ptholomeo'."
+       }
+      ],
+      "reader_note": "A complete and faithful reading of the page with the abbreviations expanded. The main text, the five marginal notes, the chapter xvii heading and the opening of the Didimus section are all present and in order. The only slip is 'Damnat', which should be 'Damnatur'."
+     }
+    },
+    {
+     "page_number": 87,
+     "page_id": "6ad8550729618b77649acb3f",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:21:17.534Z",
+     "text": "adb96e749644416c",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "48\n54\n60",
+        "severity": "wrong_text",
+        "what": "The second diagram's first number reads 45 on the page (45:54 is the sesquiquinta ratio). 48 is wrong, and 48:54 would be 9:8."
+       },
+       {
+        "class": "O6",
+        "quote": "De Tribus oñribus spissis",
+        "severity": "misleads",
+        "what": "The page has the abbreviation gñribus (generibus). 'oñribus' is not a word."
+       },
+       {
+        "class": "E2",
+        "quote": "sexquasextam",
+        "severity": "cosmetic",
+        "what": "Wrong expansion of the abbreviation sexq̄sextā. It should be sexquisextam."
+       }
+      ],
+      "reader_note": "The text and margin notes are faithful, but the middle diagram gives 48 where the page has 45, which breaks the arithmetic, and the chapter heading has the garbled word 'oñribus'."
+     }
+    },
+    {
+     "page_number": 93,
+     "page_id": "6ad8550729618b77649acb45",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:21:29.090Z",
+     "text": "ab939be4612a2ced",
+     "verdict": {
+      "accept": true,
+      "fidelity": 5,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "collocata sesquinona in antecedente",
+        "severity": "cosmetic",
+        "what": "page prints 'sexquinona'; normalised to 'sesquinona'"
+       },
+       {
+        "class": "O8",
+        "quote": "quoniam numerus .17.",
+        "severity": "cosmetic",
+        "what": "printer's misprint 'numetus' silently corrected"
+       }
+      ],
+      "reader_note": "A faithful, complete transcription: both paragraphs and the diagram labels and numbers (72, 80, 90, 96) match the page, with only two small spelling normalisations."
+     }
+    },
+    {
+     "page_number": 96,
+     "page_id": "6ad8550729618b77649acb48",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:21:38.212Z",
+     "text": "afa0d22bbe6216ab",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "| 18 | 20 | 21 | 24 | 17 | 30 | 33 | 36 |",
+        "severity": "wrong_text",
+        "what": "header numbers on the page are 22 and 27, not 21 and 17; the candidate's own image description has 22 and 27"
+       },
+       {
+        "class": "O7",
+        "quote": "| 2 | 2 | 7 | 3 |",
+        "severity": "wrong_text",
+        "what": "third difference is 2 (22−20), not 7"
+       }
+      ],
+      "reader_note": "The words in the diagram are all correct, but three numbers in the key series are misread (21, 17 and 7 where the page has 22, 27 and 2), so the proportions shown no longer add up."
+     }
+    },
+    {
+     "page_number": 101,
+     "page_id": "6ad8550729618b77649acb4d",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:21:47.407Z",
+     "text": "e490bc0453d51852",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O14",
+        "quote": "showing overlapping semicircles, numbers 24, 27, 32 and intermediate fractions, labeled with tonus, sesquioctava, semitonium minus, and semitonium maius with numerical ratios",
+        "severity": "misleads",
+        "what": "The diagram is only described. Its labels and numbers are not transcribed: 24, 25 23/81, 27, 28 4/9, 30 3/8, 32; 243 ad 256 and 2048 ad 2187 under each semitone; 'Sesquitertia proportio' and the placement of the tonus and sesquioctaua labels."
+       }
+      ],
+      "reader_note": "The prose matches the page line for line, but the diagram's specific numbers and ratios (e.g. 25 23/81, 2048 ad 2187), which are the point of the passage, appear only as a vague description."
+     }
+    },
+    {
+     "page_number": 115,
+     "page_id": "6ad8550729618b77649acb5b",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:22:00.340Z",
+     "text": "e01787bb598a3fc8",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "quoniam animi affectus",
+        "severity": "misleads",
+        "what": "the page has the ꝙ abbreviation, which normally stands for 'quod', not 'quoniam'"
+       },
+       {
+        "class": "D1",
+        "quote": "septe<gloss>m</gloss>",
+        "severity": "cosmetic",
+        "what": "gloss tag misused to mark expanded abbreviations (also na<gloss>m</gloss>que)"
+       },
+       {
+        "class": "E2",
+        "quote": "consonarum huiusmodi conversionem",
+        "severity": "cosmetic",
+        "what": "the print appears to read 'consonatum', a misprint; it was silently corrected"
+       }
+      ],
+      "reader_note": "A complete and accurate reading of chapter 32 with all marginal notes; the only real slip is that 'ꝙ' is expanded as 'quoniam' where it should be 'quod'."
+     }
+    },
+    {
+     "page_number": 116,
+     "page_id": "6ad8550729618b77649acb5c",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:22:12.095Z",
+     "text": "398e3ea0637ea659",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O12",
+        "quote": "<margin>\nQuarta species\ndiapason\n</margin>\nprocedit a Parhypate hypaton",
+        "severity": "misleads",
+        "what": "This side-note sits beside 'Quartæ processus' on the page. The candidate puts it before 'procedit…', which is the end of the third species."
+       },
+       {
+        "class": "O6",
+        "quote": "Quarta processus est",
+        "severity": "cosmetic",
+        "what": "The page reads 'Quartæ processus'."
+       },
+       {
+        "class": "O8",
+        "quote": "per Trites diezeugmenon chordam",
+        "severity": "cosmetic",
+        "what": "The page prints 'diezeumenon'. The candidate silently corrects it to the expected spelling."
+       }
+      ],
+      "reader_note": "The text is complete and faithful. The only real slip is the first side-note ('Quarta species diapason'), which is placed against the end of the third species instead of beside 'Quartæ processus'."
+     }
+    },
+    {
+     "page_number": 120,
+     "page_id": "6ad8550729618b77649acb60",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:22:21.146Z",
+     "text": "6c4a666d1ef58145",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "( puta Proslambanomeno & Mese )",
+        "severity": "cosmetic",
+        "what": "page prints 'Proslambanemeno' here; candidate silently regularised to the earlier spelling"
+       }
+      ],
+      "reader_note": "A complete and accurate reading of the text and all three side-notes; abbreviations are expanded and paragraph marks dropped, and one spelling, Proslambanemeno, is quietly regularised."
+     }
+    },
+    {
+     "page_number": 137,
+     "page_id": "6ad8550729618b77649acb71",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:23:54.541Z",
+     "text": "9e678c99bd4843fb",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O8",
+        "quote": "aperte perſpicitur",
+        "severity": "cosmetic",
+        "what": "The page has the printer's misspelling 'perpicitur'; the candidate silently corrects it."
+       },
+       {
+        "class": "O8",
+        "quote": "æquum erit ſpatio ditoni",
+        "severity": "cosmetic",
+        "what": "The page reads 'spacio'; the candidate normalises it to 'spatio'."
+       },
+       {
+        "class": "E2",
+        "quote": "z.I.atc iccirco",
+        "severity": "cosmetic",
+        "what": "Garbled transcription: the page has '4.3.z.1.atq; icirco'; 'atc' is a misread of 'atq;' and the '1' became 'I'."
+       },
+       {
+        "class": "O12",
+        "quote": "<margin>Iacobus faber.</margin>",
+        "severity": "cosmetic",
+        "what": "The third marginal note reads 'Iacobus fabri.' on the page, not 'faber'."
+       }
+      ],
+      "reader_note": "The text is complete and in order, and the marginal notes are placed correctly. Only small spelling normalisations and a garbled 'atq;' after the run of numerals are off."
+     }
+    },
+    {
+     "page_number": 144,
+     "page_id": "6ad8550729618b77649acb78",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:24:06.164Z",
+     "text": "a2d41c551e5c330c",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "neqr ratione tantum",
+        "severity": "cosmetic",
+        "what": "the page has neqꝫ (neque); the abbreviation is garbled to 'neqr'"
+       },
+       {
+        "class": "O6",
+        "quote": "( quanque minima )",
+        "severity": "cosmetic",
+        "what": "the page has quanq̄ (quanquam), read here as 'quanque'"
+       },
+       {
+        "class": "O8",
+        "quote": "illæsus non euadet auditus",
+        "severity": "cosmetic",
+        "what": "the page spells it 'illesus'; the candidate changes it to the classical spelling"
+       },
+       {
+        "class": "O12",
+        "quote": "Anselmus.\n</margin>",
+        "severity": "cosmetic",
+        "what": "the separate 'Anselmus.' side-note is put in the same margin block as the Pythagorici note, and that block is placed before the text it sits beside"
+       }
+      ],
+      "reader_note": "This is a complete and faithful reading of the main text and the side-notes. The abbreviations are silently expanded. The only slips are small ones, such as 'neqr' for neque and 'quanque' for quanquam."
+     }
+    },
+    {
+     "page_number": 150,
+     "page_id": "6ad8550729618b77649acb7e",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:24:18.307Z",
+     "text": "ba29b2631259fa2e",
+     "verdict": {
+      "accept": false,
+      "fidelity": 3,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "in . 4 . &. Iz",
+        "severity": "wrong_text",
+        "what": "the page has 4.8.12: the 8 is read as '&' and 12 is garbled as 'Iz'"
+       },
+       {
+        "class": "O7",
+        "quote": "Sic in . 5 . 10 . 1 atoz",
+        "severity": "wrong_text",
+        "what": "the page has 5.10.15 atq; (atque): 15 is cut to '1' and atque is garbled as 'atoz'"
+       },
+       {
+        "class": "O7",
+        "quote": "inter . 16 . & . z . numerus . zo.",
+        "severity": "wrong_text",
+        "what": "the page has 16 & 25, numerus 20: 25 is given as 'z' and 20 as 'zo'"
+       },
+       {
+        "class": "O7",
+        "quote": "Et inter . 2 . & . 36",
+        "severity": "wrong_text",
+        "what": "the page has inter 25 & 36: 25 is given as '2'"
+       },
+       {
+        "class": "E2",
+        "quote": "ſeſquiquartã",
+        "severity": "cosmetic",
+        "what": "long s and tilde kept here only, while the rest of the page is normalised"
+       }
+      ],
+      "reader_note": "The text reads well overall, but the worked number examples are garbled (4.8.12, 5.10.15, 25, 20 show up as '&. Iz', '1', 'z', 'zo', '2'), so the arithmetic and geometric examples can't be followed."
+     }
+    },
+    {
+     "page_number": 151,
+     "page_id": "6ad8550729618b77649acb7f",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:24:34.645Z",
+     "text": "de91ff10dfdbd69c",
+     "verdict": {
+      "accept": false,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "qui secripseos qua",
+        "severity": "misleads",
+        "what": "page reads 'q[ui] īter ipsos qua-' (qui inter ipsos quadratos); the candidate turns it into the nonsense word 'secripseos', so 'between them' is lost"
+       },
+       {
+        "class": "O14",
+        "quote": "Reductio Lateris in Latus",
+        "severity": "cosmetic",
+        "what": "diagram labels are described rather than transcribed; the woodcut reads 'Deductio Lateris in Latus', and the labels 'numerus cubus', 'numerus quadratus' and 'Proportio sesquitertia' are not given"
+       }
+      ],
+      "reader_note": "The prose is accurate except in line 1, where 'qui inter ipsos' (between the two squares) appears as the meaningless 'qui secripseos'. The diagram is only summarised: its labels are not fully transcribed, and one is misread."
+     }
+    },
+    {
+     "page_number": 154,
+     "page_id": "6ad8550729618b77649acb82",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:24:49.730Z",
+     "text": "f1709ff5b02fbd20",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O7",
+        "quote": "hoc modo .z. 3. A. & .6. 8. Iz.",
+        "severity": "misleads",
+        "what": "the page prints the numeral 4; the candidate turned it into the letter 'A'"
+       },
+       {
+        "class": "T6",
+        "quote": "proportionis ad ducem",
+        "severity": "cosmetic",
+        "what": "the page begins mid-word with 'portiōis'; the 'pro-' from the previous page was silently added"
+       },
+       {
+        "class": "O8",
+        "quote": "arithmeticam medietatem continuam",
+        "severity": "cosmetic",
+        "what": "the page spells it 'arythmeticam' (also 'Arythmeticae' later); the spelling was normalised"
+       },
+       {
+        "class": "O12",
+        "quote": "Ioannes linerius",
+        "severity": "cosmetic",
+        "what": "the margin reads 'Io.linerius'; the abbreviation was expanded silently"
+       },
+       {
+        "class": "O16",
+        "quote": "sesquialtera, diapason",
+        "severity": "cosmetic",
+        "what": "'diapason' is listed in the vocab tag but does not appear on this page"
+       }
+      ],
+      "reader_note": "The text is faithful and complete, but in the six-term example one numeral 4 is printed as the letter 'A' ('.z. 3. A. & .6. 8. Iz.')."
+     }
+    },
+    {
+     "page_number": 157,
+     "page_id": "6ad8550729618b77649acb85",
+     "lane": "pero-agy-first-read-7701",
+     "route": "pero>agy-flash-low-written",
+     "judged_at": "2026-10-30T03:25:06.170Z",
+     "text": "3f726854dd487d2c",
+     "verdict": {
+      "accept": true,
+      "fidelity": 4,
+      "defects": [
+       {
+        "class": "O6",
+        "quote": "harmonica mediocritas continua quam tribus tantum terminis",
+        "severity": "misleads",
+        "what": "the abbreviation printed before 'tribus' (probably quoniam or quum) is expanded as 'quam', which shifts the sense of the clause"
+       },
+       {
+        "class": "E2",
+        "quote": "cum. 6. ad. z. maiores",
+        "severity": "cosmetic",
+        "what": "here the 'z' form of the numeral 2 is kept, while elsewhere in the text it is normalised to '2'"
+       },
+       {
+        "class": "O6",
+        "quote": "prop sesqterna",
+        "severity": "cosmetic",
+        "what": "the diagram label reads 'prop° sesq̃tertia' (sesquitertia), not 'sesqterna'"
+       }
+      ],
+      "reader_note": "The diagrams and the body text are complete and in the right order. The only real slip is that one abbreviation is expanded as 'quam' in the clause 'continua … tribus tantum terminis'. There are also minor inconsistencies in how the numeral 2 and the diagram labels are written."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -44,6 +44,8 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 
 ## Data Pipeline Flow
 
+> **Out of date (2026-10-29, #7759):** this section shows the orchestrator line only. Most OCR and translation now runs in subscription lanes (agy Flash, Opus via `claude -p`) and on the GPU box. The process today: `book-process.md`. Live lanes and counts: https://sourcelibrary.org/admin/pipeline/now.
+
 The pipeline has **13+ phases** managed by `pipeline-orchestrator.mjs` (every 2 min) and `enrich-worker.mjs` (every 5 min) on Hetzner. Books flow through `pipeline_auto.status` states:
 
 ```
@@ -141,6 +143,7 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | `jobs` | Processing job queue |
 | `batch_jobs` | Batch OCR/translation jobs |
 | `page_revisions` | OCR/translation history (MUST create before writes) |
+| `page_annotations` | The notes layer (#5942): one doc per page, source and run, never overwritten (a re-run inserts its own; undo deletes only its run's) — the model's notes and the page's marks, anchored to `pages.translation.text` by exact/prefix/suffix + offsets, with the `data_hash` of the `translation.data` they were parsed from. Read via `getPageAnnotations` (`scripts/lib/translation-text.mjs`), never served when the hash is stale. |
 | `gemini_usage` | AI cost tracking (single source of truth) |
 | `system_config` | Global settings (`processing_control` with `paused` flag) |
 

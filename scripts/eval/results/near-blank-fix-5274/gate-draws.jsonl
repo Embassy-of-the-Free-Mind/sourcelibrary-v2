@@ -1,0 +1,521 @@
+{"page_id": "6992cbda018b80967354bf0e", "book_id": "6992cbda018b80967354bea2", "page": 108, "family": "other", "state": "not-translatable", "why": "book needs_splitting and is not split: split it first (split-book.mjs --gutter-only / split-pecha.mjs), #7605", "ocr_first": false}
+{"page_id": "6992ce9c77d26f93217774e4", "book_id": "6992ce9c77d26f9321777495", "page": 79, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce7f673ee1e40e320cf2", "book_id": "6992ce7f673ee1e40e320caa", "page": 72, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce83673ee1e40e320d87", "book_id": "6992ce83673ee1e40e320d58", "page": 46, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf88f5b4f75c1a4c9282", "book_id": "6992cf87f5b4f75c1a4c9232", "page": 80, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4f2960dc4e5cea90b9", "book_id": "6992ce4f2960dc4e5cea9056", "page": 99, "family": "武備志", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b25c2ff2a8dc09e77765", "book_id": "69e8b25c2ff2a8dc09e7773b", "page": 42, "family": "道德經", "state": "ocr-refused", "why": null, "ocr_first": true}
+{"page_id": "6992cf0e284cdd19fef46f49", "book_id": "6992cf0e284cdd19fef46f38", "page": 17, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cf3af5b4f75c1a4c84ba", "book_id": "6992cf3af5b4f75c1a4c8467", "page": 83, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "69d9fb2a290e8006e23c3a50", "book_id": "69af118e7feb16bd9d149210", "page": 8, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": true}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf6ef5b4f75c1a4c8e34", "book_id": "6992cf6ef5b4f75c1a4c8e2c", "page": 7, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cbe4018b80967354c3e1", "book_id": "6992cbe4018b80967354c399", "page": 72, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf5bf5b4f75c1a4c8b8b", "book_id": "6992cf5bf5b4f75c1a4c8b6a", "page": 23, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabbd4d545ae73fee904", "book_id": "6992cabbd4d545ae73fee88b", "page": 121, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cbe8018b80967354c597", "book_id": "6992cbe8018b80967354c531", "page": 102, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc043713c66ea63859e", "book_id": "6992cdc043713c66ea638565", "page": 57, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf073158e1eeeea7f941", "book_id": "6992cf073158e1eeeea7f8fd", "page": 68, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cf12284cdd19fef47018", "book_id": "6992cf12284cdd19fef46f88", "page": 27, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf45f5b4f75c1a4c870d", "book_id": "6992cf45f5b4f75c1a4c86c0", "page": 77, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf78f5b4f75c1a4c9013", "book_id": "6992cf78f5b4f75c1a4c900a", "page": 9, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cea677d26f9321777575", "book_id": "6992cea677d26f9321777550", "page": 37, "family": "武備志", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf8cf5b4f75c1a4c92e7", "book_id": "6992cf8cf5b4f75c1a4c92d5", "page": 18, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e788094a6785cfd60ceb67", "book_id": "69e788094a6785cfd60ceb41", "page": 38, "family": "本草綱目", "state": "not-translatable", "why": "not translatable (skip-type)", "ocr_first": true}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "699998894310a671394526d1", "book_id": "699998884310a6713945261c", "page": 181, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce66673ee1e40e32084e", "book_id": "6992ce66673ee1e40e32081c", "page": 50, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f63", "book_id": "6992cf0e284cdd19fef46f38", "page": 43, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cf3af5b4f75c1a4c84b8", "book_id": "6992cf3af5b4f75c1a4c8467", "page": 81, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf6ef5b4f75c1a4c8e83", "book_id": "6992cf6ef5b4f75c1a4c8e2c", "page": 86, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6a3ceb1f95fcd45563053b78", "book_id": "6a3ceb1f95fcd45563053b46", "page": 50, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca59d4d545ae73fedd34", "book_id": "6992ca59d4d545ae73fedcd8", "page": 92, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf073158e1eeeea7f90e", "book_id": "6992cf073158e1eeeea7f8fd", "page": 17, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf12284cdd19fef4702b", "book_id": "6992cf12284cdd19fef46f88", "page": 46, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf45f5b4f75c1a4c86e5", "book_id": "6992cf45f5b4f75c1a4c86c0", "page": 37, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf3af5b4f75c1a4c8484", "book_id": "6992cf3af5b4f75c1a4c8467", "page": 29, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf78f5b4f75c1a4c9015", "book_id": "6992cf78f5b4f75c1a4c900a", "page": 11, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf12284cdd19fef47054", "book_id": "6992cf12284cdd19fef46f88", "page": 87, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf073158e1eeeea7f909", "book_id": "6992cf073158e1eeeea7f8fd", "page": 12, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf3af5b4f75c1a4c84ac", "book_id": "6992cf3af5b4f75c1a4c8467", "page": 69, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf45f5b4f75c1a4c86d5", "book_id": "6992cf45f5b4f75c1a4c86c0", "page": 21, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf073158e1eeeea7f930", "book_id": "6992cf073158e1eeeea7f8fd", "page": 51, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf12284cdd19fef47047", "book_id": "6992cf12284cdd19fef46f88", "page": 74, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf3af5b4f75c1a4c847a", "book_id": "6992cf3af5b4f75c1a4c8467", "page": 19, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7f673ee1e40e320cda", "book_id": "6992ce7f673ee1e40e320caa", "page": 48, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7f673ee1e40e320cda", "book_id": "6992ce7f673ee1e40e320caa", "page": 48, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf073158e1eeeea7f949", "book_id": "6992cf073158e1eeeea7f8fd", "page": 76, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7f673ee1e40e320cda", "book_id": "6992ce7f673ee1e40e320caa", "page": 48, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce273ea667fbac828582", "book_id": "6992ce273ea667fbac82854a", "page": 56, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992c906453c7175dc1bccb9", "book_id": "6992c906453c7175dc1bcc1b", "page": 158, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce542960dc4e5cea91ad", "book_id": "6992ce542960dc4e5cea9195", "page": 24, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce542960dc4e5cea91ad", "book_id": "6992ce542960dc4e5cea9195", "page": 24, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7f673ee1e40e320cda", "book_id": "6992ce7f673ee1e40e320caa", "page": 48, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdac43713c66ea637e53", "book_id": "6992cdab43713c66ea637dca", "page": 136, "family": "本草綱目", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdb943713c66ea638309", "book_id": "6992cdb943713c66ea6382fd", "page": 12, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd4", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee385", "book_id": "6992ca83d4d545ae73fee34e", "page": 55, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63808f", "book_id": "6992cdb243713c66ea638041", "page": 78, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc443713c66ea638736", "book_id": "6992cdc343713c66ea63870c", "page": 42, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b2c", "book_id": "6992cd7943713c66ea636b07", "page": 37, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e29", "book_id": "6992cdee81c9d7efb84d0dee", "page": 59, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cabdd4d545ae73fee984", "book_id": "6992cabdd4d545ae73fee906", "page": 126, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9aa6", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 59, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e320496", "book_id": "6992ce60673ee1e40e320488", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7f673ee1e40e320cda", "book_id": "6992ce7f673ee1e40e320caa", "page": 48, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce542960dc4e5cea91ad", "book_id": "6992ce542960dc4e5cea9195", "page": 24, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce3b3ea667fbac8288eb", "book_id": "6992ce3a3ea667fbac8288d4", "page": 23, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdf381c9d7efb84d0efd", "book_id": "6992cdf281c9d7efb84d0ee0", "page": 29, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72b6", "book_id": "6992f3eec8c6ac61574e72a1", "page": 21, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cff5f5b4f75c1a4c9cc0", "book_id": "6992cff5f5b4f75c1a4c9c50", "page": 112, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4600291c2fcb634157", "book_id": "6992ce4500291c2fcb634100", "page": 87, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7177d26f9321776ecd", "book_id": "6992ce7177d26f9321776eb3", "page": 26, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9261", "book_id": "6992ce582960dc4e5cea91f3", "page": 27, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b6a", "book_id": "6992cefff7519cdd65044b57", "page": 19, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f932177720c", "book_id": "6992ce7477d26f9321776f6a", "page": 40, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320f7e", "book_id": "6992ce8a673ee1e40e320f60", "page": 30, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f79", "book_id": "6992cf0e284cdd19fef46f38", "page": 65, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f412c8c6ac61574e754c", "book_id": "6992f412c8c6ac61574e753f", "page": 13, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea6384a3", "book_id": "6992cdbc43713c66ea6383f4", "page": 89, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd3f43713c66ea6359cd", "book_id": "6992cd3e43713c66ea63598e", "page": 63, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb943713c66ea638309", "book_id": "6992cdb943713c66ea6382fd", "page": 12, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5fd4d545ae73fedfe3", "book_id": "6992ca5fd4d545ae73fedf66", "page": 125, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd5643713c66ea635e19", "book_id": "6992cd5543713c66ea635de5", "page": 52, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb443713c66ea638138", "book_id": "6992cdb443713c66ea63812e", "page": 9, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5bd4d545ae73fede45", "book_id": "6992ca5ad4d545ae73fedda0", "page": 165, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee364", "book_id": "6992ca83d4d545ae73fee34e", "page": 22, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992f3e9c8c6ac61574e7262", "book_id": "6992f3e9c8c6ac61574e7225", "page": 61, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992c9022b03ab4dc6e12bee", "book_id": "6992c9022b03ab4dc6e12b7a", "page": 116, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "695924fe1cac2ce31a4a8ba1", "book_id": "695924fe1cac2ce31a4a8b6b", "page": 54, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63806d", "book_id": "6992cdb243713c66ea638041", "page": 44, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce5c673ee1e40e320371", "book_id": "6992ce5c673ee1e40e32030e", "page": 18, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "699998894310a671394526a3", "book_id": "699998884310a6713945261c", "page": 135, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce512960dc4e5cea90f3", "book_id": "6992ce502960dc4e5cea90bb", "page": 56, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e40", "book_id": "6992cdee81c9d7efb84d0dee", "page": 82, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992c93c69b777d72c7638d0", "book_id": "6992c93c69b777d72c76353e", "page": 914, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd9943713c66ea63782c", "book_id": "6992cd9943713c66ea6377ef", "page": 61, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdc043713c66ea6385b8", "book_id": "6992cdc043713c66ea638565", "page": 83, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd7c43713c66ea636c35", "book_id": "6992cd7c43713c66ea636be2", "page": 83, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce1f3ea667fbac828396", "book_id": "6992ce1f3ea667fbac82838a", "page": 12, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9265", "book_id": "6992ce582960dc4e5cea91f3", "page": 31, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf073158e1eeeea7f955", "book_id": "6992cf073158e1eeeea7f8fd", "page": 88, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce4f2960dc4e5cea909f", "book_id": "6992ce4f2960dc4e5cea9056", "page": 73, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8e673ee1e40e321042", "book_id": "6992ce8e673ee1e40e32103c", "page": 6, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320faa", "book_id": "6992ce8a673ee1e40e320f60", "page": 74, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cf0e284cdd19fef46f59", "book_id": "6992cf0e284cdd19fef46f38", "page": 33, "family": "植物名實圖考", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cdbc43713c66ea63847c", "book_id": "6992cdbc43713c66ea6383f4", "page": 50, "family": "武備志", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce62673ee1e40e320631", "book_id": "6992ce62673ee1e40e320547", "page": 234, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b5d", "book_id": "6992cefff7519cdd65044b57", "page": 6, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd4243713c66ea635a32", "book_id": "6992cd4243713c66ea635a00", "page": 50, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce393ea667fbac82887c", "book_id": "6992ce393ea667fbac828874", "page": 8, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd6743713c66ea6363da", "book_id": "6992cd6743713c66ea6363c5", "page": 20, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce243ea667fbac8284a6", "book_id": "6992ce233ea667fbac828452", "page": 84, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e40", "book_id": "6992cdee81c9d7efb84d0dee", "page": 82, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd9943713c66ea63782c", "book_id": "6992cd9943713c66ea6377ef", "page": 61, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7943713c66ea636b3a", "book_id": "6992cd7943713c66ea636b07", "page": 51, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce5c673ee1e40e320371", "book_id": "6992ce5c673ee1e40e32030e", "page": 18, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63806d", "book_id": "6992cdb243713c66ea638041", "page": 44, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce512960dc4e5cea90f3", "book_id": "6992ce502960dc4e5cea90bb", "page": 56, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce60673ee1e40e3204c8", "book_id": "6992ce60673ee1e40e320488", "page": 64, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992c93c69b777d72c7638d0", "book_id": "6992c93c69b777d72c76353e", "page": 914, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7c43713c66ea636c35", "book_id": "6992cd7c43713c66ea636be2", "page": 83, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce542960dc4e5cea91b3", "book_id": "6992ce542960dc4e5cea9195", "page": 30, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce1f3ea667fbac828396", "book_id": "6992ce1f3ea667fbac82838a", "page": 12, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9265", "book_id": "6992ce582960dc4e5cea91f3", "page": 31, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4f2960dc4e5cea909f", "book_id": "6992ce4f2960dc4e5cea9056", "page": 73, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320faa", "book_id": "6992ce8a673ee1e40e320f60", "page": 74, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd6743713c66ea6363da", "book_id": "6992cd6743713c66ea6363c5", "page": 20, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b5d", "book_id": "6992cefff7519cdd65044b57", "page": 6, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9a96", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 43, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd4243713c66ea635a32", "book_id": "6992cd4243713c66ea635a00", "page": 50, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce6a673ee1e40e32091c", "book_id": "6992ce6a673ee1e40e32090d", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b25c2ff2a8dc09e77749", "book_id": "69e8b25c2ff2a8dc09e7773b", "page": 14, "family": "道德經", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72a9", "book_id": "6992f3eec8c6ac61574e72a1", "page": 8, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce243ea667fbac8284a6", "book_id": "6992ce233ea667fbac828452", "page": 84, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b2562ff2a8dc09e774fb", "book_id": "69e8b2562ff2a8dc09e774b0", "page": 75, "family": "Legge Chinese Classics", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cc0f018b80967354cb60", "book_id": "6992cc0f018b80967354cb4c", "page": 20, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce393ea667fbac82887c", "book_id": "6992ce393ea667fbac828874", "page": 8, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce86673ee1e40e320e6e", "book_id": "6992ce86673ee1e40e320e14", "page": 88, "family": "武備志", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "699356c28ed86e583b7b832d", "book_id": "699356c28ed86e583b7b8320", "page": 13, "family": "other", "state": "not-translatable", "why": "english-page", "ocr_first": false}
+{"page_id": "699df07e3430a1d77dc79202", "book_id": "699df07e3430a1d77dc79099", "page": 361, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce0e3ea667fbac827d54", "book_id": "6992ce0e3ea667fbac827d0e", "page": 69, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6a09f79aec7a5a72f8dab4fa", "book_id": "6a09f79aec7a5a72f8daafe5", "page": 1301, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b25c2ff2a8dc09e77749", "book_id": "69e8b25c2ff2a8dc09e7773b", "page": 14, "family": "道德經", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e40", "book_id": "6992cdee81c9d7efb84d0dee", "page": 82, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd9943713c66ea63782c", "book_id": "6992cd9943713c66ea6377ef", "page": 61, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce512960dc4e5cea90f3", "book_id": "6992ce502960dc4e5cea90bb", "page": 56, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63806d", "book_id": "6992cdb243713c66ea638041", "page": 44, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce5c673ee1e40e320371", "book_id": "6992ce5c673ee1e40e32030e", "page": 18, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9a96", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 43, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992c93c69b777d72c7638d0", "book_id": "6992c93c69b777d72c76353e", "page": 914, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992c9aad4d545ae73fed641", "book_id": "6992c9a9d4d545ae73fed5e9", "page": 88, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cb50d4d545ae73feee96", "book_id": "6992cb50d4d545ae73feee35", "page": 97, "family": "other", "state": "not-translatable", "why": "not translatable (skip-type)", "ocr_first": false}
+{"page_id": "6992cd7c43713c66ea636c35", "book_id": "6992cd7c43713c66ea636be2", "page": 83, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdae43713c66ea637eef", "book_id": "6992cdae43713c66ea637ec9", "page": 38, "family": "三才圖會", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce6a673ee1e40e32091c", "book_id": "6992ce6a673ee1e40e32090d", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72a9", "book_id": "6992f3eec8c6ac61574e72a1", "page": 8, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce1f3ea667fbac828396", "book_id": "6992ce1f3ea667fbac82838a", "page": 12, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca5dd4d545ae73fedf44", "book_id": "6992ca5dd4d545ae73fedf0e", "page": 54, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce3f3ea667fbac8289bb", "book_id": "6992ce3f3ea667fbac8289ab", "page": 16, "family": "武備志", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "69e8b2562ff2a8dc09e774fb", "book_id": "69e8b2562ff2a8dc09e774b0", "page": 75, "family": "Legge Chinese Classics", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9265", "book_id": "6992ce582960dc4e5cea91f3", "page": 31, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4f2960dc4e5cea909f", "book_id": "6992ce4f2960dc4e5cea9056", "page": 73, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320faa", "book_id": "6992ce8a673ee1e40e320f60", "page": 74, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd6743713c66ea6363da", "book_id": "6992cd6743713c66ea6363c5", "page": 20, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b5d", "book_id": "6992cefff7519cdd65044b57", "page": 6, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd4243713c66ea635a32", "book_id": "6992cd4243713c66ea635a00", "page": 50, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce0e3ea667fbac827d54", "book_id": "6992ce0e3ea667fbac827d0e", "page": 69, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce243ea667fbac8284a6", "book_id": "6992ce233ea667fbac828452", "page": 84, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce393ea667fbac82887c", "book_id": "6992ce393ea667fbac828874", "page": 8, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6a09f79aec7a5a72f8dab4fa", "book_id": "6a09f79aec7a5a72f8daafe5", "page": 1301, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd8043713c66ea636eeb", "book_id": "6992cd8043713c66ea636ec0", "page": 43, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce0200f13b15f3ca3d20", "book_id": "6992ce0200f13b15f3ca3ccf", "page": 81, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b25c2ff2a8dc09e77749", "book_id": "69e8b25c2ff2a8dc09e7773b", "page": 14, "family": "道德經", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce5c673ee1e40e320371", "book_id": "6992ce5c673ee1e40e32030e", "page": 18, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e40", "book_id": "6992cdee81c9d7efb84d0dee", "page": 82, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ca83d4d545ae73fee363", "book_id": "6992ca83d4d545ae73fee34e", "page": 21, "family": "other", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992cd9943713c66ea63782c", "book_id": "6992cd9943713c66ea6377ef", "page": 61, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63806d", "book_id": "6992cdb243713c66ea638041", "page": 44, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce512960dc4e5cea90f3", "book_id": "6992ce502960dc4e5cea90bb", "page": 56, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992c93c69b777d72c7638d0", "book_id": "6992c93c69b777d72c76353e", "page": 914, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9a96", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 43, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7c43713c66ea636c35", "book_id": "6992cd7c43713c66ea636be2", "page": 83, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd8043713c66ea636eeb", "book_id": "6992cd8043713c66ea636ec0", "page": 43, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce6a673ee1e40e32091c", "book_id": "6992ce6a673ee1e40e32090d", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72a9", "book_id": "6992f3eec8c6ac61574e72a1", "page": 8, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce1f3ea667fbac828396", "book_id": "6992ce1f3ea667fbac82838a", "page": 12, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b2562ff2a8dc09e774fb", "book_id": "69e8b2562ff2a8dc09e774b0", "page": 75, "family": "Legge Chinese Classics", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ceaf673ee1e40e3215ef", "book_id": "6992ceaf673ee1e40e3215cf", "page": 32, "family": "武備志", "state": "not-translatable", "why": "not translatable (no-body)", "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9265", "book_id": "6992ce582960dc4e5cea91f3", "page": 31, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce0200f13b15f3ca3d20", "book_id": "6992ce0200f13b15f3ca3ccf", "page": 81, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4f2960dc4e5cea909f", "book_id": "6992ce4f2960dc4e5cea9056", "page": 73, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd6743713c66ea6363da", "book_id": "6992cd6743713c66ea6363c5", "page": 20, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320faa", "book_id": "6992ce8a673ee1e40e320f60", "page": 74, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b5d", "book_id": "6992cefff7519cdd65044b57", "page": 6, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd4243713c66ea635a32", "book_id": "6992cd4243713c66ea635a00", "page": 50, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce0e3ea667fbac827d54", "book_id": "6992ce0e3ea667fbac827d0e", "page": 69, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce243ea667fbac8284a6", "book_id": "6992ce233ea667fbac828452", "page": 84, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce393ea667fbac82887c", "book_id": "6992ce393ea667fbac828874", "page": 8, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6a09f79aec7a5a72f8dab4fa", "book_id": "6a09f79aec7a5a72f8daafe5", "page": 1301, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "699998894310a671394526a2", "book_id": "699998884310a6713945261c", "page": 134, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f93217771e8", "book_id": "6992ce7477d26f9321776f6a", "page": 4, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cffef5b4f75c1a4c9ec5", "book_id": "6992cffdf5b4f75c1a4c9e79", "page": 76, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b25c2ff2a8dc09e77749", "book_id": "69e8b25c2ff2a8dc09e7773b", "page": 14, "family": "道德經", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdee81c9d7efb84d0e40", "book_id": "6992cdee81c9d7efb84d0dee", "page": 82, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce5c673ee1e40e320371", "book_id": "6992ce5c673ee1e40e32030e", "page": 18, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cdb243713c66ea63806d", "book_id": "6992cdb243713c66ea638041", "page": 44, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd9943713c66ea63782c", "book_id": "6992cd9943713c66ea6377ef", "page": 61, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce512960dc4e5cea90f3", "book_id": "6992ce502960dc4e5cea90bb", "page": 56, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cfdaf5b4f75c1a4c9a96", "book_id": "6992cfdaf5b4f75c1a4c9a6b", "page": 43, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992c93c69b777d72c7638d0", "book_id": "6992c93c69b777d72c76353e", "page": 914, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd8043713c66ea636eeb", "book_id": "6992cd8043713c66ea636ec0", "page": 43, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd7c43713c66ea636c35", "book_id": "6992cd7c43713c66ea636be2", "page": 83, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce6a673ee1e40e32091c", "book_id": "6992ce6a673ee1e40e32090d", "page": 14, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "699998894310a671394526a2", "book_id": "699998884310a6713945261c", "page": 134, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992f3eec8c6ac61574e72a9", "book_id": "6992f3eec8c6ac61574e72a1", "page": 8, "family": "名山圖", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce1f3ea667fbac828396", "book_id": "6992ce1f3ea667fbac82838a", "page": 12, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "69e8b2562ff2a8dc09e774fb", "book_id": "69e8b2562ff2a8dc09e774b0", "page": 75, "family": "Legge Chinese Classics", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce582960dc4e5cea9265", "book_id": "6992ce582960dc4e5cea91f3", "page": 31, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce0200f13b15f3ca3d20", "book_id": "6992ce0200f13b15f3ca3ccf", "page": 81, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4f2960dc4e5cea909f", "book_id": "6992ce4f2960dc4e5cea9056", "page": 73, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce8a673ee1e40e320faa", "book_id": "6992ce8a673ee1e40e320f60", "page": 74, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce7577d26f93217771e8", "book_id": "6992ce7477d26f9321776f6a", "page": 4, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cefff7519cdd65044b5d", "book_id": "6992cefff7519cdd65044b57", "page": 6, "family": "植物名實圖考", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd6743713c66ea6363da", "book_id": "6992cd6743713c66ea6363c5", "page": 20, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cd4243713c66ea635a32", "book_id": "6992cd4243713c66ea635a00", "page": 50, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce0e3ea667fbac827d54", "book_id": "6992ce0e3ea667fbac827d0e", "page": 69, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce243ea667fbac8284a6", "book_id": "6992ce233ea667fbac828452", "page": 84, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cffef5b4f75c1a4c9ec5", "book_id": "6992cffdf5b4f75c1a4c9e79", "page": 76, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce393ea667fbac82887c", "book_id": "6992ce393ea667fbac828874", "page": 8, "family": "三才圖會", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6a09f79aec7a5a72f8dab4fa", "book_id": "6a09f79aec7a5a72f8daafe5", "page": 1301, "family": "other", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992ce4a2960dc4e5cea8fd2", "book_id": "6992ce4a2960dc4e5cea8f7d", "page": 85, "family": "武備志", "state": "read", "why": null, "ocr_first": false}
+{"page_id": "6992cb00d4d545ae73feee32", "book_id": "6992caffd4d545ae73feee14", "page": 30, "family": "other", "state": "read", "why": null, "ocr_first": false}

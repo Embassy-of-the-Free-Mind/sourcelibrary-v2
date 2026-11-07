@@ -11,7 +11,7 @@ test.describe('Gallery', () => {
   });
 
   test('gallery page loads with heading', async ({ page }) => {
-    await expect(page.getByText('Image Gallery').first()).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'The Gallery' })).toBeVisible();
   });
 
   test('image grid loads with gallery cards', async ({ page }) => {

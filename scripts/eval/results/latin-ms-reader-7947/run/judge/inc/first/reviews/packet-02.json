@@ -1,0 +1,136 @@
+[
+  {
+    "book_id": "b02-k", "slot": 1, "title": "De modo opponendi et respondendi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "de mixtis ge/neratōe", "image": "de mixt[i]s ge/neratōe (last letters faint at line end)", "problem": "reading plausible; cannot fully confirm at this resolution", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 33, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nō aūt ꝯptum ad <unclear>reatū</unclear>", "image": "nō aūt ꝯptum ad ꝑcatū (peccatum)", "problem": "abbreviated 'peccatum' guessed as 'reatū' (flagged unclear)", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 48, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Close, faithful reading of all three pages: p.16 kept diplomatic with abbreviations, pp.33/48 expanded correctly (e.g. 'Dicendum quod quamuis', 'responsio', signature 'd iij'); the only real slip is 'reatū' for peccatum on p.33, and it is marked unclear."
+  },
+  {
+    "book_id": "b02-m", "slot": 2, "title": "De modo opponendi et respondendi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "sequitur si quodlibet est animal. est.", "image": "sequit si quodlibet est aliqd est.", "problem": "'aliquid' misread as 'animal', breaking the premise 'if anything is, something is'", "severity": "moderate", "class": "O6" },
+          { "ocr": "sed omne contingens per esse verum", "image": "sed omne ꝯtingens pt esse verū (potest)", "problem": "'pt' (potest) expanded as 'per'", "severity": "moderate", "class": "O6" },
+          { "ocr": "¶ Sed aut lapis naturaliter mouetur sursum", "image": "Qz aūt lapis naturalr mouetur sursum (Quod autem)", "problem": "'Quod autem' read as 'Sed aut'", "severity": "moderate", "class": "O6" },
+          { "ocr": "contradictoriarum", "image": "ꝯtradictorioꝝ", "problem": "wrong case ending, repeated", "severity": "minor" },
+          { "ocr": "Sed ista duo sunt contradictoria. quod unum", "image": "Sz ista duo sūt ꝯtradictoria. g vnū", "problem": "'g' (ergo) read as 'quod'", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "an <image-desc> tag is inserted mid-word: 'Boe<image-desc …>paragraph mark in red ink</image-desc>tii'", "severity": "moderate", "class": "D1" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 33, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Tercio sic. 82 in quarto thopicorum", "image": "Tercio sic. dr in ꝗrto thopicoꝝ (dicitur)", "problem": "'dr' (dicitur) read as the numeral '82'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Ad primum dictum quod", "image": "Ad primū dōm q (dicendum)", "problem": "'dōm' expanded as 'dictum' throughout (4×)", "severity": "minor" },
+          { "ocr": "de qualiter fallacia accidentis", "image": "de qualibet fallacia accidentis", "problem": "misread", "severity": "minor" },
+          { "ocr": "totum integrale ad boiem", "image": "totū integrale ad hoiem (hominem)", "problem": "abbreviation left half-expanded / misread", "severity": "minor" },
+          { "ocr": "homo mortuum ad vocem", "image": "hō mortu⁹ ꝯptum ad vocē", "problem": "'mortuus' miscased, 'quantum' dropped", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 48, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "sed ista quoddam animal fuit in archa noe non dicitur multipliciter", "image": "sed ista quoddaȝ aīal nō fuit in archa noe nō dr multipliciter", "problem": "negation dropped: 'some animal was NOT in the ark' becomes 'some animal was in the ark', reversing the contrary the argument rests on", "severity": "serious", "class": "O6" },
+          { "ocr": "Ostenso quod quis terminus communis", "image": "Dōm q ꝗuis terminus ꝯmunis (Dicendum quod quamuis)", "problem": "the response formula 'Dicendum quod quamuis' misread as 'Ostenso quod quis'", "severity": "moderate", "class": "O6" },
+          { "ocr": "quare et ratio nulla", "image": "quare ⁊ rñsio nulla (responsio)", "problem": "'responsio' read as 'ratio'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Aut pro omnibus vt dicitur:", "image": "Aut ꝓ omib dr fieri", "problem": "'dicitur fieri' read as 'vt dicitur'", "severity": "minor" },
+          { "ocr": "et tunc debet fieri distributio", "image": "⁊ tenet fieri distributio (tenetur)", "problem": "misread", "severity": "minor" },
+          { "ocr": "distinctio per eis … per species", "image": "distinctio ꝓ eis … ꝓ spēb", "problem": "'pro' expanded as 'per'", "severity": "minor" },
+          { "ocr": "<sig>b ij</sig>", "image": "d iij", "problem": "signature misread", "severity": "moderate", "class": "O11" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "'### Ad cuius rei euidentiam…' rendered as a markdown heading; on the page it is only a rubricated paragraph opening", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Fully expanded, readable text, but with meaning-changing misreads on every page, the worst a dropped 'non' on p.48 that reverses a premise. It also has a wrong signature and an image-desc tag spliced into the middle of a word."
+  },
+  {
+    "book_id": "b02-r", "slot": 3, "title": "De modo opponendi et respondendi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "ergo ā pmo si aliqd nō est p pdictā regulā", "image": "ergo a pmo si aliqd est aliquid nō est p pdictā regulā", "problem": "'est aliquid' dropped: 'if something is, something is not' becomes 'if something is not'", "severity": "serious", "class": "O5" },
+          { "ocr": "ncciras fni naturam.sicut lapis mouetur furfum", "image": "nccitas fm naturam.sicut lapis mouetur sursum", "problem": "long-s read as f, plus other letter confusions", "severity": "minor" },
+          { "ocr": "<term>Daioz</term> prz", "image": "Maioꝛ pꝫ", "problem": "'Maior patet' misread", "severity": "minor" },
+          { "ocr": "<term>Os</term> aut lapis", "image": "Qz aūt lapis", "problem": "misread", "severity": "minor" },
+          { "ocr": "sz ista duo st", "image": "Sz ista duo sūt", "problem": "rubric initial misread as 'Ez'", "severity": "minor" },
+          { "ocr": "naturaliter sursum z nō mouetur naturaliter deozsum", "image": "naturaliter sursum nō mouetur naturaliter deozsum", "problem": "a 'z' (and) inserted", "severity": "minor" },
+          { "ocr": "sunt ztradictio", "image": "sunt ꝯtradictoꝛia", "problem": "word truncated", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "running head 'opponendi z respondendi.' given as a markdown '#' heading in the text body", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 33, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Scdō sic. omne totū integrale est boiem.", "image": "Scdō sic. ome totū integrale sequit suas ptes. sed hō mortu⁹ est totum integrale ad hoiem.", "problem": "a whole premise ('sequitur suas partes. sed homo mortuus est totum integrale ad') dropped, leaving a non-argument", "severity": "serious", "class": "O5" },
+          { "ocr": "sed dictum fm qm ed et sūptr", "image": "sed dictum fm qd et simplr", "problem": "garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "q hō mortu? ⁊ hō ad vocē solū", "image": "q hō mortu⁹ ꝯptum ad vocē solū", "problem": "'quantum' read as '⁊ hō'", "severity": "moderate", "class": "O6" },
+          { "ocr": "⁊ iste terminus hō aliter paratur", "image": "ꝯstat q iste terminus hō aliter ꝯparatur", "problem": "'constat quod' dropped/misread; 'comparatur' truncated", "severity": "minor" },
+          { "ocr": "Qux aut", "image": "Qz aūt", "problem": "misread, twice", "severity": "minor" },
+          { "ocr": "Tercio sic. in ꝗrto thopicor", "image": "Tercio sic. dr in ꝗrto thopicoꝝ", "problem": "'dicitur' dropped", "severity": "minor" },
+          { "ocr": "sicut batet", "image": "sicut habet", "problem": "misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "'<page-num>N/A</page-num>' tag emitted", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 48, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "ergo semper distinctio fiet circa singularia. et nunquam cadit sub arte.", "image": "…circa singularia. ⁊ nunquam circa sensus. quare nulla distinctio erit hic. Decimo sic. ois distinctio cadit sub arte.", "problem": "one and a half lines dropped, merging the ninth and tenth arguments", "severity": "serious", "class": "O5" },
+          { "ocr": "Nono prout per boetium quod uel est de intelligit particulare de sensu", "image": "Minoꝛ pꝫ p boetiū q vle est dū intelligit. pticulare dū sentit", "problem": "'Minor patet' read as 'Nono prout'; the Boethius dictum garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "Item quod quis terminus … tunc propositionem ad predicatum", "image": "Dōm q ꝗuis terminus … tñ p ꝯpatiōem ad pdicatum", "problem": "'Dicendum quod quamuis … tamen per comparationem' garbled into a different construction", "severity": "moderate", "class": "O6" },
+          { "ocr": "quare et ratio nulla", "image": "quare ⁊ rñsio nulla", "problem": "'responsio' read as 'ratio'", "severity": "moderate", "class": "O6" },
+          { "ocr": "omne animal pertinet … omnes species uirtuoce", "image": "ome aīal ꝯtinet … oms spēs vniuoce", "problem": "misreads", "severity": "minor" },
+          { "ocr": "<sig>o iiij</sig>", "image": "d iij", "problem": "signature misread", "severity": "moderate", "class": "O11" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "vocab line names 'Albertus Magnus', an attribution that is not on the page", "severity": "moderate", "class": "O16" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The reading is diplomatic in places but loses text on every page, among them a dropped clause that reverses a conclusion on p.16 and dropped lines on pp.33 and 48. It also has many letter-level misreads (f/s, rubric initials), a wrong signature, and an author attribution that is not on the page."
+  }
+]

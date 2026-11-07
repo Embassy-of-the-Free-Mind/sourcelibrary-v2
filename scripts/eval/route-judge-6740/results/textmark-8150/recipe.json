@@ -1,0 +1,14 @@
+{
+  "question": "prompt",
+  "issue": 8150,
+  "stage": "translation",
+  "languages": ["Latin", "Chinese", "French", "Greek", "Dutch", "German"],
+  "baseline": "live",
+  "arms": ["live", "marked"],
+  "batch": { "pages_per_call": 1, "tested": null },
+  "noise_floor": { "repeat_kind": "repeat", "from": null },
+  "feeds": "none",
+  "router_evidence": "none — a provenance-mark test, not a routing cell; nothing here routes a page",
+  "waive": {},
+  "not_judged": "The pre-registered decision (#8150 comment 6642775598) failed on criterion 1 (detection after paraphrase: pooled z 0.65, needed >= 4) before any judging. Criterion 3 (fidelity) cannot change a fail, so the 31 Opus calls were not spent. The packet passed check; it holds marked text, so it is not committed, and run.mjs packet rebuilds it after a rerun if a later threat model (light edits, not paraphrase) reopens the question."
+}
