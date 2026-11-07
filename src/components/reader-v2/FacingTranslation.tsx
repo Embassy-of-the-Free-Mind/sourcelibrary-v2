@@ -158,9 +158,10 @@ export function FacingOpening({ book, opening, currentId, settings, showOurs, on
                     src={display}
                     alt=""
                     decoding="async"
-                    className={stacked ? 'w-full h-auto' : 'mx-auto w-auto max-w-full object-contain'}
+                    // Each scan meets the gutter, as the leaves of an open book do.
+                    className={stacked ? 'w-full h-auto' : `block w-auto max-w-full object-contain ${i ? 'mr-auto' : 'ml-auto'}`}
                     style={{
-                      ...(stacked ? {} : { height: 'min(72vh, 1000px)', [i ? 'marginLeft' : 'marginRight']: 0 }),
+                      ...(stacked ? {} : { height: 'min(72vh, 1000px)' }),
                       boxShadow: marked ? '0 0 0 2px var(--accent-rust)' : undefined,
                     }}
                   />
