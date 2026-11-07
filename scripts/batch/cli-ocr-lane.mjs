@@ -1126,8 +1126,8 @@ export const ARMC_EURO_REASON = '#6871 euro first-read arm-c lane';
 export const ARMC_EURO_HOLDS = Object.freeze(['scans-only-publish-7270']);
 export const ARMC_EURO_CELLS = Object.freeze({
   // the cell test (scripts/eval/experiments/2026-11-07-euro-gpu-agy-cells-6871.md), with the #8296 marker refusal
-  es19: { lang: 'es', language: 'Spanish', code: 'spa', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test: 23/23 written accepted with #8296, 0 wrong text, P 0.995' },
-  fr19: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test, two draws: 28/30 written accepted with #8296, 0 wrong text, P 0.962', skipFirstRead: true },
+  es19: { lang: 'es', language: 'Spanish', code: 'spa', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test: 23/23 written accepted with #8296, 0 wrong text, P 0.995; gate on new pages 28/30, 1 wrong text, P 0.962' },
+  fr19: { lang: 'fr', language: 'French', code: 'fra', years: [1800, 1929], route: LO_ROUTE, evidence: '#6871 cell test, two draws: 28/30 written accepted with #8296, 0 wrong text, P 0.962; gate on new pages 29/30, 0 wrong text, P 0.992', skipFirstRead: true },
 });
 const ARMC_EURO_PROJECTION = { id: 1, title: 1, language: 1, year: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, human_read_count: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pages_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.held': 1, 'pipeline_auto.split_checked': 1 };
 const armcEuroBookFilter = (C) => ({ language: { $regex: `^${C.language}` }, year: { $gte: C.years[0], $lte: C.years[1] }, pages_count: { $gt: 0 }, 'pages_state.state': { $nin: ['manifest_only', 'materializing'] },
