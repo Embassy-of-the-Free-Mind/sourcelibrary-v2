@@ -21,7 +21,8 @@
  * `fit`: the rule flags a frame when any feature passes its threshold. Thresholds are chosen on the training frames
  * only (each threshold from a small grid, greedily, maximising Youden's J), and every frame is predicted by the rule
  * fitted WITHOUT its book (leave-one-book-out; here one frame per book). Reports sensitivity and specificity with
- * Wilson intervals, the fixed rule fitted on all frames, and each feature alone.
+ * Wilson intervals, the fixed rule fitted on all frames, and each feature alone (at its own best threshold, in sample
+ * and leave-one-book-out).
  */
 import fs from 'node:fs';
 
@@ -93,6 +94,12 @@ function fitRule(rows) {
   }
   return rule;
 }
+/** One feature alone: the threshold from its grid that maximises Youden's J on these rows (ties: the first). */
+function fitOne(rows, k) {
+  const g = GRID[k]; let bt = g.ts[0], bj = -Infinity;
+  for (const t of g.ts) { const s = score(rows, rows.map((r) => g.get(r.f) >= t)), j = (s.sensitivity ?? 0) + (s.specificity ?? 0) - 1; if (j > bj + 1e-9) { bj = j; bt = t; } }
+  return bt;
+}
 
 if (CMD === 'features') {
   const frames = fs.readFileSync(arg('frames'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
@@ -112,7 +119,10 @@ if (CMD === 'fit') {
     const pred = rows.map((r) => flag(fitRule(rows.filter((x) => x.book !== r.book)), r.f));
     const full = fitRule(rows);
     res[name] = { positives: rows.filter((r) => r.y).length, n: rows.length, books: books.length, lobo: score(rows, pred), rule_on_all: full, in_sample: score(rows, rows.map((r) => flag(full, r.f))),
-      single_features: Object.fromEntries(Object.entries(GRID).map(([k, g]) => { const t = fitRule(rows)[k] ?? g.ts[0]; return [`${k}>=${t}`, score(rows, rows.map((r) => g.get(r.f) >= t))]; })),
+      single_features: Object.fromEntries(Object.entries(GRID).map(([k, g]) => {
+        const t = fitOne(rows, k), lobo = rows.map((r) => g.get(r.f) >= fitOne(rows.filter((x) => x.book !== r.book), k));
+        return [`${k}>=${t}`, { ...score(rows, rows.map((r) => g.get(r.f) >= t)), lobo: score(rows, lobo) }];
+      })),
       missed_lobo: rows.filter((r, i) => r.y && !pred[i]).map((r) => r.uid), false_flags_lobo: rows.filter((r, i) => !r.y && pred[i]).map((r) => r.uid) };
   }
   fs.writeFileSync(arg('out'), JSON.stringify(res, null, 1));

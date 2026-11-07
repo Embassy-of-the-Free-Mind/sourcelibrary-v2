@@ -19,13 +19,13 @@ import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { auditPrompt, fetchImage, iiifTiles, tile } from '../opus-tib-sa-6948/audit.mjs';
 import { rng, shuffle } from '../opus-tib-sa-6948/sample.mjs';
+import { stratum as stratumOf } from './stratum.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const S = process.env.JOB_SCRATCH;
 const frames = fs.readFileSync(arg('frames'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 const plants = Object.values(JSON.parse(fs.readFileSync(arg('plants'), 'utf8'))).filter((p) => p.english);
 const ARMS = arg('arms').split(',').map((a) => { const [name, txt, en] = a.split(':'); return { name, txt, en }; });
-const stratumOf = (f) => (f.stored.read_mode === 'page' ? 'SEAM' : f.ledger_cut ? 'RECUT' : 'SAME');
 
 /** The split-leaf transcription of a frame: its leaf reads in frame order, joined as a leaf-mode read is stored. */
 export function leafTranscription(dir, uid) {

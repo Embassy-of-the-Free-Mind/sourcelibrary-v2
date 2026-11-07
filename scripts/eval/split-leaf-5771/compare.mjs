@@ -16,16 +16,19 @@
  */
 import fs from 'node:fs';
 import { wilson } from '../opus-tib-sa-6948/audit.mjs';
+import { stratum } from './stratum.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const jl = (f) => fs.readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 const frames = new Map(jl(arg('frames')).map((f) => [f.uid, f]));
-const stratum = (f) => (f.stored.read_mode === 'page' ? 'SEAM' : f.ledger_cut || /^by-eye \(leafsplit/.test(f.cut_source) ? 'RECUT' : 'SAME');
 const leavesOf = (f) => (f.spans ? f.spans.length : 1);
 
-const before = jl(arg('before')).filter((r) => r.lang === 'bo' && !r.control && frames.has(r.uid)).map((r) => ({ ...r, frame: r.uid, arm: 'seam' }));
+// Every arm keeps only parsed replies: an unanswered or unparsed reply is not a verdict.
+const beforeAll = jl(arg('before')).filter((r) => r.lang === 'bo' && !r.control && frames.has(r.uid));
+const before = beforeAll.filter((r) => r.parsed).map((r) => ({ ...r, frame: r.uid, arm: 'seam' }));
 const afterAll = jl(arg('after'));
-const after = afterAll.filter((r) => !r.control && r.frame && r.parsed);   // an unanswered or unparsed reply is not a verdict
+const after = afterAll.filter((r) => !r.control && r.frame && r.parsed);
+const dropped = { seam: beforeAll.length - before.length, after: afterAll.filter((r) => !r.control && r.frame).length - after.length };
 const controls = afterAll.filter((r) => r.control);
 const attr = { seam: JSON.parse(fs.readFileSync(arg('before-attr'), 'utf8')), after: JSON.parse(fs.readFileSync(arg('after-attr'), 'utf8')) };
 const rows = [...before, ...after].map((r) => {
@@ -65,21 +68,25 @@ const pairedOcr = Object.fromEntries(['cut', 'reread'].map((a) => [a, { all: pai
 // Pairs of verdicts, arm 1 → arm 3, per frame.
 const trans = {}; for (const r of rows.filter((x) => x.arm === 'reread')) { const b = rows.find((x) => x.arm === 'seam' && x.frame === r.frame); if (b) { const k = `${b.verdict}→${r.verdict}`; trans[k] = (trans[k] || 0) + 1; } }
 
-// Triage labels (pre-registered). L1: legible in arms 1 and 3 and arm1 − arm3 ≥ max(5, arm1/2). L2: arm 1 bad from the OCR.
-const L1 = {}, L2 = {};
+// Triage labels (pre-registered). L1: legible in arms 1 and 3 and arm1 − arm3 ≥ max(5, arm1/2). L2: arm 1 bad with at
+// least one flagged item caused by the transcription ("transcription" or "both"); this is wider than the table's
+// OCR-caused (`cause: 'ocr'`, every item from the transcription), which L2_strict is.
+const L1 = {}, L2 = {}, L2s = {};
 for (const r of rows.filter((x) => x.arm === 'seam')) {
   const y = rows.find((x) => x.arm === 'reread' && x.frame === r.frame);
   if (r.spans != null && y?.spans != null) L1[r.frame] = r.spans - y.spans >= Math.max(5, r.spans / 2) ? 1 : 0;
   const a = attr.seam[r.frame];
   L2[r.frame] = r.bad && (a?.items || []).some((x) => x.cause === 'transcription' || x.cause === 'both') ? 1 : 0;
+  L2s[r.frame] = r.cause === 'ocr' ? 1 : 0;
 }
-fs.writeFileSync(arg('labels'), JSON.stringify({ L1_reread_helps: L1, L2_seam_bad_from_ocr: L2 }, null, 1));
+fs.writeFileSync(arg('labels'), JSON.stringify({ L1_reread_helps: L1, L2_seam_bad_from_ocr: L2, L2_strict_seam_bad_ocr_caused: L2s }, null, 1));
 
 const out = {
   arms: by, paired_ocr: pairedOcr, verdict_transitions_seam_to_reread: trans,
   bar: { ocr_primary_seam: pairedOcr.reread.SEAM, ocr_pass: pairedOcr.reread.SEAM.median_ratio != null && pairedOcr.reread.SEAM.median_ratio <= 0.5 },
   controls: { n: controls.length, caught: controls.filter((r) => r.caught).length, by_kind: Object.fromEntries(['reversal', 'invention'].map((k) => [k, `${controls.filter((r) => r.control === k && r.caught).length}/${controls.filter((r) => r.control === k).length}`])), missed: controls.filter((r) => !r.caught).map((r) => ({ uid: r.uid, kind: r.control, verdict: r.verdict })) },
-  labels: { L1_positive: Object.values(L1).filter(Boolean).length, L1_n: Object.keys(L1).length, L2_positive: Object.values(L2).filter(Boolean).length, L2_n: Object.keys(L2).length },
+  labels: { L1_positive: Object.values(L1).filter(Boolean).length, L1_n: Object.keys(L1).length, L2_positive: Object.values(L2).filter(Boolean).length, L2_n: Object.keys(L2).length, L2_strict_positive: Object.values(L2s).filter(Boolean).length },
+  unparsed_dropped: dropped,
 };
 fs.writeFileSync(arg('out'), JSON.stringify(out, null, 1));
 const line = (a, s) => { const x = by[a][s]; return `${a.padEnd(7)} ${s.padEnd(6)} n=${x.n} bad ${x.bad.k} (${(x.bad.rate * 100).toFixed(0)}%, ${x.bad.ci95.map((v) => (v * 100).toFixed(0)).join('–')}%) ocr-caused ${x.bad_ocr_caused.k} translator ${x.bad_translator_caused.k} | spans/frame med ${x.ocr.spans_per_frame_median} mean ${x.ocr.spans_per_frame_mean} /leaf med ${x.ocr.spans_per_leaf_median} (legible ${x.ocr.legible})`; };

@@ -1849,6 +1849,11 @@
   "L1_positive": 5,
   "L1_n": 55,
   "L2_positive": 23,
-  "L2_n": 80
+  "L2_n": 80,
+  "L2_strict_positive": 18
+ },
+ "unparsed_dropped": {
+  "seam": 0,
+  "after": 0
  }
 }

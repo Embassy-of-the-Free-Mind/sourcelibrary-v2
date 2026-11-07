@@ -8,7 +8,7 @@ n_books: 80
 n_pages: 80
 verdict: "The split-leaf re-read fails its pre-registered OCR bar (paired median span ratio 0.86, bar ≤ 0.5) but removes the seam damage: on the 28 frames served from a whole-page Yigdzin read, bad Opus translations fall from 75% to 21% and no seam line is invented by eye; cutting the stored read without re-reading changes nothing (82%). Re-reading frames that were already read leaf by leaf gains nothing (13% to 13%). The re-read invents text on near-blank title leaves."
 status: undecided
-decision: "Re-read only the frames whose stored Yigdzin read is a whole-page read (free metadata; sensitivity 0.87, specificity 0.86 for 'bad from the OCR'), behind a per-leaf blank/title guard; no page writes until Derek decides the split migration (#5771)"
+decision: "Re-read only the frames whose stored Yigdzin read is a whole-page read (free metadata; sensitivity 0.87, specificity 0.86 for 'bad, with at least one item from the OCR'; 0.94 and 0.82 for 'bad, every item from the OCR'), behind a per-leaf blank/title guard; no page writes until Derek decides the split migration (#5771)"
 superseded_by: null
 issue: [5771, 6948, 5320, 6871]
 router_evidence: "none — not yet entered in router-table/rules.json (land-evals, 2026-10-29); the per-arm audit is scripts/eval/split-leaf-5771/results/score.json"
@@ -104,9 +104,10 @@ Spans per leaf (frame spans ÷ leaves), median: SEAM 4 → REREAD 2.7 overall; o
 - **Translator-caused bad pages rise** when the English is made per leaf without context: SEAM 10, CUT 19, REREAD 12.
 
 **Triage (Derek's B), leave-one-book-out, one frame per book:**
-- **L2, "the seam read is bad because of the OCR"** (23 of 80): the fitted rule `whole-page read OR leaf asymmetry ≥ 0.4` reaches sensitivity **0.87 (0.68–0.96)** and specificity **0.79 (0.67–0.88)**.
+- **L2, "the seam read is bad, with at least one flagged item caused by the transcription"** (23 of 80). This is wider than the table's "OCR-caused" (18), which needs every item to come from the transcription; the 5 between them (a010, a046, a050, a075, a076) also have translator items. On L2 the fitted rule `whole-page read OR leaf asymmetry ≥ 0.4` reaches sensitivity **0.87 (0.68–0.96)** and specificity **0.79 (0.67–0.88)**.
 - **"The stored read is a whole-page read"** alone (free metadata) gives 0.87 and 0.86.
-- The text-only features add nothing over it. The best are stored lines ≠ ledger lines (0.57 / 0.81) and a near-copied line pair (0.48 / 0.95).
+- **On the strict label (OCR-caused, 18 of 80)** it gives 0.94 (17/18) and 0.82. The fitted rule adds a near-copied line pair and gets 0.94 / 0.81, so on this label too the text features add nothing.
+- The text-only features add nothing over it. Each is scored alone at its own best threshold. On L2 the best are stored lines ≠ ledger lines (0.57 / 0.81) and a near-copied line pair (0.48 / 0.95).
 - **L1, "the re-read halves the spans"**, has 5 positives in 55, too few to fit (0.8 / 0.6).
 
 **Engine and cost:**
@@ -134,13 +135,21 @@ Spans per leaf (frame spans ÷ leaves), median: SEAM 4 → REREAD 2.7 overall; o
     - The translation estimator: its likelihood is 1–5 fidelity and these verdicts are 3-class.
     - A routing row: the OCR router has no Tibetan CER chart and the planner no cell input.
 
+### Corrections (2026-11-07, review of PR #7467)
+Recomputed from the kept results, with no model call. **No number in the tables or the verdict changed.**
+- `results/audit-key.json` and `score.json` had a018 and a065 (by-eye leafsplit-fallback recuts) in SAME. That made RECUT 10, where this record and `compare.json` count 12. Both files now take the stratum from `stratum.mjs` (RECUT 8/24 bad over the two arms = CUT 2/12 + REREAD 6/12, as in the table).
+- Before this correction, a feature outside the fitted rule was scored at its grid's first threshold. Now each is scored at its own best threshold, in sample and leave-one-book-out. The figures quoted above did not move.
+- L2 is now named for what it counts (above), and `labels.json` adds the strict label.
+- Arm 1 is now filtered to parsed replies like arms 2 and 3 (0 dropped).
+- A failed leaf translation no longer yields a frame file, and the leaf-read wait counts crops from the crop meta and stops on `.err` or after 6 h. In this run 0 of 371 leaf translations failed and all 188 crops were read, so neither changes a number.
+
 ### Artifacts
 - `scripts/eval/split-leaf-5771/`:
   - `frames.mjs`, `frames.jsonl` (cuts, with every by-eye recut marked);
   - `yig_leaf_read.py` (HF port; crops);
   - `contact.mjs` and `gaps.mjs`;
   - `cut.mjs`, `leaf-translate.mjs`, `packet.mjs`, `run.sh`;
-  - `compare.mjs`, `triage.mjs`, `evidence.mjs`;
+  - `compare.mjs`, `triage.mjs`, `evidence.mjs`, `stratum.mjs` (the one stratum definition);
   - `results/` (compare, triage, labels, 20 by-eye notes, audit score and key).
 - Scratch: `$JOB_SCRATCH` on main (`/mnt/HC_Volume_105839809/jobs/split-leaves-5771`): crops, contact sheets, leaf reads (vLLM and HF), translations, audit replies.
 - Nothing was written to `pages` or `books`.

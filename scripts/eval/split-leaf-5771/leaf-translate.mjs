@@ -15,7 +15,8 @@
  * books; a wrong seed would invite the translator to bridge text that is not continuous. A leaf whose read has fewer
  * than 5 syllables is a blank leaf: no call. Writes OUT/<uid>-L<i>.txt + .meta.json, and OUT/frames/<uid>.txt (the
  * frame's English, leaves joined by <leaf-break/>, as the served English is). Stops (exit 3) at the job's usage caps
- * (CLAUDE_SESSION_MAX_PCT / CLAUDE_WEEKLY_MAX_PCT, read by claudeCall); re-running skips leaves done.
+ * (CLAUDE_SESSION_MAX_PCT / CLAUDE_WEEKLY_MAX_PCT, read by claudeCall); re-running skips leaves done. A frame with a
+ * leaf whose read errored (.err) or whose translation failed twice gets no frame file, and the run exits 2.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -38,9 +39,12 @@ const books = new Map((await db.collection('books').find({ id: { $in: [...new Se
 await c.close();
 
 let calls = 0, stop = null;
+const incomplete = [];   // frames with a leaf read that errored or a leaf translation that failed: no frame file
 for (const f of frames) {
   const leaves = fs.readdirSync(TXT).filter((x) => x.startsWith(`${f.uid}-L`) && x.endsWith('.txt')).sort((a, b) => Number(a.match(/-L(\d+)/)[1]) - Number(b.match(/-L(\d+)/)[1]));
+  if (fs.readdirSync(TXT).some((x) => x.startsWith(`${f.uid}-L`) && x.endsWith('.err'))) { console.log(`  ${f.uid}: a leaf read errored; frame not translated`); incomplete.push(f.uid); continue; }
   const english = [];
+  let failed = false;
   for (const lf of leaves) {
     const id = lf.replace(/\.txt$/, ''), dst = path.join(OUT, `${id}.txt`), metaF = path.join(OUT, `${id}.meta.json`);
     const ocr = fs.readFileSync(path.join(TXT, lf), 'utf8').trim();
@@ -69,10 +73,14 @@ for (const f of frames) {
     fs.writeFileSync(dst, text || '');
     fs.writeFileSync(metaF, JSON.stringify({ id, uid: f.uid, book_id: f.book_id, page_number: f.page_number, exit: text ? 0 : 1, error_class: text ? null : (r?.cls || 'page_tags_mismatch'), model: r?.model, usage: r?.usage, secs: r?.secs, prompt_ref: built.promptRef, prompt_sent_hash: contentHash(sent), ocr_hash: contentHash(ocr), chatter: text ? cliChatterReason(text) : null, job: JOB, at: new Date().toISOString() }, null, 1));
     console.log(`  ${id}: ${text ? `${text.length} chars` : `FAILED ${r?.cls || 'tags'}`} (${Math.round(r?.secs || 0)}s)`);
+    if (!text) failed = true;
     english.push(text || '');
   }
   if (stop) break;
+  // A frame with a failed leaf is not audited as a translated frame: the auditor would score the gap as an omission.
+  if (failed) { incomplete.push(f.uid); continue; }
   if (english.length === leaves.length) fs.writeFileSync(path.join(OUT, 'frames', `${f.uid}.txt`), english.join('\n<leaf-break/>\n').trim() + '\n');
 }
-console.log(`${calls} calls`);
+console.log(`${calls} calls; ${incomplete.length} frames incomplete${incomplete.length ? `: ${incomplete.join(' ')}` : ''}`);
 if (stop) { console.error(`STOPPED: ${stop}`); process.exit(3); }
+if (incomplete.length) process.exit(2);   // run.sh re-runs, which retries only the failed leaves

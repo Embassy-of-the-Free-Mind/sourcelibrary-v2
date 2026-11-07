@@ -23,7 +23,7 @@ waitcap() { node --input-type=module -e "const m=await import('$ROOT/scripts/lib
 # 1 pull (skipped with LEAF_TXT=<dir> when the leaf reads are already on this box, e.g. run on gex45 itself)
 if [ -n "${LEAF_TXT:-}" ]; then mkdir -p $S/leafread && ln -sfn "$LEAF_TXT" $S/leafread/txt; log "leaf reads from $LEAF_TXT: $(ls $LEAF_TXT | grep -c '\.txt$')"; else
 until ssh -o ConnectTimeout=20 $G "ls /root/gpu-queue/done/81-split-leaf-5771.sh /root/gpu-queue/failed/81-split-leaf-5771.sh 2>/dev/null | grep -q ." ; do sleep 600; done
-mkdir -p $S/leafread && rsync -a $G:$J/out/txt $G:$J/out/leaves.jsonl $S/leafread/
+mkdir -p $S/leafread/crops && rsync -a $G:$J/out/txt $G:$J/out/leaves.jsonl $S/leafread/ && rsync -a --include='*.json' --exclude='*' $G:$J/out/crops/ $S/leafread/crops/
 n=$(ls $S/leafread/txt | grep -c '\.txt$'); log "leaf reads pulled: $n"
 [ "$n" -ge 180 ] || { log "too few leaf reads ($n); stopping"; state pull-short; exit 2; }
 fi
@@ -34,8 +34,18 @@ node scripts/eval/split-leaf-5771/cut.mjs --frames=$S/frames.jsonl --req=$P6948/
 for arm in cut:$S/arm2/txt reread:$S/leafread/txt; do
   name=${arm%%:*}; txt=${arm#*:}
   if [ "$name" = reread ]; then   # every crop must have its read, or a frame's English would miss a leaf
-    want=$(node -e "console.log(require('fs').readFileSync('$S/frames.jsonl','utf8').trim().split('\n').map(JSON.parse).reduce((a,f)=>a+(f.spans?f.spans.length:1),0))")
-    until [ "$(ls $txt | grep -c '\.txt$')" -ge "$want" ]; do log "waiting for leaf reads: $(ls $txt | grep -c '\.txt$')/$want"; sleep 600; done
+    # the crop count comes from yig_leaf_read.py's crops/<uid>.json (a frame with no spans is cut by leafsplit.detect and
+    # can give more than one leaf); a leaf that raised leaves <uid>-L<i>.err, which is final, not pending
+    crops=$(dirname "$(readlink -f $txt)")/crops; [ -d "$crops" ] || crops=$S/leafread/crops
+    want=$(node -e "const fs=require('fs'),d='$crops';const fr=fs.readFileSync('$S/frames.jsonl','utf8').trim().split('\n').map(JSON.parse);let n=0,miss=0;for(const f of fr){const m=d+'/'+f.uid+'.json';if(fs.existsSync(m))n+=JSON.parse(fs.readFileSync(m,'utf8')).spans_px.length;else miss++}console.log(miss?-1:n)")
+    [ "$want" -gt 0 ] || { log "no crop meta for every frame in $crops; stopping"; state reread-no-crops; exit 2; }
+    for w in $(seq 1 37); do
+      got=$(ls $txt | grep -c '\.txt$'); bad=$(ls $txt | grep -c '\.err$')
+      [ $((got + bad)) -ge "$want" ] && break
+      [ "$w" -eq 37 ] && { log "leaf reads still $got+$bad/$want after 6 h; stopping"; state reread-short; exit 2; }
+      log "waiting for leaf reads: $got (+$bad errored)/$want"; sleep 600
+    done
+    [ "$bad" -eq 0 ] || log "$bad leaf reads errored; their frames are not translated or audited"
   fi
   for i in $(seq 1 30); do
     waitcap || exit 4
