@@ -1256,7 +1256,7 @@ async function armcMain(mode, arg) {
  * armc-plan: tops the plan up to the drafting horizon (--ahead=N pages planned and not yet ledgered; default the pages the
  * lane ledgered in the last 48 h, at least --ahead-min=600), so the GPU never drafts more than ~2 days ahead of the
  * correction. Books most-read first; a book is planned whole (every page in frame), unless --per-book=N (a pilot: N
- * pages spread evenly) with --books-per-lang=M.
+ * pages spread evenly) with --books-per-lang=M. --skip-books=ID,ID leaves books out (a gate pilot on books not judged before).
  */
 async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMPAIGN = null, CELL = null) {
   const planned = new Map(fs.readdirSync(P.plan).filter((f) => f.endsWith('.json')).map((f) => { const pl = readJson(path.join(P.plan, f)); return [pl.bid, pl]; }));
@@ -1266,6 +1266,7 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMP
   const AHEAD = Number(arg('ahead') || Math.max(Number(arg('ahead-min') || 600), recent));
   const PER_BOOK = Number(arg('per-book') || 0), PER_LANG = Number(arg('books-per-lang') || Infinity);
   const ONLY = arg('book') ? new Set(arg('book').split(',')) : null;
+  const NOT = new Set((arg('skip-books') || '').split(',').filter(Boolean));
   let room = AHEAD - open;
   console.log(`armc-plan: ${open} pages planned and not ledgered, horizon ${AHEAD} (${recent} ledgered in 48 h): room for ${Math.max(0, room)}`);
   if (room <= 0) return;
@@ -1280,7 +1281,7 @@ async function armcPlan(db, P, arg, LANGS, ledger, SKIP, FRAME = 'correct', CAMP
     ? (await db.collection('books').find(FIRST_READ_BOOKS, { projection: { ...FIRST_READ_PROJECTION, year: 1, human_read_count: 1 } }).toArray()).filter((b) => !firstReadSkip(b, { languages: frLangs }))
     : TH ? (await db.collection('books').find(armcTranslateBookFilter(LANGS), { projection: ARMC_TRANSLATE_PROJECTION }).toArray()).filter(armcTranslateBookOk)
     : await db.collection('books').find(armcBookFilter(LANGS), { projection: { id: 1, title: 1, language: 1, year: 1, pages_count: 1, human_read_count: 1, processing_priority: 1 } }).toArray())
-    .filter((b) => (!ONLY || ONLY.has(b.id)) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(CAMPAIGN ? byCampaignOrder(tiers) : FR ? byFirstReadOrder : byReaders);
+    .filter((b) => (!ONLY || ONLY.has(b.id)) && !NOT.has(b.id) && !planned.get(b.id)?.whole && !(PER_BOOK && planned.has(b.id))).sort(CAMPAIGN ? byCampaignOrder(tiers) : FR ? byFirstReadOrder : byReaders);
   const perLang = {};
   let added = 0;
   for (const b of books) {
