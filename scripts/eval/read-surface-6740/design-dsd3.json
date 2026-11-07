@@ -1,0 +1,268 @@
+{
+ "design": "Definitive Screening Design, 3 three-level continuous + 1 two-level categorical factor (Jones & Nachtsheim 2011, 2013)",
+ "construction": "skew conference matrix of order 4; rows C and −C; the categorical zero +1 in C, −1 in −C; two continuous-centre runs with the prompt line off and on",
+ "conference_matrix": [
+  [
+   0,
+   1,
+   1,
+   1
+  ],
+  [
+   -1,
+   0,
+   1,
+   -1
+  ],
+  [
+   -1,
+   -1,
+   0,
+   1
+  ],
+  [
+   -1,
+   1,
+   -1,
+   0
+  ]
+ ],
+ "factors": [
+  {
+   "key": "ppc",
+   "name": "pages a call",
+   "kind": "continuous",
+   "levels": [
+    1,
+    4,
+    8
+   ]
+  },
+  {
+   "key": "edge",
+   "name": "image long edge (px)",
+   "kind": "continuous",
+   "levels": [
+    1024,
+    1600,
+    2400
+   ]
+  },
+  {
+   "key": "think",
+   "name": "thinking",
+   "kind": "continuous (ordinal)",
+   "levels": [
+    "low",
+    "medium",
+    "high"
+   ]
+  },
+  {
+   "key": "prompt",
+   "name": "prompt",
+   "kind": "categorical",
+   "levels": [
+    "live",
+    "live + script line"
+   ]
+  }
+ ],
+ "runs": [
+  {
+   "id": "T01",
+   "x": [
+    0,
+    1,
+    1,
+    1
+   ],
+   "ppc": 4,
+   "edge": 2400,
+   "think": "high",
+   "prompt": "live + script line"
+  },
+  {
+   "id": "T02",
+   "x": [
+    -1,
+    0,
+    1,
+    -1
+   ],
+   "ppc": 1,
+   "edge": 1600,
+   "think": "high",
+   "prompt": "live"
+  },
+  {
+   "id": "T03",
+   "x": [
+    -1,
+    -1,
+    0,
+    1
+   ],
+   "ppc": 1,
+   "edge": 1024,
+   "think": "medium",
+   "prompt": "live + script line"
+  },
+  {
+   "id": "T04",
+   "x": [
+    -1,
+    1,
+    -1,
+    1
+   ],
+   "ppc": 1,
+   "edge": 2400,
+   "think": "low",
+   "prompt": "live + script line"
+  },
+  {
+   "id": "T05",
+   "x": [
+    0,
+    -1,
+    -1,
+    -1
+   ],
+   "ppc": 4,
+   "edge": 1024,
+   "think": "low",
+   "prompt": "live"
+  },
+  {
+   "id": "T06",
+   "x": [
+    1,
+    0,
+    -1,
+    1
+   ],
+   "ppc": 8,
+   "edge": 1600,
+   "think": "low",
+   "prompt": "live + script line"
+  },
+  {
+   "id": "T07",
+   "x": [
+    1,
+    1,
+    0,
+    -1
+   ],
+   "ppc": 8,
+   "edge": 2400,
+   "think": "medium",
+   "prompt": "live"
+  },
+  {
+   "id": "T08",
+   "x": [
+    1,
+    -1,
+    1,
+    -1
+   ],
+   "ppc": 8,
+   "edge": 1024,
+   "think": "high",
+   "prompt": "live"
+  },
+  {
+   "id": "T09",
+   "x": [
+    0,
+    0,
+    0,
+    -1
+   ],
+   "ppc": 4,
+   "edge": 1600,
+   "think": "medium",
+   "prompt": "live"
+  },
+  {
+   "id": "T10",
+   "x": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "ppc": 4,
+   "edge": 1600,
+   "think": "medium",
+   "prompt": "live + script line"
+  }
+ ],
+ "main_effect_correlation": [
+  [
+   1,
+   0,
+   0,
+   -0.258
+  ],
+  [
+   0,
+   1,
+   0,
+   0.258
+  ],
+  [
+   0,
+   0,
+   1,
+   -0.258
+  ],
+  [
+   -0.258,
+   0.258,
+   -0.258,
+   1
+  ]
+ ],
+ "run_order": {
+  "de": [
+   "T06",
+   "T05",
+   "T01",
+   "T03",
+   "T08",
+   "T09",
+   "T10",
+   "T07",
+   "T02",
+   "T04"
+  ],
+  "la": [
+   "T05",
+   "T10",
+   "T03",
+   "T08",
+   "T07",
+   "T02",
+   "T06",
+   "T09",
+   "T04",
+   "T01"
+  ],
+  "en": [
+   "T02",
+   "T05",
+   "T03",
+   "T06",
+   "T09",
+   "T07",
+   "T01",
+   "T08",
+   "T04",
+   "T10"
+  ]
+ },
+ "seed": 6740
+}

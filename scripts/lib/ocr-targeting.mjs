@@ -23,6 +23,28 @@ export function readPageIdsFile(file) {
   return parsePageIds(JSON.parse(fs.readFileSync(file, 'utf8')));
 }
 
+/**
+ * The OCR prompt LABEL four selectors still key on (#7499). Until #7499, realtime-ocr.mjs and
+ * realtime-reocr-efm.mjs stamped the constant `v5.2026-02` on every page whatever prompt they
+ * sent (the DB default: v16, then v19.1; `ocr.engine.prompt` held the truth). They now stamp
+ * the version actually sent. Their selectors (and bulk-reocr-local.mjs, batch-extract-chapters
+ * --new-ocr) treated `v5.2026-02` as "read under the current prompt", so a page those two
+ * writers write must still count as carrying it, or a re-OCR'd page would be picked again
+ * (selection must not move when a label is made true). `ocrLabelIn` / `ocrLabelNotIn` are
+ * the old `$in` / `$nin` with that one equivalence added: written by a former v5 stamper.
+ */
+export const LEGACY_V5_LABEL = 'v5.2026-02';
+export const FORMER_V5_STAMPERS = Object.freeze(['scripts/batch/realtime-ocr.mjs', 'scripts/batch/realtime-reocr-efm.mjs']);
+
+const labelClauses = (labels) => [
+  { 'ocr.prompt_version': { $in: [...labels] } },
+  ...(labels.includes(LEGACY_V5_LABEL) ? [{ 'ocr.engine.call_site': { $in: [...FORMER_V5_STAMPERS] } }] : []),
+];
+/** Mongo clause: the page's OCR carries one of `labels` (old `{ 'ocr.prompt_version': { $in: labels } }`). */
+export const ocrLabelIn = (labels) => ({ $or: labelClauses(labels) });
+/** Mongo clause: the negation (old `{ 'ocr.prompt_version': { $nin: labels } }`). */
+export const ocrLabelNotIn = (labels) => ({ $nor: labelClauses(labels) });
+
 /** Book ids, one per line. Blank lines and `#` comments are ignored. */
 export function parseBookIds(text) {
   return [...new Set(String(text).split('\n').map((l) => l.replace(/#.*/, '').trim()).filter(Boolean))];

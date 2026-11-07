@@ -29,7 +29,8 @@
  *     run: { job_id | batch_job_id, code_version, host, at },
  *     input: { image_url, … } | { source_text_hash, … },
  *   }
- *   plus top-level `content_hash` (of the text written) and `updated_at`.
+ *   plus top-level `content_hash` (of the text written) and `updated_at`, and `lane` (the registered lane,
+ *   scripts/lib/lanes.mjs `stamps`) when the writer is one (#7301).
  *
  * ── Three rules, enforced here rather than remembered ────────────────────────
  *
@@ -66,6 +67,7 @@ import { relative, sep } from 'path';
 import os from 'os';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { laneForWrite } from './lanes.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -369,12 +371,50 @@ export function engineFromBatchJob(job, { batch_job_id, input, collected_by, res
 export function ocrProvenance(text, engine) {
   const m = missingProvenance('ocr', { data: text, source: 'ai', updated_at: new Date(), content_hash: contentHash(text), engine });
   if (m.missing.length) throw new Error(`write-provenance: OCR engine block incomplete — ${m.missing.join(', ')}`);
-  return { content_hash: contentHash(text), engine };
+  return { content_hash: contentHash(text), engine, ...laneStamp('ocr', engine) };
 }
 export function translationProvenance(text, engine) {
   const m = missingProvenance('translation', { data: text, source: 'ai', updated_at: new Date(), content_hash: contentHash(text), engine });
   if (m.missing.length) throw new Error(`write-provenance: translation engine block incomplete — ${m.missing.join(', ')}`);
-  return { content_hash: contentHash(text), engine };
+  return { content_hash: contentHash(text), engine, ...laneStamp('translation', engine) };
+}
+
+/**
+ * The page's top-level prompt LABEL (`prompt_version`, `prompt_id`, `prompt_hash`, `prompt_name`) from the prompt
+ * actually sent (#7499): `ref` is the stored row it came from ({ id, name, version, hash | content_hash }). A value
+ * not known is left out, never filled with a constant — realtime-ocr.mjs stamped 'v5.2026-02' for months while
+ * sending v16 and then v19.1 (.claude/docs/prompt-history.md, lesson 3).
+ */
+export function promptLabel(ref) {
+  const out = {};
+  const version = ref?.version != null && ref.version !== '' && ref.version !== NOT_RECORDED ? String(ref.version) : null;
+  if (version) out.prompt_version = version;
+  if (ref?.id) out.prompt_id = String(ref.id);
+  if (ref?.hash ?? ref?.content_hash) out.prompt_hash = ref.hash ?? ref.content_hash;
+  if (ref?.name) out.prompt_name = ref.name;
+  return out;
+}
+
+/**
+ * A batch job's prompt version for the page label (#7499): the job's own `prompt_version`, else the version its
+ * submit-time provenance recorded, else null. The collectors used to fall back to a constant ('v5.2026-02',
+ * 'v4.2026-02'). null, written over the previous read's label, says "not known" — leaving the key alone
+ * would let the old read's label describe the new text.
+ */
+export function jobPromptVersion(job) {
+  if (job?.prompt_version != null && job.prompt_version !== '') return String(job.prompt_version);
+  const v = job?.provenance?.prompt?.version;
+  return v != null && v !== '' && v !== NOT_RECORDED ? String(v) : null;
+}
+
+/**
+ * `{ lane }` when the registry (scripts/lib/lanes.mjs `stamps`) names this writer as a lane, else `{}` (#7301): the
+ * subscription and GPU lanes stamp `ocr.lane` / `translation.lane` beside `engine`, so a page says which lane wrote
+ * it, not only `source: 'ai'`. A writer the registry does not name writes no `lane` key, exactly as before.
+ */
+function laneStamp(field, engine) {
+  const lane = laneForWrite(field, engine);
+  return lane ? { lane } : {};
 }
 
 /**
@@ -387,7 +427,7 @@ export function translationProvenance(text, engine) {
  *     `gemini-engine/1` block with model, api, call_site, prompt.version, prompt.sent_hash,
  *     generation (temperature, max_output_tokens, thinking), run.code_version, run.host, input
  *     (image_url for OCR, source_text_hash for translation).
- *   `kraken` / `bdrc` / `mineru` / `paddle` (specialist engines): content_hash, updated_at, engine.name/model/run.
+ *   `kraken` / `bdrc` / `mineru` / `paddle` / `lightonocr` (specialist engines): content_hash, updated_at, engine.name/model/run.
  *   `ia_djvu`: content_hash, updated_at, source_url, ia.item, ia.ingest_run.
  *   anything else (manual, corpus, source-column, …): content_hash and updated_at only.
  * @returns {{ missing: string[], markers: string[] }}
@@ -442,7 +482,7 @@ export function missingProvenance(field, sub) {
     else if (isNotRecorded(i)) markers.push(`${field}.engine.input`);
     else if (field === 'ocr' && !i.image_url) missing.push(`${field}.engine.input.image_url`);
     else if (field === 'translation' && !HEX16.test(i.source_text_hash || '')) missing.push(`${field}.engine.input.source_text_hash`);
-  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle') {
+  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle' || src === 'lightonocr') {
     if (!e || typeof e !== 'object') missing.push(`${field}.engine`);
     else {
       if (!e.name) missing.push(`${field}.engine.name`);

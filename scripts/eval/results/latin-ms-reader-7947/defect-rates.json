@@ -1,0 +1,69 @@
+{
+ "issue": 7947,
+ "note": "Confirmed serious calls (second reader) per set and arm, OCR only. Words = the stored page's count for every arm. One Opus reader per book judging all arms blind, side by side; REVIEWER.md scale.",
+ "study_cells": {
+  "manuscript|stored": {
+   "route": "stored (Flash-Lite)",
+   "books": 26,
+   "pages": 78,
+   "words": 17350,
+   "misleads_per_1k": 4.67,
+   "wrong_text_per_1k": 0.4,
+   "fidelity_mean": 3.04
+  },
+  "manuscript|opus": {
+   "route": "claude-opus (claude-ocr.mjs, 1 a call)",
+   "books": 26,
+   "pages": 78,
+   "words": 17350,
+   "misleads_per_1k": 0.06,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.44
+  },
+  "manuscript|agyread": {
+   "route": "agy-flash-low@4",
+   "books": 26,
+   "pages": 78,
+   "words": 17350,
+   "misleads_per_1k": 2.77,
+   "wrong_text_per_1k": 0.23,
+   "fidelity_mean": 3.55
+  },
+  "manuscript|armc": {
+   "route": "pero>agy-flash-low (arm c, E3 put-back)",
+   "books": 26,
+   "pages": 78,
+   "words": 17350,
+   "misleads_per_1k": 3.8,
+   "wrong_text_per_1k": 0.46,
+   "fidelity_mean": 3.37
+  },
+  "incunabula|agyread": {
+   "route": "agy-flash-low@4",
+   "books": 8,
+   "pages": 24,
+   "words": 11462,
+   "misleads_per_1k": 0.44,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 3.46
+  },
+  "incunabula|liteopus": {
+   "route": "lite>opus (correct.mjs)",
+   "books": 8,
+   "pages": 24,
+   "words": 11462,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.38
+  },
+  "incunabula|stored": {
+   "route": "stored (Flash-Lite)",
+   "books": 8,
+   "pages": 24,
+   "words": 11462,
+   "misleads_per_1k": 1.92,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 2.83
+  }
+ }
+}

@@ -1,0 +1,116 @@
+[
+  {
+    "book_id": "b08-k", "slot": 1, "title": "De officiis. Comm: Petrus Marsus. Add: Laelius, sive de amicitia. Comm: Omnibonus Leonicenus; Cato maior, sive de senectute. Comm: Martinus Phileticus; Paradoxa Stoicorum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 93, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "Idem gloriae iactura: ne nimia quidem facere.\n\nluté cu. f. cunctator", "image": "right column: \"Ericulosæ autem: postq̃ de periculis adeundis fecit mentionẽ: dicit p diuisionẽ ... Laudatq; fabium maximũ: qui nunq̃ rumores de se: & infamiam posuit ante patriæ sa-\" (c. 13 lines) before \"lutẽ cũ .s. cunctator\"", "problem": "the whole right-column commentary block is missing; the text jumps from the left column into its continuation mid-word", "severity": "serious", "class": "O5" },
+          { "ocr": "Apro. Comodis: fed nomen et gloria: citra tn ignominia alioge qm ad gloria et honore et honestate nati fumus: cum uita effundere uoluiffent", "image": "Apro. Cōmodis: utilitatibus & bonis externis: qm̄ ipse magnanimus: q circa magna uersat̃: non curat bona fortunæ: sed nomen & gloriã ... nati sumus: cum sint uirtutũ præmia. Inuenti aũt sunt: nunc affert illos qui pro patria quicquid habuerunt: & etiã uitã effundere uoluissent", "problem": "two stretches of commentary dropped and the remainder spliced into one false sentence", "severity": "serious", "class": "O5" },
+          { "ocr": "quod eft corra officiu: que nobis om habenda eft: et illi aliqui feruiendu et: pat ut fama noftra diminuat: et patria coducit", "image": "quod est cōtra officiũ: nã ratio tẽporis habenda est: & illi aliq̄n seruiendũ: & pati ut fama nostra diminuat̃: si patriæ cōducit", "problem": "\"nã ratio tẽporis\" replaced by words from the next line; \"si patriæ\" read as \"et patria\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "Re explicata et manifesta ... Qua addubitata: que re non explicata est resultet", "image": "Re explicata: clara & manifesta ... Quã addubitata: incerta: qm̄ re non explicata est res uitæ", "problem": "glosses \"clara\" and \"incerta\" dropped; \"res uitæ\" misread \"resultet\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "que bona fortunae con tenenda fut, puta conseruanda", "image": "qm̄ bona fortunæ cō tenenda sũt ꝓ uita cōseruanda", "problem": "\"pro uita\" read as \"puta\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "unde potius moriendu est: que subire dedecus", "image": "q̃ subire dedecus", "problem": "q̃ (quam) systematically expanded as \"que\" throughout the page", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 185, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>pter sanctitate aliqua remota ... tela recepit</margin>", "image": "full-width commentary block at the foot of the page, continuing the right column", "problem": "the main lower commentary block is tagged as marginalia", "severity": "moderate", "class": "O11" },
+          { "ocr": "M. brutus i quo nunquid fuit brute uulnus", "image": "M. brutus ĩ quo magnũ fuit brute uulnus", "problem": "\"magnum\" misread \"nunquid\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "quoniam in nunquid pot fieri fine scelere", "image": "qm̄ id nunq̃ pōt fieri sine scelere", "problem": "\"id nunquam\" garbled to \"in nunquid\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "non est hominis noie tantum", "image": "nō est homo nisi noĩe tantũ", "problem": "\"nisi\" dropped, so the sense changes", "severity": "moderate", "class": "O6" },
+          { "ocr": "patroni nonum uerisimile", "image": "patroni nōnũq̃ uerisimile", "problem": "nonnunquam misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "uictoria est: iracudia cohibere", "image": "uictoriã tẽperare: iracũdiã cohibere", "problem": "\"temperare\" read as \"est\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "debilitari frangitet. ueru animu", "image": "debilitari frangique possit. uerũ animũ", "problem": "\"frangique possit\" garbled", "severity": "minor" },
+          { "ocr": "qui cu tanto nomine et patre optimu habuisset", "image": "qui cũ tanto nomine eẽt: patreq; optimũ uiꝝ habuisset", "problem": "\"esset\" and \"uirum\" dropped", "severity": "minor" },
+          { "ocr": "Multitudo: populus quoniam imperitia", "image": "Multitudo: populus q ꝓpter imperitiã", "problem": "\"propter\" dropped", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 277, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "qbus cu amore fe applicauerut cu fi\n& iatate.", "image": "qbus cũ amore se applicauerũt cũ si-/gnũ uirtutis ĩ eũ agnoscat. Vsu: cōsuetudine eius fruimur. Pares: ad aicitiã: æqles ĩ moribus: ĩ lr̄is:/& ĩ ætate.", "problem": "one full line of the bottom commentary is missing", "severity": "moderate", "class": "O5" },
+          { "ocr": "Suspice: in altum afpicere", "image": "Suspicere: in altum aspicere", "problem": "lemma truncated", "severity": "minor" },
+          { "ocr": "fortaffe non ulla", "image": "fortasse nõnulla", "problem": "word split, and long s read as f throughout", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The pages are recognisably right, but page 93 is missing a whole column of commentary plus two further spans and splices what remains into false sentences; with q̃ misexpanded throughout and misreads that change the sense on page 185, a Latinist would not trust it."
+  },
+  {
+    "book_id": "b08-m", "slot": 2, "title": "De officiis. Comm: Petrus Marsus. Add: Laelius, sive de amicitia. Comm: Omnibonus Leonicenus; Cato maior, sive de senectute. Comm: Martinus Phileticus; Paradoxa Stoicorum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 93, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "vita spernenda est neque laus et bonum nomen amittatur", "image": "uita spernẽda est ne laus & bonũ nomẽ amittat̃", "problem": "\"ne\" (lest) turned into \"neque\", which garbles the purpose clause", "severity": "moderate", "class": "O6" },
+          { "ocr": "qui neque gloriam propriam amitteret", "image": "qui ne gloriam propriam amitterẽt", "problem": "\"ne\" turned into \"neque\", reversing the clause", "severity": "moderate", "class": "O6" },
+          { "ocr": "et nobis etiam patria postulante", "image": "& nois etiã patria postulante", "problem": "nominis read as \"nobis\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "bona fortunae contenda sunt", "image": "bona fortunæ cō tenenda sũt", "problem": "contemnenda/contenenda misread", "severity": "minor" },
+          { "ocr": "Propthiores igitur", "image": "Proptiores igr̃", "problem": "spurious h", "severity": "minor" },
+          { "ocr": "vir ... vitam ... evasit", "image": "uir ... uitã ... euasit", "problem": "u silently normalised to v, and inconsistently (uis/vis on the same page)", "severity": "minor", "class": "O8" },
+          { "ocr": "perdit fortitudinis laudem et decorem", "image": "pdit fortitudinis laudẽ & decoꝝ", "problem": "decorum read as decorem", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 185, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ut ei afferata libidine expleant", "image": "ut aĩ efferatã libidinẽ expleãt", "problem": "animi efferatam misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "nisi idem placeret grauissimo stoicorum Panaetio", "image": "nisi idẽ placeret grauissi/mo stoicorũ Pa.", "problem": "the abbreviation \"Pa.\" expanded to the canonical name; \"audere\" also normalised to \"auderem\"", "severity": "minor", "class": "O8" },
+          { "ocr": "Religiosi inquit Macrobius etii sunt", "image": "Religiosi inquit Macro. di/cti sũt", "problem": "\"dicti\" misread as \"etii\"", "severity": "minor" },
+          { "ocr": "quae uerge quaerit", "image": "quæ ue℞ quærit", "problem": "verum misread", "severity": "minor" },
+          { "ocr": "quod cum uideas esse ... quos non timet per ueritate & humanitate oratur", "image": "qd' cũ uideat̃ eẽ ... quos nõ timẽt ꝓ ueritate & humanitate oratu/ri", "problem": "verb endings slip", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 277, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "in quo iam amore ponere coepimus. illud\n\nsane relinquunt ...\n\nillum auget atque confirmat", "image": "illud / quidẽ signũ uirtutis atq; ꝓbitatis amorẽ / illũ auget", "problem": "the last line of the right column is dropped, and the main text is inserted between \"illud\" and its continuation", "severity": "moderate", "class": "O5" },
+          { "ocr": "Ouidius enim metaphora inquit", "image": "Oui. eñi metha. inq̄t", "problem": "\"metha.\" (Metamorphoses) expanded as \"metaphora\"", "severity": "moderate", "class": "O6" },
+          { "ocr": "aequales in moribus: in studiis & in aetate", "image": "æqles ĩ moribus: ĩ lr̄is: & ĩ ætate", "problem": "\"litteris\" replaced by \"studiis\"", "severity": "moderate", "class": "O8" },
+          { "ocr": "expetendam putamus", "image": "expetendã petamus", "problem": "normalised to the canonical Cicero reading", "severity": "minor", "class": "O3" },
+          { "ocr": "ut ita dicam", "image": "at ita dicã", "problem": "\"at\" read as \"ut\"", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A fluent, fully expanded reading that is mostly right, but it normalises toward the expected (u→v, Panaetio, putamus, studiis), drops a line on page 277, and flips \"ne\" to \"neque\" twice on page 93."
+  },
+  {
+    "book_id": "b08-r", "slot": 3, "title": "De officiis. Comm: Petrus Marsus. Add: Laelius, sive de amicitia. Comm: Omnibonus Leonicenus; Cato maior, sive de senectute. Comm: Martinus Phileticus; Paradoxa Stoicorum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 93, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Promptiores igitur debemus", "image": "Prōptiores igr̃", "problem": "the printer's \"Proptiores\" in the text column is silently corrected (the commentary keeps its misprints elsewhere)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 185, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "In primis: inter primos", "image": "In primis: iter primos", "problem": "\"iter\" silently corrected", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 277, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Complete and faithful on all three pages: layout order is right, abbreviations are kept or expanded correctly, the printer's misprints are preserved, and its notes on unfilled initials and the damaged inner edge are accurate."
+  }
+]

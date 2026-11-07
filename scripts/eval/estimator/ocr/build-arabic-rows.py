@@ -7,6 +7,8 @@
 
   python3 scripts/eval/estimator/ocr/build-arabic-rows.py --mss6544 /mnt/HC_Volume_105839809/jobs/mss-thinking-6544 \
       --out scripts/eval/estimator/ocr/results/arabic-rows.jsonl
+  python3 scripts/eval/estimator/ocr/build-arabic-rows.py --kraus-only --out scripts/eval/estimator/ocr/results/arabic-rows.jsonl
+      (re-writes only the kraus-7341 rows of an existing --out; no #6544 scratch needed)
 
 Sources (one row per page x engine; a failed read is a did-not-read row, never scored):
   gate-7341    results/arabic-mss-gate-7341/gate-rows.jsonl: 13 Jabir manuscripts (26 pages) + Kraus 1935 print (4),
@@ -17,6 +19,8 @@ Sources (one row per page x engine; a failed read is a did-not-read row, never s
                the job's reads (scratch: --mss6544).
   6544-setB    Our Arabic-script manuscripts, 6 pages (2 Arabic, 3 Persian, 1 Malay Jawi), KEY-O (Opus referee over
                the Pro and Opus reads): a MODEL key, DIRECTIONAL.
+  kraus-7341   results/kraus-print-7341/kraus-rows.jsonl: 25 more Kraus 1935 pages (#7341 follow-up), same arms, key
+               procedure and row shape as the gate; panel jabir-7341, so they join the gate's Kraus cell.
   reocr-5700   11 Arabic print pages (#5695 T4 track) with a by-eye corrected transcription OF THE SERVED OCR: the
                served read (Flash-Lite or 3 Flash) and a fresh 3 Flash read, CER from ocr-score.json. The key is
                built from the served read, so the served row is self-keyed.
@@ -62,7 +66,7 @@ def base(**kw):
     return r
 
 
-def gate_rows(path):
+def gate_rows(path, source='gate-7341'):
     rows = [json.loads(l) for l in open(path)]
     agy_failed = {r['page'] for r in rows if r['engine'].startswith('gemini-3.8') and not r['scored']}
     out = []
@@ -74,7 +78,7 @@ def gate_rows(path):
         keep = {k: r[k] for k in ('chart', 'panel', 'page', 'work', 'engine', 'engine_family', 'kind', 'period', 'year',
                                   'cer', 'scored', 'failure', 'n_ref', 'language')}
         keep['n_ref_source'] = 'reference'
-        out.append(base(**keep, source='gate-7341', key_type='model', key_self=int(self_), alchemy=1,
+        out.append(base(**keep, source=source, key_type='model', key_self=int(self_), alchemy=1,
                         usability=r.get('usability_worse')))
     return out
 
@@ -151,12 +155,26 @@ def reocr5700_rows(score_path, tracks_path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--mss6544', required=True, help="#6544's job scratch (its reads, Set A pages and Set B keys)")
+    ap.add_argument('--mss6544', help="#6544's job scratch (its reads, Set A pages and Set B keys)")
+    ap.add_argument('--kraus-only', action='store_true', help='replace only the kraus-7341 rows of an existing --out')
     ap.add_argument('--out', required=True)
     a = ap.parse_args()
     res = os.path.join(ROOT, 'scripts', 'eval', 'results')
+    kraus = os.path.join(res, 'kraus-print-7341', 'kraus-rows.jsonl')
+    if a.kraus_only:
+        old = [json.loads(l) for l in open(a.out)]
+        out = [r for r in old if r['source'] != 'kraus-7341']
+        out += [label_legacy(r, 'arabic-rows', [r['source']]) for r in gate_rows(kraus, 'kraus-7341')]
+        with open(a.out, 'w') as f:
+            f.writelines(json.dumps(r, ensure_ascii=False) + '\n' for r in out)
+        print(len(old), '->', len(out), 'rows')
+        return
+    if not a.mss6544:
+        ap.error('--mss6544 is required unless --kraus-only')
     out = gate_rows(os.path.join(res, 'arabic-mss-gate-7341', 'gate-rows.jsonl'))
     out += mss6544_rows(a.mss6544)
+    if os.path.exists(kraus):
+        out += gate_rows(kraus, 'kraus-7341')
     out += reocr5700_rows(os.path.join(res, 'reocr-lift-2026-10', 'ocr-score.json'),
                           os.path.join(res, 'reocr-lift-2026-10', 'track-pages.jsonl'))
     out = [label_legacy(r, 'arabic-rows', [r['source']]) for r in out]

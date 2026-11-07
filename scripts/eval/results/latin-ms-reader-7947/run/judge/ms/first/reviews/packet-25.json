@@ -1,0 +1,738 @@
+[
+ {
+  "book_id": "b25-k",
+  "slot": 1,
+  "title": "Sermo generalis de naturis rerum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "aliud est accedentibus uenatoribus occisus et de resurges tascensione tanquam palacio regis prius et omnibus suis aspiciendo",
+      "image": "a iudeis a crudelissimis uenatoribus occisus et inde resurgens in ascensione tanquam in palacio regis patris et omnibus sanctis conspiciendus (a iudeis acdelissimis ... pris ... sās ꝯspiciend9)",
+      "problem": "opening sentence garbled: 'the Jews, most cruel hunters' lost; 'patris', 'sanctis' misread",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ambigitur",
+      "image": "ambz (Ambrosius)",
+      "problem": "authority Ambrose read as a verb 'ambigitur', here and at the fox",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod est more omnium carnium",
+      "image": "q̄ ē ꝯ morē omīū carniū (quod est contra morem omnium carnium)",
+      "problem": "'contra' dropped: reverses the claim that boiled bear-meat growing is against the nature of all meat",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Vrso xx die paulo autem muribus immaturum parit plem",
+      "image": "Vrso xxx die paulomaiorem murib9 īmaturū parit plem",
+      "problem": "'xxx' read 'xx' (day count wrong); 'paulo maiorem' read 'paulo autem'",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "auares in secreto. uenantur ursas guidas nihil rarius quam ursa plene uidetur",
+      "image": "Mares insecreto. uenan. ursas g̃uidas nichil rarius q̄m ursā pientē uidē",
+      "problem": "'Mares'→'auares', 'grauidas'→'guidas', 'parientem uidere'→'plene uidetur'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Candes es et onde et statu ursu potest uix potest stare",
+      "image": "Candēs es ei ondr̄ et statī uisū pdit. Vix pt stare",
+      "problem": "'uisum perdit' (loses sight) read 'ursu potest'; sentence nonsensical",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Vlpes sedem uelidorum et quod uoluppes est",
+      "image": "Vulpes scdm ysidorū dr̄ qs̄ uoluppes",
+      "problem": "'secundum Ysidorum dicitur quasi' read as 'sedem uelidorum'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Si amigdalas uulpes comedit mouet et calefactionem epatis pane et tpe et uale",
+      "image": "Si amigdalas wlpes comedit mori dr̄. Calefcōnem epatis patit̄ tpe estiuale",
+      "problem": "'mori dicitur' (it dies) read 'mouet'; 'patitur tempore estiuali' garbled",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Carnes uulpis si aburatur puluis est ualde almatias cum uino. suprus. Sags adipis est multum fert dolorum aurium",
+      "image": "Carnes uulpis si ꝯburāt pulu9 eaꝝ ual; asmaticis cū uino sūptus. Sagīs adipis ei9 mltu ꝯfert dolorib9 auriū",
+      "problem": "remedy for asthmatics and ear-pain garbled ('almatias','suprus','fert dolorum')",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "dicit experimentum",
+      "image": "Dicit experimentator",
+      "problem": "the source 'Experimentator' turned into 'experimentum'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Nocte sphense m expedite excubant su pme vt alas suas armet apliuna ptegat",
+      "image": "Nocte ꝯphense in expeditōe excubant supine ut alas suas a rore et a pluuia ptegant",
+      "problem": "abbreviations left half-expanded and misread; 'a rore' (from dew) read 'armet'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "hic forma egregiore e 7 duplo eius maior peme breuiores. arva et arva mgrellu collior m fronte mada ndem",
+      "image": "Hic forma egregior est et duplo ceteris maior penne breuiores crura recta ingressu celsior in fronte macula quidem",
+      "problem": "description of the king bee reduced to non-words ('arva et arva mgrellu', 'mada ndem')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "7 mpz apu nllin habet aculeu maiestat tm armat",
+      "image": "Imperator apud illum (nullum?) habet aculeum maiestate tantum armatur",
+      "problem": "non-word 'nllin'; sentence unreadable",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "seniores mel opant ... sut mel offiat in uisa",
+      "image": "seniores int9 opant̄ ... Sunt int9 officia diuisa",
+      "problem": "'intus' (inside) twice read as 'mel' (honey)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "e cap adolescenaa adopa exut. 7 rip dea auchut",
+      "image": "est etas adolescentie ad opera exeunt et super dicta conuehunt",
+      "problem": "abbreviations transcribed as letter strings, not words",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Plim? ofiua obliato ipis essen ciu m horat notat",
+      "image": "Plinius. Custodia observato temporis cessantium inhertiam notat",
+      "problem": "Pliny attribution and sentence garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Whole page is a half-diplomatic, half-expanded letter string ('7', 'qi', 'mt', 'apu' left as is) — not readable Latin for a reader",
+      "severity": "moderate",
+      "class": "O9"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 145,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Magnes uel magnates lapis colore frugineo et manu attingit. Et scire adamante",
+      "image": "Magnes ul magnates lap ē coloris ferruginei ferrū mirū attrahit. Absēte adamāte",
+      "problem": "'ferrum mirum attrahit' (draws iron wonderfully) lost; 'Absente' read 'Et scire'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Illa uero que adultera est diligit qui manu repulsa siro feroce cocta cadit",
+      "image": "Illa uero que adultera est de lecto qi manu repulsa subito fetore coacta cadit",
+      "problem": "'de lecto' read 'diligit' (loves); 'subito fetore coacta' garbled — the adultery test reads backwards",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hic lapis saliare et uxores manitas",
+      "image": "Hic lap ē ꝯciliare dr̄ uxores maritis",
+      "problem": "'conciliare' (reconcile wives to husbands) lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hic lapis cocto et lacte amittit morbum uapure resoluit. Bustas",
+      "image": "hic lap coct9 et lacti ꝯmixt9 morbū ydropicū resoluit. Combustus",
+      "problem": "dropsy remedy garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Freneticos facit",
+      "image": "freneticos cur̄at",
+      "problem": "'curat' (cures frenzy) read as 'facit' (causes) — reversal of a medical claim",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Iterum lapis est balbid phisicus",
+      "image": "Nitrum lap ē subalbid9 pspicuus",
+      "problem": "stone name Nitrum lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Nychomantia uel alabastrum id est lapis albus et p; uia uia et amia ad colit",
+      "image": "Nychomar ul alabastrum idē ē lap alb9 pb; uictoriā et amiciciā ꝯciliat",
+      "problem": "stone name changed to 'Nychomantia' (invented, also in the margin tags); virtues garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Glossa super leuitate ... Jaune unguis",
+      "image": "Glo. sup leuitic dr̄ ... latine unguis",
+      "problem": "'super Leviticum' read 'super leuitate'; 'latine' read 'Jaune'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "invented <margin> labels ('De Nychomantia', 'Magnes') presented as marginalia; the real marginal finding-notes are different",
+      "severity": "moderate",
+      "class": "O12"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Transcription is largely unreadable: abbreviations left as letter strings and many words misread into non-words, with several meaning reversals (e.g. 'freneticos facit' for 'curat', 'contra' dropped, 'mori dicitur' → 'mouet'). A Latin reader could not use it."
+ },
+ {
+  "book_id": "b25-m",
+  "slot": 2,
+  "title": "Sermo generalis de naturis rerum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "respergunt uiam usque ad foueam melle",
+      "image": "respḡūt uiā ūsus foueā melle (uersus foueam)",
+      "problem": "'uersus' expanded as 'usque ad'; same sense",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Calefactionem epatis patitur tempore estiuali. Plinius. Et cum esurit",
+      "image": "... tp̄e estiuale. [ligature] & cū esurit",
+      "problem": "the sign before '& cum esurit' read as 'Plinius'; uncertain at this resolution",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "alie quoque lanugine totis corporibus",
+      "image": "alie aq̄mq3 lanugine toti9 corpis (aquamque lanugine totius corporis)",
+      "problem": "'aquamque' (water) read 'quoque'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Pigrarum custodia observato temporis cessantium inhertiam notat",
+      "image": "Plini9 ofstra obsuato tp̄is cessantiū in hercia notat",
+      "problem": "the Pliny attribution read as 'Pigrarum'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Quibus est <unclear>cura</unclear>, adolescentia ad opera exeunt et <unclear>super dicta conchiunt</unclear>",
+      "image": "Quib9 ē etas adolescentie ad opa exeūt et sup dca ꝯuehūt",
+      "problem": "a phrase marked unclear and partly misread; flagged honestly",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 145,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "rotundus ualet <unclear>propter</unclear> uulneratis",
+      "image": "rotūd9 ualde papue ... wlneratis (reading uncertain)",
+      "problem": "doubtful word, marked unclear",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<unclear>Mna</unclear> lacte solutus mulieris que masculum peperit",
+      "image": "Mnā lacte solut9 mulis q̄ masc̄l pepit",
+      "problem": "left as unclear; rest correct",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta>Lapidary entries arranged alphabetically, L–O. Catchword: none visible.</meta> — model's own page description stored inside the transcription",
+      "severity": "moderate",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A careful, fully expanded, largely accurate reading of all three pages, with doubtful words honestly marked <unclear>; a few moderate slips (Pliny attribution, 'aquamque') and a model note in a <meta> tag on p.145."
+ },
+ {
+  "book_id": "b25-r",
+  "slot": 3,
+  "title": "Sermo generalis de naturis rerum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "aludens ac fidelissimis uenatoribus occisus est",
+      "image": "a iudeis acdelissimis uenatorib9 occis9 (a iudeis a crudelissimis)",
+      "problem": "'by the Jews, most cruel hunters' read as 'faithful hunters' — reverses the sense",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Urso xxie die",
+      "image": "Vrso xxx die",
+      "problem": "day count misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Frigido vero fetudini nascitur. nullum membrum aperit",
+      "image": "Inipso u̾ fetudū nascat̄. nullū mēbz apet (In ipso uero fetu dum nascitur)",
+      "problem": "'In ipso' read 'Frigido'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Coeuntes in secreto. uenantes",
+      "image": "Mares insecreto. uenan̄",
+      "problem": "'Mares' (males) read 'Coeuntes'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "maxime crabronis appetitum non auidi. Aliquando quoniam mella captat",
+      "image": "maxime ē fauos appetūt. n̄ auidi9 aliq̄t q̄m mella captat",
+      "problem": "'fauos' (honeycombs) read 'crabronis' (hornet); sentence broken",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Candens eis est odor et statim uisum perdit",
+      "image": "Candēs es ei ondr̄ (ostenditur)",
+      "problem": "'ostenditur' read 'est odor'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sanguis adipis eius multum profert",
+      "image": "Sagīs adipis ei9 mltu ꝯfert",
+      "problem": "'sagimen' (lard) read 'sanguis' (blood)",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<warning>Printed incunable text with contemporary handwritten foliation</warning> — the page is a manuscript, not print",
+      "severity": "moderate",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ut alas suas armis et apluvia protegant",
+      "image": "ut alas suas a rore et a pluuia ptegant",
+      "problem": "'a rore' read 'armis'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "que fures dicuntur ... quasi furacula primarum",
+      "image": "q fuci dicunt̄ (drones)",
+      "problem": "drones ('fuci') read as 'fures' (thieves)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Imperatorem suum summo sedula reverencia",
+      "image": "Inpiem suū iuuene sedula reuerencia",
+      "problem": "'iuuenem' read 'summo'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Ambientes omnes etate demumque alias vigilare",
+      "image": "Amb9. Vides oms ctare demune alias uigilare",
+      "problem": "Ambrose citation and 'Vides omnes certare de munere' turned into 'Ambientes omnes etate demumque'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Quies temporis est",
+      "image": "Quies opis ē",
+      "problem": "'operis' read 'temporis'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Ardua mundicia ... spurcitia iacet tantum et exactitud operantium",
+      "image": "Mira mūdicia ... spurcicia latet q̄m et excremēta operantiū",
+      "problem": "'Mira' read 'Ardua'; 'excrementa' read as a non-word 'exactitud'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 145,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Aquis resolutus et potatus sanat euomi pulmone quia lavit ipsis aquis strumas",
+      "image": "aq̄s resolut9 et potat9 facit euomi pulmonē. q̄ lauit ip̄is aq̄s frontē cecum facit",
+      "problem": "'facit euomere' (makes one vomit) read 'sanat' (cures); 'frontem cecum facit' replaced by invented 'strumas' and 'cecum facit' moved to Nitrum — a reversed medical claim",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ferru manu attrahit. Abscedit adamante",
+      "image": "ferrū mirū attrahit. Absēte adamāte",
+      "problem": "'mirum' read 'manu'; 'Absente' read 'Abscedit'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "hunc Isidorus dicit",
+      "image": "hūc ē dicere",
+      "problem": "authority 'Isidorus' inserted where the line has none",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hic lapis et calcare et uxores maritis",
+      "image": "Hic lap ē ꝯciliare dr̄ uxores maritis",
+      "problem": "'conciliare' read 'calcare'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "multis qui maritant pepigit",
+      "image": "mulieris q̄ masculū pepit",
+      "problem": "'milk of a woman who bore a son' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "valet contra venenum ... virtutem continuatam conlucet",
+      "image": "ualet ꝯ yctericiam ... uictoriā et amiciciā ꝯciliat",
+      "problem": "jaundice read as poison; 'victory and friendship' turned into nonsense",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Readable, expanded Latin that follows the page well, but with many moderate misreadings and some that reverse the sense (the 'faithful' hunters of p.50; 'sanat' for 'facit' and an invented 'strumas' on p.145), plus a header that calls the manuscript a printed incunable."
+ },
+ {
+  "book_id": "b25-t",
+  "slot": 4,
+  "title": "Sermo generalis de naturis rerum",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "aliud est accedentibus uenatoribus occisus et de resurges tascensione tanquam palacio regis prius et omnibus suis aspiciendo",
+      "image": "a iudeis a crudelissimis uenatoribus occisus et inde resurgens in ascensione tanquam in palacio regis patris et omnibus sanctis conspiciendus (a iudeis acdelissimis ... pris ... sās ꝯspiciend9)",
+      "problem": "opening sentence garbled: 'the Jews, most cruel hunters' lost; 'patris', 'sanctis' misread",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ambigitur",
+      "image": "ambz (Ambrosius)",
+      "problem": "authority Ambrose read as a verb 'ambigitur', here and at the fox",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod est more omnium carnium",
+      "image": "q̄ ē ꝯ morē omīū carniū (quod est contra morem omnium carnium)",
+      "problem": "'contra' dropped: reverses the claim that boiled bear-meat growing is against the nature of all meat",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Vrso xx die paulo autem muribus immaturum parit plem",
+      "image": "Vrso xxx die paulomaiorem murib9 īmaturū parit plem",
+      "problem": "'xxx' read 'xx' (day count wrong); 'paulo maiorem' read 'paulo autem'",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "auares in secreto. uenantur ursas guidas nihil rarius quam ursa plene uidetur",
+      "image": "Mares insecreto. uenan. ursas g̃uidas nichil rarius q̄m ursā pientē uidē",
+      "problem": "'Mares'→'auares', 'grauidas'→'guidas', 'parientem uidere'→'plene uidetur'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Candes es et onde et statu ursu potest uix potest stare",
+      "image": "Candēs es ei ondr̄ et statī uisū pdit. Vix pt stare",
+      "problem": "'uisum perdit' (loses sight) read 'ursu potest'; sentence nonsensical",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Vlpes sedem uelidorum et quod uoluppes est",
+      "image": "Vulpes scdm ysidorū dr̄ qs̄ uoluppes",
+      "problem": "'secundum Ysidorum dicitur quasi' read as 'sedem uelidorum'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Si amigdalas uulpes comedit mouet et calefactionem epatis pane et tpe et uale",
+      "image": "Si amigdalas wlpes comedit mori dr̄. Calefcōnem epatis patit̄ tpe estiuale",
+      "problem": "'mori dicitur' (it dies) read 'mouet'; 'patitur tempore estiuali' garbled",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Carnes uulpis si aburatur puluis est ualde almatias cum uino. suprus. Sags adipis est multum fert dolorum aurium",
+      "image": "Carnes uulpis si ꝯburāt pulu9 eaꝝ ual; asmaticis cū uino sūptus. Sagīs adipis ei9 mltu ꝯfert dolorib9 auriū",
+      "problem": "remedy for asthmatics and ear-pain garbled ('almatias','suprus','fert dolorum')",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "dicit experimentum",
+      "image": "Dicit experimentator",
+      "problem": "the source 'Experimentator' turned into 'experimentum'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Nocte sphense m expedite excubant su pme vt alas suas armet apliuna ptegat",
+      "image": "Nocte ꝯphense in expeditōe excubant supine ut alas suas a rore et a pluuia ptegant",
+      "problem": "abbreviations left half-expanded and misread; 'a rore' (from dew) read 'armet'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "hic forma egregiore e 7 duplo eius maior peme breuiores. arva et arva mgrellu collior m fronte mada ndem",
+      "image": "Hic forma egregior est et duplo ceteris maior penne breuiores crura recta ingressu celsior in fronte macula quidem",
+      "problem": "description of the king bee reduced to non-words ('arva et arva mgrellu', 'mada ndem')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "7 mpz apu nllin habet aculeu maiestat tm armat",
+      "image": "Imperator apud illum (nullum?) habet aculeum maiestate tantum armatur",
+      "problem": "non-word 'nllin'; sentence unreadable",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "seniores mel opant ... sut mel offiat in uisa",
+      "image": "seniores int9 opant̄ ... Sunt int9 officia diuisa",
+      "problem": "'intus' (inside) twice read as 'mel' (honey)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "e cap adolescenaa adopa exut. 7 rip dea auchut",
+      "image": "est etas adolescentie ad opera exeunt et super dicta conuehunt",
+      "problem": "abbreviations transcribed as letter strings, not words",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Plim? ofiua obliato ipis essen ciu m horat notat",
+      "image": "Plinius. Custodia observato temporis cessantium inhertiam notat",
+      "problem": "Pliny attribution and sentence garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Whole page is a half-diplomatic, half-expanded letter string ('7', 'qi', 'mt', 'apu' left as is) — not readable Latin for a reader",
+      "severity": "moderate",
+      "class": "O9"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 145,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Magnes uel magnates lapis colore frugineo et manu attingit. Et scire adamante",
+      "image": "Magnes ul magnates lap ē coloris ferruginei ferrū mirū attrahit. Absēte adamāte",
+      "problem": "'ferrum mirum attrahit' (draws iron wonderfully) lost; 'Absente' read 'Et scire'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Illa uero que adultera est diligit qui manu repulsa siro feroce cocta cadit",
+      "image": "Illa uero que adultera est de lecto qi manu repulsa subito fetore coacta cadit",
+      "problem": "'de lecto' read 'diligit' (loves); 'subito fetore coacta' garbled — the adultery test reads backwards",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hic lapis saliare et uxores manitas",
+      "image": "Hic lap ē ꝯciliare dr̄ uxores maritis",
+      "problem": "'conciliare' (reconcile wives to husbands) lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hic lapis cocto et lacte amittit morbum uapure resoluit. Bustas",
+      "image": "hic lap coct9 et lacti ꝯmixt9 morbū ydropicū resoluit. Combustus",
+      "problem": "dropsy remedy garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Freneticos facit",
+      "image": "freneticos cur̄at",
+      "problem": "'curat' (cures frenzy) read as 'facit' (causes) — reversal of a medical claim",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Iterum lapis est balbid phisicus",
+      "image": "Nitrum lap ē subalbid9 pspicuus",
+      "problem": "stone name Nitrum lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Nychomantia uel alabastrum id est lapis albus et p; uia uia et amia ad colit",
+      "image": "Nychomar ul alabastrum idē ē lap alb9 pb; uictoriā et amiciciā ꝯciliat",
+      "problem": "stone name changed to 'Nychomantia' (invented, also in the margin tags); virtues garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Glossa super leuitate ... Jaune unguis",
+      "image": "Glo. sup leuitic dr̄ ... latine unguis",
+      "problem": "'super Leviticum' read 'super leuitate'; 'latine' read 'Jaune'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "invented <margin> labels ('De Nychomantia', 'Magnes') presented as marginalia; the real marginal finding-notes are different",
+      "severity": "moderate",
+      "class": "O12"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Transcription is largely unreadable: abbreviations left as letter strings and many words misread into non-words, with several meaning reversals (e.g. 'freneticos facit' for 'curat', 'contra' dropped, 'mori dicitur' → 'mouet'). A Latin reader could not use it."
+ }
+]

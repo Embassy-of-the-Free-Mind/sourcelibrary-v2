@@ -1,4 +1,5 @@
 import { Pencil } from 'lucide-react';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Role } from '@/lib/auth';
 import { canEditCatalog, canReviewCatalog } from '@/lib/catalog-role';
 
@@ -20,6 +21,7 @@ const LINK_CLASS =
   'text-secondary hover:bg-warm hover:text-primary transition-colors';
 
 interface Props {
+  tenant: string;
   role: Role;
   /**
    * Present when rendered on a single record: adds that record's History and
@@ -33,36 +35,37 @@ interface Props {
   className?: string;
 }
 
-export default function CatalogEditorNav({ role, ubn, editLabel, current, className }: Props) {
+export default async function CatalogEditorNav({ tenant, role, ubn, editLabel, current, className }: Props) {
   if (!canEditCatalog(role)) return null;
+  const room = await getRoomHref(tenant);
   const canReview = canReviewCatalog(role);
 
   return (
     <div className={className ?? 'flex justify-end flex-wrap gap-2 mb-2'}>
       {ubn && (
-        <a href={`/catalog/${encodeURIComponent(ubn)}/history`} className={LINK_CLASS}>
+        <a href={room(`/catalog/${encodeURIComponent(ubn)}/history`)} className={LINK_CLASS}>
           History
         </a>
       )}
       {canReview && (
         <>
           {current !== 'workspace' && (
-            <a href="/catalog/workspace" className={LINK_CLASS}>My work</a>
+            <a href={room('/catalog/workspace')} className={LINK_CLASS}>My work</a>
           )}
           {current !== 'new' && (
-            <a href="/catalog/new" className={LINK_CLASS}>+ New record</a>
+            <a href={room('/catalog/new')} className={LINK_CLASS}>+ New record</a>
           )}
           {current !== 'review' && (
-            <a href="/catalog/review" className={LINK_CLASS}>Review queue</a>
+            <a href={room('/catalog/review')} className={LINK_CLASS}>Review queue</a>
           )}
           {current !== 'team' && (
-            <a href="/catalog/team" className={LINK_CLASS}>Team</a>
+            <a href={room('/catalog/team')} className={LINK_CLASS}>Team</a>
           )}
         </>
       )}
-      <a href="/catalog/help" className={LINK_CLASS}>Help</a>
+      <a href={room('/catalog/help')} className={LINK_CLASS}>Help</a>
       {ubn && (
-        <a href={`/catalog/${encodeURIComponent(ubn)}/edit`} className={LINK_CLASS}>
+        <a href={room(`/catalog/${encodeURIComponent(ubn)}/edit`)} className={LINK_CLASS}>
           <Pencil className="w-3.5 h-3.5" />
           {editLabel ?? 'Edit catalogue entry'}
         </a>

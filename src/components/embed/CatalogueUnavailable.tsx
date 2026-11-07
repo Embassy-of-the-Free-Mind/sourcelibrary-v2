@@ -10,13 +10,15 @@ import { Search } from 'lucide-react';
  *     is hidden/not-yet-available and has no catalogue entry to redirect to.
  *
  * Server component (no client hooks) so it can render inside either route. The
- * `/catalog` "New search" link is host-relative and proxy-rewritten to the
- * tenant's catalogue search view — never an off-subdomain URL (tenant lockdown).
+ * caller passes `newSearchHref` from getRoomHref(): a bare `/catalog` is the
+ * room on a subdomain but the global site inside the iframe (tenant lockdown).
  */
 export default function CatalogueUnavailable({
+  newSearchHref,
   heading,
   detail,
 }: {
+  newSearchHref: string;
   heading: string;
   detail: string;
 }) {
@@ -25,7 +27,7 @@ export default function CatalogueUnavailable({
       <div className="max-w-2xl mx-auto px-6 py-12">
         <div className="mb-4">
           <a
-            href="/catalog"
+            href={newSearchHref}
             className="inline-flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors"
           >
             <Search className="w-3.5 h-3.5" />

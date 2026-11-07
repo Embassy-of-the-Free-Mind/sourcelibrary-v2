@@ -1,0 +1,19 @@
+{
+ "built_at": "2026-10-30T17:14:17.552Z",
+ "rule": "visible English, year 1400-1799, held under a GPU-lane hold or not held (pipeline_auto.held excluded), not a manuscript (cli-ocr-lane manuscriptReason), not an unsplit spread, not in the 1800+ frame, pages with no text",
+ "tally": {
+  "books": 707,
+  "manuscript": 28,
+  "unsplit_spread": 2,
+  "other_hold": 22,
+  "in_1800_frame": 0,
+  "nothing_owed": 336,
+  "possible_spread_books": 72
+ },
+ "books": 319,
+ "pages": 41224,
+ "possible_spread": {
+  "books": 72,
+  "pages": 25858
+ }
+}

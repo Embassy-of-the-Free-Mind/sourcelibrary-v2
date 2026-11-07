@@ -1,0 +1,20 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>十五</page-num>
+<header>聖君志遺芳記卷三</header>
+
+然君每怪妾不肯獻醜今將長別當率成一章索筆構
+成曰心悲意亂不能推敲乖音錯節慎勿出以示人掩
+袂而去公送諸門外湮然而沒公悵悼良久視其詩字
+態端妍珍而藏之詩曰靜鎖深宮十七年誰將故國問
+青天閒看殿宇封喬木泣望君王化杜鵑海國波濤斜
+夕照漢家簫鼓靜烽烟紅顏力弱難為厲蕙質心悲只
+問禪日誦菩提千百句閒看貝葉兩三篇高唱梨園歌
+代哭請君獨聽亦潸然
+<gloss>詩中重複脫節疑傳者錯悞</gloss>
+不託於音
+<gloss>禮檀弓孔子之故人原壤其母死夫子助之沐槨原壤登木曰久矣予之不托於音</gloss>
+
+<vocab>聖君志, 遺芳記, 杜鵑, 梨園, 檀弓, 原壤</vocab>

@@ -33,11 +33,34 @@ function tileSourceFor(m: DeepZoomManifest): any {
   };
 }
 
-export default function DeepZoomInline({ manifest }: { manifest: DeepZoomManifest }) {
+export default function DeepZoomInline({
+  manifest,
+  quiet = false,
+  wheelScrollsPage = false,
+  onDrawn,
+  onFailed,
+}: {
+  manifest: DeepZoomManifest;
+  /** Opened by the reader's default, over a scan that is still showing: no loading message. */
+  quiet?: boolean;
+  /** In a partner's iframe the wheel belongs to the host page (#7747); the buttons zoom instead. */
+  wheelScrollsPage?: boolean;
+  /** The first view's tiles have drawn, so the scan underneath can be covered. */
+  onDrawn?: () => void;
+  /** The tile pyramid would not open. */
+  onFailed?: () => void;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const viewerRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
+  // In refs so a new callback from a parent render does not rebuild the viewer.
+  const onDrawnRef = useRef(onDrawn);
+  const onFailedRef = useRef(onFailed);
+  useEffect(() => {
+    onDrawnRef.current = onDrawn;
+    onFailedRef.current = onFailed;
+  });
 
   useEffect(() => {
     let disposed = false;
@@ -65,9 +88,33 @@ export default function DeepZoomInline({ manifest }: { manifest: DeepZoomManifes
           immediateRender: false,
         });
         viewerRef.current = viewer;
-        viewer.addHandler('open', () => !disposed && setReady(true));
+        viewer.addHandler('open', () => {
+          if (disposed) return;
+          setReady(true);
+          viewer.world.getItemAt(0)?.addOnceHandler('fully-loaded-change', () => {
+            if (!disposed) onDrawnRef.current?.();
+          });
+        });
+        viewer.addHandler('open-failed', () => {
+          if (!disposed) onFailedRef.current?.();
+        });
+        // The arrow keys keep turning pages, and the viewer leaves them alone.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        viewer.addHandler('canvas-key', (e: any) => {
+          if (/^Arrow/.test(e.originalEvent?.key ?? '')) {
+            e.preventDefaultAction = true;
+            e.preventDefault = false;
+          }
+        });
+        if (wheelScrollsPage) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          viewer.addHandler('canvas-scroll', (e: any) => {
+            e.preventDefaultAction = true;
+            e.preventDefault = false;
+          });
+        }
       })
-      .catch(() => {});
+      .catch(() => onFailedRef.current?.());
     return () => {
       disposed = true;
       try {
@@ -77,7 +124,7 @@ export default function DeepZoomInline({ manifest }: { manifest: DeepZoomManifes
       }
       viewerRef.current = null;
     };
-  }, [manifest]);
+  }, [manifest, wheelScrollsPage]);
 
   const zoomBy = (f: number) => {
     const v = viewerRef.current;
@@ -90,7 +137,7 @@ export default function DeepZoomInline({ manifest }: { manifest: DeepZoomManifes
   return (
     <div className="absolute inset-0">
       <div ref={containerRef} className="absolute inset-0" />
-      {!ready && (
+      {!ready && !quiet && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-stone-400">
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           <span className="text-xs">Loading deep zoom…</span>

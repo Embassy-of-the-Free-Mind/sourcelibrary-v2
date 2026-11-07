@@ -22,6 +22,11 @@
  * asked for). A read kept by the sweep, before readers kept their own, has no `reuse` block; a reader can pass
  * `derive(meta)` to compute the same hash from the stored meta.
  *
+ * METADATA READS (#7660). field 'metadata' keeps a reader's answer ABOUT a book rather than a page's text: a title-page
+ * read returning {author, title, imprint…}, or a batch of author strings classified in one call (kept under the book
+ * the batch was sampled from). `page_id` names what was read ('title-page', 'author-strings-<n>'); the text must be
+ * JSON.
+ *
  * BEST EFFORT, ALWAYS. No credentials, an R2 error or a timeout logs one line and returns: keeping or finding a read
  * never fails the read. CANDIDATE_READS=off turns both off.
  */
@@ -33,10 +38,11 @@ import path from 'node:path';
 
 export const BUCKET = 'sl-corpus-snapshots';
 export const PREFIX = 'candidate-reads';
+const FIELDS = new Set(['ocr', 'translation', 'metadata']);
 
 /** The object key for one read. Throws unless book-scoped (#3362). */
 export function candidateKey(bookId, pageId, field, hash) {
-  if (field !== 'ocr' && field !== 'translation') throw new Error(`bad field ${JSON.stringify(field)}`);
+  if (!FIELDS.has(field)) throw new Error(`bad field ${JSON.stringify(field)}`);
   if (!/^[0-9a-f]{16}$/.test(String(hash))) throw new Error(`bad content hash ${JSON.stringify(hash)}`);
   if (!pageId || /[/\s]/.test(pageId)) throw new Error(`bad page id ${JSON.stringify(pageId)}`);
   const key = `${PREFIX}/${bookId}/${pageId}/${field}/${hash}.json`;
@@ -64,6 +70,7 @@ export function promptKey(bookId, hash) {
 export function textProblem(text, field) {
   const t = String(text || '').trim();
   if (!t) return 'empty';
+  if (field === 'metadata') { try { JSON.parse(t); return null; } catch { return 'not JSON'; } }
   if (field === 'translation') return cliChatterReason(t);
   // header: false — a correct-mode reply (cli-ocr --correct, correct.mjs) is plain text by design (#6560), and a
   // missing <page-type> tag is a format slip, not chatter; plan notes, refusals, restarts and openers still fail.
@@ -200,6 +207,40 @@ export async function hasKeptReads(bookId) {
     const r = await send(c, new sdk.ListObjectsV2Command({ Bucket: BUCKET, Prefix: `${prefix}/`, MaxKeys: 1 }));
     return (r.KeyCount || 0) > 0;
   } catch { return false; }
+}
+
+/**
+ * Every kept read of one book and field, as [{ page_id, model }] (one LIST of the book's prefix, then one small GET
+ * per read to learn its model, only for `pageIds` when given). Unusable reads are left out. Never throws: an error
+ * returns [].
+ */
+export async function listKeptReads(bookId, field, pageIds = null) {
+  const want = pageIds ? new Set(pageIds) : null;
+  if (off() || !bookId) return [];
+  try {
+    const c = await client();
+    if (!c) return [];
+    const prefix = `${PREFIX}/${bookId}`;
+    assertBookScopedKey(prefix, bookId, 'candidate-reads book');
+    const keys = [];
+    let token;
+    do {
+      const r = await send(c, new sdk.ListObjectsV2Command({ Bucket: BUCKET, Prefix: `${prefix}/`, ContinuationToken: token }));
+      for (const o of r.Contents || []) if (o.Key.endsWith('.json') && o.Key.split('/')[3] === field && (!want || want.has(o.Key.split('/')[2]))) keys.push(o.Key);
+      token = r.IsTruncated ? r.NextContinuationToken : undefined;
+    } while (token);
+    const out = [];
+    for (const key of keys) {
+      try {
+        const r = await send(c, new sdk.GetObjectCommand({ Bucket: BUCKET, Key: key }));
+        const body = JSON.parse(await r.Body.transformToString());
+        const m = body.meta || {};
+        if (textProblem(body.text, field) || (m.exit !== undefined && m.exit !== 0) || m.error_class || m.wrapper) continue;
+        out.push({ page_id: body.page_id, model: body.reuse?.model ?? m.model_requested ?? body.model ?? null });
+      } catch { /* one unreadable object is one read not offered */ }
+    }
+    return out;
+  } catch (e) { warn('list', `listing ${bookId} failed: ${e.message}`); return []; }
 }
 
 /** The exact prompt kept for this book and hash, or null. Never throws. */

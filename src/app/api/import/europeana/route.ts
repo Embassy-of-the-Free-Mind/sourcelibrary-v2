@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
 import { withCuratorAuth } from '@/lib/auth-helpers';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -61,7 +62,7 @@ export const POST = withCuratorAuth(async (request, session) => {
         ? `https://api.europeana.eu/record/v2${normalizedId}.json?wskey=${apiKey}`
         : `https://api.europeana.eu/record/v2${normalizedId}.json`;
 
-      const recordRes = await fetch(apiUrl);
+      const recordRes = await outboundFetch(apiUrl);
 
       if (!recordRes.ok) {
         return NextResponse.json({

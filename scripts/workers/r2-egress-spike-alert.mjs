@@ -36,6 +36,7 @@
  *   node scripts/workers/r2-egress-spike-alert.mjs --json --no-push   # dry run
  */
 import { MongoClient } from 'mongodb';
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || 'eb0562555fd5ce2a4ec0f29b6df10e7b';
 const TOKEN = process.env.CF_ANALYTICS_TOKEN;
@@ -132,7 +133,7 @@ async function fetchDaily() {
 async function pushNtfy(title, message) {
   if (NO_PUSH) { console.log('[r2-spike] --no-push: skipping ntfy'); return; }
   try {
-    await fetch(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: 'high', Tags: 'rotating_light' }, body: message });
+    await ntfyPost(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: 'high', Tags: 'rotating_light' }, body: message });
     console.log('[r2-spike] ntfy push sent');
   } catch (err) { console.error(`[r2-spike] ntfy push failed: ${err.message}`); }
 }

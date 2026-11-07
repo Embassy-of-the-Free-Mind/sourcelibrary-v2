@@ -1,0 +1,47 @@
+[
+  {
+    "book_id": "b04-r", "slot": 1, "title": "Pontificalis liber", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An illuminated Italian manuscript pontifical (ordination, episcopal consecration, foundation stone, reconciliation of a cemetery), in Latin as catalogued. No tradition or collection is given to test it against; as a liturgical primary source it is coherent with the title.",
+    "rights_flag": null,
+    "structure_note": "The packet carries no structure counts. The three images are not consecutive leaves: the folio numbers read xxxiiij (p.9), cc.xxiiij in mirror-reversed show-through (p.16), and cc.xxxij (p.24). The scan therefore looks like a selection of leaves, not the whole book, which is consistent with the three page numbers. The rubric on p.16 says the chant was 'per errorem sine notis impressa' earlier in the book, which suggests the manuscript was copied from the printed Pontificale (Rome 1485). The 1490 date is plausible. No splice or wrong work is seen.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Romanam ecclesiarum cathedralium", "image": "[Q]uoniam ecclesiarum cathedralium (historiated initial followed by 'uoniam' in red)", "problem": "The opening word of the consecration rubric is misread. The conjunction 'Quoniam' becomes 'Romanam', which invents a 'Roman' and breaks the clause ('Since the provisions ... belong to the Apostolic See').", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "The packet has no translation for this page (empty string), so translation was not judged.", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "The packet has no translation for this page (empty string), so translation was not judged. The chant staves are honestly marked as not transcribed, and the underlay text is complete.", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 24,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "non <unclear>censeatur</unclear> pro uiolata", "image": "nō hēatur (= habeatur) p uiolata", "problem": "The abbreviated 'habeatur' is replaced by a guessed synonym. It is flagged as unclear and the sense survives.", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "The packet has no translation for this page (empty string), so translation was not judged.", "severity": "minor" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this illuminated pontifical is accurate and careful: abbreviations are expanded correctly, rubric crosses are kept, and the chant is honestly flagged. The one real slip is 'Romanam' for 'Quoniam' at the start of the consecration of a bishop. None of the three pages has a translation, so only the OCR could be judged."
+  }
+]

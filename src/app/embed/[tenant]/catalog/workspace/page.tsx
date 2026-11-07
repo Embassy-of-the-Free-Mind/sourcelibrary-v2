@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Metadata } from 'next';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL } from '@/lib/auth';
@@ -83,6 +84,7 @@ const n = (x: number | null | undefined) => (x ?? 0).toLocaleString('en-GB');
 
 export default async function CatalogueWorkspacePage({ params }: Props) {
   const { tenant } = await params;
+  const room = await getRoomHref(tenant);
   if (tenant !== 'bph') notFound();
 
   const session = await auth();
@@ -91,7 +93,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
   const platformRole = normalizeCatalogRole((session.user as { role?: unknown }).role);
   const tenantRole = await effectiveCatalogRole(session.user.email, platformRole, tenant);
   const role = ROLE_LEVEL[platformRole] >= ROLE_LEVEL[tenantRole] ? platformRole : tenantRole;
-  if (ROLE_LEVEL[role] < ROLE_LEVEL['editor']) redirect('/catalog');
+  if (ROLE_LEVEL[role] < ROLE_LEVEL['editor']) redirect(room('/catalog'));
 
   const email = (session.user.email || '').toLowerCase();
   const aliases = memorixAliasesFor(email);
@@ -151,7 +153,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
   return (
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
-        <a href="/catalog" className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors">
+        <a href={room('/catalog')} className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors">
           ← Back to catalogue
         </a>
 
@@ -201,7 +203,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
                   const source = Object.values(r.field_changes || {}).find((c) => c?.source)?.source;
                   return (
                     <li key={r.id} className="py-2.5 text-sm">
-                      <a href={`/catalog/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
+                      <a href={room(`/catalog/${encodeURIComponent(r.ubn)}`)} className="text-accent-rust hover:underline font-medium">
                         {r.ubn}
                       </a>
                       <span className="text-muted"> · {formatDate(r.applied_at)}</span>
@@ -243,7 +245,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
                       // the link for all 2,012 of them; `bph_works.id` is a
                       // DIFFERENT uuid from `bph_works.uuid` and resolves to
                       // nothing (José Bouman, 2026-08-12). See the RPC header.
-                      href={`/catalog/${encodeURIComponent(s.ubn || s.uuid || s.id)}`}
+                      href={room(`/catalog/${encodeURIComponent(s.ubn || s.uuid || s.id)}`)}
                       className="text-accent-rust hover:underline"
                       title={s.hint || undefined}
                     >
@@ -272,7 +274,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
               return (
                 <div key={r.id} className="p-4 text-sm">
                   <div className="flex items-baseline justify-between gap-3">
-                    <a href={`/catalog/${encodeURIComponent(r.ubn)}`} className="text-accent-rust hover:underline font-medium">
+                    <a href={room(`/catalog/${encodeURIComponent(r.ubn)}`)} className="text-accent-rust hover:underline font-medium">
                       {r.ubn}
                     </a>
                     <span className="text-muted shrink-0">{formatDate(r.applied_at)}</span>

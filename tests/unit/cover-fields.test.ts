@@ -39,7 +39,7 @@ describe('buildCoverUpdate', () => {
     expect(update!.thumbnail_blob).toBe(SAMPLE_THUMB);
     expect(update!.thumbnail_source).toBe('manual');
     expect(update!.cover_page).toBe(5);
-    expect(update!.field_provenance?.thumbnail.method).toBe('cover-picker-ui');
+    expect(update!['field_provenance.thumbnail']?.method).toBe('cover-picker-ui');
   });
 
   it('uses display URL as thumb when page has no pre-generated thumb', () => {

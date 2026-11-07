@@ -26,6 +26,16 @@ export const API_LIMITS = {
     pagesPerDay: 500,
     imagesPerDay: 500,
   },
+  /**
+   * An assistant reading for a person, proven by name AND published address
+   * (src/lib/assistant-fetchers.ts). Still per IP, but one IP here is many people
+   * (#8161), which is why it exceeds what one signed-in person gets. Not part of
+   * the anon < session < key ordering: nobody can sign in to this tier.
+   */
+  assistantFetcher: {
+    requestsPerHour: 1000,
+    pagesPerDay: 2000,
+  },
   /** Signed-in users (free account). */
   session: {
     requestsPerHour: 1000,

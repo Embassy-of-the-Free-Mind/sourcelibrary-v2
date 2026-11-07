@@ -8,6 +8,11 @@
  * licences. This sibling packs the bundle into ONE archive (what a reader downloads) and uploads that,
  * plus README.md and LICENSES.md so Zenodo previews them.
  *
+ * SUPERSEDED for the DOI deposit (#7462): its description predates the 2026-10-26 fixes. Deposit with
+ *   node --env-file=.env.production.local scripts/eval/deposit-ft-dataset.mjs --dir scripts/eval/dataset/quality-v1 \
+ *     --metadata scripts/eval/dataset/quality-v1.zenodo.json [--dry-run]
+ * which uploads the files themselves (Zenodo previews each) under the same CC BY-SA 4.0 licence.
+ *
  * DRAFT ONLY. There is deliberately no --publish: minting a DOI is public and irreversible, so publishing
  * is a human click in the Zenodo UI after review.
  *

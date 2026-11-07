@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { TRIPWIRE_PATH } from '@/lib/tripwire';
+import GivingSeasonBanner from '@/components/donate/GivingSeasonBanner';
 
 export default function BookLayout({
   children,
@@ -23,6 +24,7 @@ export default function BookLayout({
   return (
     <>
       {children}
+      <GivingSeasonBanner />
       {/* Tripwire (#5995, src/lib/tripwire.ts): invisible, untabbable, and
           robots-disallowed, so only a scraper ignoring robots.txt follows it.
           A plain <a>, not next/link — Link would prefetch it for real readers. */}

@@ -36,6 +36,17 @@ jl = lambda p: [json.loads(l) for l in open(p) if l.strip()] if os.path.exists(p
 cand_p = {r['node']: r for r in jl(os.path.join(OUT, 'cand-passages.jsonl'))}
 cand_e = {r['key']: r for r in jl(os.path.join(OUT, 'cand-edges.jsonl'))}
 term_c = {r['node']: r for r in jl(os.path.join(OUT, 'term-candidates.jsonl'))}
+# Quotes the exact verify failed, re-cut from the served page or dropped (#7458): keyed by page URL and the old quote.
+_rc_p = os.path.join(HERE, 'recuts.json')
+RECUTS = {(r['url'], r['old']): r for r in json.load(open(_rc_p))['recuts']} if os.path.exists(_rc_p) else {}
+def recut(q):
+    """The candidate with its quote replaced by the page's own span, or None where the passage was dropped."""
+    r = RECUTS.get((q['url'], plain(q['quote'])))
+    if not r:
+        return q
+    if r['action'] != 'recut':
+        return None
+    return {**q, 'quote': r['new_marked'], 'cut': r['cut'], 'recut': '#7458'}
 bl_p = os.path.join(OUT, 'baseline.json')
 baseline = json.load(open(bl_p)) if os.path.exists(bl_p) else None
 
@@ -134,7 +145,9 @@ for n in NODES:
         for p in vp.get('picks', []):
             i = p.get('idx')
             if isinstance(i, int) and 0 <= i < len(cands):
-                q = dict(cands[i])
+                q = recut(dict(cands[i]))
+                if q is None:
+                    continue
                 q['why'] = p.get('why', '')
                 picks.append(q)
     passages = [{'quote': plain(q['quote']), 'quote_marked': q['quote'], 'cut': q['cut'], 'url': q['url'], 'book_id': q['book_id'], 'page': q['page'],
@@ -203,8 +216,10 @@ for e in seed_e['edges']:
     if v and v.get('verdict') == 'stated':
         i = v.get('idx')
         cs = ce.get('candidates', [])
-        if isinstance(i, int) and 0 <= i < len(cs):
-            q = cs[i]
+        q = recut(cs[i]) if isinstance(i, int) and 0 <= i < len(cs) else None
+        if q is None and isinstance(i, int) and 0 <= i < len(cs):
+            prov['passage_dropped'] = 'the judged passage is not on the page as served (#7458)'
+        if q is not None:
             prov = {'kind': 'passage', 'claim': e['claim'], 'judge': v.get('judge', MODEL_BG), 'reason': v.get('reason', ''),
                     'passage': {'quote': plain(q['quote']), 'quote_marked': q['quote'], 'cut': q['cut'], 'url': q['url'], 'title': q['title'],
                                 'author': q['author'], 'work_year': q['year'], 'date_basis': q['basis']}}
@@ -240,8 +255,10 @@ ontology = {
         'terms': 'Forms are the seed spellings with their tagged-page counts in the page-terms harvest (#4695). Variants, equivalents '
                  'and related terms come from src/data/concept-aliases.json where the node is a curated concept, otherwise from '
                  'term-gloss bridges judged under .claude/docs/concept-aliases/JUDGE-RUBRIC.md. Related terms are never merged.',
-        'quotes': 'Every quote is a verbatim substring of the page\'s English translation after editorial wrappers and translator '
-                  'notes are removed; [square brackets] are the translator\'s inline glosses.',
+        'quotes': 'Every quote is an exact span of the text the page serves to a reader: the English translation, or the '
+                  'transcription where the leaf is an English original (#7100). Editorial wrappers are removed and whitespace '
+                  'collapsed; nothing else is normalised. Translator notes stay in (they are on the page); [square brackets] '
+                  'are the translator\'s inline glosses. `measure.mjs verify` checks every quote against the live page (#7458).',
     },
     'senses': seed['senses'], 'kinds': seed['kinds'],
     'tallies': {'nodes': len(out_nodes), 'edges': len(out_edges), 'edges_by_provenance': dict(prov_tally),

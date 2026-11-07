@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import HomeAbout from '@/components/home/HomeAbout';
+import HomeJoin from '@/components/home/HomeJoin';
 import HeroSection from '@/components/layout/HeroSection';
 import AskTheSourceBand from '@/components/home/AskTheSourceBand';
 import HomePageSchema from '@/components/seo/HomePageSchema';
@@ -10,7 +12,6 @@ import { posts as ARTICLES } from '@/app/articles/posts';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
 import SubjectIndex from '@/components/home/SubjectIndex';
-import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, NATIVE_SUBJECT_SHELVES, type HomeLang, collectionName } from '@/lib/home-i18n';
@@ -31,7 +32,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf, untranslatedShelf, subjectShelves } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, nativeShelfTotal, beginnerShelf, untranslatedShelf, subjectShelves } = data;
   const subjectShelvesText = NATIVE_SUBJECT_SHELVES[lang];
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
@@ -115,7 +116,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </Link>
             </div>
             <p className="text-muted mb-6 max-w-2xl">
-              {t.nativeShelfSubtitle}
+              {nativeShelfTotal > 0 && t.nativeShelfTotal ? t.nativeShelfTotal(nativeShelfTotal) : t.nativeShelfSubtitle}
             </p>
             <BookSlider books={nativeShelf as unknown as MiniBook[]} lang={lang} />
           </div>
@@ -218,7 +219,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 </h3>
                 <p className="text-muted mt-2">
                   {t.bySubjectLead}{' '}
-                  <Link href="/catalog" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
+                  <Link href="/library" className="hover:text-accent-rust transition-colors">{nf(counts.totalBooks)} {t.booksLabel}</Link>
                   {' '}&middot;{' '}
                   <Link href={lp('/search?has_translation=true')} className="hover:text-accent-rust transition-colors">{nf(counts.readableInEnglish)} {t.translationsLabel}</Link>
                   {' '}&middot;{' '}
@@ -238,7 +239,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 </p>
               </div>
               <Link
-                href="/catalog"
+                href="/library"
                 className="hidden md:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
@@ -293,7 +294,9 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.recentlyTranslatedHeading}
               </h2>
               <Link
-                href="/catalog?sort=last_translated"
+                // On /es the band holds Spanish editions, so "see all" is the
+                // Spanish list, not the English catalog (#7496).
+                href={spanishCollection ? lp(`/collections/${spanishCollection.slug}`) : '/library?sort=last_translated'}
                 className="hidden sm:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
@@ -302,6 +305,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             </div>
             <p className="text-muted mb-6 max-w-2xl">
               {t.recentlyTranslatedSubtitle}
+              {!spanishCollection && (
+                <>
+                  {' '}
+                  <Link href="/new-in-english" className="underline hover:text-primary">
+                    See everything new this week
+                  </Link>
+                </>
+              )}
             </p>
             <BookSlider books={recentlyTranslated as unknown as MiniBook[]} lang={lang} />
           </div>
@@ -421,171 +432,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
-            {t.aboutHeading}
-          </h2>
-          <div className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed">
-            <p>{t.aboutP1}</p>
-            <p>{t.aboutP2}</p>
-            <p className="text-gray-500 text-base">
-              {t.aboutP3Before}
-              <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">{t.efmLinkText}</a>
-              {t.aboutP3After}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* About, then support: the why, then the how */}
+      <HomeAbout lang={lang} />
+      <HomeJoin lang={lang} />
 
-      {/* Be part of this */}
-      <section className="py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
-        <div className="px-6 md:px-12 max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <p
-              className="text-sm uppercase tracking-[0.2em] mb-6"
-              style={{ color: 'var(--accent-gold)' }}
-            >
-              {t.bePartEyebrow}
-            </p>
-            <h2
-              className="text-2xl md:text-3xl lg:text-4xl font-display mb-5 leading-snug"
-              style={{ color: '#f5f0e8' }}
-            >
-              {t.bePartHeading}
-            </h2>
-          </div>
-
-          {/* Support the Library — primary */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="rounded-xl p-8 text-center" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <h3 className="text-xl font-display mb-3" style={{ color: '#f5f0e8' }}>
-                {t.supportTitle}
-              </h3>
-              <p className="leading-relaxed mb-6" style={{ color: '#a09a90' }}>
-                {t.supportBody}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href={lp('/support')}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
-                  style={{ background: 'var(--accent-rust)', color: '#fff' }}
-                >
-                  {t.howToSupport}
-                </Link>
-                <Link
-                  href={lp('/auth/signin')}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
-                  style={{ background: 'rgba(255,255,255,0.08)', color: '#a09a90' }}
-                >
-                  {t.createAccount}
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Other ways to participate */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <Link
-              href="/contribute"
-              className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-            >
-              <p className="text-sm font-medium mb-1" style={{ color: '#f5f0e8' }}>{t.contribute}</p>
-              <p className="text-xs leading-relaxed" style={{ color: '#6b6560' }}>
-                {t.contributeDesc}
-              </p>
-            </Link>
-            <Link
-              href="/developers"
-              className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-            >
-              <p className="text-sm font-medium mb-1" style={{ color: '#f5f0e8' }}>{t.developers}</p>
-              <p className="text-xs leading-relaxed" style={{ color: '#6b6560' }}>
-                {t.developersDesc}
-              </p>
-            </Link>
-          </div>
-
-          {/* Free account nudge — for anonymous users only */}
-          <SignUpCTA variant="inline" lang={lang} />
-        </div>
-      </section>
-
-      {/* Search */}
-      <section className="bg-[#f6f3ee] py-16 md:py-20">
-        <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-display text-stone-900 mb-3">
-            {t.searchHeading}
-          </h2>
-          <p className="text-stone-500 text-sm mb-8">
-            {t.searchStats(nf(counts.totalBooks), nf(counts.authorCount), counts.languageCount)}
-          </p>
-          <form action={lp('/search')} method="get" className="relative max-w-lg mx-auto mb-6">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              name="q"
-              placeholder={t.searchPlaceholder}
-              className="w-full pl-12 pr-12 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-rust/20 focus:border-accent-rust shadow-sm"
-            />
-          </form>
-          <p className="text-stone-400 text-sm">
-            {t.browseBy}{' '}
-            <Link href="/browse/titles/A" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">{t.byTitle}</Link>
-            {' '}&middot;{' '}
-            <Link href="/browse/authors/A" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">{t.byAuthor}</Link>
-            {' '}&middot;{' '}
-            <Link href="/browse/years/1500s" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">{t.byYear}</Link>
-            {' '}&middot;{' '}
-            <Link href="/gallery" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">{t.byImages}</Link>
-          </p>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <div className="max-w-4xl border-t border-stone-300 pt-10 mt-8">
-            <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-6">
-              {t.inSpiritOf}
-            </p>
-            <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
-              <div className="flex-1">
-                <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
-                  Marsilio Ficino
-                </h3>
-                <p className="text-stone-500 text-sm mb-3">
-                  {t.ficinoRole}
-                </p>
-                <p className="text-stone-600 text-base leading-relaxed">
-                  {t.ficinoBio}
-                </p>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
-                  Cosimo de&apos; Medici
-                </h3>
-                <p className="text-stone-500 text-sm mb-3">
-                  {t.cosimoRole}
-                </p>
-                <p className="text-stone-600 text-base leading-relaxed">
-                  {t.cosimoBio}
-                </p>
-              </div>
-            </div>
-            <div className="mt-8 bg-accent-gold/5 rounded-lg p-5 border border-accent-gold/15">
-              <p className="text-stone-700 text-base leading-relaxed">
-                <strong>{t.closingStrong}</strong>{t.closingRest}
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

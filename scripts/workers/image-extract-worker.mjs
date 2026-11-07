@@ -51,6 +51,7 @@ import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import fs from 'fs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 
@@ -331,7 +332,7 @@ async function processBook(db, book) {
   const rawCandidates = await db.collection('pages')
     .find({
       book_id: book.id,
-      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      ...VISIBLE_PAGE_MATCH, // Skip hidden/deduped pages (page_number ≤ 0) and hidden repeat captures (#5056)
       $or: [
         { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
         { 'ocr.data': { $regex: '<detected-images>|<image-desc' } },

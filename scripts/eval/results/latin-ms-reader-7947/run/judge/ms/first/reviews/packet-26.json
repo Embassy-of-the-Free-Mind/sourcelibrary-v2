@@ -1,0 +1,754 @@
+[
+ {
+  "book_id": "b26-k",
+  "slot": 1,
+  "title": "Artificium artis generalis - BSB Clm 28951",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Pavis in<unclear>t</unclear>u",
+      "image": "[opera]cōis intrīce (operacionis intrinsece)",
+      "problem": "first words garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ctnahter",
+      "image": "eternaliter",
+      "problem": "garble",
+      "severity": "minor"
+     },
+     {
+      "ocr": "cushber p'etan actual sua sliendme",
+      "image": "cuilibet pfectiōi actuali sua similitudine",
+      "problem": "line garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ea muale ... simplatons ... in pmo aepe sic ... sub cdmundnali ... solanificare martunificare",
+      "image": "eē īuāle ... simplicitatis ... in pmo corpe nāē ... sub eē indiuiduali ... iohannificare martinificare",
+      "problem": "many tokens left as unresolved garble; abbreviations are mostly left unexpanded, so the text is hard to use",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<image-desc> reports a 'decorative initial P' that is not on the page",
+      "severity": "moderate",
+      "class": "O15"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Sequitur ulterius / scienda miratio de causa et eius specie",
+      "image": "Sequitur q̄liter ē / fienda mētio de cā cū suis spēbꝰ (qualiter est facienda mentio de causa cum suis speciebus)",
+      "problem": "opening sentence garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Et possumus conside-rare illud modo",
+      "image": "t̄bus mōis (tribus modis)",
+      "problem": "'three ways' lost, so the enumeration loses its frame",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ista est huius potestatis infinita",
+      "image": "ista ē tm̄o ptās infinita (tantummodo potestas)",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "mundus cui sit finita et omnis species non potest esse per se nec sine species neque a melo",
+      "image": "mūdꝰ cū sit finitꝰ et oēs sue ptes nō pnt eē p se nec sue ptes neqꝫ a nichilo",
+      "problem": "'partes' read as 'species', 'nichilo' as 'melo'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "nihil est a seipso efficiens per se; et tunc per causam",
+      "image": "nichil ē cā ipīꝰ efficiens gᵒ hꝫ eē tm̄o p cām (nichil est causa ipsius efficiens, ergo habet esse tantum per causam)",
+      "problem": "inference garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "facit de nihilo angelum ipsum angelum",
+      "image": "facit de ptibꝰ angeli ipm angelum (de partibus angeli)",
+      "problem": "'from the parts of the angel' replaced by the expected 'from nothing': a statement not on the page",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "vegetativa pragmativa spiritua facit per unum corpus huius",
+      "image": "vegetatiua ymaginatiua sensitiua fecit pmū corpus hoīs (primum corpus hominis)",
+      "problem": "faculties and 'first body of man' misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Et causa efficiens hominis est principium",
+      "image": "Cā efficiēs finita ē pncipiū",
+      "problem": "'finita' read as 'hominis'; the finite/infinite contrast is lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "sicut per tunc de filiam panis in corpus Christi et statuer sicut adam et eva",
+      "image": "sic presbiter de sbām panis in corpus xpi ꝛc Nālit sicut adam et eua",
+      "problem": "the priest (transubstantiation) and the heading 'Naturaliter' are lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "leonem facit per sola fructu",
+      "image": "leonem ficulnea folia fructꝰ",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "hoc scilicet forma de iris et apes facit et praedices mundi moralis",
+      "image": "hō scba formā de lrīs et apes fauū et prudēs ... Moralr̄",
+      "problem": "scribe/letters/honeycomb lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "deo occidendo hominem substantiae",
+      "image": "deꝰ occidendo hoīem subitanee",
+      "problem": "'suddenly' read as 'substantiae'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sicut est causa efficiens nihil quando suppoitum a suo esse actuali nihil per qualitates suae demerey",
+      "image": "Silr̄ est cā efficiens nālis priuando suppositū a suo eē actuali nāli p qualitates suoꝝ elementoꝝ",
+      "problem": "'naturalis' read as 'nihil', 'privando' as 'quando', 'elementorum' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "pnat se castitate humiliando se de luxuria",
+      "image": "priuat se a castitate habituando se de luxuria",
+      "problem": "'habituando' read as 'humiliando'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "3o modo est causa efficiens artificialiter homo scilicet quando tras et argentario terra alia figura",
+      "image": "[4]o mō est cā efficiens artificialit sic hō scba priuando lrās et argentariꝰ terrā a sua figura",
+      "problem": "last sentence garbled; numeral of the mode likely wrong",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 147,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "utrum bonitas sit deus ... utrum magnitudo sit deus ... utrum duratio sit bona ... quod est concordantia deus",
+      "image": "vtrū bonitas sit drīs ... magnitudo sit drīs ... dr̄a sit bona ... ꝯcordantia drīs (differens / differentia)",
+      "problem": "'differens' read as 'deus' and 'differentia' as 'duratio' throughout; the question matrix is about the wrong principles",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "utrum duratio sit concordans, quod est duratio magna, utrum duratio sit deus",
+      "image": "vtrū dr̄a sit ꝯcordās quid ē dr̄a ꝯcordans vtrū ꝯcor^a sit bona ... sit magna ...",
+      "problem": "questions on concordantia (bona, magna) dropped",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "in qualibet camera fiunt quaestiones et ubi et cetera sunt verbi quaestiones",
+      "image": "sunt xxiiij. qōnes et ubi est .k. sunt xxxvj. qōnes",
+      "problem": "both counts (24, 36) dropped",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "ut praecons puemens ex ueritate uel omnem positione ... et petatum illius praepior adia omni",
+      "image": "vel priuacionis proueniens ex necessaria vel conveniente positione ... et proprietatum ... principiorum condicionum",
+      "problem": "definition of demonstration garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Et hec demonstrationes purificae et omnis. Supnaliter",
+      "image": "Et hee demonstraciones pnt fieri 4or modis s. supnāliter",
+      "problem": "'possunt fieri quattuor modis' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "et corpus augitur quod hec est, et cetera clita ut se apponit quod clita",
+      "image": "et corpus ꝯiungitur gᵒ hō est 4or elita int se ꝯponūt gᵒ elita",
+      "problem": "last line garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Weak: page 51 is a half-expanded diplomatic reading with much garble and an invented image description, and pages 98 and 147 are mostly wrong. On 147 'differens/differentia' is read as 'deus/duratio' throughout, so the questions are about the wrong principles."
+ },
+ {
+  "book_id": "b26-m",
+  "slot": 2,
+  "title": "Artificium artis generalis - BSB Clm 28951",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "quamvis intrinseca",
+      "image": "[opera]cōis intrīce (operacionis intrinsece)",
+      "problem": "first word invented as 'quamvis'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "patrem filium et spiritum sanctum",
+      "image": "prem filiū et seipm (et seipsum)",
+      "problem": "'seipsum' normalised to the expected Trinity formula",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "cuilibet proprietati actuali",
+      "image": "cuilibet pfectiōi actuali",
+      "problem": "'perfectioni' read as 'proprietati'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "essentia manuale aut est simplex per simplificare simplicitatis anime et corporis et oppositum de arte omnium principiorum Sicut",
+      "image": "eē īuāle aut ē simplex p simplificare Et ē ꝯpositum de are alioꝝ pncipioꝝ Sic",
+      "problem": "the clause 'Et est compositum de ... aliorum principiorum' is dropped and the following line's text is put in its place (repeated two lines later)",
+      "severity": "serious",
+      "class": "O4"
+     },
+     {
+      "ocr": "et oppositum de arte omnium principiorum anime et corporis",
+      "image": "et ꝯponitur de are oīm pncipioꝝ",
+      "problem": "'componitur' read as 'oppositum'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "aut exquisitum per quantitate",
+      "image": "aut ē quātū p quantitate",
+      "problem": "misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "scienda mencio de causa essentiali in suis speciebus",
+      "image": "fienda mētio de cā cū suis spēbꝰ",
+      "problem": "'cum' read as 'essentiali'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "nichil est causa ipsius efficiens generalis; est tantummodo",
+      "image": "nichil ē cā ipīꝰ efficiens gᵒ hꝫ eē tm̄o (ergo habet esse)",
+      "problem": "'ergo habet esse' read as 'generalis; est'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "fecit de primo corpore universe celi empirei",
+      "image": "de pmo corpe nāē celū empireū",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quod deus est causa efficiens faciendo primi hominem",
+      "image": "faciendo pmū hoīem",
+      "problem": "case slip",
+      "severity": "minor"
+     },
+     {
+      "ocr": "per qualitates suos demeroy",
+      "image": "p qualitates suoꝝ elementoꝝ",
+      "problem": "'elementorum' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "put homo castus privat se acchtrate bituando",
+      "image": "ꝓut hō ē castus priuat se a castitate habituando",
+      "problem": "garble",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 147,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Vtrum contrarietas sit bona ... Vtrum contrarietas sit magna ... Vtrum contrarietas sit differens",
+      "image": "vtrū ꝯcor^a sit bona ... sit magna ... sit drīs (concordantia)",
+      "problem": "'concordantia' read as 'contrarietas' (three times); the next phrase reads 'concordantia' correctly",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "differentia Sequuntur",
+      "image": "drīs ¶ Sequitur (differens)",
+      "problem": "first word",
+      "severity": "minor"
+     },
+     {
+      "ocr": "sunt .xxxij. questiones",
+      "image": "sunt xxiiij. qōnes",
+      "problem": "24 read as 32",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "necessaria seu veridica apprehensio",
+      "image": "necia seu ꝯueniēs aphensio (conveniens)",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Vel aliano modo non per aliquod magis notum agnicio",
+      "image": "Vel alicuius minus noti p aliqd magis noti cognicio",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "in mente antecipio sui inferius",
+      "image": "in me^te aut supius suū inferius",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "et semper est causa effectus alterius",
+      "image": "et seipam esse causam effectus alterius",
+      "problem": "'se ipsam esse' read as 'semper est'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "differentia infusita erat finitatum",
+      "image": "dr̄a infinita cāt finitam",
+      "problem": "garble",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "que coniuncta inter se opponuntur ergo coniunc-",
+      "image": "4or elita int se ꝯponūt gᵒ elita (quattuor elementa inter se componuntur ergo elementata)",
+      "problem": "last line misread",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A readable, fully expanded transcription with a steady stream of misreadings. On page 51 a clause is dropped and replaced by text repeated from the next line, and on page 147 'concordantia' becomes 'contrarietas'."
+ },
+ {
+  "book_id": "b26-r",
+  "slot": 3,
+  "title": "Artificium artis generalis - BSB Clm 28951",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "quamvis intellectus",
+      "image": "[opera]cōis intrīce (operacionis intrinsece)",
+      "problem": "first words invented",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "patrem filium et spiritum sanctum",
+      "image": "prem filiū et seipm (et seipsum)",
+      "problem": "'seipsum' normalised to the expected Trinity formula",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Et est oppositum de arte aliorum principiorum ... et oppositum de arte omnium principiorum",
+      "image": "Et ē ꝯpositum de ... et ꝯponitur de ...",
+      "problem": "'compositum/componitur' read as 'oppositum', which reverses the claim",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "esse vniversale",
+      "image": "eē īuāle (individuale)",
+      "problem": "'individuale' read as 'universale' (twice)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "sub vniversali aliorum principiorum",
+      "image": "sub nā alioꝝ pncipioꝝ (natura)",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "in primo corpore etc",
+      "image": "in pmo corpe nāē",
+      "problem": "'naturali' read as 'etc'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "aut equititi per quantitatem",
+      "image": "aut ē quātū p quantitate",
+      "problem": "garble",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Sequitur ulterius / scienda miratio de causa et eius specie",
+      "image": "Sequitur q̄liter ē / fienda mētio de cā cū suis spēbꝰ (qualiter est facienda mentio de causa cum suis speciebus)",
+      "problem": "opening sentence garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Et possumus conside-rare illud modo",
+      "image": "t̄bus mōis (tribus modis)",
+      "problem": "'three ways' lost, so the enumeration loses its frame",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ista est huius potestatis infinita",
+      "image": "ista ē tm̄o ptās infinita (tantummodo potestas)",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "mundus cui sit finita et omnis species non potest esse per se nec sine species neque a melo",
+      "image": "mūdꝰ cū sit finitꝰ et oēs sue ptes nō pnt eē p se nec sue ptes neqꝫ a nichilo",
+      "problem": "'partes' read as 'species', 'nichilo' as 'melo'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "nihil est a seipso efficiens per se; et tunc per causam",
+      "image": "nichil ē cā ipīꝰ efficiens gᵒ hꝫ eē tm̄o p cām (nichil est causa ipsius efficiens, ergo habet esse tantum per causam)",
+      "problem": "inference garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "facit de nihilo angelum ipsum angelum",
+      "image": "facit de ptibꝰ angeli ipm angelum (de partibus angeli)",
+      "problem": "'from the parts of the angel' replaced by the expected 'from nothing': a statement not on the page",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "vegetativa pragmativa spiritua facit per unum corpus huius",
+      "image": "vegetatiua ymaginatiua sensitiua fecit pmū corpus hoīs (primum corpus hominis)",
+      "problem": "faculties and 'first body of man' misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Et causa efficiens hominis est principium",
+      "image": "Cā efficiēs finita ē pncipiū",
+      "problem": "'finita' read as 'hominis'; the finite/infinite contrast is lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "sicut per tunc de filiam panis in corpus Christi et statuer sicut adam et eva",
+      "image": "sic presbiter de sbām panis in corpus xpi ꝛc Nālit sicut adam et eua",
+      "problem": "the priest (transubstantiation) and the heading 'Naturaliter' are lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "leonem facit per sola fructu",
+      "image": "leonem ficulnea folia fructꝰ",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "hoc scilicet forma de iris et apes facit et praedices mundi moralis",
+      "image": "hō scba formā de lrīs et apes fauū et prudēs ... Moralr̄",
+      "problem": "scribe/letters/honeycomb lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "deo occidendo hominem substantiae",
+      "image": "deꝰ occidendo hoīem subitanee",
+      "problem": "'suddenly' read as 'substantiae'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Sicut est causa efficiens nihil quando suppoitum a suo esse actuali nihil per qualitates suae demerey",
+      "image": "Silr̄ est cā efficiens nālis priuando suppositū a suo eē actuali nāli p qualitates suoꝝ elementoꝝ",
+      "problem": "'naturalis' read as 'nihil', 'privando' as 'quando', 'elementorum' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "pnat se castitate humiliando se de luxuria",
+      "image": "priuat se a castitate habituando se de luxuria",
+      "problem": "'habituando' read as 'humiliando'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "3o modo est causa efficiens artificialiter homo scilicet quando tras et argentario terra alia figura",
+      "image": "[4]o mō est cā efficiens artificialit sic hō scba priuando lrās et argentariꝰ terrā a sua figura",
+      "problem": "last sentence garbled; numeral of the mode likely wrong",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 147,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "utrum bonitas sit deus ... Utrum bonitas sit accidens ... concordantia sit deus quid est concordantia deus",
+      "image": "vtrū bonitas sit drīs ... sit ꝯcordans ... ꝯcor^a sit drīs (differens / concordans)",
+      "problem": "'differens' read as 'deus' and 'concordans' as 'accidens' throughout the page; the question matrix and the demonstration ('utrum differentia sit accidens') are about the wrong principles",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "sunt xxvii questiones",
+      "image": "sunt xxxvj. qōnes",
+      "problem": "36 read as 27",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Sequitur quinto modo ad probandum",
+      "image": "Sequitur mō ad pbandū",
+      "problem": "'modo' read as 'quinto modo'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "certa seu evidens apprehensio ... ex certa ut convenienti",
+      "image": "necia seu ꝯueniēs aphensio ... ex necia vel ꝯueniēti",
+      "problem": "'necessaria' read as 'certa'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Vel aliter uno modo non per aliquod magis non notum",
+      "image": "Vel alicuius minus noti p aliqd magis noti cognicio",
+      "problem": "garbled; 'magis non notum' inverts the sense",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ergo distincta inter se opponunt ergo distincta",
+      "image": "4or elita int se ꝯponūt gᵒ elita",
+      "problem": "last line misread",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Page 51 is fair but normalised in places ('spiritum sanctum', 'oppositum'). Page 98 is mostly wrong, including the invented 'de nihilo angelum', and on page 147 'differens/concordans' becomes 'deus/accidens' throughout."
+ },
+ {
+  "book_id": "b26-t",
+  "slot": 4,
+  "title": "Artificium artis generalis - BSB Clm 28951",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "eadem substantia indivisa",
+      "image": "eadem sbā īmēsa (immensa)",
+      "problem": "'immensa' read as 'indivisa'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "cuilibet perfectam actualem suam similitudinem",
+      "image": "cuilibet pfectiōi actuali sua similitudine",
+      "problem": "case normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<unclear>influentum</unclear>",
+      "image": "influēs (influens)",
+      "problem": "flagged uncertain, minor",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 98,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<unclear>facienda mentio</unclear> de causa cum suis speciebus",
+      "image": "fienda mētio de cā cū suis spēbꝰ",
+      "problem": "correct, flagged",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Tercio modo est causa que facit de esse in non esse",
+      "image": "2o/3o mō (numeral hard to read)",
+      "problem": "numeral uncertain",
+      "severity": "minor"
+     },
+     {
+      "ocr": "prudentes <unclear>mundum</unclear> moraliter",
+      "image": "prudēs ... Moralr̄",
+      "problem": "partly uncertain, marked",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 147,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "particularis positionis vel conclusionis ... ex impossibili conclusione",
+      "image": "ꝑticularis posicionis vel ꝑuacionis ... ex inpossibili ꝑuacione (privationis / privatione)",
+      "problem": "'privatio' read as 'conclusio' (twice)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "<unclear>aliorum</unclear> principiorum",
+      "image": "[word unclear]",
+      "problem": "marked uncertain",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "The best of the four: abbreviations are expanded correctly and the Lullian terms, numbers (24/36) and arguments hold on all three pages. Only a few moderate slips ('indivisa', 'conclusionis'), and doubtful readings are marked."
+ }
+]

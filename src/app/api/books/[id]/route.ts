@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE, countReaderListedPages } from '@/lib/reader-pages';
 import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -77,6 +78,9 @@ export const GET = withApiAuth(async (
       // `visible` feeds the hidden-book gate below — without it a hidden book
       // in nav mode reads as public (isHiddenBook tests visible === false).
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
+      // The reader's download panel: a partner's own book downloads without
+      // sign-in inside the partner's embed (#7702).
+      tenantId: 1,
       // Whether `display_title` is the source record's title or a label a
       // vision model wrote from the image (#4288). Artwork records live in
       // `books` too, and MCP's get_book returned `display_title || title` with
@@ -95,7 +99,10 @@ export const GET = withApiAuth(async (
       pages_count: 1, pages_translated: 1,
       // The stamped translation rung (#5287) — the reader's whole-book
       // download panel reads it instead of its own page arithmetic.
-      'translation_state.rung': 1, 'translation_state.english_original': 1,
+      'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1,
+      // The same panel offers the OCR formats only with `pages_ocr`, and the
+      // scan formats by imageAccessFor(), which reads `year` and these.
+      pages_ocr: 1, 'image_source.provider': 1, 'image_source.license': 1, 'image_source.rights_normalized': 1,
       // Per-language edition counters, so get_book can report `editions`
       // ({ en: 357, es: 357 }) rather than leaving an agent to discover a
       // Spanish edition by accident (#4095).
@@ -168,7 +175,8 @@ export const GET = withApiAuth(async (
     // every caller where this slice sits so it can fetch the next one.
     const windowed = isWindowedCaller(identity.kind);
     const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
-    const pageFilter: Record<string, unknown> = { book_id: bookId, page_number: { $gte: 0 } };
+    // Repeat captures (#5056) are out of the list like soft-hidden pages; their ids still resolve.
+    const pageFilter: Record<string, unknown> = { book_id: bookId, page_number: { $gte: 0 }, ...NOT_REPEAT_CAPTURE };
     if (tenantId) pageFilter.tenantId = tenantId;
     let cursor = db.collection('pages')
       .find(pageFilter)
@@ -182,7 +190,7 @@ export const GET = withApiAuth(async (
       limit: pageLimit,
       returned: pages.length,
       total: await countPagesForWindow(pageOffset, pageLimit, pages.length,
-        () => db.collection('pages').countDocuments(pageFilter)),
+        () => countReaderListedPages(f => db.collection('pages').countDocuments(f), bookId, tenantId)),
     };
 
     // Keyed on wantsFull, not includeFull: the same URL answers differently for

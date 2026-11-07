@@ -1,0 +1,48 @@
+== de
+  CH             n= 58 raw   4.95  folded   1.18  loops 1 trunc 0
+  D              n= 58 raw   4.07  folded   1.92  loops 0 trunc 1
+  LO             n= 58 raw   3.33  folded   2.18  loops 0 trunc 0
+  S              n= 58 raw   5.19  folded   2.26  loops 0 trunc 0
+  P              n= 58 raw   5.41  folded   2.49  loops 0 trunc 1
+  IP             n= 58 raw   5.76  folded   2.60  loops 1 trunc 1
+  G              n= 58 raw   6.00  folded   3.21  loops 2 trunc 0
+== en
+  LO             n= 58 raw   4.57  folded   3.31  loops 0 trunc 0
+  S              n= 58 raw   4.53  folded   3.40  loops 0 trunc 0
+  P              n= 58 raw   6.03  folded   3.50  loops 0 trunc 0
+  IP             n= 58 raw   4.50  folded   3.58  loops 0 trunc 0
+  G              n= 58 raw   4.80  folded   3.69  loops 0 trunc 0
+  CH             n= 58 raw   6.12  folded   3.74  loops 0 trunc 0
+  D              n= 58 raw   5.50  folded   3.92  loops 0 trunc 0
+== fr
+  S              n= 40 raw   3.18  folded   0.63  loops 0 trunc 0
+  LO             n= 40 raw   2.64  folded   0.64  loops 0 trunc 0
+  CH             n= 40 raw   2.04  folded   0.80  loops 1 trunc 0
+  G              n= 40 raw   3.24  folded   1.05  loops 1 trunc 0
+  D              n= 40 raw   3.08  folded   1.11  loops 1 trunc 0
+  IP             n= 40 raw   3.11  folded   1.34  loops 0 trunc 1
+  P              n= 40 raw   2.60  folded   1.61  loops 0 trunc 0
+== it
+  LO             n= 38 raw   3.16  folded   2.16  loops 1 trunc 0
+  S              n= 38 raw   2.98  folded   2.35  loops 0 trunc 0
+  D              n= 38 raw   4.26  folded   2.68  loops 0 trunc 0
+  IP             n= 38 raw   3.79  folded   2.78  loops 0 trunc 0
+  G              n= 38 raw   3.59  folded   2.79  loops 0 trunc 0
+  P              n= 38 raw   7.22  folded   2.80  loops 0 trunc 0
+  CH             n= 38 raw   8.14  folded   3.17  loops 0 trunc 0
+== la
+  P              n=116 raw  11.37  folded   5.99  loops 0 trunc 0
+  S              n=116 raw   8.09  folded   6.25  loops 0 trunc 1
+  LO             n=116 raw   8.69  folded   6.38  loops 1 trunc 0
+  D              n=116 raw  11.29  folded   6.75  loops 2 trunc 0
+  G              n=116 raw   8.44  folded   6.81  loops 0 trunc 0
+  IP             n=116 raw   8.76  folded   6.88  loops 1 trunc 1
+  CH             n=116 raw  12.75  folded   7.26  loops 2 trunc 0
+== all
+  LO             n=310 raw   5.39  folded   3.07  loops 2 trunc 0
+  S              n=310 raw   5.69  folded   3.55  loops 0 trunc 1
+  P              n=310 raw   7.28  folded   3.59  loops 0 trunc 1
+  CH             n=310 raw   7.49  folded   3.73  loops 4 trunc 0
+  IP             n=310 raw   5.83  folded   3.81  loops 2 trunc 3
+  G              n=310 raw   5.86  folded   3.96  loops 3 trunc 0
+  D              n=310 raw   6.60  folded   3.96  loops 3 trunc 1

@@ -58,7 +58,7 @@ import { MongoClient } from 'mongodb';
 import { bodyText, foldHan, makeRng } from '../eval/ground-truth-5935/lib.mjs';
 import { LANE } from '../lib/paddle-zh-lane.mjs';
 import { paddleTableRisk } from '../lib/paddle-table-detect.mjs';
-import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
+import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { geminiEngine, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
@@ -342,7 +342,7 @@ async function onePage(s, book) {
     prompt: { id: built.promptRef?.id, name: built.promptRef?.name, version: built.promptRef?.version, hash: built.promptRef?.content_hash, sent_hash: contentHash(sent), sent_chars: sent.length },
     generationConfig: notRecorded(`${CLI} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     run: { job_id: runId, code_version: codeVer, host: host(), at: new Date(), read_started_at: t0.toISOString(), reason: W.reason },
-    input: translationInput({ ocrText: now.ocr.data, ocrUpdatedAt: now.ocr.updated_at, context: { previous_translation: !!prev?.translation?.data, previous_from: meta.prev_from, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped', sentinels: true, tool_gate: true } }),
+    input: translationInput({ ocrText: now.ocr.data, ocrUpdatedAt: now.ocr.updated_at, context: { previous_translation: !!prev?.translation?.data, previous_from: meta.prev_from, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), sentinels: true, tool_gate: true } }),
   });
   const res = await writePageTranslation(db, { page: now, book, text: u.text, promptRef: built.promptRef, model: MODEL, jobId: runId, note: W.note, refuseUnhealthy: true, engine });
   if (res.protected) return { outcome: 'skipped', why: 'human-edited translation (door)', ...meta };

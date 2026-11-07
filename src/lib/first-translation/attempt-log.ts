@@ -15,6 +15,7 @@ import type { Db } from 'mongodb';
 import type {
   EvidenceStrength,
   MatchKey,
+  PriorRegister,
   Resolver,
 } from './types';
 
@@ -46,7 +47,12 @@ export type AttemptMethod =
 export interface PriorTranslation {
   english_title?: string;
   translator?: string;
+  /** Year of the EDITION cited, which for a modern edition of an old translation is not the translation's. */
   pub_year?: string;
+  /** Year the English translation was first made or published (#7797). Preferred over pub_year for dating. */
+  tr_year?: string;
+  /** The translation's English register (#7797). */
+  register?: PriorRegister;
   publisher?: string;
   completeness?: string;
   /** The grounding link to where the prior actually is (archive.org / publisher / WorldCat). */

@@ -120,6 +120,9 @@ function localizeDatePart(s: string, lang: Foreign): string | null {
   if (cent) return `${cent[1] ? `${CIRCA[lang]} ` : ''}${centuries(Number(cent[2]), cent[3] ? Number(cent[3]) : null, lang)}`;
   const era = ERA[lang];
   let out = s.replace(/\b(?:AD|A\.D\.)\s*(\d+)/g, '$1 CE');
+  // In "300–100 BCE" the era covers both years. With the era after the year that reads fine,
+  // but in Chinese it would land on the last year only: "300–公元前100" says 300 CE to 100 BCE.
+  if (lang === 'zh') out = out.replace(/(\d+)\s*[-–—]\s*(\d+)\s*(?:BCE|BC)\b/g, `${era.bce}$1–${era.bce}$2`);
   // Chinese puts the era before the year (公元前500); the others after it.
   out = out.replace(/(\d+)\s*(BCE|BC|CE)\b/g, (_, y: string, e: string) => {
     const word = e === 'CE' ? era.ce : era.bce;

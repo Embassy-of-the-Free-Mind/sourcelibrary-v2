@@ -1,0 +1,165 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** German
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Triple Hermetic Cloverleaf | Author: Nuysement, Clovis Hesteau de|Norton, Samuel|Ficino, Marsilio | Date: 1667
+
+**Note:** This is a public domain work published in 1667. It is not under copyright.
+
+**Page breaks:** a catchword (the next page's first word printed again at the foot of this page) is a printer's device, not text: never translate it. A word split by a hyphen at the page break is one word: translate it once, on the page where it begins. A sentence that runs across the break is translated in the light of how it continues, but only this page's words are rendered here: never repeat or complete the next page's words.
+
+**Text to translate:**
+<language>German</language>
+<page-type>text</page-type>
+<page-num>76</page-num>
+<header>Von dem wahren Philosoph. Saltz/</header>
+<meta>catchword: nen</meta>
+
+> „ Feuer begriffen ist / dessen Meldung ich allbereits
+> „ gethan habe / in vorgehenden Capitel. Und daß
+> noch desto mehr bekräfftiget werde / das nemlich dieses
+> Centralische Feur nicht so starck sey / daß es zum mar-
+> tern oder verbrennen taugen solte / sehen wir / daß sich
+> nicht alle astra mit ihren Einflüssen zur Wärme an-
+> lassen / und daß selbiger Natur nicht sey / daß sie erwär-
+> men sollen. Dann der Saturnus ist kalt und tru-
+> cken / Jupiter warm und feucht / Mars warm und tru-
+> cken / die Sonn heiß und trucken / Venus kalt und
+> feucht / der Mond feucht und kalt / Mercurius aber
+> hat aller deren Natur an sich / und schickt sich unter-
+> schiedlicher Weiß zu allen. Ist derohalben leicht zu-
+> schliessen / daß alle Einfluß eine mässige oder tempe-
+> rirte Wärme / aus den vier qualitatibus generiren /
+> welche seynd / Wärme / Trockne / Kälte uñ Feuchte; die /
+> so sie mit ihrer temperatur, oder dergleichen Ver-
+> mischung zusammen kommen / müssen nohtwendig
+> den Ort / in welchem sie zusammen kommen / mit sei-
+> ner temperatur begriffen und umfangen. Der-
+> „ selbige Dampff nun oder Spiritus, welcher aus
+> „ dem Centro herausgehet / participirt von diesen
+> „ vier qualitatibus, und daher nehmen alle qualita-
+> „ tes der Simplicen ihren Ursprung / deren etliche
+> „ Hitzen / weiln der calor den Vorzug hat / andere
+> „ trocknen / weiln die Trockenheit die Oberhand hat /
+> „ andere feuchten und kühlen / nachdem viel oder we-
+> „ nig Kält oder Feuchtigkeit in denselben ist; auf der
+> „ andern Seiten / werffen die astra in das centrum,
+> „ noch mehr andere Eigenschafften oder qualitates,
+> „ als diese gewesen seynd; dann es kommen von ihder
+
+<vocab>Centralische Feur, astra, Saturnus, Jupiter, Mars, Sonn, Venus, Mond, Mercurius, qualitatibus, Spiritus, Simplicen, calor</vocab>
+
+**At the page break:** This page ends with the word «ihder», completed from the top of the next page; it is ordinary text of this page, so translate it here as part of its sentence like any other word — do not leave it in the original.
+
+**Previous page translation for continuity:**
+### ...and general World-Spirit.
+
+
+...it is believable / that its greatest solidification <note>original Latin: "immassatio," referring to the process of matter becoming dense or hardening into a physical mass.</note> happens then / because the central heat is driven back / and held within the Earth / because of the cold of the air and the water / with which it is surrounded. Thus the Sun in spring / though it has already returned / and now shines directly upon us / is not the primary cause of the growth of things: For if this came from the Sun alone / there would be no doubt / that the growth
+[…]
+ to describe the vital force of growing things.</note> / the higher the Sun rises / would increase and grow larger in proportion to the growing heat / yet we experience the opposite instead. But because every thing gladly draws its like to itself / and when one retreats / the other also retreats / thus the Sun / through its magnetic power <term>Magnetische Krafft</term> <note>In early modern science, "magnetic power" was often used to explain how celestial bodies exerted an attractive force on elements of the same nature within the Earth.</note> / draws the heat of the central Sun / which had been driven into the Earth and compressed by the harshest cold / toward itself and back out again / which / when it rises out onto the surface of the Earth / imparts its growing power to all things. 
+
+" Therefore, it is not the external heat
+" of the heavenly Sun that warms the depths of the Earth / 
+" but rather the innate heat of the terrestrial
+" Sun; for there are two kinds of heat / 
+" that of reflection <note>original Latin: "reverberationis"</note> (which strikes back) which
+" is external / the other of influence and penetration
+" <note>original Latin: "influxionis & penetrationis"</note> / (which flows in and permeates) which is in-
+" ternal / of which I now speak / whose nature 
+" is to make alive / to multiply / to preserve / to re-
+" juvenate the natural moisture / which in this
+<summary>The author argues that the Earth's internal "central heat" is the true driver of plant growth, triggered by the Sun's magnetic attraction rather than just the Sun's external warmth. He distinguishes between external reflected heat and internal penetrating heat that rejuvenates nature.</summary>
+<keywords>central heat, magnetic power, plant growth, terrestrial sun, internal heat, alchemy, world-spirit</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

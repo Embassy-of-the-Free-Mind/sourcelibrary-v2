@@ -1,0 +1,35 @@
+name: Close stale PRs
+
+# Weekly: close PRs idle 14+ days (last commit or comment, never `updatedAt`,
+# #6285) that conflict or fail a required check
+# (scripts/maintenance/close-stale-prs.mjs, #8353). At most 10 a run.
+# Reopenable; branches are never deleted. Green mergeable PRs, drafts,
+# dependabot, `blocked` and `keep` are never touched.
+
+on:
+  schedule:
+    - cron: '10 7 * * 1'   # Mondays 07:10 UTC (park-stale-issues is 06:30)
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Actually close (default: dry-run listing)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Close
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/maintenance/close-stale-prs.mjs ${{ (github.event_name == 'schedule' || inputs.apply == true) && '--apply' || '' }}

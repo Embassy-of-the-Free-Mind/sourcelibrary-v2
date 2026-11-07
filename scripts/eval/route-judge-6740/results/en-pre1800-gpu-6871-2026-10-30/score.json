@@ -1,0 +1,1382 @@
+{
+ "scored_at": "2026-10-30T17:19:14.747Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "Opus (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled",
+ "cell": "en-pre1800",
+ "route": "lighton",
+ "drawn": 30,
+ "written": 29,
+ "judged_written": 29,
+ "accepted_written": 18,
+ "wrong_text_written": 10,
+ "accepted_of_drawn": 18,
+ "p_acc_ge_0_8": 0.01,
+ "controls": {
+  "wrong_page": [
+   {
+    "page_id": "69924f4c5976b55115ffdc8a",
+    "accept": false,
+    "fidelity": 1
+   },
+   {
+    "page_id": "6ac382e8966464312757c5e7",
+    "accept": false,
+    "fidelity": 1
+   }
+  ],
+  "wrong_page_passed": true,
+  "planted": [
+   {
+    "kind": "D",
+    "accepted": false,
+    "named": true,
+    "caught": true
+   },
+   {
+    "kind": "D",
+    "accepted": false,
+    "named": true,
+    "caught": true
+   }
+  ],
+  "plants_void": false
+ },
+ "not_written": [
+  "reject:other_script"
+ ],
+ "top_defects": [
+  [
+   "O6",
+   58
+  ],
+  [
+   "E2",
+   29
+  ],
+  [
+   "O8",
+   25
+  ],
+  [
+   "O12",
+   5
+  ],
+  [
+   "O11",
+   5
+  ]
+ ],
+ "decision": "FAIL: the cell keeps its current route (scans only); test next: gpu>agy-flash-low",
+ "rows": [
+  {
+   "page_id": "6a08fd4c25e3a402b23b3d6d",
+   "book_id": "6a08fd4c25e3a402b23b3d46",
+   "year": 1616,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Alexander kns him",
+     "what": "page reads 'kils him'; the killing of Darius is lost"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "woe I call and wake him",
+     "what": "page reads 'we'l call'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Away, he gone.",
+     "what": "page reads 'be gone'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "you doe forget your felle",
+     "what": "page reads 'selfe'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Oee, see, my gracious Lord",
+     "what": "page reads 'See, see'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "I would haue compass him",
+     "what": "page reads 'compast'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Upon the head of young Benvolio.",
+     "what": "page spells 'yong'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "my thoughts are so ravished",
+     "what": "silently modernised spellings: page has 'rauished', 'shadowes', 'Maiesty', 'asleepe', 'dreames'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "saying to be true:",
+     "what": "punctuation wrong: the page ends the line with a question mark"
+    }
+   ],
+   "reader_note": "All the page's text is there and in order, but some misreads change it: 'kns him' replaces 'kils him', and 'woe I call' and 'he gone' replace 'we'l call' and 'be gone'. Several old spellings have also been silently modernised."
+  },
+  {
+   "page_id": "69e961ab2beefe2f6f72c561",
+   "book_id": "69e961ab2beefe2f6f72c3b6",
+   "year": 1599,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": false,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "first from England to Genice",
+     "what": "page reads 'Venice'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "out of England peery that waies",
+     "what": "page reads 'yeerly' (yearly)"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "in such saecie",
+     "what": "page reads 'safetie'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "being Bahumetans",
+     "what": "page reads 'Mahumetans'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Then Edwards heard him name Londro",
+     "what": "page reads 'When Edwards heard'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "had him come neere",
+     "what": "page reads 'bad' (bade), an order rather than 'had'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "in a seat rotall",
+     "what": "OCR slip for 'roiall'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "and that th'ice",
+     "what": "garbles 'thrise'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Queenes maieutie",
+     "what": "OCR slip for 'maiestie' (twice)"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "clothes reaby made",
+     "what": "OCR slip for 'readie'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "fine karsles",
+     "what": "page reads 'karsies'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "And therefoze",
+     "what": "long-s/r glyph left as 'z'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "wherefoer he shall find",
+     "what": "page reads 'wheresoeuer'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "to deceue and rob",
+     "what": "page reads 'deceiue'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "become Buformen",
+     "what": "page reads 'Busormen'"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "03",
+     "what": "catchword 'or' misread as numerals"
+    }
+   ],
+   "reader_note": "All of the page's text is here in the right order, with both margin notes, but OCR misreads such as 'Genice' for Venice, 'peery' for yeerly, 'saecie' for safetie, 'Bahumetans' and 'Then' for When would mislead readers."
+  },
+  {
+   "page_id": "6ac502524ba7223afefa2f34",
+   "book_id": "6ac502504ba7223afefa2d22",
+   "year": 1575,
+   "hold": "acquisition-wave-2026-10-images-only",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "to haue browghete the 30. Canons into 70.",
+     "what": "page reads '80. Canons into 70.'; '30' makes the abridgment claim nonsensical"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "decreed in the Popes Pitchin",
+     "what": "page reads 'Popes kitchin'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "canons off the Vicene council",
+     "what": "black-letter N misread as V; page reads 'Nicene' (also 'Nicene council' later), while the same text gives 'Nice' correctly"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "canon forre times",
+     "what": "page reads 'fowre times' (four)"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "for shortnes safe",
+     "what": "page reads 'shortnes sake'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "not hauing the boorke",
+     "what": "typo; page reads 'booke'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "he takerth still",
+     "what": "typo; page reads 'taketh'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "which you haue alledge",
+     "what": "page reads 'alledged' (both times)"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "the Council off Arles",
+     "what": "page spells 'Councell' throughout; also 'number' for 'nomber', 'common' for 'commen'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "as Batus a Pocce",
+     "what": "page reads 'Battus'"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "CCCCXC.",
+     "what": "marginal line numbers 5–35 dropped"
+    }
+   ],
+   "reader_note": "The text follows the page in order, but there are real misreads: '30' where the page has '80' canons, 'Pitchin' for kitchin, 'Vicene' for Nicene, and 'forre' for fowre."
+  },
+  {
+   "page_id": "69f677d8882924d65d4cdb7c",
+   "book_id": "6909b22fcf28baa1b4caf185",
+   "year": 1671,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "which are alleged to prove",
+     "what": "the page spells it 'alledged' (split 'al-/ledged'); the candidate silently modernises it to 'alleged'"
+    }
+   ],
+   "reader_note": "A complete and accurate reading of the page, header, signature and catchword included; the only change is that the page's 'alledged' has been modernised to 'alleged'."
+  },
+  {
+   "page_id": "6aa35f17d1e28a213beeaca1",
+   "book_id": "6aa35f17d1e28a213beeab7a",
+   "year": 1654,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": false,
+   "why": "reject:other_script",
+   "judged": false,
+   "accept": false,
+   "wrong_text": false,
+   "fidelity": null,
+   "defects": [],
+   "reader_note": null
+  },
+  {
+   "page_id": "6ad832ba0a79ec6fc00ed27f",
+   "book_id": "6ad832ba0a79ec6fc00ed091",
+   "year": 1758,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "surveying ourselves, as it were, in reflexion",
+     "what": "page reads 'surveying ourself'; changed to the modern 'ourselves'"
+    }
+   ],
+   "reader_note": "A complete, accurate transcription of p. 462 (Section IX). The only change is 'ourself' made into 'ourselves', and the italics on 'party' are not marked."
+  },
+  {
+   "page_id": "6ab5a4089e89e2a1f41393ad",
+   "book_id": "6ab5a4089e89e2a1f4139348",
+   "year": 1655,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "misleads",
+     "quote": "Animals. 33",
+     "what": "the page number reads 83, not 33, which also fits signature M2"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "as Huns do",
+     "what": "page reads 'Hens do'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Noble-ment Stables",
+     "what": "page reads 'Noble-mens stables'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "not inferior to the best",
+     "what": "page spells it 'inferiour'"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "foundnesse",
+     "what": "long s misread; page reads 'soundnesse'"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "whose wool is rather the Merchants high 20 s. per pound",
+     "what": "page reads 'whose wool yieldeth the Merchant nigh 20 s. per pound'"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Spain not affording full sheep before",
+     "what": "page reads 'such sheep'"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Dark sheep are reported",
+     "what": "page reads 'Dutch-sheep'"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Turly sheep are very great",
+     "what": "page reads 'Turky-sheep'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "wool is very coarse",
+     "what": "page spells it 'course'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "two or three Lams",
+     "what": "page reads 'Lambs'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Country-man",
+     "what": "page reads 'Countrey-man'; 'Countrys' is also 'Countreys' on the page"
+    }
+   ],
+   "reader_note": "All of the page is there and in order, but several words are misread in ways that change the meaning ('Huns' for Hens, 'Dark'/'Turly' for Dutch/Turky sheep, 'is rather the Merchants high' for 'yieldeth the Merchant nigh', 'full' for such), and the page number reads 83, not 33."
+  },
+  {
+   "page_id": "6957ebcc57a4c14a9879ad3b",
+   "book_id": "6957ebcc57a4c14a9879ab9c",
+   "year": 1597,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Dodonens say",
+     "what": "page reads 'Dodonæus'; the name is garbled but still recognisable"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "streeete",
+     "what": "typo: an extra 'e' added to 'streete'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "vprwardes",
+     "what": "typo: page reads 'vpwardes'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "venemous beafts",
+     "what": "long s read as f (also 'felues', 'felse', 'foile', 'phificke'), while long s is rendered as s elsewhere"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "in my judgement",
+     "what": "page has 'iudgement'; the spelling was modernised to j"
+    }
+   ],
+   "reader_note": "This is a complete and faithful reading of page 389 on Barren woort (chap. 123). There are a few typos and inconsistent long-s readings ('beafts', 'felues', 'Dodonens'), but no words or numerals that change the meaning."
+  },
+  {
+   "page_id": "6ac510f04ba7223afe0518b2",
+   "book_id": "6ac510ef4ba7223afe051880",
+   "year": 1579,
+   "hold": "acquisition-wave-2026-10-images-only",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "we be bond to beare witnes",
+     "what": "page reads 'boūd' (bound); the tilde was dropped, giving 'bond'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "being withdrawn frō this world",
+     "what": "page spelling 'withdrawen' modernised to 'withdrawn'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "shall be brought to light",
+     "what": "page has 'shal' here and in 'we shal haue'; candidate gives 'shall' both times"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "manifested him selſe in this time",
+     "what": "page reads 'selfe'; candidate has a long s where the page has an f"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Muſte it not needes be ſaide",
+     "what": "long s is shown only near the end of the page and as plain s elsewhere, so the convention is inconsistent"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "foolish opinions, For the secōd",
+     "what": "several full stops on the page are given as commas (also 'life, But', 'vp, For', 'speculation, To')"
+    }
+   ],
+   "reader_note": "The text is complete and in order, catchword included. There are small spelling normalisations, uneven long-s handling and changed sentence punctuation, and 'boūd' (bound) is misread as 'bond'."
+  },
+  {
+   "page_id": "69ee472c6dd925d126f41886",
+   "book_id": "69ee472c6dd925d126f4179a",
+   "year": 1780,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "as that fun, when he looks",
+     "what": "long-s 'ſun' read as 'fun'; elsewhere long-s is normalised to s"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "armed with fcythes",
+     "what": "long-s read as f in 'scythes', which breaks the s normalisation used elsewhere"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "“AND",
+     "what": "catchword placed between the two footnote columns instead of after the main text, above the notes"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "Caledonians used cars.",
+     "what": "added full stop splits a footnote sentence that runs on into the second column"
+    }
+   ],
+   "reader_note": "The text and the two-column Ossian footnote are complete and in order, but one 'sun' is printed as 'fun' and the catchword 'AND' sits between the footnote columns."
+  },
+  {
+   "page_id": "6972d08ec48d0f305929a62b",
+   "book_id": "6970e3549b09d309d780a240",
+   "year": 1743,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "south of the square enclosure going up to Cheril-hill",
+     "what": "the page spells it 'in-closure' (inclosure); the candidate modernises it to 'enclosure'"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "But to return.\n\nTAB. VI. VII.\n\nI apprehend",
+     "what": "the margin note 'TAB. VI. VII.' stands beside the line 'may be apt to conclude…'; the candidate moves it down to sit between paragraphs"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "south-west.\n\nTAB. XXI. From Silbury-hill",
+     "what": "the margin note 'TAB. XXI.' is run into the text and starts a new paragraph; on the page the text runs on without a break"
+    },
+    {
+     "class": "O5",
+     "severity": "cosmetic",
+     "quote": "Adytis cum lubricus anguis ab imis",
+     "what": "the leading dash before 'Adytis' is dropped, along with the accent on 'cùm'"
+    }
+   ],
+   "reader_note": "The text matches the page almost word for word, numerals included (4000 cubits, ten and twenty-five degrees). Only one spelling is modernised (enclosure), and the two 'Tab.' margin notes are slightly out of place."
+  },
+  {
+   "page_id": "6ac382e8966464312757c5e7",
+   "book_id": "6ac382e7966464312757c442",
+   "year": 1757,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "a collection of thin small tunices",
+     "what": "the page reads \"tunicles\""
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "imi-\ntating all his awkward gestures",
+     "what": "the page spells it \"aukward\"; the candidate modernised it"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "of ancient and modern observations",
+     "what": "the page spells it \"antient\"; the candidate modernised it"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "in figure like a glas-\ndrop",
+     "what": "the page has \"glass-\" at the line break, but the candidate dropped an s"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "tating all his awkward gestures. He produced some of the hair of each, both so",
+     "what": "the running opening quotation marks are missing at the start of several lines"
+    }
+   ],
+   "reader_note": "The text is complete and in the right order. The only problems are small spelling slips: \"tunices\" where the page has \"tunicles\", modernised spellings (awkward, ancient), \"glas-\" where the page has \"glass-\", and some missing quotation marks at line starts."
+  },
+  {
+   "page_id": "6aa3602eba2a5c2cc348ce1a",
+   "book_id": "6aa3602eba2a5c2cc348ce02",
+   "year": 1640,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O5",
+     "severity": "wrong_text",
+     "quote": "312. The tongue talkes at the heads cost.",
+     "what": "The page's first line, \"steales his supper from him.\", is left out. It is the end of proverb 311, carried over from the previous page."
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Omnibus Proverbs.",
+     "what": "The running head is cropped, but what remains reads \"[Ou]tlandish Proverbs\", not \"Omnibus\"."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "Little stickes kindle the fire",
+     "what": "The page spells it \"Litle\"; the candidate modernises it to \"Little\"."
+    }
+   ],
+   "reader_note": "The page's opening line \"steales his supper from him.\" is missing, and the running head is given as \"Omnibus\" when the page has \"Outlandish Proverbs\". Proverbs 312–326 are otherwise accurate."
+  },
+  {
+   "page_id": "6a76d5156ba8d6d1d3f8eece",
+   "book_id": "6a76d5156ba8d6d1d3f8ee80",
+   "year": 1713,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 1,
+   "defects": [
+    {
+     "class": "E2",
+     "severity": "wrong_text",
+     "quote": "O ILLI A A ILLI O",
+     "what": "This page is blank. The candidate reads the mirror-image show-through of the title page ('THE ODES OF SAPPHO') from the other side of the leaf as if it were text on this page, and garbles it."
+    },
+    {
+     "class": "O1",
+     "severity": "wrong_text",
+     "quote": "Don Bosco di OREK BY MICKEL HILL",
+     "what": "Made-up words: the faint reversed 'Done from the GREEK / By Mr. AMBROSE PHILIPS' show-through has been turned into 'Don Bosco' and 'MICKEL HILL', which are not on any leaf."
+    }
+   ],
+   "reader_note": "The image shows a blank page with faint reversed show-through of a title page, but the transcription prints nonsense text, including 'Don Bosco' and 'MICKEL HILL', that does not appear on the page."
+  },
+  {
+   "page_id": "69bd9e746120d54bd037d2ce",
+   "book_id": "69bd9e746120d54bd037d283",
+   "year": 1624,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 5,
+   "defects": [
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "vnderstand perfectly D 4",
+     "what": "the line-end 'per-' has been joined to the catchword 'fectly', so the catchword now reads as body text and comes before the signature 'D 4'"
+    }
+   ],
+   "reader_note": "A faithful, complete reading of p. 55. The only oddity is that the catchword 'fectly' has been merged into the last line as 'perfectly'."
+  },
+  {
+   "page_id": "69bd9ebbf6d63c919747ca2e",
+   "book_id": "69bd9ebbf6d63c919747c99a",
+   "year": 1647,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "set it downe plainly before his eyes",
+     "what": "page spells it 'plainely'; the candidate modernised it"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "become the Glaffe of the Eternall",
+     "what": "the superscript reference letters f, g and h are dropped from the text (here before 'Glaffe', also before 'source' and 'the word'); the margin notes are kept but moved to the end"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "in the ground of the Originall of the foule",
+     "what": "long s is transcribed as f in 'foule', 'Effences' and 'Glaffe', but as s elsewhere, so the convention is inconsistent"
+    }
+   ],
+   "reader_note": "All the text is there and in the right order, including the printed slips 'lifd' and 'en'. The margin notes appear at the end with their reference letters removed, and long s is sometimes printed as f, as in 'foule'."
+  },
+  {
+   "page_id": "6ac4fa234ba7223afef6c37b",
+   "book_id": "6ac4fa224ba7223afef6c370",
+   "year": 1573,
+   "hold": "acquisition-wave-2026-10-images-only",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "eiufdem",
+     "what": "long s (ſ) misread as f in 'eiuſdem', twice (theorem statement and proof)"
+    }
+   ],
+   "reader_note": "The text matches the page line by line, signature 'B.i.' and catchword 'Dico' included. The only slip is 'eiufdem' for 'eiuſdem', which appears twice. The diagram's letter labels are not transcribed, which is acceptable for a figure."
+  },
+  {
+   "page_id": "69d6667abf5afe33937f98a8",
+   "book_id": "69d6667abf5afe33937f9858",
+   "year": 1787,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 2,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Welfsias Soliter",
+     "what": "page reads Messias Sother"
+    },
+    {
+     "class": "O10",
+     "severity": "wrong_text",
+     "quote": "Sabaoth Vtra",
+     "what": "Hebrew divine name after Sabaoth rendered as a Latin-looking non-word"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Mingenitrus",
+     "what": "page reads Unigenitus"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Via Vtra Manes",
+     "what": "page reads Via, Vita, Manus"
+    },
+    {
+     "class": "O10",
+     "severity": "wrong_text",
+     "quote": "Ovessov",
+     "what": "Greek word (Homousion) garbled into Latin letters"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Sol pator",
+     "what": "Salvator split over the line break and misread"
+    },
+    {
+     "class": "O10",
+     "severity": "misleads",
+     "quote": "A & N",
+     "what": "Greek omega (A & Ω) read as N"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Ongqo Spes Tudes",
+     "what": "page reads Origo, Spes, Fides"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Ditulus",
+     "what": "page reads Vitulus"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Dermis Primus Nuyssin",
+     "what": "page reads Vermis, Primus, Novissimus"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Daler Hilius Fuis lectus",
+     "what": "page reads Pater, Filius, Spus Sctus (Spiritus Sanctus)"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Ego qui hem",
+     "what": "page reads Ego qui sum"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Alemus Reemptor",
+     "what": "page reads Æternus, Redemptor"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Nuntor",
+     "what": "page reads Unitas"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "Oremus",
+     "what": "page reads Clemens; a different real word put in its place"
+    },
+    {
+     "class": "O10",
+     "severity": "wrong_text",
+     "quote": "O Deo Fros Itra reuqeratov",
+     "what": "Greek words (Ο Θεος ..., Τετραγραμματον) garbled into Latin letters"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Ista Nomine me pro:",
+     "what": "page reads Nomina"
+    }
+   ],
+   "reader_note": "This is a list of the names of God, but about half of them are garbled into non-words or wrong words (Welfsias for Messias, Oremus for Clemens, Fuis lectus for Spus Sctus), and the Hebrew and Greek names are mangled."
+  },
+  {
+   "page_id": "6a243f7a0f0e4f405e635474",
+   "book_id": "6a243f7a0f0e4f405e6353db",
+   "year": 1675,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "A Living Worm applied close",
+     "what": "page spells 'applyed'; the candidate modernises it to 'applied'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "in Mans Body. Vipers Flesh frequently assumed",
+     "what": "paragraph break lost: 'Vipers Flesh' starts a new indented paragraph on the page"
+    }
+   ],
+   "reader_note": "The text matches the page almost word for word. Only 'applyed' has been modernised, and the Vipers paragraph has been joined onto the Wolf paragraph."
+  },
+  {
+   "page_id": "69ac8e65e54b190acc1d4124",
+   "book_id": "69ac8e65e54b190acc1d40d6",
+   "year": 1684,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 5,
+   "defects": [],
+   "reader_note": "The transcription matches the page line for line. This includes the running head, the page number 62 and the catchword 'Tak'. Long s is modernised, the italics (per Infinitum, Mercury, Astrum Mercurii) are not marked, and the letters cut off at the gutter edge are correctly filled in."
+  },
+  {
+   "page_id": "6991be1a2e5d8f25d7e87d57",
+   "book_id": "6991be1a2e5d8f25d7e87c29",
+   "year": 1784,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 5,
+   "defects": [],
+   "reader_note": "The transcription matches the page line by line: the running head, the numbers 9806, 9946 and 10204, and the Isaiah references xliii. 5, xliv. 3, xlv. 25 and liii. 10 are all correct, and the faint text showing through from the other side of the leaf has rightly been left out."
+  },
+  {
+   "page_id": "69924f4c5976b55115ffdc8a",
+   "book_id": "69924f4c5976b55115ffdc5e",
+   "year": 1787,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 5,
+   "defects": [],
+   "reader_note": "This is a faithful, complete transcription of page 24. Every line matches the image in order, with the long s modernised (e.g. 'soul' for 'ſoul'), hyphenated words rejoined, and the catchword 'and' kept."
+  },
+  {
+   "page_id": "6991e178b53cae6bb602479d",
+   "book_id": "6991e177b53cae6bb602477b",
+   "year": 1691,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 5,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "intrinsic Value, which is nothing else",
+     "what": "the page spells it 'intrinsick' both times; the candidate modernises it to 'intrinsic'"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "Digitized by Google",
+     "what": "the scanner's watermark is transcribed as if it were page text, without being marked as furniture"
+    }
+   ],
+   "reader_note": "Every line of page 30 is present and in order, with the right words and the catchword 'be'. Only the spelling 'intrinsick' was modernised, and the Google watermark appears as plain text."
+  },
+  {
+   "page_id": "6a76d4a3b13a2814115465f1",
+   "book_id": "6a76d4a3b13a2814115465a7",
+   "year": 1656,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "two Capital diseases",
+     "what": "page spells it 'Capitall'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "or more General Prudence; because",
+     "what": "page has 'Generall' here and in 'a more Generall Prudence'; candidate drops the final l both times"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "invading the minds or at least",
+     "what": "page reads 'the mind; or'; the semicolon was read as 's'"
+    }
+   ],
+   "reader_note": "Every line is present and in order; the only differences are a few spelling normalisations ('Capital', 'General') and 'minds' where the page has 'mind;'."
+  },
+  {
+   "page_id": "6a08fd3425e3a402b23b3c6e",
+   "book_id": "6a08fd3425e3a402b23b3c3a",
+   "year": 1631,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "felse-affliction",
+     "what": "page reads 'ſelfe-affliction'; letters transposed"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "I sware dos't not",
+     "what": "misspelling: the page reads 'ſweare', and the candidate drops the e"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "remembered",
+     "what": "normalised from the page's 'remembred'"
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "underwent",
+     "what": "normalised from the page's 'vnderwent'"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "whos beaft",
+     "what": "misspelling: the page reads 'whoſe', and the candidate drops the final e"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "pannier-mans lacke",
+     "what": "page reads 'Iacke' (Jack, the horse), not 'lacke'"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "loynes of matton",
+     "what": "blotted word reads 'mutton'"
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "an' you",
+     "what": "catchword 'you' joined to the last text line"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "Digitized by Google",
+     "what": "scanner watermark transcribed as if it were page text"
+    }
+   ],
+   "reader_note": "The text is complete and in the right order, with a few small misreads, chiefly 'lacke' for 'Iacke' and 'felse' for 'ſelfe'. The catchword is merged into the last line and the Google watermark is included."
+  },
+  {
+   "page_id": "6a8f6236ddd2f57fe0f816fa",
+   "book_id": "6a8f6236ddd2f57fe0f8144f",
+   "year": 1787,
+   "hold": null,
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "1228 ——— its difference, with respect to merchants, between the first and second one, vol. i. p. 196-7.",
+     "what": "the second date, 1258, beside this entry's second line is dropped"
+    },
+    {
+     "class": "T4",
+     "severity": "wrong_text",
+     "quote": "1400 ——— King Henry VII. of England’s jealousy of them",
+     "what": "dates slip by one line from here to Maltha. 1400 belongs to the Maintenance entry's second line; Henry VII is 1486, Majorca 1115, 'is taken' 1229, 'trades' 1323, maritime 1330, 'trades' 1341, 'and again' 1343, Malacca 1640, Maltha 21"
+    },
+    {
+     "class": "O7",
+     "severity": "wrong_text",
+     "quote": "1640 Maltba, or Malta, (olim Melita)",
+     "what": "the page gives 21 (A.D. 21) for the Maltha entry, not 1640"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "1486 ——— Majorca, and the rest of the Balearic isles",
+     "what": "a ditto dash is added, so the headword Majorca reads as a sub-entry of Maintenance"
+    },
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "1343 ——— Malacca is seized on by the Hollanders",
+     "what": "a ditto dash is added, so the headword Malacca reads as a sub-entry of Majorca"
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Maltba, or Malta",
+     "what": "the page reads 'Maltha', not 'Maltba'"
+    }
+   ],
+   "reader_note": "From Maintenance down to Malta, each date sits one entry too low. 1258 is missing and Malta's date of 21 has become 1640, and Majorca and Malacca have been given ditto dashes as though they were sub-entries."
+  },
+  {
+   "page_id": "6ab5a40d9e89e2a1f41394dd",
+   "book_id": "6ab5a40d9e89e2a1f413948c",
+   "year": 1655,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "feed them upon the lyes of two foot in breadth",
+     "what": "The page reads 'upon shelves' (printed 'ſhel ves'). The candidate's 'the lyes' is a misread that loses the shelves, which the next paragraph refers back to as 'The said shelves'."
+    },
+    {
+     "class": "T6",
+     "severity": "cosmetic",
+     "quote": "but so as you may passe",
+     "what": "'passe' is the catchword printed below the last line. The candidate runs it into the text as if it ended the sentence."
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "3.",
+     "what": "The page number is printed as '3' with no full stop."
+    }
+   ],
+   "reader_note": "The text is faithful apart from modernised spelling, except that 'feed them upon shelves' has become the meaningless 'feed them upon the lyes'. This hides the shelves that the next paragraph goes on to describe."
+  },
+  {
+   "page_id": "6aa35f05d1e28a213beeaae1",
+   "book_id": "6aa35f05d1e28a213beeaab0",
+   "year": 1680,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "misleads",
+     "quote": "Euchindion",
+     "what": "page reads 'Enchi-|ridion' (Enchiridion), a known word; the candidate gives a non-word"
+    },
+    {
+     "class": "O6",
+     "severity": "wrong_text",
+     "quote": "well-fructed Knowledge",
+     "what": "page reads 'wel-|structed Knowledge' (-structed, i.e. instructed); 'fructed' is a different word"
+    },
+    {
+     "class": "O12",
+     "severity": "cosmetic",
+     "quote": "The price which I owe, and the affection which I bear",
+     "what": "signature mark 'C' at the foot of the page is dropped"
+    }
+   ],
+   "reader_note": "The headings and most of the text are right, but two misread words ('Euchindion' for Enchiridion, 'well-fructed' for well-instructed) change what the dedication says."
+  },
+  {
+   "page_id": "6a357e8f2aadc65cf09076b9",
+   "book_id": "6a357e8f2aadc65cf0907659",
+   "year": 1605,
+   "hold": null,
+   "possible_spread": false,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": false,
+   "wrong_text": true,
+   "fidelity": 3,
+   "defects": [
+    {
+     "class": "O10",
+     "severity": "wrong_text",
+     "quote": "the Sunne is entred. Into xx. The 10. day of February x. The 11. of March v. The 11. of April y. The 12. of May ii. The ",
+     "what": "All twelve zodiac symbols (♒ ♓ ♈ ♉ ♊ ♋ ♌ ♍ ♎ ♏ ♐ ♑) are garbled into stray letters. 'xx' reads as the numeral 20, and Leo and Scorpio both come out as 'm'."
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "works thus for euer",
+     "what": "The page has 'worke'."
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "dases more",
+     "what": "The page has 'daies'."
+    },
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "Pe must put",
+     "what": "The page has 'Ye must'."
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "M Altiplie",
+     "what": "The drop capital is split off, so the word is not rejoined as 'Multiplie'."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "of April",
+     "what": "The page has 'Aprill'."
+    },
+    {
+     "class": "O8",
+     "severity": "cosmetic",
+     "quote": "for every day",
+     "what": "The page has 'for euery'; the spelling is modernised."
+    }
+   ],
+   "reader_note": "The paragraph listing the dates when the Sun enters each sign has lost its zodiac symbols, which become meaningless letters such as 'xx', 'v' and 'm', so a reader cannot tell which sign belongs to which month; the rest is close to the page apart from small OCR slips."
+  },
+  {
+   "page_id": "6a94b59e1041a1eb1e96cf7a",
+   "book_id": "6a94b59e1041a1eb1e96cf24",
+   "year": 1651,
+   "hold": "scans-only-publish-7270",
+   "possible_spread": true,
+   "written": true,
+   "why": null,
+   "judged": true,
+   "accept": true,
+   "wrong_text": false,
+   "fidelity": 4,
+   "defects": [
+    {
+     "class": "O6",
+     "severity": "cosmetic",
+     "quote": "sharp ficknesse",
+     "what": "the page has the plural 'sicknesses' (printed with long s); the candidate drops the final -s"
+    },
+    {
+     "class": "E2",
+     "severity": "cosmetic",
+     "quote": "my fins",
+     "what": "long s read as f here and in 'ficknesse' ('sins', 'sicknesses'), while other long-s words are given as s, so the convention is inconsistent"
+    },
+    {
+     "class": "O11",
+     "severity": "cosmetic",
+     "quote": "Digitized by Google",
+     "what": "scanner watermark transcribed as untagged body text"
+    }
+   ],
+   "reader_note": "This is a faithful transcription of p. 52. The only slips are 'sicknesses' given as singular, a couple of long-s letters read as 'f' ('fins'), and the Google watermark left in as text."
+  }
+ ]
+}

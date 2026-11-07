@@ -10,6 +10,7 @@
 - **Direct.** Say what was measured or seen, in plain words. "About 38 statements per 100 pages are reversed or attributed to the wrong speaker", not "some passages may benefit from review".
 - **Not harsh.** Describe the errors, not the work. Leave out verdict adjectives such as weakest, poor, unreliable, garbled or hazard, unless the measure is literally a ranking. If it is, say the ranking: "the highest error rates of any section".
 - **Not sugarcoated.** No reassurance words such as readable, rewards, pays off, closer look or worth checking standing in for an error count. No "may contain errors" when we know which errors and how often.
+- **Describe, do not instruct.** Derek, 2026-11-04: "we cant trust any translation, honestly. is it useful? even if they cite, it can still be useful." Say what was found and how often. Do not tell readers what they may do with a page: no "fit to quote", "do not rely on", "check before quoting". No text, human or machine, is beyond error, and the reader decides what is useful. That a page is withheld is a fact and can be stated.
 - **Value where it was measured.** State the positive finding with the same standing as the negative one, for example "75% of pages need only light edits" or "the transcription matches every leaf sampled". Never state a positive that was not measured.
 
 ## The shape (in this order; drop what does not apply)
@@ -25,6 +26,8 @@
 - Quote a rate only with its n and source, and give an interval when n is small. A reference-judged rate covers only the referenced texts (see eval-design.md).
 - Below the minimum n, say "too few pages reviewed" and give the wider figure instead. Never let a small sample read as a clean bill.
 - A partner sees the same statement the public sees. Do not soften a figure for a funder.
+- **Never publish one pass/fail share. Publish the distribution, and name the bar.** A share is one point on a curve whose slope is the threshold, not the corpus: `/quality` led with "57% of books passed" while the same 800 verdicts gave 93% bad at a letter-perfect bar and about half the pages clean at a "would a reader be misled" bar (#7933, #7263). Binarising also bins a page whose only fault is *Egypt* read as `IJgyjDt` with a page carrying another book's text. The four grades of `quality-rubric-and-sampling.md` §5 are the shape to publish; the Tengyur note above is the same shape in prose.
+- **An instrument's error runs both ways, and both go in the statement.** Report what the judge over-flags (a blind re-read of its own flags) beside what it misses (its sensitivity against a typed reference). Giving only one makes a corrected figure read as a correction in one direction. And when a correction is applied, its interval has to carry the sampling error as well as the instrument error, or the corrected figure reads as the more precise one (#7933).
 
 ## Example (Tengyur reader note, PR #6128)
 > Of 19 random Pramāṇa pages checked against the Tibetan by AI reviewers (4 Oct 2026), 39% needed only light edits, 55% substantial revision and 5% a specialist. Measured errors: about 74 statements per 100 pages are reversed or attributed to the wrong speaker, including opponents' objections given as the author's view. Also common: mistranslated technical terms.

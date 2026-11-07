@@ -1,0 +1,27 @@
+# Showcase candidates, 25 pages opened by eye (Opus subagent, 2026-11-04). Images + text: eye/showcase/
+6ae0bc1f4adf2ffb52f71a90_37 | OK-NOT-SHOWCASE | folio 十八 rendered "Volume 18"; 不聞通者 loose | Shiji, Chu house; Shuxiang's five difficulties
+6ae0bca94adf2ffb52f71e1b_44 | SHOWCASE | Shiji, Laozi biography; Daodejing written at the pass
+6ae0bd3a4adf2ffb52f722f9_126 | OK-NOT-SHOWCASE | margin title garbled body line 金矢口工仁 (EN drops it) | Shiji 104
+6ae0bd3d4adf2ffb52f72384_85 | SHOWCASE | Shiji, Ying Gao urges Jiaoxi to join Wu's revolt
+6ae0bd8d4adf2ffb52f725c5_108 | SHOWCASE | Shiji, Huang vs Yuan Gu debate on Tang/Wu
+6ae0bdda4adf2ffb52f72939_55 | OK-NOT-SHOWCASE | garbled margin header | Hanshu Wendi annals
+6ae0be184adf2ffb52f729b9_16 | OK-NOT-SHOWCASE | leading junk lines (garbled margin) | Hanshu Wudi annals
+6ae0c1554adf2ffb52f74035_30 | OK-NOT-SHOWCASE | 以杖荷蓧 read 以救荷蓧 | Hanshu Xiao Wangzhi
+6ae0c1e14adf2ffb52f74326_99 | OK-NOT-SHOWCASE | garbled margin last line; EN 鋋殺 "iron hammer", 魏僖侯 "King Anxi" | Hanshu Youxia preface
+6ae0c1f34adf2ffb52f74449_11 | OK-NOT-SHOWCASE | Song Qi collation note garbled in EN | Hanshu Xiongnu
+6ae0c2834adf2ffb52f747e5_132 | OK-NOT-SHOWCASE | cut-off clause completed wrongly (更始所害) | Hou Hanshu, Kunyang
+6ae0c2ce4adf2ffb52f74a6e_76 | OK-NOT-SHOWCASE | 梁竦/梁松 both "Liang Song" | Hou Hanshu, Empress Dou
+6ae0c4394adf2ffb52f75327_27 | OK-NOT-SHOWCASE | garbled margin header; 復 glossed "cover" | Hou Hanshu, Lang Yi memorial
+6ae0c5b74adf2ffb52f75c45_103 | SHOWCASE | Hou Hanshu, Yuan Shao defies Dong Zhuo
+6ae0c5bc4adf2ffb52f75cea_72 | SHOWCASE | Hou Hanshu, Chen Gong persuades Zhang Miao
+6ae0c6694adf2ffb52f76286_46 | OK-NOT-SHOWCASE | garbled margin first line | Sanguozhi, Cao Mao at Taixue
+6ae0c6cf4adf2ffb52f76830_121 | SHOWCASE | Sanguozhi Wei, Hu Zhi biography
+6ae0c7164adf2ffb52f76a64_27 | OK-NOT-SHOWCASE | 愀然 read 慠然 (EN right) | Sanguozhi Shu, Jieting
+6ae0c71d4adf2ffb52f76b10_145 | SHOWCASE | Sanguozhi Shu, Xi Zheng rhapsody
+6ae0c7ef4adf2ffb52f76f4d_127 | OK-NOT-SHOWCASE | 突圍 read 災圍 (EN right) | Sanguozhi Wu, Shouchun revolt
+69aebb3a39a43078777732aa_138 | OK-NOT-SHOWCASE | 有恃即戎 read 有時即我 | Shangshu commentary
+69aebb5e39a4307877774064_229 | OK-NOT-SHOWCASE | 轙 read 轅 | 楚辭後集 Si xuan fu
+6a3c6bdfc4e8626320db2395_21 | SHOWCASE | Chunqiu shuci bishi ji, embassies table
+6a3c6bf4c4e8626320db3a11_45 | SHOWCASE (one char unconfirmed) | Lady Wei biography
+6a3c6cf8c4e8626320dbdace_39 | OK-NOT-SHOWCASE | two chars unconfirmable | Yunxian zaji juan 4/5
+REJECT: 0 of 25. Garbled margin in 5 of 20 manuscript pages; EN dropped it in all 5 (not invented).

@@ -1,0 +1,4828 @@
+{
+ "built_at": "2026-11-03T12:43:34.899Z",
+ "cli": [
+  {
+   "book_id": "69bd9ffcf6d63c9197483772",
+   "title": "Sophia, das ist die holdseelige ewige Jungfrau der göttlichen Weisheit oder wunderbahre geistliche Entdeck- und Offenbahrungen so die theure Weisheit einer heiligen Seele gegeben ...",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9ffcf6d63c9197483881",
+    "69bd9ffcf6d63c9197483882",
+    "69bd9ffcf6d63c9197483883",
+    "69bd9ffcf6d63c9197483884",
+    "69bd9ffcf6d63c9197483885"
+   ],
+   "pages": [
+    271,
+    272,
+    273,
+    274,
+    275
+   ]
+  },
+  {
+   "book_id": "6a3f02f097e91e1768f68b37",
+   "title": "Libanii Opera;",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a3f02f097e91e1768f68d68",
+    "6a3f02f097e91e1768f68d69"
+   ],
+   "pages": [
+    561,
+    562
+   ]
+  },
+  {
+   "book_id": "6990580b17295890441351e7",
+   "title": "Die Akustik",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6990580b1729589044135303",
+    "6990580b1729589044135304",
+    "6990580b1729589044135305",
+    "6990580b1729589044135306"
+   ],
+   "pages": [
+    284,
+    285,
+    286,
+    287
+   ]
+  },
+  {
+   "book_id": "6a4a4c83547be098cf67f38c",
+   "title": "Disputatio Iuridica Inauguralis De Poenitentia, Quam Ex Decreto & Auctoritate Iurisconsultorum Ordinis In Celeberrima Argentoratensium Universitate Pro Licentia Summos in Utroque Iure Honores & Privilegia Doctoralia rite consequendi Placidae Eruditorum Disquisitioni Solenniter exhibet Paulus Draing, Hamburg. Ad d. 9. Mens. Ianuar. Horis locoque consuetis",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4a4c83547be098cf67f3c6",
+    "6a4a4c83547be098cf67f3c7"
+   ],
+   "pages": [
+    29,
+    30
+   ]
+  },
+  {
+   "book_id": "69b51e0aefd8df28f2daf544",
+   "title": "Reise in das Berner Oberland. 2",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e0aefd8df28f2daf563",
+    "69b51e0aefd8df28f2daf564",
+    "69b51e0aefd8df28f2daf565",
+    "69b51e0aefd8df28f2daf566",
+    "69b51e0aefd8df28f2daf567",
+    "69b51e0aefd8df28f2daf595",
+    "69b51e0aefd8df28f2daf596",
+    "69b51e0aefd8df28f2daf597"
+   ],
+   "pages": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    81,
+    82,
+    83
+   ]
+  },
+  {
+   "book_id": "69aea3b5912e8f072fbef54f",
+   "title": "Hierosolymitike Bibliotheke II",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69aea3b5912e8f072fbef5e5",
+    "69aea3b5912e8f072fbef5e6"
+   ],
+   "pages": [
+    150,
+    151
+   ]
+  },
+  {
+   "book_id": "6955742ef63a757109173030",
+   "title": "Musici Scriptores Graeci",
+   "language": "Greek",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "6955742ef63a7571091730cd",
+    "6955742ef63a7571091730ce",
+    "6955742ef63a7571091730cf",
+    "6955742ef63a757109173120",
+    "6955742ef63a757109173121"
+   ],
+   "pages": [
+    157,
+    158,
+    159,
+    240,
+    241
+   ]
+  },
+  {
+   "book_id": "69bda147f6d63c919748f3c3",
+   "title": "Ge. Henr. Nievpoort ... Rituum qui olim apud Romanos obtinuerunt succincta explicatio ad intelligentiam veterum auctorum facili methodo conscripta : accedunt ... Ioanne Matthiae Gesneri prolusio. atque Caroli Ferdinandi Hommelii de tribunali praetoris liber singularis",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bda147f6d63c919748f415",
+    "69bda147f6d63c919748f416"
+   ],
+   "pages": [
+    82,
+    83
+   ]
+  },
+  {
+   "book_id": "69b1def1ca46fa60ea1eeaa8",
+   "title": "Pedanii Dioscuridis De Materia Medica, Vol. 3 (Liber V)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b1def1ca46fa60ea1eeb77",
+    "69b1def1ca46fa60ea1eeb78",
+    "69b1def1ca46fa60ea1eeb79"
+   ],
+   "pages": [
+    207,
+    208,
+    209
+   ]
+  },
+  {
+   "book_id": "69af4a1b656a420ddbc6c2e3",
+   "title": "Metrologicorum Scriptorum Reliquiae, Vol. II",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af4a1c656a420ddbc6c384",
+    "69af4a1c656a420ddbc6c385"
+   ],
+   "pages": [
+    161,
+    162
+   ]
+  },
+  {
+   "book_id": "69af447bd3f5f44360044ad2",
+   "title": "Servii Grammatici in Vergilii Carmina Commentarii Vol. II (Thilo-Hagen)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af447bd3f5f44360044afb",
+    "69af447bd3f5f44360044afc",
+    "69af447bd3f5f44360044b00",
+    "69af447bd3f5f44360044b01"
+   ],
+   "pages": [
+    41,
+    42,
+    46,
+    47
+   ]
+  },
+  {
+   "book_id": "69bda143f6d63c919748f149",
+   "title": "Von den Träumen und Nachtwandlern",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bda143f6d63c919748f28f",
+    "69bda143f6d63c919748f290",
+    "69bda143f6d63c919748f291",
+    "69bda143f6d63c919748f292",
+    "69bda143f6d63c919748f386",
+    "69bda143f6d63c919748f387"
+   ],
+   "pages": [
+    326,
+    327,
+    328,
+    329,
+    573,
+    574
+   ]
+  },
+  {
+   "book_id": "69ef3dbc72c1376fdf2b0c0c",
+   "title": "Aesthetica, Pars Altera (Vol. 2)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69ef3dbc72c1376fdf2b0cb3",
+    "69ef3dbc72c1376fdf2b0cb4"
+   ],
+   "pages": [
+    167,
+    168
+   ]
+  },
+  {
+   "book_id": "69d143e91c2a66dc094b1ba5",
+   "title": "De Vita Pythagorica liber, Pars 2 (Kiessling)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69d143ea1c2a66dc094b1dcf",
+    "69d143ea1c2a66dc094b1dd0",
+    "69d143ea1c2a66dc094b1dd1",
+    "69d143ea1c2a66dc094b1dd2",
+    "69d143ea1c2a66dc094b1dd3"
+   ],
+   "pages": [
+    554,
+    555,
+    556,
+    557,
+    558
+   ]
+  },
+  {
+   "book_id": "6a243c8f0f0e4f405e62e9d4",
+   "title": "Geschichtmässige Erörterung der wichtigen Frage: Ob es rathsam sey, dass die Stände des Reichs mit dem römischen Hofe über die vorwaltenden Nunziaturstreitigkeiten in Vergleichsunterhandlungen sich einlassen? : Nebst einigen Beylagen und Anmerkungen über die Schrift: Principia et Monita vere catholica occasione edita libellorum: Gedanken des Ludwig Böhmers über den Embserkongress [et]c. und Gründliche Entwickelung der Dispens- und Nunziaturstreitigkeiten [et]c.",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a243c8f0f0e4f405e62e9ea"
+   ],
+   "pages": [
+    22
+   ]
+  },
+  {
+   "book_id": "69bd9d386120d54bd0373f7f",
+   "title": "D. Aurelii Augustini Hipponensis episcopi liber de haeresibus, ad Quodvultdeum : accessit operi quadruplex index ... In calce operis addita est arbor hæreseon ... ; additus est præterea tractatus de ecclesia ...",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9d386120d54bd0373fbb",
+    "69bd9d386120d54bd0373fbc",
+    "69bd9d386120d54bd0373fbd",
+    "69bd9d386120d54bd0373fed",
+    "69bd9d386120d54bd0373fee",
+    "69bd9d386120d54bd03741b2",
+    "69bd9d386120d54bd03741b3",
+    "69bd9d386120d54bd03741b4",
+    "69bd9d386120d54bd03741b5",
+    "69bd9d386120d54bd03741b6"
+   ],
+   "pages": [
+    60,
+    61,
+    62,
+    110,
+    111,
+    563,
+    564,
+    565,
+    566,
+    567
+   ]
+  },
+  {
+   "book_id": "69b51dddcf111105c4292540",
+   "title": "Disputatio Medica Corpus Humanum Sympatheticum sistens",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51dddcf111105c429255c",
+    "69b51dddcf111105c429255d"
+   ],
+   "pages": [
+    28,
+    29
+   ]
+  },
+  {
+   "book_id": "69942c12b2f6748db4abcf37",
+   "title": "Martianus Capella (Eyssenhardt critical edition)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69942c12b2f6748db4abd054",
+    "69942c12b2f6748db4abd055"
+   ],
+   "pages": [
+    285,
+    286
+   ]
+  },
+  {
+   "book_id": "69b656e118b87551bfce481e",
+   "title": "Dialexis de novae et prius incognitae stellae inusitatae magnitudinis & splendidissimi luminis apparitione, & de eiusdem stellae vero loco constituendo ...",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b656e118b87551bfce4853",
+    "69b656e118b87551bfce4854",
+    "69b656e118b87551bfce485a",
+    "69b656e118b87551bfce485b",
+    "69b656e118b87551bfce485c",
+    "69b656e118b87551bfce4879",
+    "69b656e118b87551bfce487a",
+    "69b656e118b87551bfce487b"
+   ],
+   "pages": [
+    53,
+    54,
+    60,
+    61,
+    62,
+    91,
+    92,
+    93
+   ]
+  },
+  {
+   "book_id": "6a085d0349638a50931ce8b7",
+   "title": "C. Velleii Paterculi Historiae. Romanae ad. M. Vinicium. cos. libri. 2 ab Aldo Manutio, Paulli f. Aldi n. emendati, et scholiis illustrati.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a085d0349638a50931ce8c9",
+    "6a085d0349638a50931ce8ca",
+    "6a085d0349638a50931ce8cb"
+   ],
+   "pages": [
+    18,
+    19,
+    20
+   ]
+  },
+  {
+   "book_id": "699438416879ff0184cb8300",
+   "title": "Patrologia Graeca Vol. 40 (Evagrius Ponticus)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "699438416879ff0184cb84ae",
+    "699438416879ff0184cb84af"
+   ],
+   "pages": [
+    430,
+    431
+   ]
+  },
+  {
+   "book_id": "69aff9d11ae4bb9c7a0feb6e",
+   "title": "Procli In Platonis Timaeum Commentaria, Vol. III (Diehl)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69aff9d11ae4bb9c7a0fec6f",
+    "69aff9d11ae4bb9c7a0fec70",
+    "69aff9d11ae4bb9c7a0fec71"
+   ],
+   "pages": [
+    257,
+    258,
+    259
+   ]
+  },
+  {
+   "book_id": "69b525cc6be604608303292f",
+   "title": "Aramean lezouin gandz :, hoc est: Joh. Joachimi Schröderi Thesaurus linguae Armenicae, antiquae et hodiernae, cum varia praxios materia, cujus elenchum sequens pagella exhibet.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b525cc6be6046083032939",
+    "69b525cc6be604608303293a",
+    "69b525cc6be6046083032948",
+    "69b525cc6be6046083032949",
+    "69b525cc6be60460830329c8",
+    "69b525cc6be60460830329c9"
+   ],
+   "pages": [
+    10,
+    11,
+    25,
+    26,
+    153,
+    154
+   ]
+  },
+  {
+   "book_id": "69af4749d6be7ec9cc323bd3",
+   "title": "Apuleii Opera Omnia Vol. IV (Oudendorp 1825)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af4749d6be7ec9cc323d84",
+    "69af4749d6be7ec9cc323d85"
+   ],
+   "pages": [
+    433,
+    434
+   ]
+  },
+  {
+   "book_id": "6a08577715c643eb1af5ba59",
+   "title": "Marci Velseri Matthaei f. Ant. n. patricii Aug. Vind. Rerum Augustanar. Vindelicar. libri octo",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08577715c643eb1af5ba78",
+    "6a08577715c643eb1af5ba79",
+    "6a08577715c643eb1af5ba7a",
+    "6a08577715c643eb1af5ba7b",
+    "6a08577715c643eb1af5ba7c",
+    "6a08577715c643eb1af5ba96"
+   ],
+   "pages": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    61
+   ]
+  },
+  {
+   "book_id": "69944b511ba8351377905f76",
+   "title": "Philonis Judaei Opera Omnia (Vol. 2)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69944b511ba8351377905ff0",
+    "69944b511ba8351377905ff1",
+    "69944b511ba83513779060c2",
+    "69944b511ba83513779060c3"
+   ],
+   "pages": [
+    122,
+    123,
+    332,
+    333
+   ]
+  },
+  {
+   "book_id": "69bd9fb2f6d63c9197481c0b",
+   "title": "Bedencken über Esaiae Stiefels Büchlein: von dreyerley Zustand des Menschen und dessen newen Gebuhrt ...",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9fb2f6d63c9197481d47",
+    "69bd9fb2f6d63c9197481d48",
+    "69bd9fb2f6d63c9197481d49"
+   ],
+   "pages": [
+    316,
+    317,
+    318
+   ]
+  },
+  {
+   "book_id": "69b51e41ff09e4fe943aa79c",
+   "title": "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm, Sine Controversia, Principis ... : nunc primùm ... postliminio restituta, ac in corpus unum redacta .... 1",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e41ff09e4fe943aa7c1",
+    "69b51e41ff09e4fe943aa7c2"
+   ],
+   "pages": [
+    37,
+    38
+   ]
+  },
+  {
+   "book_id": "69af423aeaef59aff2e0f06c",
+   "title": "Sex. Aurelii Propertii Elegiarum Libri Quattuor",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af423aeaef59aff2e0f118",
+    "69af423aeaef59aff2e0f119"
+   ],
+   "pages": [
+    172,
+    173
+   ]
+  },
+  {
+   "book_id": "69b2f482f9f1ad2b3b1533bf",
+   "title": "Quaestiones illustres in Academia Parisiensi",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b2f482f9f1ad2b3b15341f",
+    "69b2f482f9f1ad2b3b153420",
+    "69b2f482f9f1ad2b3b153421",
+    "69b2f482f9f1ad2b3b153485"
+   ],
+   "pages": [
+    96,
+    97,
+    98,
+    198
+   ]
+  },
+  {
+   "book_id": "69b303d95facc83a9a3db234",
+   "title": "De Jure Belli",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b303d95facc83a9a3db2df",
+    "69b303d95facc83a9a3db2e0",
+    "69b303d95facc83a9a3db392",
+    "69b303d95facc83a9a3db393",
+    "69b303d95facc83a9a3db394"
+   ],
+   "pages": [
+    171,
+    172,
+    350,
+    351,
+    352
+   ]
+  },
+  {
+   "book_id": "69b5259e2f891867c1ae3de9",
+   "title": "Biblia Sacra Hebræa /, correcta & collata cum antiquissimis & accuratissimis exemplaribus manu scriptis & hactenùs impressis.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b5259e2f891867c1ae3df2",
+    "69b5259e2f891867c1ae3df3"
+   ],
+   "pages": [
+    9,
+    10
+   ]
+  },
+  {
+   "book_id": "69af43957872e4f8698c77ce",
+   "title": "Grammatici Latini Vol. VII: Scriptores De Orthographia",
+   "language": "Latin",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af43957872e4f8698c7a2c",
+    "69af43957872e4f8698c7a2d"
+   ],
+   "pages": [
+    606,
+    607
+   ]
+  },
+  {
+   "book_id": "69afdd0756ce5b958fcfc510",
+   "title": "Galen: De Usu Partium Libri XVII, Vol. II",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69afdd0f56ce5b958fcfc63b"
+   ],
+   "pages": [
+    298
+   ]
+  },
+  {
+   "book_id": "69afd38af4c860f1b891d71f",
+   "title": "De Partibus Animalium",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69afd38af4c860f1b891d817",
+    "69afd38af4c860f1b891d818"
+   ],
+   "pages": [
+    248,
+    249
+   ]
+  },
+  {
+   "book_id": "69ef3da072c1376fdf2b0940",
+   "title": "Johann Winckelmanns Geschichte der Kunst des Alterthums, Vol. 1 (1776 ed.)",
+   "language": "German",
+   "hold": "blank-leaf-english-orphan-6420",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69ef3da072c1376fdf2b0976",
+    "69ef3da072c1376fdf2b0977",
+    "69ef3da072c1376fdf2b0978",
+    "69ef3da072c1376fdf2b0b44",
+    "69ef3da072c1376fdf2b0b45",
+    "69ef3da072c1376fdf2b0b46",
+    "69ef3da072c1376fdf2b0b47",
+    "69ef3da072c1376fdf2b0b48",
+    "69ef3da072c1376fdf2b0bd7",
+    "69ef3da072c1376fdf2b0bd8"
+   ],
+   "pages": [
+    54,
+    55,
+    56,
+    516,
+    517,
+    518,
+    519,
+    520,
+    663,
+    664
+   ]
+  },
+  {
+   "book_id": "69b300005545150b61b4b45a",
+   "title": "De Auctoritate Juris Civilis Romanorum",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b300005545150b61b4b58c",
+    "69b300005545150b61b4b58d",
+    "69b300005545150b61b4b58e",
+    "69b300005545150b61b4b58f",
+    "69b300005545150b61b4b615",
+    "69b300005545150b61b4b616",
+    "69b300005545150b61b4b617"
+   ],
+   "pages": [
+    306,
+    307,
+    308,
+    309,
+    443,
+    444,
+    445
+   ]
+  },
+  {
+   "book_id": "6a3f027f97e91e1768f67513",
+   "title": "Patrologiae Cursus Completus - Series Graeca - Volume 48",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a3f027f97e91e1768f67545",
+    "6a3f027f97e91e1768f676dd"
+   ],
+   "pages": [
+    50,
+    458
+   ]
+  },
+  {
+   "book_id": "69dfdc934c23e88e070e65a1",
+   "title": "Il Codice Magliabechiano cl. XVII.17: notizie sopra l'arte degli antichi e quella de' fiorentini da Cimabue a Michelangelo Buonarroti",
+   "language": "Italian / German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "italian-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69dfdc964c23e88e070e6702",
+    "69dfdc964c23e88e070e6703",
+    "69dfdc964c23e88e070e6704",
+    "69dfdc964c23e88e070e675e",
+    "69dfdc964c23e88e070e675f",
+    "69dfdc964c23e88e070e6760",
+    "69dfdc964c23e88e070e6761",
+    "69dfdc964c23e88e070e6775",
+    "69dfdc964c23e88e070e6776",
+    "69dfdc964c23e88e070e6777",
+    "69dfdc964c23e88e070e6778"
+   ],
+   "pages": [
+    353,
+    354,
+    355,
+    445,
+    446,
+    447,
+    448,
+    468,
+    469,
+    470,
+    471
+   ]
+  },
+  {
+   "book_id": "69ee649a7b983848aff57d1b",
+   "title": "Deutsche Mythologie",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69ee649a7b983848aff57d4b",
+    "69ee649a7b983848aff57d4c",
+    "69ee649a7b983848aff57d4d"
+   ],
+   "pages": [
+    48,
+    49,
+    50
+   ]
+  },
+  {
+   "book_id": "6990540438e1fdee57b364df",
+   "title": "Vorlesungen über Gastheorie, Bd. 1",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6990540438e1fdee57b3658e",
+    "6990540438e1fdee57b3658f"
+   ],
+   "pages": [
+    175,
+    176
+   ]
+  },
+  {
+   "book_id": "69b302d53613a84e68067dcb",
+   "title": "Historia Naturalis Brasiliae",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b302d53613a84e68067e50",
+    "69b302d53613a84e68067e51",
+    "69b302d53613a84e68067e52"
+   ],
+   "pages": [
+    133,
+    134,
+    135
+   ]
+  },
+  {
+   "book_id": "6a4c4c5942f9b6155899d269",
+   "title": "Discursus Iuris Canonici De Poenitentia Ecclesiastica, von der Kirchen-Buße, Anno 1678 in Florentissima Academia Salana in Cathedra publice habitus & defensus, nunc recognitus & auctior editus a Joh. Friderico Knorren, ICto, Sereniss. Ducis Saxo-Isenac. Consiliario Aulico & Camerali, nec non Suprem. Praefect. Altsted.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4c4c5942f9b6155899d2a9",
+    "6a4c4c5942f9b6155899d2aa",
+    "6a4c4c5942f9b6155899d2ab",
+    "6a4c4c5942f9b6155899d2ac"
+   ],
+   "pages": [
+    64,
+    65,
+    66,
+    67
+   ]
+  },
+  {
+   "book_id": "69af2364c6df16b7172a9fab",
+   "title": "Hyginus, Fabulae (Schmidt ed.)",
+   "language": "Latin",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af2364c6df16b7172a9fd6",
+    "69af2364c6df16b7172a9fd7",
+    "69af2364c6df16b7172a9fd8",
+    "69af2364c6df16b7172aa083",
+    "69af2364c6df16b7172aa084",
+    "69af2364c6df16b7172aa085",
+    "69af2364c6df16b7172aa086",
+    "69af2364c6df16b7172aa087"
+   ],
+   "pages": [
+    43,
+    44,
+    45,
+    216,
+    217,
+    218,
+    219,
+    220
+   ]
+  },
+  {
+   "book_id": "6a100a2af71729295096e40f",
+   "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Fünfter Theil.",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a100a2af71729295096e63f",
+    "6a100a2af71729295096e640",
+    "6a100a2af71729295096e79e",
+    "6a100a2af71729295096e79f"
+   ],
+   "pages": [
+    560,
+    561,
+    911,
+    912
+   ]
+  },
+  {
+   "book_id": "69b51e739a81ef7feb3d53ba",
+   "title": "Allgemeine Literatur-Zeitung : ALZ ; auf das Jahr .... 1792, 2 ## Intelligenzblatt, 20.06.1792",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e739a81ef7feb3d53f5",
+    "69b51e739a81ef7feb3d53f6"
+   ],
+   "pages": [
+    59,
+    60
+   ]
+  },
+  {
+   "book_id": "69b62f391c1c21a3737f3d95",
+   "title": "Illustrium controversiarum aliarumque usu frequentium Pars prima, tres priores libros continens. Authore D. Fernando Vasquio Menchacensi Hispano jureconsulto praestantissimo, et in summo dominicae rei Philippi Hispaniarum regis catholici praetorio senatore. Longe accuratiori superioribus editionibus diligentia recogniti. Cum indice rerum ac verborum locupletissimo.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b62f391c1c21a3737f3e5d",
+    "69b62f391c1c21a3737f3e5e",
+    "69b62f391c1c21a3737f3e5f",
+    "69b62f391c1c21a3737f3f86",
+    "69b62f391c1c21a3737f3f87",
+    "69b62f391c1c21a3737f3f88"
+   ],
+   "pages": [
+    200,
+    201,
+    202,
+    497,
+    498,
+    499
+   ]
+  },
+  {
+   "book_id": "69af42b63fd91d3991399d15",
+   "title": "De Consolatione Philosophiae Libri Quinque",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af42b63fd91d3991399e65",
+    "69af42b63fd91d3991399e66",
+    "69af42b63fd91d3991399fa3",
+    "69af42b63fd91d3991399fa4",
+    "69af42b63fd91d3991399fa5"
+   ],
+   "pages": [
+    336,
+    337,
+    654,
+    655,
+    656
+   ]
+  },
+  {
+   "book_id": "6953e5ef1479a63c1108408e",
+   "title": "Mathematische Schriften Vol. IV",
+   "language": "German",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6953e5ef1479a63c110842ac",
+    "6953e5ef1479a63c110842ad"
+   ],
+   "pages": [
+    542,
+    543
+   ]
+  },
+  {
+   "book_id": "6990500f7d19f3f2aac1dbee",
+   "title": "Della Cristiana Religione",
+   "language": "Italian",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "italian-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6990500f7d19f3f2aac1dca0",
+    "6990500f7d19f3f2aac1dca1"
+   ],
+   "pages": [
+    178,
+    179
+   ]
+  },
+  {
+   "book_id": "6990657c3dc2ed39a49f1b1f",
+   "title": "De Chymicorum cum Aristotelicis et Galenicis Consensu",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6990657c3dc2ed39a49f1d80"
+   ],
+   "pages": [
+    609
+   ]
+  },
+  {
+   "book_id": "6992543859cdabeb78f1cd2a",
+   "title": "Liturgie der drei ersten christlichen Jahrhunderte",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6992543959cdabeb78f1ce48",
+    "6992543959cdabeb78f1ce49",
+    "6992543959cdabeb78f1ce4a"
+   ],
+   "pages": [
+    286,
+    287,
+    288
+   ]
+  },
+  {
+   "book_id": "699438446879ff0184cb8593",
+   "title": "Macarii Aegyptii Opera Omnia",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "699438446879ff0184cb87dc"
+   ],
+   "pages": [
+    585
+   ]
+  },
+  {
+   "book_id": "69944b5e1ba8351377906ed8",
+   "title": "Philonis Judaei Opera Omnia (Vol. 7)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69944b5e1ba8351377907048",
+    "69944b5e1ba8351377907049",
+    "69944b5e1ba835137790704a",
+    "69944b5e1ba835137790704b",
+    "69944b5e1ba835137790704c"
+   ],
+   "pages": [
+    368,
+    369,
+    370,
+    371,
+    372
+   ]
+  },
+  {
+   "book_id": "69a5edcf96d6dd816a56be93",
+   "title": "Bibliotheca Orientalis Clementino-Vaticana vol. 3 pars 2",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69a5edcf96d6dd816a56c24f",
+    "69a5edcf96d6dd816a56c250",
+    "69a5edcf96d6dd816a56c251",
+    "69a5edcf96d6dd816a56c252"
+   ],
+   "pages": [
+    956,
+    957,
+    958,
+    959
+   ]
+  },
+  {
+   "book_id": "69a68221d5bf106c72bb8725",
+   "title": "Le operazioni del compasso geometrico et militare",
+   "language": "Italian",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "italian-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69a68221d5bf106c72bb8740"
+   ],
+   "pages": [
+    27
+   ]
+  },
+  {
+   "book_id": "69ac8509960d5ad0b47313a9",
+   "title": "Tychonis Brahei, Equitis Dani, Astronomorum Coryphaei, Vita",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69ac8509960d5ad0b473143a",
+    "69ac8509960d5ad0b473143b",
+    "69ac8509960d5ad0b47314b0",
+    "69ac8509960d5ad0b47314b1",
+    "69ac8509960d5ad0b47314b2",
+    "69ac8509960d5ad0b4731538"
+   ],
+   "pages": [
+    145,
+    146,
+    263,
+    264,
+    265,
+    399
+   ]
+  },
+  {
+   "book_id": "69aea4c53f91570550876d41",
+   "title": "Logische Untersuchungen",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69aea4c53f91570550876eae",
+    "69aea4c53f91570550876eaf"
+   ],
+   "pages": [
+    365,
+    366
+   ]
+  },
+  {
+   "book_id": "69aeacef66bcc9447837bf26",
+   "title": "Invectiva in Antonium Luschum",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69aeacef66bcc9447837bf35",
+    "69aeacef66bcc9447837bf36",
+    "69aeacef66bcc9447837bf37"
+   ],
+   "pages": [
+    15,
+    16,
+    17
+   ]
+  },
+  {
+   "book_id": "69aebf2d980210bbfc1ef769",
+   "title": "Philosophie als Denken der Welt gemäss dem Princip des kleinsten Kraftmasses",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69aebf2d980210bbfc1ef794"
+   ],
+   "pages": [
+    43
+   ]
+  },
+  {
+   "book_id": "69af0a1c5c5d25dbf81c824d",
+   "title": "Primitiae Gnomonicae Catoptricae",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af0a1d5c5d25dbf81c8325",
+    "69af0a1d5c5d25dbf81c8326"
+   ],
+   "pages": [
+    216,
+    217
+   ]
+  },
+  {
+   "book_id": "69af0ab86ff9e48a393c227b",
+   "title": "De Motu Animalium",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af0ab86ff9e48a393c24d8",
+    "69af0ab86ff9e48a393c24d9"
+   ],
+   "pages": [
+    605,
+    606
+   ]
+  },
+  {
+   "book_id": "69af0dab9f13b61d0a6c6105",
+   "title": "Cogitata Physico-Mathematica",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af0dac9f13b61d0a6c6410",
+    "69af0dac9f13b61d0a6c6411",
+    "69af0dac9f13b61d0a6c6412",
+    "69af0dac9f13b61d0a6c6413"
+   ],
+   "pages": [
+    779,
+    780,
+    781,
+    782
+   ]
+  },
+  {
+   "book_id": "69af0fc06f6d83348c7fa40c",
+   "title": "De Morbis Artificum Diatriba (Wellcome ed.)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af0fc06f6d83348c7fa492",
+    "69af0fc06f6d83348c7fa493",
+    "69af0fc06f6d83348c7fa494"
+   ],
+   "pages": [
+    134,
+    135,
+    136
+   ]
+  },
+  {
+   "book_id": "69af10fed5d111f99e41c937",
+   "title": "De Medica Materia Libri Sex (1554)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af10ffd5d111f99e41ca20",
+    "69af10ffd5d111f99e41ca21"
+   ],
+   "pages": [
+    233,
+    234
+   ]
+  },
+  {
+   "book_id": "69af447846e13536d25887fe",
+   "title": "S. Aurelii Augustini De Civitate Dei Libri XXII Vol. I (Dombart 1877)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af447846e13536d258889f",
+    "69af447846e13536d25888a0",
+    "69af447846e13536d25888a1",
+    "69af447846e13536d2588a48",
+    "69af447846e13536d2588a49"
+   ],
+   "pages": [
+    161,
+    162,
+    163,
+    586,
+    587
+   ]
+  },
+  {
+   "book_id": "69af447908fe1c6d3da38b17",
+   "title": "S. Aurelii Augustini De Civitate Dei Libri XXII Vol. II (Dombart 1877)",
+   "language": "Latin",
+   "hold": "summary-placeholder-6117",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af447908fe1c6d3da38b95",
+    "69af447908fe1c6d3da38b96"
+   ],
+   "pages": [
+    126,
+    127
+   ]
+  },
+  {
+   "book_id": "69af451ebdd4afb440d85f39",
+   "title": "Corpus Scriptorum Ecclesiasticorum Latinorum, Vol. LIV: Augustini Epistulae Pars I",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af451ebdd4afb440d85f77"
+   ],
+   "pages": [
+    62
+   ]
+  },
+  {
+   "book_id": "69af45d0b8e08960c7fbb4fc",
+   "title": "Sancti Ambrosii Omnia Quae Extant Opera, Vol. I",
+   "language": "Latin",
+   "hold": "summary-placeholder-6117",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af45d0b8e08960c7fbb71f",
+    "69af45d0b8e08960c7fbb720"
+   ],
+   "pages": [
+    547,
+    548
+   ]
+  },
+  {
+   "book_id": "69af4997d6be7ec9cc3244b0",
+   "title": "Die Schriften der Romischen Feldmesser (Gromatici Veteres), Vol. II",
+   "language": "German",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af499bd6be7ec9cc32468c",
+    "69af499bd6be7ec9cc32468d",
+    "69af499bd6be7ec9cc32468e"
+   ],
+   "pages": [
+    476,
+    477,
+    478
+   ]
+  },
+  {
+   "book_id": "69af4a320c7af0237dfb900e",
+   "title": "Metrologicorum Scriptorum Reliquiae, Vol. I",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69af4a3d0c7af0237dfb9332",
+    "69af4a3d0c7af0237dfb9333"
+   ],
+   "pages": [
+    36,
+    37
+   ]
+  },
+  {
+   "book_id": "69b00e9e312120db3b488d41",
+   "title": "L. Annaei Senecae Opera Philosophica, Vol. 1",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b00e9e312120db3b488ff0"
+   ],
+   "pages": [
+    687
+   ]
+  },
+  {
+   "book_id": "69b00ea8312120db3b489116",
+   "title": "L. Annaei Senecae Opera Philosophica, Vol. 2",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b00ea8312120db3b489192",
+    "69b00ea8312120db3b489193"
+   ],
+   "pages": [
+    124,
+    125
+   ]
+  },
+  {
+   "book_id": "69b1de8eca46fa60ea1edb69",
+   "title": "De Opificio Mundi",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b1de8eca46fa60ea1edbf6",
+    "69b1de8eca46fa60ea1edbf7"
+   ],
+   "pages": [
+    141,
+    142
+   ]
+  },
+  {
+   "book_id": "69b21ccd429e087c6f865a8f",
+   "title": "Saturnalium Sermonum Libri Duo",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b21ccd429e087c6f865aa0"
+   ],
+   "pages": [
+    17
+   ]
+  },
+  {
+   "book_id": "69b21e2394025df5d290b6e5",
+   "title": "Plutarchi Chaeronensis Moralia, Vol. 5 (Bernardakis, Teubner)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b21e2394025df5d290b839",
+    "69b21e2394025df5d290b83a"
+   ],
+   "pages": [
+    340,
+    341
+   ]
+  },
+  {
+   "book_id": "69b222b656715b0e32474cb1",
+   "title": "Cicero, Epistolae ad Atticum, ad Brutum, ad Quintum Fratrem (Aldine Press)",
+   "language": "Latin",
+   "hold": "summary-placeholder-6117",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b222b656715b0e32474e89",
+    "69b222b656715b0e32474e8a"
+   ],
+   "pages": [
+    472,
+    473
+   ]
+  },
+  {
+   "book_id": "69b2f372a9a500a45e5e81c6",
+   "title": "Auli Gellii Noctes Atticae",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b2f372a9a500a45e5e82ce",
+    "69b2f372a9a500a45e5e82cf",
+    "69b2f372a9a500a45e5e855e",
+    "69b2f372a9a500a45e5e855f"
+   ],
+   "pages": [
+    264,
+    265,
+    920,
+    921
+   ]
+  },
+  {
+   "book_id": "69b2f47c5ef23d31023f7535",
+   "title": "Iuris Orientalis Libri III",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b2f47c5ef23d31023f7804",
+    "69b2f47c5ef23d31023f7805",
+    "69b2f47c5ef23d31023f782f",
+    "69b2f47c5ef23d31023f7830"
+   ],
+   "pages": [
+    719,
+    720,
+    762,
+    763
+   ]
+  },
+  {
+   "book_id": "69b30090e28f56bd74941f9a",
+   "title": "Historiarum libri Vol. 2 (Elzevir 1645)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b30090e28f56bd74942240",
+    "69b30090e28f56bd74942241",
+    "69b30090e28f56bd74942242"
+   ],
+   "pages": [
+    678,
+    679,
+    680
+   ]
+  },
+  {
+   "book_id": "69b300eae5d6d64d8e19a00c",
+   "title": "Epistolae Familiares",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b300eae5d6d64d8e19a208"
+   ],
+   "pages": [
+    508
+   ]
+  },
+  {
+   "book_id": "69b3017578de5de2306d53e9",
+   "title": "Respublica et Status Regni Hungariae",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b3017578de5de2306d552d"
+   ],
+   "pages": [
+    324
+   ]
+  },
+  {
+   "book_id": "69b3018b78de5de2306d57b7",
+   "title": "Russia seu Moscovia",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b3018b78de5de2306d5831"
+   ],
+   "pages": [
+    122
+   ]
+  },
+  {
+   "book_id": "69b302ca3613a84e68067ba4",
+   "title": "Poemata",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b302ca3613a84e68067c3e",
+    "69b302ca3613a84e68067c3f"
+   ],
+   "pages": [
+    154,
+    155
+   ]
+  },
+  {
+   "book_id": "69b3032f5facc83a9a3d95b5",
+   "title": "Summa Theologiae (Vol. 2)",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b3032f5facc83a9a3d9616",
+    "69b3032f5facc83a9a3d9617"
+   ],
+   "pages": [
+    97,
+    98
+   ]
+  },
+  {
+   "book_id": "69b303855facc83a9a3d9b8f",
+   "title": "Anglicae Historiae libri XXVI",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b303855facc83a9a3d9c7a",
+    "69b303855facc83a9a3d9c7b",
+    "69b303855facc83a9a3d9c7c"
+   ],
+   "pages": [
+    235,
+    236,
+    237
+   ]
+  },
+  {
+   "book_id": "69b304135facc83a9a3dbc53",
+   "title": "Danubius Fluviorum Europae Princeps",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b304135facc83a9a3dbc99",
+    "69b304135facc83a9a3dbc9a"
+   ],
+   "pages": [
+    70,
+    71
+   ]
+  },
+  {
+   "book_id": "69b4d641853c26e0d1560221",
+   "title": "Theophrasti Paracelsi Philosophiae Et Medicinae Utriusque Universae, Compendium : Ex optimis quibusque eius libris ; Cum scholiis in libros IIII. eiusde[m] De Vita Longa, Plenos mysteriorum, parabolarum, aenigmatum",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b4d641853c26e0d156023f",
+    "69b4d641853c26e0d1560240",
+    "69b4d641853c26e0d15602fe"
+   ],
+   "pages": [
+    30,
+    31,
+    221
+   ]
+  },
+  {
+   "book_id": "69b51cea261c58d636647f49",
+   "title": "Andreae Libavii Schediasmata medica et philosophica : ad Henningum Rennemannum ... pro Galenicae medicinae & peripateticae familiae scholarumque Germaniae dignitate edita",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51cea261c58d6366480aa"
+   ],
+   "pages": [
+    353
+   ]
+  },
+  {
+   "book_id": "69b51db3cf111105c428e55e",
+   "title": "Theatrvm Chemicvm : Praecipvos Selectorvm Avctorvm Tractatvs De Chemiae Et Lapidis Philosophici Antiqvitate, veritate, iure, praestantia & operationibus, continens ; In Gratiam Verae Chemiae, Et Medicinae Chemicae studiosorum ... congestum, et in tres partes seu volumina digestum ; Singvlis Volvminibvs, Svo Avctorvm Et Librorvm Catalogo Primis pagellis: rerum vero & verborum Indice postremis annexo. 3",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51db3cf111105c428e91d",
+    "69b51db3cf111105c428e91e"
+   ],
+   "pages": [
+    959,
+    960
+   ]
+  },
+  {
+   "book_id": "69b51db3ff09e4fe943a765e",
+   "title": "Singularium Andreae Libavii Pars .... 4, Continens Historiam & investigationem fontis medicati ad Tubarim sub Rotemburgo: Libros Batrachiorum duos ...: Sectiones duas historiae & confutationis Panaceae ...Et tandem de Aethiopibus & Seribus duplicibus tractatiunculam ...",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51db3ff09e4fe943a785d",
+    "69b51db3ff09e4fe943a785e",
+    "69b51db3ff09e4fe943a785f"
+   ],
+   "pages": [
+    511,
+    512,
+    513
+   ]
+  },
+  {
+   "book_id": "69b51db9768235dc65987073",
+   "title": "Vervm Inventvm : Das ist, Von den hochnützlichen, herrlichen Erfindungen vnd Künsten, welche von der löblichen Teutschen Nation, auß sonderbarem hohen Verstande vnd Scharpffsinnigkeit erstlich erfunden, vnd der Welt communiciert worden, durch welche auch nicht allein vnermäßliche Nutzbarkeiten deren zugefügt, sondern auch, vnd vielmehr grosse, merckliche, vnd fast Vniuersal Verenderungen verursachet worden",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51db9768235dc65987119"
+   ],
+   "pages": [
+    166
+   ]
+  },
+  {
+   "book_id": "69b51dceff09e4fe943a931a",
+   "title": "Theatrum Chemicum, Praecipuos Selectorum Auctorum Tractatus De Chemiae Et Lapidis Philosophici Antiquitate, veritate, iure, praestantia, & operationibus, continens : In gratiam Verae Chemiae, & medicinae Chemicae studiosorum ... congestum, & in Sex partes seu volumina digestum ; Singulis Voluminibus, Suo Auctorum Et Librorum Catalogo Primis pagellis; rerum vero & verborum Indice postremis annexo. 1",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51dceff09e4fe943a9391",
+    "69b51dceff09e4fe943a9392",
+    "69b51dceff09e4fe943a9393"
+   ],
+   "pages": [
+    119,
+    120,
+    121
+   ]
+  },
+  {
+   "book_id": "69b51e15cf111105c429678f",
+   "title": "Divini Platonis operum. 4, Continens Quaternitatem Septimam, & Octavam",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e15cf111105c4296a7d",
+    "69b51e15cf111105c4296a7e",
+    "69b51e15cf111105c4296a7f"
+   ],
+   "pages": [
+    750,
+    751,
+    752
+   ]
+  },
+  {
+   "book_id": "69b51e1c47b06ecd5818a033",
+   "title": "Henrici Cornelii Agrippae Ab Nettesheym Armatae Militiae Eqvitis Avrati ... Opera : In Dvos Tomos Concinne Digesta. 1",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e1c47b06ecd5818a106",
+    "69b51e1c47b06ecd5818a107"
+   ],
+   "pages": [
+    211,
+    212
+   ]
+  },
+  {
+   "book_id": "69b51e2cefd8df28f2db2159",
+   "title": "De episcopis Eugubinis",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e2cefd8df28f2db2198",
+    "69b51e2cefd8df28f2db2199",
+    "69b51e2cefd8df28f2db219a"
+   ],
+   "pages": [
+    63,
+    64,
+    65
+   ]
+  },
+  {
+   "book_id": "69b51e3ccf111105c4298ec4",
+   "title": "De universitate liber",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e3ccf111105c4298f02",
+    "69b51e3ccf111105c4298f03"
+   ],
+   "pages": [
+    62,
+    63
+   ]
+  },
+  {
+   "book_id": "69b51e509a81ef7feb3d2d99",
+   "title": "Io. Francisci Bvddei P. P. Introdvctio Ad Historiam Philosophiae Ebraeorvm : Accedit Dissertatio De Haeresi Valentiniana",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e509a81ef7feb3d2ef2",
+    "69b51e509a81ef7feb3d2ef3",
+    "69b51e509a81ef7feb3d2ef4"
+   ],
+   "pages": [
+    345,
+    346,
+    347
+   ]
+  },
+  {
+   "book_id": "69b51e6747b06ecd5818f505",
+   "title": "Confessio catholica. 2,1",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e6747b06ecd5818f648",
+    "69b51e6747b06ecd5818f649"
+   ],
+   "pages": [
+    323,
+    324
+   ]
+  },
+  {
+   "book_id": "69b51e69ff09e4fe943ae8a3",
+   "title": "Dissertatio Solemnis, De Philosophia Silentii",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e69ff09e4fe943ae8af",
+    "69b51e69ff09e4fe943ae8b0",
+    "69b51e69ff09e4fe943ae8b1",
+    "69b51e69ff09e4fe943ae8b2",
+    "69b51e69ff09e4fe943ae8b3"
+   ],
+   "pages": [
+    12,
+    13,
+    14,
+    15,
+    16
+   ]
+  },
+  {
+   "book_id": "69b51e9a9a81ef7feb3d7f3b",
+   "title": "R. P. Jacobi Balde è Societate Jesu Opera Poëtica Omnia : Magnam partem nunquam edita; è MM. SS. Auctoris. 1, Continet Lyrica",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51e9a9a81ef7feb3d7fdf",
+    "69b51e9a9a81ef7feb3d7fe0",
+    "69b51e9a9a81ef7feb3d7fe1",
+    "69b51e9a9a81ef7feb3d7fe2"
+   ],
+   "pages": [
+    164,
+    165,
+    166,
+    167
+   ]
+  },
+  {
+   "book_id": "69b51ea6cf111105c42a2b3f",
+   "title": "Georgii Paschii Schediasma de curiosis huius seculi inventis, quorum accuratiori cultui facem praetulit antiquitas",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b51ea6cf111105c42a2c1d",
+    "69b51ea6cf111105c42a2c1e",
+    "69b51ea6cf111105c42a2c1f",
+    "69b51ea6cf111105c42a2c20"
+   ],
+   "pages": [
+    222,
+    223,
+    224,
+    225
+   ]
+  },
+  {
+   "book_id": "69b6554418b87551bfcd33b7",
+   "title": "Pauli principis de la Scala et Hun ... primi tomi miscellaneorum, de rerum caussis & successibus atque secretiori methodo ibidem expressa effigies ac exemplar, nimirum vaticiniorum & imaginum Ioachimi abbatis Florensis Calabriae, & Anselmi episcopi Marsichani, super statu summorum pontificum Rhomanae ecclesiae, contra falsam, iniquam, vanam, confictam & seditiosam cuiusdam pseudomagi, quae nuper nomine Theophrasti Paracelsi in lucem prodiit, pseudomagicam expositionem vera, & certa, & indubitata| explanatio",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b6554418b87551bfcd344c",
+    "69b6554418b87551bfcd344d",
+    "69b6554418b87551bfcd344e",
+    "69b6554418b87551bfcd344f",
+    "69b6554418b87551bfcd3450"
+   ],
+   "pages": [
+    149,
+    150,
+    151,
+    152,
+    153
+   ]
+  },
+  {
+   "book_id": "69b657ec18b87551bfced361",
+   "title": "Francisci Hotomani iurisconsulti observationum liber IIII",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b657ec18b87551bfced396",
+    "69b657ec18b87551bfced397",
+    "69b657ec18b87551bfced398"
+   ],
+   "pages": [
+    53,
+    54,
+    55
+   ]
+  },
+  {
+   "book_id": "69b65e5eb3f4fc0441520d28",
+   "title": "Dialogus de unione personali duarum in Christo naturarum secundum mentem Sacrae Scripturae, Ecclesiae, atque Augustanae Confessionis adversus eos qui genuinam horum sententiam pervertunt",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b65e5eb3f4fc0441520d76",
+    "69b65e5eb3f4fc0441520d77"
+   ],
+   "pages": [
+    78,
+    79
+   ]
+  },
+  {
+   "book_id": "69b65f54b3f4fc0441528075",
+   "title": "Justitia Britannica : per quam liquet perspicue ...",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b65f54b3f4fc04415280b5",
+    "69b65f54b3f4fc04415280b6"
+   ],
+   "pages": [
+    64,
+    65
+   ]
+  },
+  {
+   "book_id": "69b660e2b3f4fc04415350b9",
+   "title": "Response aux cinq premieres et principales demandes de F. Jean Hay, moine jesuite, aux ministres escossois",
+   "language": "French",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "french-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b660e2b3f4fc044153514f",
+    "69b660e2b3f4fc0441535150",
+    "69b660e2b3f4fc0441535151",
+    "69b660e2b3f4fc0441535152"
+   ],
+   "pages": [
+    150,
+    151,
+    152,
+    153
+   ]
+  },
+  {
+   "book_id": "69b6b43296dc15d4a16dd8db",
+   "title": "Jeremiae Horroccii ... Opera posthuma ... Astronomia Kepleriana, defensa &amp; promota. Excerpta ex epistolis ad Crabtraeum suum. Observationum coelestium catalogus. Lunae theoria nova : ; accedunt Guilielmi Crabtraei ... Observationes coelestes. quibus accesserunt Johannis Flamstedii ... De temporis aequatione diatriba. Numeri ad lunae theoriam Horroccianam.. In calce adjiciuntur, nondum editae Johannis Wallisii ... Exercitationes tres ... De cometarum distantiis investigandis. De rationum &amp; fractionum reductione. De periodo Juliana",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b6b43296dc15d4a16dd8ff"
+   ],
+   "pages": [
+    36
+   ]
+  },
+  {
+   "book_id": "69bd9ca06120d54bd036fee4",
+   "title": "Catalogus haereticorum omnium pene qui ad haec usque tempora passim literarum monumentis proditi sunt ...",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9ca06120d54bd036ff01",
+    "69bd9ca06120d54bd036ff02"
+   ],
+   "pages": [
+    29,
+    30
+   ]
+  },
+  {
+   "book_id": "69bd9ca86120d54bd03701ab",
+   "title": "Artemidori ... De somniorum interpretatione, libri quinque",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9ca86120d54bd037021b",
+    "69bd9ca86120d54bd037021c",
+    "69bd9ca86120d54bd03702a1",
+    "69bd9ca86120d54bd03702a2",
+    "69bd9ca86120d54bd03702a3",
+    "69bd9ca86120d54bd03702a4"
+   ],
+   "pages": [
+    112,
+    113,
+    246,
+    247,
+    248,
+    249
+   ]
+  },
+  {
+   "book_id": "69bd9cb66120d54bd037078a",
+   "title": "Raimundi Lulli ... de secretis naturae sive quinta essentia libri duo : his accesserunt Alberti Magni ... de mineralibus &amp; rebus metallicis libri quinque",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9cb66120d54bd0370802",
+    "69bd9cb66120d54bd0370803",
+    "69bd9cb66120d54bd0370804"
+   ],
+   "pages": [
+    120,
+    121,
+    122
+   ]
+  },
+  {
+   "book_id": "69bd9cba6120d54bd0370923",
+   "title": "Aetii medici Graeci contractae ex veteribus medicinae tetrabiblos : hoc est quaternio, id est libri universales quatuor, singuli quatuor sermones complectentes, ut sint in summa quatuor sermonum quaterniones, id est sermones XVI",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bd9cba6120d54bd0370b25",
+    "69bd9cba6120d54bd0370b26"
+   ],
+   "pages": [
+    514,
+    515
+   ]
+  },
+  {
+   "book_id": "69bda0cef6d63c919748b171",
+   "title": "Johann Jacob Schlierbachs ... practischer Versuch und Vorstellung, vom Nutzen und Schaden des Aderlassens ...",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bda0cef6d63c919748b2a6",
+    "69bda0cef6d63c919748b2a7",
+    "69bda0cef6d63c919748b2af",
+    "69bda0cef6d63c919748b2b0",
+    "69bda0cef6d63c919748b2b1",
+    "69bda0cef6d63c919748b2b2",
+    "69bda0cef6d63c919748b2b3"
+   ],
+   "pages": [
+    309,
+    310,
+    318,
+    319,
+    320,
+    321,
+    322
+   ]
+  },
+  {
+   "book_id": "69bda0f5f6d63c919748bcb3",
+   "title": "Armamentarium ecclesiasticum : complectens arma spiritualia fortissima ad insultus diabolicos elidendos, & feliciter superandos ... pars prima [- secunda]",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bda0f5f6d63c919748bdca",
+    "69bda0f5f6d63c919748bdcb",
+    "69bda0f5f6d63c919748bdcc",
+    "69bda0f5f6d63c919748bdeb",
+    "69bda0f5f6d63c919748bdec",
+    "69bda0f5f6d63c919748bded",
+    "69bda0f5f6d63c919748bdee",
+    "69bda0f5f6d63c919748bdef"
+   ],
+   "pages": [
+    279,
+    280,
+    281,
+    312,
+    313,
+    314,
+    315,
+    316
+   ]
+  },
+  {
+   "book_id": "69bda10bf6d63c919748cb55",
+   "title": "Die Philosophie der Alten wiederkommend in der güldenen Zeit : worinnen von den unsichtbaren Anfängen des spiritus rectoris oder bildenden Geists in den Pflanzen ... gehandelt wird",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69bda10bf6d63c919748cc87",
+    "69bda10bf6d63c919748cc88",
+    "69bda10bf6d63c919748cc89",
+    "69bda10bf6d63c919748cc8a",
+    "69bda10bf6d63c919748cc95",
+    "69bda10bf6d63c919748cc96",
+    "69bda10bf6d63c919748cc97",
+    "69bda10bf6d63c919748cc98",
+    "69bda10bf6d63c919748cc99",
+    "69bda10bf6d63c919748cc9a"
+   ],
+   "pages": [
+    306,
+    307,
+    308,
+    309,
+    320,
+    321,
+    322,
+    323,
+    324,
+    325
+   ]
+  },
+  {
+   "book_id": "69dbc7cc1040d1d5e2093fd0",
+   "title": "Sermones de tempore et de sanctis",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69dbc7cc1040d1d5e20941ab",
+    "69dbc7cc1040d1d5e20941ac",
+    "69dbc7cc1040d1d5e20941ad",
+    "69dbc7cc1040d1d5e20941ae"
+   ],
+   "pages": [
+    475,
+    476,
+    477,
+    478
+   ]
+  },
+  {
+   "book_id": "69dbc7e41040d1d5e209511e",
+   "title": "Opera. Ed: Johann Amerbach, Johannes (Heynlin) de Lapide",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69dbc7e41040d1d5e20952c0",
+    "69dbc7e41040d1d5e20952c1",
+    "69dbc7e41040d1d5e20952c2"
+   ],
+   "pages": [
+    418,
+    419,
+    420
+   ]
+  },
+  {
+   "book_id": "69de99071b234a773e439b52",
+   "title": "Jatakatthavannana (Jataka with Commentary), Vol. 1",
+   "language": "Pali",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "claude-opus-5-5",
+   "lane_row": "pali-cli-opus",
+   "ocr_checked": null,
+   "page_ids": [
+    "69de99071b234a773e439d1d",
+    "69de99071b234a773e439d1e",
+    "69de99071b234a773e439d1f"
+   ],
+   "pages": [
+    459,
+    460,
+    461
+   ]
+  },
+  {
+   "book_id": "69e3ff7eb142e5dd9d6b05f7",
+   "title": "Les Liaisons dangereuses",
+   "language": "French",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "french-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69e3ff7eb142e5dd9d6b066f",
+    "69e3ff7eb142e5dd9d6b0670",
+    "69e3ff7eb142e5dd9d6b0671",
+    "69e3ff7eb142e5dd9d6b0672"
+   ],
+   "pages": [
+    120,
+    121,
+    122,
+    123
+   ]
+  },
+  {
+   "book_id": "69e41a108a8dae1074c52a29",
+   "title": "Scriptores Erotici Graeci, Vol. 2 (Xenophon of Ephesus)",
+   "language": "Greek",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "greek-cli-gemini38",
+   "ocr_checked": null,
+   "page_ids": [
+    "69e41a108a8dae1074c52a8e",
+    "69e41a108a8dae1074c52a8f",
+    "69e41a108a8dae1074c52a90",
+    "69e41a108a8dae1074c52a91",
+    "69e41a108a8dae1074c52b51",
+    "69e41a108a8dae1074c52cf6",
+    "69e41a108a8dae1074c52cf7",
+    "69e41a108a8dae1074c52cf8",
+    "69e41a108a8dae1074c52cf9",
+    "69e41a108a8dae1074c52cfa"
+   ],
+   "pages": [
+    101,
+    102,
+    103,
+    104,
+    296,
+    717,
+    718,
+    719,
+    720,
+    721
+   ]
+  },
+  {
+   "book_id": "69e41e92d0364cb0bcf7894b",
+   "title": "Carmina Burana",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69e41e92d0364cb0bcf78b06",
+    "69e41e92d0364cb0bcf78b07",
+    "69e41e92d0364cb0bcf78b08",
+    "69e41e92d0364cb0bcf78b09",
+    "69e41e92d0364cb0bcf78b0a"
+   ],
+   "pages": [
+    443,
+    444,
+    445,
+    446,
+    447
+   ]
+  },
+  {
+   "book_id": "69e747ae85f786e884a49391",
+   "title": "Bucolica, Georgica, et Aeneis",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "69e747ae85f786e884a4941e",
+    "69e747ae85f786e884a4941f",
+    "69e747ae85f786e884a49420",
+    "69e747ae85f786e884a49421"
+   ],
+   "pages": [
+    141,
+    142,
+    143,
+    144
+   ]
+  },
+  {
+   "book_id": "6a06d2fc9a48d513999627c9",
+   "title": "Francisci Vargas ... De episcoporum iurisdictione, et Pontificis Max. auctoritate, responsum.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a06d2fc9a48d5139996285f",
+    "6a06d2fc9a48d51399962860",
+    "6a06d2fc9a48d51399962861",
+    "6a06d2fc9a48d51399962862"
+   ],
+   "pages": [
+    150,
+    151,
+    152,
+    153
+   ]
+  },
+  {
+   "book_id": "6a06d30b9a48d51399962925",
+   "title": "M. Tullij Ciceronis Epistolae familiares. Pauli Manutij Scholia, quibus harum epistolarum locos complures ab alijs propter obscuritatem aut omissos, aut minus recte explanatos, partim interpretatur...",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a06d30b9a48d51399962a75",
+    "6a06d30b9a48d51399962a76",
+    "6a06d30b9a48d51399962a77",
+    "6a06d30b9a48d51399962a78"
+   ],
+   "pages": [
+    336,
+    337,
+    338,
+    339
+   ]
+  },
+  {
+   "book_id": "6a08502d15c643eb1af469ff",
+   "title": "Auli Gellii Noctium atticarum libri undeuiginti",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08502d15c643eb1af46ca0",
+    "6a08502d15c643eb1af46ca1",
+    "6a08502d15c643eb1af46ca2",
+    "6a08502d15c643eb1af46ca3",
+    "6a08502d15c643eb1af46ca4"
+   ],
+   "pages": [
+    673,
+    674,
+    675,
+    676,
+    677
+   ]
+  },
+  {
+   "book_id": "6a08515a49638a50931b889a",
+   "title": "Oribasii Sardiani Collectorum medicinalium, libri 17, qui ex magno septuaginta librorum volumine ad nostram aetatem soli peruenerunt. Ioanne Baptista Rasario, medico, Nouariensi, interprete.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08515a49638a50931b8a07",
+    "6a08515a49638a50931b8a08",
+    "6a08515a49638a50931b8a09",
+    "6a08515a49638a50931b8a95",
+    "6a08515a49638a50931b8a96"
+   ],
+   "pages": [
+    365,
+    366,
+    367,
+    507,
+    508
+   ]
+  },
+  {
+   "book_id": "6a08518715c643eb1af4a940",
+   "title": "M. Tullij Ciceronis Epistolae familiares. Pauli Manutij Scholia, quibus harum epistolarum locos complures ab alijs propter obscuritatem aut omissos, aut minus recte explanatos, partim interpretatur, partim corrigit",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08518715c643eb1af4aa84",
+    "6a08518715c643eb1af4aa85",
+    "6a08518715c643eb1af4aa86",
+    "6a08518715c643eb1af4aa87"
+   ],
+   "pages": [
+    324,
+    325,
+    326,
+    327
+   ]
+  },
+  {
+   "book_id": "6a0852c249638a50931bb682",
+   "title": "In hoc volumine haec continentur. Aurelii Cornelii Celsii Medicinae libri. 8. quam emendatissimi, Graecis etiam omnibus dictionibus restitutis. Quinti Sereni Liber de medicina et ipse castigatiss. Accedit index in Celsum, et Serenum sane quam copiosus.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a0852c249638a50931bb7c0"
+   ],
+   "pages": [
+    318
+   ]
+  },
+  {
+   "book_id": "6a08536215c643eb1af4fa3c",
+   "title": "L. Cslii Lactantii Firmiani Diuinarum institutionum libri septem. De ira Dei, liber 1 De opificio Dei, liber 1 Epitome in libros suos liber acephalos. Phoenix. Carmen de dominica resurrectione",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08536215c643eb1af4fa9b",
+    "6a08536215c643eb1af4fa9c",
+    "6a08536215c643eb1af4fa9d"
+   ],
+   "pages": [
+    95,
+    96,
+    97
+   ]
+  },
+  {
+   "book_id": "6a08539049638a50931bcff0",
+   "title": "Commentarius Pauli Manutii in epistolas Ciceronis ad Atticum. Index rerum, & verborum.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08539049638a50931bd0d3",
+    "6a08539049638a50931bd0d4",
+    "6a08539049638a50931bd0d5",
+    "6a08539049638a50931bd0d6",
+    "6a08539049638a50931bd0d7",
+    "6a08539049638a50931bd2ea",
+    "6a08539049638a50931bd2eb",
+    "6a08539049638a50931bd2ec",
+    "6a08539049638a50931bd2ed",
+    "6a08539049638a50931bd2ee"
+   ],
+   "pages": [
+    227,
+    228,
+    229,
+    230,
+    231,
+    762,
+    763,
+    764,
+    765,
+    766
+   ]
+  },
+  {
+   "book_id": "6a08549a49638a50931c01a8",
+   "title": "M. Tullii Ciceronis Orationum pars 1. Cum correctionibus P. Manutij , et annotationib. D. Lambini.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a08549a49638a50931c0286",
+    "6a08549a49638a50931c0287",
+    "6a08549a49638a50931c0288"
+   ],
+   "pages": [
+    222,
+    223,
+    224
+   ]
+  },
+  {
+   "book_id": "6a0857de15c643eb1af5cbc1",
+   "title": "In epistolas Ciceronis ad Atticvm / Pavli Manvtii commentarivs",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a0857de15c643eb1af5cf00",
+    "6a0857de15c643eb1af5cf01",
+    "6a0857de15c643eb1af5cf02",
+    "6a0857de15c643eb1af5cf03",
+    "6a0857de15c643eb1af5cf04"
+   ],
+   "pages": [
+    831,
+    832,
+    833,
+    834,
+    835
+   ]
+  },
+  {
+   "book_id": "6a085b4049638a50931cb447",
+   "title": "Commentarius Pauli Manutij in epistolas M. Tullij Ciceronis ad M. Iunium Brutum, & ad Q. Ciceronem fratrem.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a085b4049638a50931cb516",
+    "6a085b4049638a50931cb517",
+    "6a085b4049638a50931cb543",
+    "6a085b4049638a50931cb544",
+    "6a085b4049638a50931cb545",
+    "6a085b4049638a50931cb546",
+    "6a085b4049638a50931cb547"
+   ],
+   "pages": [
+    207,
+    208,
+    252,
+    253,
+    254,
+    255,
+    256
+   ]
+  },
+  {
+   "book_id": "6a0b44551615109dc53b1141",
+   "title": "Die Armpolypen in den süssen Wassern um Regensburg",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a0b44551615109dc53b1152",
+    "6a0b44551615109dc53b1153"
+   ],
+   "pages": [
+    17,
+    18
+   ]
+  },
+  {
+   "book_id": "6a10092ff7172929509680b9",
+   "title": "Histoire de la philosophie hermétique : accompagnée d'un catalogue raisonné des écrivains de cette science ... / 2",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a10092ff7172929509680f7",
+    "6a10092ff7172929509680f8",
+    "6a10092ff7172929509680f9",
+    "6a10092ff717292950968210",
+    "6a10092ff717292950968212"
+   ],
+   "pages": [
+    62,
+    63,
+    64,
+    343,
+    345
+   ]
+  },
+  {
+   "book_id": "6a1009c9f71729295096bc35",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & operationibus, continens: in gratiam verae chemiae, et medicinae chemicae studiosorum ... congestum, et in quatuor partes seu volumina digestum; singulis voluminibus, suo auctorum et librorum catalogo primis pagellis: rerum vero & verborum indice postremis annexo. Volumen primum [- quartum] / Volumen quintum.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a1009c9f71729295096be26"
+   ],
+   "pages": [
+    497
+   ]
+  },
+  {
+   "book_id": "6a100a33f71729295096e7d2",
+   "title": "Christian Wilhelm Franz Walchs ... Entwurf einer vollständigen Historie der Kezerein, Spaltungen und Religionsstreitigkeiten, bis auf die Zeiten der Reformation. Erster [- sechster] Theil / Sechster Theil.",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a100a33f71729295096eaf6",
+    "6a100a33f71729295096eaf7",
+    "6a100a33f71729295096ebc9",
+    "6a100a33f71729295096ebca"
+   ],
+   "pages": [
+    804,
+    805,
+    1015,
+    1016
+   ]
+  },
+  {
+   "book_id": "6a243c3a0f0e4f405e62d2cd",
+   "title": "D. Johannis Henrici Pott Chym. Et Medic. Profess. S.S. Pruss. Sodal. Observationum Et Animadversionum Chymicarum ... Collectio ... / 2 : Praecipue Zincum, Boracem Et Pseudogalenam, Tractantium Collectio Secunda",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a243c3a0f0e4f405e62d2fc",
+    "6a243c3a0f0e4f405e62d2fd"
+   ],
+   "pages": [
+    47,
+    48
+   ]
+  },
+  {
+   "book_id": "6a267c4c6c1f37c9c4f35e3d",
+   "title": "Dissertatio Inauguralis Medica De Cacochymia Discreto Et Limitato Sensu Accipienda",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a267c4c6c1f37c9c4f35e43",
+    "6a267c4c6c1f37c9c4f35e44"
+   ],
+   "pages": [
+    6,
+    7
+   ]
+  },
+  {
+   "book_id": "6a267d786c1f37c9c4f3a188",
+   "title": "Hermetum Trismegistum, Literarum Inventorem, sive Mercurium",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a267d786c1f37c9c4f3a194",
+    "6a267d786c1f37c9c4f3a195",
+    "6a267d786c1f37c9c4f3a196"
+   ],
+   "pages": [
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "book_id": "6a267eca6c1f37c9c4f3cbf7",
+   "title": "Remonstrantie von wegen Deß Königs in Böhmen",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "german-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a267eca6c1f37c9c4f3cbfc",
+    "6a267eca6c1f37c9c4f3cbfd"
+   ],
+   "pages": [
+    5,
+    6
+   ]
+  },
+  {
+   "book_id": "6a26ba3d61b3857ed05ae445",
+   "title": "Joannis Iusti Losii, Hildesiensis Biga Dissertationum, Quarum Prima exhibet Sefer ha-tapūaḥ Sive Librum De Pomo Aristotelis, Quod moribundus in manu gestaverit, cuius odore adstantibus aliis Philosophis ad confortationem virium frueretur, quousque discursum absolvisset, Ex Arabica lingua in Ebræo-Rabbinicam translatum à R. Abraham Levita, Nunc latine versum, &amp; notis illustratum : Altera ostendit Consensum Kabbalisticorum cum Philosophiâ Academica &amp; Peripatetica dogmatum per quinque capita ; Cum Præfatione Dn. D. Jo. Henrici Maji, SS. Theol. &amp; LL. OO. P.P. in inclyta Ludoviciana",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a26ba3d61b3857ed05ae449",
+    "6a26ba3d61b3857ed05ae44a",
+    "6a26ba3d61b3857ed05ae44b",
+    "6a26ba3d61b3857ed05ae44c"
+   ],
+   "pages": [
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "book_id": "6a3f029897e91e1768f67bf4",
+   "title": "De providentia & fato: ...  1655",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a3f029897e91e1768f67c30",
+    "6a3f029897e91e1768f67c31"
+   ],
+   "pages": [
+    60,
+    61
+   ]
+  },
+  {
+   "book_id": "6a4266e0dfbbb4d07aa70500",
+   "title": "Quadratura circuli, cubatio sphæræ, duplicatio cubi, breviter demonstrata. Auct. Tho. Hobbes.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4266e0dfbbb4d07aa70512",
+    "6a4266e0dfbbb4d07aa70513"
+   ],
+   "pages": [
+    18,
+    19
+   ]
+  },
+  {
+   "book_id": "6a433973201f98f53c3eeb14",
+   "title": "Specimen Antinomiarum Mevianarum: Ex Decisionibus Vismariensibus ad Lydium lapidem revocatarum: Cum Adiecta Crisi, Exhibitum Ab Ottone Philippo Zaunschliffero, ICto, Antecessore Iuris, & Syndico Univ. Marburg.",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a433973201f98f53c3eeb22",
+    "6a433973201f98f53c3eeb23"
+   ],
+   "pages": [
+    14,
+    15
+   ]
+  },
+  {
+   "book_id": "6a4438deaa50a8e8f5051b57",
+   "title": "Istorie fiorentine, Volume 1",
+   "language": "Italian",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "italian-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4438deaa50a8e8f5051cb5",
+    "6a4438deaa50a8e8f5051cb6",
+    "6a4438deaa50a8e8f5051cb7",
+    "6a4438deaa50a8e8f5051cb8"
+   ],
+   "pages": [
+    350,
+    351,
+    352,
+    353
+   ]
+  },
+  {
+   "book_id": "6a4b5e80c8fb186d83282c0a",
+   "title": "Praefica Romana sive De Funeribus Romanorum Disquisitio , Quam ... Sub Patrocinio ... Christiani Gueinzii ICti. in theatro litterario repraesentat Johannes Christophorus Lichtnerus Nymizensis-Boimannus In Acroaterio consueto. Propridie Idus Novembres. Ann",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "cli",
+   "engine": "gemini-3.8-flash+agy-cli",
+   "lane_row": "latin-cli-agy4",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4b5e80c8fb186d83282c29",
+    "6a4b5e80c8fb186d83282c2a",
+    "6a4b5e80c8fb186d83282c2b"
+   ],
+   "pages": [
+    13,
+    14,
+    15
+   ]
+  }
+ ],
+ "paid": [
+  {
+   "book_id": "69c830506c6f3cc53c84da00",
+   "title": "Schola sapientum, das ist: Schul der Weisen",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f734a35439ac83f7669d2d",
+    "69f734a65439ac83f7669d36",
+    "69f734e75439ac83f7669e2a",
+    "69f734e75439ac83f7669e2b"
+   ],
+   "pages": [
+    359,
+    360,
+    600,
+    601
+   ]
+  },
+  {
+   "book_id": "69c81c766c6f3cc53c849c90",
+   "title": "Geloove, hoope, en liefde der Christenen, vertoond in den tweeden brief van den heiligen apostel Simeon Petrus",
+   "language": "Dutch",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f71e757cf8039a9e099297",
+    "69f71e787cf8039a9e09929c",
+    "69f71ef17cf8039a9e0993f3",
+    "69f71ef17cf8039a9e0993f0",
+    "69f71ef17cf8039a9e0993f1",
+    "69f71ef47cf8039a9e0993fc"
+   ],
+   "pages": [
+    199,
+    200,
+    547,
+    548,
+    549,
+    550
+   ]
+  },
+  {
+   "book_id": "6a98ba03ec48f9ad103e26e1",
+   "title": "Ancient Records of Egypt, Volume III: The Nineteenth Dynasty",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a98ba03ec48f9ad103e27e7",
+    "6a98ba03ec48f9ad103e27e8",
+    "6a98ba03ec48f9ad103e27e9"
+   ],
+   "pages": [
+    262,
+    263,
+    264
+   ]
+  },
+  {
+   "book_id": "69c74f7f6a0f3d112faf848b",
+   "title": "Operis politici: variis digressionibus philologicis & iuridicis illustrati",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f6abd49c2e91f595253556",
+    "69f6abd49c2e91f595253551"
+   ],
+   "pages": [
+    345,
+    346
+   ]
+  },
+  {
+   "book_id": "69af42623fd91d39913994f1",
+   "title": "Литературные изгнанники, том 1",
+   "language": "Russian",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af42623fd91d399139961b"
+   ],
+   "pages": [
+    298
+   ]
+  },
+  {
+   "book_id": "6a3f025d97e91e1768f67165",
+   "title": "Walter Budge, The History of Alexander the Great: Being the Syriac Version of the Pseudo-Callisthenes ",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a3f025d97e91e1768f67174",
+    "6a3f025d97e91e1768f67175"
+   ],
+   "pages": [
+    15,
+    16
+   ]
+  },
+  {
+   "book_id": "69af23cfc6df16b7172aa795",
+   "title": "Исторія Государства Россійскаго. Т.9",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af23cfc6df16b7172aa814",
+    "69af23cfc6df16b7172aa815",
+    "69af23cfc6df16b7172aa818",
+    "69af23cfc6df16b7172aa819",
+    "69af23cfc6df16b7172aa81a",
+    "69af23cfc6df16b7172aaa0e",
+    "69af23cfc6df16b7172aaa0f",
+    "69af23cfc6df16b7172aaa10"
+   ],
+   "pages": [
+    127,
+    128,
+    131,
+    132,
+    133,
+    633,
+    634,
+    635
+   ]
+  },
+  {
+   "book_id": "6992d66546b85e738a0c3d03",
+   "title": "Garuda Purana",
+   "language": "Sanskrit",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "flash-measured",
+   "ocr_checked": null,
+   "page_ids": [
+    "6992f1ec6e218326b27d4fec",
+    "6992f1ec6e218326b27d4fed",
+    "6992f1ec6e218326b27d4ff0",
+    "6992f1ec6e218326b27d4ff1",
+    "6992f1ec6e218326b27d5096",
+    "6992f1ec6e218326b27d5097",
+    "6992f1ec6e218326b27d5098",
+    "6992f1ec6e218326b27d5099",
+    "6992f1ec6e218326b27d509a"
+   ],
+   "pages": [
+    154,
+    155,
+    158,
+    159,
+    324,
+    325,
+    326,
+    327,
+    328
+   ]
+  },
+  {
+   "book_id": "69c836fb6c6f3cc53c84ed48",
+   "title": "Versuch eines fruchtbaren Auszugs der Kirchengeschichte",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f718c09e664dc9a4a60610",
+    "69f718c09e664dc9a4a60609",
+    "69f718c09e664dc9a4a6060a",
+    "69f718d49e664dc9a4a6064a",
+    "69f718d49e664dc9a4a6064b"
+   ],
+   "pages": [
+    485,
+    486,
+    487,
+    547,
+    548
+   ]
+  },
+  {
+   "book_id": "69af11dba03f6f3663ba9133",
+   "title": "Сочинения А.П. Чехова. Том 10: Остров Сахалин",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af11dba03f6f3663ba917f",
+    "69af11dba03f6f3663ba9180",
+    "69af11dba03f6f3663ba9202"
+   ],
+   "pages": [
+    76,
+    77,
+    207
+   ]
+  },
+  {
+   "book_id": "69e8b28a2ff2a8dc09e77ff4",
+   "title": "मूलमध्यमककारिका (Mūlamadhyamakakārikā)",
+   "language": "Sanskrit",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "flash-measured",
+   "ocr_checked": null,
+   "page_ids": [
+    "6a270d47fba8f3d78dd8c00c",
+    "6a270d47fba8f3d78dd8c00d"
+   ],
+   "pages": [
+    291,
+    292
+   ]
+  },
+  {
+   "book_id": "69c72032da9771c716316baf",
+   "title": "Canon chronicus Aegyptiacus, Ebraicus, Graecus, & disquisitiones",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f725459af7183e61670523",
+    "69f725459af7183e61670520"
+   ],
+   "pages": [
+    437,
+    438
+   ]
+  },
+  {
+   "book_id": "69c85cb76c6f3cc53c854d3f",
+   "title": "The Divine Being and its attributes",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f5303a03c63fddf5f68fab",
+    "69f5303a03c63fddf5f68fac"
+   ],
+   "pages": [
+    178,
+    179
+   ]
+  },
+  {
+   "book_id": "69907cb2554109373fedd9a3",
+   "title": "On the Original Inhabitants of Bharatavarsa or India",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69907cb2554109373feddb6d",
+    "69907cb2554109373feddb6e"
+   ],
+   "pages": [
+    458,
+    459
+   ]
+  },
+  {
+   "book_id": "69c7dd28bae5db59ace1a068",
+   "title": "Historie der Wiedergebohrnen",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f767ba43d815c54ccad231",
+    "69f767ba43d815c54ccad22e",
+    "69f767d743d815c54ccad28f",
+    "69f767d543d815c54ccad288",
+    "69f768a143d815c54ccad4e2",
+    "69f768a143d815c54ccad4e3",
+    "69f768a243d815c54ccad4e8",
+    "69f768a243d815c54ccad4e9"
+   ],
+   "pages": [
+    527,
+    528,
+    613,
+    614,
+    1212,
+    1213,
+    1214,
+    1215
+   ]
+  },
+  {
+   "book_id": "6a4a3ee5f0f4a3b75e90e924",
+   "title": "An Ecclesiastical History, Ancient and Modern, Vol. 2",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4a3ee5f0f4a3b75e90ea3a",
+    "6a4a3ee5f0f4a3b75e90eafd"
+   ],
+   "pages": [
+    278,
+    473
+   ]
+  },
+  {
+   "book_id": "6909d654cf28baa1b4cb0269",
+   "title": "Opuscula theologici, historici et philosophici argumenti tomi prioris",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f756d2a90a22185d37b87a",
+    "69f756d1a90a22185d37b873"
+   ],
+   "pages": [
+    673,
+    674
+   ]
+  },
+  {
+   "book_id": "69c843436c6f3cc53c850f39",
+   "title": "Das platonisch-hermetische Christenthum",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f767dc90139e9166c22361",
+    "69f767dc90139e9166c2235e",
+    "69f767e690139e9166c22381",
+    "69f767ea90139e9166c2238c",
+    "69f7688590139e9166c22529"
+   ],
+   "pages": [
+    643,
+    644,
+    679,
+    680,
+    1103
+   ]
+  },
+  {
+   "book_id": "69c7053eda9771c716315aae",
+   "title": "Ausführliche Untersuchung der Gründe für die Aechtheit und Glaubwürdigkeit der schriftlichen Urkunden des Christenthums",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f69ef2732ea17e06b8edf3",
+    "69f69ef2732ea17e06b8edf4",
+    "69f69ef3732ea17e06b8edf9",
+    "69f69f3d732ea17e06b8eeb0",
+    "69f69f41732ea17e06b8eebb"
+   ],
+   "pages": [
+    150,
+    151,
+    152,
+    349,
+    350
+   ]
+  },
+  {
+   "book_id": "6a98bb97ec48f9ad103e3a85",
+   "title": "Ancient Records of Assyria and Babylonia, Volume II: Historical Records of Assyria from Sargon to the End",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a98bb97ec48f9ad103e3b92",
+    "6a98bb97ec48f9ad103e3b93",
+    "6a98bb97ec48f9ad103e3b94"
+   ],
+   "pages": [
+    269,
+    270,
+    271
+   ]
+  },
+  {
+   "book_id": "69c83b7a6c6f3cc53c84f699",
+   "title": "Posthuma",
+   "language": "Latin",
+   "hold": "by-eye-wrong-leaf-6420",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f7497b0ceb71cb052c9779",
+    "69f749880ceb71cb052c97a6",
+    "69f749870ceb71cb052c979d",
+    "69f749870ceb71cb052c979e",
+    "69f749ab0ceb71cb052c9812",
+    "69f749ab0ceb71cb052c980b",
+    "69f749ab0ceb71cb052c980c"
+   ],
+   "pages": [
+    34,
+    71,
+    72,
+    73,
+    187,
+    188,
+    189
+   ]
+  },
+  {
+   "book_id": "69b525a829577f283b57a2d2",
+   "title": "Nor ktakaran srboy Awetarani Tearn meroy Yisusi Kristosi.",
+   "language": "Armenian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69b525a829577f283b57a30e",
+    "69b525a829577f283b57a30f",
+    "69b525a829577f283b57a33b",
+    "69b525a829577f283b57a33c",
+    "69b525a829577f283b57a33d",
+    "69b525a829577f283b57a391",
+    "69b525a829577f283b57a392"
+   ],
+   "pages": [
+    60,
+    61,
+    105,
+    106,
+    107,
+    191,
+    192
+   ]
+  },
+  {
+   "book_id": "6a9f346b9a132af3854466d6",
+   "title": "Travels in Nubia",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a9f346b9a132af3854467cc",
+    "6a9f346b9a132af3854467cd"
+   ],
+   "pages": [
+    246,
+    247
+   ]
+  },
+  {
+   "book_id": "69c803536c6f3cc53c844af1",
+   "title": "Alcoran",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f6fead06cac8cfcfca314a"
+   ],
+   "pages": [
+    339
+   ]
+  },
+  {
+   "book_id": "69c7a81892b884e4f8173d17",
+   "title": "Erklärte Offenbarung Johannis und vielmehr Jesu Christi",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f75cb7b3ac19626affff76",
+    "69f75cb8b3ac19626affff79",
+    "69f75cb8b3ac19626affff7a",
+    "69f75cb8b3ac19626affff7b",
+    "69f75ccdb3ac19626affffae",
+    "69f75ccdb3ac19626affffa9",
+    "69f75d53b3ac19626a000135",
+    "69f75d52b3ac19626a00012c"
+   ],
+   "pages": [
+    445,
+    446,
+    447,
+    448,
+    495,
+    496,
+    887,
+    888
+   ]
+  },
+  {
+   "book_id": "69b18a7cc4be2cdd0edc7c3b",
+   "title": "Leviathan, of van de Stoffe",
+   "language": "Dutch",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69b18a7cc4be2cdd0edc7e29",
+    "69b18a7cc4be2cdd0edc7e2a",
+    "69b18a7cc4be2cdd0edc7f73",
+    "69b18a7cc4be2cdd0edc7f74",
+    "69b18a7cc4be2cdd0edc7f75",
+    "69b18a7cc4be2cdd0edc7f76"
+   ],
+   "pages": [
+    494,
+    495,
+    824,
+    825,
+    826,
+    827
+   ]
+  },
+  {
+   "book_id": "6992590b8812793469fe0503",
+   "title": "The Conception of Buddhist Nirvana",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6992590b8812793469fe0637",
+    "6992590b8812793469fe0638"
+   ],
+   "pages": [
+    308,
+    309
+   ]
+  },
+  {
+   "book_id": "69a5f469d4c2e3cf8ecb9324",
+   "title": "Le Livre de lAscension de lEsprit: Cours dAstronomie",
+   "language": "Syriac",
+   "hold": "syriac-retranslation-awaits-derek",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69a5f469d4c2e3cf8ecb95c3",
+    "69a5f469d4c2e3cf8ecb95c4",
+    "69a5f469d4c2e3cf8ecb95c5",
+    "69a5f469d4c2e3cf8ecb95c6"
+   ],
+   "pages": [
+    671,
+    672,
+    673,
+    674
+   ]
+  },
+  {
+   "book_id": "69ac9bb499d9a0170d090bb2",
+   "title": "Confessions",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ac9bb499d9a0170d090c38",
+    "69ac9bb499d9a0170d090c39"
+   ],
+   "pages": [
+    134,
+    135
+   ]
+  },
+  {
+   "book_id": "69ad65cc75811c30866e1f80",
+   "title": "Lives of the Sophists (Philostratus and Eunapius)",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ad65cc75811c30866e2015"
+   ],
+   "pages": [
+    149
+   ]
+  },
+  {
+   "book_id": "69ad7117c5001c07fa84719a",
+   "title": "Cicero's Tusculan Disputations, On the Nature of the Gods, and On the Commonwealth",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ad7117c5001c07fa8471d0",
+    "69ad7117c5001c07fa8471d1",
+    "69ad7117c5001c07fa8471d2",
+    "69ad7117c5001c07fa8471ee",
+    "69ad7117c5001c07fa8471ef",
+    "69ad7117c5001c07fa8471f0",
+    "69ad7117c5001c07fa84725c",
+    "69ad7117c5001c07fa84725d",
+    "69ad7117c5001c07fa84725e"
+   ],
+   "pages": [
+    54,
+    55,
+    56,
+    84,
+    85,
+    86,
+    194,
+    195,
+    196
+   ]
+  },
+  {
+   "book_id": "69ade989bbdf273192a46c0e",
+   "title": "Sobranie sochinenii, vol. 4",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ade989bbdf273192a46de8",
+    "69ade989bbdf273192a46de9"
+   ],
+   "pages": [
+    474,
+    475
+   ]
+  },
+  {
+   "book_id": "69ae9b5b0c67f8f6d433e717",
+   "title": "The Book of Enoch",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ae9b5b0c67f8f6d433e891",
+    "69ae9b5b0c67f8f6d433e892",
+    "69ae9b5b0c67f8f6d433e893"
+   ],
+   "pages": [
+    378,
+    379,
+    380
+   ]
+  },
+  {
+   "book_id": "69af22dff98f6eff774cd775",
+   "title": "Сочиненія А. И. Герцена и Переписка съ Н. А. Захарьиной. Т. 7",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af22dff98f6eff774cd934",
+    "69af22dff98f6eff774cd935"
+   ],
+   "pages": [
+    447,
+    448
+   ]
+  },
+  {
+   "book_id": "69af22f2f98f6eff774cdb06",
+   "title": "О повреждении нравовъ въ Россіи князя Щербатова и Путешествіе А. Радищева",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af22f2f98f6eff774cdc20",
+    "69af22f2f98f6eff774cdc21",
+    "69af22f2f98f6eff774cdc22",
+    "69af22f2f98f6eff774cdc23"
+   ],
+   "pages": [
+    282,
+    283,
+    284,
+    285
+   ]
+  },
+  {
+   "book_id": "69af380405844800f9d80d60",
+   "title": "Сочиненія Ломоносова. Том 3",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af380405844800f9d80db7",
+    "69af380405844800f9d80db8",
+    "69af380405844800f9d80db9"
+   ],
+   "pages": [
+    87,
+    88,
+    89
+   ]
+  },
+  {
+   "book_id": "69af3ab8102120ca71f01ee4",
+   "title": "П.Я. Чаадаевъ: жизнь и мышленіе",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af3ab8102120ca71f01f58",
+    "69af3ab8102120ca71f01f59",
+    "69af3ab8102120ca71f01f5a"
+   ],
+   "pages": [
+    116,
+    117,
+    118
+   ]
+  },
+  {
+   "book_id": "69af3de6dec9c66a7172ba54",
+   "title": "Взаимная помощь, как фактор эволюции",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af3de6dec9c66a7172ba94",
+    "69af3de6dec9c66a7172ba95"
+   ],
+   "pages": [
+    64,
+    65
+   ]
+  },
+  {
+   "book_id": "69af4063ec3bbb60b1d38352",
+   "title": "Quintilian, Institutio Oratoria, Vol. IV (Loeb)",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af4063ec3bbb60b1d3840f",
+    "69af4063ec3bbb60b1d38410",
+    "69af4063ec3bbb60b1d38411"
+   ],
+   "pages": [
+    189,
+    190,
+    191
+   ]
+  },
+  {
+   "book_id": "69af41c6eaef59aff2e0e6a4",
+   "title": "Опавшие листья. Короб 2",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af41c6eaef59aff2e0e733",
+    "69af41c6eaef59aff2e0e734"
+   ],
+   "pages": [
+    143,
+    144
+   ]
+  },
+  {
+   "book_id": "69af424d3fd91d399139930c",
+   "title": "Итальянские впечатления",
+   "language": "Russian",
+   "hold": "title-leaf-recitation-6297",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af424d3fd91d3991399430",
+    "69af424d3fd91d3991399431"
+   ],
+   "pages": [
+    292,
+    293
+   ]
+  },
+  {
+   "book_id": "69af42d73bd5f6f35ab89b8f",
+   "title": "Полное собрание сочинений К. С. Аксакова, том 1",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af42d73bd5f6f35ab89bd9",
+    "69af42d73bd5f6f35ab89c1d",
+    "69af42d73bd5f6f35ab89c1e",
+    "69af42d73bd5f6f35ab89c1f"
+   ],
+   "pages": [
+    74,
+    142,
+    143,
+    144
+   ]
+  },
+  {
+   "book_id": "69af47c14a5e5a377fef964c",
+   "title": "Достоевский и Ницше (Философия трагедии)",
+   "language": "Russian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69af47c14a5e5a377fef9675"
+   ],
+   "pages": [
+    41
+   ]
+  },
+  {
+   "book_id": "69b525a829577f283b57a187",
+   "title": "Girkh patmoutheanc /, šaradreal vardapetin Aṙakheloj Davrēžacuoj : saks dipoûatsoc Hajastaneajc' eu eus gauaṙin Araratoj eu masin Goghthan gauaṙi, skseal 'i thoûojn Hajoc 1054 ēn minceu jauart patmagrouthẽs, ajleu 'i jišoumn aceal masnauorabar, asti eu anti.",
+   "language": "Armenian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69b525a829577f283b57a284",
+    "69b525a829577f283b57a285"
+   ],
+   "pages": [
+    253,
+    254
+   ]
+  },
+  {
+   "book_id": "69b525ac95677df8153c6c28",
+   "title": "Tšašoc girkh gegheckatip eû vajelouč gaghaphareceal 'i matenic hnoc thagaûoracn Hajoc.",
+   "language": "Armenian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69b525ac95677df8153c6c35",
+    "69b525ac95677df8153c6c36",
+    "69b525ac95677df8153c6df5",
+    "69b525ac95677df8153c6df7",
+    "69b525ac95677df8153c6df8"
+   ],
+   "pages": [
+    13,
+    14,
+    461,
+    463,
+    464
+   ]
+  },
+  {
+   "book_id": "69b63ec509a998b4c36dd211",
+   "title": "Heaven and Its Wonders, and Hell",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69b63ec609a998b4c36dd3f7",
+    "69b63ec609a998b4c36dd3f8"
+   ],
+   "pages": [
+    486,
+    487
+   ]
+  },
+  {
+   "book_id": "69b99f786ed9e0490990abcf",
+   "title": "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+   "language": "Chinese",
+   "hold": "paddle-print-6101",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "flash-measured",
+   "ocr_checked": null,
+   "page_ids": [
+    "69b99f786ed9e0490990ada3",
+    "69b99f786ed9e0490990ada4"
+   ],
+   "pages": [
+    468,
+    469
+   ]
+  },
+  {
+   "book_id": "69c581f0a0ac0c96f42b4018",
+   "title": "Een verklaringh over het getal 666",
+   "language": "Dutch",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f68f053c3d96c48685b747",
+    "69f68f053c3d96c48685b748",
+    "69f68f343c3d96c48685b7be",
+    "69f68f343c3d96c48685b7bf",
+    "69f68f353c3d96c48685b7c4",
+    "69f68f353c3d96c48685b7c5",
+    "69f68f343c3d96c48685b7c0"
+   ],
+   "pages": [
+    143,
+    144,
+    260,
+    261,
+    262,
+    263,
+    264
+   ]
+  },
+  {
+   "book_id": "69c634823e8cae136d1497fa",
+   "title": "Versuch über die Beschuldigungen welche dem Tempelherrenorden gemacht worden, und über dessen Geheimniss",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f512bb2c50c99ed1a6683b",
+    "69f512bb2c50c99ed1a6683c",
+    "69f512be2c50c99ed1a6683d"
+   ],
+   "pages": [
+    98,
+    99,
+    100
+   ]
+  },
+  {
+   "book_id": "69c6fd8ada9771c7163154e0",
+   "title": "Vom Zank und Streit der Gelehrten um Christi Testamenta",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f5c228a34222a227073b5a",
+    "69f5c22ba34222a227073b5b",
+    "69f5c22ba34222a227073b5c",
+    "69f5c22da34222a227073b5d",
+    "69f5c22da34222a227073b5e",
+    "69f5c22fa34222a227073b5f"
+   ],
+   "pages": [
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+   ]
+  },
+  {
+   "book_id": "69c735f26a0f3d112faf75cb",
+   "title": "Diatribe theologica de Antichristo",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f67dbda116d9e6d57f47d1",
+    "69f67dbda116d9e6d57f47d2",
+    "69f67dbda116d9e6d57f47cd"
+   ],
+   "pages": [
+    104,
+    105,
+    106
+   ]
+  },
+  {
+   "book_id": "69c77c816a0f3d112faf96d0",
+   "title": "Über Heilige Schrift, Judenthum, Recht der höchsten Gewalt in geistlichen Dingen, und Freyheit zu philosophiren",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f6cdc4efcf8572c71eb52b",
+    "69f6cdc7efcf8572c71eb534"
+   ],
+   "pages": [
+    359,
+    360
+   ]
+  },
+  {
+   "book_id": "69c7d4dc25ec2ba5ccd8050a",
+   "title": "Physiologia Medica",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f7419e5be574e98e484339",
+    "69f7419e5be574e98e484336",
+    "69f7429d5be574e98e484641"
+   ],
+   "pages": [
+    71,
+    72,
+    859
+   ]
+  },
+  {
+   "book_id": "69c7e10c295ea01b70c8d66c",
+   "title": "Sententiae",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f72f916415e6e30f897a24",
+    "69f72f936415e6e30f897a2d",
+    "69f72f936415e6e30f897a2e"
+   ],
+   "pages": [
+    469,
+    470,
+    471
+   ]
+  },
+  {
+   "book_id": "69c7f9746c6f3cc53c8426c1",
+   "title": "Chymisches Laboratorium oder unter-erdische Naturkündigung",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f728b9a3ddafd239727e8b",
+    "69f728b8a3ddafd239727e86",
+    "69f728cda3ddafd239727ecb",
+    "69f728cda3ddafd239727ed0",
+    "69f728cda3ddafd239727ed1"
+   ],
+   "pages": [
+    651,
+    652,
+    725,
+    726,
+    727
+   ]
+  },
+  {
+   "book_id": "69c8078c6c6f3cc53c8458e1",
+   "title": "Coelum philosophorum, seu liber de secretis naturae. Directorium summae summarum medicinae",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f70d10eb983d3177916436",
+    "69f70d10eb983d3177916437",
+    "69f70d0feb983d3177916434",
+    "69f70d0feb983d3177916435"
+   ],
+   "pages": [
+    164,
+    165,
+    166,
+    167
+   ]
+  },
+  {
+   "book_id": "69c8088e6c6f3cc53c845de2",
+   "title": "Opus aureum ... drey unterschiedliche Tractat von der Alchimey",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f51e719bcd0f7d324e6430"
+   ],
+   "pages": [
+    177
+   ]
+  },
+  {
+   "book_id": "69c80e8c6c6f3cc53c846ff7",
+   "title": "Leben des Freyherrn Gottfried Wilhelm von Leibnitz",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f5c66a4c888670f6920c49",
+    "69f5c66a4c888670f6920c4a",
+    "69f5c66d4c888670f6920c4b",
+    "69f5c66d4c888670f6920c4c"
+   ],
+   "pages": [
+    48,
+    49,
+    50,
+    51
+   ]
+  },
+  {
+   "book_id": "69c8103c6c6f3cc53c8474c3",
+   "title": "Die Grewel der Verwüstung menschlichen Geschlechtes",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f76bb66cac47661d16f801",
+    "69f76dac6cac47661d16fbbf",
+    "69f76dac6cac47661d16fbb8"
+   ],
+   "pages": [
+    251,
+    1217,
+    1218
+   ]
+  },
+  {
+   "book_id": "69c81ce16c6f3cc53c849e00",
+   "title": "Prima, media, et ultima. Ofte de eerste, middelste en laetste dingen",
+   "language": "Dutch",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f7380b0bddaedd07a7d6dd",
+    "69f7380b0bddaedd07a7d6de",
+    "69f7380b0bddaedd07a7d6df",
+    "69f7380b0bddaedd07a7d6e4"
+   ],
+   "pages": [
+    345,
+    346,
+    347,
+    348
+   ]
+  },
+  {
+   "book_id": "69c8231f6c6f3cc53c84af44",
+   "title": "Collegium physico-chymicum experimentale, oder Laboratorium chymicum",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f72fd0af211d6a0f2d3739",
+    "69f72fd0af211d6a0f2d3734",
+    "69f72fd0af211d6a0f2d3735"
+   ],
+   "pages": [
+    541,
+    542,
+    543
+   ]
+  },
+  {
+   "book_id": "69c828246c6f3cc53c84c283",
+   "title": "Einleitung zur Alchimie",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f4bcad4eff233fc39fce0b",
+    "69f4bcad4eff233fc39fce0c",
+    "69f4bcb04eff233fc39fce0d"
+   ],
+   "pages": [
+    36,
+    37,
+    38
+   ]
+  },
+  {
+   "book_id": "69c82cb66c6f3cc53c84cf65",
+   "title": "De resurrectione mortuorum libri III",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f6ab2c4e0a64269f268a5d",
+    "69f6ab2c4e0a64269f268a58",
+    "69f6ab2c4e0a64269f268a59"
+   ],
+   "pages": [
+    377,
+    378,
+    379
+   ]
+  },
+  {
+   "book_id": "69c82de66c6f3cc53c84d4bf",
+   "title": "Specimen philologicum de veterum gentilium et judaeorum theologia mythica",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f5341a67d99f24d955d23b",
+    "69f5341f67d99f24d955d23c"
+   ],
+   "pages": [
+    37,
+    38
+   ]
+  },
+  {
+   "book_id": "69c836106c6f3cc53c84eaa5",
+   "title": "Kurtzgefasste Historie von den zehen Haupt-Verfolgungen der ersten Christen",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f69412db4ab4b741e970ed",
+    "69f69412db4ab4b741e970f2",
+    "69f69412db4ab4b741e970f3",
+    "69f6941cdb4ab4b741e97117",
+    "69f6941cdb4ab4b741e97114"
+   ],
+   "pages": [
+    135,
+    136,
+    137,
+    177,
+    178
+   ]
+  },
+  {
+   "book_id": "69c84dda6c6f3cc53c8527eb",
+   "title": "Lehr und geistreiche [...] Predigten",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f74393a765ef41f8e34d54"
+   ],
+   "pages": [
+    303
+   ]
+  },
+  {
+   "book_id": "69c85edf6c6f3cc53c85532c",
+   "title": "Brief aan den heer Fredericus Spanhemius ... waarin de leere der Doopsgesinden nader uytgelegt en verdedigt werdt",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f6613c544e60f4b5b5d2fa",
+    "69f6613f544e60f4b5b5d307",
+    "69f6613f544e60f4b5b5d308",
+    "69f6613f544e60f4b5b5d305",
+    "69f6613f544e60f4b5b5d306"
+   ],
+   "pages": [
+    29,
+    30,
+    31,
+    32,
+    33
+   ]
+  },
+  {
+   "book_id": "69c869926c6f3cc53c8568a7",
+   "title": "Apologia: das ist, Verandtwortung: fuer Herr Caspar Schwenckfelden",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f66bfeb8cbdb313ff75f14"
+   ],
+   "pages": [
+    167
+   ]
+  },
+  {
+   "book_id": "69c87c636c6f3cc53c8589e4",
+   "title": "[Cyrillisch:] De leer der getallen",
+   "language": "German",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69f6998a2218a4d672a4ccf8",
+    "69f6998a2218a4d672a4ccef"
+   ],
+   "pages": [
+    271,
+    272
+   ]
+  },
+  {
+   "book_id": "69e00a0d846d79f28d56750c",
+   "title": "Nursery Tales, Traditions, and Histories of the Zulus (bilingual)",
+   "language": "Zulu",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69e00a0d846d79f28d567537",
+    "69e00a0d846d79f28d567538",
+    "69e00a0d846d79f28d567539",
+    "69e00a0d846d79f28d56753a",
+    "69e00a0d846d79f28d5675dd"
+   ],
+   "pages": [
+    43,
+    44,
+    45,
+    46,
+    209
+   ]
+  },
+  {
+   "book_id": "69e00fc3c47b5c9f88212149",
+   "title": "Ke Kauoha Hou (Hawaiian New Testament)",
+   "language": "Hawaiian",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69e00fc3c47b5c9f882122f5",
+    "69e00fc3c47b5c9f882122f6"
+   ],
+   "pages": [
+    428,
+    429
+   ]
+  },
+  {
+   "book_id": "69e0113dc47b5c9f88214596",
+   "title": "The Damathat (Laws of Manu, bilingual Burmese/English)",
+   "language": "Burmese",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69e0113dc47b5c9f88214633",
+    "69e0113dc47b5c9f88214634",
+    "69e0113dc47b5c9f88214635"
+   ],
+   "pages": [
+    157,
+    158,
+    159
+   ]
+  },
+  {
+   "book_id": "69e167363615607a59942032",
+   "title": "Kāmasūtra of Vātsyāyana with Yaśodhara's Jayamaṅgalā Commentary",
+   "language": "Sanskrit",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "flash-measured",
+   "ocr_checked": null,
+   "page_ids": [
+    "69e1673b3615607a5994208c",
+    "69e1673b3615607a5994208d"
+   ],
+   "pages": [
+    90,
+    91
+   ]
+  },
+  {
+   "book_id": "69e961542beefe2f6f72b0a2",
+   "title": "رسالة ابن فضلان (Risāla of Ibn Fadlan)",
+   "language": "Arabic",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "flash-measured",
+   "ocr_checked": null,
+   "page_ids": [
+    "69e961542beefe2f6f72b13b",
+    "69e961542beefe2f6f72b13c"
+   ],
+   "pages": [
+    153,
+    154
+   ]
+  },
+  {
+   "book_id": "69ea3eac300d991d0f1d3d7e",
+   "title": "معجم البلدان (Muʿjam al-Buldān), Vol. I",
+   "language": "Arabic",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "flash-measured",
+   "ocr_checked": null,
+   "page_ids": [
+    "69ea3eac300d991d0f1d3ddf",
+    "69ea3eac300d991d0f1d3de0",
+    "69ea3eac300d991d0f1d3de1",
+    "69ea3eac300d991d0f1d3de2"
+   ],
+   "pages": [
+    97,
+    98,
+    99,
+    100
+   ]
+  },
+  {
+   "book_id": "69ee4f206dd925d126f42ff8",
+   "title": "Barddas: or, a Collection of Original Documents Illustrative of the Theology, Wisdom and Usages of the Bardo-Druidic System of the Isle of Britain",
+   "language": "Welsh",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ee4f206dd925d126f43026",
+    "69ee4f206dd925d126f43028",
+    "69ee4f206dd925d126f4302c",
+    "69ee4f206dd925d126f4302e",
+    "69ee4f206dd925d126f43030",
+    "69ee4f206dd925d126f4304e",
+    "69ee4f206dd925d126f4304f",
+    "69ee4f206dd925d126f43050"
+   ],
+   "pages": [
+    46,
+    48,
+    52,
+    54,
+    56,
+    86,
+    87,
+    88
+   ]
+  },
+  {
+   "book_id": "69ef2143b3e2d3a0927f29c0",
+   "title": "The Zend-Avesta, Part III: The Yasna, Visparad, Âfrînagân, Gâhs, and Miscellaneous Fragments (SBE Vol. 31)",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69ef2143b3e2d3a0927f2a19"
+   ],
+   "pages": [
+    89
+   ]
+  },
+  {
+   "book_id": "69ef34e06c5c0455cc3f6302",
+   "title": "Tractatus philologico-theologicus de sacerdotio Christi juxta ordinem Melchizedeci",
+   "language": "Latin",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3-flash-preview",
+   "lane_row": "bph",
+   "ocr_checked": null,
+   "page_ids": [
+    "69ef34f06c5c0455cc3f631d",
+    "69ef34f06c5c0455cc3f631c"
+   ],
+   "pages": [
+    26,
+    27
+   ]
+  },
+  {
+   "book_id": "69f3259f52a77bb28fdb55c5",
+   "title": "Ilbonguk Oemusong samu, 8-kwŏn",
+   "language": "Korean",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69f3259f52a77bb28fdb57dc",
+    "69f3259f52a77bb28fdb57dd",
+    "69f3259f52a77bb28fdb57de",
+    "69f3259f52a77bb28fdb57df",
+    "69f3259f52a77bb28fdb57e0",
+    "69f3259f52a77bb28fdb57e1"
+   ],
+   "pages": [
+    535,
+    536,
+    537,
+    538,
+    539,
+    540
+   ]
+  },
+  {
+   "book_id": "69f8c11e0c0c281d4bd32838",
+   "title": "The Maya Chronicles (Library of Aboriginal American Literature, Vol. I)",
+   "language": "Yucatec Maya / English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "69f8c11e0c0c281d4bd328b7",
+    "69f8c11e0c0c281d4bd328b8",
+    "69f8c11e0c0c281d4bd328b9"
+   ],
+   "pages": [
+    127,
+    128,
+    129
+   ]
+  },
+  {
+   "book_id": "6a2199164b61907ea5ffb056",
+   "title": "Saddharma Puṇḍarīka Sūtra",
+   "language": "Hindi",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a2199164b61907ea5ffb0a4",
+    "6a2199164b61907ea5ffb0a5",
+    "6a2199164b61907ea5ffb0a6",
+    "6a2199164b61907ea5ffb0a7",
+    "6a2199164b61907ea5ffb0a8"
+   ],
+   "pages": [
+    78,
+    79,
+    80,
+    81,
+    82
+   ]
+  },
+  {
+   "book_id": "6a4a1e3bfd99a02b936fe6a6",
+   "title": "The Works of Thomas Jefferson (Federal Edition, Ford), Vol. 3",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4a1e3bfd99a02b936fe81a",
+    "6a4a1e3bfd99a02b936fe81b",
+    "6a4a1e3bfd99a02b936fe81c",
+    "6a4a1e3bfd99a02b936fe81d",
+    "6a4a1e3bfd99a02b936fe81e",
+    "6a4a1e3bfd99a02b936fe81f",
+    "6a4a1e3bfd99a02b936fe8a2"
+   ],
+   "pages": [
+    372,
+    373,
+    374,
+    375,
+    376,
+    377,
+    508
+   ]
+  },
+  {
+   "book_id": "6a4a2475fd99a02b93702d6e",
+   "title": "The Works of President Edwards, Vol. 8",
+   "language": "English",
+   "hold": "ia-wrong-leaf-4790",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4a2475fd99a02b93702e2b"
+   ],
+   "pages": [
+    189
+   ]
+  },
+  {
+   "book_id": "6a4a3ee9f0f4a3b75e90eb81",
+   "title": "An Ecclesiastical History, Ancient and Modern, Vol. 3",
+   "language": "English",
+   "hold": "leaf-shift-5021",
+   "channel": "batch",
+   "engine": "gemini-3.1-flash-lite",
+   "lane_row": null,
+   "ocr_checked": null,
+   "page_ids": [
+    "6a4a3ee9f0f4a3b75e90ec6b"
+   ],
+   "pages": [
+    234
+   ]
+  }
+ ],
+ "not_withheld": 0
+}

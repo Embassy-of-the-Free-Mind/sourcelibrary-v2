@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>五, 六</page-num>
+<header>墨子 十五卷</header>
+<meta>Two-page spread from a woodblock printed book, right page transcribed first. Red ink characters in the top margin of both pages.</meta>
+
+<margin>伍 伍</margin>
+車裂五人不得斬得之除救火者無敢謹譁及離守絕巷
+救火者斬其往及父老有守此巷中部吏皆得救之吏部
+函令人謁之大將大將使信人將左右救之部吏失不言
+者斬諸女子有死罪及坐失火皆無有所失逮其以火為
+亂事者如法圍城之重禁敵人卒而至嚴令吏民無敢謹
+囂三最並行相視坐泣流涕若視舉手相探相指相呼相
+<unclear>麾</unclear>相踵相投相擊相靡以身及衣訟駁言語及非令也而
+視敵動移者斬伍人不得斬得之除五人踰城歸敵伍人
+不得斬與伯歸敵隊吏斬與吏歸敵隊將斬歸敵者父母
+妻子同產皆車裂先覺之除當術需敵離地斬五人不得
+斬得之除其疾鬪却敵於術敵下終不能復上疾鬪者隊
+
+<column-break/>
+
+<margin>五 伍 待</margin>
+<image-desc size="small" type="decorative" significance="low">Red ink block mark in the top margin of the left page, below the red character 待.</image-desc>
+二人賜上奉而勝圍城周里以上封城將三十里地為關
+內侯輔將如今賜上卿丞及吏比於丞者賜爵五大夫官
+吏豪傑與計堅守者十人及城上吏地五官者皆賜公乘
+男子有守者爵人二級女子賜錢伍千男女老小先分守
+者人賜錢千復之三歲無有所與不租稅此所以勸吏民
+堅守勝圍也吏卒侍大門中者曹無過二人勇敢為前行
+止坐令各知其左右前後擅離署戮門尉畫三閱之莫鼓
+擊門閉一閱守時令人參之上道者名鋪食皆於署不得
+外食守必謹微察視謁者執盾中涓及婦人侍前者志意
+顏色使令言語之請及上飲食必令人嘗皆非請也擊而
+請故守有所不悅謁者執盾中涓及婦人侍前者守日斷
+
+<vocab>車裂, 救火, 守城, 爵位, 封賞, 法律, 墨子, 號令</vocab>

@@ -25,6 +25,10 @@
  *            page (leaf guards), re-check the stored reading and the hold, write through writePageText (revision row
  *            with the whole prior field, CAS, human-edit guard), mark English stale, recount, sweep_log before and
  *            after, one book_events row. Dry unless --apply.
+ *   fallback the pages the guards turned away (fallbackRoute): still without text in a book still held → fallback/page-ids.json
+ *            for Gemini Flash through agy; blank pages and pages with no image are listed, not read. `apply --apply` writes
+ *            the list at its end; `fallback --read --apply` reads it with scripts/batch/cli-ocr.mjs and writes the reads
+ *            with that writer's guards and provenance. The hold stays: no translation follows.
  *   status   counts from the files.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/paddle-print-lane.mjs census
@@ -34,15 +38,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { withMongo } from '../lib/mongo.mjs';
 import { recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { recountBook } from '../lib/page-counts.mjs';
+import { recountBook, VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
-import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
+import { holdBook, isHeld, isUnsplitSpread } from '../lib/pipeline-hold.mjs';
 import { recordFailedReads, fromErrFile, fromTextless } from '../lib/ocr-failed-read.mjs';
 import {
-  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
+  LANE, LANE_ISSUE, HOLD_REASON, HOLD_RELEASE, HOLD_RELEASE_WHEN, BOOK_EVENT, PADDLE, INK_BLANK, OVERLAP,
   storedPolicy, isSpread, innerInk, assemblePage, envelope, ocrField, writeLanePage, laneLanguage, isHumanEdited, markTranslationsStale, coversLite, leafChars, SHORT_LEAF, kanaShare, MAX_KANA_SHARE, bookMedians, dittoDropped,
+  fallbackRoute,
 } from '../lib/paddle-print-lane.mjs';
+import { spawnSync } from 'node:child_process';
 import { workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
 const argv = process.argv.slice(2);
@@ -140,7 +146,7 @@ async function census() {
     for (let i = 0; i < cand.length; i += 100) {
       const chunk = cand.slice(i, i + 100);
       const rows = await P.aggregate([
-        { $match: { book_id: { $in: chunk.map((b) => b.id) }, page_number: { $gt: 0 } } },
+        { $match: { book_id: { $in: chunk.map((b) => b.id) }, ...VISIBLE_PAGE_MATCH } },
         { $project: {
           _id: 0, book_id: 1, w: '$image_width', h: '$image_height',
           src: '$ocr.source', model: '$ocr.model', pipeline: '$ocr.pipeline', edited_by: '$ocr.edited_by', edited_at: '$ocr.edited_at',
@@ -215,13 +221,15 @@ async function plan() {
   const tally = { books: 0, pages: 0, keep: {}, no_image: 0, skipped_books: [] };
   await withMongo(async (db) => {
     for (const bid of ids) {
-      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1 } });
+      const book = await db.collection('books').findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, pages_count: 1, 'image_source.provider': 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { tally.skipped_books.push({ bid, why: 'not_found' }); continue; }
+      // split before read (#7605): two leaves read here still land on ONE page record, uncitable and stranded by the split
+      if (isUnsplitSpread(book)) { tally.skipped_books.push({ bid, why: 'needs_splitting (#7605)' }); continue; }
       if (isHeld(book) && book.pipeline_auto.hold.reason !== HOLD_REASON) { tally.skipped_books.push({ bid, why: `held: ${book.pipeline_auto.hold.reason}` }); continue; }
       // canary by eye 2026-10-23: on kanji-katakana print Paddle reads katakana as look-alike kanji (ヲ→之, ス→入)
       // and invented a garbled near-repeat line; #7184 measured Chinese only. Japanese stays out of this lane.
       if (laneLanguage(book.language) === 'Japanese') { tally.skipped_books.push({ bid, why: 'japanese' }); continue; }
-      const pages = await db.collection('pages').find({ book_id: book.id, page_number: { $gt: 0 } }, { projection: {
+      const pages = await db.collection('pages').find({ book_id: book.id, ...VISIBLE_PAGE_MATCH }, { projection: {
         id: 1, page_number: 1, image_width: 1, image_height: 1, 'ocr.data': 1, 'ocr.source': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.edited_by': 1, 'ocr.edited_at': 1,
         photo: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, photo_original: 1, split_from_spread: 1,
       } }).sort({ page_number: 1 }).toArray();
@@ -237,7 +245,7 @@ async function plan() {
       if (!rows.length) { tally.skipped_books.push({ bid, why: 'nothing_to_read' }); continue; }
       if (!APPLY) { log(`${bid} would hold and plan ${rows.length}/${pages.length} pages | ${String(book.title).slice(0, 50)}`); tally.books++; tally.pages += rows.length; continue; }
       // the hold BEFORE anything else: an OCR write on a released book otherwise queues paid gap-fill translation
-      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, source: LANE, detail: { engine: PADDLE.model, planned_pages: rows.length } });
+      const h = await holdBook(db, book.id, { reason: HOLD_REASON, issue: LANE_ISSUE, release: HOLD_RELEASE, release_when: HOLD_RELEASE_WHEN, source: LANE, detail: { engine: PADDLE.model, planned_pages: rows.length } });
       if (!['held', 'already_held'].includes(h.outcome)) { tally.skipped_books.push({ bid, why: `hold ${h.outcome}` }); log(`${bid} hold: ${h.outcome} — not planned`); continue; }
       fs.writeFileSync(planFile(book.id), JSON.stringify({
         bid: book.id, title: book.title, language: book.language, provider: book.image_source?.provider || null,
@@ -448,8 +456,9 @@ async function apply() {
     const P = db.collection('pages'), B = db.collection('books');
     for (const { bid, pages: prepped } of ready) {
       const pl = readJson(planFile(bid));
-      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1 } });
+      const book = await B.findOne({ id: bid }, { projection: { id: 1, title: 1, language: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1 } });
       if (!book) { log(`${bid} not found — skipping`); continue; }
+      if (isUnsplitSpread(book)) { log(`${bid} needs_splitting — split it first, not written (#7605)`); continue; }
       // the hold is the lane's guarantee that no paid re-translation follows the write
       if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { log(`${bid} NOT held for ${HOLD_REASON} — refusing to write`); totals.not_held++; continue; }
       const language = laneLanguage(book.language);
@@ -552,7 +561,65 @@ async function apply() {
     }
   }, { timeoutMs: 6 * 3600 * 1000 });
   log(`APPLY ${JSON.stringify(totals)}`);
+  // the pages turned away go on to the Flash fallback list: nothing waits behind the hold unrouted (#6101)
+  if (APPLY) await fallback({ read: false, write: false });
   return totals;
+}
+
+// ── fallback: the pages this lane turned away, to Gemini Flash through agy ───────────────
+
+const FALLBACK_JOB = 'paddle-print-fallback-6101';
+const FALLBACK_REASON = 'paddle-print-6101 fallback (#6101, routing row chinese-print): Paddle split-leaf guards turned this page away; Gemini Flash through agy reads it';
+
+/**
+ * Route every page the lane did not write (fallbackRoute) and, for the ones still without text in a book still held
+ * for this lane, write fallback/page-ids.json (Flash), blank.jsonl and unfetchable.jsonl. Read-only on Mongo.
+ * `--read` then reads the Flash list with scripts/batch/cli-ocr.mjs (agy, --stop-on-quota) and `--apply` writes the
+ * reads with its guards and provenance. The book keeps its hold: no translation follows.
+ */
+async function fallback({ read = flag('--read'), write = flag('--apply') } = {}) {
+  const fb = path.join(DIR, 'fallback'), reads = path.join(fb, 'reads');
+  fs.mkdirSync(fb, { recursive: true });
+  const last = new Map();
+  for (const r of readJsonl(F.rejected)) last.set(`${r.bid}/${r.pn}`, { verdict: 'reject', reason: r.reason, at: r.at });
+  for (const r of readJsonl(F.skipped)) { const k = `${r.bid}/${r.pn}`; if (!last.has(k) || last.get(k).at < r.at) last.set(k, { verdict: 'skip', reason: r.why, at: r.at }); }
+  const cand = [];
+  for (const f of fs.existsSync(F.prepDir) ? fs.readdirSync(F.prepDir).filter((x) => x.endsWith('.json')) : []) {
+    const pr = readJson(path.join(F.prepDir, f));
+    if (BOOK && pr.bid !== BOOK) continue;
+    for (const p of pr.pages) {
+      const l = last.get(`${pr.bid}/${p.pn}`);
+      const route = fallbackRoute({ verdict: l?.verdict, reason: l?.reason, leaves: p.leaves || [], prepError: p.error || null });
+      if (route) cand.push({ bid: pr.bid, pn: p.pn, pid: p.pid, route, reason: p.error ? 'prep_error' : l.reason });
+    }
+  }
+  const out = { flash: [], blank: [], unfetchable: [] };
+  const why = {};
+  await withMongo(async (db) => {
+    const held = new Set((await db.collection('books').find({ id: { $in: [...new Set(cand.map((c) => c.bid))] }, 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1 } }).toArray()).map((b) => b.id));
+    for (let i = 0; i < cand.length; i += 1000) {
+      const chunk = cand.slice(i, i + 1000);
+      const live = new Map((await db.collection('pages').find({ id: { $in: chunk.map((c) => c.pid) } }, { projection: { id: 1, image_width: 1, image_height: 1, ocr: 1 } }).toArray()).map((p) => [p.id, p]));
+      for (const c of chunk) {
+        const p = live.get(c.pid);
+        // a page that has text now (a later read, a human) or whose book left the lane is not this lane's to send
+        if (!p || !held.has(c.bid) || storedPolicy(p.ocr, { spread: isSpread(p.image_width, p.image_height) }).why !== 'no_text') continue;
+        out[c.route].push(c); why[`${c.route}:${c.reason}`] = (why[`${c.route}:${c.reason}`] || 0) + 1;
+      }
+    }
+  });
+  fs.writeFileSync(path.join(fb, 'page-ids.json'), JSON.stringify(out.flash.map((c) => c.pid)));
+  for (const k of ['blank', 'unfetchable']) fs.writeFileSync(path.join(fb, `${k}.jsonl`), out[k].map((c) => JSON.stringify(c)).join('\n') + (out[k].length ? '\n' : ''));
+  log(`FALLBACK flash ${out.flash.length}, blank ${out.blank.length}, unfetchable ${out.unfetchable.length} ${JSON.stringify(why)} → ${fb}`);
+  const run = (stage, extra) => {
+    if (stage === 'read' && !out.flash.length) return;
+    const r = spawnSync(process.execPath, [new URL('../batch/cli-ocr.mjs', import.meta.url).pathname, stage, `--out=${reads}`, ...extra], { stdio: 'inherit', env: process.env });
+    if (r.status === 3) { log('FALLBACK read stopped on quota; the next run resumes from the reads on disk'); process.exit(3); }
+    if (r.status !== 0) throw new Error(`cli-ocr ${stage} exited ${r.status}`);
+  };
+  if (read) run('read', [`--page-ids-file=${path.join(fb, 'page-ids.json')}`, `--job=${FALLBACK_JOB}`, '--stop-on-quota', `--concurrency=${arg('--concurrency', 2)}`]);
+  if (write && fs.existsSync(reads)) run('apply', [`--reason=${FALLBACK_REASON}`, `--only=${path.join(fb, 'page-ids.json')}`, '--apply']);
+  return out;
 }
 
 // ── status ─────────────────────────────────────────────────────────────────────────────
@@ -582,7 +649,7 @@ function status() {
   }, null, 1));
 }
 
-const CMDS = { census, plan, prep, recheck, apply, status };
+const CMDS = { census, plan, prep, recheck, apply, fallback, status };
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === new URL(import.meta.url).pathname;
 if (isMain) {
   if (!CMDS[CMD]) { console.error(`usage: paddle-print-lane.mjs ${Object.keys(CMDS).join('|')} [options]`); process.exit(1); }

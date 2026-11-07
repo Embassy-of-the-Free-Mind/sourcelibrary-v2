@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { isProtectedSurface } from '@/lib/partner-access';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { pruneSearchRowsForDeletedBook } from '@/lib/prune-deleted-book';
@@ -14,6 +15,7 @@ import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 import { auth } from '@/lib/auth';
 import { resolvePageWindow, countPagesForWindow, type PagesWindow } from '@/lib/page-window';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 
 export const preferredRegion = 'fra1';
 
@@ -57,6 +59,15 @@ export async function GET(
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, visible: 1,
       published: 1, language: 1, doi: 1,
       chapters: 1,
+      // The reader's download panel: a partner's own book downloads without
+      // sign-in inside the partner's embed (#7702).
+      tenantId: 1,
+      // What the download panel offers. Without these the embed's drawer read
+      // a book with no pages and rendered no format at all (twin of the apex
+      // route's nav projection).
+      pages_count: 1, pages_ocr: 1, pages_translated: 1,
+      'translation_state.rung': 1, 'translation_state.english_original': 1, facing_translation: 1,
+      year: 1, 'image_source.provider': 1, 'image_source.license': 1, 'image_source.rights_normalized': 1,
     } : undefined;
 
     const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId);
@@ -110,7 +121,9 @@ export async function GET(
     const session = await auth().catch(() => null);
     const windowed = !session?.user?.id;
     const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
-    const pageFilter = { book_id: bookId, tenantId };
+    // Repeat captures (#5056) stay out, as in /api/books/[id]: these are the EFM/BPH books
+    // the hide was written for (PR #7777 review S4).
+    const pageFilter = { book_id: bookId, tenantId, page_number: { $gte: 0 }, ...NOT_REPEAT_CAPTURE };
     let cursor = db.collection('pages')
       .find(pageFilter)
       .project(projection)
@@ -130,9 +143,11 @@ export async function GET(
     // an admin, so neither answer may be stored by a shared cache. An uncapped
     // (signed-in) answer is private; the capped one varies on Cookie — see
     // /api/books/[id].
+    // A protected surface's answer stays out of the shared cache too: the edge
+    // would hand a reader's copy to whoever the proxy refuses (#8098).
     const cacheControl = wantsFull
       ? 'private, no-cache'
-      : windowed
+      : windowed && !isProtectedSurface(request.headers.get('host') || '', request.nextUrl.pathname)
         ? 'public, max-age=60, stale-while-revalidate=300'
         : 'private, max-age=60, stale-while-revalidate=300';
 

@@ -31,6 +31,8 @@
 export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Corpus-wide aggregations (#3364).
   '/encyclopedia',
+  // Every Chinese book in the library, by class (#8035). Same reasoning as /works.
+  '/sibu',
   '/explore',
   '/ngrams',
   '/libraries',
@@ -84,6 +86,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // leak as /encyclopedia, in a surface that also invites people to act on it.
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
+  // Personal reader-check links (#7573) serve pages drawn from the whole corpus,
+  // the same leak as /review. The links are minted for sourcelibrary.org only.
+  '/check',
   '/volunteers',
   // The public Quality Center (#5918): the whole library's quality figures, experiments and
   // feedback themes, with doors into /review. Corpus-wide by construction, like /research.
@@ -97,6 +102,14 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   '/admin/quality',
   // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
   '/admin/work',
+  // Laura's work record: unreleased work and open decisions. Same reasoning as /admin/work.
+  '/admin/laura',
+  // Token use (#8201): our accounts, machines and job names. Same reasoning as /admin/work.
+  '/admin/tokens',
+  // Pipeline now (#7759): our boxes' cron lanes, quota pools and account meters. Same reasoning as /admin/work.
+  '/admin/pipeline/now',
+  // Router board (#7913): our router table, cron lanes and pages waiting. Same reasoning as /admin/work.
+  '/admin/router',
   // Inner-circle curation surfaces (#3846): identity adjudication over the
   // whole corpus (work merges, edition keeper choices). Corpus-wide by
   // construction and actuating, so a partner host must refuse it outright —
@@ -115,6 +128,17 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // assistant over its own shelf needs a different feature, not this one on
   // its domain. The header and footer filter on this list, so the link goes too.
   '/librarian',
+  // The whole catalogue with search and Ask the librarian (moved from
+  // /catalog, 2026-10-18). On a partner host /catalog is rewritten to that
+  // partner's own catalogue; /library is the global one and must not answer
+  // there. Links shared by both hosts pick their target with catalogueHref.
+  '/library',
+  // The hidden-mark decoder (#8150). It names the book a mark belongs to, from
+  // the whole library, and the riddles built on it lead into other books. A
+  // Source Library feature, not a partner's.
+  '/decode',
+  // The hunt built on those marks (#8150 slice 3): its riddles lead through global books.
+  '/hunt',
 ] as const;
 
 /**
@@ -154,6 +178,8 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // they were served on, so blocking only the page would leave the unscoped
   // corpus reachable from a tenant subdomain.
   '/api/review',
+  // The answer endpoint behind /check (#7573).
+  '/api/check',
   // /identify posts the photo from the client, so blocking only the page would
   // leave corpus-wide visual search callable from a tenant host.
   '/api/identify',
@@ -161,6 +187,19 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // Blocking only the page would leave the whole-library agent callable from
   // the partner host.
   '/api/embassy',
+  // The /library page's list and counts: whole-catalogue queries.
+  '/api/catalog/results',
+  '/api/catalog/stats',
+  '/api/decode',
+  '/api/hunt',
+  // Not under /api, but a route handler with no page, like its twin /api/search.
+  // It searches the whole library, while a partner's /search stays scoped (#8161).
+  '/search/text',
+  // Also a route handler with no page: the page list above is pinned to page.tsx
+  // files and filters the nav. From an Internet Archive item to our copy of it
+  // (#8161). It resolves against the whole library and redirects to
+  // sourcelibrary.org, so it has no place on a partner's host.
+  '/ia',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
@@ -170,8 +209,25 @@ const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
 
 /** Exact match or a path segment beneath it — `/explore` and `/explore/map`,
  *  but never `/exploration`. */
+/** The catalogue a shared link should open: a partner's own, or the whole library. */
+export function catalogueHref(isTenantHost: boolean): string {
+  return isTenantHost ? '/catalog' : '/library';
+}
+
+/**
+ * /book/<slug>/search/text: one book's passages for an assistant (#8161). A route
+ * handler with no page, like /search/text, and its links and quote URLs point at
+ * sourcelibrary.org, so a reading room must not serve it. Not a prefix, so it is
+ * matched on its own rather than listed above.
+ */
+const BOOK_SEARCH_TEXT_RE = /^\/book\/[^/]+\/search\/text\/?$/;
+
+export function isBookSearchTextPath(pathname: string): boolean {
+  return BOOK_SEARCH_TEXT_RE.test(pathname);
+}
+
 export function isGlobalOnlyTenantPath(pathname: string): boolean {
-  return ALL_GLOBAL_ONLY_PATHS.some(
+  return isBookSearchTextPath(pathname) || ALL_GLOBAL_ONLY_PATHS.some(
     p => pathname === p || pathname.startsWith(`${p}/`)
   );
 }

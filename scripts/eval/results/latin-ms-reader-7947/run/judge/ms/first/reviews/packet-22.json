@@ -1,0 +1,492 @@
+[
+ {
+  "book_id": "b22-k",
+  "slot": 1,
+  "title": "Collection of Alchemical Texts: Flamel, Bernard, Llull (PH228)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 70,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Ubicunque unum, 1, … binarius est, 2, … ternarium facit, 3,",
+      "image": "Hebrew letters א … ב … ג written inline",
+      "problem": "Hebrew aleph/beth/gimel replaced by Arabic numerals; the secondary script is lost",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "Aentitas igitur omnium rerum",
+      "image": "Identitas (decorated initial)",
+      "problem": "initial misread, gives a non-word for the key term Identitas",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ideo quia vniversi ordine alligare videtur Geometrica. quide substantiarum comp",
+      "image": "ordinē alligare videtur, Geometrica quidē substan- / catchword 'tiarum comp'",
+      "problem": "full stop moved after Geometrica, which belongs to the next sentence; catchword merged into the text",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Travail … l'un de nos autheurs … Tom. 5.",
+      "image": "trauail … l'vn de noz Autheur … Ton. 5.",
+      "problem": "spelling silently normalised",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "faecundum",
+      "image": "foecũdum",
+      "problem": "spelling",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Alteritas aute rerum",
+      "image": "Alteritas autē rerum",
+      "problem": "abbreviation not expanded (autem)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "marginal '1.' beside the last line dropped",
+      "severity": "minor",
+      "class": "O12"
+     },
+     {
+      "note": "<page-num>1</page-num>: the number at the head of the leaf reads '4'",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 141,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>Lentini Ordinis sancti Benedicti - In festo 1570.</margin>",
+      "image": "running head 'nis sti P. Benedicti – In testamẽto 70.' ('…entini Ordi-' is on the facing leaf)",
+      "problem": "running head garbled into a 'margin': 'In testamento' read as 'In festo' and the page number 70 turned into a date '1570' that is not on the page",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "hanc scripsit scientia",
+      "image": "sciẽtiã (scientiam)",
+      "problem": "abbreviation dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "qua Aquam vivam",
+      "image": "quã Aquam viuã",
+      "problem": "quam → qua",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Non est autem substantia ipsa Sulphur, nec Argentum vivum ut sunt",
+      "image": "ipsũ Sulphur, nec Arg. vi. pro vt sunt",
+      "problem": "ipsum → ipsa; 'pro' dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "i.e. quaedam materiam",
+      "image": "i.e. quãdã materiam (quandam)",
+      "problem": "case wrong",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<columns>2</columns> and <column-break/>: the page is one column; the facing leaf in the spread is a different page",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 212,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "certum <unclear>et</unclear> … perpe<unclear>tran-</unclear> … ab vno, <unclear>medi-</unclear> …",
+      "image": "line endings cut off at the right edge of the image",
+      "problem": "words past the edge are supplied from the known text, though each is marked <unclear>; a reader may take them as partly seen",
+      "severity": "minor",
+      "class": "O3"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<page-num>201</page-num>: the head of the leaf reads '1' (a faint '105' at top left); 201 is not on the page",
+      "severity": "moderate",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Body text of all three pages is mostly sound, but p.70 replaces the Hebrew letters with numerals and misreads 'Identitas', and p.141 turns the running head into an invented 'In festo 1570'. On the cropped p.212 it supplies the missing line endings but marks them unclear."
+ },
+ {
+  "book_id": "b22-m",
+  "slot": 2,
+  "title": "Collection of Alchemical Texts: Flamel, Bernard, Llull (PH228)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 70,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 141,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "prædictam fumosam substantiam",
+      "image": "prædictam famosam substãtiam",
+      "problem": "'famosam' normalised to 'fumosam' (the word used elsewhere on the page); changes the word",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "sed tantum alliciat artifices",
+      "image": "allicu-it",
+      "problem": "verb form misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 212,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The most faithful of the reads: original spelling and the Hebrew letters are kept, and the cut-off line endings on p.212 are marked rather than supplied. One slip that changes a word on p.141 ('fumosam' for 'famosam')."
+ },
+ {
+  "book_id": "b22-r",
+  "slot": 3,
+  "title": "Collection of Alchemical Texts: Flamel, Bernard, Llull (PH228)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 70,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "l'un de noz Autheur",
+      "image": "l'vn",
+      "problem": "spelling normalised",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<lb/> tags left in the reader text ('existenti<lb/>um', 'comp<lb/>')",
+      "severity": "minor",
+      "class": "D1"
+     },
+     {
+      "note": "catchword 'tiarum comp' both merged into the last line ('substantiarum comp') and repeated in <meta>",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 141,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "nis sancti Benedicti - In testamento.",
+      "image": "nis sti P. Benedicti – In testamẽto",
+      "problem": "'P[atris]' dropped from the running head",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Non est autem Substantia ipsa Sulphur",
+      "image": "ipsũ Sulphur",
+      "problem": "ipsum → ipsa",
+      "severity": "minor"
+     },
+     {
+      "ocr": "id est quaedam materiam",
+      "image": "quãdã materiam",
+      "problem": "quandam → quaedam",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<term> tags around the ☿ and ☉ symbols in the body text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 212,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "certum et / verissimum … est sicut … superius … perpetran-/da … medi-/tatione … fuerunt … portavit … ejus ter-/ra … fugiet … fortis … omnemque … modus",
+      "image": "line endings cut off at the right edge of the image",
+      "problem": "about twenty line endings that the image does not show are supplied from the canonical Emerald Tablet with no mark, so the transcription reads as if the whole page were seen",
+      "severity": "serious",
+      "class": "O3"
+     },
+     {
+      "ocr": "Pater omnis thelesmi totius mundi est hic.",
+      "image": "Pater omnis Thelesmj totius mudi [cut off]",
+      "problem": "'est hic' supplied from the canonical text; not visible on the page",
+      "severity": "moderate",
+      "class": "O3"
+     },
+     {
+      "ocr": "Separabis terram … Subtile a spisso",
+      "image": "Separabis teram … Subtille a sp[cut off]",
+      "problem": "spelling silently normalised",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<page-num>105</page-num>: the page number at the head of the leaf is '1'; 105 is a faint older mark at top left",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Pages 70 and 141 are accurate apart from small markup leaks, but on p.212 it silently completes the line endings cut off by the image from the canonical Emerald Tablet, so a reader cannot tell what was actually seen."
+ },
+ {
+  "book_id": "b22-t",
+  "slot": 4,
+  "title": "Collection of Alchemical Texts: Flamel, Bernard, Llull (PH228)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 70,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Ubicunque unum, 1, … binarius est, 2, … ternarium facit, 3,",
+      "image": "Hebrew letters א … ב … ג written inline",
+      "problem": "Hebrew aleph/beth/gimel replaced by Arabic numerals; the secondary script is lost",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "Aentitas igitur omnium rerum",
+      "image": "Identitas (decorated initial)",
+      "problem": "initial misread, gives a non-word for the key term Identitas",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ideo quia vniversi ordine alligare videtur Geometrica. quide substantiarum comp",
+      "image": "ordinē alligare videtur, Geometrica quidē substan- / catchword 'tiarum comp'",
+      "problem": "full stop moved after Geometrica, which belongs to the next sentence; catchword merged into the text",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Travail … l'un de nos autheurs … Tom. 5.",
+      "image": "trauail … l'vn de noz Autheur … Ton. 5.",
+      "problem": "spelling silently normalised",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "faecundum",
+      "image": "foecũdum",
+      "problem": "spelling",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Alteritas aute rerum",
+      "image": "Alteritas autē rerum",
+      "problem": "abbreviation not expanded (autem)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "marginal '1.' beside the last line dropped",
+      "severity": "minor",
+      "class": "O12"
+     },
+     {
+      "note": "<page-num>1</page-num>: the number at the head of the leaf reads '4'",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 141,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>Lentini Ordinis sancti Benedicti - In festo 1570.</margin>",
+      "image": "running head 'nis sti P. Benedicti – In testamẽto 70.' ('…entini Ordi-' is on the facing leaf)",
+      "problem": "running head garbled into a 'margin': 'In testamento' read as 'In festo' and the page number 70 turned into a date '1570' that is not on the page",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "hanc scripsit scientia",
+      "image": "sciẽtiã (scientiam)",
+      "problem": "abbreviation dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "qua Aquam vivam",
+      "image": "quã Aquam viuã",
+      "problem": "quam → qua",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Non est autem substantia ipsa Sulphur, nec Argentum vivum ut sunt",
+      "image": "ipsũ Sulphur, nec Arg. vi. pro vt sunt",
+      "problem": "ipsum → ipsa; 'pro' dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "i.e. quaedam materiam",
+      "image": "i.e. quãdã materiam (quandam)",
+      "problem": "case wrong",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<columns>2</columns> and <column-break/>: the page is one column; the facing leaf in the spread is a different page",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 212,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "certum et / verissimum … est sicut … superius, … perpetran-/da … ab uno, / mediatione … fuerunt … portavit … terra … spisso … modus",
+      "image": "line endings cut off at the right edge of the image",
+      "problem": "the line endings the image does not show are supplied from the canonical text with no mark, as if seen",
+      "severity": "serious",
+      "class": "O3"
+     },
+     {
+      "ocr": "ab uno, / mediatione unius",
+      "image": "ab vno, [cut off] / tatione vnius",
+      "problem": "'mediatione' supplied: the visible part is '…tatione', and the word start is cut off",
+      "severity": "moderate",
+      "class": "O3"
+     },
+     {
+      "ocr": "5. Sic habes gloriam … ideo fugiat",
+      "image": "Sic hab(be)is gloriam … Ideo fu[cut off]",
+      "problem": "'habebis' (with 'be' written above) read as 'habes'; 'fugiat' supplied past the edge",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Separabis terram ab igne, subtile",
+      "image": "Separabis teram ab Igne, Subtille",
+      "problem": "spelling silently normalised",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<page-num>201</page-num>: the head of the leaf reads '1'",
+      "severity": "moderate",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Shares k's faults on p.70 (Hebrew letters turned into numerals, 'Aentitas') and p.141 (invented 'In festo 1570' header). On p.212 it silently completes the cut-off text and introduces readings that are not on the page ('habes', 'fugiat', 'mediatione')."
+ }
+]

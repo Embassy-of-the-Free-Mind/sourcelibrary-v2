@@ -32,7 +32,7 @@ import { getCanvases, extractCanvasImage } from '../iiif-discovery/lib/manifest-
 import { rateLimitedFetch, fetchPageMaster } from './iiif-utils.mjs';
 import { classifyFetchError } from './host-breaker.mjs';
 import { assertNotQuotaPlaceholder } from './archive-failure-class.mjs';
-import { isMissFor, MISS_LIMIT, bookVerdict, createBookMissGuard } from './archive-miss.mjs';
+import { isMissFor, isBookScopedFailure, MISS_LIMIT, bookVerdict, createBookMissGuard } from './archive-miss.mjs';
 import { LAZY_STATES, isLazyPagesBook } from './pages-state.mjs';
 import {
   LEDGER_FIELD, newLedger, openLedger, manifestFingerprint, ledgerKey, ledgerPageFields,
@@ -145,7 +145,7 @@ export async function archiveFromManifest(db, bookId, deps) {
 
   /** Put one page's JPEG at its book-scoped key and mark it in the ledger. */
   const storePage = async (p, jpg, native, h) => {
-    const key = ledgerKey(bookId, p);
+    const key = ledgerKey(bookId, p, stored.layout);
     const blob = await put(key, jpg, { contentType: 'image/jpeg', access: 'public' });
     // The URL base comes from the store's own answer, never assumed: the page docs will carry it.
     const b = typeof blob?.url === 'string' && blob.url.endsWith(`/${key}`) ? blob.url.slice(0, -(key.length + 1)) : null;
@@ -224,7 +224,9 @@ export async function archiveFromManifest(db, bookId, deps) {
       } catch (e) {
         const code = classifyFetchError(e);
         if (!fetched && isMissFor(url, code)) {
-          ledger.markMiss(p);
+          // Kept only once the host has served something this run: an outage's 404s are not facts about
+          // pages (archive-acquired.ts, 2026-10-26). Without a breaker there is no run state; keep it.
+          if (!breaker || (breaker.stateOf(h)?.ok ?? 0) > 0) ledger.markMiss(p);
           res.missed++;
           breaker?.pageMiss(h, code);
           missGuard.miss(bookId);
@@ -232,6 +234,19 @@ export async function archiveFromManifest(db, bookId, deps) {
           if (missGuard.abandoned(bookId)) {
             abandoned = true;
             log(`book ${bookId}: ${missGuard.stateOf(bookId)?.miss} page misses [${code}] and nothing served — leaving it for a later run`);
+            if ((breaker?.stateOf(h)?.ok ?? 0) === 0) breaker?.failure(h, `dead-book-${code}`);
+          }
+          continue;
+        }
+        if (!fetched && isBookScopedFailure(code) && missGuard.fresh(bookId)) {
+          // A 400/500 from a book that has served nothing yet is about the book (archive-miss.mjs).
+          missGuard.fail(bookId);
+          res.failed++;
+          breaker?.pageMiss(h, code);
+          onPage({ outcome: 'failed', host: h, code });
+          if (!abandoned && missGuard.abandoned(bookId)) {
+            abandoned = true;
+            log(`book ${bookId}: ${missGuard.stateOf(bookId)?.fail} page failures [${code}] and nothing served — leaving it for a later run`);
             if ((breaker?.stateOf(h)?.ok ?? 0) === 0) breaker?.failure(h, `dead-book-${code}`);
           }
           continue;

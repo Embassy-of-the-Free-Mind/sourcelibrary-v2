@@ -83,9 +83,9 @@ export function parseNumeralToken(tok) {
 // ── marker extraction ────────────────────────────────────────────────────────────────────────
 const META_TAGS = /<(page-num|scan-quality|language|script|page-type|vocab|meta|sig|columns|warning|keywords|summary|image-desc|detected-images|abbrev|folio)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi;
 
-/** Markers for one page from its OCR head and tail. Returns { P, S, src }. */
+/** Markers for one page from its OCR head and tail. Returns { P, S, src, tok }; tok is the token P was read from (#8041). */
 export function pageMarkers(head, tail) {
-  const out = { P: null, S: null, src: null };
+  const out = { P: null, S: null, src: null, tok: null };
   const hm = /<header(?:\s[^>]*)?>([\s\S]*?)<\/header>/i.exec(head || '');
   if (hm) {
     const header = hm[1].replace(/<[^>]+>/g, ' ').trim();
@@ -103,26 +103,26 @@ export function pageMarkers(head, tail) {
     const refTail = toks.length > 1 && (/\d|[—–]/.test(toks.at(-2)) || /^[IVXLCDM]+[.,:]?$/i.test(toks.at(-2)));
     // Dictionary heads ("ד ה ד ו") are letters, not numerals.
     const letterHeads = toks.filter(t => /^[\u05D0-\u05EA]$/.test(t)).length >= 2;
-    if (dashed) { out.P = parseDigits(dashed[1]); out.src = 'header'; }
+    if (dashed) { out.P = parseDigits(dashed[1]); out.src = 'header'; out.tok = dashed[1]; }
     else if (toks.length) {
       const last = toks.at(-1);
       let v = refTail ? null : parseDigits(last.replace(/[.,:;·]+$/, ''));
       if (v === null && toks.length > 1 && !refTail && !letterHeads) v = parseHebrewNumeral(last);
       if (v === null) { // CJK: trailing numeral run, set off by a space or a page/leaf word
         const m = /(?:^|[\s頁葉页丁])([〇零一二兩三四五六七八九十百千]{1,6})$/.exec(outside);
-        if (m) v = parseChineseNumeral(m[1]);
+        if (m) { v = parseChineseNumeral(m[1]); if (v !== null) out.tok = m[1]; }
       }
       // A LEADING number is the page only when it is the head's only number ("162 COLOGNE."),
       // never a book or chapter ("1 IOH. 4, 13.", "4, 14. 1 IOH.").
-      if (v === null && toks.length > 1 && /^[0-9٠-٩۰-۹]{1,4}\.?$/.test(toks[0]) && !/[0-9٠-٩۰-۹]/.test(toks.slice(1).join(' '))) v = parseDigits(toks[0].replace(/\.$/, ''));
+      if (v === null && toks.length > 1 && /^[0-9٠-٩۰-۹]{1,4}\.?$/.test(toks[0]) && !/[0-9٠-٩۰-۹]/.test(toks.slice(1).join(' '))) { v = parseDigits(toks[0].replace(/\.$/, '')); if (v !== null) out.tok = toks[0]; }
       if (v === null && toks.length === 1 && !/^[\u05D0-\u05EA]$/.test(toks[0])) v = parseNumeralToken(toks[0]);
-      if (v !== null) { out.P = v; out.src = 'header'; }
+      if (v !== null) { out.P = v; out.src = 'header'; out.tok ||= last; }
     }
   }
   if (out.P === null) {
     const c = /->\s*([^<\n]{1,12}?)\s*<-/.exec(head || '');
     const v = c ? parseNumeralToken(c[1]) : null;
-    if (v !== null) { out.P = v; out.src = 'centred'; }
+    if (v !== null) { out.P = v; out.src = 'centred'; out.tok = c[1]; }
   }
   if (out.P === null) {
     // v4: a numeral inside <margin>/<note>/<gloss> is a marginal reference, not the page number.
@@ -133,7 +133,7 @@ export function pageMarkers(head, tail) {
     for (const [l, src] of [[first, 'bare-first'], [last, 'bare-last']]) {
       if (!l || l.length > 12) continue;
       const v = parseNumeralToken(l);
-      if (v !== null) { out.P = v; out.src = src; break; }
+      if (v !== null) { out.P = v; out.src = src; out.tok = l; break; }
     }
   }
   return out;

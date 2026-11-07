@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: artwork records, not page images (#4406).
 /**
  * Targeted resolution upgrade for low-res Met artworks.
  *

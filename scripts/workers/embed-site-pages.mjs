@@ -214,6 +214,9 @@ export function robotsDisallow(robotsTxt) {
   return (p) => rules.some((re) => re.test(p) || re.test(`${p}/`));
 }
 
+/** Articles are the 'blog' type (search labels it "Essay"). /blog/* became /articles/* in #6887 and now redirects. */
+const pageTypeOf = (p) => (p.startsWith('/articles/') || p.startsWith('/blog/') ? 'blog' : 'page');
+
 async function sitemapPaths(chunk, keep) {
   const { html: xml } = await fetchHtml(`/sitemap/${chunk}.xml`);
   if (!xml) throw new Error(`could not read /sitemap/${chunk}.xml — refusing to index the site from a partial list`);
@@ -259,7 +262,7 @@ async function crawlPages(paths, skipped, notPublic) {
       ? main.text
       : [head.description, listing ? '' : main.text].filter(Boolean).join('\n\n') || title;
     out.push({
-      url: p, page_type: p.startsWith('/blog/') ? 'blog' : 'page', title, tenant_id: null, text,
+      url: p, page_type: pageTypeOf(p), title, tenant_id: null, text,
       names: [title, ...pathNames(p)], weight: 0,
     });
   };
@@ -374,7 +377,7 @@ async function main() {
   if (wants('blog') || wants('page')) {
     const found = await candidatePaths();
     notPublic.disallowed = found.disallowed;
-    const paths = found.paths.filter((p) => wants(p.startsWith('/blog/') ? 'blog' : 'page'));
+    const paths = found.paths.filter((p) => wants(pageTypeOf(p)));
     pages.push(...await crawlPages(paths, skipped, notPublic));
   }
   if (wants('collection')) pages.push(...await collectionPages(db));

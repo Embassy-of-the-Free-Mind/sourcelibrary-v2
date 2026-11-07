@@ -1,0 +1,5972 @@
+[
+ {
+  "slug": "ws-de-bekanntmachung-k-niglich-s-chsischer-verein-1825-p5",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0.099,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 9,
+     "wrong_text": 0
+    },
+    "score": 51.64835164835165,
+    "score_flat": 51.64835164835165,
+    "score_steep": 101.0989010989011,
+    "ref_words": 91
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0.099,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 9,
+     "wrong_text": 0
+    },
+    "score": 51.64835164835165,
+    "score_flat": 51.64835164835165,
+    "score_steep": 101.0989010989011,
+    "ref_words": 91
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.003,
+   "wer": 0.033,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 10.989010989010989,
+    "score_flat": 10.989010989010989,
+    "score_steep": 21.978021978021978,
+    "ref_words": 91
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 2.197802197802198,
+    "score_flat": 2.197802197802198,
+    "score_steep": 2.197802197802198,
+    "ref_words": 91
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-gn-a-110-gemein-nachrichten-1765-2-pdf-p26",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.069,
+   "wer": 0.164,
+   "fca": 0.913,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 20,
+     "wrong_text": 0
+    },
+    "score": 63.125,
+    "score_flat": 63.125,
+    "score_steep": 125.625,
+    "ref_words": 160
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.038,
+   "wer": 0.099,
+   "fca": 0.962,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 11,
+     "wrong_text": 0
+    },
+    "score": 35.625,
+    "score_flat": 35.625,
+    "score_steep": 70,
+    "ref_words": 160
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpu": {
+   "cer": 0.739,
+   "wer": 0.98,
+   "fca": 0.24,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 6
+    },
+    "score": 96.25,
+    "score_flat": 40,
+    "score_steep": 377.5,
+    "ref_words": 160
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.069,
+   "wer": 0.164,
+   "fca": 0.913,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 20,
+     "wrong_text": 0
+    },
+    "score": 63.125,
+    "score_flat": 63.125,
+    "score_steep": 125.625,
+    "ref_words": 160
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  }
+ },
+ {
+  "slug": "ws-de-demme-mordwerk-zu-frauenburg-pdf-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.012,
+   "wer": 0.039,
+   "fca": 0.983,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 11,
+     "wrong_text": 1
+    },
+    "score": 23.391812865497077,
+    "score_flat": 19.005847953216374,
+    "score_steep": 61.40350877192982,
+    "ref_words": 342
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.009,
+   "wer": 0.024,
+   "fca": 0.986,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 6,
+     "wrong_text": 1
+    },
+    "score": 16.08187134502924,
+    "score_flat": 11.695906432748538,
+    "score_steep": 46.78362573099415,
+    "ref_words": 342
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.019,
+   "wer": 0.11,
+   "fca": 0.972,
+   "span": {
+    "counts": {
+     "cosmetic": 33,
+     "misleads": 32,
+     "wrong_text": 0
+    },
+    "score": 56.432748538011694,
+    "score_flat": 56.432748538011694,
+    "score_steep": 103.21637426900585,
+    "ref_words": 342
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.007,
+   "wer": 0.063,
+   "fca": 0.988,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 19,
+     "wrong_text": 1
+    },
+    "score": 35.67251461988304,
+    "score_flat": 31.28654970760234,
+    "score_steep": 85.38011695906432,
+    "ref_words": 342
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-fliegende-bl-tter-1-djvu-p17",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.065,
+   "wer": 0.028,
+   "fca": 0.926,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 0,
+     "wrong_text": 3
+    },
+    "score": 55.86206896551724,
+    "score_flat": 24.82758620689655,
+    "score_steep": 211.0344827586207,
+    "ref_words": 145
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.065,
+   "wer": 0.028,
+   "fca": 0.926,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 3
+    },
+    "score": 54.48275862068966,
+    "score_flat": 23.448275862068964,
+    "score_steep": 209.6551724137931,
+    "ref_words": 145
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.191,
+   "wer": 0.262,
+   "fca": 0.912,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 16,
+     "wrong_text": 2
+    },
+    "score": 95.86206896551724,
+    "score_flat": 75.17241379310344,
+    "score_steep": 254.48275862068965,
+    "ref_words": 145
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.065,
+   "wer": 0.028,
+   "fca": 0.926,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 3
+    },
+    "score": 54.48275862068966,
+    "score_flat": 23.448275862068964,
+    "score_steep": 209.6551724137931,
+    "ref_words": 145
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-die-vierbeinigten-philosophen-djvu-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.005,
+   "wer": 0.018,
+   "fca": 0.995,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 9.090909090909092,
+    "score_flat": 9.090909090909092,
+    "score_steep": 18.181818181818183,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.016,
+   "wer": 0.067,
+   "fca": 0.98,
+   "span": {
+    "counts": {
+     "cosmetic": 27,
+     "misleads": 10,
+     "wrong_text": 1
+    },
+    "score": 61.81818181818182,
+    "score_flat": 52.72727272727273,
+    "score_steep": 137.57575757575756,
+    "ref_words": 165
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.006,
+   "wer": 0.024,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 17.575757575757574,
+    "score_flat": 17.575757575757574,
+    "score_steep": 29.696969696969695,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-chronica-pethau-djvu-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.017,
+   "wer": 0.064,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 33,
+     "misleads": 16,
+     "wrong_text": 1
+    },
+    "score": 50.92250922509225,
+    "score_flat": 45.38745387453874,
+    "score_steep": 108.11808118081181,
+    "ref_words": 271
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.015,
+   "wer": 0.061,
+   "fca": 0.985,
+   "span": {
+    "counts": {
+     "cosmetic": 33,
+     "misleads": 15,
+     "wrong_text": 1
+    },
+    "score": 49.07749077490775,
+    "score_flat": 43.542435424354245,
+    "score_steep": 104.4280442804428,
+    "ref_words": 271
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.012,
+   "wer": 0.098,
+   "fca": 0.985,
+   "span": {
+    "counts": {
+     "cosmetic": 49,
+     "misleads": 24,
+     "wrong_text": 1
+    },
+    "score": 71.58671586715867,
+    "score_flat": 66.05166051660517,
+    "score_steep": 143.54243542435424,
+    "ref_words": 271
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.003,
+   "wer": 0.042,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 36,
+     "misleads": 10,
+     "wrong_text": 1
+    },
+    "score": 40.95940959409594,
+    "score_flat": 35.42435424354244,
+    "score_steep": 87.08487084870849,
+    "ref_words": 271
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-bruder-felix-fabers-gereimtes-pilgerbuechlein-dj-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.014,
+   "wer": 0.069,
+   "fca": 0.979,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 15,
+     "wrong_text": 3
+    },
+    "score": 49.526813880126184,
+    "score_flat": 35.33123028391167,
+    "score_steep": 144.16403785488959,
+    "ref_words": 317
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.013,
+   "wer": 0.063,
+   "fca": 0.98,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 14,
+     "wrong_text": 2
+    },
+    "score": 40.37854889589905,
+    "score_flat": 30.914826498422713,
+    "score_steep": 109.77917981072555,
+    "ref_words": 317
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.013,
+   "wer": 0.073,
+   "fca": 0.977,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 15,
+     "wrong_text": 2
+    },
+    "score": 41.32492113564669,
+    "score_flat": 31.861198738170348,
+    "score_steep": 112.30283911671924,
+    "ref_words": 317
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.014,
+   "wer": 0.069,
+   "fca": 0.979,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 16,
+     "wrong_text": 2
+    },
+    "score": 43.217665615141954,
+    "score_flat": 33.753943217665615,
+    "score_steep": 115.77287066246056,
+    "ref_words": 317
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-der-ahnherr-pdf-p20",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.011,
+   "wer": 0.056,
+   "fca": 0.989,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 23.853211009174313,
+    "score_flat": 23.853211009174313,
+    "score_steep": 46.788990825688074,
+    "ref_words": 109
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.004,
+   "wer": 0.019,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 10.091743119266056,
+    "score_flat": 10.091743119266056,
+    "score_steep": 19.26605504587156,
+    "ref_words": 109
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.04,
+   "wer": 0.204,
+   "fca": 0.942,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 11,
+     "wrong_text": 0
+    },
+    "score": 55.04587155963303,
+    "score_flat": 55.04587155963303,
+    "score_steep": 105.5045871559633,
+    "ref_words": 109
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.004,
+   "wer": 0.019,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 1,
+     "wrong_text": 7
+    },
+    "score": 166.9724770642202,
+    "score_flat": 70.64220183486239,
+    "score_steep": 653.2110091743119,
+    "ref_words": 109
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-experimental-untersuchungen-ber-elektricit-t-02-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.007,
+   "wer": 0.004,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 2,
+     "wrong_text": 4
+    },
+    "score": 41.72932330827068,
+    "score_flat": 19.172932330827066,
+    "score_steep": 158.27067669172934,
+    "ref_words": 266
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.007,
+   "wer": 0.004,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 2,
+     "wrong_text": 4
+    },
+    "score": 41.72932330827068,
+    "score_flat": 19.172932330827066,
+    "score_steep": 158.27067669172934,
+    "ref_words": 266
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.008,
+   "wer": 0.008,
+   "fca": 0.954,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 3,
+     "wrong_text": 4
+    },
+    "score": 43.609022556390975,
+    "score_flat": 21.05263157894737,
+    "score_steep": 162.0300751879699,
+    "ref_words": 266
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.008,
+   "wer": 0.008,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 3,
+     "wrong_text": 4
+    },
+    "score": 43.609022556390975,
+    "score_flat": 21.05263157894737,
+    "score_steep": 162.0300751879699,
+    "ref_words": 266
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-ber-hmte-krapfen-recepte-und-die-heirath-durch-k-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.014,
+   "wer": 0.056,
+   "fca": 0.985,
+   "span": {
+    "counts": {
+     "cosmetic": 18,
+     "misleads": 40,
+     "wrong_text": 0
+    },
+    "score": 26.61782661782662,
+    "score_flat": 26.61782661782662,
+    "score_steep": 51.03785103785104,
+    "ref_words": 819
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.01,
+   "wer": 0.045,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 34,
+     "wrong_text": 0
+    },
+    "score": 22.344322344322343,
+    "score_flat": 22.344322344322343,
+    "score_steep": 43.101343101343105,
+    "ref_words": 819
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.092,
+   "wer": 0.163,
+   "fca": 0.956,
+   "span": {
+    "counts": {
+     "cosmetic": 97,
+     "misleads": 90,
+     "wrong_text": 2
+    },
+    "score": 72.89377289377289,
+    "score_flat": 69.23076923076923,
+    "score_steep": 146.15384615384616,
+    "ref_words": 819
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.007,
+   "wer": 0.024,
+   "fca": 0.991,
+   "span": {
+    "counts": {
+     "cosmetic": 36,
+     "misleads": 26,
+     "wrong_text": 1
+    },
+    "score": 23.32112332112332,
+    "score_flat": 21.489621489621488,
+    "score_steep": 48.35164835164835,
+    "ref_words": 819
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-erinnerungst-felchen-an-die-ausstellung-der-kuns-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.004,
+   "wer": 0.019,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 11.688311688311689,
+    "score_flat": 11.688311688311689,
+    "score_steep": 21.428571428571427,
+    "ref_words": 154
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.004,
+   "wer": 0.019,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 11.688311688311689,
+    "score_flat": 11.688311688311689,
+    "score_steep": 21.428571428571427,
+    "ref_words": 154
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.061,
+   "wer": 0.24,
+   "fca": 0.939,
+   "span": {
+    "counts": {
+     "cosmetic": 16,
+     "misleads": 29,
+     "wrong_text": 0
+    },
+    "score": 104.54545454545455,
+    "score_flat": 104.54545454545455,
+    "score_steep": 198.7012987012987,
+    "ref_words": 154
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 5.194805194805195,
+    "score_flat": 5.194805194805195,
+    "score_steep": 8.441558441558442,
+    "ref_words": 154
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-das-suggenthal-djvu-p4",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.006,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 2.9154518950437316,
+    "score_flat": 2.9154518950437316,
+    "score_steep": 5.830903790087463,
+    "ref_words": 686
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.002,
+   "wer": 0.006,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 2.9154518950437316,
+    "score_flat": 2.9154518950437316,
+    "score_steep": 5.830903790087463,
+    "ref_words": 686
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.682,
+   "wer": 0.509,
+   "fca": 0.942,
+   "span": {
+    "counts": {
+     "cosmetic": 22,
+     "misleads": 39,
+     "wrong_text": 14
+    },
+    "score": 82.65306122448979,
+    "score_flat": 52.04081632653061,
+    "score_steep": 264.1399416909621,
+    "ref_words": 686
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.035,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 24,
+     "wrong_text": 0
+    },
+    "score": 17.49271137026239,
+    "score_flat": 17.49271137026239,
+    "score_steep": 34.98542274052478,
+    "ref_words": 686
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-95-thesen-pdf-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.007,
+   "wer": 0.183,
+   "fca": 0.977,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 38,
+     "wrong_text": 0
+    },
+    "score": 52.5065963060686,
+    "score_flat": 52.5065963060686,
+    "score_steep": 102.63852242744063,
+    "ref_words": 379
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.007,
+   "wer": 0.183,
+   "fca": 0.977,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 38,
+     "wrong_text": 0
+    },
+    "score": 52.5065963060686,
+    "score_flat": 52.5065963060686,
+    "score_steep": 102.63852242744063,
+    "ref_words": 379
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.013,
+   "wer": 0.148,
+   "fca": 0.968,
+   "span": {
+    "counts": {
+     "cosmetic": 92,
+     "misleads": 35,
+     "wrong_text": 4
+    },
+    "score": 96.83377308707124,
+    "score_flat": 81.00263852242745,
+    "score_steep": 222.16358839050133,
+    "ref_words": 379
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.016,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 6,
+     "wrong_text": 0
+    },
+    "score": 8.443271767810026,
+    "score_flat": 8.443271767810026,
+    "score_steep": 16.358839050131927,
+    "ref_words": 379
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-die-neue-messaline-1788-pdf-p30",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.01,
+   "wer": 0.047,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 33.108108108108105,
+    "score_flat": 33.108108108108105,
+    "score_steep": 50,
+    "ref_words": 148
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.003,
+   "wer": 0.02,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 30,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 27.027027027027028,
+    "score_flat": 27.027027027027028,
+    "score_steep": 33.78378378378378,
+    "ref_words": 148
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.135,
+   "wer": 0.547,
+   "fca": 0.843,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 38,
+     "wrong_text": 0
+    },
+    "score": 133.78378378378378,
+    "score_flat": 133.78378378378378,
+    "score_steep": 262.1621621621622,
+    "ref_words": 148
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.01,
+   "wer": 0.047,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 33.108108108108105,
+    "score_flat": 33.108108108108105,
+    "score_steep": 50,
+    "ref_words": 148
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  }
+ },
+ {
+  "slug": "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.008,
+   "wer": 0.014,
+   "fca": 0.991,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 7.421875,
+    "score_flat": 7.421875,
+    "score_steep": 14.2578125,
+    "ref_words": 512
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 3.515625,
+    "score_flat": 3.515625,
+    "score_steep": 6.4453125,
+    "ref_words": 512
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.071,
+   "wer": 0.1,
+   "fca": 0.915,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 45,
+     "wrong_text": 2
+    },
+    "score": 54.4921875,
+    "score_flat": 48.6328125,
+    "score_steep": 127.734375,
+    "ref_words": 512
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.055,
+   "wer": 0.002,
+   "fca": 0.933,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 6.4453125,
+    "score_flat": 3.515625,
+    "score_steep": 22.0703125,
+    "ref_words": 512
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-deutsche-kunstbl-tter-die-kunstausstellung-zu-dr-p53",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.025,
+   "fca": 0.828,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 12.711864406779661,
+    "score_flat": 12.711864406779661,
+    "score_steep": 25.423728813559322,
+    "ref_words": 118
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.002,
+   "wer": 0.025,
+   "fca": 0.828,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 12.711864406779661,
+    "score_flat": 12.711864406779661,
+    "score_steep": 25.423728813559322,
+    "ref_words": 118
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.012,
+   "wer": 0.076,
+   "fca": 0.791,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 8,
+     "wrong_text": 0
+    },
+    "score": 45.76271186440678,
+    "score_flat": 45.76271186440678,
+    "score_steep": 79.66101694915254,
+    "ref_words": 118
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.025,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 31.35593220338983,
+    "score_flat": 18.64406779661017,
+    "score_steep": 103.38983050847457,
+    "ref_words": 118
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-clementine-schrader-der-hohlweg-1843-pdf-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.926829268292683,
+    "score_flat": 7.926829268292683,
+    "score_steep": 7.926829268292683,
+    "ref_words": 164
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.926829268292683,
+    "score_flat": 7.926829268292683,
+    "score_steep": 7.926829268292683,
+    "ref_words": 164
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.004,
+   "wer": 0.037,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 6,
+     "wrong_text": 0
+    },
+    "score": 26.829268292682926,
+    "score_flat": 26.829268292682926,
+    "score_steep": 45.1219512195122,
+    "ref_words": 164
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.926829268292683,
+    "score_flat": 7.926829268292683,
+    "score_steep": 7.926829268292683,
+    "ref_words": 164
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-caecilia206-229-pdf-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.004,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 25.390625,
+    "score_flat": 13.671875,
+    "score_steep": 87.890625,
+    "ref_words": 256
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 27.34375,
+    "score_flat": 15.625,
+    "score_steep": 89.84375,
+    "ref_words": 256
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.006,
+   "wer": 0.043,
+   "fca": 0.98,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 11,
+     "wrong_text": 2
+    },
+    "score": 43.75,
+    "score_flat": 32.03125,
+    "score_steep": 123.828125,
+    "ref_words": 256
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.004,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 28.515625,
+    "score_flat": 16.796875,
+    "score_steep": 91.015625,
+    "ref_words": 256
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-friedens-instrument-zwischen-den-kayser-und-dem-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.042,
+   "wer": 0.106,
+   "fca": 0.946,
+   "span": {
+    "counts": {
+     "cosmetic": 49,
+     "misleads": 19,
+     "wrong_text": 1
+    },
+    "score": 55.5921052631579,
+    "score_flat": 50.6578947368421,
+    "score_steep": 111.51315789473684,
+    "ref_words": 304
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.011,
+   "wer": 0.056,
+   "fca": 0.988,
+   "span": {
+    "counts": {
+     "cosmetic": 54,
+     "misleads": 15,
+     "wrong_text": 1
+    },
+    "score": 50.6578947368421,
+    "score_flat": 45.723684210526315,
+    "score_steep": 100,
+    "ref_words": 304
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.04,
+   "wer": 0.304,
+   "fca": 0.932,
+   "span": {
+    "counts": {
+     "cosmetic": 61,
+     "misleads": 50,
+     "wrong_text": 1
+    },
+    "score": 110.52631578947368,
+    "score_flat": 105.59210526315789,
+    "score_steep": 217.43421052631578,
+    "ref_words": 304
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.042,
+   "wer": 0.106,
+   "fca": 0.946,
+   "span": {
+    "counts": {
+     "cosmetic": 49,
+     "misleads": 19,
+     "wrong_text": 1
+    },
+    "score": 55.5921052631579,
+    "score_flat": 50.6578947368421,
+    "score_steep": 111.51315789473684,
+    "ref_words": 304
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  }
+ },
+ {
+  "slug": "ws-de-ein-kurtzweilig-lesen-von-dyl-vlenspiegel-djvu-p19",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.034,
+   "wer": 0.324,
+   "fca": 0.957,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 35,
+     "wrong_text": 0
+    },
+    "score": 81.94444444444444,
+    "score_flat": 81.94444444444444,
+    "score_steep": 162.96296296296296,
+    "ref_words": 216
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.028,
+   "wer": 0.272,
+   "fca": 0.972,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 28,
+     "wrong_text": 0
+    },
+    "score": 65.27777777777777,
+    "score_flat": 65.27777777777777,
+    "score_steep": 130.09259259259258,
+    "ref_words": 216
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.11,
+   "wer": 0.484,
+   "fca": 0.88,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 41,
+     "wrong_text": 11
+    },
+    "score": 231.0185185185185,
+    "score_flat": 154.62962962962962,
+    "score_steep": 707.8703703703703,
+    "ref_words": 216
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.035,
+   "wer": 0.291,
+   "fca": 0.965,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 32,
+     "wrong_text": 0
+    },
+    "score": 74.53703703703704,
+    "score_flat": 74.53703703703704,
+    "score_steep": 148.61111111111111,
+    "ref_words": 216
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-de-barrikaden-lieder-gottschall-djvu-p24",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 99
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 99
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 1.0101010101010102,
+    "score_flat": 1.0101010101010102,
+    "score_steep": 1.0101010101010102,
+    "ref_words": 99
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 99
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-dudalaeus-welt-herum-wandernde-jude-djvu-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.004,
+   "wer": 0.017,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 8.720930232558139,
+    "score_flat": 8.720930232558139,
+    "score_steep": 17.441860465116278,
+    "ref_words": 172
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.98,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 172
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.058,
+   "wer": 0.215,
+   "fca": 0.931,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 27,
+     "wrong_text": 1
+    },
+    "score": 108.13953488372093,
+    "score_flat": 99.4186046511628,
+    "score_steep": 230.2325581395349,
+    "ref_words": 172
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.949,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 4.069767441860465,
+    "score_flat": 4.069767441860465,
+    "score_steep": 6.976744186046512,
+    "ref_words": 172
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-ah-ca-ira-pdf-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.008,
+   "wer": 0.039,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 19.37984496124031,
+    "score_flat": 19.37984496124031,
+    "score_steep": 38.75968992248062,
+    "ref_words": 129
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.008,
+   "wer": 0.039,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 19.37984496124031,
+    "score_flat": 19.37984496124031,
+    "score_steep": 38.75968992248062,
+    "ref_words": 129
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.036,
+   "wer": 0.178,
+   "fca": 0.937,
+   "span": {
+    "counts": {
+     "cosmetic": 17,
+     "misleads": 18,
+     "wrong_text": 1
+    },
+    "score": 102.32558139534883,
+    "score_flat": 90.69767441860465,
+    "score_steep": 230.2325581395349,
+    "ref_words": 129
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.006,
+   "wer": 0.023,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 11.627906976744185,
+    "score_flat": 11.627906976744185,
+    "score_steep": 23.25581395348837,
+    "ref_words": 129
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-gn-a-148-gemein-nachrichten-1770-2-pdf-p26",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.046,
+   "wer": 0.189,
+   "fca": 0.945,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 20,
+     "wrong_text": 3
+    },
+    "score": 118.54304635761589,
+    "score_flat": 88.74172185430463,
+    "score_steep": 333.7748344370861,
+    "ref_words": 151
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.031,
+   "wer": 0.14,
+   "fca": 0.969,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 13,
+     "wrong_text": 3
+    },
+    "score": 96.02649006622516,
+    "score_flat": 66.2251655629139,
+    "score_steep": 288.0794701986755,
+    "ref_words": 151
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpu": {
+   "cer": 0.727,
+   "wer": 0.993,
+   "fca": 0.17,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 0,
+     "wrong_text": 4
+    },
+    "score": 67.54966887417218,
+    "score_flat": 27.814569536423843,
+    "score_steep": 266.2251655629139,
+    "ref_words": 151
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.046,
+   "wer": 0.189,
+   "fca": 0.945,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 20,
+     "wrong_text": 3
+    },
+    "score": 118.54304635761589,
+    "score_flat": 88.74172185430463,
+    "score_steep": 333.7748344370861,
+    "ref_words": 151
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  }
+ },
+ {
+  "slug": "ws-de-die-poetische-ukraine-1845-pdf-p15",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.005,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 2.5641025641025643,
+    "score_flat": 2.5641025641025643,
+    "score_steep": 5.128205128205129,
+    "ref_words": 195
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 195
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.016,
+   "wer": 0.087,
+   "fca": 0.977,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 17,
+     "wrong_text": 0
+    },
+    "score": 45.12820512820513,
+    "score_flat": 45.12820512820513,
+    "score_steep": 88.71794871794872,
+    "ref_words": 195
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 195
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-baumann-kriegs-und-familienscenen-1813-pdf-p16",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.5649717514124294,
+    "score_flat": 0.5649717514124294,
+    "score_steep": 0.5649717514124294,
+    "ref_words": 177
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.5649717514124294,
+    "score_flat": 0.5649717514124294,
+    "score_steep": 0.5649717514124294,
+    "ref_words": 177
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.014,
+   "wer": 0.113,
+   "fca": 0.982,
+   "span": {
+    "counts": {
+     "cosmetic": 36,
+     "misleads": 19,
+     "wrong_text": 0
+    },
+    "score": 74.01129943502825,
+    "score_flat": 74.01129943502825,
+    "score_steep": 127.68361581920904,
+    "ref_words": 177
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.051,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 9,
+     "wrong_text": 0
+    },
+    "score": 25.98870056497175,
+    "score_flat": 25.98870056497175,
+    "score_steep": 51.41242937853107,
+    "ref_words": 177
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-etwas-ber-die-dresdner-kunstausstellung-1811-zei-p1",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.007,
+   "wer": 0.032,
+   "fca": 0.909,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 19,
+     "wrong_text": 0
+    },
+    "score": 16.134453781512605,
+    "score_flat": 16.134453781512605,
+    "score_steep": 32.10084033613445,
+    "ref_words": 595
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.007,
+   "wer": 0.032,
+   "fca": 0.909,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 19,
+     "wrong_text": 0
+    },
+    "score": 16.134453781512605,
+    "score_flat": 16.134453781512605,
+    "score_steep": 32.10084033613445,
+    "ref_words": 595
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.091,
+   "wer": 0.395,
+   "fca": 0.82,
+   "span": {
+    "counts": {
+     "cosmetic": 75,
+     "misleads": 141,
+     "wrong_text": 2
+    },
+    "score": 139.49579831932772,
+    "score_flat": 134.45378151260505,
+    "score_steep": 283.1932773109244,
+    "ref_words": 595
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.003,
+   "wer": 0.066,
+   "fca": 0.913,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 27,
+     "wrong_text": 1
+    },
+    "score": 27.563025210084035,
+    "score_flat": 25.04201680672269,
+    "score_steep": 62.857142857142854,
+    "ref_words": 595
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-der-sieg-ber-die-branntweinpest-in-oberschlesien-p33",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.005,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 2.816901408450704,
+    "score_flat": 2.816901408450704,
+    "score_steep": 5.164319248826291,
+    "ref_words": 213
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.005,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 2.816901408450704,
+    "score_flat": 2.816901408450704,
+    "score_steep": 5.164319248826291,
+    "ref_words": 213
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.001,
+   "wer": 0.014,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 7.981220657276995,
+    "score_flat": 7.981220657276995,
+    "score_steep": 15.023474178403756,
+    "ref_words": 213
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.009,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 5.164319248826291,
+    "score_flat": 5.164319248826291,
+    "score_steep": 9.859154929577464,
+    "ref_words": 213
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-experimental-untersuchungen-ber-elektricit-t-08-p4",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 4
+    },
+    "score": 41.666666666666664,
+    "score_flat": 20.833333333333332,
+    "score_steep": 147.56944444444446,
+    "ref_words": 288
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 4
+    },
+    "score": 41.666666666666664,
+    "score_flat": 20.833333333333332,
+    "score_steep": 147.56944444444446,
+    "ref_words": 288
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.007,
+   "wer": 0.025,
+   "fca": 0.95,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 10,
+     "wrong_text": 4
+    },
+    "score": 53.81944444444444,
+    "score_flat": 32.986111111111114,
+    "score_steep": 175.34722222222223,
+    "ref_words": 288
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 4
+    },
+    "score": 41.666666666666664,
+    "score_flat": 20.833333333333332,
+    "score_steep": 147.56944444444446,
+    "ref_words": 288
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-chronica-eckersberg-und-olbersdorff-djvu-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.006,
+   "wer": 0.038,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 15.555555555555555,
+    "score_flat": 15.555555555555555,
+    "score_steep": 30.37037037037037,
+    "ref_words": 135
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0.008,
+   "fca": 0.995,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 22.962962962962962,
+    "score_flat": 11.851851851851851,
+    "score_steep": 82.22222222222223,
+    "ref_words": 135
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.023,
+   "wer": 0.195,
+   "fca": 0.928,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 21,
+     "wrong_text": 0
+    },
+    "score": 97.03703703703704,
+    "score_flat": 97.03703703703704,
+    "score_steep": 174.8148148148148,
+    "ref_words": 135
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.075,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 10,
+     "wrong_text": 1
+    },
+    "score": 60.74074074074074,
+    "score_flat": 49.629629629629626,
+    "score_steep": 153.33333333333334,
+    "ref_words": 135
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-chronica-hartau-djvu-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.017,
+   "wer": 0.11,
+   "fca": 0.983,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 6,
+     "wrong_text": 2
+    },
+    "score": 80.1980198019802,
+    "score_flat": 50.495049504950494,
+    "score_steep": 258.41584158415844,
+    "ref_words": 101
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.015,
+   "wer": 0.1,
+   "fca": 0.985,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 5,
+     "wrong_text": 2
+    },
+    "score": 75.24752475247524,
+    "score_flat": 45.54455445544554,
+    "score_steep": 248.5148514851485,
+    "ref_words": 101
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.09,
+   "wer": 0.29,
+   "fca": 0.924,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 14,
+     "wrong_text": 4
+    },
+    "score": 188.11881188118812,
+    "score_flat": 128.7128712871287,
+    "score_steep": 554.4554455445544,
+    "ref_words": 101
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.02,
+   "wer": 0.16,
+   "fca": 0.98,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 11,
+     "wrong_text": 2
+    },
+    "score": 116.83168316831683,
+    "score_flat": 87.12871287128714,
+    "score_steep": 319.8019801980198,
+    "ref_words": 101
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-de-pfm-1833-05-25-nr-04-djvu-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.003,
+   "wer": 0.012,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 9,
+     "wrong_text": 3
+    },
+    "score": 12.46261216350947,
+    "score_flat": 7.976071784646062,
+    "score_steep": 39.38185443668993,
+    "ref_words": 1003
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.004,
+   "wer": 0.01,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 10,
+     "wrong_text": 2
+    },
+    "score": 10.468594217347956,
+    "score_flat": 7.477567298105683,
+    "score_steep": 30.40877367896311,
+    "ref_words": 1003
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.014,
+   "wer": 0.06,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 94,
+     "misleads": 54,
+     "wrong_text": 2
+    },
+    "score": 41.27617148554337,
+    "score_flat": 38.2851445663011,
+    "score_steep": 83.1505483549352,
+    "ref_words": 1003
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.007,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 4.087736789631107,
+    "score_flat": 4.087736789631107,
+    "score_steep": 7.577268195413759,
+    "ref_words": 1003
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 163
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 163
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.017,
+   "wer": 0.098,
+   "fca": 0.983,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 16,
+     "wrong_text": 0
+    },
+    "score": 51.533742331288344,
+    "score_flat": 51.533742331288344,
+    "score_steep": 100.61349693251533,
+    "ref_words": 163
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0,
+    "score_flat": 0,
+    "score_steep": 0,
+    "ref_words": 163
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-die-dresdener-gem-lde-galerie-mosen-pdf-p17",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.005,
+   "wer": 0.013,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 6.726457399103139,
+    "score_flat": 6.726457399103139,
+    "score_steep": 13.452914798206278,
+    "ref_words": 223
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.003,
+   "wer": 0.004,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 2.242152466367713,
+    "score_flat": 2.242152466367713,
+    "score_steep": 4.484304932735426,
+    "ref_words": 223
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.021,
+   "wer": 0.103,
+   "fca": 0.971,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 19,
+     "wrong_text": 0
+    },
+    "score": 43.946188340807176,
+    "score_flat": 43.946188340807176,
+    "score_steep": 86.54708520179372,
+    "ref_words": 223
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.003,
+   "wer": 0.004,
+   "fca": 0.995,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 2.242152466367713,
+    "score_flat": 2.242152466367713,
+    "score_steep": 4.484304932735426,
+    "ref_words": 223
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.006,
+   "wer": 0.008,
+   "fca": 0.932,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 5,
+     "wrong_text": 1
+    },
+    "score": 8.307692307692308,
+    "score_flat": 6,
+    "score_steep": 23.692307692307693,
+    "ref_words": 650
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.938,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 5.230769230769231,
+    "score_flat": 2.923076923076923,
+    "score_steep": 17.53846153846154,
+    "ref_words": 650
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.006,
+   "wer": 0.035,
+   "fca": 0.922,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 20,
+     "wrong_text": 3
+    },
+    "score": 27.846153846153847,
+    "score_flat": 20.923076923076923,
+    "score_steep": 77.84615384615384,
+    "ref_words": 650
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.003,
+   "fca": 0.938,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 5.846153846153846,
+    "score_flat": 3.5384615384615383,
+    "score_steep": 18.923076923076923,
+    "ref_words": 650
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-deutsche-gewerbezeitung-nr-37-1849-pdf-p7",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.148,
+   "wer": 0.194,
+   "fca": 0.322,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 49,
+     "wrong_text": 3
+    },
+    "score": 43.359375,
+    "score_flat": 37.5,
+    "score_steep": 104.55729166666667,
+    "ref_words": 768
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.148,
+   "wer": 0.194,
+   "fca": 0.322,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 51,
+     "wrong_text": 1
+    },
+    "score": 38.151041666666664,
+    "score_flat": 36.197916666666664,
+    "score_steep": 81.11979166666667,
+    "ref_words": 768
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpu": {
+   "cer": 0.096,
+   "wer": 0.406,
+   "fca": 0.278,
+   "span": {
+    "counts": {
+     "cosmetic": 34,
+     "misleads": 197,
+     "wrong_text": 1
+    },
+    "score": 135.9375,
+    "score_flat": 133.984375,
+    "score_steep": 273.9583333333333,
+    "ref_words": 768
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.148,
+   "wer": 0.194,
+   "fca": 0.322,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 51,
+     "wrong_text": 1
+    },
+    "score": 38.151041666666664,
+    "score_flat": 36.197916666666664,
+    "score_steep": 81.11979166666667,
+    "ref_words": 768
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  }
+ },
+ {
+  "slug": "ws-de-dresdner-anzeigen-1803-kunstausstellung-djvu-p3",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.016,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 6.666666666666667,
+    "score_flat": 6.666666666666667,
+    "score_steep": 12.413793103448276,
+    "ref_words": 435
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.007,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 3.9080459770114944,
+    "score_flat": 3.9080459770114944,
+    "score_steep": 7.35632183908046,
+    "ref_words": 435
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.018,
+   "wer": 0.149,
+   "fca": 0.972,
+   "span": {
+    "counts": {
+     "cosmetic": 80,
+     "misleads": 52,
+     "wrong_text": 1
+    },
+    "score": 83.9080459770115,
+    "score_flat": 80.45977011494253,
+    "score_steep": 160.91954022988506,
+    "ref_words": 435
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.069,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 30,
+     "wrong_text": 0
+    },
+    "score": 34.71264367816092,
+    "score_flat": 34.71264367816092,
+    "score_steep": 69.19540229885058,
+    "ref_words": 435
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-feldern-rolf-orangenbluethe-pdf-p2",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 4.464285714285714,
+    "score_flat": 4.464285714285714,
+    "score_steep": 4.464285714285714,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 4.464285714285714,
+    "score_flat": 4.464285714285714,
+    "score_steep": 4.464285714285714,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.025,
+   "wer": 0.125,
+   "fca": 0.971,
+   "span": {
+    "counts": {
+     "cosmetic": 17,
+     "misleads": 24,
+     "wrong_text": 0
+    },
+    "score": 61.160714285714285,
+    "score_flat": 61.160714285714285,
+    "score_steep": 114.73214285714286,
+    "ref_words": 224
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 2.232142857142857,
+    "score_flat": 2.232142857142857,
+    "score_steep": 2.232142857142857,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-die-philosophen-aus-dem-uranus-djvu-p18",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.008,
+   "wer": 0.085,
+   "fca": 0.982,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 12,
+     "wrong_text": 0
+    },
+    "score": 42.95774647887324,
+    "score_flat": 42.95774647887324,
+    "score_steep": 85.21126760563381,
+    "ref_words": 142
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.005,
+   "wer": 0.028,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 14.788732394366198,
+    "score_flat": 14.788732394366198,
+    "score_steep": 28.87323943661972,
+    "ref_words": 142
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.012,
+   "wer": 0.099,
+   "fca": 0.977,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 13,
+     "wrong_text": 0
+    },
+    "score": 65.49295774647888,
+    "score_flat": 65.49295774647888,
+    "score_steep": 111.26760563380282,
+    "ref_words": 142
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.049,
+   "fca": 0.995,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 29.577464788732396,
+    "score_flat": 29.577464788732396,
+    "score_steep": 54.225352112676056,
+    "ref_words": 142
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-de-deutsches-schimpfw-rterbuch-oder-die-schimpfw-rt-p23",
+  "lang": "de",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.005,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 3.1914893617021276,
+    "score_flat": 3.1914893617021276,
+    "score_steep": 5.851063829787234,
+    "ref_words": 188
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.5319148936170213,
+    "score_flat": 0.5319148936170213,
+    "score_steep": 0.5319148936170213,
+    "ref_words": 188
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.995,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.5319148936170213,
+    "score_flat": 0.5319148936170213,
+    "score_steep": 0.5319148936170213,
+    "ref_words": 188
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.5319148936170213,
+    "score_flat": 0.5319148936170213,
+    "score_steep": 0.5319148936170213,
+    "ref_words": 188
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-barbier-th-tre-1745-pdf-p258",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.019,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 35,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 25.58139534883721,
+    "score_flat": 25.58139534883721,
+    "score_steep": 34.883720930232556,
+    "ref_words": 215
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.019,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 35,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 25.58139534883721,
+    "score_flat": 25.58139534883721,
+    "score_steep": 34.883720930232556,
+    "ref_words": 215
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.023,
+   "wer": 0.091,
+   "fca": 0.965,
+   "span": {
+    "counts": {
+     "cosmetic": 33,
+     "misleads": 14,
+     "wrong_text": 3
+    },
+    "score": 82.79069767441861,
+    "score_flat": 61.86046511627907,
+    "score_steep": 220,
+    "ref_words": 215
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 48,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 22.325581395348838,
+    "score_flat": 22.325581395348838,
+    "score_steep": 22.325581395348838,
+    "ref_words": 215
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-relation-envoy-e-de-brest-au-sujet-d-un-p2",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.003,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 72,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 22.916666666666668,
+    "score_flat": 22.916666666666668,
+    "score_steep": 24.404761904761905,
+    "ref_words": 336
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 73,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 24.702380952380953,
+    "score_flat": 24.702380952380953,
+    "score_steep": 27.678571428571427,
+    "ref_words": 336
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.007,
+   "wer": 0.037,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 35,
+     "misleads": 11,
+     "wrong_text": 0
+    },
+    "score": 26.785714285714285,
+    "score_flat": 26.785714285714285,
+    "score_steep": 43.154761904761905,
+    "ref_words": 336
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.006,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 84,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 26.488095238095237,
+    "score_flat": 26.488095238095237,
+    "score_steep": 27.976190476190474,
+    "ref_words": 336
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-j-b-p-bacon-belph-gor-dans-marseille-173-p3",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.053,
+   "wer": 0.236,
+   "fca": 0.944,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 32,
+     "wrong_text": 0
+    },
+    "score": 109.8159509202454,
+    "score_flat": 109.8159509202454,
+    "score_steep": 207.9754601226994,
+    "ref_words": 163
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.052,
+   "wer": 0.23,
+   "fca": 0.946,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 32,
+     "wrong_text": 0
+    },
+    "score": 109.8159509202454,
+    "score_flat": 109.8159509202454,
+    "score_steep": 207.9754601226994,
+    "ref_words": 163
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.023,
+   "wer": 0.087,
+   "fca": 0.962,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 11,
+     "wrong_text": 1
+    },
+    "score": 66.25766871165644,
+    "score_flat": 57.05521472392638,
+    "score_steep": 146.01226993865032,
+    "ref_words": 163
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.003,
+   "wer": 0.006,
+   "fca": 0.995,
+   "span": {
+    "counts": {
+     "cosmetic": 66,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 43.558282208588956,
+    "score_flat": 43.558282208588956,
+    "score_steep": 46.625766871165645,
+    "ref_words": 163
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-aboulf-da-vie-de-mohammed-traduction-et-commenta-p21",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.005,
+   "wer": 0.02,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 35,
+     "misleads": 2,
+     "wrong_text": 3
+    },
+    "score": 47.430830039525695,
+    "score_flat": 29.64426877470356,
+    "score_steep": 140.31620553359684,
+    "ref_words": 253
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.004,
+   "wer": 0.016,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 35,
+     "misleads": 2,
+     "wrong_text": 3
+    },
+    "score": 47.430830039525695,
+    "score_flat": 29.64426877470356,
+    "score_steep": 140.31620553359684,
+    "ref_words": 253
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.025,
+   "wer": 0.098,
+   "fca": 0.962,
+   "span": {
+    "counts": {
+     "cosmetic": 46,
+     "misleads": 14,
+     "wrong_text": 7
+    },
+    "score": 115.0197628458498,
+    "score_flat": 73.51778656126483,
+    "score_steep": 350.197628458498,
+    "ref_words": 253
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.005,
+   "wer": 0.02,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 35,
+     "misleads": 2,
+     "wrong_text": 3
+    },
+    "score": 47.430830039525695,
+    "score_flat": 29.64426877470356,
+    "score_steep": 140.31620553359684,
+    "ref_words": 253
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-bacchus-l-amour-et-les-plaisirs-ou-recueil-de-ch-p22",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.008,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 11.811023622047244,
+    "score_flat": 11.811023622047244,
+    "score_steep": 15.748031496062993,
+    "ref_words": 127
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.004,
+   "wer": 0.016,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 12.598425196850394,
+    "score_flat": 12.598425196850394,
+    "score_steep": 20.47244094488189,
+    "ref_words": 127
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-adresse-messieurs-nos-abonn-s-pour-la-no-p2",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 30,
+    "score_flat": 19.285714285714285,
+    "score_steep": 87.14285714285714,
+    "ref_words": 140
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.002,
+   "wer": 0,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 30,
+    "score_flat": 19.285714285714285,
+    "score_steep": 87.14285714285714,
+    "ref_words": 140
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.006,
+   "wer": 0.015,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 39.285714285714285,
+    "score_flat": 28.571428571428573,
+    "score_steep": 100,
+    "ref_words": 140
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.002,
+   "wer": 0,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 30,
+    "score_flat": 19.285714285714285,
+    "score_steep": 87.14285714285714,
+    "ref_words": 140
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-barbey-d-aurevilly-aux-h-ros-des-thermopyles-djv-p14",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.003,
+   "wer": 0.008,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 1,
+     "wrong_text": 2
+    },
+    "score": 48.4375,
+    "score_flat": 25,
+    "score_steep": 169.53125,
+    "ref_words": 128
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.003,
+   "wer": 0.008,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 32.8125,
+    "score_flat": 21.09375,
+    "score_steep": 99.21875,
+    "ref_words": 128
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.039,
+   "wer": 0.056,
+   "fca": 0.956,
+   "span": {
+    "counts": {
+     "cosmetic": 25,
+     "misleads": 6,
+     "wrong_text": 3
+    },
+    "score": 101.5625,
+    "score_flat": 66.40625,
+    "score_steep": 300.78125,
+    "ref_words": 128
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.003,
+   "wer": 0.008,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 32.8125,
+    "score_flat": 21.09375,
+    "score_steep": 99.21875,
+    "ref_words": 128
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-abbadie-l-art-de-se-connaitre-soi-meme-djvu-p32",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.036,
+   "wer": 0.036,
+   "fca": 0.954,
+   "span": {
+    "counts": {
+     "cosmetic": 16,
+     "misleads": 4,
+     "wrong_text": 2
+    },
+    "score": 50.887573964497044,
+    "score_flat": 33.13609467455621,
+    "score_steep": 151.4792899408284,
+    "ref_words": 169
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.036,
+   "wer": 0.036,
+   "fca": 0.953,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 4,
+     "wrong_text": 2
+    },
+    "score": 50.29585798816568,
+    "score_flat": 32.544378698224854,
+    "score_steep": 150.88757396449705,
+    "ref_words": 169
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.061,
+   "wer": 0.109,
+   "fca": 0.919,
+   "span": {
+    "counts": {
+     "cosmetic": 39,
+     "misleads": 11,
+     "wrong_text": 2
+    },
+    "score": 85.20710059171597,
+    "score_flat": 67.45562130177515,
+    "score_steep": 206.50887573964496,
+    "ref_words": 169
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.035,
+   "wer": 0.036,
+   "fca": 0.954,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 4,
+     "wrong_text": 2
+    },
+    "score": 53.25443786982248,
+    "score_flat": 35.50295857988166,
+    "score_steep": 153.84615384615384,
+    "ref_words": 169
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-ballanche-vision-d-h-bal-djvu-p5",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 5.223880597014926,
+    "score_flat": 5.223880597014926,
+    "score_steep": 5.223880597014926,
+    "ref_words": 134
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 9.701492537313433,
+    "score_flat": 9.701492537313433,
+    "score_steep": 13.432835820895523,
+    "ref_words": 134
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.002,
+   "wer": 0.008,
+   "fca": 0.97,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 24.62686567164179,
+    "score_flat": 13.432835820895523,
+    "score_steep": 80.59701492537313,
+    "ref_words": 134
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 5.223880597014926,
+    "score_flat": 5.223880597014926,
+    "score_steep": 5.223880597014926,
+    "ref_words": 134
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-aza-s-seconde-lettre-m-le-vte-de-ch-teaubriand-p-p45",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 11.728395061728396,
+    "score_flat": 11.728395061728396,
+    "score_steep": 14.814814814814815,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 11.728395061728396,
+    "score_flat": 11.728395061728396,
+    "score_steep": 14.814814814814815,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 12.345679012345679,
+    "score_flat": 12.345679012345679,
+    "score_steep": 15.432098765432098,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.006,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 11.728395061728396,
+    "score_flat": 11.728395061728396,
+    "score_steep": 14.814814814814815,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-austen-orgueil-et-pr-jug-paschoud-4-djvu-p177",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.006,
+   "wer": 0.02,
+   "fca": 0.933,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 32.38095238095238,
+    "score_flat": 18.095238095238095,
+    "score_steep": 103.80952380952381,
+    "ref_words": 105
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.006,
+   "wer": 0.02,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 32.38095238095238,
+    "score_flat": 18.095238095238095,
+    "score_steep": 103.80952380952381,
+    "ref_words": 105
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.018,
+   "wer": 0.059,
+   "fca": 0.931,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 36.19047619047619,
+    "score_flat": 36.19047619047619,
+    "score_steep": 60,
+    "ref_words": 105
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.006,
+   "wer": 0.02,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 35.23809523809524,
+    "score_flat": 20.952380952380953,
+    "score_steep": 106.66666666666667,
+    "ref_words": 105
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-austen-la-famille-elliot-t2-djvu-p210",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.016,
+   "wer": 0.013,
+   "fca": 0.984,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 30.864197530864196,
+    "score_flat": 21.604938271604937,
+    "score_steep": 80.24691358024691,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.016,
+   "wer": 0.013,
+   "fca": 0.984,
+   "span": {
+    "counts": {
+     "cosmetic": 7,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 22.839506172839506,
+    "score_flat": 13.580246913580247,
+    "score_steep": 72.22222222222223,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.018,
+   "wer": 0.019,
+   "fca": 0.96,
+   "span": {
+    "counts": {
+     "cosmetic": 21,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 34.5679012345679,
+    "score_flat": 25.308641975308642,
+    "score_steep": 87.03703703703704,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.016,
+   "wer": 0.013,
+   "fca": 0.984,
+   "span": {
+    "counts": {
+     "cosmetic": 21,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 31.48148148148148,
+    "score_flat": 22.22222222222222,
+    "score_steep": 80.8641975308642,
+    "ref_words": 162
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-alban-s-les-myst-res-du-coll-ge-1845-djvu-p171",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.003,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 74,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 30.057803468208093,
+    "score_flat": 25.722543352601157,
+    "score_steep": 53.179190751445084,
+    "ref_words": 346
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.003,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 74,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 30.057803468208093,
+    "score_flat": 25.722543352601157,
+    "score_steep": 53.179190751445084,
+    "ref_words": 346
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.01,
+   "wer": 0.01,
+   "fca": 0.99,
+   "span": {
+    "counts": {
+     "cosmetic": 41,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 20.520231213872833,
+    "score_flat": 16.184971098265898,
+    "score_steep": 43.641618497109825,
+    "ref_words": 346
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 79,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 24.277456647398843,
+    "score_flat": 24.277456647398843,
+    "score_steep": 25.722543352601157,
+    "ref_words": 346
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-10-septembre-17-p3",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.01,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 59,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 29.765886287625417,
+    "score_flat": 24.74916387959866,
+    "score_steep": 56.52173913043478,
+    "ref_words": 299
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0.01,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 41,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 23.745819397993312,
+    "score_flat": 18.729096989966557,
+    "score_steep": 50.50167224080268,
+    "ref_words": 299
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.011,
+   "wer": 0.059,
+   "fca": 0.959,
+   "span": {
+    "counts": {
+     "cosmetic": 25,
+     "misleads": 10,
+     "wrong_text": 4
+    },
+    "score": 58.52842809364549,
+    "score_flat": 38.46153846153846,
+    "score_steep": 175.58528428093646,
+    "ref_words": 299
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.003,
+   "fca": 0.967,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 20.735785953177256,
+    "score_flat": 20.735785953177256,
+    "score_steep": 22.40802675585284,
+    "ref_words": 299
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-abeille-coriolan-1676-djvu-p40",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.983,
+   "span": {
+    "counts": {
+     "cosmetic": 40,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 41.935483870967744,
+    "score_flat": 32.25806451612903,
+    "score_steep": 90.3225806451613,
+    "ref_words": 155
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.983,
+   "span": {
+    "counts": {
+     "cosmetic": 40,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 29.032258064516128,
+    "score_flat": 29.032258064516128,
+    "score_steep": 32.25806451612903,
+    "ref_words": 155
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.017,
+   "wer": 0.099,
+   "fca": 0.964,
+   "span": {
+    "counts": {
+     "cosmetic": 22,
+     "misleads": 11,
+     "wrong_text": 3
+    },
+    "score": 98.06451612903226,
+    "score_flat": 69.03225806451613,
+    "score_steep": 278.7096774193548,
+    "ref_words": 155
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0.026,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 48,
+     "misleads": 1,
+     "wrong_text": 2
+    },
+    "score": 66.45161290322581,
+    "score_flat": 47.096774193548384,
+    "score_steep": 166.4516129032258,
+    "ref_words": 155
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-audibert-histoire-et-roman-1834-djvu-p240",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.008,
+   "wer": 0.019,
+   "fca": 0.988,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 26.060606060606062,
+    "score_flat": 16.96969696969697,
+    "score_steep": 77.57575757575758,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.008,
+   "wer": 0.019,
+   "fca": 0.988,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 26.060606060606062,
+    "score_flat": 16.96969696969697,
+    "score_steep": 77.57575757575758,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.008,
+   "wer": 0.019,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 17.575757575757574,
+    "score_flat": 17.575757575757574,
+    "score_steep": 26.666666666666668,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.008,
+   "wer": 0.019,
+   "fca": 0.988,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 26.060606060606062,
+    "score_flat": 16.96969696969697,
+    "score_steep": 77.57575757575758,
+    "ref_words": 165
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-l-alpha-de-la-r-publique-1848-djvu-p4",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.006,
+   "wer": 0.005,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 19.41747572815534,
+    "score_flat": 12.135922330097088,
+    "score_steep": 58.25242718446602,
+    "ref_words": 206
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.006,
+   "wer": 0.005,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 19.41747572815534,
+    "score_flat": 12.135922330097088,
+    "score_steep": 58.25242718446602,
+    "ref_words": 206
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.006,
+   "wer": 0.01,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 11.650485436893204,
+    "score_flat": 11.650485436893204,
+    "score_steep": 16.50485436893204,
+    "ref_words": 206
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.006,
+   "wer": 0.005,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 19.41747572815534,
+    "score_flat": 12.135922330097088,
+    "score_steep": 58.25242718446602,
+    "ref_words": 206
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anselme-mission-du-commandant-du-g-nie-guy-tunis-p3",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 24.18300653594771,
+    "score_flat": 14.379084967320262,
+    "score_steep": 73.20261437908496,
+    "ref_words": 153
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 11.11111111111111,
+    "score_flat": 11.11111111111111,
+    "score_steep": 14.379084967320262,
+    "ref_words": 153
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.001,
+   "wer": 0,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 11,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 23.529411764705884,
+    "score_flat": 13.72549019607843,
+    "score_steep": 72.54901960784314,
+    "ref_words": 153
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 12.418300653594772,
+    "score_flat": 12.418300653594772,
+    "score_steep": 15.686274509803921,
+    "ref_words": 153
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-annales-de-math-matiques-pures-et-appliqu-es-182-p3",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.003,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 23.728813559322035,
+    "score_flat": 23.728813559322035,
+    "score_steep": 32.20338983050848,
+    "ref_words": 59
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.003,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 23.728813559322035,
+    "score_flat": 23.728813559322035,
+    "score_steep": 32.20338983050848,
+    "ref_words": 59
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.1,
+   "wer": 0,
+   "fca": 0.9,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 0,
+     "wrong_text": 2
+    },
+    "score": 108.47457627118644,
+    "score_flat": 57.6271186440678,
+    "score_steep": 362.7118644067797,
+    "ref_words": 59
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 11,
+     "misleads": 0,
+     "wrong_text": 2
+    },
+    "score": 103.38983050847457,
+    "score_flat": 52.54237288135593,
+    "score_steep": 357.6271186440678,
+    "ref_words": 59
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-accusation-de-tentative-d-assassinat-sur-p16",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.007,
+   "fca": 0.975,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 7.6923076923076925,
+    "score_flat": 7.6923076923076925,
+    "score_steep": 9.294871794871796,
+    "ref_words": 312
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.007,
+   "fca": 0.975,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 7.6923076923076925,
+    "score_flat": 7.6923076923076925,
+    "score_steep": 9.294871794871796,
+    "ref_words": 312
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpu": {
+   "cer": 0.017,
+   "wer": 0.074,
+   "fca": 0.963,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 17,
+     "wrong_text": 2
+    },
+    "score": 50.96153846153846,
+    "score_flat": 41.34615384615385,
+    "score_steep": 126.28205128205128,
+    "ref_words": 312
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.007,
+   "fca": 0.975,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 7.6923076923076925,
+    "score_flat": 7.6923076923076925,
+    "score_steep": 9.294871794871796,
+    "ref_words": 312
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  }
+ },
+ {
+  "slug": "ws-fr-annales-de-math-matiques-pures-et-appliqu-es-182-p304",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.355,
+   "wer": 0.045,
+   "fca": 0.346,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 5
+    },
+    "score": 112.71186440677967,
+    "score_flat": 49.152542372881356,
+    "score_steep": 434.7457627118644,
+    "ref_words": 118
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.355,
+   "wer": 0.045,
+   "fca": 0.346,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 5
+    },
+    "score": 112.71186440677967,
+    "score_flat": 49.152542372881356,
+    "score_steep": 434.7457627118644,
+    "ref_words": 118
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.36,
+   "wer": 0.045,
+   "fca": 0.358,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 5
+    },
+    "score": 112.71186440677967,
+    "score_flat": 49.152542372881356,
+    "score_steep": 434.7457627118644,
+    "ref_words": 118
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.067,
+   "wer": 0.045,
+   "fca": 0.915,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 0,
+     "wrong_text": 4
+    },
+    "score": 87.28813559322033,
+    "score_flat": 36.440677966101696,
+    "score_steep": 341.52542372881356,
+    "ref_words": 118
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p5",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.012,
+   "wer": 0.025,
+   "fca": 0.974,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 46.45669291338583,
+    "score_flat": 34.645669291338585,
+    "score_steep": 109.44881889763779,
+    "ref_words": 127
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.012,
+   "wer": 0.025,
+   "fca": 0.974,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 46.45669291338583,
+    "score_flat": 34.645669291338585,
+    "score_steep": 109.44881889763779,
+    "ref_words": 127
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.053,
+   "wer": 0.117,
+   "fca": 0.881,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 8,
+     "wrong_text": 3
+    },
+    "score": 98.4251968503937,
+    "score_flat": 62.99212598425197,
+    "score_steep": 307.0866141732283,
+    "ref_words": 127
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.012,
+   "wer": 0.025,
+   "fca": 0.974,
+   "span": {
+    "counts": {
+     "cosmetic": 31,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 48.031496062992126,
+    "score_flat": 36.22047244094488,
+    "score_steep": 111.02362204724409,
+    "ref_words": 127
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-auber-de-la-fi-vre-puerp-rale-djvu-p31",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 38,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 14.878892733564014,
+    "score_flat": 14.878892733564014,
+    "score_steep": 16.608996539792386,
+    "ref_words": 289
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 40,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 15.570934256055363,
+    "score_flat": 15.570934256055363,
+    "score_steep": 17.301038062283737,
+    "ref_words": 289
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.002,
+   "wer": 0.007,
+   "fca": 0.982,
+   "span": {
+    "counts": {
+     "cosmetic": 32,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 14.53287197231834,
+    "score_flat": 14.53287197231834,
+    "score_steep": 17.993079584775085,
+    "ref_words": 289
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.004,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 38,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 14.878892733564014,
+    "score_flat": 14.878892733564014,
+    "score_steep": 16.608996539792386,
+    "ref_words": 289
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-austen-la-famille-elliot-t1-djvu-p19",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 16,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.373271889400922,
+    "score_flat": 7.373271889400922,
+    "score_steep": 7.373271889400922,
+    "ref_words": 217
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 16,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.373271889400922,
+    "score_flat": 7.373271889400922,
+    "score_steep": 7.373271889400922,
+    "ref_words": 217
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 22,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 10.138248847926267,
+    "score_flat": 10.138248847926267,
+    "score_steep": 10.138248847926267,
+    "ref_words": 217
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 1.3824884792626728,
+    "score_flat": 1.3824884792626728,
+    "score_steep": 1.3824884792626728,
+    "ref_words": 217
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-30-ao-t-1784-dj-p2",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.018,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 68,
+     "misleads": 3,
+     "wrong_text": 1
+    },
+    "score": 38.297872340425535,
+    "score_flat": 32.97872340425532,
+    "score_steep": 70.2127659574468,
+    "ref_words": 282
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.002,
+   "wer": 0.018,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 68,
+     "misleads": 3,
+     "wrong_text": 1
+    },
+    "score": 38.297872340425535,
+    "score_flat": 32.97872340425532,
+    "score_steep": 70.2127659574468,
+    "ref_words": 282
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.008,
+   "wer": 0.044,
+   "fca": 0.991,
+   "span": {
+    "counts": {
+     "cosmetic": 38,
+     "misleads": 10,
+     "wrong_text": 1
+    },
+    "score": 40.0709219858156,
+    "score_flat": 34.751773049645394,
+    "score_steep": 84.39716312056737,
+    "ref_words": 282
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.001,
+   "wer": 0.007,
+   "fca": 0.999,
+   "span": {
+    "counts": {
+     "cosmetic": 64,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 26.24113475177305,
+    "score_flat": 26.24113475177305,
+    "score_steep": 29.78723404255319,
+    "ref_words": 282
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-agoult-lettres-r-publicaines-djvu-p145",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.006,
+   "fca": 0.761,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 10.695187165775401,
+    "score_flat": 10.695187165775401,
+    "score_steep": 13.368983957219251,
+    "ref_words": 187
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.002,
+   "wer": 0.006,
+   "fca": 0.761,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 10.695187165775401,
+    "score_flat": 10.695187165775401,
+    "score_steep": 13.368983957219251,
+    "ref_words": 187
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.002,
+   "wer": 0.011,
+   "fca": 0.762,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 11.764705882352942,
+    "score_flat": 11.764705882352942,
+    "score_steep": 17.112299465240643,
+    "ref_words": 187
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.002,
+   "wer": 0.006,
+   "fca": 0.761,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 10.695187165775401,
+    "score_flat": 10.695187165775401,
+    "score_steep": 13.368983957219251,
+    "ref_words": 187
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-alfieri-de-la-tyrannie-djvu-p17",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 9.929078014184396,
+    "score_flat": 9.929078014184396,
+    "score_steep": 9.929078014184396,
+    "ref_words": 141
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 9.929078014184396,
+    "score_flat": 9.929078014184396,
+    "score_steep": 9.929078014184396,
+    "ref_words": 141
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.974,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 8.51063829787234,
+    "score_flat": 8.51063829787234,
+    "score_steep": 8.51063829787234,
+    "ref_words": 141
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 4.25531914893617,
+    "score_flat": 4.25531914893617,
+    "score_steep": 4.25531914893617,
+    "ref_words": 141
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-aristote-metaphysique-1840-1-djvu-p24",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.117437722419929,
+    "score_flat": 7.117437722419929,
+    "score_steep": 7.117437722419929,
+    "ref_words": 281
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.117437722419929,
+    "score_flat": 7.117437722419929,
+    "score_steep": 7.117437722419929,
+    "ref_words": 281
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.001,
+   "wer": 0.011,
+   "fca": 0.976,
+   "span": {
+    "counts": {
+     "cosmetic": 23,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 11.743772241992882,
+    "score_flat": 11.743772241992882,
+    "score_steep": 15.302491103202847,
+    "ref_words": 281
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.117437722419929,
+    "score_flat": 7.117437722419929,
+    "score_steep": 7.117437722419929,
+    "ref_words": 281
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.031,
+   "wer": 0.124,
+   "fca": 0.969,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 23,
+     "wrong_text": 0
+    },
+    "score": 61.5,
+    "score_flat": 61.5,
+    "score_steep": 119,
+    "ref_words": 200
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.031,
+   "wer": 0.124,
+   "fca": 0.969,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 23,
+     "wrong_text": 0
+    },
+    "score": 61.5,
+    "score_flat": 61.5,
+    "score_steep": 119,
+    "ref_words": 200
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.011,
+   "wer": 0.046,
+   "fca": 0.981,
+   "span": {
+    "counts": {
+     "cosmetic": 27,
+     "misleads": 9,
+     "wrong_text": 0
+    },
+    "score": 36,
+    "score_flat": 36,
+    "score_steep": 58.5,
+    "ref_words": 200
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.002,
+   "wer": 0.005,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 7,
+    "score_flat": 7,
+    "score_steep": 9.5,
+    "ref_words": 200
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-allart-la-femme-et-la-democratie-de-nos-temps-dj-p16",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.006,
+   "wer": 0.005,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 24.257425742574256,
+    "score_flat": 16.831683168316832,
+    "score_steep": 63.86138613861386,
+    "ref_words": 202
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.006,
+   "wer": 0.005,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 14.356435643564357,
+    "score_flat": 14.356435643564357,
+    "score_steep": 19.306930693069308,
+    "ref_words": 202
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.008,
+   "wer": 0.015,
+   "fca": 0.991,
+   "span": {
+    "counts": {
+     "cosmetic": 17,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 38.118811881188115,
+    "score_flat": 23.26732673267327,
+    "score_steep": 117.32673267326733,
+    "ref_words": 202
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.006,
+   "wer": 0.005,
+   "fca": 0.994,
+   "span": {
+    "counts": {
+     "cosmetic": 18,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 13.861386138613861,
+    "score_flat": 13.861386138613861,
+    "score_steep": 18.81188118811881,
+    "ref_words": 202
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-abrant-s-l-exil-une-rose-au-d-sert-tome-2-djvu-p206",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 2.6315789473684212,
+    "score_flat": 2.6315789473684212,
+    "score_steep": 2.6315789473684212,
+    "ref_words": 152
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 2.6315789473684212,
+    "score_flat": 2.6315789473684212,
+    "score_steep": 2.6315789473684212,
+    "ref_words": 152
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.004,
+   "wer": 0.033,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 32.23684210526316,
+    "score_flat": 22.36842105263158,
+    "score_steep": 88.15789473684211,
+    "ref_words": 152
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.996,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 2.6315789473684212,
+    "score_flat": 2.6315789473684212,
+    "score_steep": 2.6315789473684212,
+    "ref_words": 152
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-andry-trait-des-aliments-de-car-me-1713-tome-i-d-p26",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.007,
+   "wer": 0.01,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 23,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 16.582914572864322,
+    "score_flat": 16.582914572864322,
+    "score_steep": 21.608040201005025,
+    "ref_words": 199
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.007,
+   "wer": 0.01,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 23,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 16.582914572864322,
+    "score_flat": 16.582914572864322,
+    "score_steep": 21.608040201005025,
+    "ref_words": 199
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.016,
+   "wer": 0.087,
+   "fca": 0.953,
+   "span": {
+    "counts": {
+     "cosmetic": 48,
+     "misleads": 12,
+     "wrong_text": 0
+    },
+    "score": 54.2713567839196,
+    "score_flat": 54.2713567839196,
+    "score_steep": 84.42211055276383,
+    "ref_words": 199
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.007,
+   "wer": 0.01,
+   "fca": 0.993,
+   "span": {
+    "counts": {
+     "cosmetic": 37,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 23.618090452261306,
+    "score_flat": 23.618090452261306,
+    "score_steep": 28.64321608040201,
+    "ref_words": 199
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anglemont-louis-xviii-1824-djvu-p6",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 11,
+     "misleads": 0,
+     "wrong_text": 4
+    },
+    "score": 77.62237762237763,
+    "score_flat": 35.66433566433567,
+    "score_steep": 287.4125874125874,
+    "ref_words": 143
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 11,
+     "misleads": 3,
+     "wrong_text": 1
+    },
+    "score": 35.66433566433567,
+    "score_flat": 25.174825174825173,
+    "score_steep": 98.6013986013986,
+    "ref_words": 143
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.002,
+   "wer": 0.014,
+   "fca": 0.984,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 17.482517482517483,
+    "score_flat": 17.482517482517483,
+    "score_steep": 20.97902097902098,
+    "ref_words": 143
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 24.475524475524477,
+    "score_flat": 24.475524475524477,
+    "score_steep": 38.46153846153846,
+    "ref_words": 143
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-alexis-de-tocqueville-de-la-d-mocratie-en-am-riq-p22",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 18,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 8.035714285714286,
+    "score_flat": 8.035714285714286,
+    "score_steep": 8.035714285714286,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 18,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 8.035714285714286,
+    "score_flat": 8.035714285714286,
+    "score_steep": 8.035714285714286,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.987,
+   "span": {
+    "counts": {
+     "cosmetic": 21,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 9.375,
+    "score_flat": 9.375,
+    "score_steep": 9.375,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 16,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 7.142857142857143,
+    "score_flat": 7.142857142857143,
+    "score_steep": 7.142857142857143,
+    "ref_words": 224
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-anonyme-le-serment-du-jeu-de-paume-1823-pdf-p2",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 13.970588235294118,
+    "score_flat": 13.970588235294118,
+    "score_steep": 13.970588235294118,
+    "ref_words": 136
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 19,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 13.970588235294118,
+    "score_flat": 13.970588235294118,
+    "score_steep": 13.970588235294118,
+    "ref_words": 136
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.003,
+   "wer": 0.015,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 21,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 22.794117647058822,
+    "score_flat": 22.794117647058822,
+    "score_steep": 30.147058823529413,
+    "ref_words": 136
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 10.294117647058824,
+    "score_flat": 10.294117647058824,
+    "score_steep": 10.294117647058824,
+    "ref_words": 136
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-argens-m-moires-historiques-et-secrets-concernan-p18",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.003,
+   "wer": 0.007,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 24.087591240875913,
+    "score_flat": 24.087591240875913,
+    "score_steep": 27.73722627737226,
+    "ref_words": 137
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.003,
+   "wer": 0.007,
+   "fca": 0.992,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 24.087591240875913,
+    "score_flat": 24.087591240875913,
+    "score_steep": 27.73722627737226,
+    "ref_words": 137
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.01,
+   "wer": 0.045,
+   "fca": 0.968,
+   "span": {
+    "counts": {
+     "cosmetic": 13,
+     "misleads": 3,
+     "wrong_text": 3
+    },
+    "score": 75.18248175182482,
+    "score_flat": 42.33576642335766,
+    "score_steep": 250.36496350364965,
+    "ref_words": 137
+   },
+   "accept": false,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0.003,
+   "wer": 0.007,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 25,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 21.8978102189781,
+    "score_flat": 21.8978102189781,
+    "score_steep": 25.547445255474454,
+    "ref_words": 137
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-austen-orgueil-et-pr-jug-paschoud-2-djvu-p19",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0.002,
+   "wer": 0.01,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 13.461538461538462,
+    "score_flat": 13.461538461538462,
+    "score_steep": 18.26923076923077,
+    "ref_words": 104
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0.002,
+   "wer": 0.01,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 9,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 13.461538461538462,
+    "score_flat": 13.461538461538462,
+    "score_steep": 18.26923076923077,
+    "ref_words": 104
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0.004,
+   "wer": 0,
+   "fca": 0.962,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 35.57692307692308,
+    "score_flat": 21.153846153846153,
+    "score_steep": 107.6923076923077,
+    "ref_words": 104
+   },
+   "accept": false,
+   "judge_wrong_text": true
+  },
+  "gpucorr": {
+   "cer": 0.002,
+   "wer": 0.01,
+   "fca": 0.998,
+   "span": {
+    "counts": {
+     "cosmetic": 8,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 12.5,
+    "score_flat": 12.5,
+    "score_steep": 17.307692307692307,
+    "ref_words": 104
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ },
+ {
+  "slug": "ws-fr-allart-l-indienne-djvu-p21",
+  "lang": "fr",
+  "aligned": true,
+  "lite": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 3.1746031746031744,
+    "score_flat": 3.1746031746031744,
+    "score_steep": 3.1746031746031744,
+    "ref_words": 126
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "litecorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 4,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 3.1746031746031744,
+    "score_flat": 3.1746031746031744,
+    "score_steep": 3.1746031746031744,
+    "ref_words": 126
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpu": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 0.997,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 11.904761904761905,
+    "score_flat": 11.904761904761905,
+    "score_steep": 11.904761904761905,
+    "ref_words": 126
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  },
+  "gpucorr": {
+   "cer": 0,
+   "wer": 0,
+   "fca": 1,
+   "span": {
+    "counts": {
+     "cosmetic": 14,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 11.11111111111111,
+    "score_flat": 11.11111111111111,
+    "score_steep": 11.11111111111111,
+    "ref_words": 126
+   },
+   "accept": true,
+   "judge_wrong_text": false
+  }
+ }
+]

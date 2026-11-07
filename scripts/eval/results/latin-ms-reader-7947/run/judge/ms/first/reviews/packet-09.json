@@ -1,0 +1,142 @@
+[
+  {
+    "book_id": "b09-k", "slot": 1, "title": "Ad illustriss. p. Ven. Paulum Nanum Taruisii Praetorem praefectu[m]que liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Taruicium ergo suum", "image": "Taruiſium ergo ſuum", "problem": "place name Taruisium (Treviso) misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "Hac sunt nota", "image": "Hæc ſunt nota (æ ligature after the marginal H)", "problem": "æ dropped", "severity": "minor" },
+          { "ocr": "Et rigidos mores ingeniumque satie", "image": "Et rigidos mores ingenium-que gra?e — words overwritten by a correction; ending begins 'gra', not 'sat'", "problem": "obscured corrected word given confidently as a non-word, with no <unclear>", "severity": "moderate", "class": "O1" },
+          { "ocr": "pectora poscant", "image": "pectora poſcunt (overwritten, but reads -unt)", "problem": "verb ending", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Promptus es his caram continuare fidem", "image": "Promptus es his canam continuare fidem", "problem": "canam read as caram — a different, plausible word", "severity": "moderate", "class": "O6" },
+          { "ocr": "tua pignora feruent", "image": "tua pignora ſeruent", "problem": "long s read as f: 'seruent' (keep) becomes 'feruent' (boil)", "severity": "moderate", "class": "O6" },
+          { "ocr": "Nexu conferuas", "image": "Nexu conſeruas", "problem": "long s read as f", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<script>printed</script> on a handwritten page", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 37, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "placidaque modestia mentis", "image": "placidæque modeſtia mentis", "problem": "æ dropped, breaking the agreement with modestia", "severity": "minor" },
+          { "ocr": "vigor ... venit ... vincere ... vultus ... vela ... vires; patiare", "image": "uigor, uenit, uincere, uultus, uela, uires; paciare", "problem": "u→v and ci→ti normalised against the hand's spelling", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Sound reads overall. On folio 9 it misreads Taruisium and gives the overwritten line a confident non-word ('satie'). On folio 15 two ſ/n slips ('caram', 'feruent') change words. Nothing serious."
+  },
+  {
+    "book_id": "b09-m", "slot": 2, "title": "Ad illustriss. p. Ven. Paulum Nanum Taruisii Praetorem praefectu[m]que liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Me lepus, et follo latitans que Cuniculus antro", "image": "Me lepus, effoſſo latitans que Cuniculus antro", "problem": "effosso misread as 'et follo' (nonsense)", "severity": "moderate", "class": "O6" },
+          { "ocr": "Et rigidos mores ingeniumque ferox", "image": "Et rigidos mores ingenium-que gra?e — overwritten by a correction; the ending begins 'gra'", "problem": "a plausible word not on the page ('ferox') supplied for an obscured one, with no <unclear>", "severity": "moderate", "class": "O1" },
+          { "ocr": "T aruilium ergo suum", "image": "Taruiſium", "problem": "long s read as l in the place name", "severity": "minor" },
+          { "ocr": "ne me crudelibus infere bellis", "image": "ne me crudelibus inſere bellis", "problem": "long s read as f", "severity": "minor" },
+          { "ocr": "H ac sunt nota", "image": "Hæc ſunt nota", "problem": "æ dropped; marginal initials left detached from their words (H ac, T aruilium)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "medium"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "P ratores alii plures", "image": "Prætores alii plures", "problem": "æ dropped", "severity": "minor" },
+          { "ocr": "muris felicibus ... feliciter; et tutis; namque", "image": "fœlicibus ... fœliciter; & tutis; nanque", "problem": "spellings and the ampersand normalised", "severity": "minor", "class": "O8" },
+          { "ocr": "A ltera, S ic, T um, L audibus ...", "image": "marginal initial letters of an acrostic", "problem": "initials left detached from their words by a space", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 37, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "praesentia, aethereos, tuae", "image": "præſentia, æthereos, tuæ", "problem": "æ ligature written as ae (inconsistent with placidaeque); harmless", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Folios 15 and 37 are read well, apart from small normalisations and initials left detached from their words. Folio 9 is weaker: 'et follo' for effosso, and an invented 'ferox' over the corrected line."
+  },
+  {
+    "book_id": "b09-r", "slot": 3, "title": "Ad illustriss. p. Ven. Paulum Nanum Taruisii Praetorem praefectu[m]que liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "praetor, praeside, aequarum, quae", "image": "prætor, præside, æquarum, quæ", "problem": "æ ligature expanded to ae", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "->TARVISII. IVD. OPTI.<- centring arrows in the text (a known centring convention; harmless if the renderer handles it)", "severity": "minor", "class": "D1" } ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 37, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "circumspicis", "image": "circunſpicis", "problem": "n→m normalised", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "The most faithful of the four. It marks the obscured initials and the overwritten words on folio 9 as <unclear> instead of guessing ('graue' fits the visible strokes and the metre). Its acrostic note on folio 37 (I F I C I Q S Q T N S) matches the margin."
+  },
+  {
+    "book_id": "b09-t", "slot": 4, "title": "Ad illustriss. p. Ven. Paulum Nanum Taruisii Praetorem praefectu[m]que liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Hac sunt nota", "image": "Hæc ſunt nota", "problem": "æ dropped", "severity": "minor" },
+          { "ocr": "pectora poscant", "image": "pectora poſcunt", "problem": "verb ending", "severity": "minor" },
+          { "ocr": "Et rigidos mores <unclear>ingeniumque satie</unclear>", "image": "ingenium-que gra?e (overwritten)", "problem": "flagged unclear, but the guessed ending is not what the strokes show", "severity": "minor" },
+          { "ocr": "passus recta ceruus", "image": "paſſus rectia ceruus", "problem": "scribe's spelling corrected", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "<script>printed</script>, and the blacked initial spaces described as 'Woodcut decorated initial letter I/A' — this is a manuscript with solid black squares, not woodcuts; invented physical description", "severity": "moderate", "class": "O16" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 26, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "nostræ coniuncta saluti", "image": "noſtræ conuicta ſaluti", "problem": "word changed to the expected 'coniuncta'", "severity": "moderate", "class": "O8" },
+          { "ocr": "Promptvs es his caram continuare fidem", "image": "Promptus es his canam continuare fidem", "problem": "canam read as caram; stray v in Promptvs", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<script>printed</script> on a handwritten page", "severity": "minor", "class": "O16" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 37, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Darij", "image": "Darii", "problem": "ii written as ij", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text is mostly right, but it calls the manuscript printed and describes its blacked initial spaces as woodcuts. On folio 15 it changes two words: 'coniuncta' for conuicta and 'caram' for canam."
+  }
+]

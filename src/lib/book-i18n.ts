@@ -44,6 +44,8 @@ export interface BookStrings {
   ocr: string;
   translated: string;
   /** Rung `complete` (#5287): every translatable page is translated. */
+  /** Both badges count the ENGLISH translation; off English they say so, or a reader of
+   *  /es or /zh takes the book to be translated into their language (#7496 spot check). */
   translationComplete: string;
   ocrTooltip: (done: number, total: number) => string;
   translatedTooltip: (n: number) => string;
@@ -55,6 +57,8 @@ export interface BookStrings {
   // ---- about / dropdowns ----
   summary: string;
   summaryIsEnglish: string;
+  /** Read button on a localized book page whose TEXT exists only in English (#7496). */
+  readThisBookInEnglish: string;
   readingGuide: string;
   englishText: string;
   contents: string;
@@ -72,6 +76,17 @@ export interface BookStrings {
   bookHistory: string;
   searchThisBook: string;
   searchPlaceholder: string;
+
+  // ---- volumes of a multi-volume set (#7527) ----
+  volumesInSet: string;
+  /** Held run is complete from 1: "Volume 41 of 64". */
+  volumeOfSet: (n: number, of: number) => string;
+  /** Held run has gaps: say how many we hold, never "of N". */
+  volumeHeld: (n: number, held: number) => string;
+  volumeShort: (n: number) => string;
+  allVolumes: (n: number) => string;
+  /** Per-volume English readability: pct is 1-100. */
+  volumeTranslated: (pct: number) => string;
 
   // ---- pages grid ----
   pagesHeading: string;
@@ -153,6 +168,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'About this book',
     summaryIsEnglish: 'Summary available in English.',
+    readThisBookInEnglish: 'Read this book (English text)',
     readingGuide: 'Reading guide',
     englishText: 'In English.',
     contents: 'Contents',
@@ -170,6 +186,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Book history',
     searchThisBook: 'Search this book',
     searchPlaceholder: 'Find a word, name, or phrase…',
+    volumesInSet: 'Volumes in this set',
+    volumeOfSet: (n, of) => `Volume ${n} of ${of}`,
+    volumeHeld: (n, held) => `Volume ${n} · ${held} volumes of this set in the library`,
+    volumeShort: (n) => `Vol. ${n}`,
+    allVolumes: (n) => `All ${n} volumes`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'translated' : `${pct}% translated`),
 
     pagesHeading: 'Pages',
     pagesShownOf: (shown, total) => `${shown} of ${total}`,
@@ -218,8 +240,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     pages: 'páginas',
     spanishEdition: 'Edición en español',
     spanishEditionOf: (es, total) => `${es} de ${total} páginas en español`,
-    firstTranslation: 'Primera traducción',
-    noPriorTranslation: 'No se ha encontrado ninguna traducción anterior',
+    firstTranslation: 'Primera traducción al inglés',
+    noPriorTranslation: 'No se ha encontrado ninguna traducción anterior al inglés',
     author: 'Autor',
     editedBy: 'editado por',
     scans: (n) => `${n} escaneos`,
@@ -232,8 +254,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} ${n === 1 ? 'imagen' : 'imágenes'}`,
     notTranscribed: 'Solo escaneos, todavía sin transcribir',
     ocr: 'Transcripción',
-    translated: 'Traducido',
-    translationComplete: 'Completo',
+    translated: 'Traducido al inglés',
+    translationComplete: 'Traducción al inglés completa',
     ocrTooltip: (done, total) => `${done} de ${total} páginas transcritas`,
     translatedTooltip: (n) => `${n} páginas traducidas al inglés`,
     notTranscribedTooltip: (total) => `${total} escaneos disponibles; ninguna página transcrita todavía`,
@@ -243,6 +265,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'Sobre este libro',
     summaryIsEnglish: 'Resumen disponible en inglés.',
+    readThisBookInEnglish: 'Leer el libro (texto en inglés)',
     readingGuide: 'Guía de lectura',
     englishText: 'En inglés.',
     contents: 'Contenido',
@@ -260,6 +283,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Historia del ejemplar',
     searchThisBook: 'Buscar en este libro',
     searchPlaceholder: 'Busca una palabra, un nombre o una frase…',
+    volumesInSet: 'Volúmenes de esta obra',
+    volumeOfSet: (n, of) => `Volumen ${n} de ${of}`,
+    volumeHeld: (n, held) => `Volumen ${n} · ${held} volúmenes de esta obra en la biblioteca`,
+    volumeShort: (n) => `Vol. ${n}`,
+    allVolumes: (n) => `Los ${n} volúmenes`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'traducido al inglés' : `${pct}% traducido al inglés`),
 
     pagesHeading: 'Páginas',
     pagesShownOf: (shown, total) => `${shown} de ${total}`,
@@ -311,8 +340,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     pages: 'paginae',
     spanishEdition: 'Editio Latina',
     spanishEditionOf: (es, total) => `${es} ex ${total} paginis Latine`,
-    firstTranslation: 'Prima conversio',
-    noPriorTranslation: 'Nulla conversio prior reperta',
+    firstTranslation: 'Prima conversio Anglica',
+    noPriorTranslation: 'Nulla conversio Anglica prior reperta',
     author: 'Auctor',
     editedBy: 'edidit',
     scans: (n) => `${n} imagines photographicae`,
@@ -325,8 +354,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} ${n === 1 ? 'imago' : 'imagines'}`,
     notTranscribed: 'Imagines tantum: nondum transcriptus',
     ocr: 'Transcriptio',
-    translated: 'Conversio',
-    translationComplete: 'Absoluta',
+    translated: 'Anglice conversum',
+    translationComplete: 'Anglice totum conversum',
     ocrTooltip: (done, total) => `${done} ex ${total} paginis transcriptae`,
     translatedTooltip: (n) => `${n} paginae Anglice conversae`,
     notTranscribedTooltip: (total) => `${total} imagines praesto sunt; nulla pagina adhuc transcripta`,
@@ -336,6 +365,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'De hoc libro',
     summaryIsEnglish: 'Summarium Anglice praesto est.',
+    readThisBookInEnglish: 'Librum lege (textus Anglicus)',
     readingGuide: 'Dux legendi',
     englishText: 'Anglice.',
     contents: 'Index capitum',
@@ -353,6 +383,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Historia libri',
     searchThisBook: 'In hoc libro quaere',
     searchPlaceholder: 'Verbum, nomen, locutionem quaere…',
+    volumesInSet: 'Volumina huius operis',
+    volumeOfSet: (n, of) => `Volumen ${n} ex ${of}`,
+    volumeHeld: (n, held) => `Volumen ${n} · ${held} volumina huius operis in bibliotheca`,
+    volumeShort: (n) => `Vol. ${n}`,
+    allVolumes: (n) => `Omnia ${n} volumina`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'Anglice conversum' : `${pct}% Anglice conversum`),
 
     pagesHeading: 'Paginae',
     pagesShownOf: (shown, total) => `${shown} ex ${total}`,
@@ -404,8 +440,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     pages: 'pagina’s',
     spanishEdition: 'Nederlandse editie',
     spanishEditionOf: (es, total) => `${es} van ${total} pagina’s in het Nederlands`,
-    firstTranslation: 'Eerste vertaling',
-    noPriorTranslation: 'Geen eerdere vertaling gevonden',
+    firstTranslation: 'Eerste Engelse vertaling',
+    noPriorTranslation: 'Geen eerdere Engelse vertaling gevonden',
     author: 'Auteur',
     editedBy: 'bezorgd door',
     scans: (n) => `${n} scans`,
@@ -418,8 +454,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} ${n === 1 ? 'afbeelding' : 'afbeeldingen'}`,
     notTranscribed: 'Alleen scans, nog niet getranscribeerd',
     ocr: 'Transcriptie',
-    translated: 'Vertaald',
-    translationComplete: 'Volledig',
+    translated: 'In het Engels vertaald',
+    translationComplete: 'Engelse vertaling volledig',
     ocrTooltip: (done, total) => `${done} van ${total} pagina’s getranscribeerd`,
     translatedTooltip: (n) => `${n} pagina’s naar het Engels vertaald`,
     notTranscribedTooltip: (total) => `${total} scans beschikbaar; nog geen pagina’s getranscribeerd`,
@@ -429,6 +465,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: 'Over dit boek',
     summaryIsEnglish: 'Samenvatting beschikbaar in het Engels.',
+    readThisBookInEnglish: 'Lees dit boek (Engelse tekst)',
     readingGuide: 'Leeswijzer',
     englishText: 'In het Engels.',
     contents: 'Inhoud',
@@ -446,6 +483,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: 'Geschiedenis van het boek',
     searchThisBook: 'Zoeken in dit boek',
     searchPlaceholder: 'Zoek een woord, naam of zinsdeel…',
+    volumesInSet: 'Delen van deze reeks',
+    volumeOfSet: (n, of) => `Deel ${n} van ${of}`,
+    volumeHeld: (n, held) => `Deel ${n} · ${held} delen van deze reeks in de bibliotheek`,
+    volumeShort: (n) => `Dl. ${n}`,
+    allVolumes: (n) => `Alle ${n} delen`,
+    volumeTranslated: (pct) => (pct >= 99 ? 'in het Engels vertaald' : `${pct}% in het Engels vertaald`),
 
     pagesHeading: 'Pagina’s',
     pagesShownOf: (shown, total) => `${shown} van ${total}`,
@@ -488,7 +531,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
   zh: {
     backToCollection: '中文书籍',
     read: '阅读',
-    readInSpanish: '阅读中文原文',
+    readInSpanish: '阅读原文',
     readThisBook: '阅读本书',
     originalTitle: '原书名',
     originalLanguage: '原文语言',
@@ -497,8 +540,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     pages: '页',
     spanishEdition: '中文版',
     spanishEditionOf: (es, total) => `共 ${total} 页，其中 ${es} 页为中文`,
-    firstTranslation: '首个译本',
-    noPriorTranslation: '未发现更早的译本',
+    firstTranslation: '首个英译本',
+    noPriorTranslation: '未发现更早的英译本',
     author: '作者',
     editedBy: '编者',
     scans: (n) => `${n} 张扫描图`,
@@ -511,8 +554,8 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     images: (n) => `${n} 幅图像`,
     notTranscribed: '仅有扫描图，尚未转录',
     ocr: '转录',
-    translated: '已翻译',
-    translationComplete: '已全部翻译',
+    translated: '已译成英文',
+    translationComplete: '英文译本完整',
     ocrTooltip: (done, total) => `共 ${total} 页，已转录 ${done} 页`,
     translatedTooltip: (n) => `已有 ${n} 页译成英文`,
     notTranscribedTooltip: (total) => `有 ${total} 张扫描图；尚无页面转录`,
@@ -522,6 +565,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
 
     summary: '关于本书',
     summaryIsEnglish: '提供英文简介。',
+    readThisBookInEnglish: '阅读本书（英文文本）',
     readingGuide: '阅读指南',
     englishText: '英文。',
     contents: '目录',
@@ -539,6 +583,12 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     bookHistory: '本书沿革',
     searchThisBook: '在本书中搜索',
     searchPlaceholder: '查找字词、人名或短语……',
+    volumesInSet: '本套各册',
+    volumeOfSet: (n, of) => `第${n}册，共${of}册`,
+    volumeHeld: (n, held) => `第${n}册 · 本馆藏有本套${held}册`,
+    volumeShort: (n) => `第${n}册`,
+    allVolumes: (n) => `全部${n}册`,
+    volumeTranslated: (pct) => (pct >= 99 ? '已译成英文' : `已译成英文${pct}%`),
 
     pagesHeading: '页面',
     pagesShownOf: (shown, total) => `${shown} / ${total}`,
@@ -621,6 +671,8 @@ export interface ReaderStrings {
   noImage: string;
   download: string;
   downloadFullRes: string;
+  /** Shown when a page download returned something other than an image. */
+  downloadFailed: string;
   viewAt: (provider: string) => string;
   // translation panel toolbar
   notes: string;
@@ -716,6 +768,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'No image available',
     download: 'Download',
     downloadFullRes: 'Download full resolution',
+    downloadFailed: 'Download failed. Please try again.',
     viewAt: (provider) => `View at ${provider}`,
 
     notes: 'Notes',
@@ -805,6 +858,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'No hay imagen disponible',
     download: 'Descargar',
     downloadFullRes: 'Descargar en alta resolución',
+    downloadFailed: 'No se pudo descargar. Inténtelo de nuevo.',
     viewAt: (provider) => `Ver en ${provider}`,
 
     notes: 'Notas',
@@ -896,6 +950,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'Imago nulla praesto est',
     download: 'Deprome',
     downloadFullRes: 'Imaginem plenae magnitudinis deprome',
+    downloadFailed: 'Depromi non potuit. Iterum conare.',
     viewAt: (provider) => `Apud ${provider} specta`,
 
     notes: 'Notae',
@@ -987,6 +1042,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: 'Geen afbeelding beschikbaar',
     download: 'Downloaden',
     downloadFullRes: 'Downloaden in volledige resolutie',
+    downloadFailed: 'Downloaden mislukt. Probeer het opnieuw.',
     viewAt: (provider) => `Bekijken bij ${provider}`,
 
     notes: 'Noten',
@@ -1078,6 +1134,7 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     noImage: '暂无图像',
     download: '下载',
     downloadFullRes: '下载原始分辨率图像',
+    downloadFailed: '下载失败，请重试。',
     viewAt: (provider) => `在 ${provider} 查看`,
 
     notes: '注释',

@@ -1,0 +1,2143 @@
+{
+ "rule": "per page: the best judged arm (accepted; then fidelity; then fewer wrong_text, misleads, cosmetic; ties to the cheaper arm, the stored text first), only where it was accepted, no other arm (the stored text included) was judged better, its text is not the stored text, and it is the text its own dry apply would write.",
+ "pages": [
+  {
+   "page_id": "69c850736c6f3cc53c852d3f",
+   "book_id": "69c84fab6c6f3cc53c852b5e",
+   "page_number": 172,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e84ff09e4fe943b0853",
+   "book_id": "69b51e84ff09e4fe943b06f5",
+   "page_number": 350,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69ae9bddf3bd47924caccfd0",
+   "book_id": "69ae9bddf3bd47924caccec8",
+   "page_number": 264,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69c763626a0f3d112faf8d85",
+   "book_id": "69c75d9a6a0f3d112faf8b18",
+   "page_number": 453,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "6a21984bf11c08f10b2027a8",
+   "book_id": "6a21984bf11c08f10b202651",
+   "page_number": 343,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69b51e22768235dc6598cabe",
+   "book_id": "69b51e22768235dc6598ca90",
+   "page_number": 46,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f738eb40c9f2ef06fc0a45",
+   "book_id": "69c84b0e6c6f3cc53c852100",
+   "page_number": 186,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69bda001f6d63c919748395d",
+   "book_id": "69bda001f6d63c91974838a6",
+   "page_number": 183,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f74485a765ef41f8e34fca",
+   "book_id": "69c84dda6c6f3cc53c8527eb",
+   "page_number": 935,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6ea215b7daf8a46ca7092",
+   "book_id": "69c8437d6c6f3cc53c851018",
+   "page_number": 264,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6d590d39336429574fc30",
+   "book_id": "69c83edd6c6f3cc53c8502c3",
+   "page_number": 449,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f508120287812c7aee824d",
+   "book_id": "69c846cf6c6f3cc53c85181f",
+   "page_number": 143,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f50cefd07e737cc517c2c5",
+   "book_id": "69c6f3d4da9771c716314e92",
+   "page_number": 77,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6f8576662642ee90b413e",
+   "book_id": "69c849176c6f3cc53c851dbf",
+   "page_number": 160,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "6a267b1e6c1f37c9c4f3053c",
+   "book_id": "6a267b1e6c1f37c9c4f3051b",
+   "page_number": 33,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "6a267b786c1f37c9c4f31d7b",
+   "book_id": "6a267b786c1f37c9c4f31d43",
+   "page_number": 56,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "6a267b216c1f37c9c4f30606",
+   "book_id": "6a267b216c1f37c9c4f305f5",
+   "page_number": 17,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f68c2a7fed95a58f912c00",
+   "book_id": "69c836936c6f3cc53c84ec3d",
+   "page_number": 206,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bd9fe2f6d63c9197482d93",
+   "book_id": "69bd9fe2f6d63c9197482b9b",
+   "page_number": 504,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bd9f31f6d63c919747fbfc",
+   "book_id": "69bd9f31f6d63c919747fb7f",
+   "page_number": 125,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "6a267b1b6c1f37c9c4f304bf",
+   "book_id": "6a267b1b6c1f37c9c4f30459",
+   "page_number": 102,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "6a267c606c1f37c9c4f35fe8",
+   "book_id": "6a267c606c1f37c9c4f35fa3",
+   "page_number": 69,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f7586393b82a84a28d897d",
+   "book_id": "69c856c76c6f3cc53c853eed",
+   "page_number": 381,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51dc6768235dc65987b4e",
+   "book_id": "69b51dc6768235dc65987a90",
+   "page_number": 190,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f6b1be4159bfe285b68d08",
+   "book_id": "69c8994b6c6f3cc53c85cd8a",
+   "page_number": 388,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "6a26c439aad44c98627ce324",
+   "book_id": "6a26c439aad44c98627ce22e",
+   "page_number": 246,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51db6efd8df28f2da9b71",
+   "book_id": "69b51db6efd8df28f2da96e3",
+   "page_number": 1166,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69906a08d69de0e69806f404",
+   "book_id": "69906a08d69de0e69806f201",
+   "page_number": 515,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "6984c26e1ae2339dcf4ba56c",
+   "book_id": "698255f272562d277d385143",
+   "page_number": 1376,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69c76a8073fe73db54030599",
+   "book_id": "69c70871da9771c716315cfd",
+   "page_number": 338,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69ade6cc2fcf4ffa86cec2fd",
+   "book_id": "69ade6cc2fcf4ffa86cec233",
+   "page_number": 202,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69c879332ada5eb2c0eb0fbe",
+   "book_id": "69c8771d6c6f3cc53c857f82",
+   "page_number": 104,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69b51df1cf111105c4293c7f",
+   "book_id": "69b51df1cf111105c4293bbc",
+   "page_number": 195,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69b51edc9a81ef7feb3dbdd7",
+   "book_id": "69b51edc9a81ef7feb3dbc33",
+   "page_number": 420,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69d378338b97c1230435a579",
+   "book_id": "69c898f06c6f3cc53c85cc6e",
+   "page_number": 53,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "698282c113bbc4a343553037",
+   "book_id": "698255f0ba923b56eda3c0bb",
+   "page_number": 188,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f69c69b16c1f69189b1762",
+   "book_id": "69c854596c6f3cc53c853821",
+   "page_number": 217,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f72f66af211d6a0f2d35ce",
+   "book_id": "69c8231f6c6f3cc53c84af44",
+   "page_number": 186,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6d2ffee687af501c0ac06",
+   "book_id": "69c857c16c6f3cc53c8540f8",
+   "page_number": 430,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69b51deb768235dc65989680",
+   "book_id": "69b51deb768235dc6598931e",
+   "page_number": 866,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51dfc768235dc6598ae41",
+   "book_id": "69b51dfc768235dc6598aca1",
+   "page_number": 416,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6a3812800194ef7aaeddf",
+   "book_id": "69c87b516c6f3cc53c858836",
+   "page_number": 143,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f73d32d9cec79f316edf39",
+   "book_id": "69c71b82da9771c7163168b6",
+   "page_number": 503,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e74cf111105c429d79d",
+   "book_id": "69b51e74cf111105c429d6f0",
+   "page_number": 173,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51df6cf111105c4294272",
+   "book_id": "69b51df6cf111105c4294244",
+   "page_number": 46,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f74ec036ac84430f3dc683",
+   "book_id": "69c825006c6f3cc53c84b72d",
+   "page_number": 283,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69bda06af6d63c9197487a3b",
+   "book_id": "69bda06af6d63c919748703b",
+   "page_number": 2560,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6c0128bdaf9c97693687a",
+   "book_id": "6909b50ecf28baa1b4caf28b",
+   "page_number": 177,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51df1efd8df28f2dae063",
+   "book_id": "69b51df1efd8df28f2dadfad",
+   "page_number": 182,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f5380c11894bc044e8ac19",
+   "book_id": "69c843166c6f3cc53c850e9c",
+   "page_number": 148,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f7272d747ba9e9bc124acb",
+   "book_id": "69c813ea6c6f3cc53c848074",
+   "page_number": 324,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f665464054b4e094a037aa",
+   "book_id": "69c877d46c6f3cc53c8580e7",
+   "page_number": 83,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51ee19a81ef7feb3dc4b3",
+   "book_id": "69b51ee19a81ef7feb3dc2cb",
+   "page_number": 488,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f69a9ccd3491dd9e11aae0",
+   "book_id": "69c581e32e2f948a050a5058",
+   "page_number": 66,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51e0bcf111105c4295c4c",
+   "book_id": "69b51e0bcf111105c4295ab7",
+   "page_number": 405,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f7071bde04d0103979eef7",
+   "book_id": "6909c41acf28baa1b4caf923",
+   "page_number": 151,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f71c84581c33d98fdc205d",
+   "book_id": "68fa138e6bd5e42f9c120538",
+   "page_number": 478,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f672a99d553fc8ff7a6b00",
+   "book_id": "69c851046c6f3cc53c852f6f",
+   "page_number": 47,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bda050f6d63c9197485f25",
+   "book_id": "69bda050f6d63c9197485ed9",
+   "page_number": 76,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69bda116f6d63c919748e157",
+   "book_id": "69bda116f6d63c919748e126",
+   "page_number": 49,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f772bf888bbcb074e9a393",
+   "book_id": "69c838a66c6f3cc53c84f0d1",
+   "page_number": 802,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f504f1a0b121577c1d68af",
+   "book_id": "69c6ea61da9771c716314778",
+   "page_number": 188,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f693cdbf7b9e1a0f6adced",
+   "book_id": "69c632563e8cae136d149653",
+   "page_number": 257,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f6b9a72a628490d4b4abd7",
+   "book_id": "69c852056c6f3cc53c85329c",
+   "page_number": 359,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e8e9a81ef7feb3d75cc",
+   "book_id": "69b51e8e9a81ef7feb3d755d",
+   "page_number": 111,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f743806254e3fa461fb380",
+   "book_id": "69c70a25da9771c716315eb4",
+   "page_number": 239,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69b51e00cf111105c4294f78",
+   "book_id": "69b51e00cf111105c4294db3",
+   "page_number": 453,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f72829916cd76306418a12",
+   "book_id": "69c85ab66c6f3cc53c854930",
+   "page_number": 174,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6d46b7f58c2f6fce81e75",
+   "book_id": "69c75d6d6a0f3d112faf8afb",
+   "page_number": 220,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51edbc35d928cea4f0880",
+   "book_id": "69b51edbc35d928cea4f06ec",
+   "page_number": 404,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51deb47b06ecd58186dcc",
+   "book_id": "69b51deb47b06ecd58186c4c",
+   "page_number": 384,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f7676843d815c54ccad156",
+   "book_id": "69c7dd28bae5db59ace1a068",
+   "page_number": 306,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69b51ece47b06ecd58196b5c",
+   "book_id": "69b51ece47b06ecd58196a1c",
+   "page_number": 320,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f75ad2cb3d36d8afe9d157",
+   "book_id": "69c859ca6c6f3cc53c8546e8",
+   "page_number": 775,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f67a13c9d0b9e0080de15b",
+   "book_id": "69c6350d3e8cae136d149872",
+   "page_number": 152,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6f9ce7a37e36ab57a0ea1",
+   "book_id": "69c8306a6c6f3cc53c84da36",
+   "page_number": 420,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69b51de1cf111105c4292bb4",
+   "book_id": "69b51de1cf111105c429258a",
+   "page_number": 1578,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51dff47b06ecd58188547",
+   "book_id": "69b51dff47b06ecd581883c3",
+   "page_number": 388,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "6a267e576c1f37c9c4f3c479",
+   "book_id": "6a267e576c1f37c9c4f3c32e",
+   "page_number": 331,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f50ba26affa36f85fbf97b",
+   "book_id": "69c6f073da9771c716314c67",
+   "page_number": 173,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51e5bff09e4fe943ad0f9",
+   "book_id": "69b51e5bff09e4fe943ad0b5",
+   "page_number": 68,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6ba308ae70ab9e04a4fba",
+   "book_id": "69c7fd1f6c6f3cc53c8432be",
+   "page_number": 318,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bda10bf6d63c919748cc09",
+   "book_id": "69bda10bf6d63c919748cb55",
+   "page_number": 180,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f752900459050f952a9454",
+   "book_id": "69c862ac6c6f3cc53c855bc2",
+   "page_number": 765,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f72bf244c4e504786fbfd2",
+   "book_id": "69c81e1d6c6f3cc53c84a166",
+   "page_number": 612,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6ef20fd0624dd7e0bcc96",
+   "book_id": "69c834b86c6f3cc53c84e624",
+   "page_number": 326,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f765cf8a99dcc18563c4b4",
+   "book_id": "69c7f67b6c6f3cc53c841e8a",
+   "page_number": 704,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f70b08821fcd6ee7caee2c",
+   "book_id": "69c849216c6f3cc53c851dcf",
+   "page_number": 287,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51edbc35d928cea4f0c05",
+   "book_id": "69b51edbc35d928cea4f0a6b",
+   "page_number": 410,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f731d788ce86668b71f678",
+   "book_id": "69c844be6c6f3cc53c85138b",
+   "page_number": 349,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "6a267da36c1f37c9c4f3aa55",
+   "book_id": "6a267da36c1f37c9c4f3aa1e",
+   "page_number": 55,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6b76e13e0cab6b64bf32e",
+   "book_id": "69c8406f6c6f3cc53c85071a",
+   "page_number": 337,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51ee3c35d928cea4f17e4",
+   "book_id": "69b51ee3c35d928cea4f165b",
+   "page_number": 393,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f697d7fcdb421394dc32af",
+   "book_id": "69c7f4326c6f3cc53c841793",
+   "page_number": 69,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4",
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f6d9899aa852b491ba9550",
+   "book_id": "69c7f8226c6f3cc53c84228e",
+   "page_number": 122,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51de8efd8df28f2dad1e0",
+   "book_id": "69b51de8efd8df28f2dad0b9",
+   "page_number": 295,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f734ec5439ac83f7669e38",
+   "book_id": "69c830506c6f3cc53c84da00",
+   "page_number": 620,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6eeca33d7d3ebe0ba1b1b",
+   "book_id": "69c850c66c6f3cc53c852ebc",
+   "page_number": 140,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f684b4518bbb058caa7a33",
+   "book_id": "69c581e48e452b634cbc3698",
+   "page_number": 266,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "6a267faf88f11913ee9c9c72",
+   "book_id": "6a267faf88f11913ee9c9b6f",
+   "page_number": 259,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f76205b2b698b3bb82f72c",
+   "book_id": "69c836d36c6f3cc53c84ecd6",
+   "page_number": 335,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6e48771801140bd3c585d",
+   "book_id": "69c6462f5dec4c2fa41d36aa",
+   "page_number": 298,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69b51decefd8df28f2dad8f3",
+   "book_id": "69b51decefd8df28f2dad5f2",
+   "page_number": 769,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69aebe8c7dd4a7474d1f2e43",
+   "book_id": "69aebe8c7dd4a7474d1f2d6b",
+   "page_number": 216,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69905885aaa7f10ed4cfa41c",
+   "book_id": "69905885aaa7f10ed4cfa20d",
+   "page_number": 527,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69ade7005426286aa40cf162",
+   "book_id": "69ade7005426286aa40cf10b",
+   "page_number": 87,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6a799fe946fc8915b8f6b",
+   "book_id": "69c890fa6c6f3cc53c85b864",
+   "page_number": 156,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e09efd8df28f2daf499",
+   "book_id": "69b51e09efd8df28f2daf3a7",
+   "page_number": 242,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51e90ff09e4fe943b0e48",
+   "book_id": "69b51e90ff09e4fe943b0d8d",
+   "page_number": 187,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e06cf111105c42953b8",
+   "book_id": "69b51e06cf111105c4295209",
+   "page_number": 431,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69b51eddc35d928cea4f10ca",
+   "book_id": "69b51eddc35d928cea4f0fcd",
+   "page_number": 253,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "6aaaa171e77fda33e8d3f6cb",
+   "book_id": "6aaaa170e77fda33e8d3f3fd",
+   "page_number": 718,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e7647b06ecd58190c0a",
+   "book_id": "69b51e7647b06ecd58190a05",
+   "page_number": 517,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69b51e0aefd8df28f2daf668",
+   "book_id": "69b51e0aefd8df28f2daf544",
+   "page_number": 292,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f681774d7efe10b47dcad5",
+   "book_id": "69c866746c6f3cc53c856409",
+   "page_number": 165,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69ef2b1a85daccce30f2dcbb",
+   "book_id": "69ef2b1a85daccce30f2dc16",
+   "page_number": 165,
+   "lang": "de",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69b51e30ff09e4fe943a9887",
+   "book_id": "69b51e30ff09e4fe943a97dd",
+   "page_number": 170,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e769a81ef7feb3d5aec",
+   "book_id": "69b51e769a81ef7feb3d5982",
+   "page_number": 362,
+   "lang": "de",
+   "face": "mixed",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f68ba305ebe79c516d6354",
+   "book_id": "69c88c706c6f3cc53c85ac11",
+   "page_number": 101,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f711fa806689416483fd21",
+   "book_id": "69c884fe6c6f3cc53c859ac3",
+   "page_number": 622,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "6a243d680f0e4f405e630192",
+   "book_id": "6a243d680f0e4f405e63014a",
+   "page_number": 72,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69bd9d0e6120d54bd0373383",
+   "book_id": "69bd9d0e6120d54bd03730b6",
+   "page_number": 717,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69bd9d7b6120d54bd0377062",
+   "book_id": "69bd9d7b6120d54bd0376fac",
+   "page_number": 182,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f773f86028036f8e239727",
+   "book_id": "69c8716b6c6f3cc53c857589",
+   "page_number": 1191,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69dbcc0b1040d1d5e20bc099",
+   "book_id": "69dbcc0b1040d1d5e20bc020",
+   "page_number": 121,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f6b5b79169821cc3b24ba1",
+   "book_id": "69c88e706c6f3cc53c85b0f4",
+   "page_number": 71,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 4,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69dbc9d11040d1d5e20a7283",
+   "book_id": "69dbc9d11040d1d5e20a7227",
+   "page_number": 92,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69dbcc131040d1d5e20bca85",
+   "book_id": "69dbcc131040d1d5e20bc94f",
+   "page_number": 310,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69dbc9d31040d1d5e20a7449",
+   "book_id": "69dbc9d21040d1d5e20a7341",
+   "page_number": 264,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69dbc9d01040d1d5e20a7204",
+   "book_id": "69dbc9d01040d1d5e20a70c0",
+   "page_number": 324,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bd9d236120d54bd0373bca",
+   "book_id": "69bd9d236120d54bd0373aaa",
+   "page_number": 288,
+   "lang": "de",
+   "face": "fraktur",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "699052538d19cbc90d9d5f9d",
+   "book_id": "699052538d19cbc90d9d5f17",
+   "page_number": 134,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4",
+    "read1"
+   ]
+  },
+  {
+   "page_id": "699201597c226bdd25f98c4c",
+   "book_id": "699201597c226bdd25f989ad",
+   "page_number": 671,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f6e4a3174a8dd59a4764e1",
+   "book_id": "69c857326c6f3cc53c853fc7",
+   "page_number": 505,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f7499d1336e2b84b0c4816",
+   "book_id": "69c7efa4fb10016c3f38a001",
+   "page_number": 169,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f74d92de9f6715ed50f0fc",
+   "book_id": "69c63918881bf48c13c42647",
+   "page_number": 827,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6ca068a992e70c92650ee",
+   "book_id": "69c861f66c6f3cc53c855aba",
+   "page_number": 82,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bd9e8bf6d63c919747bb77",
+   "book_id": "69bd9e8bf6d63c919747b5a1",
+   "page_number": 1494,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6f6ab8d9c80951ecf8eda",
+   "book_id": "69c8188a6c6f3cc53c849100",
+   "page_number": 323,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f519481de6defeafd45614",
+   "book_id": "69c703a9da9771c716315943",
+   "page_number": 216,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69e726d2a409200ea79efc21",
+   "book_id": "69e726d2a409200ea79efb7d",
+   "page_number": 164,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69ef288a85daccce30f2d132",
+   "book_id": "69ef288a85daccce30f2ced1",
+   "page_number": 609,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f70603a191706ba778736e",
+   "book_id": "69c7fe2b6c6f3cc53c8436af",
+   "page_number": 259,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f673ea86e31a67b72e221b",
+   "book_id": "69c7fe2e6c6f3cc53c8436b4",
+   "page_number": 58,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69e7541d095c302d3fddd29c",
+   "book_id": "69e7541d095c302d3fddd1b3",
+   "page_number": 233,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e8e768235dc65995ec6",
+   "book_id": "69b51e8e768235dc65995de5",
+   "page_number": 225,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69b51eb0ff09e4fe943b3674",
+   "book_id": "69b51eb0ff09e4fe943b3651",
+   "page_number": 35,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69bda05ff6d63c91974864a4",
+   "book_id": "69bda05ff6d63c9197486310",
+   "page_number": 404,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f6a0d2d8fb9d2160395c2b",
+   "book_id": "69c829de6c6f3cc53c84c6c2",
+   "page_number": 160,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f7310689033b600076bb1f",
+   "book_id": "69c811be6c6f3cc53c84798b",
+   "page_number": 641,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f6c2b0cebc78a20d7c99fd",
+   "book_id": "69c81bf26c6f3cc53c849ad9",
+   "page_number": 370,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f66c9975c8d01b1451a2af",
+   "book_id": "69c4ec33a3a4a7c546ee6115",
+   "page_number": 122,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f661a60ecacde91f35fb85",
+   "book_id": "69c74c046a0f3d112faf8321",
+   "page_number": 115,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69ee4ef36dd925d126f42606",
+   "book_id": "69ee4ef36dd925d126f423f2",
+   "page_number": 532,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69bda0acf6d63c9197489968",
+   "book_id": "69bda0acf6d63c919748958e",
+   "page_number": 986,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6b48ddacbe9861fbeecba",
+   "book_id": "69c74e3d6a0f3d112faf83a2",
+   "page_number": 267,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69de0b324a4b38a1e32c8e17",
+   "book_id": "69de0b324a4b38a1e32c8dd3",
+   "page_number": 68,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6c624f25d10d34eba7213",
+   "book_id": "69c7fda46c6f3cc53c84349e",
+   "page_number": 111,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f7023ee826d7c555571f3a",
+   "book_id": "69c825ba6c6f3cc53c84ba26",
+   "page_number": 203,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6b1764f6efa942398efc0",
+   "book_id": "69c89cb16c6f3cc53c85d634",
+   "page_number": 144,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69bda103f6d63c919748c86d",
+   "book_id": "69bda103f6d63c919748c7c4",
+   "page_number": 169,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69f6bc07bacc4f4f77e12b19",
+   "book_id": "69c88aac6c6f3cc53c85a71c",
+   "page_number": 255,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f6951724d2534d8b3c0beb",
+   "book_id": "69c7cf0825ec2ba5ccd801a2",
+   "page_number": 146,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69905cd4aaa7f10ed4cfceae",
+   "book_id": "69905cd3aaa7f10ed4cfcdb4",
+   "page_number": 250,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "gpu",
+   "fidelity": 5,
+   "same_text_arms": [
+    "gpu"
+   ]
+  },
+  {
+   "page_id": "69d37179035a3fc19f881f28",
+   "book_id": "69c898da6c6f3cc53c85cc33",
+   "page_number": 8,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69593349b91a6184ea944753",
+   "book_id": "69593349b91a6184ea9443a0",
+   "page_number": 947,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "6a9f34759a132af385446aac",
+   "book_id": "6a9f34759a132af385446969",
+   "page_number": 323,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69e72b82a409200ea79f2b7b",
+   "book_id": "69e72b82a409200ea79f2b10",
+   "page_number": 107,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6820c8f7dc96ce85518cf",
+   "book_id": "69c8937c6c6f3cc53c85beb8",
+   "page_number": 223,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6ea1be1d9277bf7b0bb3b",
+   "book_id": "69c73a1c6a0f3d112faf7920",
+   "page_number": 221,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69e961652beefe2f6f72b593",
+   "book_id": "69e961652beefe2f6f72b4a8",
+   "page_number": 235,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69e7824cd93c1f6007503fa5",
+   "book_id": "69e7824cd93c1f6007503eaf",
+   "page_number": 246,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6bdbd6a443d4296b081bb",
+   "book_id": "69c811476c6f3cc53c847807",
+   "page_number": 416,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69b51e3c768235dc6598e0cb",
+   "book_id": "69b51e3c768235dc6598e024",
+   "page_number": 167,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f67bc03700a5497d2db81e",
+   "book_id": "69c63cd593cbf3c0fd742523",
+   "page_number": 270,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 4,
+   "same_text_arms": [
+    "corr"
+   ]
+  },
+  {
+   "page_id": "69f7200f1a245fba5cf13502",
+   "book_id": "69c4ec33a3a4a7c546ee6109",
+   "page_number": 394,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read4",
+   "fidelity": 5,
+   "same_text_arms": [
+    "read4"
+   ]
+  },
+  {
+   "page_id": "69f6a2262d4ec0788760efc9",
+   "book_id": "69c88b0a6c6f3cc53c85a824",
+   "page_number": 117,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "read1",
+   "fidelity": 4,
+   "same_text_arms": [
+    "read1"
+   ]
+  },
+  {
+   "page_id": "69f70c76aae884afc4b841b7",
+   "book_id": "69c805766c6f3cc53c8451e8",
+   "page_number": 425,
+   "lang": "fr",
+   "face": "antiqua",
+   "arm": "corr",
+   "fidelity": 5,
+   "same_text_arms": [
+    "corr"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,485 @@
+{
+ "generated_at": "2026-10-31T21:42:15.639Z",
+ "seeds": {
+  "draw": 78661,
+  "pages": 78662,
+  "queue": 78663,
+  "wrongPage": 78664,
+  "planted": 78665,
+  "bootstrap": 78666,
+  "revSample": 78667,
+  "geminiQueue": 78668
+ },
+ "calls": {
+  "opus_abs": 801,
+  "opus_abs_parsed": 800,
+  "opus_controls": 20,
+  "unparsed_or_error": 1,
+  "list_usd_equiv": 52.73,
+  "models": [
+   "claude-opus-5-5"
+  ]
+ },
+ "instrument": {
+  "wrong_page": "8/8 rejected at fidelity <= 2",
+  "planted": "12/12 caught",
+  "planted_rate": 1,
+  "valid": true,
+  "rule": "valid when every wrong-page control is rejected at fidelity <= 2 and >= 0.80 of plants are caught (the sampler's bar)",
+  "by_stratum": {
+   "high": {
+    "wrong_page": "2/2",
+    "planted": "3/3"
+   },
+   "middle": {
+    "wrong_page": "2/2",
+    "planted": "3/3"
+   },
+   "low": {
+    "wrong_page": "2/2",
+    "planted": "3/3"
+   },
+   "unmeasured": {
+    "wrong_page": "2/2",
+    "planted": "3/3"
+   }
+  }
+ },
+ "books": {
+  "drawn": 160,
+  "classified": 160,
+  "measured_classified": 110,
+  "pages_judged": 800
+ },
+ "primary": {
+  "spearman_score_vs_defect_rate": -0.262,
+  "spearman_ci95": [
+   -0.442,
+   -0.061
+  ],
+  "auc_bad_weighted": 0.656,
+  "auc_bad_weighted_ci95": [
+   0.553,
+   0.755
+  ],
+  "auc_bad_unweighted": 0.65,
+  "auc_bad_unweighted_ci95": [
+   0.544,
+   0.746
+  ],
+  "bad_books_measured": "51/110",
+  "note": "Spearman ρ < 0 means higher confidence goes with fewer defects. AUC = P(a bad book scores lower than a good one), pairs weighted by the books' design weights (the primary); unweighted beside it."
+ },
+ "within_cell": {
+  "zh-paddle-dice-lt090/manuscript paddle": {
+   "books": 58,
+   "bad": 28,
+   "rho_score_vs_defect_rate": -0.197,
+   "rho_ci95": [
+    -0.448,
+    0.079
+   ],
+   "auc_bad": 0.574
+  }
+ },
+ "by_stratum": {
+  "high": {
+   "books": 30,
+   "pages": 150,
+   "frame_books": 11967,
+   "bad_books": "7/30",
+   "bad_share": 0.233,
+   "bad_share_wilson": [
+    0.118,
+    0.409
+   ],
+   "observed_accept": 0.733,
+   "observed_accept_ci95_by_book": [
+    0.627,
+    0.833
+   ],
+   "predicted_accept_p_route": 0.787,
+   "calibrated": true,
+   "wrong_text_pages": "30/150",
+   "defect_rate_pooled": 52.845,
+   "defect_rate_median_book": 36.952
+  },
+  "middle": {
+   "books": 30,
+   "pages": 150,
+   "frame_books": 11181,
+   "bad_books": "18/30",
+   "bad_share": 0.6,
+   "bad_share_wilson": [
+    0.423,
+    0.754
+   ],
+   "observed_accept": 0.587,
+   "observed_accept_ci95_by_book": [
+    0.48,
+    0.687
+   ],
+   "predicted_accept_p_route": 0.563,
+   "calibrated": true,
+   "wrong_text_pages": "37/150",
+   "defect_rate_pooled": 88.626,
+   "defect_rate_median_book": 77.647
+  },
+  "low": {
+   "books": 50,
+   "pages": 250,
+   "frame_books": 11545,
+   "bad_books": "26/50",
+   "bad_share": 0.52,
+   "bad_share_wilson": [
+    0.385,
+    0.652
+   ],
+   "observed_accept": 0.584,
+   "observed_accept_ci95_by_book": [
+    0.488,
+    0.684
+   ],
+   "predicted_accept_p_route": 0.45,
+   "calibrated": false,
+   "wrong_text_pages": "79/250",
+   "defect_rate_pooled": 152.722,
+   "defect_rate_median_book": 81.439
+  },
+  "unmeasured": {
+   "books": 50,
+   "pages": 250,
+   "frame_books": 12742,
+   "bad_books": "20/50",
+   "bad_share": 0.4,
+   "bad_share_wilson": [
+    0.276,
+    0.538
+   ],
+   "observed_accept": 0.668,
+   "observed_accept_ci95_by_book": [
+    0.564,
+    0.764
+   ],
+   "predicted_accept_p_route": null,
+   "calibrated": null,
+   "wrong_text_pages": "60/250",
+   "defect_rate_pooled": 90.405,
+   "defect_rate_median_book": 16.568
+  }
+ },
+ "corpus": {
+  "frame_books": {
+   "high": 11967,
+   "middle": 11181,
+   "low": 11545,
+   "unmeasured": 12742
+  },
+  "bad_share": 0.434,
+  "bad_share_ci95": [
+   0.361,
+   0.508
+  ],
+  "bad_books_est": 20601,
+  "by_stratum_est": {
+   "high": 2788,
+   "middle": 6709,
+   "low": 6003,
+   "unmeasured": 5097
+  }
+ },
+ "calibration": {
+  "high": {
+   "predicted": 0.787,
+   "observed": 0.733,
+   "ci95": [
+    0.627,
+    0.833
+   ],
+   "calibrated": true
+  },
+  "middle": {
+   "predicted": 0.563,
+   "observed": 0.587,
+   "ci95": [
+    0.48,
+    0.687
+   ],
+   "calibrated": true
+  },
+  "low": {
+   "predicted": 0.45,
+   "observed": 0.584,
+   "ci95": [
+    0.488,
+    0.684
+   ],
+   "calibrated": false
+  }
+ },
+ "signals": {
+  "confidence_score": {
+   "books": 110,
+   "bad": 51,
+   "rho_vs_defect_rate": -0.262,
+   "auc_bad": 0.65,
+   "auc_ci95": [
+    0.548,
+    0.747
+   ]
+  },
+  "p_route": {
+   "books": 110,
+   "bad": 51,
+   "rho_vs_defect_rate": -0.272,
+   "auc_bad": 0.624,
+   "auc_ci95": [
+    0.518,
+    0.724
+   ]
+  },
+  "one_minus_flag_share": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": -0.097,
+   "auc_bad": 0.591,
+   "auc_ci95": [
+    0.506,
+    0.678
+   ]
+  },
+  "route_wrong_text_per_1k_neg": {
+   "books": 105,
+   "bad": 46,
+   "rho_vs_defect_rate": -0.21,
+   "auc_bad": 0.608,
+   "auc_ci95": [
+    0.506,
+    0.707
+   ]
+  },
+  "served_is_decided": {
+   "books": 110,
+   "bad": 51,
+   "rho_vs_defect_rate": -0.191,
+   "auc_bad": 0.564,
+   "auc_ci95": [
+    0.508,
+    0.623
+   ]
+  },
+  "cell_decided_keep_switch": {
+   "books": 126,
+   "bad": 59,
+   "rho_vs_defect_rate": -0.002,
+   "auc_bad": 0.49,
+   "auc_ci95": [
+    0.426,
+    0.554
+   ]
+  },
+  "route_measured": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": 0.22,
+   "auc_bad": 0.472,
+   "auc_ci95": [
+    0.398,
+    0.544
+   ]
+  },
+  "no_warning_share": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": 0.118,
+   "auc_bad": 0.501,
+   "auc_ci95": [
+    0.454,
+    0.549
+   ]
+  },
+  "no_poor_fair_scan_tag_share": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": -0.17,
+   "auc_bad": 0.565,
+   "auc_ci95": [
+    0.505,
+    0.628
+   ]
+  },
+  "page_scan_score": {
+   "books": 87,
+   "bad": 39,
+   "rho_vs_defect_rate": 0.145,
+   "auc_bad": 0.383,
+   "auc_ci95": [
+    0.271,
+    0.503
+   ]
+  },
+  "book_scan_score": {
+   "books": 93,
+   "bad": 41,
+   "rho_vs_defect_rate": 0.155,
+   "auc_bad": 0.392,
+   "auc_ci95": [
+    0.288,
+    0.504
+   ]
+  },
+  "language_tag_agrees": {
+   "books": 148,
+   "bad": 66,
+   "rho_vs_defect_rate": 0.008,
+   "auc_bad": 0.554,
+   "auc_ci95": [
+    0.464,
+    0.646
+   ]
+  },
+  "no_near_empty_share": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": -0.149,
+   "auc_bad": 0.534,
+   "auc_ci95": [
+    0.456,
+    0.613
+   ]
+  },
+  "no_withheld_share": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": 0.022,
+   "auc_bad": 0.516,
+   "auc_ci95": [
+    0.468,
+    0.565
+   ]
+  },
+  "revisions_agree": {
+   "books": 75,
+   "bad": 35,
+   "rho_vs_defect_rate": -0.264,
+   "auc_bad": 0.621,
+   "auc_ci95": [
+    0.49,
+    0.74
+   ]
+  },
+  "human_read_count": {
+   "books": 160,
+   "bad": 71,
+   "rho_vs_defect_rate": -0.058,
+   "auc_bad": 0.528,
+   "auc_ci95": [
+    0.474,
+    0.583
+   ]
+  }
+ },
+ "icc": {
+  "bad_page": 0.379,
+  "bad_page_ci95": [
+   0.291,
+   0.462
+  ],
+  "severity_log1p": 0.5,
+  "severity_ci95": [
+   0.409,
+   0.579
+  ],
+  "reliability_of_book_mean": {
+   "3": {
+    "bad_page": 0.647,
+    "severity": 0.75
+   },
+   "5": {
+    "bad_page": 0.753,
+    "severity": 0.833
+   },
+   "8": {
+    "bad_page": 0.83,
+    "severity": 0.889
+   }
+  },
+  "rule": "pages per book for a future sweep = the smallest of 3 / 5 / 8 whose Spearman-Brown reliability of the book mean (bad-page share) is >= 0.70; if none, 8 and the book-level call is reported as not reliable from a sample",
+  "pages_per_book": 5,
+  "reliable_at_8": true
+ },
+ "decision": {
+  "auc_ge_075": false,
+  "calibrated_all_measured_strata": false,
+  "instrument_valid": true,
+  "verdict": "MORE TESTING: confidence does not meet the bar"
+ },
+ "gemini_secondary": {
+  "model": "gemini-3.8-flash-low (agy)",
+  "texts_judged": 820,
+  "unparsed": 1,
+  "pages_all": {
+   "pages": 800,
+   "accept_agree": 0.657,
+   "accept_kappa": 0.34,
+   "opus_accept": 0.639,
+   "gemini_accept": 0.431,
+   "wrong_text_agree": 0.654,
+   "wrong_text_kappa": 0.313,
+   "gemini_misses_opus_bad": "54/289",
+   "miss_rate": 0.187,
+   "defect_rate_rho": 0.495
+  },
+  "self_preference": {
+   "stored_text_gemini": {
+    "pages": 434,
+    "accept_agree": 0.735,
+    "accept_kappa": 0.455,
+    "opus_accept": 0.608,
+    "gemini_accept": 0.565,
+    "wrong_text_agree": 0.74,
+    "wrong_text_kappa": 0.427,
+    "gemini_misses_opus_bad": "48/170",
+    "miss_rate": 0.282,
+    "defect_rate_rho": 0.574
+   },
+   "stored_text_other": {
+    "pages": 366,
+    "accept_agree": 0.566,
+    "accept_kappa": 0.25,
+    "opus_accept": 0.675,
+    "gemini_accept": 0.273,
+    "wrong_text_agree": 0.552,
+    "wrong_text_kappa": 0.23,
+    "gemini_misses_opus_bad": "6/119",
+    "miss_rate": 0.05,
+    "defect_rate_rho": 0.499
+   }
+  },
+  "controls": {
+   "wrong_page": "8/8",
+   "planted": "12/12"
+  },
+  "screen": {
+   "books": 160,
+   "opus_bad": 71,
+   "flagged_by_gemini": 143,
+   "sensitivity": "70/71",
+   "sensitivity_wilson": [
+    0.924,
+    0.998
+   ],
+   "cleared_share": 0.106,
+   "good_enough": false
+  },
+  "auc_measured_books": {
+   "books": 110,
+   "confidence_score": 0.65,
+   "gemini_bad_share": 0.68,
+   "score_x_gemini": 0.688
+  },
+  "auc_all_books_gemini_bad_share": 0.734
+ },
+ "bad_books_n": 71,
+ "containment_candidates_n": 38
+}

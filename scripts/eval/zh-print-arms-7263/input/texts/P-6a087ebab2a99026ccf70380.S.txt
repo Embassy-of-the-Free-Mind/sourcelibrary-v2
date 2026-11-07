@@ -1,0 +1,98 @@
+<scan-quality>good</scan-quality>
+<language>English</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>921</page-num>
+<header>INDEX III. CHINESE CHARACTERS AND PHRASES.</header>
+<sig>VOL. V. 116</sig>
+
+by Ts'oo. I. xi. 3: II. xv. 6; et sæpissime. (2) 許田, some lands originally granted to Loo, near the first capital of Heu. II. i. 3. (3) The name of one of the chiefs of the Tsang-sun clan in Loo. VIII. i. 5; ii. 3; iv. 4.
+
+**訾** *tsze* 訾婁,—see 婁.
+
+**詹** *chen* The name of a great officer of Ch'ing. III. xvii. 1, 3.
+
+**詣** *e* The name of one of the chiefs of the Shuh clan in Loo. X. xxv. 2; xxiv. 3.
+
+**詭** *kwei* 詭諸, name of a marquis of Tsin. V. ix. 5.
+
+**誘** *yew* To beguile, to inveigle X. xiv. 2.
+
+**語** *yu* Name of a prince of Ch'ing. II. xvi. 3.
+
+**說** *yueh* 御說,—see 御.
+
+**諸** *choo* (1) In the phrase 諸侯,—see 侯. (2) A city in Loo,—in the pres. dis. of Choo-shing, dep. Ts'ing-chow. III. xxix. 5: VI. xii. 8. (3) 諸耳,—see 耳. (4) 詭諸,—see 詭.
+
+**譚** *t'an* A small State, whose lords were Tszes (子) and viscounts,—in the pres. dis. of Leih-shing, dep. Tse-nan. It appears in the text only once, when it was extinguished by Ts'e. III. x. 6.
+
+**讙** *hwan* A city of Loo,—in the pres. dis. of Fei-shing, dep. T'ae-gan. II. iii. 6, 8: XI. x. 5; viii. 3, 7.
+
+---
+
+THE 150th RADICAL. 谷
+
+**谷** *kuh* A valley. 夾谷,—see 夾.
+
+**谿** *k'e* 乾谿,—see 乾.
+
+---
+
+THE 151st RADICAL. 豆
+
+**豎** *shoo* The name of a great officer of Ch'in. XII. xiv. 6, 13.
+
+---
+
+THE 153d RADICAL. 豸
+
+**豹** *p'aou* (1) The name of one of the chiefs of the Shuh-sun clan. IX. ii. 8; iii. 7; iv. 2; v. 3; xiv. 3; et sæpe. His death is mentioned in X. iv. 8. (2) A viscount of Hoo. XI. xv. 3.
+
+**貉** *mih* 厥貉,—see 厥.
+
+<column-break/>
+
+**貍** *le* 貍賑,—see 賑.
+
+**貜** *këoh* (1) The name of one of the chiefs of the Chung-sun clan. X. ix. 4; x. 3; xi. 6; xxiv. 1. (2) 貜且,—see 且.
+
+---
+
+THE 154th RADICAL. 貝
+
+**貞** *ching* The name of a prince of Ts'oo. IX. v. 10; vii 8; x. 3, 8, 10; xii. 5; xiv. 6.
+
+**負** *foo* 負芻,—see 芻.
+
+**貫** *kwan* A city of Sung,—in the pres. dis. of Ts'aou, dep. Ts'aou-chow. V. ii. 4. But this identification proceeds on the supposition of 貫's being for 貫, in which case the pronunciation should be different.
+
+**買** *mae* The name:—1st, of a prince of Loo, a son of duke Chwang, V. xxviii 2; 2d, of a great officer of Wei, IX. xvii. 3; xviii. 2; 3d, of a baron of Heu, X. xix. 2; 4th, of a great officer of Ch'in. XII. xiv. 14.
+
+**費** *pe* (1) The name of an earl of Ch'ing. VIII vi. 7. (2) A city of Loo,—in the pres. dis. of Pe, dep. E-chow. It was the principal city of the Ke-sun clan. IX. vii. 4: X. xiii. 1: XI. xii. 5.
+
+**賦** *foo* To levy or collect taxes. 田賦, a certain contribution levied for military purposes from the land in Loo. XII. xii. 1.
+
+**賜** *tsze* To give to, to confer on. VIII. viii. 7.
+
+**賴** *lae* A small State, whose lords were viscounts, surname unknown,—in pres. dis. of Shang-shing, Kwang Chow, Ho-nan. It was extinguished by Ts'oo, in X. iv. 6.
+
+**賵** *fung* Presents for the burial of the dead;—specially of carriages and horses. I. i. 4: VI. v. 1.
+
+**賻** *foo* Presents or contributions of money for the burial of the dead. I. iii. 4.
+
+---
+
+THE 155th RADICAL. 赤
+
+**赤** *ch'ih* (1) Red. In the name 赤狄,—see 狄. (2) The name:—1st, of a prince, perhaps an earl, of Ts'aou, III. xxiv. 8; 2d, of a viscount of the Jung-man, XII. iv. 6. (3) 赤棘,—see 棘.
+
+---
+
+THE 156th RADICAL. 走
+
+**起** *k'e* The name of a minister of Tsin. X. ii. 1; xi. 7.
+
+**越** *yueh* (1) The name of a city in Wei, or, acc. to others, in Ts'aou. If not identical with 垂, it was near it;—see 垂. II. i. 4.
+
+<vocab>Radicals, Tso Chuen, Loo, Ts'oo, Tsin, Ch'ing, Shuh-sun, Ke-sun, burial presents, geography</vocab>

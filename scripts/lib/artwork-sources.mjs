@@ -20,7 +20,7 @@
  * callers without it get `unverifiable`, never a guess.
  */
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org) bot';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 // One string, both fields: the Cleveland/Met/AIC importer wrote its source
 // link into `source_url`; a separate, older importer generation (or a

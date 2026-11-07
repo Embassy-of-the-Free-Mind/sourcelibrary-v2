@@ -10,8 +10,12 @@ the build recomputes the paper's numbers and refuses to write if one has moved.
 
 - Repository directory: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval/dataset/quality-v1
 - Build script: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/build-quality-dataset.mjs
-- Licences: see `LICENSES.md`. Our data is CC BY-SA 4.0; third-party reference windows keep theirs.
-- Integrity: `checksums.txt` (sha256 of every other file).
+- Licence: **CC BY-SA 4.0** for the deposit; third-party reference windows keep theirs, and the text of
+  12 audit pages from modern editions is withheld (see `LICENSES.md`).
+- Cite: `CITATION.cff`.
+- Integrity: `checksums.txt` (sha256 of every other file). On Zenodo, whose file names cannot contain a
+  folder, `references/pointers.jsonl` is uploaded as `references__pointers.jsonl` (and so on), and files
+  over 2 MB as `.gz`; `checksums.txt` refers to the uncompressed files under their folder paths.
 
 ## Purpose
 
@@ -40,12 +44,11 @@ Each row carries a `measure` field. They are not interchangeable.
 | `audit-weights.json` | — | weights | `draw-log.json`, `arm-shares.json`, `book-weights.json` |
 | `eye-check.jsonl` | 20 | accuracy | `eye-notes.md` |
 | `two-read-screen.jsonl` | 327 | agreement | `scripts/eval/results/two-read-garble-5313-2026-09-30/` reference, scores |
-| `ocr-accuracy-cells.json` | 2 quoted cells | accuracy | `src/data/ocr-benchmark-evidence.json` |
-| `ocr-accuracy-latin-pages.jsonl` | 154 | accuracy | `scripts/eval/results/benchmark/ref-*.json` |
-| `references/included-cc-by-sa.jsonl` | 79 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
-| `references/included-cc-by-sa-4-0.jsonl` | 233 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
-| `references/included-pd-us-project-gutenberg.jsonl` | 35 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
-| `references/pointers.jsonl` | 192 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
+| `ocr-accuracy-cells.json` | 2 quoted cells | accuracy | `src/data/ocr-benchmark-evidence.json` at commit a65044017 |
+| `ocr-accuracy-latin-pages.jsonl` | 154 | accuracy | `scripts/eval/results/benchmark/ref-*.json` at commit a65044017 |
+| `references/included-cc-by-sa-4-0.jsonl` | 298 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
+| `references/included-pd-us.jsonl` | 32 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
+| `references/pointers.jsonl` | 209 | reference | `scripts/eval/benchmark/refs/`, `ground-truth/`, `ground-truth-ws/` |
 
 ### audit-pages.jsonl — the translation audit (#5274)
 
@@ -55,7 +58,9 @@ One interior page from each of 311 live books across 15 catalogue languages, dra
 Flash-Lite, flash = Gemini 3 Flash; quota-sampled 50/50 within language), `translation_model`,
 `prompt_version`, `ocr_hash` / `translation_hash` (first 16 hex of the served text's hash on
 the audit date), `transcription` (the served OCR text, with its markup), `translation` (the
-served English), `judge` (Claude Opus: `fidelity` 1–5, `flags`, `defects` with type and
+served English), `transcription_sha256` / `translation_sha256` (sha256 of those exact texts),
+`text_withheld` (null, or why the two texts are null: 12 pages from editions in copyright, or not
+established as public domain in the EU; see `LICENSES.md`), `judge` (Claude Opus: `fidelity` 1–5, `flags`, `defects` with type and
 severity, `confidence`, `reason`), `second_judge` (Claude Sonnet, 107 pages, else null),
 `leaf_check_5311` (`match` / `mismatch` / `uncertain`: is the transcription of the leaf shown,
 from the follow-up check over all pages, #5311), `url`, `image`.
@@ -70,7 +75,14 @@ seed 20260930 (`scripts/eval/translation-corpus-audit/score.mjs`).
 45 blinded controls mixed into the same packets: 15 `swap` (translation of another page;
 expected fidelity ≤ 2 and `wrong_page`), 15 `drop` (middle third of the translation removed;
 expected `omission`), 15 `repeat` (a page shown twice under different ids). `transcription_shown`
-and `translation_shown` are exactly what the judge saw.
+and `translation_shown` are exactly what the judge saw, unless withheld (`transcription_withheld`,
+`translation_withheld`; the `*_sha256` fields are kept either way).
+
+Links: a `repeat` row's `repeat_of` is the `id` of the audit page shown again, in `audit-pages.jsonl`.
+A `swap` or `drop` row was built from a **reserve page**: one drawn with the sample, never judged on its
+own, and not in this dataset. `reserve_page_id` is its draw id (it matches no row here; the first build
+called this field `control_of`), and the row's `book_id` and `page_number` are that page. A swap shows
+the translation of a second reserve page, `swap_translation_from`, whose book was not recorded.
 
 ### eye-check.jsonl — 20 pages read against the scan
 
@@ -106,11 +118,18 @@ medians (0.7% and 1.7%) be recomputed. CER is measured with the two-stage aligne
 
 ### references/
 
-Every reference window the benchmark scores against that has a text, split by the licence its
-record names. See `LICENSES.md`. The Latin rows above are scored against Wikisource and pinned
-passages whose records do not yet carry a `licence` field, so in v1 they are pointers; they will
-be included once their licences are recorded (#5502 records them for the CBETA, Kanripo, Perseus,
-First1KGreek and el.wikisource windows).
+Every reference window that existed when v1 was first built (commit a65044017) and has a text,
+split by licence. Licences, attribution fields and revisions are as the records have them now. Records
+added to the repository since then belong to a later version. See `LICENSES.md`. The Latin rows above
+are scored against Wikisource and pinned passages whose records do not carry a `licence` field, so
+in v1 they are pointers.
+
+Fields: `slug`, `tier`, `source` (null for gutenberg.org rows: the URL is the source), `source_url`,
+`source_revision` (the Wikisource oldid, Git commit or edition the window was cut from), `work` (an id
+where the source has one), `work_title`, `licence`, `licence_url`, `pd_eu` and `pd_eu_basis`
+(whether the work is public domain in the EU, and why), `memorization_risk`, `leaf_check`, `record` (the
+record in the repository), `text_sha256`, `text_chars`, and `text` or, in `pointers.jsonl`,
+`why_pointer`.
 
 ## Collection
 
@@ -140,6 +159,24 @@ have changed since; `ocr_hash` and `translation_hash` identify the version.
   table. The precision (95%) and the conclusion are unchanged.
 - **Arm quota.** The model arm was sampled 50/50 within language; `audit-weights.json → arm_shares`
   gives the true shares for re-weighting.
+
+## Changes since the first build (2026-10-26, #7462)
+
+A review before the DOI deposit found these, fixed here:
+
+- `leaf_check_5311` was null on two audit pages (`3c80e935d4`, `9f3c4b81cf`): the monthly sample
+  reuses those two ids for other pages, and the lookup keyed on id alone. It now keys on run + id.
+- `audit-controls.jsonl`: `control_of` pointed to nothing in the dataset. It is now `reserve_page_id`,
+  documented above, and repeats carry `repeat_of`.
+- Text withheld: the audit pages of 12 modern or not-yet-EU-public-domain editions, the
+  translations shown in the swap controls, and the reference windows of works not public domain in the EU.
+- Reference rows gained `work_title`, `licence_url` and `source_revision` where they lacked them
+  (Wikisource, el.wikisource, Kanripo, whose licence version, CC BY-SA 4.0, is stated on its GitHub
+  organisation page). gutenberg.org rows are `PD-US`, recorded by URL only.
+- The OCR cells read the evidence table as of commit a65044017, the version the paper quotes; the
+  live table has moved since.
+
+No figure the paper quotes changed: the build's checks pass.
 
 ## Exclusions
 

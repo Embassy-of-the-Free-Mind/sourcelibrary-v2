@@ -29,9 +29,24 @@ on:
   schedule:
     - cron: '7,37 * * * *'
   workflow_dispatch:
+    inputs:
+      page_test:
+        description: 'Send a harmless test message down the failure page path, and do nothing else'
+        type: boolean
+        default: false
+
+# FAILURE PAGES (#6553). A source file the build cannot read fails this job, and
+# a red scheduled run pages no one: it failed silently four times (#7016, #7428,
+# #7724, #8031; the last for 37 hours, a note above a heading), while every
+# write-up merged in between was missing from EXPERIMENTS.md, index.json and
+# /quality. A failure now pages ntfy `sourcelibrary-uptime` when the previous
+# run passed, and again every 6 hours while it stays red (the job runs every 30
+# minutes; one page per run would be 48 a day). The PR-time check
+# (experiments-valid.yml) is the prevention; this is the alarm.
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: eval-ledgers-regenerate
@@ -42,16 +57,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Test the page path
+        if: inputs.page_test
+        run: |
+          curl -sf -H "Title: Eval ledgers: page-path test" -H "Priority: low" -H "Tags: test_tube" \
+            -d "Test only, nothing failed. eval-ledgers-regenerate.yml run ${{ github.run_id }} checked its failure page (#6553)." \
+            https://ntfy.sh/sourcelibrary-uptime
+          echo "page-path test sent; skipping the rebuild"
+
       - uses: actions/checkout@v4
+        if: ${{ !inputs.page_test }}
         with:
           ref: main
           fetch-depth: 1
 
       - uses: actions/setup-node@v4
+        if: ${{ !inputs.page_test }}
         with:
           node-version: 22
 
       - name: Rebuild EXPERIMENTS.md, experiments/index.json and INDEX.md
+        if: ${{ !inputs.page_test }}
         run: |
           node scripts/eval/build-experiments.mjs
           node scripts/eval/build-index.mjs
@@ -60,6 +86,7 @@ jobs:
       # EXPERIMENTS.md, creating a new file under experiments/ — commit that too,
       # or the source is lost and the next run adopts it again.
       - name: Commit if anything changed
+        if: ${{ !inputs.page_test }}
         run: |
           git add -A -- scripts/eval/EXPERIMENTS.md scripts/eval/INDEX.md scripts/eval/experiments
           if git diff --cached --quiet; then
@@ -72,3 +99,18 @@ jobs:
           # Another merge may have landed since checkout; then this run's result is stale
           # and the next push regenerates. Never force.
           git push origin HEAD:main || echo "push rejected — main moved; the next push to main regenerates"
+
+      - name: Page on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prev=$(gh run list -R "$GITHUB_REPOSITORY" --workflow eval-ledgers-regenerate.yml --status completed --limit 5 \
+            --json databaseId,conclusion -q "[.[] | select(.databaseId != ${{ github.run_id }})][0].conclusion" 2>/dev/null || echo unknown)
+          hour=$(date -u +%H); min=$(date -u +%M)
+          if [ "$prev" = "failure" ] && [ $((10#$hour % 6)) -ne 0 -o $((10#$min)) -ge 30 ]; then
+            echo "still failing since an earlier run (already paged); next reminder at the next 6-hour mark"; exit 0
+          fi
+          curl -s -H "Title: Eval ledgers stopped regenerating" -H "Priority: high" -H "Tags: warning" \
+            -d "eval-ledgers-regenerate.yml failed (previous run: ${prev}). EXPERIMENTS.md / index.json / /quality stop updating until a write-up is fixed. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            https://ntfy.sh/sourcelibrary-uptime || true

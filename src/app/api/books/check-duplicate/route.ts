@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
-import { checkHoldings, candidateFromInput, type HoldingCandidate, type HoldingReason } from '@/lib/holdings-check';
+import { checkHoldings, candidateFromInput, nameTokens, type HoldingCandidate, type HoldingReason } from '@/lib/holdings-check';
+import { normalizeEditionTitle } from '@/lib/edition-key';
 import { semanticBookSearch } from '@/lib/semantic-search';
 import { GLOBAL_SCOPE } from '@/lib/tenant-search-scope';
 
@@ -45,6 +46,8 @@ const CONFIDENCE: Record<string, Confidence> = {
   same_iiif_manifest: 'exact',
   same_edition: 'high',
   same_edition_year_unknown: 'high',
+  // Asked for one volume; the record names none. Possibly held, not confirmed (#7624).
+  same_edition_volume_unknown: 'medium',
   title_author_near_same_year: 'high',
   other_edition: 'medium',
   same_work: 'medium',
@@ -173,8 +176,10 @@ export async function GET(request: NextRequest) {
       : null,
     limits: holdings.limits,
     normalization: {
-      normalized_title: normalizeTitle(title),
-      normalized_author: normalizeAuthor(author),
+      // The stored normalizers are ASCII-only and blank a Han, Greek or Arabic
+      // title; report a script-safe form rather than an empty string (#8084).
+      normalized_title: normalizeTitle(title) || normalizeEditionTitle(title),
+      normalized_author: normalizeAuthor(author) || nameTokens(author).sort().join(' '),
       source_fingerprint: sourceFingerprint(cand),
       edition_key: holdings.query.edition_key,
     },

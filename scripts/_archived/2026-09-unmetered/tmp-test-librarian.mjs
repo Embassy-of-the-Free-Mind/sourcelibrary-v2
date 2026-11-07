@@ -54,7 +54,7 @@ async function executeTool(name, args) {
     try {
       const res = await fetch(
         `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`,
-        { headers: { 'User-Agent': 'SourceLibrary/1.0' }, signal: AbortSignal.timeout(5000) },
+        { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' }, signal: AbortSignal.timeout(5000) },
       );
       if (res.ok) {
         const data = await res.json();

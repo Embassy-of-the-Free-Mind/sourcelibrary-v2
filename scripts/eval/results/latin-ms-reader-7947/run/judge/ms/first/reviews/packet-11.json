@@ -1,0 +1,430 @@
+[
+ {
+  "book_id": "b11-k",
+  "slot": 1,
+  "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 14,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "sita opera",
+      "image": "sitæ operæ",
+      "problem": "genitive of quality (parallel to 'præstantis formæ, et raræ maiestatis') read as ablative; same æ glyph as in 'formæ'",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "fundatorum extrema Laus",
+      "image": "trema laus",
+      "problem": "capital L added; the image has a lower-case 'laus'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Strages autèm",
+      "image": "¶ Strages autem",
+      "problem": "the paragraph mark before 'Strages' is dropped",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "a blank line after every manuscript line; layout only",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 25,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "univer-sis ... civitatem ... observavimusque",
+      "image": "uniuer=sis ... ciuitatem ... obserua=uimus q3",
+      "problem": "u/v normalised and the q3 abbreviation expanded silently; no word wrong",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "a blank line after every manuscript line; layout only",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Tressennus",
+      "image": "Tressenus",
+      "problem": "the name has one n in the image",
+      "severity": "minor"
+     },
+     {
+      "ocr": "breuius quam ... hic ... utpote ... optime",
+      "image": "breuiùs quàm ... hîc ... utpotè ... optimè",
+      "problem": "accents on the image dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Qu et (and <meta>catchword: Qu et</meta>)",
+      "image": "C?n et",
+      "problem": "the last words of line 13 are text, not a catchword; reading 'Qu' does not match the capital C. line 13 ends 'perdurat et uisitur. C?n et': a capital C with a suspension, then 'et'; most likely 'Cum' (or 'Cũ') but not certain at this resolution",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "a blank line after every manuscript line; layout only",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A close, faithful line-by-line reading of all three pages. Its slips are small: 'sita opera' for 'sitæ operæ', a doubled n in 'Tressennus', dropped accents and ¶, the last word of p.26 read wrongly and tagged as a catchword, and a blank line after every line."
+ },
+ {
+  "book_id": "b11-m",
+  "slot": 2,
+  "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 14,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "sita opera",
+      "image": "sitæ operæ",
+      "problem": "genitive of quality (parallel to 'præstantis formæ, et raræ maiestatis') read as ablative; same æ glyph as in 'formæ'",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "fundatorum ex=trema Laus",
+      "image": "trema laus",
+      "problem": "capital L added",
+      "severity": "minor"
+     },
+     {
+      "ocr": "priorem",
+      "image": "Priorem",
+      "problem": "capital dropped after the full stop",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 25,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "univer-sis ... civitatem ... observavimusque",
+      "image": "uniuer=sis ... ciuitatem ... obserua=uimus q3",
+      "problem": "u/v normalised, abbreviation expanded silently",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "antèa",
+      "image": "anteà",
+      "problem": "accent on the wrong syllable",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "a blank line after every manuscript line; layout only",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Tressennus",
+      "image": "Tressenus",
+      "problem": "the name has one n in the image",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Est et",
+      "image": "C?n et",
+      "problem": "the word does not start with E in the image. line 13 ends 'perdurat et uisitur. C?n et': a capital C with a suspension, then 'et'; most likely 'Cum' (or 'Cũ') but not certain at this resolution",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "a blank line after every manuscript line; layout only",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Very close to the image, keeping line breaks, hyphens, accents and the ¶. Only small slips: 'sita opera' for 'sitæ operæ', 'Tressennus', and 'Est' for the uncertain last word on p.26."
+ },
+ {
+  "book_id": "b11-r",
+  "slot": 3,
+  "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 14,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "(nisi me mea fallat opinio)",
+      "image": "(ni / me mea fallat opinio)",
+      "problem": "'ni' ends the line and 'me' begins the next; joining the lines added a syllable 'si' that the image does not have",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Gneo Pompeio",
+      "image": "Gneo pom=peio",
+      "problem": "capital P added",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 25,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "patriae nostrae",
+      "image": "patriæ uestræ",
+      "problem": "'your fatherland' becomes 'our fatherland'; this changes the orator's address to the 'conscripti auditores'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<unclear>Cum</unclear> et",
+      "image": "C?n et",
+      "problem": "plausible, and marked uncertain. line 13 ends 'perdurat et uisitur. C?n et': a capital C with a suspension, then 'et'; most likely 'Cum' (or 'Cũ') but not certain at this resolution",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A good running-text reading (line breaks removed, hyphenations joined) that gets 'sitæ operæ' right and marks its uncertain words honestly. There are two meaning-level slips: 'nisi' for 'ni', and 'nostrae' for 'uestræ' on p.15."
+ },
+ {
+  "book_id": "b11-t",
+  "slot": 4,
+  "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 14,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "sita opera",
+      "image": "sitæ operæ",
+      "problem": "genitive of quality (parallel to 'præstantis formæ, et raræ maiestatis') read as ablative; same æ glyph as in 'formæ'",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "quasit haec structura",
+      "image": "euasit hæc structura",
+      "problem": "'euasit' misread as the non-word 'quasit'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "supprema in glo=ria",
+      "image": "supprema`ue glo=ria",
+      "problem": "the enclitic '-ue' read as 'in', which changes the construction",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "reliquis abo=liorem",
+      "image": "reliquis atro=ciorem",
+      "problem": "'atrociorem' read as the non-word 'aboliorem'; the comparative 'more atrocious' is lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "praestantis formae ... negotium",
+      "image": "præstantis formæ ... negocium",
+      "problem": "æ split into ae and the spelling negocium normalised",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "Strages autem",
+      "image": "¶ Strages autem",
+      "problem": "paragraph mark dropped",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 25,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Coloneum",
+      "image": "Coto=neum",
+      "problem": "place name misread (Cotoneum, a castle near Lodi)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "patriae nostrae",
+      "image": "patriæ uestræ",
+      "problem": "'your' becomes 'our'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "antè pausillum",
+      "image": "anteà pauxillum",
+      "problem": "the word is cut short and the spelling normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pinguidinem; soleant.; tanquam; superius",
+      "image": "pinguedinem; soleant?; tanquàm; superiùs",
+      "problem": "small spelling and punctuation slips, accents dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Tressonus",
+      "image": "Tressenus",
+      "problem": "name misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "sic ortum suum nactus est",
+      "image": "hîc ortum suum nactus est",
+      "problem": "'here (in Lodi) he was born' becomes 'thus he was born'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "auspicamur; perpetua memoriam; sive",
+      "image": "auspicemur; perpetuæ memoriam; siue",
+      "problem": "subjunctive made indicative, the genitive ending lost, u/v normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Et et",
+      "image": "C?n et",
+      "problem": "the word does not start with E. line 13 ends 'perdurat et uisitur. C?n et': a capital C with a suspension, then 'et'; most likely 'Cum' (or 'Cũ') but not certain at this resolution",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "This is the weakest of the four. Each page has several meaning-changing misreadings, two of them non-words ('quasit', 'aboliorem'), plus 'supprema in', 'Coloneum', 'nostrae', 'Tressonus' and 'sic' for 'hîc'. It also normalises æ and accents throughout. Nothing is invented at passage level."
+ }
+]

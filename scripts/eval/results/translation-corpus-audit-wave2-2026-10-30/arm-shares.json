@@ -1,0 +1,96 @@
+{
+ "Hebrew": {
+  "flash": 0.2958,
+  "lite": 0.6975,
+  "agy-flash": 0.0066,
+  "claude-other": 0.0001,
+  "opus": 0,
+  "gemini-legacy": 0.0001
+ },
+ "Greek": {
+  "flash": 0.3012,
+  "lite": 0.693,
+  "agy-flash": 0.0007,
+  "claude-other": 0,
+  "opus": 0.0023,
+  "argon": 0.0008,
+  "gemini-legacy": 0.0019
+ },
+ "Arabic": {
+  "flash": 0.441,
+  "lite": 0.5192,
+  "agy-flash": 0.0145,
+  "opus": 0.0254,
+  "claude-other": 0
+ },
+ "Latin": {
+  "lite": 0.729,
+  "flash": 0.2658,
+  "agy-flash": 0.0016,
+  "opus": 0.0001,
+  "gemini-legacy": 0.0035,
+  "claude-other": 0
+ },
+ "Tibetan": {
+  "flash": 0.9069,
+  "opus": 0.0173,
+  "lite": 0.0009,
+  "agy-flash": 0.0749
+ },
+ "German": {
+  "lite": 0.3615,
+  "flash": 0.6303,
+  "agy-flash": 0.0026,
+  "opus": 0.0056,
+  "gemini-legacy": 0,
+  "claude-other": 0
+ },
+ "English": {
+  "lite": 0.6039,
+  "flash": 0.3954,
+  "claude-other": 0,
+  "gemini-legacy": 0.0007
+ },
+ "French": {
+  "lite": 0.4364,
+  "flash": 0.5454,
+  "opus": 0.008,
+  "agy-flash": 0.0103
+ },
+ "Chinese": {
+  "flash": 0.5066,
+  "lite": 0.1319,
+  "agy-flash": 0.2982,
+  "opus": 0.0634
+ },
+ "Spanish": {
+  "lite": 0.761,
+  "flash": 0.1389,
+  "opus": 0.0917,
+  "argon": 0.0085
+ },
+ "Dutch": {
+  "lite": 0.4062,
+  "flash": 0.5938
+ },
+ "Sanskrit": {
+  "lite": 0.4437,
+  "flash": 0.5512,
+  "agy-flash": 0.0003,
+  "opus": 0.0048
+ },
+ "Italian": {
+  "lite": 0.77,
+  "flash": 0.23,
+  "opus": 0
+ },
+ "Korean": {
+  "flash": 0.9616,
+  "lite": 0.0384
+ },
+ "Japanese": {
+  "flash": 0.1794,
+  "lite": 0.8206,
+  "agy-flash": 0.0001
+ }
+}

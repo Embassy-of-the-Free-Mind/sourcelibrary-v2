@@ -1,0 +1,703 @@
+[
+ {
+  "book_id": "b19-k",
+  "slot": 1,
+  "title": "Collection of Rosicrucian and Alchemical Texts (PH255)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 78,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "non enim purificatus Regulus unicum est in terris reperibile solvens",
+      "image": "noēr etenim purificatus Regulus unicum est (Noster etenim)",
+      "problem": "'noster etenim' read as 'non enim': the claim that our purified regulus is the one solvent is negated",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "huic merito Regulo non solventis Ursi nomen tribuitur",
+      "image": "hinc merito Regulo noō solventis Univ[ersa]lis nomen tribuitur",
+      "problem": "'nostro … universalis' read as 'non … Ursi': a negation and a nonsense name invented in the key definition",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "quam si sub spiritu dissolventis nomine sum novum antimonialem",
+      "image": "quam hic sub ☿ii dissolventis nomine ♁um novum antimonialem",
+      "problem": "Mercury sign read as 'spiritu', antimony/regulus sign as 'sum': the substance named is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "per jam vero minera comparatum quem novum facies, aut denes aquilatus",
+      "image": "per ▽am vero mineralem praeparatum ☿ium novum …, aut decies aquilatum",
+      "problem": "water sign read 'jam', Mercury sign 'quem', 'decies' as 'denes'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "sine humidi radicalis nota coitura",
+      "image": "sive humidi radicalis [non struck] apertura",
+      "problem": "'sive' read as 'sine'; struck 'non' read as 'nota'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "in formam currentis spiritu resolvat",
+      "image": "in formam currentis ☿ii resolvat",
+      "problem": "'running Mercury' becomes 'running spirit'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "rubei coloris dealbationem",
+      "image": "rubei latoris dealbationem",
+      "problem": "word substituted",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Recipe partem i finissimo et copulato et ut ante docuimus spiritu rectificati non spiritu spiritu martialis partes duas",
+      "image": "℞ partem 1 finissime et copellatae ☽(?) ut ante documimus: rectificati noēi 🜺i ☿ii mortificalis partes duas",
+      "problem": "recipe ingredients garbled: the cupelled metal dropped, 'nostri arsenici mercurii mortificalis' becomes 'non spiritu spiritu martialis' (iron invented)",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Aquam minutissime potes … ad lapideum",
+      "image": "Atque quam minutissime potes … vel lapideo",
+      "problem": "misdivision; 'vel' read 'ad'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Superfunde jam calidam",
+      "image": "Superfunde ▽am calidam",
+      "problem": "water sign read 'jam': what is poured is lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 154,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Gem vero rubeum … hunc gum et rubeum gem",
+      "image": "⊖em vero rubeum … hunc ♁um et rubeum ⊖em",
+      "problem": "alchemical signs rendered as Latin-looking letters 'gem'/'gum' throughout",
+      "severity": "serious",
+      "class": "O10"
+     },
+     {
+      "ocr": "fluentibus inuice iterum et ad 6 lot[iones] O[lei] et paucam quantitatem O[lei] fusi",
+      "image": "fluentibus iniice iterum 5 aut 6 lot ⊖i et paucam quantitatem ⊖ fusi",
+      "problem": "'5 aut' read 'et ad'; 'lot' (weight) expanded to 'lotiones'; the salt/metal signs expanded to 'Olei' (oil), an ingredient not on the page",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "rubeum salem eodem serva",
+      "image": "rubeum salem comēm ꝯserva (communem conserva)",
+      "problem": "'communem' read 'eodem'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ut C[rystallum] mollem",
+      "image": "ut ☾ mollem",
+      "problem": "moon sign expanded to an invented 'Crystallum'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Et hic ad augmentationem O[lei] et Co-gitationem [?] magno cum emolumento servit",
+      "image": "♁us hic ad augmentationem ⊖i et ☾ae fixationemque ☿ii magno cum emolumento servit",
+      "problem": "'fixationemque ☿ii' becomes 'Cogitationem', 'Olei' invented; what the regulus serves is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "tunc supra splendentem stellam auquires",
+      "image": "♁umque supra splendentem stellam acquires",
+      "problem": "regulus sign read as 'tunc'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "1mo A[ntimonium] et O[leum]: Sis et tri in chaos con-iunguntur",
+      "image": "1mo ♁: ⊖: et ☿(?): ⊖is et ♁ii in chaos conjunguntur",
+      "problem": "symbol list garbled into 'Oleum … Sis et tri'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quia vero necdum genitalia, sed ad eam massam redacta sunt",
+      "image": "quia vero necdum …ialia, sed ad unam massam reducta sunt",
+      "problem": "'unam' read 'eam'; first word misread",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 232,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<column-break/> suis =nua puris =Aa bene abso pure aurea. ille a pe et =bed vivo pure Aurea vul magi et. fail eum quod minr Sabe vivo arec",
+      "image": "(single-column page; these are line-ends of the facing leaf at the right edge)",
+      "problem": "a second column of word fragments transcribed from the neighbouring leaf's strip, presented as this page's text",
+      "severity": "serious",
+      "class": "I4"
+     },
+     {
+      "ocr": "Recipe et electi uncias 4: … adde inue et electi ut suus uncias 8",
+      "image": "℞ ♁ii electi uncias 4: … adde iniice ♂is electi ut sit uncias 8",
+      "problem": "antimony and iron signs both reduced to 'et': the recipe no longer says what is weighed",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "non quidem centraliter, sed auidenter",
+      "image": "non quidem essentialiter, sed accidentaliter",
+      "problem": "the key distinction (essentially vs accidentally poisoned) is misread",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Rege nostri … attamen suui federe nondum luit",
+      "image": "Reguli noēi … attamen sui fidere nondum licet",
+      "problem": "several misreads",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Mars em arsenicale et et radicitus eliminal",
+      "image": "mars enim arsenicale 🜍 ♁ii radicitus eliminat",
+      "problem": "symbols collapsed to 'et' throughout the paragraph",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "denuo cum et statu.",
+      "image": "deinde cum 🜕 sicato",
+      "problem": "nitre sign and 'sicato' lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Not usable: the alchemical signs are turned into plausible-looking Latin words ('spiritu', 'gem', 'Olei', 'et'), negations are invented ('non enim', 'non solventis Ursi'), recipes lose their ingredients, and p.232 appends a fake second column read from the facing leaf."
+ },
+ {
+  "book_id": "b19-m",
+  "slot": 2,
+  "title": "Collection of Rosicrucian and Alchemical Texts (PH255)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 78,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "non enim purificatus Regulus unicum est in terris reperibile solvens",
+      "image": "noēr etenim purificatus Regulus unicum est (Noster etenim)",
+      "problem": "'noster etenim' read as 'non enim': the claim that our purified regulus is the one solvent is negated",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "huic merito Regulo non solventis Ursi nomen tribuitur",
+      "image": "hinc merito Regulo noō solventis Univ[ersa]lis nomen tribuitur",
+      "problem": "'nostro … universalis' read as 'non … Ursi': a negation and a nonsense name invented in the key definition",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "quam si sub spiritu dissolventis nomine sum novum antimonialem",
+      "image": "quam hic sub ☿ii dissolventis nomine ♁um novum antimonialem",
+      "problem": "Mercury sign read as 'spiritu', antimony/regulus sign as 'sum': the substance named is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "per jam vero minera comparatum quem novum facies, aut denes aquilatus",
+      "image": "per ▽am vero mineralem praeparatum ☿ium novum …, aut decies aquilatum",
+      "problem": "water sign read 'jam', Mercury sign 'quem', 'decies' as 'denes'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "sine humidi radicalis nota coitura",
+      "image": "sive humidi radicalis [non struck] apertura",
+      "problem": "'sive' read as 'sine'; struck 'non' read as 'nota'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "in formam currentis spiritu resolvat",
+      "image": "in formam currentis ☿ii resolvat",
+      "problem": "'running Mercury' becomes 'running spirit'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "rubei coloris dealbationem",
+      "image": "rubei latoris dealbationem",
+      "problem": "word substituted",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Recipe partem i finissimo et copulato et ut ante docuimus spiritu rectificati non spiritu spiritu martialis partes duas",
+      "image": "℞ partem 1 finissime et copellatae ☽(?) ut ante documimus: rectificati noēi 🜺i ☿ii mortificalis partes duas",
+      "problem": "recipe ingredients garbled: the cupelled metal dropped, 'nostri arsenici mercurii mortificalis' becomes 'non spiritu spiritu martialis' (iron invented)",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Aquam minutissime potes … ad lapideum",
+      "image": "Atque quam minutissime potes … vel lapideo",
+      "problem": "misdivision; 'vel' read 'ad'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Superfunde jam calidam",
+      "image": "Superfunde ▽am calidam",
+      "problem": "water sign read 'jam': what is poured is lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 154,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "1mo ♁, ⊖ : et 🜍 : ♂is et ☉is in chaos",
+      "image": "1mo ♁: ⊖: et ☿(?): ⊖is et ♁ii in chaos",
+      "problem": "last two signs misidentified as Mars and Sol",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quia vero necdum purificata",
+      "image": "quia vero necdum …ialia (a sign + '-ialia')",
+      "problem": "word normalised to 'purificata'; image shows a sign + '-ialia'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "vitro assimilantibus",
+      "image": "vitro assimilantur",
+      "problem": "minor misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "paucam quantitatem ☉ fusi",
+      "image": "paucam quantitatem ⊖ fusi",
+      "problem": "sign read as Sol; at this resolution uncertain",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Markdown '##'/'###' heading markup in the reader text for the page's two-line heading",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 232,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<column-break/> suis =nua puris =Aa bene abso pure aurea. ille a pe et =bed vivo pure Aurea vul magi et. fail eum quod minr Sabe vivo arec",
+      "image": "(single-column page; these are line-ends of the facing leaf at the right edge)",
+      "problem": "a second column of word fragments transcribed from the neighbouring leaf's strip, presented as this page's text",
+      "severity": "serious",
+      "class": "I4"
+     },
+     {
+      "ocr": "Recipe et electi uncias 4: … adde inue et electi ut suus uncias 8",
+      "image": "℞ ♁ii electi uncias 4: … adde iniice ♂is electi ut sit uncias 8",
+      "problem": "antimony and iron signs both reduced to 'et': the recipe no longer says what is weighed",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "non quidem centraliter, sed auidenter",
+      "image": "non quidem essentialiter, sed accidentaliter",
+      "problem": "the key distinction (essentially vs accidentally poisoned) is misread",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Rege nostri … attamen suui federe nondum luit",
+      "image": "Reguli noēi … attamen sui fidere nondum licet",
+      "problem": "several misreads",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Mars em arsenicale et et radicitus eliminal",
+      "image": "mars enim arsenicale 🜍 ♁ii radicitus eliminat",
+      "problem": "symbols collapsed to 'et' throughout the paragraph",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "denuo cum et statu.",
+      "image": "deinde cum 🜕 sicato",
+      "problem": "nitre sign and 'sicato' lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Uneven: p.154 is a good symbol-preserving reading, but pp.78 and 232 are the same garbled reading as the other weak entries, with invented negations, symbols turned into words and a fake second column from the facing leaf."
+ },
+ {
+  "book_id": "b19-r",
+  "slot": 3,
+  "title": "Collection of Rosicrucian and Alchemical Texts (PH255)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 78,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "non enim purificatus Regulus unicum est in terris reperibile solvens",
+      "image": "noēr etenim purificatus Regulus unicum est (Noster etenim)",
+      "problem": "'noster etenim' read as 'non enim': the claim that our purified regulus is the one solvent is negated",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "huic merito Regulo non solventis Ursi nomen tribuitur",
+      "image": "hinc merito Regulo noō solventis Univ[ersa]lis nomen tribuitur",
+      "problem": "'nostro … universalis' read as 'non … Ursi': a negation and a nonsense name invented in the key definition",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "quam si sub spiritu dissolventis nomine sum novum antimonialem",
+      "image": "quam hic sub ☿ii dissolventis nomine ♁um novum antimonialem",
+      "problem": "Mercury sign read as 'spiritu', antimony/regulus sign as 'sum': the substance named is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "per jam vero minera comparatum quem novum facies, aut denes aquilatus",
+      "image": "per ▽am vero mineralem praeparatum ☿ium novum …, aut decies aquilatum",
+      "problem": "water sign read 'jam', Mercury sign 'quem', 'decies' as 'denes'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "sine humidi radicalis nota coitura",
+      "image": "sive humidi radicalis [non struck] apertura",
+      "problem": "'sive' read as 'sine'; struck 'non' read as 'nota'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "in formam currentis spiritu resolvat",
+      "image": "in formam currentis ☿ii resolvat",
+      "problem": "'running Mercury' becomes 'running spirit'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "rubei coloris dealbationem",
+      "image": "rubei latoris dealbationem",
+      "problem": "word substituted",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Recipe partem i finissimo et copulato et ut ante docuimus spiritu rectificati non spiritu spiritu martialis partes duas",
+      "image": "℞ partem 1 finissime et copellatae ☽(?) ut ante documimus: rectificati noēi 🜺i ☿ii mortificalis partes duas",
+      "problem": "recipe ingredients garbled: the cupelled metal dropped, 'nostri arsenici mercurii mortificalis' becomes 'non spiritu spiritu martialis' (iron invented)",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Aquam minutissime potes … ad lapideum",
+      "image": "Atque quam minutissime potes … vel lapideo",
+      "problem": "misdivision; 'vel' read 'ad'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Superfunde jam calidam",
+      "image": "Superfunde ▽am calidam",
+      "problem": "water sign read 'jam': what is poured is lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 154,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "Gem vero rubeum … hunc gum et rubeum gem",
+      "image": "⊖em vero rubeum … hunc ♁um et rubeum ⊖em",
+      "problem": "alchemical signs rendered as Latin-looking letters 'gem'/'gum' throughout",
+      "severity": "serious",
+      "class": "O10"
+     },
+     {
+      "ocr": "fluentibus inuice iterum et ad 6 lot[iones] O[lei] et paucam quantitatem O[lei] fusi",
+      "image": "fluentibus iniice iterum 5 aut 6 lot ⊖i et paucam quantitatem ⊖ fusi",
+      "problem": "'5 aut' read 'et ad'; 'lot' (weight) expanded to 'lotiones'; the salt/metal signs expanded to 'Olei' (oil), an ingredient not on the page",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "rubeum salem eodem serva",
+      "image": "rubeum salem comēm ꝯserva (communem conserva)",
+      "problem": "'communem' read 'eodem'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ut C[rystallum] mollem",
+      "image": "ut ☾ mollem",
+      "problem": "moon sign expanded to an invented 'Crystallum'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Et hic ad augmentationem O[lei] et Co-gitationem [?] magno cum emolumento servit",
+      "image": "♁us hic ad augmentationem ⊖i et ☾ae fixationemque ☿ii magno cum emolumento servit",
+      "problem": "'fixationemque ☿ii' becomes 'Cogitationem', 'Olei' invented; what the regulus serves is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "tunc supra splendentem stellam auquires",
+      "image": "♁umque supra splendentem stellam acquires",
+      "problem": "regulus sign read as 'tunc'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "1mo A[ntimonium] et O[leum]: Sis et tri in chaos con-iunguntur",
+      "image": "1mo ♁: ⊖: et ☿(?): ⊖is et ♁ii in chaos conjunguntur",
+      "problem": "symbol list garbled into 'Oleum … Sis et tri'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "quia vero necdum genitalia, sed ad eam massam redacta sunt",
+      "image": "quia vero necdum …ialia, sed ad unam massam reducta sunt",
+      "problem": "'unam' read 'eam'; first word misread",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 232,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "<column-break/> suis =nua puris =Aa bene abso pure aurea. ille a pe et =bed vivo pure Aurea vul magi et. fail eum quod minr Sabe vivo arec",
+      "image": "(single-column page; these are line-ends of the facing leaf at the right edge)",
+      "problem": "a second column of word fragments transcribed from the neighbouring leaf's strip, presented as this page's text",
+      "severity": "serious",
+      "class": "I4"
+     },
+     {
+      "ocr": "Recipe et electi uncias 4: … adde inue et electi ut suus uncias 8",
+      "image": "℞ ♁ii electi uncias 4: … adde iniice ♂is electi ut sit uncias 8",
+      "problem": "antimony and iron signs both reduced to 'et': the recipe no longer says what is weighed",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "non quidem centraliter, sed auidenter",
+      "image": "non quidem essentialiter, sed accidentaliter",
+      "problem": "the key distinction (essentially vs accidentally poisoned) is misread",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Rege nostri … attamen suui federe nondum luit",
+      "image": "Reguli noēi … attamen sui fidere nondum licet",
+      "problem": "several misreads",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "Mars em arsenicale et et radicitus eliminal",
+      "image": "mars enim arsenicale 🜍 ♁ii radicitus eliminat",
+      "problem": "symbols collapsed to 'et' throughout the paragraph",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "denuo cum et statu.",
+      "image": "deinde cum 🜕 sicato",
+      "problem": "nitre sign and 'sicato' lost",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Not usable: the alchemical signs are turned into plausible-looking Latin words ('spiritu', 'gem', 'Olei', 'et'), negations are invented ('non enim', 'non solventis Ursi'), recipes lose their ingredients, and p.232 appends a fake second column read from the facing leaf."
+ },
+ {
+  "book_id": "b19-t",
+  "slot": 4,
+  "title": "Collection of Rosicrucian and Alchemical Texts (PH255)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 78,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "praeparatum Mercurium nostrum <unclear>species</unclear>",
+      "image": "praeparatum ☿ium noūm …",
+      "problem": "'novum' read as 'nostrum'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "subtili Sale",
+      "image": "subtili Oo",
+      "problem": "the sign is read as salt; plausible but uncertain",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "'->Mercurii mediante Arsenico<-' arrow centring markup in the reader text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 154,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "splendentem, ut et mollem",
+      "image": "splendentem, ut ☾ mollem",
+      "problem": "moon sign dropped and read as 'et' (soft as silver → soft)",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "ad augmentationem ⊖i et fixationemque <unclear>♀ri</unclear>",
+      "image": "ad augmentationem ⊖i et ☾ae fixationemque ☿ii",
+      "problem": "'et ☾ae' dropped; Mercury sign read as Venus (flagged unclear)",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "statim <unclear>quamvis</unclear> liquescant",
+      "image": "statim geniti/igniti liquefiant",
+      "problem": "misread, flagged unclear",
+      "severity": "minor"
+     },
+     {
+      "ocr": "etc:",
+      "image": "2do:",
+      "problem": "catchword misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "'->…<-' arrow centring markup around the heading",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 232,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "quamvis autem Reguli nomine",
+      "image": "quamvis am Regl noēi (nostri)",
+      "problem": "abbreviated 'nostri' expanded as 'nomine'",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "optime purificatus ♁ purissimi",
+      "image": "optime purificatus ☿ii purissimi",
+      "problem": "sign read as antimony; looks like Mercury",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "deinde iniice",
+      "image": "adde iniice",
+      "problem": "minor misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Markdown '###' heading markup in the reader text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "The best of the four: close, word-by-word readings that keep the signs, mark doubt with <unclear>, tag the pencil note as a later hand and leave out the facing-leaf strip; a few signs are dropped or misidentified, and arrow/markdown heading markup leaks into the reader text."
+ }
+]

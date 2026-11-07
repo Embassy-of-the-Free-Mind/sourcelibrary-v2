@@ -1,7 +1,8 @@
 #!/bin/bash
 # #6560 Flash low correction pass, one Kangyur volume: read -> ya-btags leaf check (Opus) -> apply.
 #   run-volume.sh <book_id> [--no-apply]      resumable: every stage skips what it has already done
-#   env MODEL (agy model, default gemini-3.8-flash-low), JOB (agy job name, default tib-flash-pass-6560)
+#   env MODEL (agy model, default gemini-3.8-flash-low), JOB (agy job name, default tib-flash-pass-6560),
+#   MARK_STALE (the --mark-stale lane, default the lane; MARK_STALE= writes the text and queues no re-translation)
 # Exit 0 = applied (or read + checked with --no-apply); 3 = a quota stop (state is on disk, re-run to resume).
 # Needs: agy and claude signed in on this box; $JOB_SCRATCH; the env file below. $0 calls only (subscription CLIs).
 set -uo pipefail
@@ -12,6 +13,7 @@ ENV=${ENV_FILE:-/root/sourcelibrary/.env.production.local}
 D=$JOB_SCRATCH/vol/$B; mkdir -p "$D"
 P=$REPO/scripts/eval/tibetan-correct-6560
 LANE=tib-correct-6560
+STALE=${MARK_STALE-$LANE}
 REASON="#6560 ${MODEL/gemini-3.8-flash-low/Gemini 3.8 Flash low} correction of the Yigdzin read (image + draft), ya-btags changes kept only where Opus saw them on the leaf"
 cd "$REPO"
 [ -s "$D.ids.json" ] || node --env-file="$ENV" $P/pass/volume-ids.mjs book --book="$B" --out="$D.ids.json" || exit 1
@@ -32,7 +34,7 @@ fi
 touch "$D/yat-out.jsonl"
 node $P/pass/leafcheck.mjs yatags-verdicts --key="$D/yat-key.json" --replies="$D/yat-out.jsonl" --out="$D/yat-verdicts.jsonl" | tee "$D.yat-summary.json" || exit 1
 [ "$NOAPPLY" = --no-apply ] && exit 0
-# 4. apply: guard on, translations flagged stale for re-translation (not withheld)
+# 4. apply: guard on; translations flagged stale for re-translation (not withheld) unless MARK_STALE=
 node --env-file="$ENV" scripts/batch/cli-ocr.mjs apply --apply --out="$D" --reason="$REASON" --yatags-verdicts="$D/yat-verdicts.jsonl" \
-  --mark-stale=$LANE > "$D.apply.log" 2>&1 || exit 1
+  ${STALE:+--mark-stale=$STALE} > "$D.apply.log" 2>&1 || exit 1
 tail -3 "$D.apply.log"

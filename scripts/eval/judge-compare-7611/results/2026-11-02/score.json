@@ -1,0 +1,2937 @@
+{
+ "generated_at": "2026-11-02T09:26:42.749Z",
+ "labels": {
+  "n": 270,
+  "errors_that_matter": 182,
+  "from": {
+   "new": 248,
+   "adjudication:flash-medium": 3,
+   "opus=medium": 18,
+   "adjudication:argon": 1
+  },
+  "flipped_by_new": 22,
+  "flipped_to_fail": 18,
+  "flipped_to_pass": 4,
+  "by_stratum": {
+   "Gemini reads": {
+    "n": 60,
+    "errors": 39
+   },
+   "Latin, Italian GPU>GEM": {
+    "n": 49,
+    "errors": 21
+   },
+   "Chinese GPU, GPU>GEM": {
+    "n": 86,
+    "errors": 58
+   },
+   "Tibetan GPU": {
+    "n": 45,
+    "errors": 42
+   },
+   "Hebrew, Arabic": {
+    "n": 30,
+    "errors": 22
+   }
+  }
+ },
+ "arms": {
+  "C": {
+   "n": 270,
+   "missing": 0,
+   "threshold": {
+    "primary": {
+     "t": 0.2242152466367713,
+     "rec": 0.8404255319148937,
+     "prec": 0.8586956521739131,
+     "rule": "max recall at precision >= 0.70"
+    },
+    "reverse": {
+     "t": 0.1430615164520744,
+     "rec": 0.7954545454545454,
+     "prec": 0.813953488372093,
+     "rule": "max recall at precision >= 0.70"
+    }
+   },
+   "held_out": {
+    "all": {
+     "n": 134,
+     "errors": 88,
+     "flagged": 84,
+     "recall": {
+      "k": 68,
+      "n": 88,
+      "rate": 0.773,
+      "wilson95": [
+       0.675,
+       0.848
+      ]
+     },
+     "precision": {
+      "k": 68,
+      "n": 84,
+      "rate": 0.81,
+      "wilson95": [
+       0.713,
+       0.879
+      ]
+     },
+     "kappa": 0.416
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 32,
+      "flagged": 29,
+      "recall": {
+       "k": 25,
+       "n": 32,
+       "rate": 0.781,
+       "wilson95": [
+        0.612,
+        0.89
+       ]
+      },
+      "precision": {
+       "k": 25,
+       "n": 29,
+       "rate": 0.862,
+       "wilson95": [
+        0.694,
+        0.945
+       ]
+      },
+      "kappa": 0.383
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 18,
+      "flagged": 16,
+      "recall": {
+       "k": 13,
+       "n": 18,
+       "rate": 0.722,
+       "wilson95": [
+        0.491,
+        0.875
+       ]
+      },
+      "precision": {
+       "k": 13,
+       "n": 16,
+       "rate": 0.813,
+       "wilson95": [
+        0.57,
+        0.934
+       ]
+      },
+      "kappa": 0.459
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 10,
+      "flagged": 11,
+      "recall": {
+       "k": 9,
+       "n": 10,
+       "rate": 0.9,
+       "wilson95": [
+        0.596,
+        0.982
+       ]
+      },
+      "precision": {
+       "k": 9,
+       "n": 11,
+       "rate": 0.818,
+       "wilson95": [
+        0.523,
+        0.949
+       ]
+      },
+      "kappa": 0.526
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 24,
+      "errors": 9,
+      "flagged": 8,
+      "recall": {
+       "k": 3,
+       "n": 9,
+       "rate": 0.333,
+       "wilson95": [
+        0.121,
+        0.646
+       ]
+      },
+      "precision": {
+       "k": 3,
+       "n": 8,
+       "rate": 0.375,
+       "wilson95": [
+        0.137,
+        0.694
+       ]
+      },
+      "kappa": 0
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 19,
+      "flagged": 20,
+      "recall": {
+       "k": 18,
+       "n": 19,
+       "rate": 0.947,
+       "wilson95": [
+        0.754,
+        0.991
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 20,
+       "rate": 0.9,
+       "wilson95": [
+        0.699,
+        0.972
+       ]
+      },
+      "kappa": 0.327
+     }
+    }
+   },
+   "held_out_reverse": {
+    "all": {
+     "n": 136,
+     "errors": 94,
+     "flagged": 92,
+     "recall": {
+      "k": 79,
+      "n": 94,
+      "rate": 0.84,
+      "wilson95": [
+       0.753,
+       0.901
+      ]
+     },
+     "precision": {
+      "k": 79,
+      "n": 92,
+      "rate": 0.859,
+      "wilson95": [
+       0.773,
+       0.916
+      ]
+     },
+     "kappa": 0.524
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 26,
+      "flagged": 28,
+      "recall": {
+       "k": 21,
+       "n": 26,
+       "rate": 0.808,
+       "wilson95": [
+        0.621,
+        0.915
+       ]
+      },
+      "precision": {
+       "k": 21,
+       "n": 28,
+       "rate": 0.75,
+       "wilson95": [
+        0.566,
+        0.873
+       ]
+      },
+      "kappa": 0.404
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 21,
+      "flagged": 19,
+      "recall": {
+       "k": 17,
+       "n": 21,
+       "rate": 0.81,
+       "wilson95": [
+        0.6,
+        0.923
+       ]
+      },
+      "precision": {
+       "k": 17,
+       "n": 19,
+       "rate": 0.895,
+       "wilson95": [
+        0.686,
+        0.971
+       ]
+      },
+      "kappa": 0.552
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 12,
+      "flagged": 11,
+      "recall": {
+       "k": 10,
+       "n": 12,
+       "rate": 0.833,
+       "wilson95": [
+        0.552,
+        0.953
+       ]
+      },
+      "precision": {
+       "k": 10,
+       "n": 11,
+       "rate": 0.909,
+       "wilson95": [
+        0.623,
+        0.984
+       ]
+      },
+      "kappa": 0.444
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 25,
+      "errors": 12,
+      "flagged": 13,
+      "recall": {
+       "k": 10,
+       "n": 12,
+       "rate": 0.833,
+       "wilson95": [
+        0.552,
+        0.953
+       ]
+      },
+      "precision": {
+       "k": 10,
+       "n": 13,
+       "rate": 0.769,
+       "wilson95": [
+        0.497,
+        0.918
+       ]
+      },
+      "kappa": 0.601
+     },
+     "Tibetan GPU": {
+      "n": 23,
+      "errors": 23,
+      "flagged": 21,
+      "recall": {
+       "k": 21,
+       "n": 23,
+       "rate": 0.913,
+       "wilson95": [
+        0.732,
+        0.976
+       ]
+      },
+      "precision": {
+       "k": 21,
+       "n": 21,
+       "rate": 1,
+       "wilson95": [
+        0.845,
+        1
+       ]
+      },
+      "kappa": 0
+     }
+    }
+   },
+   "all_at_primary": {
+    "all": {
+     "n": 270,
+     "errors": 182,
+     "flagged": 176,
+     "recall": {
+      "k": 147,
+      "n": 182,
+      "rate": 0.808,
+      "wilson95": [
+       0.744,
+       0.858
+      ]
+     },
+     "precision": {
+      "k": 147,
+      "n": 176,
+      "rate": 0.835,
+      "wilson95": [
+       0.773,
+       0.883
+      ]
+     },
+     "kappa": 0.47
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 86,
+      "errors": 58,
+      "flagged": 57,
+      "recall": {
+       "k": 46,
+       "n": 58,
+       "rate": 0.793,
+       "wilson95": [
+        0.672,
+        0.877
+       ]
+      },
+      "precision": {
+       "k": 46,
+       "n": 57,
+       "rate": 0.807,
+       "wilson95": [
+        0.687,
+        0.889
+       ]
+      },
+      "kappa": 0.397
+     },
+     "Gemini reads": {
+      "n": 60,
+      "errors": 39,
+      "flagged": 35,
+      "recall": {
+       "k": 30,
+       "n": 39,
+       "rate": 0.769,
+       "wilson95": [
+        0.617,
+        0.874
+       ]
+      },
+      "precision": {
+       "k": 30,
+       "n": 35,
+       "rate": 0.857,
+       "wilson95": [
+        0.706,
+        0.937
+       ]
+      },
+      "kappa": 0.509
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 22,
+      "recall": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "precision": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "kappa": 0.489
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 21,
+      "recall": {
+       "k": 13,
+       "n": 21,
+       "rate": 0.619,
+       "wilson95": [
+        0.409,
+        0.792
+       ]
+      },
+      "precision": {
+       "k": 13,
+       "n": 21,
+       "rate": 0.619,
+       "wilson95": [
+        0.409,
+        0.792
+       ]
+      },
+      "kappa": 0.333
+     },
+     "Tibetan GPU": {
+      "n": 45,
+      "errors": 42,
+      "flagged": 41,
+      "recall": {
+       "k": 39,
+       "n": 42,
+       "rate": 0.929,
+       "wilson95": [
+        0.81,
+        0.975
+       ]
+      },
+      "precision": {
+       "k": 39,
+       "n": 41,
+       "rate": 0.951,
+       "wilson95": [
+        0.839,
+        0.987
+       ]
+      },
+      "kappa": 0.227
+     }
+    }
+   },
+   "any_change": {
+    "all": {
+     "n": 270,
+     "errors": 182,
+     "flagged": 178,
+     "recall": {
+      "k": 149,
+      "n": 182,
+      "rate": 0.819,
+      "wilson95": [
+       0.756,
+       0.868
+      ]
+     },
+     "precision": {
+      "k": 149,
+      "n": 178,
+      "rate": 0.837,
+      "wilson95": [
+       0.776,
+       0.884
+      ]
+     },
+     "kappa": 0.483
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 86,
+      "errors": 58,
+      "flagged": 57,
+      "recall": {
+       "k": 46,
+       "n": 58,
+       "rate": 0.793,
+       "wilson95": [
+        0.672,
+        0.877
+       ]
+      },
+      "precision": {
+       "k": 46,
+       "n": 57,
+       "rate": 0.807,
+       "wilson95": [
+        0.687,
+        0.889
+       ]
+      },
+      "kappa": 0.397
+     },
+     "Gemini reads": {
+      "n": 60,
+      "errors": 39,
+      "flagged": 36,
+      "recall": {
+       "k": 31,
+       "n": 39,
+       "rate": 0.795,
+       "wilson95": [
+        0.645,
+        0.892
+       ]
+      },
+      "precision": {
+       "k": 31,
+       "n": 36,
+       "rate": 0.861,
+       "wilson95": [
+        0.713,
+        0.939
+       ]
+      },
+      "kappa": 0.539
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 22,
+      "recall": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "precision": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "kappa": 0.489
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 22,
+      "recall": {
+       "k": 14,
+       "n": 21,
+       "rate": 0.667,
+       "wilson95": [
+        0.454,
+        0.828
+       ]
+      },
+      "precision": {
+       "k": 14,
+       "n": 22,
+       "rate": 0.636,
+       "wilson95": [
+        0.43,
+        0.803
+       ]
+      },
+      "kappa": 0.379
+     },
+     "Tibetan GPU": {
+      "n": 45,
+      "errors": 42,
+      "flagged": 41,
+      "recall": {
+       "k": 39,
+       "n": 42,
+       "rate": 0.929,
+       "wilson95": [
+        0.81,
+        0.975
+       ]
+      },
+      "precision": {
+       "k": 39,
+       "n": 41,
+       "rate": 0.951,
+       "wilson95": [
+        0.839,
+        0.987
+       ]
+      },
+      "kappa": 0.227
+     }
+    }
+   },
+   "auc": {
+    "all": 0.782,
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": 0.72,
+     "Gemini reads": 0.84,
+     "Hebrew, Arabic": 0.73,
+     "Latin, Italian GPU>GEM": 0.707,
+     "Tibetan GPU": 0.933
+    }
+   },
+   "score_quantiles": {
+    "0.25": 0,
+    "0.5": 1.21,
+    "0.75": 5.15,
+    "0.9": 11.6
+   }
+  },
+  "R": {
+   "n": 267,
+   "missing": 3,
+   "threshold": {
+    "primary": {
+     "t": 0.5524861878453039,
+     "rec": 0.9891304347826086,
+     "prec": 0.7711864406779662,
+     "rule": "max recall at precision >= 0.70"
+    },
+    "reverse": {
+     "t": 0.5747126436781609,
+     "rec": 1,
+     "prec": 0.7096774193548387,
+     "rule": "max recall at precision >= 0.70"
+    }
+   },
+   "held_out": {
+    "all": {
+     "n": 134,
+     "errors": 88,
+     "flagged": 124,
+     "recall": {
+      "k": 88,
+      "n": 88,
+      "rate": 1,
+      "wilson95": [
+       0.958,
+       1
+      ]
+     },
+     "precision": {
+      "k": 88,
+      "n": 124,
+      "rate": 0.71,
+      "wilson95": [
+       0.624,
+       0.782
+      ]
+     },
+     "kappa": 0.267
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 32,
+      "flagged": 41,
+      "recall": {
+       "k": 32,
+       "n": 32,
+       "rate": 1,
+       "wilson95": [
+        0.893,
+        1
+       ]
+      },
+      "precision": {
+       "k": 32,
+       "n": 41,
+       "rate": 0.78,
+       "wilson95": [
+        0.633,
+        0.88
+       ]
+      },
+      "kappa": 0.249
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 18,
+      "flagged": 28,
+      "recall": {
+       "k": 18,
+       "n": 18,
+       "rate": 1,
+       "wilson95": [
+        0.824,
+        1
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 28,
+       "rate": 0.643,
+       "wilson95": [
+        0.458,
+        0.793
+       ]
+      },
+      "kappa": 0.194
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 10,
+      "flagged": 14,
+      "recall": {
+       "k": 10,
+       "n": 10,
+       "rate": 1,
+       "wilson95": [
+        0.722,
+        1
+       ]
+      },
+      "precision": {
+       "k": 10,
+       "n": 14,
+       "rate": 0.714,
+       "wilson95": [
+        0.454,
+        0.883
+       ]
+      },
+      "kappa": 0.25
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 24,
+      "errors": 9,
+      "flagged": 19,
+      "recall": {
+       "k": 9,
+       "n": 9,
+       "rate": 1,
+       "wilson95": [
+        0.701,
+        1
+       ]
+      },
+      "precision": {
+       "k": 9,
+       "n": 19,
+       "rate": 0.474,
+       "wilson95": [
+        0.273,
+        0.683
+       ]
+      },
+      "kappa": 0.273
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 19,
+      "flagged": 22,
+      "recall": {
+       "k": 19,
+       "n": 19,
+       "rate": 1,
+       "wilson95": [
+        0.832,
+        1
+       ]
+      },
+      "precision": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "kappa": 0
+     }
+    }
+   },
+   "held_out_reverse": {
+    "all": {
+     "n": 133,
+     "errors": 92,
+     "flagged": 117,
+     "recall": {
+      "k": 90,
+      "n": 92,
+      "rate": 0.978,
+      "wilson95": [
+       0.924,
+       0.994
+      ]
+     },
+     "precision": {
+      "k": 90,
+      "n": 117,
+      "rate": 0.769,
+      "wilson95": [
+       0.685,
+       0.836
+      ]
+     },
+     "kappa": 0.385
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 42,
+      "errors": 26,
+      "flagged": 37,
+      "recall": {
+       "k": 26,
+       "n": 26,
+       "rate": 1,
+       "wilson95": [
+        0.871,
+        1
+       ]
+      },
+      "precision": {
+       "k": 26,
+       "n": 37,
+       "rate": 0.703,
+       "wilson95": [
+        0.542,
+        0.825
+       ]
+      },
+      "kappa": 0.36
+     },
+     "Gemini reads": {
+      "n": 29,
+      "errors": 20,
+      "flagged": 23,
+      "recall": {
+       "k": 18,
+       "n": 20,
+       "rate": 0.9,
+       "wilson95": [
+        0.699,
+        0.972
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 23,
+       "rate": 0.783,
+       "wilson95": [
+        0.581,
+        0.903
+       ]
+      },
+      "kappa": 0.379
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 12,
+      "flagged": 14,
+      "recall": {
+       "k": 12,
+       "n": 12,
+       "rate": 1,
+       "wilson95": [
+        0.758,
+        1
+       ]
+      },
+      "precision": {
+       "k": 12,
+       "n": 14,
+       "rate": 0.857,
+       "wilson95": [
+        0.601,
+        0.96
+       ]
+      },
+      "kappa": 0.444
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 25,
+      "errors": 12,
+      "flagged": 21,
+      "recall": {
+       "k": 12,
+       "n": 12,
+       "rate": 1,
+       "wilson95": [
+        0.758,
+        1
+       ]
+      },
+      "precision": {
+       "k": 12,
+       "n": 21,
+       "rate": 0.571,
+       "wilson95": [
+        0.365,
+        0.755
+       ]
+      },
+      "kappa": 0.299
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 22,
+      "flagged": 22,
+      "recall": {
+       "k": 22,
+       "n": 22,
+       "rate": 1,
+       "wilson95": [
+        0.851,
+        1
+       ]
+      },
+      "precision": {
+       "k": 22,
+       "n": 22,
+       "rate": 1,
+       "wilson95": [
+        0.851,
+        1
+       ]
+      },
+      "kappa": null
+     }
+    }
+   },
+   "all_at_primary": {
+    "all": {
+     "n": 267,
+     "errors": 180,
+     "flagged": 242,
+     "recall": {
+      "k": 179,
+      "n": 180,
+      "rate": 0.994,
+      "wilson95": [
+       0.969,
+       0.999
+      ]
+     },
+     "precision": {
+      "k": 179,
+      "n": 242,
+      "rate": 0.74,
+      "wilson95": [
+       0.681,
+       0.791
+      ]
+     },
+     "kappa": 0.331
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 85,
+      "errors": 58,
+      "flagged": 78,
+      "recall": {
+       "k": 58,
+       "n": 58,
+       "rate": 1,
+       "wilson95": [
+        0.938,
+        1
+       ]
+      },
+      "precision": {
+       "k": 58,
+       "n": 78,
+       "rate": 0.744,
+       "wilson95": [
+        0.637,
+        0.827
+       ]
+      },
+      "kappa": 0.323
+     },
+     "Gemini reads": {
+      "n": 59,
+      "errors": 38,
+      "flagged": 52,
+      "recall": {
+       "k": 37,
+       "n": 38,
+       "rate": 0.974,
+       "wilson95": [
+        0.865,
+        0.995
+       ]
+      },
+      "precision": {
+       "k": 37,
+       "n": 52,
+       "rate": 0.712,
+       "wilson95": [
+        0.577,
+        0.817
+       ]
+      },
+      "kappa": 0.305
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 28,
+      "recall": {
+       "k": 22,
+       "n": 22,
+       "rate": 1,
+       "wilson95": [
+        0.851,
+        1
+       ]
+      },
+      "precision": {
+       "k": 22,
+       "n": 28,
+       "rate": 0.786,
+       "wilson95": [
+        0.605,
+        0.898
+       ]
+      },
+      "kappa": 0.328
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 40,
+      "recall": {
+       "k": 21,
+       "n": 21,
+       "rate": 1,
+       "wilson95": [
+        0.845,
+        1
+       ]
+      },
+      "precision": {
+       "k": 21,
+       "n": 40,
+       "rate": 0.525,
+       "wilson95": [
+        0.375,
+        0.671
+       ]
+      },
+      "kappa": 0.289
+     },
+     "Tibetan GPU": {
+      "n": 44,
+      "errors": 41,
+      "flagged": 44,
+      "recall": {
+       "k": 41,
+       "n": 41,
+       "rate": 1,
+       "wilson95": [
+        0.914,
+        1
+       ]
+      },
+      "precision": {
+       "k": 41,
+       "n": 44,
+       "rate": 0.932,
+       "wilson95": [
+        0.818,
+        0.977
+       ]
+      },
+      "kappa": 0
+     }
+    }
+   },
+   "any_change": {
+    "all": {
+     "n": 267,
+     "errors": 180,
+     "flagged": 245,
+     "recall": {
+      "k": 179,
+      "n": 180,
+      "rate": 0.994,
+      "wilson95": [
+       0.969,
+       0.999
+      ]
+     },
+     "precision": {
+      "k": 179,
+      "n": 245,
+      "rate": 0.731,
+      "wilson95": [
+       0.672,
+       0.782
+      ]
+     },
+     "kappa": 0.292
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 85,
+      "errors": 58,
+      "flagged": 78,
+      "recall": {
+       "k": 58,
+       "n": 58,
+       "rate": 1,
+       "wilson95": [
+        0.938,
+        1
+       ]
+      },
+      "precision": {
+       "k": 58,
+       "n": 78,
+       "rate": 0.744,
+       "wilson95": [
+        0.637,
+        0.827
+       ]
+      },
+      "kappa": 0.323
+     },
+     "Gemini reads": {
+      "n": 59,
+      "errors": 38,
+      "flagged": 54,
+      "recall": {
+       "k": 37,
+       "n": 38,
+       "rate": 0.974,
+       "wilson95": [
+        0.865,
+        0.995
+       ]
+      },
+      "precision": {
+       "k": 37,
+       "n": 54,
+       "rate": 0.685,
+       "wilson95": [
+        0.553,
+        0.793
+       ]
+      },
+      "kappa": 0.198
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 28,
+      "recall": {
+       "k": 22,
+       "n": 22,
+       "rate": 1,
+       "wilson95": [
+        0.851,
+        1
+       ]
+      },
+      "precision": {
+       "k": 22,
+       "n": 28,
+       "rate": 0.786,
+       "wilson95": [
+        0.605,
+        0.898
+       ]
+      },
+      "kappa": 0.328
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 41,
+      "recall": {
+       "k": 21,
+       "n": 21,
+       "rate": 1,
+       "wilson95": [
+        0.845,
+        1
+       ]
+      },
+      "precision": {
+       "k": 21,
+       "n": 41,
+       "rate": 0.512,
+       "wilson95": [
+        0.365,
+        0.657
+       ]
+      },
+      "kappa": 0.255
+     },
+     "Tibetan GPU": {
+      "n": 44,
+      "errors": 41,
+      "flagged": 44,
+      "recall": {
+       "k": 41,
+       "n": 41,
+       "rate": 1,
+       "wilson95": [
+        0.914,
+        1
+       ]
+      },
+      "precision": {
+       "k": 41,
+       "n": 44,
+       "rate": 0.932,
+       "wilson95": [
+        0.818,
+        0.977
+       ]
+      },
+      "kappa": 0
+     }
+    }
+   },
+   "auc": {
+    "all": 0.814,
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": 0.834,
+     "Gemini reads": 0.703,
+     "Hebrew, Arabic": 0.898,
+     "Latin, Italian GPU>GEM": 0.736,
+     "Tibetan GPU": 0.573
+    }
+   },
+   "score_quantiles": {
+    "0.25": 2.38,
+    "0.5": 8.74,
+    "0.75": 37.07,
+    "0.9": 90.63
+   }
+  },
+  "S": {
+   "n": 270,
+   "all": {
+    "all": {
+     "n": 270,
+     "errors": 182,
+     "flagged": 178,
+     "recall": {
+      "k": 169,
+      "n": 182,
+      "rate": 0.929,
+      "wilson95": [
+       0.882,
+       0.958
+      ]
+     },
+     "precision": {
+      "k": 169,
+      "n": 178,
+      "rate": 0.949,
+      "wilson95": [
+       0.907,
+       0.973
+      ]
+     },
+     "kappa": 0.817
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 86,
+      "errors": 58,
+      "flagged": 57,
+      "recall": {
+       "k": 55,
+       "n": 58,
+       "rate": 0.948,
+       "wilson95": [
+        0.859,
+        0.982
+       ]
+      },
+      "precision": {
+       "k": 55,
+       "n": 57,
+       "rate": 0.965,
+       "wilson95": [
+        0.881,
+        0.99
+       ]
+      },
+      "kappa": 0.869
+     },
+     "Gemini reads": {
+      "n": 60,
+      "errors": 39,
+      "flagged": 36,
+      "recall": {
+       "k": 35,
+       "n": 39,
+       "rate": 0.897,
+       "wilson95": [
+        0.764,
+        0.959
+       ]
+      },
+      "precision": {
+       "k": 35,
+       "n": 36,
+       "rate": 0.972,
+       "wilson95": [
+        0.858,
+        0.995
+       ]
+      },
+      "kappa": 0.823
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 23,
+      "recall": {
+       "k": 21,
+       "n": 22,
+       "rate": 0.955,
+       "wilson95": [
+        0.782,
+        0.992
+       ]
+      },
+      "precision": {
+       "k": 21,
+       "n": 23,
+       "rate": 0.913,
+       "wilson95": [
+        0.732,
+        0.976
+       ]
+      },
+      "kappa": 0.734
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 20,
+      "recall": {
+       "k": 19,
+       "n": 21,
+       "rate": 0.905,
+       "wilson95": [
+        0.711,
+        0.973
+       ]
+      },
+      "precision": {
+       "k": 19,
+       "n": 20,
+       "rate": 0.95,
+       "wilson95": [
+        0.764,
+        0.991
+       ]
+      },
+      "kappa": 0.874
+     },
+     "Tibetan GPU": {
+      "n": 45,
+      "errors": 42,
+      "flagged": 42,
+      "recall": {
+       "k": 39,
+       "n": 42,
+       "rate": 0.929,
+       "wilson95": [
+        0.81,
+        0.975
+       ]
+      },
+      "precision": {
+       "k": 39,
+       "n": 42,
+       "rate": 0.929,
+       "wilson95": [
+        0.81,
+        0.975
+       ]
+      },
+      "kappa": -0.071
+     }
+    }
+   },
+   "held_out": {
+    "all": {
+     "n": 134,
+     "errors": 88,
+     "flagged": 88,
+     "recall": {
+      "k": 82,
+      "n": 88,
+      "rate": 0.932,
+      "wilson95": [
+       0.859,
+       0.968
+      ]
+     },
+     "precision": {
+      "k": 82,
+      "n": 88,
+      "rate": 0.932,
+      "wilson95": [
+       0.859,
+       0.968
+      ]
+     },
+     "kappa": 0.801
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 32,
+      "flagged": 33,
+      "recall": {
+       "k": 32,
+       "n": 32,
+       "rate": 1,
+       "wilson95": [
+        0.893,
+        1
+       ]
+      },
+      "precision": {
+       "k": 32,
+       "n": 33,
+       "rate": 0.97,
+       "wilson95": [
+        0.847,
+        0.995
+       ]
+      },
+      "kappa": 0.937
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 18,
+      "flagged": 15,
+      "recall": {
+       "k": 15,
+       "n": 18,
+       "rate": 0.833,
+       "wilson95": [
+        0.608,
+        0.942
+       ]
+      },
+      "precision": {
+       "k": 15,
+       "n": 15,
+       "rate": 1,
+       "wilson95": [
+        0.796,
+        1
+       ]
+      },
+      "kappa": 0.8
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 10,
+      "flagged": 11,
+      "recall": {
+       "k": 10,
+       "n": 10,
+       "rate": 1,
+       "wilson95": [
+        0.722,
+        1
+       ]
+      },
+      "precision": {
+       "k": 10,
+       "n": 11,
+       "rate": 0.909,
+       "wilson95": [
+        0.623,
+        0.984
+       ]
+      },
+      "kappa": 0.842
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 24,
+      "errors": 9,
+      "flagged": 8,
+      "recall": {
+       "k": 7,
+       "n": 9,
+       "rate": 0.778,
+       "wilson95": [
+        0.453,
+        0.937
+       ]
+      },
+      "precision": {
+       "k": 7,
+       "n": 8,
+       "rate": 0.875,
+       "wilson95": [
+        0.529,
+        0.978
+       ]
+      },
+      "kappa": 0.727
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 19,
+      "flagged": 21,
+      "recall": {
+       "k": 18,
+       "n": 19,
+       "rate": 0.947,
+       "wilson95": [
+        0.754,
+        0.991
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 21,
+       "rate": 0.857,
+       "wilson95": [
+        0.654,
+        0.95
+       ]
+      },
+      "kappa": -0.073
+     }
+    }
+   }
+  },
+  "opus": {
+   "n": 270,
+   "all": {
+    "all": {
+     "n": 270,
+     "errors": 182,
+     "flagged": 112,
+     "recall": {
+      "k": 111,
+      "n": 182,
+      "rate": 0.61,
+      "wilson95": [
+       0.537,
+       0.678
+      ]
+     },
+     "precision": {
+      "k": 111,
+      "n": 112,
+      "rate": 0.991,
+      "wilson95": [
+       0.951,
+       0.998
+      ]
+     },
+     "kappa": 0.497
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 86,
+      "errors": 58,
+      "flagged": 45,
+      "recall": {
+       "k": 45,
+       "n": 58,
+       "rate": 0.776,
+       "wilson95": [
+        0.653,
+        0.864
+       ]
+      },
+      "precision": {
+       "k": 45,
+       "n": 45,
+       "rate": 1,
+       "wilson95": [
+        0.921,
+        1
+       ]
+      },
+      "kappa": 0.693
+     },
+     "Gemini reads": {
+      "n": 60,
+      "errors": 39,
+      "flagged": 24,
+      "recall": {
+       "k": 24,
+       "n": 39,
+       "rate": 0.615,
+       "wilson95": [
+        0.459,
+        0.751
+       ]
+      },
+      "precision": {
+       "k": 24,
+       "n": 24,
+       "rate": 1,
+       "wilson95": [
+        0.862,
+        1
+       ]
+      },
+      "kappa": 0.528
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 18,
+      "recall": {
+       "k": 18,
+       "n": 22,
+       "rate": 0.818,
+       "wilson95": [
+        0.615,
+        0.927
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 18,
+       "rate": 1,
+       "wilson95": [
+        0.824,
+        1
+       ]
+      },
+      "kappa": 0.706
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 6,
+      "recall": {
+       "k": 6,
+       "n": 21,
+       "rate": 0.286,
+       "wilson95": [
+        0.138,
+        0.5
+       ]
+      },
+      "precision": {
+       "k": 6,
+       "n": 6,
+       "rate": 1,
+       "wilson95": [
+        0.61,
+        1
+       ]
+      },
+      "kappa": 0.314
+     },
+     "Tibetan GPU": {
+      "n": 45,
+      "errors": 42,
+      "flagged": 19,
+      "recall": {
+       "k": 18,
+       "n": 42,
+       "rate": 0.429,
+       "wilson95": [
+        0.291,
+        0.578
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 19,
+       "rate": 0.947,
+       "wilson95": [
+        0.754,
+        0.991
+       ]
+      },
+      "kappa": 0.021
+     }
+    }
+   },
+   "held_out": {
+    "all": {
+     "n": 134,
+     "errors": 88,
+     "flagged": 57,
+     "recall": {
+      "k": 56,
+      "n": 88,
+      "rate": 0.636,
+      "wilson95": [
+       0.532,
+       0.729
+      ]
+     },
+     "precision": {
+      "k": 56,
+      "n": 57,
+      "rate": 0.982,
+      "wilson95": [
+       0.907,
+       0.997
+      ]
+     },
+     "kappa": 0.529
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 32,
+      "flagged": 28,
+      "recall": {
+       "k": 28,
+       "n": 32,
+       "rate": 0.875,
+       "wilson95": [
+        0.719,
+        0.95
+       ]
+      },
+      "precision": {
+       "k": 28,
+       "n": 28,
+       "rate": 1,
+       "wilson95": [
+        0.879,
+        1
+       ]
+      },
+      "kappa": 0.782
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 18,
+      "flagged": 10,
+      "recall": {
+       "k": 10,
+       "n": 18,
+       "rate": 0.556,
+       "wilson95": [
+        0.337,
+        0.754
+       ]
+      },
+      "precision": {
+       "k": 10,
+       "n": 10,
+       "rate": 1,
+       "wilson95": [
+        0.722,
+        1
+       ]
+      },
+      "kappa": 0.5
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 10,
+      "flagged": 8,
+      "recall": {
+       "k": 8,
+       "n": 10,
+       "rate": 0.8,
+       "wilson95": [
+        0.49,
+        0.943
+       ]
+      },
+      "precision": {
+       "k": 8,
+       "n": 8,
+       "rate": 1,
+       "wilson95": [
+        0.676,
+        1
+       ]
+      },
+      "kappa": 0.727
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 24,
+      "errors": 9,
+      "flagged": 1,
+      "recall": {
+       "k": 1,
+       "n": 9,
+       "rate": 0.111,
+       "wilson95": [
+        0.02,
+        0.435
+       ]
+      },
+      "precision": {
+       "k": 1,
+       "n": 1,
+       "rate": 1,
+       "wilson95": [
+        0.207,
+        1
+       ]
+      },
+      "kappa": 0.135
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 19,
+      "flagged": 10,
+      "recall": {
+       "k": 9,
+       "n": 19,
+       "rate": 0.474,
+       "wilson95": [
+        0.273,
+        0.683
+       ]
+      },
+      "precision": {
+       "k": 9,
+       "n": 10,
+       "rate": 0.9,
+       "wilson95": [
+        0.596,
+        0.982
+       ]
+      },
+      "kappa": 0.062
+     }
+    }
+   }
+  },
+  "medium": {
+   "n": 270,
+   "all": {
+    "all": {
+     "n": 270,
+     "errors": 182,
+     "flagged": 182,
+     "recall": {
+      "k": 161,
+      "n": 182,
+      "rate": 0.885,
+      "wilson95": [
+       0.83,
+       0.923
+      ]
+     },
+     "precision": {
+      "k": 161,
+      "n": 182,
+      "rate": 0.885,
+      "wilson95": [
+       0.83,
+       0.923
+      ]
+     },
+     "kappa": 0.646
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 86,
+      "errors": 58,
+      "flagged": 61,
+      "recall": {
+       "k": 56,
+       "n": 58,
+       "rate": 0.966,
+       "wilson95": [
+        0.883,
+        0.99
+       ]
+      },
+      "precision": {
+       "k": 56,
+       "n": 61,
+       "rate": 0.918,
+       "wilson95": [
+        0.822,
+        0.964
+       ]
+      },
+      "kappa": 0.809
+     },
+     "Gemini reads": {
+      "n": 60,
+      "errors": 39,
+      "flagged": 37,
+      "recall": {
+       "k": 34,
+       "n": 39,
+       "rate": 0.872,
+       "wilson95": [
+        0.733,
+        0.944
+       ]
+      },
+      "precision": {
+       "k": 34,
+       "n": 37,
+       "rate": 0.919,
+       "wilson95": [
+        0.787,
+        0.972
+       ]
+      },
+      "kappa": 0.713
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 21,
+      "recall": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "precision": {
+       "k": 19,
+       "n": 21,
+       "rate": 0.905,
+       "wilson95": [
+        0.711,
+        0.973
+       ]
+      },
+      "kappa": 0.59
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 19,
+      "recall": {
+       "k": 11,
+       "n": 21,
+       "rate": 0.524,
+       "wilson95": [
+        0.324,
+        0.717
+       ]
+      },
+      "precision": {
+       "k": 11,
+       "n": 19,
+       "rate": 0.579,
+       "wilson95": [
+        0.363,
+        0.769
+       ]
+      },
+      "kappa": 0.241
+     },
+     "Tibetan GPU": {
+      "n": 45,
+      "errors": 42,
+      "flagged": 44,
+      "recall": {
+       "k": 41,
+       "n": 42,
+       "rate": 0.976,
+       "wilson95": [
+        0.877,
+        0.996
+       ]
+      },
+      "precision": {
+       "k": 41,
+       "n": 44,
+       "rate": 0.932,
+       "wilson95": [
+        0.818,
+        0.977
+       ]
+      },
+      "kappa": -0.034
+     }
+    }
+   },
+   "held_out": {
+    "all": {
+     "n": 134,
+     "errors": 88,
+     "flagged": 94,
+     "recall": {
+      "k": 78,
+      "n": 88,
+      "rate": 0.886,
+      "wilson95": [
+       0.803,
+       0.937
+      ]
+     },
+     "precision": {
+      "k": 78,
+      "n": 94,
+      "rate": 0.83,
+      "wilson95": [
+       0.741,
+       0.892
+      ]
+     },
+     "kappa": 0.556
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 32,
+      "flagged": 33,
+      "recall": {
+       "k": 32,
+       "n": 32,
+       "rate": 1,
+       "wilson95": [
+        0.893,
+        1
+       ]
+      },
+      "precision": {
+       "k": 32,
+       "n": 33,
+       "rate": 0.97,
+       "wilson95": [
+        0.847,
+        0.995
+       ]
+      },
+      "kappa": 0.937
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 18,
+      "flagged": 18,
+      "recall": {
+       "k": 15,
+       "n": 18,
+       "rate": 0.833,
+       "wilson95": [
+        0.608,
+        0.942
+       ]
+      },
+      "precision": {
+       "k": 15,
+       "n": 18,
+       "rate": 0.833,
+       "wilson95": [
+        0.608,
+        0.942
+       ]
+      },
+      "kappa": 0.583
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 10,
+      "flagged": 10,
+      "recall": {
+       "k": 9,
+       "n": 10,
+       "rate": 0.9,
+       "wilson95": [
+        0.596,
+        0.982
+       ]
+      },
+      "precision": {
+       "k": 9,
+       "n": 10,
+       "rate": 0.9,
+       "wilson95": [
+        0.596,
+        0.982
+       ]
+      },
+      "kappa": 0.7
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 24,
+      "errors": 9,
+      "flagged": 11,
+      "recall": {
+       "k": 3,
+       "n": 9,
+       "rate": 0.333,
+       "wilson95": [
+        0.121,
+        0.646
+       ]
+      },
+      "precision": {
+       "k": 3,
+       "n": 11,
+       "rate": 0.273,
+       "wilson95": [
+        0.097,
+        0.566
+       ]
+      },
+      "kappa": -0.191
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 19,
+      "flagged": 22,
+      "recall": {
+       "k": 19,
+       "n": 19,
+       "rate": 1,
+       "wilson95": [
+        0.832,
+        1
+       ]
+      },
+      "precision": {
+       "k": 19,
+       "n": 22,
+       "rate": 0.864,
+       "wilson95": [
+        0.667,
+        0.953
+       ]
+      },
+      "kappa": 0
+     }
+    }
+   }
+  },
+  "CS": {
+   "n": 270,
+   "held_out": {
+    "all": {
+     "n": 134,
+     "errors": 88,
+     "flagged": 67,
+     "recall": {
+      "k": 63,
+      "n": 88,
+      "rate": 0.716,
+      "wilson95": [
+       0.614,
+       0.8
+      ]
+     },
+     "precision": {
+      "k": 63,
+      "n": 67,
+      "rate": 0.94,
+      "wilson95": [
+       0.856,
+       0.977
+      ]
+     },
+     "kappa": 0.567
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 43,
+      "errors": 32,
+      "flagged": 26,
+      "recall": {
+       "k": 25,
+       "n": 32,
+       "rate": 0.781,
+       "wilson95": [
+        0.612,
+        0.89
+       ]
+      },
+      "precision": {
+       "k": 25,
+       "n": 26,
+       "rate": 0.962,
+       "wilson95": [
+        0.811,
+        0.993
+       ]
+      },
+      "kappa": 0.586
+     },
+     "Gemini reads": {
+      "n": 30,
+      "errors": 18,
+      "flagged": 11,
+      "recall": {
+       "k": 11,
+       "n": 18,
+       "rate": 0.611,
+       "wilson95": [
+        0.386,
+        0.797
+       ]
+      },
+      "precision": {
+       "k": 11,
+       "n": 11,
+       "rate": 1,
+       "wilson95": [
+        0.741,
+        1
+       ]
+      },
+      "kappa": 0.557
+     },
+     "Hebrew, Arabic": {
+      "n": 15,
+      "errors": 10,
+      "flagged": 10,
+      "recall": {
+       "k": 9,
+       "n": 10,
+       "rate": 0.9,
+       "wilson95": [
+        0.596,
+        0.982
+       ]
+      },
+      "precision": {
+       "k": 9,
+       "n": 10,
+       "rate": 0.9,
+       "wilson95": [
+        0.596,
+        0.982
+       ]
+      },
+      "kappa": 0.7
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 24,
+      "errors": 9,
+      "flagged": 1,
+      "recall": {
+       "k": 1,
+       "n": 9,
+       "rate": 0.111,
+       "wilson95": [
+        0.02,
+        0.435
+       ]
+      },
+      "precision": {
+       "k": 1,
+       "n": 1,
+       "rate": 1,
+       "wilson95": [
+        0.207,
+        1
+       ]
+      },
+      "kappa": 0.135
+     },
+     "Tibetan GPU": {
+      "n": 22,
+      "errors": 19,
+      "flagged": 19,
+      "recall": {
+       "k": 17,
+       "n": 19,
+       "rate": 0.895,
+       "wilson95": [
+        0.686,
+        0.971
+       ]
+      },
+      "precision": {
+       "k": 17,
+       "n": 19,
+       "rate": 0.895,
+       "wilson95": [
+        0.686,
+        0.971
+       ]
+      },
+      "kappa": 0.228
+     }
+    }
+   },
+   "all": {
+    "all": {
+     "n": 270,
+     "errors": 182,
+     "flagged": 143,
+     "recall": {
+      "k": 137,
+      "n": 182,
+      "rate": 0.753,
+      "wilson95": [
+       0.685,
+       0.81
+      ]
+     },
+     "precision": {
+      "k": 137,
+      "n": 143,
+      "rate": 0.958,
+      "wilson95": [
+       0.911,
+       0.981
+      ]
+     },
+     "kappa": 0.614
+    },
+    "by_stratum": {
+     "Chinese GPU, GPU>GEM": {
+      "n": 86,
+      "errors": 58,
+      "flagged": 47,
+      "recall": {
+       "k": 45,
+       "n": 58,
+       "rate": 0.776,
+       "wilson95": [
+        0.653,
+        0.864
+       ]
+      },
+      "precision": {
+       "k": 45,
+       "n": 47,
+       "rate": 0.957,
+       "wilson95": [
+        0.858,
+        0.988
+       ]
+      },
+      "kappa": 0.639
+     },
+     "Gemini reads": {
+      "n": 60,
+      "errors": 39,
+      "flagged": 27,
+      "recall": {
+       "k": 27,
+       "n": 39,
+       "rate": 0.692,
+       "wilson95": [
+        0.536,
+        0.814
+       ]
+      },
+      "precision": {
+       "k": 27,
+       "n": 27,
+       "rate": 1,
+       "wilson95": [
+        0.875,
+        1
+       ]
+      },
+      "kappa": 0.612
+     },
+     "Hebrew, Arabic": {
+      "n": 30,
+      "errors": 22,
+      "flagged": 20,
+      "recall": {
+       "k": 18,
+       "n": 22,
+       "rate": 0.818,
+       "wilson95": [
+        0.615,
+        0.927
+       ]
+      },
+      "precision": {
+       "k": 18,
+       "n": 20,
+       "rate": 0.9,
+       "wilson95": [
+        0.699,
+        0.972
+       ]
+      },
+      "kappa": 0.526
+     },
+     "Latin, Italian GPU>GEM": {
+      "n": 49,
+      "errors": 21,
+      "flagged": 11,
+      "recall": {
+       "k": 11,
+       "n": 21,
+       "rate": 0.524,
+       "wilson95": [
+        0.324,
+        0.717
+       ]
+      },
+      "precision": {
+       "k": 11,
+       "n": 11,
+       "rate": 1,
+       "wilson95": [
+        0.741,
+        1
+       ]
+      },
+      "kappa": 0.557
+     },
+     "Tibetan GPU": {
+      "n": 45,
+      "errors": 42,
+      "flagged": 38,
+      "recall": {
+       "k": 36,
+       "n": 42,
+       "rate": 0.857,
+       "wilson95": [
+        0.722,
+        0.933
+       ]
+      },
+      "precision": {
+       "k": 36,
+       "n": 38,
+       "rate": 0.947,
+       "wilson95": [
+        0.827,
+        0.985
+       ]
+      },
+      "kappa": 0.118
+     }
+    }
+   },
+   "c_flag_share": 0.652
+  }
+ },
+ "plants": {
+  "C": {
+   "caught": {
+    "k": 58,
+    "n": 60,
+    "rate": 0.967,
+    "wilson95": [
+     0.886,
+     0.991
+    ]
+   },
+   "named": {
+    "k": 56,
+    "n": 60,
+    "rate": 0.933,
+    "wilson95": [
+     0.841,
+     0.974
+    ]
+   },
+   "caught_any_change": {
+    "k": 59,
+    "n": 60,
+    "rate": 0.983,
+    "wilson95": [
+     0.911,
+     0.997
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 14,
+     "n": 15,
+     "rate": 0.933,
+     "wilson95": [
+      0.702,
+      0.988
+     ]
+    },
+    "C": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    },
+    "D": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    },
+    "E": {
+     "k": 14,
+     "n": 15,
+     "rate": 0.933,
+     "wilson95": [
+      0.702,
+      0.988
+     ]
+    }
+   },
+   "clean_flagged": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "wilson95": null
+   }
+  },
+  "R": {
+   "caught": {
+    "k": 130,
+    "n": 140,
+    "rate": 0.929,
+    "wilson95": [
+     0.874,
+     0.961
+    ]
+   },
+   "named": {
+    "k": 137,
+    "n": 140,
+    "rate": 0.979,
+    "wilson95": [
+     0.939,
+     0.993
+    ]
+   },
+   "caught_any_change": {
+    "k": 140,
+    "n": 140,
+    "rate": 1,
+    "wilson95": [
+     0.973,
+     1
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 30,
+     "n": 35,
+     "rate": 0.857,
+     "wilson95": [
+      0.706,
+      0.937
+     ]
+    },
+    "C": {
+     "k": 30,
+     "n": 35,
+     "rate": 0.857,
+     "wilson95": [
+      0.706,
+      0.937
+     ]
+    },
+    "D": {
+     "k": 35,
+     "n": 35,
+     "rate": 1,
+     "wilson95": [
+      0.901,
+      1
+     ]
+    },
+    "E": {
+     "k": 35,
+     "n": 35,
+     "rate": 1,
+     "wilson95": [
+      0.901,
+      1
+     ]
+    }
+   },
+   "clean_flagged": {
+    "k": 29,
+    "n": 35,
+    "rate": 0.829,
+    "wilson95": [
+     0.673,
+     0.919
+    ]
+   },
+   "clean_any_change": {
+    "k": 30,
+    "n": 35,
+    "rate": 0.857,
+    "wilson95": [
+     0.706,
+     0.937
+    ]
+   }
+  },
+  "R_on_C_subset": {
+   "caught": {
+    "k": 55,
+    "n": 58,
+    "rate": 0.948,
+    "wilson95": [
+     0.859,
+     0.982
+    ]
+   },
+   "named": {
+    "k": 56,
+    "n": 58,
+    "rate": 0.966,
+    "wilson95": [
+     0.883,
+     0.99
+    ]
+   },
+   "caught_any_change": {
+    "k": 58,
+    "n": 58,
+    "rate": 1,
+    "wilson95": [
+     0.938,
+     1
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 13,
+     "n": 14,
+     "rate": 0.929,
+     "wilson95": [
+      0.685,
+      0.987
+     ]
+    },
+    "C": {
+     "k": 13,
+     "n": 15,
+     "rate": 0.867,
+     "wilson95": [
+      0.621,
+      0.963
+     ]
+    },
+    "D": {
+     "k": 14,
+     "n": 14,
+     "rate": 1,
+     "wilson95": [
+      0.785,
+      1
+     ]
+    },
+    "E": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    }
+   },
+   "clean_flagged": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "wilson95": null
+   }
+  },
+  "S": {
+   "caught": {
+    "k": 60,
+    "n": 60,
+    "rate": 1,
+    "wilson95": [
+     0.94,
+     1
+    ]
+   },
+   "named": {
+    "k": 60,
+    "n": 60,
+    "rate": 1,
+    "wilson95": [
+     0.94,
+     1
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    },
+    "C": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    },
+    "D": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    },
+    "E": {
+     "k": 15,
+     "n": 15,
+     "rate": 1,
+     "wilson95": [
+      0.796,
+      1
+     ]
+    }
+   },
+   "clean_flagged": {
+    "k": 12,
+    "n": 36,
+    "rate": 0.333,
+    "wilson95": [
+     0.202,
+     0.497
+    ]
+   }
+  }
+ },
+ "strata": {},
+ "cost": {
+  "C": {
+   "calls": 331,
+   "ok": 330,
+   "tokens": {
+    "input": 27819,
+    "output": 2314,
+    "thinking": 1537,
+    "cache_read": 10022
+   },
+   "list_usd_mean": 0.030294,
+   "flash_low_judge_list_usd_mean": 0.013288,
+   "ratio_to_low": 2.28,
+   "usd_per_call": 0.001254,
+   "usd_per_page": 0.001258
+  },
+  "R": {
+   "calls": 332,
+   "ok": 302,
+   "tokens": {
+    "input": 24867,
+    "output": 3390,
+    "thinking": 2658,
+    "cache_read": 9889
+   },
+   "list_usd_mean": 0.032105,
+   "flash_low_judge_list_usd_mean": 0.013288,
+   "ratio_to_low": 2.416,
+   "usd_per_call": 0.001329,
+   "usd_per_page": 0.001461
+  },
+  "S": {
+   "calls": 366,
+   "ok": 366,
+   "list_usd_mean": 0.0718,
+   "opus_judge_list_usd_mean": 0.06777,
+   "ratio": 1.059,
+   "usd_per_call": 0.00233,
+   "usd_per_page": 0.00233
+  },
+  "CS": {
+   "usd_per_page": 0.00278,
+   "c_flag_share": 0.652
+  },
+  "opus_stored": {
+   "usd_per_page": 0.0022
+  },
+  "medium": {
+   "usd_per_page": 0.00248,
+   "note": "#7918 cost.json"
+  },
+  "adjudications": {
+   "calls": 250,
+   "parsed": 248
+  },
+  "all_books_237k": {
+   "C": 298,
+   "R": 346,
+   "S": 552,
+   "CS": 659
+  }
+ },
+ "fix": {
+  "spots_with_c": 1514,
+  "fixed": 622,
+  "introduced": 262,
+  "fixed_trivial": 350,
+  "introduced_r_agreed": 87,
+  "other": 222,
+  "unclear": 57,
+  "missing": 1,
+  "cut_spots": 2992,
+  "net": 360,
+  "by_stratum": {
+   "Gemini reads": {
+    "fixed": 112,
+    "introduced": 43
+   },
+   "Chinese GPU, GPU>GEM": {
+    "fixed": 146,
+    "introduced": 123
+   },
+   "Latin, Italian GPU>GEM": {
+    "fixed": 9,
+    "introduced": 19
+   },
+   "Tibetan GPU": {
+    "fixed": 310,
+    "introduced": 47
+   },
+   "Hebrew, Arabic": {
+    "fixed": 45,
+    "introduced": 30
+   }
+  },
+  "pages": {
+   "better": 66,
+   "worse": 42,
+   "mixed": 44,
+   "same": 23
+  }
+ },
+ "decision": {
+  "arms": {
+   "C": {
+    "plants": "58/60",
+    "plants_ok": false,
+    "recall": 0.773,
+    "recall_ok": false,
+    "precision": 0.81,
+    "precision_ok": true,
+    "usd_per_page": 0.001258,
+    "passes": false
+   },
+   "R": {
+    "plants": "130/140",
+    "plants_ok": false,
+    "recall": 1,
+    "recall_ok": true,
+    "precision": 0.71,
+    "precision_ok": true,
+    "usd_per_page": 0.001461,
+    "passes": false
+   },
+   "S": {
+    "plants": "60/60",
+    "plants_ok": true,
+    "recall": 0.929,
+    "recall_ok": true,
+    "precision": 0.949,
+    "precision_ok": true,
+    "usd_per_page": 0.00233,
+    "passes": true
+   },
+   "CS": {
+    "plants": "needs both C and S",
+    "plants_ok": false,
+    "recall": 0.716,
+    "recall_ok": false,
+    "precision": 0.94,
+    "precision_ok": true,
+    "usd_per_page": 0.00278,
+    "passes": false
+   }
+  },
+  "recommended": "S"
+ }
+}

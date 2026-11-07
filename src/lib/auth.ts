@@ -12,6 +12,7 @@ import { toUserId } from './user-id';
 import clientPromise from './mongodb-client';
 import { Resend } from 'resend';
 import { activatePendingMembership } from './memberships';
+import { membershipState } from './membership-status';
 import { recordAuthEvent } from './auth-events';
 import { resolvePostSignInRedirect } from './auth-redirect';
 
@@ -447,7 +448,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // Check ficino membership status on sign-in and session updates.
       // Kept for future per-tenant membership tiers — returns null gracefully on empty DB.
-      if (token.id && (user || trigger === 'update')) {
+      // Also re-read once a membership's end date passes: otherwise a token issued
+      // at sign-in would keep a lapsed member's benefits, and drop a renewed one's.
+      const membershipUntil = (token as { membershipUntil?: number | null }).membershipUntil;
+      const membershipLapsed = typeof membershipUntil === 'number' && membershipUntil <= Date.now();
+      if (token.id && (user || trigger === 'update' || membershipLapsed)) {
         try {
           const client = await clientPromise;
           const db = client.db(dbName);
@@ -458,15 +463,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // it): 3,850 of 3,854 users never saw the welcome interstitial.
           const dbUser = await db.collection('users').findOne(
             { _id: toUserId(token.id as string) as any },
-            { projection: { name: 1, image: 1, 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1, welcomedAt: 1 } }
+            { projection: { name: 1, image: 1, 'membership.active': 1, 'membership.expiresAt': 1, 'membership.joined': 1, 'membership.student.expiresAt': 1, welcomedAt: 1 } }
           );
-          if (dbUser?.membership?.active) {
-            token.membership = dbUser.membership.plan || 'ficino';
-          } else if (dbUser?.membership?.joined) {
-            token.membership = 'member';
-          } else {
-            token.membership = null;
-          }
+          const membership = membershipState(dbUser?.membership);
+          token.membership = membership.kind === 'none' ? null : membership.kind;
+          (token as { membershipUntil?: number | null }).membershipUntil = membership.until;
 
           // Pick up a name saved after sign-in (magic-link users have none until
           // they fill in /welcome) so the session greets them without a re-login.
