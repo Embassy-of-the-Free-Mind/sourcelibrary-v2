@@ -5,7 +5,9 @@
  */
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs, no types
-import { claimBook, groupBatches, MAX_CHARS, MAX_TURNS } from '../../scripts/workers/lib/enrich-agy-lane.mjs';
+import { claimBook, groupBatches, MAX_CHARS, MAX_TURNS, needsChapters, retryEmptyFilter } from '../../scripts/workers/lib/enrich-agy-lane.mjs';
+// @ts-expect-error — plain .mjs, no types
+import { gapFilter } from '../../scripts/workers/lib/enrich-batch-lane.mjs';
 
 type Row = Record<string, unknown> & { _id: string };
 /** The two operations claimBook uses, over an in-memory map, with Mongo's duplicate-key error. */
@@ -63,5 +65,25 @@ describe('enrich-agy-lane parts', () => {
   it('keeps the measured defaults: 600K characters a conversation, 8 turns', () => {
     expect(MAX_CHARS).toBe(600_000);
     expect(MAX_TURNS).toBe(8);
+  });
+});
+
+describe('enrich-agy-lane --retry-empty-chapters (#8333)', () => {
+  // Olaus Magnus as the lane's cursor projects it: chapters as a length, extraction stamped 2026-03-06.
+  const olaus = { id: '699065763dc2ed39a49f155d', pages_count: 915, chapters: 0, chapters_extracted_at: new Date('2026-03-06T19:10:59Z') };
+  it('asks again for a book whose extraction stored an empty list only when the retry is asked for', () => {
+    expect(needsChapters(olaus)).toBe(false);
+    expect(needsChapters(olaus, { retryEmpty: true })).toBe(true);
+  });
+  it('never re-asks a book that has chapters, or one too short to have any', () => {
+    expect(needsChapters({ ...olaus, chapters: 22 }, { retryEmpty: true })).toBe(false);
+    expect(needsChapters({ ...olaus, pages_count: 5 }, { retryEmpty: true })).toBe(false);
+  });
+  it('selects on an empty chapter list alone, keeping every other exclusion of the gap', () => {
+    const gap = gapFilter({});
+    const f = retryEmptyFilter(gap) as Record<string, unknown>;
+    expect(f.$or).toEqual([{ chapters: null }, { chapters: { $size: 0 } }]);
+    expect(JSON.stringify(f.$or)).not.toContain('summary');
+    for (const k of Object.keys(gap).filter(k => k !== '$or' && k !== 'pages_count')) expect(f[k]).toEqual((gap as Record<string, unknown>)[k]);
   });
 });
