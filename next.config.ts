@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
     // nothing to .next/cache/turbopack, so the reset never comes. Cost: the
     // ~40s a warm compile used to save. Re-measure before turning it back on.
     turbopackFileSystemCacheForBuild: false,
+    // Prerender workers, set by hand because the default follows the machine.
+    // Each worker queries production Atlas. On the 8-core Enhanced machine the
+    // default of 7 timed out the /works prerender and failed 1 build of 2,
+    // where the 3 workers of the 4-core machine hit the same timeouts and
+    // finished (#8364).
+    cpus: 3,
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
   // pdfkit must stay an unbundled runtime require: bundling it rewrites
