@@ -12,7 +12,9 @@ name: Release to production
 # When it runs:
 #   - 07:00, 13:00, 19:00 UTC (GitHub may drop a scheduled run under load, #5276;
 #     scripts/audit/vercel-prod-watch.mjs pages when production trails main by > 13 h)
-#   - on demand:  gh workflow run release.yml
+#   - by hand, for a reader-facing breakage or a failed scheduled release (#8372):
+#       gh workflow run release.yml -f reason="what breaks for readers until the next window"
+#     A wish to see a change sooner is what a preview is for.
 #   - on a push to main whose SUBJECT line (a squash merge: the PR title) carries [deploy-now] (a hand merge; merges by
 #     auto-merge.yml use GITHUB_TOKEN and never trigger push workflows)
 #
@@ -33,6 +35,10 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      reason:
+        description: 'What breaks for readers until the next scheduled release, or which scheduled release failed'
+        type: string
+        required: true
       force:
         description: 'Release and build even if no build input changed since the last release'
         type: boolean
@@ -58,7 +64,16 @@ jobs:
         env:
           EVENT: ${{ github.event_name }}
           MESSAGE: ${{ github.event.head_commit.message }}
+          REASON: ${{ inputs.reason }}
         run: |
+          # A build empties the page cache, so a hand release has to say why it cannot wait (#8372).
+          if [ "$EVENT" = workflow_dispatch ]; then
+            if [ -z "${REASON//[[:space:]]/}" ]; then
+              echo "::error::A hand release needs -f reason=\"...\". Otherwise it ships at the next 07:00, 13:00 or 19:00 UTC; a preview shows it sooner."
+              exit 1
+            fi
+            echo "Hand release: $REASON"
+          fi
           SUBJECT="${MESSAGE%%$'\n'*}"
           if [ "$EVENT" != push ] || [[ "$SUBJECT" == *"[deploy-now]"* ]]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "go=false" >> "$GITHUB_OUTPUT"; fi
 
