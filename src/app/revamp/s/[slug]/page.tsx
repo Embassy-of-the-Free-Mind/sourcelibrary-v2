@@ -15,6 +15,7 @@ interface Subj { id: string; label: string; level: number; parents: string[] }
 const n = (v: number) => v.toLocaleString('en-GB');
 const WRAP = 'max-w-[var(--container-wide)] mx-auto px-6 md:px-12';
 const H2 = 'font-serif text-3xl md:text-4xl text-primary leading-[1.05] tracking-tight';
+const H3 = 'text-lg font-semibold text-primary mb-3';
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -36,6 +37,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             {parent && <><span className="opacity-50">/</span><Link href={`/revamp/subjects#${parent.id}`} className="hover:text-white">{parent.label}</Link></>}
           </nav>
           <h1 className="font-serif text-[44px] md:text-[clamp(52px,5.6vw,84px)] leading-[1.02] tracking-[-0.03em]">{m.name}</h1>
+          {m.intro[0] && <p className="mt-4 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">{m.intro[0]}</p>}
           <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[13.5px] font-medium">
             {[`${n(m.stats.works)} works`, `${n(m.stats.images)} images`, about.length ? `${about.length} collections` : ''].filter(Boolean).map((t, i) => <span key={t} style={{ color: RAMP[i] }}>{t}</span>)}
           </div>
@@ -45,22 +47,26 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <SubjectSearch name={m.name} authors={[...new Set(m.books.map((b) => (b.author || '').split(/[;,|]/)[0].trim()).filter((a) => a && !/unknown|anonym/i.test(a)))].slice(0, 3)} />
       </div>
       {m.overview && <div className={`${WRAP} pb-8`}><OverviewBand o={m.overview} /></div>}
-      {m.intro[0] && <p className={`${WRAP} text-secondary leading-relaxed font-body max-w-3xl pb-8 !mx-0 md:!ml-[max(0px,calc((100vw-var(--container-wide))/2))]`}>{m.intro[0]}</p>}
-      {narrower.length > 0 && (
-        <section className={`${WRAP} pb-10`}>
-          <h2 className={`${H2} mb-4`}>Narrower subjects</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block bg-warm border border-border-light px-[18px] py-3.5 text-[15px] text-primary hover:border-primary transition-colors">{s.label}</Link>)}</div>
-        </section>
-      )}
-      {about.length > 0 && (
+      {(narrower.length > 0 || about.length > 0) && (
         <section className="bg-warm border-y border-border-light">
           <div className={`${WRAP} py-10 md:py-14`}>
-            <h2 className={`${H2} mb-6`}>Collections about this</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
-              {about.slice(0, 10).map((c) => (
-                <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="grid" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
-              ))}
-            </div>
+            <h2 className={`${H2} mb-6 md:mb-8`}>Inside {m.name}</h2>
+            {narrower.length > 0 && (
+              <div className={about.length > 0 ? 'mb-8 md:mb-10' : ''}>
+                <h3 className={H3}>Narrower subjects</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3">{narrower.map((s) => <Link key={s.id} href={`/revamp/subjects#${s.id}`} className="block bg-white border border-border-light px-[18px] py-3.5 text-[15px] text-primary hover:border-primary transition-colors">{s.label}</Link>)}</div>
+              </div>
+            )}
+            {about.length > 0 && (
+              <div>
+                <h3 className={H3}>Collections</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-5 gap-y-7">
+                  {about.slice(0, 10).map((c) => (
+                    <Link key={c.slug} href={c.href} className="block group"><Thumb item={c} mode="grid" /><span className="block mt-2.5 font-serif text-[17px] leading-snug text-primary group-hover:underline underline-offset-2">{c.name}</span></Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
