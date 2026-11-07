@@ -98,7 +98,8 @@ import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-e
 import { wilson } from './lib/agreement-stats.mjs';
 import { REASON as SIKU_REASON, MODEL as SIKU_MODEL } from '../batch/siku-translate-lane.mjs';
 import { verdictQuery, isLive } from './lib/judge-rows.mjs';
-import { loadCurrentTable, checkBinding, describeFinding, planBind, trFirstLanguage, translationDisagrees } from '../lib/router-binding.mjs';
+import { loadCurrentTable, checkBinding, describeFinding, planBind, trFirstLanguage, translationDisagrees, ocrCellNoLane } from '../lib/router-binding.mjs';
+import { FIRST_READ_CELL } from '../lib/ocr-routing.mjs';
 import { translateLaneForBook } from '../lib/translation-routing.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -919,7 +920,7 @@ async function autoBind({ OUT, dir, RT, ref, table, stamp, sha }) {
   const last = sh('git', ['-C', REPO(), 'log', '-1', '--format=%s', ref, '--', `${RT}/current.json`]).trim();
   if (/^Revert\b/.test(last)) { console.log(`auto-bind: paused, the last move of current.json is a revert (${last})`); return null; }
   const translations = JSON.parse(sh('git', ['-C', REPO(), 'show', `${ref}:scripts/lib/translation-routing-table.json`]));
-  const refuse = (row) => { const language = trFirstLanguage(row.id); return language && translationDisagrees(row, translateLaneForBook(translations, { language })); };
+  const refuse = (row) => { const language = trFirstLanguage(row.id); return ocrCellNoLane(row, Object.values(FIRST_READ_CELL)) || (language && translationDisagrees(row, translateLaneForBook(translations, { language }))); };
   const name = `${stamp}-nightly`, plan = planBind(loadCurrentTable(path.join(dir, RT)), table, { name, today: stamp, refuse });
   console.log(`auto-bind: ${plan.moved.length} move(s), ${plan.blocked.length} not auto-bound`);
   if (!plan.moved.length) return null;

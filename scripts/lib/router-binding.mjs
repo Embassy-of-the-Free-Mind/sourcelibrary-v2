@@ -225,6 +225,16 @@ export function translationDisagrees(row, lane) {
 export const trFirstLanguage = (id) => id.match(/^([a-z]+)-tr-first\//)?.[1].replace(/^./, (c) => c.toUpperCase()) ?? null;
 
 /**
+ * A first-read OCR cell bound to an Opus read (#8283): the reason, or null. getOcrModelForBook would answer Opus for the cell's books,
+ * and no lane reads an unread book on Opus (cli-ocr-lane has no CLI model for it, its first-read cohort skips it), so they would stop
+ * being read and nothing would fail. `bases` is FIRST_READ_CELL's values. A person can still pin it; the nightly does not.
+ */
+export function ocrCellNoLane(row, bases) {
+  const route = boundRoute(row), reads = route && routeReader(route);
+  return reads?.first_read && reads.reader === 'opus' && bases.includes(row.id.split('/')[0]) ? `no OCR lane reads an unread book on ${route}` : null;
+}
+
+/**
  * What the nightly rebuild does with a new build (#8283), pure. A cell whose bound route changes MOVES when a V3-tested rule
  * pick passes V3 (row.v3.passes; an annotated row has v3, null when the rule compared nothing), the judge gate did not hold it,
  * and `refuse(row)` (the routers cannot follow) gives no reason. A default, a held-over live route or a person's planned

@@ -10,10 +10,10 @@ import { describe, it, expect } from 'vitest';
 import { createRequire } from 'node:module';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { loadCurrentTable, boundRoute, routeReader, planBind, translationDisagrees, trFirstLanguage, checkBinding } from '../../scripts/lib/router-binding.mjs';
+import { loadCurrentTable, boundRoute, routeReader, planBind, translationDisagrees, trFirstLanguage, checkBinding, ocrCellNoLane } from '../../scripts/lib/router-binding.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { ocrRouteForBook, getOcrModelForBook, OCR_MODEL_AGY, OCR_MODEL_OPUS, OCR_ROUTING_TABLE } from '../../scripts/lib/ocr-routing.mjs';
+import { ocrRouteForBook, getOcrModelForBook, OCR_MODEL_AGY, OCR_MODEL_OPUS, OCR_ROUTING_TABLE, FIRST_READ_CELL } from '../../scripts/lib/ocr-routing.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { translateLaneForBook } from '../../scripts/lib/translation-routing.mjs';
@@ -185,6 +185,28 @@ describe('planBind: the nightly move', () => {
   it('a router that cannot follow refuses the cell', () => {
     const p = plan([row('a/print', 'y', { decision: 'switch', v3: { passes: true } })], () => 'the translation router runs z');
     expect(p.blocked[0].why).toBe('the translation router runs z');
+  });
+});
+
+describe('ocrCellNoLane: a first-read cell the lanes could not read', () => {
+  const bases = Object.values(FIRST_READ_CELL);
+  const why = (id: string, bound_route: string | null) => ocrCellNoLane({ id, bound_route }, bases);
+
+  it('refuses an Opus first read on a language cell, and the plan pins it', () => {
+    expect(why('italian-lite/print', 'opus-read')).toContain('opus-read');
+    expect(why('latin-blank/print', 'pero>opus')).toContain('pero>opus');
+    const current = { name: 'old', rows: new Map(), waivers: [], pointer: { table: 'old' } };
+    const row = { id: 'italian-lite/print', decision: 'switch', route: 'opus-read', bound_route: 'opus-read', routes: [], v3: { passes: true } };
+    const p = planBind(current, { rows: [row] }, { name: 'new', today: '2026-11-07', refuse: (r: any) => ocrCellNoLane(r, bases) });
+    expect(p.moved).toEqual([]);
+    expect(p.blocked[0].why).toContain('no OCR lane');
+  });
+
+  it('lets agy, a stored-text correction and a cell no book routes by pass', () => {
+    expect(why('italian-lite/print', 'agy-flash-low-written')).toBeNull();
+    expect(why('italian-lite/print', 'lite>opus')).toBeNull();
+    expect(why('zh-frame-6871/print', 'paddle>opus')).toBeNull();
+    expect(why('italian-lite/print', null)).toBeNull();
   });
 });
 

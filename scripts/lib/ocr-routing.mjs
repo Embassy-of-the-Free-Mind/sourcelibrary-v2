@@ -162,7 +162,7 @@ export const OCR_MODEL_OPUS = 'claude-opus-5-5';
 const READER_MODEL = Object.freeze({ agy: OCR_MODEL_AGY, opus: OCR_MODEL_OPUS });
 
 /** The router cell of a book's first language with a fresh read to give (a book's unread pages have nothing stored to correct). */
-const FIRST_READ_CELL = Object.freeze({
+export const FIRST_READ_CELL = Object.freeze({
   lat: 'latin-blank', deu: 'german-blank', fra: 'french-blank', eng: 'english-blank-pre1800', ita: 'italian-lite', spa: 'spanish-lite',
   grc: 'greek-lite', san: 'sanskrit-lite', ara: 'arabic-lite', zho: 'zh-lite', kor: 'korean-lite', rus: 'russian-lite',
   por: 'portuguese-lite', dan: 'danish-lite', hin: 'hindi-lite', enm: 'middle-english-lite', gmh: 'mhg-lite', fro: 'old-french-lite',
