@@ -27,6 +27,11 @@ describe('plainEngineWords', () => {
     expect(plainEngineWords('Opus 4.5 of 5')).toBe('The strongest model tested 4.5 of 5');
   });
 
+  it('says Claude Code whole, so no stray word is left behind', () => {
+    expect(plainEngineWords('read by Claude Code')).toBe('read by an AI coding assistant');
+    expect(plainEngineWords('A Claude Code session')).toBe('An AI coding assistant session');
+  });
+
   it('drops the name and keeps the noun', () => {
     expect(plainEngineWords('the paid Gemini API')).toBe('the paid API');
     expect(plainEngineWords('every other Gemini model')).toBe('every other model');

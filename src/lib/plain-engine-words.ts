@@ -80,6 +80,8 @@ const RULES: Array<[RegExp, string]> = [
   [/\b[Aa] (thinking )?Gemini\b/g, 'a $1general-model'],
   [new RegExp(String.raw`\bGemini${V}\b`, 'g'), 'the general model'],
   // Claude stays only as the reader's assistant.
+  [/\b([Aa]) Claude Code\b/g, '$1n AI coding assistant'],
+  [/\bClaude Code\b/g, 'an AI coding assistant'],
   [/\bClaude(?! use\b| or ChatGPT| & ChatGPT)/g, 'an AI reviewer'],
   [/(?<![-\w])lite(?![-\w])/g, 'the lightest model'],
 
