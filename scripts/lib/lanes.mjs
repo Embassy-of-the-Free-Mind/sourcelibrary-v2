@@ -288,6 +288,9 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/eval/quality-dashboard/build.mjs', reason: 'report: reads book and page counts, writes only its dashboard file and ops_reports' },
+  { file: 'scripts/eval/quality-dashboard/trends.mjs', reason: 'report: reads book and page counts, writes only its own daily trend rows; no book or page writes' },
+  { file: 'scripts/maintenance/rebuild-human-read-count-5048.mjs', reason: 'metadata: recomputes books.human_read_count from analytics_events, no step work (#5048); daily cron' },
   { file: 'scripts/maintenance/router-board-push.mjs', reason: 'report: reads the router table and repo crontabs, writes only ops_reports router-board:latest for /admin/router (#7913); the write libs come in through the lane constants router-binding.mjs imports from cli-ocr-lane.mjs' },
   { file: 'scripts/eval/lane-judge-sampler.mjs', reason: 'measurement: reads pages/books/page_revisions, writes only lane_judge_verdicts, lane_judge_runs and ops_reports (#7611); the write libs come in through the lane constants it imports from cli-ocr-lane.mjs' },
   { file: 'scripts/maintenance/backfill-printed-page-4291.mjs', reason: 'metadata: pages.printed_page fitted per book, no step work (#4291); daily cron --ocr-since=26h' },
@@ -342,6 +345,12 @@ export const CRONTAB_SNAPSHOTS = [
  * name the lane they drive. A new off-repo line that is neither here nor in a lane's `cron` fails the test.
  */
 export const OFF_REPO_CRON = [
+  { match: '/root/tengyur-cli-6361/watchdog.sh', reason: 'tends the #6361 Tengyur CLI driver; removes itself at DONE-STAGE2' },
+  { match: '/usr/local/bin/climits', reason: 'reads Claude subscription limits, no step work' },
+  { match: '/root/agy-quota/meter.py', reason: 'meter for the agy quota (#6331, #6375): passive, makes no model calls' },
+  { match: '/root/bin/box.sh', reason: 'job plumbing: pushes limits across the box mesh' },
+  { match: '/root/bin/sync-concepts.sh', reason: 'not book or page work: syncs the concept knowledge bases' },
+  { match: '/root/restic-transcripts.sh', reason: 'box backup of session transcripts, no step work' },
   { match: '/root/moltbook-', reason: 'not Source Library (moltbook)' },
   { match: '/root/restic-backup.sh', reason: 'box backup, no step work' },
   { match: '/root/bin/claude-job.sh', reason: 'job plumbing: starts or resumes headless jobs (a copy of scripts/workers/claude-job.sh); the work each job does is the lane it runs' },
@@ -351,13 +360,7 @@ export const OFF_REPO_CRON = [
   { match: '/root/bin/atlas-egress-meter.sh', reason: 'cost alarm: hand-placed copy of scripts/workers/atlas-egress-meter.sh, the cron fallback until the checkout has it; counts bytes from Atlas, no step work (#5189)' },
   { match: '/root/bin/disk-steward.sh', reason: 'disk: hand-placed copy of scripts/workers/disk-steward.sh, the cron fallback until the checkout has cold-r2.mjs (#6223)' },
   { match: '/data/vector-search/app/', reason: 'page-vector service on l7a (#6821): reads page_translations from Supabase, writes its own index; a deployed copy of scripts/workers/vector-search' },
-  { match: '/root/translate300/driver.mjs', reason: 'hand driver (#5467) of translate-chained; retired by R6 (#5825)' },
-  { match: '/root/translate-next/driver.mjs', reason: 'hand driver (#5467) of translate-chained; retired by R6 (#5825)' },
-  { match: '/root/claude-jobs/chain-translate-next.sh', reason: 'starts the translate-next-5467 hand driver; retired with it by R6 (#5825)' },
   { match: '/root/leaf-break/fullrun-4523-watchdog.sh', reason: 'watchdog of the #4523 Tibetan re-OCR driver (Yigdzin, specialist); remove when DONE-4523 exists' },
-  { match: '/root/tib-step2/tend.py', reason: 'tends the #5320 Tibetan step-2 job; remove when step 2 is done' },
-  { match: '/root/tibetan-reocr/relaunch.sh', reason: 'NOT A REGISTERED LANE YET: relaunches the Tibetan Yigdzin re-OCR reads on main (#4523, routing row `tibetan`); its pages are written by hand through scripts/maintenance/apply-reocr-verdicts.mjs after adjudication. Remove when the re-OCR is done, or register it if it becomes standing' },
-  { match: '/root/tibetan-eval/relaunch_reacquire.sh', reason: 'relaunches the British Library image re-acquisition (#4646): images, no model spend; remove when reacquire-done.txt is complete' },
   { match: '/root/bin/ocr-filler.sh', reason: 'queues ONE chunk of the first gated OCR route in scripts/gpu/ocr-filler-routes.tsv on the gex45 GPU queue when it is empty (#6871; replaced the SigLIP2 requeue 2026-10-28); an installed copy of scripts/gpu/ocr-filler.sh. Writes no page text itself: each route\'s own lane applies its reads (first route: paddle-zh-lane.mjs, #7546)' },
 ];
 
