@@ -1,0 +1,399 @@
+{
+ "generated_by": "scripts/eval/zh-siku-route-matrix-7263/matrix.mjs",
+ "provenance": "#7263 zh-siku-route-matrix: 60 Siku pages of the Gemini-read frame, one a book, reader x draft; PREREGISTRATION.md",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image; Opus judges Opus, Kanripo beside it",
+ "mapping": "wrong_text = a wrong_text defect; accept = the judge accepts",
+ "cells": {
+  "chinese-gemini-siku-matrix-7263": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "pages": 60,
+   "frame": "Siku stratum, Gemini-read",
+   "controls": {
+    "setA": [
+     {
+      "id": "wp-V4-6a3ce7950a0011cb4bc0a144-V4-6a3cc13fec254ff6cae0aafb",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3cc010f9474f825c16da57-V4-6a3c6b6139b4508b04e436af",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3ce7950a0011cb4bc0a144-V4-6a3cc13fec254ff6cae0aafb#retest",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3cc010f9474f825c16da57-V4-6a3c6b6139b4508b04e436af#retest",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3cc010f9474f825c16da57-V4-6a3c6b6139b4508b04e436af#matrix",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3ce7950a0011cb4bc0a144-V4-6a3cc13fec254ff6cae0aafb#matrix",
+      "accept": false,
+      "fidelity": 1
+     }
+    ],
+    "setB": [
+     {
+      "id": "wp-V4-6a3cbbc587ee3d48c89d1073-V4-6a3c78ea01fe4f593c20bf3c",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3c6776af3c49b59c5d38e0-V4-6a3c7a5801fe4f593c216997",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3c6776af3c49b59c5d38e0-V4-6a3c7a5801fe4f593c216997#matrix",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-V4-6a3cbbc587ee3d48c89d1073-V4-6a3c78ea01fe4f593c20bf3c#matrix",
+      "accept": false,
+      "fidelity": 1
+     }
+    ],
+    "print/one": [
+     {
+      "id": "wp-P-699249f2a2d53df4853c179d-P-6a0acab24d80f9c159497451#retest",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e787fd4a6785cfd60ce526-P-69de984e1b234a773e43842a#retest",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-699249f2a2d53df4853c179d-P-6a0acab24d80f9c159497451",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e787fd4a6785cfd60ce526-P-69de984e1b234a773e43842a",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-699249f2a2d53df4853c179d-P-6a0acab24d80f9c159497451#matrix",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e787fd4a6785cfd60ce526-P-69de984e1b234a773e43842a#matrix",
+      "accept": false,
+      "fidelity": 1
+     }
+    ],
+    "print/ten": [
+     {
+      "id": "wp-P-69e75e3fcc48e59ad74ec3f1-P-6a087ebab2a99026ccf70380",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e72c60a409200ea79f478f-P-69bd0b0bb01b17638a098a07#retest",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e72c60a409200ea79f478f-P-69bd0b0bb01b17638a098a07",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e75e3fcc48e59ad74ec3f1-P-6a087ebab2a99026ccf70380#retest",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e72c60a409200ea79f478f-P-69bd0b0bb01b17638a098a07#matrix",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "id": "wp-P-69e75e3fcc48e59ad74ec3f1-P-6a087ebab2a99026ccf70380#matrix",
+      "accept": false,
+      "fidelity": 1
+     }
+    ]
+   },
+   "routes": {
+    "gemini-stored": {
+     "n": 60,
+     "books": 60,
+     "accept": "21/60",
+     "wrong_text_pages": "31/60",
+     "severe_per_1k_chars": 19.08,
+     "classes": {
+      "O6": 116,
+      "O5": 64,
+      "O11": 31,
+      "O7": 20,
+      "O12": 18,
+      "O16": 15,
+      "E2": 13,
+      "O1": 10,
+      "O17": 8,
+      "O4": 6,
+      "O8": 2,
+      "O14": 1,
+      "O15": 1,
+      "O3": 1
+     }
+    },
+    "paddle-zh-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "33/60",
+     "wrong_text_pages": "19/60",
+     "severe_per_1k_chars": 9.19,
+     "classes": {
+      "O6": 56,
+      "O7": 39,
+      "O11": 38,
+      "O5": 21,
+      "E2": 10,
+      "O16": 6,
+      "O12": 5,
+      "O8": 4,
+      "O1": 3,
+      "I4": 2,
+      "O17": 2,
+      "O14": 1,
+      "O4": 1
+     }
+    },
+    "opus-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "58/60",
+     "wrong_text_pages": "1/60",
+     "severe_per_1k_chars": 0.45,
+     "classes": {
+      "O6": 5,
+      "O8": 4,
+      "O16": 2,
+      "O11": 2,
+      "E2": 1,
+      "O5": 1
+     }
+    },
+    "paddle>opus": {
+     "n": 60,
+     "books": 60,
+     "accept": "60/60",
+     "wrong_text_pages": "0/60",
+     "severe_per_1k_chars": 0.22,
+     "classes": {
+      "O6": 8,
+      "O11": 7,
+      "O16": 3,
+      "O12": 3,
+      "E2": 3,
+      "O7": 3,
+      "O17": 2,
+      "O4": 1,
+      "O8": 1
+     }
+    },
+    "gemini>opus": {
+     "n": 60,
+     "books": 60,
+     "accept": "55/60",
+     "wrong_text_pages": "1/60",
+     "severe_per_1k_chars": 0.68,
+     "classes": {
+      "O6": 9,
+      "O11": 8,
+      "O5": 5,
+      "O16": 4,
+      "O17": 3,
+      "E2": 2,
+      "O8": 2,
+      "O12": 2,
+      "O14": 1,
+      "O15": 1,
+      "O7": 1
+     }
+    },
+    "agy-flash-low-read": {
+     "n": 60,
+     "books": 60,
+     "accept": "17/60",
+     "wrong_text_pages": "32/60",
+     "severe_per_1k_chars": 15.39,
+     "classes": {
+      "O6": 109,
+      "O5": 35,
+      "O11": 22,
+      "E2": 17,
+      "O7": 16,
+      "O8": 10,
+      "O1": 6,
+      "O12": 5,
+      "O16": 4,
+      "O17": 3,
+      "D1": 2,
+      "O4": 2,
+      "O14": 1
+     }
+    },
+    "paddle>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "41/60",
+     "wrong_text_pages": "14/60",
+     "severe_per_1k_chars": 6.18,
+     "classes": {
+      "O5": 35,
+      "O6": 30,
+      "O11": 22,
+      "E2": 13,
+      "O7": 7,
+      "O8": 4,
+      "O17": 4,
+      "O12": 4,
+      "D1": 3,
+      "O16": 2,
+      "O14": 1,
+      "O1": 1
+     }
+    },
+    "gemini>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "24/60",
+     "wrong_text_pages": "25/60",
+     "severe_per_1k_chars": 12.84,
+     "classes": {
+      "O6": 89,
+      "O5": 36,
+      "O11": 26,
+      "O7": 15,
+      "O12": 12,
+      "E2": 10,
+      "O1": 8,
+      "O17": 7,
+      "O8": 7,
+      "O4": 5,
+      "O16": 5,
+      "O15": 2,
+      "D1": 1,
+      "I4": 1
+     }
+    }
+   }
+  },
+  "chinese-gemini-siku-matrix-7263-en": {
+   "task": "translation",
+   "lang": "Chinese",
+   "pages": 60,
+   "frame": "the same pages; the arm's text translated by agy 3.8 Flash low, one page a call",
+   "controls": {
+    "wrong_page": [
+     {
+      "arm": "tS",
+      "id": "g1ae1bc6fec",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "arm": "tP",
+      "id": "g058ca7dbd7",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "arm": "tF",
+      "id": "g1f82616b09",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "arm": "tPO",
+      "id": "g0b4243615e",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "arm": "tO",
+      "id": "g00f58f4713",
+      "accept": false,
+      "fidelity": 1
+     },
+     {
+      "arm": "tPFL",
+      "id": "g255bad6b38",
+      "accept": false,
+      "fidelity": 1
+     }
+    ],
+    "repeat_n": 6,
+    "repeat_accept_agree": 4,
+    "repeat_within_one": 6
+   },
+   "routes": {
+    "gemini-stored>agy-text@1": {
+     "n": 60,
+     "books": 60,
+     "accept": "22/60",
+     "wrong_text_pages": "30/60",
+     "major_per_1k_words": 11.95,
+     "kanripo_source_caused": 174
+    },
+    "paddle-zh-read>agy-text@1": {
+     "n": 60,
+     "books": 60,
+     "accept": "24/60",
+     "wrong_text_pages": "28/60",
+     "major_per_1k_words": 7.82,
+     "kanripo_source_caused": 64
+    },
+    "opus-read>agy-text@1": {
+     "n": 60,
+     "books": 60,
+     "accept": "39/60",
+     "wrong_text_pages": "8/60",
+     "major_per_1k_words": 3.25,
+     "kanripo_source_caused": 13
+    },
+    "paddle>opus>agy-text@1": {
+     "n": 60,
+     "books": 60,
+     "accept": "35/60",
+     "wrong_text_pages": "15/60",
+     "major_per_1k_words": 3.74,
+     "kanripo_source_caused": 7
+    },
+    "gemini>opus>agy-text@1": {
+     "n": 60,
+     "books": 60,
+     "accept": "41/60",
+     "wrong_text_pages": "11/60",
+     "major_per_1k_words": 3.31,
+     "kanripo_source_caused": 15
+    },
+    "paddle>agy-flash-low>agy-text@1": {
+     "n": 60,
+     "books": 60,
+     "accept": "28/60",
+     "wrong_text_pages": "17/60",
+     "major_per_1k_words": 5.43,
+     "kanripo_source_caused": 58
+    }
+   }
+  }
+ }
+}

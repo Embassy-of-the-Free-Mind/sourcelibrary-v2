@@ -20,6 +20,13 @@ describe('agy-tool-gate', () => {
     expect(decide('read_file', { Path: '/etc/passwd' })).toBe('deny');
     expect(decide('read_file', { Path: path.join(root, '..', 'x.jpg') })).toBe('deny');
   });
+  // correct.mjs --cli=agy counts a page as answered only if the model opened that page's image and draft.
+  it('logs the path of each call, for gateReads', () => {
+    const log = path.join(root, 'gate.jsonl');
+    const file = path.join(root, 'd01.txt');
+    execFileSync('python3', [GATE], { input: JSON.stringify({ toolCall: { name: 'read_file', args: { Path: file } } }), env: { ...process.env, AGY_GATE_ROOT: root, AGY_GATE_LOG: log } });
+    expect(JSON.parse(fs.readFileSync(log, 'utf8').trim())).toEqual({ tool: 'read_file', decision: 'allow', path: file });
+  });
   it('denies every other tool', () => {
     expect(decide('run_command', { CommandLine: 'ls' })).toBe('deny');
     expect(decide('write_to_file', { TargetFile: path.join(root, 'x') })).toBe('deny');

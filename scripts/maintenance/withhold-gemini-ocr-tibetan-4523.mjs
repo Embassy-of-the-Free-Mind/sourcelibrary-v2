@@ -49,6 +49,7 @@ const BY = 'scripts/maintenance/withhold-gemini-ocr-tibetan-4523.mjs';
 const HOLD = {
   reason: 'gemini-ocr-tibetan-4523', issue: 4523, source: SWEEP,
   release: 'Release when every page of this book withheld as gemini-ocr-tibetan-4523 has a specialist (Yigdzin) read that passed the #4523 write rule, or is marked unreadable on its own evidence, and its English is re-made from that read.',
+  release_when: { kind: 'test', ref: 'every withheld gemini-ocr-tibetan-4523 page has a Yigdzin read passing the #4523 write rule' },
 };
 const PROTECTED_MODELS = new Set(['gemini-3.8-flash-low']);
 

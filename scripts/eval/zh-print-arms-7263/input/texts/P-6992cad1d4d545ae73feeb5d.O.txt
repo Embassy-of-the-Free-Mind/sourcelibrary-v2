@@ -1,0 +1,15 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Chinese regular script (kaishu), in vertical columns reading right to left on a ruled scroll</warning>
+<meta>A half-cut column at the far left edge of the image is not transcribed. The black-and-white image shows a circular library stamp in the lower centre, set sideways to the text.</meta>
+
+樂離五欲。樂觀五陰如<unclear>怨</unclear>賊。樂觀四大如毒蛇。樂觀內入如空聚。樂隨護道意。樂饒益眾生。樂敬養師。樂廣行施。樂堅持戒。樂忍辱柔和。樂勤集善根。樂禪定不亂。樂離垢明慧。樂廣菩提心。樂降伏眾魔。樂斷諸煩惱。樂淨佛國土。樂成就相好故。脩諸功德。樂莊嚴道場。樂聞深法不畏。樂三脫門。不樂非時。樂近同學。樂於非同學中心無恚<unclear>㝵</unclear>。樂將護惡知識。樂近善知識。樂心喜清淨。樂脩無量道品之法。是為菩薩法樂。於是波旬告諸女言。我欲與汝俱還天宮。諸女言。以我等與此居士。有法樂。我等甚樂。不復樂於五欲樂也。魔言。居士可捨此女。一切所有施於彼者。是為菩薩。維摩詰言。我已捨矣。汝便將去。令一切眾生得法願具足。於是諸女問維摩詰言。我等云何止於魔宮。維摩詰言。諸姊。有法門。名無盡燈。汝等當學。無盡燈者。譬如一燈。然百千燈。冥者皆明。明終不盡。如是諸姊。夫一菩薩開導百千眾生。令發阿耨多羅三藐三菩提心。於其道意。亦不滅盡。隨所說法。而自增益。一切善法。是名無盡燈也。汝等雖住魔宮。以是無盡燈。令無數天子天女。發阿耨多羅三藐三菩提心者。為報佛恩。亦大饒益一切眾生。爾時。天女頭面禮維摩詰足。隨魔還宮。忽然不現。世尊。維摩詰有如是神力智慧辯才。故我不任詣彼問疾。
+
+佛告長者子善得。汝行詣維摩詰問疾。善德白佛言。世尊。我不堪任詣彼問疾。所以者何。憶念我昔。自於父舍。設大施會。供養一切沙門婆羅門及諸外道。貧窮下賤。孤獨乞人。期滿七日。時維摩詰。來入會中。謂我言。長者子。夫大施會。不當如汝所設。當為法施之會。何用是財施會為。我言。居士。何為法施之會。法施會者。無前無後。一時供養一切眾生。是名法施之會。曰。何謂也。謂以菩提起於慈心。以救眾生起大悲心。以持正法起於喜心。以攝智慧行於捨心。以攝慳貪起檀波羅蜜。以化犯戒起尸波羅蜜。以無我法起羼提波羅蜜。以離身心相起毗梨耶波羅蜜。以菩提相起禪波羅蜜。以一切智起般若波羅蜜。教化眾生而起於空。不捨有為法而起無相。示現受生而起無作。護持正法起方便力。以度眾生起四攝法。以敬事一切起除慢法。於身命財起三堅法。於六念中起思念法。於六和敬起質直心。正行善法起於淨命。心淨歡喜起近賢聖。不憎惡人起調伏心。以出家法起於深心。以如說行起於多聞。以無諍法起空閑處。趣向佛慧起於宴坐。解眾生縛起脩行地。以具相好及淨佛土起福德業。知一切眾生心念如應說法起
+
+<image-desc size="small" type="symbol" significance="low">Circular library stamp in the lower centre of the sheet, set sideways to the text, with a legend around the rim and an accession number in the centre.</image-desc>
+<insert><unclear>BIBLIOTHEQUE NATIONALE</unclear> <unclear>Don</unclear> 4502</insert>
+
+<vocab>維摩詰, 波旬, 無盡燈, 阿耨多羅三藐三菩提, 善德, 檀波羅蜜, 尸波羅蜜, 羼提波羅蜜, 毗梨耶波羅蜜, 禪波羅蜜, 般若波羅蜜, 法施之會</vocab>

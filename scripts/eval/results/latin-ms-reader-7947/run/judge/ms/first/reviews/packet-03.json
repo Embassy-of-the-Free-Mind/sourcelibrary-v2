@@ -1,0 +1,710 @@
+[
+ {
+  "book_id": "b03-k",
+  "slot": 1,
+  "title": "Homiliary",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 2,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ut <unclear>ae</unclear> <unclear>ris</unclear> naturam mundaret",
+      "image": "ut eri tis naturā mundaret",
+      "problem": "the scribe's 'eritis' replaced by the expected 'aeris' (flagged unclear)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<margin>Sermo CLV P.L. 39, col. 2047,3</margin>",
+      "image": "col. 2043,3 (modern pencil)",
+      "problem": "digit of modern note misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "fert annos",
+      "image": "fert annos (fere)",
+      "problem": "kept literally; fine",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "et de inuentis et inueniendis",
+      "image": "et de inuentis et inuenienda",
+      "problem": "silent normalisation",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<margin><unclear>lc</unclear></margin> placed mid-text",
+      "image": "tiny marginal pen marks",
+      "problem": "marginal scribble inserted between sentences",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta> asserts 'Text is from Augustine, Tractatus in Iohannem 63' — a correct identification, but not written on the page",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "quod <unclear>tacque</unclear> superbientibus",
+      "image": "quod eaq; sup̄bientib;",
+      "problem": "'eaque' misread (flagged unclear)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "praedicauerunt ... luxuriae ... caelesti",
+      "image": "pdicauerunt ... luxurie ... celesti",
+      "problem": "e-spellings classicised to ae",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The closest of the four readers to the leaves: all three pages are read in full with abbreviations correctly expanded, and the few doubtful spots are flagged as unclear rather than guessed. Its remaining slips are only spelling normalisation."
+ },
+ {
+  "book_id": "b03-m",
+  "slot": 2,
+  "title": "Homiliary",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 2,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "in altitudine crucifixi immolatur",
+      "image": "in altitudine crucis immolatur",
+      "problem": "crucis misread as crucifixi",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut et omnis natura mundaretur",
+      "image": "ut eri tis naturā mundaret",
+      "problem": "invented 'et omnis natura'",
+      "severity": "moderate",
+      "class": "O1"
+     },
+     {
+      "ocr": "non mortuum resuscitans. non marem uitiens. sed crucifixus",
+      "image": "nō mortuū resuscitans. non mari et uenti impans. nō demones eiciens. sed",
+      "problem": "'non mari et venti imperans' garbled and 'non demones eiciens' dropped",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "fumo araru et modo robustorum ceterorumque inquinamentorum",
+      "image": "fumo ararū et nidore bustorū cetterorūq; quo inquinamentorū",
+      "problem": "'nidore bustorum' misread, 'quo' dropped",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "quanta maior oratio",
+      "image": "quanta maior olatio (oblatio)",
+      "problem": "oblatio turned into oratio",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "precepit deus",
+      "image": "precepit dñs",
+      "problem": "dominus expanded as deus",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Durior enim lapidibus anima",
+      "image": "Duriorē enī lapidib; anima",
+      "problem": "case slip",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "sed dictum est nec clarificatus est filius hominis",
+      "image": "sed dictū ē nc̄ clarificatus ē (nunc)",
+      "problem": "'nunc' read as 'nec': 'it was said: now is glorified' becomes 'nor is glorified' — sense reversed (also 'non est dictum nec significata')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "sed petra significabat",
+      "image": "sed petra erat xp̄s",
+      "problem": "Augustine's point (petra ERAT Christus, not 'significabat') reversed; phrase copied from the previous clause",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Quid ait dies. cum exisset nox. dicit redemptor. nunc inquit",
+      "image": "Quid ait dies. cū exisset nox. qd ait redēptor. cū exisset uenditor. nunc inquit",
+      "problem": "'cum exisset venditor' dropped and 'quid ait' turned into 'dicit'",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "hoc enim traditurus",
+      "image": "hoc ē dñm traditurus",
+      "problem": "'dominum' (the object betrayed) dropped",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut tormentatur",
+      "image": "ut interimatur",
+      "problem": "invented non-word for 'interimatur'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "si hoc dies ille magister",
+      "image": "si hoc ds ille magister",
+      "problem": "'deus' misread as 'dies'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "cum zizania sunt attritis separatis iusta fulgebunt",
+      "image": "cū zizanis a triticis separatis iusti fulgebunt",
+      "problem": "phrase garbled (tares separated from wheat lost)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "uoluntate eius quum sit cum",
+      "image": "uoluntatē eius qui misit eum",
+      "problem": "'qui misit eum' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "non sicut nostram finem scilicet",
+      "image": "non sicut nr̄am in finē sc̄li",
+      "problem": "'in finem seculi' misread as 'finem scilicet'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "cis ut non grauet ecclesia",
+      "image": "eis ut non grauetur eccl'a",
+      "problem": "eis/cis, grauetur truncated",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ita qui passibus",
+      "image": "tāquā passib;",
+      "problem": "tamquam misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "aptis sanctis",
+      "image": "aplis scīs (apostolis)",
+      "problem": "apostolis misread as 'aptis'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "uim impendet",
+      "image": "iam impendet",
+      "problem": "iam misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "uirorum quippe non solent inseripturis",
+      "image": "uirorū quippe nōie solent inscripturis",
+      "problem": "'nomine' read as 'non': 'men are wont to figure the perfect' becomes 'are not wont' — sense reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "eorum que non scripta indicaffe incelus",
+      "image": "eorūq; nōia scripta indicasse incelis",
+      "problem": "'nomina' read as 'non': 'their names are written in heaven' becomes 'not written'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod ea que sapientibus abscondit",
+      "image": "quod eaq; sup̄bientib; abscondit",
+      "problem": "'superbientibus' replaced by the Gospel's 'sapientibus' (Mt 11:25)",
+      "severity": "moderate",
+      "class": "O3"
+     },
+     {
+      "ocr": "Fenum in quo discipuli turbam reficitur",
+      "image": "Foenū inquo discū bens turba reficitur",
+      "problem": "'discumbens turba' misread as 'discipuli turbam'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hominum quinque milia uirorum ... satiant",
+      "image": "Hi nimirū quinq; milib; uirorū ... satiauit",
+      "problem": "'Hi nimirum' and case/tense garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ab a reuelata ei parua. qua saluta acute",
+      "image": "tib; et reuelasti eā paruul[is] / quia saluti ac uite",
+      "problem": "cut-off top line and next line garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "pfectiones quinque figurari",
+      "image": "pfectiores quiq; figurari",
+      "problem": "perfectiores quique misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Uultus et enim nosse frf quintumre congaudeat",
+      "image": "Uultis et enī nosse frs quantū nr̄e congaudeat",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "alimi tati desiderat",
+      "image": "alimti satiari desiderat",
+      "problem": "alimentis satiari garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quiqui uis",
+      "image": "quiquā uis",
+      "problem": "quamvis misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 2 has a dropped clause and several misreadings that change words. Pages 4 and 5 contain four sense reversals: 'nec' for 'nunc', 'petra significabat' for 'petra erat Christus', 'non solent' for 'nomine solent', and 'non scripta' for 'nomina scripta'. A reader would be misled."
+ },
+ {
+  "book_id": "b03-r",
+  "slot": 3,
+  "title": "Homiliary",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 2,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "fumo ararum et nidoribus sturcorumque quo inquinamentorum",
+      "image": "fumo ararū et nidore bustorū cetterorūq; quo inquinamentorū",
+      "problem": "'bustorum ceterorumque' garbled into 'sturcorumque'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut eritis natura mundaretur",
+      "image": "ut eri tis naturā mundaret",
+      "problem": "verb altered",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Duriores enim lapidibus animas",
+      "image": "Duriorē enī lapidib; anima",
+      "problem": "normalised to plural",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Terra etiam purgabitur",
+      "image": "Terra etiā purgabatur",
+      "problem": "tense changed",
+      "severity": "minor"
+     },
+     {
+      "ocr": "flamma romphea ubi voluit",
+      "image": "flamma romphea ibi uoluit",
+      "problem": "ibi→ubi",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<meta>... col. 2043, 3 / et 6xha</meta>",
+      "image": "et Extra",
+      "problem": "modern note misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "sed dictum est nec clarificatus est filius hominis",
+      "image": "sed dictū ē nc̄ clarificatus ē (nunc)",
+      "problem": "'nunc' read as 'nec' — 'now is glorified' becomes 'nor is glorified'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "hec est glorificatio in potius humilitio",
+      "image": "hec ē glorificatio an potius humiliatio",
+      "problem": "an→in, humiliatio garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "manum aliquod",
+      "image": "manū aliqd (magnum aliquid)",
+      "problem": "minor misreading",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "et quantis divinis perfectionibus gratuletur divina spiritali refactione",
+      "image": "et quantū de nr̄is pfectib; gratulet̃ de nr̄a spāli refectione",
+      "problem": "'nr̄is/nr̄a' (nostris/nostra) expanded as 'divinis/divina' — our progress becomes divine perfections",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ultra quam nulla nostri coniunctio",
+      "image": "ultra quā nulla nr̄a conpunctio",
+      "problem": "conpunctio misread as coniunctio",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod eap sapientibus abscondit",
+      "image": "quod eaq; sup̄bientib; abscondit",
+      "problem": "'superbientibus' replaced by Gospel 'sapientibus'",
+      "severity": "moderate",
+      "class": "O3"
+     },
+     {
+      "ocr": "perfectiones quinque figurari",
+      "image": "pfectiores quiq;",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod feminei mollities nulli corrumpant",
+      "image": "quos feminea mollities nulla corrūp̄",
+      "problem": "case/number slips",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 2 is good. Page 4 reads 'nunc' as 'nec' twice, which reverses the sense of Augustine's argument. On page 5, 'nostra' is expanded as 'divina' and a Gospel word replaces the scribe's 'superbientibus'."
+ },
+ {
+  "book_id": "b03-t",
+  "slot": 4,
+  "title": "Homiliary",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 2,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "et nidoribus bustorum ceterorumque quinquinamentorum",
+      "image": "et nidore bustorū cetterorūq; quo inquinamentorū",
+      "problem": "nidore normalised; 'quo' merged into 'quinquinamentorum'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Duriores enim lapidibus animas",
+      "image": "Duriorē enī lapidib; anima",
+      "problem": "normalised to plural",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "super→supra eam; disrupit→dirupit; deliciarum→deliciis",
+      "image": "sup eā; disrupit; delicirū",
+      "problem": "small normalisations",
+      "severity": "minor"
+     },
+     {
+      "ocr": "idcirco",
+      "image": "iccirco",
+      "problem": "spelling normalised",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "sed dictum est nec clarificatus est filius hominis",
+      "image": "sed dictū ē nc̄ clarificatus ē (nunc)",
+      "problem": "'nunc' read as 'nec': 'it was said: now is glorified' becomes 'nor is glorified' — sense reversed (also 'non est dictum nec significata')",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "sed petra significabat",
+      "image": "sed petra erat xp̄s",
+      "problem": "Augustine's point (petra ERAT Christus, not 'significabat') reversed; phrase copied from the previous clause",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Quid ait dies. cum exisset nox. dicit redemptor. nunc inquit",
+      "image": "Quid ait dies. cū exisset nox. qd ait redēptor. cū exisset uenditor. nunc inquit",
+      "problem": "'cum exisset venditor' dropped and 'quid ait' turned into 'dicit'",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "hoc enim traditurus",
+      "image": "hoc ē dñm traditurus",
+      "problem": "'dominum' (the object betrayed) dropped",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut tormentatur",
+      "image": "ut interimatur",
+      "problem": "invented non-word for 'interimatur'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "si hoc dies ille magister",
+      "image": "si hoc ds ille magister",
+      "problem": "'deus' misread as 'dies'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "cum zizania sunt attritis separatis iusta fulgebunt",
+      "image": "cū zizanis a triticis separatis iusti fulgebunt",
+      "problem": "phrase garbled (tares separated from wheat lost)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "uoluntate eius quum sit cum",
+      "image": "uoluntatē eius qui misit eum",
+      "problem": "'qui misit eum' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "non sicut nostram finem scilicet",
+      "image": "non sicut nr̄am in finē sc̄li",
+      "problem": "'in finem seculi' misread as 'finem scilicet'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "cis ut non grauet ecclesia",
+      "image": "eis ut non grauetur eccl'a",
+      "problem": "eis/cis, grauetur truncated",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ita qui passibus",
+      "image": "tāquā passib;",
+      "problem": "tamquam misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "aptis sanctis",
+      "image": "aplis scīs (apostolis)",
+      "problem": "apostolis misread as 'aptis'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "uim impendet",
+      "image": "iam impendet",
+      "problem": "iam misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "uirorum quippe non solent inseripturis",
+      "image": "uirorū quippe nōie solent inscripturis",
+      "problem": "'nomine' read as 'non': 'men are wont to figure the perfect' becomes 'are not wont' — sense reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "eorum que non scripta indicaffe incelus",
+      "image": "eorūq; nōia scripta indicasse incelis",
+      "problem": "'nomina' read as 'non': 'their names are written in heaven' becomes 'not written'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod ea que sapientibus abscondit",
+      "image": "quod eaq; sup̄bientib; abscondit",
+      "problem": "'superbientibus' replaced by the Gospel's 'sapientibus' (Mt 11:25)",
+      "severity": "moderate",
+      "class": "O3"
+     },
+     {
+      "ocr": "Fenum in quo discipuli turbam reficitur",
+      "image": "Foenū inquo discū bens turba reficitur",
+      "problem": "'discumbens turba' misread as 'discipuli turbam'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Hominum quinque milia uirorum ... satiant",
+      "image": "Hi nimirū quinq; milib; uirorū ... satiauit",
+      "problem": "'Hi nimirum' and case/tense garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ab a reuelata ei parua. qua saluta acute",
+      "image": "tib; et reuelasti eā paruul[is] / quia saluti ac uite",
+      "problem": "cut-off top line and next line garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "pfectiones quinque figurari",
+      "image": "pfectiores quiq; figurari",
+      "problem": "perfectiores quique misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Uultus et enim nosse frf quintumre congaudeat",
+      "image": "Uultis et enī nosse frs quantū nr̄e congaudeat",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "alimi tati desiderat",
+      "image": "alimti satiari desiderat",
+      "problem": "alimentis satiari garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quiqui uis",
+      "image": "quiquā uis",
+      "problem": "quamvis misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 2 is good. Pages 4 and 5 contain four sense reversals: 'nec' for 'nunc', 'petra significabat' for 'petra erat Christus', 'non solent', and 'non scripta'. They also have dropped clauses and garbled phrases. A reader would be misled."
+ }
+]

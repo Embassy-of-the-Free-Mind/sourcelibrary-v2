@@ -11,7 +11,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { BookCheck, PageTextStamp } from '@/lib/book-checks';
 import { deriveWarnings, kindsOfFinding, ownChecks, pageAnchor, checkAnchor, commonKinds, WARNING_KINDS } from '@/lib/book-warnings';
-import { CHECK_METHODS } from '@/lib/check-methods';
+import { CHECK_METHODS, evidenceUrl } from '@/lib/check-methods';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 
 const row = (over: Partial<BookCheck> = {}): BookCheck => ({
@@ -42,6 +42,14 @@ describe('deriveWarnings', () => {
     expect(w.book).toMatchObject({ pagesRead: 4, pagesSerious: 2, anchor: checkAnchor(row()) });
   });
 
+  it('derives nothing from a row written with reader_warning: false: no warning, no "checked", and no clearing (#8069)', () => {
+    const quiet = row({ reader_warning: false, run_id: 'r2', checked_at: new Date('2026-10-08T10:00:00Z') });
+    expect(deriveWarnings([quiet], untouched([7, 8, 9, 10]))).toEqual({ book: null, checked: null, pages: {} });
+    const clean = row({ reader_warning: false, run_id: 'r3', checked_at: new Date('2026-10-08T10:00:00Z'), verdict: 'show', page_findings: [] });
+    expect(deriveWarnings([clean], untouched([7, 8, 9, 10])).checked).toBeNull();
+    expect(Object.keys(deriveWarnings([row(), clean], untouched([7, 8, 9, 10])).pages).map(Number)).toEqual([7, 9]);
+  });
+
   it('drops a page whose text was rewritten after the check, from the warning and from both counts', () => {
     const stamps = untouched([7, 8, 9, 10]);
     stamps.set(7, { page_number: 7, translation: { updated_at: '2026-10-07T00:00:00Z' } });
@@ -54,7 +62,7 @@ describe('deriveWarnings', () => {
     const stamps = untouched([8, 10]);
     stamps.set(7, { page_number: 7, ocr: { updated_at: '2026-10-07T00:00:00Z' } });
     // page 9 has no record any more
-    expect(deriveWarnings([row()], stamps)).toEqual({ book: null, pages: {} });
+    expect(deriveWarnings([row()], stamps)).toEqual({ book: null, checked: null, pages: {} });
   });
 
   it('lets a later clean read of the same page clear an earlier finding', () => {
@@ -69,7 +77,7 @@ describe('deriveWarnings', () => {
   it('never counts or warns about a soft-hidden page (page_number ≤ 0)', () => {
     const r = row({ pages_read: [-3, 8], text_provenance: [-3, 8].map((n) => ({ page_number: n, ocr_model: 'm', translation_model: 'm' })),
       page_findings: [{ page_number: -3, errors: [{ stage: 'ocr', class: 'O1' }] }] });
-    expect(deriveWarnings([r], untouched([-3, 8]))).toEqual({ book: null, pages: {} });
+    expect(deriveWarnings([r], untouched([-3, 8]))).toEqual({ book: null, checked: null, pages: {} });
   });
 
   it('gives a book warning without a count when a fix verdict kept no per-page record', () => {
@@ -152,11 +160,8 @@ describe('kindsOfFinding — named classes', () => {
   });
 });
 
-describe('the book line says what "serious" means and how many pages were clean (#7082)', () => {
+describe('the book line says how many pages were clean (#7082)', () => {
   const langs = Object.keys(READER_UI_STRINGS) as (keyof typeof READER_UI_STRINGS)[];
-  it('every locale has the closing sentence', () => {
-    for (const lang of langs) expect(READER_UI_STRINGS[lang].info.qualitySeriousMeans, lang).toBeTruthy();
-  });
   it('names the clean pages when some were clean, and only then', () => {
     const book = READER_UI_STRINGS.en.info.qualityBook;
     const base = { ai: true, image: true, date: '22 October 2026' };
@@ -169,5 +174,13 @@ describe('the book line says what "serious" means and how many pages were clean 
       const l = READER_UI_STRINGS[lang].info.qualityBook({ ...base, read: 10, serious: 3 });
       expect(l, lang).toContain('7');
     }
+  });
+});
+
+describe('evidence with no public URL (#8069)', () => {
+  it('a file on a box or in the ops repo has no link; a repo path does', () => {
+    expect(evidenceUrl('box:clawdbot:/mnt/x/verdicts.json')).toBeNull();
+    expect(evidenceUrl('ops:quality-sprint/x.json')).toBeNull();
+    expect(evidenceUrl('scripts/eval/results/x.json')).toMatch(/blob\/main\/scripts\/eval\/results\/x\.json$/);
   });
 });

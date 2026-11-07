@@ -183,6 +183,19 @@ const RT = {
   'de-blank-r2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@4>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4' }, 'agy-flash-low@4>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), draftFrom: 'agy-flash-low@4', perCall: 4 } } },
   'fr-blank-r2': { lang: 'French', draft: null, blank: 'fra', correctors: { 'agy-flash-low': FRESH('gemini-3.8-flash-low'), 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 } } },
   'la-armc': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'pero>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img' }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4 } } },
+  // #7701 german-cheaper (job german-cheaper-7701): 30 NEW German books (draw --exclude-from=<both earlier #7701 draws>),
+  // each page in a block of up to 8 unread neighbours. A = read@4 (the live route), R8 = read@8, and arm C's shape on
+  // two GPU drafts of the block (DIR/lighton.json LightOnOCR-3-1B, DIR/pero.json PERO-OCR, made on gex45 from DIR/img):
+  // the draft corrected by agy Flash-low with the image, 4 a call. The GPU drafts ALONE are routes too, judged from the
+  // draft files by german-cheaper-7701/run.mjs (no agy call).
+  // #6740 read-surface confirmation (job read-surface-6740): the live read@4 (the 4-page piece of the drawn page's block)
+  // against the response surface's Latin optimum, 8 a call with the image fitted to 1,600 px, on the SAME new queue pages.
+  // #6740 read-surface, German confirmation (read-surface-6740/confirm-de/RULE.md): era-stratified to the frame's unread pages.
+  'de-surface': { lang: 'German', draft: null, blank: 'deu', eraQuota: { 'before 1700': 17, '1700s': 11, '1800 on': 2 }, correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
+  // #6740 read-surface, German confirmation 2 (confirm-de2/RULE.md): drawn by confirm-de2/draw.mjs, read here unchanged.
+  'de-surface2': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 } } },
+  'la-surface': { lang: 'Latin', draft: null, blank: 'lat', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4, blockPages: 4 }, 'agy-flash-low@8-1600px': { ...FRESH('gemini-3.8-flash-low'), perCall: 8, longEdge: 1600 } } },
+  'de-cheap': { lang: 'German', draft: null, blank: 'deu', correctors: { 'agy-flash-low@4': { ...FRESH('gemini-3.8-flash-low'), perCall: 4 }, 'agy-flash-low@8': { ...FRESH('gemini-3.8-flash-low'), perCall: 8 }, 'lighton>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'lighton.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'pero>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'pero.json', imageDir: 'img', perCall: 4, blockPages: 4 }, 'kraken>agy-flash-low@4': { ...AGY('gemini-3.8-flash-low'), gpuDraft: 'kraken.json', imageDir: 'img', perCall: 4, blockPages: 4 } } },
   // The pilot's Tibetan cell again on 30 NEW Kangyur folios (#6740): both correctors get the #6560 CORR prompt.
   'tib-kangyur': { lang: 'Tibetan', draft: 'yigdzin', derge: true, planted: 10,
     correctors: { 'yigdzin>agy-flash-low': { ...AGY('gemini-3.8-flash-low'), prompt: TIB_CORR }, 'yigdzin>opus-correct': { by: 'opus-prompt', prompt: TIB_CORR } } },
@@ -373,12 +386,18 @@ async function drawBlank(db, name, t, isInterior) {
   const books = (await db.collection('books').find(lane.FIRST_READ_BOOKS, { projection: { id: 1, title: 1, language: 1, published: 1, visible: 1, pages_count: 1, pages_ocr: 1, processing_priority: 1, image_source: 1, needs_splitting: 1, split_completed: 1, pipeline_auto: 1 } }).toArray())
     .filter((b) => !lane.firstReadSkip(b, { languages: [t.blank] }));
   // --exclude-from=<sample.json> (#7701 cheap routes): no book any cell of that draw used
-  const excluded = new Set(arg('exclude-from') ? Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id)) : []);
+  // (comma-separated: several draws)
+  const excluded = new Set(arg('exclude-from') ? arg('exclude-from').split(',').flatMap((f) => Object.values(JSON.parse(fs.readFileSync(f, 'utf8')).cells).flatMap((c) => c.pages.map((p) => p.book_id))) : []);
   for (const b of [...books]) if (excluded.has(b.id)) books.splice(books.indexOf(b), 1);
   const order = [...books].sort((a, b) => h(`rt-${name}${a.id}`).localeCompare(h(`rt-${name}${b.id}`)));
   const pages = [], tally = { books_in_frame: books.length, books_left_out: excluded.size, books_walked: 0, spread_wait: 0, no_interior_unread: 0, no_ocr_books: books.filter((b) => !b.pages_ocr).length };
+  // #6740 read-surface (Amendment 6.8c): an era-stratified draw. t.eraQuota = {era: n}; a book of a full era is passed.
+  const eraOf = (pub) => { const m = String(pub ?? '').match(/1[4-9]\d\d/); const y = m ? Number(m[0]) : null; return y === null ? null : y < 1700 ? 'before 1700' : y < 1800 ? '1700s' : '1800 on'; };
+  const got = {};
+  if (t.eraQuota) tally.era_quota = t.eraQuota;
   for (const b of order) {
     if (pages.length >= N) break;
+    if (t.eraQuota) { const e = eraOf(b.published); if (!e || (got[e] || 0) >= (t.eraQuota[e] || 0)) continue; }
     tally.books_walked++;
     const unread = await db.collection('pages').find({ book_id: b.id, ...lane.UNREAD }, { projection: { _id: 0, id: 1, page_number: 1, crop: 1, cropped_photo: 1, split_from_spread: 1 } }).sort({ page_number: 1 }).toArray();
     if (lane.spreadReason(b, unread)) { tally.spread_wait++; continue; }
@@ -394,7 +413,8 @@ async function drawBlank(db, name, t, isInterior) {
     let end = p.page_number;
     while (end + 1 - start < perCall && byNum.has(end + 1)) end++;
     const block = Array.from({ length: end - start + 1 }, (_, i) => byNum.get(start + i).id);
-    pages.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, draft_model: null, draft_sha: null, block, book_language: b.language, provider: b.image_source?.provider ?? null, hold: b.pipeline_auto?.hold?.reason ?? null, pages_ocr: b.pages_ocr ?? 0 });
+    pages.push({ page_id: p.id, book_id: b.id, page_number: p.page_number, draft_model: null, draft_sha: null, block, book_language: b.language, provider: b.image_source?.provider ?? null, hold: b.pipeline_auto?.hold?.reason ?? null, pages_ocr: b.pages_ocr ?? 0, published: b.published ?? null, ...(t.eraQuota && { era: eraOf(b.published) }) });
+    if (t.eraQuota) got[eraOf(b.published)] = (got[eraOf(b.published)] || 0) + 1;
   }
   return { pages, frame: { ...tally, rule: `the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=${t.blank}, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of ${perCall}` } };
 }
@@ -551,7 +571,10 @@ async function correct() {
         const used = agyCalls();
         if (used + ids.length * 1.1 > AGY_MAX) { console.log(`${cell}/${route}: ${used} agy calls used, cap ${AGY_MAX}; skipped`); continue; }
         // perCall (#7701 blank cells): each drawn page with its block of neighbours, read N a call as the lane reads.
-        let readIds = cor.perCall > 1 ? cs.pages.flatMap((p) => p.block ?? [p.page_id]) : ids;
+        // blockPages (#7701 german-cheaper, the agy budget): only the blockPages-page piece of the drawn page's block that
+        // holds it, cut as a perCall=blockPages read cuts the block (the call the read@4 route made for that page)
+        const piece = (p) => { const b = p.block ?? [p.page_id], n = cor.blockPages; if (!n) return b; for (let i = 0; i < b.length; i += n) if (b.slice(i, i + n).includes(p.page_id)) return b.slice(i, i + n); return [p.page_id]; };
+        let readIds = cor.perCall > 1 ? cs.pages.flatMap(piece) : ids;
         // draftFrom (#7701 arm B): the draft is the named route's read of each page in this DIR (a page it did not deliver
         // has no draft and is not corrected), handed to cli-ocr.mjs as --draft-file.
         let draftsFile = null;
@@ -571,7 +594,7 @@ async function correct() {
         const keep = process.argv.includes('--keep-reads');
         await new Promise((resolve) => {
           const child = spawn(process.execPath, [path.join(ROOT, 'scripts/batch/cli-ocr.mjs'), 'read', `--page-ids-file=${path.join(dir, 'ids.json')}`, `--out=${dir}`, `--model=${cor.model}`,
-            ...mode, ...(cor.perCall > 1 ? [`--per-call=${cor.perCall}`] : []), `--job=${arg('job') || 'route-judge-6740'}`, '--concurrency=3', ...(keep ? [] : ['--fresh'])], { env: keep ? process.env : { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
+            ...mode, ...(cor.perCall > 1 ? [`--per-call=${cor.perCall}`] : []), ...(cor.longEdge ? [`--long-edge=${cor.longEdge}`] : []), `--job=${arg('job') || 'route-judge-6740'}`, '--concurrency=3', ...(keep ? [] : ['--fresh'])], { env: keep ? process.env : { ...process.env, CANDIDATE_READS: 'off' }, cwd: ROOT, stdio: ['ignore', 'pipe', 'inherit'] });
           child.stdout.on('data', (d) => {
             process.stdout.write(d);
             if (/QUOTA at|LOCKED at/.test(String(d))) { agyStopped = true; fs.writeFileSync(path.join(OUT, 'agy-stopped.txt'), `${new Date().toISOString()} ${String(d).trim()}\n`); child.kill('SIGTERM'); }
@@ -825,9 +848,9 @@ export const parseVerdict = (t) => parseJson(t, (v) => typeof v.accept === 'bool
 export const QUOTA = /usage limit|limit reached|hit your (?:usage )?limit|rate.?limit|out of extra usage/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 /** Opus with the image in its workspace and Read as its only tool (replicate-6547/run-claude-arm.py's call). */
-export function opusCall(prompt, cwd) {
+export function opusCall(prompt, cwd, model = 'opus') {
   return new Promise((resolve) => {
-    const child = spawn('claude', ['-p', '--model', 'opus', '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
+    const child = spawn('claude', ['-p', '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['pipe', 'pipe', 'pipe'], env: claudeEnv() });
     let out = '', err = '';
     const timer = setTimeout(() => child.kill('SIGKILL'), 900e3);
     child.stdout.on('data', (d) => { out += d; }); child.stderr.on('data', (d) => { err += d; });
@@ -870,9 +893,13 @@ async function judge() {
     calls++;
     const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'rj-opus-'));
     try {
-      const res = await fetch(it.image_url);
-      if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ id: it.id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
-      fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      // image_file: the image the packet drew, on disk (a library that refuses this box, #6871 manifest-only sample)
+      if (it.image_file) fs.copyFileSync(it.image_file, path.join(ws, 'page.jpg'));
+      else {
+        const res = await fetch(it.image_url);
+        if (!res.ok) { fs.appendFileSync(file, JSON.stringify({ id: it.id, verdict: null, raw: `image HTTP ${res.status}` }) + '\n'); return; }
+        fs.writeFileSync(path.join(ws, 'page.jpg'), Buffer.from(await res.arrayBuffer()));
+      }
       const t0 = Date.now();
       const r = await opusCall(judgePrompt(it, 'the file ./page.jpg in your working directory (open it with Read before you answer)'), ws);
       if (r.cls === 'quota') { limits.noteLimitHit('claude', { reason: r.text.slice(0, 200) }); stop = { until: limits.claudeUsage()?.sessionReset ?? null, reason: 'quota reply' }; return; }

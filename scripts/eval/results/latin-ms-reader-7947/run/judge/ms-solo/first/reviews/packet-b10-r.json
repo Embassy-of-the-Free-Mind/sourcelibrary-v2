@@ -1,0 +1,59 @@
+[
+  {
+    "book_id": "b10-r",
+    "slot": 1,
+    "title": "Ars artium sive Ars magna cabalistica (PH337)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "The work is a Latin manuscript on cabalistic number-art: Hebrew letters used as numerals, a magic square summing to 175 (\"Mysterium Tetragrammati\"), a quotation from Esch Mezareph, and proportion arithmetic. No tradition is set in the packet, but it belongs on a Kabbalah / Christian-cabala shelf.",
+    "rights_flag": null,
+    "structure_note": "There are no structure counts in the packet. Packet page 50 carries the manuscript number \"44.\", page 95 carries \"9\" and page 140 carries \"54.\". The numbering restarts between packet pages 50 and 95, so the manuscript is either paginated in sections or bound out of order. That is not necessarily a defect, but it is worth noting. The catalogue date is 1566, yet the hand is a 17th–18th-century Italian cursive and page 95 quotes \"Esch Mezareph. C. 5.\", a text that circulated in Latin only from the 1670s (Kabbala Denudata). 1566 may be the date the work was composed, but it is not the date of this copy (possible I7; confidence low).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 50,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "This page has no translation (empty translation field). The page is a labelled diagram, so a reader gets only the Latin labels.", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nempe 22. 23. 24. 25. 26. 27. 28.", "image": "nempe 22. 13. 24. 25. 26. 27. 28.", "problem": "The scribe wrote 13. The OCR silently corrected it to 23, the value the sum of 175 requires, and did not flag that it departs from the manuscript.", "severity": "moderate", "class": "O8" },
+          { "ocr": "Hic omnes Columnae ... reliquae ... Tetragrammati", "image": "Columnę ... reliquę ... Tetragrammati", "problem": "The e-caudata is normalised to ae on this page, while page 140 keeps ę. The convention flips between pages.", "severity": "minor", "class": "O9" },
+          { "ocr": "Rab. Simeon Benlanges", "image": "Rab. Simeon Bonlangés", "problem": "The name looks like Bonlangés in the hand; read at moderate resolution.", "severity": "minor" },
+          { "ocr": "<unclear>Ex</unclear> Exod. 27. v. 6.", "image": "Es exod. 27. v. 6.", "problem": "The abbreviation before Exod. is doubtful. It is marked unclear, which is honest.", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "This page has no translation (empty translation field), so the reader sees dense Latin with Hebrew numerals only.", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "sit 10 ad 5 [...] vel sit 6. ad 9.", "image": "sit 10 ad 5 ............ vel sit 6. ad 9.", "problem": "A dotted leader is rendered as an ellipsis in brackets, which looks like an omission marker.", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "This page has no translation (empty translation field).", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this cabalistic-arithmetical manuscript is careful and accurate. Every checked numeral and ratio matches the image and is arithmetically consistent (336:28 duodecupla, 4:3 sesquitertia, 8:9 sesquioctava). The only substantive slip is a scribal \"13\" silently corrected to \"23\" on page 95. None of the three pages has a translation. The catalogue date 1566 does not fit this later copy."
+  }
+]

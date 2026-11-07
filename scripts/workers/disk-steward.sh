@@ -6,7 +6,7 @@
 # Disk steward for the job hosts (#6223). Hourly from cron; safe to run by hand at any time.
 #   disk-steward.sh                  # dry run: lists every candidate and what it would do
 #   disk-steward.sh --apply          # does it
-#   disk-steward.sh --apply --agy-only   # only the Antigravity CLI steps (1b, 1c)
+#   disk-steward.sh --apply --agy-only   # only the Antigravity CLI steps (1b, 1c, 1d)
 #   disk-steward.sh restore <dir>.IN-R2.txt   # bring an archived folder back from R2
 #
 # Why: every box sat between 80% and 95% with alarms (Derek 2026-10-29: "There must be a better way to manage
@@ -15,11 +15,12 @@
 # between boxes by hand (2026-10-27), which only shuffled them. So storage now has a LIFETIME instead:
 #
 #   1. Reaps job worktrees whose PR is merged or closed (reap-worktrees.mjs --merged-only; branches kept).
-#   1b/1c. Antigravity CLI: checkpoint its SQLite WAL, remove orphaned .tmp files.
+#   1b/1c/1d. Antigravity CLI: checkpoint its SQLite WAL, remove orphaned .tmp files, trim debug logs to 2 days.
 #   2. CACHE: trims the Hugging Face hub cache to HF_CACHE_CAP_GB, least recently accessed revision first
 #      (huggingface_hub's scan-cache / delete-revisions). Models are re-downloadable. A revision with a blob
 #      open by any process, or read in the last HF_KEEP_RECENT_H hours, is never touched. Runs every time.
-#   3. COLD ARCHIVE, only while a disk is above BAND% (default 75), oldest-idle first, stopping at <= BAND%:
+#   3. COLD ARCHIVE, only while a disk is above BAND% (default 75), oldest-idle first, stopping at <= BAND%
+#      (idle = IDLE_DAYS, or PRESSURE_IDLE_DAYS while the folder's disk is at PRESSURE_PCT or more):
 #      an idle folder is tarred with zstd and streamed to R2 (private bucket sl-corpus-snapshots,
 #      key cold/<box>/<path-slug>-<date>.tar.zst), read back in full and checked (bytes, sha256, and the
 #      archive's entry count against the folder's), and only then removed, leaving <dir>.IN-R2.txt with the
@@ -53,6 +54,11 @@ ROOT=${DISK_STEWARD_ROOT:-/root}
 VOL=${DISK_STEWARD_VOL:-/mnt/HC_Volume_105839809}
 MIN_GB=${DISK_STEWARD_MIN_GB:-1}
 IDLE_DAYS=${DISK_STEWARD_IDLE_DAYS:-7}
+# A finished job never says so, so idle is a guess, and at 7 days a heavy week fills the disk faster than it clears
+# (gex45 75% to 91% in three days, 2026-11-07: about 97 GB of job scratch, 54 GB of it page images). Under pressure a
+# folder counts as idle sooner. It is archived, never deleted: its pointer restores it if the job comes back.
+PRESSURE_PCT=${DISK_STEWARD_PRESSURE_PCT:-80}
+PRESSURE_IDLE_DAYS=${DISK_STEWARD_PRESSURE_IDLE_DAYS:-3}
 BAND=${DISK_STEWARD_BAND:-75}
 HF_CAP_GB=${HF_CACHE_CAP_GB:-50}
 HF_KEEP_RECENT_H=${HF_KEEP_RECENT_H:-24}
@@ -142,6 +148,17 @@ for T in "$ROOT"/.gemini/antigravity-cli/*.tmp "$ROOT"/.agy-*/.gemini/antigravit
   [ -n "$APPLY" ] && rm -f "$T"
 done
 [ "$n" -gt 0 ] && echo "  $([ -n "$APPLY" ] && echo removed || echo would remove) $n orphaned agy .tmp files ($((kb / 1048576)) GB)"
+
+# 1d. Trim the Antigravity CLI's debug logs. agy writes one log/cli-<timestamp>.log per call and never removes
+#     them; on 2026-10-31 main's two agy homes held 128K of them, 4.2 GB, about 0.5 GB a day each, and that
+#     growth alone kept the root disk over the 85% alarm. They are debug output nothing reads; keep two days.
+n=0; kb=0
+for L in "$ROOT"/.gemini/antigravity-cli/log "$ROOT"/.agy-*/.gemini/antigravity-cli/log; do
+  [ -d "$L" ] || continue
+  while IFS=' ' read -r k _; do n=$((n + 1)); kb=$((kb + k)); done < <(find "$L" -maxdepth 1 -type f -name 'cli-*.log' -mtime +1 -printf '%k %p\n')
+  [ -n "$APPLY" ] && find "$L" -maxdepth 1 -type f -name 'cli-*.log' -mtime +1 -delete
+done
+[ "$n" -gt 0 ] && echo "  $([ -n "$APPLY" ] && echo removed || echo would remove) $n agy debug logs ($((kb / 1024)) MB)"
 [ -n "$AGY_ONLY" ] && { echo "$(now) done (agy only). root: $(df -h --output=used,avail,pcent / | tail -1)"; exit 0; }
 
 # Every open file and working directory on the box, once (steps 2 and 3 test against it).
@@ -210,7 +227,7 @@ git_busy() {  # $1 folder: prints why a git checkout inside it may not be archiv
   done < <(find "$1" -maxdepth 4 -name .git 2>/dev/null)
 }
 consider() {  # $1 folder, $2 top|child. Appends "newest kb path" to CANDS, or "kb path reason" to KEPT.
-  local S=$1 n kb newest age reason
+  local S=$1 n kb newest age reason idle=$IDLE_DAYS
   [ -d "$S" ] && [ ! -L "$S" ] || return
   n=$(basename "$S")
   case "$n" in .restoring-*) return ;; esac
@@ -218,8 +235,9 @@ consider() {  # $1 folder, $2 top|child. Appends "newest kb path" to CANDS, or "
   [ "${kb:-0}" -ge $((MIN_GB * 1048576)) ] || return
   newest=$(find "$S" -xdev -printf '%T@\n' 2>/dev/null | sort -n | tail -1); newest=${newest%.*}
   age=$(( ($(date +%s) - ${newest:-0}) / 86400 ))
+  [ "$(pct "$S")" -ge "$PRESSURE_PCT" ] && [ "$PRESSURE_IDLE_DAYS" -lt "$idle" ] && idle=$PRESSURE_IDLE_DAYS
   reason=""
-  if [ "$age" -lt "$IDLE_DAYS" ]; then reason="written ${age} d ago"
+  if [ "$age" -lt "$idle" ]; then reason="written ${age} d ago"
   elif named_by_session "$n"; then reason="a tmux session is named for it"
   elif awk -v p="$S" '$0 == p || index($0, p "/") == 1 { f = 1; exit } END { exit !f }' "$OPEN"; then reason="open files or a process working inside it"
   elif [ "$2" = top ] && [ -n "$(find "$S" -maxdepth 3 -name pyvenv.cfg -print -quit 2>/dev/null)" ]; then reason="holds a Python environment (a tool, not scratch)"
@@ -268,7 +286,7 @@ archive_one() {  # $1 folder, $2 kb, $3 newest-write epoch. Returns 0 only when 
   fi
   local ptr="$S.IN-R2.txt" restore_cmd="$here/disk-steward.sh restore $S.IN-R2.txt"
   cat > "$ptr" <<P
-# $S was archived to Cloudflare R2 by disk-steward.sh (#6223) after ${IDLE_DAYS}+ idle days, and removed here.
+# $S was archived to Cloudflare R2 by disk-steward.sh (#6223) after it went idle, and removed here.
 # Restore: $restore_cmd
 path=$S
 host=$BOX

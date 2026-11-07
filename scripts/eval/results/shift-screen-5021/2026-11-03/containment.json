@@ -1,0 +1,2356 @@
+{
+ "contain": [
+  {
+   "book_id": "69b00ae2afa0a2090809b114",
+   "title": "Galeni Opera Omnia, Vol. 12 (BIU Santé)",
+   "language": "Greek",
+   "pages": [
+    915
+   ],
+   "evidence": "'Boil six kotylai of mulberry juice until it has the thickness of glue' = 'μόρων χυλοῦ κοτύλας στ΄. ἕψε ὡς γλοιοῦ ἔχειν τὸ πάχος' (p916); the English opening 'If you wish the medicine to be intermediate in its blend' = 'εἰ μὲν μέσον τῇ κράσει βουληθῇς γενέσθαι τὸ φάρμακον' (p916). Nothing from p915's own text appears, such as 'Καππάδοκος Ἥρα βίβλῳ'."
+  },
+  {
+   "book_id": "69b3027416f06ae4cdc55939",
+   "title": "Defensio pro Populo Anglicano",
+   "language": "Latin",
+   "pages": [
+    25
+   ],
+   "evidence": "'that they prefer to be called sons of the earth... a man of nothing and a straw-stuffed knight' = 'se autem malle filios terræ dici... homo nihili & stramineus eques' (p26). Only the catchword 'He is well' (—Valet) comes from p25; none of p25's text ('De regis autem supplicio', 'Leges per tot annos ratas refixisse') is rendered."
+  },
+  {
+   "book_id": "69b51e4ecf111105c429a518",
+   "title": "Petri Galatini De Arcanis Catholicae Veritatis, Libri XII. : Quibus Pleraque Religionis Ch",
+   "language": "Latin",
+   "pages": [
+    428
+   ],
+   "evidence": "English 'due to the three letters of this word... For Ghimel signifies Ghematria' renders the second column of page 427: 'propter ternas hujus dictionis literas... Nam ghimel significat גימטריא Ghematria' (p427). Page 428 starts instead with 'juscunque complementum. Iod enim decem significat'."
+  },
+  {
+   "book_id": "69bd9d416120d54bd037457f",
+   "title": "Henrici Cornelii Agrippae ab Nettesheym De incertitudine et vanitate scientiarum declamati",
+   "language": "Latin",
+   "pages": [
+    583
+   ],
+   "evidence": "'was not yet dead when he opened his side with a lance... He came upon Aaron, but departed in the sin of the calf' = 'nondum mortuum dum lancea latus eius aperuit... Venit super Aaron, sed in peccato vituli' (p584); p583's own text ('certitudo corrueret... Sic defecit Moyses... Defecit Ionas') is not rendered"
+  },
+  {
+   "book_id": "69c8a07f6c6f3cc53c85e005",
+   "title": "Les images ou tableaux de platte peinture de Philostrate Lemnien Sophiste Grec",
+   "language": "French",
+   "pages": [
+    860
+   ],
+   "evidence": "English 'Meanwhile the halcyon came to flutter above the blond head of Jason' renders 'Sur ces entrefaittes l'Alcyon s'en vint volleter au dessus du blond chef de Iason' (p861); page 860's own text about Ceyx and Alcyone is missing from the English."
+  },
+  {
+   "book_id": "69ef254385daccce30f2b86a",
+   "title": "Works of H.H. Wilson, Vol. 3 (Vishnu Purana, Part 1)",
+   "language": "English",
+   "pages": [
+    230
+   ],
+   "evidence": "The English 'One of them ran to Vibhíshaṇa to report the arrival to the prince' matches 'One of them set off forthwith to Vibhíshaṇa, to announce the event to the prince' on p229. The scan of p230 (printed page 208) actually begins 'his followers, desired the Rákshasa to go immediately'. The OCR for p230 wrongly repeats p229's text."
+  },
+  {
+   "book_id": "6a42ac675207af7c42f4cb96",
+   "title": "Disputationum Theologicarum De Variis Scripturae Sacrae Editionibus, Roberto Card. Bellarm",
+   "language": "Latin",
+   "pages": [
+    19
+   ],
+   "evidence": "'you see him disrupt those cells of the LXX (which he also does in preface 107, to the Paralipomena)' = 'vides, disturbare eundem LXX cellulas, (quod etiam facit praefatione CVII, in Paralipomena)' (p20); none of p19's text ('nescio quis primus auctor septuaginta cellulas...') is rendered"
+  },
+  {
+   "book_id": "69c82bb66c6f3cc53c84cbe7",
+   "title": "Critica sacra, de sacri codicis partitione, editionibus variis, linguis originalibus & ill",
+   "language": "Latin",
+   "pages": [
+    682
+   ],
+   "evidence": "The English on page 682 ('we will set before your eyes that double accentuation of the commandments… The longer Commandments are the 1st and the 3rd') translates page 683 ('ob oculos ponemus duplicem illam præceptorum… accentuationem… Prolixiora Præcepta sunt I. & III.'). Page 682's own text ('Contrà cùm alia Præcepta sc. V. VI. VII. & VIII. tàm brevia essent… Gen. 35, 22') is not rendered at all."
+  },
+  {
+   "book_id": "69dbcb491040d1d5e20b5588",
+   "title": "Epistolae. Ed: Philippus Beroaldus",
+   "language": "Latin",
+   "pages": [
+    171
+   ],
+   "evidence": "English 'I give thanks that you have undertaken the cultivation of the little field that I had given to my nurse' = 'Gratias ago quod Agellum quem nutrici meae donaueram colendum suscepisti' (p172); page 171's own text about Regulus and clepsydrae ('benefecit Regulus quod est mortuus') is not translated"
+  },
+  {
+   "book_id": "6a085cf049638a50931ce361",
+   "title": "M. Tullii Ciceronis De philosophia, prima pars, Academicarum quaestionum editionis primae ",
+   "language": "Latin",
+   "pages": [
+    51,
+    52,
+    53,
+    54,
+    189,
+    190,
+    191,
+    192
+   ],
+   "evidence": "'perfectly, and absolutely so equal that there is no difference whatsoever between them' = 'sed undique, perfecte, et absolute ita pares, ut inter eos nihil prorsus intersit' (p52)"
+  },
+  {
+   "book_id": "69af0f68af16a5a1d2280ece",
+   "title": "Полное собрание сочинений. Т. 5: Униженные и оскорблённые. Вечный муж",
+   "language": "Russian",
+   "pages": [
+    67
+   ],
+   "evidence": "'Matryona appeared with the samovar as soon as she saw Nikolay Sergeyich' = 'Матрена тотчасъ-же, какъ увидала Николая Сергѣича, и явилась съ самоваромъ' (p68); the medallion story printed on p67 does not appear in this English"
+  },
+  {
+   "book_id": "69c800466c6f3cc53c843ec1",
+   "title": "Dissertatio de sobria alterius sexus frequentatione per sacros & religiosos homines",
+   "language": "Latin",
+   "pages": [
+    415,
+    549,
+    550
+   ],
+   "evidence": "'specifically Benedictus Justinianus and Thomas Massutius in his description of the life of Paul' = 'nominatim Benedictus Iustinianus a, & Thomas Massutius b in Pauli vitae descriptione' (p416); p415's own text (Barnabas, Thecla, Gelasius) is not rendered"
+  },
+  {
+   "book_id": "69af3988102120ca71f00a1d",
+   "title": "Сочиненія Н.А. Добролюбова. Том 4",
+   "language": "Russian",
+   "pages": [
+    344,
+    345,
+    346
+   ],
+   "evidence": "'To call a person an animal and a donkey without any prevarication' = 'Безъ всякихъ обиняковъ назвать человѣка скотомъ и осломъ' (transcription p.345). Note: the image files show printed pp. 318–322, not the transcribed pp. 327–331, so the images do not match the transcriptions. This verdict relies on the transcriptions."
+  },
+  {
+   "book_id": "69af447908fe1c6d3da38b17",
+   "title": "S. Aurelii Augustini De Civitate Dei Libri XXII Vol. II (Dombart 1877)",
+   "language": "Latin",
+   "pages": [
+    572,
+    573,
+    574
+   ],
+   "evidence": "'the bishop of Uzala at that time, Saturninus of blessed memory, and the presbyter Gulosus' = 'episcopus tunc Uzalensis, beatae memoriae Saturninus, et presbyter Gulosus' (p573); none of p572's text (Ammonius, the Alexandrian surgeon) appears"
+  },
+  {
+   "book_id": "6a08574415c643eb1af5b1c9",
+   "title": "Hoc volumine continentur haec. Commentariorum de bello Gallico libri 8. De bello ciuili Po",
+   "language": "Latin",
+   "pages": [
+    357,
+    358
+   ],
+   "evidence": "'pitches his camp at the river Apsus, in the territory of the Apollonians' = 'castraque ad flumen Apsum ponit, in finibus Apolloniatium' (p358)"
+  },
+  {
+   "book_id": "69b21ba0429e087c6f862ab8",
+   "title": "Aristotelis Opera, Vol. 1 (Organon)",
+   "language": "Greek",
+   "pages": [
+    53,
+    54
+   ],
+   "evidence": "English 'nor is music \"music of something\"' matches 'οὐδὲ ἡ μουσικὴ, τινὸς μουσικὴ' (p54), and the heading 'ON ACTING AND BEING ACTED UPON' matches 'ΠΕΡΙ ΤΟΥ ΠΟΙΕΙΝ ΚΑΙ ΠΑΣΧΕΙΝ' (p54). Page 53's own text (triangle and circle, 'τρίγωνον δὲ καὶ τετράγωνον') is missing."
+  },
+  {
+   "book_id": "69ac9bdedc7bbeb9206212f1",
+   "title": "Epistulae",
+   "language": "Latin",
+   "pages": [
+    517
+   ],
+   "evidence": "Only the opening clause about trembling of heart is from p517 (its last two lines: 'Sciatis me, carissimi, cum ineffabili pro uobis tremore cordis'). The rest of the English renders p518, e.g. 'the people of the Jews torn from their seats' = 'populum Iudaeorum auulsum a sedibus suis' (p518). None of p517's main text ('refriguit animus meus... basilicae ianuam') is translated."
+  },
+  {
+   "book_id": "69c73a466a0f3d112faf7972",
+   "title": "Versuch einer freiern theologischen Lehrart, zur Bestätigung und Erläuterung seines latein",
+   "language": "German",
+   "pages": [
+    131,
+    132,
+    133,
+    543,
+    544,
+    545,
+    546,
+    547,
+    548
+   ],
+   "evidence": "English 'The praised union of various Armenian bishops ... Bishop Uscan' = 'Die gerümte Vereinigung dieser und jener armenischen Bischöfe ... der B. Uscan' (p132); none of p131's text (Leo Allatius, Cyrillus Lucaris) appears"
+  },
+  {
+   "book_id": "69b638be1c1c21a373839d77",
+   "title": "Opera nuper in lucem prodeuntia : Liber gratie spiritualis visionum & revelationum beate M",
+   "language": "Latin",
+   "pages": [
+    135,
+    136
+   ],
+   "evidence": "Forward shift of two pages, not one: 'That zither was the Lord Jesus... the supreme cantor of all cantors, Jesus, struck the zither' = 'Cythara aut illa erat dominus Yhs... summus cātor oium cantorū Yhs cytharā pcussit' (p137). Page 135's own vineyard text ('ab oibus maculis lauabatur... multitudo pisciū') is not translated."
+  },
+  {
+   "book_id": "6a267b216c1f37c9c4f305f5",
+   "title": "Theoria Metallica ist Eine kurtze Metallische Betrachtung, Aus welcher Materia, in, aus, u",
+   "language": "German",
+   "pages": [
+    15
+   ],
+   "evidence": "'Duke Johann Georg the Third, with his consort's Highness' = 'Herzog Johann Georgen den dritten/ mit dero Frau Gemahlin Hochheit' (p16); also 'seconded by Your most gracious help' = 'mit gnädigster Hülffe secundiren' (p16)"
+  },
+  {
+   "book_id": "69aebd719f50e4af6e1da5ed",
+   "title": "Kurze Encyklopädie der Philosophie",
+   "language": "German",
+   "pages": [
+    259,
+    260
+   ],
+   "evidence": "'may present itself to plant life as a means of awakening or encouragement' = 'mag sich dem Pflanzenleben als ein Erweckungs- oder Förderungsmittel darbieten' (p260)"
+  },
+  {
+   "book_id": "69b51e4a9a81ef7feb3d27db",
+   "title": "Cosmographicae disciplinae compendium : Libri duo",
+   "language": "Latin",
+   "pages": [
+    164,
+    165,
+    167
+   ],
+   "evidence": "'the mountain is in the middle of a plain... between Bagdad and Tauris' = 'Mons autem media in planicie est... inter Bagdad & Tauris' (p165)"
+  },
+  {
+   "book_id": "69c820ca6c6f3cc53c84a904",
+   "title": "Die isländische Edda",
+   "language": "German",
+   "pages": [
+    382,
+    383
+   ],
+   "evidence": "'Meanwhile, this giant was somewhat awakened from sleep' = 'Indessen wurde dieser Riese etwas vom Schlaf aufgewecket' (p383). Page 382's own main text ('das Handgefäß seines Miölners in die Hand… einen erschrecklich grossen Mann') is not rendered."
+  },
+  {
+   "book_id": "6a08551449638a50931c1410",
+   "title": "De philosophia volume 1",
+   "language": "English",
+   "pages": [
+    453
+   ],
+   "evidence": "'Why did you forget to buy the Attalic wall-hangings... from the same Heius?' = 'quid illa Attalica, tota Sicilia nominata, ab eodem Heio peripetasmata emere oblitus es?' (p454). Page 453's own text (Mamertini, C. Pompeij Basilici, Percenniorum) is not translated; the English goes on past p454 into the Philarchus passage."
+  },
+  {
+   "book_id": "69bd9fe2f6d63c9197482b9b",
+   "title": "Collectanea medico-physica, oder Holländisch Jahr-Register, sonderbarer Anmerckungen, die ",
+   "language": "German",
+   "pages": [
+    742,
+    743,
+    744,
+    745,
+    746
+   ],
+   "evidence": "'when this artery is burned, or at the very least has shrunk together' = 'daß wenn diese Puls-Ader abgebrant/ oder zum wenigsten zusammen geschrumpffen ist' (p743)"
+  },
+  {
+   "book_id": "69de0e27006cdd4b9e56c7e6",
+   "title": "La terza et ultima parte de Ragionamenti",
+   "language": "Italian",
+   "pages": [
+    277,
+    278,
+    279,
+    280
+   ],
+   "evidence": "'The beatitude of those who bear it with patience' = 'La beatitudine di coloro che se la recano in patientia' (p278)"
+  },
+  {
+   "book_id": "6a3f024e97e91e1768f66d4b",
+   "title": "Musici scriptores graeci : Aristoteles, Euclides, Nicomachus, Bacchius, Gaudentius, Alypiu",
+   "language": "Greek",
+   "pages": [
+    351,
+    352,
+    353,
+    354,
+    355,
+    356
+   ],
+   "evidence": "'the old trite was a fourth away from the nete, which is the interval the paramese has now taken' = 'ἡ πάλαι τρίτη διὰ τεσσάρων ἀπεῖχε τῆς νήτης, ὅπερ διάστημα νῦν ἀπέλαβεν ἡ παραμέση' (p. 352)"
+  },
+  {
+   "book_id": "69944b511ba8351377905f76",
+   "title": "Philonis Judaei Opera Omnia (Vol. 2)",
+   "language": "Greek",
+   "pages": [
+    208
+   ],
+   "evidence": "'the sculptor Phidias took bronze and ivory and gold' = 'Τὸν ἀνδριαντοποιὸν Φειδίαν ἐκεῖνον καὶ χαλκὸν λαβόντα φασὶ καὶ ἐλέφαντα καὶ χρυσὸν' (p209); none of p208's text about the ark, robes and altars appears"
+  },
+  {
+   "book_id": "6a08557649638a50931c2379",
+   "title": "De philosophia",
+   "language": "Latin",
+   "pages": [
+    185,
+    186,
+    187,
+    188
+   ],
+   "evidence": "'he was a boy pasturing swine because of poverty' = 'qui cum propter paupertatem sues puer pasceret' (p186)"
+  },
+  {
+   "book_id": "69b3037b5facc83a9a3d9a78",
+   "title": "Compendiolum Socinianismi",
+   "language": "Latin",
+   "pages": [
+    196,
+    197
+   ],
+   "evidence": "'reclining in an idol's temple' = 'accubitum in idoleo' (p197); p196's own text (Piscator, Terentius, Beza on scortatio) is not translated"
+  },
+  {
+   "book_id": "69aea3113d57a11fc021c0eb",
+   "title": "Analekta Hierosolymitikes Stachyologias Vol. I",
+   "language": "Greek",
+   "pages": [
+    70,
+    349,
+    350
+   ],
+   "evidence": "'Let the treasurer also bring out the previously deposited letters' = 'ἐξαγαγέτω δὲ καὶ ὁ ταμειοφύλαξ τὰ προαποκείμενα γράμματα' (p350)"
+  },
+  {
+   "book_id": "69af3851677cd73a3221c4df",
+   "title": "Сочиненія В. Бѣлинскаго. Том 8",
+   "language": "Russian",
+   "pages": [
+    635,
+    636,
+    637,
+    638
+   ],
+   "evidence": "The English 'His love for the people was not a feeling, but a calculation' renders 'Любовь его къ народу была не чувствомъ, а разсчетомъ' from page 636. Page 635 itself is about Godunov and the Pretender."
+  },
+  {
+   "book_id": "6a08548949638a50931bfebe",
+   "title": "M. Tullii Ciceronis Orationum pars 3",
+   "language": "Latin",
+   "pages": [
+    22
+   ],
+   "evidence": "English 'Shall I call them by this name, the destroyers of this empire?' renders 'hoccine ut ego appellē nomine euersores huius imperij?' on p23. Page 22's own text ('occulte à salute nostra dissentiunt... Cn. Pōpeius omni cautione') is not translated."
+  },
+  {
+   "book_id": "69b3009ee28f56bd749422ab",
+   "title": "Historiarum libri Vol. 3 (Elzevir 1645)",
+   "language": "Latin",
+   "pages": [
+    179
+   ],
+   "evidence": "'Mammula to the Bruttii, M. Aemilius Lepidus to Sicily' and 'with thirty ships readied' match 'Cornelio Mammulæ Bruttii, M. Æmilio Lepido Sicilia' and 'cum triginta navibus paratis' on p180. None of p179's own text ('cui Græcia evenisset', the vow of 'ludos magnos') is translated."
+  },
+  {
+   "book_id": "69b2f450f9f1ad2b3b152c44",
+   "title": "C. Iulii Caesaris Commentarii",
+   "language": "Latin",
+   "pages": [
+    319,
+    320
+   ],
+   "evidence": "'so much farther they were from water ... The Afranian battle line was double' = 'tanto aberat ab aqua longius ... Acies erat Afraniana duplex' (p320)"
+  },
+  {
+   "book_id": "6a084db249638a50931b462e",
+   "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quinctum fratrem, cum correctio",
+   "language": "Latin",
+   "pages": [
+    346,
+    347
+   ],
+   "evidence": "'The day before, however, Crassipes had been with me' = 'Pridie autem apud me Crassipes fuerat' (p347)"
+  },
+  {
+   "book_id": "6993897c74305116d72d1d5f",
+   "title": "Herodotus, Histories",
+   "language": "Greek",
+   "pages": [
+    400,
+    401
+   ],
+   "evidence": "'The Libyans and Ethiopians are indigenous… except for Cinyps alone' = 'Λίβυες μὲν καὶ Αἰθίοπες, αὐτόχθονα… πλὴν Κίνυπος μούνης' (p401). Page 400 itself is about pitch at Zakynthos and the Carthaginian silent gold trade."
+  },
+  {
+   "book_id": "69f33d1b876dd827cbc5b8f2",
+   "title": "Munsan sŏnsaeng sangjŏn",
+   "language": "Korean",
+   "pages": [
+    497,
+    498,
+    499,
+    500,
+    501,
+    502
+   ],
+   "evidence": "'When I die, it must remain hanging in front of my heart' = 吾死必仍懸吾心前 (p498); 'Huangtutan' = 黃土潭 (p498)"
+  },
+  {
+   "book_id": "69dbcb471040d1d5e20b5393",
+   "title": "Epistolae",
+   "language": "Latin",
+   "pages": [
+    166,
+    167
+   ],
+   "evidence": "'C. Plinius sends greetings to his Sabinus... Circensian Games' = 'C.Plinius Sabino suo Salutem... Circeses erat' (p167); p166's own Massa/Nerua/Maximo text is absent"
+  },
+  {
+   "book_id": "69dbc9821040d1d5e20a3ac9",
+   "title": "Brutus. Add: Orator",
+   "language": "Latin",
+   "pages": [
+    182,
+    183,
+    184,
+    185,
+    186,
+    273,
+    274
+   ],
+   "evidence": "'Around the same times, a little younger in age than Julius... C. Cotta, P. Sulpicius' = 'Iisdem fere temporibus etate inferiores paulo quam Iulius... C. Cotta. P. Sulpicius' (p274)"
+  },
+  {
+   "book_id": "69b2230956715b0e32476067",
+   "title": "Decameron (Aldine Press)",
+   "language": "Italian",
+   "pages": [
+    149
+   ],
+   "evidence": "'he asked the Catalan for him. And he, although it seemed grievous to him, left him to him' = 'al catalano il dimando: & quegli, anchora che graue gli pareſſe; glie lo laſcio' (p150); the text printed on p149 ('cuna misericordia hauere di uoi... Albenga... Alessandria') does not appear in the English"
+  },
+  {
+   "book_id": "6a0857d049638a50931c5a32",
+   "title": "Bartholomaei Riccii De imitatione libri tres, ad Alfonsum Atestium principem, ...",
+   "language": "Latin",
+   "pages": [
+    150,
+    151
+   ],
+   "evidence": "'this third book on locution could have been born from the second without any just accusation' = 'tertius hic de locutione liber ex secundo sine ulla iusta accusatione nasci potuerit' (p151)"
+  },
+  {
+   "book_id": "69af1372356d04f8db194a39",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 7. История одного города. Убежище Монрепо. П",
+   "language": "Russian",
+   "pages": [
+    459
+   ],
+   "evidence": "\"something like Adam's weeping over lost paradise\" = \"нѣчто въ родѣ плача Адама объ утраченномъ раѣ\" (p460)"
+  },
+  {
+   "book_id": "69c859ca6c6f3cc53c8546e8",
+   "title": "Christianus Democritus autocatacritus, das ist: der sich selbst verurtheilende Democritus",
+   "language": "German",
+   "pages": [
+    955,
+    956,
+    957
+   ],
+   "evidence": "'the number of sinners, so that they do not build upon their own righteousness' = 'ter die Zahl der Sünder beschlossen sind, damit sie nicht auf ihre Gerechtigkeit' (p956)"
+  },
+  {
+   "book_id": "69af14604e1da8eb32ebf7c6",
+   "title": "Собрание сочинений К. Леонтьева. Т. 2",
+   "language": "Russian",
+   "pages": [
+    56,
+    57
+   ],
+   "evidence": "'Hafuz rushed to me and started kissing me: \"Yorgaki... you sea (foolish) Yorgaki!' = 'а Хафузъ кинулся ко мнѣ и ну меня цѣловать: «Йоргаки! говоритъ, море (глупый) Йоргаки!' (p57)"
+  },
+  {
+   "book_id": "6a08509515c643eb1af47e28",
+   "title": "In hoc volumine haec continentur : Neruae [et] Traiani, atq[ue] Adriani Caesarum vitae ex ",
+   "language": "Latin",
+   "pages": [
+    305,
+    306,
+    481,
+    482,
+    483
+   ],
+   "evidence": "'The Gallic fields are plowed with barbarian oxen' = 'Arantur gallicana rura barbaris bobus' (p482)"
+  },
+  {
+   "book_id": "69c850c66c6f3cc53c852ebc",
+   "title": "Höchstnothwendige und zur Seelen Seligkeit sehr nützliche Erklärung etlicher Haupt-Puncten",
+   "language": "German",
+   "pages": [
+    142,
+    143,
+    144,
+    145,
+    146
+   ],
+   "evidence": "'fine wounds of the Lord Jesus might be healed' = 'feine des HErrn JEsu Wunden heil würden' (p143)"
+  },
+  {
+   "book_id": "6a0970a6bf2196cdca904531",
+   "title": "Ioannis Iouiani Pontani. De Aspiratione libri duo. Charon dialogus. Antonius dialogus. Act",
+   "language": "Latin",
+   "pages": [
+    208,
+    209,
+    210,
+    302,
+    303,
+    304,
+    305,
+    306,
+    307,
+    543,
+    544,
+    545,
+    546,
+    547
+   ],
+   "evidence": "'Varro wants cohors to be a small space within a wall' = 'Varro uult cohortem uile spacium esse intra maceriem' (p544)"
+  },
+  {
+   "book_id": "69b221a308069e96e8430731",
+   "title": "Pliny the Younger, Epistolarum Libri Decem, with Panegyricus and Suetonius (Aldine Press)",
+   "language": "Latin",
+   "pages": [
+    56,
+    57
+   ],
+   "evidence": "'that we might avoid the repentance that accompanies sudden giving' = 'ut subitæ largitionis comitē, pœnitētiā caueremus' (p57)"
+  },
+  {
+   "book_id": "69c862ac6c6f3cc53c855bc2",
+   "title": "Theodicaea, oder, Versuch und Abhandlung, wie die Güte und Gerechtigkeit Gottes ...zu vert",
+   "language": "German",
+   "pages": [
+    847
+   ],
+   "evidence": "English 'the world would have been a mere passive machine' renders 'so würde die Welt eine blose leidende Machine gewesen seyn' (p848); none of p847's text ('ens rationis ratiocinantis', 'III. Section, von den unziemlichen Wahlen') appears"
+  },
+  {
+   "book_id": "6a09748bf14f992996681a6e",
+   "title": "Le pistole di Cicerone ad Attico, fatte volgari da M. Matteo Senarega.",
+   "language": "Italian",
+   "pages": [
+    530,
+    531,
+    532,
+    533
+   ],
+   "evidence": "'Balbus and Oppius provide a remedy for this evil' = 'Balbo et Oppio porgano rimedio a questo male' (p531)"
+  },
+  {
+   "book_id": "6a08511549638a50931b7fd1",
+   "title": "4!: Orator Ciceronis ad M. Brutum. ...",
+   "language": "Latin",
+   "pages": [
+    20,
+    21,
+    22
+   ],
+   "evidence": "'Caria, Phrygia, and Mysia... fatty diction' = 'Itaque Caria et Phrygia et Mysia... tanquam adipatæ dictionis genus' (p21)"
+  },
+  {
+   "book_id": "69b00f6ce485bbb15c6b29cb",
+   "title": "Pedanii Dioscoridis De Medica Materia Libri Quinque (1546)",
+   "language": "Latin",
+   "pages": [
+    418,
+    419
+   ],
+   "evidence": "'Chamelæa grows as a shrub with branches nine inches long' = 'Chamelæa surculosa fruticat, ramis dodrantalibus' (p419)"
+  },
+  {
+   "book_id": "69dbcb481040d1d5e20b5456",
+   "title": "Epistolae. Ed: Pomponius Laetus",
+   "language": "Latin",
+   "pages": [
+    37,
+    38
+   ],
+   "evidence": "The English leaves out the tribune letter that fills most of p37 ('agere decere: plurimu refert… tribunum omnibus exhibere'). Apart from the first lines of the Tranquillus letter, it translates p38: 'the proximity to the city, the convenience of the road, the mediocrity of the villa' = 'uicinitas urbis/oportunitas uiae/mediocritas uillae' (p38)"
+  },
+  {
+   "book_id": "6a205634bf38605d952c54b1",
+   "title": "Henrici Cornelii Agrippae ab Nettesheym De incertitudine et vanitate scientiarum declamati",
+   "language": "Latin",
+   "pages": [
+    116,
+    117,
+    118,
+    119,
+    120
+   ],
+   "evidence": "'produce roses in the month of March' = 'in mense martio rosas producat' (p117)"
+  },
+  {
+   "book_id": "69e753cf095c302d3fddc2e2",
+   "title": "मृच्छकटिक (Mṛcchakaṭika / The Little Clay Cart)",
+   "language": "Sanskrit",
+   "pages": [
+    173,
+    174,
+    175,
+    176
+   ],
+   "evidence": "'This servant took the necklace from me and killed her' = 'एशे चेडे शुवण्णचोलिआए मए गहिदे पिट्टिदे मालिदे' (p174); p173's own text (Śakāra's monologue, 'ओशलध देध मग्गं') is not rendered"
+  },
+  {
+   "book_id": "69dbcbca1040d1d5e20bacfe",
+   "title": "Epistolae ad Lucilium",
+   "language": "Latin",
+   "pages": [
+    156
+   ],
+   "evidence": "English 'many arts, many precepts, examples of many ages, yet all conspired into one... By constant intention' = 'multe in illo artes. multa precepta sunt. multarum etatum exempla. sed in unum conspirata... Assidua intentione' (p157); none of p156's own text (Apes... Virgilius... chorus) is rendered"
+  },
+  {
+   "book_id": "69b3001fe5d6d64d8e1984c5",
+   "title": "Disputationum adversus Gentes libri octo",
+   "language": "Latin",
+   "pages": [
+    550,
+    551,
+    552,
+    553,
+    554,
+    555
+   ],
+   "evidence": "'Is it Janus, the founder of the Janiculum' = 'Ianus Ianiculi conditor' (p551)"
+  },
+  {
+   "book_id": "69aea88e1cbf28a363a50346",
+   "title": "Opera Omnia (Aldine)",
+   "language": "Latin",
+   "pages": [
+    416,
+    417
+   ],
+   "evidence": "'from the contemplation of the stars' = 'à syderum contemplatione nomen duxit' (p417); p416's own text (Cato Porcius, Solon, Lycurgus) is not translated"
+  },
+  {
+   "book_id": "6a08553349638a50931c19da",
+   "title": "Le epistole famigliari di Cicerone, tradotte secondo i ueri sensi dell'auttore, & con figu",
+   "language": "Italian",
+   "pages": [
+    501,
+    502,
+    503
+   ],
+   "evidence": "'which Oppia, once wife of Mindius, has carried off' = 'le quali ha trasfugate Oppia, già moglie di Mindio' (p502)"
+  },
+  {
+   "book_id": "69b3f773a107e55a0ee1d546",
+   "title": "Works / Tertullian (BPL 2)",
+   "language": "Latin",
+   "pages": [
+    444,
+    445
+   ],
+   "evidence": "English 'even with a medical document, no one had run to God working in the prophet' = 'etiam medico documento nemo decurasset ad deum operantem in prophe.' (p445)"
+  },
+  {
+   "book_id": "69e8b12c2ff2a8dc09e755a4",
+   "title": "Disquisitiones Arithmeticae",
+   "language": "Latin",
+   "pages": [
+    220,
+    221,
+    222,
+    223,
+    224
+   ],
+   "evidence": "'168. THEOREM. If the number M is represented by the form axx + 2bxy + cyy' = '168. THEOREMA. Si numerus M per formam axx + 2bxy + cyy repraesentatur' (p221)"
+  },
+  {
+   "book_id": "6a100a83f717292950970467",
+   "title": "Cérémonies et coutumes religieuses des peuples idolatres : avec une explication historique",
+   "language": "French",
+   "pages": [
+    504,
+    505,
+    506
+   ],
+   "evidence": "English 'stolen precious jewels from the General of the Army of Madurai' matches 'volé des bijoux precieux au General d'Armée de Maduré' on p505. Page 504 is about snakes and Bouchet's oracles, which this English does not cover."
+  },
+  {
+   "book_id": "69af21fb7c27d4b637fedf7d",
+   "title": "Opera Omnia, Vol. XXXIV",
+   "language": "Latin",
+   "pages": [
+    637,
+    638
+   ],
+   "evidence": "'But this distinction is based on the false in many ways' = 'Sed hæc distinctio multipliciter fundatur super falsum' (p638)"
+  },
+  {
+   "book_id": "6a08a86f50cb4ea746a0a44f",
+   "title": "The Works of Lucian of Samosata, Vol. 4 (Fowler trans., 1905)",
+   "language": "English",
+   "pages": [
+    180,
+    181,
+    182,
+    183,
+    184
+   ],
+   "evidence": "English 'Nature (which you honor) and the gods have given us the earth' matches 'Nature (which you honour) and the Gods have given us the earth' on p181; p180 has the feet/body dialogue instead"
+  },
+  {
+   "book_id": "69ac8e56e54b190acc1d39e5",
+   "title": "Splendor lucis, oder Glanz des Lichts",
+   "language": "German",
+   "pages": [
+    90,
+    91,
+    92,
+    93,
+    94
+   ],
+   "evidence": "'The garment is called Lebuscho... 338' = 'Das Kleyd stehet in der Grund-Sprach לבושו (Lebuscho) so in der grossen Zahl 338' (p91)"
+  },
+  {
+   "book_id": "69b2692ab42fc08a921c5c1b",
+   "title": "C. Plinii Secundi Historiae Naturalis Libri XXXVII (1510 Aldine)",
+   "language": "Latin",
+   "pages": [
+    137,
+    138,
+    139
+   ],
+   "evidence": "'the river Novanus is a torrent at all solstices' = 'fluuius nouanus omnibus solstitijs torrens' (p138), and none of p137's text (Arethusa, Timavus, Asphaltites) is there"
+  },
+  {
+   "book_id": "69dc55ddcb6f7429748b95d2",
+   "title": "Speculum vitae humanae",
+   "language": "Latin",
+   "pages": [
+    120,
+    121,
+    122,
+    123,
+    124
+   ],
+   "evidence": "'does the foolish man open his mouth and multiply words without wisdom' = 'Stultus homo aperit os suum et absque sapientia verba multiplicat' (p121)"
+  },
+  {
+   "book_id": "6a084ed615c643eb1af42d57",
+   "title": "Conuersio et passio SS. martyrum Afrae, Hilariae, Dignae, Eunomiae, Eutropiae; quae ante a",
+   "language": "Latin",
+   "pages": [
+    104,
+    105,
+    106,
+    107,
+    108
+   ],
+   "evidence": "English 'Pious antiquity believed that Afra... was beaten after being bound to a post' = 'Pia antiquitas credidit Afram... ad palum deligatam uerberatam fuisse' (p105)"
+  },
+  {
+   "book_id": "69b51e06768235dc6598b5fb",
+   "title": "Vater Johann Rudolf Meyer, Bürger von Aarau : eine Denkschrift",
+   "language": "German",
+   "pages": [
+    80,
+    81,
+    82,
+    83,
+    84,
+    88,
+    89,
+    90,
+    91
+   ],
+   "evidence": "'my spirit to the light from which I received it' = 'ich meinen Geist dem Licht, von dem ich ihn empfangen' (p81)"
+  },
+  {
+   "book_id": "6990541c38e1fdee57b36c1a",
+   "title": "L'automatisme psychologique",
+   "language": "French",
+   "pages": [
+    264
+   ],
+   "evidence": "'I no longer know how to put my hands in prayer' = 'je ne sais plus mettre mes mains en prière' (p265); p264 itself covers paralysies systématisées, 'griffes cubitales', none translated"
+  },
+  {
+   "book_id": "6a08549a49638a50931c01a8",
+   "title": "M. Tullii Ciceronis Orationum pars 1. Cum correctionibus P. Manutij , et annotationib. D. ",
+   "language": "Latin",
+   "pages": [
+    377,
+    378
+   ],
+   "evidence": "'I said I would conclude the charge of the tithes' = 'conclusurum me esse crimen decumarum dixeram' (p378)"
+  },
+  {
+   "book_id": "69b21dca94025df5d2909ff2",
+   "title": "Socrates Scholasticus, Ecclesiastical History (Greek, Hussey text)",
+   "language": "Greek",
+   "pages": [
+    298,
+    299
+   ],
+   "evidence": "'a huge comet, extending from the sky to the earth' = 'κομήτην μέγιστον ἐκ τοῦ οὐρανοῦ καὶ μέχρι τῆς γῆς διήκοντα' (p299)"
+  },
+  {
+   "book_id": "69c6332f3e8cae136d1496fd",
+   "title": "Versuch über die Beschuldigungen welche dem Tempelherrenorden gemacht worden, und über des",
+   "language": "German",
+   "pages": [
+    45,
+    46,
+    335,
+    336,
+    337
+   ],
+   "evidence": "'expand the Saracen word Y alla ... into Chalil allah' = 'das saracenische Wort Y alla ... in Chalil allah (Freund Gottes) ausdehnen' (p336)"
+  },
+  {
+   "book_id": "69dbc57237db7bc4b2eb2902",
+   "title": "Mariale",
+   "language": "Latin",
+   "pages": [
+    331,
+    332,
+    333
+   ],
+   "evidence": "'Likewise, Deuteronomy 33: God's works are perfect' = 'Ite Deut. xxxiii. dei pfecta sunt opa' (p332)"
+  },
+  {
+   "book_id": "6a06d4e89a48d513999643b4",
+   "title": "2: M. Tullii Ciceronis De philosophia volumen secundum, idest, De natura deorum libri 3. D",
+   "language": "Latin",
+   "pages": [
+    420,
+    421
+   ],
+   "evidence": "'It follows that we must speak about rumor' = 'Sequitur enim, ut de rumore dicendum sit' (p421)"
+  },
+  {
+   "book_id": "6a06d5039a48d513999646ae",
+   "title": "De philosophia",
+   "language": "Latin",
+   "pages": [
+    154,
+    166
+   ],
+   "evidence": "English 'do we think that Aesopus ever acted in anger, or that Accius wrote in anger' = 'num aut egisse unquam iratum Aesopum, aut scripsisse existimamus iratum Accium' (p155); p154 itself is about Chrysippus' definition of fortitudo and the Stoics, which this English never renders"
+  },
+  {
+   "book_id": "69aea30f6016d4db42d3b105",
+   "title": "Jenseits von Gut und Böse: Vorspiel einer Philosophie der Zukunft",
+   "language": "German",
+   "pages": [
+    23,
+    24
+   ],
+   "evidence": "'understanding morality, namely, as a doctrine of the relations of dominion' = 'Moral nämlich als Lehre von den Herrschafts-Verhältnissen verstanden' (p24); page 23's own text ('Gehorchenden sind... L'effet c'est moi') is missing"
+  },
+  {
+   "book_id": "69af48c4d6be7ec9cc324226",
+   "title": "Патриотика: Политика, культура, религия, социализм",
+   "language": "Russian",
+   "pages": [
+    464,
+    465
+   ],
+   "evidence": "'must become a classic work of our epistolary literature' = 'должны стать классическимъ произведеніемъ нашей эпистолярной литературы' (p465)"
+  },
+  {
+   "book_id": "69c8a2e26c6f3cc53c85e51f",
+   "title": "Hussiten Krieg",
+   "language": "German",
+   "pages": [
+    413,
+    414,
+    415,
+    416,
+    417
+   ],
+   "evidence": "'Given at Prague in the month of October, Anno 1431' / 'Chapter LXXVIII' = 'Datum Pragæ mense Octob. Anno 1431' / 'Das LXXVIII. Capitel' (p414)"
+  },
+  {
+   "book_id": "69bd9d0a6120d54bd0372c80",
+   "title": "Philonis Judaei ... operum, quotquot ad hunc diem haberi potuerunt, tomus prior[-alter]",
+   "language": "Latin",
+   "pages": [
+    864,
+    865,
+    866,
+    867
+   ],
+   "evidence": "'so the splendor fails with the flame. Therefore, the restoration of the world is impossible' = 'fomite, sic splendor cum flama. itaq; impossibilis est mundi reparatio' (p865)"
+  },
+  {
+   "book_id": "6a08555049638a50931c1f9f",
+   "title": "Di S. Giouanni Crisostomo arciuescouo di Costantinopoli Libri tre della prouidenza di Dio ",
+   "language": "Italian",
+   "pages": [
+    309,
+    310
+   ],
+   "evidence": "'since He made us for His goodness, to give us to enjoy those His eternal goods' = 'Ma poi che egli ci ha fatti per la sua bonta, per darci à godere quei suoi eterni beni' (p310)"
+  },
+  {
+   "book_id": "69c8278b6c6f3cc53c84c09a",
+   "title": "Samlungen [!] von Briefen und Aufsätzen über die Gassnerischen und Schröpferischen Geister",
+   "language": "German",
+   "pages": [
+    108
+   ],
+   "evidence": "'If I had, however, fully seen the whole Teufelsdreck' = 'Wenn ich aber vollend den ganzen Teufelsdreck gesehen hätte' (p109); 'first letter from Zurich' = 'ersten Brief aus Zürch' (p109). Page 108's own text ('Furcht und Erwartung des Teufels', 'Exorcismen', 'Verfolgung des Gaßners') is missing from the English."
+  },
+  {
+   "book_id": "69b2f47c5ef23d31023f7535",
+   "title": "Iuris Orientalis Libri III",
+   "language": "Latin",
+   "pages": [
+    646
+   ],
+   "evidence": "English 'He also cast down the ecclesiastical crosses from my monasteries, that of the Inclusa and of the holy Resurrection' matches 'Deiecit etiam ecclesiasticas cruces à meis monasteriis, Inclusæ, & sanctæ Resurrectionis' on p647. None of p646's own text (Catzurae, Comneno, Smocobi) appears in the English."
+  },
+  {
+   "book_id": "69bd9e066120d54bd037a8ad",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosop",
+   "language": "Latin",
+   "pages": [
+    2072,
+    2073,
+    2074,
+    2075,
+    2076,
+    2077
+   ],
+   "evidence": "'Multitude and diversity must be left behind, one disposition must be sought' = 'Multitudo, & diversitas relinquenda, una dispositio quærenda' (p2073)"
+  },
+  {
+   "book_id": "69b301ecc22956d8a0de5299",
+   "title": "Aristarchus Sacer",
+   "language": "Latin",
+   "pages": [
+    397,
+    581,
+    582,
+    583
+   ],
+   "evidence": "'Concerning whom Jerome rightly says, The Lord's world is the Devil' = 'De quo recte D. Hieronymus, Dominus Diaboli mundus' (p582)"
+  },
+  {
+   "book_id": "6a0a26ce489395e89e449cb9",
+   "title": "De Furtivis Literarum Notis, vulgo de Ziferis libri III, foundational treatise on cryptogr",
+   "language": "Latin",
+   "pages": [
+    100
+   ],
+   "evidence": "'THE ENEMIES' GAIN IS GREAT, AND OUR GAIN IS NO LESS' renders 'QVESTVS HOSTIS MAGNVS EST, ET QVESTVS NOSTER NON MINVS EST' (p101); also 'Secondly, let us seek in empty, additional, and idle letters' = 'Secundo in vacuis, adiectitijs, & ociosis literis quaeramus' (p101)"
+  },
+  {
+   "book_id": "69af42f13bd5f6f35ab8a0cf",
+   "title": "Сочинения И. С. Аксакова, том 2: Славянофильство и западничество",
+   "language": "Russian",
+   "pages": [
+    634
+   ],
+   "evidence": "English 'the Russian seamstress who melts with pleasure if one calls her \"madame\"' renders 'Русской портнихи, которая таетъ отъ удовольствія, если назвать ее мадамой' on p635 (printed 626). Page 634's own text (carriages, telephone, Academy of Sciences, Lomonosov) is missing from the English, apart from the '— 625 —' header."
+  },
+  {
+   "book_id": "69dbcb241040d1d5e20b2e83",
+   "title": "De venenis. Add: Matthaeus Silvaticus: De lapide begaar ex Pandectis",
+   "language": "Latin",
+   "pages": [
+    17,
+    18,
+    19
+   ],
+   "evidence": "'when many humans are poisoned by one food... at the same dinner' = 'multi homines uenenati vno cibo z eadē qntitate in eadem cena' (p18)"
+  },
+  {
+   "book_id": "69e8b18b2ff2a8dc09e76378",
+   "title": "Traité Élémentaire de Chimie, Tome 1",
+   "language": "French",
+   "pages": [
+    107,
+    108,
+    109,
+    110,
+    111,
+    112
+   ],
+   "evidence": "'its weight in this state is quite exactly half a grain' = 'sa pesanteur dans cet état est assez exactement d'un demi-grain' (p108)"
+  },
+  {
+   "book_id": "6991f3d40d82ea4dc111d0fd",
+   "title": "Vite di uomini illustri del secolo XV",
+   "language": "Italian",
+   "pages": [
+    366
+   ],
+   "evidence": "English 'from Friar Agnolo, he began to devote himself to Greek letters, and his tutor was Messer Francesco da Castiglione' = 'da frate Agnolo, cominciò a dare opera alle lettere greche, e fu suo precettore messer Francesco da Castiglione' (p367); none of p366's text (Cardinale di Pavia, Iacopo da Lucca) appears"
+  },
+  {
+   "book_id": "6a4e5bdf00c1250433dc2c03",
+   "title": "Compendium Manualis Navarri ad commodiorem usum, tum confessariorum, tum poenitentium conf",
+   "language": "Latin",
+   "pages": [
+    182,
+    183,
+    184,
+    185,
+    186,
+    187
+   ],
+   "evidence": "'the conditions for lost profit are three' = 'conditiones lucri cessantis necessariæ sunt tres' (p183)"
+  },
+  {
+   "book_id": "69c860796c6f3cc53c8557d5",
+   "title": "scripture thesauros pandens, denuo possa eliata: atque ubi truncata pri habebat supplement",
+   "language": "Latin",
+   "pages": [
+    220,
+    221,
+    222
+   ],
+   "evidence": "'In the vernacular book Coelifodina ... the jubilee ... Raymond, the Legate, through Thuringia' = 'in vulgari celifodina ... predicare iubileum ... Raymudi Legati ... per Thuringiā' (p221)"
+  },
+  {
+   "book_id": "6a0851c315c643eb1af4b0f7",
+   "title": "M. Tullii Ciceronis De philosophia prima pars uolumen secundum .. De philosophia, prima pa",
+   "language": "Latin",
+   "pages": [
+    348,
+    349
+   ],
+   "evidence": "'I wish Panaetius could be present. He lived with Africanus' = 'uellem adesse posset Panaetius. uixit cum Africano' (p349)"
+  },
+  {
+   "book_id": "69c8460b6c6f3cc53c851695",
+   "title": "Christliche, schriffmässige, wolgegründete Rettunge der Vier Bücher vom wahren Christenthu",
+   "language": "German",
+   "pages": [
+    561,
+    562,
+    563,
+    564,
+    565,
+    640,
+    641
+   ],
+   "evidence": "'turn back, do penance, recognize the abomination of our sins' = 'vmbkehren / Busse thun/ vnsern sünden Gräwel erkennen' (p641); p640's own text 'gewirdiget, ists billig, daß wir solchen himmlischen Schatz' is missing"
+  },
+  {
+   "book_id": "69aeb6a2bf00526d1d64c9a1",
+   "title": "De Vitis et Moribus Philosophorum (trans. Ambrogio Traversari, 1546 Lyon)",
+   "language": "Latin",
+   "pages": [
+    43
+   ],
+   "evidence": "English 'Pittacus of Mitylene was the son of Hyrradius, who, Duris is the author, was a Thracian' renders 'Pittacus Mitylenæus Hyrradio patre, quem Thraca fuisse, Duris autor est' (p.44); page 43 itself has Chilo's death, epigrams and letter to Periander, none of which appear in the English"
+  },
+  {
+   "book_id": "69dbcbaa1040d1d5e20ba048",
+   "title": "Speculum vitae humanae [German] Spiegel des menschlichen Lebens. Tr: Heinrich Steinhöwel",
+   "language": "German",
+   "pages": [
+    275,
+    276,
+    277,
+    278,
+    279
+   ],
+   "evidence": "'I am miserable in this church' = 'Ich bin unsälig in diser kirchen' (p276)"
+  },
+  {
+   "book_id": "69c78d3a6a0f3d112faf99bc",
+   "title": "Saltz-Bund Gottes... in VIII Theilen",
+   "language": "German",
+   "pages": [
+    632,
+    633,
+    634
+   ],
+   "evidence": "'that they anointed themselves with a certain oil, and then they could fly' = 'sie salbeten sich mit einem gewissen Oel, und denn könten sie fliegen' (p633)"
+  },
+  {
+   "book_id": "69af242c7c27d4b637fef7fa",
+   "title": "Lucan, with an English Translation (Loeb)",
+   "language": "Latin",
+   "pages": [
+    387
+   ],
+   "evidence": "The English shown ('Sunshine had conquered the stars... demanded the signal for battle') renders 'Vicerat astra iubar, cum mixto murmure turba / Castrorum fremuit... Signa petit pugnae' (p388). It does not render the English printed on p387 ('plain robe of white... Break not his sleep, watchmen of the camp'), which translates 'Ne rumpite somnos, / Castrorum vigiles' (p386)."
+  }
+ ],
+ "not_contained": [
+  {
+   "book_id": "69b00ed8312120db3b489ffe",
+   "title": "Macrobii In Somnium Scipionis; Saturnalia (1528)",
+   "language": "Latin",
+   "pages": [
+    586,
+    587,
+    588,
+    608
+   ]
+  },
+  {
+   "book_id": "6a085b0349638a50931caa99",
+   "title": "De oratore",
+   "language": "Latin",
+   "pages": [
+    371
+   ]
+  },
+  {
+   "book_id": "6a084fcd15c643eb1af45cfe",
+   "title": "Ex XIIII. T. Liuii decadibus. Prima, tertia, quarta, in qua præter fragmenta III, & X libr",
+   "language": "Latin",
+   "pages": [
+    499,
+    500,
+    501
+   ]
+  },
+  {
+   "book_id": "69c72e586a0f3d112faf71e3",
+   "title": "[Greek: Peri Bion, Dogmaton kai apophthegmaton ton en philosophia eudokimesanton: biblia d",
+   "language": "Greek",
+   "pages": [
+    46,
+    47
+   ]
+  },
+  {
+   "book_id": "6a08507515c643eb1af47761",
+   "title": "M.T. Ciceronis Epistolarum ad Atticum, ad Brutum, ad Quintum fratrem, libri XX. nuper exac",
+   "language": "Latin",
+   "pages": [
+    68,
+    69,
+    466,
+    467,
+    468
+   ]
+  },
+  {
+   "book_id": "69aead2b66bcc9447837cb6b",
+   "title": "Descartes' Kritik der mathematischen und naturwissenschaftlichen Erkenntnis",
+   "language": "German",
+   "pages": [
+    34,
+    35,
+    36
+   ]
+  },
+  {
+   "book_id": "69c84cb96c6f3cc53c8524fe",
+   "title": "Teutsch-evangelisches Judenthum",
+   "language": "German",
+   "pages": [
+    183,
+    184,
+    185
+   ]
+  },
+  {
+   "book_id": "69b630291c1c21a3737fe6da",
+   "title": "Disputatio physica expendens rationes & caussas, cur plurimi ab esu casei abhorreant",
+   "language": "Latin",
+   "pages": [
+    22,
+    23
+   ]
+  },
+  {
+   "book_id": "6a209ede89e8715c5947af4b",
+   "title": "Die Vorzeit Lieflands: Ein Denkmahl des Pfaffen- und Rittergeistes",
+   "language": "German",
+   "pages": [
+    378,
+    379,
+    380,
+    381,
+    382,
+    383
+   ]
+  },
+  {
+   "book_id": "69af13c8f7553c6a79e853d1",
+   "title": "Собрание сочинений К. Леонтьева. Т. 7. Восток, Россия и славянство",
+   "language": "Russian",
+   "pages": [
+    213,
+    214
+   ]
+  },
+  {
+   "book_id": "69c4ec33a3a4a7c546ee6109",
+   "title": "Philosophie d'amour",
+   "language": "French",
+   "pages": [
+    304
+   ]
+  },
+  {
+   "book_id": "69592b207c072c27f686dd71",
+   "title": "Theologia Platonica de immortalitate animarum",
+   "language": "Latin",
+   "pages": [
+    132,
+    133,
+    134
+   ]
+  },
+  {
+   "book_id": "69af20fb7c27d4b637fec71d",
+   "title": "Полное собраніе сочиненій Н.С. Лѣскова. Т. 2",
+   "language": "Russian",
+   "pages": [
+    168
+   ]
+  },
+  {
+   "book_id": "6a08560115c643eb1af5783c",
+   "title": "De discorsi del reuerendo monsignor Francesco Patritij Sanese vescouo Gaiettano, sopra all",
+   "language": "Italian",
+   "pages": [
+    220,
+    221,
+    222,
+    223,
+    224
+   ]
+  },
+  {
+   "book_id": "69a6825ad5bf106c72bb888d",
+   "title": "Theatrum Machinarum, Erster Theil",
+   "language": "German",
+   "pages": [
+    238
+   ]
+  },
+  {
+   "book_id": "69ea3e63300d991d0f1d3186",
+   "title": "अर्थशास्त्र (Arthaśāstra)",
+   "language": "Sanskrit",
+   "pages": [
+    308,
+    309,
+    310,
+    311,
+    312,
+    313
+   ]
+  },
+  {
+   "book_id": "69c8a3f26c6f3cc53c85e777",
+   "title": "Discursus politici singulares, de informatione et coactione suditorum, ubi agitur",
+   "language": "Latin",
+   "pages": [
+    102,
+    103
+   ]
+  },
+  {
+   "book_id": "69b51de2261c58d63664c611",
+   "title": "Vom hylealischen, das ist, pri-materialischen catholischen oder allgemeinen natürlichen Ch",
+   "language": "German",
+   "pages": [
+    256,
+    257,
+    258,
+    259,
+    260
+   ]
+  },
+  {
+   "book_id": "6a0970d3bf2196cdca904e33",
+   "title": "Epistolae clarorum uirorum, selectae de quamplurimis optimæ, ad indicandam nostrorum tempo",
+   "language": "Latin",
+   "pages": [
+    194
+   ]
+  },
+  {
+   "book_id": "69dbca901040d1d5e20acc2f",
+   "title": "Liber de gestis et translatione trium regum. Add: Albertus Magnus: De festo die epiphaniae",
+   "language": "Latin",
+   "pages": [
+    20,
+    21
+   ]
+  },
+  {
+   "book_id": "69af135c46ef029572e0328e",
+   "title": "Epitomes Omnium Galeni Pergameni Operum",
+   "language": "Latin",
+   "pages": [
+    94
+   ]
+  },
+  {
+   "book_id": "69af0f46af16a5a1d2280684",
+   "title": "Полное собрание сочинений. Т. 8: Бесы",
+   "language": "Russian",
+   "pages": [
+    281,
+    282
+   ]
+  },
+  {
+   "book_id": "69af41acb778f128264fc4b0",
+   "title": "Религия и культура",
+   "language": "Russian",
+   "pages": [
+    239,
+    240,
+    241
+   ]
+  },
+  {
+   "book_id": "69ea6ec4d81c1e8a069c439d",
+   "title": "益軒全集 (Ekiken Zenshu), Vol. 5 (Travel Writings)",
+   "language": "Japanese",
+   "pages": [
+    135,
+    760
+   ]
+  },
+  {
+   "book_id": "69b6518618b87551bfcaa0dd",
+   "title": "Tractatio verborum domini, in domo patris mei mansiones multae sunt, &c. ex XIIII. cap. Ev",
+   "language": "Latin",
+   "pages": [
+    18,
+    19,
+    20,
+    21,
+    22
+   ]
+  },
+  {
+   "book_id": "69b30042a1a4246ddb45be5b",
+   "title": "Opera Omnia (Elzevir pocket)",
+   "language": "Latin",
+   "pages": [
+    529
+   ]
+  },
+  {
+   "book_id": "6a084e5215c643eb1af416e0",
+   "title": "Octauiani Ferrarii Hieronymi. F. Mediolanesis De Sermonibus exotericis liber",
+   "language": "Latin",
+   "pages": [
+    118,
+    119
+   ]
+  },
+  {
+   "book_id": "69b300a6e28f56bd749425d6",
+   "title": "Comoediae (Elzevir 1635)",
+   "language": "Latin",
+   "pages": [
+    250,
+    251
+   ]
+  },
+  {
+   "book_id": "69c85f796c6f3cc53c855555",
+   "title": "Vollständige Erklärung des Hohen Liedes Salomonis",
+   "language": "German",
+   "pages": [
+    128,
+    129
+   ]
+  },
+  {
+   "book_id": "6a08571915c643eb1af5aae6",
+   "title": "C. Plinii Secundi Nouocomensis Epistolarum libri 10. Eiusdem Panegyricus Traiano Principi ",
+   "language": "Latin",
+   "pages": [
+    226,
+    227
+   ]
+  },
+  {
+   "book_id": "69af42cc3bd5f6f35ab89765",
+   "title": "Полное собрание сочинений А. С. Хомякова, том 6",
+   "language": "Russian",
+   "pages": [
+    126,
+    127
+   ]
+  },
+  {
+   "book_id": "69b51db8768235dc65986d03",
+   "title": "Elucidarius major. Oder Erleuchterunge vber die Reformation der gantzen weiten Welt, F. C.",
+   "language": "German",
+   "pages": [
+    189,
+    190,
+    191
+   ]
+  },
+  {
+   "book_id": "69bd9ebff6d63c919747ca7c",
+   "title": "Des Sibylles celebrées tant par l'antiquité payenne que par les saincts pères : discours t",
+   "language": "French",
+   "pages": [
+    274,
+    275,
+    276,
+    277,
+    278,
+    279
+   ]
+  },
+  {
+   "book_id": "69b222839dbc3744b781a93e",
+   "title": "Livy, Ab Urbe Condita: Decades III (Books 21-30) (Aldine Press)",
+   "language": "Latin",
+   "pages": [
+    706,
+    707,
+    708,
+    709
+   ]
+  },
+  {
+   "book_id": "69b642051c1c21a373889f10",
+   "title": "Henrici Cor. Agrippae ab Nettesheym a consiliis et archivis inditiarii sacrae maiestatis, ",
+   "language": "Latin",
+   "pages": [
+    139,
+    140,
+    141,
+    142,
+    143,
+    144
+   ]
+  },
+  {
+   "book_id": "6a08513849638a50931b8482",
+   "title": "Titi Liuii Patauini Decadis quintae libri quinque.",
+   "language": "Latin",
+   "pages": [
+    34,
+    35,
+    36,
+    37,
+    38
+   ]
+  },
+  {
+   "book_id": "69b51e15cf111105c429678f",
+   "title": "Divini Platonis operum. 4, Continens Quaternitatem Septimam, & Octavam",
+   "language": "Latin",
+   "pages": [
+    621,
+    622,
+    623,
+    624,
+    625
+   ]
+  },
+  {
+   "book_id": "69f33ccc876dd827cbc5adf2",
+   "title": "Hwangdan chʻuhyang sasil",
+   "language": "Korean",
+   "pages": [
+    97,
+    98,
+    99,
+    100,
+    101
+   ]
+  },
+  {
+   "book_id": "69dbca101040d1d5e20a8fae",
+   "title": "Summa perfectionis magisterii. Add: Liber trium verborum. Alexander Magnus: Epistola, 'Qui",
+   "language": "Latin",
+   "pages": [
+    91,
+    92,
+    93,
+    94,
+    95
+   ]
+  },
+  {
+   "book_id": "69b4d64b853c26e0d1560764",
+   "title": "Liber unus de secretis antimonii",
+   "language": "German",
+   "pages": [
+    134,
+    135
+   ]
+  },
+  {
+   "book_id": "69b51ec8768235dc65998aac",
+   "title": "Dissertatio Inauguralis Medica, De Abstinentia Medici Ab Aegrotis Famam Et Vitam Nonnunqua",
+   "language": "German",
+   "pages": [
+    29,
+    30,
+    31,
+    32
+   ]
+  },
+  {
+   "book_id": "69af3c1ce2921802c6c77d53",
+   "title": "Полное собрание сочинений Ф.М. Достоевского, Т. 12: Дневник писателя",
+   "language": "Russian",
+   "pages": [
+    317,
+    318
+   ]
+  },
+  {
+   "book_id": "69af119523aa4b6749dc3238",
+   "title": "De Christiana Expeditione apud Sinas (The Jesuit China Mission)",
+   "language": "Latin",
+   "pages": [
+    636,
+    637,
+    638,
+    639
+   ]
+  },
+  {
+   "book_id": "69af1353199e32dea75f9f1e",
+   "title": "Полное собрание сочинений М. Е. Салтыкова. Т. 5. Мелочи жизни. Сборник",
+   "language": "Russian",
+   "pages": [
+    338,
+    339
+   ]
+  },
+  {
+   "book_id": "6990700c245959b9547d6474",
+   "title": "Coelestis Physiognomoniae Libri Sex",
+   "language": "Latin",
+   "pages": [
+    183,
+    184
+   ]
+  },
+  {
+   "book_id": "69dbc9ce1040d1d5e20a6f7c",
+   "title": "Die Neue Ehe und das Passional von Jesu. Add: Johannes de Hildesheim: Liber de gestis et t",
+   "language": "German",
+   "pages": [
+    210,
+    211,
+    212,
+    213,
+    214
+   ]
+  },
+  {
+   "book_id": "69de1c7cd10d4b0d3f6f293e",
+   "title": "Justine, ou les Malheurs de la vertu",
+   "language": "French",
+   "pages": [
+    478,
+    479,
+    480,
+    481,
+    482,
+    483
+   ]
+  },
+  {
+   "book_id": "69b66065b3f4fc04415321aa",
+   "title": "Tres Orationes : Prima De cognitione herbarum, tyroni medicinae apprime necessaria : Secun",
+   "language": "Latin",
+   "pages": [
+    45,
+    46,
+    47,
+    48
+   ]
+  },
+  {
+   "book_id": "69c70a25da9771c716315eb4",
+   "title": "Geistreiche Predigten",
+   "language": "German",
+   "pages": [
+    759,
+    760
+   ]
+  },
+  {
+   "book_id": "69bd9c976120d54bd036fc7c",
+   "title": "Divi Ioannis Chrysostomi Psegmata quaedam",
+   "language": "Latin",
+   "pages": [
+    77,
+    78
+   ]
+  },
+  {
+   "book_id": "69c851df6c6f3cc53c853242",
+   "title": "Disputatio theologica inauguralis qua theologiae fanaticae fundamentum de tribus partibus ",
+   "language": "Latin",
+   "pages": [
+    43,
+    44,
+    45
+   ]
+  },
+  {
+   "book_id": "69d14b5f1c2a66dc094b4d88",
+   "title": "Miscellanies in Prose and Verse",
+   "language": "English",
+   "pages": [
+    29,
+    30
+   ]
+  },
+  {
+   "book_id": "69ac8509960d5ad0b47313a9",
+   "title": "Tychonis Brahei, Equitis Dani, Astronomorum Coryphaei, Vita",
+   "language": "Latin",
+   "pages": [
+    471
+   ]
+  },
+  {
+   "book_id": "69aec5d23b6ebce5e0ee97fa",
+   "title": "Philosophia Moralis sive Ethica",
+   "language": "Latin",
+   "pages": [
+    333,
+    334,
+    335,
+    336,
+    337,
+    338
+   ]
+  },
+  {
+   "book_id": "6a0974a3f14f992996682326",
+   "title": "1. M. Tullii Ciceronis Epistolae familiares, diligentius, quam quae hactenus exierunt, eme",
+   "language": "Latin",
+   "pages": [
+    383,
+    384,
+    385
+   ]
+  },
+  {
+   "book_id": "69dbc9901040d1d5e20a4508",
+   "title": "De oratore",
+   "language": "Latin",
+   "pages": [
+    78,
+    79,
+    80
+   ]
+  },
+  {
+   "book_id": "69c718aada9771c71631663b",
+   "title": "Evangelische Kirchen-Harmonie",
+   "language": "German",
+   "pages": [
+    645,
+    646,
+    647,
+    648,
+    649,
+    650
+   ]
+  },
+  {
+   "book_id": "69c82e676c6f3cc53c84d61e",
+   "title": "Thesaurus et armamentarium medico-chymicum",
+   "language": "German",
+   "pages": [
+    65
+   ]
+  },
+  {
+   "book_id": "6a09749df14f992996682189",
+   "title": "Della republica et magistrati di Venetia libri 5 di m. Gasparo Contarini ... Con un ragion",
+   "language": "Italian",
+   "pages": [
+    333,
+    334,
+    335
+   ]
+  },
+  {
+   "book_id": "69b6fec53c7947b468d92d14",
+   "title": "Christianismi restitutio ... MDLIII",
+   "language": "Latin",
+   "pages": [
+    502,
+    503,
+    504,
+    505,
+    506
+   ]
+  },
+  {
+   "book_id": "69b4cd0fd5b6c3815e1a3afc",
+   "title": "Geographiae universae tum veteris, tum novae",
+   "language": "Latin",
+   "pages": [
+    197
+   ]
+  },
+  {
+   "book_id": "6a1009d0f71729295096c07a",
+   "title": "Deutsches theatrum chemicum, auf welchem der berühmtesten Philosophen und Alchymisten Schr",
+   "language": "German",
+   "pages": [
+    996,
+    997,
+    998,
+    999,
+    1000,
+    1001
+   ]
+  },
+  {
+   "book_id": "69af13bef837644f29a494ef",
+   "title": "Собрание сочинений К. Леонтьева. Т. 5. Восток, Россия и славянство",
+   "language": "Russian",
+   "pages": [
+    366,
+    367,
+    368
+   ]
+  },
+  {
+   "book_id": "6a085ce349638a50931ce22c",
+   "title": "Ciceronis De officiis libri 3. Cato maior, uel de senectute: Laelius, uel de amicitia: Par",
+   "language": "Latin",
+   "pages": [
+    278
+   ]
+  },
+  {
+   "book_id": "69b62fc71c1c21a3737fa5f9",
+   "title": "Commentarii in Epistolas D. Pauli ad Timoth. ad Titum, et ad Philem. facili et perspicua m",
+   "language": "Latin",
+   "pages": [
+    221,
+    222,
+    223
+   ]
+  },
+  {
+   "book_id": "69c81bf26c6f3cc53c849ad9",
+   "title": "Justifications de la doctrine de Madame de la Mothe-Guion",
+   "language": "French",
+   "pages": [
+    331,
+    332,
+    333
+   ]
+  },
+  {
+   "book_id": "69dbcc9e0f8c5edf20f4cb58",
+   "title": "De eucharistia ad modum decem praedicamentorum, sive De corpore Christi (Pseudo-). Exposit",
+   "language": "Latin",
+   "pages": [
+    37,
+    38,
+    39
+   ]
+  },
+  {
+   "book_id": "6a0854be15c643eb1af539be",
+   "title": "Quae toto volumine continentur. Pacis querela. De regno administrando. Institutio principi",
+   "language": "Latin",
+   "pages": [
+    446,
+    447,
+    448
+   ]
+  },
+  {
+   "book_id": "6a08592449638a50931c6ee7",
+   "title": "M. Tullii Ciceronis Orationum uolumen tertium",
+   "language": "Latin",
+   "pages": [
+    141
+   ]
+  },
+  {
+   "book_id": "69f326ef52a77bb28fdb6cb6",
+   "title": "Toktae sŏrhwa",
+   "language": "Korean",
+   "pages": [
+    103,
+    104,
+    105,
+    106,
+    107
+   ]
+  },
+  {
+   "book_id": "69aea42bf7e8488296c57291",
+   "title": "Les essais de Michel seigneur de Montaigne",
+   "language": "French",
+   "pages": [
+    151,
+    152,
+    153
+   ]
+  },
+  {
+   "book_id": "69b00f46f0043345da7679a6",
+   "title": "C. Plinii Secundi Naturalis Historiae, Vol. 3 (1535 Aldine)",
+   "language": "Latin",
+   "pages": [
+    461
+   ]
+  },
+  {
+   "book_id": "6a267f6588f11913ee9c907f",
+   "title": "Als Die Aller Durchleuchtigste Groszmächtigste Fürstin und Frau, Frau Elisabeth Christina ",
+   "language": "German",
+   "pages": [
+    19,
+    20,
+    21
+   ]
+  },
+  {
+   "book_id": "6a085cd949638a50931cdecf",
+   "title": "Rhetoricorum ad C. Herennium libri 4. Incerto auctore. Ciceronis De inuentione libri 2. De",
+   "language": "Latin",
+   "pages": [
+    303
+   ]
+  },
+  {
+   "book_id": "69af11a8630497387e9c7a18",
+   "title": "Кому на Руси жить хорошо и другие стихотворения",
+   "language": "Russian",
+   "pages": [
+    248
+   ]
+  },
+  {
+   "book_id": "6a09707fbf2196cdca903bfb",
+   "title": "M. Tulli Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quinctum fratrem, cum correction",
+   "language": "Latin",
+   "pages": [
+    758,
+    759,
+    760,
+    761,
+    762
+   ]
+  },
+  {
+   "book_id": "69c8726c6c6f3cc53c85786f",
+   "title": "Disputationum de nova medicina Philippi Paracelsi",
+   "language": "Latin",
+   "pages": [
+    185,
+    186,
+    187
+   ]
+  },
+  {
+   "book_id": "69af11663bf2d972adad7d68",
+   "title": "Полное собрание сочинений И.С. Тургенева. Том 6",
+   "language": "Russian",
+   "pages": [
+    625,
+    626,
+    627,
+    628,
+    629
+   ]
+  },
+  {
+   "book_id": "69bda154f6d63c919748f7f3",
+   "title": "Unterhaltungen aus der Naturgeschichte / 3 Die  Amphibien",
+   "language": "German",
+   "pages": [
+    206,
+    207,
+    208,
+    209
+   ]
+  },
+  {
+   "book_id": "69b21cda429e087c6f865b68",
+   "title": "Origines Antwerpianae",
+   "language": "Latin",
+   "pages": [
+    269,
+    270,
+    271
+   ]
+  },
+  {
+   "book_id": "69c7b03b25ec2ba5ccd7f355",
+   "title": "Labyrinth der Welt, nebst glücklichem Ausgang aus demselben",
+   "language": "German",
+   "pages": [
+    211,
+    212
+   ]
+  },
+  {
+   "book_id": "69dbc9641040d1d5e20a33c8",
+   "title": "De officiis [German]",
+   "language": "German",
+   "pages": [
+    99,
+    100,
+    101,
+    102,
+    103
+   ]
+  },
+  {
+   "book_id": "69dc5587cb6f7429748b8ddb",
+   "title": "De Christiana religione [Italian]",
+   "language": "Italian",
+   "pages": [
+    18,
+    19,
+    20
+   ]
+  },
+  {
+   "book_id": "69bda0acf6d63c919748958e",
+   "title": "Bibliothèque des philosophes chimiques",
+   "language": "French",
+   "pages": [
+    158,
+    159,
+    160,
+    161,
+    162
+   ]
+  },
+  {
+   "book_id": "69c70fd0da9771c71631624d",
+   "title": "De verbo Dei scripto, et non scripto",
+   "language": "Latin",
+   "pages": [
+    308,
+    310
+   ]
+  },
+  {
+   "book_id": "69af3d024b4d9535c7f50189",
+   "title": "Сочинения Николая Гоголя, Т. 3",
+   "language": "Russian",
+   "pages": [
+    305,
+    306
+   ]
+  },
+  {
+   "book_id": "69dbcb011040d1d5e20b071e",
+   "title": "Summa de virtutibus",
+   "language": "Latin",
+   "pages": [
+    277,
+    278,
+    279,
+    280,
+    281,
+    282
+   ]
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "title": "О понимании",
+   "language": "Russian",
+   "pages": [
+    697,
+    698,
+    699,
+    700
+   ]
+  },
+  {
+   "book_id": "69afd447f4c860f1b891db85",
+   "title": "Recentiorum Disceptationes de Motu Cordis",
+   "language": "Latin",
+   "pages": [
+    600,
+    601
+   ]
+  },
+  {
+   "book_id": "69dbcba21040d1d5e20b9ade",
+   "title": "Speculum vitae humanae",
+   "language": "Latin",
+   "pages": [
+    244,
+    245,
+    246,
+    247
+   ]
+  },
+  {
+   "book_id": "6a0854b215c643eb1af536f1",
+   "title": "Dictionarium Graecum cum interpretatione latina, omnium, quæ hactenus impressa sunt, copio",
+   "language": "Latin",
+   "pages": [
+    396,
+    397
+   ]
+  },
+  {
+   "book_id": "6a0853c249638a50931bda8e",
+   "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem, multorum locor",
+   "language": "Latin",
+   "pages": [
+    27,
+    28,
+    29
+   ]
+  },
+  {
+   "book_id": "69dbcc5c0f8c5edf20f4a6bc",
+   "title": "Catena aurea super quattuor evangelistas. Ed: Johannes Andreas, bishop of Aleria",
+   "language": "Latin",
+   "pages": [
+    244
+   ]
+  },
+  {
+   "book_id": "6a0852a949638a50931bb199",
+   "title": "Le epistole famigliari di Cicerone, tradotte secondo i ueri sensi dell'auttore, et con fig",
+   "language": "Italian",
+   "pages": [
+    221
+   ]
+  },
+  {
+   "book_id": "69bd9d7b6120d54bd0376fac",
+   "title": "Aureum vellus oder Guldin Schatz und Kunstkammer: darinnen der aller fürnemisten ... Aucto",
+   "language": "German",
+   "pages": [
+    976
+   ]
+  },
+  {
+   "book_id": "6a08540b49638a50931be8ec",
+   "title": "Delle rime, et prose del s. Torquato Tasso. 2.",
+   "language": "Italian",
+   "pages": [
+    170,
+    171
+   ]
+  },
+  {
+   "book_id": "69b630531c1c21a373800baa",
+   "title": "Iiob Petri Merlini commentariis illustratus. Analytica methodo ingratiam studiosae juventu",
+   "language": "Latin",
+   "pages": [
+    332,
+    333,
+    334
+   ]
+  },
+  {
+   "book_id": "6a08512f49638a50931b81b7",
+   "title": "M. Tullii Ciceronis Orationum pars 1. Cum correctionibus Pauli Manutii.",
+   "language": "Latin",
+   "pages": [
+    272
+   ]
+  },
+  {
+   "book_id": "69b2f45d5ef23d31023f6138",
+   "title": "Ammiani Marcellini Rerum Gestarum libri",
+   "language": "Latin",
+   "pages": [
+    14
+   ]
+  },
+  {
+   "book_id": "69c8001f6c6f3cc53c843e25",
+   "title": "De rerum varietate",
+   "language": "Latin",
+   "pages": [
+    179,
+    180,
+    181,
+    182
+   ]
+  },
+  {
+   "book_id": "69b62f641c1c21a3737f5129",
+   "title": "Ad acta colloquii Montisbelgardensis Tubingae edita, Theodori Bezae responsionis, pars pri",
+   "language": "Latin",
+   "pages": [
+    166,
+    167
+   ]
+  },
+  {
+   "book_id": "69e3ff6bb142e5dd9d6b0167",
+   "title": "Luciani Samosatensis Opera (Vol. 4)",
+   "language": "Greek",
+   "pages": [
+    450,
+    451,
+    452,
+    453
+   ]
+  },
+  {
+   "book_id": "6a08571a49638a50931c38df",
+   "title": "M. Tullii Ciceronis Orationum volumen secundum, collatis libris manuscriptis, et adhibito ",
+   "language": "Latin",
+   "pages": [
+    191,
+    192
+   ]
+  },
+  {
+   "book_id": "69af21387c27d4b637fed2ce",
+   "title": "Великосвѣтскій расколъ",
+   "language": "Russian",
+   "pages": [
+    140,
+    141
+   ]
+  },
+  {
+   "book_id": "69af423aeaef59aff2e0f06c",
+   "title": "Sex. Aurelii Propertii Elegiarum Libri Quattuor",
+   "language": "Latin",
+   "pages": [
+    243,
+    244
+   ]
+  },
+  {
+   "book_id": "6a08a2b743d85a6ece189325",
+   "title": "Les Paradis Artificiels: opium et haschisch",
+   "language": "French",
+   "pages": [
+    165
+   ]
+  },
+  {
+   "book_id": "69b64f6518b87551bfc93e15",
+   "title": "De ortu et causis, subterraneorum lib. V",
+   "language": "Latin",
+   "pages": [
+    243,
+    244
+   ]
+  },
+  {
+   "book_id": "69b30090e28f56bd74941f9a",
+   "title": "Historiarum libri Vol. 2 (Elzevir 1645)",
+   "language": "Latin",
+   "pages": [
+    84,
+    85
+   ]
+  },
+  {
+   "book_id": "69b636621c1c21a37382c700",
+   "title": "Vitruvius iterum et Frontinus à Iocundo revisi repurgatique quantum ex collatione licuit",
+   "language": "Latin",
+   "pages": [
+    99,
+    100,
+    101,
+    102,
+    103
+   ]
+  },
+  {
+   "book_id": "6a08527949638a50931ba781",
+   "title": "Orationum",
+   "language": "Latin",
+   "pages": [
+    129,
+    130
+   ]
+  },
+  {
+   "book_id": "69aec89ef24f28c970822764",
+   "title": "Epistolae familiares",
+   "language": "Latin",
+   "pages": [
+    295,
+    296,
+    297,
+    298,
+    299
+   ]
+  },
+  {
+   "book_id": "69b52c053dd6d9423027d616",
+   "title": "Marsilii Ficini Epistolae (Plut.51.11)",
+   "language": "Latin",
+   "pages": [
+    225
+   ]
+  },
+  {
+   "book_id": "695910f2ecb01322b3068302",
+   "title": "Historia natural y moral de las Indias",
+   "language": "Spanish",
+   "pages": [
+    212
+   ]
+  },
+  {
+   "book_id": "69b2ff81a1a4246ddb45b056",
+   "title": "De Calido Innato et Semine",
+   "language": "Latin",
+   "pages": [
+    17
+   ]
+  },
+  {
+   "book_id": "69b21dfa94025df5d290ae35",
+   "title": "Plutarchi Chaeronensis Moralia, Vol. 1 (Bernardakis, Teubner)",
+   "language": "Greek",
+   "pages": [
+    267,
+    268
+   ]
+  },
+  {
+   "book_id": "69b51ed5ff09e4fe943b58d1",
+   "title": "Philosophia vetus restituta",
+   "language": "Latin",
+   "pages": [
+    67
+   ]
+  },
+  {
+   "book_id": "69d5ac12d0bd3547a5654f7b",
+   "title": "Patmut'iwn Hayots'",
+   "language": "Classical Armenian",
+   "pages": [
+    161,
+    162,
+    163,
+    164,
+    165
+   ]
+  },
+  {
+   "book_id": "6a0851d915c643eb1af4b5e7",
+   "title": "M. Tullii Ciceronis Epistolae ad Atticum, ad M. Brutum, ad Quintum fratrem, multorum locor",
+   "language": "Latin",
+   "pages": [
+    275,
+    276,
+    277,
+    278,
+    279
+   ]
+  },
+  {
+   "book_id": "6958e893d3a89283348141c1",
+   "title": "De natura stirpium libri tres",
+   "language": "Latin",
+   "pages": [
+    561,
+    562,
+    563,
+    564,
+    565
+   ]
+  },
+  {
+   "book_id": "69b3015d78de5de2306d4e9d",
+   "title": "Respublica sive Status Regni Scotiae",
+   "language": "Latin",
+   "pages": [
+    190
+   ]
+  },
+  {
+   "book_id": "69b2223608069e96e8432e2d",
+   "title": "Suetonius, Twelve Caesars, with Aurelius Victor and Eutropius (Aldine Press)",
+   "language": "Latin",
+   "pages": [
+    509,
+    510,
+    511
+   ]
+  },
+  {
+   "book_id": "69c4ec33a3a4a7c546ee6123",
+   "title": "Pymander. Asclepius. De mysteriis Aegyptiorum. In Platonicum Alcibiadem, de anima & daemon",
+   "language": "Latin",
+   "pages": [
+    197,
+    198,
+    199
+   ]
+  },
+  {
+   "book_id": "69c88e4f6c6f3cc53c85b0a7",
+   "title": "De la vie d'Apollonius Thyanéen",
+   "language": "French",
+   "pages": [
+    1103,
+    1104,
+    1105,
+    1106
+   ]
+  },
+  {
+   "book_id": "69bd9cc86120d54bd03710d8",
+   "title": "Pretiosa margarita novella de thesauro, ac pretiosissimo philosophorum lapide : artis huiu",
+   "language": "Latin",
+   "pages": [
+    75,
+    76
+   ]
+  },
+  {
+   "book_id": "69b220b356715b0e324732e1",
+   "title": "Aristotelis Opera, Vol. 6 (Aldine, 1495): Ethica, Politica, Oeconomica",
+   "language": "Greek",
+   "pages": [
+    617
+   ]
+  },
+  {
+   "book_id": "69ea0b27e639a70bb4cc5866",
+   "title": "Toscanelli and Columbus: The Letter and Chart",
+   "language": "English",
+   "pages": [
+    236
+   ],
+   "source": "sonnet-only below-cut flag, Opus-confirmed"
+  },
+  {
+   "book_id": "69ee47436dd925d126f41aba",
+   "title": "Antiquities, Historical and Monumental, of the County of Cornwall",
+   "language": "English",
+   "pages": [
+    539
+   ],
+   "source": "sonnet-only below-cut flag, Opus-confirmed"
+  }
+ ]
+}

@@ -282,14 +282,21 @@ export const books = {
   /**
    * Download book as file
    */
-  download: async (id: string, format: BookDownloadFormats, edition_id?: string): Promise<Response> => {
+  download: async (id: string, format: BookDownloadFormats, edition_id?: string, terms?: string): Promise<Response> => {
     const params = new URLSearchParams({format});
     if (edition_id) {
       params.append('edition_id', edition_id);
     }
-    
+    // The terms version this browser agreed to; the route ignores it on a book that has none.
+    if (terms) {
+      params.append('terms', terms);
+    }
+
+    // DownloadButton reads 401/402/403/429 and the body itself: the terms
+    // agreement arrives as a 403, and a throw here would hide it (#8098).
     return await streamRequest(getBookUrl(`/${id}/download?${params.toString()}`),
-      { method: 'GET' }
+      { method: 'GET' },
+      { passErrors: true },
     );
   },
 

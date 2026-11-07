@@ -164,6 +164,56 @@ export function distinctTrigramShare(cp) {
 /** Screen threshold — generous on purpose: it must not be the thing that decides. */
 const SCREEN_MAX = 0.35;
 
+/**
+ * The second arm (2026-11-02): one short word or syllable repeated, space-separated,
+ * many times IN A ROW — `긇 긇 긇 …`, `ꝑ ꝑ ꝑ …`, `ἦν ἦν ἦν …`, `et et et …`.
+ *
+ * The share arm misses it two ways, both measured on the corpus mirror that day:
+ *  - the run sits inside a page that is otherwise text, so it covers under half the
+ *    body (Avicenna, Canon p.592: `ꝑ` 3,051 times in a row, 42% of the page);
+ *  - the page is short, or the real text before the run keeps trigram diversity above
+ *    the screen, so the exact scan never runs (a Korean manuscript, p.27: 44 × `긇`).
+ * Over all 8.4M live OCR pages in the corpus mirror (2026-11-02) this arm refuses 421
+ * pages in 178 books that the share arm passes; 386 of them are already translated, and
+ * that English has no basis in the page (the Korean p.27 translation explains its filler
+ * as "a breakdown in the conversation"). 12 of 12 sampled were degenerate reads, across
+ * Latin, Greek, Hebrew, Italian, Dutch and Law French.
+ *
+ * The false positive found while calibrating, and why runs must cross a line: a TABLE
+ * row repeats one sign across its columns (御製歷象考成: `黃道宮 三 三 三 …` ×31), and every
+ * Chinese hit at a 25 bar with no line rule was one. A loop runs on over line breaks; a
+ * row stops at one. Hence: 25+ across two or more lines, or 60+ on one line.
+ * Genuine prose repeats a PHRASE (the share arm's job, and its controls still pass);
+ * word-level repeats in print — `hūṃ hūṃ hūṃ`, `sanctus sanctus sanctus` — stop at a few.
+ * Known residual: a letter diagram drawn as text (troop formations of `o o o` in
+ * Machiavelli's Arte della guerra) can trip it; such a page is rare and the refusal is
+ * recorded, not silent.
+ */
+export const DEFAULT_MIN_TOKEN_RUN = 25;
+/** Longest token, in code points, the run arm considers — a syllable or short word. */
+const TOKEN_MAX_CP = 4;
+/** A run confined to one line must be this long: past any table's column count. */
+const ONE_LINE_TOKEN_RUN = 60;
+
+/** Longest run of one identical short letter token, and how many lines it spans. */
+export function tokenRun(text) {
+  // Lines matter: a TABLE row legitimately repeats one sign across its columns
+  // (御製歷象考成: 黃道宮 三 三 三 … thirty times), and it ends at the line break.
+  // A loop runs on across lines. So keep line breaks, drop markup.
+  const lines = String(text || '').replace(/&[a-z]+;|&#\d+;/gi, ' ').replace(/<[^>]*>/g, ' ').split(/\n/);
+  let best = { reps: 0, chars: 0, unit: '', lines: 0 };
+  let prev = null, run = 0, startLine = 0;
+  lines.forEach((line, li) => {
+    for (const t of line.split(/\s+/).filter(Boolean)) {
+      if (t === prev) run++; else { prev = t; run = 1; startLine = li; }
+      if (run > best.reps && [...t].length <= TOKEN_MAX_CP && /\p{L}/u.test(t)) {
+        best = { reps: run, chars: run * ([...t].length + 1), unit: ` ${t}`, lines: li - startLine + 1 };
+      }
+    }
+  });
+  return best;
+}
+
 export function guardEnabled() {
   return String(process.env.OCR_LOOP_GUARD || '').toLowerCase() !== 'off';
 }
@@ -182,11 +232,17 @@ export function loopVerdict(text, {
   minRun = DEFAULT_MIN_RUN,
   minShare = DEFAULT_MIN_SHARE,
   minReps = DEFAULT_MIN_REPS,
+  minTokenRun = DEFAULT_MIN_TOKEN_RUN,
 } = {}) {
   if (!guardEnabled()) return { refuse: false, reason: 'guard_disabled', share: 0, period: 0, reps: 0, chars: 0, body: 0 };
 
   const cp = normalise(transcriptionBody(text));
   const body = cp.length;
+  const tr = tokenRun(text);
+  if (tr.reps >= minTokenRun && (tr.lines >= 2 || tr.reps >= ONE_LINE_TOKEN_RUN)) {
+    return { refuse: true, reason: 'token_run', share: +(tr.chars / Math.max(1, body)).toFixed(3), covered: tr.chars, body,
+      period: tr.unit.length, reps: tr.reps, chars: tr.chars, unit: tr.unit, runs: 1 };
+  }
   if (body < minBody) return { refuse: false, reason: 'body_too_short', share: 0, period: 0, reps: 0, chars: 0, body };
 
   if (distinctTrigramShare(cp) > SCREEN_MAX) {

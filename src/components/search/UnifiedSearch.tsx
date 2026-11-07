@@ -15,6 +15,7 @@ import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import { useLocalePath, canonicalPath } from '@/lib/i18n';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useRoomResultHref } from '@/lib/EmbedContext';
 
 const TYPE_ICONS: Record<string, typeof Lightbulb> = {
   concept: Lightbulb,
@@ -108,7 +109,10 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
   // the registry (i18n.md rule 5, "prefer the registry to a per-item ternary").
   const lp = useLocalePath();
   const pathParts = canonicalPath(pathname).split('/').filter(Boolean);
-  const tenantPrefix = pathParts[0] && pathParts[0] !== 'search' ? `/${pathParts[0]}` : '';
+  // /embed/<tenant> has its own helper, which carries both segments (#8047).
+  const tenantPrefix = pathParts[0] && pathParts[0] !== 'search' && pathParts[0] !== 'embed' ? `/${pathParts[0]}` : '';
+  const room = useRoomResultHref();
+  const inEmbedRoute = room('/search') !== '/search';
   // The Librarian is refused on partner hosts (tenant-global-paths), so the
   // typeahead must not offer it there.
   const isTenantSurface = useIsEmbedded();
@@ -219,27 +223,27 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
     if (!results || !hasResults) return [];
     const items: NavigableItem[] = [];
     for (const book of results.books.results) {
-      items.push({ type: 'book', href: lp(bookUrl(book)), id: `book-${book.id}` });
+      items.push({ type: 'book', href: room(lp(bookUrl(book))), id: `book-${book.id}` });
     }
     for (let i = 0; i < results.index.results.length; i++) {
       const item = results.index.results[i];
       const bookPath = item.book_slug || item.book_id;
-      const href = lp(item.pages?.[0]
+      const href = room(lp(item.pages?.[0]
         ? `${tenantPrefix}/book/${bookPath}/guide?page=${item.pages[0]}`
-        : `${tenantPrefix}/book/${bookPath}`);
+        : `${tenantPrefix}/book/${bookPath}`));
       items.push({ type: 'index', href, id: `index-${item.book_id}-${item.type}-${i}` });
     }
     for (const sem of semanticResults) {
-      items.push({ type: 'book', href: lp(`${tenantPrefix}/book/${sem.book_id}`), id: `semantic-${sem.book_id}` });
+      items.push({ type: 'book', href: room(lp(`${tenantPrefix}/book/${sem.book_id}`)), id: `semantic-${sem.book_id}` });
     }
     for (const img of galleryResults) {
       // The gallery has no localized twin, so lp() leaves this alone — which is
       // the point: an English gallery page beats a prefixed 404.
-      items.push({ type: 'gallery', href: lp(`${tenantPrefix}/gallery/image/${img.id}`), id: `gallery-${img.id}` });
+      items.push({ type: 'gallery', href: inEmbedRoute ? room(`/book/${img.bookId}/page/${img.pageId}`) : lp(`${tenantPrefix}/gallery/image/${img.id}`), id: `gallery-${img.id}` });
     }
-    items.push({ type: 'full-search', href: lp(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`), id: 'full-search' });
+    items.push({ type: 'full-search', href: room(lp(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`)), id: 'full-search' });
     return items;
-  }, [results, hasResults, query, galleryResults, semanticResults, tenantPrefix, lp]);
+  }, [results, hasResults, query, galleryResults, semanticResults, tenantPrefix, lp, room, inEmbedRoute]);
 
   // Reset active index when results change
   useEffect(() => {
@@ -273,7 +277,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
         // No item selected — go to full search page
         e.preventDefault();
         setIsOpen(false);
-        router.push(lp(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`));
+        router.push(room(lp(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`)));
       }
       return;
     }
@@ -365,7 +369,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                 </p>
               )}
               <Link
-                href={lp(`/search?q=${encodeURIComponent(query)}`)}
+                href={room(lp(`/search?q=${encodeURIComponent(query)}`))}
                 onClick={() => setIsOpen(false)}
                 className="inline-flex items-center gap-2 mt-3 text-sm text-accent-rust hover:text-accent-rust"
               >
@@ -386,7 +390,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       </span>
                       {results.books.hasMore && (
                         <Link
-                          href={lp(`/search?q=${encodeURIComponent(query)}`)}
+                          href={room(lp(`/search?q=${encodeURIComponent(query)}`))}
                           className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                           onClick={() => setIsOpen(false)}
                         >
@@ -400,7 +404,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                         <Link
                           key={book.id}
                           id={`search-item-${itemIndex}`}
-                          href={bookUrl(book)}
+                          href={room(bookUrl(book))}
                           onClick={() => setIsOpen(false)}
                           role="option"
                           aria-selected={activeIndex === itemIndex}
@@ -461,7 +465,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       </span>
                       {results.index.hasMore && (
                         <Link
-                          href={lp(`/search?q=${encodeURIComponent(query)}&mode=index`)}
+                          href={room(lp(`/search?q=${encodeURIComponent(query)}&mode=index`))}
                           className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                           onClick={() => setIsOpen(false)}
                         >
@@ -476,10 +480,10 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                         <Link
                           key={`${item.book_id}-${item.type}-${idx}`}
                           id={`search-item-${itemIndex}`}
-                          href={item.pages?.[0]
+                          href={room(item.pages?.[0]
                             ? `/book/${item.book_slug || item.book_id}/guide?page=${item.pages[0]}`
                             : `/book/${item.book_slug || item.book_id}`
-                          }
+                          )}
                           onClick={() => setIsOpen(false)}
                           role="option"
                           aria-selected={activeIndex === itemIndex}
@@ -522,7 +526,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                         <Link
                           key={sem.book_id}
                           id={`search-item-${itemIndex}`}
-                          href={`/book/${sem.book_id}`}
+                          href={room(`/book/${sem.book_id}`)}
                           onClick={() => setIsOpen(false)}
                           role="option"
                           aria-selected={activeIndex === itemIndex}
@@ -575,6 +579,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
                         Images ({galleryResults.length})
                       </span>
+                      {!inEmbedRoute && (
                       <Link
                         href={`${tenantPrefix}/gallery?q=${encodeURIComponent(query)}`}
                         className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
@@ -582,6 +587,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       >
                         See all <ChevronRight className="w-3 h-3" />
                       </Link>
+                      )}
                     </div>
                     {galleryResults.map((img: any, idx: number) => {
                       const itemIndex = galStartIndex + idx;
@@ -589,7 +595,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                         <Link
                           key={img.id}
                           id={`search-item-${itemIndex}`}
-                          href={`${tenantPrefix}/gallery/image/${img.id}`}
+                          href={inEmbedRoute ? room(`/book/${img.bookId}/page/${img.pageId}`) : `${tenantPrefix}/gallery/image/${img.id}`}
                           onClick={() => setIsOpen(false)}
                           role="option"
                           aria-selected={activeIndex === itemIndex}
@@ -637,7 +643,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                 return (
                   <Link
                     id={`search-item-${fullSearchIndex}`}
-                    href={lp(`/search?q=${encodeURIComponent(query)}`)}
+                    href={room(lp(`/search?q=${encodeURIComponent(query)}`))}
                     onClick={() => setIsOpen(false)}
                     role="option"
                     aria-selected={activeIndex === fullSearchIndex}

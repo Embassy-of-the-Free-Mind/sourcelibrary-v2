@@ -60,7 +60,25 @@
      0.652
     ],
     "flagged": 27,
-    "n": 55
+    "n": 55,
+    "lobo": {
+     "tp": 3,
+     "fn": 2,
+     "tn": 26,
+     "fp": 24,
+     "sensitivity": 0.6,
+     "sens_ci95": [
+      0.231,
+      0.882
+     ],
+     "specificity": 0.52,
+     "spec_ci95": [
+      0.385,
+      0.652
+     ],
+     "flagged": 27,
+     "n": 55
+    }
    },
    "line_excess_abs>=1": {
     "tp": 4,
@@ -78,7 +96,25 @@
      0.792
     ],
     "flagged": 20,
-    "n": 55
+    "n": 55,
+    "lobo": {
+     "tp": 4,
+     "fn": 1,
+     "tn": 34,
+     "fp": 16,
+     "sensitivity": 0.8,
+     "sens_ci95": [
+      0.376,
+      0.964
+     ],
+     "specificity": 0.68,
+     "spec_ci95": [
+      0.542,
+      0.792
+     ],
+     "flagged": 20,
+     "n": 55
+    }
    },
    "seg_mismatch>=1": {
     "tp": 1,
@@ -96,7 +132,25 @@
      1
     ],
     "flagged": 1,
-    "n": 55
+    "n": 55,
+    "lobo": {
+     "tp": 1,
+     "fn": 4,
+     "tn": 50,
+     "fp": 0,
+     "sensitivity": 0.2,
+     "sens_ci95": [
+      0.036,
+      0.624
+     ],
+     "specificity": 1,
+     "spec_ci95": [
+      0.929,
+      1
+     ],
+     "flagged": 1,
+     "n": 55
+    }
    },
    "dup_line>=0.4": {
     "tp": 2,
@@ -114,7 +168,25 @@
      0.944
     ],
     "flagged": 8,
-    "n": 55
+    "n": 55,
+    "lobo": {
+     "tp": 1,
+     "fn": 4,
+     "tn": 44,
+     "fp": 6,
+     "sensitivity": 0.2,
+     "sens_ci95": [
+      0.036,
+      0.624
+     ],
+     "specificity": 0.88,
+     "spec_ci95": [
+      0.762,
+      0.944
+     ],
+     "flagged": 7,
+     "n": 55
+    }
    },
    "dup_seam>=0.2": {
     "tp": 2,
@@ -132,7 +204,25 @@
      0.917
     ],
     "flagged": 10,
-    "n": 55
+    "n": 55,
+    "lobo": {
+     "tp": 1,
+     "fn": 4,
+     "tn": 42,
+     "fp": 8,
+     "sensitivity": 0.2,
+     "sens_ci95": [
+      0.036,
+      0.624
+     ],
+     "specificity": 0.84,
+     "spec_ci95": [
+      0.715,
+      0.917
+     ],
+     "flagged": 9,
+     "n": 55
+    }
    },
    "rep>=0.03": {
     "tp": 2,
@@ -150,43 +240,97 @@
      0.872
     ],
     "flagged": 13,
-    "n": 55
+    "n": 55,
+    "lobo": {
+     "tp": 1,
+     "fn": 4,
+     "tn": 39,
+     "fp": 11,
+     "sensitivity": 0.2,
+     "sens_ci95": [
+      0.036,
+      0.624
+     ],
+     "specificity": 0.78,
+     "spec_ci95": [
+      0.648,
+      0.872
+     ],
+     "flagged": 12,
+     "n": 55
+    }
    },
-   "short_frac>=0.1": {
+   "short_frac>=0.3": {
     "tp": 0,
     "fn": 5,
-    "tn": 49,
-    "fp": 1,
+    "tn": 50,
+    "fp": 0,
     "sensitivity": 0,
     "sens_ci95": [
      0,
      0.434
     ],
-    "specificity": 0.98,
+    "specificity": 1,
     "spec_ci95": [
-     0.895,
-     0.996
+     0.929,
+     1
     ],
-    "flagged": 1,
-    "n": 55
+    "flagged": 0,
+    "n": 55,
+    "lobo": {
+     "tp": 0,
+     "fn": 5,
+     "tn": 49,
+     "fp": 1,
+     "sensitivity": 0,
+     "sens_ci95": [
+      0,
+      0.434
+     ],
+     "specificity": 0.98,
+     "spec_ci95": [
+      0.895,
+      0.996
+     ],
+     "flagged": 1,
+     "n": 55
+    }
    },
-   "asym>=0.2": {
+   "asym>=0.5": {
     "tp": 2,
     "fn": 3,
-    "tn": 37,
-    "fp": 13,
+    "tn": 45,
+    "fp": 5,
     "sensitivity": 0.4,
     "sens_ci95": [
      0.118,
      0.769
     ],
-    "specificity": 0.74,
+    "specificity": 0.9,
     "spec_ci95": [
-     0.604,
-     0.841
+     0.786,
+     0.957
     ],
-    "flagged": 15,
-    "n": 55
+    "flagged": 7,
+    "n": 55,
+    "lobo": {
+     "tp": 2,
+     "fn": 3,
+     "tn": 45,
+     "fp": 5,
+     "sensitivity": 0.4,
+     "sens_ci95": [
+      0.118,
+      0.769
+     ],
+     "specificity": 0.9,
+     "spec_ci95": [
+      0.786,
+      0.957
+     ],
+     "flagged": 7,
+     "n": 55
+    }
    }
   },
   "missed_lobo": [
@@ -276,7 +420,25 @@
      0.927
     ],
     "flagged": 28,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 20,
+     "fn": 3,
+     "tn": 49,
+     "fp": 8,
+     "sensitivity": 0.87,
+     "sens_ci95": [
+      0.679,
+      0.955
+     ],
+     "specificity": 0.86,
+     "spec_ci95": [
+      0.747,
+      0.927
+     ],
+     "flagged": 28,
+     "n": 80
+    }
    },
    "line_excess_abs>=1": {
     "tp": 13,
@@ -294,25 +456,61 @@
      0.889
     ],
     "flagged": 24,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 13,
+     "fn": 10,
+     "tn": 46,
+     "fp": 11,
+     "sensitivity": 0.565,
+     "sens_ci95": [
+      0.368,
+      0.744
+     ],
+     "specificity": 0.807,
+     "spec_ci95": [
+      0.687,
+      0.889
+     ],
+     "flagged": 24,
+     "n": 80
+    }
    },
-   "seg_mismatch>=1": {
+   "seg_mismatch>=2": {
     "tp": 1,
     "fn": 22,
-    "tn": 54,
-    "fp": 3,
+    "tn": 57,
+    "fp": 0,
     "sensitivity": 0.043,
     "sens_ci95": [
      0.008,
      0.21
     ],
-    "specificity": 0.947,
+    "specificity": 1,
     "spec_ci95": [
-     0.856,
-     0.982
+     0.937,
+     1
     ],
-    "flagged": 4,
-    "n": 80
+    "flagged": 1,
+    "n": 80,
+    "lobo": {
+     "tp": 1,
+     "fn": 22,
+     "tn": 57,
+     "fp": 0,
+     "sensitivity": 0.043,
+     "sens_ci95": [
+      0.008,
+      0.21
+     ],
+     "specificity": 1,
+     "spec_ci95": [
+      0.937,
+      1
+     ],
+     "flagged": 1,
+     "n": 80
+    }
    },
    "dup_line>=0.3": {
     "tp": 11,
@@ -330,7 +528,25 @@
      0.982
     ],
     "flagged": 14,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 11,
+     "fn": 12,
+     "tn": 54,
+     "fp": 3,
+     "sensitivity": 0.478,
+     "sens_ci95": [
+      0.292,
+      0.67
+     ],
+     "specificity": 0.947,
+     "spec_ci95": [
+      0.856,
+      0.982
+     ],
+     "flagged": 14,
+     "n": 80
+    }
    },
    "dup_seam>=0.2": {
     "tp": 6,
@@ -348,7 +564,25 @@
      0.972
     ],
     "flagged": 10,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 6,
+     "fn": 17,
+     "tn": 53,
+     "fp": 4,
+     "sensitivity": 0.261,
+     "sens_ci95": [
+      0.125,
+      0.465
+     ],
+     "specificity": 0.93,
+     "spec_ci95": [
+      0.833,
+      0.972
+     ],
+     "flagged": 10,
+     "n": 80
+    }
    },
    "rep>=0.03": {
     "tp": 7,
@@ -366,7 +600,25 @@
      0.951
     ],
     "flagged": 13,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 7,
+     "fn": 16,
+     "tn": 51,
+     "fp": 6,
+     "sensitivity": 0.304,
+     "sens_ci95": [
+      0.156,
+      0.509
+     ],
+     "specificity": 0.895,
+     "spec_ci95": [
+      0.789,
+      0.951
+     ],
+     "flagged": 13,
+     "n": 80
+    }
    },
    "short_frac>=0.1": {
     "tp": 1,
@@ -384,7 +636,25 @@
      1
     ],
     "flagged": 1,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 1,
+     "fn": 22,
+     "tn": 57,
+     "fp": 0,
+     "sensitivity": 0.043,
+     "sens_ci95": [
+      0.008,
+      0.21
+     ],
+     "specificity": 1,
+     "spec_ci95": [
+      0.937,
+      1
+     ],
+     "flagged": 1,
+     "n": 80
+    }
    },
    "asym>=0.4": {
     "tp": 8,
@@ -402,7 +672,25 @@
      0.951
     ],
     "flagged": 14,
-    "n": 80
+    "n": 80,
+    "lobo": {
+     "tp": 8,
+     "fn": 15,
+     "tn": 51,
+     "fp": 6,
+     "sensitivity": 0.348,
+     "sens_ci95": [
+      0.188,
+      0.551
+     ],
+     "specificity": 0.895,
+     "spec_ci95": [
+      0.789,
+      0.951
+     ],
+     "flagged": 14,
+     "n": 80
+    }
    }
   },
   "missed_lobo": [
@@ -423,6 +711,358 @@
    "a060",
    "a072",
    "a073"
+  ]
+ },
+ "L2_strict_seam_bad_ocr_caused": {
+  "positives": 18,
+  "n": 80,
+  "books": 80,
+  "lobo": {
+   "tp": 17,
+   "fn": 1,
+   "tn": 50,
+   "fp": 12,
+   "sensitivity": 0.944,
+   "sens_ci95": [
+    0.742,
+    0.99
+   ],
+   "specificity": 0.806,
+   "spec_ci95": [
+    0.691,
+    0.886
+   ],
+   "flagged": 29,
+   "n": 80
+  },
+  "rule_on_all": {
+   "whole_read": 1,
+   "dup_line": 0.3
+  },
+  "in_sample": {
+   "tp": 18,
+   "fn": 0,
+   "tn": 50,
+   "fp": 12,
+   "sensitivity": 1,
+   "sens_ci95": [
+    0.824,
+    1
+   ],
+   "specificity": 0.806,
+   "spec_ci95": [
+    0.691,
+    0.886
+   ],
+   "flagged": 30,
+   "n": 80
+  },
+  "single_features": {
+   "whole_read>=1": {
+    "tp": 17,
+    "fn": 1,
+    "tn": 51,
+    "fp": 11,
+    "sensitivity": 0.944,
+    "sens_ci95": [
+     0.742,
+     0.99
+    ],
+    "specificity": 0.823,
+    "spec_ci95": [
+     0.71,
+     0.898
+    ],
+    "flagged": 28,
+    "n": 80,
+    "lobo": {
+     "tp": 17,
+     "fn": 1,
+     "tn": 51,
+     "fp": 11,
+     "sensitivity": 0.944,
+     "sens_ci95": [
+      0.742,
+      0.99
+     ],
+     "specificity": 0.823,
+     "spec_ci95": [
+      0.71,
+      0.898
+     ],
+     "flagged": 28,
+     "n": 80
+    }
+   },
+   "line_excess_abs>=1": {
+    "tp": 10,
+    "fn": 8,
+    "tn": 48,
+    "fp": 14,
+    "sensitivity": 0.556,
+    "sens_ci95": [
+     0.337,
+     0.754
+    ],
+    "specificity": 0.774,
+    "spec_ci95": [
+     0.656,
+     0.86
+    ],
+    "flagged": 24,
+    "n": 80,
+    "lobo": {
+     "tp": 10,
+     "fn": 8,
+     "tn": 48,
+     "fp": 14,
+     "sensitivity": 0.556,
+     "sens_ci95": [
+      0.337,
+      0.754
+     ],
+     "specificity": 0.774,
+     "spec_ci95": [
+      0.656,
+      0.86
+     ],
+     "flagged": 24,
+     "n": 80
+    }
+   },
+   "seg_mismatch>=2": {
+    "tp": 0,
+    "fn": 18,
+    "tn": 61,
+    "fp": 1,
+    "sensitivity": 0,
+    "sens_ci95": [
+     0,
+     0.176
+    ],
+    "specificity": 0.984,
+    "spec_ci95": [
+     0.914,
+     0.997
+    ],
+    "flagged": 1,
+    "n": 80,
+    "lobo": {
+     "tp": 0,
+     "fn": 18,
+     "tn": 61,
+     "fp": 1,
+     "sensitivity": 0,
+     "sens_ci95": [
+      0,
+      0.176
+     ],
+     "specificity": 0.984,
+     "spec_ci95": [
+      0.914,
+      0.997
+     ],
+     "flagged": 1,
+     "n": 80
+    }
+   },
+   "dup_line>=0.3": {
+    "tp": 11,
+    "fn": 7,
+    "tn": 59,
+    "fp": 3,
+    "sensitivity": 0.611,
+    "sens_ci95": [
+     0.386,
+     0.797
+    ],
+    "specificity": 0.952,
+    "spec_ci95": [
+     0.867,
+     0.983
+    ],
+    "flagged": 14,
+    "n": 80,
+    "lobo": {
+     "tp": 11,
+     "fn": 7,
+     "tn": 59,
+     "fp": 3,
+     "sensitivity": 0.611,
+     "sens_ci95": [
+      0.386,
+      0.797
+     ],
+     "specificity": 0.952,
+     "spec_ci95": [
+      0.867,
+      0.983
+     ],
+     "flagged": 14,
+     "n": 80
+    }
+   },
+   "dup_seam>=0.2": {
+    "tp": 6,
+    "fn": 12,
+    "tn": 58,
+    "fp": 4,
+    "sensitivity": 0.333,
+    "sens_ci95": [
+     0.163,
+     0.563
+    ],
+    "specificity": 0.935,
+    "spec_ci95": [
+     0.846,
+     0.975
+    ],
+    "flagged": 10,
+    "n": 80,
+    "lobo": {
+     "tp": 6,
+     "fn": 12,
+     "tn": 58,
+     "fp": 4,
+     "sensitivity": 0.333,
+     "sens_ci95": [
+      0.163,
+      0.563
+     ],
+     "specificity": 0.935,
+     "spec_ci95": [
+      0.846,
+      0.975
+     ],
+     "flagged": 10,
+     "n": 80
+    }
+   },
+   "rep>=0.03": {
+    "tp": 7,
+    "fn": 11,
+    "tn": 56,
+    "fp": 6,
+    "sensitivity": 0.389,
+    "sens_ci95": [
+     0.203,
+     0.614
+    ],
+    "specificity": 0.903,
+    "spec_ci95": [
+     0.805,
+     0.955
+    ],
+    "flagged": 13,
+    "n": 80,
+    "lobo": {
+     "tp": 7,
+     "fn": 11,
+     "tn": 56,
+     "fp": 6,
+     "sensitivity": 0.389,
+     "sens_ci95": [
+      0.203,
+      0.614
+     ],
+     "specificity": 0.903,
+     "spec_ci95": [
+      0.805,
+      0.955
+     ],
+     "flagged": 13,
+     "n": 80
+    }
+   },
+   "short_frac>=0.3": {
+    "tp": 0,
+    "fn": 18,
+    "tn": 62,
+    "fp": 0,
+    "sensitivity": 0,
+    "sens_ci95": [
+     0,
+     0.176
+    ],
+    "specificity": 1,
+    "spec_ci95": [
+     0.942,
+     1
+    ],
+    "flagged": 0,
+    "n": 80,
+    "lobo": {
+     "tp": 0,
+     "fn": 18,
+     "tn": 61,
+     "fp": 1,
+     "sensitivity": 0,
+     "sens_ci95": [
+      0,
+      0.176
+     ],
+     "specificity": 0.984,
+     "spec_ci95": [
+      0.914,
+      0.997
+     ],
+     "flagged": 1,
+     "n": 80
+    }
+   },
+   "asym>=0.4": {
+    "tp": 5,
+    "fn": 13,
+    "tn": 53,
+    "fp": 9,
+    "sensitivity": 0.278,
+    "sens_ci95": [
+     0.125,
+     0.509
+    ],
+    "specificity": 0.855,
+    "spec_ci95": [
+     0.747,
+     0.922
+    ],
+    "flagged": 14,
+    "n": 80,
+    "lobo": {
+     "tp": 5,
+     "fn": 13,
+     "tn": 49,
+     "fp": 13,
+     "sensitivity": 0.278,
+     "sens_ci95": [
+      0.125,
+      0.509
+     ],
+     "specificity": 0.79,
+     "spec_ci95": [
+      0.674,
+      0.873
+     ],
+     "flagged": 18,
+     "n": 80
+    }
+   }
+  },
+  "missed_lobo": [
+   "a066"
+  ],
+  "false_flags_lobo": [
+   "a010",
+   "a012",
+   "a023",
+   "a028",
+   "a032",
+   "a033",
+   "a035",
+   "a036",
+   "a050",
+   "a060",
+   "a072",
+   "a075"
   ]
  }
 }

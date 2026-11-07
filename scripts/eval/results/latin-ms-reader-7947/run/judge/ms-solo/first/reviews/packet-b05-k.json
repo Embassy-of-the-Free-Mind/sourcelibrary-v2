@@ -1,0 +1,55 @@
+[
+  {
+    "book_id": "b05-k", "slot": 1, "title": "Horae beatae Mariae virginis (use of Paris)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection given in the packet. The pages are a richly illuminated Book of Hours (Matins incipits under miniatures, a French devotional prayer), consistent with the title.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The pencil foliation on the images (36? on p5, 57 on p10, 85 on p14) matches the OCR's page-num where given. No page has a translation (translation null on all three).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>\ndicat. O\nnobis qui\nabrenunci\nente fan ... Deo g\ncramen\ntous.\n</margin>", "image": "the cut-off column at the left edge is the text of the FACING verso (\"…dicat. Oms / o nobis quat / …abz nobis / …\"), not a margin of this leaf", "problem": "the neighbour leaf's partial column is transcribed as this page's margin, as garbled fragments", "severity": "moderate", "class": "I4" },
+          { "ocr": "(not transcribed)", "image": "frieze inscription \"VORSTVONLCAFGRSTVORLVEFNOEVOEY…\" in the miniature", "problem": "the decorative pseudo-inscription in the miniature is not recorded (it is probably ornamental lettering)", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation exists for this page (translation null). The main text \"Domine labia mea aperies et os meum annuntiabit laudem tuam Deus\" is read correctly, with the abbreviation expanded. The image description (a procession carrying the Sacrament under a canopy, an initial D with a dragon, putti with a chalice and host) matches the image.", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<margin>\nne patre nos\nomnes atque\nas <unclear>einar</unclear>\n... gloria facer ... tua messabi ... periailis ...</margin>", "image": "the left edge shows the facing leaf's column (\"…gne patre nos / Omnes al[…] / …gloria sacer / …tua ineffabili / …periculis / …me liberemur\")", "problem": "the neighbour leaf's column is transcribed as this page's margin, with misreadings (facer for sacer, messabi for ineffabili, periailis for periculis)", "severity": "moderate", "class": "I4" },
+          { "ocr": "type=\"engraving\"", "image": "a painted miniature", "problem": "the medium is mis-tagged as an engraving", "severity": "minor", "class": "O16" },
+          { "ocr": "A soldier stands to the left", "image": "on the left, a man in a blue tunic carrying a basket; the armoured soldiers are the fallen figures at the centre", "problem": "a small error in the image description", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation exists for this page (translation null). The main text \"Domine labia mea aperies. Et os meum annuntiabit laudem tuam.\" is correct. The miniature is correctly identified as St Catherine with the wheel, the angel and the king.", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "**O**ut a par moy", "image": "decorated initial T: \"Tout a par moy\"", "problem": "the first word is misread: the initial is a T, read as O (the image description also calls it \"Decorative initial 'O'\")", "severity": "moderate", "class": "O6" },
+          { "ocr": "affu quon neme\nboye.", "image": "affin quon ne me\nvoye.", "problem": "two words misread (affu for affin, boye for voye)", "severity": "moderate", "class": "O6" },
+          { "ocr": "<margin>h deum. et pa\n... Sulpicia\n... m cum cozun ...</margin>", "image": "the left edge is the facing leaf's Latin column (\"…h deum. et pa… / …ortе. Suspicia… / …z inimicorum…\")", "problem": "the neighbour leaf's column is transcribed as this page's margin, garbled. It is also why the page is tagged \"Latin, Middle French\" and \"mixed\"", "severity": "moderate", "class": "I4" },
+          { "ocr": "<column-break/>; type=\"engraving\"", "image": "a single text block under a painted miniature", "problem": "an invented column break, and the painted miniature is tagged as an engraving", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation exists for this page (translation null). The miniature description (the Virgin and Child on a rocky outcrop, a man in black kneeling) is accurate.", "severity": "minor" } ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The main text under each miniature is read well on all three pages: the Matins incipits are exact and the French prayer is mostly right, except that its first word is misread (\"Out\" for \"Tout\") and two words are slipped. But every page also transcribes the facing leaf's cut-off column as a garbled 'margin', which an expert would notice at once, and no page is translated."
+  }
+]

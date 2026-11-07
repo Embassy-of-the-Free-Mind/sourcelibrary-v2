@@ -83,12 +83,12 @@ const QUERIES = {
 // count to record; this is five short query embeddings per run (well under a cent).
 async function embed(text) {
   const r = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        requests: [{ model: 'models/gemini-embedding-2-preview', content: { parts: [{ text }] }, outputDimensionality: 768 }],
+        requests: [{ model: 'models/gemini-embedding-2', content: { parts: [{ text }] }, outputDimensionality: 768 }],
       }),
     },
   );

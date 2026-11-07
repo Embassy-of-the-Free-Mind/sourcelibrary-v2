@@ -1,0 +1,200 @@
+{
+ "main_sha": "ba0dc7a7c",
+ "baseline": [
+  {
+   "id": "korean-lite/print",
+   "pages_waiting": 7306,
+   "decision": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route": "agy-flash-low-read",
+   "decision_kn": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route_kn": "agy-flash-low-read",
+   "flags": null,
+   "routes": [
+    {
+     "id": "lite",
+     "k": 2,
+     "n": 11,
+     "wrong": 9,
+     "mean": 0.31368662638801686
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 5,
+     "n": 11,
+     "wrong": 5,
+     "mean": 0.5271619570717933
+    }
+   ]
+  },
+  {
+   "id": "korean-lite/manuscript",
+   "pages_waiting": 9274,
+   "decision": "switch (k/n: manuscript: the defect rates are not split by script type)",
+   "route": "agy-flash-low-read",
+   "decision_kn": "switch",
+   "route_kn": "agy-flash-low-read",
+   "flags": null,
+   "routes": [
+    {
+     "id": "lite",
+     "k": 2,
+     "n": 14,
+     "wrong": 12,
+     "mean": 0.23977713121811353
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 9,
+     "n": 14,
+     "wrong": 5,
+     "mean": 0.6327191410888432
+    }
+   ]
+  },
+  {
+   "id": "korean-lite/unknown",
+   "pages_waiting": 0,
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "route": "lite",
+   "decision_kn": "HOLD (unknown: < 10 pages a route)",
+   "route_kn": "lite",
+   "flags": null,
+   "routes": [
+    {
+     "id": "lite",
+     "k": 0,
+     "n": 3,
+     "wrong": 3,
+     "mean": 0.3174810955358661
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 2,
+     "n": 3,
+     "wrong": 1,
+     "mean": 0.6501555757536951
+    }
+   ]
+  }
+ ],
+ "with_7982": [
+  {
+   "id": "korean-lite/print",
+   "pages_waiting": 7306,
+   "decision": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route": "agy-flash-low-read",
+   "decision_kn": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route_kn": "agy-flash-low-read",
+   "flags": null,
+   "routes": [
+    {
+     "id": "lite",
+     "k": 2,
+     "n": 17,
+     "wrong": 15,
+     "mean": 0.19960935974105207
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 7,
+     "n": 24,
+     "wrong": 15,
+     "mean": 0.35868036732726544
+    },
+    {
+     "id": "paddle",
+     "k": 3,
+     "n": 13,
+     "wrong": 7,
+     "mean": 0.2663285226669813
+    },
+    {
+     "id": "qwen3-vl-8b",
+     "k": 1,
+     "n": 13,
+     "wrong": 9,
+     "mean": 0.13272202750898243
+    }
+   ]
+  },
+  {
+   "id": "korean-lite/manuscript",
+   "pages_waiting": 9274,
+   "decision": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route": "paddle",
+   "decision_kn": "switch (fallback: none passes the gate; the best agy / GPU route)",
+   "route_kn": "paddle",
+   "flags": null,
+   "routes": [
+    {
+     "id": "lite",
+     "k": 2,
+     "n": 17,
+     "wrong": 15,
+     "mean": 0.19257793276286192
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 10,
+     "n": 31,
+     "wrong": 20,
+     "mean": 0.36064414803396433
+    },
+    {
+     "id": "paddle",
+     "k": 2,
+     "n": 17,
+     "wrong": 10,
+     "mean": 0.1581723322012505
+    },
+    {
+     "id": "qwen3-vl-8b",
+     "k": 1,
+     "n": 17,
+     "wrong": 14,
+     "mean": 0.1050507719655127
+    }
+   ]
+  },
+  {
+   "id": "korean-lite/unknown",
+   "pages_waiting": 0,
+   "decision": "HOLD (unknown: < 10 pages a route)",
+   "route": "lite",
+   "decision_kn": "HOLD (unknown: < 10 pages a route)",
+   "route_kn": "lite",
+   "flags": null,
+   "routes": [
+    {
+     "id": "lite",
+     "k": 0,
+     "n": 3,
+     "wrong": 3,
+     "mean": 0.31563859963179774
+    },
+    {
+     "id": "agy-flash-low-read",
+     "k": 2,
+     "n": 3,
+     "wrong": 1,
+     "mean": 0.6500813014233865
+    },
+    {
+     "id": "paddle",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.4991362056382854
+    },
+    {
+     "id": "qwen3-vl-8b",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5004117131221796
+    }
+   ]
+  }
+ ],
+ "note": "what build.py decides with this export added to korean-lite (the stored-lite and agy rows as evidence; paddle and qwen3-vl-8b as new stage-none routes); the checkout's rules.json is NOT changed"
+}

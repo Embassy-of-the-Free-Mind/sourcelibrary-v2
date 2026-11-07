@@ -109,7 +109,7 @@ export interface JourneyData {
   sourceUrl?: string;
   /** Pages of this book held in our own storage. Absent: none were copied. */
   pagesArchived?: number;
-  /** How the transcription was made, in a few words ("Gemini", "the Internet Archive's own OCR"). */
+  /** How the transcription was made, in a few words ("a machine", "the Internet Archive's own OCR"); no model name is published here. */
   readBy: string;
   readByModel: boolean;
   /** The translation is a model's and no person has reviewed it (reader's own rule). */

@@ -1,0 +1,39 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<meta>
+image quality: clean, well-preserved woodblock print
+catchwords: 本草綱目 (Bencao Gangmu), 總目 (General Table of Contents)
+</meta>
+
+<margin>
+本草綱目
+總目
+</margin>
+
+## 木三 <gloss>灌木類五十一種</gloss>
+
+### 第三十七卷
+
+## 木四 <gloss>寓木類一十二種</gloss> 木五 <gloss>苞木類四種</gloss> 木六 <gloss>雜木類七種 附錄二十種</gloss>
+
+### 第三十八卷 服器部二類
+
+## 服器一 <gloss>服帛類二十五種</gloss> 服器二 <gloss>器物類五十四種</gloss>
+
+### 第三十九卷 蟲部四類
+
+## 蟲一 <gloss>卵生類上二十三種</gloss>
+
+### 第四十卷
+
+## 蟲二 <gloss>卵生類下二十二種</gloss>
+
+### 第四十一卷
+
+## 蟲三 <gloss>化生類三十三種</gloss>
+
+### 第四十二卷
+
+<vocab>本草綱目, 總目, 灌木, 寓木, 苞木, 雜木, 服器部, 服帛, 蟲部, 卵生, 化生</vocab>

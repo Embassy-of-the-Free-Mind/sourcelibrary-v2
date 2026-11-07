@@ -1,3 +1,4 @@
+import { hasMemberBenefits, membershipState } from './membership-status';
 import { getDb } from './mongodb';
 import { toUserId } from './user-id';
 import { imageAccessFor, type ImageAccess } from './types/image-source';
@@ -95,9 +96,9 @@ export async function canDownload(userId: string | null, type: PurchaseType, ite
   // Check membership first (fast path)
   const user = await db.collection('users').findOne(
     { _id: toUserId(userId) as any },
-    { projection: { 'membership.active': 1 } }
+    { projection: { 'membership.active': 1, 'membership.expiresAt': 1, 'membership.joined': 1, 'membership.student.expiresAt': 1 } }
   );
-  if (user?.membership?.active) return true;
+  if (hasMemberBenefits(membershipState(user?.membership).kind)) return true;
 
   // Check individual purchase
   return hasPurchased(userId, type, itemId);

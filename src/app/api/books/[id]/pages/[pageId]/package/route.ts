@@ -1,3 +1,4 @@
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import archiver from 'archiver';
@@ -17,6 +18,11 @@ import { getRequestBaseUrl } from '@/lib/shortlinks';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { pageExportImageUrl, fetchAndCompressImage } from '@/lib/export-page-images';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
+import { transcriptProvenance, transcriptProvenanceLabel, translationCorpus, textProducedAt, datedProvenanceLabel } from '@/lib/text-provenance';
+import { getReaderStrings } from '@/lib/reader-strings';
+import { serveEnglishOriginalPage, servesTranscriptionInsteadOfTranslation } from '@/lib/english-original-text';
+import { facingTranslationLabel, hasPublishedFacingTranslation } from '@/lib/facing-translation';
 
 /**
  * GET /api/books/[id]/pages/[pageId]/package
@@ -64,8 +70,15 @@ function buildReadme(opts: {
   citation: Citation;
   imageAccess: ImageAccess;
   hasImage: boolean;
+  /**
+   * The leaf is printed in English and its stored translation was withheld
+   * (#7100; a Loeb's English leaf, #8321): the transcription IS its text.
+   */
+  printedEnglish: boolean;
 }): string {
-  const { book, page, bookTitle, citation, imageAccess, hasImage } = opts;
+  const { book, page, bookTitle, citation, imageAccess, hasImage, printedEnglish } = opts;
+  // On a facing-page edition the printed English is the translator's, not the author's.
+  const facingLabel = printedEnglish && hasPublishedFacingTranslation(book) ? facingTranslationLabel(book) : null;
   const now = new Date().toISOString().split('T')[0];
   const lines: string[] = [];
 
@@ -102,29 +115,52 @@ function buildReadme(opts: {
   } else {
     lines.push('  - [scan NOT included] no scan is archived for this page.');
   }
-  if (page.ocr?.data) {
+  if (page.ocr?.data && facingLabel) {
+    lines.push(`  - transcription.txt: the printed English of this leaf (${facingLabel}),`);
+    lines.push('    printed facing the original text');
+  } else if (page.ocr?.data && printedEnglish) {
+    lines.push('  - transcription.txt: the printed English text of this leaf');
+  } else if (page.ocr?.data) {
     lines.push('  - transcription.txt: the original-language text');
   } else {
     lines.push('  - [transcription NOT included] this page has not been transcribed.');
   }
   if (page.translation?.data) {
     lines.push('  - translation.txt: the English translation');
+  } else if (printedEnglish) {
+    lines.push('  - [translation NOT included] this leaf is printed in English; transcription.txt is its text.');
   } else {
     lines.push('  - [translation NOT included] no translation available for this page.');
   }
   lines.push('');
 
-  // Provenance — who/what produced the text, named plainly.
+  // Provenance — what kind of text each file is, named plainly. The same helper as the
+  // reader's drawer, so the package and the page say the same thing; the model is not
+  // named (#7263) — it stays in the record and in /api/books/[id]/text?include_metadata.
+  const info = getReaderStrings('en').info;
+  const prov = transcriptProvenance(page);
+  const trCorpus = translationCorpus(page);
   lines.push('PROVENANCE');
   lines.push(
-    page.ocr?.model
-      ? `Transcription produced by: ${page.ocr.model}`
-      : 'Transcription: not yet produced.'
+    prov
+      ? `Transcription: ${datedProvenanceLabel(transcriptProvenanceLabel(prov, info, 'full'), textProducedAt(page, 'ocr'), info)}`
+      : page.ocr?.data ? 'Transcription: included.' : 'Transcription: not yet produced.'
   );
   lines.push(
-    page.translation?.model
-      ? `Translation produced by: ${page.translation.model}`
-      : 'Translation: not yet produced.'
+    facingLabel
+      ? `Translation: the published English (${facingLabel}); Source Library's translation of this leaf is not included.`
+      : printedEnglish
+      ? 'Translation: none; the leaf is printed in English.'
+      : !page.translation?.data
+      ? 'Translation: not yet produced.'
+      : trCorpus
+        ? `Translation: ${info.corpusTranslation(trCorpus.name)}`
+        // No model means not ours to call AI (e.g. Sefaria's own English, `source: 'manual'`).
+        : !page.translation.model
+          ? 'Translation: included.'
+          : page.translation.edited_by || page.translation.edited_at
+          ? `Translation: ${datedProvenanceLabel(info.machineTranslationEdited, textProducedAt(page, 'translation'), info)}`
+          : `Translation: ${datedProvenanceLabel(info.machineTranslation, textProducedAt(page, 'translation'), info)}`
   );
   lines.push('');
 
@@ -137,7 +173,8 @@ function buildReadme(opts: {
 
   lines.push('-'.repeat(60));
   lines.push(`Downloaded: ${now}`);
-  lines.push('License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)');
+  lines.push('License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)');
+  lines.push(AI_TRAINING_NOTICE);
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
   lines.push('='.repeat(60));
@@ -182,10 +219,14 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
     }
     const bookId = book.id;
 
-    const page = await db.collection('pages').findOne({ id: pageId, book_id: bookId }) as unknown as Page | null;
-    if (!page) {
+    const storedPage = await db.collection('pages').findOne({ id: pageId, book_id: bookId }) as unknown as Page | null;
+    if (!storedPage) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+    // An English leaf of an English edition or a Loeb (#7100, #8321) ships its
+    // transcription, never the stored rewording, and claims no translation credit.
+    const printedEnglish = servesTranscriptionInsteadOfTranslation(storedPage, book);
+    const page = serveEnglishOriginalPage(storedPage, book, { modernized: false });
 
     // Daily free-tier cap (#3290) — a page package rides the same free/capped
     // tier as the plain-text book formats. Members, per-book purchasers, and
@@ -196,7 +237,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
         return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
       }
     }
-    const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+    const isMember = sessionHasMemberBenefits(session?.user);
     const isExemptEditor = userId ? await isInnerCircle() : false;
     const isPurchased = !userId || isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', bookId);
     if (userId && !isMember && !isExemptEditor && !isPurchased) {
@@ -224,7 +265,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
       editions.find(e => e.id === book.current_edition_id) ||
       editions.find(e => e.status === 'published') ||
       null;
-    const citation = generateCitations(book, page.page_number, bookId, page.id, baseUrl, edition || undefined, undefined, page.printed_page);
+    const citation = generateCitations(book, page.page_number, bookId, page.id, baseUrl, edition || undefined, undefined, page.printed_page, { transcription: printedEnglish });
 
     const bookTitle = book.display_title || book.title || 'untitled';
     const safeTitle = bookTitle
@@ -265,7 +306,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
         }
 
         archive.append(
-          buildReadme({ book: book as Book, page, bookTitle, citation, imageAccess, hasImage: !!imageUrl }),
+          buildReadme({ book: book as Book, page, bookTitle, citation, imageAccess, hasImage: !!imageUrl, printedEnglish }),
           { name: 'README.txt' },
         );
 

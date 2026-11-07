@@ -5,7 +5,7 @@
  * sevprep.mjs — blind severity-grading packets for #7243 (PREREG Amendment 1). One packet per page: every arm's text
  * under a shuffled letter, word-level diff spans against the frozen reference, and structure flags. The arm↔letter key is
  * written apart (key.json) and never shown to the grader.
- *   node sevprep.mjs <arms dir> <refs dir> <tiles dir> <out dir>
+ *   node sevprep.mjs <arms dir> <refs dir> <tiles dir> <out dir>      (SEV_PAGES=<manifest> for another page set, e.g. pages-confirm.json)
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -13,7 +13,7 @@ import { clean, nview, views, invention } from './score.mjs';
 import { makeRng } from '../lib/paired-stats.mjs';
 
 const [armsDir, refsDir, tilesDir, outDir] = process.argv.slice(2);
-const pages = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'pages.json'), 'utf8')).pages;
+const pages = JSON.parse(fs.readFileSync(process.env.SEV_PAGES || path.join(path.dirname(new URL(import.meta.url).pathname), 'pages.json'), 'utf8')).pages;
 const arms = {};
 for (const f of fs.readdirSync(armsDir).filter((x) => /^[A-Za-z0-9]+\.jsonl$/.test(x))) {
   const rows = {}; for (const l of fs.readFileSync(path.join(armsDir, f), 'utf8').split('\n')) { if (!l.trim()) continue; const r = JSON.parse(l); rows[r.page_id || r.uid] = r; }

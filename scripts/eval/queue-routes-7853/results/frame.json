@@ -1,0 +1,331 @@
+{
+ "at": "2026-10-31T14:57:45.183Z",
+ "census": {
+  "at": "2026-10-31T14:38:12.637Z",
+  "ledger_rows": 26911,
+  "judged_pages": 347,
+  "by_lang": {
+   "de": {
+    "books": 2690,
+    "books_owing": 1233,
+    "pages_owed": 234953
+   },
+   "fr": {
+    "books": 847,
+    "books_owing": 337,
+    "pages_owed": 76165
+   }
+  }
+ },
+ "queue": {
+  "fr": {
+   "books": 337,
+   "pages": 76165,
+   "century": {
+    "18th": 28255,
+    "<=1600": 6590,
+    "19th+": 20885,
+    "17th": 20432,
+    "undated": 3
+   },
+   "scan": {
+    "fair-poor": 9269,
+    "good": 66896
+   },
+   "page_scan_tag": {
+    "good": 66827,
+    "fair": 96,
+    "poor": 74,
+    "other": 9168
+   },
+   "book_scan_score": {
+    "none": 41070,
+    ">=85": 31417,
+    "<70": 1866,
+    "70-84": 1812
+   }
+  },
+  "de": {
+   "books": 1233,
+   "pages": 234953,
+   "century": {
+    "18th": 132396,
+    "17th": 44074,
+    "<=1600": 22069,
+    "19th+": 35801,
+    "undated": 613
+   },
+   "scan": {
+    "good": 197593,
+    "fair-poor": 37360
+   },
+   "page_scan_tag": {
+    "good": 197114,
+    "fair": 266,
+    "poor": 269,
+    "other": 37304
+   },
+   "book_scan_score": {
+    ">=85": 78470,
+    "none": 147881,
+    "<70": 2986,
+    "70-84": 5616
+   }
+  }
+ },
+ "queue_head": {
+  "pages_per_lang": 20000,
+  "de": {
+   "books": 92,
+   "pages": 20008,
+   "century": {
+    "18th": 11838,
+    "17th": 2675,
+    "<=1600": 2025,
+    "19th+": 3470
+   },
+   "scan": {
+    "good": 15498,
+    "fair-poor": 4510
+   }
+  },
+  "fr": {
+   "books": 118,
+   "pages": 20135,
+   "century": {
+    "18th": 7744,
+    "<=1600": 2731,
+    "19th+": 3797,
+    "17th": 5862,
+    "undated": 1
+   },
+   "scan": {
+    "fair-poor": 4076,
+    "good": 16059
+   }
+  }
+ },
+ "sample": {
+  "de": {
+   "pages": 150,
+   "century": {
+    "17th": 29,
+    "18th": 87,
+    "19th+": 21,
+    "<=1600": 13
+   },
+   "scan": {
+    "fair-poor": 21,
+    "good": 129
+   },
+   "face": {
+    "fraktur": 126,
+    "mixed": 11,
+    "antiqua": 13
+   }
+  },
+  "fr": {
+   "pages": 60,
+   "century": {
+    "17th": 16,
+    "18th": 22,
+    "19th+": 17,
+    "<=1600": 5
+   },
+   "scan": {
+    "fair-poor": 7,
+    "good": 53
+   },
+   "face": {
+    "antiqua": 60
+   }
+  }
+ },
+ "face_of_queue_estimated": {
+  "de": {
+   "fraktur": 0.839,
+   "mixed": 0.073,
+   "antiqua": 0.088
+  },
+  "fr": {
+   "antiqua": 1
+  }
+ },
+ "strata": {
+  "de|17th|fair-poor": {
+   "books": 55,
+   "pages": 6064,
+   "share": 0.0276,
+   "n": 4,
+   "selected": 4,
+   "books_excluded": 6,
+   "pages_excluded": 703
+  },
+  "de|17th|good": {
+   "books": 285,
+   "pages": 36117,
+   "share": 0.1642,
+   "n": 25,
+   "selected": 25,
+   "books_excluded": 11,
+   "pages_excluded": 1190
+  },
+  "de|18th|fair-poor": {
+   "books": 88,
+   "pages": 13832,
+   "share": 0.0629,
+   "n": 10,
+   "selected": 10,
+   "books_excluded": 4,
+   "pages_excluded": 1093
+  },
+  "de|18th|good": {
+   "books": 378,
+   "pages": 111081,
+   "share": 0.505,
+   "n": 77,
+   "selected": 77,
+   "books_excluded": 27,
+   "pages_excluded": 6390
+  },
+  "de|19th+|fair-poor": {
+   "books": 59,
+   "pages": 10500,
+   "share": 0.0477,
+   "n": 7,
+   "selected": 7,
+   "books_excluded": 12,
+   "pages_excluded": 3270
+  },
+  "de|19th+|good": {
+   "books": 105,
+   "pages": 20470,
+   "share": 0.0931,
+   "n": 14,
+   "selected": 14,
+   "books_excluded": 7,
+   "pages_excluded": 1561
+  },
+  "de|<=1600|fair-poor": {
+   "books": 13,
+   "pages": 1897,
+   "share": 0.0086,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  },
+  "de|<=1600|good": {
+   "books": 170,
+   "pages": 19395,
+   "share": 0.0882,
+   "n": 13,
+   "selected": 13,
+   "books_excluded": 7,
+   "pages_excluded": 777
+  },
+  "de|undated|fair-poor": {
+   "books": 1,
+   "pages": 1,
+   "share": 0,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  },
+  "de|undated|good": {
+   "books": 5,
+   "pages": 612,
+   "share": 0.0028,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  },
+  "fr|17th|fair-poor": {
+   "books": 13,
+   "pages": 2359,
+   "share": 0.0313,
+   "n": 2,
+   "selected": 2,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  },
+  "fr|17th|good": {
+   "books": 50,
+   "pages": 17963,
+   "share": 0.2381,
+   "n": 14,
+   "selected": 14,
+   "books_excluded": 2,
+   "pages_excluded": 110
+  },
+  "fr|18th|fair-poor": {
+   "books": 24,
+   "pages": 3119,
+   "share": 0.0413,
+   "n": 2,
+   "selected": 2,
+   "books_excluded": 1,
+   "pages_excluded": 25
+  },
+  "fr|18th|good": {
+   "books": 104,
+   "pages": 25012,
+   "share": 0.3315,
+   "n": 20,
+   "selected": 20,
+   "books_excluded": 1,
+   "pages_excluded": 99
+  },
+  "fr|19th+|fair-poor": {
+   "books": 34,
+   "pages": 3709,
+   "share": 0.0492,
+   "n": 3,
+   "selected": 3,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  },
+  "fr|19th+|good": {
+   "books": 65,
+   "pages": 17004,
+   "share": 0.2254,
+   "n": 14,
+   "selected": 14,
+   "books_excluded": 3,
+   "pages_excluded": 172
+  },
+  "fr|<=1600|fair-poor": {
+   "books": 3,
+   "pages": 57,
+   "share": 0.0008,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  },
+  "fr|<=1600|good": {
+   "books": 34,
+   "pages": 6217,
+   "share": 0.0824,
+   "n": 5,
+   "selected": 5,
+   "books_excluded": 1,
+   "pages_excluded": 316
+  },
+  "fr|undated|good": {
+   "books": 2,
+   "pages": 3,
+   "share": 0,
+   "n": 0,
+   "selected": 0,
+   "books_excluded": 0,
+   "pages_excluded": 0
+  }
+ },
+ "replaced": {
+  "face none (no printed body text)": 6
+ },
+ "tags_made": 229
+}

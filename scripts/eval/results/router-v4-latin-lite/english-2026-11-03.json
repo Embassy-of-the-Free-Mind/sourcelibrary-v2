@@ -1,0 +1,1073 @@
+{
+ "at": "2026-11-03T10:56:26.889Z",
+ "cell": "latin-lite/print",
+ "translator": {
+  "model": "gemini-3.8-flash-low",
+  "per_call": 4,
+  "row": "latin-cli-agy4",
+  "reader": "claude-translate.mjs read --cli=agy --per-call=4 --fresh (CANDIDATE_READS=off)"
+ },
+ "judge": "claude -p --model opus, JUDGE-PROMPT.md + IMAGE-ADDENDUM.md",
+ "gate": {
+  "pass": true,
+  "checks": {
+   "swap": {
+    "n": 15,
+    "k": 15,
+    "need": 0.9333333333333333,
+    "rate": 1,
+    "pass": true
+   },
+   "drop": {
+    "n": 15,
+    "k": 15,
+    "need": 0.8666666666666667,
+    "rate": 1,
+    "pass": true
+   },
+   "repeat": {
+    "n": 15,
+    "k": 15,
+    "need": 0.9333333333333333,
+    "rate": 1,
+    "pass": true
+   }
+  }
+ },
+ "reported": true,
+ "items": {
+  "main": 98,
+  "controls": 45,
+  "verdicts": 143
+ },
+ "arms": {
+  "E1": {
+   "pages": 26,
+   "wrong_end_to_end": 15,
+   "wrong_e2e_rate": 0.577,
+   "wrong_e2e_ci95": [
+    0.385,
+    0.769
+   ],
+   "major_pages": 6,
+   "misread_pages": 14,
+   "fidelity_ge4": 20,
+   "fidelity_ge4_share": 0.769,
+   "fidelity_mean": 4,
+   "english_words": 12129,
+   "majors": 7,
+   "major_per_1k": 0.58,
+   "major_per_1k_ci95": [
+    0.18,
+    1
+   ],
+   "translated_fresh": 0,
+   "reused_e2": 0,
+   "failed_stored_served": 0,
+   "agy_calls": 0
+  },
+  "E2": {
+   "pages": 30,
+   "wrong_end_to_end": 18,
+   "wrong_e2e_rate": 0.6,
+   "wrong_e2e_ci95": [
+    0.433,
+    0.767
+   ],
+   "major_pages": 1,
+   "misread_pages": 18,
+   "fidelity_ge4": 29,
+   "fidelity_ge4_share": 0.967,
+   "fidelity_mean": 4.5,
+   "english_words": 14581,
+   "majors": 1,
+   "major_per_1k": 0.07,
+   "major_per_1k_ci95": [
+    0,
+    0.23
+   ],
+   "translated_fresh": 30,
+   "reused_e2": 0,
+   "failed_stored_served": 0,
+   "agy_calls": 35
+  },
+  "E3": {
+   "pages": 30,
+   "wrong_end_to_end": 14,
+   "wrong_e2e_rate": 0.467,
+   "wrong_e2e_ci95": [
+    0.3,
+    0.633
+   ],
+   "major_pages": 0,
+   "misread_pages": 14,
+   "fidelity_ge4": 30,
+   "fidelity_ge4_share": 1,
+   "fidelity_mean": 4.63,
+   "english_words": 14597,
+   "majors": 0,
+   "major_per_1k": 0,
+   "major_per_1k_ci95": [
+    0,
+    0
+   ],
+   "translated_fresh": 16,
+   "reused_e2": 14,
+   "failed_stored_served": 0,
+   "agy_calls": 18
+  },
+  "E4": {
+   "pages": 30,
+   "wrong_end_to_end": 7,
+   "wrong_e2e_rate": 0.233,
+   "wrong_e2e_ci95": [
+    0.1,
+    0.4
+   ],
+   "major_pages": 0,
+   "misread_pages": 7,
+   "fidelity_ge4": 30,
+   "fidelity_ge4_share": 1,
+   "fidelity_mean": 4.67,
+   "english_words": 13588,
+   "majors": 0,
+   "major_per_1k": 0,
+   "major_per_1k_ci95": [
+    0,
+    0
+   ],
+   "translated_fresh": 26,
+   "reused_e2": 4,
+   "failed_stored_served": 0,
+   "agy_calls": 33
+  }
+ },
+ "vs_E1": [
+  {
+   "arm": "E2",
+   "vs": "E1",
+   "n": 26,
+   "wrong_arm": 16,
+   "wrong_vs": 15,
+   "d_wrong_rate_reduction": -0.038,
+   "ci95": [
+    -0.192,
+    0.115
+   ],
+   "fixed": 2,
+   "broke": 3,
+   "sign_test_p": 1,
+   "fid_ge4_arm": 25,
+   "fid_ge4_vs": 20
+  },
+  {
+   "arm": "E3",
+   "vs": "E1",
+   "n": 26,
+   "wrong_arm": 12,
+   "wrong_vs": 15,
+   "d_wrong_rate_reduction": 0.115,
+   "ci95": [
+    -0.115,
+    0.346
+   ],
+   "fixed": 6,
+   "broke": 3,
+   "sign_test_p": 0.5078,
+   "fid_ge4_arm": 26,
+   "fid_ge4_vs": 20
+  },
+  {
+   "arm": "E4",
+   "vs": "E1",
+   "n": 26,
+   "wrong_arm": 7,
+   "wrong_vs": 15,
+   "d_wrong_rate_reduction": 0.308,
+   "ci95": [
+    0.154,
+    0.5
+   ],
+   "fixed": 8,
+   "broke": 0,
+   "sign_test_p": 0.0078,
+   "fid_ge4_arm": 26,
+   "fid_ge4_vs": 20
+  }
+ ],
+ "between": [
+  {
+   "arm": "E3",
+   "vs": "E2",
+   "n": 30,
+   "wrong_arm": 14,
+   "wrong_vs": 18,
+   "d_wrong_rate_reduction": 0.133,
+   "ci95": [
+    0.033,
+    0.267
+   ],
+   "fixed": 4,
+   "broke": 0,
+   "sign_test_p": 0.125,
+   "fid_ge4_arm": 30,
+   "fid_ge4_vs": 29
+  },
+  {
+   "arm": "E4",
+   "vs": "E2",
+   "n": 30,
+   "wrong_arm": 7,
+   "wrong_vs": 18,
+   "d_wrong_rate_reduction": 0.367,
+   "ci95": [
+    0.2,
+    0.533
+   ],
+   "fixed": 11,
+   "broke": 0,
+   "sign_test_p": 0.001,
+   "fid_ge4_arm": 30,
+   "fid_ge4_vs": 29
+  },
+  {
+   "arm": "E4",
+   "vs": "E3",
+   "n": 30,
+   "wrong_arm": 7,
+   "wrong_vs": 14,
+   "d_wrong_rate_reduction": 0.233,
+   "ci95": [
+    0.1,
+    0.4
+   ],
+   "fixed": 7,
+   "broke": 0,
+   "sign_test_p": 0.0156,
+   "fid_ge4_arm": 30,
+   "fid_ge4_vs": 30
+  }
+ ],
+ "per_page": [
+  {
+   "book_id": "69bd9e496120d54bd037c4c1",
+   "page_id": "69bd9e496120d54bd037c66e",
+   "E1": {
+    "fid": 3,
+    "major": true,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "68fb103412055a03a58d3307",
+   "page_id": "69d369d74ced20ea32d376ee",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b51df8768235dc6598a7e2",
+   "page_id": "69b51df8768235dc6598a97b",
+   "E1": null,
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "6a267d826c1f37c9c4f3a2b8",
+   "page_id": "6a267d826c1f37c9c4f3a2c0",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b51e58ff09e4fe943ace4f",
+   "page_id": "69b51e58ff09e4fe943acf49",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69dbc8af1040d1d5e209b7d3",
+   "page_id": "69dbc8af1040d1d5e209b927",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "69b51ddccf111105c42922b3",
+   "page_id": "69b51ddccf111105c42923a5",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "6a42e82b06e6ead3ac53d15c",
+   "page_id": "6a42e82b06e6ead3ac53d182",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "6958e96f813ea03889c33051",
+   "page_id": "6958e96f813ea03889c3332b",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69dbca351040d1d5e20a9c51",
+   "page_id": "69dbca351040d1d5e20a9c62",
+   "E1": {
+    "fid": 3,
+    "major": true,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "69dbcbc51040d1d5e20baaae",
+   "page_id": "69dbcbc51040d1d5e20baadc",
+   "E1": {
+    "fid": 3,
+    "major": true,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 3,
+    "major": true,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "699246a8bc722ec0ee80fa08",
+   "page_id": "699246a8bc722ec0ee80fc34",
+   "E1": {
+    "fid": 3,
+    "major": true,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b21f2d4522d8c1db3bde77",
+   "page_id": "69b21f2d4522d8c1db3bdf0c",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "695937333b43cb6630c91e6d",
+   "page_id": "695937333b43cb6630c920b5",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b6596818b87551bfcfb415",
+   "page_id": "69b6596818b87551bfcfb420",
+   "E1": {
+    "fid": 3,
+    "major": true,
+    "misread": false,
+    "bad": true
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "6a447bfcd4792484c6c184e7",
+   "page_id": "6a447bfcd4792484c6c1850c",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69bd9bda46b01553e33bf343",
+   "page_id": "69bd9bda46b01553e33bf584",
+   "E1": null,
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "6a243e470f0e4f405e6338e2",
+   "page_id": "6a243e470f0e4f405e6338fd",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b51dd6768235dc659888ca",
+   "page_id": "69b51dd6768235dc65988a1c",
+   "E1": null,
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69dbc9711040d1d5e20a358f",
+   "page_id": "69dbc9711040d1d5e20a359d",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69ac7ee520878c5c9ba51e75",
+   "page_id": "69ac7ee520878c5c9ba51f2c",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69bd9ee4f6d63c919747d604",
+   "page_id": "69bd9ee4f6d63c919747d70a",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69af41a12a17c2103c82089b",
+   "page_id": "69af41a12a17c2103c820aad",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b303855facc83a9a3d9b8f",
+   "page_id": "69b303855facc83a9a3d9e2a",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page_id": "69bd9f0ef6d63c919747e28c",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b631541c1c21a37380686e",
+   "page_id": "69b631541c1c21a373806b54",
+   "E1": {
+    "fid": 2,
+    "major": true,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E3": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E4": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   }
+  },
+  {
+   "book_id": "69b51e7547b06ecd581907cc",
+   "page_id": "69b51e7547b06ecd58190840",
+   "E1": null,
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69af22217c27d4b637fee2ab",
+   "page_id": "69af22217c27d4b637fee34f",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "6a267d436c1f37c9c4f391bc",
+   "page_id": "6a267d436c1f37c9c4f391ce",
+   "E1": {
+    "fid": 4,
+    "major": false,
+    "misread": true,
+    "bad": true
+   },
+   "E2": {
+    "fid": 4,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  },
+  {
+   "book_id": "69b222799dbc3744b781a6d7",
+   "page_id": "69b222799dbc3744b781a90f",
+   "E1": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E2": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E3": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   },
+   "E4": {
+    "fid": 5,
+    "major": false,
+    "misread": false,
+    "bad": false
+   }
+  }
+ ]
+}

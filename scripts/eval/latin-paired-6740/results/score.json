@@ -1,0 +1,758 @@
+{
+ "generated_at": "2026-11-01T02:40:38.429Z",
+ "seeds": {
+  "draw": 67401,
+  "queue": 67402,
+  "wrongPage": 67403,
+  "planted": 67404,
+  "bootstrap": 6740
+ },
+ "calls": {
+  "opus_abs": 82,
+  "opus_controls": 11,
+  "unparsed": 0,
+  "list_usd_equiv": 5.62
+ },
+ "items": {
+  "total": 82,
+  "judged": 82
+ },
+ "instrument": {
+  "wrong_page": "6/6",
+  "wrong_page_by_arm": {
+   "pero4": {
+    "n": 2,
+    "pass": 2
+   },
+   "live": {
+    "n": 2,
+    "pass": 2
+   },
+   "read4": {
+    "n": 2,
+    "pass": 2
+   }
+  },
+  "planted": "5/5",
+  "planted_detail": [
+   {
+    "kind": "B",
+    "caught": true,
+    "accept": false
+   },
+   {
+    "kind": "C",
+    "caught": true,
+    "accept": false
+   },
+   {
+    "kind": "D",
+    "caught": true,
+    "accept": false
+   },
+   {
+    "kind": "E",
+    "caught": true,
+    "accept": false
+   },
+   {
+    "kind": "B",
+    "caught": true,
+    "accept": false
+   }
+  ],
+  "valid": true,
+  "rule": "valid when every wrong-page control is refused at fidelity <= 2 and >= 0.8 of plants are caught",
+  "noise_floor": "reused from #7818: accept kappa 0.87, 29/30, same judge and prompt (no rerun)"
+ },
+ "pages": 40,
+ "arms": {
+  "live": {
+   "name": "1 PERO draft > agy, 1 a call (live)",
+   "route": "pero>agy-flash-low-written",
+   "pages_drawn": 40,
+   "written": {
+    "k": 22,
+    "n": 40,
+    "rate": 0.55,
+    "wilson95": [
+     0.398,
+     0.693
+    ]
+   },
+   "judged": 22,
+   "accept_all_drawn": {
+    "k": 19,
+    "n": 40,
+    "rate": 0.475,
+    "wilson95": [
+     0.329,
+     0.625
+    ]
+   },
+   "accept_all_drawn_weighted": 0.479,
+   "accept_all_drawn_weighted_ci95": [
+    0.329,
+    0.628
+   ],
+   "accept_written": {
+    "k": 19,
+    "n": 22,
+    "rate": 0.864,
+    "wilson95": [
+     0.667,
+     0.953
+    ]
+   },
+   "severity_per_1000": 15.185,
+   "severity_per_1000_ci95": [
+    7.609,
+    28.419
+   ],
+   "severity_per_1000_page_mean": 22.356,
+   "defects_per_1000_weighted": {
+    "wrong_text": 0.199,
+    "wrong_text_ci95": [
+     0,
+     0.658
+    ],
+    "misleads": 0.592,
+    "misleads_ci95": [
+     0,
+     1.332
+    ],
+    "cosmetic": 7.247,
+    "cosmetic_ci95": [
+     5.155,
+     9.663
+    ]
+   },
+   "defect_counts": {
+    "wrong_text": 1,
+    "misleads": 3,
+    "cosmetic": 36,
+    "words": 4989
+   },
+   "wrong_text_pages": 1,
+   "fidelity_mean_weighted": 4.316,
+   "median_words_per_page": 209,
+   "agy_calls_per_page": 0.975,
+   "gpu_seconds_per_page": 2.925,
+   "usd_per_raw_page": 0.000848,
+   "usd_per_raw_page_with_gpu": 0.001129,
+   "usd_per_accepted_page": 0.00177
+  },
+  "pero4": {
+   "name": "2 PERO draft > agy, 4 a call",
+   "route": "pero>agy-flash-low@4-written",
+   "pages_drawn": 40,
+   "written": {
+    "k": 23,
+    "n": 40,
+    "rate": 0.575,
+    "wilson95": [
+     0.422,
+     0.715
+    ]
+   },
+   "judged": 23,
+   "accept_all_drawn": {
+    "k": 22,
+    "n": 40,
+    "rate": 0.55,
+    "wilson95": [
+     0.398,
+     0.693
+    ]
+   },
+   "accept_all_drawn_weighted": 0.554,
+   "accept_all_drawn_weighted_ci95": [
+    0.405,
+    0.703
+   ],
+   "accept_written": {
+    "k": 22,
+    "n": 23,
+    "rate": 0.957,
+    "wilson95": [
+     0.79,
+     0.992
+    ]
+   },
+   "severity_per_1000": 9.275,
+   "severity_per_1000_ci95": [
+    5.963,
+    13.281
+   ],
+   "severity_per_1000_page_mean": 15.903,
+   "defects_per_1000_weighted": {
+    "wrong_text": 0,
+    "wrong_text_ci95": [
+     0,
+     0
+    ],
+    "misleads": 0.56,
+    "misleads_ci95": [
+     0,
+     1.256
+    ],
+    "cosmetic": 6.473,
+    "cosmetic_ci95": [
+     4.498,
+     8.618
+    ]
+   },
+   "defect_counts": {
+    "wrong_text": 0,
+    "misleads": 3,
+    "cosmetic": 34,
+    "words": 5264
+   },
+   "wrong_text_pages": 0,
+   "fidelity_mean_weighted": 4.477,
+   "median_words_per_page": 211,
+   "agy_calls_per_page": 0.244,
+   "gpu_seconds_per_page": 2.925,
+   "usd_per_raw_page": 0.000212,
+   "usd_per_raw_page_with_gpu": 0.000493,
+   "usd_per_accepted_page": 0.00038
+  },
+  "read4": {
+   "name": "3 agy fresh read, 4 a call",
+   "route": "agy-flash-low@4-written",
+   "pages_drawn": 40,
+   "written": {
+    "k": 37,
+    "n": 40,
+    "rate": 0.925,
+    "wilson95": [
+     0.801,
+     0.974
+    ]
+   },
+   "judged": 37,
+   "accept_all_drawn": {
+    "k": 30,
+    "n": 40,
+    "rate": 0.75,
+    "wilson95": [
+     0.598,
+     0.858
+    ]
+   },
+   "accept_all_drawn_weighted": 0.754,
+   "accept_all_drawn_weighted_ci95": [
+    0.631,
+    0.877
+   ],
+   "accept_written": {
+    "k": 30,
+    "n": 37,
+    "rate": 0.811,
+    "wilson95": [
+     0.658,
+     0.905
+    ]
+   },
+   "severity_per_1000": 41.877,
+   "severity_per_1000_ci95": [
+    21.306,
+    64.165
+   ],
+   "severity_per_1000_page_mean": 36.793,
+   "defects_per_1000_weighted": {
+    "wrong_text": 0.92,
+    "wrong_text_ci95": [
+     0.23,
+     1.717
+    ],
+    "misleads": 2.774,
+    "misleads_ci95": [
+     1.45,
+     3.856
+    ],
+    "cosmetic": 5.009,
+    "cosmetic_ci95": [
+     3.938,
+     6.132
+    ]
+   },
+   "defect_counts": {
+    "wrong_text": 10,
+    "misleads": 30,
+    "cosmetic": 53,
+    "words": 10655
+   },
+   "wrong_text_pages": 5,
+   "fidelity_mean_weighted": 4.274,
+   "median_words_per_page": 236,
+   "agy_calls_per_page": 0.299,
+   "gpu_seconds_per_page": 0,
+   "usd_per_raw_page": 0.00026,
+   "usd_per_raw_page_with_gpu": 0.00026,
+   "usd_per_accepted_page": 0.00034
+  }
+ },
+ "primary_severity": [
+  {
+   "contrast": "pero4_vs_live",
+   "n": 21,
+   "diff_weighted": -5.467,
+   "ci95": [
+    -18.84,
+    2.987
+   ],
+   "wilcoxon": {
+    "n": 21,
+    "w_plus": 95,
+    "z": -0.695,
+    "p": 0.487
+   },
+   "fewer": 11,
+   "more": 10,
+   "same": 0,
+   "wrong_text": {
+    "live": 1,
+    "pero4": 0
+   },
+   "misleads": {
+    "live": 2,
+    "pero4": 3
+   },
+   "holm_p": 0.487,
+   "supported": false,
+   "direction": "candidate fewer"
+  },
+  {
+   "contrast": "read4_vs_live",
+   "n": 22,
+   "diff_weighted": 10.233,
+   "ci95": [
+    -9.827,
+    34.683
+   ],
+   "wilcoxon": {
+    "n": 22,
+    "w_plus": 177,
+    "z": 1.623,
+    "p": 0.105
+   },
+   "fewer": 8,
+   "more": 14,
+   "same": 0,
+   "wrong_text": {
+    "live": 1,
+    "read4": 2
+   },
+   "misleads": {
+    "live": 3,
+    "read4": 8
+   },
+   "holm_p": 0.21,
+   "supported": false,
+   "direction": "candidate more"
+  }
+ ],
+ "secondary_severity": {
+  "read4_vs_pero4": {
+   "n": 23,
+   "diff_weighted": 4.481,
+   "ci95": [
+    -0.338,
+    9.237
+   ],
+   "wilcoxon": {
+    "n": 23,
+    "w_plus": 191,
+    "z": 1.597,
+    "p": 0.11
+   },
+   "fewer": 8,
+   "more": 15,
+   "same": 0,
+   "wrong_text": {
+    "pero4": 0,
+    "read4": 0
+   },
+   "misleads": {
+    "pero4": 3,
+    "read4": 7
+   }
+  }
+ },
+ "paired_accept": {
+  "pero4_vs_live": {
+   "n": 40,
+   "both": 18,
+   "gained": 4,
+   "lost": 1,
+   "neither": 17,
+   "mcnemar_exact_p": 0.375,
+   "effect_points_weighted": 7.549,
+   "effect_ci95_points": [
+    -2.5,
+    17.8
+   ],
+   "wrong_text_pages": {
+    "added": 0,
+    "removed": 1
+   },
+   "wrong_text_added_list": []
+  },
+  "read4_vs_live": {
+   "n": 40,
+   "both": 18,
+   "gained": 12,
+   "lost": 1,
+   "neither": 9,
+   "mcnemar_exact_p": 0.00342,
+   "effect_points_weighted": 27.585,
+   "effect_ci95_points": [
+    12.7,
+    42.7
+   ],
+   "wrong_text_pages": {
+    "added": 1,
+    "removed": 1
+   },
+   "wrong_text_added_list": [
+    {
+     "page_id": "69b6460618b87551bfc40772",
+     "defects": [
+      "O6 \"Roma vadew liber\" page reads 'Romā uade' (Romam vade); candidate drops the accusative and adds a s",
+      "O6 \"Si quibus in terris quis simul in urbe rogabit\" page has 'q̄ simus' (qua simus); candidate's 'quis simul' changes the words and "
+     ]
+    }
+   ]
+  },
+  "read4_vs_pero4": {
+   "n": 40,
+   "both": 21,
+   "gained": 9,
+   "lost": 1,
+   "neither": 9,
+   "mcnemar_exact_p": 0.0215,
+   "effect_points_weighted": 20.035,
+   "effect_ci95_points": [
+    7.4,
+    34.9
+   ],
+   "wrong_text_pages": {
+    "added": 0,
+    "removed": 0
+   },
+   "wrong_text_added_list": []
+  }
+ },
+ "gate": {
+  "live": {
+   "accept_all_drawn_weighted": 0.479,
+   "passes": true
+  },
+  "pero4": {
+   "accept_all_drawn_weighted": 0.554,
+   "passes": true
+  },
+  "read4": {
+   "accept_all_drawn_weighted": 0.754,
+   "passes": true
+  }
+ },
+ "lowest_severity_gated": "pero4",
+ "decision_s1": {
+  "decision": "switch",
+  "route": "pero>agy-flash-low@4-written",
+  "arm": "pero4",
+  "bar": "pero>agy-flash-low-written",
+  "words_per_page": 211,
+  "rates_per_1k_deflated": {
+   "live": {
+    "misleads": 0.576,
+    "wrong_text": 0.235
+   },
+   "pero4": {
+    "misleads": 0.554,
+    "wrong_text": 0.116
+   },
+   "read4": {
+    "misleads": 1.652,
+    "wrong_text": 0.699
+   }
+  },
+  "prior": {
+   "words_thousand": 2,
+   "pooled_per_1k": {
+    "misleads": 1.722,
+    "wrong_text": 0.526
+   }
+  },
+  "gates": {
+   "live": {
+    "wrong_text": true,
+    "accept": true
+   },
+   "pero4": {
+    "wrong_text": true,
+    "accept": true,
+    "p_accept_floor": 0.98
+   },
+   "read4": {
+    "wrong_text": false,
+    "accept": true,
+    "p_accept_floor": 1
+   }
+  },
+  "passing": [
+   "pero>agy-flash-low-written",
+   "pero>agy-flash-low@4-written"
+  ],
+  "defects_cost_per_page": {
+   "pero>agy-flash-low-written": 0.27,
+   "pero>agy-flash-low@4-written": 0.19,
+   "agy-flash-low@4-written": 0.791
+  },
+  "price_per_raw_page": {
+   "pero>agy-flash-low-written": 0.000848,
+   "pero>agy-flash-low@4-written": 0.000212,
+   "agy-flash-low@4-written": 0.00026
+  },
+  "picks": {
+   "0.001": "pero>agy-flash-low@4-written",
+   "0.01": "pero>agy-flash-low@4-written",
+   "0.1": "pero>agy-flash-low@4-written"
+  },
+  "gpu_priced": false
+ },
+ "decision_s1_gpu_priced": {
+  "decision": "switch",
+  "route": "pero>agy-flash-low@4-written",
+  "arm": "pero4",
+  "bar": "pero>agy-flash-low-written",
+  "words_per_page": 211,
+  "rates_per_1k_deflated": {
+   "live": {
+    "misleads": 0.576,
+    "wrong_text": 0.235
+   },
+   "pero4": {
+    "misleads": 0.554,
+    "wrong_text": 0.116
+   },
+   "read4": {
+    "misleads": 1.652,
+    "wrong_text": 0.699
+   }
+  },
+  "prior": {
+   "words_thousand": 2,
+   "pooled_per_1k": {
+    "misleads": 1.722,
+    "wrong_text": 0.526
+   }
+  },
+  "gates": {
+   "live": {
+    "wrong_text": true,
+    "accept": true
+   },
+   "pero4": {
+    "wrong_text": true,
+    "accept": true,
+    "p_accept_floor": 0.98
+   },
+   "read4": {
+    "wrong_text": false,
+    "accept": true,
+    "p_accept_floor": 1
+   }
+  },
+  "passing": [
+   "pero>agy-flash-low-written",
+   "pero>agy-flash-low@4-written"
+  ],
+  "defects_cost_per_page": {
+   "pero>agy-flash-low-written": 0.27,
+   "pero>agy-flash-low@4-written": 0.19,
+   "agy-flash-low@4-written": 0.791
+  },
+  "price_per_raw_page": {
+   "pero>agy-flash-low-written": 0.001129,
+   "pero>agy-flash-low@4-written": 0.000493,
+   "agy-flash-low@4-written": 0.00026
+  },
+  "picks": {
+   "0.001": "pero>agy-flash-low@4-written",
+   "0.01": "pero>agy-flash-low@4-written",
+   "0.1": "pero>agy-flash-low@4-written"
+  },
+  "gpu_priced": true
+ },
+ "by_stratum": {
+  "17th": {
+   "pages": 15,
+   "weight": 0.375,
+   "accept": {
+    "live": "8/15",
+    "pero4": "9/15",
+    "read4": "12/15"
+   },
+   "severity_per_1000": {
+    "live": 22.04,
+    "pero4": 10.716,
+    "read4": 24.759
+   }
+  },
+  "18th": {
+   "pages": 9,
+   "weight": 0.235,
+   "accept": {
+    "live": "6/9",
+    "pero4": "7/9",
+    "read4": "9/9"
+   },
+   "severity_per_1000": {
+    "live": 8.935,
+    "pero4": 7.096,
+    "read4": 8.486
+   }
+  },
+  "<=1600": {
+   "pages": 16,
+   "weight": 0.39,
+   "accept": {
+    "live": "5/16",
+    "pero4": "6/16",
+    "read4": "9/16"
+   },
+   "severity_per_1000": {
+    "live": 9.836,
+    "pero4": 9.677,
+    "read4": 67.282
+   }
+  }
+ },
+ "by_face": {
+  "antiqua": {
+   "pages": 37,
+   "accept": {
+    "live": "19/37",
+    "pero4": "22/37",
+    "read4": "30/37"
+   }
+  },
+  "fraktur": {
+   "pages": 3,
+   "accept": {
+    "live": "0/3",
+    "pero4": "0/3",
+    "read4": "0/3"
+   }
+  }
+ },
+ "arm_outcomes": {
+  "live": {
+   "written": 22,
+   "letters outside the book's scripts": 3,
+   "no draft: pero wrote no draft": 1,
+   "a diff-guard flag is not a like-for-like substitution: the put-back cannot be sp": 9,
+   "a diff-guard flag spans a tag: the put-back cannot be spliced, the page stays un": 3,
+   "only N% of its words are in the GPU draft: check by eye": 2
+  },
+  "pero4": {
+   "written": 23,
+   "letters outside the book's scripts": 3,
+   "no draft: pero wrote no draft": 1,
+   "a diff-guard flag is not a like-for-like substitution: the put-back cannot be sp": 6,
+   "cli exit -9": 1,
+   "a diff-guard flag spans a tag: the put-back cannot be spliced, the page stays un": 3,
+   "only N% of its words are in the GPU draft: check by eye": 2,
+   "corrector tags the page <script>handwritten</script>: the GPU-draft route is pri": 1
+  },
+  "read4": {
+   "written": 37,
+   "letters outside the book's scripts": 3
+  }
+ },
+ "camena": {
+  "file": "typed-refs-6012-2026-10-06.camena.aligned-pages.jsonl.gz",
+  "sampled_books_in_camena": 0,
+  "pages": [],
+  "cer": "not available at this n (0 matched pages < 5): the aligned pages need a stored read to align, and the queue's books have none"
+ },
+ "agy_calls_total": 226,
+ "pooled": {
+  "live": {
+   "pages": 22,
+   "misleads": {
+    "defects": 3,
+    "words": 4989
+   },
+   "wrong_text": {
+    "defects": 1,
+    "words": 4989
+   }
+  },
+  "pero4": {
+   "pages": 23,
+   "misleads": {
+    "defects": 3,
+    "words": 5264
+   },
+   "wrong_text": {
+    "defects": 0,
+    "words": 5264
+   }
+  },
+  "read4": {
+   "pages": 37,
+   "misleads": {
+    "defects": 30,
+    "words": 10655
+   },
+   "wrong_text": {
+    "defects": 10,
+    "words": 10655
+   }
+  }
+ },
+ "study_cells": {
+  "latin-blank/pero>agy-flash-low-written": {
+   "n": 22,
+   "books": 22,
+   "fidelity_mean": 4.316,
+   "misleads_per_1k": 0.592,
+   "wrong_text_per_1k": 0.199,
+   "cosmetic_per_1k": 7.247,
+   "severity_per_1k": 15.185,
+   "accept_all_drawn_weighted": 0.479
+  },
+  "latin-blank/pero>agy-flash-low@4-written": {
+   "n": 23,
+   "books": 23,
+   "fidelity_mean": 4.477,
+   "misleads_per_1k": 0.56,
+   "wrong_text_per_1k": 0,
+   "cosmetic_per_1k": 6.473,
+   "severity_per_1k": 9.275,
+   "accept_all_drawn_weighted": 0.554
+  },
+  "latin-blank/agy-flash-low@4-written": {
+   "n": 37,
+   "books": 37,
+   "fidelity_mean": 4.274,
+   "misleads_per_1k": 2.774,
+   "wrong_text_per_1k": 0.92,
+   "cosmetic_per_1k": 5.009,
+   "severity_per_1k": 41.877,
+   "accept_all_drawn_weighted": 0.754
+  }
+ },
+ "writeback": {
+  "pages": 31,
+  "by_arm": {
+   "pero4": 10,
+   "live": 6,
+   "read4": 15
+  }
+ }
+}

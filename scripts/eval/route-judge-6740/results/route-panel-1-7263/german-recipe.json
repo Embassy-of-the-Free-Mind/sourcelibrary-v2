@@ -1,0 +1,25 @@
+{
+ "question": "route",
+ "issue": 7263,
+ "stage": "translation",
+ "languages": [
+  "German"
+ ],
+ "baseline": "flash-lite",
+ "arms": [
+  "agy-flash-low-tr@1",
+  "agy-flash-low-tr@4",
+  "flash-lite"
+ ],
+ "batch": {
+  "pages_per_call": 4,
+  "tested": "not tested \u2014 block size is one of the settings under test; position in block reported per arm, and the judge reads one output per call"
+ },
+ "noise_floor": {
+  "repeat_kind": "repeat",
+  "from": null
+ },
+ "feeds": "route",
+ "router_evidence": "none \u2014 proposal only per brief",
+ "waive": {}
+}

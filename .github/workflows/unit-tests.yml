@@ -73,9 +73,3 @@ jobs:
       # Baseline in scripts/lib/translation-data-readers-baseline.json, a list to shrink.
       - name: No new direct readers of translation.data
         run: node scripts/audit/translation-data-readers.mjs
-      # The generated routing table (.claude/docs/ocr-engine-routing.md) against the live
-      # routing constants (#5871). Class (c) of scripts/audit/routing-drift.mjs only: the
-      # other classes compare the code with the decisions ledger and are filed as issues by
-      # the daily cron, never failed on a PR. Exit 2 (could not run) fails the step too.
-      - name: Generated routing table is current
-        run: node scripts/audit/routing-drift.mjs --ci

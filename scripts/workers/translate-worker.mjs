@@ -73,6 +73,7 @@ import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, promptLabel, codeVersion, host } from '../lib/write-provenance.mjs';
 import { translationLayers, writePageAnnotations } from '../lib/translation-text.mjs'; // #5942
 import { dropDriftedPages } from '../lib/block-drift.mjs';
+import { structuredBlockRule, structuredReplyToTags, BLOCK_RESPONSE_SCHEMA } from '../lib/block-page-guard.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS, translateJobOutcome, blockedJobFields } from '../lib/translate-job-outcome.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 
@@ -420,14 +421,21 @@ async function translateBatch(db, pages, book, prevTranslation) {
   // the evals send the same bytes. With PAGE_BREAK_SCOPED (#5103, ON since round 4) every in-block
   // break is resolved page against page, and the block's ends against the pages adjacent to it.
   const { prevOcrText, nextOcrText } = await adjacentOcr(db, book, pages[0].page_number, pages[pages.length - 1].page_number);
-  const { prompt, promptRef } = buildBlockTranslationPrompt({
+  const built = buildBlockTranslationPrompt({
     prompts: await loadPrompts(db), book, pages, previousTranslation: prevTranslation,
     prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED,
   });
+  const { promptRef } = built;
+  // #5021: each page's section opens on an anchor copied from its own source (block-page-guard.mjs); the parser
+  // takes it off, and a page whose anchor is a neighbour's, or no page's, is re-translated single-page below.
+  // The reply is bound to a response schema (structured output, Derek 2026-11-03): one {page, anchor_first,
+  // anchor_last, translation} per page in the order sent; a count or page mismatch sends every page single-page.
+  const anchored = pages.length > 1;
+  const prompt = built.prompt + (anchored ? structuredBlockRule(pages.map((p) => p.page_number)) : '');
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
-  const generationConfig = { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 } };
+  const generationConfig = { maxOutputTokens: maxOutputTokensFor(pages), thinkingConfig: { thinkingBudget: 0 }, ...(anchored && { responseMimeType: 'application/json', responseSchema: BLOCK_RESPONSE_SCHEMA }) };
   // thinking-ok: `generationConfig` just above carries thinkingConfig: { thinkingBudget: 0 } — one object, sent and recorded (#4613)
   const model = ai.getGenerativeModel({
     model: selectedModel,
@@ -437,13 +445,18 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
-  const responseText = result.response.text();
+  const rawText = result.response.text();
   const usage = result.response.usageMetadata || {};
+  // The schema-bound reply, as the tag text the block parser reads; a reply that is not one object per page, in order,
+  // parses to nothing (every page single-page), never to a positional guess.
+  const structured = anchored ? structuredReplyToTags(rawText, pages.map((p) => p.page_number)) : null;
+  const responseText = anchored ? structured || '' : rawText;
+  if (anchored && !structured) console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: structured reply is not one object per page in order — re-translating all ${pages.length} pages single-page`);
 
   // Parse (translate-core parseBlockTranslations: the 15% truncation check, the positional
   // fallback, and the BLOCK-SHIFT guard — a block that came back short is discarded whole, since
   // its page labels cannot be trusted; every page then takes the missing-from-batch path below).
-  const parsed = parseBlockTranslations(responseText, pages, { lang: book?.language });
+  const parsed = anchored && !structured ? { translations: new Map(), returned: pages.length, discarded: 'structured-mismatch', truncated: [], anchors: new Map() } : parseBlockTranslations(responseText, pages, { lang: book?.language });
   const { translations } = parsed;
   if (parsed.truncated?.length) {
     console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: truncated ${parsed.truncated.map((t) => `p${t.page_number} (${t.reasons[0]})`).join(', ')} — re-translating single-page (#5055)`);
@@ -455,9 +468,11 @@ async function translateBatch(db, pages, book, prevTranslation) {
   // A clause moved across an in-block page break (#5021): the model finished page N's last
   // sentence with page N+1's opening words. Both pages drop out of the map, so the caller's
   // "missing from batch" path re-translates them single-page, in order, with continuity.
-  const { drifted } = dropDriftedPages(pages, translations);
+  // The same call also refuses, page by page, an anchor that is not the page's own, an English that holds two
+  // leaves (or none), and an English that prints only a neighbour's numbers (#5021, block-page-guard.mjs).
+  const { drifted } = dropDriftedPages(pages, translations, { anchors: anchored ? parsed.anchors : null, prevOcr: prevOcrText ?? null, nextOcr: nextOcrText ?? null });
   if (drifted.length) {
-    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: clause moved across ${drifted.map(d => `${d.prev}→${d.next}`).join(', ')} — re-translating those pages single-page`);
+    console.log(`  Block ${pages[0].page_number}-${pages[pages.length - 1].page_number}: ${drifted.map(d => (d.prev === d.next ? `p${d.prev} ${d.kind}` : `${d.kind} ${d.prev}→${d.next}`)).join(', ')} — re-translating those pages single-page`);
   }
   // A leaf seam the block bridged (#5260): the page drops out of the map and takes the
   // single-page path, where translatePageGuarded retries and the write gate refuses.

@@ -20,8 +20,10 @@
  *        [--book=ID[,ID] [--per-book=3]]   book-depth (#7263 pilots): N random written pages of each named book, no rate
  *                                          or per-book cap; window from 2026-10-27 unless --since; never moves the nightly window
  *   ... lane-judge-sampler.mjs export --file=PATH          the store as one route-judge score.json (router evidence)
- *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post]
- *                                                      build.py on origin/main + this export; publish; post flips
+ *   ... lane-judge-sampler.mjs rebuild --out=DIR [--export=FILE] [--no-publish] [--no-post] [--no-bind]
+ *                                                      build.py on origin/main + this export; publish; post flips,
+ *                                                      and the router binding (maintenance/router-board-push.mjs) when it changes;
+ *                                                      then moves current.json itself: a tier:auto PR when a bound route changes (#8283)
  *   ... lane-judge-sampler.mjs annotate                    give older store records their script type (print / manuscript)
  *   ... lane-judge-sampler.mjs nightly --out=DIR           run, annotate, export, rebuild (the cron line)
  *   ... lane-judge-sampler.mjs weekly-pr --out=DIR         the repo copy: a PR with the export + rules.json entries
@@ -63,6 +65,8 @@
  * never judged twice): page, book, cell, route, lane, the lane's write (revision id, run id, time, text hash), judge
  * model, prompt template hash and prompt hash, seed, run id, date, verdict, and the page's script type (scriptClass). `lane_judge_runs`: one per run (window,
  * seed, draw log, meter, calls, retry queue). Not `pages` or `books` (field-sprawl.md): nothing on a page changes.
+ * The store also holds TEST rows (`origin: 'test'`, lib/judge-rows.mjs, #7263); every read here is live-only
+ * (verdictQuery), so a test never moves this draw, its cap or its export.
  *
  * FEED. `export` writes every counted verdict as one score.json in the route-judge format, cells and routes named as
  * rules.json names them (german-lite / lite>agy-flash-low), so build.py pools it as one more source, scaled by its
@@ -93,6 +97,10 @@ import { bookHand } from '../lib/ocr-trust-gate.mjs';
 import { plantError, scorePlant, langCode, ERROR_KINDS } from './lib/plant-ocr-errors.mjs';
 import { wilson } from './lib/agreement-stats.mjs';
 import { REASON as SIKU_REASON, MODEL as SIKU_MODEL } from '../batch/siku-translate-lane.mjs';
+import { verdictQuery, isLive } from './lib/judge-rows.mjs';
+import { loadCurrentTable, checkBinding, describeFinding, planBind, trFirstLanguage, translationDisagrees, ocrCellNoLane } from '../lib/router-binding.mjs';
+import { FIRST_READ_CELL } from '../lib/ocr-routing.mjs';
+import { translateLaneForBook } from '../lib/translation-routing.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
@@ -404,6 +412,8 @@ function byScript(rs) {
 
 /** The store as one route-judge score.json. records: every document of lane_judge_verdicts. */
 export function exportScore(records, { generatedAt = new Date().toISOString() } = {}) {
+  // Test rows (#7263) are never live-lane evidence, even when a caller hands the whole store in.
+  records = records.filter(isLive);
   const ok = records.filter(validRecord), bad = records.length - ok.length;
   const judged = ok.filter(opusJudged);
   const report = { generated_at: generatedAt, source: 'lane-judge-sampler (#7611)', file: EVIDENCE_PATH,
@@ -595,7 +605,8 @@ async function findWrites(db, since, until, only = null) {
 }
 
 async function history(db) {
-  const rows = await db.collection(VERDICTS).find({}, { projection: { kind: 1, page_id: 1, book_id: 1, cell: 1, route: 1, judged_at: 1, called: 1, week: 1, judge: 1, lane: 1, run_id: 1, _id: 1 } }).toArray();
+  // Live rows only (#7263): a test's pages and calls never move this draw's per-book cap, rate switch or weekly cap.
+  const rows = await db.collection(VERDICTS).find(verdictQuery({}), { projection: { kind: 1, page_id: 1, book_id: 1, cell: 1, route: 1, judged_at: 1, called: 1, week: 1, judge: 1, lane: 1, run_id: 1, _id: 1 } }).toArray();
   const pagesJudged = new Set(), bookPagesSet = new Map(), routeBooks = new Map();
   for (const r of rows.filter((x) => x.kind !== 'wrong_page' && x.kind !== 'planted' && validRecordLoose(x))) {
     pagesJudged.add(r.page_id);
@@ -678,10 +689,10 @@ async function run() {
         const lang = drawn.find((d) => `${d.cell}|${d.route}` === g)?.lang;
         if (drawn.find((d) => `${d.cell}|${d.route}` === g)?.task === 'translation') { console.log(`  planted: the planter plants OCR errors, not translation errors (${g}); none owed`); continue; }
         if (!langCode(lang)) { console.log(`  planted: no planter for ${lang} (${g}); none owed`); continue; }
-        const prior = await db.collection(VERDICTS).find({ kind: 'planted', cell, route }, { projection: { planted_from: 1, week: 1 } }).toArray();
+        const prior = await db.collection(VERDICTS).find(verdictQuery({ kind: 'planted', cell, route }), { projection: { planted_from: 1, week: 1 } }).toArray();
         const owed = PER_WEEK - prior.filter((r) => r.week === week).length;
         if (owed <= 0) continue;
-        const accepted = await db.collection(VERDICTS).find({ kind: 'item', cell, route, 'verdict.accept': true, 'draw.stratum': { $ne: 'flagged' } }).toArray();
+        const accepted = await db.collection(VERDICTS).find(verdictQuery({ kind: 'item', cell, route, 'verdict.accept': true, 'draw.stratum': { $ne: 'flagged' } })).toArray();
         const ok = accepted.filter((r) => validRecord(r) && inEvidence(r));
         const texts = new Map((await db.collection('pages').find({ id: { $in: ok.map((r) => r.page_id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p.ocr?.data]));
         const sources = ok.map((rec) => ({ rec, text: texts.get(rec.page_id) })).filter((x) => typeof x.text === 'string' && h(x.text.trim()).slice(0, 16) === x.rec.text_hash);
@@ -727,6 +738,7 @@ async function run() {
       if (!text?.trim() || !imageUrl || (task === 'translation' && !source?.trim())) { console.log(`  skip ${q.kind} ${q.d.page_id}: ${!imageUrl ? 'no image' : !text?.trim() ? 'no text' : 'no source OCR'}`); continue; }
       if (q.kind === 'item' && (await import('../lib/page-text-writer.mjs')).textHash(p[field]) !== q.d.write.text_hash) { console.log(`  skip ${q.d.page_id}: rewritten since the draw`); continue; }
       const _id = `lj${h(`${q.kind}:${q.d.cell}:${q.route}:${q.d.page_id}:${q.other?.page_id ?? ''}:${h(text.trim())}`).slice(0, 16)}`;
+      // all origins: an _id dedupe before insert (test ids are prefixed ljt), not a read of evidence.
       if (await db.collection(VERDICTS).findOne({ _id }, { projection: { _id: 1 } })) continue;
       const it = { id: _id, task, lang: q.d.lang, image_url: imageUrl, text, ...(source != null && { source }) };
       const ws = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'lj-opus-'));
@@ -768,7 +780,7 @@ async function run() {
 async function annotate() {
   const { c, db } = await mongo();
   try {
-    const todo = await db.collection(VERDICTS).find({ script_type: { $exists: false } }, { projection: { _id: 1, page_id: 1, book_id: 1, lane: 1 } }).toArray();
+    const todo = await db.collection(VERDICTS).find(verdictQuery({ script_type: { $exists: false } }), { projection: { _id: 1, page_id: 1, book_id: 1, lane: 1 } }).toArray();
     if (!todo.length) { console.log('annotate: nothing to do'); return 0; }
     const pages = new Map((await db.collection('pages').find({ id: { $in: [...new Set(todo.map((r) => r.page_id))] } }, { projection: { id: 1, script_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
     const prof = await bookProfiles(db, [...new Set(todo.map((r) => r.book_id))]);
@@ -783,7 +795,7 @@ async function annotate() {
 
 async function readStore() {
   const { c, db } = await mongo();
-  try { return { records: await db.collection(VERDICTS).find({}).toArray(), runs: await db.collection(RUNS).find({ dry_run: false }).sort({ at: 1 }).toArray() }; } finally { await c.close(); }
+  try { return { records: await db.collection(VERDICTS).find(verdictQuery({})).toArray(), runs: await db.collection(RUNS).find({ dry_run: false }).sort({ at: 1 }).toArray() }; } finally { await c.close(); }
 }
 
 async function doExport(file, root) {
@@ -807,7 +819,8 @@ const REPO = () => process.env.SL_REPO || '/data/scratch/sl/sourcelibrary';
 /** The repo paths build.py opens: the table's own folder, its inputs, the script split's, and every evidence source but ours. */
 export function rebuildInputs(rules, RT = 'scripts/eval/estimator/router-table') {
   const ss = rules.script_split?.on ? [rules.script_split.waiting].filter(Boolean) : [];
-  return [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', ...Object.values(rules.inputs), ...ss,
+  // defect-rate.py and the 2026-10-30 inventory: route-evidence.mjs export rebuilds defect-rates.json in this copy
+  return [...new Set([RT, 'scripts/eval/estimator/ocr', 'scripts/eval/estimator/chain', 'scripts/eval/route-judge-6740/defect-rate.py', 'scripts/eval/route-judge-6740/results/defect-rate-2026-10-30', ...Object.values(rules.inputs), ...ss,
     ...rules.cells.flatMap((c) => c.routes.flatMap((r) => (r.evidence || []).map((e) => e.score)))])]
     .filter((p) => p !== EVIDENCE_PATH && p !== BY_SCRIPT_PATH);
 }
@@ -828,12 +841,18 @@ async function rebuild() {
   // --export=FILE: a given score.json instead of the store (a replay, or a test of the feed)
   const score = arg('export') ? JSON.parse(fs.readFileSync(arg('export'), 'utf8')) : await doExport(null, dir);
   if (arg('export')) writeEvidence(dir, score);
+  // #8283: the one decision input. QA verdicts into the store (additive), the store into this copy's defect-rates.json
+  const evidence = path.join(REPO(), 'scripts/eval/route-evidence.mjs');
+  if (!flag('no-publish') && !arg('export')) sh('node', [evidence, 'ingest', '--apply'], { cwd: REPO() });   // a replay or a test writes nothing
+  sh('node', [evidence, 'export', `--out=${path.join(dir, 'route-evidence')}`], { cwd: REPO(), env: { ...process.env, ROUTE_EVIDENCE_CWD: dir } });
   const py = (name, extra = []) => sh('python3', [`${RT}/build.py`, '--name', name, ...extra], { cwd: dir });
   py('baseline');
   let text = rulesText; const added = [];
   for (const { cell, route, entry } of evidenceEntries(score, rules)) { text = addEvidence(text, cell, route, entry); added.push(`${cell}/${route}`); }
   fs.writeFileSync(path.join(dir, RT, 'rules.json'), text);
   py('lane-judge', ['--before', `${RT}/baseline.json`]);
+  // V3 for each cell's real n (#8283): rows[].v3, which the bind below gates on, and a section in the .md
+  sh('python3', [`${RT}/v3_sim.py`, `${RT}/lane-judge.json`, '--reps', '1000', '--procs', '4', '--annotate'], { cwd: dir });
   const table = JSON.parse(fs.readFileSync(path.join(dir, RT, 'lane-judge.json'), 'utf8'));
   const md = fs.readFileSync(path.join(dir, RT, 'lane-judge.md'), 'utf8');
   const decisions = Object.fromEntries(table.rows.map((r) => [r.id, `${r.decision} ${r.route}`]));
@@ -850,12 +869,25 @@ async function rebuild() {
   fs.writeFileSync(prevFile, JSON.stringify(pub, null, 1));
   if (!flag('no-publish')) { const { c, db } = await mongo(); try { await db.collection('ops_reports').replaceOne({ _id: pub._id }, pub, { upsert: true }); } finally { await c.close(); } }
   console.log(`rebuilt on ${ref} ${sha}: evidence added ${added.join(', ') || 'none'}; flips ${flips.length}`);
-  if (flips.length && !flag('no-post')) {
-    const body = [`**Router table, lane-judge sampler nightly (#7611)**: ${flips.length} cell decision(s) changed with the judged lane output (build.py on main ${sha}).`, '',
+  // Router binding (#7263, router-optimization-paper.md build step 5): has each decided cell of current.json shipped?
+  // Posted when its drift changes (a cell newly unshipped, mismatched, waived or fixed), with the flips or alone.
+  let binding = null;
+  const bindingFile = path.join(pubDir, 'binding-posted.json');
+  try {
+    const d = await import('../maintenance/router-board-push.mjs');
+    const r = d.driftFromRepo();
+    const last = fs.existsSync(bindingFile) ? JSON.parse(fs.readFileSync(bindingFile, 'utf8')).signature : null;
+    if (r.signature !== last) binding = { md: d.driftMarkdown(r), signature: r.signature };
+    console.log(`router binding: ${JSON.stringify(r.tally)}${binding ? ' (changed)' : ''}`);
+  } catch (e) { console.log(`router binding: not run (${e.message})`); }
+  if ((flips.length || binding) && !flag('no-post')) {
+    const body = [...(flips.length ? [`**Router table, lane-judge sampler nightly (#7611)**: ${flips.length} cell decision(s) changed with the judged lane output (build.py on main ${sha}).`, '',
       '| cell | before | after | lane evidence |', '|---|---|---|---|',
       ...flips.map((f) => `| ${f.cell} | ${f.before} | ${f.after} | ${Object.entries(pub.lane_evidence[f.cell] ?? {}).map(([r, x]) => `${r} ${x.accept} (wrong text ${x.wrong_text}, ${x.books} books)`).join('; ') || 'none (other evidence moved)'} |`), '',
-      'Published: ops_reports `router-table:lane-judge`. The routing tables do not change from this (hold list).'].join('\n');
+      'Published: ops_reports `router-table:lane-judge`. A bound route that changed moves through the auto-bind PR, if V3 and the judge gate pass it (#8283).'] : []),
+    ...(binding ? [...(flips.length ? ['', '---', ''] : []), binding.md] : [])].join('\n');
     sh('gh', ['issue', 'comment', '7263', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--body', body]);
+    if (binding) fs.writeFileSync(bindingFile, JSON.stringify({ at: new Date().toISOString(), signature: binding.signature }));
   }
   // New containment candidates go on #7611, once each.
   const seenFile = path.join(OUT, 'contain-posted.json'), seen = new Set(fs.existsSync(seenFile) ? JSON.parse(fs.readFileSync(seenFile, 'utf8')) : []);
@@ -868,19 +900,68 @@ async function rebuild() {
     for (const x of fresh) seen.add(`${x.page_id}:${x.route}`);
     fs.writeFileSync(seenFile, JSON.stringify([...seen]));
   }
+  if (!flag('no-bind') && !flag('no-publish') && !arg('export')) await autoBind({ OUT, dir, RT, ref, table, stamp, sha });
   return { flips, added, sha };
 }
 
-/** The repo copy: a PR (never main) with the export and the rules.json entries. */
-async function weeklyPr() {
-  const OUT = path.resolve(arg('out') || path.join(process.env.JOB_SCRATCH || os.tmpdir(), 'lane-judge-sampler'));
-  const stamp = new Date().toISOString().slice(0, 10), branch = `lane-judge/weekly-${stamp}`, wt = path.join(OUT, 'pr-worktree');
-  const RT = 'scripts/eval/estimator/router-table';
+/** The auto-bind PR's body: the diff, what stayed and why, the lanes the move leaves behind, the way back (#8283). */
+export function bindPrBody({ plan, mismatches, sha, name }) {
+  const cell = (m) => `| ${m.cell} | ${m.from ?? 'nothing bound'} | ${m.to ?? 'nothing bound'} |`;
+  return [`The nightly rebuild (\`lane-judge-sampler.mjs rebuild\`, build.py on main ${sha} and the evidence store) binds \`${name}\`. Moving \`current.json\` is the decision; a cell moves only when it passes V3 and the judge-validity gate (#8283).`, '',
+    `**Moved: ${plan.moved.length} cell(s)**`, '', '| cell | runs now | runs after | decision | pages waiting |', '|---|---|---|---|---|',
+    ...plan.moved.map((m) => `${cell(m)} ${m.decision.replace(/\|/g, '/').slice(0, 120)} | ${m.pages_waiting.toLocaleString('en-US')} |`), '',
+    `**Not moved: ${plan.blocked.length} cell(s)**, pinned where they run`, ...(plan.blocked.length ? ['', '| cell | runs now | would run | why |', '|---|---|---|---|', ...plan.blocked.map((m) => `${cell(m)} ${m.why} |`)] : []), '',
+    `**Lanes whose flags no longer match: ${mismatches.length}** (they page, and keep running until their flags change)`, ...mismatches.map((f) => `- ${describeFinding(f)}`), '',
+    'Rollback: revert this PR; auto-bind then pauses until current.json is next moved by hand. Every paid read is kept. Waivers still expire on their dates.', '',
+    'Part of #8283', '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
+}
+
+async function autoBind({ OUT, dir, RT, ref, table, stamp, sha }) {
+  const last = sh('git', ['-C', REPO(), 'log', '-1', '--format=%s', ref, '--', `${RT}/current.json`]).trim();
+  if (/^Revert\b/.test(last)) { console.log(`auto-bind: paused, the last move of current.json is a revert (${last})`); return null; }
+  const translations = JSON.parse(sh('git', ['-C', REPO(), 'show', `${ref}:scripts/lib/translation-routing-table.json`]));
+  const refuse = (row) => { const language = trFirstLanguage(row.id); return ocrCellNoLane(row, Object.values(FIRST_READ_CELL)) || (language && translationDisagrees(row, translateLaneForBook(translations, { language }))); };
+  const name = `${stamp}-nightly`, plan = planBind(loadCurrentTable(path.join(dir, RT)), table, { name, today: stamp, refuse });
+  console.log(`auto-bind: ${plan.moved.length} move(s), ${plan.blocked.length} not auto-bound`);
+  if (!plan.moved.length) return null;
+  const branch = 'router-bind/nightly';
+  return inMainWorktree(OUT, branch, async (wt) => {
+    for (const ext of ['json', 'md']) fs.copyFileSync(path.join(dir, RT, `lane-judge.${ext}`), path.join(wt, RT, `${name}.${ext}`));
+    fs.writeFileSync(path.join(wt, RT, 'current.json'), JSON.stringify(plan.pointer, null, 1) + '\n');
+    sh('node', ['scripts/maintenance/router-routing-rows.mjs', '--write'], { cwd: wt });
+    const { servedByCrontab, defaultCrontabs } = await import('../maintenance/router-board-push.mjs');
+    const served = defaultCrontabs(wt).flatMap((f) => servedByCrontab(fs.readFileSync(path.join(wt, f), 'utf8')));
+    const mismatches = checkBinding(loadCurrentTable(path.join(wt, RT)), served, { today: stamp }).filter((f) => f.status === 'mismatch');
+    sh('git', ['-C', wt, 'add', RT, 'scripts/lib/ocr-routing-table.json', 'scripts/lib/translation-routing-table.json', '.claude/docs/routing.md', 'scripts/eval/ocr-routing/README.md']);
+    sh('git', ['-C', wt, 'commit', '-s', '-q', '-m', `router(#8283): bind ${name}\n\n${plan.moved.length} cell(s) move; made by lane-judge-sampler.mjs rebuild.`]);
+    sh('git', ['-C', wt, 'push', '-q', '-f', '-u', 'origin', branch]);
+    const body = bindPrBody({ plan, mismatches, sha, name }), repo = ['--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2'];
+    const existing = sh('gh', ['pr', 'list', ...repo, '--head', branch, '--state', 'open', '--json', 'number', '--jq', '.[0].number']).trim();
+    if (existing) sh('gh', ['pr', 'edit', existing, ...repo, '--title', `router(#8283): bind ${name}`, '--body', body]);
+    else sh('gh', ['pr', 'create', ...repo, '--base', 'main', '--head', branch, '--label', 'tier:auto', '--title', `router(#8283): bind ${name}`, '--body', body]);
+    console.log(`auto-bind: ${existing ? `updated #${existing}` : 'opened'} ${branch}`);
+    return branch;
+  });
+}
+
+/** fn(wt) on a fresh worktree of origin/main at branch `branch`, with the file the pre-commit hook needs; removed after. */
+async function inMainWorktree(OUT, branch, fn) {
+  const wt = path.join(OUT, 'pr-worktree');
   sh('git', ['-C', REPO(), 'fetch', '-q', 'origin', 'main']);
   if (fs.existsSync(wt)) sh('git', ['-C', REPO(), 'worktree', 'remove', '--force', wt]);
   sh('git', ['-C', REPO(), 'worktree', 'add', '-q', '-B', branch, wt, 'origin/main']);
   try {
     for (const f of ['src/lib/vendor/lamejs-bundle.js']) if (fs.existsSync(path.join(REPO(), f))) { fs.mkdirSync(path.dirname(path.join(wt, f)), { recursive: true }); fs.copyFileSync(path.join(REPO(), f), path.join(wt, f)); }
+    return await fn(wt);
+  } finally { sh('git', ['-C', REPO(), 'worktree', 'remove', '--force', wt]); }
+}
+
+/** The repo copy: a PR (never main) with the export and the rules.json entries. */
+async function weeklyPr() {
+  const OUT = path.resolve(arg('out') || path.join(process.env.JOB_SCRATCH || os.tmpdir(), 'lane-judge-sampler'));
+  const stamp = new Date().toISOString().slice(0, 10), branch = `lane-judge/weekly-${stamp}`;
+  const RT = 'scripts/eval/estimator/router-table';
+  return inMainWorktree(OUT, branch, async (wt) => {
     const score = await doExport(null, wt);
     const rf = path.join(wt, RT, 'rules.json');
     let text = fs.readFileSync(rf, 'utf8'); const rules = JSON.parse(text), added = [];
@@ -894,12 +975,12 @@ async function weeklyPr() {
     const lines = Object.entries(score.cells).flatMap(([c, C]) => Object.entries(C.routes).map(([r, x]) => `| ${c} | ${r} | ${x.accept} | ${x.accept_ci.ci95?.join('–') ?? ''} | ${x.wrong_text_pages} | ${x.books} |`));
     const body = [`Weekly snapshot of the lane-judge sampler store (#7611): the export as \`${EVIDENCE_PATH}\`${added.length ? ` and new rules.json evidence entries (${added.join(', ')})` : ''}. Made by \`lane-judge-sampler.mjs weekly-pr\`; the box rebuilds the table nightly either way (ops_reports \`router-table:lane-judge\`).`, '',
       '| cell | route | accepted | 95% CI (by book) | wrong text | books |', '|---|---|---|---|---|---|', ...lines, '',
-      'Out of scope: the routing tables (hold list); no page text changes.', '', 'Part of #7611', '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
+      'Out of scope: the routing tables (the nightly auto-bind moves them, #8283); no page text changes.', '', 'Part of #7611', '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
     const existing = sh('gh', ['pr', 'list', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--head', branch, '--json', 'number', '--jq', '.[0].number']).trim();
     if (!existing) sh('gh', ['pr', 'create', '--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2', '--base', 'main', '--head', branch, '--title', `eval(#7611): lane-judge sampler weekly snapshot ${stamp}`, '--body', body]);
     console.log(`weekly-pr: ${existing ? `updated #${existing}` : 'opened'} ${branch}`);
     return branch;
-  } finally { sh('git', ['-C', REPO(), 'worktree', 'remove', '--force', wt]); }
+  });
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {

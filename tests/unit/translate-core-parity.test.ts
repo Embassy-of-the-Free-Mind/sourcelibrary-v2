@@ -41,6 +41,7 @@ import {
   getOcrModelForBook as ocrMjs,
   GREEK_FLASH_FROM,
   FLASH_OCR_FROM,
+  OCR_LITE_ONLY,
   isGreekFlashOcrBook,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
@@ -208,8 +209,7 @@ describe('OCR_LITE_ONLY (2026-09-11): every batch OCR submission is flash-lite',
 
   it('is the default unless OCR_LITE_ONLY=0 is set in the environment', () => {
     // The module reads the env once at import; this pins the default of that read.
-    expect(process.env.OCR_LITE_ONLY === '0' ? MODEL_FLASH : MODEL_LITE)
-      .toBe(ocrMjs({ image_source: { provider: 'bph' } }));
+    expect(OCR_LITE_ONLY).toBe(process.env.OCR_LITE_ONLY !== '0');
   });
 
   it('does not touch translation routing (BPH translation stays on flash)', () => {

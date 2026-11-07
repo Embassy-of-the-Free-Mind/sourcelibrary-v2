@@ -1,14 +1,19 @@
 import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import { getTenantContext } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { displayPublished } from '@/lib/publication-date';
 // `cache()`d in its own module: generateMetadata, the shell below, and the
 // (reader) group layout's visibility gate all read it, so one round trip
 // serves the whole request.
-import { getPageData } from './page-data';
-import { type Locale } from '@/lib/locale-path';
+import { getPageData, getTrimmedPageId } from './page-data';
+import { type Locale, localePath } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
 import { localizedTitle, hasLocalizedEdition } from '@/lib/localized';
+import { bylineClaimsAuthorship } from '@/lib/corporate-bylines';
+import { citationYear } from '@/lib/publication-date';
+import { getShortUrl } from '@/lib/shortlinks';
+import type { PrintedPage } from '@/lib/types';
 
 export const preferredRegion = 'fra1';
 
@@ -35,7 +40,8 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
 
   const bookTitle = localizedTitle(book as Parameters<typeof localizedTitle>[0], lang);
   const pageNum = page.page_number;
-  const ogBookTitle = book.published ? `${bookTitle} (${book.published})` : bookTitle;
+  const publishedDate = displayPublished(book.published);
+  const ogBookTitle = publishedDate ? `${bookTitle} (${publishedDate})` : bookTitle;
   const title = rs.metaTitle(ogBookTitle, pageNum);
 
   // Use translation excerpt if available, otherwise OCR excerpt. Strip editorial
@@ -56,7 +62,7 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // around it follows the locale. An untranslated book keeps its English frame.
   const description = excerpt
     ? `${rs.metaPageOf(pageNum, bookTitle)}, ${book.author}. ${excerpt}`
-    : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
+    : `Page ${pageNum} of "${bookTitle}" by ${book.author}${publishedDate ? ` (${publishedDate})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId
   const bookPath = (book as unknown as { slug?: string }).slug || id;
@@ -71,10 +77,28 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // for all; this gate controls *indexing*).
   const indexable = (page as unknown as { seo_indexable?: boolean }).seo_indexable === true;
 
+  // Reference managers read these to save a page with its book, author and page
+  // (#8161). Same rules as the book page's scholarMeta: a holder or issuer is no
+  // author, and only a bare year is a date. `citation_firstpage` is the number
+  // printed on the leaf; a scan index is not a page anyone can find, so a page
+  // without one says nothing. A partner's reading room keeps its own links.
+  const printedLabel = (page as unknown as { printed_page?: PrintedPage }).printed_page?.label?.trim();
+  const citeYear = citationYear(book.published);
+  const scholarMeta: Record<string, string> = ctx?.id ? {} : {
+    citation_title: book.title,
+    ...(book.author && bylineClaimsAuthorship(book.author) ? { citation_author: book.author } : {}),
+    ...(citeYear ? { citation_publication_date: citeYear } : {}),
+    ...(book.language ? { citation_language: book.language } : {}),
+    ...(printedLabel ? { citation_firstpage: printedLabel } : {}),
+    citation_fulltext_html_url: `https://sourcelibrary.org${pageUrl}`,
+    citation_public_url: getShortUrl((book as unknown as { id: string }).id, pageNum, pageId),
+  };
+
   return {
     title: `${title} - Source Library`,
     description,
     robots: { index: indexable, follow: true },
+    other: scholarMeta,
     alternates: {
       canonical: pageUrl,
     },
@@ -121,6 +145,15 @@ export default async function PageLayout({ children, params, lang = 'en' }: Layo
   const { id, pageId } = await params;
   const ctx = await getTenantContext();
   const { book, page } = await getPageData(id, pageId, ctx?.id ?? undefined, ctx?.slug ?? undefined);
+  // A real page id with junk on its end (a mangled copied link) goes to that
+  // page instead of a 404 — same book only (getTrimmedPageId).
+  if (book && !page) {
+    const bookKey = (book as unknown as { id?: string }).id;
+    const trimmed = bookKey ? await getTrimmedPageId(bookKey, pageId) : null;
+    if (trimmed) {
+      permanentRedirect(localePath(`/book/${(book as unknown as { slug?: string }).slug || id}/page/${trimmed}`, lang));
+    }
+  }
   if (!book || !page) notFound();
 
   // A localized URL is a promise the page is in that language, so a book with

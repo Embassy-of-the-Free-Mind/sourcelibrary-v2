@@ -15,11 +15,17 @@ import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
+type LangMap = Record<string, string[]>;
+
+// BnF's open API serves Presentation v3; the v2 fields are kept for a manifest that still has them.
 interface IIIFManifest {
-  label?: string;
+  label?: string | LangMap;
   description?: string;
   license?: string | string[];
   attribution?: string | Array<{ '@value'?: string; '@language'?: string }>;
+  rights?: string;
+  requiredStatement?: { label?: LangMap; value?: LangMap };
+  items?: unknown[];
   sequences?: Array<{
     canvases?: Array<{
       images?: Array<{
@@ -66,13 +72,12 @@ export const POST = withCuratorAuth(async (request, session) => {
       );
     }
 
-    // Fetch IIIF manifest from Gallica
+    // gallica.bnf.fr answers scripts with a Cloudflare challenge (403, since ~2026-10); BnF's
+    // open API serves the same manifest (#7771). The stored address stays the gallica.bnf.fr
+    // one, like every other Gallica book: the archive lane maps it to openapi.bnf.fr itself.
     const manifestUrl = `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/manifest.json`;
-    const manifestRes = await outboundFetch(manifestUrl, {
-      headers: {
-        'Accept': 'application/json, application/ld+json',
-        'Referer': 'https://gallica.bnf.fr/',
-      }
+    const manifestRes = await outboundFetch(`https://openapi.bnf.fr/iiif/presentation/v3/ark:/12148/${ark}/manifest.json`, {
+      headers: { 'Accept': 'application/json, application/ld+json' },
     });
 
     if (!manifestRes.ok) {
@@ -85,7 +90,7 @@ export const POST = withCuratorAuth(async (request, session) => {
     const manifest: IIIFManifest = await manifestRes.json();
 
     // Get page count from IIIF canvases
-    const canvases = manifest.sequences?.[0]?.canvases || [];
+    const canvases = manifest.items ?? manifest.sequences?.[0]?.canvases ?? [];
     const pageCount = canvases.length;
 
     if (pageCount === 0) {
@@ -138,9 +143,10 @@ export const POST = withCuratorAuth(async (request, session) => {
       `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/f${pageNum + 1}/full/200,/0/default.jpg`;
 
     // Extract license URL from manifest
-    const licenseUrl = Array.isArray(manifest.license)
-      ? manifest.license[0]
-      : manifest.license || null;
+    // v3 states it as `rights` (e.g. rightsstatements.org NoC-NC); v2 as `license`.
+    const licenseUrl = manifest.rights
+      || (Array.isArray(manifest.license) ? manifest.license[0] : manifest.license)
+      || null;
 
     // Extract attribution from manifest (prefer English)
     let attribution: string | null = null;
@@ -149,6 +155,9 @@ export const POST = withCuratorAuth(async (request, session) => {
     } else if (Array.isArray(manifest.attribution)) {
       const englishAttr = manifest.attribution.find(a => a['@language'] === 'en');
       attribution = englishAttr?.['@value'] || manifest.attribution[0]?.['@value'] || null;
+    } else if (manifest.requiredStatement?.value) {
+      const v = manifest.requiredStatement.value;
+      attribution = (v.en ?? v.fr ?? Object.values(v)[0])?.[0] ?? null;
     }
 
     const slug = await generateUniqueBookSlug(db, title, author, display_title);

@@ -495,7 +495,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -510,7 +510,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -525,7 +525,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -600,7 +600,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -615,7 +615,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -673,7 +673,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -688,7 +688,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -718,7 +718,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -733,7 +733,7 @@
    "how": "Kraken on our own server (CPU)",
    "available": true,
    "why_not": null,
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
    "checked": "2026-10-16"
   },
@@ -763,7 +763,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   },
@@ -778,7 +778,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   },
@@ -793,7 +793,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   },
@@ -808,7 +808,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   },
@@ -823,7 +823,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   },
@@ -838,7 +838,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   },
@@ -853,7 +853,7 @@
    "how": "Tesseract on our own server",
    "available": false,
    "why_not": "banned: Tesseract is not used, as an engine or as a reference",
-   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "source": ".claude/docs/routing.md",
    "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
    "checked": "2026-10-16"
   }

@@ -3,6 +3,8 @@ import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { canDownload, classifyImageAccess, hasPurchased, PRICES } from '@/lib/purchases';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
+import { sessionHasMemberBenefits } from '@/lib/membership-status';
 import { isBookReadable } from '@/lib/book-access';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { isPremiumFormat, isValidDownloadFormat } from '@/lib/download-formats';
@@ -18,7 +20,9 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { runWithTraceRef, traceRefFor, tracedCopiesEnabled } from '@/lib/trace-ref';
 import { getBookIndex } from '@/lib/book-index';
+import { partnerTermsRefusal } from '@/lib/partner-terms';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { Readable } from 'stream';
 import { generatePdfTranslationStream, generatePdfFacsimileStream } from '@/lib/pdf-export';
@@ -37,6 +41,7 @@ import {
   fetchFacsimilePdfImage,
   generateImagesZipStream,
 } from '@/lib/export-page-images';
+import { AI_TRAINING_NOTICE } from '@/lib/license-info';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -98,9 +103,10 @@ async function generateTxtDownload(db: Db, book: Book, pages: Page[], format: 't
   // Source and license
   lines.push(`Source: ${BASE_URL}/book/${book.id}`);
   lines.push(`Downloaded: ${now}`);
-  lines.push(`License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)`);
+  lines.push(`License: CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)`);
+  lines.push(AI_TRAINING_NOTICE);
   lines.push('');
-  lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
+  lines.push('From Source Library. Amsterdam, 2026.');
   lines.push('Please cite Source Library when using this material.');
   lines.push('');
   lines.push('This edition carries a Trithemian imprimatur, an invisible');
@@ -370,12 +376,13 @@ async function generateEpubDownload(
     ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
     <p><strong>Content:</strong> ${contentLabel}</p>
     ${flow ? '<p>The text runs on across pages; the small raised numbers mark where each printed page begins and link to it, with its scan.</p>' : ''}
+    ${flow?.translationCredit ? `<p><strong>Translation:</strong> ${flow.translationCredit}</p>` : ''}
     ${flow?.imagesNote ? `<p>${flow.imagesNote}</p>` : ''}
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
-      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+      <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
+      <p>From Source Library. Amsterdam, 2026.</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
@@ -422,12 +429,15 @@ async function generateEpubDownload(
   // Add colophon chapter at the end
   const colophon = `
     <h1>About This Edition</h1>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
-    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-    <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
+    <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
+    ${flow?.translationCredit
+      // A Loeb (#8321): the English is the published translation, not ours, and carries no mark of ours.
+      ? `<p><em>${flow.translationCredit}</em></p>`
+      : `<p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
-    by Source Library. It does not identify you or track your usage.</em></p>
+    by Source Library. It does not identify you or track your usage.</em></p>`}
   `;
   chapters.push({ title: 'About This Edition', content: colophon });
 
@@ -491,8 +501,8 @@ async function generateParallelFlowEpubDownload(
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
-      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+      <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
+      <p>From Source Library. Amsterdam, 2026.</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
@@ -532,9 +542,9 @@ async function generateParallelFlowEpubDownload(
   const colophon = `
     <h1>About This Edition</h1>
     <p>This parallel text edition was prepared by the <strong>Source Library</strong>, presenting the original ${book.language} text and its English translation together, page by page.</p>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
-    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+    <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
     <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
     by Source Library. It does not identify you or track your usage.</em></p>
@@ -639,7 +649,7 @@ async function generateLoebEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>
-    <dc:rights>CC BY-SA 4.0</dc:rights>
+    <dc:rights>CC BY-NC-SA 4.0</dc:rights>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <!-- Fixed-layout metadata -->
     <meta property="rendition:layout">pre-paginated</meta>
@@ -820,8 +830,8 @@ p:first-of-type {
           <p style="text-indent:0;text-align:center;">Original ${escapeXml(book.language)} with English translation</p>
         </div>
         <div class="colophon">
-          <p style="text-indent:0;text-align:center;">Produced by SourceLibrary.org in Amsterdam, 2026</p>
-          <p style="text-indent:0;text-align:center;">CC BY-SA 4.0</p>
+          <p style="text-indent:0;text-align:center;">From Source Library. Amsterdam, 2026.</p>
+          <p style="text-indent:0;text-align:center;">CC BY-NC-SA 4.0</p>
         </div>
       </div>
     `, 'Title Page', 'page-right');
@@ -863,7 +873,7 @@ p:first-of-type {
       <p>The Source Library digitizes and translates rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.</p>
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-        <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution)</p>
+        <p><strong>License:</strong> CC BY-NC-SA 4.0 (Creative Commons Attribution-NonCommercial-ShareAlike)</p>
         <p>Source Library is a project of the Embassy of the Free Mind.</p>
       </div>
     `, 'About This Edition', 'page-right');
@@ -988,7 +998,7 @@ async function generateFacsimileEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>
-    <dc:rights>CC BY-SA 4.0</dc:rights>
+    <dc:rights>CC BY-NC-SA 4.0</dc:rights>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <meta property="rendition:layout">pre-paginated</meta>
     <meta property="rendition:orientation">auto</meta>
@@ -1164,7 +1174,7 @@ p:first-of-type { text-indent: 0; }
       <p>This facsimile edition presents original manuscript pages alongside translations.</p>
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-        <p><strong>License:</strong> CC BY-SA 4.0</p>
+        <p><strong>License:</strong> CC BY-NC-SA 4.0</p>
         <p>Source Library · Embassy of the Free Mind</p>
       </div>
     `, 'About This Edition', 'page-right');
@@ -1960,8 +1970,13 @@ async function generateScholarlyEpubDownload(
     manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
 
     // Build contributors list
-    const contributors = edition?.contributors || [
-      { name: 'Source Library', role: 'translator', type: 'ai' as const, model: 'Gemini AI' }
+    // AI contributors print by kind, one per role, never by vendor or model (#7263). The edition
+    // record (and its Zenodo deposit) keeps each model; only what the reader sees changes.
+    const recorded = edition?.contributors || [{ name: 'Source Library', role: 'translator' as const, type: 'ai' as const }];
+    const aiRoles = [...new Set(recorded.filter(c => c.type === 'ai').map(c => c.role))];
+    const contributors = [
+      ...recorded.filter(c => c.type !== 'ai'),
+      ...aiRoles.map(role => ({ name: 'Source Library, using AI', role })),
     ];
 
     // OPF
@@ -1975,7 +1990,7 @@ async function generateScholarlyEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>${bilingual ? `\n    <dc:language>${escapeXml(book.language.toLowerCase().slice(0, 3))}</dc:language>` : ''}
     <dc:date>${edition?.published_at ? new Date(edition.published_at).toISOString().split('T')[0] : now}</dc:date>
-    <dc:rights>${edition?.license || 'CC-BY-SA-4.0'}</dc:rights>
+    <dc:rights>${edition?.license || 'CC-BY-NC-SA-4.0'}</dc:rights>
     ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <meta name="cover" content="cover-image"/>
@@ -2105,14 +2120,14 @@ async function generateScholarlyEpubDownload(
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
     <p>English translation prepared by Source Library</p>
     <p>&#160;</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
     <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit and distribute under the same license.</p>
     ${edition?.doi ? `<p>&#160;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&#160;</p>
     <p><strong>Contributors:</strong></p>
-    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
+    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})</p>`).join('\n    ')}
     <p>&#160;</p>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     <p>&#160;</p>
     <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
   </div>
@@ -2368,10 +2383,10 @@ async function generateScholarlyEpubDownload(
 <body>
   <div class="colophon">
     <h1>About This Edition</h1>
-    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p>From Source Library. Amsterdam, 2026.</p>
     ${edition?.doi ? `<p><strong>Permanent Citation:</strong> ${edition.doi_url || `https://doi.org/${edition.doi}`}</p>` : ''}
     <p><strong>Online Version:</strong> ${BASE_URL}/book/${book.id}</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'}</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-NC-SA-4.0'}</p>
     <p>&#160;</p>
     <p style="font-size:0.85em;color:#888;">Generated: ${now}</p>
   </div>
@@ -2383,7 +2398,7 @@ async function generateScholarlyEpubDownload(
   });
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+async function downloadGET(request: NextRequest, { params }: RouteParams) {
   try {
     const { tenant, id } = await params;
     const { searchParams } = new URL(request.url);
@@ -2426,6 +2441,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       }
       anonCapKey = anonymousDownloadCapKey(request.headers);
     }
+
+    // A protected partner's book: agree to its terms first. Ahead of the cap, so being asked costs nothing.
+    const termsRefusal = await partnerTermsRefusal(
+      request,
+      await (await getDb()).collection('books').findOne({ id, tenantId }, { projection: { id: 1, tenantId: 1 } }) as { id?: string; tenantId?: string | null } | null,
+      { userId, format },
+    );
+    if (termsRefusal) return termsRefusal;
 
     // Get optional edition_id for scholarly format
     const editionId = searchParams.get('edition_id');
@@ -2470,7 +2493,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // Member-or-purchased gate applies ONLY to premium formats (#3290). NC-free
     // image formats bypass this too (charging for an NC scan would cross the
     // commercial line).
-    if (isPremiumFormat(format) && process.env.STRIPE_SECRET_KEY && imageAccess !== 'nc-free') {
+    if (isPremiumFormat(format) && downloadChargesEnabled() && imageAccess !== 'nc-free') {
       const allowed = await canDownload(userId, 'book', id);
       if (!allowed) {
         return NextResponse.json(
@@ -2491,7 +2514,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         return NextResponse.json({ error: ANON_EMBED_LIMIT_MESSAGE, limit_reached: true }, { status: 429 });
       }
     } else if (userId && !isPremiumFormat(format)) {
-      const isMember = (session?.user as { membership?: unknown } | undefined)?.membership != null;
+      const isMember = sessionHasMemberBenefits(session?.user);
       const isExemptEditor = await isInnerCircle();
       const isPurchased = isMember || isExemptEditor ? false : await hasPurchased(userId, 'book', id);
       if (!isMember && !isExemptEditor && !isPurchased) {
@@ -2743,4 +2766,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Traced bulk copies (#8150 slice 8): a signed-in download carries an opaque
+ * account ref in every marked passage. DARK unless TRACED_COPIES=on, which
+ * waits on terms, sign-up disclosure and a GDPR check. Anonymous downloads are
+ * never traced. A traced response is never shared-cacheable.
+ */
+export async function GET(request: NextRequest, ctx: RouteParams) {
+  const ref = tracedCopiesEnabled() ? traceRefFor({ userId: (await auth())?.user?.id ?? null }) : undefined;
+  const res = await runWithTraceRef(ref, () => downloadGET(request, ctx));
+  if (ref) {
+    try { res.headers.set('Cache-Control', 'private, no-store'); } catch { /* immutable headers: route already no-cache */ }
+  }
+  return res;
 }

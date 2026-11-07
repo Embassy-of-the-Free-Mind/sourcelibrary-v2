@@ -53,6 +53,9 @@ const YEAR_TO = parseInt(argOf('to', '1900'), 10);
 const MIN_LEVEL = parseInt(argOf('level', '3'), 10);
 const MAX_PAGES = parseInt(argOf('max', '40'), 10);
 const MAX_PER_WORK = parseInt(argOf('per-work', '1'), 10);  // one page per book — the standing sampling rule
+// --ref-chars=N: the reference is cut to N characters (default 2000, as before); 0 keeps the whole page, for a CER
+// over the page rather than its opening passage (#7818).
+const REF_CHARS = parseInt(argOf('ref-chars', '2000'), 10);
 const OUT = argOf('out', path.join(__dirname, 'ground-truth-wikisource'));
 
 const UA = 'SourceLibrary-GT-Harvest/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) node-fetch';
@@ -232,7 +235,7 @@ for (const cand of candidates) {
         // Blanket-tagging everything 'word' would have thrown that tier away.
         fidelity: /[ſꝛﬁﬂﬀ]/.test(text) ? 'glyph' : 'word',
         glyph_marks: (text.match(/[ſꝛﬁﬂﬀ]/g) || []).length,
-        reference: text.slice(0, 2000),
+        reference: REF_CHARS > 0 ? text.slice(0, REF_CHARS) : text,
       });
       takenForWork++;
       console.log(`  + ${cand.year}  ${p.title.slice(0, 70)}  (L${level}, ${text.length} chars)`);
