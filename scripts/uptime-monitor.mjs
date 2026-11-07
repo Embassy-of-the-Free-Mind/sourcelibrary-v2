@@ -62,7 +62,7 @@ const ALERT_COOLDOWN_MS = 60 * 60 * 1000;
 const RECOVERY_WARM_THRESHOLD_MS = 800;
 // Delay between the two shots in a two-shot probe
 const TWO_SHOT_DELAY_MS = 250;
-// The embed routes STREAM (src/app/embed/[tenant]/loading.tsx): the 200 shell goes out first and
+// The embed catalogue routes STREAM (src/app/embed/[tenant]/(library)/loading.tsx): the 200 shell goes out first and
 // the page renders inside a Suspense boundary. A render that throws after the shell (a Mongo
 // maxTimeMS expiry, #5075) never changes the status code and never puts "Something went wrong"
 // in the HTML — the error boundary is rendered client-side. What React (Fizz) DOES emit is

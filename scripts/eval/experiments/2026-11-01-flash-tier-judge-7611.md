@@ -147,6 +147,66 @@ So both higher tiers find real failures that Opus passed. **Against the adjudica
 - Flash medium alone: $588. Flash high alone: $1,197. Both fail as judge in every stratum, and both cost more than Opus.
 - **The one passing option, a medium screen with Opus on the pages it fails, on GPU>GEM:** $0.00248 + 0.52 × $0.0022 = **$0.0036 a page**. Applied to every judgement, that is about **$860**, 65% more than Opus alone. A screen saves money only when it is cheaper than the judge it screens for, and medium is not.
 
+### What the judges disagreed about (qualitative, added 2026-11-02)
+
+This reads the 360 real items' disagreements and the blind Opus adjudications, which were reused across arms as the preregistration allows. The 270 transcription items are covered; translation is left out.
+
+**Where they disagree.** Medium and Opus disagree on 76 of the 270 transcription pages. In 73 of them, Flash rejects a page that Opus passed.
+- Tibetan GPU: 25. Chinese GPU and GPU>GEM: 17. Latin GPU>GEM: 12.
+- German, French and Latin Gemini reads: 13 together.
+- Hebrew, Arabic and Italian: 6.
+- High's pattern is the same.
+
+**The hard scripts are hard for the OCR, but the judges agree on them.** Opus passes only 5 of 15 Hebrew pages and 7 of 15 Arabic. Medium rejects the same pages for the same reasons, so these pages produce almost no disagreements.
+- Most of these pages are rabbinic cursive, both Ashkenazic and Sephardic.
+- Rejected pages show confabulation, plus one canonical substitution: Ruth chapter 1 written in place of an unrelated cursive leaf.
+- One "Hebrew" leaf is in an Indic script.
+- Both judges see failures this gross. The trouble is the reading lane (Gemini Flash 3 on cursive Hebrew), not the judge. The sample has no Greek.
+
+**Who was right when Flash rejected an Opus pass.** The adjudicator rejected the page on 44 of the 72 adjudicated cases for medium, and 48 of 70 for high.
+- **38 of those 44 are word-level changes that alter the text**, not conventions:
+  - Tibetan: ཐོས་ནས ('heard') for བསྟན ('taught'); ཚང for ཚད; སེམས་དཔའ dropped.
+  - Chinese: 益 ('more') for 葢 ('for, because'); 周 for 困 in the running title of 周易玩辭困學記; 貢 for 貞 in a genealogy.
+  - Latin: long-s 'ſine' read as 'fine'; non-words 'clatinc' and 'teneri-/rum'.
+  - German: 'franck' for 'kranck' (sick).
+  - French: 'fons' for 'ſons'.
+- 3 are dropped text. Only 1 is a margin or folio label alone.
+- A recurring adjudicator line is "Review N found the error but still accepted". Across all 200 adjudications from #7807 and this run, it is said of the Opus review 31 times and of the Gemini review 10 times. Opus often *sees* the misread, calls it a slip and passes the page at fidelity 4. Its misses are mostly lenience in the accept decision, not blindness.
+
+**Where Flash was wrong (28 for medium).** The adjudicator listed 76 false defect claims on those pages: "misreadings" the page does not contain, spelling conventions treated as errors (巳/已, མེད/མྱེད, expanded abbreviations), and correct leaf-break markup called a defect. These come mostly from Latin, Tibetan and Chinese. More thinking makes Flash find real errors *and* invent them.
+
+**What this means for "checked by Opus".** Of the 158 transcription pages Opus passed, at least 52 (33%) have an error that the adjudicator says matters, found once another judge pointed at the spot. That is a lower bound, since pages both judges passed were not adjudicated. By stratum:
+
+| stratum | Opus passed | with a real error | notes |
+|---|---|---|---|
+| Tibetan GPU | 26 | 18 | |
+| Chinese GPU and GPU>GEM | 41 | 12 | |
+| Latin GPU>GEM | 34 | 9 | |
+| French, German and Latin Gemini reads | 35 | 11 | |
+| Hebrew | 5 | 2 | |
+| Arabic | 7 | 0 | |
+| Italian | 9 | 0 | |
+
+Two caveats:
+- The sample is weighted toward hard cells, so this is not a library rate.
+- The adjudicator is Opus reading a spot it was pointed at, which is easier than finding the error unprompted. The 33% is how often an unprompted Opus pass misses a pointed-out error, not how often a reader meets one.
+
+It still revises the reading of #7866. A fidelity-4 pass on Tibetan or Chinese is often a page with a meaning-changing misread, and the "checked, no serious errors" line on the book page (#7896) is weakest exactly there.
+
+**What matters more than what.** Ranked by what a reader loses, using the adjudicator's `matters` flags:
+1. Word changes that read fluently: O6, the large majority.
+2. Dropped words or lines: O5.
+3. Wrong titles, names and numbers: running titles, genealogies, folio numbers.
+
+Conventions (variant characters, abbreviation expansion, long s kept or not, tsheg punctuation) are the bulk of what the adjudicator marks as not mattering. A judge that cannot separate the two (Flash at medium or high) over-rejects. A judge that sees both and forgives both (Opus) under-rejects.
+
+**Next test (#7611 follow-up).** Is a different *task* a better detector than a verdict prompt? Three arms on these same 540 items:
+- a **correction** prompt, whose diff against the stored text is the detection, and whose output is also the fix;
+- an independent **re-read**, diffed against the stored text. #5313 found AUC 0.80–0.85 but precision 0.3–0.45 on Flash-lite and Flash 3; this test reruns it on 3.8 Flash;
+- **Opus with a stricter accept rule**: any word-level change fails the page, conventions excepted.
+
+It is scored on the plants and on adjudicated disagreements, at each arm's measured cost per page.
+
 ### Recommendation for judging every book (#7896)
 
 - **Opus alone, as now: 5 pages a book, about $520.**

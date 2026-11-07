@@ -7,7 +7,7 @@
  *   - the page: /quality imports the JSON and types no row of its own.
  * It also holds each row to its evidence: every experiment file exists, and its date is the file's.
  *
- * If the doc test is red, run `node scripts/eval/build-routing-table.mjs` and commit the README.
+ * If the doc test is red, run `node scripts/maintenance/router-routing-rows.mjs --write` and commit the README.
  * If a router probe is red, the code and a settled row disagree: that is a decision for Derek
  * (scripts/eval/ocr-routing/README.md), not something to settle by editing whichever side is easier.
  */
@@ -20,10 +20,10 @@ import {
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/ocr-routing.mjs';
 import {
-  renderKindTable, currentKindSection, withKindSection, KIND_DOC, KIND_BEGIN, KIND_END,
+  renderKindTable, currentSection, withSection, KIND_DOC, KIND_BEGIN, KIND_END,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
-} from '../../scripts/eval/build-routing-table.mjs';
+} from '../../scripts/maintenance/router-routing-rows.mjs';
 
 const ROOT = path.resolve(__dirname, '../..');
 const read = (f: string) => fs.readFileSync(path.join(ROOT, f), 'utf8');
@@ -114,19 +114,22 @@ describe('OCR routing table by page kind (scripts/lib/ocr-routing-table.json)', 
     const doc = read(KIND_DOC);
     expect(doc.split(KIND_BEGIN).length).toBe(2);
     expect(doc.split(KIND_END).length).toBe(2);
-    expect(currentKindSection(doc)).toBe(renderKindTable());
-    expect(withKindSection(doc, renderKindTable())).toBe(doc);
-    for (const r of rows) expect(currentKindSection(doc)).toContain(`(\`${r.id}\`)`);
+    const section = currentSection(doc, KIND_BEGIN, KIND_END);
+    expect(section).toBe(renderKindTable(OCR_ROUTING_TABLE));
+    expect(withSection(doc, section, KIND_BEGIN, KIND_END)).toBe(doc);
+    for (const r of rows) expect(section).toContain(`(\`${r.id}\`)`);
   });
 
   it('NEGATIVE CONTROL: a row changed in the JSON makes the committed section stale', () => {
     const changed = { ...OCR_ROUTING_TABLE, rows: rows.map((r) => (r.id === 'tibetan' ? { ...r, reader: 'Gemini 3.1 Flash-Lite' } : r)) };
-    expect(renderKindTable(changed)).not.toBe(currentKindSection(read(KIND_DOC)));
+    expect(renderKindTable(changed)).not.toBe(currentSection(read(KIND_DOC), KIND_BEGIN, KIND_END));
   });
 
   it('PAGE: /quality renders the rows from the JSON and types none of its own', () => {
-    const page = read('src/app/quality/page.tsx');
-    expect(page).toMatch(/import ocrRouting from '\.\.\/\.\.\/\.\.\/scripts\/lib\/ocr-routing-table\.json'/);
+    const page = read('src/app/quality/record/page.tsx');
+    expect(page).toMatch(/import ocrRoutingData from '\.\.\/\.\.\/\.\.\/\.\.\/scripts\/lib\/ocr-routing-table\.json'/);
+    // The same rows, in role words (#7263): the page says the kind of engine, the JSON keeps the name.
+    expect(page).toContain('const ocrRouting = plainEngineData(ocrRoutingData);');
     expect(page).toContain('ocrRouting.rows.map(');
     expect(page).toContain('ocrRouting.not_adopted.map(');
     for (const k of ['row.kind', 'row.reader', 'row.why', 'row.in_use']) expect(page).toContain(`{${k}}`);

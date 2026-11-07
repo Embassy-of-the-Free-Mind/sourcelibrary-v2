@@ -132,7 +132,7 @@ own retention, and no script may run a bare `restic forget`** — always `--tag 
 
 | store | covered by | restic tag / where | frequency | retention |
 |---|---|---|---|---|
-| `books`, `deleted_books` | `backup-books.sh` → `/root/restic-backup.sh` (main) | `mongodump` | daily 04:00 | pruned by `restic-backup.sh` |
+| `books`, `deleted_books` | `backup-books.sh` → `/root/restic-backup.sh` (main) | `mongodump` | daily 04:00 — **empty 2026-10-02 → 11-03 (#8225, fixed 11-04: `278b4877` holds `books.bson.gz`, restore-proven)** | pruned by `restic-backup.sh` |
 | `pages`, `page_revisions`, `chapter_texts`, `entities`, `first_translation_attempts`, `gallery_images` | `backup-corpus-text.sh` (main) | `corpus-text`, streamed | weekly, Sun 06:00 | 6 weekly + 12 monthly |
 | **every other `bookstore` collection** (196 on 2026-10-29, ~44 GB: `audit_log`, `sweep_log`, `iiif_manifests`, `book_indexes`, `jobs`, `import_candidates`, users, collections, …) — enumerated with `listCollections` at run time, so new collections are included | `backup-mongo-rest.sh` (gex45, #7708) | `mongo-rest`, one uncompressed archive | weekly, Mon 03:00 | 8 weekly + 12 monthly |
 | `books_warehouse_retired_2026_10`, `pages_warehouse_retired_2026_10` | one snapshot at retirement (#5470) | same repo | once | — |
@@ -140,7 +140,7 @@ own retention, and no script may run a bare `restic forget`** — always `--tag 
 | `bph_works` (+ revisions, pending changes) | 4 layers incl. revisions + daily JSON export | `bph-catalogue-disaster-recovery.md` | daily | — |
 | Supabase (managed) | Supabase managed backups | Supabase | daily, 8 retained, **PITR off** | — |
 | Claude Code transcripts, all four boxes | `/root/restic-transcripts.sh` on each box (#7673) | `transcripts` | nightly 02:30 | **never pruned** |
-| **R2 objects (~21.7 TB)** | `cold-copy-r2.mjs` → AWS S3 Glacier Deep Archive, one tar per book + manifest (#7708) — **written and dry-run tested; not yet running** (bucket pending) | AWS | — | Object Lock |
+| **R2 objects (~34.6 TB, `system_config.storage_stats`)** | `cold-copy-r2.mjs` → Scaleway Glacier, one tar per book + manifest (#7708). **In progress as of 2026-11-05:** EFM/BPH (3.6 TB), `masters` and the restic repo are sent; `rest` (most images) starts after the watermark backfill (#4406) | `sourcelibrary-cold-efm`, ~EUR 0.0025/GB-month | once per unit; a changed book is re-sent | Object Lock, governance, 10 years |
 
 Each weekly database backup is checked by **reading it back**, not by the job exiting 0:
 the script `restic dump`s the snapshot it just wrote and pipes it through
@@ -148,6 +148,27 @@ the script `restic dump`s the snapshot it just wrote and pipes it through
 the `-- PostgreSQL database dump` header and trailer, and counts every document per
 collection / row per table against the live estimates taken just before the dump. Results land
 in `/var/log/sourcelibrary/backup-rehearsals/` and a failure pages via ntfy.
+
+### Restore rehearsal, 2026-11-04 (#8196)
+
+A restore into a throwaway local mongod 8.0.4 (127.0.0.1:27018, aarch64, tools 100.10) worked for
+`books`, `deleted_books`, `books_warehouse`, `pages` and `page_revisions`: 0 failures, 600 random
+books (one page each) matched live text exactly wherever the page had not changed since the snapshot,
+and every stored `content_hash` was identical to live. What it also showed:
+
+- **The daily `mongodump` tag held nothing from 2026-10-02 to 11-03.** `/root/backups` became a symlink to
+  the Hetzner volume and restic stored the link, not the target (#8225). Fixed 2026-11-04: snapshot
+  `278b4877` (12.56 GiB) was restored the same day: 568,765 books + 3,200 deleted_books in 12 min, 1,000
+  sampled books all present live with equal title and author. Snapshots 10-02 … 11-03 stay empty.
+- **`restic dump` of the 18 GB pages archive takes ~21 min (~14 MB/s) and must not be run under a
+  foreground tool timeout**: a killed dump leaves a truncated file that `mongorestore` happily reads
+  as a shorter archive. Check the byte count against `restic stats <id> --mode restore-size`.
+- `pages` had 30.66M documents in the 2026-11-01 snapshot (not ~20.6M). Restore 16 min for the
+  documents, 23 min more to build 18 indexes: 39 min, 38 GB on disk. `page_revisions` (6.45M) 12 min streamed.
+- **Stored `content_hash` is not always `sha256(text)[:16]`**: about 10% of pages carrying a hash
+  (44 of 246 OCR, 39 of 290 translation in a 600-page sample) do not match the recomputed value,
+  identically in live. A restore reproduces that exactly; a hash check must compare restored against
+  live, not recompute and expect a match. About 45% of OCR texts carry no stored hash at all.
 
 ### How to restore each one
 
@@ -160,7 +181,7 @@ source /root/.config/restic-hetzner.env          # then `restic snapshots --tag 
 #               one table: restic dump <id> supabase.sql | sed -n '/^COPY public.<t> /,/^\\\.$/p'
 # transcripts:  restic restore <id> --target /tmp/r --include /root/.claude/projects/<project>
 # bph_works:    see bph-catalogue-disaster-recovery.md
-# R2 (cold):    restore the tar from Deep Archive (bulk tier, ≤48 h), then `tar -xf`; members are
+# R2 (cold):    `aws s3api restore-object` on the tar from Scaleway Glacier, wait, then `tar -xf`; members are
 #               named by their R2 key, and <tar>.manifest.json (STANDARD class) lists key, size,
 #               ETag and SHA-256 for each, so the restore can be checked before re-uploading.
 ```
@@ -173,12 +194,14 @@ principle 2. Verified by restore rehearsal, not by the job exiting 0: read the s
 back out of restic, `gzip -t` the whole stream, confirm the mongodump magic
 `6de29981`.
 
-**The gap that is still open: R2 has no second copy.** Tier-1 and tier-2 objects are
-re-acquirable in principle; tier-0 (BPH, Kloss, Allard Pierson) is not. A bucket-level
-accident is currently unrecoverable for those. `scripts/maintenance/cold-copy-r2.mjs`
-(#7708) is the mover — EFM/BPH first (`archive/` JP2 masters, then every prefix of books with
-`image_source.provider: 'bph'`, then a `bph_works` export), then the other masters, the restic
-repo, and the rest of R2. Until it has run, no bytes have moved.
+**R2's second copy is partly built, not finished.** Tier-0 (BPH, Kloss, Allard Pierson) is what
+cannot be re-acquired. As of 2026-11-05, `scripts/maintenance/cold-copy-r2.mjs` (#7708) has sent to
+Scaleway Glacier the EFM/BPH material (`archive/` JP2 masters and every prefix of BPH books, 3.6 TB,
+under a 10-year governance lock) and the `masters` group (`books/`, `uploads/`, `page-masters/`,
+`masters/`, `artwork/*-full*`). The `rest` group, most page images, is NOT copied yet: it waits for the
+watermark backfill (#4406), because a book whose files changed is re-sent, and each re-send stays
+locked for 10 years. Until `rest` finishes, a bucket-level accident loses those images. Progress and
+the restore proof are on #7708.
 
 **Unverified: MongoDB Atlas cluster snapshots.** The cluster is dedicated (MongoDB
 9.0.0 Enterprise), and Atlas enables Cloud Backup by default on dedicated tiers — but

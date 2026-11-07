@@ -1,0 +1,523 @@
+{
+  "issue": 6056,
+  "dir": "scripts/eval/results/spot-check/overview-2026-11-04-zh-held",
+  "weighted_serious_page_rate": 0.17680597992143168,
+  "weight_basis": "frame_size (books in stratum frame)",
+  "strata": [
+    {
+      "name": "zh-shiji",
+      "desc": "hold zh-histories-7546, work_id kr:KR2a0001, Siku 欽定四庫全書 CADAL copy, Paddle OCR 2026-10-28, gemini-3.8-flash-low English 2026-10-29",
+      "frame_size": 44,
+      "books": 8,
+      "pages": 32,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0.03125,
+        0.21875
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.53,
+      "mean_tr": 4.47,
+      "on_sight_books": 6,
+      "fit_to_show": {
+        "show_with_caveat": 6,
+        "show": 2
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6ae0bd3d4adf2ffb52f72384?page=85",
+        "https://sourcelibrary.org/book/6ae0bd3d4adf2ffb52f72384?page=157",
+        "https://sourcelibrary.org/book/6ae0bd8d4adf2ffb52f725c5?page=32",
+        "https://sourcelibrary.org/book/6ae0bd8d4adf2ffb52f725c5?page=108",
+        "https://sourcelibrary.org/book/6ae0bd8d4adf2ffb52f725c5?page=168",
+        "https://sourcelibrary.org/book/6ae0bd3a4adf2ffb52f722f9?page=8",
+        "https://sourcelibrary.org/book/6ae0bd3a4adf2ffb52f722f9?page=126",
+        "https://sourcelibrary.org/book/6ae0bc1f4adf2ffb52f71a90?page=37",
+        "https://sourcelibrary.org/book/6ae0bc1f4adf2ffb52f71a90?page=42",
+        "https://sourcelibrary.org/book/6ae0bca94adf2ffb52f71e1b?page=27",
+        "https://sourcelibrary.org/book/6ae0bca94adf2ffb52f71e1b?page=44",
+        "https://sourcelibrary.org/book/6ae0bca94adf2ffb52f71e1b?page=67",
+        "https://sourcelibrary.org/book/6ae0bb854adf2ffb52f7166f?page=28",
+        "https://sourcelibrary.org/book/6ae0bb854adf2ffb52f7166f?page=70",
+        "https://sourcelibrary.org/book/6ae0bbcd4adf2ffb52f7185a?page=2",
+        "https://sourcelibrary.org/book/6ae0bbcd4adf2ffb52f7185a?page=40",
+        "https://sourcelibrary.org/book/6ae0baaf4adf2ffb52f70e01?page=37",
+        "https://sourcelibrary.org/book/6ae0baaf4adf2ffb52f70e01?page=110",
+        "https://sourcelibrary.org/book/6ae0baaf4adf2ffb52f70e01?page=204"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6ae0bd3d4adf2ffb52f72384",
+          "title": "史記·卷一百五~卷一百八 (Shiji, Siku Quanshu, vol. 37 of 44)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku manuscript of Shiji juan 105-108 with the three commentaries. The text is the right one and the main narrative reads accurately. The medical juan (Cang Gong) is weaker: one pulse statement is reversed (excess rendered as deficiency), spirit counts are wrong, and junk from the margin label shows up as text. The narrative chapters can be trusted. Check the technical medical passages against the Chinese."
+        },
+        {
+          "book_id": "6ae0bd8d4adf2ffb52f725c5",
+          "title": "史記·卷一百十八~卷一百二十二 (Shiji, Siku Quanshu, vol. 41 of 44)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku manuscript of Shiji juan 118-122 (Huainan, Upright Officials, Confucian Scholars, Harsh Officials) with the commentaries. The transcription is of the right text and the narrative English is faithful. On the juan title leaf, a line that is not on the page is transcribed and then rendered as a scholarly gloss."
+        },
+        {
+          "book_id": "6ae0bd3a4adf2ffb52f722f9",
+          "title": "史記·卷九十九~卷一百四 (Shiji, Siku Quanshu, vol. 36 of 44)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku manuscript of Shiji juan 99-104 (Liu Jing, Yuan Ang, Zhang Shizhi and others) with commentaries. The main text is transcribed correctly and translated faithfully. The small-print commentary is garbled where the brush is faint, and one chapter-end page carries invented fascicle headings."
+        },
+        {
+          "book_id": "6ae0bc1f4adf2ffb52f71a90",
+          "title": "史記·卷四十~卷四十一 (Shiji, Siku Quanshu, vol. 22 of 44)",
+          "fit": "show",
+          "summary": "This is the Siku manuscript of Shiji juan 40-41 (the houses of Chu and of Goujian of Yue) with commentaries and the Qing collation notes. The transcription is of the right text with few slips, and the English is faithful apart from occasional errors in dates and idioms."
+        },
+        {
+          "book_id": "6ae0bca94adf2ffb52f71e1b",
+          "title": "史記·卷六十一~卷六十六 (Shiji, Siku Quanshu, vol. 28 of 44)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku manuscript of Shiji juan 61-66, including the Laozi and Han Fei biography and the Guan Zhong biography, with commentaries. The transcriptions sampled are accurate and the English is faithful and readable. At a chapter end, an invented row of numbers appears as a note."
+        },
+        {
+          "book_id": "6ae0bb854adf2ffb52f7166f",
+          "title": "史記·卷二十三~卷二十四 (Shiji, Siku Quanshu, vol. 14 of 44)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku manuscript of Shiji juan 23-24, the Treatises on Ritual and Music (drawing on Xunzi and the Yueji), with commentaries. The transcription is accurate. The English handles the dense ritual and music theory well. It misreads the Wu dance as King Wu once, and one note ends in an invented sentence."
+        },
+        {
+          "book_id": "6ae0bbcd4adf2ffb52f7185a",
+          "title": "史記·卷二十九~卷三十 (Shiji, Siku Quanshu, vol. 17 of 44)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku manuscript of Shiji juan 29-30 (Rivers and Canals; the Balanced Standard on Han coinage and finance) with commentaries. The transcription is accurate and the economic narrative is translated faithfully. At one page end, a commentator 'Ci Ding' is invented from the garbled margin label."
+        },
+        {
+          "book_id": "6ae0baaf4adf2ffb52f70e01",
+          "title": "史記·卷一 (Shiji, Siku Quanshu, vol. 1 of 44)",
+          "fit": "show",
+          "summary": "This is the opening volume of the Siku Shiji: the editors' memorial of presentation, the full table of contents, and the Annals of the Five Emperors with commentaries. The transcription is of the right text with one recurring slip (曰 for 日), and the English is faithful, including the Hundun story quoted in the Zhengyi."
+        }
+      ]
+    },
+    {
+      "name": "zh-hanshu",
+      "desc": "hold zh-histories-7546, work_id kr:KR2a0007, Siku 欽定四庫全書 CADAL copy, Paddle OCR 2026-10-28, gemini-3.8-flash-low English 2026-10-29",
+      "frame_size": 57,
+      "books": 8,
+      "pages": 32,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.25,
+      "mean_tr": 3.94,
+      "on_sight_books": 8,
+      "fit_to_show": {
+        "show_with_caveat": 8
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6ae0be184adf2ffb52f729b9?page=16",
+        "https://sourcelibrary.org/book/6ae0be184adf2ffb52f729b9?page=64",
+        "https://sourcelibrary.org/book/6ae0c1e14adf2ffb52f74326?page=99",
+        "https://sourcelibrary.org/book/6ae0c1f34adf2ffb52f74449?page=11",
+        "https://sourcelibrary.org/book/6ae0c1f34adf2ffb52f74449?page=100",
+        "https://sourcelibrary.org/book/6ae0c1554adf2ffb52f74035?page=30",
+        "https://sourcelibrary.org/book/6ae0c03d4adf2ffb52f739d2?page=89",
+        "https://sourcelibrary.org/book/6ae0c0884adf2ffb52f73bfa?page=44",
+        "https://sourcelibrary.org/book/6ae0bdda4adf2ffb52f72939?page=55",
+        "https://sourcelibrary.org/book/6ae0bdda4adf2ffb52f72939?page=88",
+        "https://sourcelibrary.org/book/6ae0bdda4adf2ffb52f72939?page=100"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6ae0be184adf2ffb52f729b9",
+          "title": "前漢書·卷六~卷七 (Hanshu, Siku Quanshu, vol. 3 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku Quanshu manuscript of Ban Gu's Hanshu, juan 6–7 (Annals of Emperors Wu and Zhao), with Yan Shigu's commentary and the Song notes of Song Qi and Liu Ban. The transcription is of the right text and largely accurate, including the small double-column commentary. The English follows text and commentary closely, but you should know that the margin title sometimes comes through as stray characters, and once as an invented commentator's note, and that the odd name or construction is misread."
+        },
+        {
+          "book_id": "6ae0c0ce4adf2ffb52f73d64",
+          "title": "前漢書·卷六十七~卷六十八 (Hanshu, Siku Quanshu, vol. 39 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku Quanshu manuscript copy of Hanshu juan 67–68 (Hu Jian, Mei Fu, Huo Guang and the appraisal), with Yan Shigu's and Song editors' notes, and the transcription is of the right leaves with few misreads. The English follows the text and its notes closely enough to read, but a reader will meet junk header characters and invented headings on most pages and an occasional clause moved into or out of the commentary, so check a passage against the Chinese before quoting it."
+        },
+        {
+          "book_id": "6ae0c1e14adf2ffb52f74326",
+          "title": "前漢書·卷九十~卷九十二 (Hanshu, Siku Quanshu, vol. 50 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku Quanshu manuscript copy of Hanshu juan 90–92, the Harsh Officials and Wandering Knights chapters, with Yan Shigu's and later Song editors' notes. The transcription is of the right leaves and the English is close and keeps the commentary, but the header strip is read as junk lines (once labelled an 'Editorial note'), and notes are broken in the display. Warn that these lines are machine noise, not part of the text."
+        },
+        {
+          "book_id": "6ae0c1f34adf2ffb52f74449",
+          "title": "前漢書·卷九十四上~卷九十五 (Hanshu, Siku Quanshu, vol. 52 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku Quanshu manuscript of Hanshu juan 94–95 (the Xiongnu and the southwestern peoples, Southern Yue), with Yan Shigu's notes. The transcription is of the right text and reads almost character for character. The English follows the text closely, but at page tops it sometimes turns header debris into fake notes or headings, and at page breaks it can attribute speech to the wrong person, so check the Chinese before you quote."
+        },
+        {
+          "book_id": "6ae0c1554adf2ffb52f74035",
+          "title": "前漢書·卷七十八~卷八十 (Hanshu, Siku Quanshu, vol. 44 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku Quanshu manuscript of Hanshu juan 78–80, from Xiao Wangzhi's biography to Emperor Xuan's sons, with Yan Shigu and the earlier commentators. The Chinese text is the right text and reads cleanly. The English is careful and keeps the commentary, but the reader pane carries header debris and broken note markup, and a few nuanced lines are off."
+        },
+        {
+          "book_id": "6ae0c03d4adf2ffb52f739d2",
+          "title": "前漢書·卷五十三~卷五十四 (Hanshu, Siku Quanshu, vol. 32 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This volume is the Siku Quanshu manuscript of Hanshu chapters 53–54, including the biographies of Li Guang, Li Ling and Su Wu with Yan Shigu's commentary, and the transcription is of the right text with only furniture slips. The English of the main narrative can be trusted. Treat the renderings of the phonetic glosses with caution, and expect header junk and stray tags on some pages."
+        },
+        {
+          "book_id": "6ae0c0884adf2ffb52f73bfa",
+          "title": "前漢書·卷六十二~卷六十三 (Hanshu, Siku Quanshu, vol. 36 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This volume is the Siku Quanshu manuscript of Hanshu chapters 62–63: Sima Qian's biography with his letter to Ren An, and the King of Yan. The transcription is of the right text with few slips. The English is faithful, but on some pages broken note tags make Yan Shigu's commentary read as part of Ban Gu's text, so a reader must check what is narrative and what is gloss."
+        },
+        {
+          "book_id": "6ae0bdda4adf2ffb52f72939",
+          "title": "前漢書·卷二~卷五 (Hanshu, Siku Quanshu, vol. 2 of 57)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Siku Quanshu manuscript of the Hanshu, juan 2–5 (the annals of Emperors Hui, Wen and Jing and of Empress Lü), with Yan Shigu's commentary. The transcription is of the right text and mostly exact, and the English of the edicts and the commentary debates (on mourning dress, for example) is careful. Some pages are spoiled by the margin title turning into an invented commentator, and on one page the English invents an event (a moon eclipse) that the text does not mention."
+        }
+      ]
+    },
+    {
+      "name": "zh-houhanshu",
+      "desc": "hold zh-histories-7546, work_id kr:KR2a0009, Siku 欽定四庫全書 CADAL copy, Paddle OCR 2026-10-28, gemini-3.8-flash-low English 2026-10-29",
+      "frame_size": 43,
+      "books": 8,
+      "pages": 32,
+      "serious_page_rate": 0.0625,
+      "serious_ci": [
+        0,
+        0.1875
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.09,
+      "mean_tr": 4.16,
+      "on_sight_books": 6,
+      "fit_to_show": {
+        "show_with_caveat": 8
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6ae0c4394adf2ffb52f75327?page=27",
+        "https://sourcelibrary.org/book/6ae0c4394adf2ffb52f75327?page=39",
+        "https://sourcelibrary.org/book/6ae0c5b74adf2ffb52f75c45?page=103",
+        "https://sourcelibrary.org/book/6ae0c2834adf2ffb52f747e5?page=132",
+        "https://sourcelibrary.org/book/6ae0c5bc4adf2ffb52f75cea?page=72",
+        "https://sourcelibrary.org/book/6ae0c5bc4adf2ffb52f75cea?page=61",
+        "https://sourcelibrary.org/book/6ae0c52b4adf2ffb52f759a6?page=2",
+        "https://sourcelibrary.org/book/6ae0c4544adf2ffb52f754d4?page=23",
+        "https://sourcelibrary.org/book/6ae0c2ce4adf2ffb52f74a6e?page=19",
+        "https://sourcelibrary.org/book/6ae0c2ce4adf2ffb52f74a6e?page=76"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6ae0c4394adf2ffb52f75327",
+          "title": "後漢書[范煜…等撰]·卷六十上~卷六十一 (Hou Hanshu, Siku Quanshu, vol. 21 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 60 (Lang Yi and Xiang Kai's portent memorials) and juan 61 (Guo Ji, Wang Tang and others) of the Siku Quanshu Hou Hanshu. The transcription is the page's own text, main text and small-character commentary both, with junk lines where the OCR reads the margin. The English is close and usable, but check official titles (右扶風 rendered as Colonel-Director of Retainers) and place names against the Chinese."
+        },
+        {
+          "book_id": "6ae0c5b74adf2ffb52f75c45",
+          "title": "後漢書[范煜…等撰]·卷一百二~卷一百四上 (Hou Hanshu, Siku Quanshu, vol. 36 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 102–104上 (Dong Zhuo, Yuan Shao) of the Siku Quanshu Hou Hanshu, with Li Xian's commentary. The transcription is the right text, apart from junk lines where the OCR reads the margin, and the English follows text and notes closely, including Chen Lin's proclamation against Cao Cao. Warn that running-head junk sometimes reaches the English pane."
+        },
+        {
+          "book_id": "6ae0c2834adf2ffb52f747e5",
+          "title": "後漢書[范煜…等撰]·卷一上~卷一下 (Hou Hanshu, Siku Quanshu, vol. 1 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "The first volume of the Siku Quanshu Hou Hanshu: an imperially composed essay (御製文), the table of contents, and the Annals of Guangwu, with Li Xian's notes. The annals pages are the right text and the English is faithful. The front-matter pages show junk headers, '<unclear>' strings and added notes that a reader should know are not from the page."
+        },
+        {
+          "book_id": "6ae0c5bc4adf2ffb52f75cea",
+          "title": "後漢書[范煜…等撰]·卷一百四下~卷一百六 (Hou Hanshu, Siku Quanshu, vol. 37 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 104下–106 of the Siku Quanshu Hou Hanshu (the later Yuan clan, Yuan Shu, Lü Bu, Sun Ce's letter, the good officials). The transcription is the page's text with minor margin junk. The English can be trusted for the main text; check battle outcomes in the commentary notes against the Chinese."
+        },
+        {
+          "book_id": "6ae0c52b4adf2ffb52f759a6",
+          "title": "後漢書[范煜…等撰]·卷九十上~卷九十二 (Hou Hanshu, Siku Quanshu, vol. 32 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 90–92 of the Siku Quanshu Hou Hanshu: Ma Rong, Cai Yong's seven memorials, Huang Qiong and Xun Shuang, with Li Xian's notes. The transcription is the right text and the English follows it well. Warn that junk from the margin and broken note markup sometimes show in the English pane."
+        },
+        {
+          "book_id": "6ae0c4544adf2ffb52f754d4",
+          "title": "後漢書[范煜…等撰]·卷六十八~卷七十下 (Hou Hanshu, Siku Quanshu, vol. 24 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 68–70 of the Siku Quanshu Hou Hanshu (Du Shang, the filial exemplars including Jiang Ge, and Ban Gu's rhapsodies with Li Xian's notes). The Chinese transcription is the right text. The English is mostly faithful, but on two of our four pages it invents scholarly apparatus from margin junk, and it misnames some offices, so a reader must not trust its notes about lacunae or marginalia."
+        },
+        {
+          "book_id": "6ae0c4ea4adf2ffb52f75886",
+          "title": "後漢書[范煜…等撰]·卷八十五~卷八十七 (Hou Hanshu, Siku Quanshu, vol. 30 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 85–87 of the Siku Quanshu Hou Hanshu (the sons of Emperor Zhang, Chen Qiu, Li Yun and Du Zhong). The transcription is the right text, with one name misread (贇 as 斌貝). The English follows the narrative faithfully, but each page carries margin garbage or a model note in the English pane, and two names (Yun, Mu Mao) are wrong."
+        },
+        {
+          "book_id": "6ae0c2ce4adf2ffb52f74a6e",
+          "title": "後漢書[范煜…等撰]·卷九~卷十下 (Hou Hanshu, Siku Quanshu, vol. 5 of 43)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 9–10 of the Siku Quanshu Hou Hanshu: the end of Emperor Xian's annals and the empresses' biographies (Empress Dou, Empress Deng), with Li Xian's notes. The transcription is the right text and the English is close and readable; warn that homophone names are not kept apart and that margin junk sometimes reaches the English pane."
+        }
+      ]
+    },
+    {
+      "name": "zh-sanguozhi",
+      "desc": "hold zh-histories-7546, work_id kr:KR2a0012, Siku 欽定四庫全書 CADAL copy, Paddle OCR 2026-10-28, gemini-3.8-flash-low English 2026-10-29",
+      "frame_size": 23,
+      "books": 8,
+      "pages": 32,
+      "serious_page_rate": 0.0625,
+      "serious_ci": [
+        0,
+        0.15625
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.47,
+      "mean_tr": 4.28,
+      "on_sight_books": 6,
+      "fit_to_show": {
+        "show_with_caveat": 6,
+        "show": 2
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6ae0c7164adf2ffb52f76a64?page=27",
+        "https://sourcelibrary.org/book/6ae0c7164adf2ffb52f76a64?page=115",
+        "https://sourcelibrary.org/book/6ae0c71d4adf2ffb52f76b10?page=145",
+        "https://sourcelibrary.org/book/6ae0c71d4adf2ffb52f76b10?page=53",
+        "https://sourcelibrary.org/book/6ae0c6cf4adf2ffb52f76830?page=28",
+        "https://sourcelibrary.org/book/6ae0c6cf4adf2ffb52f76830?page=121",
+        "https://sourcelibrary.org/book/6ae0c6cf4adf2ffb52f76830?page=146",
+        "https://sourcelibrary.org/book/6ae0c6694adf2ffb52f76286?page=46",
+        "https://sourcelibrary.org/book/6ae0c6694adf2ffb52f76286?page=85",
+        "https://sourcelibrary.org/book/6ae0c6c74adf2ffb52f766d0?page=3",
+        "https://sourcelibrary.org/book/6ae0c6c74adf2ffb52f766d0?page=134",
+        "https://sourcelibrary.org/book/6ae0c66d4adf2ffb52f76311?page=116",
+        "https://sourcelibrary.org/book/6ae0c7ef4adf2ffb52f76f4d?page=22",
+        "https://sourcelibrary.org/book/6ae0c7ef4adf2ffb52f76f4d?page=127",
+        "https://sourcelibrary.org/book/6ae0c7ef4adf2ffb52f76f4d?page=184",
+        "https://sourcelibrary.org/book/6ae0c67d4adf2ffb52f76459?page=126"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6ae0c7164adf2ffb52f76a64",
+          "title": "三國志·蜀志·卷五~卷八 (Sanguozhi, Siku Quanshu, vol. 15 of 23)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 5–8 of the Shu section of the Sanguozhi in the Siku Quanshu copy, with Pei Songzhi's commentary and the Qing collation notes. The transcription is of the right text and largely exact; the English follows it closely. Warn that the running header is sometimes read as text, and once the translation calls that garble a corruption in the original."
+        },
+        {
+          "book_id": "6ae0c71d4adf2ffb52f76b10",
+          "title": "三國志·蜀志·卷九~卷十二 (Sanguozhi, Siku Quanshu, vol. 16 of 23)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 9–12 of the Shu section (Liu Feng, Li Yan, Yang Hong, Xi Zheng and others) in the Siku Quanshu copy. The transcription matches the manuscript almost character for character and the English is close. Warn that explanatory notes are model-written and occasionally wrong (a misnamed Jin duke), and that two men both called 'Zhi' are not distinguished."
+        },
+        {
+          "book_id": "6ae0c6cf4adf2ffb52f76830",
+          "title": "三國志·魏志·卷二十五~卷二十七 (Sanguozhi, Siku Quanshu, vol. 12 of 23)",
+          "fit": "show",
+          "summary": "Juan 25–27 of the Wei section (Xin Pi, Yang Fu, Gao Tang Long, Xu Miao, Hu Zhi, Wang Chang, Wang Ji) in the Siku Quanshu copy, with Qing collation notes. The transcription is of the right text and exact on the sampled pages; the English is faithful and readable. Stray header characters appear at a page foot."
+        },
+        {
+          "book_id": "6ae0c6694adf2ffb52f76286",
+          "title": "三國志·魏志·卷四~卷五 (Sanguozhi, Siku Quanshu, vol. 3 of 23)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 4–5 of the Wei section: the annals of the three young Wei emperors and the biographies of the empresses, Siku Quanshu copy with Pei's notes. The transcription is of the right text and nearly exact. The English is mostly faithful, but date glosses in the annals are wrong and a cited source title is normalised, so dates and source names should be checked against the Chinese."
+        },
+        {
+          "book_id": "6ae0c6c74adf2ffb52f766d0",
+          "title": "三國志·魏志·卷十九~卷二十一 (Sanguozhi, Siku Quanshu, vol. 10 of 23)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 19–21 of the Wei section (Cao Zhang and Cao Zhi, Cao Cao's other sons, Wang Can's circle, Wei Ji, Liu Yi) in the Siku Quanshu copy. The transcription is of the right text and accurate. The English carries the narrative well but gets noble ranks and kin terms wrong on the genealogical page and invents a gloss in Liu Yi's letter."
+        },
+        {
+          "book_id": "6ae0c66d4adf2ffb52f76311",
+          "title": "三國志·魏志·卷六~卷七 (Sanguozhi, Siku Quanshu, vol. 4 of 23)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 6–7 of the Wei section (Dong Zhuo, Yuan Shao, Yuan Shu, Lü Bu, Zhang Miao, Chen Deng) in the Siku Quanshu copy with Pei's notes. The transcription is of the right text. The English reads well and is mostly faithful, but header garble sometimes surfaces as text or as notes about the OCR, and one name (Ma Midi) is misread."
+        },
+        {
+          "book_id": "6ae0c7ef4adf2ffb52f76f4d",
+          "title": "三國志·吳志·卷十六~卷二十 (Sanguozhi, Siku Quanshu, vol. 23 of 23)",
+          "fit": "show",
+          "summary": "Juan 16–20 of the Wu section (Lu Kai, Zhuge Ke, Sun Chen, Hua He and others), the last volume of the Siku Quanshu Sanguozhi. The transcription is of the right text and exact on the sampled pages; the English is faithful and readable, with occasional small slips in glosses."
+        },
+        {
+          "book_id": "6ae0c67d4adf2ffb52f76459",
+          "title": "三國志·魏志·卷十~卷十一 (Sanguozhi, Siku Quanshu, vol. 6 of 23)",
+          "fit": "show_with_caveat",
+          "summary": "Juan 10–11 of the Wei section (Xun Yu, Xun You, Jia Xu; Yuan Huan, Tian Chou, Wang Xiu, Guan Ning) in the Siku Quanshu copy. The transcription is of the right text, but 彧 is written 或 throughout Xun Yu's biography. The English is mostly faithful; at page breaks it sometimes completes a sentence the page does not contain, once giving a false sense."
+        }
+      ]
+    },
+    {
+      "name": "zh-print-ocr-only",
+      "desc": "hold paddle-print-6101, hidden, pages_ocr>0, hidden_reason not /rights|duplicate|supersed/ (8 excluded); OCR scored only",
+      "frame_size": 159,
+      "books": 8,
+      "pages": 32,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0.03125,
+        0.21875
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.94,
+      "mean_tr": null,
+      "on_sight_books": 6,
+      "fit_to_show": {
+        "show_with_caveat": 6,
+        "show": 2
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69aebb5e39a4307877774064?page=229",
+        "https://sourcelibrary.org/book/69aebb5e39a4307877774064?page=311",
+        "https://sourcelibrary.org/book/69aebb3a39a43078777732aa?page=138",
+        "https://sourcelibrary.org/book/69aebb3a39a43078777732aa?page=267",
+        "https://sourcelibrary.org/book/6a3c6bdfc4e8626320db2395?page=21",
+        "https://sourcelibrary.org/book/6a3c6bdfc4e8626320db2395?page=43",
+        "https://sourcelibrary.org/book/6a3c6cf8c4e8626320dbdace?page=39",
+        "https://sourcelibrary.org/book/6a3c6cf8c4e8626320dbdace?page=56",
+        "https://sourcelibrary.org/book/6a3c6bf4c4e8626320db3a11?page=45",
+        "https://sourcelibrary.org/book/6a3c6bf4c4e8626320db3a11?page=66",
+        "https://sourcelibrary.org/book/6a3c6be9c4e8626320db2f13?page=63",
+        "https://sourcelibrary.org/book/6a3c6be9c4e8626320db2f13?page=33",
+        "https://sourcelibrary.org/book/6a3c6cdac4e8626320dbc955?page=23",
+        "https://sourcelibrary.org/book/69af121cf78a272df25b564a?page=5",
+        "https://sourcelibrary.org/book/69af121cf78a272df25b564a?page=14"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69aebb5e39a4307877774064",
+          "title": "楚辭集註 (Songs of Chu with Collected Annotations)",
+          "fit": "show_with_caveat",
+          "summary": "This is Zhu Xi's collected commentary on the Chu ci, with the 後語 and 辯證, in a Ming print carrying a reader's handwritten notes. The transcription is of the right text, and the large main text is mostly accurate. But at least one line of main text is dropped, and the handwritten notes are transcribed on one half of a spread and silently left out on the other. There is no English."
+        },
+        {
+          "book_id": "69aebb3a39a43078777732aa",
+          "title": "尚書韻 (Book of Documents)",
+          "fit": "show_with_caveat",
+          "summary": "This is a 1630 sectional exposition of the Book of Documents, not the classic itself. The commentary pages are transcribed accurately enough to read. The cursive preface is badly misread, with one negation reversed. There is no English."
+        },
+        {
+          "book_id": "6a3c6bdfc4e8626320db2395",
+          "title": "春秋屬辭比事記",
+          "fit": "show",
+          "summary": "This is Mao Qiling's topical arrangement of Spring and Autumn entries by rite (court visits, embassies, peace-making, campaigns). The transcription is of the right text and is close to exact, with a misread state name and one garbled note in 4 pages. There is no English."
+        },
+        {
+          "book_id": "6a3c6cf8c4e8626320dbdace",
+          "title": "雲仙雜記",
+          "fit": "show",
+          "summary": "This is the Yunxian zaji, short anecdotes each followed by its cited source. The transcription is of the right text and reads well, apart from a misread place name and one garbled duplicated line. There is no English."
+        },
+        {
+          "book_id": "6a3c6bf4c4e8626320db3a11",
+          "title": "穆天子傳",
+          "fit": "show_with_caveat",
+          "summary": "Under the title 穆天子傳 a reader finds a Ming collection of Tang tales: the Princess Tongchang, Lady Wei, Liu Yi. The transcription of those tales is mostly accurate. But the record does not say what is in it, and none of the sampled pages is the Mu Tianzi zhuan. There is no English."
+        },
+        {
+          "book_id": "6a3c6be9c4e8626320db2f13",
+          "title": "井觀瑣言 (vol 1)",
+          "fit": "show_with_caveat",
+          "summary": "This is a Ming collection of scholars' notes: 井觀瑣言 followed by 林泉隨筆, 震澤長語 and at least one more work, all filed under the first title. The transcription is accurate and readable. Readers are not told which work they are in, and one page leaks layout arrows. There is no English."
+        },
+        {
+          "book_id": "6a3c6cdac4e8626320dbc955",
+          "title": "新編金匱要略方論",
+          "fit": "show_with_caveat",
+          "summary": "This is the Jingui yaolue, the Han formulary of Zhang Zhongjing, in a 1598 print, catalogued here with no author. The transcription is of the right text and mostly accurate. But doses and their units are where it slips: one dose is dropped, and 方寸匕 is turned into 'seven'. There is no English."
+        },
+        {
+          "book_id": "69af121cf78a272df25b564a",
+          "title": "遠鏡說 (On the Telescope)",
+          "fit": "show_with_caveat",
+          "summary": "This is Schall von Bell's On the Telescope, in the Qing 藝海珠塵 reprint, not the 1626 first edition the record claims. The running text is transcribed accurately. The pages with diagrams are not: captions are garbled, labels invented, and on p.3 a line naming Ricci as author is invented. There is no English."
+        }
+      ]
+    },
+    {
+      "name": "control-live-siku",
+      "desc": "visible:true, pages_count>0, work_id kr:KR1*/kr:KR3*, ia_identifier *.cn (CADAL), pages_translated>=8; the live bar",
+      "frame_size": 1965,
+      "books": 8,
+      "pages": 32,
+      "serious_page_rate": 0.1875,
+      "serious_ci": [
+        0.03125,
+        0.375
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4,
+      "mean_tr": 3.69,
+      "on_sight_books": 6,
+      "fit_to_show": {
+        "show_with_caveat": 2,
+        "show": 2,
+        "do_not_show": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6a3ced944701a906f10e1919?page=56",
+        "https://sourcelibrary.org/book/6a3ced944701a906f10e1919?page=89",
+        "https://sourcelibrary.org/book/6a3ced944701a906f10e1919?page=104",
+        "https://sourcelibrary.org/book/6a3ced944701a906f10e1919?page=29",
+        "https://sourcelibrary.org/book/6a3c618a879008ba7e15ee76?page=42",
+        "https://sourcelibrary.org/book/6a3c618a879008ba7e15ee76?page=95",
+        "https://sourcelibrary.org/book/6a3c618a879008ba7e15ee76?page=104",
+        "https://sourcelibrary.org/book/6a3c6d4301fe4f593c1b9568?page=46",
+        "https://sourcelibrary.org/book/6a3c6d4301fe4f593c1b9568?page=62",
+        "https://sourcelibrary.org/book/6a3c6d4301fe4f593c1b9568?page=23",
+        "https://sourcelibrary.org/book/6a3c6d4301fe4f593c1b9568?page=13",
+        "https://sourcelibrary.org/book/6a3c63b339b4508b04e2285e?page=74",
+        "https://sourcelibrary.org/book/6a3c64ea39b4508b04e2b1ff?page=66"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6a3ced944701a906f10e1919",
+          "title": "數度衍·卷六~卷七 (vol 3)",
+          "fit": "show_with_caveat",
+          "summary": "This is juan 6–7 of Fang Zhongtong's Shudu yan, worked right-triangle (gougu) problems with diagrams, in the Siku manuscript. The transcription is of the right text and nearly letter-perfect, and the English can be trusted, numbers included. The caveat is that the English title gives the wrong juan range."
+        },
+        {
+          "book_id": "6a3c618a879008ba7e15ee76",
+          "title": "經濟文衡前集·卷一~卷五 (vol 1)",
+          "fit": "show",
+          "summary": "This is the first collection of Jingji wenheng, Zhu Xi's letters and discussions on Taiji, the River Chart and the Luo Writing, with the Siku editors' tiyao. The transcription is of the right text, and the English is a faithful, readable rendering. Nine pages have no English yet."
+        },
+        {
+          "book_id": "6a3c632f879008ba7e166b1e",
+          "title": "御定佩文韻府·卷九十一之四~卷九十二之一 (vol 228)",
+          "fit": "do_not_show",
+          "summary": "This is a volume of the Peiwen yunfu, a rhyme-ordered thesaurus of two-character phrases, each followed by quotations from classics, histories and poems. The transcription is the right text, with recurring misreads in proper names. The English cannot be trusted for who said what: authors are misnamed, guesses fill the headword marks, and one page invents an attribution."
+        },
+        {
+          "book_id": "6a3c60e640c88a541d8ebc54",
+          "title": "御定駢字類編·卷七十四: Imperial Parallel Characters (vol 256)",
+          "fit": "do_not_show",
+          "summary": "This is juan 74 of the Pianzi leibian, a thesaurus of phrases built on 銀 'silver' and 鐵 'iron', each with quotations. The transcription is the right text but breaks down at the headwords and their small-print notes. The English fills the gaps with invented headwords and split names, so it cannot be trusted entry by entry."
+        },
+        {
+          "book_id": "6a3c6d4301fe4f593c1b9568",
+          "title": "黃氏日抄·卷九十七 (vol 49)",
+          "fit": "show",
+          "summary": "This is juan 97 of Huang Zhen's Huangshi richao, Song epitaphs and funerary records written for local gentry and their widows. The transcription is of the right text and accurate, and the English is a faithful, readable translation that can be quoted."
+        },
+        {
+          "book_id": "6a3c63b339b4508b04e2285e",
+          "title": "御定佩文韻府·卷十六之三 (vol 359)",
+          "fit": "do_not_show",
+          "summary": "This is a Peiwen yunfu volume of phrases ending in 煙 'smoke', 蓮 'lotus' and 田 'field', each with quotations. The transcription is the right text, but it loses the headword marks that hold each quotation together. The English is unreliable on those pages, and on one it prints nonsense."
+        },
+        {
+          "book_id": "6a3c64ea39b4508b04e2b1ff",
+          "title": "御定佩文韻府·卷九十五之四 (vol 673)",
+          "fit": "show_with_caveat",
+          "summary": "This is a Peiwen yunfu volume of phrases ending in 伐, 罰, 卒 and 竭, each with quotations from histories and classics. The transcription is the right text and largely accurate. The English is readable but makes a meaning-changing slip on most pages, so check it against the Chinese before quoting."
+        },
+        {
+          "book_id": "6a3c6010879008ba7e159fde",
+          "title": "御定駢字類編·卷五十三: Imperial Parallel Characters (vol 50)",
+          "fit": "do_not_show",
+          "summary": "This is juan 53 of the Pianzi leibian, phrases built on 湖, 澤, 浦, 川 and 渠, each with quotations. The transcription is the right text but shreds the headwords and small notes on dense pages. The English invents poets and headings and misstates a key figure, so it cannot be trusted."
+        }
+      ]
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import { experiment } from '@/lib/experiments-index';
 import { TENGYUR_QUALITY } from '@/lib/tengyur-quality';
 import data from '@/data/tibetan-expert-page.json';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
+import { plainEngineWords } from '@/lib/plain-engine-words';
 import { ENGLISH, NO_ENGLISH, Figure, Swatch, TraditionProgress, type TraditionProgressRow } from '../canon-gap/diagrams';
 
 // A briefing for Tibetologists whose feedback we are asking for: what we hold, how the Tibetan
@@ -68,8 +69,8 @@ const fmtDate = (iso: string) =>
 const readerUrl = (e: Example) => `/book/${e.book_id}?page=${e.page}`;
 
 const MODEL_NAMES: Record<string, string> = {
-  'gemini-3-flash-preview': 'Gemini 3 Flash',
-  'gemini-3.8-flash-low': 'Gemini 3.8 Flash',
+  'gemini-3-flash-preview': 'the mid-tier model',
+  'gemini-3.8-flash-low': 'the current reading model',
 };
 
 const CONTENTS = [
@@ -93,8 +94,8 @@ const GLOSSARY: [string, ReactNode][] = [
   ['dbu can / dbu med', 'The headed, formal Tibetan script and the headless, cursive one. Cursive is harder to read, for people and machines.'],
   ['Tsheg, shad', 'The dot between Tibetan syllables (་) and the vertical stroke ending a phrase (།).'],
   ['Syllable identity', 'The share of syllables in our reading that line up with the reference text. 0.95 means about 95 in 100 line up.'],
-  ['Yigdzin', 'An open-source Tibetan OCR model released by the Buddhist Digital Resource Center (BDRC). We run it on our own machines.'],
-  ['Gemini Flash, Claude Opus', 'Large AI models from Google and Anthropic. Gemini writes our English; Claude Opus is used as a reviewer.'],
+  ['BDRC Tibetan model', 'An open-source Tibetan OCR model released by the Buddhist Digital Resource Center (BDRC). We run it on our own machines.'],
+  ['General-purpose AI models', 'Large AI models trained on text of every kind. One writes our English; another is used as a reviewer.'],
   ['AI reviewer', 'An AI model asked to read our page against the image and the Tibetan and list every error it finds. Not a person.'],
   ['84000', 'A project publishing English translations of the canon by scholars. Where it has translated a passage, we compare our English with theirs.'],
   ['EAP', 'The British Library’s Endangered Archives Programme, which photographed the Bhutanese collections.'],
@@ -194,8 +195,8 @@ function ExampleCard({
           <A href={readerUrl(e)}>
             {e.title}, page {e.page}
           </A>
-          {' · '}Tibetan: {e.tibetan_source}
-          {e.english_model ? ` · English: ${MODEL_NAMES[e.english_model] ?? e.english_model}` : ''}
+          {' · '}Tibetan: {e.tibetan_source && plainEngineWords(e.tibetan_source)}
+          {e.english_model ? ` · English: ${MODEL_NAMES[e.english_model] ?? plainEngineWords(e.english_model)}` : ''}
         </div>
         {(e.tibetan || e.english) && (
           <div className="grid md:grid-cols-2 gap-4 md:gap-6 border-t border-stone-100 pt-4">
@@ -540,13 +541,13 @@ export default function TibetanBriefingPage() {
             </li>
             <li>
               <strong>The Tibetan text.</strong> On the Tengyur, the Esukhia e-text. On the manuscripts, a reading by
-              Yigdzin, BDRC&rsquo;s open Tibetan OCR model (Apache 2.0), run by us one leaf at a time. It has read{' '}
+              a Tibetan OCR model from BDRC (Apache 2.0), run by us one leaf at a time. It has read{' '}
               {n0(bl.yigdzin)} of the {n0(bl.pages)} manuscript pages. Where we could not confirm a reading, the page
               is marked <em>not reliably legible</em> and the reader shows only the scan. That applies to{' '}
               {n0(bl.not_legible)} pages ({pct(bl.not_legible, bl.pages)}).
             </li>
             <li>
-              <strong>The English.</strong> A general-purpose model, Google&rsquo;s Gemini Flash, translates one page at
+              <strong>The English.</strong> A general-purpose model translates one page at
               a time from the stored Tibetan. It keeps technical terms with a
               short gloss and can add notes. {n0(bl.english)} manuscript pages and {n0(tg.english)} Tengyur pages
               have English. On {n0(blNoEnglish)} manuscript pages the Tibetan is ready but the English has not been
@@ -569,8 +570,8 @@ export default function TibetanBriefingPage() {
             Until September 2026 these manuscripts were read by the same general-purpose model we use for European
             print. Its output was fluent and repeated itself from run to run, which we took as a sign of reliability.
             Checked against the canon, most of it was not what the page says. On some leaves it produced Devanagari
-            instead of Tibetan. We replaced every one of those readings with Yigdzin. On 23 Kangyur pages checked
-            against Derge, Yigdzin matched at 0.962 and the earlier model at 0.149. <S href={SRC.liteVsYigdzin} />{' '}
+            instead of Tibetan. We replaced every one of those readings with the BDRC model. On 23 Kangyur pages checked
+            against Derge, the BDRC model matched at 0.962 and the earlier model at 0.149. <S href={SRC.liteVsYigdzin} />{' '}
             Pages where neither reading could be confirmed were marked not legible. <S href={SRC.reocr} label="#4523" />
           </p>
           <H3>Kanjur volumes, checked against Derge</H3>
@@ -594,8 +595,7 @@ export default function TibetanBriefingPage() {
           <p>
             For the roughly 1,000 volumes with no printed counterpart, no score is possible. Even among the treasure
             cycles and biographies, where we searched BDRC&rsquo;s open e-text deposit book by book, 96% of pages
-            match no open e-text. <S href={SRC.terma} /> We had AI reviewers (Claude
-            Opus) read 112 pages from 28 randomly drawn books, four from each collection, against the photographs.
+            match no open e-text. <S href={SRC.terma} /> We had AI reviewers read 112 pages from 28 randomly drawn books, four from each collection, against the photographs.
             Every page&rsquo;s text was a reading of the leaf in the image. None was invented or from another leaf.{' '}
             <S href={SRC.blOther} /> Their recurring reading problems were dbu med letters confused with one another,
             mantra syllables confused (ĀḤ / OM), and scribal abbreviations kept as written rather than expanded.
@@ -605,7 +605,7 @@ export default function TibetanBriefingPage() {
             <p>
               A Neyphug Kanjur volume, the rGyud section. The photograph holds two folios, and the reading marks the
               break between them, which the English carries as a seam (‖). In this volume, 64 pages that earlier
-              checks had marked unreadable all scored at least 0.7 against Derge once read by Yigdzin, with a mean of
+              checks had marked unreadable all scored at least 0.7 against Derge once read by the BDRC model, with a mean of
               0.95. <S href={`${ISSUE}4722`} label="#4722" />
             </p>
           </ExampleCard>
@@ -614,7 +614,7 @@ export default function TibetanBriefingPage() {
             <p>
               A dbu med history of Padmasambhava. The reading keeps the ༔ terma punctuation and all seven lines. The
               earlier model wrote one sentence four times on this page. Checked line by line against the image on
-              three leaves of this book (pp. 57, 233 and 412), by Claude, not by a reader of Tibetan. Contractions such as ཁཾས for ཁམས are kept as the scribe
+              three leaves of this book (pp. 57, 233 and 412), by an AI reviewer, not by a reader of Tibetan. Contractions such as ཁཾས for ཁམས are kept as the scribe
               wrote them. Whether to expand them is one of our questions below. This page has no English yet.
             </p>
           </ExampleCard>
@@ -640,7 +640,7 @@ export default function TibetanBriefingPage() {
 
           <H3>The Derge Tengyur</H3>
           <p>
-            {sample.n} randomly drawn pages were read against the Tibetan by two Claude Opus reviewers, blind to each
+            {sample.n} randomly drawn pages were read against the Tibetan by two AI reviewers, blind to each
             other ({fmtDate(TQ.measured)}). <strong>{Math.round(sample.light)}%</strong> of pages needed only light
             edits, {Math.round(sample.work)}% substantial revision and {Math.round(sample.specialist)}% a specialist.
             The commonest serious error is a reversed statement or the wrong speaker, such as an opponent&rsquo;s
@@ -659,7 +659,7 @@ export default function TibetanBriefingPage() {
           <p className="text-sm text-stone-500">
             Sections with at least {TQ.min_pages} pages in the random sample. The Jātaka, Abhidharma, sūtra
             commentaries and sciences had too few pages to rate. * The Pramāṇa and Madhyamaka English was replaced
-            on 10 October 2026 by Gemini 3.8 Flash. In a blind read of 40 replaced pages against the image, Opus
+            on 10 October 2026 by the current reading model. In a blind read of 40 replaced pages against the image, an AI reviewer
             found a serious error on 3 new pages and 6 old ones. A second reader from another model family found 3
             and 11. These rates describe the earlier English. <S href={SRC.tengyurCli} />
           </p>

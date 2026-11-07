@@ -1,4 +1,4 @@
-import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
+import { catalogueHref, isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { type FooterStrings } from '@/lib/i18n';
 
 /**
@@ -32,7 +32,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
   {
     titleKey: 'colLibrary',
     links: [
-      { key: 'texts', href: '/catalog' },
+      { key: 'texts', href: catalogueHref(false) },
       { key: 'gallery', href: '/gallery' },
       { key: 'collections', href: '/collections' },
       { key: 'askLibrarian', href: '/librarian' },
@@ -72,6 +72,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'cookieSettings', href: '#cookie-settings' },
       { key: 'terms', href: '/terms' },
       { key: 'copyright', href: '/dmca' },
+      { key: 'hiddenMarks', href: '/decode' },
     ],
   },
 ];
@@ -89,6 +90,11 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
 export function visibleFooterNavColumns(isTenantHost: boolean): FooterNavColumn[] {
   if (!isTenantHost) return [...FOOTER_NAV_COLUMNS];
   return FOOTER_NAV_COLUMNS
-    .map(col => ({ ...col, links: col.links.filter(link => !isGlobalOnlyNavHref(link.href)) }))
+    .map(col => ({
+      ...col,
+      links: col.links
+        .map(link => (link.key === 'texts' ? { ...link, href: catalogueHref(true) } : link))
+        .filter(link => !isGlobalOnlyNavHref(link.href)),
+    }))
     .filter(col => col.links.length > 0);
 }

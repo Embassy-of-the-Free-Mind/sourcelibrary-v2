@@ -1,0 +1,57 @@
+[
+  {
+    "book_id": "b20-m", "slot": 1,
+    "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A c.1720 manuscript emblem book by Freher, the Boehmist theosopher: numbered circular pen emblems with Latin mottoes on the Centre, Unity and Trinity. It belongs on a Christian theosophy / Boehme shelf. The packet gives no tradition or collections to check it against.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. All three pages are emblem leaves with OCR but no translation (translation is null on every page), so a reader gets Latin mottoes without English. Emblem numbers 58–60, 81–83 and 135–136 go up with the leaf numbers 36, 45 and 74, so the order is consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Causam", "image": "Caüsam", "problem": "the scribe's diaeresis on u is silently dropped; meaning unchanged", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page: the reader gets the Latin mottoes without English", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Ex una Mente semper Tota.", "image": "Ex una Mente semper Totâ.", "problem": "the mark over the final a (ablative) is dropped", "severity": "minor", "class": "O8" },
+          { "ocr": "82. / 83. (plain)", "image": "82. / 83.", "problem": "emblem numbers tagged ->81.<- but 82 and 83 left as plain text with --- rules: the convention changes within the page", "severity": "minor", "class": "O9" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "A <meta> note from the model ('The numbers 81, 82 and 83 seem to number the emblems…') is stored in the OCR text. It is harmless if the renderer hides it, but it is model commentary inside the transcription", "severity": "minor", "class": "O15" },
+          { "note": "No translation stored for this page", "severity": "minor" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 74,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page", "severity": "minor" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "On all three leaves the mottoes, the German line and the emblem numbers are transcribed accurately, and the image descriptions match the drawings. The only lapses are a dropped diacritic or two and a model <meta> note. There is no translation yet, so the book is not readable in English."
+  }
+]

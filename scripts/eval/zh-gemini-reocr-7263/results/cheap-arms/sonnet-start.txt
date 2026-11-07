@@ -1,0 +1,2 @@
+2026-11-03T13:40:02.090228+00:00 5 [{'key': 'weekly_all:all', 'label': 'weekly (all models)', 'percent': 5, 'severity': 'normal', 'resets_at': '2026-11-10T11:00:00.921319+00:00', 'is_active': True}, {'key': 'weekly_scoped:Fable', 'label': 'weekly Fable', 'percent': 0, 'severity': 'normal', 'resets_at': '2026-11-10T11:00:00+00:00', 'is_active': False}]
+2026-11-03T13:45:16Z

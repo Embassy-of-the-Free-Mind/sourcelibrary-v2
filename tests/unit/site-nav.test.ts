@@ -1,5 +1,22 @@
 import { describe, it, expect } from 'vitest';
-import { parseNavQuery, rankNavMatches, NAV_MIN_COVERAGE, type NavCandidate } from '@/lib/search/site-nav';
+import { parseNavQuery, rankNavMatches, sitePageSnippet, NAV_MIN_COVERAGE, type NavCandidate } from '@/lib/search/site-nav';
+
+describe('sitePageSnippet', () => {
+  it('prints link text, not markdown', () => {
+    expect(sitePageSnippet("The emperor's [Lülü zhengyi](/book/correct-meaning-of-the-pitch-pipes-vol-1) closes"))
+      .toBe("The emperor's Lülü zhengyi closes");
+  });
+  it('drops emphasis marks and tags', () => {
+    expect(sitePageSnippet('volume. **For the emperors** who <em>commissioned</em> it')).toBe('volume. For the emperors who commissioned it');
+  });
+  it('cuts at a word and says so', () => {
+    expect(sitePageSnippet('one two three four', 10)).toBe('one two…');
+  });
+  it('leaves short text whole and survives nothing', () => {
+    expect(sitePageSnippet('short')).toBe('short');
+    expect(sitePageSnippet(null)).toBe('');
+  });
+});
 
 // #5945: a query that NAMES a page leads to the page. The candidates below are
 // real rows of site_pages (names as embed-site-pages.mjs writes them).

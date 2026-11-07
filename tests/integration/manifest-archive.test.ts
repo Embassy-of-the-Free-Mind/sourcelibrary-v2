@@ -14,7 +14,7 @@ import type { Db } from 'mongodb';
 import { getTestDb, cleanDb } from '../setup';
 import { materializePages, initialPagesState } from '../../scripts/lib/lazy-pages.mjs';
 import { archiveFromManifest } from '../../scripts/lib/manifest-archive.mjs';
-import { openLedger, ledgerKey, manifestFingerprint } from '../../scripts/lib/manifest-ledger.mjs';
+import { openLedger, ledgerKey, manifestFingerprint, LEDGER_LAYOUT } from '../../scripts/lib/manifest-ledger.mjs';
 import { makeBookDoc } from '../../scripts/lib/book-docs.mjs';
 
 const BOOK = 'lazy-arch-book';
@@ -80,7 +80,7 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     expect(r.status).toBe('complete');
     expect(r.archived).toBe(N - 1);              // canvas 4 has no image
     expect(await db.collection('pages').countDocuments({ book_id: BOOK })).toBe(0); // no page docs
-    expect([...store.objects.keys()].sort()).toEqual([1, 2, 3, 5, 6].map(n => ledgerKey(BOOK, n)).sort());
+    expect([...store.objects.keys()].sort()).toEqual([1, 2, 3, 5, 6].map(n => ledgerKey(BOOK, n, LEDGER_LAYOUT)).sort());
 
     const book = await db.collection('books').findOne({ id: BOOK });
     expect(book?.pages_state?.state).toBe('manifest_only');
@@ -98,7 +98,7 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     expect(pages).toHaveLength(N);
     for (const p of pages) {
       if (p.page_number === 4) { expect(p.archived_photo).toBeUndefined(); continue; }
-      expect(p.archived_photo).toBe(`${BASE}/${ledgerKey(BOOK, p.page_number)}`);
+      expect(p.archived_photo).toBe(`${BASE}/${ledgerKey(BOOK, p.page_number, LEDGER_LAYOUT)}`);
       // It SERVES: the object exists, and it is canvas n's image, not a neighbour's.
       const bytes = store.objects.get(p.archived_photo.slice(BASE.length + 1))!;
       expect(bytes).toBeDefined();
@@ -164,7 +164,7 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     const store = fakeStore();
     const r = await archiveFromManifest(db, BOOK, { put: store.put, download: fakeImages({}, new Set([3])).download, fetchManifest: async () => manifest() });
     expect(r.failed).toBe(1);
-    expect(store.objects.has(ledgerKey(BOOK, 3))).toBe(false);
+    expect(store.objects.has(ledgerKey(BOOK, 3, LEDGER_LAYOUT))).toBe(false);
     expect(openLedger(await ledgerOf(db)).isDone(3)).toBe(false);
   });
 

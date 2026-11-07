@@ -77,7 +77,9 @@ async function archivePage(db, page) {
 
       // Upload to storage
       const padded = String(page.page_number).padStart(4, '0');
-      const storagePath = `pages/${page.book_id}/${padded}.jpg`;
+      // Masters live under archived/; pages/<book>/NNNN.jpg is the marked display variant, which
+      // display-backfill makes (#4406). A master at that key was served to readers unmarked.
+      const storagePath = `archived/${page.book_id}/${page.page_number}.jpg`;
       const blob = await storagePut(storagePath, processed, {
         contentType: 'image/jpeg',
         access: 'public',

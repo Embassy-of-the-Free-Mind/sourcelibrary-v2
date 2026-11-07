@@ -7,7 +7,7 @@ canons: []
 n_books: 180
 n_pages: 180
 verdict: "NO-GO as written for Opus-correcting the 24,834 stale Siku pages: the over-correction gate (made worse vs the page's own Kanripo leaf by > 0.5 pt on <= 10% of pages) failed. The experiment's prompt (v1) made 9 of 60 Kanripo-scored pages worse (15%, Wilson 8–26%). v1 plus one rule ('keep the page's own character forms; no notes of your own', v2) made 4 of the same 60 worse, but 5 of 40 on a fresh held-out draw (12.5%, 5–26%). Read beside the gate: nearly every 'worse' page is a swap between two forms of one character (髙/高, 㑹/會, 巳/已, 諡/謚) or a printed seal Kanripo leaves out; on the same pages the median Kanripo CER falls 3.5% → 2.1% (v2, n=60) and 3.2% → 2.6% (held-out, n=40). The gate was not moved; Derek decides."
-status: undecided
+status: rejected
 decision: null
 superseded_by: null
 issue: [6561, 6567]

@@ -36,6 +36,9 @@ export interface PageNote {
   /** The judge's 1–5 fidelity, when the method has one. */
   fidelity?: number;
   accepted?: boolean;
+  /** recordPageVerdicts() rows (#8069): how the page came out, and the method's own word for it. */
+  outcome?: 'clean' | 'minor' | 'serious';
+  verdict?: string;
   defects: { severity: 'cosmetic' | 'misleads' | 'wrong_text'; what: string; class?: string; quote?: string }[];
 }
 
@@ -56,6 +59,8 @@ export interface BookCheck {
   page_findings?: PageFinding[];
   /** Every page read, with what the reader wrote about it. Absent on rows written before #7896. */
   page_notes?: PageNote[];
+  /** false = listed on the checks page, derives no reader warning or "checked" line (#8069). */
+  reader_warning?: false;
   evidence_path: string;
   text_provenance: CheckProvenance[];
   api_usd?: number;

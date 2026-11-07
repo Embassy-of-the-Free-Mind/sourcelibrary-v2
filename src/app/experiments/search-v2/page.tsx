@@ -13,7 +13,7 @@ import { search as searchApi } from '@/lib/api-client';
 import type { SearchResult, IndexSearchResult } from '@/lib/api-client';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { bookUrl } from '@/lib/slugify';
-import { applyCitationFixes, applyGroundingEdits, applyImageRemovals } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, applyLinkRemovals } from '@/lib/embassy/citation-fixes';
 import HighlightedText from '@/components/search/HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -181,6 +181,10 @@ export default function SearchV2Page() {
                   break;
                 case 'image_removals':
                   contentAccum = applyImageRemovals(contentAccum, event.removeUrls || []);
+                  setLibrarianContent(contentAccum);
+                  break;
+                case 'link_removals':
+                  contentAccum = applyLinkRemovals(contentAccum, event.removeLinks || []);
                   setLibrarianContent(contentAccum);
                   break;
                 case 'choices':

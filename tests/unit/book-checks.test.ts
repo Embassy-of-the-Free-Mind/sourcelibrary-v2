@@ -13,7 +13,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { buildBookCheck, recordBookCheck, attachPageFindings, readMethod, provenanceFromPage } from '../../scripts/lib/book-checks.mjs';
+import { buildBookCheck, recordBookCheck, attachPageFindings, readMethod, provenanceFromPage, recordPageVerdicts, judgedProvenance } from '../../scripts/lib/book-checks.mjs';
 
 const good = () => ({
   book_id: '69f325ae52a77bb28fdb58e9',
@@ -145,5 +145,80 @@ describe('page_findings', () => {
     expect(Object.keys(update.$set).sort()).toEqual(['page_findings', 'page_findings_attached_at', 'page_findings_attached_by']);
     await expect(attachPageFindings({ collection: () => ({ updateOne }) }, { ...good(), page_findings: [{ ...finding, page_number: 99 }] })).rejects.toThrow(/not in pages_read/);
     expect(updateOne).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('recordPageVerdicts (#8069)', () => {
+  const at = '2026-10-30T14:04:00Z';
+  const page = (id: string, book_id: string, page_number: number, over = {}) => ({ id, book_id, page_number,
+    ocr: { data: 'ocr', model: 'paddle', updated_at: '2026-10-06T00:00:00Z' },
+    translation: { data: 'english', model: 'flash', updated_at: '2026-10-27T00:00:00Z' }, ...over });
+  const fakeDb = (pages: object[], insertOne = vi.fn(async () => ({}))) => ({ insertOne, collection: (c: string) => ({
+    find: () => ({ toArray: async () => pages }),
+    findOne: async () => ({ visible: true, pages_count: 10, language: 'Classical Chinese' }),
+    insertOne,
+  }) });
+  const input = (verdicts: object[], over = {}) => ({
+    method_id: 'lane-spot-check', method_version: readMethod('lane-spot-check').version, run_id: 'siku-20261030T1404', checked_at: at,
+    selection: 'random', stages: ['ocr', 'translation'], reader: { kind: 'model', model: 'claude-opus-5-5', image_opened: true },
+    evidence_path: 'box:clawdbot:/mnt/x/verdicts.json', reader_warning: true, verdicts, ...over,
+  });
+  const clean = (page_id: string, judged = { ocr: 'ocr', translation: 'english' }) => ({ page_id, outcome: 'clean', page_verdict: 'show', verdict: 'fine', note: 'matches', judged });
+  const bad = (page_id: string) => ({ page_id, outcome: 'serious', page_verdict: 'caveat', verdict: 'sense-error', note: 'n', errors: [{ stage: 'translation', kind: 'mistranslation', problem: 'p' }], judged: { ocr: 'ocr', translation: 'english' } });
+
+  it('writes one row per book, keeps clean pages, says how the pages were chosen, and hashes the text judged', async () => {
+    const insertOne = vi.fn(async () => ({}));
+    const db = fakeDb([page('p1', 'b1', 3), page('p2', 'b1', 9), page('p3', 'b2', 5)], insertOne);
+    const r = await recordPageVerdicts(db, input([clean('p1'), bad('p2'), clean('p3')]));
+    expect(r).toMatchObject({ inserted: 2, already: 0, failed: [] });
+    const [b1, b2] = insertOne.mock.calls.map((c) => (c as unknown as [Record<string, any>])[0]);
+    expect(b1).toMatchObject({ book_id: 'b1', pages_read: [3, 9], verdict: 'caveat', verdict_source: 'rule', frame: { selection: 'random', stages: ['ocr', 'translation'] } });
+    expect(b1.page_notes.map((n: any) => [n.page_number, n.outcome, n.verdict])).toEqual([[3, 'clean', 'fine'], [9, 'serious', 'sense-error']]);
+    expect(b1.page_findings).toEqual([{ page_number: 9, errors: [{ stage: 'translation', kind: 'mistranslation', problem: 'p' }] }]);
+    expect(b1.text_provenance[0]).toMatchObject({ page_id: 'p1', hash_of: 'judged text', changed_since_check: false });
+    expect(b1.text_provenance[0].translation_hash).toMatch(/^[0-9a-f]{16}$/);
+    expect(b1.exposure[0].exposure).toBe('served');
+    expect(b1.reader_warning).toBeUndefined();
+    expect(b2).toMatchObject({ book_id: 'b2', verdict: 'show', page_findings: [] });
+  });
+
+  it('refuses a call that does not say how pages were chosen or whether readers are warned', async () => {
+    const db = fakeDb([]);
+    await expect(recordPageVerdicts(db, input([], { selection: undefined }))).rejects.toThrow(/selection/);
+    await expect(recordPageVerdicts(db, input([], { selection: 'most-read' }))).rejects.toThrow(/selection/);
+    await expect(recordPageVerdicts(db, input([], { reader_warning: undefined }))).rejects.toThrow(/reader_warning/);
+  });
+
+  it('writes reader_warning: false when told, and nothing at all on a dry run', async () => {
+    const insertOne = vi.fn(async () => ({}));
+    const dry = await recordPageVerdicts(fakeDb([page('p1', 'b1', 3)], insertOne), input([clean('p1')], { reader_warning: false, selection: 'picked' }), { apply: false });
+    expect(insertOne).not.toHaveBeenCalled();
+    expect(dry.rows[0]).toMatchObject({ reader_warning: false, frame: { selection: 'picked' } });
+  });
+
+  it('reports a failed write, a missing page and an inconsistent verdict, and still writes the rest', async () => {
+    const insertOne = vi.fn(async (row: { book_id: string }) => { if (row.book_id === 'b2') throw new Error('Atlas down'); return {}; });
+    const db = fakeDb([page('p1', 'b1', 3), page('p3', 'b2', 5), page('p4', 'b3', 7)], insertOne);
+    const r = await recordPageVerdicts(db, input([clean('p1'), clean('p3'), clean('gone'), { ...bad('p4'), outcome: 'clean' }]));
+    expect(r.inserted).toBe(1);
+    expect(r.failed).toEqual([
+      { page_id: 'gone', error: 'no page record' },
+      expect.objectContaining({ page_id: 'p4' }),
+      { book_id: 'b2', error: 'Atlas down' },
+    ]);
+  });
+
+  it('a rerun of a run does not double it', async () => {
+    const insertOne = vi.fn(async () => { throw Object.assign(new Error('dup'), { code: 11000 }); });
+    const r = await recordPageVerdicts(fakeDb([page('p1', 'b1', 3)], insertOne), input([clean('p1')]));
+    expect(r).toMatchObject({ inserted: 0, already: 1, failed: [] });
+  });
+
+  it('a page rewritten since it was judged is stale by construction, and its current models are not credited', () => {
+    const e = judgedProvenance(page('p1', 'b1', 3), { ocr: 'ocr', translation: 'older english' }, at);
+    expect(e).toMatchObject({ changed_since_check: true, ocr_model: null, translation_model: null, hash_of: 'judged text' });
+    expect(e.unknown_reason).toMatch(/rewritten/);
+    expect(judgedProvenance(page('p1', 'b1', 3), undefined, at)).toMatchObject({ changed_since_check: false, translation_model: 'flash', hash_of: 'page text, unchanged since the check' });
+    expect(judgedProvenance(page('p1', 'b1', 3, { translation: { data: 'x', model: 'flash', updated_at: '2026-11-01T00:00:00Z' } }), undefined, at)).toMatchObject({ changed_since_check: true, translation_hash: null, hash_of: 'unknown' });
   });
 });

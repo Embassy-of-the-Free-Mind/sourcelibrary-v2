@@ -7,7 +7,8 @@ canons: []
 n_books: 50
 n_pages: 50
 verdict: "Guarded Paddle passes the preregistered bar in both classes on a fresh draw of 25 table + 25 mixed held pages, from books not in the first set. Paired against agy Gemini 3.8 Flash: table median Δ 0.0 (95% CI −3.9 to +0.7 pp, noise floor 1.9); mixed 0.0 (CI −0.9 to 0.0, floor 1.8). The frozen guard caught 8 of 8 collapsed or looped Paddle outputs and passed 34 of 35 good pages. Not preregistered: two works have no reader in either engine. Those are 欽定西域同文志 (polyglot glossary: Flash refuses or misreads, Paddle mis-orders the registers) and 琴譜合璧 (qin tablature: both fail)."
-status: undecided
+status: adopted
+landed: "scripts/workers/paddle-zh-guarded-lane.mjs"
 decision: "Apply guarded Paddle to the held table + mixed pages, except 欽定西域同文志, 琴譜合璧 and the 清文鑑 titles, which stay held. That is about 27,000 pages, ≈ 0.33 GPU-days plus ≈ 3,300 Flash calls. Awaiting Derek (DECISION on #6871). The writer, the provenance standard and a routing row come first"
 superseded_by: null
 issue: [6871]

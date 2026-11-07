@@ -32,6 +32,8 @@ export async function generateApiKey(
     stripeSubscriptionId?: string;
     /** Grant visible-mark-free image serving regardless of tier. */
     cleanImages?: boolean;
+    /** The terms version the holder agreed to when asking for this key. */
+    termsVersion?: string;
   }
 ): Promise<{ key: string; doc: ApiKeyDoc }> {
   const db = await getDb();
@@ -57,6 +59,7 @@ export async function generateApiKey(
     },
     status: 'active',
     stripe_subscription_id: options?.stripeSubscriptionId,
+    ...(options?.termsVersion ? { terms_version: options.termsVersion, terms_accepted_at: new Date() } : {}),
     created_at: new Date(),
     last_used_at: null,
     expires_at: null,
@@ -151,6 +154,7 @@ export async function rotateApiKey(
     clusters: old.permissions.clusters === '*' ? undefined : old.permissions.clusters,
     stripeSubscriptionId: old.stripe_subscription_id,
     cleanImages: old.permissions.clean_images === true,
+    termsVersion: old.terms_version,
   });
 }
 

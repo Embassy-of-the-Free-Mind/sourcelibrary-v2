@@ -19,6 +19,7 @@ import { wilson, binaryAgreement, aucLowerIsPositive, krippendorffAlpha } from '
 import { clusterCI } from '../route-judge-6740/judge.mjs';
 import { exportScore, PLANT_BAR } from '../lane-judge-sampler.mjs';
 import { CORRECT_LANE } from '../../batch/cli-ocr-lane.mjs';
+import { verdictQuery } from '../lib/judge-rows.mjs';
 
 const R = (f, x) => { fs.mkdirSync(RESULTS, { recursive: true }); fs.writeFileSync(path.join(RESULTS, f), typeof x === 'string' ? x : JSON.stringify(x, null, 1) + '\n'); };
 const kn = (k, n) => ({ k, n, rate: n ? +(k / n).toFixed(3) : null, wilson95: n ? wilson(k, n).map((x) => +x.toFixed(3)) : null });
@@ -385,7 +386,7 @@ async function h4() {
 async function h5() {
   const { MongoClient } = await import('mongodb');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
-  const rs = await c.db('bookstore').collection('lane_judge_verdicts').find({ cell: 'latin-blank', kind: 'item', verdict: { $ne: null } }, { projection: { route: 1, lane: 1, script_type: 1, draw: 1, verdict: 1, book_id: 1, judged_at: 1 } }).toArray();
+  const rs = await c.db('bookstore').collection('lane_judge_verdicts').find(verdictQuery({ cell: 'latin-blank', kind: 'item', verdict: { $ne: null } }), { projection: { route: 1, lane: 1, script_type: 1, draw: 1, verdict: 1, book_id: 1, judged_at: 1 } }).toArray();
   await c.close();
   const split = (f) => { const t = {}; for (const r of rs) { const k = f(r); (t[k] ??= []).push(r); } return Object.fromEntries(Object.entries(t).map(([k, g]) => [k, { accept: `${g.filter((r) => r.verdict.accept).length}/${g.length}`, wilson95: wilson(g.filter((r) => r.verdict.accept).length, g.length).map(r3), wrong_text: `${g.filter((r) => wrongText(r.verdict)).length}/${g.length}`, books: new Set(g.map((r) => r.book_id)).size }])); };
   const out = { at: new Date().toISOString(), n: rs.length, all: split(() => 'all').all, by_stratum: split((r) => r.draw?.stratum ?? 'random'), by_route: split((r) => r.route), by_lane: split((r) => r.lane), by_script: split((r) => r.script_type ?? 'unknown'),

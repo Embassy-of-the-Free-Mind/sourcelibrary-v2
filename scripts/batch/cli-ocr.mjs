@@ -82,7 +82,8 @@
  * note}) lifts the 40% shared-words floor for exactly the pages a person or session opened against the image, when a
  * book has too few refused pages for a lane gate (it needs 10). `verdict` must be 'read-matches-image'; a row whose
  * read_sha256 is not the read in the directory lifts nothing. Every other guard stays, and the row is written into
- * `engine.input.by_eye`.
+ * `engine.input.by_eye`. A row may add `scripts_seen: ["Greek"]`: the scripts the checker saw printed on the leaf, which
+ * the foreign-script guard then accepts for this read only (#8189).
  *
  * KEPT AND REUSED (#7075, scripts/lib/candidate-reads.mjs): every usable read is copied to R2 candidate-reads/ the
  * moment it is made. Before calling, `read` asks for a kept read of the same page by the same model on the same prompt
@@ -135,12 +136,13 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, cliExitCode } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, alignSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
 import { checkWrittenText, writeGuardReason, correctionHeaderProblem } from '../lib/write-text-guard.mjs';
+import { ocrBlockRefusals } from '../lib/block-page-guard.mjs';
 import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 import { keepRead, findRead, reuseInto, reuseHash, wantsFresh } from '../lib/candidate-reads.mjs';
 import { laneForWrite } from '../lib/lanes.mjs';
@@ -204,6 +206,9 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.
 // the one tool that works up front; the default stays sentinels-6523 unless the A/B in the experiment record says so.
 const PROMPT_VARIANTS = ['sentinels-6523', 'read-file-7558'];
 const PROMPT_VARIANT = arg('prompt-variant') || 'sentinels-6523';
+// #8330: offer the model read_file alone, not agy's ~60 tools: about 40% fewer input tokens a page at the same quality.
+// Same prompt, so a kept read stays reusable; recorded on the read as `agent`. --all-tools sends the full list.
+const NARROW_TOOLS = !process.argv.includes('--all-tools');
 if (STAGE === 'read' && !PROMPT_VARIANTS.includes(PROMPT_VARIANT)) { console.error(`--prompt-variant must be one of ${PROMPT_VARIANTS.join(', ')}`); process.exit(2); }
 if (STAGE === 'read' && arg('prompt-variant') && CORRECT_PROMPT) { console.error('--prompt-variant is for a plain read; --correct-prompt sends its own file'); process.exit(2); }
 const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === 'read-file-7558'
@@ -353,6 +358,7 @@ if (STAGE === 'read') {
     // --reuse-only (#7075): a paid lane hands its pages here first; a page with no kept read is left to that lane.
     if (REUSE_ONLY) { noKept++; return; }
     const gateLog = installToolGate(path.dirname(img));
+    const agentArgs = NARROW_TOOLS ? installNarrowAgent(path.dirname(img)) : [];
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
     // (plan note, refusal, restarted or duplicated read) is read once more from scratch (#6420 rule 4). A quota error
@@ -362,7 +368,7 @@ if (STAGE === 'read') {
     const usage = [];
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
-      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img));
+      r = await agyCall(['-p', sent, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS], path.dirname(img));
       // A locked model is not called (agy-cli.mjs → model-limits.mjs): sleep to its quoted reset, not a fixed 30 min.
       if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(p, `locked until ${r.locked_until || '?'}: ${r.err}`);
       if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${p.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
@@ -372,7 +378,7 @@ if (STAGE === 'read') {
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
         nudged = true;
-        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++; usage.push(agyUsage(r.usage));
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++; usage.push(agyUsage(r.usage));
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       }
       // #5055: a read the write guard calls truncated (a tag left open at its tail, a text ending inside a tag) is read
@@ -386,10 +392,10 @@ if (STAGE === 'read') {
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
     const meta = {
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: r.cls, ...(r.hung_after_reply && { hung_after_reply: true }),
       chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
-      prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
+      prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), wrapper, tool_calls: gateCalls(gateLog),
       image_url: src, image_bytes: buf.length, image_sha256: imageSha, ...(fit && { image_fit: fit }),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
@@ -436,12 +442,13 @@ if (STAGE === 'read') {
     fs.mkdirSync(ws, { recursive: true });
     imgs.forEach((im, i) => fs.writeFileSync(path.join(ws, pageBlockFile(i)), im.buf));
     const gateLog = installToolGate(ws);
+    const agentArgs = NARROW_TOOLS ? installNarrowAgent(ws) : [];
     const t0 = new Date();
     let r, nudged = false, calls = 0;
     const usage = [];
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
-      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], ws);
+      r = await agyCall(['-p', sent, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS], ws);
       if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(first, `locked until ${r.locked_until || '?'}: ${r.err}`);
       if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${first.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
       calls++; usage.push(agyUsage(r.usage));
@@ -450,7 +457,7 @@ if (STAGE === 'read') {
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${first.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
         nudged = true;
-        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], ws); calls++; usage.push(agyUsage(r.usage));
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS, '--conversation', r.conversation], ws); calls++; usage.push(agyUsage(r.usage));
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls, pages: n });
       }
       break;
@@ -462,8 +469,19 @@ if (STAGE === 'read') {
     fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: first.book_id, pages: group.map((p) => p.page_number), page_ids: group.map((p) => p.id), model: MODEL, secs: Math.round((Date.now() - t0) / 1000), cls: r.cls || (texts ? null : 'page_markers_mismatch'), calls, nudged, usage, tool_calls: tools }) + '\n');
     if (!texts) { console.log(`  p.${first.page_number}-${last.page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round((Date.now() - t0) / 1000)}s)`); return null; }
     const redo = [];
+    // #5021 (block-page-guard.mjs ocrBlockRefusals): a page whose read holds its neighbour's leaf, against the page's
+    // stored text where it has one (the draft, or the text a re-read replaces), or that prints the same page number as
+    // another read of the call, is read again alone. A correction's UNCHANGED / CONTAIN answer is not a transcription.
+    const asRead = texts.map((t) => (CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(t) ? '' : t));
+    const stored = new Map(group.map((q) => [q.id, q.ocr?.data || storedText.get(q.id) || '']));
+    const wrongLeaf = new Set();
+    for (const g of ocrBlockRefusals(group, asRead, { stored })) {
+      wrongLeaf.add(g.page_number);
+      fs.appendFileSync(path.join(OUT, 'calls.jsonl'), JSON.stringify({ ts: new Date().toISOString(), call_id: callId, guard: g }) + '\n');
+    }
     for (const [i, p] of group.entries()) {
       const text = texts[i];
+      if (wrongLeaf.has(p.page_number)) { redo.push(p); continue; }
       // A correction's UNCHANGED / CONTAIN answer is not a transcription: no chatter or cut-text check (readOne: the same).
       const answer = CORRECT_PROMPT && /^(UNCHANGED\.?|CONTAIN\s*:[\s\S]*)$/i.test(text);
       const chatter = answer ? null : ocrReadProblem(text, { header: !CORRECT_PROMPT || p.ocr?.source === 'gpu' });
@@ -475,9 +493,9 @@ if (STAGE === 'read') {
       fs.writeFileSync(path.join(OUT, `${p.id}.txt`), text);
       const meta = {
         page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: null,
+        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: null, ...(r.hung_after_reply && { hung_after_reply: true }),
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
-        prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
+        prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
         wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
         prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
         ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
@@ -517,6 +535,10 @@ if (STAGE === 'read') {
     for (const p of redo ?? group) await readOne(p, from);
   };
   let groups = pages.map((p) => [p]);
+  // The stored transcription of each page, for the block guard (#5021); read apart from the page, so a first read is
+  // not mistaken for a correction anywhere else in this script.
+  const storedText = new Map();
+  if (PER_CALL > 1) for (const r of await db.collection('pages').find({ id: { $in: pages.map((p) => p.id) } }, { projection: { id: 1, 'ocr.data': 1 } }).toArray()) if (r.ocr?.data) storedText.set(r.id, r.ocr.data);
   if (PER_CALL > 1) {
     // Runs of consecutive pages of one book in the page-ids file's order (a gap or a new book starts a run), cut into calls.
     const order = new Map(ids.map((id, i) => [id, i]));
@@ -625,12 +647,18 @@ const books = {};
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   let text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   const correct = m.mode === 'correct';
+  // correct.mjs --draft-dir reads have no `mode`, so this comes before the correct branch.
+  if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file or --draft-dir (an eval read), not the stored OCR'); continue; }
   // Route C (#7263): a correction of a GPU engine's draft of a page with no OCR. Its reply carries the full header.
   const gpu = correct && m.draft?.source === 'gpu';
+  // #8110: a reply agy printed whole before it hung is recorded as exit 0 since then. Metas written before that still
+  // say -9 and stay refused here on purpose: those reads are unjudged, and what happens to them is decided on #7701.
   if (m.exit !== 0) { failed(m, `cli exit ${m.exit}`, 'exit'); continue; }
   // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
   // written even when the text inside looks like a transcription: it is usually a partial page.
   if (m.wrapper) { failed(m, `reply wrapper: ${m.wrapper}`, 'wrapper'); continue; }
+  // #5274: the gate denied every image read, so the reply is not a reading of this leaf (blank stub or invented page).
+  if (imageNeverOpened(m)) { skip(m, 'the model never opened the page image (every read_file/view_file denied): not a read of this leaf'); continue; }
   if (text.length < 5) { failed(m, 'empty read (refusal or blank)', 'empty'); continue; }
   // A corrector answers UNCHANGED (the draft stands) or `CONTAIN: <why>` (not this leaf's text) instead of a text: the
   // #5924 template's two non-text answers, parsed as correct.mjs parseAnswer does. Neither is ever written as OCR. A
@@ -665,7 +693,11 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // A staged split leaf (#7605) has no text of its own yet: the scripts its frame's text carries are the ones it may.
   const served = page.ocr?.data || (page.staged_split?.frame_id
     ? (await db.collection('pages').findOne({ id: page.staged_split.frame_id }, { projection: { 'ocr.data': 1 } }))?.ocr?.data : '');
-  const foreign = foreignScriptReason(text, { languages: bookLanguages(await bookOf(page.book_id)), served });
+  // A by-eye row on exactly this read may name scripts the checker saw printed on the leaf (#8189: Greek quotations in a
+  // Latin book whose stored read was garbage, so the stored text could not vouch for them). Only those scripts are lifted.
+  const seenRow = BY_EYE.get(page.id);
+  const scriptsSeen = seenRow?.read_sha256 === sha256(text) && seenRow?.verdict === 'read-matches-image' && Array.isArray(seenRow?.scripts_seen) ? seenRow.scripts_seen : [];
+  const foreign = foreignScriptReason(text, { languages: [...bookLanguages(await bookOf(page.book_id)), ...scriptsSeen], served });
   if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
@@ -730,7 +762,6 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       if (text.trim() === ref.trim()) { skip(m, 'every change was put back by the diff guard: ' + stands); continue; }
     }
   } else if (correct) {
-    if (m.draft?.source === 'file') { skip(m, 'the draft came from --draft-file (an eval read), not the stored OCR'); continue; }
     if (contentHash(page.ocr?.data ?? '') !== m.draft?.text_hash) { skip(m, 'the draft this corrects is no longer the stored OCR'); continue; }
     if (correctionHeaderProblem(page.ocr.data, text)) { skip(m, 'more transcription headers than the draft: restarted or refused read'); continue; }
     const d = changedUnits(page.ocr.data, text);
@@ -772,6 +803,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       byEye = { verdict: eye.verdict, checked_by: eye.checked_by ?? null, at: eye.at ?? null, note: eye.note ?? null, read_sha256: eye.read_sha256, shared_words: Number(shared.toFixed(2)) };
     }
   }
+  if (scriptsSeen.length) byEye = { verdict: seenRow.verdict, checked_by: seenRow.checked_by ?? null, at: seenRow.at ?? null, note: seenRow.note ?? null, read_sha256: seenRow.read_sha256, ...byEye, scripts_seen: scriptsSeen };
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
   if (m.prompt_extra_hash && contentHash(EXTRA) !== m.prompt_extra_hash) { skip(m, 'prompt-extra.txt is not the instruction this read was sent'); continue; }
@@ -783,7 +815,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
+    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }), ...(change && change) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),

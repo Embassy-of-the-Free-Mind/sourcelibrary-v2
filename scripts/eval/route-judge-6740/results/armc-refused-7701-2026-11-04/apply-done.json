@@ -1,0 +1,37 @@
+{
+ "la-armc-refused-share": {
+  "pages": 7,
+  "ids": [
+   "69b6324e1c1c21a37380f5f3",
+   "69b632af1c1c21a373812b2e",
+   "69b632e01c1c21a3738141e9",
+   "69b632501c1c21a37380f7f4",
+   "69b632db1c1c21a37381408a",
+   "69b632831c1c21a3738117f8",
+   "69b632bb1c1c21a373813066"
+  ],
+  "exit": 0,
+  "summary": [
+   "written: 7   skipped: {}   run cli-ocr-20261104122227-578136"
+  ],
+  "stderr": ""
+ },
+ "la-armc-refused-putback": {
+  "pages": 8,
+  "ids": [
+   "69b632351c1c21a37380ed91",
+   "69b6326a1c1c21a373810bdc",
+   "69b6329b1c1c21a373812435",
+   "69b6321a1c1c21a37380d73a",
+   "69b632d61c1c21a373813ef3",
+   "69b632e51c1c21a3738145c7",
+   "69b632b91c1c21a373812daf",
+   "69b632ac1c1c21a3738129be"
+  ],
+  "exit": 0,
+  "summary": [
+   "written: 8   skipped: {}   run cli-ocr-20261104122232-578484"
+  ],
+  "stderr": ""
+ }
+}

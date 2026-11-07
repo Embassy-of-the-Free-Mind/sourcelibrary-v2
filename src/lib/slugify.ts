@@ -369,7 +369,9 @@ export function authorSlug(author: string): string {
 export function authorUrl(author: string, authorId?: string | null): string | null {
   if (authorId) return `/author/${authorId}`;
   if (!author || author === 'Unknown' || author === 'Anonymous') return null;
-  return `/author/${authorSlug(author)}`;
+  // A byline in Han characters slugs to nothing; "/author/" is the index, not this person.
+  const slug = authorSlug(author);
+  return slug ? `/author/${slug}` : null;
 }
 
 /** Artist page URL — same slug logic as authors */

@@ -1,6 +1,6 @@
 {
   "_comment": "Files that wrote or cleared pages.ocr / pages.translation without writePageText() when the check landed (#7058, 2026-10-21). This list only shrinks: migrate a writer to scripts/lib/page-text-writer.mjs / src/lib/page-text-writer.ts (or archive it), remove it here, lower count and GRANDFATHER_CEILING in tests/unit/text-writers-use-provenance-builder.test.ts. The probe is a heuristic, so a few entries are readers it over-matches; they stay until the probe stops matching them.",
-  "count": 89,
+  "count": 88,
   "files": [
     "scripts/audit/withheld-translation-drift.mjs",
     "scripts/batch/claude-ocr-two-read.mjs",
@@ -59,7 +59,6 @@
     "scripts/workers/mineru-ocr-worker.mjs",
     "scripts/workers/ndl-koten-lane.mjs",
     "scripts/workers/ocr-correct-grounded.mjs",
-    "scripts/workers/paddle-zh-guarded-lane.mjs",
     "scripts/workers/paddle-zh-lane.mjs",
     "scripts/workers/syriac-kraken-lane.mjs",
     "scripts/workers/translate-worker.mjs",

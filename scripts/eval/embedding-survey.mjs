@@ -19,7 +19,7 @@
  *   - Cosine distance between OCR embedding and translation embedding
  *
  * Controls:
- *   - Same embedding model (gemini-embedding-2-preview, 768d)
+ *   - Same embedding model (gemini-embedding-2, 768d)
  *   - Same text cleaning (strip XML + markdown)
  *   - Pages with ≥100 chars of both OCR and translation
  *   - Skip first 3 and last 2 pages (title/colophon bias)
@@ -141,7 +141,7 @@ const results = {
     languages: LANGUAGES,
     conditions: ['manuscript', 'print'],
     pagesPerCell: PAGES_PER_CELL,
-    embeddingModel: 'gemini-embedding-2-preview',
+    embeddingModel: 'gemini-embedding-2',
     embeddingDims: 768,
     minTextLength: MIN_TEXT_LENGTH,
     date: new Date().toISOString().slice(0, 10),
