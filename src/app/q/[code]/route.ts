@@ -3,7 +3,6 @@ import { getReadDb } from '@/lib/mongodb';
 import { decodeShortlink } from '@/lib/shortlinks';
 import { mintCitationToken } from '@/lib/citation-token';
 import { meteredReaderEnabled } from '@/lib/free-preview';
-import { CITATION_PASS_COOKIE, CITATION_PASS_MAX_AGE_SECONDS } from '@/lib/reader-terms';
 import { logShortlinkVisit } from '@/lib/shortlink-visit-log';
 import { Page } from '@/lib/types';
 
@@ -92,23 +91,10 @@ export async function GET(request: NextRequest, context: RouteContext) {
     const citeSuffix = cite ? `?cite=${cite}` : '';
 
     // Redirect to the full page URL
-    const response = NextResponse.redirect(
+    return NextResponse.redirect(
       new URL(`${prefix}/book/${bookPath}/page/${page.id}${citeSuffix}`, request.url),
       { status: 302 }
     );
-    // A citation opened from a PDF or a chat app has no referrer. This lets it past
-    // the edge's terms step (reader-terms.ts). No-store, so Cloudflare neither caches
-    // the cookie nor strips it; this route already reached the origin on every hit.
-    response.headers.set('Cache-Control', 'private, no-store');
-    response.headers.set('Cloudflare-CDN-Cache-Control', 'no-store');
-    response.cookies.set(CITATION_PASS_COOKIE, '1', {
-      path: '/',
-      maxAge: CITATION_PASS_MAX_AGE_SECONDS,
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-    });
-    return response;
   } catch (error) {
     console.error('Shortlink decode error:', error);
     // Invalid shortlink - redirect to home
