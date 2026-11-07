@@ -111,6 +111,13 @@ export const SPRAY_MAX_READS_PER_NET = 3;
 export const SPRAY_MIN_READS = 2000;
 export const SPRAY_MIN_SHARE = 0.05;
 
+// A surge a phone never saw (#8353). On 2026-11-05/06 reads classed human rose about 6x on desktop browsers and not
+// at all on phones, across 20,111 books, on the day a YouTube episode went out. It read as an audience and was a
+// proxy pool. An audience arrives on phones too: the YouTube visitors of those days were 68% phones.
+export const DESKTOP_SURGE_RATIO = 3;
+export const DESKTOP_SURGE_MIN_READS = 10000;
+export const PHONE_FLAT_RATIO = 1.5;
+
 // ── The fingerprint axis (added 2026-09-20, #4947) ────────────────────────
 // Every check above thresholds a NETWORK, and the 2026-09-20 pool showed what
 // that costs. It read 149,296 pages over three weeks from 63,599 addresses in
@@ -305,6 +312,26 @@ export function prefix16(ip) {
  * nothing about volume: the pool's defining property is that its per-unit
  * volume is ~1 at every unit you might threshold.
  */
+/** Which kind of device a user agent claims to be. Phones and tablets count together. */
+export function deviceClass(ua = '') {
+  if (/iPhone|iPad|Android/.test(ua)) return 'phone';
+  if (/Windows NT|Macintosh/.test(ua)) return 'desktop';
+  return 'other';
+}
+
+export const medianOf = (xs) => {
+  const v = [...xs].sort((a, b) => a - b);
+  if (!v.length) return 0;
+  const m = Math.floor(v.length / 2);
+  return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
+};
+
+/** Today's desktop reads far above their baseline while phone reads are not. Baselines are daily medians. */
+export function looksLikeDesktopSurge({ desktop, phone, desktopBase, phoneBase }) {
+  if (desktop < DESKTOP_SURGE_MIN_READS || !desktopBase) return false;
+  return desktop >= desktopBase * DESKTOP_SURGE_RATIO && phone < Math.max(phoneBase, 1) * PHONE_FLAT_RATIO;
+}
+
 export function looksLikeSpray(reads, nets) {
   if (!nets || nets < SPRAY_MIN_NETS) return false;
   return reads / nets <= SPRAY_MAX_READS_PER_NET;
@@ -772,6 +799,31 @@ async function run() {
         message: `${net.label} is supposed to be refused, but produced ${n.toLocaleString()} read events in ${HOURS}h via ${leaked.map(r => `${r._id ?? '?'}=${r.n}`).join(' ')}. Either the app-layer block regressed (src/lib/blocked-networks.ts + the check at the top of src/proxy.ts), or traffic is arriving on a host that bypasses it. NOTE: a Cloudflare rule can read as "enabled" and never fire — a terminating action above it (managed_challenge) stops evaluation. Verify placement, don't trust the dashboard.`,
       });
     }
+  }
+
+  // ── 1e. Desktop surge — the audience that is not one (#8353) ─────────────
+  // Compares the last 24 h with the median of the seven days before it, in 24 h buckets counted back from now, so
+  // it ignores --hours and needs no calendar. A median, because a surge sits in the baseline for a week afterwards.
+  const NOW = Date.now();
+  const byDay = await ev.aggregate([
+    { $match: { event: { $in: ['page_read', 'book_read'] }, traffic_class: 'human', timestamp: { $gte: new Date(NOW - 8 * 864e5) } } },
+    { $group: { _id: { d: { $floor: { $divide: [{ $subtract: [new Date(NOW), '$timestamp'] }, 864e5] } }, ua: '$user_agent' }, n: { $sum: 1 } } },
+  ], { allowDiskUse: true }).toArray();
+  const days = Array.from({ length: 8 }, () => ({ desktop: 0, phone: 0 }));
+  for (const r of byDay) {
+    const device = deviceClass(r._id.ua);
+    if (device !== 'other' && days[r._id.d]) days[r._id.d][device] += r.n;
+  }
+  const surge = {
+    desktop: days[0].desktop, phone: days[0].phone,
+    desktopBase: medianOf(days.slice(1).map((d) => d.desktop)), phoneBase: medianOf(days.slice(1).map((d) => d.phone)),
+  };
+  if (looksLikeDesktopSurge(surge)) {
+    alerts.push({
+      level: 'critical',
+      check: 'desktop_surge',
+      message: `Desktop reads ${surge.desktop.toLocaleString()} in 24 h against a daily median of ${surge.desktopBase.toLocaleString()}, while phone reads are ${surge.phone.toLocaleString()} against ${surge.phoneBase.toLocaleString()}. An audience shows up on phones too, so treat this as a proxy pool until shown otherwise, even if a talk or video just came out. Count the real audience by referrer in analytics_pageviews, then read Cloudflare's firewall events (CLOUDFLARE_API_TOKEN_READ). #8286 is the last time this happened.`,
+    });
   }
 
   // ── Report ────────────────────────────────────────────────────────────────
