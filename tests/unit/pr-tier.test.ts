@@ -79,6 +79,11 @@ describe('pr-tier: a PR whose diff GitHub will not serve holds instead of crashi
   const view = JSON.stringify({ number: 5991, title: 'eval: big results drop', author: { login: 'JDerekLomas' }, labels: [], files: [{ path: 'scripts/eval/results/x.json' }], comments: [] });
   const fakeGh = (diff: () => string) => (cmd: string) => (cmd.startsWith('gh pr view') ? view : diff());
 
+  it('every box crontab snapshot holds, not only hetzner (#7618 auto-merged a new cloudlayer cron)', () => {
+    for (const f of ['infrastructure/hetzner-crontab', 'infrastructure/gex45-crontab', 'infrastructure/l7a-crontab', 'infrastructure/cloudlayer-crontab'])
+      expect(classifyPaths([f]).reasons.map((r: { reason: string }) => r.reason).join(' ')).toMatch(/crons/);
+  });
+
   it('a readable diff of harmless paths is AUTO', () => {
     expect(classifyPR(5991, fakeGh(() => '')).result.tier).toBe('AUTO');
   });
