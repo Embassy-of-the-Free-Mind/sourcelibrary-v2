@@ -1,6 +1,8 @@
 ---
 stage: ocr
 measure: [none]
+feeds: route
+landed: scripts/lib/router-binding.mjs
 languages: []
 scripts: []
 canons: []
@@ -12,7 +14,7 @@ decision: "A rule pick over the bar is not auto-bound: the nightly planBind pins
 superseded_by: null
 ---
 
-# V3 on the one rule: the false-pick rate of `decide_defects` at each cell's real n (#8283)
+## 2026-11-07 — V3 on the one rule: the false-pick rate of `decide_defects` at each cell's real n (#8283)
 
 **Question.** `decide_defects` replaced the k/n rule on 2026-11-06 and nothing had simulated it. How often does it pick a route truly worse than the bar by more than the gate's margin?
 
