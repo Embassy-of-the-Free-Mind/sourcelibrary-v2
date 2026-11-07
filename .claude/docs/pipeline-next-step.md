@@ -10,7 +10,7 @@ Revision 2 adds the standing driver, budgets, alarms and the quality gate. Their
 And inside it:
 - `scripts/workers/pipeline-health-alert.mjs`, a daily email with no ntfy
 - `OCR_TRUST_TABLE` in `scripts/lib/ocr-trust-gate.mjs`, a routing-shaped table already kept as data
-- `.claude/docs/ocr-engine-routing.md`, the evidence the routing table would hold
+- `.claude/docs/routing.md`, the router table that decides routes
 
 **Read this when:**
 - you are writing a phase selector, a lane or a driver
@@ -377,7 +377,7 @@ Spend happens at enrolment, so the gate stops enrolment, not spend after the fac
 ```
 
 - **The router reads the rows.** `ocr-routing.mjs` takes the first matching row. A final catch-all row holds today's default, lite.
-- **The scattered settings become rows or references.** `OCR_LITE_ONLY` and `FLASH_OCR_FROM` become rows. `OCR_TRUST_TABLE` names its trusted readers by the same engine names. `.claude/docs/ocr-engine-routing.md` becomes this table's evidence column instead of a parallel list.
+- **The scattered settings become rows or references.** `OCR_LITE_ONLY` and `FLASH_OCR_FROM` become rows. `OCR_TRUST_TABLE` names its trusted readers by the same engine names. The router table (`.claude/docs/routing.md`) is this table's evidence column, not a parallel list.
 - **sync-worker stamps `ocr_route` on each book from the table.** That stamp is the input to rule 5.
 - **A bench verdict becomes a one-row PR.**
   - It is still `tier:hold`, because a route moves spend.

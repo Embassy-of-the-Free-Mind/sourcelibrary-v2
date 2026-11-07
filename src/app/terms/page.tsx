@@ -57,7 +57,7 @@ export default function TermsPage() {
         </p>
 
         <p className="text-sm text-muted">
-          <strong>Effective date:</strong> November 5, 2026
+          <strong>Effective date:</strong> November 6, 2026
           &middot; Operated by Stichting Het Wereldhart (Embassy of the Free Mind), Amsterdam, the Netherlands.
         </p>
 
@@ -176,6 +176,33 @@ export default function TermsPage() {
             </ul>
           </div>
           <p className="text-secondary text-sm">Version 2026-11-04.</p>
+        </section>
+
+        {/* ── Asked by the edge rule in scripts/maintenance/reader-terms-rule.mjs. A change of substance here needs a new READER_TERMS_VERSION. ── */}
+        <section id="reading-terms" className="bg-white rounded-xl p-8 border border-border-light scroll-mt-24">
+          <h2 className="text-2xl text-primary mb-4">Reading the library</h2>
+          <p className="text-secondary mb-4">
+            If you open a page of a book directly, without following a link or a citation, we ask you
+            once to agree to these terms. You agree by ticking the box and continuing.
+          </p>
+          <div className="bg-cream rounded-lg p-6 mb-4">
+            <ul className="text-secondary space-y-2 list-disc list-inside">
+              <li><strong>What you may do:</strong> read, study, teach from and quote the library, as
+                set out at the top of this page.</li>
+              <li><strong>Bulk copying:</strong> you may not copy the library, a collection or a large
+                part of either by automated means without written permission. Non-profit academic
+                research can use our{' '}
+                <Link href="/developers" className="text-accent-rust hover:underline">API</Link> within
+                the posted limits.</li>
+              <li><strong>AI training:</strong> training, fine-tuning or evaluating an AI model for a
+                commercial product needs a{' '}
+                <Link href="/licensing" className="text-accent-rust hover:underline">licence</Link>.</li>
+              <li><strong>What we keep:</strong> when you agree, we record the date, these
+                terms&rsquo; version, the page, your browser&rsquo;s description of itself, and a hash
+                of your network address, not the address. A cookie remembers your answer for a year.</li>
+            </ul>
+          </div>
+          <p className="text-secondary text-sm">Version 2026-11-06.</p>
         </section>
 
         <section>

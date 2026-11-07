@@ -100,6 +100,11 @@ export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').sp
  * `tool_calls` and no allowed read is that case. A read with no `tool_calls` field (before the gate, or another CLI)
  * is not judged here.
  */
+// #8110: the exit a read's meta records. agyCall ends a CLI that printed a whole SUCCESS reply and then never exited
+// (#7503) with SIGKILL, so its code is null, but it returns that reply as the call's result (`hung_after_reply`, no
+// error class). That is a delivered reply: exit 0. A kill with no complete reply stays -9 (agyCall classes it 'timeout').
+export const cliExitCode = (r) => (r.code === null ? (r.hung_after_reply ? 0 : -9) : r.code);
+
 export function imageNeverOpened(meta) {
   if (!meta || meta.cli !== 'agy' || !Array.isArray(meta.tool_calls)) return false;
   return !meta.tool_calls.some((t) => t === 'read_file' || t === 'view_file');
@@ -112,7 +117,11 @@ export const gateReads = (log) => { try { return fs.readFileSync(log, 'utf8').sp
 export function unwrapRead(raw) {
   const u = unwrapSentinels(raw);
   if (u.inside == null) return { text: String(raw || '').trim(), problem: String(raw || '').trim() ? 'no <<<BEGIN>>> marker' : null };
-  const problem = u.outside ? 'text outside the markers' : !u.closed ? 'reply cut before <<<END>>>' : null;
+  // #6871: a reply that opens a second <<<BEGIN>>> inside the block (seen: a correction that stops mid-page, then
+  // "<<<BEGIN>>>\nUNCHANGED") is neither the transcription nor the one-word answer; unwrapped, it stored the cut page
+  // with the marker in it, and every guard passed it. Never clean: re-read once, then refused at apply.
+  const problem = u.outside ? 'text outside the markers' : !u.closed ? 'reply cut before <<<END>>>'
+    : /<<<\s*(?:BEGIN|END)\s*>>>/.test(u.inside) ? 'a second marker inside the block' : null;
   return { text: u.inside, problem };
 }
 

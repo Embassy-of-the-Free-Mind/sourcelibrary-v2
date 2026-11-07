@@ -1,0 +1,9 @@
+{
+  "_source": "JDerekLomas/conceptual-histories, audits/2026-11-06-spot-check/report.md (issue #9). Severity grades by Claude Sonnet of the 28 October 2026 audit verdicts.",
+  "date": "2026-11-06",
+  "rejected": { "total": 47, "read": 46, "misleading": 4, "stretch": 13, "minor": 24, "none": 5 },
+  "accepted": { "read": 66, "serious": 0, "minor": 17 },
+  "sawVerdict": 20,
+  "outsideLibrary": { "rejected": 13, "of": 26 },
+  "insideLibrary": { "rejected": 34, "of": 149 }
+}

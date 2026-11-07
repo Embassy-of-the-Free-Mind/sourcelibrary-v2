@@ -304,7 +304,7 @@ function LanguageGrid() {
 }
 
 /* ── Decisions the evidence drove: which engine does what, and the experiment behind it ── */
-// Plain-language rows from scripts/eval/DECISIONS.md (the ledger is the source of truth; update it first).
+// Plain-language rows; routes are decided in the router table (.claude/docs/routing.md), scripts/eval/DECISIONS.md is the history.
 type Decision = { area: 'OCR' | 'Translation'; question: string; compared: string; evidence: string; result: string; decision: string; status: 'decided' | 'pending' | 'open'; issue: number };
 const DECISIONS: Decision[] = [
   { area: 'OCR', question: 'English print 1800–1930: is the cheaper engine good enough?', compared: 'The lightest model vs the mid-tier model', evidence: 'Accuracy against published texts, 114 books (decision-grade)', result: 'The mid-tier model read better on 14 pages, the lightest model on 3, 75 tied; median difference 0. Both refused 15–18% of pages as recitation.', decision: 'Keep the lightest model; add a fallback for refused pages.', status: 'decided', issue: 5182 },

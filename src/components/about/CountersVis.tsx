@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from './useInView';
 import { useReducedMotion } from './useReducedMotion';
+import { ABOUT_NUMBER_LOCALE, type AboutCounterStrings } from '@/lib/about-i18n';
+import { localePath, type Locale } from '@/lib/locale-path';
 
 /**
  * The library's three live numbers drawn as one nested whole: of every book
@@ -20,7 +22,7 @@ const C = { first: '#9e4a3a', readable: '#d0a397', rest: '#e3dcd1' };
 
 export type VisStats = { totalBooks: number; readableInEnglish: number; firstTranslationCount: number };
 
-export default function CountersVis({ stats, mode }: { stats: VisStats; mode: 'bars' | 'grid' }) {
+export default function CountersVis({ stats, mode, t: tr, lang = 'en' }: { stats: VisStats; mode: 'bars' | 'grid'; t: AboutCounterStrings; lang?: Locale }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.35);
   const still = useReducedMotion();
   const [t, setT] = useState(0);
@@ -41,19 +43,20 @@ export default function CountersVis({ stats, mode }: { stats: VisStats; mode: 'b
 
   const { totalBooks: all, readableInEnglish: read, firstTranslationCount: first } = stats;
   const k = still ? 1 : t;
-  const n = (v: number) => Math.round(v * k).toLocaleString('en-GB');
+  const n = (v: number) => new Intl.NumberFormat(ABOUT_NUMBER_LOCALE[lang], { useGrouping: 'always' }).format(Math.round(v * k));
+  const aria = tr.aria.replace('{first}', String(first)).replace('{read}', String(read)).replace('{all}', String(all));
 
   const legend = (
     <dl className="mt-10 md:mt-12 grid grid-cols-[minmax(0,1fr)] sm:grid-cols-3 gap-8">
       {[
-        { c: C.rest, v: all, label: 'books digitised', href: '/search' },
-        { c: C.readable, v: read, label: 'readable in English', href: '/search?has_translation=true' },
-        { c: C.first, v: first, label: 'translated into English for the first time', href: '/search?first_translation=true' },
+        { c: C.rest, v: all, label: tr.digitised, href: localePath('/search', lang) },
+        { c: C.readable, v: read, label: tr.readable, href: localePath('/search?has_translation=true', lang) },
+        { c: C.first, v: first, label: tr.first, href: localePath('/search?first_translation=true', lang) },
       ].map((it) => (
         <Link key={it.label} href={it.href} className="block hover:opacity-80 transition-opacity">
           <dt className="flex items-center gap-3">
             <i className="block w-4 h-4 shrink-0" style={{ background: it.c }} />
-            <span className="font-serif text-5xl md:text-6xl text-primary tabular-nums leading-none tracking-tight">{n(it.v)}</span>
+            <span className="font-serif text-5xl md:text-6xl text-primary tabular-nums lining-nums leading-none tracking-tight">{n(it.v)}</span>
           </dt>
           <dd className="mt-3 text-lg text-secondary">{it.label}</dd>
         </Link>
@@ -65,7 +68,7 @@ export default function CountersVis({ stats, mode }: { stats: VisStats; mode: 'b
     const ease = 'width 1.6s cubic-bezier(.2,.7,.2,1)';
     return (
       <div ref={ref}>
-        <div className="relative h-20 md:h-28 w-full" style={{ background: C.rest }} role="img" aria-label={`${first} first translations and ${read} books readable in English, out of ${all} books digitised`}>
+        <div className="relative h-20 md:h-28 w-full" style={{ background: C.rest }} role="img" aria-label={aria}>
           <i className="absolute inset-y-0 right-0 block" style={{ background: C.readable, width: on ? `${(read / all) * 100}%` : '0%', transition: still ? 'none' : ease }} />
           <i className="absolute inset-y-0 right-0 block" style={{ background: C.first, width: on ? `${(first / all) * 100}%` : '0%', transition: still ? 'none' : `${ease} .35s` }} />
         </div>
@@ -80,7 +83,7 @@ export default function CountersVis({ stats, mode }: { stats: VisStats; mode: 'b
   const nRead = Math.round(read / 100);
   return (
     <div ref={ref}>
-      <div className="grid gap-[3px] grid-cols-[repeat(25,minmax(0,1fr))] md:grid-cols-[repeat(50,minmax(0,1fr))]" role="img" aria-label={`${first} first translations and ${read} books readable in English, out of ${all} books digitised; one square per hundred books`}>
+      <div className="grid gap-[3px] grid-cols-[repeat(25,minmax(0,1fr))] md:grid-cols-[repeat(50,minmax(0,1fr))]" role="img" aria-label={aria}>
         {Array.from({ length: total }, (_, i) => (
           <i
             key={i}
@@ -93,7 +96,7 @@ export default function CountersVis({ stats, mode }: { stats: VisStats; mode: 'b
           />
         ))}
       </div>
-      <p className="mt-4 text-sm text-muted">Each square is a hundred books.</p>
+      <p className="mt-4 text-sm text-muted">{tr.squares}</p>
       {legend}
     </div>
   );

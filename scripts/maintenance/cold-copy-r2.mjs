@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
- * Cold copy of R2 (and the restic repo) to an archive-class bucket — Scaleway
- * Glacier for EFM/BPH, AWS S3 Glacier Deep Archive for the rest — one tar per
- * book, with a manifest beside each tar (#7708).
+ * Cold copy of R2 (and the restic repo) to Scaleway Glacier, an archive-class
+ * bucket with a different company from Cloudflare and Hetzner: one tar per book,
+ * with a manifest beside each tar (#7708). Derek chose Scaleway for everything on
+ * 2026-11-04. --target aws remains in the code, but no AWS bucket exists.
  *
  * PRIOR ART: scripts/maintenance/build-preservation-manifest.mjs — lists a
  * book's objects across the eleven prefix conventions and records size + ETag,
@@ -10,13 +11,13 @@
  * script that moves them. BOOK_PREFIXES below is that script's list.
  *
  * WHY: 21.7 TB of page images had exactly one copy, in R2. Tier-0 masters (BPH
- * `archive/` JP2s, Kloss/IDP `books/`, `uploads/`) exist nowhere else. Deep
- * Archive is a different company from Cloudflare and Hetzner, ~$1/TB-month.
+ * `archive/` JP2s, Kloss/IDP `books/`, `uploads/`) exist nowhere else. Scaleway
+ * Glacier measured ~EUR 0.0025/GB-month from the bill (November 2026).
  *
- * WHY TAR PER BOOK: Deep Archive bills per request ($0.05 per 1,000 PUTs) and
- * keeps ~40 KB of overhead per object. 14M page images as 14M objects would
- * cost more in requests than a year of storage; one tar per book prefix keeps
- * it in the tens of thousands. A restore is per book anyway.
+ * WHY TAR PER BOOK: archive classes charge or add overhead per object (AWS Deep
+ * Archive: $0.05 per 1,000 PUTs, ~40 KB per object). Millions of page images as
+ * separate objects would also mean millions of restore requests; one tar per book
+ * prefix keeps it in the hundreds of thousands. A restore is per book anyway.
  *
  * LAYOUT in the cold bucket
  *   r2/<prefix>/<bookId>.tar                 every object under R2 `<prefix>/<bookId>/`
@@ -54,7 +55,7 @@
  *   … --group efm-archive --apply [--concurrency 4] [--limit N] [--units archive/<id>/,…]
  * Flags: --ledger <jsonl> (default /root/jobs/cold-copy/ledger.jsonl)
  *        --concurrency N (units in parallel, default 4) --prefetch N (GETs ahead per unit, default 16)
- *        --target scw|aws  per-group default: efm-* and restic → scw, masters and rest → aws.
+ *        --target scw|aws  default scw for every group (Derek, 2026-11-04).
  *          efm-* refuses aws (the BPH agreement: partner masters stay with an EU company).
  *          scw → /root/.config/cold-scw.env, aws → /root/.config/cold-aws.env (--cold-env overrides):
  *          AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, COLD_BUCKET, and optionally
@@ -88,11 +89,10 @@ const CONC = parseInt(arg('--concurrency', MODE === 'estimate' ? '24' : '4')) ||
 const ONLY_UNITS = arg('--units') ? new Set(arg('--units').split(',')) : null;
 const LEDGER = arg('--ledger', '/root/jobs/cold-copy/ledger.jsonl');
 const OUT = arg('--out', '/root/jobs/cold-copy/dry');
-// Where each group goes (Derek, #7708, 2026-10-29): EFM/BPH material and the
-// database/text backups to Scaleway Glacier (an EU company — the BPH agreement);
-// the ~21 TB of re-fetchable images to AWS Deep Archive. EFM never goes to AWS.
+// Where each group goes (Derek, #7708, 2026-11-04): everything to Scaleway Glacier.
+// EFM must never go to AWS (an EU company holds partner masters: the BPH agreement).
 const TARGET_ENV = { scw: '/root/.config/cold-scw.env', aws: '/root/.config/cold-aws.env' };
-const DEFAULT_TARGET = { 'efm-archive': 'scw', 'efm-books': 'scw', 'efm-bph-works': 'scw', restic: 'scw', masters: 'aws', rest: 'aws' };
+const DEFAULT_TARGET = { 'efm-archive': 'scw', 'efm-books': 'scw', 'efm-bph-works': 'scw', restic: 'scw', masters: 'scw', rest: 'scw' };
 const TARGET_ARG = arg('--target');
 const COLD_ENV_ARG = arg('--cold-env');
 const RESTIC_ENV = arg('--restic-env', '/root/.config/restic-hetzner.env');
@@ -538,9 +538,17 @@ async function runGroup(group) {
     } finally { u.cleanup?.(); }
   });
   st.seconds = Math.round((Date.now() - t0) / 1000);
-  // Deep Archive: $0.05 per 1,000 requests; ~$0.99 per TB-month; 40 KB overhead per object.
-  st.est_request_usd = +(st.requests * 0.05 / 1000).toFixed(2);
-  st.est_storage_usd_month = +(((st.bytes + st.nonempty * 2 * 40e3) / 1e12) * 0.99).toFixed(2);
+  // An estimate counts every unit, including ones a real run would skip as already sent.
+  // Each listed object is one R2 GET at $0.36/M.
+  st.est_r2_read_usd = +(st.objects * 0.36 / 1e6).toFixed(2);
+  if (TARGET === 'scw') {
+    // Measured on the November 2026 bill: EUR 1.54 for 18,746 GB-days, no request charges.
+    st.est_storage_eur_month = +((st.bytes / 1e9) * 0.0025).toFixed(2);
+  } else {
+    // Deep Archive list prices: $0.05 per 1,000 requests; ~$0.99 per TB-month; 40 KB overhead per object.
+    st.est_request_usd = +(st.requests * 0.05 / 1000).toFixed(2);
+    st.est_storage_usd_month = +(((st.bytes + st.nonempty * 2 * 40e3) / 1e12) * 0.99).toFixed(2);
+  }
   console.log(`[${group}] ${JSON.stringify({ ...st, gb: gb(st.bytes) })}`);
   return st;
 }

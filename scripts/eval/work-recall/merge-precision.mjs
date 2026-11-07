@@ -23,7 +23,7 @@ if (process.argv[2] === '--score') {
   console.log(`book-weighted:   ${okBooks}/${books} = ${(100 * okBooks / books).toFixed(1)}%`);
   if (!process.argv.includes('--quiet')) for (const r of rows.filter(r => r.verdict !== 'all_same_work')) console.log(`- ${r.verdict}: [${r.author}] ${r.canonical_title} :: ${r.why}`);
   // --approved-out FILE --proposals A.json [B.json]: write the HIGH groups this judge accepted, in the
-  // proposals shape llm-verify-work-merges.mjs --apply-from reads. Nothing else may reach --apply-from.
+  // proposals shape scripts/maintenance/apply-verified-work-merges.mjs reads (llm-verify --apply-from is closed, #8293).
   const ai = process.argv.indexOf('--approved-out');
   if (ai > -1) {
     const pi = process.argv.indexOf('--proposals');

@@ -71,7 +71,10 @@ describe('who reaches it', () => {
   it('is allowed for assistant fetchers and disallowed for everything else in robots.txt', async () => {
     const groups = (await (robots() as Response).text()).split(/\n\n/);
     const group = (ua: string) => groups.find((g) => g.startsWith(`User-agent: ${ua}\n`))!;
-    expect(group('Claude-User')).toContain('Allow: /search/text\n');
+    for (const ua of ['Claude-User', 'ChatGPT-User', 'Perplexity-User']) {
+      expect(group(ua), ua).toContain('Allow: /search/text\n');
+      expect(group(ua), ua).not.toMatch(/^Disallow: \/search\/text$/m);
+    }
     for (const ua of ['*', 'Claude-SearchBot', 'OAI-SearchBot', 'Sogou web spider']) {
       expect(group(ua), ua).toMatch(/^Disallow: \/search\/text$/m);
       expect(group(ua), ua).not.toContain('Allow: /search/text');

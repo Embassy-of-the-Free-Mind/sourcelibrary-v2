@@ -4,6 +4,7 @@ import Link from 'next/link';
 import atlas from '@/components/about/covers-atlas.json';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { HOME_STRINGS, type HomeLang } from '@/lib/home-i18n';
+import { localePath } from '@/lib/locale-path';
 import { useInView } from '@/components/about/useInView';
 import { useReducedMotion } from '@/components/about/useReducedMotion';
 
@@ -188,7 +189,7 @@ export default function HomeWall({ lang = 'en' }: { lang?: HomeLang }) {
           <h2 className="font-serif text-[44px] leading-[1.02] md:text-[clamp(56px,6vw,88px)] tracking-[-0.03em] text-balance text-white">{t.wallTitle}</h2>
           <p className="mt-8 text-lg md:text-xl leading-relaxed text-stone-200">{t.wallBody}</p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/about" className="px-6 py-3 font-medium transition-colors bg-white text-[#1a1612] hover:bg-stone-200">{t.wallCta}</Link>
+            <Link href={localePath('/about', lang)} className="px-6 py-3 font-medium transition-colors bg-white text-[#1a1612] hover:bg-stone-200">{t.wallCta}</Link>
           </div>
         </div>
       </div>

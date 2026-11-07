@@ -94,13 +94,13 @@ The router serves three readers:
 
 ## Statistical methods
 
-**Today (`build.py`).**
-- **Model:** a Beta-binomial on accepted k of n per cell × route. n is scaled to books (effective n).
-- **Prior:** v1/v2 means on 24 routes and flat on 230, worth 7 pages.
-- **Gate:** P(acc_route ≥ acc_bar − 0.08) ≥ 0.9. The bar is the best measured Opus route (print), or the best measured route (manuscript).
-- **Wrong-text bar:** relative, the best route + 2 points.
-- **Pick:** the lowest median expected dollars per accepted page among the routes that pass.
-- **Defect rule** (since 10-31): MQM-weighted defects per 1,000 words where measured, with acceptance as a floor. It decides about 3 of 109 cells.
+**Today (`build.py`, the one rule, #8283, Derek 2026-11-06).**
+- **Outcome:** MQM-weighted defects per 1,000 words against the live route, from `defect-rates.json`. `scripts/eval/route-evidence.mjs` writes that file from the store: every judged page of a lane, a test or a QA draw that can be tied to the text judged. A verdict with no severity or no text tie is left out, and the file counts what it left out.
+- **Rated:** verdicts from at least 10 books and clear of the hard floor. An unrated or blocked live route has no privilege.
+- **Gates:** wrong text no more than the bar's + 0.15 per 1,000 words, and acceptance not more than 5 points below the live route (posterior median). k/n survives only as that floor: a Beta-binomial on accepted k of n, n scaled to books.
+- **Pick:** the lowest price + weight × defects per page. A switch has to hold at every weight in `misleads_usd_sensitivity`, or the cell is HOLD.
+- **Stays:** the hard floor, the menu, `menu_default` (an undecided cell gets agy) and the judge-validity gate.
+- **V3 on this rule (2026-11-07, #8283):** `v3_sim.py` runs `decide_defects` at each cell's real n. 11 of the 13 cells it compares are over the 5% bar at the boundary (18–47%), so a rule pick there is not auto-bound: `planBind` pins the cell where it runs. Record: `scripts/eval/experiments/2026-11-07-router-v3-defect-rule-8283.md`.
 
 **Planned.**
 - **Prior mean from a partially pooled logit:** engine + draft + language + writing system + print/manuscript, no interaction. It is worth about 5 pages: V1 measured 5.2–6.4 held out (PR #7878).
@@ -148,6 +148,8 @@ The router serves three readers:
 - **Decision 3 below still stands** as the router's own outcome: it is the measure behind Z.
 
 ## Decisions (Derek, 2026-11-01: "defaults")
+
+The rule of 2026-11-06 (#8283) replaces Decisions 1 and 2 as decision paths: `loss` and `absolute_bar` are `in_force: false` in `rules.json`. The price of a wrong page now sits in the defect weight, and the floor under acceptance is relative to the live route. Decision 3 is the one rule.
 
 What the optimum is:
 1. **A wrong page is priced.** Loss = cost per page + λ × P(wrong text), with λ = 20 × the cost of a good read (about $0.02 a page at current prices). It replaces the hand-set margins (8 points; best route + 2% wrong text) once the build job's joint gate lands.
@@ -228,7 +230,7 @@ Each check below has a pass bar set before the data. A failing check stops the r
 2. **Judge correction.** Prediction-powered intervals that use the V2 calibration.
 3. **A best-arm planner.** Top-two Thompson sampling, weighted by pages waiting, with a Bayesian stopping rule. It replaces hand-picked tests and the fixed n floors.
 4. **Paired designs.** Every candidate in a test reads the same books.
-5. **Binding.** A decision that passes V4 opens the routing-row PR, which is on the hold list. `routing-drift.mjs` audits `current.json`. `routeCheck` is set to refuse once V1–V3 pass.
+5. **Binding.** A decision that passes V4 opens the routing-row PR, which is on the hold list. The binding test holds the routers to `current.json`. `routeCheck` is set to refuse once V1–V3 pass.
 6. **Widen the space.** Add prompt, thinking level and pages per call.
 
 ## Prior art (searched 2026-11-01)

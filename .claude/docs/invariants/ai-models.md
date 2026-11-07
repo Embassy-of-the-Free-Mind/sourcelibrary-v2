@@ -21,14 +21,7 @@ owns the OCR-routing detail and `measurement-instruments.md` owns grounding.
 - **Summary / index generation.** The enrich-worker uses `gemini-3.1-flash-lite` for
   every phase — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5),
   collection assignment (Phase 7.6). NEVER use models older than v3.
-- **OCR and translation route DIFFERENTLY since #4762 — do not "fix" the divergence.**
-  Translation: lite for all but BPH. OCR *as written* sends BPH, non-Latin and unknown
-  language to full flash — **but `OCR_LITE_ONLY` (default ON since 2026-09-11) returns
-  lite before any of that runs**, so in production that carve-out never fires; measured
-  bad on manuscripts and early print, #4877. The one exception since 2026-10-02 is Greek
-  (`isGreekFlashOcrBook`, #5575): visible Greek and Greek books created from that date
-  read on flash; the hidden Greek backlog and every other script stay on lite. **Tell:** reading the router and assuming
-  the carve-out applied. Detail → `language-fields.md`.
+- **Which model reads or translates a page is the router table's call, not this file's** → `../routing.md`.
 - **Gemini 3.x thinks by default and bills it at the output rate, invisibly.** Six
   unconfigured call sites cost ~$2K/mo for months (#4581, a 17× meter gap; August 2026
   metered $500 against $8,389 billed). Since PR #4954 / #4956 the working rule is no

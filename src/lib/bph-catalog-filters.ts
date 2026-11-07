@@ -212,7 +212,9 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
   const ilikeFilter = (col: string, val: string) => {
     if (!val) return;
     const safe = sanitizeFilterValue(val);
-    const normVal = sanitizeFilterValue(normalizeBphSearchText(val));
+    // Not sanitised: `.ilike()` is a single filter rather than an `.or()` string, so
+    // a comma is safe here, and the catalogue files every author as "Surname, Name".
+    const normVal = normalizeBphSearchText(val);
     if (mode === 'new') {
       if (useNormCols && normVal.length > 0) {
         query = query.ilike(col === 'shelf_mark' ? 'shelf_mark_norm' : `${col}_norm`, `%${normVal}%`);
@@ -284,25 +286,66 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
     }
   }
 
-  return applyBphSort(query, f.sort);
+  return applyBphSort(query, f.sort, mode);
 }
 
 /** Result ordering. nullsFirst:false everywhere so null titles never lead. */
-export function applyBphSort<T extends FilterableQuery<T>>(query: T, sort: string): T {
+export function applyBphSort<T extends FilterableQuery<T>>(query: T, sort: string, mode: 'new' | 'legacy' = 'new'): T {
+  // Filing order: `author_sort` and `title_sort` ignore leading brackets and
+  // quotes, so "[Fludd, Robert]" files under F as on a card catalogue
+  // (scripts/migration/add-bph-filing-sort-columns.sql). The legacy schema lacks them.
+  const author = mode === 'new' ? 'author_sort' : 'author';
+  const title = mode === 'new' ? 'title_sort' : 'title';
+  const ordered = applySortColumns(query, sort, author, title);
+  // A final unique key, so records that tie (copies of one edition share author
+  // and title) keep one order across pages and a paged walk neither repeats nor
+  // skips a record. The legacy schema has no uuid.
+  return mode === 'new' ? ordered.order('uuid', { ascending: true }) : ordered;
+}
+
+function applySortColumns<T extends FilterableQuery<T>>(query: T, sort: string, author: string, title: string): T {
   switch (sort) {
     case 'year_asc':
-      return query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+      return query.order('year', { ascending: true, nullsFirst: false }).order(title, { ascending: true });
     case 'year_desc':
-      return query.order('year', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+      return query.order('year', { ascending: false, nullsFirst: false }).order(title, { ascending: true });
+    // Best match orders each of its tiers by author (see bphBestMatchTiers).
+    case 'relevance':
     case 'author':
-      return query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+      return query.order(author, { ascending: true, nullsFirst: false }).order(title, { ascending: true });
     case 'author_desc':
-      return query.order('author', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+      return query.order(author, { ascending: false, nullsFirst: false }).order(title, { ascending: true });
     case 'title_desc':
-      return query.order('title', { ascending: false, nullsFirst: false });
+      return query.order(title, { ascending: false, nullsFirst: false });
     case 'shelfmark':
-      return query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+      return query.order('shelf_mark', { ascending: true, nullsFirst: false }).order(title, { ascending: true });
     default:
-      return query.order('title', { ascending: true });
+      return query.order(title, { ascending: true });
   }
+}
+
+/**
+ * Best match, as a catalogue files it: works BY the name, then works whose
+ * title holds the words (often works ABOUT the name), then works that mention
+ * the words only elsewhere (notes, imprint, bibliography). "Every search word"
+ * in each case. Each tier is in author order. No score: the rule is one sentence
+ * a librarian can check against any result.
+ *
+ * Returns the three tiers, each as the `.or()` filters that select it, or null
+ * when Best match does not apply (another sort, no words, or a schema without the
+ * *_norm columns), in which case the caller runs one query as usual. author_norm
+ * and title_norm are non-null on every row, so the tiers partition the result
+ * exactly: their counts add up to the plain search's.
+ */
+export function bphBestMatchTiers(f: BphFilters, caps: SchemaCaps): string[][] | null {
+  if (f.sort !== 'relevance' || caps.mode !== 'new' || !caps.hasNormalizedColumns || f.q.length < 2) return null;
+  const terms = parseBphSearchTerms(f.q);
+  if (terms.length === 0) return null;
+  const byAuthor = `and(${terms.map((t) => `author_norm.ilike.%${t}%`).join(',')})`;
+  const inTitle = `and(${terms.map((t) => `title_norm.ilike.%${t}%`).join(',')})`;
+  return [
+    [byAuthor],
+    [inTitle, `not.${byAuthor}`],
+    [`not.${byAuthor}`, `not.${inTitle}`],
+  ];
 }

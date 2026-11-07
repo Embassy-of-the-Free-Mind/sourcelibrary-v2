@@ -17,6 +17,30 @@ describe('classifyTraffic', () => {
     expect(classifyTraffic('Mozilla/5.0 HeadlessChrome/120.0.0.0')).toBe('other_bot');
   });
 
+  // facebookexternalhit has no "bot" in its UA and was stored as human (#8151).
+  it('classifies link-preview fetchers as other_bot', () => {
+    expect(
+      classifyTraffic('facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)')
+    ).toBe('other_bot');
+    expect(classifyTraffic('facebookcatalog/1.0')).toBe('other_bot');
+    expect(classifyTraffic('WhatsApp/2.23.20.0 A')).toBe('other_bot');
+    expect(
+      classifyTraffic('Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5')
+    ).toBe('other_bot');
+    expect(classifyTraffic('Mozilla/5.0 (compatible; Embedly/0.2; +http://support.embed.ly/)')).toBe(
+      'other_bot'
+    );
+    expect(classifyTraffic('Iframely/1.3.1 (+https://iframely.com/docs/about)')).toBe('other_bot');
+  });
+
+  it('keeps the Facebook in-app browser as human', () => {
+    expect(
+      classifyTraffic(
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 [FBAN/FBIOS;FBAV/440.0.0.0;FBBV/1;FBDV/iPhone15,2]'
+      )
+    ).toBe('human');
+  });
+
   it('still classifies a real browser UA as human', () => {
     expect(
       classifyTraffic(

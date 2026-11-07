@@ -2183,12 +2183,11 @@ function BookSearchPanel({
 }
 
 function Filmstrip({
-  pageList, currentPageId, compact, innerRef, onPrev, onNext, onGoTo, onPageShape,
+  pageList, currentPageId, compact, onPrev, onNext, onGoTo, onPageShape,
 }: {
   pageList: Page[];
   currentPageId: string;
   compact: boolean;
-  innerRef: React.RefObject<HTMLDivElement | null>;
   onPrev: () => void;
   onNext: () => void;
   onGoTo: (pageId: string) => void;
@@ -2232,6 +2231,28 @@ function Filmstrip({
     }),
     [pageList, thumbW, thumbH, dpr],
   );
+  // Keep the current page centred. The strip lives here, not in the reader,
+  // because the reader does not render it until it is mounted and knows the
+  // viewport: an effect up there ran once before the strip existed and never
+  // again, so a link to p. 237 opened on thumbnails 1–26 (#8190). Re-centred
+  // when the slot width changes too, since the first loaded thumbnail resizes
+  // every slot and moves the current one. Only a page turn glides; opening the
+  // book and a resize jump straight there.
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const centredPageRef = useRef<string | null>(null);
+  useEffect(() => {
+    const container = scrollerRef.current;
+    const el = container?.querySelector<HTMLElement>(`[data-strip-page="${currentPageId}"]`);
+    if (!container || !el) return;
+    const turned = centredPageRef.current !== null && centredPageRef.current !== currentPageId;
+    centredPageRef.current = currentPageId;
+    // Measured against the scroller itself: offsetLeft counts from the nearest
+    // positioned ancestor, which put every page one arrow-width off centre.
+    const box = container.getBoundingClientRect();
+    const slot = el.getBoundingClientRect();
+    const target = container.scrollLeft + slot.left - box.left - box.width / 2 + slot.width / 2;
+    container.scrollTo({ left: target, behavior: turned ? 'smooth' : 'auto' });
+  }, [currentPageId, thumbs, thumbW]);
   return (
     <div
       className="flex items-start gap-1 h-full pt-2 rv2-strip-in"
@@ -2243,7 +2264,7 @@ function Filmstrip({
         <ChevronLeft size={15} />
       </button>
       <div
-        ref={innerRef}
+        ref={scrollerRef}
         className="flex-1 flex items-start gap-2.5 overflow-x-auto px-2 py-1"
         style={{ overscrollBehavior: 'contain', scrollbarWidth: 'none' }}
       >
@@ -3340,20 +3361,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     swipeRef.current = null;
     dragFollow(null);
   };
-  // Filmstrip: keep the current page centred
-  const stripRef = useRef<HTMLDivElement>(null);
-  const stripMobileRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    for (const container of [stripRef.current, stripMobileRef.current]) {
-      if (!container) continue;
-      const el = container.querySelector<HTMLElement>(`[data-strip-page="${r.currentPageId}"]`);
-      if (el) {
-        const target = el.offsetLeft - container.clientWidth / 2 + el.clientWidth / 2;
-        container.scrollTo({ left: target, behavior: 'smooth' });
-      }
-    }
-  }, [r.currentPageId, stripVisible]);
-
   // One string to copy, and its parts to show. A citation read as a wall of
   // text on screen while being perfectly correct on the clipboard; setting the
   // title, the locator and the URL apart makes it checkable at a glance
@@ -4234,7 +4241,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
               pageList={r.pageList}
               currentPageId={r.currentPageId}
               compact={false}
-              innerRef={stripRef}
               onPrev={r.goPrev}
               onNext={r.goNext}
               onGoTo={r.goToPage}
@@ -4754,7 +4760,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 pageList={r.pageList}
                 currentPageId={r.currentPageId}
                 compact
-                innerRef={stripMobileRef}
                 onPrev={r.goPrev}
                 onNext={r.goNext}
                 onGoTo={r.goToPage}
