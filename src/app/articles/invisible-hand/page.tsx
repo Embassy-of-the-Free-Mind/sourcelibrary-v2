@@ -132,8 +132,8 @@ export default function InvisibleHandPage() {
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/della-mercatura-et-del-mercante-perfetto-cotrugli" className="text-accent-rust hover:text-accent-rust underline"><strong>Benedetto Cotrugli</strong></Link>
           {' '}(<em>Della Mercatura et del Mercante Perfetto</em>, written c. 1458, published 1573) produced the earliest known description of double-entry bookkeeping, predating{' '}
-          <Link href="/book/summa-de-arithmetica-geometria-proportioni-et-pacioli" className="text-accent-rust hover:text-accent-rust underline"><strong>Luca Pacioli</strong></Link>
-          {' '}&apos;s famous <Link href="/book/summa-de-arithmetica-geometria-proportioni-et-pacioli" className="text-accent-rust hover:text-accent-rust underline"><em>Summa de Arithmetica</em></Link> (1494) by thirty-five years. Pacioli systematised the method, but Cotrugli&apos;s four books on mercantile life (covering trade, the merchant&apos;s character, accounting, and maritime commerce) give us the fullest portrait of the commercial mind that made the Renaissance possible.
+          <strong>Luca Pacioli</strong>
+          {' '}&apos;s famous <em>Summa de Arithmetica</em> (1494) by thirty-five years. Pacioli systematised the method, but Cotrugli&apos;s four books on mercantile life (covering trade, the merchant&apos;s character, accounting, and maritime commerce) give us the fullest portrait of the commercial mind that made the Renaissance possible.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
