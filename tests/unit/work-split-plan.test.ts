@@ -106,3 +106,47 @@ describe('planSplits', () => {
     expect(identityOf(bk('b1'))).not.toBe(identityOf(bk('b1', { work_slug: 'other' })));
   });
 });
+
+describe('planSplits — hand-fixed rows (#8293 six)', () => {
+  const Q = 'Q1242501';
+  const cic = (id: string) => ({ id, work_id: Q, work_title: 'De officiis', work_slug: 'cicero-de-officiis', author: 'Cicero', author_id: 'cicero', visible: true });
+  const taken = () => ({ ids: new Set<string>([Q]), slugs: new Set<string>(['cicero-de-officiis']), aliases: new Set<string>() });
+
+  it('moves the majority to a verified QID with the slug, and retitles the stayers with a fresh slug', () => {
+    const carriers = new Map([[Q, [cic('s1'), cic('o1'), cic('o2')]]]);
+    const { clusters, refused } = planSplits([{ work_id: Q, seen: ['s1', 'o1', 'o2'], stay: { title: 'Somnium Scipionis' },
+      moves: [{ books: ['o1', 'o2'], to: 'new', new_id: 'Q1180721', slug: 'take', title: 'De officiis' }] }], carriers, taken());
+    expect(refused).toEqual([]);
+    const [c] = clusters;
+    expect([c.moves[0].to, c.moves[0].work_slug]).toEqual(['Q1180721', 'cicero-de-officiis']);
+    expect(c.moves[0].books[0].after.work_id_aliases).toEqual([]);
+    expect(c.stay).toMatchObject({ title: 'Somnium Scipionis', work_slug: 'cicero-somnium-scipionis' });
+  });
+
+  it('a dissolve onto ONE id renames: the old id becomes an alias there', () => {
+    const carriers = new Map([[Q, [cic('a'), cic('b')]]]);
+    const { clusters } = planSplits([{ work_id: Q, seen: ['a', 'b'], dissolve: true,
+      moves: [{ books: ['a', 'b'], to: 'new', new_id: 'Q4780426', slug: 'take', title: 'Apologeticus' }] }], carriers, taken());
+    expect(clusters[0].renamed_to).toBe('Q4780426');
+    expect(clusters[0].moves[0].books.map((b: { after: { work_id_aliases: string[] } }) => b.after.work_id_aliases)).toEqual([[Q], [Q]]);
+  });
+
+  it('a dissolve onto several ids aliases the old id nowhere; slug "alias" keeps the old URL on one side', () => {
+    const carriers = new Map([[Q, [cic('a'), cic('b')]]]);
+    const { clusters } = planSplits([{ work_id: Q, seen: ['a', 'b'], dissolve: true, moves: [
+      { books: ['a'], to: 'new', title: 'Orphica', slug: 'alias' },
+      { books: ['b'], to: 'new', new_id: 'Q1313790', title: 'Orphic hymns' },
+    ] }], carriers, taken());
+    const [g1, g2] = clusters[0].moves;
+    expect(clusters[0].renamed_to).toBeNull();
+    expect(g1.books[0].after.work_id_aliases).toEqual(['cicero-de-officiis']);
+    expect(g2.books[0].after.work_id_aliases).toEqual([]);
+  });
+
+  it('refuses a slug hand-over when the stayers would keep the same slug, and a new_id already carried', () => {
+    const carriers = new Map([[Q, [cic('s1'), cic('o1')]], ['Q1', [{ ...cic('x'), work_id: 'Q1' }]]]);
+    const t = taken(); t.ids.add('Q1');
+    expect(planSplits([{ work_id: Q, seen: ['s1', 'o1'], moves: [{ books: ['o1'], to: 'new', slug: 'take', title: 'x y' }] }], carriers, t).refused[0].why).toContain('not retitled');
+    expect(planSplits([{ work_id: Q, seen: ['s1', 'o1'], moves: [{ books: ['o1'], to: 'new', new_id: 'Q1', title: 'x y' }] }], carriers, t).refused[0].why).toContain('not free');
+  });
+});

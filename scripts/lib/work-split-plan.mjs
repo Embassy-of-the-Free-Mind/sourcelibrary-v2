@@ -35,6 +35,19 @@
  *     books the reader saw (hidden included), a named book is not in it, a book
  *     moves twice, nothing stays, or a target id is carried by no book / is
  *     itself split in this run.
+ *
+ * Hand-fixed rows (the six wrong-Wikidata clusters, #8293) may also carry:
+ *   row.dissolve: true       every book may leave (an id that names a work none of
+ *                            them is). If all go to ONE id the source becomes an
+ *                            alias there (a rename, as planRemintAliases); else none.
+ *   row.stay: { title }      retitle the books that keep the id; their slug is
+ *                            re-derived from the new title.
+ *   move.new_id: '<id>'      with to:'new', the exact id to use (a verified QID no
+ *                            book carries yet) instead of a minted local one.
+ *   move.slug: 'take'        the group takes the source's slug (the slug names the
+ *                            work THEY are); needs row.stay or row.dissolve.
+ *   move.slug: 'alias'       the source slug becomes an alias on the group, which
+ *                            gets a fresh slug (old URL redirects to them).
  */
 import crypto from 'node:crypto';
 import { deacc, slug, authorTokens, mintAuthorPart } from './work-id-remint.mjs';
@@ -73,6 +86,11 @@ export function workSlugFor(title, author) {
 
 const isLocalId = (w) => typeof w === 'string' && w.startsWith('local:');
 const sameSet = (a, b) => a.length === b.length && a.every((x) => b.includes(x));
+const nightlyTop = (vals) => {
+  const m = new Map();
+  for (const v of vals) if (v) m.set(v, (m.get(v) || 0) + 1);
+  return [...m].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length)[0]?.[0] || null;
+};
 const commonest = (vals) => {
   const m = new Map();
   for (const v of vals) if (v) m.set(v, (m.get(v) || 0) + 1);
@@ -92,6 +110,7 @@ export function planSplits(rows, carriers, taken) {
   const free = (id) => !taken.ids.has(id) && !taken.aliases.has(id) && !claimedIds.has(id);
   const freeSlug = (s) => !taken.slugs.has(s) && !taken.ids.has(s) && !taken.aliases.has(s) && !claimedSlugs.has(s);
   const clusters = [], refused = [];
+  const mintedHere = new Map(); // new id -> { title, work_slug } claimed by an earlier row of this run
 
   for (const r of [...rows].sort((a, b) => a.work_id.localeCompare(b.work_id))) {
     const cur = carriers.get(r.work_id) || [];
@@ -110,12 +129,17 @@ export function planSplits(rows, carriers, taken) {
       }
       if (m.to !== 'new') {
         if (m.to === r.work_id) bad = 'target is the source id';
-        else if (!(carriers.get(m.to) || []).length) bad = `target ${m.to} carried by no book`;
+        else if (!(carriers.get(m.to) || []).length && !mintedHere.has(m.to)) bad = `target ${m.to} carried by no book`;
         else if (sources.has(m.to)) bad = `target ${m.to} is itself split in this run`;
       }
     }
     if (!bad && !moved.size) bad = 'no book moves';
-    if (!bad && moved.size >= cur.length) bad = 'every book moves; nothing keeps the source id';
+    if (!bad && moved.size >= cur.length && !r.dissolve) bad = 'every book moves; nothing keeps the source id';
+    if (!bad && r.dissolve && moved.size < cur.length) bad = 'dissolve names only some carriers';
+    if (!bad && (r.moves || []).some((m) => m.slug) && !(r.stay || r.dissolve)) bad = 'a group takes the source slug but the stayers are not retitled';
+    if (!bad) for (const m of r.moves || []) {
+      if (m.new_id && (m.to !== 'new' || !free(m.new_id) || (carriers.get(m.new_id) || []).length)) bad = `new_id ${m.new_id} is not free`;
+    }
     if (bad) { refuse(bad); continue; }
 
     const stayers = cur.filter((b) => !moved.has(b.id));
@@ -123,6 +147,9 @@ export function planSplits(rows, carriers, taken) {
     // slug as an alias would redirect /work/<slug> the same way the source id would
     const stayerAliases = new Set(stayers.flatMap((b) => [...(b.work_id_aliases || []), b.work_slug].filter(Boolean)));
     const groups = r.moves.map((m) => ({ ...m, books: [...m.books].sort().map((id) => byId.get(id)) }));
+    const sourceSlug = commonest(cur.map((b) => b.work_slug));
+    const dests = new Set(groups.map((g) => (g.to === 'new' ? g.new_id || null : g.to)));
+    const renameTo = r.dissolve && dests.size === 1 && !dests.has(null) ? [...dests][0] : null;
 
     // alias ownership across the moved groups (stayers win outright, never written)
     const owner = new Map();
@@ -139,16 +166,22 @@ export function planSplits(rows, carriers, taken) {
     const out = [];
     groups.forEach((g, gi) => {
       let to, to_existed, title, workSlug, restored = null;
-      if (g.to !== 'new') {
+      if (g.to !== 'new' && mintedHere.has(g.to)) {
+        // joins a work an earlier row of this run creates (rows run in work_id order)
+        to = g.to; to_existed = false; ({ title, work_slug: workSlug } = mintedHere.get(g.to));
+      } else if (g.to !== 'new') {
         const tb = carriers.get(g.to);
         to = g.to; to_existed = true;
-        title = commonest(tb.map((b) => b.work_title)) || g.title;
+        // assign-work-slugs.mjs's own pick (count, then the longer title), so the books
+        // that join do not move the nightly slug of the work they join
+        title = nightlyTop(tb.map((b) => (b.work_title || b.display_title || b.title || '').trim())) || g.title;
         workSlug = commonest(tb.map((b) => b.work_slug));
       } else {
         to_existed = false; title = g.title;
-        const reuse = [...owner].filter(([a, o]) => o === gi && isLocalId(a) && !taken.ids.has(a) && !claimedIds.has(a)
+        const reuse = g.new_id ? [g.new_id] : [...owner].filter(([a, o]) => o === gi && isLocalId(a) && !taken.ids.has(a) && !claimedIds.has(a)
           && g.books.every((b) => (b.work_id_aliases || []).includes(a))).map(([a]) => a).sort();
-        if (reuse.length) { to = reuse[0]; restored = to; }
+        if (g.new_id) to = g.new_id;
+        else if (reuse.length) { to = reuse[0]; restored = to; }
         else {
           const lead = g.books.find((b) => mintAuthorPart(b).part) || g.books[0];
           const part = mintAuthorPart(lead).part || 'anon';
@@ -158,14 +191,18 @@ export function planSplits(rows, carriers, taken) {
           for (let n = 2; !free(to); n++) to = `${base}-${n}`;
         }
         claimedIds.add(to);
+      }
+      if (g.slug === 'take') workSlug = sourceSlug;
+      else if (!to_existed && !(g.to !== 'new' && mintedHere.has(g.to))) {
         const sbase = workSlugFor(g.title, g.books[0].author);
         workSlug = sbase;
         for (let n = 2; !freeSlug(workSlug); n++) workSlug = `${sbase}-${n}`;
         claimedSlugs.add(workSlug);
       }
+      const extra = [...(g.slug === 'alias' && sourceSlug ? [sourceSlug] : []), ...(renameTo ? [r.work_id] : [])];
       const books = g.books.map((b) => {
         const had = b.work_id_aliases || [];
-        const keep = had.filter((a) => owner.get(a) === gi && a !== to && a !== r.work_id);
+        const keep = [...new Set([...had.filter((a) => owner.get(a) === gi && a !== to && a !== r.work_id), ...extra])];
         return {
           id: b.id, visible: b.visible ?? null, hidden: b.hidden === true,
           before: { work_id: b.work_id, work_title: b.work_title ?? null, work_slug: b.work_slug ?? null, work_id_aliases: had },
@@ -173,11 +210,21 @@ export function planSplits(rows, carriers, taken) {
           aliases_dropped: had.filter((a) => !keep.includes(a)),
         };
       });
-      out.push({ to, to_existed, restored, title, work_slug: workSlug, why: g.why, books });
+      if (g.to === 'new') mintedHere.set(to, { title, work_slug: workSlug });
+      out.push({ to, to_existed, joins_new: g.to !== 'new' && !to_existed, restored, title, work_slug: workSlug, why: g.why, books });
     });
+    let stay = null;
+    if (r.stay && stayers.length) {
+      const sbase = workSlugFor(r.stay.title, stayers[0].author);
+      let workSlug = sbase;
+      for (let n = 2; !freeSlug(workSlug); n++) workSlug = `${sbase}-${n}`;
+      claimedSlugs.add(workSlug);
+      stay = { title: r.stay.title, work_slug: workSlug,
+        books: stayers.map((b) => ({ id: b.id, visible: b.visible ?? null, before: { work_title: b.work_title ?? null, work_slug: b.work_slug ?? null } })) };
+    }
     clusters.push({
-      work_id: r.work_id, bar: r.bar, evidence: r.evidence, note: r.note,
-      stays: stayers.map((b) => b.id).sort(), carriers: curIds, moves: out,
+      work_id: r.work_id, bar: r.bar, evidence: r.evidence, note: r.note, dissolve: !!r.dissolve, renamed_to: renameTo,
+      stays: stayers.map((b) => b.id).sort(), stay, carriers: curIds, moves: out,
     });
   }
   return { clusters, refused };

@@ -34,6 +34,7 @@ import path from 'node:path';
 import { planSplits, identityOf, SPLIT_SOURCE, SPLIT_CONFIDENCE } from '../lib/work-split-plan.mjs';
 import { isCompletedCopyOf, COMPLETED_COPY_STATUSES } from '../workers/lib/work-copy-dedup.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { revalidatePaths } from '../lib/revalidate.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (f) => argv.includes(f);
@@ -41,8 +42,8 @@ const val = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : null);
 const APPLY_PLAN = val('--apply');
 const REVERT = val('--revert');
 const ISSUE = 8293;
-const SWEEP = `reviewed-work-splits-${new Date().toISOString().slice(0, 10)}`;
-const ID_FIELDS = { _id: 0, id: 1, work_id: 1, work_title: 1, work_slug: 1, work_id_aliases: 1, work_id_source: 1, work_id_confidence: 1,
+const SWEEP = val('--sweep') || `reviewed-work-splits-${new Date().toISOString().slice(0, 10)}`;
+const ID_FIELDS = { _id: 0, id: 1, work_id: 1, work_title: 1, work_slug: 1, work_id_aliases: 1, work_id_source: 1, work_id_confidence: 1, display_title: 1,
   author: 1, author_id: 1, visible: 1, hidden: 1, title: 1, pages_count: 1, pages_ocr: 1, edition_key: 1, 'pipeline_auto.status': 1 };
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
@@ -102,7 +103,8 @@ async function dryRun() {
     new_ids: newIds.length, restored_retired_ids: newIds.filter((m) => m.restored).length,
     aliases_kept_on_movers: moving.reduce((n, b) => n + b.after.work_id_aliases.length, 0),
     aliases_dropped_from_movers: moving.reduce((n, b) => n + b.aliases_dropped.length, 0),
-    source_id_aliased: 0, // by construction: the planner never adds the source id
+    // a split never aliases its source id; only a whole-cluster rename onto one id does
+    source_id_aliased: moving.filter((b) => b.after.work_id_aliases.includes(b.before.work_id)).length,
     ...report.counts,
   };
   const out = val('--plan-out') || path.join(new URL('../output/', import.meta.url).pathname, `work-splits-plan-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.json`);
@@ -118,7 +120,7 @@ async function readers(clusters, carriers) {
   const src = clusters.map((c) => c.work_id);
   const moved = clusters.flatMap((c) => c.moves.flatMap((m) => m.books.map((b) => ({ ...b, source: c.work_id, to: m.to }))));
   // FT cards are keyed by work_id: the card stays with the source id, moved books lose it
-  const ft = await db.collection('work_translation_history').find({ _id: { $in: src } }, { projection: { _id: 1 } }).toArray();
+  const ft = await db.collection('work_translation_history').find({ _id: { $in: src } }, { projection: { _id: 1, status: 1 } }).toArray();
   // canon-works.ts static workIds that name a source id (the canon page keeps the stayers only)
   const canonSrc = fs.readFileSync(new URL('../../src/lib/canon-works.ts', import.meta.url), 'utf8');
   const canon = src.filter((w) => canonSrc.includes(`'${w}'`));
@@ -127,11 +129,19 @@ async function readers(clusters, carriers) {
   // orchestrator copy-dedup: a moved book with no full text that a stayer stood in for
   // becomes eligible for OCR/translation after the move = SPEND
   const spend = [];
+  const done = (b) => b.hidden !== true && b.pages_count > 0 && COMPLETED_COPY_STATUSES.includes(b.pipeline_auto?.status);
+  const byId = new Map([...carriers.values()].flat().map((b) => [b.id, b]));
+  // every book's work AFTER the run: moved books on their destination, the rest where they are
+  const after = new Map([...byId.values()].map((b) => [b.id, b.work_id]));
+  for (const c of clusters) for (const m of c.moves) for (const mb of m.books) after.set(mb.id, m.to);
+  const members = new Map();
+  for (const [id, w] of after) { if (!members.has(w)) members.set(w, []); members.get(w).push(byId.get(id)); }
   for (const c of clusters) {
-    const sibs = (carriers.get(c.work_id) || []).filter((b) => c.stays.includes(b.id) && b.hidden !== true && b.pages_count > 0
-      && COMPLETED_COPY_STATUSES.includes(b.pipeline_auto?.status));
+    const sibs = (carriers.get(c.work_id) || []).filter(done);
     for (const m of c.moves) for (const mb of m.books) {
-      const b = (carriers.get(c.work_id) || []).find((x) => x.id === mb.id);
+      const b = byId.get(mb.id);
+      // still a copy of something on its new work (e.g. De officiis editions moving together)
+      if ((members.get(m.to) || []).some((s) => done(s) && isCompletedCopyOf({ ...b, work_id: m.to }, { ...s, work_id: m.to }))) continue;
       // a book already past the pipeline, or hidden, is not a candidate whatever its work
       if (b.hidden === true || !(b.pages_count > 0) || COMPLETED_COPY_STATUSES.includes(b.pipeline_auto?.status)) continue;
       if (sibs.some((s) => isCompletedCopyOf(b, s))) spend.push({ id: b.id, source: c.work_id, status: b.pipeline_auto?.status ?? null, pages_count: b.pages_count, pages_ocr: b.pages_ocr ?? 0, visible: b.visible ?? null });
@@ -143,15 +153,23 @@ async function readers(clusters, carriers) {
   const newMulti = clusters.flatMap((c) => c.moves.filter((m) => !m.to_existed && m.books.filter((b) => b.visible !== false).length >= 2));
   return {
     counts: {
-      ft_cards_on_source_ids: ft.length, canon_entries_on_source_ids: canon.length, pending_queue_rows_citing_source: queue,
+      ft_cards_on_source_ids: ft.length, ft_cards_settled_on_source_ids: ft.filter((f) => f.status !== 'under_review').length, canon_entries_on_source_ids: canon.length, pending_queue_rows_citing_source: queue,
       copy_dedup_unblocked: spend.length, copy_dedup_unblocked_ocr_pages: spend.reduce((n, s) => n + Math.max(0, (s.pages_count || 0) - (s.pages_ocr || 0)), 0),
       copy_dedup_unblocked_pages_total: spend.reduce((n, s) => n + (s.pages_count || 0), 0),
       visible_books_moving: visibleMoves.length, work_pages_to_revalidate: workPaths.size, book_pages_to_revalidate: visibleMoves.length,
       new_multi_edition_works: newMulti.length,
     },
-    detail: { ft_cards: ft.map((f) => f._id), canon, copy_dedup_unblocked: spend },
+    detail: { ft_cards: ft.map((f) => [f._id, f.status]), canon, copy_dedup_unblocked: spend },
   };
 }
+
+// The work that receives a MAJORITY of the source's books, for re-keying what is keyed by the source id.
+const mainDest = (c) => {
+  const n = new Map();
+  for (const m of c.moves) n.set(m.to, (n.get(m.to) || 0) + m.books.length);
+  const [to, k] = [...n].sort((a, b) => b[1] - a[1])[0] || [];
+  return to && k * 2 > c.carriers.length ? { to, title: c.moves.find((m) => m.to === to).title } : null; // a majority, not a plurality
+};
 
 async function apply(planFile) {
   const plan = JSON.parse(fs.readFileSync(planFile, 'utf8'));
@@ -159,15 +177,21 @@ async function apply(planFile) {
   const targets = [...new Set(plan.clusters.flatMap((c) => c.moves.filter((m) => m.to_existed).map((m) => m.to)))];
   const newIds = plan.clusters.flatMap((c) => c.moves.filter((m) => !m.to_existed).map((m) => m.to));
   const now = await carriersOf([...new Set([...srcIds, ...targets, ...newIds])]);
+  const cards = db.collection('work_translation_history');
   const t0 = new Date();
-  let moved = 0, stale = 0;
-  const skipped = [];
+  let moved = 0, stale = 0, retitled = 0, cardsCopied = 0, queueSuperseded = 0;
+  const skipped = [], paths = new Set(), bookPaths = new Set();
   for (const c of plan.clusters) {
     const cur = (now.get(c.work_id) || []).map(identityOf).sort();
     if (JSON.stringify(cur) !== JSON.stringify(plan.identity[c.work_id])) { skipped.push([c.work_id, 'a carrier changed since the plan']); continue; }
     const gone = c.moves.find((m) => (m.to_existed ? !(now.get(m.to) || []).length : (now.get(m.to) || []).length));
     if (gone) { skipped.push([c.work_id, gone.to_existed ? `target ${gone.to} no longer carried` : `new id ${gone.to} now taken`]); continue; }
-    const log = { work_id: c.work_id, stays: c.stays, moves: [], issue: ISSUE, sweep: SWEEP, reviewed_from: plan.reviewed_from, plan: planFile, applied_at: t0, reverted_at: null };
+    // a SETTLED first-translation card is a public claim about the books under this id: moving
+    // books out of it changes what their pages say. Only silent (under_review) cards pass.
+    const card = await cards.findOne({ _id: c.work_id });
+    if (card && card.status !== 'under_review' && !flag('--allow-settled-cards')) { skipped.push([c.work_id, `settled FT card (${card.status}) on the source id`]); continue; }
+    const log = { work_id: c.work_id, stays: c.stays, dissolve: !!c.dissolve, renamed_to: c.renamed_to ?? null, moves: [], stay: null, card_copy: null, queue_superseded: [],
+      issue: ISSUE, sweep: SWEEP, reviewed_from: plan.reviewed_from, plan: planFile, applied_at: t0, reverted_at: null };
     for (const m of c.moves) {
       const done = [];
       for (const b of m.books) {
@@ -176,9 +200,40 @@ async function apply(planFile) {
         const r = await books.updateOne({ id: b.id, work_id: c.work_id }, { $set: {
           work_id: m.to, work_title: m.title, work_slug: m.work_slug, work_id_aliases: b.after.work_id_aliases,
           work_id_source: SPLIT_SOURCE, work_id_confidence: SPLIT_CONFIDENCE, updated_at: t0 } });
-        if (r.matchedCount) { moved++; done.push(b.id); } else stale++;
+        if (r.matchedCount) { moved++; done.push(b.id); if (b.visible !== false) bookPaths.add(`/book/${b.id}`); } else stale++;
       }
       log.moves.push({ to: m.to, to_existed: m.to_existed, restored: m.restored, title: m.title, work_slug: m.work_slug, books: done, why: m.why });
+      paths.add(`/work/${encodeURIComponent(m.work_slug || m.to)}`); paths.add(`/work/${encodeURIComponent(m.to)}`);
+    }
+    if (c.stay) {
+      for (const b of c.stay.books) {
+        await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'work-title-after-split',
+          detail: { work_id: c.work_id, title_from: b.before.work_title, title_to: c.stay.title, slug_from: b.before.work_slug, slug_to: c.stay.work_slug, issue: ISSUE } });
+        const r = await books.updateOne({ id: b.id, work_id: c.work_id }, { $set: { work_title: c.stay.title, work_slug: c.stay.work_slug, updated_at: t0 } });
+        retitled += r.modifiedCount;
+        if (b.visible !== false) bookPaths.add(`/book/${b.id}`);
+      }
+      log.stay = c.stay;
+      paths.add(`/work/${encodeURIComponent(c.stay.work_slug)}`);
+    }
+    for (const b of (now.get(c.work_id) || [])) if (b.work_slug) paths.add(`/work/${encodeURIComponent(b.work_slug)}`);
+    paths.add(`/work/${encodeURIComponent(c.work_id)}`);
+    // a silent card follows the books when most of them leave for one work that has none
+    const dest = mainDest(c);
+    if (card && dest && !(await cards.findOne({ _id: dest.to }, { projection: { _id: 1 } }))) {
+      const { _id, ...rest } = card;
+      await cards.insertOne({ ...rest, _id: dest.to, work_id: dest.to, work_title: dest.title, status: 'under_review',
+        seeded_from: `work-split-${ISSUE}:${c.work_id}`, seeded_at: t0 });
+      log.card_copy = { from: c.work_id, to: dest.to };
+      cardsCopied++;
+    }
+    // merge-queue pairs were scored on the fused cluster; they no longer describe either side
+    const q = await db.collection('work_merge_queue').find({ status: 'pending', $or: [{ a: c.work_id }, { b: c.work_id }] }, { projection: { _id: 1 } }).toArray();
+    if (q.length) {
+      await db.collection('work_merge_queue').updateMany({ _id: { $in: q.map((x) => x._id) }, status: 'pending' },
+        { $set: { status: 'superseded', superseded_by: `work-split-${ISSUE}`, sweep: SWEEP, updated_at: t0 } });
+      log.queue_superseded = q.map((x) => x._id);
+      queueSuperseded += q.length;
     }
     log.before = plan.backup.filter((d) => c.moves.some((m) => m.books.some((b) => b.id === d.id)))
       .map((d) => ({ id: d.id, work_id: d.work_id ?? null, work_title: d.work_title ?? null, work_slug: d.work_slug ?? null, work_id_aliases: d.work_id_aliases ?? null,
@@ -186,12 +241,16 @@ async function apply(planFile) {
     await db.collection('work_id_splits').insertOne(log);
   }
   for (const [w, why] of skipped) console.log(`  skipped ${w}: ${why}`);
-  console.log(`APPLIED sweep ${SWEEP} — ${moved} books moved, ${stale} stale, ${skipped.length} clusters skipped. Now run scripts/workers/sync-books-catalog.mjs; revert with --revert ${SWEEP} --apply.`);
+  console.log(`APPLIED sweep ${SWEEP} — ${moved} books moved, ${retitled} stayers retitled, ${stale} stale, ${skipped.length} clusters skipped; ${cardsCopied} silent FT cards copied, ${queueSuperseded} queue rows superseded.`);
+  const list = [...paths, ...bookPaths];
+  try { for (let i = 0; i < list.length; i += 100) await revalidatePaths(list.slice(i, i + 100), { quiet: true }); console.log(`revalidated ${list.length} paths`); }
+  catch (e) { console.log(`REVALIDATE FAILED (${e.message}) — re-run: ${JSON.stringify(list)}`); }
+  console.log(`Now run scripts/workers/sync-books-catalog.mjs; revert with --revert ${SWEEP} --apply.`);
 }
 
 async function revert(sweep, really) {
   const rows = await db.collection('work_id_splits').find({ sweep, reverted_at: null }).toArray();
-  let restored = 0, moved_on = 0;
+  let restored = 0, moved_on = 0, unretitled = 0;
   for (const row of rows) {
     for (const m of row.moves) for (const id of m.books) {
       const before = row.before.find((b) => b.id === id);
@@ -208,7 +267,16 @@ async function revert(sweep, really) {
       }
       restored++;
     }
+    for (const b of row.stay?.books || []) {
+      if (really) {
+        const r = await books.updateOne({ id: b.id, work_id: row.work_id, work_slug: row.stay.work_slug },
+          { $set: { work_title: b.before.work_title, work_slug: b.before.work_slug, updated_at: new Date() } });
+        unretitled += r.modifiedCount;
+      } else unretitled++;
+    }
+    if (really && row.card_copy) await db.collection('work_translation_history').deleteOne({ _id: row.card_copy.to, seeded_from: `work-split-${ISSUE}:${row.work_id}` });
+    if (really && row.queue_superseded?.length) await db.collection('work_merge_queue').updateMany({ _id: { $in: row.queue_superseded }, status: 'superseded' }, { $set: { status: 'pending', updated_at: new Date() }, $unset: { superseded_by: '', sweep: '' } });
     if (really) await db.collection('work_id_splits').updateOne({ _id: row._id }, { $set: { reverted_at: new Date() } });
   }
-  console.log(`${really ? 'REVERTED' : 'DRY RUN revert'} ${sweep}: ${rows.length} clusters, ${restored} books restored, ${moved_on} left (moved since).${really ? ' Now run sync-books-catalog.mjs.' : ' Pass --apply to write.'}`);
+  console.log(`${really ? 'REVERTED' : 'DRY RUN revert'} ${sweep}: ${rows.length} clusters, ${restored} books restored, ${unretitled} stayers un-retitled, ${moved_on} left (moved since).${really ? ' Now run sync-books-catalog.mjs.' : ' Pass --apply to write.'}`);
 }
