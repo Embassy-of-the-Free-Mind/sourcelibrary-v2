@@ -44,9 +44,10 @@
 
 import { ObjectId, type Db, type Document } from 'mongodb';
 import { checkDuplicate, editionYear, sourceFingerprints, type DedupCandidate, type DedupMatch } from './dedup';
-import { buildEditionKey, editionSurname, normalizeEditionTitle } from './edition-key';
+import { buildEditionKey, editionSurname, normalizeEditionTitle, DENSE_SCRIPT, type EditionKeyResult } from './edition-key';
 import { BOOK_SEARCH_INDEX } from './atlas-search';
 import { relationsOfIds, type RelationRole } from './book-relations';
+import { foldSimplifiedHan } from './search/han-fold';
 
 export type HoldingsVerdict =
   | 'same_object'
@@ -305,8 +306,53 @@ export function titleCoverage(query: string, candidate: string): { coverage: num
   if (q.size === 0) return { coverage: 0, hits: 0 };
   const c = rankingTokens(candidate);
   let hits = 0;
-  for (const t of q) if (c.has(t)) hits++;
+  // A script written without spaces is one token per title, and a catalogue
+  // appends the juan to it (本草綱目 → 本草綱目卷上之中): count containment.
+  for (const t of q) if (c.has(t) || (DENSE_SCRIPT.test(t) && [...c].some((x) => x.includes(t)))) hits++;
   return { coverage: hits / q.size, hits };
+}
+
+/** A letter outside the Latin script — Han, Greek, Arabic, Tibetan, Cyrillic… */
+const NON_LATIN_LETTER = /(?=\p{L})\P{Script=Latin}/u;
+
+/** Name words in every script (marks kept, so Tibetan and Devanagari stay whole).
+ *  `editionSurname()` is ASCII-only and stays so — it builds the STORED key. */
+export function nameTokens(name?: string | null): string[] {
+  return String(name || '').normalize('NFKC').toLowerCase().split(/[^\p{L}\p{M}\p{N}]+/u).filter(Boolean);
+}
+
+/** Arabic name particles: "son of", "father of". Shared by unrelated people. */
+const NAME_PARTICLES = new Set(['ابن', 'بن', 'بنت', 'ابو', 'أبو', 'بنو']);
+
+/**
+ * Same author, judged in any script. The Latin surname when both sides have one;
+ * otherwise a non-Latin name word the two share — whole for Arabic or Greek
+ * names, contained for Han, where a catalogue writes 李時珍撰 or (明)李時珍.
+ */
+export function sameAuthorAnyScript(query: string, held: string): boolean {
+  const s = editionSurname(query);
+  if (s && s === editionSurname(held)) return true;
+  const heldTokens = nameTokens(held);
+  return nameTokens(query).some((t) => {
+    if (!NON_LATIN_LETTER.test(t) || NAME_PARTICLES.has(t)) return false;
+    if (DENSE_SCRIPT.test(t)) return [...t].length >= 2 && heldTokens.some((h) => h.includes(t));
+    return [...t].length >= 3 && heldTokens.includes(t);
+  });
+}
+
+/** Classify a stored `edition_key` sharing the query's title + surname, against
+ *  the edition looked for: another year or volume, a volume-less record, or this. */
+function classifyKeyRow(editionKey: string, ek: EditionKeyResult): { reason: HoldingReason; detail: string } {
+  const segs = editionKey.split('|');
+  const y = segs.length >= 4 && segs[segs.length - 2] !== '' ? parseInt(segs[segs.length - 2], 10) : null;
+  const volSeg = segs[segs.length - 1] || 'v';
+  const v = volSeg === 'v' ? null : parseInt(volSeg.slice(1), 10);
+  const otherVolume = ek.parts.volume != null && v != null && v !== ek.parts.volume;
+  const otherYear = ek.parts.year != null && y != null && y !== ek.parts.year;
+  if (otherVolume || otherYear) return { reason: 'other_edition', detail: otherYear ? `Same title and author, year ${y}.` : `Same title and author, volume ${v}.` };
+  if (ek.parts.volume != null && v == null) return VOLUME_UNKNOWN;
+  if (ek.parts.year != null && y != null) return { reason: 'same_edition', detail: `Same title, author and year (${y}).` };
+  return { reason: 'same_edition_year_unknown', detail: 'Same title and author; a year is missing on one side, so this may be another printing.' };
 }
 
 interface NearHit { id: string; coverage: number; sameAuthor: boolean }
@@ -347,9 +393,15 @@ async function nearTitleHits(db: Db, title: string, author: string, limit: numbe
 
 export async function checkHoldings(
   db: Db,
-  input: HoldingsInput,
+  rawInput: HoldingsInput,
   opts: { nearTitleLimit?: number; otherEditionLimit?: number } = {}
 ): Promise<HoldingsResult> {
+  // The corpus prints traditional forms; a Simplified 本草纲目 must find 本草綱目 (#8084).
+  const input: HoldingsInput = {
+    ...rawInput,
+    title: rawInput.title ? foldSimplifiedHan(rawInput.title) : rawInput.title,
+    author: rawInput.author ? foldSimplifiedHan(rawInput.author) : rawInput.author,
+  };
   const nearLimit = opts.nearTitleLimit ?? 6;
   const otherLimit = opts.otherEditionLimit ?? 15;
   const limits: string[] = [];
@@ -413,27 +465,54 @@ export async function checkHoldings(
         // Compared against the edition we are looking for. On the caller's
         // own title these same-edition rows were already found by tier 2; on
         // a record-derived key (URL-only lookup) they were not, so classify.
-        const segs = String(r.edition_key || '').split('|');
-        const y = segs.length >= 4 && segs[segs.length - 2] !== '' ? parseInt(segs[segs.length - 2], 10) : null;
-        const volSeg = segs[segs.length - 1] || 'v';
-        const v = volSeg === 'v' ? null : parseInt(volSeg.slice(1), 10);
-        const otherVolume = ek.parts.volume != null && v != null && v !== ek.parts.volume;
-        const otherYear = ek.parts.year != null && y != null && y !== ek.parts.year;
-        if (otherVolume || otherYear) {
-          add(toCandidate(r, coll, 'other_edition', otherYear ? `Same title and author, year ${y}.` : `Same title and author, volume ${v}.`));
-        } else if (ek.parts.volume != null && v == null) {
-          add(toCandidate(r, coll, VOLUME_UNKNOWN.reason, VOLUME_UNKNOWN.detail));
-        } else if (ek.parts.year != null && y != null) {
-          add(toCandidate(r, coll, 'same_edition', `Same title, author and year (${y}).`));
-        } else {
-          add(toCandidate(r, coll, 'same_edition_year_unknown', 'Same title and author; a year is missing on one side, so this may be another printing.'));
+        const { reason, detail } = classifyKeyRow(String(r.edition_key || ''), ek);
+        add(toCandidate(r, coll, reason, detail));
+      }
+    }
+  }
+
+  // 4b. A title in a non-Latin script. Its stored key is rarely the query's:
+  // the surname slot is empty for a name written in that script (the key is
+  // ASCII-surnamed), and a catalogue appends a juan or a romanization to the
+  // title (本草綱目卷上之中, "كتاب الجبر والمقابلة kitab aljabr"). So search
+  // keys that BEGIN with the title and judge the author on the record (#8084).
+  const lookupAuthor = titleFromRecord && anchor ? String(anchor.author || '') : String(input.author || '');
+  const nonLatinTitle = !!ek.key && NON_LATIN_LETTER.test(ek.parts.title);
+  if (nonLatinTitle) {
+    const prefix = new RegExp(`^${escapeRegex(ek.parts.title)}`);
+    let unconfirmed = 0;
+    for (const coll of ['books', 'books_warehouse'] as const) {
+      const rows = await db.collection(coll).find({ edition_key: prefix }, { projection: BOOK_PROJ }).limit(otherLimit * 2).toArray();
+      for (const r of rows) {
+        if (found.has(idOf(r))) continue;
+        const key = String(r.edition_key || '');
+        const heldTitle = key.split('|')[0];
+        // A Latin-script title must end at a word; 史記 does not need to.
+        if (heldTitle !== ek.parts.title && !DENSE_SCRIPT.test(ek.parts.title) && heldTitle[ek.parts.title.length] !== ' ') continue;
+        if (lookupAuthor && sameAuthorAnyScript(lookupAuthor, String(r.author || ''))) {
+          if (heldTitle === ek.parts.title) {
+            const { reason, detail } = classifyKeyRow(key, ek);
+            add(toCandidate(r, coll, reason, detail));
+          } else {
+            const y = editionYear(r as { year?: number | null; published?: string | null });
+            const sameYear = ek.parts.year != null && y === ek.parts.year;
+            add(toCandidate(r, coll, sameYear ? 'title_author_near_same_year' : 'title_author_near',
+              `Same author; the held title begins with this one${y != null ? ` (year ${y})` : ''}: a volume, another edition, or this one catalogued at more length.`));
+          }
+        } else if (unconfirmed < nearLimit) {
+          unconfirmed++;
+          add(toCandidate(r, coll, 'near_title', 'The held title begins with this one; the author is not confirmed. Check by eye.'));
         }
       }
     }
-  } else if (!ek.key) {
+  }
+
+  if (!ek.key) {
     limits.push('No usable title, so other editions and the same edition were not searched.');
-  } else {
-    limits.push('No author, so other editions were not searched by title + author.');
+  } else if (!ek.parts.author && !(nonLatinTitle && nameTokens(lookupAuthor).length > 0)) {
+    limits.push(nameTokens(lookupAuthor).length > 0
+      ? 'The author is written in a script the edition key does not carry, so other editions were not searched by title + author.'
+      : 'No author, so other editions were not searched by title + author.');
   }
 
   // 5. The same work (`work_id`) — other editions and translations.
