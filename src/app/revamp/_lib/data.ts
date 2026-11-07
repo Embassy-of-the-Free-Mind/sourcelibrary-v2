@@ -8,7 +8,7 @@ import type { Overview } from '../_components/OverviewBand';
 /* Reads a saved snapshot of public API output. No database, no live calls. */
 const SNAP = path.join(process.cwd(), 'src/app/revamp/_data/snap');
 function read<T>(name: string): T | null {
-  try { return JSON.parse(fs.readFileSync(path.join(SNAP, `${name}.json`), 'utf8')) as T; } catch (e) { console.error('[revamp] read', name, SNAP, e); return null; }
+  try { return JSON.parse(fs.readFileSync(path.join(SNAP, `${name}.json`), 'utf8')) as T; } catch { return null; }
 }
 type Rec = Record<string, unknown>;
 export function dataFile<T>(name: string): T | null {

@@ -60,7 +60,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Art",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -78,7 +80,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indigenous traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -93,7 +97,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Agriculture",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -153,7 +159,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Alchemy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -201,7 +209,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indigenous traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -231,7 +241,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit, but it names a civilisation.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient Egyptian religion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -261,7 +273,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Poetry",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -276,7 +290,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit, but it names a religion.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient Greek religion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -291,7 +307,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient history",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -306,7 +324,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Music theory",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -351,7 +371,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mesmerism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -366,7 +388,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit with a hook, but it is a standard category of texts.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Bible",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -381,7 +405,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Arabic alchemy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -396,7 +422,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 10 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic magic",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -411,7 +439,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic medicine",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -426,7 +456,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Architecture",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -441,7 +473,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Aristotelianism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -456,7 +490,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit, but it covers a national literary tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Eastern Christianity",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -471,7 +507,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A broad form of book rather than a topic, but it works as a top-level Subject.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Arts",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -531,7 +569,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Astrology and divination",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -546,7 +586,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit, but it names a medical tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ayurveda",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -561,7 +603,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Aztec and Nahua culture",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -606,7 +650,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit, but it names a regional religion.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient religions and mythology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -681,7 +727,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "A place, so kind provenance is wrong. The plan lists it as a Subject.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Tibetan Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -696,7 +744,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Bible",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -741,7 +791,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -756,7 +808,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -786,7 +840,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -831,7 +887,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Omens and portents",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -846,7 +904,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Celtic religion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -910,7 +970,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese divination",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -928,7 +990,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Buddhist scriptures",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -946,7 +1010,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "East Asian religion and thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -964,7 +1030,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 12 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Daoism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -982,7 +1050,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese divination",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1000,7 +1070,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1018,7 +1090,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese history",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1036,7 +1110,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese medicine",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1051,7 +1127,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A stub description, but a real topic with 105 books.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese military writing",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1066,7 +1144,9 @@
 "proposed_subject": null,
 "confidence": "low",
 "reason": "A stub description, but the topic is real. Overlaps Chinese Natural Knowledge.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese natural history",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1084,7 +1164,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese natural history",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1099,7 +1181,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Chinese technology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1114,7 +1198,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Christian mysticism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1129,7 +1215,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Christianity",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1159,7 +1247,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1177,7 +1267,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Confucian classics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1207,7 +1299,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Hermeticism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1237,7 +1331,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Music of the spheres",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1252,7 +1348,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Astronomy and cosmology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1282,7 +1380,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 2 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Daoism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1297,7 +1397,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 6 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Daoist alchemy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1315,7 +1417,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Daoism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1345,7 +1449,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Demonology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1360,7 +1466,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 7 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Psychology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1420,7 +1528,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Divination",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1435,7 +1545,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Prayer and devotion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1450,7 +1562,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Drama",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1555,7 +1669,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad place or people the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "East Asian religion and thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1570,7 +1686,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 5 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Erotic literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1585,7 +1703,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Education",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1630,7 +1750,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Encyclopaedias",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1660,7 +1782,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Enlightenment thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1705,7 +1829,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Erotic literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1753,7 +1879,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 7 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Eastern Christianity",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1768,7 +1896,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Erotic literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1783,7 +1913,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Experimental science",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1798,7 +1930,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Fables",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1813,7 +1947,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Psychology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1828,7 +1964,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1888,7 +2026,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Neoplatonism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1903,7 +2043,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Food and drink",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1948,7 +2090,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Freemasonry",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -1963,7 +2107,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Galenic medicine",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2008,7 +2154,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Geography and travel",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2023,7 +2171,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Christian mysticism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2053,7 +2203,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Gnosticism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2158,7 +2310,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Herbals",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2218,7 +2372,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Esoteric traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2233,7 +2389,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Hinduism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2248,7 +2406,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "History",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2278,7 +2438,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 6 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Native North American traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2293,7 +2455,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Astrology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2308,7 +2472,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Renaissance humanism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2323,7 +2489,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Secret societies",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2371,7 +2539,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A tradition. Duplicates Puranas & Epics, so these want merging.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian epics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2401,7 +2571,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian mathematics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2434,7 +2606,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2449,7 +2623,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Tantra",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2464,7 +2640,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian alchemy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2479,7 +2657,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 14 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Tantra",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2494,7 +2674,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian religions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2527,7 +2709,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed exhibit, but it names a broad tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indigenous traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2572,7 +2756,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islam",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2587,7 +2773,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic science",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2602,7 +2790,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic magic",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2620,7 +2810,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2650,7 +2842,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Islamic science",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2665,7 +2859,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Jainism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2695,7 +2891,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Kabbalah",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2710,7 +2908,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Judaism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2725,7 +2925,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Jewish philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2758,7 +2960,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian astrology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2773,7 +2977,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Kabbalah",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2803,7 +3009,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Erotic literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2818,7 +3026,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 10 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Tantra",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2851,7 +3061,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Alchemical apparatus",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2866,7 +3078,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient history",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2926,7 +3140,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2956,7 +3172,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Magic and witchcraft",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -2971,7 +3189,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mahayana Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3016,7 +3236,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Manichaeism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3046,7 +3268,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mathematics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3061,7 +3285,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Maya civilisation",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3076,7 +3302,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Machines",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3091,7 +3319,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Medicine",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3106,7 +3336,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 12 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Heresy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3136,7 +3368,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A region. Overlaps Aztec & Nahua and Maya.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mesoamerican religion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3181,7 +3415,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "War",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3211,7 +3447,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 12 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mystery religions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3226,7 +3464,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "A field of thought with no kind set.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ethics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3259,7 +3499,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Music",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3274,7 +3516,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A real field, though small and with its own custom page.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Fungi",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3289,7 +3533,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Meditation",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3304,7 +3550,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mysticism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3319,7 +3567,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient religions and mythology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3349,7 +3599,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Natural history",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3364,7 +3616,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Natural magic",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3379,7 +3633,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Natural philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3394,7 +3650,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 3 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Native North American traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3409,7 +3667,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Neoplatonism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3439,7 +3699,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A tradition and region. Overlaps Norse & Germanic.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Norse religion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3484,7 +3746,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 13 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Optics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3499,7 +3763,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Comparative religion",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3514,7 +3780,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Mystery religions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3529,7 +3797,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 5 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Native North American traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3544,7 +3814,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A stub description, but a real tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Fables",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3634,7 +3906,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Paracelsianism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3649,7 +3923,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Paracelsianism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3664,7 +3940,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real place or people, but with only 3 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Native North American traditions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3709,7 +3987,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Pharmacy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3724,7 +4004,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Christian theology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3754,7 +4036,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Platonism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3769,7 +4053,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Poetry",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3799,7 +4085,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 9 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Economics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3877,7 +4165,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Prose fiction",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3892,7 +4182,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Psychology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3907,7 +4199,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Psychology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3925,7 +4219,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A tradition. Duplicates Epics & Purāṇas, so these want merging.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian epics",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3940,7 +4236,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Quran",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3955,7 +4253,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Reformation",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -3985,7 +4285,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A field. Overlaps Architecture and Renaissance Architecture.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Architecture",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4000,7 +4302,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Renaissance humanism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4030,7 +4334,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Music theory",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4045,7 +4351,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Natural philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4060,7 +4368,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4075,7 +4385,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Political thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4090,7 +4402,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Political thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4120,7 +4434,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ritual magic",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4150,7 +4466,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Canon and Roman law",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4195,7 +4513,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Rosicrucianism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4210,7 +4530,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Poetry",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4255,7 +4577,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4270,7 +4594,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 14 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Political thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4285,7 +4611,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Eastern Christianity",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4360,7 +4688,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Sacred texts",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4405,7 +4735,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed curated, but it is a broad topic of 158 books.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ships and shipbuilding",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4420,7 +4752,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Secret societies",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4435,7 +4769,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Heresy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4450,7 +4786,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Shinto",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4510,7 +4848,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4540,7 +4880,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Political thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4555,7 +4897,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Dreams",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4585,7 +4929,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Political thought",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4600,7 +4946,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad place or people the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian religions",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4615,7 +4963,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Necromancy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4645,7 +4995,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Spiritual alchemy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4690,7 +5042,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "A school of thought with no kind set.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Stoicism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4705,7 +5059,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A field, but sits oddly under Literature and overlaps Games.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Games",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4720,7 +5076,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A tradition. Overlaps Sufism and needs a clearer scope.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Sufism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4738,7 +5096,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A tradition. Duplicates Sufism & Islamic Mysticism, so these want merging.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Sufism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4753,7 +5113,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A tradition. Duplicates Sufism, so these want merging.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Sufism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4768,7 +5130,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Typed exhibit, but it simply names a religious tradition.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Ancient religions and mythology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4813,7 +5177,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Eastern Christianity",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4843,7 +5209,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Secret societies",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4948,7 +5316,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Demonology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4963,7 +5333,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a broad tradition or field the books are about.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Christian theology",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4978,7 +5350,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A movement with narrower records under it, though typed curated.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Theosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -4993,7 +5367,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Theosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5008,7 +5384,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Theravada Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5038,7 +5416,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Reads as a tradition, though its dedication suggests someone shaped it.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Tibetan Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5053,7 +5433,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Tibetan Buddhism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5071,7 +5453,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Indian philosophy",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5086,7 +5470,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Vedas",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5146,7 +5532,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 9 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Food and drink",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5161,7 +5549,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Literature",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5176,7 +5566,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Witchcraft",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5191,7 +5583,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "A narrow topic under Demonology, with a curated feel.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Witchcraft",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5224,7 +5618,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Fables",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5239,7 +5635,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Music",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5254,7 +5652,9 @@
 "proposed_subject": null,
 "confidence": "low",
 "reason": "A catch-all for everything outside Europe, so its children may be better Subjects than it is.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Religion and mysticism",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5287,7 +5687,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Typed curated, but it is a broad tradition of 122 books.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Yoga",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5305,7 +5707,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Yoga",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5324,7 +5728,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a place or people, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Yoga",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5354,7 +5760,9 @@
 "proposed_subject": null,
 "confidence": "medium",
 "reason": "Names a real tradition or field, but with only 13 books it may be too small to stand alone.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Zen",
+"merge_into": null
 },
 {
 "source": "collection",
@@ -5369,7 +5777,9 @@
 "proposed_subject": null,
 "confidence": "high",
 "reason": "Names a tradition or field, so it is a narrower Subject and not a selection.",
-"first_pass": "subject"
+"first_pass": "subject",
+"subject_term": "Zoroastrianism",
+"merge_into": null
 },
 {
 "source": "gallery",
