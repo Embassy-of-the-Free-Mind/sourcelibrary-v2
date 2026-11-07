@@ -26,6 +26,7 @@ import {
   loadWatchlist, classesForLanguage, screenPage,
   TRANSLATION_PREFILTER as regexFilterTranslation, OCR_PREFILTER as regexFilterOcr,
 } from '../lib/loaded-terms.mjs';
+import { getTranslationText } from '../lib/translation-text.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (f, d = null) => { const i = args.indexOf(f); return i >= 0 && i + 1 < args.length ? args[i + 1] : d; };
@@ -80,12 +81,12 @@ for (const b of books) {
   if (!cls.length) { skippedEnglish++; continue; }
   const cursor = db.collection('pages').find(
     { book_id: b.id, 'translation.data': regexFilterTranslation, 'ocr.data': regexFilterOcr },
-    { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'word_alignment.pairs': 1 } },
+    { projection: { id: 1, page_number: 1, 'ocr.data': 1, translation: 1, 'word_alignment.pairs': 1 } },
   ).batchSize(1000);
   for await (const p of cursor) {
     pagesScanned++;
     const hits = screenPage(
-      { ocr: p.ocr?.data, translation: p.translation?.data, alignment: p.word_alignment?.pairs },
+      { ocr: p.ocr?.data, translation: getTranslationText(p), alignment: p.word_alignment?.pairs },
       cls, { window: WINDOW },
     );
     if (!hits.length) continue;
