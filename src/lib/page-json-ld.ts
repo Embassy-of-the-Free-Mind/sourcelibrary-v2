@@ -9,6 +9,7 @@ import type { Book, Page } from '@/lib/types';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { isEnglishOriginalBook } from '@/lib/english-original-text';
 import { facingTranslationOf, leafRole } from '@/lib/facing-translation';
+import { getTranslationText } from '@/lib/translation-text';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -21,12 +22,13 @@ import { facingTranslationOf, leafRole } from '@/lib/facing-translation';
 export function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: string): Record<string, unknown> | null {
   if ((page as unknown as { seo_indexable?: boolean }).seo_indexable !== true) return null;
   const bookTitle = book.display_title || book.title;
-  const raw = page.translation?.data || page.ocr?.data || '';
+  const translation = getTranslationText(page);
+  const raw = translation || page.ocr?.data || '';
   // A Loeb's English leaf (#8321) excerpts the printed English: its translator
   // is the edition's, never Source Library. `page` arrives already served, so a
   // withheld rewording has no `translation` left.
   const facing = facingTranslationOf(book);
-  const printedEnglish = !!facing && !page.translation?.data && leafRole(page.ocr?.data) === 'translation';
+  const printedEnglish = !!facing && !translation && leafRole(page.ocr?.data) === 'translation';
   const clean = stripEditorialWrappers(raw).trim();
   const excerpt = clean.length > 500 ? clean.slice(0, 497) + '…' : clean;
   const work = {
