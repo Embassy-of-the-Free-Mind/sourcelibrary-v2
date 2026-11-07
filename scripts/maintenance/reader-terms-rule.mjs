@@ -44,8 +44,10 @@ export const EXPRESSION = [
   'not http.user_agent contains "sourcelibrary-"',
 ].join(' and ');
 
-// Cloudflare limits a custom response's size; check the length printed by --status.
-export const PAGE = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Before you read - Source Library</title><style>body{font:18px/1.5 Georgia,serif;background:#faf8f3;color:#2c2620;margin:0;padding:48px 16px}main{max-width:520px;margin:auto}a{color:#8b4a2b}label{display:block;margin:24px 0}button{font:inherit;padding:10px 20px;background:#2c2620;color:#fff;border:0;border-radius:6px;cursor:pointer}small{display:block;margin-top:32px;color:#6b6258}</style><main><h1>Before you read</h1><p>Source Library is free to read, study, teach from and quote. You opened this page directly, so we ask once per browser that you agree to our <a href="/terms#reading-terms">terms of use</a>.</p><p>In short: copying the library or a large part of it by automated means needs our written permission.</p><form method="post" action="/api/terms/accept"><input type="hidden" name="next" id="n"><label><input type="checkbox" name="agree" required> I agree to the terms of use</label><button>Continue to the page</button></form><small>We record the date, the page, your browser's description of itself and a hash of your network address. Is something wrong? <a href="mailto:team@sourcelibrary.org">team@sourcelibrary.org</a></small></main><script>document.getElementById('n').value=location.pathname+location.search</script></html>`;
+// Cloudflare limits a custom response to 2 KB, so the look lives in public/reader-terms/,
+// which must be in production before this page is saved. The form works without it.
+const PAGE_LIMIT_BYTES = 2048;
+export const PAGE = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Welcome - Source Library</title><link rel="stylesheet" href="/reader-terms/style.css?v=1"><main><a class="b" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="4"/></svg><span><b>Source</b>Library</span></a><h1>Welcome, reader</h1><p>Source Library is free to read, study, teach from and quote. Bots have been copying it page by page, so when someone opens a page directly, we ask them once to agree to our <a href="/terms#reading-terms">terms of use</a>.</p><p>In short: copying the library or a large part of it by automated means needs our written permission.</p><form method="post" action="/api/terms/accept"><input type="hidden" name="next" id="n"><label><input type="checkbox" name="agree" required> I agree to the terms of use</label><button>Continue to the page</button></form><p class="a">Or <a id="s" href="/auth/signin">create a free account</a> and skip this step.</p><small>We record the date, the page, your browser's description of itself and a hash of your network address. Something wrong? <a href="mailto:team@sourcelibrary.org">team@sourcelibrary.org</a></small></main><script>var p=location.pathname+location.search;document.getElementById('n').value=p;document.getElementById('s').href='/auth/signin?callbackUrl='+encodeURIComponent(p)</script></html>`;
 
 const zone = process.env.CLOUDFLARE_ZONE_ID || process.env.CF_ZONE_ID;
 const token = process.env.CF_API_TOKEN;
@@ -77,6 +79,8 @@ async function main() {
     throw new Error('Use --status, --test, --on or --off.');
   }
   if (!zone || !token) throw new Error('CF_API_TOKEN and a zone id are required; none were found.');
+  const pageBytes = Buffer.byteLength(PAGE);
+  if (pageBytes > PAGE_LIMIT_BYTES) throw new Error(`The page is ${pageBytes} bytes; Cloudflare allows ${PAGE_LIMIT_BYTES}.`);
 
   const ruleset = await cf('/rulesets/phases/http_request_firewall_custom/entrypoint');
   const existing = ruleset.rules.find((rule) => rule.ref === REF);
@@ -85,7 +89,7 @@ async function main() {
     console.log(existing
       ? `enabled=${existing.enabled} guarded=${existing.expression.includes(TEST_GUARD)} position=${ruleset.rules.indexOf(existing) + 1}/${ruleset.rules.length}`
       : `not installed; ${ruleset.rules.length} rules in the zone`);
-    console.log(`page length: ${PAGE.length}`);
+    console.log(`page size: ${pageBytes} of ${PAGE_LIMIT_BYTES} bytes`);
     return;
   }
 
