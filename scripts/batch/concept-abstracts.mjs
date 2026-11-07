@@ -49,7 +49,7 @@
  *   collect  --dir D   Write finished jobs' abstracts to pages (re-checking every
  *            exclusion), close the usage rows with billed tokens. Free; idempotent.
  *   embed    --dir D   Batch-embed the stored abstracts (not NONE) with the page
- *            model (gemini-embedding-2-preview, 768-d, plain text).
+ *            model (gemini-embedding-2, 768-d, plain text).
  *   embed-collect --dir D   Collect embedding jobs into D/vectors/*.f32 + ids.
  *   load     --dir D [--rows-per-sec 40]   Insert vectors into page_concepts at a
  *            capped rate (Supabase writes are the shared bottleneck).

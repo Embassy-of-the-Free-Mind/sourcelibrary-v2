@@ -285,7 +285,7 @@ Read these for the house conventions before designing a new study.
 | `embed-granularity/run-arms.mjs` | mjs — ranks one pool by one vector set per arm and scores a single gold page; no fusion, no diversity re-ranking, no query expansion. |
 | `embed-granularity/score.mjs` | mjs — recall@10 / MRR for one gold page per query with Wilson intervals; no graded judgments, no per-tradition measure. |
 | `embed-models/build-pool-t.mjs` | mjs — the same seeded book/page draw, but over UNTRANSLATED books and OCR text only; here every page needs BOTH texts (OCR and the stored translation) and the vector production already holds, so it… |
-| `embed-models/gemini-dual.mjs` | mjs --fill-pool — the same production-shaped call (gemini-embedding-2-preview, 768, plain text, 50 per batchEmbedContents) over pool A; this one embeds the ORIGINAL text of pages that already hold … |
+| `embed-models/gemini-dual.mjs` | mjs --fill-pool — the same production-shaped call (gemini-embedding-2, 768, plain text, 50 per batchEmbedContents) over pool A; this one embeds the ORIGINAL text of pages that already hold … |
 | `embed-models/score.mjs` | mjs — the same rank-by-cosine recall@10 over pool A, with arm names hard-wired (gemini/e5/bge-m3) and a one-page relevant set; this scorer adds book-grain relevance (gold set B), max-score fusion o… |
 | `embedding-survey.mjs` | Embedding Alignment Survey Properly designed experiment measuring OCR→Translation embedding distance across languages and document types (manuscript vs print). |
 | `en-ocr-reference-5124.mjs` | — |
