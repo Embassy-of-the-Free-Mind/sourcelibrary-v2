@@ -225,6 +225,32 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 
 #8293 proposes the repair, sized: judge about 2,000 clusters (~330 calls), read about 610, split about 170 [86–330]. It needs a split writer first and a log row on the `--apply` path. Containers need typed relations (#3258) rather than splits. Nothing was repaired here. The list: `scripts/eval/work-recall/overmerge-confirmed-8291.jsonl` (28 different work, 62 container, with bar, evidence and note). Script: `scripts/eval/work-recall/overmerge-audit.mjs`; planted set: `overmerge-planted-8291.jsonl`.
 
+## 2026-11-07 — V3 on the one rule: the false-pick rate of `decide_defects` at each cell's real n (#8283)
+
+**Question.** `decide_defects` replaced the k/n rule on 2026-11-06 and nothing had simulated it. How often does it pick a route truly worse than the bar by more than the gate's margin?
+
+**Method.** `scripts/eval/estimator/router-table/v3_sim.py` imports `build.decide_defects`, no re-implementation, and runs it on table `2026-11-06-one-rule-8283`: 2,000 replicates a cell at each cell's acceptance n and defect exposure. No model calls, no pages. The boundary is the worse of two configurations: every other rated route just past gate 1 (wrong text +0.16 per 1,000 words), or just past gate 2 (acceptance -0.06). Paired evidence is simulated as independent.
+
+| cell | rule says | candidates | false pick, boundary | estimates | power | auto-bound? |
+|---|---|---|---|---|---|---|
+| latin-flash3/print | switch pero>agy@4 | 3 | 32.6% | 0.1% | 27.5% | no |
+| german-lite/print | keep lite>opus | 2 | 32.6% | 0.0% | 46.5% | no |
+| german-flash3/print | keep 3flash>opus | 2 | 34.6% | 5.7% | 47.8% | no |
+| german-tr-lite/print | switch opus-cli | 1 | 47.3% | 0.0% | 50.0% | no |
+| tibetan-yigdzin/manuscript | switch yigdzin>agy | 2 | 28.0% | 0.0% | 38.6% | no |
+| zh-paddle-dice-lt090/manuscript | HOLD paddle>opus | 3 | 32.8% | 0.0% | 16.0% | no |
+| chinese-flash3/print | keep 3flash>opus | 1 | 18.1% | 0.0% | 30.9% | no |
+| latin-blank/print | HOLD agy@4-written | 4 | 36.7% | 5.6% | 24.5% | no |
+| german-blank/print | HOLD agy@4>agy@4-written | 9 | 22.9% | 0.1% | 12.1% | no |
+| german-blank-fraktur/print | keep agy@4-written | 4 | 38.8% | 0.0% | 12.4% | no |
+| german-blank-antiqua/print | HOLD lighton-written | 3 | 36.7% | 17.9% | 12.2% | no |
+| french-blank/print | HOLD agy-written | 4 | 3.9% | 0.1% | 1.4% | yes |
+| english-blank-pre1800/unknown | keep scans-only | 1 | 0.0% | 0.0% | 0.0% | yes |
+
+The other 109 cells have no rule pick to be false.
+
+**What it does not say.** The boundary is the least favourable truth, not the likely one: with the table's own estimates as the truth, the rate is under 6% in all but one cell. It measures the rule's margins at these n, not whether any route is good. Reports: issue comment on #8283 (2026-11-07), and rows[].v3 in every table the nightly rebuild builds.
+
 ## 2026-11-07 · French print 1800-1929 in manifest-only books (e-rara, NB Norway, IA, BSB): does GPU draft > agy Flash-low carry over? (#6871)
 
 Part of #6871.
