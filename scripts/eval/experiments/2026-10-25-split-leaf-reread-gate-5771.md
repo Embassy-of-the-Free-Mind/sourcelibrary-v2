@@ -141,6 +141,7 @@ Recomputed from the kept results, with no model call. **No number in the tables 
 - Before this correction, a feature outside the fitted rule was scored at its grid's first threshold. Now each is scored at its own best threshold, in sample and leave-one-book-out. The figures quoted above did not move.
 - L2 is now named for what it counts (above), and `labels.json` adds the strict label.
 - Arm 1 is now filtered to parsed replies like arms 2 and 3 (0 dropped).
+- The span-ratio bootstrap used the double-arithmetic LCG of #5373. It now uses `makeRng` (`scripts/eval/lib/paired-stats.mjs`). The intervals quoted here are unchanged: REREAD on the SEAM stratum 0.68–0.97, CUT overall 1.00–1.00. Only uncited strata moved, by at most 0.02 (`results/compare.json`).
 - A failed leaf translation no longer yields a frame file, and the leaf-read wait counts crops from the crop meta and stops on `.err` or after 6 h. In this run 0 of 371 leaf translations failed and all 188 crops were read, so neither changes a number.
 
 ### Artifacts

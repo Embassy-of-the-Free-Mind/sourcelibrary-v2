@@ -17,6 +17,7 @@
 import fs from 'node:fs';
 import { wilson } from '../opus-tib-sa-6948/audit.mjs';
 import { stratum } from './stratum.mjs';
+import { makeRng } from '../lib/paired-stats.mjs';
 
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const jl = (f) => fs.readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
@@ -53,12 +54,12 @@ const ARMS = ['seam', 'cut', 'reread'], STRATA = ['SEAM', 'RECUT', 'SAME'];
 const by = Object.fromEntries(ARMS.map((a) => [a, { all: summ(rows.filter((r) => r.arm === a)), ...Object.fromEntries(STRATA.map((s) => [s, summ(rows.filter((r) => r.arm === a && r.stratum === s))])), CANON: summ(rows.filter((r) => r.arm === a && r.canon === 'CANON')), OTHER: summ(rows.filter((r) => r.arm === a && r.canon === 'OTHER')) }]));
 
 // Paired OCR: arm X vs arm 1 on frames legible in both. Ratio after/before (0/0 = 1; x/0 with x > 0 counts as worse).
-// Bootstrap over frames (2,000 resamples, seeded) for the median ratio's interval.
+// Bootstrap over frames (2,000 resamples, seeded, paired-stats makeRng; the double-arithmetic LCG first used here is #5373's bug).
 function paired(arm, strat) {
   const b = new Map(rows.filter((r) => r.arm === 'seam').map((r) => [r.frame, r]));
   const ps = rows.filter((r) => r.arm === arm && (!strat || r.stratum === strat)).map((r) => [b.get(r.frame), r]).filter(([x, y]) => x && x.spans != null && y.spans != null);
   const ratio = ps.map(([x, y]) => (x.spans === 0 ? (y.spans === 0 ? 1 : 2) : y.spans / x.spans));
-  let s = 5771; const rnd = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
+  const rnd = makeRng(5771);
   const boots = []; for (let i = 0; i < 2000; i++) { const xs = ratio.map(() => ratio[Math.floor(rnd() * ratio.length)]); boots.push(med(xs)); }
   boots.sort((a, b) => a - b);
   return { n: ps.length, median_ratio: med(ratio) == null ? null : +med(ratio).toFixed(3), ci95: ratio.length ? [+boots[50].toFixed(3), +boots[1949].toFixed(3)] : null, before_median: med(ps.map(([x]) => x.spans)), after_median: med(ps.map(([, y]) => y.spans)), fewer: ps.filter(([x, y]) => y.spans < x.spans).length, same: ps.filter(([x, y]) => y.spans === x.spans).length, more: ps.filter(([x, y]) => y.spans > x.spans).length };

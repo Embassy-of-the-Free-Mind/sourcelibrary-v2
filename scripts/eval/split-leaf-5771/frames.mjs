@@ -65,7 +65,7 @@ for (const r of rows) {
   const segs = p.ocr.data.split(/<leaf-break\s*\/>/).map((x) => x.split('\n').filter((y) => y.trim()).length);
   out.push({
     uid: r.uid, page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, stratum: r.stratum,
-    src: p.archived_photo || p.photo, src_alt: p.photo_original || null,
+    src: p.archived_photo || p.photo, src_alt: p.photo_original || null, // image-pick-ok: the WHOLE multi-leaf photo is wanted; this harness cuts the leaves from it (an unsplit frame, not a split child)
     stored: { read_mode: mode, run: served, leaf_lines: segs, chars: p.ocr.data.length },
     step2_decision: dec[s] ? `${dec[s].class}:${dec[s].reason}` : null,
     spans: from ? L[from].spans : null, cut_source: from ? `ledger:${from}` : 'leafsplit.detect',
