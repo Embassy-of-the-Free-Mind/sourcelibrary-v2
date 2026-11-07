@@ -164,12 +164,13 @@ async function readers(clusters, carriers) {
 }
 
 // The work that receives a MAJORITY of the source's books, for re-keying what is keyed by the source id.
-const mainDest = (c) => {
+// (a function declaration: the dispatch above runs before any const below is initialised)
+function mainDest(c) {
   const n = new Map();
   for (const m of c.moves) n.set(m.to, (n.get(m.to) || 0) + m.books.length);
   const [to, k] = [...n].sort((a, b) => b[1] - a[1])[0] || [];
   return to && k * 2 > c.carriers.length ? { to, title: c.moves.find((m) => m.to === to).title } : null; // a majority, not a plurality
-};
+}
 
 async function apply(planFile) {
   const plan = JSON.parse(fs.readFileSync(planFile, 'utf8'));
