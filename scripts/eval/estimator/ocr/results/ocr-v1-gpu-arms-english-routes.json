@@ -1,0 +1,840 @@
+{
+ "english": {
+  "svi": {
+   "choice": "Chandra OCR 2 (GPU)",
+   "best_quality": "claude -p Sonnet 5.5",
+   "routes": [
+    {
+     "route": "claude -p Sonnet 5.5",
+     "p_read": [
+      0.9891,
+      0.9988,
+      0.9999
+     ],
+     "cer": [
+      0.0425,
+      0.0492,
+      0.0564
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "p_best": 0.24
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "p_read": [
+      0.8562,
+      0.94,
+      0.9756
+     ],
+     "cer": [
+      0.0433,
+      0.049,
+      0.0566
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.97,
+     "p_best": 0.2
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "p_read": [
+      0.9488,
+      0.9841,
+      0.9958
+     ],
+     "cer": [
+      0.0429,
+      0.0493,
+      0.0571
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.955,
+     "p_best": 0.193
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "p_read": [
+      0.9932,
+      0.9988,
+      0.9998
+     ],
+     "cer": [
+      0.0456,
+      0.0514,
+      0.0582
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.93,
+     "p_best": 0.065
+    }
+   ]
+  },
+  "nuts": {
+   "choice": "Chandra OCR 2 (GPU)",
+   "best_quality": "claude -p Sonnet 5.5",
+   "routes": [
+    {
+     "route": "claude -p Sonnet 5.5",
+     "p_read": [
+      0.988,
+      0.9992,
+      1.0
+     ],
+     "cer": [
+      0.0418,
+      0.0498,
+      0.0596
+     ],
+     "number_errors": null,
+     "p_clears_bar": 1.0,
+     "p_best": 0.298
+    },
+    {
+     "route": "Chandra OCR 2 (GPU)",
+     "p_read": [
+      0.9898,
+      0.9992,
+      1.0
+     ],
+     "cer": [
+      0.0432,
+      0.0514,
+      0.0609
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.933,
+     "p_best": 0.17
+    },
+    {
+     "route": "Gemini 3 Flash, realtime API",
+     "p_read": [
+      0.862,
+      0.9295,
+      0.9718
+     ],
+     "cer": [
+      0.0438,
+      0.0517,
+      0.0611
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.924,
+     "p_best": 0.144
+    },
+    {
+     "route": "agy Gemini 3.8 Flash high (CLI)",
+     "p_read": [
+      0.9222,
+      0.9781,
+      0.9967
+     ],
+     "cer": [
+      0.043,
+      0.0516,
+      0.0622
+     ],
+     "number_errors": null,
+     "p_clears_bar": 0.91,
+     "p_best": 0.181
+    }
+   ]
+  }
+ },
+ "english-1880-1930-dense": {
+  "svi": {
+   "choice": null,
+   "best_quality": "MinerU (GPU)",
+   "routes": [
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9975,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0275,
+      0.0362,
+      0.0497
+     ],
+     "number_errors": [
+      0.1169,
+      0.1396,
+      0.1648
+     ],
+     "p_clears_bar": 0.485,
+     "p_best": 0.285
+    },
+    {
+     "route": "MinerU (GPU)",
+     "p_read": [
+      0.9983,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0324,
+      0.044,
+      0.0895
+     ],
+     "number_errors": [
+      0.1064,
+      0.1263,
+      0.1507
+     ],
+     "p_clears_bar": 0.345,
+     "p_best": 0.705
+    },
+    {
+     "route": "Internet Archive text (djvu)",
+     "p_read": [
+      0.9783,
+      0.9993,
+      1.0
+     ],
+     "cer": [
+      0.0398,
+      0.0503,
+      0.0644
+     ],
+     "number_errors": [
+      0.144,
+      0.1678,
+      0.1952
+     ],
+     "p_clears_bar": 0.018,
+     "p_best": 0.01
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9971,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.036,
+      0.0477,
+      0.0832
+     ],
+     "number_errors": [
+      0.8973,
+      0.9581,
+      1.0234
+     ],
+     "p_clears_bar": 0.0,
+     "p_best": 0.0
+    }
+   ]
+  },
+  "nuts": {
+   "choice": null,
+   "best_quality": "MinerU (GPU)",
+   "routes": [
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9962,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0243,
+      0.0401,
+      0.0735
+     ],
+     "number_errors": [
+      0.1167,
+      0.1399,
+      0.1654
+     ],
+     "p_clears_bar": 0.429,
+     "p_best": 0.274
+    },
+    {
+     "route": "MinerU (GPU)",
+     "p_read": [
+      0.998,
+      1.0,
+      1.0
+     ],
+     "cer": [
+      0.0293,
+      0.0481,
+      0.0887
+     ],
+     "number_errors": [
+      0.1067,
+      0.1276,
+      0.1517
+     ],
+     "p_clears_bar": 0.333,
+     "p_best": 0.716
+    },
+    {
+     "route": "Internet Archive text (djvu)",
+     "p_read": [
+      0.9861,
+      0.9996,
+      1.0
+     ],
+     "cer": [
+      0.0332,
+      0.0514,
+      0.0848
+     ],
+     "number_errors": [
+      0.1447,
+      0.1689,
+      0.1965
+     ],
+     "p_clears_bar": 0.029,
+     "p_best": 0.011
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9973,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.034,
+      0.0561,
+      0.1026
+     ],
+     "number_errors": [
+      0.8952,
+      0.9597,
+      1.0252
+     ],
+     "p_clears_bar": 0.0,
+     "p_best": 0.0
+    }
+   ]
+  }
+ },
+ "english-1880-1930-prose": {
+  "svi": {
+   "choice": "olmOCR 2 (GPU)",
+   "best_quality": "Gemini 3.1 Flash-Lite, Batch API",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "p_read": [
+      0.7875,
+      0.9104,
+      0.9671
+     ],
+     "cer": [
+      0.0026,
+      0.0034,
+      0.0044
+     ],
+     "number_errors": [
+      0.0457,
+      0.0945,
+      0.185
+     ],
+     "p_clears_bar": 1.0,
+     "p_best": 0.695
+    },
+    {
+     "route": "Internet Archive text (djvu)",
+     "p_read": [
+      0.9848,
+      0.9995,
+      1.0
+     ],
+     "cer": [
+      0.0052,
+      0.0064,
+      0.0088
+     ],
+     "number_errors": [
+      0.0482,
+      0.1054,
+      0.2073
+     ],
+     "p_clears_bar": 0.99,
+     "p_best": 0.0
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9982,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0041,
+      0.0051,
+      0.0088
+     ],
+     "number_errors": [
+      0.0434,
+      0.0883,
+      0.1714
+     ],
+     "p_clears_bar": 0.99,
+     "p_best": 0.015
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9989,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0029,
+      0.0039,
+      0.0076
+     ],
+     "number_errors": [
+      0.0424,
+      0.0848,
+      0.1624
+     ],
+     "p_clears_bar": 0.99,
+     "p_best": 0.26
+    }
+   ]
+  },
+  "nuts": {
+   "choice": "olmOCR 2 (GPU)",
+   "best_quality": "Gemini 3.1 Flash-Lite, Batch API",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "p_read": [
+      0.7926,
+      0.8844,
+      0.9486
+     ],
+     "cer": [
+      0.0025,
+      0.004,
+      0.0077
+     ],
+     "number_errors": [
+      0.0437,
+      0.0933,
+      0.1849
+     ],
+     "p_clears_bar": 1.0,
+     "p_best": 0.471
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9974,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0026,
+      0.0042,
+      0.0096
+     ],
+     "number_errors": [
+      0.041,
+      0.0857,
+      0.1722
+     ],
+     "p_clears_bar": 0.986,
+     "p_best": 0.339
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9982,
+      1.0,
+      1.0
+     ],
+     "cer": [
+      0.0035,
+      0.0055,
+      0.0117
+     ],
+     "number_errors": [
+      0.0404,
+      0.0871,
+      0.1768
+     ],
+     "p_clears_bar": 0.981,
+     "p_best": 0.005
+    },
+    {
+     "route": "Internet Archive text (djvu)",
+     "p_read": [
+      0.9887,
+      0.9996,
+      1.0
+     ],
+     "cer": [
+      0.0045,
+      0.0071,
+      0.0137
+     ],
+     "number_errors": [
+      0.0483,
+      0.1017,
+      0.2066
+     ],
+     "p_clears_bar": 0.978,
+     "p_best": 0.004
+    }
+   ]
+  }
+ },
+ "english-pre1880-dense": {
+  "svi": {
+   "choice": "olmOCR 2 (GPU)",
+   "best_quality": "olmOCR 2 (GPU)",
+   "routes": [
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9982,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0236,
+      0.0297,
+      0.0387
+     ],
+     "number_errors": [
+      0.1893,
+      0.2326,
+      0.2755
+     ],
+     "p_clears_bar": 0.91,
+     "p_best": 0.355
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "p_read": [
+      0.698,
+      0.8908,
+      0.9732
+     ],
+     "cer": [
+      0.0212,
+      0.0273,
+      0.0353
+     ],
+     "number_errors": [
+      0.1997,
+      0.2479,
+      0.2959
+     ],
+     "p_clears_bar": 0.69,
+     "p_best": 0.22
+    },
+    {
+     "route": "MinerU (GPU)",
+     "p_read": [
+      0.9982,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0268,
+      0.0348,
+      0.0698
+     ],
+     "number_errors": [
+      0.1995,
+      0.2436,
+      0.2936
+     ],
+     "p_clears_bar": 0.44,
+     "p_best": 0.23
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9975,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.031,
+      0.0381,
+      0.0497
+     ],
+     "number_errors": [
+      0.2034,
+      0.2482,
+      0.3001
+     ],
+     "p_clears_bar": 0.305,
+     "p_best": 0.193
+    }
+   ]
+  },
+  "nuts": {
+   "choice": "olmOCR 2 (GPU)",
+   "best_quality": "olmOCR 2 (GPU)",
+   "routes": [
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9944,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0174,
+      0.0301,
+      0.0552
+     ],
+     "number_errors": [
+      0.1898,
+      0.2316,
+      0.2829
+     ],
+     "p_clears_bar": 0.917,
+     "p_best": 0.384
+    },
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "p_read": [
+      0.7494,
+      0.8825,
+      0.9609
+     ],
+     "cer": [
+      0.0155,
+      0.0282,
+      0.0527
+     ],
+     "number_errors": [
+      0.2018,
+      0.2459,
+      0.2956
+     ],
+     "p_clears_bar": 0.702,
+     "p_best": 0.208
+    },
+    {
+     "route": "MinerU (GPU)",
+     "p_read": [
+      0.9963,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0194,
+      0.0336,
+      0.0619
+     ],
+     "number_errors": [
+      0.1997,
+      0.2444,
+      0.2955
+     ],
+     "p_clears_bar": 0.573,
+     "p_best": 0.221
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9955,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0228,
+      0.0385,
+      0.0703
+     ],
+     "number_errors": [
+      0.2027,
+      0.2499,
+      0.3031
+     ],
+     "p_clears_bar": 0.328,
+     "p_best": 0.187
+    }
+   ]
+  }
+ },
+ "english-pre1880-prose": {
+  "svi": {
+   "choice": "olmOCR 2 (GPU)",
+   "best_quality": "Gemini 3.1 Flash-Lite, Batch API",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "p_read": [
+      0.8134,
+      0.9349,
+      0.9814
+     ],
+     "cer": [
+      0.0111,
+      0.015,
+      0.0212
+     ],
+     "number_errors": [
+      0.2269,
+      0.3981,
+      0.6757
+     ],
+     "p_clears_bar": 1.0,
+     "p_best": 0.73
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.998,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0129,
+      0.018,
+      0.0273
+     ],
+     "number_errors": [
+      0.1701,
+      0.292,
+      0.5032
+     ],
+     "p_clears_bar": 0.917,
+     "p_best": 0.228
+    },
+    {
+     "route": "MinerU (GPU)",
+     "p_read": [
+      0.9984,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0159,
+      0.0236,
+      0.0421
+     ],
+     "number_errors": [
+      0.175,
+      0.3186,
+      0.5553
+     ],
+     "p_clears_bar": 0.598,
+     "p_best": 0.03
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9988,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0178,
+      0.0246,
+      0.0346
+     ],
+     "number_errors": [
+      0.1885,
+      0.3256,
+      0.5555
+     ],
+     "p_clears_bar": 0.575,
+     "p_best": 0.013
+    }
+   ]
+  },
+  "nuts": {
+   "choice": "Gemini 3.1 Flash-Lite, Batch API",
+   "best_quality": "Gemini 3.1 Flash-Lite, Batch API",
+   "routes": [
+    {
+     "route": "Gemini 3.1 Flash-Lite, Batch API",
+     "p_read": [
+      0.8315,
+      0.9341,
+      0.983
+     ],
+     "cer": [
+      0.0095,
+      0.0156,
+      0.0271
+     ],
+     "number_errors": [
+      0.2247,
+      0.3928,
+      0.6697
+     ],
+     "p_clears_bar": 1.0,
+     "p_best": 0.709
+    },
+    {
+     "route": "olmOCR 2 (GPU)",
+     "p_read": [
+      0.9958,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0123,
+      0.0188,
+      0.0326
+     ],
+     "number_errors": [
+      0.1691,
+      0.2892,
+      0.4949
+     ],
+     "p_clears_bar": 0.897,
+     "p_best": 0.226
+    },
+    {
+     "route": "MinerU (GPU)",
+     "p_read": [
+      0.9977,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.0138,
+      0.0217,
+      0.0392
+     ],
+     "number_errors": [
+      0.1804,
+      0.317,
+      0.5465
+     ],
+     "p_clears_bar": 0.746,
+     "p_best": 0.06
+    },
+    {
+     "route": "PaddleOCR-VL 1.6 (GPU)",
+     "p_read": [
+      0.9974,
+      0.9999,
+      1.0
+     ],
+     "cer": [
+      0.017,
+      0.0256,
+      0.0419
+     ],
+     "number_errors": [
+      0.1938,
+      0.3306,
+      0.566
+     ],
+     "p_clears_bar": 0.524,
+     "p_best": 0.005
+    }
+   ]
+  }
+ }
+}

@@ -204,7 +204,7 @@ export default function ForLibrariesPage() {
           />
           <FeatureCard
             title="AI translation pipeline"
-            description="Every book OCR'd and translated by Gemini, with quality signals and warnings inline. Translation prompt and model version recorded on every page for auditability."
+            description="Every book OCR'd and translated by AI, with quality signals and warnings inline. Translation prompt and model version recorded on every page for auditability."
           />
           <FeatureCard
             title="Citation-ready URLs"

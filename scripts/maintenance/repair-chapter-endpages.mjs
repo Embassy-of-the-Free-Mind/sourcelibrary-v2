@@ -54,7 +54,7 @@ async function main() {
 
   const cursor = books.find(filter, {
     projection: { id: 1, title: 1, visible: 1, chapters: 1, pages_count: 1 },
-  });
+  }).batchSize(1000);
 
   let scanned = 0;
   let changedBooks = 0;

@@ -3,7 +3,7 @@
 *Format follows Gebru et al., "Datasheets for Datasets" (CACM 2021). This file is
 copied into every export as `DATASHEET.md` by `scripts/eval/export-ft-dataset.mjs`;
 per-snapshot counts, checksums, and the generating git SHA live in the accompanying
-`manifest.json`. Figures quoted below are from the 2026-08-09 snapshot unless dated
+`manifest.json`. Figures quoted below are from the 2026-10-26 snapshot unless dated
 otherwise.*
 
 ## Motivation
@@ -30,20 +30,24 @@ code is AGPL at https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2.
 
 **What do the instances represent?** Four related tables:
 
-1. **`attempts.jsonl` / `.csv` (63,173 rows)** — one row per verification attempt on
+1. **`attempts.jsonl` / `.csv` (73,436 rows)** — one row per verification attempt on
    one book: instrument (`method`), date, match key, sources consulted, verbatim
-   queries (present on 17,736 rows), result (`found` / `none` / `not_applicable` +
-   legacy variants), structured priors found (18,189 rows carry at least one),
+   queries (present on 27,528 rows), result (`found` / `none` / `not_applicable` +
+   legacy variants), structured priors found (23,191 rows carry at least one),
    evidence strength, model id, cost, and free-text rationale. Append-only in the
-   source system; 29,938 distinct books are covered.
-2. **`verdicts.jsonl` / `.csv` (10,377 rows)** — one row per book carrying a resolved
+   source system; 29,276 distinct books are covered. Grounded-search attempts record
+   every query the model issued: 2,257 rows hold more than 2,000 characters of queries,
+   the largest 1,290 queries in one attempt (a few repeat themselves; kept as recorded).
+2. **`verdicts.jsonl` / `.csv` (10,369 rows)** — one row per book carrying a resolved
    graded verdict under the 8-verdict taxonomy, with public bibliographic metadata
    (title, author, language, original language, year), the qualifiers
    (evidence strength, our-item completeness, match key, prior relationship), the
    resolving tier, and a pointer (`best_attempt_id`) into the attempts table.
-   Distribution at snapshot: 9,630 `first_no_prior`, 339 `not_first`,
-   124 `first_modern`, 106 `needs_review`, 79 `first_complete`, 77 `not_applicable`,
-   22 `first_from_source`. Evidence strength: 238 strong, 987 moderate, 9,152 weak.
+   Distribution at snapshot: 7,779 `first_no_prior`, 875 `not_applicable`,
+   561 `needs_review`, 550 `not_first`, 343 `first_complete`, 243 `first_modern`,
+   18 `first_from_source`. Evidence strength: 973 strong, 1,089 moderate, 8,307 weak.
+   (2026-08-09: 9,630 `first_no_prior` and 9,152 weak of 10,377; verdicts are re-resolved
+   as evidence arrives, so the distribution moves between snapshots.)
 3. **`screening_decisions.jsonl` (82 rows)** — durable screening judgements keyed on
    (work, prior), which persist across regenerations of the underlying search efforts.
 4. **`reference-set-summary.json`** — composition statistics of the 149,096-row
@@ -85,7 +89,7 @@ are part of this ledger.
 
 - **Exclusions:** books hidden by takedown or owner/curator removal request, and
   test records, are excluded entirely — verdicts, attempts, and identifiers
-  (2026-08-09 snapshot: 508 verdict rows, 1,661 attempt rows). Books hidden for
+  (2026-10-26 snapshot: 511 verdict rows, 2,561 attempt rows). Books hidden for
   ordinary curation/processing reasons are retained and flagged `visible: false`.
 - **Redaction:** email addresses → `[email-redacted]`; URL query parameters named
   like credentials (`key`, `token`, `signature`, …) → `[redacted]`. Counts per
@@ -105,7 +109,7 @@ documented baseline.
 
 - **Do not read a `none` result — or a `first_no_prior` verdict with `weak`
   evidence — as proof no prior translation exists.** Absence is graded evidence
-  bounded by the reference set and the search; 9,152 of 10,377 verdicts rest on
+  bounded by the reference set and the search; 8,307 of 10,369 verdicts rest on
   weak evidence, and the public site excludes weak-evidence claims from its
   headline counts for exactly this reason.
 - Do not treat model-written `notes` or `priors` as verified citations: sampled

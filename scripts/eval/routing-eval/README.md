@@ -38,10 +38,8 @@ Flags for a new run (all optional except `--family` or `--filter`): `--visibilit
 An engine that is not a Gemini model is supplied as files (`out/<arm>/<slug>.json` in the work dir);
 `arms` skips files that exist.
 
-After the verdict: `node scripts/eval/build-routing-table.mjs` puts it in the generated table of
-`.claude/docs/ocr-engine-routing.md`. Add the `experiments/` entry and the `DECISIONS.md` row
-(`eval-design.md` §9). The verdict is a rule's output. A routing constant changes only with Derek's
-sign-off (§10).
+After the verdict: add the `experiments/` entry (`eval-design.md` §9) and the judged pages as evidence in the router table
+(`.claude/docs/routing.md`). The verdict is a rule's output; the table decides the route.
 
 ## Rule files (`rules/*.json`)
 

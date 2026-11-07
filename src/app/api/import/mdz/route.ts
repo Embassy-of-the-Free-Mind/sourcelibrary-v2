@@ -11,6 +11,7 @@ import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup'
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { initialPageCounters } from '@/lib/page-counts';
 import { selfCallHeaders } from '@/lib/self-call';
+import { outboundFetch } from '@/lib/outbound-fetch';
 
 export const maxDuration = 300;
 
@@ -81,9 +82,8 @@ export const POST = withCuratorAuth(async (request, session) => {
 
     // Fetch IIIF manifest from MDZ
     const manifestUrl = `https://api.digitale-sammlungen.de/iiif/presentation/v2/${normalizedId}/manifest`;
-    const manifestRes = await fetch(manifestUrl, {
+    const manifestRes = await outboundFetch(manifestUrl, {
       headers: {
-        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
         'Accept': 'application/json, application/ld+json',
       }
     });

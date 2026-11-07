@@ -67,6 +67,7 @@ src/data/*
 !src/data/image-subjects.json
 !src/data/image-subject-map.json
 !src/data/ocr-benchmark-evidence.json
+!src/data/ocr-read-surface-6740.json
 !src/data/ocr-pareto.json
 !src/data/translation-pareto.json
 !src/data/pareto-sample-audit.json
@@ -176,3 +177,8 @@ scripts/import/*-ledger.jsonl
 # (see sidequests/README.md). Never part of sourcelibrary; only the README is tracked.
 /sidequests/*
 !/sidequests/README.md
+
+# Python bytecode (the estimator builders import provenance.py, #6740)
+__pycache__/
+*.pyc
+scripts/maintenance/output/

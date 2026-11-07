@@ -1,0 +1,12 @@
+{
+ "reader": "the job's Opus session, Archive image open, column by column, 2026-11-03",
+ "not_blind": "The Kanripo mark counts had already been printed in the job's log when these pages were counted, and p103's first sum was an addition slip (20) corrected to 22 from the same column list.",
+ "pages": [
+  {"slug": "zero-04e283fc-p47", "by_eye": 26, "kanripo": 26, "counter": 26},
+  {"slug": "zero-04e2bbee-p103", "by_eye": 22, "kanripo": null, "counter": 22, "p2_ia": 22},
+  {"slug": "zero-e83506a6-p98", "by_eye": 60, "kanripo": 60, "counter": 60},
+  {"slug": "zero-04e29792-p13", "by_eye": 18, "kanripo": 18, "counter": 18},
+  {"slug": "keep-1d8ea136-p34", "by_eye": 12, "kanripo": 12, "counter": 12}
+ ],
+ "brief_example_not_in_draw": {"slug": "6a3c64bf39b4508b04e29b20 p72", "note": "Leaf has ditto marks on most columns; the Archive file (1978x2747) shows them plainly as thin single strokes; the stored text has none."}
+}

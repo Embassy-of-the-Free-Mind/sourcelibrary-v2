@@ -81,7 +81,7 @@ async function main() {
   const tier0 = makeTier0Catalog(lookup);
 
   const query = { is_first_translation: true, visible: true, pages_translated: { $gt: 0 }, language: { $nin: [null, 'en', 'eng', 'English', 'english'] } };
-  const cursor = books.find(query, { projection: { _id: 0, id: 1, title: 1, author: 1, language: 1, original_language: 1, work_id: 1 } });
+  const cursor = books.find(query, { projection: { _id: 0, id: 1, title: 1, author: 1, language: 1, original_language: 1, work_id: 1 } }).batchSize(1000);
   if (LIMIT) cursor.limit(LIMIT);
 
   const now = new Date().toISOString();

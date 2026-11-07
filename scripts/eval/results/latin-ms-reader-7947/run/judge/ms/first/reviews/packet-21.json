@@ -1,0 +1,300 @@
+[
+ {
+  "book_id": "b21-k",
+  "slot": 1,
+  "title": "Icones Fungorum Niskiensium",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "SP = RAI/- <unclear>net</unclear>",
+      "image": "SP = RAJ/- n[e]t (pencil)",
+      "problem": "'J' read as 'I' in the pencil price code",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 20,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 38,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "All captions on both plates read correctly, including the struck-through 'incarnata' (recorded in a note) and the faint pencil 'Cop. semiglob' under the ink caption; the flyleaf notes are read faithfully with only a one-letter slip in a pencil code."
+ },
+ {
+  "book_id": "b21-m",
+  "slot": 1,
+  "title": "Icones Fungorum Niskiensium",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "LATE G. FELL, 5, PICCADILLY",
+      "image": "LATE G.FELL / D.PICCADILLY (the house number is cut off at the page edge; the visible character is not a clear '5')",
+      "problem": "house number guessed where the ticket is cropped",
+      "severity": "minor",
+      "class": "O7"
+     },
+     {
+      "ocr": "OF CRYPTOGAMIC BOTANY • HARVARD UNIVERSITY\nFARLOW REFERENCE LIBRARY",
+      "image": "FARLOW REFERENCE LIBRARY OF CRYPTOGAMIC BOTANY • HARVARD UNIVERSITY",
+      "problem": "bookplate legend put out of reading order",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "a faint pencil 'S' below the title note",
+      "problem": "faint pencil mark dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 20,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 38,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Stemonitis <unclear>ovata</unclear> incarnata.",
+      "image": "Stemonitis ovata [dotted: stet] incarnata [struck through]",
+      "problem": "the cancelled 'incarnata' is kept as part of the name and the deletion is not marked; 'ovata', which is clearly written, is tagged unclear",
+      "severity": "moderate",
+      "class": "O12"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "faint pencil 'Cop. semiglob' under 'Cop. semiglobat.'",
+      "problem": "pencil duplicate caption dropped",
+      "severity": "minor",
+      "class": "O13"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Plate captions are read correctly, but the correction on page 38 is lost: the struck-through 'incarnata' is transcribed as if it were part of the species name. Flyleaf notes are good apart from a guessed house number."
+ },
+ {
+  "book_id": "b21-r",
+  "slot": 1,
+  "title": "Icones Fungorum Niskiensium",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "S P = RAT/- net",
+      "image": "SP = RAJ/- n[e]t (pencil)",
+      "problem": "'J' read as 'T' in the pencil price code",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "a faint pencil 'S' below the title note",
+      "problem": "faint pencil mark dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 20,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 38,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Stemonitis <unclear>ovata</unclear> incarnata.",
+      "image": "Stemonitis ovata [dotted: stet] incarnata [struck through]",
+      "problem": "the cancelled 'incarnata' is kept as part of the name and the deletion is not marked; 'ovata', which is clearly written, is tagged unclear",
+      "severity": "moderate",
+      "class": "O12"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "faint pencil 'Cop. semiglob' under 'Cop. semiglobat.'",
+      "problem": "pencil duplicate caption dropped",
+      "severity": "minor",
+      "class": "O13"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Captions and flyleaf notes are essentially right; the one real loss is the deletion on page 38, where the struck-through 'incarnata' is read into the species name."
+ },
+ {
+  "book_id": "b21-t",
+  "slot": 1,
+  "title": "Icones Fungorum Niskiensium",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<page-type>title-page</page-type>",
+      "image": "a pastedown/flyleaf with a bookplate, a bookseller's ticket and pencil notes",
+      "problem": "page type wrong",
+      "severity": "minor",
+      "class": "O16"
+     },
+     {
+      "ocr": "purple-inked stamp",
+      "image": "a printed pink bookseller's ticket pasted in",
+      "problem": "ticket described as a stamp",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "a faint pencil 'S' below the title note",
+      "problem": "faint pencil mark dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "model narration in the reader text: '<note>Handwritten note in pencil at the left:</note>', '<note>Handwritten note in pencil in the center:</note>'",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 20,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 38,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Stemonitis ovata incarnata.",
+      "image": "Stemonitis ovata [dotted: stet] incarnata [struck through]",
+      "problem": "the cancelled 'incarnata' is silently kept as part of the name",
+      "severity": "moderate",
+      "class": "O12"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "faint pencil 'Cop. semiglob' under 'Cop. semiglobat.'",
+      "problem": "pencil duplicate caption dropped",
+      "severity": "minor",
+      "class": "O13"
+     },
+     {
+      "ocr": "Peziza macropus β.",
+      "image": "Peziza macropus. β.",
+      "problem": "full stop before β dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Captions are read correctly, but the struck-through 'incarnata' on page 38 is silently read into the name, and the flyleaf is mislabelled as a title page with model narration in note tags."
+ }
+]

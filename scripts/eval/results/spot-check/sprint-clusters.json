@@ -1,79 +1,79 @@
 {
-  "rounds": 5,
-  "rows": 326,
+  "rounds": 6,
+  "rows": 391,
   "rule": "≥3 distinct books",
   "classes": [
     {
       "class": "O6",
-      "books": 7,
-      "serious": 18,
+      "books": 10,
+      "serious": 23,
       "candidate": true,
       "forms": {
-        "print": 5,
-        "MS": 2
+        "print": 7,
+        "MS": 3
       },
       "frames": {
         "canon": 2,
-        "public": 5
+        "public": 8
       },
       "example": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209"
     },
     {
-      "class": "O1",
-      "books": 5,
-      "serious": 13,
+      "class": "T7",
+      "books": 6,
+      "serious": 15,
       "candidate": true,
       "forms": {
         "MS": 3,
-        "print": 2
-      },
-      "frames": {
-        "canon": 2,
-        "public": 3
-      },
-      "example": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=149"
-    },
-    {
-      "class": "T7",
-      "books": 5,
-      "serious": 10,
-      "candidate": true,
-      "forms": {
-        "MS": 2,
         "print": 3
       },
       "frames": {
         "canon": 2,
-        "public": 3
+        "public": 4
       },
       "example": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=18"
     },
     {
-      "class": "O5",
-      "books": 5,
-      "serious": 8,
+      "class": "O1",
+      "books": 6,
+      "serious": 15,
       "candidate": true,
       "forms": {
-        "print": 4,
+        "MS": 4,
+        "print": 2
+      },
+      "frames": {
+        "canon": 2,
+        "public": 4
+      },
+      "example": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=149"
+    },
+    {
+      "class": "O5",
+      "books": 6,
+      "serious": 9,
+      "candidate": true,
+      "forms": {
+        "print": 5,
         "MS": 1
       },
       "frames": {
         "canon": 1,
-        "public": 4
+        "public": 5
       },
       "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
     },
     {
       "class": "T8",
-      "books": 5,
-      "serious": 6,
+      "books": 6,
+      "serious": 7,
       "candidate": true,
       "forms": {
-        "print": 5
+        "print": 6
       },
       "frames": {
         "canon": 1,
-        "public": 3,
+        "public": 4,
         "recent": 1
       },
       "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
@@ -92,6 +92,20 @@
         "public": 1
       },
       "example": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20"
+    },
+    {
+      "class": "O7",
+      "books": 3,
+      "serious": 4,
+      "candidate": true,
+      "forms": {
+        "MS": 2,
+        "print": 1
+      },
+      "frames": {
+        "public": 3
+      },
+      "example": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=205"
     },
     {
       "class": "O3",
@@ -148,19 +162,6 @@
         "canon": 1
       },
       "example": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=21"
-    },
-    {
-      "class": "O7",
-      "books": 1,
-      "serious": 2,
-      "candidate": false,
-      "forms": {
-        "MS": 1
-      },
-      "frames": {
-        "public": 1
-      },
-      "example": "https://sourcelibrary.org/book/69f32e7e876dd827cbc440b5?page=205"
     },
     {
       "class": "O16",

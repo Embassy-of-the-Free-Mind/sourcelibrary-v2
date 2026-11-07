@@ -27,7 +27,8 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText, isEmptyTranslation, recordEmptyTranslation, EMPTY_RESPONSE_REASON, CLEAR_EMPTY_RESPONSE_UNSET, recordTruncatedTranslation } from '../lib/translate-core.mjs';
 import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
-import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
+import { engineFromBatchJob, imageInput, jobPromptVersion, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
+import { translationLayers, writePageAnnotations } from '../lib/translation-text.mjs'; // #5942
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
@@ -476,6 +477,7 @@ async function processOneJob(db, job) {
     }
 
     const bulkOps = [];
+    const annotationItems = []; // #5942: page_annotations for the translations in bulkOps
     let galleryDocs = null; // Populated by image_extraction jobs
     const inheritedScanQualityByPage = new Map(); // pageId → gallery-row scan_quality (image_extraction)
 
@@ -565,7 +567,7 @@ async function processOneJob(db, job) {
 
     // #5055: the write guard needs each translated page's OCR (the length rule); one read per job.
     const guardSource = job.type === 'ocr' || job.type === 'image_extraction' || !pageResults.length ? new Map()
-      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { id: 1, page_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
+      : new Map((await db.collection('pages').find({ id: { $in: pageResults.map((r) => r.pageId) } }, { projection: { id: 1, book_id: 1, page_type: 1, 'ocr.data': 1 } }).toArray()).map((p) => [p.id, p]));
     let writeGuardRepaired = 0;
 
     for (const { pageId, text: resultText, usage } of pageResults) {
@@ -651,7 +653,7 @@ async function processOneJob(db, job) {
           // stack can still segment previews from full passes now that both
           // arrive through the Batch API (.claude/docs/data-provenance.md).
           'ocr.source': job.ocr_source || 'batch_api',
-          'ocr.prompt_version': job.prompt_version || 'v5.2026-02',
+          'ocr.prompt_version': jobPromptVersion(job), // never a constant (#7499)
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,
           'ocr.prompt_name': job.prompt_name,
@@ -825,18 +827,22 @@ async function processOneJob(db, job) {
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason);
           continue;
         }
+        const layers = translationLayers(text, { promptVersion: jobPromptVersion(job) }); // #5942: text + annotations beside data
+        annotationItems.push({ page_id: pageId, book_id: guardSource.get(pageId)?.book_id ?? job.book_id, run_id: jobIdStr, layers });
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
             update: {
               $set: {
                 'translation.data': text,
+                'translation.text': layers.text,
+                'translation.text_from': layers.text_from,
                 'translation.updated_at': now,
                 'translation.model': job.model,
                 'translation.source_language': job.language,
                 'translation.target_language': 'English',
                 'translation.source': 'batch_api',
-                'translation.prompt_version': job.prompt_version || 'v5.2026-02',
+                'translation.prompt_version': jobPromptVersion(job), // never a constant (#7499)
                 'translation.prompt_id': job.prompt_id,
                 'translation.prompt_hash': job.prompt_hash,
                 'translation.prompt_name': job.prompt_name,
@@ -876,6 +882,7 @@ async function processOneJob(db, job) {
         failCount += (chunk.length - chunkResult.matchedCount);
         if (i + CHUNK_SIZE < bulkOps.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
       }
+      if (annotationItems.length) await writePageAnnotations(db, annotationItems);
       // Dual-write to Supabase (fire-and-forget)
       syncPageBatch(bulkOps.map(op => ({
         pageId: op.updateOne.filter.id,

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'AI & Data-Mining Licensing - Source Library',
+  title: 'AI & Data Licensing - Source Library',
   description:
     'How AI training and text-and-data-mining use of Source Library works. Search indexing and individual use are welcome; large-scale AI training requires a separate license.',
   alternates: {
@@ -17,7 +17,7 @@ export default function LicensingPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="AI & Data-Mining Licensing"
+          title="AI & Data Licensing"
           subtitle="What's open, what's reserved, and how to license training use"
         />
       }
@@ -41,13 +41,12 @@ export default function LicensingPage() {
           <h2 className="text-2xl text-primary mb-4">Freely permitted: no license needed</h2>
           <ul className="space-y-2 text-secondary leading-relaxed list-disc pl-5">
             <li>
-              <strong>Original texts &amp; page images</strong> are in the public domain.
-              Use them freely.
+              <strong>Original texts</strong> are in the public domain. <strong>Page images</strong> stay under each holding library&rsquo;s terms, shown on each book.
             </li>
             <li>
-              <strong>Our AI-generated translations and editorial content</strong> are
-              licensed <strong>CC&nbsp;BY-SA&nbsp;4.0</strong>, free for individuals,
-              researchers, and organizations, with attribution and ShareAlike.
+              <strong>Our translations, transcriptions and editorial content</strong> are
+              licensed <strong>CC&nbsp;BY-NC-SA&nbsp;4.0</strong>, free for learning, teaching and research, with
+              attribution. Quoting them inside your own commercial work is fine too; see <Link href="/terms" className="text-accent-rust hover:underline">our terms</Link>.
             </li>
             <li>
               <strong>Search indexing.</strong> Search engines and AI search crawlers
@@ -71,10 +70,9 @@ export default function LicensingPage() {
         <section className="bg-white rounded-xl p-8 border border-border-light">
           <h2 className="text-2xl text-primary mb-4">Reserved: a separate license is required</h2>
           <p className="text-secondary leading-relaxed mb-4">
-            <strong>Using our content to train, fine-tune, or build AI models, and
-            bulk text-and-data-mining (TDM) for those purposes, is expressly
-            reserved and requires a separate license from us.</strong> That
-            reservation rests on several independent grounds:
+            <strong>Training, fine-tuning or evaluating commercial AI models on our content, and
+            commercial bulk text-and-data-mining (TDM), needs a license from us.</strong> Here is
+            what that rests on:
           </p>
           <ul className="space-y-3 text-secondary leading-relaxed list-disc pl-5">
             <li>
@@ -87,13 +85,8 @@ export default function LicensingPage() {
               identify and respect this reservation.
             </li>
             <li>
-              <strong>Database right.</strong> The Source Library corpus (the curated,
-              verified, and structured collection of texts, transcriptions,
-              translations, and metadata) is a database within the meaning of EU
-              Directive 96/9/EC, reflecting substantial investment by the Embassy of
-              the Free Mind. Extraction or re-utilization of a substantial part of it
-              (including the OCR and metadata layers) requires our authorization,
-              independent of the copyright status of any individual item.
+              <strong>Database right.</strong> As far as the law gives one, we reserve the EU database right
+              (Directive 96/9/EC) in the collection as a whole, including its selection, structure and metadata.
             </li>
             <li>
               <strong>First publication of unpublished works.</strong> Where we are
@@ -103,21 +96,18 @@ export default function LicensingPage() {
               2006/116/EC for 25 years from publication.
             </li>
             <li>
-              <strong>Copyright.</strong> Human-authored editorial content (collection
-              essays, blog posts, curatorial descriptions) is protected by copyright.
-              Our AI-generated translations and annotations are offered under
-              CC&nbsp;BY-SA&nbsp;4.0, and that license&rsquo;s <em>ShareAlike</em> term
-              would require a model built on this material to be released under
-              CC&nbsp;BY-SA, which proprietary models do not do. The free license
-              therefore does not authorize proprietary AI training.
+              <strong>License.</strong> Our translations, transcriptions and editorial content are offered under
+              CC&nbsp;BY-NC-SA&nbsp;4.0, which covers non-commercial purposes only. Copies obtained under CC&nbsp;BY-SA&nbsp;4.0 before November 5, 2026 stay under that license.
+            </li>
+            <li>
+              <strong>Agreement.</strong> Getting an API key or a dataset means agreeing to our terms, and a
+              signed agreement sets the terms of a data license.
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4">
             Bulk or training access is available through the API or a dataset
-            license, under the standard terms below or a partnership. We&rsquo;d
-            genuinely like these texts in the models that shape how people learn; we
-            just ask for a conversation and attribution. Please don&rsquo;t scrape the
-            full corpus around the controls.
+            license, under the standard terms below or a partnership. Want something different? Ask us. We
+            would like these texts in the models that shape how people learn.
           </p>
         </section>
 
@@ -168,8 +158,7 @@ export default function LicensingPage() {
             </li>
           </ul>
           <p className="text-secondary leading-relaxed mt-4 mb-4">
-            These are the standard terms for training use, and the rates at which
-            unlicensed use is invoiced. Scoped subscriptions at lower annual rates
+            These are the standard terms for training use. Scoped subscriptions at lower annual rates
             (a single language corpus, one scholarly domain, or the full
             collection delivered through our streaming dataset API) are available
             to partners who take the data cooperatively; see{' '}
@@ -207,13 +196,6 @@ export default function LicensingPage() {
             export. Every record we ship carries that library&rsquo;s name and its
             stated rights class, so you can see whose terms apply before you ask them
             for the scans.
-          </p>
-
-          <p className="text-secondary leading-relaxed">
-            <strong>Unlicensed training use is unauthorized.</strong> Where we identify
-            training use of our content without a license, we will invoice at the
-            standard rates above and pursue payment under the reserved rights described
-            in the previous section.
           </p>
         </section>
 

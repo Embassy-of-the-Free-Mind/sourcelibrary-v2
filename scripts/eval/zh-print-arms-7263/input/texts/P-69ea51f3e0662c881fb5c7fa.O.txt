@@ -1,0 +1,13 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>三四</page-num>
+<header>山海經廣注 卷二</header>
+<warning>The header and page number in the centre fold are clipped at the gutter, so the page number reading is uncertain. Some small fish-radical characters are hard to distinguish.</warning>
+
+漾水出崑崙西北隅又許慎呂忱孔安國常璩並以漾水出隴西則洋水或一名漾水未可知也又案海內西經洋當音翔而西南流注于醜塗之水郭曰醜塗亦山名也皆在南極穆天子傳曰戊辰濟洋水又曰觴天子洋水也任臣案水經注作配塗黑水出焉郭曰亦出西北隅也而西流于大杅郭曰山名也穆天子傳曰乃封長肱于黑水之西河是惟崑崙鴻鷺之上以爲周室主杅音于是多怪鳥獸郭曰謂有一獸九首有一鳥六首之屬也
+
+又西三百七十里曰樂游之山桃水出焉西流注于稷澤是多白玉其中多<unclear>䱻</unclear>魚郭曰音滑任臣案字書<unclear>䱻</unclear>魚有二鳥翼如魚者音滑子桐水之<unclear>䱻</unclear>魚是也如蛇四足者音骨今郭音相反疑字書誤景純江賦云<unclear>䱻鰊鱢鮋</unclear>張融海賦云<unclear>鰥魵鰊䱻</unclear>其狀如蛇而四足是食魚任臣案劉會孟曰龍蟠山潭中亦產魚四足而有角
+
+<vocab>山海經, 郭璞, 吳任臣, 漾水, 洋水, 醜塗, 黑水, 大杅, 穆天子傳, 水經注, 樂游之山, 桃水, 稷澤, 䱻魚, 江賦, 海賦, 張融, 劉會孟</vocab>

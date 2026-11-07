@@ -1,0 +1,140 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** Sanskrit
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: Recognition of the Lord with Commentary | Author: Utpaladeva; Abhinavagupta, comm. | Date: 1918
+
+**Note:** This is a public domain work published in 1918. It is not under copyright.
+
+**Text to translate:**
+<scan-quality>good</scan-quality>
+<language>Sanskrit</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>224</page-num>
+<header>ईश्वरप्रत्यभिज्ञा । [ १ अ० ५ आ०</header>
+
+विषयेण स्फुटेन च नियन्त्रितं संवित्तत्त्वं तत् ज्ञानम् । मनसा विषयेण च अस्फुटेन संकल्पः । बुद्ध्या विषयेण च विषयत्वपर्यन्तभाजा अध्यवसायो निश्चयः । विषयस्य च यत् भिन्नत्वं बहिरन्तःकरणानां च तत्प्रकाशाभेदात् अनुपपन्नं चित्तत्वेन आभास्यते, इति भेदे यतो विश्रान्तिः, न तु भेदस्य अभेदे ईश्वरसदाशिवादिवत्, ततो ज्ञानसंकल्पादयो भिन्नाः तस्य अप्रध्र्वस्तस्वस्वभावाभेदस्य संवित्तत्त्वस्य अनुसंधातुः शक्तय इति उक्ताः, संशयादयश्च भिन्ना नीलादिवैचित्र्यं च इति सर्वम् अखण्डितम् ॥ १८ ॥
+
+ननु प्रत्यवमर्शात्मत्वं चितिशक्तेः संकल्पस्मरणादिशक्तिषु सविकल्पात्मिकासु भवतु । या तु निर्विकल्परूपा साक्षात्कारलक्षणा अनुभवशक्तिः, तत्र कथम् । प्रत्यवमर्शो हि
+
+---
+
+<note>403 चित्तत्वेन-अशुद्धप्रमात्रा ।</note>
+<note>404 यद्यपि अर्थस्थितिः प्राणपुर्यष्टकनियन्त्रिते जीवे निरुद्धा तत्रापि परमात्मनि सा स्थिता इति नित्या ।</note>
+<note>405 अखण्डितम्-अभिन्नम् ।</note>
+<note>406 प्रत्यवमर्शात्मत्वम् ।</note>
+
+<vocab>ईश्वरप्रत्यभिज्ञा, संवित्तत्त्व, ज्ञान, संकल्प, अध्यवसाय, चितिशक्ति, अनुभवशक्ति, प्रत्यवमर्श</vocab>
+
+**Previous page translation for continuity:**
+<header>Verse 18] The Commentary by the Illustrious Teacher Abhinavagupta. 223</header>
+
+
+
+->**and is named as knowledge, intention, determination, and so forth.**<- [Verse 18]
+
+<term>Māyā</term> <gloss>illusion</gloss> is defined as an appearance that is inconsistent with reality <note>original: "anupapannam avabhāsanaṃ"</note>. Consequently, everything that appears as separate from the light of consciousness is a product of <term>Māyā</term>. In that context, the very freedom of the principle of consciousness is called the <term>Māyā-śakti</term> <gloss>the power of illusion</gloss>. By that
+[…]
+ includes doubt, memory, and other states. To explain: that which is grasped through the clear external senses—
+
+---
+
+<note>399. This is the gist of the verse: Through the <term>Māyā-śakti</term> of the Supreme Lord, who is the essence of Light, the universe—which is actually His own self—is made to appear as separate. Therefore, that same consciousness is "knowledge" <term>jñāna</term> when it is direct perception. Memory, intention, and determination of that same separate appearance are also just consciousness, even when taking the form of the activities of the mind and intellect.</note>
+<note>400. This shows the grammatical resolution of the term "freedom within <term>Māyā</term>."</note>
+<note>401. Regarding "from the knower": The Self is indeed the all-pervading Supreme Lord. However, through the <term>Māyā-śakti</term>, He becomes a limited subject <term>grāhaka</term> <gloss>grasper</gloss> due to contraction. Similarly, the power of reflection also becomes contracted by the influence of objects that have been limited by the <term>Māyā-śakti</term>. In this state, it is called "knowledge," "memory," and so on. But the point is that these are not separate principles other than the power of reflection itself; they are merely different names.</note>
+<note>402. This explains the phrase "separate objects of consciousness" by adopting the view of repeated manifestation.</note>
+<summary>This page concludes Verse 18, explaining that Maya is the Lord's power to make the world appear separate from Himself. It identifies various mental states like knowledge and intention as modes of the single power of reflection.</summary>
+<keywords>Maya, Maya-shakti, Paravak, Pratyavamarsha, knowledge, intention, determination, consciousness, Abhinavagupta</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

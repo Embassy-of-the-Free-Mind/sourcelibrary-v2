@@ -105,9 +105,8 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 // Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider). The Rithmomachia game stays at /rithmomachia: it is a
-// full-width game with its own guide and scenario pages, not an article; the
-// article about it is /articles/rithmomachia.
+// home slider). /rithmomachia redirects to the standalone game (#7821), which
+// is not an article; the article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
   {
     slug: 'play-rithmomachia',
@@ -125,6 +124,35 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'kircher-hieroglyphs',
+    title: 'Kircher and the Hieroglyphs',
+    subtitle:
+      'What Athanasius Kircher thought the Egyptian signs were, how he read whole obelisks, and the one thing he got right, in the books he printed in Rome between 1636 and 1676.',
+    summary:
+      'Athanasius Kircher read Rome’s obelisks as hymns to a hidden Hermetic theology. Oedipus Aegyptiacus and his Coptic books, quoted from the printed pages.',
+    date: '3 November 2026',
+    readTime: '13 min read',
+    kind: 'stories',
+    image: 'https://images.sourcelibrary.org/archived/69527350ab34727b1f048c2e/78.jpg',
+    imageAlt:
+      'Kircher’s folding plate of the Pamphilian obelisk: its four faces of hieroglyphs drawn side by side, with the papal arms and the obelisk in Piazza Navona between them.',
+  },
+  {
+    slug: 'agrippa-against-himself',
+    title: 'Agrippa Against Himself',
+    subtitle:
+      'He wrote the textbook of Renaissance magic, then a book declaring all learning vain, magic included. Read through his own pages.',
+    summary:
+      'Cornelius Agrippa wrote the textbook of Renaissance magic, then recanted it in a book on the vanity of learning. His books, and the accused woman he saved.',
+    date: '28 October 2026',
+    readTime: '11 min read',
+    kind: 'stories',
+    // Title page of the 1533 Cologne De occulta philosophia (the C. G. Jung copy, e-rara), reader page 6, opened by eye.
+    image: 'https://images.sourcelibrary.org/archived/69bd9ca46120d54bd037001f/6.jpg',
+    imageAlt:
+      'Title page of De occulta philosophia libri tres (Cologne, 1533), with a woodcut portrait of Agrippa in a cap and fur collar.',
+  },
   {
     slug: 'aldine-roman',
     title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
@@ -146,8 +174,8 @@ export const posts: BlogPost[] = [
     date: '6 October 2026',
     readTime: '',
     kind: 'tours',
-    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
-    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
+    image: '/articles/beeckman-on-drebbel/drebbel-submarine.jpg',
+    imageAlt: 'Drebbel’s boat under water, drawn as a covered hull with rowers inside, in a later engraving.',
   },
   {
     slug: 'search-by-meaning',
@@ -211,6 +239,22 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg',
     imageAlt:
       'Red chalk drawing of a woman dancing in a flowing robe with a cymbal in each hand, between a faun with a curved horn and a faun with pan-pipes.',
+  },
+  {
+    slug: 'aliveness',
+    title: 'What Is Alive? Ten Turning Points',
+    subtitle:
+      'Soul, breath, heat, machine, force and feeling: how the answer to what makes a thing alive changed, what people did in each age to keep it, and the first use of the word aliveness in 1898.',
+    summary:
+      'Life as soul, breath, heat, machine, force and feeling, and what each age did to keep it: Aristotle, Ibn Tufayl, Ficino, Hobbes, Bichat, Fechner.',
+    date: '26 October 2026',
+    readTime: '18 min read',
+    kind: 'stories',
+    // Robert Fludd, Utriusque cosmi historia (1617), title page (scan 1), cropped to the microcosm inside the macrocosm.
+    image: '/articles/aliveness/fludd-microcosm.jpg',
+    imageAlt:
+      'Engraved title page: a naked man stands with arms outstretched inside the circles of the heavens, ringed by clouds.',
+    imagePosition: 'center 30%',
   },
   {
     slug: 'concords-not-unisons',
@@ -1079,6 +1123,42 @@ export const posts: BlogPost[] = [
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
     imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
+  },
+  {
+    slug: 'alchemical-process',
+    title: 'Is Source Library an Alchemical Process? Testing the Frame',
+    subtitle: 'Which alchemy the comparison borrows, which steps hold up against our measurements, and three places it breaks.',
+    summary:
+      'We set the steps of alchemy against what happens to a page here. Where the comparison holds, with measurements, and three places it fails.',
+    date: '4 November 2026',
+    readTime: '20 min read',
+    kind: 'research',
+    image: '/articles/alchemical-process/emblem-iii.jpg',
+    imageAlt: 'Engraving from Atalanta fugiens (1618): a woman pours steaming water from a jug into a large wooden tub, with a fire behind her and laundry on the ground.',
+  },
+  {
+    slug: 'how-many-translated-into-english',
+    title: 'How Many Old Books Have Been Translated into English?',
+    subtitle: 'An estimate for the books printed in Europe before 1700, made three ways.',
+    summary:
+      'Of some 815,000 works printed in Europe before 1700, about 18,000 to 39,000 have ever been put into English. Three estimates, and why catalogues miss most.',
+    date: '2 November 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6a19bfb49b13f9ea2b27283f/13.jpg',
+    imageAlt: 'Title page of The Divine Pymander of Hermes Mercurius Trismegistus (London, 1650), translated into English by Doctor Everard, in a printed border.',
+  },
+  {
+    slug: 'how-much-in-english',
+    title: 'How Much of the Written Past Can You Read in English?',
+    subtitle: 'What survives, what is scanned, and what has been translated, tradition by tradition, from Latin print to Tibetan and Japanese.',
+    summary:
+      'How many old books and manuscripts survive in Latin, Arabic, Sanskrit, Tibetan, Chinese and more, how many are scanned, and how few are in English.',
+    date: '30 October 2026',
+    readTime: '9 min read',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg',
+    imageAlt: 'Engraved frontispiece of Athanasius Kircher, Turris Babel (Amsterdam, 1679): robed figures in the foreground, the tower rising in the background under a sky of angels.',
   },
   {
     slug: 'counting-the-gap',

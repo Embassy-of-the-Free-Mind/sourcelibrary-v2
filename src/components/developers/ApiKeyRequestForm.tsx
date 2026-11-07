@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Copy, Check, Key, Loader2 } from 'lucide-react';
+import { PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
 
 /** Existing keys for the signed-in user */
 interface UserKey {
@@ -13,6 +14,19 @@ interface UserKey {
   status: string;
   created_at: string;
   rate_limit: { requests_per_minute: number; pages_per_day: number };
+}
+
+function TermsCheckbox({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
+  return (
+    <label className="flex items-start gap-2 text-sm text-stone-700 cursor-pointer">
+      <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} className="mt-1" />
+      <span>
+        I agree to the{' '}
+        <Link href="/terms" className="text-accent-rust hover:underline">terms of use</Link>, including the{' '}
+        <Link href="/terms#embassy-collection" className="text-accent-rust hover:underline">terms for the Embassy of the Free Mind&rsquo;s collection</Link>.
+      </span>
+    </label>
+  );
 }
 
 export default function ApiKeyRequestForm() {
@@ -27,6 +41,7 @@ export default function ApiKeyRequestForm() {
   const [copied, setCopied] = useState(false);
   const [keyName, setKeyName] = useState('');
   const [error, setError] = useState('');
+  const [termsAgreed, setTermsAgreed] = useState(false);
 
   // Request form state (anonymous users)
   const [form, setForm] = useState({
@@ -57,7 +72,7 @@ export default function ApiKeyRequestForm() {
       const res = await fetch('/api/dataset/v1/keys', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: keyName || 'API Key' }),
+        body: JSON.stringify({ name: keyName || 'API Key', accept_terms: PARTNER_TERMS_VERSION }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -92,7 +107,7 @@ export default function ApiKeyRequestForm() {
       const res = await fetch('/api/dataset/v1/request-key', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, accept_terms: PARTNER_TERMS_VERSION }),
       });
       const data = await res.json();
 
@@ -189,13 +204,14 @@ export default function ApiKeyRequestForm() {
             </div>
             <button
               onClick={handleGenerate}
-              disabled={generating}
+              disabled={generating || !termsAgreed}
               className="shrink-0 px-5 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {generating ? 'Generating...' : 'Generate API Key'}
             </button>
           </div>
         )}
+        {!newKey && <TermsCheckbox checked={termsAgreed} onChange={setTermsAgreed} />}
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
@@ -292,9 +308,11 @@ export default function ApiKeyRequestForm() {
           <p className="text-sm text-red-600">{formMessage}</p>
         )}
 
+        <TermsCheckbox checked={termsAgreed} onChange={setTermsAgreed} />
+
         <button
           type="submit"
-          disabled={formStatus === 'submitting'}
+          disabled={formStatus === 'submitting' || !termsAgreed}
           className="px-5 py-2.5 bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {formStatus === 'submitting' ? 'Submitting...' : 'Request API Key'}

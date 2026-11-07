@@ -1,0 +1,281 @@
+{
+ "judges": {
+  "opus": {
+   "n": 20,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 18,
+    "old": 2,
+    "tie": 0
+   },
+   "mean_new_minus_old": 1,
+   "ci95": [
+    0.65,
+    1.35
+   ],
+   "pages": {
+    "6a3c5f0f879008ba7e15299e": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X omits the first entry (稀蒼丸, Harmony 256) and misreads 風 as part of the formula label, which yields 'Wind-Harmonizing Formula 207' (should be 270), drops wind from 風寒濕痺 and turns 風濕 into just 'Dampness'; Y renders every entry with correct numbers and conditions."
+    },
+    "6a3c5f37879008ba7e1536df": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X renders 生薑成一斤 correctly as bringing the ginger up to one jin, keeps the 丹 marginal attribution, and ends on the truncated 'one-sided' (偏); Y says 'add one jin', drops 丹 and 偏, invents an 'obscured line', and adds metric conversions not in the source."
+    },
+    "6a3c5e5540c88a541d8e1111": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Y attaches each author name to the verse that follows it, when in this anthology names come after their verses, so every attribution is shifted (for example, Su Shi's Zhao Dun/Fu Yue line is credited to Shi Jie, and Su Shi is left with nothing); it also drops the Shi Ping attribution and turns the 'moistens stems and soaks leaves' saying into 'gentle dew', whereas X keeps the correct name-after-verse attributions and only drops minor details such as 羃紫."
+    },
+    "6a3c5f0940c88a541d8e66e5": {
+     "new": 4,
+     "old": 5,
+     "better": "old",
+     "reason": "Y opens with a meta note that invents prior-page text (\"Is this not a case of Greater Yang...\") that does not appear in the source, while X renders the page's statements, negations and formula names accurately without adding content."
+    },
+    "6a3c5f2840c88a541d8e6a24": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X gets two cross-reference numbers wrong (外二 as 21 and 外一 as 10, where the source has 2 and 1), drops the four 金 characters, and adds explanatory glosses not on the page; Y keeps every number correct and flags its interpretations, though it mislabels the section numbers as 'page'."
+    },
+    "6a3c6232879008ba7e16182e": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y romanizes the inscribed character 鬲 as \"Ge\" instead of the vessel-name reading \"Li,\" so it misnames both the inscription and the 鬲彝; X reads it correctly, though it adds an unsupported claim that the matching vessel is \"catalogued earlier in this volume\" and an extraneous Liang Shizheng keyword."
+    },
+    "6a3c6247879008ba7e16230f": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y misreads 或者猶有深許晉人…之意 as 'some people still praise Jin' rather than the Annals' possible intent to commend Jin, says the Shaoliang event is absent from 'other classics' rather than the Classic itself, omits the king sending to stop Zixi, and garbles the final 自正, while X renders all of these correctly and its only additions are an unsupported 'continues from previous page' meta line and explanatory notes."
+    },
+    "6a3c5f2b40c88a541d8e6b8a": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Y adds 'Qi' to the unfinished closing phrase 善行善散, gives the wrong start year for Wanli (1572, not 1573), drops the contrastive 然 that opens the caution, and weakens 刻見效 ('immediately effective') to 'clearly observed', while X renders every clause accurately and only adds a speculative bracketed note about the previous page."
+    },
+    "6a3c621740c88a541d8f2a36": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Both render every number and line correctly, but X keeps the cun/fen/chi/liang units with accurate glosses where Y's bare 'inches/feet' misstates the measurements; X's summary does add an unsupported identification as the Xiqing Gujian (and a Liang Shizheng keyword), while Y's summary wrongly says the page lists the Siku Quanshu's opening volumes."
+    },
+    "6a3c61ac879008ba7e15fa1d": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X renders 儀同三司 (Yitong Sansi) wrongly as 'Grand Master for Splendid Happiness', translates 該 ('covers') as 'considering', and turns the stray margin characters into content such as 'Gold', '1,000' and '36', while Y renders the names and the 'one grade covers all' sense correctly and marks the margin characters as uncertain."
+    },
+    "6a3c6f4301fe4f593c1caa78": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "X renders 皆指歲言 correctly as the Six Calendars' xinmao and yimao both referring to years, while Y changes this to 'the specific start of an era' and adds 'modern' to the hour terms, which loosens the argument."
+    },
+    "6a3c622f879008ba7e1615d1": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Both render all numbers and headers correctly, but Y presents the doubtful OCR title '西洋屯銀' as a real silver vessel of Western or maritime origin in its note and summary, while X translates it literally and flags it as a likely misreading (X's only addition is the unsupported 'Liang Shizheng' keyword)."
+    },
+    "6a3c624740c88a541d8f3107": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y makes the ministers, not the Duke of Song, leave the mourning place, and it renders the OCR slip 金草 literally as 'gold and grass', glossing it as worldly wealth, where X correctly reads 金革 'metal and leather' as military affairs; Y also calls the day yihai a year, tags the Zuo quotation as marginalia, and closes the page's unfinished last sentence as a complete statement."
+    },
+    "6a3c5f12879008ba7e152b8f": {
+     "new": 4,
+     "old": 4,
+     "better": "old",
+     "reason": "Y opens with 'doubling their portion of food', which is not on this page (the source begins mid-phrase at 食暴傷), and it attributes the passage to Xue Lizhai without textual support, whereas X translates the visible text without importing outside content."
+    },
+    "6a3c5e5940c88a541d8e1402": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Y drops the source attributions (the trailing 伊 for Cheng Yi and 房 introducing Fang's gloss on 寇) and the page number, while X renders everything on the page accurately."
+    },
+    "6a3c5f26879008ba7e1533fb": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X correctly reads the split page marks 十 and 九 as 新補 formula 19 for Zhenyuan Yin, while Y gives it as 'New Tonic formula 10' (leaving 19 as a stray page number) and also mistranslates 煎 in 胃關煎 as 'Bolus'; X's only lapse is an unsupported 'Volume 42' in its summary."
+    },
+    "6a3c5f31879008ba7e1535e0": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Y invents quantities absent from the source (3 qian licorice, 1 liang poria, and formula 116 for the Modified Aloe Pill), and mislabels the continuing formula as the Great Aloe Pill No. 169. X keeps the source's gaps marked and its numbering correct, though its 'no desire for food' is an inferred reading of the truncated 思."
+    },
+    "6a3c621040c88a541d8f255c": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X renders the OCR-garbled header '金星正周全書' as an invented title ('The Complete Book of the Correct Cycle of the Planet Venus') and drops 右 ('at right'). Y flags the misreading as probably '欽定四庫全書' and translates the measurements accurately, though its summary and keywords add unsupported claims that the page is from Xiqing Gujian, shows a bronze vessel and involves Liang Shizheng."
+    },
+    "6a3c6231879008ba7e161733": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Both render the measurements, weight and linked-ring handles correctly, but X marks the garbled opening characters (金穴凹屋) as an uncertain reconstruction of 欽定四庫, while Y silently replaces them with a confident title; X's own flaw is that its summary and keywords name the Xiqing Gujian and Liang Shizheng, which the page does not mention."
+    },
+    "6a3c5e6040c88a541d8e189c": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Y renders 莫有使之然者 and 雷疾 accurately as 'nothing causes them to be so' and 'thunder is swift', while X adds an unstated 'external' and turns 疾 into 'strikes'; Y's own additions, such as 'Fire trigram' in the main text and the explanatory meta, are interpretive but mostly flagged."
+    }
+   }
+  },
+  "gemini": {
+   "n": 20,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 19,
+    "old": 1,
+    "tie": 0
+   },
+   "mean_new_minus_old": 1.7,
+   "ci95": [
+    1.2,
+    2.05
+   ],
+   "pages": {
+    "6a3c5f0f879008ba7e15299e": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y translates all content including the page number and first formula while accurately resolving OCR artifacts, whereas X omits the first formula and page number and invents a 'Wind-Harmonizing' formula category from misread text."
+    },
+    "6a3c5f37879008ba7e1536df": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X faithfully translates marginal source attributions and correctly resolves OCR errors in formula numbering, whereas Y omits the source marker '丹', mistakes formula number 179 for a page number, and replaces the character '偏' with an obscured text notice."
+    },
+    "6a3c5e5540c88a541d8e1111": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X correctly recognizes that author attributions follow each poem, whereas Translation Y treats them as prefixes, systematically misattributing every poem, omitting Shi Ping, and failing to connect Su Shi to his verse."
+    },
+    "6a3c5f0940c88a541d8e66e5": {
+     "new": 3,
+     "old": 5,
+     "better": "old",
+     "reason": "Translation X faithfully translates the text on the page, whereas Translation Y adds an extraneous continuation clause not present in the source that leaves the opening sentence as a fragment."
+    },
+    "6a3c5f2840c88a541d8e6a24": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y faithfully includes the opening characters and translates all formula numbers accurately, whereas X omits the opening characters and misreads numbers 2 and 1 as 21 and 10."
+    },
+    "6a3c6232879008ba7e16182e": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X correctly identifies and reads the bronze vessel and inscription as \"Li\" and faithfully translates the inscription comparison, whereas Translation Y misreads \"鬲\" as \"Ge\", misinterprets the inscription note as a statement about terminology, and converts Chinese units directly into English inches and ounces."
+    },
+    "6a3c6247879008ba7e16230f": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X accurately renders the classical syntax and exegesis, whereas Y misattributes the opening lacuna theory, omits the king sending to stop Zixi (止子西), and mistranslates the final phrase 自正 as 'From the perspective of...'."
+    },
+    "6a3c5f2b40c88a541d8e6b8a": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X correctly recognizes that the page begins and ends mid-sentence, whereas Translation Y mistranslates '刻見效' as 'clearly observed' and fabricates the object 'Qi' at the end."
+    },
+    "6a3c621740c88a541d8f2a36": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "X accurately preserves the original Chinese units of measurement and structural markup tags, whereas Y translates traditional units directly into English feet and inches."
+    },
+    "6a3c61ac879008ba7e15fa1d": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y correctly identifies marginal OCR artifacts and accurately translates key Song bureaucratic titles such as Yitong Sansi and Pingzhang, whereas X mistranslates these central official titles and mechanically renders stray characters as body text."
+    },
+    "6a3c6f4301fe4f593c1caa78": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X faithfully preserves the text's parallel calendrical arguments and technical terminology, whereas Y distorts '皆指歲言' as pointing to the start of an era and anachronistically renders '時刻' as 'modern moments'."
+    },
+    "6a3c622f879008ba7e1615d1": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X faithfully preserves the original Chinese measurement units rather than inaccurately converting them to Western inches and feet, and renders the title without adding extraneous words."
+    },
+    "6a3c624740c88a541d8f3107": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X correctly identifies the OCR error of 金草 for 金革 (military affairs) and translates 乙亥 as a day rather than a year, whereas Y mistakenly interprets 金草 as 'gold and grass' and translates 乙亥 as a year."
+    },
+    "6a3c5f12879008ba7e152b8f": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y faithfully preserves the page's incomplete sentence structure by translating the trailing conjunction '而' as 'and' and accounts for the marginal characters and OCR error, whereas Translation X artificially closes the final sentence by dropping '而' and ignores the marginal characters."
+    },
+    "6a3c5e5940c88a541d8e1402": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Translation X is complete and correctly identifies the commentator attributions '伊' and '房' as well as the page number, whereas Translation Y omits them entirely."
+    },
+    "6a3c5f26879008ba7e1533fb": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X correctly recognizes that the OCR-split numerals '十' and '九' represent formula 19 for Zhenyuan Yin and accurately renders Weiguan Jian as a decoction, whereas Y misidentifies the formula number as 10, creates an erroneous page 19 tag, and mistranslates the decoction as a bolus."
+    },
+    "6a3c5f31879008ba7e1535e0": {
+     "new": 5,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X accurately identifies the recipe as a continuation from the previous page while faithfully noting illegible quantities, whereas Translation Y misattributes the formula to the Great Aloe Pill and invents dosages for licorice and poria that are not in the source text."
+    },
+    "6a3c621040c88a541d8f255c": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y correctly identifies the opening header as an OCR misreading of the Siku Quanshu rather than mistranslating it as a book about Venus, and also translates '右' which X omits."
+    },
+    "6a3c6231879008ba7e161733": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X correctly interprets the cataloguing formula '右' as referring to the preceding vessel and preserves traditional Chinese measurement units with glosses, whereas Y mistranslates '右' literally as 'To the right:' and inaccurately converts decimal Chinese units into feet and inches."
+    },
+    "6a3c5e6040c88a541d8e189c": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Y is more faithful because it accurately translates the commentary and natural attributes (such as rendering '雷疾' as 'thunder is swift' rather than 'thunder strikes' and capturing '莫有使之然者' without interpolating 'external force'), whereas X contains several mistranslations and factual errors."
+    }
+   }
+  }
+ },
+ "rule": {
+  "controls": true,
+  "non_inferior": true,
+  "by_eye": "recorded separately (rule 3)"
+ }
+}

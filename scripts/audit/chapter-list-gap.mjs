@@ -106,7 +106,7 @@ async function main() {
   if (!ALL) filter.is_fully_translated = true;
   const cursor = db.collection('books').find(filter, {
     projection: { _id: 0, id: 1, title: 1, pages_count: 1, chapters_extracted_at: 1, 'chapters.title': 1, 'chapters.titleEn': 1 },
-  });
+  }).batchSize(1000);
 
   let withList = 0, measurable = 0;
   const flagged = [];

@@ -1,0 +1,824 @@
+[
+  {
+    "book_id": "69f330cf876dd827cbc47ea6",
+    "slot": 95,
+    "title": "Plautus ex umbria Sarsinas Romae moritur anno ab urbe condita millessimo",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection assigned; a 15th-c. humanist manuscript of Plautus (Amphitruo) with a Latin Batrachomyomachia — a classical text, outside the core esoteric shelves but a legitimate primary source.",
+    "rights_flag": null,
+    "structure_note": "Composite manuscript: pp. 29 and 51 are Plautus' Amphitruo (51 = its explicit, 'Finit Amphitrio comoedia'), p. 74 is Marsuppini's Latin Batrachomyomachia. The title covers only the Plautus part. 113 of 114 pages have OCR and 89 have translations. Nothing in the counts suggests a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "N udi edepol quoque morales credo ego uxores suas",
+            "image": "N u[n]q[uam] edepol quemq[uam] mortale[m] credo ego uxore[m] suam",
+            "problem": "Amphitruo 507 (Numquam edepol quemquam mortalem…) turned into gibberish",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Q uid tibi hac curatio res ubero haud munro / E no lego ias hoc sermone Ah noh in munro modo",
+            "image": "Q uid tibi hac curatio est rem uerbero aut muttitio / Q uo ego iam hoc scipione — Ah noli — muttito modo",
+            "problem": "verbero/muttitio/scipione misread as 'ubero', 'munro', 'sermone'; the line's sense is lost",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "V cruz quod tu dicis",
+            "image": "V erum quod tu dicis",
+            "problem": "misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "opas hac lueripui tibi / E me primo prima faires",
+            "image": "operam hanc surripui tibi / Ex me primo prima scires",
+            "problem": "surripui and scires misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "N e me uxores prehensile ducant",
+            "image": "N e me uxorem preuertisse dicant",
+            "problem": "'praevertisse dicant' becomes 'prehensile ducant'; the sense changes",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "N ue tibi hanc pareras … obututes / A tamen tibi condono",
+            "image": "N unc tibi hanc pateram … ob uirtutem / A lcumena tibi condono",
+            "problem": "pateram, ob virtutem and the name Alcumena all misread; 'A tamen' drops the addressee",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "N on ego te hic lubes reliquo ni abeo abste al lenno",
+            "image": "N on ego te hic lubens relinquo neque abeo abs te — al. Sentio",
+            "problem": "'Sentio' read as 'lenno'; speaker sigla read into the verse",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "(left margin omitted)",
+            "image": "a column of left-margin glosses and speaker sigla (al, me, iu), plus many interlinear glosses",
+            "problem": "the left-margin glosses are dropped and most interlinear glosses are missing; the <gloss> tags wrap words of the main text instead",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Nudi edepol quoque morales credo ego uxores suas",
+            "english": "By Pollux, I also believe that wives are naked,",
+            "problem": "fluent English built on garbled OCR; Plautus says no mortal loves his wife so desperately",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "E no lego ias hoc sermone Ah noh in munro modo",
+            "english": "I do not read here in this speech, Ah, not in a pittance only.",
+            "problem": "nonsense presented as translation (should be 'whom I'll now [beat] with this stick — Ah don't — just mutter once more')",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "P terela rex qui potauit",
+            "english": "Pterela, the king who drank",
+            "problem": "potitavit = ruled; 'drank' is wrong",
+            "severity": "moderate"
+          },
+          {
+            "source": "ac supparasitabor patri",
+            "english": "and play the parasite, I was small",
+            "problem": "'patri' (to [his] father) rendered 'I was small'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "a line is left as '<note>Unclear text: \"V cruz quod tu dicis…\"</note>' in the reader translation",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "translator adds the note '<note>a stock character in Roman comedy</note>' mid-verse",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Ego tiresiam uictorem aduocabo",
+            "image": "Ego tiresiam coniectorem aduocabo",
+            "problem": "'coniectorem' (seer) read as 'uictorem'; the translation then says 'Tiresias the victor'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Tu gravidam utero fecisti",
+            "image": "Tu grauidam item fecisti",
+            "problem": "item → utero",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Redi haud promeruit culpam inuideo notares / Mea ui subacta est facta",
+            "image": "Redi haud promeruit q[uam]obrem uitio uorteres / Mea ui subacta est facere",
+            "problem": "the line excusing Alcumena is garbled; 'facere' read as 'facta'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nam mihi honos habetur misso peperit dies tuos",
+            "image": "Nam mihi honor maior … peperit diis tuis",
+            "problem": "opening line misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "<gloss>ecce inuice se complectuntur</gloss> (twice)",
+            "image": "the gloss appears once",
+            "problem": "gloss duplicated",
+            "severity": "minor",
+            "class": "O4"
+          },
+          {
+            "ocr": "Tiresias prius magis peritus uaticinandi / in petere brachio coepit feminam … senatorem sepede heros fieri feminam",
+            "image": "Tiresias prius mas, percusso … serpente baculo, factus femina …",
+            "problem": "the right-margin scholion on Tiresias' change of sex is badly garbled",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Ego tiresiam uictorem aduocabo",
+            "english": "I will call Tiresias the victor",
+            "problem": "carries the OCR misread; Tiresias is the seer",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Redi haud promeruit culpam inuideo notares",
+            "english": "Return, she did not deserve blame, I envy [you] to mark",
+            "problem": "garbled English left as is",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Tiresias prius magis peritus … (margin)",
+            "english": "he began to seek the woman in his arm since the senator to be made a hero …",
+            "problem": "fluent nonsense for the marginal scholion",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Nam mihi honos habetur misso peperit dies tuos",
+            "english": "For honor is held for me, sent, he bore your days",
+            "problem": "word-for-word nonsense",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 74,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "rane percite ab alis",
+            "image": "rane percite ab altis",
+            "problem": "'ab altis' read as 'ab alis'; the translation then says 'from the wings'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Moxque tuent ipsos",
+            "image": "Moxque ruent ipsos",
+            "problem": "ruent → tuent",
+            "severity": "minor"
+          },
+          {
+            "ocr": "quoniam … physiognatus",
+            "image": "quom … physignatus",
+            "problem": "silent normalisation of the name",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Ecce fatus magni tyroglyphy sanguine quondam / Crytrobates preco",
+            "english": "Behold, the herald of the great Tyroglyphy cheese-carver, whose blood once / Crytrobates",
+            "problem": "'satus … sanguine' (born of the blood of great Tyroglyphus) is misconstrued",
+            "severity": "moderate"
+          },
+          {
+            "source": "Nec murem leto dedimus nec morte perire / Vidimus",
+            "english": "Neither did we give the mouse to death, nor die, / But we surely saw him",
+            "problem": "'nor did we see him perish' is broken; the clause has the wrong sense",
+            "severity": "moderate"
+          },
+          {
+            "source": "Physiognatus",
+            "english": "Physiognatus <gloss>nature-born</gloss>",
+            "problem": "an etymology that is not on the page and is wrong (Physignathus = 'puff-cheek'); a 'creeping one' gloss is added the same way",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> blocks are appended to the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A real humanist Plautus manuscript, but the Amphitruo pages are read badly: half the verses on p. 29 are gibberish, and the translation turns them into confident nonsense ('wives are naked'). The Batrachomyomachia leaf, in a clearer hand, is good."
+  },
+  {
+    "book_id": "69f32f93876dd827cbc45a7c",
+    "slot": 13,
+    "title": "[Fragmenta sive libri manualis de universis festivitatibus et dominicos et singulis diebus ecclesiae Mediolanensis, cum psalterio canticis et hymnis]",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition assigned; a 14th-c. Ambrosian (Milanese) liturgical manuscript with neumes — a liturgical primary source.",
+    "rights_flag": null,
+    "structure_note": "Each of the 4 'pages' is a microfilm strip of several openings: p. 2 has six openings at 221 px tall, p. 4 six at 225 px, p. 3 two at 664 px. A reader cannot read pp. 2 and 4 at all, and each record transcribes only a selection. The page unit is wrong (I5/I7-like), not one leaf per record.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Pange lingua gloriosi lauream certaminis. et super crucis trophaeo dic triumphum nobilem…",
+            "image": "under the P initial the strip reads roughly '…molantibus nos pangere tue …', and the next line reads 'q[ui] habitare facis unanimes in domo'",
+            "problem": "Venantius' Pange lingua looks supplied from memory; the visible lines (e.g. 'qui habitare facis unanimes in domo') are not transcribed",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "ocr": "Deus qui hanc sacratissimam noctem ueri luminis fecisti illustratione clarescere…",
+            "image": "illegible at this resolution; only 'celebrante' at the head of the first right page is legible",
+            "problem": "the Christmas collect looks supplied from memory; the model itself warns 'Transcribing representative segments'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "(five other openings)",
+            "image": "six openings in the strip",
+            "problem": "most of the strip is not transcribed",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Omnes qui in te sperant et reuno",
+            "english": "All who hope in you and the kingdom",
+            "problem": "'reuno' guessed as 'kingdom'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "image is a 2000×221 microfilm strip of six openings; illegible to a reader",
+            "severity": "serious",
+            "class": "I7"
+          },
+          {
+            "note": "<meta>, <note>, <summary> and <keywords> blocks in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Sacramentum celeste cum amore",
+            "image": "Sacramentum celeste cum timore",
+            "problem": "timore → amore (fear becomes love)",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Concede nobis omnipotens deus. ut qui sollempnia ueneratio colimus. celestibus uestiris accentu. fonte uite eme finam",
+            "image": "Concede nob[is] omnip[oten]s deus ut qui sollempnia corporis et sanguinis d[omi]ni n[ost]ri Ihesu Xpi ueneratione colimus celestibus desideriis accensi fonte uite cene sinamur",
+            "problem": "'corporis et sanguinis domini nostri Ihesu Christi' is dropped and the rest garbled",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "et ideo sancti erunt et nomen eius et alleluia",
+            "image": "et ideo sancti erunt deo suo et non polluent nomen eius alleluia",
+            "problem": "'deo suo et non polluent' is dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "**Left Page** … **Right Page**",
+            "image": "two openings (four pages)",
+            "problem": "the labels call two openings 'left' and 'right page'",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "et ideo sancti erunt et nomen eius et alleluia",
+            "english": "and therefore they shall be holy, and his name, and alleluia",
+            "problem": "follows the truncated OCR; 'and shall not defile his name' is lost",
+            "severity": "moderate"
+          },
+          {
+            "source": "<insert>p'ena</insert>",
+            "english": "<insert>penalty</insert>",
+            "problem": "a rubric abbreviation guessed as 'penalty'",
+            "severity": "minor",
+            "class": "T7"
+          },
+          {
+            "source": "celestibus uestiris accentu. fonte uite eme finam",
+            "english": "[may be nourished] by the heavenly sustenance, [the] fountain of life, forever",
+            "problem": "garbled OCR filled in by guess",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 4,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "In illo tempore dixit Iesus discipulis suis. Si diligitis me mandata mea servate… (full John 14:15–21)",
+            "image": "six tiny openings, mostly neumes with short underlay; prose blocks illegible at 225 px",
+            "problem": "a complete, clean Vulgate pericope that cannot be read off this strip, probably supplied from memory",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "ocr": "constituerit genus humanum. In hac die sancta. Nomen tuum domine Iesu Christe. Adoramus et glorificamus…",
+            "image": "after 'O[mn]ium … illuminas' on the last opening there are only neumes with short syllables",
+            "problem": "a long prayer that does not fit the visible layout; it looks invented",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "image is a 2000×225 microfilm strip of six openings; illegible to a reader",
+            "severity": "serious",
+            "class": "I7"
+          },
+          {
+            "note": "the model's warning says it transcribed 'the central visible spread (folios 3 and 4)', a choice the reader is not told about",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "A medieval Ambrosian chant book served as microfilm strips too small to read. On the two strips the 'transcriptions' look like canonical texts supplied from memory (Pange lingua, a Christmas collect, John 14). Only p. 3 is legible, and it is a partial, error-prone read."
+  },
+  {
+    "book_id": "699067e68da6face82f779a6",
+    "slot": 6,
+    "title": "Liber Razielis Archangeli",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Vat. Reg. lat. 1300, Liber Razielis: angel magic and astrological magic. Core Kabbalah/ritual-magic shelf.",
+    "rights_flag": true,
+    "structure_note": "444 pages, all with OCR, 415 translated. The page numbers are consistent (image 112 = fol. 14, 223 = p. 195, 333 = p. 201 / 158 old foliation). Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "in p[ri]ncipio **azarij**",
+            "image": "in p[ri]ncipio marcij",
+            "problem": "'marcij' (March) misread as 'azarij', a non-word; repeated later ('sup[ra] mensem azarij')",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "que uoluis facere in mense",
+            "image": "que uolu[er]is scire in mense",
+            "problem": "scire → facere",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Sabdinel ul Sabriel. Passriel / … Gooluyel",
+            "image": "Dabdriel ul Dabderiel. Raffdiel / … Beeluyel(?)",
+            "problem": "angel names misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "ffaigael … myraſael",
+            "image": "Ragael … mzpatael(?)",
+            "problem": "angel names misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(licet q[uod] pri[us] diximus de",
+            "image": "Scias q[uod] postq[uam] diximus de",
+            "problem": "opening words misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "in p[ri]ncipio azarij",
+            "english": "in the beginning of **Nisan** <note>original: \"azarij,\" a term often used in these manuscripts to refer to the first month of the Hebrew religious calendar, Nisan.</note>",
+            "problem": "the translator builds an invented scholarly claim on the OCR misread; the text says Adar falls at the end of February and the start of March",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "eq[ue]ntur sup[ra] mensem azarij",
+            "english": "are aligned upon the month of Nisan",
+            "problem": "the same invented 'Nisan'; it should be March",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "a <meta> continuity paragraph, many <note>s, <summary> and <keywords> in the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "note": "Vatican 'ALL RIGHTS RESERVED' watermark across the page",
+            "severity": "moderate"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 223,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "si volueris semper omnia que volueris dampnare",
+            "image": "Et notabis semper omnia que uolueris dampnare",
+            "problem": "'Et notabis' read as 'si volueris'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "uoca suos eos uoca angelos",
+            "image": "Et noia sup[er] eos noia angelorum",
+            "problem": "'nomina' read as 'uoca'",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "et totius pene et supplicii",
+            "image": "et totius pene et stulticie",
+            "problem": "stulticie → supplicii",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "et destruat precordia et pulmones eius",
+            "image": "et destruat renes et pulmones eius",
+            "problem": "renes (kidneys) → precordia",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "si fuit homo cui debueris de lucto",
+            "image": "si fuit homo cui debueris debitum",
+            "problem": "'debitum' read as 'de lucto'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "si fuit homo cui debueris de lucto",
+            "english": "If it was a man with whom you have a struggle <note>…legal dispute, a physical fight, or a state of mourning</note>",
+            "problem": "the text concerns a man to whom you owe a debt; the misread is given a speculative gloss",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "et destruat precordia",
+            "english": "let it destroy his vitals <note>…diaphragm…</note>",
+            "problem": "the image has kidneys (renes); the note is built on the misread",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented heading '# Folio 195' at the top of the translation",
+            "severity": "moderate"
+          },
+          {
+            "note": "the <meta> continuity paragraph claims a link to 'the \"Ninth Sphere\" or the cardinal directions mentioned previously' that cannot be checked on this page",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 333,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "et afortunijs et infortunijs ~~et sup[er] ista~~",
+            "image": "'Et afortunijs et infortunijs Et sup[er] ista' all struck through in red",
+            "problem": "the deletion is only partly marked, so the cancelled words are kept as text and translated",
+            "severity": "minor",
+            "class": "O13"
+          },
+          {
+            "ocr": "qui assimila[n]t[ur] tibi et faciei tue",
+            "image": "qui assimillant[ur] ipsi et faciei eius",
+            "problem": "the person changes (it/its → you/your)",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "tercius et reru[m] . est d[omi]n[u]s t[er]cie",
+            "image": "~~tercius~~ Et tercius est d[omi]n[u]s t[er]cie",
+            "problem": "a struck word misread as 'et rerum'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "qui assimilantur tibi et faciei tue",
+            "english": "which are likened to you and your face",
+            "problem": "follows the misread and adds a speculative note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A readable OCR of the Vatican Liber Razielis with recurring misreads of names and key words. The translator builds invented notes on some of them, e.g. 'azarij' explained as a manuscript term for Nisan where the page says March. The Vatican all-rights-reserved watermark is on every scan."
+  },
+  {
+    "book_id": "69aeb688bf00526d1d64c3b9",
+    "slot": 75,
+    "title": "Historiarum Florentinarum libri XII",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Bruni's History of the Florentine People (Strasbourg: Zetzner, 1610), from the John Adams/BPL collection; a humanist historical source.",
+    "rights_flag": null,
+    "structure_note": "Image and text are out of step, and the gap grows through the book: image 82 shows printed p. 67 but its text is p. 68; image 162 shows p. 143 but its text is p. 148; image 243 shows p. 222 but its text is p. 229. This is a systematic text/image misalignment across the book, not a misread numeral.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 82,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>68</page-num> <header>HISTOR. FLORENTINAR.</header> cioſam inani verbo, servitutem revera turpissimam…",
+            "image": "LIBER QUARTUS. 67 — 'quam societatem cum populo exercebat, præpotens siquidem opibus…' ending 'libertatē spe-'",
+            "problem": "the text is the next leaf (p. 68, continuing 'spe-ciosam'), not this image's p. 67",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(OCR ends 'illi cædes ac vulnera,')",
+            "english": "…They underwent slaughter, wounds, losses of patrimony… I only ask you now to consult your own liberty and safety.",
+            "problem": "the translation runs past the end of the OCR into text from yet another page, and none of it is on this image",
+            "severity": "serious",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 162,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>148</page-num> … Ungariæ Rege alius item Carolus est exortus… (Joanna of Naples, Andrew of Hungary, the Visconti)",
+            "image": "LIBER SEPTIMUS. 143 — 'segnem nobilitas operam civitati navarat…' (Florence's reform after the tyranny, the Priors, the Bishop's intervention)",
+            "problem": "the text is about five printed pages away from the image",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(whole page)",
+            "english": "From the King of Hungary, another Charles was born…",
+            "problem": "faithful to the OCR, but neither is this image's text",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 243,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>229</page-num> <header>LIBER UNDECIMUS.</header> ANNO 1396 … cives quosdam erexerat…",
+            "image": "222 HISTOR. FLORENTINAR. — 'Bononienses, Patavinus, Ferrariensis…' (the tournament for the French king's son; the Milanese envoys)",
+            "problem": "the text is seven printed pages away from the image",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(whole page)",
+            "english": "and had prepared it in such a way that…",
+            "problem": "not this image's page",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "other": [
+          {
+            "note": "<header> tag carried into the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "All three sampled pages carry another leaf's text, and the gap grows from 1 to 7 printed pages through the book. A reader sees prose that does not match the facing image on every page. The reads themselves look clean, so this is an alignment repair, not an OCR repair."
+  },
+  {
+    "book_id": "6a4e4abfd6b40547a16a0119",
+    "slot": 52,
+    "title": "Carmen elegia gratulatoria in honorem et gratiam Martini Fabricii zuellichiensis…",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition assigned; a 1583 Frankfurt (Oder) academic occasional poem bound in a Sammelband. A minor but genuine primary source.",
+    "rights_flag": null,
+    "structure_note": "Pp. 9 and 13 are a later (18th/19th-c.) handwritten inventory of a Sammelband of occasional prints (items 89–173, dated 1588–1610). They are not the 1583 elegy the title names. The printed poem (sig. A2) begins only around p. 19, and its addressee is a 'docte Sabine', so it may be another piece in the volume. The 29-page record looks like the bound volume's manuscript index plus one print. Pages translated (19) are fewer than pages with OCR (29).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Petri Itteri",
+            "image": "Petri Hessi (or Itessi)",
+            "problem": "surname misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "a Johanne Sculteto",
+            "image": "a Tob. Sculteto",
+            "problem": "the abbreviation 'Tob.' is expanded as Johannes",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "Lipsiae / ab amicis",
+            "image": "Lips. / ab amic.",
+            "problem": "abbreviations expanded silently",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Eorundem — a Johanne Sculteto",
+            "english": "The same — by Johannes Scultetus",
+            "problem": "carries the wrong first name",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> calls it a 'Register of academic acknowledgments' — it is a binding inventory of occasional prints",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Thomae Prizii",
+            "image": "Thomae Rizii / Pizii",
+            "problem": "initial letter uncertain",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Johannis Jacobi Greissen",
+            "image": "Joh. Jacob. Gruissen(?)",
+            "problem": "surname uncertain",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Christiani Salmuth / Christiani Sleidani",
+            "image": "Christof. Salmuth / Chr. Sledani",
+            "problem": "abbreviations expanded by guess",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "gratia amicis",
+            "english": "thanks to friends",
+            "problem": "'grat.' is gratulatio (congratulations) from friends",
+            "severity": "minor"
+          },
+          {
+            "source": "fautoribus & amicis",
+            "english": "to patrons and friends",
+            "problem": "should be 'by patrons and friends'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Vinea vite carens",
+            "english": "A vine lacking grapes",
+            "problem": "a vineyard lacking vines",
+            "severity": "minor"
+          },
+          {
+            "source": "Aonidum munera",
+            "english": "the gifts of the Aonians",
+            "problem": "Aonides = the Muses",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "&nbsp; entities used for verse indentation in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good reads of a later manuscript inventory and a clean printed elegiac poem. The record is really a Sammelband's index plus a print, not just the titled 1583 elegy, which is worth a catalogue note but is not an on-sight defect."
+  }
+]

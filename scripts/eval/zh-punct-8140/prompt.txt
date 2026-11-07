@@ -1,0 +1,13 @@
+You are punctuating a page of classical Chinese (文言) for a modern reader. The text below has no punctuation.
+
+Insert modern Chinese punctuation (新式標點: ，。、；：？！「」『』《》) where a careful editor of classical texts would put it.
+
+Rules:
+- Do not add, delete, change, reorder or normalise any character. Keep every variant form exactly as given; do not convert to simplified or to any other form. The sign 〓 stands for a character that cannot be typed: keep it where it is.
+- Add only punctuation marks. No spaces, no line breaks, no notes, no brackets around anything.
+- The page may begin or end in the middle of a sentence. Punctuate what is there.
+
+Write the punctuated text between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.
+
+Text:
+{{TEXT}}

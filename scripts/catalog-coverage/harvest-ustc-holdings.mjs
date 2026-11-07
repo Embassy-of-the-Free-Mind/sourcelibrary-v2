@@ -74,7 +74,7 @@ async function main() {
     const cursor = db.collection('catalog_coverage').find(
       { has_iiif_scan: { $ne: true } },
       { projection: { ustc_id: 1, _id: 0 } }
-    );
+    ).batchSize(1000);
     for await (const doc of cursor) {
       if (doc.ustc_id) sns.push(String(doc.ustc_id));
     }

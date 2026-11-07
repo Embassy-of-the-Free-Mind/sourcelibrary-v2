@@ -188,6 +188,14 @@ async function main() {
       { $project: { title: 1, ia_identifier: 1, visible: 1, pages_count: 1 } },
     ]).toArray();
     console.log(`sampling ${picked.length} random IA books`);
+    // A half-done repair is a finding however it hashes, so these are checked on every run (#8266).
+    const halfDone = await db.collection('books').find(
+      { 'archive_metadata.jp2_text_shift_awaiting_image_rearchive': true },
+      { projection: { title: 1, ia_identifier: 1, visible: 1, pages_count: 1 } },
+    ).toArray();
+    for (const b of halfDone) console.log(`HALF-DONE REPAIR (text moved, images never re-archived): ${b._id} ${b.title}`);
+    const sampled = new Set(picked.map(b => String(b._id)));
+    picked.push(...halfDone.filter(b => !sampled.has(String(b._id))));
     for (const book of picked) {
       scanned++;
       const task = auditBook(db, book)
@@ -203,7 +211,7 @@ async function main() {
     console.log(`\nsampled ${scanned}, audited ${audited} with bulk_jp2 pages`);
     console.log('TALLY:', JSON.stringify(tally));
     await client.close();
-    process.exit(shifted > 0 ? 1 : 0); // non-zero so a scheduled run can alert
+    process.exit(shifted > 0 || halfDone.length > 0 ? 1 : 0); // non-zero so a scheduled run can alert
   }
 
   // Paginate by _id rather than holding one cursor open. A single cursor sits

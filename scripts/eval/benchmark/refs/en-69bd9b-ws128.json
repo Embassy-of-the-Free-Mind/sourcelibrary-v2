@@ -29,5 +29,9 @@
   },
   "reference_error_rate": null,
   "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
-  "reference_error": "by eye 2026-09-28 (#5182): the leader-dot template leaked as \"pr.5\" and replaced the printed row numbers (12.–20.) and times (10.2″ … 14.8″) of the table"
+  "reference_error": "by eye 2026-09-28 (#5182): the leader-dot template leaked as \"pr.5\" and replaced the printed row numbers (12.–20.) and times (10.2″ … 14.8″) of the table",
+  "work_title": "Jung - The psychology of dementia praecox",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "pd_eu": false,
+  "pd_eu_basis": "C. G. Jung d. 1961: public domain in the EU not established (checked 2026-10-26, #7462)"
 }

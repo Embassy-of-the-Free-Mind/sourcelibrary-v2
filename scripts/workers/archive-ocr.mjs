@@ -20,6 +20,8 @@ import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
+import { ARCHIVE_NOT_BLOCKED } from '../lib/pipeline-hold.mjs';
 import { THROTTLE_STATUSES, throttledError, isQuotaPlaceholderSize } from '../lib/archive-failure-class.mjs';
 
 const MAX_PAGES = 10_000;
@@ -308,12 +310,14 @@ async function main() {
   // dominated by fully-archived books and the per-book inner query returns 0
   // unarchived pages for nearly every book. Symptom is "Found 6 pages across
   // 3423 books" while the library has hundreds of thousands of unarchived pages.
-  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] } };
+  // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+  const NEEDS_ARCHIVE_EXPR = { $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] }, ...PAGES_MATERIALIZED_FILTER };
   const priorityBooks = await db.collection('books')
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
         ...NEEDS_ARCHIVE_EXPR,
         ...SCOPE_FILTER,
@@ -331,7 +335,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         // 'harvard' excluded: mps.lib.harvard.edu HTTP 429s every request from Hetzner
         // IPs (verified 2026-05-25 at AWS ELB layer, both v4 and v6, all UAs, all paces).
         // Routed to Mac-side via scripts/workers/archive-harvard.mjs.
@@ -355,7 +360,8 @@ async function main() {
     .find(
       {
         pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
+        // Not blocked, or blocked only because the book is held: archiving ignores the hold (#5448).
+        ...ARCHIVE_NOT_BLOCKED,
         'archive_metadata.bulk_unsuitable': true,
         'image_source.provider': 'internet_archive',
         ...NEEDS_ARCHIVE_EXPR,

@@ -1,0 +1,1006 @@
+{
+ "frozen_at": "2026-11-03T09:29:15.553299Z",
+ "normaliser": "deva-n@1",
+ "refs": [
+  {
+   "slug": "sa-2380f8b8-p481",
+   "sha256": "6f12762c78feaa3e93f85d0d7399d8cc559de301cf1b531b4ea8e26e75c573f2",
+   "chars": 1963,
+   "kind": "print",
+   "catalogue_year": 1958,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-a4805caa-p543",
+   "sha256": "205d0cec8f521e13ed0caae27a86cdcf0c4a4a1de1306541bda14de1fc891aaa",
+   "chars": 1398,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-f09f57d7-p188",
+   "sha256": "7e27868068e75d00c7c61c8b2586f8681f442211da0d79baa42cf1fffca90459",
+   "chars": 1070,
+   "kind": "print",
+   "catalogue_year": 1230,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-9ba75a76-p245",
+   "sha256": "6f7016b4775afbfb789eeb3ff919e8a15e71040ee542eb519602f62641000a69",
+   "chars": 1347,
+   "kind": "print",
+   "catalogue_year": 1951,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-f502c7c1-p213",
+   "sha256": "2ac06954221153e0e66cc6f51b1f087c7375e0b4091dbadf905993bbfd964da7",
+   "chars": 1861,
+   "kind": "print",
+   "catalogue_year": 1150,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-f09f595b-p573",
+   "sha256": "306e8734bb319aed78291a3fefcd4a27e97864d326094418d9ae6424765813ca",
+   "chars": 515,
+   "kind": "print",
+   "catalogue_year": 1230,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-1052a93c-p345",
+   "sha256": "3aed8dc2bdb11e8d2b728b43a571c8ad57e6c6557499179b64ff148a798432ad",
+   "chars": 4616,
+   "kind": "print",
+   "catalogue_year": 1939,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-05c7c071-p209",
+   "sha256": "305f976f61e9a2fcc03f2bf5de20b90f657218a5f0be8220c5dd0dd44280b0e0",
+   "chars": 3967,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-06eb90f6-p1312",
+   "sha256": "4ad889aa61a6cefba941ddc5c21894b9b8599e60d1b4982318d1f4f3e7b9822c",
+   "chars": 1684,
+   "kind": "print",
+   "catalogue_year": 1966,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-487f30a6-p240",
+   "sha256": "9328ff0d7ffb9e68ad2f098d2429ecb98580a44573ec3493104a3ed46f7acf0a",
+   "chars": 4192,
+   "kind": "print",
+   "catalogue_year": 1931,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.8,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-3c8397bb-p157",
+   "sha256": "94d660bba4cb6d5afded3a961ed8356e6ab720cd96ba2607b9a45bffcbd95b78",
+   "chars": 1071,
+   "kind": "print",
+   "catalogue_year": 1952,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-ee26b1c8-p54",
+   "sha256": "2e3eb3928b6e22cc0f27254ab66d70e2e797b0c9c08132c3c436f1f47b8905c8",
+   "chars": 1771,
+   "kind": "print",
+   "catalogue_year": 1941,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 1.8,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-9ba757c7-p165",
+   "sha256": "cdd15b10a7c2d18d63aa2e21dcaac7df9ca528149467e693e058e4831dbe1c2a",
+   "chars": 1357,
+   "kind": "print",
+   "catalogue_year": 1943,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 6.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-0c10b7a9-p485",
+   "sha256": "955e7a9961d91cae09db8e1602344fa44f7bc07a7f11f41e0e04eabced5bfff7",
+   "chars": 1994,
+   "kind": "print",
+   "catalogue_year": 1966,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-1697c362-p109",
+   "sha256": "409096b5dd4de56f76e45fc3418da4ff73d18a63a291da8ae98f3fd966d318de",
+   "chars": 769,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-57449355-p286",
+   "sha256": "915fa03d087e83e661947b8a11ee6c39d3e82887cc04a600f2d908904e68e6aa",
+   "chars": 1151,
+   "kind": "print",
+   "catalogue_year": 1930,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-57449355-p286.txt",
+   "r1_r2_cer_N_pct": 1.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-c9e1f67c-p238",
+   "sha256": "c3cb90b2357b65d84b61184b4dafdad3eb4ee78f48213b0529696b21106eff6e",
+   "chars": 2070,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-b109159e-p449",
+   "sha256": "a146c126792ef9cad34526951740aff60af47d98dcd011e72adfcc71e3a0027f",
+   "chars": 1045,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-9d20bde5-p73",
+   "sha256": "6163bf3fc2562abd03869dadfdc54754d87539c8586abd662a94cd4949fd0681",
+   "chars": 514,
+   "kind": "print",
+   "catalogue_year": 1926,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-9d20bde5-p73.txt",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-f502b85a-p295",
+   "sha256": "ead4d9d7763c05f74cb5c75b76e1d172584ed165aef316fa561fc3967f046449",
+   "chars": 841,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 2.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-1697d02c-p555",
+   "sha256": "9e5d2fdd7e06bd9f9a56f3b6e216e61885b331fba2399575da92c1402f289e1b",
+   "chars": 864,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-5d8bcdfd-p204",
+   "sha256": "4beaf024df592da2b2ed268405167330d0629ce8df0827b121fd44cb4e4a2230",
+   "chars": 1707,
+   "kind": "print",
+   "catalogue_year": 1938,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-574474fa-p103",
+   "sha256": "ebdd5ad6d4ea56970de0d38321d6ec0387b37dd6a79005a947161eed1d386307",
+   "chars": 2660,
+   "kind": "print",
+   "catalogue_year": 1956,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-be36eddd-p717",
+   "sha256": "0419795956f7e7dbdc33fa47809ddee48ec8ef35c2845aaf9133b67b18ea6013",
+   "chars": 1737,
+   "kind": "print",
+   "catalogue_year": 1926,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-be36eddd-p717.txt",
+   "r1_r2_cer_N_pct": 0.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-ee26c1e2-p56",
+   "sha256": "4a94c6156821ca0c9cb85a147780ea990c99d76e12ff0fb01f89da5f6554e600",
+   "chars": 2269,
+   "kind": "print",
+   "catalogue_year": 991,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-5d8be97b-p119",
+   "sha256": "46f444ecd62484e3c7f84b0f085f35e4ddd3d6e1946216167853c2782ff938b1",
+   "chars": 905,
+   "kind": "print",
+   "catalogue_year": 2019,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-91d255ef-p66",
+   "sha256": "c482fe917d4d0b74d8c85fa8cd5607b0fe45425c049312c3234d599fd3c2ca86",
+   "chars": 1164,
+   "kind": "print",
+   "catalogue_year": 1973,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.9,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-a0ef5a44-p67",
+   "sha256": "5af43f1275a9f15c31d63fcf89568d5080ec5279702248132f4bb6de49569f9a",
+   "chars": 1251,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.8,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-f502c5b5-p135",
+   "sha256": "d6d813ebe2be5421514e62e4fa760efb3333e9c7abdf55b237c6eb361e2f66bb",
+   "chars": 957,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-e5a9d403-p143",
+   "sha256": "e5da48e9ce3293fa096fe27901dda03005f78bbc23515b49b5efc83e945e0c29",
+   "chars": 1160,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.4,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-1697d5dc-p122",
+   "sha256": "b503427eb5522c23314ef7e315b1ad60f0ac12b8262aff1b7919abb58c66e248",
+   "chars": 924,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-a5ffb864-p176",
+   "sha256": "d92a0bf5e062926d53c842137a586b936ab899bc67272fe987f8031c70e237b5",
+   "chars": 1376,
+   "kind": "print",
+   "catalogue_year": 1986,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-f502ba19-p262",
+   "sha256": "adf969ed368db2683b0f8508d0459f52555198c7f758ba1808dd56d6baa174be",
+   "chars": 1443,
+   "kind": "print",
+   "catalogue_year": 1150,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-be36f107-p107",
+   "sha256": "07edfcf6bf3e5b0874535f7cca21937c941628217b80041668feabf54458475f",
+   "chars": 1834,
+   "kind": "print",
+   "catalogue_year": 1926,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-be36f107-p107.txt",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-a99c0f2f-p78",
+   "sha256": "aefa875dce7f7e3a840796a3d7ffc7ea5aeccb526fddb8b60af38879e3bfb572",
+   "chars": 1361,
+   "kind": "print",
+   "catalogue_year": 1938,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-c1af74df-p268",
+   "sha256": "863100d2c3865dd745a9649b83a023dc2d260d42da159a0010da373aee6a3630",
+   "chars": 1795,
+   "kind": "print",
+   "catalogue_year": 1900,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-c1af74df-p268.txt",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-1697bdac-p195",
+   "sha256": "a6b440dfefec2ffdee5b366bc1152009eaeda49aa42b9a3a6f3155136ebe26f3",
+   "chars": 1260,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-09173f3c-p64",
+   "sha256": "cb165fe8d05ad8e7aa5ce5f0f9f92df1b7751d949f99504a2cd763a016f383cc",
+   "chars": 1205,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-c27da5ea-p674",
+   "sha256": "24d17b6883a978f98de893467b4de41160d9fa49f07d33552091d6be8c0d0c12",
+   "chars": 2486,
+   "kind": "print",
+   "catalogue_year": 1922,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-c27da5ea-p674.txt",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-09e780a7-p626",
+   "sha256": "2857943bc8fe8a9296cac1adf03fe7e29710318eb044d398d2a9d78f2af000ba",
+   "chars": 4093,
+   "kind": "print",
+   "catalogue_year": 1934,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-5744c41d-p150",
+   "sha256": "9bfc018505e1ae6e8c90a8d5e7c08f415eedae217870911ebd5a94c4c5085821",
+   "chars": 3201,
+   "kind": "print",
+   "catalogue_year": 1938,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.5,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-05c7c3a0-p171",
+   "sha256": "94a8aaa83cadccd890d1730070a4a8d608947939b1681d1801fb963b6277a626",
+   "chars": 1739,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-7ec56c99-p579",
+   "sha256": "288f5073937796bf01b529822bbabcc1f124349b1225ba5327c6bd3d2be8f162",
+   "chars": 1388,
+   "kind": "print",
+   "catalogue_year": 1966,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 3.6,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-574472af-p408",
+   "sha256": "060f64704e0cd284956a97bb90ab9508379c3f92b1c3c6682516bcc52ffc836f",
+   "chars": 2457,
+   "kind": "print",
+   "catalogue_year": 1956,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.3,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-5d8bd37f-p150",
+   "sha256": "b618a5715147f4724e33d76d268842ee9a68d9417475356baa47893326a61398",
+   "chars": 1198,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.0,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-18cd7735-p100",
+   "sha256": "38b2a200d316a658ccc22bb5aa31d6c6fc7c0be51807ddef984db3b26b52e912",
+   "chars": 1882,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.4,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-05c7c4d9-p190",
+   "sha256": "fbaf842ffbfc5151e8633c461f44c88f818281dd0e69629aeaccaad6909e75cf",
+   "chars": 2315,
+   "kind": "print",
+   "catalogue_year": null,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-5d8bf7ad-p264",
+   "sha256": "fa6debe155e778422ae1db964b09db1cdc832676753447e1b80589a0b4496c1e",
+   "chars": 1312,
+   "kind": "print",
+   "catalogue_year": 1819,
+   "text_public": true,
+   "text_location": "refs-confirm/sa-5d8bf7ad-p264.txt",
+   "r1_r2_cer_N_pct": 0.1,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-1697ba6d-p651",
+   "sha256": "acec174c32527cf7268df7cfc7817e57a0c5e0f8e0b08d1d2b5c059e3ee333f4",
+   "chars": 774,
+   "kind": "print",
+   "catalogue_year": 2013,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.2,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  },
+  {
+   "slug": "sa-0cf222e4-p520",
+   "sha256": "7c81d32e27c969bde2542ced602d784fd2bb9e4886d8a72a61ea1fb95807ef87",
+   "chars": 1721,
+   "kind": "print",
+   "catalogue_year": 1949,
+   "text_public": false,
+   "text_location": "private (gex45:/root/jobs/sanskrit-surya-confirm-7243/c/refs)",
+   "r1_r2_cer_N_pct": 0.4,
+   "made_by": {
+    "engine": "human-proxy",
+    "model": "claude-opus-5-5 (claude -p, subscription)",
+    "method": "two independent reads from full-resolution tiles + adjudicator (confirm-refs.py)"
+   },
+   "leaf_check": {
+    "status": "ok",
+    "by": "construction: read from the fed page image",
+    "at": "2026-11-03"
+   }
+  }
+ ]
+}

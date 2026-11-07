@@ -116,6 +116,15 @@ an emergency stop that validates keys, sets every key, and parks open
   movement looks identical when the line is quiet and when the monitor is dead.
   Positive-control it against a live query before trusting six hours of calm.
 
+- **A lane-wide envelope funds ONE worker on every book, never more (#7402).** An envelope
+  (`set-scope.mjs`) is book-scoped by default. A worker whose work can land on any book (the
+  `embed-gemini --incremental` cron) gets `--all-books`, which is refused without `--lanes` and
+  `--meter-endpoints`, and with a book list. The gate then returns *unscoped* dispatch for that
+  lane only, and meters it by endpoint since `created_at` with no book filter (it fails closed on an
+  unreadable or truncated meter, like every envelope). A book-scoped envelope is the wrong shape
+  for such a worker: the backlog outgrows the list, and a scoped run never advances the worker's
+  watermark (`RUN_SCOPED`), so every run rescans it. It grants no pause bypass.
+
 ## Known holes, deliberately
 
 - **Traffic-driven Vercel routes are outside the dial by construction** — chat,

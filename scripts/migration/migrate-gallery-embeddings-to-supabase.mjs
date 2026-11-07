@@ -140,7 +140,7 @@ async function migrateEmbeddings() {
   let processed = 0;
   let upserted = 0;
 
-  const cursor = db.collection('gallery_embeddings').find({});
+  const cursor = db.collection('gallery_embeddings').find({}).batchSize(1000);
 
   let batch = [];
 

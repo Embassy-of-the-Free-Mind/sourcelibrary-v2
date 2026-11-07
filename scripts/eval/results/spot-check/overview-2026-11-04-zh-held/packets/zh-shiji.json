@@ -1,0 +1,722 @@
+[
+ {
+  "slot": 1,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bd3d4adf2ffb52f72384",
+  "book_url": "https://sourcelibrary.org/book/6ae0bd3d4adf2ffb52f72384",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bd3d4adf2ffb52f72384",
+   "title": "史記·卷一百五~卷一百八 (Shiji, Siku Quanshu, vol. 37 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 168,
+   "pages_ocr": 166,
+   "pages_translated": 160,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 168,
+   "distinct_page_numbers": 168,
+   "duplicate_records": 0,
+   "pages_with_ocr": 166,
+   "pages_translated": 160,
+   "with_printed_number": 28,
+   "printed_backsteps": 8,
+   "printed_repeats": 22,
+   "pages_count_field": 168,
+   "pages_translated_field": 160
+  },
+  "run": [
+   25,
+   63,
+   85,
+   157
+  ],
+  "pages": [
+   {
+    "page_number": 25,
+    "page_id": "6ae0bd3d4adf2ffb52f7239f",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3d4adf2ffb52f72384/25.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金穴口座人三\n<header>卷一百五</header>\n不及九分至二分或四分五分此太過\n不滿一寸見八分或五分六分此不及\n經主病和者其\n病得之筋髓裏其代絕而脈賁者病得之酒且内所以\n知其後五日而蒭腫八日嘔膿死者切其脈時少陽初\n代代者經病病去過人人則去絡脈主病當其時少陽\n初關一分故中熱而膿未發也及五分則至少陽之界\n集解徐廣曰一作分下章曰肝與心相去五分故曰五\n日盡也正義王叔和脈經云分別三門鏡界脈候所主\n云從魚際至髙骨却行一寸其中名曰寸口其骨自髙\n從寸至尺名曰尺澤故曰尺寸後尺前名曰關陽出隂\n入以關爲界陽出三分故曰三隂三陽陽生於尺動於\n寸隂生於寸動於尺寸主射上焦出頭及皮毛竟手關",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>falling short of nine tenths of an inch, reaching only two tenths, or four or five tenths, this constitutes deficiency. When failing to reach a full inch behind the barrier, manifesting at only eight tenths, or five or six tenths, this constitutes deficiency. \n\nWhen the primary vessels govern the illness, there is harmony. \n\nWhen the illness is contracted within the sinews and bone marrow, and the pulse is intermittent while also surging, the illness is contracted from wine and sexual indulgence. The reason one knows that after five days an ulcerated swelling would form, and after eight days he would vomit pus and die, is that when examining his pulse, the lesser <term>yang</term> <gloss>active, exterior bodily principle</gloss> had begun to alternate. An alternating pulse indicates a disease of the primary vessel. When the illness passes, it moves to the human body; entering the human body, it moves into the collateral vessels governing the illness. At that time, the lesser yang pulse had first reached one tenth of an inch at the barrier position. Therefore, there was internal heat, but the pus had not yet erupted. When it reached five tenths of an inch, it reached the boundary of the lesser yang. \n\n<note>Collected Explanations: Xu Guang says: 'One' is also written as 'tenth'. The later chapter states that the liver and heart are five tenths of an inch apart, which is why it is said that after five days it is exhausted.</note> <note>Correct Meaning: Wang Shuhe's Pulse Classic states: 'Distinguishing the boundaries of the three gates and what the pulse signs govern: It is said that from the fish border to the high bone, moving backward one inch, the middle is called the cun mouth. From the high bone past the cun to the cubit, it is called the cubit marsh. Therefore it is called cun and cubit. Behind the cubit and in front of the cun is called the barrier. Yang emerges and yin enters, with the barrier serving as the boundary. Yang emerges three tenths of an inch, hence it is called three yin and three yang. Yang is born at the cubit and moves at the cun. Yin is born at the cun and moves at the cubit. The cun governs directing upward to the upper burner, emerging at the head and skin and hair, reaching the hands.'</note>\n\n<summary>This page records Chunyu Yi's diagnostic pulse analysis from the Records of the Grand Historian, explaining how the pulse positions and measurements reveal the progression of internal heat into fatal ulceration, accompanied by commentary on anatomical pulse boundaries from Xu Guang and the Pulse Classic.</summary>\n<keywords>Shiji, Chunyu Yi, Wang Shuhe, Xu Guang, pulse diagnosis, lesser yang, barrier pulse, cubit pulse, cun mouth, collateral vessels</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 63,
+    "page_id": "6ae0bd3d4adf2ffb52f723c5",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3d4adf2ffb52f72384/63.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n全一\n厂\n<page-num>二</page-num>\n<header>卷一百五</header>\n腸而數之故短也肝重四斤四兩左三葉右四葉凡七\n葉主藏魂肝者幹也於五行爲木其體狀有枝幹也肝\n之神七人老子名曰明堂宮蘭臺府從官三千六百人\n又云肝神六童子三女子三心重十二兩中有七孔三\n毛盛精汁三合主藏神心纖也所識纖微也其神九太\n尉公名曰絳宮太始南極老人員光之身其從官三千\n六百人又爲帝王身之王也脾重二斤三兩扁廣三寸\n長五寸有散膏半斤主裏血溫五藏主藏意脾裨也在\n助氣主化穀其神云光玉女子母其從官三千六百人\n也肺重三斤三兩六葉兩耳凡八葉主藏魂魄肺孛也\n言其氣孛故短也鬱也其神八人太和君名曰玉堂宮\n尚書府其從官三千六百人又云肺神十四童子七女\n子七也腎有兩枚重一斤一兩主藏志腎引也腎屬水\n主引水氣灌注諸脈也其神六人司徒司空司命司録\n司隸校尉尉卿也膽在肝之短葉間重三兩三銖盛精\n汁三合膽敢也言人有膽氣而能果敢也其神五人太",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\n<note>Running headers and page markers:</note>\nComplete in one <note>original: \"全一\"</note>\n<note>structural marker: \"厂\"</note>\nTwo <note>page number: \"二\"</note>\n### Scroll One Hundred and Five <note>original: \"卷一百五\"</note>\n\nintestine and calculates them, hence it is shorter. \n\nThe <term>liver</term> <gloss>gan</gloss> weighs four catties and four ounces. It has three lobes on the left and four lobes on the right, making seven lobes in total. It governs the storing of the <term>ethereal soul</term> <gloss>hun</gloss>. The liver is a trunk <note>original: \"幹\", a pun on gan</note>. In the Five Elements, it is Wood, and its physical form has branches and trunks. The spirits of the liver are seven persons. <term>Laozi</term> named their dwelling the Bright Hall Palace, Palace Bureau of the Orchid Terrace <note>original: \"明堂宮蘭臺府\"</note>, attended by three thousand six hundred subordinate officials. Another source says that the liver spirits are six boys and three girls. \n\nThe <term>heart</term> <gloss>xin</gloss> weighs twelve ounces. Within it are seven pores and three hairs. It contains three tenths of a pint of seminal fluid. It governs the storing of the <term>spirit</term> <gloss>shen</gloss>. The heart is fine and subtle <note>original: \"纖\", a pun on xin</note>, for what it perceives is subtle and delicate. Its spirit is Nine Grand Commanders <note>original: \"九太尉公\"</note>, named Grand Origin of the Crimson Palace, Venerable Person of the South Pole <note>original: \"絳宮太始南極老人\"</note>, possessing a body of circular radiance, with three thousand six hundred attendant officials. It is also the sovereign ruler of the body. \n\nThe <term>spleen</term> <gloss>pi</gloss> weighs two catties and three ounces. It is flat and three inches wide, five inches long, and has half a catty of diffuse fatty tissue. It governs the wrapping of blood and warming of the five <term>viscera</term> <gloss>zang</gloss>, and governs the storing of <term>intention</term> <gloss>yi</gloss>. The spleen provides assistance <note>original: \"裨\", a pun on pi</note>, aiding the vital energy and governing the transformation of grain. Its spirit is called the Jade Maiden Mother of Radiant Cloud <note>original: \"雲光玉女子母\"</note>, with three thousand six hundred attendant officials. \n\nThe <term>lungs</term> <gloss>fei</gloss> weigh three catties and three ounces. They have six lobes and two ears, making eight lobes in total. They govern the storing of the ethereal soul and corporeal soul <note>original: \"魂魄\"</note>. The lungs mean sudden flourish <note>original: \"孛\", a pun on fei</note>, meaning that their vital energy flourishes suddenly and is therefore short, being congested. Their spirit is eight persons, the Lords of Great Harmony <note>original: \"太和君\"</note>, named Jade Hall Palace, Imperial Secretarial Bureau <note>original: \"玉堂宮尚書府\"</note>, with three thousand six hundred attendant officials. Another source says that the lung spirits are fourteen boys and seven girls. \n\nThe <term>kidneys</term> <gloss>shen</gloss> are two in number, weighing one catty and one ounce. They govern the storing of the <term>will</term> <gloss>zhi</gloss>. The kidneys guide <note>original: \"引\", an etymological gloss on shen</note>. The kidneys belong to Water, governing the guiding of water vapor to irrigate the various channels. Their spirits are six persons: the Minister of Works, the Minister of Instruction, the Director of Destinies, the Director of Records, the Colonel of Censors, and the Commandant Magistrate <note>original: \"司徒、司空、司命、司録、司隸校尉、尉卿\"</note>. \n\nThe <term>gallbladder</term> <gloss>dan</gloss> lies between the short lobes of the liver, weighing three ounces and three zhu. It contains three tenths of a pint of seminal fluid. The gallbladder signifies bravery <note>original: \"敢\", a pun on dan</note>, meaning that a person possesses gallbladder energy and is therefore able to be resolute and courageous. Its spirits are five persons, the Great\n\n<summary>This page records Zhengyi commentary on the Five Viscera and gallbladder, detailing the weight, anatomical structure, physiological and spiritual functions, and resident internal deities of the liver, heart, spleen, lungs, kidneys, and gallbladder.</summary>\n<keywords>Zhengyi commentary, Five Viscera, liver, heart, spleen, lungs, kidneys, gallbladder, internal deities, Daoist anatomy, hun and po, Five Elements</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 85,
+    "page_id": "6ae0bd3d4adf2ffb52f723db",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3d4adf2ffb52f72384/85.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n也\n吳與膠西知名諸侯也一時見察恐不得安肆矣吳\n王身有内病不能朝請二十餘年嘗患見疑無以自白\n今脅肩累足猶懼不見釋竊聞大王以爵事有適\n正義\n張革\n反\n所聞諸侯削地罪不至此此恐不得削地而巳王曰\n然有之子將奈何髙曰同惡相助同好相留同情相成\n同欲相趨同利相死今吳王自以爲與大王同憂願因\n時循理棄軀以除患害於天下意亦可乎王瞿然駭曰\n索隱劉氏瞿音九具反說\n文瞿逺視貌音九縛反\n寡人何敢如是今主上雖急",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>as well.\n\nWu and Jiaoxi are prominent among the feudal lords. Once under scrutiny, neither can hope to remain secure in quiet indulgence. The King of Wu has an internal illness of his own and has been unable to pay court to the Emperor for more than twenty years. He has long worried that he is suspected, and has found no way to clear his name. Even now he draws in his shoulders and treads lightly with overlapping feet in apprehension, fearing he will not be spared. I have also quietly heard that Your Great King has incurred censure over matters of nobility rank.\"\n\n<note>Correct Meaning: The pronunciation of di <gloss>censure or penalty</gloss> is indicated by the fanqie spelling zhang-ge.</note>\n\n\"From what I hear, when feudal lords have their territories stripped, their missteps never warranted such severe measures. I fear this will not stop at the mere confiscation of land!\"\n\nThe King replied, \"Indeed, this has happened. What would you have me do?\"\n\nGao said, \"Those who share an enmity assist one another; those who share fond passions keep company together; those who share similar sentiments bring each other success; those who share the same desires run in the same direction; and those who pursue a common benefit will die for each other. Now the King of Wu believes he shares the very same distress as Your Great King. He wishes to adapt to the times, follow reason, and cast aside his own life to rid the world of this looming peril and ruin. Would such an intention be agreeable to you?\"\n\nThe King was visibly startled and alarmed.\n\n<note>Seeking the Obscure: Master Liu states that the pronunciation of ju <gloss>startled or alarmed</gloss> is indicated by the fanqie spelling jiu-ju. The Shuowen Jiezi states that ju denotes the look of gazing into the distance, with its pronunciation indicated by jiu-fu.</note>\n\nHe said, \"How could I dare do such a thing? Even though the Sovereign on high acts with urgency today...\"\n\n<summary>Emissary Ying Gao urges the King of Jiaoxi to ally with Wu in revolt, warning that imperial land seizures will ultimately consume all kingdoms, and appeals to their shared peril to justify taking up arms against the Han court.</summary>\n<keywords>King of Wu, Liu Pi, King of Jiaoxi, Liu Ang, Ying Gao, Western Han, rebellion of the seven states, Shiji, Sima Qian</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 157,
+    "page_id": "6ae0bd3d4adf2ffb52f72423",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3d4adf2ffb52f72384/157.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n胡事議曰漢與匈奴和親率不過數歲卽復倍約不如\n勿許興兵擊之安國曰千里而戰兵不獲利今匈奴負\n戎馬之足懷禽獸之心遷徙鳥舉難得而制也得其地\n不足以爲廣有其衆不足以爲彊自上古不屬爲人\n索\n隱\n案晉灼云不內\n屬於漢爲人\n漢數千里爭利則人馬罷虜以全制其\n敝且彊弩之極矢不能穿魯縞\n集解許慎曰\n魯之縞尤薄\n衝風之末\n力不能漂鴻毛非初不勁末力衰也擊之不便不如和\n親羣臣議者多附安國於是上許和親其明年則元光\n欠巳曰三之\n史記\n五",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>affairs concerning the Hu. In the court discussion, he said, \"Whenever Han has concluded a marriage alliance with the Xiongnu, it rarely lasted more than a few years before they broke the treaty again. It would be better not to grant it, but rather to raise troops and attack them.\"\n\nAnguo said, \"Fighting across a thousand leagues brings no advantage to an army. At present, the Xiongnu rely on the swiftness of their warhorses and harbor the hearts of beasts. Moving like birds taking flight, they are difficult to capture and control. Winning their lands is not enough to expand our territory; taking their populace is not enough to strengthen our state. Since high antiquity, they have never been reckoned as subjects of our civilization <note><term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: Jin Zhuo states that they did not submit internally to Han to become civilized subjects.</note>. If Han marches several thousand leagues to vie for gain, men and horses will be exhausted, while the enemy will use their full strength to exploit our weariness. Furthermore, when an arrow shot from a powerful crossbow reaches the end of its flight, it cannot pierce even thin Lu silk <note><term>Jijie</term> <gloss>Collected Explanations</gloss>: Xu Shen says that the silk of Lu was exceptionally thin.</note>; when a tempest dies down, its final force cannot stir a swan's down. This is not because the shot or the wind lacked vigor at first, but because their strength fades at the end. Launching an attack on them would be unfavorable. It is better to grant the marriage alliance.\"\n\nMost of the ministers participating in the deliberation agreed with Anguo. Thereupon, the Emperor approved the marriage alliance. In the following year, the first year of the Yuanguang era <note>134 BCE</note>,\n\n<summary>Wang Hui advocates attacking the Xiongnu rather than making another short-lived marriage alliance, but Han Anguo persuades Emperor Wu and the court that distant campaigns against elusive nomads bring exhaustion and defeat. Persuaded by Anguo's famous arguments on military limits, the emperor approves the peace alliance.</summary>\n<keywords>Han Anguo, Wang Hui, Xiongnu, marriage alliance, Emperor Wu of Han, Jin Zhuo, Suoyin, Jijie, Yuanguang era, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 2,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bd8d4adf2ffb52f725c5",
+  "book_url": "https://sourcelibrary.org/book/6ae0bd8d4adf2ffb52f725c5",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bd8d4adf2ffb52f725c5",
+   "title": "史記·卷一百十八~卷一百二十二 (Shiji, Siku Quanshu, vol. 41 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 175,
+   "pages_ocr": 170,
+   "pages_translated": 166,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 175,
+   "distinct_page_numbers": 175,
+   "duplicate_records": 0,
+   "pages_with_ocr": 170,
+   "pages_translated": 166,
+   "with_printed_number": 35,
+   "printed_backsteps": 12,
+   "printed_repeats": 28,
+   "pages_count_field": 175,
+   "pages_translated_field": 166
+  },
+  "run": [
+   32,
+   59,
+   108,
+   168
+  ],
+  "pages": [
+   {
+    "page_number": 32,
+    "page_id": "6ae0bd8d4adf2ffb52f725e7",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd8d4adf2ffb52f725c5/32.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金文匹左全言\n<header>卷一百十八</header>\n政君臣之義父子之親夫婦之别長幼之序皆得其理\n上之舉錯遵古之道風俗紀綱未有所缺也重裝富賈\n周流天下道無不通故交易之道行南越賔服羗僰入\n獻東甌入降廣長榆\n集觧如淳曰廣謂拓大之也長\n榆塞名王恢所謂樹榆為塞\n開\n朔方匈奴折翅傷翼失援不振雖未及古太平之時然\n猶為治也王怒被謝死罪王又謂被曰山東即有兵漢\n必使大將軍將而制山東公以為大將軍何如人也被\n曰被所善者黃義從大將軍擊匈奴還告被曰大將軍",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>government: the righteousness of ruler and minister, the affection between father and son, the distinction between husband and wife, and the precedence of elders and juniors all accord with their proper principles. The sovereign's initiatives adhere to the ways of antiquity; custom, discipline, and order show no defect. Heavily laden and wealthy merchants travel across the realm, every road unobstructed, and thus commerce and trade flourish. The <term>Southern Yue</term> <gloss>Nanyue</gloss> submit as tributary vassals; the <term>Qiang</term> and <term>Bo</term> <gloss>western and southwestern barbarians</gloss> arrive to present tribute; <term>Eastern Ou</term> <gloss>Dong'ou</gloss> enters in submission. The empire has expanded into <term>Changyu</term> <gloss>Long Elm, a northern frontier fortification</gloss> <note>Collected Explanations: Ru Chun explains that \"expanded\" means enlarged. Changyu is the name of a frontier barrier, referring to what Wang Hui described as planting elm trees to create a defensive line.</note> and opened the territory of <term>Shuofang</term> <gloss>the northern commandery</gloss>. The <term>Xiongnu</term> <gloss>northern nomadic steppe confederation</gloss> have their wings broken and their feathers damaged; losing their allies, they are unable to recover. Although this does not yet match the great peace of ancient golden ages, it still counts as good governance.\"\n\nThe King grew angry. Wu Bei apologized, saying, \"I deserve death for my offense.\"\n\nThe King spoke again to Wu Bei, saying, \"If Shandong should raise troops, the Han court will certainly dispatch the Grand General to lead armies and suppress Shandong. Sir, what kind of man do you take the Grand General to be?\"\n\nBei replied, \"A close friend of mine, Huang Yi, accompanied the Grand General on his campaign against the Xiongnu. Upon his return, he told me, 'The Grand General\n<summary>Wu Bei argues that the Han empire is orderly and strong, provoking King Liu An's anger; the King then questions Wu Bei regarding the capabilities of the Han Grand General.</summary>\n<keywords>Wu Bei, King of Huainan, Liu An, Southern Yue, Qiang, Bo, Eastern Ou, Changyu, Shuofang, Xiongnu, Grand General, Wei Qing, Huang Yi, Shandong, Shiji, Sima Qian</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 59,
+    "page_id": "6ae0bd8d4adf2ffb52f72602",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd8d4adf2ffb52f725c5/59.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n史記卷一百十九\n漢太史令司馬遷撰\n宋中郎外兵曹參軍裴駰集解\n唐國子博士弘文館學士司馬貞索隱\n唐諸王侍讀率府長史張守節正義\n循吏列傳第五十九\n索隱謂奉法\n循理之吏也\n也巳巳字一也\n<header>史記</header>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Imperially Approved Complete Library in the Four Branches of Literature <note>original: \"欽定四庫全書\", Qinding Siku Quanshu</note></header>\nRecords of the Grand Historian, Volume 119 <note>original: \"史記卷一百十九\", Shiji Juan 119</note>\nComposed by Sima Qian, Grand Astrologer of the Han <note>original: \"漢太史令司馬遷撰\"</note>\nCollected Explanations by Pei Yin, General of the Palace Gentlemen and Military Advisor of the Song <note>original: \"宋中郎外兵曹參軍裴駰集解\"</note>\nSeeking the Obscure by Sima Zhen, Erudite of the Directorate of Education and Scholar of the Hongwen Academy of the Tang <note>original: \"唐國子博士弘文館學士司馬貞索隱\"</note>\nCorrect Meaning by Zhang Shoujie, Companion to the Princes and Commandant of the Guard of the Tang <note>original: \"唐諸王侍讀率府長史張守節正義\"</note>\nBiographies of Reasonable Officials, Number 59 <note>original: \"循吏列傳第五十九\", Xunli Liezhuan</note>\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: This refers to officials who uphold the law\nand comply with proper principles.\n\"Also\" <note>original: \"也\"</note> and \"already\" <note>original: \"巳\"</note>: the characters \"already\" <note>original: \"巳\"</note> and \"already\" <note>original: \"巳\"</note> are identical in form.\n<header>Records of the Grand Historian <note>original: \"史記\", Shiji</note></header>\n\n<summary>This page contains the title, authorship attributions, commentary credits, and opening section heading for the Biographies of Reasonable Officials in Volume 119 of the Records of the Grand Historian.</summary>\n<keywords>Records of the Grand Historian, Shiji, Sima Qian, Pei Yin, Sima Zhen, Zhang Shoujie, Reasonable Officials, Xunli, Siku Quanshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 108,
+    "page_id": "6ae0bd8d4adf2ffb52f72633",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd8d4adf2ffb52f725c5/108.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>卷一百二十一</header>\n下之心而誅桀紂桀紂之民不為之使而歸湯武湯武\n不得巳而立非受命為何黃生曰冠雖敝必加於首履\n雖新必關於足何者上下之分也今桀紂雖失道然君\n上也湯武雖聖臣下也夫主有失行臣下不能正言匡\n過以尊天子反因過而誅之代立踐南面非弑而何也\n轅固生曰必若所云是髙帝代秦即天子之位非邪於\n是景帝曰食肉不食馬肝\n正義論衡云氣熱而毒盛故\n食馬肝殺人乂盛夏馬行多\n渴死殺氣\n為毒也\n不為不知味言學者無言湯武受命不為愚",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and the will of the people, executed Jie and Zhou. The people of Jie and Zhou would no longer serve them, but turned their allegiance to Tang and Wu. Tang and Wu had no choice but to ascend the throne. If this was not receiving the Mandate of Heaven, what was it?\"\n\nMaster Huang replied: \"Although a cap may be worn and tattered, it must be placed upon the head. Although shoes may be brand new, they must be fitted upon the feet. Why is this so? It is because of the proper distinction between above and below. Now, although Jie and Zhou departed from the Way, they were nonetheless rulers above. Although Tang and Wu were sages, they were nonetheless subjects below. When a sovereign acts amiss, if his subjects cannot remonstrate with upright words and rectify his errors to honor the Son of Heaven, but instead seize upon his transgressions to execute him and take his place, facing south upon the throne, if that is not regicide, what is it?\"\n\nMaster Yuangu replied: \"If it must be as you say, then when the Founding Emperor <note>Emperor Gaozu of Han</note> replaced the Qin dynasty and assumed the throne of the Son of Heaven, was he in the wrong?\"\n\nThereupon Emperor Jing intervened, saying: \"One who eats meat without eating horse liver\n\n<note><term>Zhengyi</term> <gloss>Correct Meaning</gloss>: The <term>Lunheng</term> <gloss>Balanced Discourses</gloss> says: The energy is hot and the poison virulent, which is why eating horse liver kills people. Furthermore, in the height of summer, when horses travel far and die of thirst, the lethal breath turns into poison.</note>\n\nis not considered ignorant of good flavors. A scholar who speaks without discussing whether Tang and Wu received the Mandate of Heaven is not considered a fool.\"\n\n<summary>In a high-stakes court debate before Emperor Jing, Master Huang argues that overthrowing a tyrant is regicide, while Master Yuangu defends the Mandate of Heaven, forcing Emperor Jing to diplomatically silence the dangerous topic by comparing it to dining without horse liver.</summary>\n<keywords>Shiji, Sima Qian, Master Yuangu, Master Huang, Emperor Jing, Emperor Gaozu, King Tang, King Wu, Jie, Zhou, Mandate of Heaven, regicide, horse liver, Confucian scholars, Han dynasty politics</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 168,
+    "page_id": "6ae0bd8d4adf2ffb52f7266f",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd8d4adf2ffb52f725c5/168.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n當時為是何古之法乎至周為廷尉詔獄亦益多矣二\n千石繫者新故相因不減百餘人郡吏大府舉之廷尉\n集觧如淳曰郡吏郡太守也孟康\n曰舉之廷尉以章劾付廷尉治之\n一𡻕至千餘章章大\n者連逮證案數百小者數十人遠者數千近者數百里\n㑹獄吏因責如章告劾不服以笞掠定之於是聞有逮\n皆亡匿獄乆者至更數赦\n集觧張晏曰詔書\n赦或有不從此令\n十有餘𡻕\n而相告言大抵盡詆以不道\n索隱案大抵猶大都\n也盡詆者盡至也\n以上\n廷尉及中都官詔獄逮至六七萬人吏所増加十萬餘",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\"What conforms to what is right for the present era: why must that be the law of antiquity?\"\n\nWhen Zhou became <term>Tingwei</term> <gloss>Commandant of Justice</gloss>, imperial trials also multiplied ever more. Those with salaries of two thousand <term>shi</term> <gloss>piculs, ranking high officials</gloss> who were imprisoned succeeded one another continuously, never falling below a hundred persons. Commandery officials and senior provincial headquarters reported cases to the Commandant of Justice.\n\n<gloss>Collected Explanations: Ru Chun states that commandery officials refers to the commandery grand administrators. Meng Kang states that reporting to the Commandant of Justice meant submitting articles of impeachment to the Commandant of Justice for judicial handling.</gloss>\n\nIn a single year, these reports reached more than a thousand memorials. In major cases, the persons arrested for confrontation and testimony numbered in the hundreds; in minor cases, several dozen people. The distances involved ranged from several thousand to several hundred <term>li</term> <gloss>Chinese miles</gloss>. When cases were brought to trial, prison officials cross-examined them strictly according to the charges in the impeachment memorials. If the accused did not submit, they were flogged and beaten until their testimony was settled. Thereupon, whenever people heard an arrest was pending, they all fled into hiding. Those held long in prison went through several general amnesties.\n\n<gloss>Collected Explanations: Zhang Yan states that some imperial edicts granting amnesties were not permitted to apply to these orders.</gloss>\n\nFor over ten years, the accusations made against one another almost all charged people with the crime of being <term>budao</term> <gloss>devoid of the proper way, heinous treason</gloss> or worse.\n\n<gloss>Seeking the Obscure: We note that \"dadi\" is like saying \"for the most part.\" \"Jindi\" means reaching the utmost extremity.</gloss>\n\nThose arrested in the imperial prisons of the Commandant of Justice and the capital magistrates reached sixty to seventy thousand people, and the clerks added more than one hundred thousand more.\n\n<summary>Du Zhou drastically expands judicial purges and harsh interrogations, resulting in tens of thousands of arrests under broad charges of heinous crimes.</summary>\n<keywords>Du Zhou, Commandant of Justice, Tingwei, imperial prisons, zhaoyu, Han dynasty legal administration, budao, Shiji, Sima Qian</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 3,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bd3a4adf2ffb52f722f9",
+  "book_url": "https://sourcelibrary.org/book/6ae0bd3a4adf2ffb52f722f9",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bd3a4adf2ffb52f722f9",
+   "title": "史記·卷九十九~卷一百四 (Shiji, Siku Quanshu, vol. 36 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 136,
+   "pages_ocr": 133,
+   "pages_translated": 126,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 136,
+   "distinct_page_numbers": 136,
+   "duplicate_records": 0,
+   "pages_with_ocr": 133,
+   "pages_translated": 126,
+   "with_printed_number": 31,
+   "printed_backsteps": 12,
+   "printed_repeats": 24,
+   "pages_count_field": 136,
+   "pages_translated_field": 126
+  },
+  "run": [
+   8,
+   51,
+   89,
+   126
+  ],
+  "pages": [
+   {
+    "page_number": 8,
+    "page_id": "6ae0bd3a4adf2ffb52f72303",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3a4adf2ffb52f722f9/8.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n春為歲之始以其首謀\n都關中故號奉春君\n漢七年韓王信反高帝自往擊\n之至晉陽聞信與匈奴欲共擊漢上大怒使人使匈奴\n匈奴匿其壯士肥牛馬但見老弱及羸畜\n正義上力為\n反下許又反\n使者十輩來皆言匈奴可擊上使劉敬復往使匈奴還\n報曰兩國相擊此宜夸矜見所長\n集解韋昭曰\n夸張矜大也\n今臣往\n徒見羸瘠老弱\n索隱羸力為反瘠音稷瘠瘦也\n漢書作胔音漬胔肉也恐非\n此必欲\n見短伏竒兵以爭利愚以為匈奴不可擊也是時漢兵\n已踰句注\n正義句注山在代州\n鴈門縣西北三十里\n二十餘萬兵已業行上\n<header>史記</header>\n<page-num>四</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\": 'Spring is the beginning of the year. Because he was the first to propose the plan to make the capital within the Pass, he was granted the title Lord of Fengchun <note>literally \"Reverer of Spring\"</note>.'\"\n\nIn the seventh year of the Han dynasty, King Xin of Han revolted. Emperor Gaozu personally marched to attack him. Arriving at Jinyang, he heard that Xin and the Xiongnu intended to launch a joint attack against the Han. The Emperor was exceedingly enraged and dispatched an envoy to the Xiongnu. The Xiongnu hid their robust warriors and fattened cattle and horses, allowing the envoy to see only the aged, the weak, and emaciated livestock.\n\n<gloss>Correct Meaning: The upper character is pronounced with the fanqie *li-wei*. The lower character is pronounced with the fanqie *xu-you*.</gloss>\n\nTen successive missions of envoys returned, and all reported that the Xiongnu were vulnerable to attack. The Emperor dispatched Liu Jing to go again on an embassy to the Xiongnu. Upon his return, he reported, saying: \"When two states prepare to clash, they normally boast and parade their strengths.\n\n<gloss>Collected Explanations: Wei Zhao states: \"Boasting and magnifying their might.\"</gloss>\n\nNow when your servant went, I saw only emaciated, sickly beasts and the aged and weak.\n\n<gloss>Seeking the Obscure: Emaciated is pronounced with the fanqie *li-wei*. Sickly has the sound *ji*; it means thin and emaciated. The Book of Han writes it as rotting meat, pronounced with the sound *zi*, meaning spoiled flesh; I fear this reading is incorrect.</gloss>\n\nThis must be a deliberate display of weakness to conceal ambush troops and contend for advantage. In your servant's humble judgment, the Xiongnu cannot be attacked.\" At that time, the Han forces had already crossed Mount Gouzhu.\n\n<gloss>Correct Meaning: Mount Gouzhu is located thirty li northwest of Yanmen County in Dai Prefecture.</gloss>\n\nMore than two hundred thousand troops were already on the march. The Emperor\n\n<summary>Emperor Gaozu marches against the rebelling King Xin of Han and the Xiongnu, where ten envoys advise attacking based on seen weakness, but Liu Jing astutely warns that the Xiongnu are concealing their elite forces to set an ambush.</summary>\n<keywords>Emperor Gaozu, King Xin of Han, Xiongnu, Liu Jing, Jinyang, Gouzhu, Lord of Fengchun, Han dynasty, military deception, ambush</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 51,
+    "page_id": "6ae0bd3a4adf2ffb52f7232e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3a4adf2ffb52f722f9/51.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n乏人陛下獨奈何與刀鋸餘人載於是上笑下趙同趙\n同泣下車文帝從霸陵上欲西馳下峻阪袁盎騎並車\n學轡上曰將軍怯邪盎曰臣聞千金之子坐不垂堂索\n隂\n張揖云恐簷瓦墮中人\n云臨堂逢垂恐壺墜也\n百金之子不騎衡\n集解徐廣\n曰一作行\n案服虔曰自惜身不騎衡如淳曰騎倚也衡樓殿邊\n物也素昭曰衡車衛索隱衡木行而也如淳云騎音\n岐反韋昭曰騎音奇案諸家說如淳句衣如云欄桷\n案纂要云宮設四局欄花者云欄桷者云桷是也\n聖主不乘危而微幸今陛下騁六騑\n集解如淳曰六\n馬之氣若飛\n馳\n下峻山如有馬驚車敗陛下縱自輕柰高廟太后何上\n句平考",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>lacks men, why should Your Majesty alone ride with a remnant of the knife and saw <note>original: \"刀鋸餘人\", meaning a mutilated criminal or castrated eunuch</note>?\"\n\nAt this, the Emperor laughed and ordered Zhao Tong down. Zhao Tong wept as he stepped down from the carriage.\n\nWhen Emperor Wen ascended from Baling and wished to gallop westward down a steep slope, Yuan Ang rode abreast of the carriage and seized the reins. The Emperor said: \"Is the General afraid?\"\n\nAng replied: \"Your servant has heard that the son of a thousand pieces of gold does not sit near the eaves of a hall <note>original: \"索隱張揖云恐簷瓦墮中人云臨堂逢垂恐壺墜也\", Seeking the Obscure: Zhang Yi says: \"He fears that roof tiles from the eaves might fall and strike someone.\" Another says: \"When approaching the hall edge where the eaves hang down, one fears that vessels might fall.\"</note>; the son of a hundred pieces of gold does not ride the crossbeam <note>original: \"集解徐廣曰一作行案服虔曰自惜身不騎衡如淳曰騎倚也衡樓殿邊物也素昭曰衡車衛索隱衡木行而也如淳云騎音岐反韋昭曰騎音奇案諸家說如淳句衣如云欄桷案纂要云宮設四局欄花者云欄桷者云桷是也\", Collected Explanations: Xu Guang says: \"Heng [crossbeam] is also written as hang [row].\" Fu Qian says: \"One who values his own person does not lean on the railing.\" Ru Chun says: \"Qi [ride] means to lean. Heng [crossbeam] is an object beside a multi-storied palace hall.\" Wei Zhao says: \"Heng refers to the chariot rail.\" Seeking the Obscure: The horizontal wood is walked upon. Ru Chun says the pronunciation of qi is qi in the fanqie system; Wei Zhao says qi is pronounced qi. Inquiring into the various commentators, Ru Chun's phrase... An examination of the Compendium of Essentials states that palaces set up railings and balustrades.</note>; and a sage ruler does not court danger to tempt fortune. Now Your Majesty drives a team of six galloping steeds <note>original: \"集解如淳曰六馬之氣若飛\", Collected Explanations: Ru Chun says: \"The spirit of the six horses is as if flying.\"</note> down a steep mountain. If a horse should be startled and the carriage wrecked, even if Your Majesty makes light of yourself, what of the ancestral temple of Gaozu and the Empress Dowager?\"\n\nThe Emperor stopped.\n\n<summary>Yuan Ang persuades Emperor Wen to dismiss the eunuch Zhao Tong from his imperial chariot and stops the Emperor from recklessly galloping down a steep hill by reminding him of his filial and ancestral duties.</summary>\n<keywords>Shiji, Emperor Wen, Yuan Ang, Zhao Tong, Baling, imperial chariot, filial piety, Gaozu temple, Empress Dowager</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 89,
+    "page_id": "6ae0bd3a4adf2ffb52f72354",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3a4adf2ffb52f722f9/89.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n有味哉有味哉語曰不知其人視其友二君之所稱誦\n可著廊廟書曰不偏不黨王道蕩蕩不黨不偏王道便\n便\n集解徐廣\n曰一作睢\n張季馮公近之矣\n索隱述贊曰張季未偶見識袁盎太子懼法嗇夫無\n狀驚馬罰金盜環悟上馮公白首味哉論將因對李\n齊收功\n魏尚\n<header>欽定四庫全書</header>\n<header>卷一</header>\n<header>卷二</header>\n<header>卷三</header>\n己\n<page-num>十</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>carried deep meaning indeed! Deep meaning indeed! A proverb says: \"If you do not know a man, look at his friends.\" What these two gentlemen praised and recited was worthy of being inscribed in the halls of state. The <term>Book of Documents</term> <note>original: \"Shu\"</note> says: \"Without partiality, without partisanship, the King's Highway is broad and vast; without partisanship, without partiality, the King's Highway is smooth and easy.\"\n\n<gloss>Collected Explanations: Xu Guang says: \"One edition reads 'straight and level' <term>sui</term> instead of 'smooth and easy' <term>bianbian</term>.\"</gloss>\n\nLord Zhang Ji <note>Zhang Shizhi</note> and Master Feng <note>Feng Tang</note> came close to this ideal!\n\n<gloss>Seeking the Obscure: Praiseworthy appraisal in verse:</gloss>\nZhang Ji had not yet found his opportunity, until Yuan Ang recognized his worth.\nThe Crown Prince was made fearful of the laws; the head officer was deemed unworthy.\nFrightening the imperial steeds met with a fine in gold; stealing the temple ring awakened the sovereign's wisdom.\nMaster Feng grew white-haired with age; how profound was his discourse on generals!\nBecause he responded concerning Li Qi, merit was secured for Wei Shang.\n<header>Imperially Commissioned Complete Library of the Four Treasuries</header>\n<header>Fascicle One</header>\n<header>Fascicle Two</header>\n<header>Fascicle Three</header>\nBranch Six <note>hexary cycle indicator</note>\n<page-num>Ten</page-num>\n\n<summary>Sima Qian concludes his appraisal of Zhang Shizhi and Feng Tang, praising their impartiality and wisdom through quotations from proverbs and the Book of Documents, followed by Sima Zhen's rhymed eulogy summarizing their achievements.</summary>\n<keywords>Shiji, Sima Qian, Zhang Shizhi, Feng Tang, Book of Documents, Sima Zhen, Seeking the Obscure, Wei Shang, Yuan Ang, Han Dynasty</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 126,
+    "page_id": "6ae0bd3a4adf2ffb52f72379",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bd3a4adf2ffb52f722f9/126.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金矢口工仁\n<header>卷一百四</header>\n拔刀列斷席别坐主家皆怪而惡之莫敢呵其後有\n詔募擇衛將軍舍人以為郎將軍取舍人中富給者\n令具鞍馬絳衣玉貝劒欲入奏之㑹賢大夫少府趙\n禹來過衛將軍將軍呼所舉舍人以示趙禹趙禹以\n次問之十餘人無一人習事有智略者趙禹曰吾聞\n之將門之下必有將類傳曰不知其君視其所使不\n知其子視其所友今有詔舉將軍舍人者欲以觀將\n軍而能得賢者文武之士也今徒取富人子上之又",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>drew their swords, split their sitting mat in two, and sat apart. The members of the master's household all regarded them as strange and detested them, yet none dared reprimand them.\n\nAfterward, an imperial edict ordered General Wei to select retainers from his household to serve as Gentlemen of the Palace <note>original: \"詔募擇衛將軍舍人以為郎\", Gentlemen of the Palace (<term>lang</term>) served as imperial attendants and bodyguards, a prime stepping stone for bureaucratic advancement.</note>. The General selected those among his retainers who were wealthy and well-provided. He ordered them to prepare saddles, horses, crimson robes, jade, cowrie shells, and ornamented swords, intending to present them to the throne.\n\nAt that time, Zhao Yu, a worthy grandee and the Chamberlain for the Palace Revenues <note>original: \"少府趙禹\", the Shaofu oversaw palace revenues, manufactures, and imperial treasury.</note>, happened to come and visit General Wei. The General summoned the retainers he had selected to present them to Zhao Yu. Zhao Yu questioned them one by one in succession. Among more than ten men, there was not a single one who was versed in public affairs or possessed wisdom and strategic acumen.\n\nZhao Yu said: \"I have heard that beneath the gates of a military general, there must surely be men of martial caliber. A tradition states: 'If you do not know a lord, observe those he employs; if you do not know a son, observe those he befriends.' Now there is an imperial edict ordering you to recommend retainers from your household. This is intended to observe whether the General can obtain worthy men who are scholars of civil and military affairs. Now you merely select the sons of wealthy families to send up to the throne, and furthermore\n\n<summary>Ren An and Tian Ren assert their dignity when insulted at Princess Pingyang's estate. When General Wei Qing selects only wealthy retainers for official appointments, Chamberlain Zhao Yu criticizes the candidates' lack of talent and statecraft.</summary>\n<keywords>Ren An, Tian Ren, Wei Qing, Zhao Yu, Shaofu, Han dynasty, patronage, Shiji, Sima Qian</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 4,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bc1f4adf2ffb52f71a90",
+  "book_url": "https://sourcelibrary.org/book/6ae0bc1f4adf2ffb52f71a90",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bc1f4adf2ffb52f71a90",
+   "title": "史記·卷四十~卷四十一 (Shiji, Siku Quanshu, vol. 22 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 150,
+   "pages_ocr": 147,
+   "pages_translated": 145,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 150,
+   "distinct_page_numbers": 150,
+   "duplicate_records": 0,
+   "pages_with_ocr": 147,
+   "pages_translated": 145,
+   "with_printed_number": 25,
+   "printed_backsteps": 8,
+   "printed_repeats": 17,
+   "pages_count_field": 150,
+   "pages_translated_field": 145
+  },
+  "run": [
+   37,
+   42,
+   102,
+   124
+  ],
+  "pages": [
+   {
+    "page_number": 37,
+    "page_id": "6ae0bc1f4adf2ffb52f71ab7",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bc1f4adf2ffb52f71a90/37.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n後立為平王竟續楚祀如其神符初子比自晉歸韓宣\n子問叔向曰子比其濟乎對曰不就宣子曰同惡相求\n如市賈焉\n集解服虔曰謂國人共惡靈\n王者如市賈之人求利也\n何為不就對曰\n無與同好誰與同惡\n集解服虔曰言無黨於\n內當與誰共同好惡\n取國有五\n難有寵無人一也\n集解杜預曰寵\n湏賢人而固\n有人無主二也\n集解\n杜預\n曰雖有賢人當\n湏內主為應\n有主無謀三也\n集解杜預曰\n謀策謀也\n有謀而無\n民四也\n集解杜預\n曰民衆也\n有民而無德五也\n集解杜預曰四者\n既備當以德成之\n子比在晉十三年矣晉楚之從不聞通者可謂無人矣\n史記\n十八",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page: King Ping (Qiji) alone survived.</meta>Later he was installed as King Ping, ultimately continuing the sacrifices of Chu, just as the divine omen had foretold.\n\nEarlier, when Zibi returned from Jin, Han Xuanzi asked Shuxiang: \"Will Zibi succeed?\"\n\nShuxiang replied: \"He will not achieve it.\"\n\nXuanzi said: \"Those who share hatred seek one another out, like merchants in the marketplace.\"\n\n<note>Collected Explanations: Fu Qian says: This means that when the people of the state all hated King Ling, it was like marketplace merchants seeking profit.</note>\n\n\"Why then should he not succeed?\"\n\nShuxiang replied: \"If there is no one who shares his affections, who will share his hatreds?\"\n\n<note>Collected Explanations: Fu Qian says: This means he had no faction within the state. With whom then could he share common likes and dislikes?</note>\n\n\"Taking possession of a state has five difficulties. Having favor without having men of worth is the first.\"\n\n<note>Collected Explanations: Du Yu says: Favor requires men of worth to become secure.</note>\n\n\"Having men of worth without an internal leader is the second.\"\n\n<note>Collected Explanations: Du Yu says: Even if one has men of worth, one still requires an internal leader to serve as counterpart.</note>\n\n\"Having a leader without strategic counsel is the third.\"\n\n<note>Collected Explanations: Du Yu says: Counsel means plans and strategies.</note>\n\n\"Having counsel without the common people is the fourth.\"\n\n<note>Collected Explanations: Du Yu says: People refers to the multitude.</note>\n\n\"Having the common people without virtue is the fifth.\"\n\n<note>Collected Explanations: Du Yu says: When these four are prepared, one must accomplish the work through virtue.</note>\n\n\"Zibi has lived in Jin for thirteen years. Among the followers of Jin and Chu, one has never heard of any communicating with him. He may truly be called one without men of worth.\"\n\n<note>Shiji, Volume 18</note>\n\n<summary>King Ping fulfills the jade disc prophecy by succeeding to the throne of Chu, while a historical conversation between Han Xuanzi and Shuxiang analyzes Zibi's doomed bid for power through the five essential prerequisites for taking control of a state.</summary>\n<keywords>King Ping, Zibi, Han Xuanzi, Shuxiang, Chu, Jin, five difficulties, statecraft, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 42,
+    "page_id": "6ae0bc1f4adf2ffb52f71abc",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bc1f4adf2ffb52f71a90/42.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>卷四十</header>\n父城之名非建所守杜預云言成父又誤也傳及酈元\n水經注云楚大城城父使太子建居之即十三州志云\n太子建所居城父謂今亳州城父縣也按今亳州見有\n城父縣是建所守者也地理志云潁川有父城縣沛郡\n有城父縣此\n二名别耳\n無忌又曰夜讒太子建於王曰自無忌入\n秦女太子怨亦不能無望於王王少自備焉且太子居\n城父擅兵外交諸侯且欲入矣平王召其傅伍奢責之\n伍奢知無忌讒乃曰王奈何以小臣疏骨肉無忌曰今\n不制後悔也於是王遂囚伍奢而召其二子而告以免\n父死乃令司馬奮揚召太子建欲誅之太子聞之亡奔",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\n<note>Correct Meaning continues: The name Fucheng was not the place guarded by Crown Prince Jian. Du Yu said that it was called Chengfu, which was also an error. The Zuo Commentary and Li Daoyuan's Commentary on the Water Classic state: \"Chu built a great walled city at Chengfu and sent Crown Prince Jian to reside there.\" That is to say, as the Record of the Thirteen Provinces states: \"The Chengfu where Crown Prince Jian resided refers to Chengfu County in modern Bozhou.\" According to our examination, Bozhou currently has a Chengfu County, which is indeed the place guarded by Jian. The Treatise on Geography states that Yingchuan Commandery had a Fucheng County, and Pei Commandery had a Chengfu County. These two names are distinct.</note>\n\nWuji again slandered Crown Prince Jian day and night to the King, saying: \"Ever since Wuji brought in the woman from Qin, the Crown Prince has harbored resentment and cannot help but bear grudges against the King. May the King be somewhat on guard against him. Furthermore, the Crown Prince resides in Chengfu, where he commands troops on his own authority and makes diplomatic ties with feudal lords outside the realm; he intends to enter the capital.\" \n\nKing Ping summoned the Crown Prince's Grand Tutor, Wu She, and reproached him. Wu She knew it was Wuji's slander, so he said: \"Why should the King estrange his own flesh and blood on account of a petty minister?\" \n\nWuji said: \"If you do not control him now, you will regret it later.\" \n\nThereupon the King imprisoned Wu She. He summoned his two sons, announcing that he would spare their father from death. The King then ordered Sima Fen Yang to summon Crown Prince Jian, intending to execute him. When the Crown Prince heard of this, he fled into exile.\n\n<summary>Fei Wuji continues slandering Crown Prince Jian, accusing him of treasonous border alliances and military build-up. King Ping imprisons Tutor Wu She, summons his sons under false pretenses, and sends an officer to execute Crown Prince Jian, prompting Jian to flee into exile.</summary>\n<keywords>Fei Wuji, Crown Prince Jian, King Ping of Chu, Wu She, Sima Fen Yang, Chengfu, Chu, exile, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 102,
+    "page_id": "6ae0bc1f4adf2ffb52f71af8",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bc1f4adf2ffb52f71a90/102.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n滅胡在十五年滅胡之年于楚昭為二十一年年表\n同此作二十年\n二十一年吳王闔閭伐越越王勾踐射傷吳王遂死○\n左傳及吳世家吳王伐越而死左魯定之十四年是\n年于楚昭為二十年\n昭王問周太史○說苑云太史州黎\n是歲也滅陳而縣之集解徐廣曰惠王之十年○左傳\n魯哀十七年秋七月已卯楚公孫朝帥師滅陳是年",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>the destruction of Hu occurs in the fifteenth year. The year Hu was destroyed corresponds to the twenty-first year of King Zhao of Chu. The chronological tables also record this, but here it is written as the twentieth year.\n\n\"In the twenty-first year, King Helü of Wu attacked Yue. King Goujian of Yue shot and wounded the King of Wu, who thereupon died.\" <note>Quotation from the Shiji text.</note> ○ In the <term>Zuo Zhuan</term> and the \"Hereditary House of Wu\" <note>in the Shiji</note>, the King of Wu died while campaigning against Yue. In Master Zuo's commentary, this is recorded in the fourteenth year of Duke Ding of Lu. This year corresponds to the twentieth year of King Zhao of Chu.\n\n\"King Zhao questioned the Grand Scribe of Zhou.\" <note>Quotation from the Shiji text.</note> ○ The <term>Shuoyuan</term> <gloss>Garden of Stories</gloss> states that this was Grand Scribe Zhou Li.\n\n\"In that year, Chu destroyed Chen and made it a county.\" <note>Quotation from the Shiji text.</note> In the <term>Jijie</term> <gloss>Collected Explanations</gloss> commentary, Xu Guang states: This was the tenth year of King Hui. ○ Master Zuo's commentary records that in the autumn of the seventeenth year of Duke Ai of Lu, on the seventeenth day <term>jisi</term> of the seventh month, Gongsun Chao of Chu led troops and destroyed Chen. This year\n\n<summary>This page collates chronological discrepancies and biographical details in Shiji Volume 40, reconciling the dates of Chu's campaigns against Hu, Wu's invasion of Yue, the identity of the Zhou Grand Scribe, and the annexation of Chen with the Zuo Zhuan, the Chunqiu annals, and commentary sources.</summary>\n<keywords>Shiji, King Zhao of Chu, King Hui of Chu, Hu, Helü of Wu, Goujian of Yue, Zuo Zhuan, Duke Ding of Lu, Duke Ai of Lu, Grand Scribe Zhou Li, Shuoyuan, Jijie, Xu Guang, Chen annexation, Gongsun Chao</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 124,
+    "page_id": "6ae0bc1f4adf2ffb52f71b0e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bc1f4adf2ffb52f71a90/124.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n金\n金\n金\n<header>卷四十一</header>\n據此文勾踐平吳之後周元王\n始命為伯後遂僭而稱王也\n范蠡遂去自齊遺大夫\n種書曰蜚鳥盡良弓藏狡兎死走狗烹\n集解徐廣云\n狡一作郊\n越\n王為人長頸鳥喙可與共患難不可與共樂子何不去\n種見書稱病不朝人或讒種且作亂越王乃賜種劒曰\n子教寡人伐吳七術\n正義越絕云九術一曰尊天事鬼\n二曰重財幣以遺其君三曰貴糴\n粟藁以空其邦四曰遺之好美以熒其志五曰遺之巧\n臣使起宮室髙臺以盡其財以疲其力六曰貴其諛臣\n使之易伐七曰彊其諫臣使之自殺八曰邦\n家富而備器利九曰堅甲利兵以承其弊\n寡人用其\n三而敗吳其四在子子為我從先王試之種遂自殺勾",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>Volume 41</header>\n\n<gloss><term>Suoyin</term> commentary: Based on this text, after Goujian pacified Wu, King Yuan of Zhou first conferred upon him the title of Hegemon, and only later did he usurp royal authority and declare himself king.</gloss>\n\nFan Li thereupon departed. From Qi, he sent a letter to Grandee Zhong, which said: \"When the soaring birds are gone, the good bow is stowed away; when the cunning hare dies, the hound is boiled.\n\n<gloss><term>Jijie</term> commentary: Xu Guang notes: For <term>jiao</term> <gloss>cunning</gloss>, one source writes <term>jiao</term> <gloss>suburban / open field</gloss>.</gloss>\n\nAs for the King of Yue, his character features a long neck and a bird's beak; with such a person, one may share adversity, but one cannot share delight. Why do you not leave?\"\n\nZhong, having read the letter, claimed illness and did not attend court. Someone slandered Zhong, saying he was about to rebel. The King of Yue then bestowed a sword upon Zhong, saying: \"You taught me seven strategies for attacking Wu.\n\n<gloss><term>Zhengyi</term> commentary: The <term>Yue Jueshu</term> <gloss>Lost Records of Yue</gloss> states there were nine strategies: First, honor Heaven and serve the spirits. Second, send heavy wealth and silks to present to their lord. Third, purchase grain and straw at high prices to deplete their state. Fourth, send them beautiful women to distract their will. Fifth, send skilled artisans to cause them to erect palaces and high terraces, exhausting their treasury and wearing down their strength. Sixth, flatter their sycophants to make them vulnerable to attack. Seventh, strengthen their forthright ministers so that they are driven to suicide. Eighth, ensure your own state is wealthy and its armaments sharp. Ninth, assemble strong armor and sharp weapons to take advantage of their decline.</gloss>\n\nI used only three of them to defeat Wu, leaving four with you. On my behalf, test them out on our late kings!\" Zhong thereupon fell upon his sword and committed suicide. Gou...\n\n<summary>Fan Li flees to Qi and warns Grandee Zhong that Goujian turns upon his ministers in peacetime. Suspected of rebellion, Zhong is ordered by Goujian to commit suicide with a sword, leaving the remaining conquest strategies to be tested in the underworld.</summary>\n<keywords>Shiji, Sima Qian, Fan Li, Grandee Zhong, Wen Zhong, Goujian, Yue, Wu, Hegemon, cunning hare, good bow, seven strategies, nine strategies, Yue Jueshu, suicide, Jijie, Zhengyi, Suoyin</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 5,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bca94adf2ffb52f71e1b",
+  "book_url": "https://sourcelibrary.org/book/6ae0bca94adf2ffb52f71e1b",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bca94adf2ffb52f71e1b",
+   "title": "史記·卷六十一~卷六十六 (Shiji, Siku Quanshu, vol. 28 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 132,
+   "pages_ocr": 129,
+   "pages_translated": 121,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 132,
+   "distinct_page_numbers": 132,
+   "duplicate_records": 0,
+   "pages_with_ocr": 129,
+   "pages_translated": 121,
+   "with_printed_number": 19,
+   "printed_backsteps": 5,
+   "printed_repeats": 12,
+   "pages_count_field": 132,
+   "pages_translated_field": 121
+  },
+  "run": [
+   27,
+   44,
+   67,
+   129
+  ],
+  "pages": [
+   {
+    "page_number": 27,
+    "page_id": "6ae0bca94adf2ffb52f71e38",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bca94adf2ffb52f71e1b/27.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n字\n匹\n左\n人\n言\n<header>卷六十二</header>\n子孫世祿於齊有封邑者十餘世\n索隱世本云莊仲山\n産敬仲夷吾夷吾産\n武子鳴鳴産桓子啟方啟方産成子孺孺産莊子盧盧\n産悼子其夷其夷産襄子武武産景子耐涉耐涉産微\n凡十代\n世譜同\n常為名大夫天下不多管仲之賢而多鮑叔能\n知人也\n正義國語云齊桓公使鮑叔為相辭曰臣之不\n若夷吾者五寬和惠民不若也治國家不失其\n柄不若也忠惠可結於百姓不若也制禮義可法於四\n方不若也執枹鼓立於軍門使百姓皆加勇猛不若也\n管仲既任政相齊以區區之齊在海濱\n正義齊國\n東濱海也\n通貨\n積財富國彊兵與俗同好惡故其稱曰\n索隱是夷吾著\n書所稱管子者\n其書有此言今\n舉其大畧也\n倉廩實而知禮節衣食足而知榮辱上",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\nHis descendants received hereditary stipends in Qi and possessed fiefs for more than ten generations, <note>Seeking the Hidden </note><note>original: \"Suoyin\"</note>: The Book of Generations <note>original: \"Shiben\"</note> states: Zhuang Zhongshan fathered Jingzhong Yiwu; Yiwu fathered Wuzi Ming; Ming fathered Huanzi Qifang; Qifang fathered Chengzi Ru; Ru fathered Zhuangzi Lu; Lu fathered Daozi Qiyi; Qiyi fathered Xiangzi Wu; Wu fathered Jingzi Naishe; Naishe fathered Wei. In all there were ten generations. The Genealogical Records <note>original: \"Shipu\"</note> agree. often serving as renowned grand officers. The realm did not praise Guan Zhong for his worthiness so much as it praised Bao Shu for his ability to recognize worth in others.\n\n<note>Correct Meaning </note><note>original: \"Zhengyi\"</note>: The Discourses of the States <note>original: \"Guoyu\"</note> records: Duke Huan of Qi appointed Bao Shu to serve as chancellor. Bao Shu declined, saying: \"There are five respects in which your servant does not equal Yiwu: in broad generosity, harmony, and kindness toward the common people, I do not equal him; in governing the state and ruling house without losing hold of the levers of authority, I do not equal him; in loyalty and benevolence capable of binding the common people, I do not equal him; in regulating ritual and duty so they may serve as models for the four quarters, I do not equal him; and in holding the drumsticks and standing at the military gates to inspire the soldiers to greater valor, I do not equal him.\"\n\nOnce Guan Zhong had taken charge of government and served as chancellor of Qi, he used the modest territory of Qi along the coast <note>Correct Meaning: The state of Qi bordered the sea to the east.</note> to circulate commodities, accumulate wealth, enrich the state, strengthen the army, and share likes and dislikes with the common people. Therefore, his saying went: <note>Seeking the Hidden: This refers to the book composed by Yiwu entitled Guanzi. His book contains these words, and here their general import is cited.</note> \"When the granaries are full, the people understand ritual and propriety; when food and clothing are sufficient, the people understand honor and shame.\" The ruler\n\n<summary>This page records how Bao Shuya's descendants maintained high office in Qi for ten generations, highlighting that the realm remembered Bao Shu above all for his discernment in recognizing Guan Zhong, whose statecraft and foundational economic philosophy turned Qi into a wealthy and well-ordered power.</summary>\n<keywords>Bao Shuya, Guan Zhong, Qi, Duke Huan, Shiji, Guoyu, Suoyin, Zhengyi, economic statecraft, granaries, ritual and honor</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 44,
+    "page_id": "6ae0bca94adf2ffb52f71e49",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bca94adf2ffb52f71e1b/44.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n其能飛魚吾知其能游獸吾知其能走走者可以為罔\n游者可以為綸飛者可以為矰至於龍吾不能知其乗\n風雲而上天吾今日見老子其猶龍邪老子修道德其\n學以自隱無名為務居周久之見周之衰廼遂去至關\n關令尹喜曰子將隱矣彊為我著書\n索隱李尤函谷關\n銘云尹喜要老子\n留作二篇而崔浩以尹喜又為散關令是也正義抱朴\n子云老子西遊遇關令尹喜於散關為喜著道德經一\n卷謂之老子或以為函谷關括地志云散關在岐州陳\n倉縣東南五十二里函谷關在陝州桃林縣西南十二\n里彊其兩反\n為于偽反\n於是老子廼著書上下篇言道德之意五\n史記",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>can fly; fish, I know can swim; beasts, I know can run. For what runs, one may make nets; for what swims, one may make fishing lines; for what flies, one may make tethered arrows. But as for the dragon, I cannot fathom how it ascends into the heavens riding upon the wind and clouds. Today I have seen Laozi: is he not like the dragon?\"\n\nLaozi cultivated the Dao and its Virtue. His teachings took self-concealment and being nameless as their primary pursuit. He resided in Zhou for a long time, but seeing the decline of Zhou, he consequently took his leave.\n\nWhen he reached the frontier pass, Yin Xi, the magistrate of the pass, said: \"Master, you are about to withdraw into seclusion. Strive to compose a book for me!\"\n\nThe <term>Suoyin</term> <gloss>Seeking the Obscure commentary</gloss> cites Li You's <term>Hangu Guan Ming</term> <gloss>Inscription on Hangu Pass</gloss>, which says that Yin Xi detained Laozi and urged him to compose two parts. Moreover, Cui Hao held that Yin Xi was also magistrate of San Pass, which agrees with this.\n\nThe <term>Zhengyi</term> <gloss>Correct Meaning commentary</gloss> cites the <term>Baopuzi</term> <gloss>Master Who Embraces Simplicity</gloss>, stating: Laozi traveled west and met Yin Xi, magistrate of the pass, at San Pass. For Xi, he composed the <term>Daodejing</term> in one scroll, entitled <term>Laozi</term>. Others consider it to be Hangu Pass. The <term>Kuodi Zhi</term> <gloss>Comprehensive Gazetteer</gloss> states: San Pass is located fifty-two <term>li</term> southeast of Chencang County in Qi Prefecture. Hangu Pass is located twelve <term>li</term> southwest of Taolin County in Shan Prefecture.\n\n<note>Phonetic commentary: The character <term>qiang</term> <gloss>compel, strive</gloss> has the pronunciation <term>qiang</term> </note><note>original: \"其兩反, Fanqie: qi + liang\"</note>. The character <term>wei</term> <gloss>for</gloss> has the pronunciation <term>wei</term> <note>original: \"于偽反, Fanqie: yu + wei\"</note>.\n\nThereupon, Laozi composed a book in two parts, an upper and a lower, expounding the meaning of the Dao and its Virtue in five\n\n<header>Shiji</header>\n\n<summary>This page records Confucius's celebrated dragon metaphor praising Laozi's unfathomable nature, Laozi's decision to depart the declining Zhou dynasty, and the request by frontier magistrate Yin Xi that led to the composition of the Daodejing, accompanied by commentaries on the location of the pass and phonetic glosses.</summary>\n<keywords>Laozi, Confucius, dragon metaphor, Dao and Virtue, departure from Zhou, Yin Xi, frontier pass, Hangu Pass, San Pass, Daodejing, Suoyin commentary, Zhengyi commentary, Sima Qian, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 67,
+    "page_id": "6ae0bca94adf2ffb52f71e60",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bca94adf2ffb52f71e1b/67.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n矢\n口\n左\n人\n<page-num>三</page-num>\n言\n<header>卷六十三</header>\n使秦秦王悦之未信用李斯姚賈害之毁之曰韓非韓\n之諸公子也今王欲弁諸侯非終為韓不為秦此人之\n情也今王不用久留而歸之此自遺患也不如以過法\n誅之秦王以為然下吏治非李斯使人遺非藥使自殺\n韓非欲自陳不得見秦王後悔之使人赦之非巳死矣\n集解駰案戰國策曰秦王封姚賈千户以為上卿韓非\n短之曰賈梁監門子盜於梁臣於趙而逐取世監門子\n梁大盜趙逐臣與同社稷之計非所以勵羣\n臣也王召賈問之賈答云云廼誅韓非也\n申子韓子\n皆著書傳於後世學者多有余獨悲韓子為說難而不",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to Qin. When he arrived in Qin, the King of Qin was delighted with him, but had not yet placed him in a position of trust or service.\n\nLi Si and Yao Jia grew jealous of him and defamed him, saying: \"Han Fei is a noble scion of the ducal house of Han. Now, Your Majesty wishes to annex all the feudal lords; Fei will ultimately act for Han and not for Qin. This is simply human nature. If Your Majesty does not employ him, yet detains him for long and eventually allows him to return home, you will be leaving a source of disaster for yourself. It would be better to execute him on the pretext of some legal infraction.\"\n\nThe King of Qin agreed with their view and handed Fei over to the judicial officials for trial. Li Si sent a messenger to deliver poison to Fei, instructing him to commit suicide. Han Fei wished to plead his case directly to the King, but could not obtain an audience. Later, the King of Qin regretted his decision and sent an envoy to pardon him, but Fei had already died.\n\n<note>The <term>Jijie</term> <gloss>Collected Explanations commentary</gloss> notes: Pei Yin observes that the <term>Zhan Guo Ce</term> <gloss>Strategies of the Warring States</gloss> states: The King of Qin enfeoffed Yao Jia with a domain of one thousand households and appointed him Senior Minister. Han Fei spoke ill of him, saying: \"Jia is the son of a gatekeeper in Liang. He committed theft in Liang, served as an official in Zhao and was banished from there. Now Your Majesty takes the son of a hereditary gatekeeper, a major thief of Liang, and a banished official of Zhao, and joins with him to plan state affairs for the altars of soil and grain. This is not the way to encourage the multitude of ministers.\" The King summoned Jia and questioned him about this. Jia replied in defense, after which Han Fei was put to death.</note>\n\nShenzi and Master Han both composed books that were transmitted to later generations, and many scholars possess them. I alone grieve for Master Han, who wrote <term>Shuo Nan</term> <gloss>Difficulties of Persuasion</gloss> and yet could not\n\n<summary>Li Si and Yao Jia slander Han Fei out of jealousy, leading the King of Qin to imprison him and Li Si to force his suicide by poison. Sima Qian cites the commentary regarding Yao Jia's rivalry and begins his personal reflection on the tragedy of Han Fei's fate.</summary>\n<keywords>Han Fei, Li Si, Yao Jia, King of Qin, execution, poison, Zhan Guo Ce, Shen Buhai, Difficulties of Persuasion, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 129,
+    "page_id": "6ae0bca94adf2ffb52f71e9e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bca94adf2ffb52f71e1b/129.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n雪大恥名垂於後世悲夫方子胥窘於江上\n索隱窘音\n求殞反\n道乞食志豈嘗須臾忘郢邪故隱忍就功名非烈丈夫\n孰能致此哉白公如不自立為君者其功謀亦不可勝\n道者哉\n索隱述贊曰讒人罔極交亂四國嗟彼伍氏被兹凶\n慝員獨忍詬志復𡨚毒霸吳起師伐楚逐北鞭尸雪\n恥抉眼\n棄德\n也\n曰\n事\n焉\n史記\n十三\n二 一 二 三 四 五 六 七 八 九 十",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to wipe out great humiliation, causing his name to be handed down to later generations. How sorrowful! When Zixu was in dire straits by the Yangzi River,\n<note>Suoyin commentary: The pronunciation of <term>jiong</term> <gloss>distress</gloss> is indicated by the fanqie characters qiu and yun.</note>\nbegging for food along the road, how could his determination have forgotten Ying <note>the capital of Chu</note> for even a single moment? Therefore, he endured humiliation to achieve fame and merit. Who other than a heroic man could have accomplished this? If the Duke of Bai had not set himself up as ruler, his achievements and stratagems could likewise hardly have been surpassed!\n\n<note>Suoyin summary赞: Slanderers know no bounds, throwing four states into chaos. Alas for the Wu clan, suffering this heinous calamity! Wu Yuan alone endured humiliation, his heart bent on avenging bitter wrongs. He helped Wu achieve hegemony, raised an army, invaded Chu, pursued retreating foes, whipped the corpse, wiped out humiliation, had his eyes gouged out, and cast aside virtue.</note>\n<note>Page layout numbers and editorial markers: 史記 十三 二 一 二 三 四 五 六 七 八 九 十</note>\n\n<summary>Sima Qian concludes his appraisal of Wu Zixu, praising his perseverance in wiping out humiliation, alongside commentary on the Duke of Bai and Sima Zhen's verse appraisal.</summary>\n<keywords>Wu Zixu, Sima Qian, Grand Scribe, Ying, Chu, Wu, Duke of Bai, Suoyin commentary, King Ping of Chu, Wu She</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 6,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bb854adf2ffb52f7166f",
+  "book_url": "https://sourcelibrary.org/book/6ae0bb854adf2ffb52f7166f",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bb854adf2ffb52f7166f",
+   "title": "史記·卷二十三~卷二十四 (Shiji, Siku Quanshu, vol. 14 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 154,
+   "pages_ocr": 152,
+   "pages_translated": 149,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 154,
+   "distinct_page_numbers": 154,
+   "duplicate_records": 0,
+   "pages_with_ocr": 152,
+   "pages_translated": 149,
+   "with_printed_number": 22,
+   "printed_backsteps": 5,
+   "printed_repeats": 14,
+   "pages_count_field": 154,
+   "pages_translated_field": 149
+  },
+  "run": [
+   28,
+   70,
+   113,
+   137
+  ],
+  "pages": [
+   {
+    "page_number": 28,
+    "page_id": "6ae0bb864adf2ffb52f7168d",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bb854adf2ffb52f7166f/28.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金文巳正全\n<header>卷二十三</header>\n極言禮之損益以\n結禮書之論也\n立隆以為極而天下莫之能益損\n也本末相順\n索隱謂禮之盛文理合以歸太一至禮\n之殺復情以歸太一隆殺皆歸太一者\n是本末\n相順也\n終始相應\n索隱禮始於脫畧終於稅稅亦殺\n也殺與脫畧是始終相應也正義\n應乙陵\n反當也\n至文有以辨\n索隱言禮之至文能辨尊\n畀貴賤故云有以辨也\n至察\n有以說\n索隱言禮之至察有以明隆殺損益委\n曲情文足以悅人心故云有以說也\n天下\n從之者治不從者亂從之者安不從者危小人不能\n則也\n正義小人猶庶人也則法也言天下士以上至\n於帝王能從禮者則治安不能從禮者則危亂\n庶人據於事\n不能法禮也\n禮之貌誠深矣堅白同異之察入焉而",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\nexhaustively expresses the adjustments of ritual in order to conclude the discourse of the Book of Ritual.\n\nEstablishing exaltation as the ultimate peak, no one in the world can add to or subtract from it. The root and branch accord with each other.\n\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: This means that when ritual is at its flourishing height, cultural patterns and principle unite to return to the Great Oneness. When ritual is reduced, it returns to natural feelings to return to the Great Oneness. That both exaltation and reduction return to the Great Oneness is what is meant by \"the root and branch accord with each other.\"\n\nBeginning and end correspond to each other.\n\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: Ritual begins in simplicity and ends in ease. Ease also means reduction. That reduction and simplicity correspond is what is meant by \"beginning and end correspond to each other.\"\n<term>Zhengyi</term> <gloss>Correct Meaning</gloss>: The character <term>ying</term> <gloss>correspond</gloss> is pronounced with the sound of <term>yi</term> and <term>ling</term> combined <note>fanqie phonological spelling</note>, meaning to match or be fitting.\n\nIn its utmost cultural refinement, it possesses the means to make distinctions.\n\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: This means that the utmost cultural refinement of ritual can distinguish between the honored and the humble, the noble and the base, which is why it is said to have \"the means to make distinctions.\"\n\nIn its utmost discernment, it possesses the means to bring joy.\n\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: This means that the utmost discernment of ritual has the means to clarify exaltation and reduction, addition and subtraction, and intricate expressions of emotion and cultural form, which suffice to bring joy to the human heart. Therefore it is said to have \"the means to bring joy.\"\n\nThose in the world who follow it enjoy order; those who do not follow it suffer chaos. Those who follow it find security; those who do not follow it face peril. The petty person cannot take it as a model.\n\n<term>Zhengyi</term> <gloss>Correct Meaning</gloss>: \"Petty person\" is equivalent to \"common person.\" To \"take as a model\" means to follow as a standard. This means that from scholars on up to emperors and kings, those who can follow ritual attain good order and peace, while those who cannot follow ritual face danger and disorder. Common people are bound by practical tasks and cannot take ritual as their model.\n\nThe outward manifestation of ritual is truly profound. Even the keen discernment of \"hard and white\" and \"sameness and difference\" <note>famous philosophical paradoxes of the School of Names</note> enters into it and\n\n<summary>This passage expounds Xunzi's theory of ritual as recorded in the Shiji, explaining how ritual harmonizes root and branch, beginnings and endings, and distinctions of rank with human joy. It emphasizes that adherence to ritual brings social order and security, whereas common folk remain constrained by daily toil and cannot fully model it.</summary>\n<keywords>Shiji, Sima Qian, Xunzi, Book of Ritual, Suoyin, Zhengyi, Great Oneness, social order, hard and white, School of Names</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 70,
+    "page_id": "6ae0bb864adf2ffb52f716b7",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bb854adf2ffb52f7166f/70.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n大樂之理順隂陽律吕生養\n萬物是大樂與天地同和也\n大禮與天地同節\n集解\n鄭元\n曰言順天地之氣與其數也正義言天有日月地有\n山川髙卑殊形生用各別太禮辯尊卑貴賤等差異\n別是大禮與\n天地同節\n和故百物不失\n集解鄭元曰不失其性\n正義樂與天地同和能\n生成性\n萬物\n節故祀天祭地\n集解鄭元曰成物有功報焉\n正義禮與天地同節有尊卑\n上下報生成\n萬物之功\n眀則有禮樂\n集解鄭元曰教人者也正\n義眀猶外也言聖王能使\n樂與天地同和禮與天地同節\n又能顯眀其禮樂以教人也\n幽則有鬼神\n集解鄭\n元曰助\n天地成物者也易曰知鬼神之情狀然則聖人精氣\n謂之神賢智之精氣謂之鬼也正義幽内也言聖王\n又能内敬鬼神助\n天地生成萬物\n如此則四海之内合敬同愛矣\n正\n義",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>The principle of great music accords with the <term>yin</term> and <term>yang</term> and the pitch pipes, giving birth to and nourishing the ten thousand things: this is how great music shares harmony with Heaven and Earth.\n\nGreat rites share moderation with Heaven and Earth.\n\n<margin><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: This means according with the vital breath of Heaven and Earth and their numerical measures.</margin>\n\n<margin><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This means that Heaven has the sun and moon, and Earth has mountains and rivers. High and low have distinct forms, and their generative functions are each different. Great rites distinguish nobility and baseness, honor and humility, marking their gradations and differences: this is how great rites share moderation with Heaven and Earth.</margin>\n\nBecause of harmony, the hundred things do not lose their course.\n\n<margin><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: They do not lose their innate nature.</margin>\n\n<margin><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: Music shares harmony with Heaven and Earth, and is able to generate and fulfill the innate nature of the ten thousand things.</margin>\n\nBecause of moderation, sacrifices are offered to Heaven and Earth.\n\n<margin><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: For their merit in completing things, recompense is offered to them.</margin>\n\n<margin><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: Rites share moderation with Heaven and Earth. With nobility and baseness, superior and inferior clearly ordered, one offers recompense for the merit of generating and completing the ten thousand things.</margin>\n\nIn the manifest realm, there are rites and music.\n\n<margin><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: These are what teach people.</margin>\n\n<margin><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: \"Manifest\" is like \"external\". It means that the sage king can cause music to harmonize with Heaven and Earth, and rites to share moderation with Heaven and Earth, and can make these rites and music luminous to instruct the people.</margin>\n\nIn the hidden realm, there are ghosts and spirits.\n\n<margin><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: They assist Heaven and Earth in completing things. The Book of Changes says: \"One understands the conditions and circumstances of ghosts and spirits.\" In that case, the refined vital breath of a sage is called a spirit, and the refined vital breath of a worthy or wise person is called a ghost.</margin>\n\n<margin><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: \"Hidden\" means internal. It means that the sage king can inwardly revere ghosts and spirits, assisting Heaven and Earth to generate and complete the ten thousand things.</margin>\n\nWhen matters are like this, within the Four Seas, all join in reverence and unite in love.\n\n<margin><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>:</margin>\n\n<summary>This passage expounds on the cosmological foundations of music and rites, showing how great music accords with cosmic harmony to nourish all creatures, while great rites mirror cosmic distinctions and moderation. It explains the dual operation of rites and music in the visible realm to educate humankind, alongside reverence for spirits in the hidden realm, thereby cultivating universal respect and love across the empire.</summary>\n<keywords>Treatise on Music, Records of the Grand Historian, Sima Qian, rites and music, yin and yang, pitch pipes, cosmic harmony, moderation, sacrifices to Heaven and Earth, ghosts and spirits, Zheng Xuan, Jijie commentary, Zhengyi commentary</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 113,
+    "page_id": "6ae0bb864adf2ffb52f716e2",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bb854adf2ffb52f7166f/113.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n文采節\n奏也\n獨樂其志不厭其道\n集解王肅曰樂能使仁\n人獨樂其志不厭倦其\n道也正義言武王諸將人各欣恱象武王\n有德天下之志並無厭干戈君臣之道\n備舉其道\n不私其欲\n正義縁人人不厭故作樂者事事法之欲\n備舉武王之道耳非為私情之所欲也\n是以情見而義立\n正義不厭武王之道其情既\n見則不私其欲義亦立也\n樂終\n而德尊\n正義為樂之理既終是象\n德之事其德亦尊顯也\n君子以好善小人\n以息過\n正義樂理周足象德可尊以此教世何往而\n不可君子聞之則好善小人聞之則改過也\n故曰生民之道樂為大焉\n正義此引舊語\n結樂道之為大\n君子曰禮\n樂不可以斯湏去身\n正義此第十章名為樂化章第\n十以化民故次賓牟賈成第十\n次定曰軍人三書",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>artistic adornment and regular rhythm.\n\nSolitary, delighting in his purpose without tiring of his Way.\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Wang Su says: Music can cause a benevolent man to delight in his purpose in solitude, never growing weary of his Way.</note>\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This means that King Wu's various generals each rejoiced, symbolizing King Wu's virtue and his ambition for all under Heaven, none tiring of shields, daggers, or the proper Way between ruler and minister.</note>\n\nCompletely manifesting his Way, never indulging private desires.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: Because everyone was untiring, the creators of the music modeled every single detail upon them, wishing only to display King Wu's Way in full, not out of personal selfish desire.</note>\n\nTherefore, genuine feelings are revealed and righteousness is established.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: Not tiring of King Wu's Way, their true sentiments were revealed; thus, not indulging private desires, righteousness was established.</note>\n\nThe music concludes, and virtue is honored.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: When the principles of music reach their conclusion, they symbolize deeds of virtue; thus, virtue is honored and made illustrious.</note>\n\nThe noble person uses it to delight in goodness, while the common person uses it to halt transgression.\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: The principles of music are complete and sufficient, symbolizing a virtue worthy of reverence. Using this to instruct the world, where could it fail? When the noble person hears it, he delights in goodness; when the common person hears it, he reforms his faults.</note>\n\nTherefore it is said: \"Among the ways of nurturing the people, music is greatest.\"\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This quotes ancient sayings to conclude that the Way of Music is greatest.</note>\n\nThe noble person says: \"Ritual and music cannot leave one's person for even an instant.\"\n\n<note><term>Correct Meaning</term> <gloss>Zhengyi commentary</gloss>: This is Chapter Ten, entitled 'Chapter on Transforming through Music.' Because it transforms the people, it follows the Binmou Jia chapter, making it the tenth chapter. The next text notes: three books of military figures.</note>\n\n<summary>This passage from the Shiji Record of Music explains how martial music cultivates moral purpose, restrains selfish desires, and establishes righteousness among both leaders and commoners. It emphasizes that ritual and music must constantly guide a person, concluding that music is the greatest method for educating and transforming the people.</summary>\n<keywords>Shiji, Record of Music, King Wu, Way of Music, virtue, righteousness, ritual and music, moral transformation, Jijie commentary, Zhengyi commentary, Wang Su</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 137,
+    "page_id": "6ae0bb864adf2ffb52f716fa",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bb854adf2ffb52f7166f/137.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n臣耕籍\n集解鄭元曰\n耕耤耤田也\n然後諸侯知所以敬五者天下\n之大教也食三老五更於太學\n集解鄭元曰老更互\n言之耳皆老人更知\n三德五事者也周\n名太學曰東膠\n天子袒而割牲執醬而饋執爵而\n醑冕而總干\n集解鄭元曰冕\n而總干在舞位\n所以敎諸侯之悌也若\n此則周道四達禮樂交通則夫武之遲久不亦宜乎\n集解鄭元曰言武\n遲久為重禮樂也\n子貢見師乙而問焉\n集解鄭元曰\n師樂官也乙\n名\n也\n曰賜聞聲歌各有宜也\n集解鄭元\n曰氣順性\n如賜者宜何歌\n也師乙曰乙賤工也\n集解鄭元曰\n樂人稱工也\n何足以問所宜請\n史\n<page-num>四千七</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to show reverence.\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: \"Plowing the sacred field\" refers to cultivating the ancestral domain.</note>\n\nOnly after this did the feudal lords understand the means by which to show reverence. These five practices constituted the great instruction of the realm.\n\nThey feasted the three elders and five experienced men at the Grand Academy.\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: \"Elders\" and \"experienced men\" are interchangeable terms. Both denote aged men of senior status who possess understanding of the three virtues and the five affairs. The Zhou designated the Grand Academy as the Eastern Jiao.</note>\n\nThe Son of Heaven bared his arm to butcher the sacrificial beast, held the sauce dish to present food, raised the goblet to toast, and wore the ceremonial crown while brandishing the dance shield.\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: Donning the ceremonial crown and brandishing the dance shield means taking his place in the dance formation. This was the means by which to instruct the feudal lords in fraternal respect.</note>\n\nIn this way, the Zhou way reached throughout the four quarters, and rites and music were harmoniously exchanged. Was it not proper, then, that King Wu's delay was prolonged?\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: This means King Wu took considerable time because he placed weight on ritual and music.</note>\n\nZigong went to see Master Yi and questioned him.\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Master refers to a music master. Yi was his personal name.</note>\n\nHe said: \"I, Ci, have heard that different musical tones and odes suit different natures.\"\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: The qi flows smoothly through one's nature.</note>\n\n\"For someone of my disposition, what songs would be fitting?\"\n\nMaster Yi replied: \"I, Yi, am merely a humble artisan.\"\n\n<note><term>Collected Explanations</term> <gloss>Jijie commentary</gloss>: Zheng Xuan says: Musicians were referred to as artisans.</note>\n\n\"How could I be worthy of being asked what is fitting? Please permit me to\"\n\n<summary>King Wu completes the royal rites by cultivating sacred fields, hosting elder statesmen at the Grand Academy, and participating in ritual dances to model fraternal respect. The narrative then shifts to Zigong consulting music master Yi on musical forms suited to individual temperament.</summary>\n<keywords>King Wu, Shiji, sacred field, Grand Academy, three elders and five experienced men, sacrificial banquet, ritual dance, Master Yi, Zigong, musical temperament, Jijie commentary, Zheng Xuan</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 7,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0bbcd4adf2ffb52f7185a",
+  "book_url": "https://sourcelibrary.org/book/6ae0bbcd4adf2ffb52f7185a",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0bbcd4adf2ffb52f7185a",
+   "title": "史記·卷二十九~卷三十 (Shiji, Siku Quanshu, vol. 17 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 73,
+   "pages_ocr": 71,
+   "pages_translated": 69,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 73,
+   "distinct_page_numbers": 73,
+   "duplicate_records": 0,
+   "pages_with_ocr": 71,
+   "pages_translated": 69,
+   "with_printed_number": 14,
+   "printed_backsteps": 6,
+   "printed_repeats": 7,
+   "pages_count_field": 73,
+   "pages_translated_field": 69
+  },
+  "run": [
+   2,
+   27,
+   40,
+   60
+  ],
+  "pages": [
+   {
+    "page_number": 2,
+    "page_id": "6ae0bbcd4adf2ffb52f7185e",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bbcd4adf2ffb52f7185a/2.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n史記卷二十九\n漢太史令司馬遷撰宋中郎外兵曹參軍裴駰集解唐國子博士弘文館學士司馬貞索隱唐諸王侍讀率府長史張守節正義河渠書第七\n夏書曰禹抑鴻水\n索隱抑音憶抑者遏也洪水滔天故\n禹遏之不令害人也漢書溝洫志作",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<header>By Imperial Order, Complete Library of the Four Treasuries <note>original: \"欽定四庫全書\", referring to the imperial compilation commissioned by the Qianlong Emperor in 1782</note></header>\n\n# <term>Shiji</term> <gloss>Records of the Grand Historian</gloss>, Volume 29\n\nWritten by Sima Qian, Grand Astrologer <note>or Grand Scribe</note> of the Han dynasty.\nCollected Explanations <note>original: \"集解\"</note> by Pei Yin, Officer of the Outer Military Staff for the Court Gentlemen of the Song dynasty.\nSearching the Hidden <note>original: \"索隱\"</note> by Sima Zhen, Scholar of the Hongwen Academy and Doctor of the National University of the Tang dynasty.\nCorrect Meaning <note>original: \"正義\"</note> by Zhang Shoujie, Chief Clerk of the Escort Guard and Reader-in-Waiting to the Tang Princes.\n\n## Treatise on Rivers and Canals, the Seventh <note>original: \"河渠書第七\"</note>\n\nThe <term>Book of Xia</term> <gloss>a section of the Shangshu, or Book of Documents</gloss> states: \"Yu restrained the great floodwaters.\"\n\n<note>Commentary from Searching the Hidden:</note> The word <term>yi</term> <gloss>抑</gloss> is pronounced like <term>yi</term> <gloss>憶</gloss>. To restrain <note>yi</note> means to stop or check. The floodwaters reached up to heaven; therefore, Yu checked them so that they would not bring harm to the people. In the \"Treatise on Ditches and Canals\" <note>original: \"溝洫志\"</note> of the <term>Book of Han</term> <gloss>Hanshu</gloss>, it is written as\n\n<summary>This opening page of Volume 29 of the Shiji establishes the authorship and standard commentaries for the Treatise on Rivers and Canals, quoting the ancient Book of Documents regarding Yu the Great taming the primeval deluge.</summary>\n<keywords>Shiji, Records of the Grand Historian, Sima Qian, Treatise on Rivers and Canals, Yu the Great, flood control, Siku Quanshu, Book of Documents</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 27,
+    "page_id": "6ae0bbcd4adf2ffb52f71877",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bbcd4adf2ffb52f7185a/27.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n金\n言\n<header>卷三十</header>\n子孫亦不得仕宦為吏量吏祿度官用以賦於民而山\n川園池市井\n正義古人未有市及井若朝聚井汲\n水便將貨物於井邉貨賣故言市井\n租稅\n之入自天子以至於封君湯沐邑皆各為私奉養焉不\n領於天下之經費\n索隱案經訓常言封君巳下皆以湯\n沐邑為私奉養故不領入天子之常\n稅為一年\n之費也\n漕轉山東粟以給中都官歲不過數十萬石\n索隱說文云漕水轉穀也一云車運曰轉水運曰漕中\n都猶都内也皆天子之倉府以給中都官者即今太倉\n以畜官\n儲者也\n至孝文時莢錢益多輕\n集解如淳曰\n如榆莢也\n乃更鑄四\n銖錢其文為半兩令民縱得自鑄錢故吳諸侯也以即",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>and their descendants were likewise barred from serving as government officials. Officials' salaries were assessed and administrative expenditures were measured out in order to levy taxes upon the common people.\n\nMeanwhile, revenues from mountains, rivers, parks, lakes, and marketplaces <note>Original: \"shìjǐng\" (市井, market well). Correct Meaning commentary explains: In ancient times people had neither formal markets nor wells. When people gathered at wells in the morning to draw water, they brought goods alongside the wells to trade and sell, which is why commerce is called \"market-well.\"</note> were collected as personal stipends for everyone from the Son of Heaven down to enfeoffed lords and recipients of bath-town domains <note>Private estates granted to nobles for their personal upkeep and ritual maintenance</note>, and these revenues were not included in the general fiscal budget of the empire. <note>Seeking the Obscure commentary notes: The canonical texts consistently state that those from enfeoffed lords downward used bath-town domains for their private stipends. Therefore, these revenues were not remitted into the emperor's regular treasury to serve as annual public expenditures.</note>\n\nGrain from east of the mountains <note>The agricultural plains east of Mount Xiao and the Hangu Pass</note> was transported by water to supply the capital officials, yet this amounted to no more than several hundred thousand piculs each year. <note>Seeking the Obscure commentary notes: The Shuowen Jiezi states that \"cáo\" refers to transporting grain by water. Another view states that carriage transport is called \"zhuǎn\" and water transport is called \"cáo.\" The \"central capital\" refers to the imperial treasury and granaries within the capital. Supplying the central capital officials means provisioning what is today the Grand Granary, where government reserves are accumulated.</note>\n\nBy the time of Emperor Xiaowen, pod cash <note>Lightweight coins struck during the early Han that resembled the winged seeds of elm trees</note> grew increasingly abundant and light in weight. <note>Collected Explanations: Ru Chun states that they were shaped like elm seed pods.</note> The court therefore recast them into four-scruple coins bearing the inscription \"half an ounce\" <note>banliang</note>, and permitted the common people to cast coins freely at will. Because of this, the King of Wu, though only a feudal vassal, took advantage of his access to copper\n\n<summary>This page records the fiscal structure of the early Han dynasty, detailing state versus private revenue, grain transport to the capital, and Emperor Xiaowen's monetary reforms authorizing four-scruple coins and private minting.</summary>\n<keywords>Shiji, Emperor Xiaowen, taxation, fiscal policy, grain transport, pod cash, banliang coins, private minting, King of Wu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 40,
+    "page_id": "6ae0bbcd4adf2ffb52f71884",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bbcd4adf2ffb52f7185a/40.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n徐氏曰有所廢\n有所畜是也\n封君皆低首仰給\n集解晉灼曰低音抵\n距也服虔曰仰給於\n商賈索隱服虔說是也而劉伯莊以為封君\n及大商皆低首營私以自給不佐天子非也\n冶鑄煮鹽\n財或累萬金而不佐國家之急黎民重困於是天子與\n公卿議更錢造幣以贍用而摧浮滛并兼之徒是時禁\n苑有白鹿而少府多銀錫自孝文更造四銖錢至是歲\n四十餘年從建元以來用少縣官往往即多銅山而鑄\n錢民亦間盜鑄錢不可勝數錢益多而輕\n集解如淳曰\n磨錢取鎔故\n也瓚曰鑄錢者多\n故錢輕輕亦賤也\n物益少而貴\n集解如淳曰但鑄\n作錢不作餘物\n有司\n<header>史記</header>\n<page-num>九</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>Xu Guang says: \"It means having goods that are discarded and goods that are stockpiled.\"\n\nFeudal lords and nobility bowed their heads and depended entirely upon them for supplies <note>Collected Explanations: Jin Zhuo says: \"Di <gloss>低</gloss> is pronounced like di <gloss>抵</gloss>, meaning to resist or oppose.\" Fu Qian says: \"They relied upon the merchants for financial supplies.\" Seeking the Obscure: Fu Qian's explanation is correct. Liu Bozhuang believed that the feudal lords and great merchants all bowed their heads and pursued private profit to provide for themselves rather than assisting the Son of Heaven, which is incorrect.</note>. Those engaged in metallurgy, casting, and boiling seawater for salt amassed fortunes sometimes totaling tens of thousands of catties of gold, yet they did nothing to alleviate the nation's emergencies, leaving the common people in dire distress. \n\nThereupon, the Son of Heaven discussed with the high ministers and court officials the reform of coinage and the minting of new currency to satisfy state expenditures and to crush those opportunistic, extravagant speculators and monopolists. At that time, the imperial park possessed white deer, and the Privy Purse had an abundance of silver and tin.\n\nSince Emperor Xiaowen reformed the coinage to mint the four-zhu coin, more than forty years had passed by this year. From the Jianyuan era onward, because state funds were deficient, the imperial authorities frequently cast coins wherever copper mountains were plentiful. The common people also illicitly minted coins in numbers beyond count. Coins became increasingly abundant and light <note>Collected Explanations: Ru Chun says: \"People filed the coins to extract copper for melting down, which caused the lightness.\" Zan says: \"Because those minting coins were so numerous, the value of the coins became light, and being light also made them cheap.\"</note>, while commodities became increasingly scarce and expensive <note>Collected Explanations: Ru Chun says: \"People only manufactured coins and did not produce other goods.\"</note>. The officials in charge\n\n<summary>Wealthy merchants and industrialists amassed vast fortunes through salt and iron while neglecting state crises, prompting Emperor Wu and his ministers to overhaul the currency system. Over decades of extensive state and illicit casting, coins had depreciated in weight and value while scarce goods surged in price.</summary>\n<keywords>Shiji, Emperor Wu, monetary reform, salt and iron monopolies, currency devaluation, illicit minting, state finance, four-zhu coin</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 60,
+    "page_id": "6ae0bbcd4adf2ffb52f71898",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0bbcd4adf2ffb52f7185a/60.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n以振之其明年天子始巡郡國東渡河河東守不意行\n至不辦自殺行西踰隴隴西守以行往卒\n集解駰案漢\n書音義曰踰\n度也卒\n倉卒\n天子從官不得食隴西守自殺於是上北出蕭\n關從數萬騎獵新秦中以勒邊兵而歸新秦中或千里\n無亭徼\n集解如淳曰徼亦卒求盜之屬也晋灼曰徼塞\n也瓚曰既無亭候又不徼巡無衛邊之備也\n於是誅北地太守以下而令民得畜牧邊縣\n集解駰案\n漢書音義\n曰令民得畜牧於邊縣也瓚曰先是新秦中千里\n無民畏寇不敢畜牧令設亭徼故民得畜牧也\n官假\n馬母三歲而歸及息什一以除告緡用充仭新秦中\n集\n解\n次定曰章王書",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>to relieve them.\n\nThe following year, the Son of Heaven began his imperial tour of the commanderies and feudal kingdoms. Heading east, he crossed the Yellow River. The Administrator of Hedong did not anticipate the arrival of the imperial procession and was unable to supply provisions; he committed suicide. The procession traveled west and crossed the Long Mountains. The Administrator of Longxi, because the imperial procession had arrived suddenly,\n\n<note>Collected Explanations: Pei Yin notes: The Phonetic Meaning of the Han Shu says: \"<term>Yu</term> <gloss>to cross</gloss> means to pass over. <term>Zu</term> <gloss>sudden</gloss> means abrupt and unexpected.\"</note>\n\ncould not provide food for the Son of Heaven's retinue; the Administrator of Longxi committed suicide.\n\nThereupon, His Majesty traveled north through Xiao Pass. Leading tens of thousands of cavalry, he hunted across the region of Xinqinzhong in order to inspect and train the frontier troops, and then returned. In Xinqinzhong, there were areas of perhaps a thousand <term>li</term> without watchtowers or border patrols.\n\n<note>Collected Explanations: Ru Chun says: \"<term>Jiao</term> <gloss>border patrol</gloss> also refers to the class of soldiers who pursue thieves.\" Jin Zhuo says: \"<term>Jiao</term> means border barricades or fortifications.\" Chen Zan says: \"There were neither signal towers nor patrolling border guards; there was no defense prepared for guarding the frontier.\"</note>\n\nThereupon, the Grand Administrator of Beidi and those beneath him were executed. The common people were then permitted to graze and breed livestock in the border counties.\n\n<note>Collected Explanations: Pei Yin notes: The Phonetic Meaning of the Han Shu says: \"This ordered that the people be allowed to raise livestock in the border counties.\" Chen Zan says: \"Prior to this, in Xinqinzhong there were no inhabitants for a thousand <term>li</term>, as they feared barbarian raiders and did not dare to raise livestock. Once watchtowers and border patrols were established, the people were able to keep livestock.\"</note>\n\nThe government lent them breeding mares, to be returned after three years along with one tenth of the offspring as interest. In this way, the proceeds seized through the denunciation of concealed wealth <note>the <term>gaomin</term> system</note> were used to fill and enrich Xinqinzhong.\n\n<note>Collected Explanations: Ci Ding says: ...</note>\n\n<summary>Emperor Wu toured the empire and inspected the northern frontier at Xinqinzhong, punishing regional officials whose negligence left troops unsupplied or borders undefended. To secure and populate the territory, the court executed negligent administrators, stationed border patrols, and funded livestock colonization through confiscations of concealed wealth.</summary>\n<keywords>Emperor Wu, imperial tour, Hedong, Longxi, Xiao Pass, Xinqinzhong, Beidi, livestock breeding, gaomin, frontier defense, Sima Qian, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 8,
+  "stratum": "zh-shiji",
+  "book_id": "6ae0baaf4adf2ffb52f70e01",
+  "book_url": "https://sourcelibrary.org/book/6ae0baaf4adf2ffb52f70e01",
+  "tradition": "zh-shiji",
+  "book": {
+   "id": "6ae0baaf4adf2ffb52f70e01",
+   "title": "史記·卷一 (Shiji, Siku Quanshu, vol. 1 of 44)",
+   "author": "司馬遷 (Sima Qian)",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 237,
+   "pages_ocr": 222,
+   "pages_translated": 217,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": false
+  },
+  "structure": {
+   "page_records": 237,
+   "distinct_page_numbers": 237,
+   "duplicate_records": 0,
+   "pages_with_ocr": 222,
+   "pages_translated": 217,
+   "with_printed_number": 20,
+   "printed_backsteps": 5,
+   "printed_repeats": 12,
+   "pages_count_field": 237,
+   "pages_translated_field": 217
+  },
+  "run": [
+   37,
+   110,
+   168,
+   204
+  ],
+  "pages": [
+   {
+    "page_number": 37,
+    "page_id": "6ae0baaf4adf2ffb52f70e28",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0baaf4adf2ffb52f70e01/37.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n行亦宜並列統雕二十二史以配一十三經承\n恩命以鳧趨引清班而雀躍善本\n頒從秘閣紛綸羣玉之編直廬密邇\n禁廷清切蕊珠之館然脂夕校月己窺簾砥墨晨書\n風為展頁喜值文林盛事渾忘素業辛勤唯是諸\n史考証之難較之羣經異同尤劇前史之後乗即\n後史之肇端南史之牽連亦北史之綴輯各人撰\n述自不必同互有淆訛豈無一是摘錄易滋繁冗\n進表\n三",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>edition, it is also fitting that they be arranged side by side to engrave the Twenty-Two Histories to match the Thirteen Classics. Receiving the imperial decree, we hurried forward like mallards skimming the water; joining the distinguished ranks of the court, we rejoiced like leaping sparrows. Fine editions have been bestowed from the imperial library <note>original: \"秘閣\" (*Mi Ge*)</note>, where jade-like volumes assemble in profusion; our duty offices stand close to the forbidden palace grounds, adjacent to the crystalline halls of the celestial realm <note>original: \"蕊珠之館\" (*Ruizhu zhi Guan*), poetically evoking the imperial library pavilions</note>. Burning the midnight oil, the evening collation continues as the moon already peeks through the blinds; grinding ink for early-morning writing, the dawn breeze turns the manuscript leaves. Rejoicing in this grand occasion of the literary world, we completely forget the toil of our usual labors. Yet the critical verification of these various histories presents difficulties far more intense than comparing variations among the Confucian Classics. The concluding records of an earlier history form the very starting point of the subsequent history; the intertwined events of the southern dynasties are likewise stitched together in the northern histories. As each author wrote according to their own perspective, divergences naturally arose, producing confusion and error. How could there be no sound reading among them? Yet extracting excerpts easily breeds tedious redundancy.\n\nMemorial of Presentation <note>original: \"進表\" (*Jin Biao*)</note>\nPage three\n\n<summary>This memorial recounts the imperial commission to compile and engrave the Twenty-Two Histories alongside the Thirteen Classics, describing the scholars' nighttime labor with palace manuscripts and the historiographical challenges of reconciling divergent and overlapping dynastic accounts.</summary>\n<keywords>Twenty-Two Histories, Thirteen Classics, Siku Quanshu, imperial library, text collation, historiography, southern and northern dynasties, presentation memorial</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 110,
+    "page_id": "6ae0baaf4adf2ffb52f70e71",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0baaf4adf2ffb52f70e01/110.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n目錄\n仲尼弟子\n史記卷六十八\n列傳第八\n商君鞅\n史記卷六十九\n列傳第九\n蘇秦\n史記卷七十",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>\nTable of Contents\nDisciples of Zhongni <note>Confucius, referred to by his style name Zhongni; this chapter records the lives of his notable students.</note>\n<term>Shiji</term> <gloss>Records of the Grand Historian</gloss>, Volume Sixty-Eight\n<term>Liezhuan</term> <gloss>Ranked Biographies</gloss>, Number Eight\nLord Shang, Yang <note>Shang Yang, also known as Wei Yang or Gongsun Yang, a key Legalist statesman and reformer whose policies laid the institutional foundations for the rise of Qin.</note>\n<term>Shiji</term> <gloss>Records of the Grand Historian</gloss>, Volume Sixty-Nine\n<term>Liezhuan</term> <gloss>Ranked Biographies</gloss>, Number Nine\nSu Qin <note>Prominent political strategist and diplomat of the Warring States period who championed the vertical alliance system uniting six states against Qin.</note>\n<term>Shiji</term> <gloss>Records of the Grand Historian</gloss>, Volume Seventy\n\n<summary>This page lists table of contents entries for chapters sixty-eight through seventy of the Shiji, covering the disciples of Confucius, the Legalist reformer Shang Yang, and the diplomat Su Qin.</summary>\n<keywords>Shiji, Records of the Grand Historian, Sima Qian, Table of Contents, Disciples of Confucius, Zhongni, Shang Yang, Lord Shang, Su Qin, Ranked Biographies, Liezhuan</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 168,
+    "page_id": "6ae0baaf4adf2ffb52f70eab",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0baaf4adf2ffb52f70e01/168.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n天之義知民之急仁而威惠而信脩身而天下服取地\n之財而節用之撫教萬民而利誨之歴曰月而迎送之\n正義言作歴弦望晦朔曰月未至而\n迎之過而送之上迎曰推策是也\n眀鬼神而敬事之\n正義天神曰神人神曰鬼又云聖人之精氣謂之\n神賢人之精氣謂之鬼言明識鬼神而敬事也\n其色\n郁郁其德嶷嶷\n索隱郁郁猶穆穆也嶷嶷德髙\n也今按大戴禮郁作神嶷作俟\n其動也\n時其服也士\n索隱舉動應天時衣服\n服士服言其公且亷也\n帝嚳溉執中而徧\n天下\n集解徐廣曰古既字作水旁徧字一作尹索隱即\n尚書允執厥中是也正義溉音既言帝嚳治民若\n水之溉灌平等而執\n中正遍於天下也\n曰月所照風雨所至莫不從服\n正\n義\n史記\n十二",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>the righteousness of Heaven, understood the urgencies of the people, was benevolent yet formidable, gracious yet faithful, cultivated his person and All under Heaven submitted. He gathered the wealth of the earth and used it with moderation, comforted and instructed the myriad people and benefited them through teaching, calculated the sun and moon and welcomed and saw them off,\n<term>Zhengyi</term> <gloss>Correct Meaning</gloss>: This means creating a calendar. For the first and last quarters, the new moon, and the full moon, before the sun and moon arrived, he welcomed them; after they passed, he saw them off. The earlier phrase about calculating by reckoning rods refers to this.\nunderstood the ghosts and spirits and served them reverently.\n<term>Zhengyi</term>: Heavenly spirits are called <term>shen</term> <gloss>gods/spirits</gloss>; human spirits are called <term>gui</term> <gloss>ghosts/ancestral spirits</gloss>. Furthermore, it is said that the refined qi of sages is called <term>shen</term>, while the refined qi of worthy men is called <term>gui</term>. This means he clearly recognized the ghosts and spirits and served them with reverence.\n\nHis countenance was solemn and dignified, his virtue lofty and prominent,\n<term>Suoyin</term> <gloss>Seeking the Obscure</gloss>: <term>Yuyu</term> <gloss>magnificent/serene</gloss> is like <term>mumu</term> <gloss>solemn and majestic</gloss>. <term>Yiyi</term> <gloss>lofty</gloss> means high virtue. Examining the <term>Da Dai Liji</term> <gloss>Records of Ritual by Dai the Elder</gloss>, <term>yu</term> is written as <term>shen</term> <gloss>spirit</gloss>, and <term>yi</term> is written as <term>si</term> <gloss>to await</gloss>.\n\nhis actions were timely, and his attire was like that of a common scholar.\n<term>Suoyin</term>: His actions corresponded to the seasons of Heaven. His attire followed the dress of a scholar, expressing his fairness and modesty.\n\nEmperor Ku was impartial, held fast to the mean, and reached everywhere across All under Heaven.\n<term>Jijie</term> <gloss>Collected Explanations</gloss>: Xu Guang states: \"In antiquity, the character <term>ji</term> <gloss>already / steeped in</gloss> was written with the water radical; the character <term>bian</term> <gloss>everywhere</gloss> was in one edition written as <term>yin</term> <gloss>sincere</gloss>.\" <term>Suoyin</term>: This corresponds to the phrase in the <term>Shangshu</term> <gloss>Classic of History</gloss>: \"Sincerely hold fast to the Mean.\" <term>Zhengyi</term>: The character <term>gai</term> is pronounced like <term>ji</term>. It means Emperor Ku governed the people like water irrigating evenly, holding to the center and uprightness, extending across All under Heaven.\n\nWherever the sun and moon shone, wherever the wind and rain reached, none failed to obey and submit.\n\n<meta>running title/pagination: Zhengyi | Shiji | 12</meta>\n\n<summary>This page concludes the account of Emperor Ku Gaoxin, describing his virtuous governance, calendar calculations, reverence toward spirits, modest personal demeanor, and universal authority across the realm.</summary>\n<keywords>Emperor Ku, Gaoxin, Zhengyi, Suoyin, Jijie, calendar, ghosts and spirits, virtue, Mean, Shangshu</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 204,
+    "page_id": "6ae0baaf4adf2ffb52f70ecf",
+    "image_url": "https://images.sourcelibrary.org/archived/6ae0baaf4adf2ffb52f70e01/204.jpg",
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n五教于四方\n索隱契為司徒司徒敷五\n教則契在八元之數也\n父義母慈兄友\n弟恭子孝內平外成\n正義杜預云內諸夏外夷狄也按\n契作五常之教諸夏太平夷狄向\n化\n也\n昔帝鴻氏有不才子\n集解賈逵曰帝鴻黃帝也\n不才子其苗裔讙兠也\n掩義\n隱賊好行凶慝天下謂之渾沌\n正義慝惡也一本云天\n下之民謂之渾沌渾沌\n即讙兠也言掩義事隂為賊害而好凶惡故謂之渾沌\n也杜預云渾沌不開通之貌神異經云崑崙西有獸焉\n其狀如犬長毛四足似羆而無爪有目而不見行不開\n有兩耳而不聞有人知往有腹無五藏有頸直短食徑\n過人有德行而往抵角有凶惡而行依憑之名渾沌又莊子云\n南海之帝為儵北海之帝為忽中央之帝為渾沌儵忽時相\n遇於渾沌之地渾沌待之甚善儵與忽謀欲報渾沌之\n德曰人皆有七竅以視聽食息此獨無有嘗試鑿之日\n<header>史記</header>\n<page-num>三十</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "<meta>continues from previous page</meta>the Five Teachings across the four quarters:\n\n<note>Seeking the Hidden: Xie served as Minister of Education. The Minister of Education spreads the Five Teachings, which means Xie was counted among the Eight Primals.</note>\n\nfathers became righteous, mothers loving, elder brothers friendly, younger brothers respectful, and sons filial. Within, there was peace; without, accomplishment was achieved.\n\n<note>Correct Meaning: Du Yu says: \"Within\" refers to the various Xia states, and \"without\" refers to the Yi and Di border peoples. In our view, Xie established the teachings of the Five Constants, so that the Xia realms enjoyed great peace and the outer peoples turned toward civilization.</note>\n\nIn ancient times, the lineage of Dihong had an unworthy son,\n\n<note>Collected Explanations: Jia Kui says Dihong refers to the Yellow Emperor. The unworthy son was his descendant, Huandou.</note>\n\nwho suppressed righteousness, concealed wickedness, and took pleasure in committing evil deeds. All under Heaven called him Hundun <gloss>Chaos</gloss>.\n\n<note>Correct Meaning: \"Te\" </note><note>original: \"慝\"</note> means evil. Another edition states: \"The people of all under Heaven called him Hundun.\" Hundun was Huandou. This means he suppressed righteous deeds, secretly worked harm, and delighted in vicious malice, which is why he was called Hundun. Du Yu says that Hundun describes an appearance of being closed and unenlightened. The Classic of Divine Marvels <note>original: \"神異經\"</note> states: \"West of the Kunlun mountains there is a beast. Its form resembles a dog with long fur and four feet like a brown bear but without claws. It has eyes but cannot see, and its steps do not advance. It has two ears but cannot hear, yet it senses when human beings pass. It has a belly without five internal organs, and its neck is straight and short so food passes straight through. When it encounters someone of virtuous conduct, it charges and butts them. When it encounters someone who acts with malice and wickedness, it leans upon and relies on them. Its name is Hundun.\" Furthermore, Zhuangzi says: \"The Emperor of the Southern Sea was Shu <gloss>Brief</gloss>, the Emperor of the Northern Sea was Hu <gloss>Sudden</gloss>, and the Emperor of the Center was Hundun <gloss>Chaos</gloss>. Shu and Hu often met in the land of Hundun, and Hundun treated them very well. Shu and Hu plotted how to repay Hundun's virtue, saying: 'All humans have seven apertures in order to see, hear, eat, and breathe. This one alone has none. Let us try boring them.' Each day\n\n<summary>Shun appoints Xie to promulgate the Five Teachings, establishing domestic virtue and external peace across the realm. Meanwhile, the chronicle introduces the malevolent descendant of Dihong, known as Chaos, detailing his malicious nature and legendary background.</summary>\n<keywords>Shun, Xie, Five Teachings, Five Constants, Dihong, Yellow Emperor, Huandou, Hundun, Chaos, Classic of Divine Marvels, Zhuangzi, Shiji</keywords>",
+    "translation_model": "gemini-3.8-flash-low",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

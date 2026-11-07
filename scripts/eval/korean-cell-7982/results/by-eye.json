@@ -1,0 +1,242 @@
+[
+ {
+  "page_id": "69f3258d52a77bb28fdb4c5f",
+  "book": "69f3258d52a77bb28fdb49dc",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "woodblock, small-character notes"
+ },
+ {
+  "page_id": "69f3279552a77bb28fdb73da",
+  "book": "69f3279552a77bb28fdb739b",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print, large regular script"
+ },
+ {
+  "page_id": "69f327d552a77bb28fdb7ba1",
+  "book": "69f327d552a77bb28fdb7aa1",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print, account table with double-column notes"
+ },
+ {
+  "page_id": "69f33d44876dd827cbc5bd0f",
+  "book": "69f33d44876dd827cbc5bc2a",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print, genealogy table"
+ },
+ {
+  "page_id": "69f33f13876dd827cbc61209",
+  "book": "69f33f13876dd827cbc611f8",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print, small notes, stained"
+ },
+ {
+  "page_id": "69f32800876dcf55533d7245",
+  "book": "69f32800876dcf55533d71b2",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print"
+ },
+ {
+  "page_id": "69f33bc1876dd827cbc59465",
+  "book": "69f33bc1876dd827cbc593cd",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "hand-copied mathematics with counting-rod figures"
+ },
+ {
+  "page_id": "69f33e77876dd827cbc5f0be",
+  "book": "69f33e77876dd827cbc5eef8",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print"
+ },
+ {
+  "page_id": "69f326df52a77bb28fdb6b27",
+  "book": "69f326df52a77bb28fdb6ae6",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print (calligraphic woodblock; stored tag says handwritten)"
+ },
+ {
+  "page_id": "69f324f252a77bb28fdb3a52",
+  "book": "69f324f252a77bb28fdb3a26",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "woodblock"
+ },
+ {
+  "page_id": "69f33e5f876dd827cbc5e4f8",
+  "book": "69f33e5f876dd827cbc5e35c",
+  "stratum": "hanja/print",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "print"
+ },
+ {
+  "page_id": "69f33df1876dd827cbc5d1c5",
+  "book": "69f33df1876dd827cbc5cb4c",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "print",
+  "eye_note": "woodblock with frame (stratum says manuscript)"
+ },
+ {
+  "page_id": "69f33f0b876dd827cbc6102c",
+  "book": "69f33f0b876dd827cbc60eac",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "cursive genealogy table"
+ },
+ {
+  "page_id": "69f3292caeeee0fa38c654d8",
+  "book": "69f3292caeeee0fa38c653ee",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "semi-cursive"
+ },
+ {
+  "page_id": "69f33bba876dd827cbc59333",
+  "book": "69f33bba876dd827cbc5925d",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "cursive"
+ },
+ {
+  "page_id": "69f3247352a77bb28fdb31c4",
+  "book": "69f3247352a77bb28fdb3102",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "cursive"
+ },
+ {
+  "page_id": "69f32935aeeee0fa38c65557",
+  "book": "69f32935aeeee0fa38c654ea",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "dense cursive, mixed sizes"
+ },
+ {
+  "page_id": "69f33ce1876dd827cbc5b065",
+  "book": "69f33ce1876dd827cbc5afe3",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "dense semi-cursive"
+ },
+ {
+  "page_id": "69f3259f52a77bb28fdb57c7",
+  "book": "69f3259f52a77bb28fdb55c5",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "regular-script copy on ruled paper, red marks"
+ },
+ {
+  "page_id": "69f33f3c876dd827cbc6150b",
+  "book": "69f33f3c876dd827cbc6148a",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "genealogy table"
+ },
+ {
+  "page_id": "69f33c18876dd827cbc59dc4",
+  "book": "69f33c18876dd827cbc59bd4",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "verse, semi-cursive"
+ },
+ {
+  "page_id": "69f3275b52a77bb28fdb71da",
+  "book": "69f3275b52a77bb28fdb7153",
+  "stratum": "hanja/manuscript",
+  "eye_mix": "hanja",
+  "eye_form": "manuscript",
+  "eye_note": "prescriptions, blue annotations"
+ },
+ {
+  "page_id": "69f325ae52a77bb28fdb590e",
+  "book": "69f325ae52a77bb28fdb58e9",
+  "stratum": "hangul/manuscript",
+  "eye_mix": "hangul",
+  "eye_form": "manuscript",
+  "eye_note": "gungche cursive"
+ },
+ {
+  "page_id": "69f33e53876dd827cbc5e309",
+  "book": "69f33e53876dd827cbc5e2f2",
+  "stratum": "hangul/manuscript",
+  "eye_mix": "hangul",
+  "eye_form": "manuscript",
+  "eye_note": "cursive, stained"
+ },
+ {
+  "page_id": "69f3253252a77bb28fdb410c",
+  "book": "69f3253252a77bb28fdb3fb2",
+  "stratum": "hangul/manuscript",
+  "eye_mix": "hangul",
+  "eye_form": "manuscript",
+  "eye_note": "neat gungche"
+ },
+ {
+  "page_id": "69f32966aeeee0fa38c6586e",
+  "book": "69f32966aeeee0fa38c65856",
+  "stratum": "hangul/manuscript",
+  "eye_mix": "hangul",
+  "eye_form": "manuscript",
+  "eye_note": "gungche"
+ },
+ {
+  "page_id": "69e014d747b76785d4ec829f",
+  "book": "69e014d647b76785d4ec821c",
+  "stratum": "hangul/print",
+  "eye_mix": "mixed+siddham",
+  "eye_form": "print",
+  "eye_note": "woodblock: Siddham, hanja and hangul"
+ },
+ {
+  "page_id": "69f3249752a77bb28fdb3556",
+  "book": "69f3249752a77bb28fdb3541",
+  "stratum": "hangul/print",
+  "eye_mix": "hangul",
+  "eye_form": "print",
+  "eye_note": "worn dense woodblock (bangakbon)"
+ },
+ {
+  "page_id": "69f33781876dd827cbc52318",
+  "book": "69f33781876dd827cbc522e3",
+  "stratum": "mixed/manuscript",
+  "eye_mix": "mixed",
+  "eye_form": "print",
+  "eye_note": "printed spread of two leaves: hanja with hangul transcription (stratum says manuscript)"
+ },
+ {
+  "page_id": "6a08fd545271a4d704d309c8",
+  "book": "6a08fd545271a4d704d309ba",
+  "stratum": "mixed/manuscript",
+  "eye_mix": "mixed",
+  "eye_form": "manuscript",
+  "eye_note": "hanja with hangul endings (gukhanmun), semi-cursive"
+ }
+]

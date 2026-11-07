@@ -37,8 +37,9 @@ export interface PageFrame {
  *  a dark printed band behind a paper margin (a headpiece, a heavy rule) is kept.
  *  4: also trims flat pure-white canvas around a page with toned or textured paper.
  *  5: a stepped page edge no longer leaves a notch of canvas in a corner of the frame.
- *  6: a frame keeping less than MIN_KEEP_AREA of the image is refused. */
-export const PAGE_FRAME_VERSION = 6;
+ *  6: a frame keeping less than MIN_KEEP_AREA of the image is refused.
+ *  7: a deep cut through a page standing beside the bed is refused (#8033). */
+export const PAGE_FRAME_VERSION = 7;
 
 /** Box in pixels of the analysed (usually downsampled) image. */
 export interface PixelBox { x: number; y: number; w: number; h: number }
@@ -46,7 +47,7 @@ export interface PixelBox { x: number; y: number; w: number; h: number }
 export type FrameVerdict =
   | { kind: 'frame'; box: PixelBox }
   | { kind: 'clean' }
-  | { kind: 'skip'; reason: 'dark-page' | 'too-much' | 'multi-leaf' | 'tiny' | 'not-a-page' | 'printing-at-edge' };
+  | { kind: 'skip'; reason: 'dark-page' | 'too-much' | 'multi-leaf' | 'tiny' | 'not-a-page' | 'printing-at-edge' | 'page-beside-bed' };
 
 /** Below this fraction of the page's median brightness, an edge band is scanner bed. */
 const DARK_RATIO = 0.6;
@@ -80,6 +81,25 @@ const MAX_PRINTED_LINES = 0.15;
  *  with ink in it, the cut is slicing letters (text that runs up to the bed). */
 const MAX_INKED_LINES = 0.1;
 const CUT_STRIP = 0.01;
+/** A cut this deep (fraction of the size) is checked for a page standing beside the
+ *  bed. The mean of a whole line can fall under DARK_RATIO with half of it paper: a
+ *  fold-out plate beside the black bed under a shorter leaf averages dark, and that
+ *  took the plate's lower fifth with it (Cabala p.32, #8033). Such a line has two
+ *  parts: an unbroken run of solid bed, and the rest of the line lit. */
+const DEEP_BAND = 0.05;
+/** A pixel this far below the dark threshold is solid bed. */
+const SOLID_BED_RATIO = 0.5;
+/** A line beside the bed: an unbroken run of solid bed at least this share of it... */
+const MIN_BED_RUN = 0.2;
+/** ...and an unbroken stretch of something else this long, too wide for a credit strip
+ *  or a book weight in the band, mostly at page brightness. */
+const MIN_PAGE_RUN = 0.35;
+const MIN_LIT_REST = 0.5;
+/** Above this share of the band's lines beside the bed, the cut goes through a page... */
+const MAX_BESIDE_LINES = 0.6;
+/** ...if the page runs on to the image edge: this share of the band's outer quarter is
+ *  still beside the bed. A book block's fore-edge stops short of it, and costs nothing. */
+const MIN_OUTER_BESIDE = 0.5;
 /** Outside this shape (w/h) an image is a spine, or the fore-edge, head or tail
  *  of a closed book, not a page (a tall octavo is ~0.6, a two-page spread ~1.5).
  *  Its "bed" is the binding itself. Bounds from the 2026-10-06 sweep reviews. */
@@ -335,6 +355,7 @@ function verdictFor(lum: ArrayLike<number>, w: number, h: number, cuts: Cuts, re
   if (printingPastCut(lum, w, h, box, ref, thr) || inkAtCut(lum, w, h, box, thr)) {
     return { kind: 'skip', reason: 'printing-at-edge' };
   }
+  if (pageBesideBed(lum, w, h, box, cuts.inset, thr)) return { kind: 'skip', reason: 'page-beside-bed' };
   return { kind: 'frame', box };
 }
 
@@ -483,6 +504,43 @@ function printingPastCut(lum: ArrayLike<number>, w: number, h: number, box: Pixe
       }
     }
     if (printed > lines * MAX_PRINTED_LINES) return true;
+  }
+  return false;
+}
+
+/**
+ * True when the band a deep dark cut removes holds a page beside the bed, not bed
+ * alone: most of its lines, out to the image edge, are an unbroken run of solid bed
+ * and a long lit stretch. Bed under a spread is solid end to end.
+ */
+function pageBesideBed(lum: ArrayLike<number>, w: number, h: number, box: PixelBox, inset: Cuts['inset'], thr: number): boolean {
+  const x1 = box.x + box.w, y1 = box.y + box.h;
+  const atX = (i: number, j: number) => lum[j * w + i], atY = (i: number, j: number) => lum[i * w + j];
+  // [cut as dark, removed lines [a, b), outer end first, walk size, length along, start along, pixel(line, j)]
+  const sides: Array<[boolean, number, number, boolean, number, number, number, (i: number, j: number) => number]> = [
+    [inset[0], 0, box.x, true, w, box.h, box.y, atX],
+    [inset[1], x1, w, false, w, box.h, box.y, atX],
+    [inset[2], 0, box.y, true, h, box.w, box.x, atY],
+    [inset[3], y1, h, false, h, box.w, box.x, atY],
+  ];
+  for (const [cut, a, b, outerFirst, size, len, from, at] of sides) {
+    if (!cut || b - a < size * DEEP_BAND) continue;
+    const quarter = Math.max(1, Math.round((b - a) / 4));
+    let beside = 0, outer = 0;
+    for (let i = a; i < b; i++) {
+      let bed = 0, bestBed = 0, rest = 0, bestRest = 0, solid = 0, lit = 0;
+      for (let j = from; j < from + len; j++) {
+        const v = at(i, j);
+        if (v < thr * SOLID_BED_RATIO) { solid++; rest = 0; if (++bed > bestBed) bestBed = bed; }
+        else { bed = 0; if (++rest > bestRest) bestRest = rest; }
+        if (v >= thr) lit++;
+      }
+      if (bestBed >= len * MIN_BED_RUN && bestRest >= len * MIN_PAGE_RUN && lit >= (len - solid) * MIN_LIT_REST) {
+        beside++;
+        if (outerFirst ? i < a + quarter : i >= b - quarter) outer++;
+      }
+    }
+    if (beside > (b - a) * MAX_BESIDE_LINES && outer >= quarter * MIN_OUTER_BESIDE) return true;
   }
   return false;
 }

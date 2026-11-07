@@ -94,14 +94,14 @@ export function buildCoverUpdate(page, opts) {
   }
 
   if (opts.method) {
-    update.field_provenance = {
-      thumbnail: {
-        source: opts.actor || 'script',
-        method: opts.method,
-        confidence: opts.confidence ?? 1,
-        date: new Date(),
-        detail: opts.detail,
-      },
+    // A dotted key, so a `$set` of this update leaves the book's other stamps
+    // alone. Lock-step with src/lib/cover-fields.ts (#7673).
+    update['field_provenance.thumbnail'] = {
+      source: opts.actor || 'script',
+      method: opts.method,
+      confidence: opts.confidence ?? 1,
+      date: new Date(),
+      detail: opts.detail,
     };
   }
 

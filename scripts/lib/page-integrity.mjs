@@ -665,6 +665,11 @@ export const TRANSLATION_LEAK_PREFILTER = new RegExp([
   "(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|the provided (?:text|ocr|transcription|input)",
   'ready to translate',
   "here(?:'s| is) (?:the |a |my |your )?(?:[\\w-]+ ){0,3}translation",
+  // summary-placeholder (#6117, found on #7968): a bracket or parenthesis that speaks of the text continuing
+  // or being left out, and the two narrow ways the model describes a page instead of translating it.
+  '[\\[(][^\\])\\n]{0,80}(?:continu|omit|truncat|as per|abbreviat|brevity|elided|remaining|rest of|remainder|and so (?:on|forth))[^\\])\\n]{0,120}[\\])]',
+  '(?:content|text|page) (?:seems|appears) to (?:be a continuation|continue)',
+  'the text continues (?:from|on|as)',
 ].join('|'), 'i');
 /** The phrases that are the model talking to itself about the job, read off the corpus walk's candidates
  *  (2026-10-06). Each names the prompt, the user, the OCR as an input, a tag as a tag, or is a markdown
@@ -695,6 +700,64 @@ const TRANSLATION_LEAK_RULE = new RegExp([
 const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|(?:^|\n)[^\n]{0,240}\bhere(?:'s| is) (?:the |a |my |your )?(?:[\w-]+ ){0,3}translation\b(?=[^\n]{0,200}:[ \t]*(?:\n|$))(?=[^\n]*\b(?:provided|preserv\w*|formatting|instructions?|contract|continuity|paragraph breaks|adher\w*|requested|accessible English|software|tagging|style rules|from the image)\b)/i;
 /** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
 const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
+/**
+ * A placeholder where the translation should be (#6117, found on #7968: Marcellus p.84 stored
+ * "...[text continues as per original structure]..." and nothing else). A bracket or parenthesis in which
+ * the text, the list, the translation "continues with / to describe / as per …", or "the rest of the text is
+ * omitted for brevity", or "this page is a continuation of the previous translation". What it does not touch:
+ * an editor's lacuna ("[…]", "[illegible]", "[sic]"), a damaged source ("[remaining text illegible]",
+ * "[rest of the page torn away]"), a catchword ("[continued on next page]", "(Table I. continued)"), a stage
+ * direction ("[*Alarums continued.*]"), a speaker in a dialogue ("(he continues)"), a rubric ("[Continue with] the
+ * Shema"), and any bracket inside a <note> or a metadata-panel block.
+ */
+const SUMMARY_SUBJECT = '(?:the )?(?:[\\w-]+ ){0,2}(?:text|translation|transcription|list|listing|entry|entries|passage|section|catalog(?:ue)?|content|discussion|narrative|enumeration|series|remainder|rest|page|lines?|verses?|chapter|commentary|treatise|argument|account|description|recipes?|remedies)';
+/** An omission that is not of the page's own prose: a parallel text in another language, a table, figures, notation. */
+const SUMMARY_NOT_PROSE = '(?![^\\])\\n]{0,80}\\b(?:original|parallel|facing|latin|greek|hebrew|syriac|arabic|aramaic|coptic|armenian|ethiopic|irish|gaelic|welsh|german|french|italian|spanish|dutch|sanskrit|tibetan|chinese|japanese|persian|turkish|cuneiform|transliteration|hieroglyph(?:s|ic)?|table|tables|tabular|notation|numbers|numerals|figures|diagrams?|cross-references|references|index|repeats|duplicates?|convention)\\b)';
+/** A damaged or unreadable source, described as such: not a placeholder for a translation. */
+const SUMMARY_DAMAGE = '(?![^\\])\\n]{0,120}\\b(?:illegible|unreadable|damaged|obscured|fragment(?:ary|ed|s)?|faded|torn|lost|missing|cut off|effaced)\\b)';
+/**
+ * "[The text continues with a series of …]", "(list continues repeating similar collation notes)", "[text continues as per original
+ * structure]". Not one ending in a colon ("[The text continues with a prose commentary:]"): that introduces the English after it.
+ * Counted only where it is the whole column or sits between English on both sides: at the head or foot of a column,
+ * with English on the other side, it is a bridge over the sentence carried across the page break ("Chapter I.
+ * [The text continues, discussing how worms] sometimes are born"), and nothing on the leaf is left out.
+ */
+const SUMMARY_CONTINUES = new RegExp(`[\\[(]${SUMMARY_NOT_PROSE}${SUMMARY_DAMAGE} ?(?:\\.{3}|…)? ?${SUMMARY_SUBJECT} continues?,? (?:with|to (?:describe|discuss|list|enumerate|explain|detail|give)|regarding|describing|discussing|listing|enumerating|detailing|concerning|repeating|in (?:the )?(?:same|similar)|similarly|as (?:per|in the|before|above|on the previous)|along (?:the )?same)\\b[^\\])\\n]{0,90}(?<![:：]\\s?)[\\])](?!\\s?[:：])`, 'gi');
+const SUMMARY_PLACEHOLDER_RULE = new RegExp([
+  // "[The rest of the text is omitted for brevity]", "[remaining entries follow the same pattern]"
+  `[\\[(]${SUMMARY_NOT_PROSE} ?(?:\\.{3}|…)? ?(?:the )?(?:remaining|rest of (?:the )?|remainder of (?:the )?)(?:[\\w-]+ ){0,2}(?:text|translation|page|entries|list|content|section|passage|lines|verses|chapter|items|recipes|remedies)\\b(?![^\\])\\n]{0,60}\\b(?:illegible|unreadable|damaged|lost|missing|torn|cut off|faded|blank|obscured|worn|effaced|cropped|not visible|(?:on|onto|to) (?:the )?(?:next|following|facing) (?:page|leaf|folio|column))\\b)[^\\])\\n]{0,40}\\b(?:omitted|truncated|abbreviated|elided|not translated|untranslated|follows? (?:the )?(?:same|similar)|continues|as per|same (?:pattern|format|structure)|for brevity)\\b[^\\])\\n]{0,30}[\\])]`,
+  // "[remainder of the passage omitted for brevity]": the page's own prose, left out
+  `[\\[(]${SUMMARY_NOT_PROSE}(?![^\\])\\n]{0,40}\\b(?:my|mine|our|i)\\b)[^\\])\\n]{0,40}\\b(?:text|passage|section|content|chapter|commentary|discussion|narrative|entries|recipes|remedies|argument|account) (?:is |has been |was )?(?:omitted|truncated|abbreviated|elided) (?:here )?(?:for brevity|to save space|for (?:the sake of )?(?:space|length|brevity))\\b[^\\])\\n]{0,90}[\\])]`,
+  // "[This page is a continuation of the previous translation; see page 12 for …]"
+  `[\\[(] ?(?:this|the) (?:page|content|text) (?:is|seems to be|appears to be) a continuation of the previous translation\\b[^\\])\\n]{0,80}[\\])]`,
+].join('|'), 'i');
+/** The model describing the page, which counts only when the page body holds nothing else: no translation. */
+// Not "The text continues from the previous page: …" — after the colon the model quotes the page's English, in a note.
+const SUMMARY_DESCRIBE = /(?:(?:content|text|page) (?:seems|appears) to (?:be a continuation|continue)|\bthe text continues (?:from|on|as))\b(?![^.\n:]{0,60}:)/i;
+const SUMMARY_UNREADABLE = /\b(?:illegible|unreadable|blurr\w*|faded|fading|degrad\w*|image quality|poor quality|low contrast|fragment(?:ary|ed)|cannot be (?:read|recovered|deciphered)|impossible to (?:read|distinguish))\b|<unclear>/i;
+/** Letters a reader meets as the page's English once the panel blocks, notes, tags, brackets and headings are gone. */
+function residualProseLetters(body) {
+  // A note under ~400 characters is the translator's aside; a longer one is where the model put the page's English
+  // ("<note>The text continues from the previous page: …</note>" holding the whole translation), so it counts.
+  const x = body.replace(/<note\b[^>]*>([\s\S]*?)<\/note>/gi, (all, inner) => (inner.length < 400 ? ' ' : inner))
+    .replace(/<(margin|header|footer|pagenum|catchword|sig|warning|image-desc)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<\/?[a-zA-Z][\w-]*(?:\s[^<>\n]*)?\/?>/g, ' ').replace(/\[[^\]\n]*\]|\([^)\n]*\)/g, ' ').replace(/^#.*$/gm, ' ');
+  return (x.match(/\p{L}/gu) || []).length;
+}
+/** Is this "continues" bracket an elision (the whole column, or English on both sides) rather than a bridge at a column's edge? */
+function continuesElision(body) {
+  for (const m of body.matchAll(SUMMARY_CONTINUES)) {
+    const before = body.slice(0, m.index).split(/<column-break\s*\/?>|<page-break\s*\/?>|^-{3,}\s*$/m).at(-1);
+    const after = body.slice(m.index + m[0].length).split(/<column-break\s*\/?>|<page-break\s*\/?>|^-{3,}\s*$/m)[0];
+    const b = residualProseLetters(before) >= SUMMARY_EDGE_LETTERS, a = residualProseLetters(after) >= SUMMARY_EDGE_LETTERS;
+    if (a === b) return m;
+  }
+  return null;
+}
+/** English on one side of a "continues" bracket, under this many letters, is a heading or a carried word, not text. */
+const SUMMARY_EDGE_LETTERS = 30;
+/** Below this many letters of English outside notes and brackets, a page that describes itself has no translation. */
+const SUMMARY_MAX_RESIDUAL = 40;
 /** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
 const TRANSLATION_PANEL_BLOCKS = /<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi;
 const TRANSLATION_PIPELINE_TALK = /the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))|<(?:meta|note|vocab|term|gloss|summary|keywords|margin)> tags?\b/i;
@@ -705,6 +768,9 @@ const TRANSLATION_PIPELINE_TALK = /the ocr (?:has|says|reads|shows|provides|list
  *   'reasoning'        the scratchpad: one of TRANSLATION_LEAK_RULE's phrases
  *   'assistant-reply'  a chat reply to the requester ("Please provide the OCR transcription you would like…")
  *   'thought-token'    the page opens with the bare word "thought" on its own line (the thinking channel's label)
+ *   'summary-placeholder'  a placeholder or a description where the translation should be: "[text continues as per
+ *                      original structure]", "[The text continues to describe the Guelph and Ghibelline conflicts]", or
+ *                      "The text continues from the previous page" with no English beside it (#6117, found on #7968)
  *   'input-talk'       "the provided OCR/transcription/text is …": the model naming its input
  * readerVisible: the phrase is in the page body, not only inside a block the reader keeps in its metadata panel.
  */
@@ -715,9 +781,16 @@ export function translationReasoningLeak(text) {
   let m;
   if ((m = body.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, true);
   if ((m = body.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, true);
+  // A bracket inside a <note> is the translator talking about the page ("from the previous page: [continues regarding …]"),
+  // beside a translation; the placeholder that stands FOR the translation sits in the body.
+  const bodyNoNotes = body.replace(/<note\b[^>]*>[\s\S]*?<\/note>/gi, ' ');
+  if ((m = bodyNoNotes.match(SUMMARY_PLACEHOLDER_RULE) || continuesElision(bodyNoNotes))) return hit('summary-placeholder', m, true);
+  // Not on a page the model says it could not read: "the text appears to be a continuation" of an illegible leaf is honest.
+  if ((m = body.match(SUMMARY_DESCRIBE)) && !SUMMARY_UNREADABLE.test(body) && residualProseLetters(body) < SUMMARY_MAX_RESIDUAL) return hit('summary-placeholder', m, true);
   if (/^thought[ \t]*\n/.test(t)) return { kind: 'thought-token', phrase: 'thought', readerVisible: true };
   if ((m = t.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, false);
   if ((m = t.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, false);
+
   if ((m = body.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, true);
   if ((m = t.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, false);
   return null;
@@ -854,6 +927,17 @@ export function echoedSource({ ocr, tr, lang }) {
   // shorter run is usually a quotation the translator kept (Latin inside German, Greek inside
   // French) — measured at 3/20 real before this split.
   return { judged: true, len: run.len, share: +share.toFixed(3), echo, wholePage: echo && share >= ECHO_WHOLE_PAGE_SHARE, listLike, englishInSource, proseLike, text: run.text.slice(0, 200) };
+}
+
+/**
+ * Does the "translation" hand back English already printed on the page? (#7075) On a bilingual page whose facing side is
+ * an English translation (a Loeb), a reader can return that English instead of translating: on Plutarch Loeb 99 p.94
+ * 77% of the 3.8 Flash read was one verbatim run of the printed English. echoedSource does not call that an echo
+ * (English in the source is exempt, for a quoted note or caption), so a writer that must not pass it asks this.
+ */
+export function copiesPrintedEnglish({ ocr, tr, lang }) {
+  const e = echoedSource({ ocr, tr, lang });
+  return !!(e.judged && e.englishInSource && e.share >= ECHO_WHOLE_PAGE_SHARE);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════════════════
@@ -1044,6 +1128,81 @@ export function repeatedBlocks(ocr) {
     judged: true, units: units.length, K, longest: best.len, copies, share, period, ttr: +types.toFixed(3), kind, unsegmented,
     flag: kind === 'block', sample: run.slice(0, unsegmented ? 60 : 24).join(unsegmented ? '' : ' '),
   };
+}
+
+// ── 7b. one block reused in a second slot (#3591) ──────────────────────────────────────────
+
+export const SLOT_TAGS = ['margin', 'insert', 'note', 'footnote'];
+export const SLOT_MIN_UNITS = 12;          // words (segmented) a slot needs before it is judged
+export const SLOT_MIN_UNITS_CJK = 30;      // characters (unsegmented)
+export const SLOT_SHINGLE = 6;             // words per shingle; 20 characters unsegmented
+export const SLOT_SHINGLE_CJK = 20;
+export const SLOT_COPIED_SHARE = 0.8;      // share of a slot's shingles found in the body
+export const HEADING_MIN_UNITS = 4;        // words; at 3, commentary formulae ("Deinde cum dicit.") recur by design
+
+const slotText = (t) => String(t || '').replace(/<\/?[a-zA-Z][^>]*>/g, ' ').replace(/[ \t]+/g, ' ').trim();
+const shingles = (units, k) => { const s = new Set(); for (let i = 0; i + k <= units.length; i++) s.add(units.slice(i, i + k).join('\u0001')); return s; };
+
+/**
+ * Has the OCR put one block of text into a second slot? The #3591 shape: where the model cannot
+ * read a marginal note or a second heading, it fills the slot with text it already transcribed —
+ * Kitāb al-Bulhān p.41's `<margin>` is the body paragraph word for word; p.159's two headings
+ * (one dot, then two dots, in the model's OWN image descriptions) are transcribed identically.
+ * repeatedBlocks() cannot see either: sourceProse() strips the slot tags before it looks, and a
+ * heading is shorter than its shingle.
+ *
+ *   copiedSlots    a `<margin>`/`<insert>`/`<note>`/`<footnote>` of ≥ SLOT_MIN_UNITS whose
+ *                  shingles are ≥ SLOT_COPIED_SHARE present in the body (or in an earlier slot)
+ *   repeatedHeads  a markdown heading of ≥ HEADING_MIN_UNITS words (letter-spaced labels joined
+ *                  first: "O R A T I O" / "E X P L A N A T I O" alternate by design) set twice;
+ *                  `descsDiffer` when the `<image-desc>` right after each copy says different
+ *                  things — the page contradicting itself, checkable in a script nobody reads
+ *
+ * UNJUDGEABLE: no slot and no heading long enough to judge; a REFRAIN_SCRIPTS page.
+ */
+export function duplicateSlots(ocr) {
+  const o = String(ocr || '');
+  const body = proseOf(o);
+  if (REFRAIN_SCRIPTS.has(dominantScript(body))) return { judged: false, why: 'refrain-script' };
+  const { units: bodyUnits, unsegmented } = repeatUnits(body);
+  const k = unsegmented ? SLOT_SHINGLE_CJK : SLOT_SHINGLE;
+  const minUnits = unsegmented ? SLOT_MIN_UNITS_CJK : SLOT_MIN_UNITS;
+  const unitsOf = (t) => (unsegmented
+    ? [...String(t).normalize('NFC').replace(/\s+/g, '')].filter(c => /[\p{L}\p{N}\p{M}]/u.test(c))
+    : repeatUnits(t).units);
+  const seen = shingles(bodyUnits, k);
+  let judgedSlots = 0;
+  const copiedSlots = [];
+  const re = new RegExp(`<(${SLOT_TAGS.join('|')})\\b[^>]*>([\\s\\S]*?)</\\1>`, 'gi');
+  for (const m of o.matchAll(re)) {
+    const units = unitsOf(slotText(m[2]));
+    if (units.length < minUnits) continue;
+    judgedSlots++;
+    const sh = shingles(units, k);
+    let hit = 0; for (const s of sh) if (seen.has(s)) hit++;
+    const share = +(hit / Math.max(1, sh.size)).toFixed(3);
+    if (share >= SLOT_COPIED_SHARE) copiedSlots.push({ tag: m[1].toLowerCase(), units: units.length, share, sample: slotText(m[2]).slice(0, 120) });
+    for (const s of sh) seen.add(s);
+  }
+  const heads = new Map();
+  let judgedHeads = 0;
+  for (const m of o.matchAll(/^#{1,6}[ \t]+(.+)$/gm)) {
+    // "A L I U D." / "E X P L A N A T I O" are one word: a printed label that recurs by design
+    const units = unsegmented ? unitsOf(slotText(m[1])) : joinSpacedLetters(unitsOf(slotText(m[1])));
+    if (units.length < (unsegmented ? HEADING_MIN_UNITS * 2 : HEADING_MIN_UNITS)) continue;
+    judgedHeads++;
+    const key = units.join('\u0001');
+    const after = o.slice(m.index + m[0].length, m.index + m[0].length + 600);
+    const desc = after.match(/^\s*<image-desc>([\s\S]*?)<\/image-desc>/i)?.[1]?.trim() ?? null;
+    const h = heads.get(key) || heads.set(key, { text: m[1].trim().slice(0, 120), count: 0, descs: [] }).get(key);
+    h.count++; h.descs.push(desc);
+  }
+  if (!judgedSlots && !judgedHeads) return { judged: false, why: 'no-slots' };
+  const repeatedHeads = [...heads.values()].filter(h => h.count > 1).map(h => {
+    const descs = h.descs.filter(Boolean);
+    return { text: h.text, count: h.count, descsDiffer: descs.length > 1 && new Set(descs).size > 1 };
+  });
+  return { judged: true, slots: judgedSlots, heads: judgedHeads, copiedSlots, repeatedHeads, flag: copiedSlots.length > 0 || repeatedHeads.length > 0 };
 }
 
 // ── 8. text hidden in the continuity <meta> ────────────────────────────────────────────────

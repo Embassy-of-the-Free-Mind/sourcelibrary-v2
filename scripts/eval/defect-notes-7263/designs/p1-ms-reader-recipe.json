@@ -1,0 +1,29 @@
+{
+  "_status": "DESIGN ONLY (defect-notes-7263, 2026-11-05). Not run. Fill the draw, then paired-arm.mjs check before any judge call.",
+  "question": "route",
+  "issue": 7263,
+  "stage": "ocr",
+  "languages": ["he", "ar", "ko", "ja", "fa", "sa", "syc", "it", "fr", "en", "nl", "es", "de"],
+  "script_type": "manuscript",
+  "baseline": "stored",
+  "arms": [
+    {"name": "stored", "what": "the served transcription (3flash / lite / kraken / ndl as stored)"},
+    {"name": "opus-read", "what": "Opus manuscript reader, scripts/batch/claude-ocr.mjs with the live prompt (live-ocr-prompt.mjs), one page a call"},
+    {"name": "agy-pro-read", "what": "non-Latin groups only: the strongest agy Gemini read the account allows, live prompt; the cheaper candidate the router may pick (switch.bar_scope: in a manuscript cell Opus is a candidate, so it needs a rival)"}
+  ],
+  "draw": "two groups, judged apart: G1 non-Latin-script manuscripts (he, ar, ko, ja, fa, sa, syc), G2 Latin-script manuscripts other than Latin (it, fr, en, nl, es, de non-Kurrent; Kurrent is #6780). One page per book, books drawn uniformly from visible manuscript books of each language with OCR text, at least 30 books per group (about 4-5 per language). Exclude pages already judged in judged-expand-7263 so the stored arm is not re-judged on a page the draw was chosen from.",
+  "batch": {"pages_per_call": 1, "tested": null},
+  "controls": "one wrong_page per arm (output from a neighbouring book's page shown with this image)",
+  "noise_floor": {"repeat_kind": "repeat", "from": null, "repeats": "6 stored-arm pages judged twice per group"},
+  "judges": [
+    {"judge": "opus", "role": "primary, route-judge-6740 judgePrompt, image attached, arm names blind"},
+    {"judge": "agy-gemini", "role": "REQUIRED second family on every page: rules.json judge_validity ocr/manuscript has self_preference_valid false (DBG +0.43), so an Opus-written arm cannot win on the Opus judge alone"}
+  ],
+  "outcomes": ["accept k/n (book intervals)", "wrong-text pages k/n", "serious notes per page and per 1,000 words (defect-rate.py)", "invented spans per page on hard hands, checked by eye on 10 pages per arm"],
+  "decision": "Switch a group's manuscript cells to opus-read (or agy-pro-read if it clears the gate) only if BOTH judges put it ahead of stored on shared pages beyond the repeat noise floor and its wrong-text rate is lower; if only the Opus judge sees the gain, HOLD. If neither arm cuts serious notes per page by at least a third, manuscripts outside zh/bo/el/la keep their route and the fix is withholding (confidence gate), not re-reading.",
+  "cost": "about 60 pages x 2-3 reads + about 60 x 3 arms x 2 judges + controls and repeats = roughly 180 Opus reads/judgings and 180 agy judgings on the subscription; no paid API. Under one account-day.",
+  "stake": "993 books in the served frame (book-weighted 7.0% of serious notes, 5.7 per page); with non-Latin print the same readers serve another 637 books (4.7%)",
+  "feeds": "route",
+  "router_evidence": "manuscript cells of the 13 languages listed, script_split manuscript; today UNTESTED / HOLD",
+  "waive": {}
+}

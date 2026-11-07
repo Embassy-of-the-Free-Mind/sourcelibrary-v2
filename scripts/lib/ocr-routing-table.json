@@ -1,6 +1,6 @@
 {
-  "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (the per-stratum ledger: what was measured and who decided, one row per question, 80+ rows), .claude/docs/ocr-engine-routing.md (a generated per-LANGUAGE table of what the Gemini router does), .claude/docs/ocr-lane-decision-tree.md (the operator's tree for a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/eval/build-routing-table.mjs), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. It RECORDS routing; it does not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
-  "as_of": "2026-10-13",
+  "_doc": "PRIOR ART: scripts/eval/DECISIONS.md (history), .claude/docs/routing.md (the router table's four routes per cell, and what to do with a page that needs text). None answers in one lookup 'this KIND of page: which reader, and why', and none is read by the public /quality page. This file is that lookup (#6688) and the only copy: scripts/lib/ocr-routing.mjs exports it (OCR_ROUTING_TABLE, ocrRouteForKind), the table in scripts/eval/ocr-routing/README.md is generated from it (node scripts/maintenance/router-routing-rows.mjs --write), /quality renders `kind`, `reader`, `why` and the first evidence link, and tests/unit/ocr-routing-table.test.ts checks all three plus every `code` claim against the live router and lane files. It RECORDS routing; it does not change what any lane selects. To change a row: change it here in the same PR as the experiment file that justifies it, then re-run the builder.",
+  "as_of": "2026-10-26",
   "issue": 6688,
   "fields": {
     "kind": "public: the kind of page, in plain words",
@@ -16,7 +16,7 @@
     "pareto": "optional: the /quality/pareto chart this row's reader is the engine in use for, and that engine's id in the benchmark data. scripts/eval/build-ocr-pareto.mjs reads it; a chart no row names takes its engine in use from getOcrModelForBook",
     "stored": "public: what readers have now, the stored text by the engine that wrote it, in pages, with the count it came from (the `census` block gives date, method and source; a row counted on another date says so); null where it was not counted. It differs from `reader`, which is what NEW pages get",
     "charts": "optional: the /quality/pareto charts whose pages are this kind; build-ocr-pareto.mjs copies `stored` onto them so each chart names both baselines",
-    "route": "internal, READ BY THE ROUTER (#7170): what the code does for this kind. {engine, families: {<language family>: {from: date, hidden?: true}}}: getOcrModelForBook sends a book whose first language is in one of these families to `engine` (visible books, books created on or after `from`, and the hidden backlog too when `hidden`). {engine, default: true}: the model for every other book. {fallback: [{chart, engine, lane}], otherwise, source}: the next reader for a page Gemini refused, per estimator chart, never a Gemini model; `otherwise` for a page no chart covers; `source` is the derive_routes.py proposal it was adopted from. A row with no `route` routes nothing; with no family route anywhere the router keeps its pinned constants (FLASH_OCR_FROM_FALLBACK). A change to a route is proposed by scripts/eval/estimator/routing/derive_routes.py and lands as a reviewed diff of this field, never a silent edit."
+    "route": "internal, READ BY THE ROUTER (#7170): {fallback: [{chart, engine, lane}], otherwise, source}: the next reader for a page Gemini refused, per estimator chart, never a Gemini model; `otherwise` for a page no chart covers; `source` is the derive_routes.py proposal it was adopted from. No router cell covers a refusal, so this one stays hand-written. Which model reads a book is not here: `router_cells` below, generated from the router table (#8283)."
   },
   "rows": [
     {
@@ -25,14 +25,10 @@
       "reader": "Gemini 3.1 Flash-Lite",
       "why": "On 147 printed Latin pages with a typed reference (7 October 2026), Flash-Lite got 93.3% of characters right, Gemini 3 Flash 94.7% and Claude Sonnet 94.0%. No other engine we tested did better than Gemini 3 Flash, and the larger model costs about twice as much a page. On English print from 1800 to 1930 the two tied on 75 of 92 pages (114 books, September 2026). Known weakness: Flash-Lite reads the long s as f, and loops on some gothic type.",
       "in_use": "In use.",
-      "stored": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
+      "stored": "Mixed. Latin, 7,874,792 pages: 1,315,741 (17%) read by Gemini 3 Flash, 859,556 (11%) by Flash-Lite, 5,693,910 (72%) with no text yet. In the same order, German, 2,114,118 pages: 353,152 (17%), 418,010 (20%), 1,334,450 (63%). English, 1,705,755 pages: 503,256 (30%), 414,079 (24%), 502,398 (29%), and 271,203 (16%) with the Internet Archive's own text. French, 782,150 pages: 189,468 (24%), 151,451 (19%), 437,119 (56%). Italian, 310,814 pages: 118,056 (38%), 46,950 (15%), 143,959 (46%). Most of the pages with no text are in books first shown on 23 and 24 October 2026, most of them as page images only, for readers who read the original (#7176, #7270): 4,923,283 of the Latin ones, 1,207,466 German, 379,829 English, 406,892 French and 117,241 Italian. Of the Latin pages that have text, 60% were read by Gemini 3 Flash and 39% by Flash-Lite.",
       "status": "settled",
       "routed": "yes",
-      "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Batch API.",
-      "route": {
-        "engine": "gemini-3.1-flash-lite",
-        "default": true
-      },
+      "production": "getOcrModelForBook returns lite for every Latin-script language (and, under OCR_LITE_ONLY, for everything not in FLASH_OCR_FROM). Since 2026-11-06 the label lite no longer names a channel: no model runs on the paid API for OCR (API_OCR_MODELS is empty, Derek \"everything on agy\"), so the orchestrator holds the book with CLI_FLASH_OCR_HOLD and cli-ocr-lane.mjs reads it on gemini-3.8-flash-low, 4 pages a call (CLI_MODEL_FOR).",
       "code": {
         "router": {
           "language": "Latin",
@@ -78,18 +74,10 @@
       "reader": "Gemini 3 Flash",
       "why": "On 127 printed Greek pages with a typed reference (7 October 2026), Gemini 3 Flash got 92.3% of characters right and Flash-Lite 87.8%. Claude Opus tied Gemini 3 Flash on 60 pages (6 October 2026).",
       "in_use": "In use for books published on the site and for newly added books. Older Greek books that are not yet published are still read by Flash-Lite.",
-      "stored": "495,404 pages: 418,469 (84%) read by Gemini 3 Flash, 38,638 (8%) by Flash-Lite, 37,376 (8%) with no text yet.",
+      "stored": "676,073 pages: 419,535 (62%) read by Gemini 3 Flash, 42,916 (6%) by Flash-Lite, 210,670 (31%) with no text yet. 174,715 of the pages with no text are in books first shown on 24 October 2026, most of them as page images only (#7270).",
       "status": "settled",
       "routed": "partly",
       "production": "FLASH_OCR_FROM.grc: visible Greek books and Greek books created from 2026-10-02 read on gemini-3-flash-preview (Derek, #5575). The hidden Greek backlog stays on lite until its language labels are fixed (#4884). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
-      "route": {
-        "engine": "gemini-3-flash-preview",
-        "families": {
-          "grc": {
-            "from": "2026-10-02"
-          }
-        }
-      },
       "code": {
         "router": {
           "language": "Greek",
@@ -128,31 +116,10 @@
       "reader": "Gemini 3 Flash",
       "why": "We had pages that Flash-Lite had read re-read by Gemini 3 Flash, and the English judged against published translations (93 pages in all, one per book; 4 October 2026). The English scored higher by 1.00 of 5 points on 6 Persian pages, 0.75 on 10 Sanskrit pages, 0.58 on 6 Pali pages and 0.39 on 9 Arabic pages. The samples are small: the Pali and Arabic gains are not clearly above zero. Manuscripts in these languages are not covered.",
       "in_use": "In use for books published on the site and for newly added books.",
-      "stored": "Arabic, 60,503 pages: 31,542 (52%) read by Gemini 3 Flash, 26,234 (43%) by Flash-Lite, 2,618 (4%) with no text yet. In the same order, Persian, 15,596 pages: 7,515 (48%), 6,428 (41%), 1,646 (11%). Sanskrit, 115,121 pages: 62,287 (54%), 46,563 (40%), 6,243 (5%). Pali, 8,540 pages: 968 (11%), 7,320 (86%), 249 (3%).",
+      "stored": "Arabic, 105,411 pages: 30,421 (29%) read by Gemini 3 Flash, 27,819 (26%) by Flash-Lite, 47,044 (45%) with no text yet. In the same order, Persian, 74,549 pages: 10,473 (14%), 12,261 (16%), 51,806 (69%). Sanskrit, 143,214 pages: 62,054 (43%), 39,641 (28%), 41,000 (29%). Pali, 17,498 pages: 1,539 (9%), 12,967 (74%), 2,989 (17%). Most of the pages with no text are in books first shown on 24 October 2026, most of them as page images only (#7270): 44,607 Arabic, 50,427 Persian, 34,804 Sanskrit and 2,740 Pali.",
       "status": "provisional",
       "routed": "partly",
       "production": "FLASH_OCR_FROM fas/san/pli/ara/gez: visible and new books read on gemini-3-flash-preview (PR #5760). Persian's hidden backlog too (FLASH_OCR_INCLUDES_HIDDEN, Derek 2026-10-04). Ge'ez is routed the same way on agreement evidence only (0.47 with flash, 9 of 20 pages catastrophic on lite, #4729). Since 2026-10-21 flash runs only through the agy CLI (#7075): the orchestrator holds the book (reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API.",
-      "route": {
-        "engine": "gemini-3-flash-preview",
-        "families": {
-          "fas": {
-            "from": "2026-10-04",
-            "hidden": true
-          },
-          "san": {
-            "from": "2026-10-04"
-          },
-          "pli": {
-            "from": "2026-10-04"
-          },
-          "ara": {
-            "from": "2026-10-04"
-          },
-          "gez": {
-            "from": "2026-10-04"
-          }
-        }
-      },
       "code": {
         "router": {
           "language": "Persian",
@@ -239,7 +206,7 @@
       "reader": "PaddleOCR-VL",
       "why": "On 433 books, one page each (1 October 2026), PaddleOCR got more than half the characters wrong on 0.9% of pages, Gemini 3 Flash on 3.7% and Flash-Lite on 10.6%. In a random check of 60 pages PaddleOCR had read, one per book (10 October 2026), no page was unusable and none had invented text: 51% were clean, 27% had minor errors and 22% had material errors. Qwen3-VL tied it on 503 pages at three times the cost.",
       "in_use": "In use.",
-      "stored": "Counted 13 October 2026: 1,567,927 Chinese pages were read by PaddleOCR-VL. Across all Chinese books, 106,365 pages were read by Gemini 3 Flash, about 39,000 by Flash-Lite, and 330,855 have no text yet.",
+      "stored": "Counted across all Chinese books, 1,943,433 Chinese pages: 1,599,766 (82%) read by PaddleOCR-VL, 103,874 (5%) by Gemini 3 Flash, 18,720 (1%) by Flash-Lite, 4,521 by Claude Opus, and 214,554 (11%) with no text yet.",
       "status": "settled",
       "routed": "yes",
       "production": "scripts/lib/paddle-zh-lane.mjs (ocr.source 'paddle'), run by hand on a leased GPU over fixed book lists (#5600, #5660, #6388); 1.57M pages written. Not in lanes.mjs, and no scheduled lane selects its books: they are held. Measured 2026-10-13 from books.pages_count − pages_ocr: about 68K unread Chinese pages sit in books held for this lane (holds gpu-backlog-5660, paddle-zh-5600-ocr-only, paddle-zh-6388-*) and wait for its next run.",
@@ -280,7 +247,7 @@
       "kind": "Chinese pages with tables and diagrams",
       "reader": "PaddleOCR-VL, then Claude Opus corrects the draft against the image",
       "why": "PaddleOCR invents text on table pages. A rule on the text found all 136 pages known to have invented text and flags 4,379 of 1,568,108 pages (0.28%), which are withheld (11 October 2026). On 40 of them (12 October 2026), Opus correcting the draft left 4.0% of characters wrong, against 6.4% for the draft and 5.8% for Opus reading the image afresh. It was better on 31 pages and worse on 1. Opus reading from the image alone was not adopted: a Gemini reviewer found invented text in 23 of 100 such readings.",
-      "in_use": "In progress. The flagged pages show no text until the corrected text has been reviewed.",
+      "in_use": "In use on the 4,379 flagged pages: they show the corrected text.",
       "stored": null,
       "status": "settled",
       "routed": "partly",
@@ -316,23 +283,50 @@
       }
     },
     {
+      "id": "chinese-held-tables-mixed",
+      "kind": "Chinese pages of tables, and pages that mix prose with tables, scores or diagrams, in books that had no reader yet",
+      "reader": "PaddleOCR-VL, with a check on its output; pages the check rejects are read by Gemini 3.8 Flash, and its reply is checked the same way",
+      "why": "On 50 new pages from 50 books (18 October 2026), 25 tables and 25 mixed pages, this was no worse than Gemini 3.8 Flash alone: median difference 0.0 points in both kinds, against Opus reference readings. The check caught all 8 pages where PaddleOCR repeated or dropped text, and passed 34 of 35 good pages. Two works are not read this way, because neither reader gets them right: a five-script glossary and a book of qin tablature.",
+      "in_use": "In use for these books from 24 October 2026. Pages neither reader passes stay without text, and the pages are not yet translated.",
+      "stored": "Counted 24 October 2026 over the 27,048 pages in scope: 22,220 pages read by PaddleOCR-VL, 1,733 by Gemini 3.8 Flash, and 3,095 with no text (Flash refused or failed the check twice on 1,063, the table check withheld 1,120, and 912 are near-blank or too short).",
+      "status": "provisional",
+      "routed": "partly",
+      "production": "scripts/workers/paddle-zh-guarded-lane.mjs (#6871 row 3, Derek yes 2026-10-23): first reads of the held table + mixed residue (27,048 pages, 190 books; applied 2026-10-24: 22,220 Paddle + 1,733 Flash written, 3,095 left unread, 4 write runs revertible with scripts/maintenance/revert-run.mjs), from the gex45 read gpu-queue 50/51-zh-guarded-read (finished 2026-10-19) and scripts/gpu/zh-guarded-read-6871/flash.py (agy gemini-3.8-flash-low, $0). ocr.source 'paddle' or 'ai', ocr.pipeline paddle-zh-guarded-2026-10, ocr.verdict = the guard's verdict and code hashes. The #6388 table detector still withholds what it flags. Books stay held (gpu-backlog-5660 / zh-guarded-6871): translation is its own priced decision. Excluded and held: 欽定西域同文志, 琴譜合璧, the 清文鑑 titles.",
+      "code": {
+        "file": "scripts/workers/paddle-zh-guarded-lane.mjs"
+      },
+      "evidence": [
+        {
+          "file": "2026-10-18-zh-guarded-paddle-6871.md",
+          "n": "50 pages, one per book (25 table, 25 mixed)",
+          "date": "2026-10-18"
+        },
+        {
+          "file": "2026-10-18-zh-guarded-read-prep-6871.md",
+          "n": "99 pages read at two image scales; 726 pages dry-run",
+          "date": "2026-10-18"
+        },
+        {
+          "file": "2026-10-18-zh-residue-bakeoff-6871.md",
+          "n": "100 pages (the guard's design set)",
+          "date": "2026-10-18"
+        }
+      ],
+      "audit": {
+        "select": "ocr.pipeline paddle-zh-guarded-2026-10, both routes",
+        "reviewer": "claude"
+      }
+    },
+    {
       "id": "chinese-print",
       "kind": "Chinese woodblock and typeset print outside the Siku Quanshu",
-      "reader": "Gemini 3 Flash, through the Gemini command-line tool",
-      "why": "Measured on 7 October 2026 against a typed text of the same editions, on 198 pages from 54 books: Gemini 3 Flash got a median 5.2% of characters wrong and no page more than half wrong. Flash-Lite got 6.8% wrong with 3 pages more than half wrong, and PaddleOCR-VL 12.8% with 29.",
-      "in_use": "In use for visible books and books added from 21 October 2026. Older hidden books are still read by Flash-Lite.",
-      "stored": "Counted 13 October 2026 with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
+      "reader": "PaddleOCR-VL, one leaf at a time; Gemini 3 Flash for the pages its checks turn away",
+      "why": "Measured on 22 October 2026 against a typed text of the same editions, on 198 pages from 54 books, with each spread split into its two leaves: PaddleOCR-VL got a median 6.1% of characters wrong, Gemini 3 Flash 5.2% and Flash-Lite 6.7%. PaddleOCR-VL had 3 pages more than half wrong, all of them blank leaves, which the checks now turn away; Flash-Lite also had 3, and Flash none. Flash is still the more accurate reader. PaddleOCR-VL runs on our own GPU at no cost per page, which keeps the Gemini allowance for correcting text (Derek, 26 October 2026).",
+      "in_use": "In use for the Chinese print books read in October 2026. Pages its checks turn away wait for Gemini 3 Flash, and books outside that read go to Gemini 3 Flash.",
+      "stored": "Counted with all Chinese books, 1,943,433 pages: 103,874 (5%) read by Gemini 3 Flash, 18,720 (1%) by Flash-Lite, 1,599,766 (82%) by PaddleOCR-VL, and 214,554 (11%) with no text yet.",
       "status": "settled",
       "routed": "partly",
-      "production": "FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API, and it waits there. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Paddle lane (row chinese-siku-manuscript) keep that hold. Measured 2026-10-13 from books.pages_count − pages_ocr, about 339K Chinese pages are unread: about 82K in books at archive_complete with no hold; about 68K held for the Paddle lane; about 102K in books already marked complete and about 63K in needs_attention, which no lane selects; the rest parked or held images-only.",
-      "route": {
-        "engine": "gemini-3-flash-preview",
-        "families": {
-          "zho": {
-            "from": "2026-10-21"
-          }
-        }
-      },
+      "production": "scripts/workers/paddle-print-lane.mjs (ocr.pipeline paddle-print-2026-10, ocr.source paddle), run by hand on gex45 through /root/gpu-queue over a frame of print books outside the Siku, cursive-Japanese and Meiji-typeset cohorts (#6101, PR #7211). Each spread is split at the gutter; per leaf the lane turns away faint leaves (show-through), unstable short leaves (re-read at 1,200 px disagrees), under-read leaves, loops, textless spreads, kana-heavy (Japanese) books and pages that lost their ditto marks; it never replaces a Gemini Flash / Pro, Claude, CBETA or human text, and replaces flash-lite only when it covers lite's text. Books are held paddle-print-6101 before the first write. Written 2026-10-25: 73,330 pages. Census 2026-10-26 (job paddle-print-rest-6101): no unread non-Siku Chinese print book is left outside that frame; the next frame is the Berlin State Library import (#7343, held manifest-only-lazy-pages, no page records yet). The fallback is wired (job paddle-rejects-flash-6101, 2026-10-26): the lane's apply lists every page its checks turned away that is still without text (fallbackRoute: guard rejects to Flash, textless pages with every leaf blank or faint left unread, pages with no image to the fetch lane), and `paddle-print-lane.mjs fallback --read --apply` reads that list with Gemini 3.8 Flash through agy (scripts/batch/cli-ocr.mjs, its guards and provenance); the book keeps its hold. Everything outside the lane: FLASH_OCR_FROM.zho (#7075, from 2026-10-21): getOcrModelForBook returns flash for visible Chinese books and Chinese books created from that date, and flash runs only through the agy CLI: the orchestrator holds the book (CLI_FLASH_OCR_HOLD, reason ocr-flash-cli-7075) for scripts/batch/cli-ocr.mjs instead of submitting it to the Batch API. Hidden Chinese books created before the date stay on lite, Batch. Books held for the Siku Paddle lane (row chinese-siku-manuscript) keep that hold.",
       "code": {
         "router": {
           "language": "Chinese",
@@ -341,6 +335,11 @@
         "expect": "flash"
       },
       "evidence": [
+        {
+          "file": "2026-10-22-paddle-split-leaves-woodblock-6101.md",
+          "n": "198 pages from 54 books",
+          "date": "2026-10-22"
+        },
         {
           "file": "2026-10-07-chinese-print-against-cbeta-6101.md",
           "n": "198 pages from 54 books",
@@ -353,8 +352,8 @@
         }
       ],
       "audit": {
-        "select": "ocr.model gemini-3-flash*, book language family zho",
-        "reviewer": "claude"
+        "select": "ocr.pipeline paddle-print-2026-10; ocr.model gemini-3-flash* in book language family zho outside it",
+        "reviewer": "claude and gemini (the lane reader is neither family; Flash pages by claude)"
       },
       "charts": [
         "chinese-print"
@@ -364,12 +363,12 @@
       "id": "tibetan",
       "kind": "Tibetan",
       "reader": "BDRC Yigdzin, a reader built for Tibetan",
-      "why": "On 60 Kangyur pages (6 October 2026), Yigdzin matched 94.9% of the syllables of the typed Derge text. Claude Opus, the best general model, matched 71.5% and fell below half on 4 of the 60 pages. On one page checked by eye it wrote Tibetan that is not on the leaf. On 30 folios (12 and 13 October 2026), a model correcting the Yigdzin text against the image raised the match: Gemini 3.8 Flash to 96.8% with no folio worse and 3 of 30 planted errors left, Opus to 96.0% with 14 of 30 left. Reading afresh from the image lowered it to 70%. No correction pass runs yet.",
-      "in_use": "In use. The correction pass is not.",
-      "stored": "Counted 13 October 2026: 203,477 pages were read by Yigdzin and 142,234 have no text yet. About 81,000 pages still carry a Gemini reading; 79,400 of those are withheld from readers.",
+      "why": "On 60 Kangyur pages (6 October 2026), Yigdzin matched 94.9% of the syllables of the typed Derge text. Claude Opus, the best general model, matched 71.5% and fell below half on 4 of the 60 pages. On one page checked by eye it wrote Tibetan that is not on the leaf. On 30 folios (12 and 13 October 2026), a model correcting the Yigdzin text against the image raised the match: Gemini 3.8 Flash to 96.8% with no folio worse and 3 of 30 planted errors left, Opus to 96.0% with 14 of 30 left. Reading afresh from the image lowered it to 70%. On 60 Kangyur folios judged against the image (26 and 27 October 2026), the Yigdzin text was accepted as the page's transcription on 34, after a Gemini 3.8 Flash correction on 53, and after an Opus correction on 52. Applied to a whole volume (525 pages, 26 October 2026), the Flash correction made 6 of 40 checked pages worse, more than the 4 allowed, so it is not applied.",
+      "in_use": "In use. The Flash correction is not: it failed its check on the first volume.",
+      "stored": "430,518 pages: 280,623 (65%) read by Yigdzin and 1,836 by BDRC's woodblock model. 137,535 (32%) carry Esukhia's digital text of the Derge Kangyur and Tengyur, matched to the page. 9,352 (2%) still carry a Gemini reading, and 1,172 have no text yet.",
       "status": "settled",
       "routed": "yes",
-      "production": "Per-leaf Yigdzin read, verdicts applied by scripts/maintenance/apply-reocr-verdicts.mjs (ocr.source 'bdrc'). Lite is unusable as a Tibetan reader (#4523). A correction pass is an open decision on #6560: Gemini 3.8 Flash low did better than Opus on the same 30 folios.",
+      "production": "Per-leaf Yigdzin read, verdicts applied by scripts/maintenance/apply-reocr-verdicts.mjs (ocr.source 'bdrc'). Lite is unusable as a Tibetan reader (#4523). Correction stage (#6560): Yigdzin > Gemini 3.8 Flash-low correction via agy, the #6560 CORR prompt (scripts/eval/tibetan-correct-6560/corr-prompt.txt), gated per volume (scripts/eval/tibetan-correct-6560/pass/run-pass.sh; ya-btags guard, 25% syllable cap, ocr.pipeline tib-correct-6560, no --mark-stale). The router picks it: router-table cell tibetan-yigdzin (scripts/eval/estimator/router-table/2026-10-27-tibetan-30.md), accepted 53/60 vs Yigdzin 34/60 and Opus correction 52/60, switch -> yigdzin>agy-flash-low. Its first volume gate failed (2026-10-26, Thadrak Kanjur rGyud 'bum Ka 69e7aab880b52390feb197a8: pooled worse 6/40, bar <= 4 and better >= 3x worse; tiled span judge 6/40 worse, whole-page judge 5/40), so nothing is applied and the pass is stopped until a new pre-registered corrector passes the same gate.",
       "code": {
         "file": "scripts/maintenance/apply-reocr-verdicts.mjs"
       },
@@ -378,6 +377,16 @@
           "file": "2026-10-06-untried-ocr-engines-wave1-6011.md",
           "n": "60 Kangyur pages",
           "date": "2026-10-06"
+        },
+        {
+          "file": "2026-10-27-tibetan-flash-pass-production-6560.md",
+          "n": "one volume, 525 pages; 40 changed pages judged by two Opus judges",
+          "date": "2026-10-27"
+        },
+        {
+          "file": "2026-10-27-tibetan-router-30-6740.md",
+          "n": "60 Kangyur folios, one per book",
+          "date": "2026-10-27"
         },
         {
           "file": "2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md",
@@ -483,7 +492,7 @@
       "stored": null,
       "status": "settled",
       "routed": "yes",
-      "production": "The RECITATION ladder (ocr-lane-decision-tree.md, branch 3): lite again, flash (= lite under OCR_LITE_ONLY, ocrEscalationModel), scripts/workers/mineru-ocr-worker.mjs (1820+ only: before that it reads the long s as f), ia-ocr-ingest under a by-eye verdict, then by eye.",
+      "production": "The RECITATION ladder (.claude/docs/routing.md): lite again, flash (= lite under OCR_LITE_ONLY, ocrEscalationModel), scripts/workers/mineru-ocr-worker.mjs (1820+ only: before that it reads the long s as f), ia-ocr-ingest under a by-eye verdict, then by eye.",
       "route": {
         "fallback": [
           {
@@ -604,7 +613,7 @@
       "stored": null,
       "status": "settled",
       "routed": "partly",
-      "production": "Applied to the Chinese table pages only (job table-correct-6561, files, not yet written). Tibetan correction is an open decision on #6560. For manuscripts a correction pass was no better than Opus alone (#6544), so this row covers specialist drafts only.",
+      "production": "Applied to the Chinese table pages only (job table-correct-6561, files, not yet written). Tibetan: the router picks Yigdzin > Flash-low correction (#6740), but its first volume gate failed on 2026-10-26 (6/40 pages worse, bar 4), so none is applied (#6560, row tibetan). For manuscripts a correction pass was no better than Opus alone (#6544), so this row covers specialist drafts only.",
       "code": null,
       "evidence": [
         {
@@ -653,8 +662,447 @@
     }
   ],
   "census": {
-    "date": "2026-10-16",
-    "source": "scripts/eval/ocr-routing/stored-census.mjs (output: scripts/eval/ocr-routing/stored-census-2026-10-16.json), run by job arb-public-cl. Chinese and Tibetan: Derek's count of 2026-10-13, posted on #6688",
-    "method": "Every page of every live book (visible, pages_count > 0), grouped by books.language and counted by the engine whose text the page carries now (ocr.model); a page with no text counts as no text yet. Chinese and Tibetan were counted the same way on 2026-10-13. The 2026-10-13 figures for Latin, German, English, Greek and Arabic came from 150 random books per language and are replaced: a few long books carry most of the pages, so two draws of 300 Latin books gave 22% and 29% with no text."
-  }
+    "date": "2026-10-25",
+    "source": "scripts/eval/ocr-routing/stored-census.mjs (output: scripts/eval/ocr-routing/stored-census-2026-10-25.json), run 2026-10-25 over twelve languages, Chinese and Tibetan included: 16,178,325 pages in 64,624 live books",
+    "method": "Every page of every live book (visible, pages_count > 0), grouped by books.language and counted by the engine whose text the page carries now (ocr.model); a page with no text counts as no text yet, and a page whose text names no engine is counted as unrecorded (all 137,535 such pages are Tibetan, and their ocr.source is Esukhia's Derge Kangyur or Tengyur text). It replaces the counts of 2026-10-16 and, for Chinese and Tibetan, of 2026-10-13. Books first shown on 23 and 24 October 2026 (#7176, #7270) are counted with the rest. An earlier draw of 150 random books per language was dropped: a few long books carry most of the pages, so two draws of 300 Latin books gave 22% and 29% with no text."
+  },
+  "page_check": {
+    "_doc": "Display only: /quality renders it under the page-kind table, and the `in_use` sentences of routes not in use also under the matching row's reader (`row`). It routes nothing. Every accepted / wrong_text count is the route's cell in `source` (score.json), checked by tests/unit/ocr-routing-table.test.ts. The judge accepts a page when a reader would be served by publishing it as that page's text (for a translation: its statements, negations, names and numbers), and marks wrong text when the candidate says something the page does not: invented, duplicated, dropped, another page, or a wrong word that changes the sense (scripts/eval/route-judge-6740/judge.mjs).",
+    "date": "2026-10-26",
+    "issue": 6740,
+    "source": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/score.json",
+    "by_eye": "scripts/eval/route-judge-6740/results/pilot-2026-10-26/by-eye.md",
+    "writeup": "2026-10-25-route-judge-qualitative-pilot-6740.md",
+    "router_table": "scripts/eval/estimator/router-table/2026-10-26.md",
+    "by_eye_agreement": {
+      "n": 28,
+      "of": 30
+    },
+    "kinds": [
+      {
+        "id": "latin-print",
+        "row": "latin-script-print",
+        "kind": "Printed Latin: the transcription",
+        "sample": "30 pages from 9 books",
+        "routes": [
+          {
+            "reader": "Gemini 3.1 Flash-Lite",
+            "in_use": "In use.",
+            "score": {
+              "cell": "latin",
+              "route": "lite"
+            },
+            "accepted": {
+              "n": 17,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 12,
+              "of": 30
+            },
+            "wrong_text_what": "Mostly words or whole lines left out (9 pages) and misreads that make another word (7). Some reverse the sense: “inæquales” read as “equales”, “ſeminis” (of seed) as “feminis” (of women)."
+          },
+          {
+            "reader": "Flash-Lite, then Claude Opus corrects the text against the image",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "latin",
+              "route": "lite>opus-correct"
+            },
+            "accepted": {
+              "n": 30,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 0,
+              "of": 30
+            },
+            "wrong_text_what": "None. What is left is cosmetic, for example abbreviations expanded on some lines and not on others."
+          }
+        ],
+        "note": null
+      },
+      {
+        "id": "chinese-paddle",
+        "row": "chinese-tables",
+        "kind": "Chinese pages that PaddleOCR-VL read and a rule flagged as possibly invented (4,379 pages, mostly the Siku Quanshu)",
+        "sample": "30 pages, one per book",
+        "routes": [
+          {
+            "reader": "PaddleOCR-VL, then Claude Opus corrects the draft against the image",
+            "in_use": "In use on the flagged pages.",
+            "score": {
+              "cell": "chinese",
+              "route": "paddle>opus-correct"
+            },
+            "accepted": {
+              "n": 24,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "On 3 pages that are mostly Manchu, the Manchu is left out (a note in the text says so). On the one table page the counting-rod numbers are written right to left, so each reads reversed."
+          },
+          {
+            "reader": "PaddleOCR-VL's draft alone",
+            "in_use": "What these pages had before the correction.",
+            "score": {
+              "cell": "chinese",
+              "route": "paddle"
+            },
+            "accepted": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 24,
+              "of": 30
+            },
+            "wrong_text_what": "Lines left out (14 pages), misreads that make another character (12), repeated text (12) and text that is not on the page (8)."
+          }
+        ],
+        "note": "An upper bound. Of the 3 corrected pages we read by eye, one changes the calligrapher's name 章德懋 to 童德懋, twice, where the page and PaddleOCR's draft have 章; the reviewer accepted it. Other one-character changes to names may have passed the same way."
+      },
+      {
+        "id": "tibetan",
+        "row": "tibetan",
+        "kind": "Tibetan (Kangyur)",
+        "sample": "30 folios, one per book",
+        "routes": [
+          {
+            "reader": "BDRC Yigdzin",
+            "in_use": "In use.",
+            "score": {
+              "cell": "tibetan",
+              "route": "yigdzin"
+            },
+            "accepted": {
+              "n": 17,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 12,
+              "of": 30
+            },
+            "wrong_text_what": "Misreads that make another word (6 folios), one of which loses a negation; lines or phrases left out (4); syllables that are not on the leaf (2)."
+          },
+          {
+            "reader": "Yigdzin, then Gemini 3.8 Flash corrects the text against the image",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "tibetan",
+              "route": "yigdzin>flash-low-correct"
+            },
+            "accepted": {
+              "n": 26,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "On one folio it filled a line Yigdzin had dropped with words that are not on the leaf. On another it put in “desire” from a different formula where the leaf has “ignorance”."
+          },
+          {
+            "reader": "Yigdzin, then Claude Opus corrects the text against the image",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "tibetan",
+              "route": "yigdzin>opus-correct"
+            },
+            "accepted": {
+              "n": 25,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "A phrase copied ahead from the next line, a garbled phrase, a doubled syllable."
+          }
+        ],
+        "note": null
+      },
+      {
+        "id": "german-translation",
+        "row": null,
+        "kind": "German books printed 1500 to 1800: the English translation",
+        "sample": "30 pages, one per book, for each translator",
+        "routes": [
+          {
+            "reader": "Gemini 3 Flash",
+            "in_use": "In use.",
+            "score": {
+              "cell": "german",
+              "route": "flash3"
+            },
+            "accepted": {
+              "n": 22,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 6,
+              "of": 30
+            },
+            "wrong_text_what": "Misreads carried into the English (an alchemical sign, a family's coat of arms), a note taken from the next page, headwords left out. On 2 of the 6 the fault is in the page itself: its photo shows another page, or the edge of the facing one."
+          },
+          {
+            "reader": "Gemini 3.1 Flash-Lite",
+            "in_use": "In use.",
+            "score": {
+              "cell": "german",
+              "route": "flash-lite"
+            },
+            "accepted": {
+              "n": 15,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 10,
+              "of": 30
+            },
+            "wrong_text_what": "Text from the next page (3 pages), words or a clause left out (3), misreads (2: a planet's sign, “Venetian soap” as “Benedetto powders”), a sense turned around (1)."
+          },
+          {
+            "reader": "Claude Opus",
+            "in_use": "Measured, not in use yet.",
+            "score": {
+              "cell": "german",
+              "route": "opus-cli"
+            },
+            "accepted": {
+              "n": 26,
+              "of": 30
+            },
+            "wrong_text": {
+              "n": 3,
+              "of": 30
+            },
+            "wrong_text_what": "A word dropped at a bracket, a claim about earlier pages, and a page whose photo shows another page (a fault in the page, not the translation)."
+          }
+        ],
+        "note": "Each translator was judged on its own 30 pages, so the comparison is between samples, not page by page."
+      }
+    ]
+  },
+  "_router_cells": "GENERATED by scripts/maintenance/router-routing-rows.mjs from scripts/eval/estimator/router-table/current.json (#7913): one row per cell of the live router table that binds a route, that route, the route's judged k/n, the build the decision comes from and any waiver. Do not edit: move the pointer in current.json and run the script with --write; tests/unit/router-routing-rows-7913.test.ts fails while this block and current.json disagree. getOcrModelForBook routes from this block in the OCR table (`reads`, #8283); lanes bind through routeCheck (scripts/lib/router-binding.mjs); translation's routers read `rows`, and tests/unit/router-bound-table.test.ts fails when they disagree with it.",
+  "router_cells": [
+    {
+      "cell": "english-gpu-7263/print",
+      "decision": "switch",
+      "route": "gpu2>agy-flash-low+diff",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "gpu2",
+        "per_call": 1
+      },
+      "k_of_n": "45/45",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "french-blank/print",
+      "decision": "switch",
+      "route": "agy-flash-low@4-written",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
+      "k_of_n": "24/24",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "french-gpu-7263/print",
+      "decision": "switch",
+      "route": "gpu-glm>agy-flash-low",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "gpu-glm",
+        "per_call": 1
+      },
+      "k_of_n": "38/38",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "french-lite/print",
+      "decision": "switch",
+      "route": "agy-flash-low@4-read",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
+      "k_of_n": "55/60",
+      "table": "2026-11-01-reread-7853",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "german-blank/print",
+      "decision": "keep",
+      "route": "agy-flash-low@4-written",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
+      "k_of_n": "63/68",
+      "table": "2026-10-31-correction-pass-7818",
+      "set": "2026-11-01",
+      "waivers": [
+        {
+          "lane": "first-read",
+          "set": "2026-11-01",
+          "until": "2026-11-15"
+        }
+      ]
+    },
+    {
+      "cell": "german-flash3/print",
+      "decision": "keep",
+      "route": "3flash>opus",
+      "reads": {
+        "first_read": false,
+        "reader": "opus",
+        "draft": "3flash",
+        "per_call": 1
+      },
+      "k_of_n": "21/21",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "german-gpu-7263/print",
+      "decision": "switch",
+      "route": "gpu>agy-flash-low",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "gpu",
+        "per_call": 1
+      },
+      "k_of_n": "49/49",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "german-lite/print",
+      "decision": "keep",
+      "route": "lite>opus",
+      "reads": {
+        "first_read": false,
+        "reader": "opus",
+        "draft": "lite",
+        "per_call": 1
+      },
+      "k_of_n": "299/307",
+      "table": "2026-11-01-reread-7853",
+      "set": "2026-11-01",
+      "waivers": [
+        {
+          "lane": "correct",
+          "set": "2026-10-31",
+          "until": "2026-11-14"
+        },
+        {
+          "lane": "reread",
+          "set": "2026-11-01",
+          "until": "2026-11-14"
+        }
+      ]
+    },
+    {
+      "cell": "german-lite/unknown",
+      "decision": "switch",
+      "route": "lite>agy-flash-low",
+      "reads": {
+        "first_read": false,
+        "reader": "agy",
+        "draft": "lite",
+        "per_call": 1
+      },
+      "k_of_n": "91/104",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "italian-gpu-7263/print",
+      "decision": "keep",
+      "route": "lite",
+      "reads": {
+        "first_read": false,
+        "reader": null,
+        "draft": null,
+        "per_call": 1
+      },
+      "k_of_n": null,
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "latin-blank/print",
+      "decision": "switch",
+      "route": "pero>agy-flash-low-written",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "pero",
+        "per_call": 1
+      },
+      "k_of_n": "18/18",
+      "table": "2026-10-31-correction-pass-7818",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "latin-gpu-7263/print",
+      "decision": "switch",
+      "route": "pero>agy-flash-low",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": "pero",
+        "per_call": 1
+      },
+      "k_of_n": "105/108",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    },
+    {
+      "cell": "latin-lite/print",
+      "decision": "switch",
+      "route": "agy-flash-low@4-read",
+      "reads": {
+        "first_read": true,
+        "reader": "agy",
+        "draft": null,
+        "per_call": 4
+      },
+      "k_of_n": "20/30",
+      "table": "2026-11-03-latin-v4-7263",
+      "set": "2026-11-03"
+    },
+    {
+      "cell": "sanskrit-lite/print",
+      "decision": "keep",
+      "route": "lite",
+      "reads": {
+        "first_read": false,
+        "reader": null,
+        "draft": null,
+        "per_call": 1
+      },
+      "k_of_n": "42/250",
+      "table": "2026-11-01-validated-7263",
+      "set": "2026-11-01"
+    }
+  ]
 }

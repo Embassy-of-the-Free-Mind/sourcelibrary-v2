@@ -63,7 +63,7 @@ async function main() {
   if (dryRun) console.log('DRY RUN — no writes');
 
   const cursor = db.collection('books')
-    .find(query, { projection: USTC_MATCH_PROJECTION })
+    .find(query, { projection: USTC_MATCH_PROJECTION }).batchSize(1000)
     .limit(toProcess);
 
   let processed = 0, matched = 0, fastMatched = 0, aiMatched = 0, noMatch = 0, errors = 0;

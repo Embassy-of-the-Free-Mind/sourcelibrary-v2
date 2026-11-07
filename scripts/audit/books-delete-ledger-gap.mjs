@@ -96,12 +96,12 @@ async function main() {
   const live = { id: new Set(), _id: new Set(), slug: new Set() };
   const ledger = new Set();
 
-  for await (const b of db.collection('books').find({}, { projection: { id: 1, slug: 1 } })) {
+  for await (const b of db.collection('books').find({}, { projection: { id: 1, slug: 1 } }).batchSize(1000)) {
     if (b.id) live.id.add(String(b.id));
     live._id.add(String(b._id));
     if (b.slug) live.slug.add(String(b.slug));
   }
-  for await (const b of db.collection('deleted_books').find({}, { projection: { id: 1, original_id: 1 } })) {
+  for await (const b of db.collection('deleted_books').find({}, { projection: { id: 1, original_id: 1 } }).batchSize(1000)) {
     ledger.add(String(b._id));
     if (b.id) ledger.add(String(b.id));
     if (b.original_id) ledger.add(String(b.original_id));
@@ -130,18 +130,18 @@ async function main() {
   };
 
   // (a) entities.books[].book_id
-  const entCursor = db.collection('entities').find({}, { projection: { books: 1, name: 1 } });
+  const entCursor = db.collection('entities').find({}, { projection: { books: 1, name: 1 } }).batchSize(1000);
   for await (const e of entCursor) {
     for (const b of e.books || []) addRef('entities.books[]', b.book_id, { entity: e.name, title: b.book_title });
   }
 
   // (b) collections.sample_books[].id
-  for await (const col of db.collection('collections').find({}, { projection: { sample_books: 1, slug: 1 } })) {
+  for await (const col of db.collection('collections').find({}, { projection: { sample_books: 1, slug: 1 } }).batchSize(1000)) {
     for (const b of col.sample_books || []) addRef('collections.sample_books[]', b.id, { collection: col.slug, title: b.title });
   }
 
   // (c) feedback rows naming a book in their page path
-  for await (const f of db.collection('feedback').find({}, { projection: { page: 1, created_at: 1, message: 1 } })) {
+  for await (const f of db.collection('feedback').find({}, { projection: { page: 1, created_at: 1, message: 1 } }).batchSize(1000)) {
     const ref = bookIdFromPath(f.page);
     if (ref) addRef('feedback.page', ref, { created_at: f.created_at, page: f.page });
   }
@@ -182,7 +182,7 @@ async function main() {
   const churn = { total: 0, byRemintDay: {} };
   for await (const b of db.collection('books').find(
     { id: { $type: 'string' } }, { projection: { id: 1 } }
-  )) {
+  ).batchSize(1000)) {
     const id = String(b.id);
     if (!HEX24.test(id)) continue;
     if (id === String(b._id)) continue;

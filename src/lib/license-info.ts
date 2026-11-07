@@ -11,14 +11,22 @@
  * routes, and don't put dollar figures here (prices live on /licensing only).
  */
 export const CONTENT_LICENSE = {
-  spdx: 'CC-BY-SA-4.0',
-  url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  spdx: 'CC-BY-NC-SA-4.0',
+  url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
   attribution: 'Source Library (https://sourcelibrary.org)',
   terms: 'https://sourcelibrary.org/terms',
   original_texts: 'public-domain',
   tdm_reservation: 1,
   tdm_policy: 'https://sourcelibrary.org/licensing',
-  ai_training: 'reserved — standard license available, see tdm_policy',
+  ai_training: 'commercial use needs a license, see tdm_policy',
 } as const;
 
 export type ContentLicense = typeof CONTENT_LICENSE;
+
+/**
+ * One-line form of the reservation for plain-text exports (.txt, downloads, PDF
+ * colophon). A file saved to disk loses our headers, so it carries the
+ * reservation next to its licence line, as the JSON payloads do.
+ */
+export const AI_TRAINING_NOTICE =
+  'Commercial AI training and bulk text-and-data-mining are reserved (EU Directive 2019/790, Art. 4); license terms: https://sourcelibrary.org/licensing';

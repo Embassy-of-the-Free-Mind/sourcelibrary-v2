@@ -62,7 +62,7 @@ for (let i = 0; i < docs.length; i += 500) {
 let n = 0, wrong = 0;
 // By this upload's own page ids: several boxes may upload one run into one collection (#6561 item 1).
 for (let i = 0; i < docs.length; i += 1000) {
-  for await (const d of coll.find({ page_id: { $in: docs.slice(i, i + 1000).map((x) => x.page_id) } }, { projection: { page_id: 1, corrected_text: 1, paddle_text: 1 } })) {
+  for await (const d of coll.find({ page_id: { $in: docs.slice(i, i + 1000).map((x) => x.page_id) } }, { projection: { page_id: 1, corrected_text: 1, paddle_text: 1 } }).batchSize(1000)) {
     n++; const r = last.get(d.page_id);
     if (!r || typeof d.corrected_text !== 'string' || sha(d.corrected_text) !== r.corrected_sha || sha(d.paddle_text) !== r.paddle_sha) wrong++;
   }

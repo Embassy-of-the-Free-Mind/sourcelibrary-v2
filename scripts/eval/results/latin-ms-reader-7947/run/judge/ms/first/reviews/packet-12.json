@@ -1,0 +1,376 @@
+[
+ {
+  "book_id": "b12-k",
+  "slot": 1,
+  "title": "Lapis Philosophicus (PH436)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>57 · 44 · 47 · p. 50 · 20</margin>",
+      "image": "37·44·47 (or 57) / p 50·20 (pencil)",
+      "problem": "first pencil numeral read 57; it may be 37 (faint)",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 101,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<meta>Catchword at foot: \"in=\"</meta>",
+      "image": "m=",
+      "problem": "catchword misread in the metadata line (not in the reader text)",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 151,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>NB:</margin>",
+      "image": "76: (pencil)",
+      "problem": "faint pencil numeral read as 'NB:'",
+      "severity": "minor",
+      "class": "O12"
+     },
+     {
+      "ocr": "<margin>p. 138. 93</margin>",
+      "image": "p 138·95",
+      "problem": "pencil numeral misread",
+      "severity": "minor",
+      "class": "O12"
+     },
+     {
+      "ocr": "quousquè sit purum elementum",
+      "image": "quousquè fit/sit (long s vs f ambiguous)",
+      "problem": "ambiguous letter; 'sit' is the grammatical reading",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "The most complete reading of the four: main text right word for word on all three pages, diacritics kept, the pencil interlinear '20 18' and nearly all marginalia captured; only a few faint pencil numerals misread."
+ },
+ {
+  "book_id": "b12-m",
+  "slot": 2,
+  "title": "Lapis Philosophicus (PH436)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "suam more-diatur aquam",
+      "image": "suam mgre-diatur aquam (= ingrediatur)",
+      "problem": "verb misread as a non-word 'morediatur'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "<margin>37. 44. 47.\np. 20.</margin>",
+      "image": "37·44·47· / p 50·20 (pencil)",
+      "problem": "later pencil cross-reference '50' dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 101,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "nihil tamen addit forma, nec materia",
+      "image": "nihil tamen addit formæ, nec materiæ",
+      "problem": "case endings dropped (formæ/materiæ read as forma/materia)",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "ipsa interius sufficit et tibi et sibi",
+      "image": "ipsa interius suffici-|et tibi et sibi (= sufficiet tibi)",
+      "problem": "line-break word 'suffici-et' split into 'sufficit et', changing the tense and adding a word",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "(no margin)",
+      "image": "138·143 (pencil, right margin)",
+      "problem": "pencil cross-reference dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 151,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "in substantia argenti uini",
+      "image": "in substantia argenti viui (argentum vivum, quicksilver)",
+      "problem": "'argenti vivi' (quicksilver) read as 'argenti uini' (of wine); u/n ambiguity in the hand, but the reading changes the substance named",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "natura ipsa in eo incipit",
+      "image": "natura ipsa in eo incæpit",
+      "problem": "perfect normalised to present ('incæpit' → 'incipit')",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "suis faeculentis corruptibilibus",
+      "image": "suis fæculentijs corruptibilibus",
+      "problem": "'-ijs' ending simplified",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "(no margins)",
+      "image": "76: / con·de / p 138·95 / 87 / p 145·151 / 87 / 149 / 137·15 MSo",
+      "problem": "all marginalia dropped, including the ink 'con·de' in the main hand",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A clean, line-faithful reading of the main text on all three pages with a few word-level misreads ('morediatur' for ingrediatur, 'argenti uini' for argenti vivi, 'incipit' for incæpit) and the marginalia partly or wholly dropped; nothing invented."
+ },
+ {
+  "book_id": "b12-r",
+  "slot": 3,
+  "title": "Lapis Philosophicus (PH436)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>p. 20.</margin> placed before '### Sententiae.'",
+      "image": "'p. 20' stands against the line 'ritualis aqua … Hanc aquam philo-'",
+      "problem": "margin note displaced a paragraph from its line",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 101,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "(no margin)",
+      "image": "138·143 and 'tria.' (pencil, right margin)",
+      "problem": "both marginal notes dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 151,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "suis faeculentijs corruptilibus",
+      "image": "suis fæculentijs corruptibilibus",
+      "problem": "syllable dropped ('corruptilibus')",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<margin>… 137. 51. 150</margin>",
+      "image": "137·15 MSo (pencil, cut at gutter)",
+      "problem": "last pencil note misread",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Accurate line-by-line reading of the main text on all three pages with the scribe's v/u spelling and ligatures kept; small slips only, chiefly in the later pencil marginalia, some of which are dropped."
+ },
+ {
+  "book_id": "b12-t",
+  "slot": 4,
+  "title": "Lapis Philosophicus (PH436)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "suam more-diatur aquam",
+      "image": "suam mgre-diatur aquam (= ingrediatur)",
+      "problem": "verb misread as a non-word 'morediatur'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "<margin>37. 44. 47.\np. 20.</margin>",
+      "image": "37·44·47· / p 50·20 (pencil)",
+      "problem": "later pencil cross-reference '50' dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 101,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "nihil tamen addit forma, nec materia",
+      "image": "nihil tamen addit formæ, nec materiæ",
+      "problem": "case endings dropped (formæ/materiæ read as forma/materia)",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "ipsa interius sufficit et tibi et sibi",
+      "image": "ipsa interius suffici-|et tibi et sibi (= sufficiet tibi)",
+      "problem": "line-break word 'suffici-et' split into 'sufficit et', changing the tense and adding a word",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "(no margin)",
+      "image": "138·143 (pencil, right margin)",
+      "problem": "pencil cross-reference dropped",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 151,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "in substantia argenti uini",
+      "image": "in substantia argenti viui (argentum vivum, quicksilver)",
+      "problem": "'argenti vivi' (quicksilver) read as 'argenti uini' (of wine); u/n ambiguity in the hand, but the reading changes the substance named",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "natura ipsa in eo incipit",
+      "image": "natura ipsa in eo incæpit",
+      "problem": "perfect normalised to present ('incæpit' → 'incipit')",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "suis faeculentis corruptibilibus",
+      "image": "suis fæculentijs corruptibilibus",
+      "problem": "'-ijs' ending simplified",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "(no margins)",
+      "image": "76: / con·de / p 138·95 / 87 / p 145·151 / 87 / 149 / 137·15 MSo",
+      "problem": "all marginalia dropped, including the ink 'con·de' in the main hand",
+      "severity": "minor",
+      "class": "O12"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "A clean, line-faithful reading of the main text on all three pages with a few word-level misreads ('morediatur' for ingrediatur, 'argenti uini' for argenti vivi, 'incipit' for incæpit) and the marginalia partly or wholly dropped; nothing invented."
+ }
+]

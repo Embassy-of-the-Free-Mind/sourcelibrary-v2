@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil, ShieldCheck } from 'lucide-react';
 import type { Book, ImageSource, FieldProvenanceEntry } from '@/lib/types';
 import { displayablePriorPicks } from '@/lib/ft-prior-guard';
-import { licenseDisplay } from '@/lib/types';
+import { displayedImageRights } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import AdoptBookPanel from './AdoptBookPanel';
 import { useRouter } from 'next/navigation';
@@ -12,6 +12,7 @@ import { AuthCheck } from '@/components/auth/AuthCheck';
 import { firstTranslationDescription } from '@/lib/first-translation-labels';
 import { getEffectiveByline } from '@/lib/byline';
 import { resolveImprintPlace } from '@/lib/imprint';
+import { displayPublished } from '@/lib/publication-date';
 import { resolveHoldingLibrary } from '@/lib/library-partners';
 
 const FIELD_LABELS: Record<string, string> = {
@@ -49,6 +50,7 @@ const SOURCE_LABELS: Record<string, string> = {
   cross_reference: 'Cross-ref',
   ai_generation: 'AI',
   ustc_enrichments: 'USTC',
+  source_catalogue: 'Source catalogue',
 };
 
 const SOURCE_COLORS: Record<string, string> = {
@@ -59,6 +61,7 @@ const SOURCE_COLORS: Record<string, string> = {
   ustc_catalog: 'bg-accent-gold/15 text-accent-gold-dark',
   ustc_enrichments: 'bg-accent-gold/15 text-accent-gold-dark',
   bph_catalogue: 'bg-accent-gold/15 text-accent-gold-dark',
+  source_catalogue: 'bg-accent-gold/15 text-accent-gold-dark',
   cross_reference: 'bg-accent-gold/15 text-accent-gold-dark',
   admin_edit: 'bg-accent-rust/15 text-accent-rust',
   manual: 'bg-accent-rust/15 text-accent-rust',
@@ -156,7 +159,8 @@ export default function BibliographicInfo({
     const citePlace = resolveImprintPlace(book)?.display;
     if (citePlace) pubParts.push(citePlace);
     if (book.publisher) pubParts.push(book.publisher);
-    if (book.published) pubParts.push(book.published);
+    const citePublished = displayPublished(book.published);
+    if (citePublished) pubParts.push(citePublished);
     if (pubParts.length > 0) {
       parts.push(pubParts.join(': '));
     }
@@ -186,6 +190,7 @@ export default function BibliographicInfo({
   };
 
   const imprintPlace = resolveImprintPlace(book)?.display; // family resolver, #4043
+  const shownPublished = displayPublished(book.published); // "Unknown" / n.d. never reach the reader (#8184)
   const hasExtraInfo = imprintPlace || book.publisher || book.format || book.ustc_id;
 
   return (
@@ -321,10 +326,10 @@ export default function BibliographicInfo({
               </div>
             )}
 
-            {book.published && (
+            {shownPublished && (
               <div className="flex gap-2">
                 <span className="text-stone-500 w-24 flex-shrink-0">Published:</span>
-                <span className="text-stone-200">{book.published}</span>
+                <span className="text-stone-200">{shownPublished}</span>
               </div>
             )}
 
@@ -446,7 +451,7 @@ export default function BibliographicInfo({
                               <p className="text-stone-400">{book.translation_verification.reasoning}</p>
                             )}
                             <p className="text-stone-600 text-[10px]">
-                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via {book.translation_verification.model || 'AI'}
+                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} by an AI search of library catalogues
                               {showExternalLinks && <>{' '}&middot;{' '}<a href="/articles/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>}
                             </p>
                           </div>
@@ -538,8 +543,9 @@ export default function BibliographicInfo({
                   // own rights statement and stays as it is. 3,740 live books
                   // store a rightsstatements.org URI or a Creative Commons deed
                   // URL rather than one of our seven ids, and this used to print
-                  // the bare URL where a licence should be.
-                  const lic = licenseDisplay(book.image_source?.license);
+                  // the bare URL where a licence should be. When the holding library
+                  // has stated its own licence, that is shown instead (#7771).
+                  const lic = displayedImageRights(book.image_source).license;
                   if (!lic) return null;
                   return (
                     <div className="flex gap-2">
@@ -554,12 +560,25 @@ export default function BibliographicInfo({
                     </div>
                   );
                 })()}
-                {book.image_source.attribution && (
-                  <div className="flex gap-2">
-                    <span className="text-stone-500 w-24 flex-shrink-0">Credit:</span>
-                    <span className="text-stone-200">{book.image_source.attribution}</span>
-                  </div>
-                )}
+                {(() => {
+                  const { credit, terms } = displayedImageRights(book.image_source);
+                  return (
+                    <>
+                      {credit && (
+                        <div className="flex gap-2">
+                          <span className="text-stone-500 w-24 flex-shrink-0">Credit:</span>
+                          <span className="text-stone-200">{credit}</span>
+                        </div>
+                      )}
+                      {terms && (
+                        <div className="flex gap-2">
+                          <span className="text-stone-500 w-24 flex-shrink-0">Terms:</span>
+                          <span className="text-stone-200">{terms}</span>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
                 {book.image_source.shelfmark && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Shelfmark:</span>
@@ -654,7 +673,9 @@ export default function BibliographicInfo({
                     const sourceLabel = SOURCE_LABELS[prov.source] || prov.source;
                     const sourceColor = SOURCE_COLORS[prov.source] || 'bg-stone-700 text-stone-300';
                     const dateStr = formatProvenanceDate(prov.date);
-                    const prevVal = formatPreviousValue(prov.previous_value);
+                    // A reconstructed stamp (#7673) attests the value already stored; its previous_value is that same
+                    // value, so "was:" would only repeat it.
+                    const prevVal = prov.reconstructed ? null : formatPreviousValue(prov.previous_value);
 
                     return (
                       <div key={field} className="flex flex-col gap-1 py-1.5 border-b border-stone-700/30 last:border-0">
@@ -673,9 +694,6 @@ export default function BibliographicInfo({
                           )}
                         </div>
                         <div className="flex flex-col gap-0.5 pl-0.5">
-                          {prov.model && (
-                            <span className="text-xs text-stone-500 font-mono">{prov.model}</span>
-                          )}
                           {prov.provider_name && (
                             <span className="text-xs text-stone-500">{prov.provider_name}</span>
                           )}

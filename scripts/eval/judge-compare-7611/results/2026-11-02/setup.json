@@ -1,0 +1,39 @@
+{
+ "at": "2026-11-02T08:18:25.934Z",
+ "correction_template": {
+  "out": "/data/scratch/sl/jobs/detector-task-7611/dt/fc-correct-prompt.txt",
+  "live_prompt": {
+   "id": "6ac02220413a82637da889bb",
+   "name": "Standard OCR",
+   "version": "19.1",
+   "hash": "9d8f959e053491362b2c4acec1e20c9a"
+  },
+  "opus_sent_hash_check": "1e710a51c1fe8355",
+  "template_hash": "0601ef30e816f7a7"
+ },
+ "ocr_prompt": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "n": {
+  "real": 270,
+  "plant_subset": 60,
+  "clean": 36,
+  "plant_pages": 36
+ },
+ "plant_subset_by_kind": {
+  "B": 15,
+  "E": 15,
+  "D": 15,
+  "C": 15
+ },
+ "strata": {
+  "Gemini reads": 60,
+  "Latin, Italian GPU>GEM": 49,
+  "Chinese GPU, GPU>GEM": 86,
+  "Tibetan GPU": 45,
+  "Hebrew, Arabic": 30
+ }
+}

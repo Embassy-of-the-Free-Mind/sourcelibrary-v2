@@ -68,7 +68,7 @@ async function one(w) {
     try {
       res = await fetch(w.url, {
         signal: controller.signal,
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (scholarly archive)' },
+        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
       });
     } finally { clearTimeout(timeout); }
     if (!res.ok) { fail++; console.log(`  [${res.status}] ${w.slug}#${w.idx} — ${new URL(w.url).host}`); return; }

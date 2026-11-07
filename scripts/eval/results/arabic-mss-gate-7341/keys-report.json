@@ -1,0 +1,22 @@
+{
+ "key-o": {
+  "pages": 30,
+  "A": 317,
+  "B": 306,
+  "none": 34,
+  "control_caught": 24
+ },
+ "key-g": {
+  "pages": 30,
+  "A": 278,
+  "B": 335,
+  "control_caught": 22,
+  "none": 44,
+  "control_other": 1,
+  "control_missed": 1
+ },
+ "spans_both_keys": 681,
+ "spans_keys_agree": 375,
+ "spans_to_fable": 306,
+ "fable_pages": 30
+}

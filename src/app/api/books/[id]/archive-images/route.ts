@@ -3,6 +3,7 @@ import { storagePut, pagePaths } from '@/lib/storage';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
+import { markDisplay } from '../../../../../../scripts/workers/lib/display-image.mjs';
 import { withAuth } from '@/lib/auth-helpers';
 import sharp from 'sharp';
 // Which source hosts we will fetch from — ONE list, shared with the watchdog and
@@ -10,6 +11,7 @@ import sharp from 'sharp';
 // copies of this became a silent no-op.
 import { ARCHIVABLE_SOURCES_REGEX } from '@/lib/archivable-sources';
 import { recountBook } from '@/lib/page-counts';
+import { ensurePages, isLazyPagesBook } from '../../../../../../scripts/lib/lazy-pages.mjs';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -80,6 +82,14 @@ export const POST = withAuth(async (request, session, context) => {
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+    // Archiving a manifest-only book (#7343) is the decision to create its pages.
+    if (!dryRun && isLazyPagesBook(book)) {
+      try {
+        await ensurePages(db, bookId, { trigger: 'archive' });
+      } catch (e) {
+        return NextResponse.json({ error: 'Pages not ready', details: String((e as Error)?.message ?? e) }, { status: 503 });
+      }
     }
 
     // Find pages that need archiving (from IA, Gallica, or MDZ)
@@ -174,7 +184,7 @@ export const POST = withAuth(async (request, session, context) => {
             // never created. Every book archived by this route rendered a broken
             // cover on its book page as a result.
             try {
-              const displayBuffer = await compress_photo(buffer, 1200, 78);
+              const displayBuffer = await markDisplay(await compress_photo(buffer, 1200, 78), { bookId, pageNumber: page.page_number });
               await storagePut(paths.display, displayBuffer, {
                 access: 'public',
                 contentType: 'image/jpeg',

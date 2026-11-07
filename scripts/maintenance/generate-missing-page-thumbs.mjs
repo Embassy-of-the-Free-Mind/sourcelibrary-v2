@@ -101,7 +101,7 @@ async function main() {
 
   console.log(`mode: ${APPLY ? 'APPLY' : 'DRY RUN'}  scope: ${scope}`);
 
-  const cursor = pages.find(query, { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1 } });
+  const cursor = pages.find(query, { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1 } }).batchSize(1000);
   if (LIMIT) cursor.limit(LIMIT);
 
   let scanned = 0, generated = 0, skipped = 0, failed = 0;

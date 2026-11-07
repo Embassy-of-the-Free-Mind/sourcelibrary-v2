@@ -129,7 +129,7 @@ const rt = db.collection('reference_translations');
 console.log('loading reference_translations…');
 const bySurname = new Map();
 let loaded = 0;
-for await (const r of rt.find({}, { projection: { _id: 0, lccn: 1, author: 1, title: 1, uniform_title: 1, year: 1, publisher: 1, original_languages: 1, source: 1 } })) {
+for await (const r of rt.find({}, { projection: { _id: 0, lccn: 1, author: 1, title: 1, uniform_title: 1, year: 1, publisher: 1, original_languages: 1, source: 1 } }).batchSize(1000)) {
   loaded++;
   const sn = norm(surnameOf(r.author));
   if (sn.length < 4) continue;

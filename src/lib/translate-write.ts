@@ -32,6 +32,7 @@ import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
 import { guardTranslationText } from './translation-write-guard';
+import { translationLayers, writePageAnnotations } from './translation-text'; // #5942: text + annotations beside data
 
 /**
  * `$unset` fragment every translation writer includes (#4927). `translation_stale`
@@ -425,12 +426,16 @@ export async function writePageTranslation(
 
   // Promise 3: provenance-stamped write.
   const now = new Date();
+  // #5942: the book's words and the notes, stored beside `data` (which is never rewritten for them).
+  const layers = translationLayers(finalText, { promptVersion: promptRef?.version ?? null });
   await db.collection('pages').updateOne(
     { id: pageId },
     {
       $set: {
         translation: {
           data: finalText,
+          text: layers.text,
+          text_from: layers.text_from,
           content_hash: contentHash(finalText),
           language,
           ...(model && { model }),
@@ -451,6 +456,7 @@ export async function writePageTranslation(
       $unset: CLEAR_STALE_UNSET,
     }
   );
+  await writePageAnnotations(db, [{ page_id: pageId, book_id: (current?.book_id as string | undefined) ?? null, run_id: jobId ?? null, layers }]);
   return { written: true, protected: false, text: finalText };
 }
 

@@ -180,6 +180,12 @@ export default function DevelopersPage() {
                   <td className="py-2">{API_LIMITS.anon.requestsPerHour}/hour</td>
                 </tr>
                 <tr className="border-b border-border-light">
+                  <td className="py-2 pr-4">Assistant reading for a person (Claude, ChatGPT, Perplexity), per shared address</td>
+                  <td className="py-2 pr-4">{API_LIMITS.assistantFetcher.pagesPerDay.toLocaleString()}</td>
+                  <td className="py-2 pr-4">{API_LIMITS.anon.imagesPerDay.toLocaleString()}</td>
+                  <td className="py-2">{API_LIMITS.assistantFetcher.requestsPerHour.toLocaleString()}/hour</td>
+                </tr>
+                <tr className="border-b border-border-light">
                   <td className="py-2 pr-4">Signed in (free)</td>
                   <td className="py-2 pr-4">{API_LIMITS.session.pagesPerDay.toLocaleString()}</td>
                   <td className="py-2 pr-4">{API_LIMITS.session.imagesPerDay.toLocaleString()}</td>

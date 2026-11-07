@@ -1,0 +1,82 @@
+{
+ "checked_by": "job ocr-percall-7522 (Opus session, image crops of the 2nd drawn page, 2026-10-27, before any read)",
+ "books": {
+  "69b51e0147b06ecd58188993": {
+   "title": "Christoph Gottlieb von Murr über den wahren Ursprung der Ros",
+   "language": "German",
+   "type": "roman"
+  },
+  "69b51e63768235dc659928d8": {
+   "title": "Elucidarius Chymicus : Oder Erleuchterung und deutliche Erkl",
+   "language": "German",
+   "type": "fraktur"
+  },
+  "69b51e6f9a81ef7feb3d4ec7": {
+   "title": "Chymische Hochzeit Christiani Rosencreutz anno 1459",
+   "language": "German",
+   "type": "fraktur"
+  },
+  "69b51edaff09e4fe943b611b": {
+   "title": "Der teutsche Merkur. 1783, 2 = Bd. 42",
+   "language": "German",
+   "type": "fraktur"
+  },
+  "69bd9abd46b01553e33bce57": {
+   "title": "Zur Psychologie und Pathologie sogenannter occulter Phänomen",
+   "language": "German",
+   "type": "roman"
+  },
+  "69bd9d236120d54bd0373aaa": {
+   "title": "Traumbuch Artemidori ... darinnen Ursprung, Unterscheid und ",
+   "language": "German",
+   "type": "fraktur"
+  },
+  "69c70242da9771c71631580e": {
+   "title": "Zwei schöne chymische Tractetlein: De Mercurio alchimistarum",
+   "language": "German",
+   "type": "fraktur"
+  },
+  "6a21991c4b61907ea5ffb24f": {
+   "title": "Diagnostische Assoziationsstudien: Beiträge zur experimentel",
+   "language": "German",
+   "type": "roman"
+  },
+  "69920bf777b798aa12121afc": {
+   "title": "Sancti Irenaei Adversus Haereses",
+   "language": "Latin",
+   "type": "roman"
+  },
+  "69af0da8be5fc7f363545d1a": {
+   "title": "Universae Geometriae Synopsis",
+   "language": "Latin",
+   "type": "roman"
+  },
+  "69b51ddccf111105c42922b3": {
+   "title": "Catalogi librorum manuscriptorum Angliae et Hiberniae in unu",
+   "language": "Latin",
+   "type": "roman"
+  },
+  "69b51e0cefd8df28f2daf7cd": {
+   "title": "Theophrasti[i] Paracelsi[i] Philosophiae Et Medicinae Vtrivs",
+   "language": "Latin",
+   "type": "roman"
+  },
+  "69b51e0ecf111105c4296303": {
+   "title": "Opusculum de mirabilibus novae et veteris urbis Romae",
+   "language": "Latin",
+   "type": "roman"
+  },
+  "69b51e3bcf111105c4298b05": {
+   "title": "Petri Galatini Opus de arcanis catholicae veritatis : hoc es",
+   "language": "Latin",
+   "type": "roman"
+  },
+  "6a4e43f4dc886f1f5abb52bb": {
+   "title": "Tomus I. (III.) operum omnium, quae quidem extant, l. Gavric",
+   "language": "Latin",
+   "type": "roman"
+  }
+ },
+ "fraktur": 5,
+ "roman": 10
+}

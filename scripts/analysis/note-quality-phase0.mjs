@@ -473,7 +473,7 @@ async function main() {
       },
     ],
     { allowDiskUse: true }
-  );
+  ).batchSize(1000);
 
   const noteRecords = [];
   const bookIds = new Set();

@@ -1,0 +1,144 @@
+{
+ "precision_by_role": {
+  "next": 0.913,
+  "none": 0.118,
+  "prev": 0.071
+ },
+ "rows": [
+  {
+   "language": "Latin",
+   "screened": 12374,
+   "flags": 5993,
+   "est_real": 5047,
+   "confirmed": 348,
+   "contained": 156,
+   "left": 4891
+  },
+  {
+   "language": "German",
+   "screened": 3768,
+   "flags": 1636,
+   "est_real": 1326,
+   "confirmed": 134,
+   "contained": 70,
+   "left": 1256
+  },
+  {
+   "language": "Greek",
+   "screened": 2470,
+   "flags": 690,
+   "est_real": 544,
+   "confirmed": 26,
+   "contained": 17,
+   "left": 527
+  },
+  {
+   "language": "other",
+   "screened": 2286,
+   "flags": 299,
+   "est_real": 238,
+   "confirmed": 22,
+   "contained": 6,
+   "left": 232
+  },
+  {
+   "language": "Russian",
+   "screened": 1403,
+   "flags": 859,
+   "est_real": 717,
+   "confirmed": 45,
+   "contained": 14,
+   "left": 703
+  },
+  {
+   "language": "French",
+   "screened": 1213,
+   "flags": 482,
+   "est_real": 390,
+   "confirmed": 40,
+   "contained": 11,
+   "left": 379
+  },
+  {
+   "language": "Italian",
+   "screened": 840,
+   "flags": 552,
+   "est_real": 479,
+   "confirmed": 29,
+   "contained": 15,
+   "left": 464
+  },
+  {
+   "language": "English",
+   "screened": 725,
+   "flags": 213,
+   "est_real": 163,
+   "confirmed": 9,
+   "contained": 7,
+   "left": 156
+  },
+  {
+   "language": "Chinese",
+   "screened": 676,
+   "flags": 38,
+   "est_real": 23,
+   "confirmed": 0,
+   "contained": 0,
+   "left": 23
+  },
+  {
+   "language": "Dutch",
+   "screened": 479,
+   "flags": 225,
+   "est_real": 189,
+   "confirmed": 0,
+   "contained": 0,
+   "left": 189
+  },
+  {
+   "language": "Sanskrit",
+   "screened": 450,
+   "flags": 83,
+   "est_real": 69,
+   "confirmed": 10,
+   "contained": 4,
+   "left": 65
+  },
+  {
+   "language": "Arabic",
+   "screened": 291,
+   "flags": 62,
+   "est_real": 41,
+   "confirmed": 0,
+   "contained": 0,
+   "left": 41
+  },
+  {
+   "language": "Hebrew",
+   "screened": 249,
+   "flags": 22,
+   "est_real": 18,
+   "confirmed": 0,
+   "contained": 0,
+   "left": 18
+  },
+  {
+   "language": "Japanese",
+   "screened": 245,
+   "flags": 47,
+   "est_real": 18,
+   "confirmed": 2,
+   "contained": 0,
+   "left": 18
+  },
+  {
+   "language": "Tibetan",
+   "screened": 14,
+   "flags": 1,
+   "est_real": 1,
+   "confirmed": 0,
+   "contained": 0,
+   "left": 1
+  }
+ ]
+}

@@ -1,0 +1,257 @@
+{
+ "judges": {
+  "opus": {
+   "n": 18,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 12,
+    "old": 5,
+    "tie": 1
+   },
+   "mean_new_minus_old": 0.39,
+   "ci95": [
+    0,
+    0.78
+   ],
+   "pages": {
+    "699379bfb0a84a5763965fdc": {
+     "new": 5,
+     "old": 4,
+     "better": "new",
+     "reason": "Both render the Greek text accurately and completely, but Y adds material not on the page: an invented account of the previous page in its meta, interpretive notes such as the 'Spartan mirage' and mothers celebrating, and 'to lead' after Agesilaus's illness, whereas X stays close to the source with only brief glosses."
+    },
+    "69f32edc876dd827cbc449ec": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Y adds 'to you, his God and Father' where the page has only 'to God and Father', and it drops 'himself' (αὐτὸς) and 'to him' (αὐτῷ); X follows the page closely, and its only additions are a clearly marked gloss and marginal notes, though both end by rendering 'δεσποτικῆς σωτηρίας' loosely as 'saving passion'."
+    },
+    "69bfcc6d355e52cf7837cbeb": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Y adds content not on the page (a claim that a liturgical text follows, a 'Bodleian Library' keyword, and a duplicated warning paragraph), while X only drops minor details such as 'intricate', 'braided or' and 'heavily'."
+    },
+    "69b630611c1c21a3738015b1": {
+     "new": 3,
+     "old": 3,
+     "better": "new",
+     "reason": "Both add many English glosses that the source does not contain, but Y renders 'cum d.' (cum derivatis, 'with derivatives') as 'with the entry' throughout, wrongly glosses euronos and euros as 'east wind', drops the signature mark, and alters 'eurein' to 'heurein', while X's main faults are its speculative added glosses (e.g. euradamangys) and a Henri Estienne attribution not on the page."
+    },
+    "69a5e5c91d73f9668388ee35": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X tracks the garbled Greek clause by clause, while Y adds interpretive material not on the page (notes on the light metaphor, otherness receding from the One, a framing meta paragraph) and alters some clauses, e.g. rendering 'ἐπὶ πάντα τὰ ζῶα μὴ μετέχειν' as 'not all living things participate' and dropping the 'ἐν ᾧ δὲ τὸ εἶναι' contrast."
+    },
+    "69bfce6c8ab50eb88e8c85b0": {
+     "new": 3,
+     "old": 3,
+     "better": "tie",
+     "reason": "X keeps the margin fragments but adds content not on the page (the invented 'to understand', a 'continues from previous page' note, and the unsupported names John of Damascus and Ephrem the Syrian), while Y renders the main line more literally ('we have made its meaning', 'the power of the unlearned', and the unclear line) but empties all ten margin fragments and states the uncertain 'servant' as fact."
+    },
+    "6953a96577f38f6761bd6380": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "X renders the Greek text and page apparatus closely with nothing added, while Y drops the header and opening word 'to many', mislabels the margin 'V. 507' as 'Vol.', and adds an editorial note, summary and keywords that are not on the page (both omit the Latin parallel version)."
+    },
+    "69b52c823dd6d94230280d48": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Y renders the garbled source literally and marks its own supplements and gaps (e.g. 'you have suffered from the...', 'falling and falling'), while X smooths over corruptions with invented content such as 'under an obstruction' and 'throbbing ceases', and adds a summary attributing the text to Galen, who is not named on the page."
+    },
+    "6993881c74305116d72cf36c": {
+     "new": 3,
+     "old": 2,
+     "better": "new",
+     "reason": "Y leaves out the last three rows (ΑΥΚΣ, ΑΥΗΛ, ΑΥΟΣ), turns the unclear left-column labels into invented readings like 'SUN' and arbitrary numbers, and has more numeral errors; X is more complete and closer on the numerals, but it wrongly renders the final entry ΡΛΒ Λ-θ- as '132 of Ares (Mars)'."
+    },
+    "6955742bf63a757109172f98": {
+     "new": 4,
+     "old": 5,
+     "better": "old",
+     "reason": "Both render the Latin commentary and its numbers accurately, but X drops the running header and turns the quoted Greek collation into English, blurring the textual readings under discussion, while Y keeps the header and the Greek forms intact."
+    },
+    "69dbc9d51040d1d5e20a76c3": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X makes several substantive errors that Y gets right: it says some miners perished 'upon the surface of the earth' instead of when the earth collapsed on them, it drops 'being called fools', and it renders the self-mastery clause as 'unable to differ even from themselves'; X also adds invented text in its continuation note."
+    },
+    "69b21edfa66227125eb0638b": {
+     "new": 4,
+     "old": 4,
+     "better": "old",
+     "reason": "Y renders the whole Greek page, including the final clause 'ἐνδεέστερος αὑτοῦ φανῆναι' ('inferior to his usual self'); X copies the printed English facing page, so it stops at 'thought inferior' and opens with 'strange and violent measure', a phrase from the previous page's Greek; Y in turn omits the editorial footnote dating the event to 52 B.C."
+    },
+    "6993895d0f04c37dcfa60eb5": {
+     "new": 3,
+     "old": 3,
+     "better": "new",
+     "reason": "Y renders more of the page, including the 'instead of acacia' clause and the bread/blood line that X omits or replaces with ellipses, and it keeps the negation of 'never resort to any extreme' that X weakens to 'not always', though Y's summary wrongly adds a 'Galen' attribution that is not in the source."
+    },
+    "69b2fed665b9d6bf89925227": {
+     "new": 4,
+     "old": 4,
+     "better": "new",
+     "reason": "Y misrenders the clause about the Athenians partly marching out from suspicion of a plot against the democracy as 'some came under suspicion of planning to dissolve the democracy', while X renders it correctly; X's errors are smaller: an invented continuation note blaming a 'Lacedaemonian' rupture, 'mercenaries' for ἐπικούρους, and 'fruit trees' for δένδρα."
+    },
+    "6a089ba1cb70c5c62b7a9af6": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "X renders the page once and accurately, with only minor liberties such as 'insult Pompey and Cicero' for 'those men'; Y translates the page twice, adds 'Faustus, the son of Sulla', which is not on the page, garbles some apparatus notes, and mistranslates ἐκρίνετο as 'being criticized'."
+    },
+    "6993892b74305116d72d118d": {
+     "new": 3,
+     "old": 3,
+     "better": "old",
+     "reason": "X adds material not on the page, namely a summary and keywords that attribute the text to Proclus and assert an argument the garbled source does not clearly make; Y's comma-separated word-by-word rendering is hard to read and misplaces the margin note, but it covers the page and invents nothing."
+    },
+    "69cf7c36878f40c5945f29be": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X adds a fabricated 'continues from previous page: ...double time' line, mistranslates πρ]υτανηω as the building 'prytaneion', drops the header, and has its diagram lyrics invent 'while all the rushing rivers hymn' in contradiction of its own main text; Y keeps the header and reads consistently, though it pads the Greek with 'while we sing to the Ruler of all' and 'in their courses'."
+    },
+    "69942f3eb2f6748db4ac0001": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "X inserts content absent from the page: it adds 'without action', recasts the honor clause as 'not the same as choosing to act rightly', and invents the explanation that gods have 'no base desires to overcome'; Y stays close to the source, with only a stray duplicated opening fragment and some literal awkwardness."
+    }
+   }
+  },
+  "gemini": {
+   "n": 18,
+   "controls_passed": "2/2",
+   "wins": {
+    "new": 14,
+    "old": 4,
+    "tie": 0
+   },
+   "mean_new_minus_old": 1.11,
+   "ci95": [
+    0.39,
+    1.72
+   ],
+   "pages": {
+    "699379bfb0a84a5763965fdc": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Translation Y correctly translates the opening sentence and includes the page number and vocabulary list that Translation X omits."
+    },
+    "69f32edc876dd827cbc449ec": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X faithfully follows the source text as written and preserves the marginal descriptions, whereas Translation Y erroneously adds a second-person address ('to you, his God and Father') not found in the Greek and omits the marginal image descriptions entirely."
+    },
+    "69bfcc6d355e52cf7837cbeb": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation Y introduces extensive extraneous content not present in the source, including fabricated references to liturgical text and the Bodleian Library, added definitions, and duplicated text."
+    },
+    "69b630611c1c21a3738015b1": {
+     "new": 5,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X correctly renders the frequent bibliographical abbreviation 'cum d.' as 'with derivatives' and translates all entries, whereas Translation Y systematically mistranslates it as 'with the entry', omits the signature line, drops source words, and confuses etymologies such as translating εὖρος under Εὐρύς as 'east wind'."
+    },
+    "69a5e5c91d73f9668388ee35": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X faithfully preserves the source text and its negations without interpolation, whereas Translation Y introduces extraneous explanatory notes and headers and distorts key negations."
+    },
+    "69bfce6c8ab50eb88e8c85b0": {
+     "new": 3,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X accurately conveys the meaning of the Greek text and accounts for OCR errors, whereas Translation Y mistranslates the text, deletes the marginal content, and contains malformed markup."
+    },
+    "6953a96577f38f6761bd6380": {
+     "new": 3,
+     "old": 5,
+     "better": "old",
+     "reason": "Translation X faithfully translates all elements on the page without additions, whereas Translation Y omits the page header and opening word while adding extraneous explanatory notes, glosses, a summary, and keywords."
+    },
+    "69b52c823dd6d94230280d48": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X accurately conveys the Greek medical terminology and syntax despite adding extraneous summary metadata, whereas Translation Y distorts key statements through nonsensical literalisms and leaves the final clause incomplete."
+    },
+    "6993881c74305116d72cf36c": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "X includes all rows and accurately transliterates the Greek numerals, whereas Y omits the final three rows of the table and systematically misreads the numerical values."
+    },
+    "6955742bf63a757109172f98": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X fully translates the Greek quotations and textual variants into English, whereas Translation Y leaves the lengthy Greek passage in line 25 and several manuscript readings completely untranslated."
+    },
+    "69dbc9d51040d1d5e20a76c3": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Y is far more complete and faithful, correctly rendering the collapsing earth in the mines and translating key terms like 'fools' and 'slaughter', whereas X omits multiple words and erroneously claims miners perish on the earth's surface."
+    },
+    "69b21edfa66227125eb0638b": {
+     "new": 3,
+     "old": 5,
+     "better": "old",
+     "reason": "Translation Y completely translates the Greek text on this page through to the end of the final sentence, whereas Translation X cuts off mid-sentence at the end and includes extraneous text and notes from outside the Greek passage."
+    },
+    "6993895d0f04c37dcfa60eb5": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y translates the entire passage completely and accurately, whereas Translation X leaves untranslated gaps marked by ellipses and produces nonsensical mistranslations such as saliva that has not yet eaten."
+    },
+    "69b2fed665b9d6bf89925227": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "X accurately translates the Greek syntax and Athenian motives regarding the overthrow of democracy and prospective naval movements, whereas Y mistranslates the democracy clause as an independent event and contains tense and omission errors."
+    },
+    "6a089ba1cb70c5c62b7a9af6": {
+     "new": 5,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation X accurately translates the Greek text without additions, whereas Translation Y introduces external facts not found in the source (naming Faustus), creates a grammatical sentence fragment, and redundantly duplicates the page."
+    },
+    "6993892b74305116d72d118d": {
+     "new": 4,
+     "old": 2,
+     "better": "new",
+     "reason": "Translation X preserves the syntactic coherence and philosophical meaning of the text despite adding unprompted metadata, whereas Translation Y is an unreadable word-for-word gloss fragmented by pervasive commas that distorts the syntax and reverses the meaning of the marginal note."
+    },
+    "69cf7c36878f40c5945f29be": {
+     "new": 4,
+     "old": 3,
+     "better": "new",
+     "reason": "Translation Y translates the complete page including the header and lacuna fragments, whereas Translation X omits the header, drops preserved text, and introduces hallucinated metadata."
+    },
+    "69942f3eb2f6748db4ac0001": {
+     "new": 3,
+     "old": 4,
+     "better": "old",
+     "reason": "Translation X accurately conveys the affirmative requirement of external goods and coherently resolves OCR corruptions, whereas Translation Y introduces an erroneous negation reversing the statement on needing favor and stumbles on recognition errors."
+    }
+   }
+  }
+ },
+ "rule": {
+  "controls": true,
+  "non_inferior": true,
+  "by_eye": "recorded separately (rule 3)"
+ }
+}

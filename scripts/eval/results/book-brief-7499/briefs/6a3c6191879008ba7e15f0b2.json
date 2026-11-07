@@ -1,0 +1,249 @@
+{
+ "book_id": "6a3c6191879008ba7e15f0b2",
+ "model": "claude-opus-5-5",
+ "words": 298,
+ "brief": "**1. The work**\nA Chinese Buddhist scholastic commentary in literary Chinese: Fazang's line-by-line exegesis (義記) of the *Awakening of Faith in the Mahāyāna* (大乘起信論), whose root text is attributed to Aśvaghoṣa. The register is technical and analytic, with dense section divisions and question-and-answer passages. The base text is quoted in segments, and each segment is followed by the commentary.\n\n**2. Glossary**\n生滅門 — gate of arising and ceasing\n眞如門 — gate of suchness\n眞如 — suchness\n如來藏 — tathāgatagarbha\n阿棃耶識 — ālaya consciousness\n藏識 — storehouse consciousness\n無沒識 — non-perishing consciousness\n七識 — seven consciousnesses\n轉識 — evolving consciousness\n無明 — ignorance\n本覺 — original awakening\n始覺 — initial awakening\n不覺 — non-awakening\n究竟覺 — ultimate awakening\n根本不覺 — fundamental non-awakening\n枝末不覺 — derivative non-awakening\n熏習 — perfuming\n和合 — union\n隨緣 — according with conditions\n不變 — immutability\n心源 — source of the mind\n法身 — Dharma body\n三大 — three greatnesses\n緣起 — dependent arising\n妄念 — deluded thoughts\n一心 — One Mind\n染法 — defiled dharmas\n淨法 — pure dharmas\n非一非異 — neither one nor different\n法界 — dharmadhātu\n\n**3. Layout**\nThe root-text lemmata stand on their own lines. Render them in bold, and render the commentary that follows as plain text. △ marks a major section division; keep it as \"△\". Small interlinear notes (e.g. 但明以下二十字…) go in square brackets. Omit the running heads and folio numbers (起信論義記卷…, digits). Sūtra and treatise quotations go in quotation marks.\n\n**4. Names**\n法藏 — Fazang\n馬鳴 — Aśvaghoṣa\n眞諦三藏 — Tripiṭaka Master Paramārtha\n奘法師 — Dharma Master Xuanzang\n楞伽(經) — Laṅkāvatāra Sūtra\n勝鬘 — Śrīmālā Sūtra\n涅槃 — Nirvāṇa Sūtra\n十地(論) — Daśabhūmika (Treatise)\n梁攝論 — Liang *Mahāyānasaṃgraha*\n無性攝論 — Asvabhāva's *Mahāyānasaṃgraha* commentary\n金光明經 — Golden Light Sūtra\n魏國西寺 — Weiguo West Monastery\n京兆府 — Jingzhao Prefecture",
+ "key": [
+  {
+   "source": "生滅門",
+   "forms": [
+    "生滅門"
+   ],
+   "english": "gate of arising and ceasing"
+  },
+  {
+   "source": "眞如門",
+   "forms": [
+    "眞如門"
+   ],
+   "english": "gate of suchness"
+  },
+  {
+   "source": "眞如",
+   "forms": [
+    "眞如"
+   ],
+   "english": "suchness"
+  },
+  {
+   "source": "如來藏",
+   "forms": [
+    "如來藏"
+   ],
+   "english": "tathāgatagarbha"
+  },
+  {
+   "source": "阿棃耶識",
+   "forms": [
+    "阿棃耶識",
+    "阿棃耶",
+    "阿梁耶",
+    "阿賴耶",
+    "棃耶",
+    "梁耶",
+    "梨耶",
+    "賴耶"
+   ],
+   "english": "ālaya consciousness"
+  },
+  {
+   "source": "藏識",
+   "forms": [
+    "藏識"
+   ],
+   "english": "storehouse consciousness"
+  },
+  {
+   "source": "無沒識",
+   "forms": [
+    "無沒識"
+   ],
+   "english": "non-perishing consciousness"
+  },
+  {
+   "source": "七識",
+   "forms": [
+    "七識"
+   ],
+   "english": "seven consciousnesses"
+  },
+  {
+   "source": "轉識",
+   "forms": [
+    "轉識"
+   ],
+   "english": "evolving consciousness"
+  },
+  {
+   "source": "無明",
+   "forms": [
+    "無明"
+   ],
+   "english": "ignorance"
+  },
+  {
+   "source": "本覺",
+   "forms": [
+    "本覺"
+   ],
+   "english": "original awakening"
+  },
+  {
+   "source": "始覺",
+   "forms": [
+    "始覺"
+   ],
+   "english": "initial awakening"
+  },
+  {
+   "source": "不覺",
+   "forms": [
+    "不覺"
+   ],
+   "english": "non-awakening"
+  },
+  {
+   "source": "究竟覺",
+   "forms": [
+    "究竟覺"
+   ],
+   "english": "ultimate awakening"
+  },
+  {
+   "source": "根本不覺",
+   "forms": [
+    "根本不覺"
+   ],
+   "english": "fundamental non-awakening"
+  },
+  {
+   "source": "枝末不覺",
+   "forms": [
+    "枝末不覺"
+   ],
+   "english": "derivative non-awakening"
+  },
+  {
+   "source": "熏習",
+   "forms": [
+    "熏習",
+    "熏"
+   ],
+   "english": "perfuming"
+  },
+  {
+   "source": "和合",
+   "forms": [
+    "和合"
+   ],
+   "english": "union"
+  },
+  {
+   "source": "隨緣",
+   "forms": [
+    "隨緣"
+   ],
+   "english": "according with conditions"
+  },
+  {
+   "source": "不變",
+   "forms": [
+    "不變"
+   ],
+   "english": "immutability"
+  },
+  {
+   "source": "心源",
+   "forms": [
+    "心源"
+   ],
+   "english": "source of the mind"
+  },
+  {
+   "source": "法身",
+   "forms": [
+    "法身"
+   ],
+   "english": "Dharma body"
+  },
+  {
+   "source": "三大",
+   "forms": [
+    "三大"
+   ],
+   "english": "three greatnesses"
+  },
+  {
+   "source": "緣起",
+   "forms": [
+    "緣起"
+   ],
+   "english": "dependent arising"
+  },
+  {
+   "source": "妄念",
+   "forms": [
+    "妄念"
+   ],
+   "english": "deluded thoughts"
+  },
+  {
+   "source": "一心",
+   "forms": [
+    "一心"
+   ],
+   "english": "One Mind"
+  },
+  {
+   "source": "染法",
+   "forms": [
+    "染法"
+   ],
+   "english": "defiled dharmas"
+  },
+  {
+   "source": "淨法",
+   "forms": [
+    "淨法"
+   ],
+   "english": "pure dharmas"
+  },
+  {
+   "source": "非一非異",
+   "forms": [
+    "非一非異",
+    "非一異"
+   ],
+   "english": "neither one nor different"
+  },
+  {
+   "source": "法界",
+   "forms": [
+    "法界"
+   ],
+   "english": "dharmadhātu"
+  }
+ ],
+ "input_pages": [
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21
+ ]
+}

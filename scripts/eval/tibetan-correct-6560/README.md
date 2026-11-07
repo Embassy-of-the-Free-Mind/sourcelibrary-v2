@@ -108,6 +108,18 @@ scripts/eval/tibetan-correct-6560/pass/run-volume.sh <book_id> [--no-apply]
 Another corrector through the same gate: `MODEL=<agy model> JOB=<job> run-volume.sh <book_id> --no-apply`. Gemini 4
 Argon low ran it on 2026-10-16 (NO-GO: `experiments/2026-10-15-tibetan-g4l-pass-gate-6560.md`).
 
+## The production pass (#6560, 2026-10-26): two judges, a net bar, volume by volume
+
+After the router cell switched to Yigdzin > agy Flash-low (#6740), `pass/run-pass.sh` wraps `run-volume.sh`:
+`gate <book>` (read, dry apply, 40-page audit), `apply-gate <book>` (only after a pass) and `run [max]` (the order
+file's volumes, each audited on 10 changed pages, then applied with `MARK_STALE=`, so no re-translation is queued and
+each volume's changed page ids go to `$JOB_SCRATCH/vol/<book>.changed.json`). The audit has two judges on the same
+pages. The first is the tiled span judge (`tiles-req`, `audit-score`). The second is the route-judge whole-page judge
+(`leafcheck.mjs page-req`, the #6740 prompt, draft and written judged separately). `leafcheck.mjs gate` pools their
+verdicts and applies the bar pre-registered in `experiments/2026-10-27-tibetan-flash-pass-production-6560.md`. agy is
+paced at `AGY_DAY_MAX` (4,000) calls a UTC day, and `$STATE` (`pass-state.jsonl`) is the done/stopped checkpoint.
+First gate, 2026-10-26, rGyud 'bum Ka: NO-GO (pooled worse 6/40, bar 4), and nothing was applied.
+
 ## Gemini 4 Argon low arm (#6560, 2026-10-15)
 
 `prep.py --root <scratch> --reuse-plants`, then `scripts/eval/run-cli-arm.py --model gemini-4-argon-low --kind ocr
@@ -124,3 +136,21 @@ lite OCR settings) on `req/corr.jsonl` and `req/corr-anchor.jsonl` into `out/lit
 (production-shaped prompt). `score.py` adds them and a `wreck` list (folios with lines > draft + 2, syllables > 115%,
 or identity < 0.85). Scores: `results/tibetan-correct-6560/scores-7263.json.gz`. No image read-off was run. Write-up:
 `scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md`.
+
+## Error profiles and diff-hunk QA (#6560, #6740, 2026-10-27)
+
+`profiles-diffqa/`: does the correction prompt do better when it carries the draft OCR system's error profile (B), or
+that profile plus the corrector's own (C)? And can a per-hunk Opus leaf check replace the lane's blanket line-count
+refusal? Profiles are data files, `profiles/<reader|corrector>.<model>.<script>.json`, written from
+`profile-counts.py` over four audits.
+
+```
+node --env-file=.env.production.local profiles-diffqa/build-set.mjs --root=$JOB_SCRATCH --brgyad=<R2 brGyad reads>.jsonl
+python3 prep.py --root $JOB_SCRATCH/prep --reuse-plants
+node profiles-diffqa/arms.mjs --root=$JOB_SCRATCH          # req/{A,B,C}.jsonl -> run-cli-arm.py --model gemini-3.8-flash-low
+node profiles-diffqa/judge.mjs span-req|confirm-req --arm=A|B|C ; page-req --variants=... ; qa-req ; score --out=S.json
+```
+
+Write-up: `scripts/eval/experiments/2026-10-27-tibetan-corrector-profiles-diff-qa-6560.md`. No variant passed the
+pre-registered rule. Profile C removed mantra and tsheg normalisation at no cost to fixes. The per-hunk QA cannot judge
+removed lines.

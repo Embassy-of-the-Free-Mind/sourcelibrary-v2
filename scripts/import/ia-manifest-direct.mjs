@@ -16,13 +16,27 @@
  * languages of a facing-text edition. text_role is deliberately NOT set — classify-text-role owns it.
  *
  * Lands HIDDEN (visible:false, hidden:true); Phase 0 auto-enrols the book on the OCR lane on its next
- * tick unless --hold <reason> is given, which parks it via scripts/lib/pipeline-hold.mjs (release with
+ * tick unless --hold <reason> is given, which parks it via scripts/lib/pipeline-hold.mjs IN THE INSERT DOCUMENT
+ * (the wave-import.mjs holdAtInsert shape), so the book never exists unheld — not even between the insert
+ * and a follow-up update (#8049: the dial was $5 that day, and a paid lane could enrol an unheld book) (release with
  * `hold-pipeline-books.mjs --release-held --reason <reason> --to queued --apply` — --to queued is
  * REQUIRED for books that never had a status, or OCR is skipped). Making a book public is a QA step.
  *
  *   set -a; source .env.production.local; set +a
  *   node scripts/import/ia-manifest-direct.mjs --manifest scripts/import/manifests/<x>.json --dry-run
  *   node scripts/import/ia-manifest-direct.mjs --manifest <x>.json --commit [--limit N] [--only <ia-id>] [--hold <reason>]
+ *     --hold needs --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD (#7860)
+ *     [--out <results.jsonl>] [--concurrency N] [--hold-release "<the release sentence>"]
+ *
+ * Optional manifest keys (#8053): `issue` (number, stamped on the hold), `hold_release` (the hold's release sentence),
+ * `work_id_source` (default for BOOKS[].work_id), `sweep` (kebab-case: a sweep_log row is written BEFORE each insert,
+ * lesson "a sweep logs before it writes"). Per book: `work_id` (e.g. kr:KR2a0001, set at insert) and `work_id_source`.
+ * IA pacing: two consecutive 429/503 answers back the run off (1, 2, 4 … 16 min, then exit 75 so the caller resumes
+ * from the manifest); every volume ends in the results file as imported, already-held, gate-declined or a failure reason.
+ * Per-book manifest keys beyond the required ones: `allow_duplicate: "<why>"` passes the acquisition gate's
+ * explicit opt-out (a same-edition copy imported because ours is incomplete; the gate still writes its
+ * `dedup_skips` row with allowed_duplicate: true), `processing_priority` (number) and `collections` (array,
+ * added to the manifest-level list).
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'fs';
@@ -30,7 +44,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
-import { holdBook } from '../lib/pipeline-hold.mjs';
+import { holdBook, makeHoldMarker, parseReleaseWhen, HOLD_STATUS, HOLD_EVENT } from '../lib/pipeline-hold.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const COMMIT = process.argv.includes('--commit');
 const argAfter = (flag) => { const i = process.argv.indexOf(flag); return i > 0 ? process.argv[i + 1] : null; };
@@ -45,14 +60,36 @@ const { BOOKS } = manifest;
 const IMPORTER = manifest.campaign || path.basename(MANIFEST, '.json');
 const COLLECTIONS = Array.isArray(manifest.collections) ? manifest.collections : [];
 if (!Array.isArray(BOOKS) || !BOOKS.length) { console.error('Manifest needs a non-empty BOOKS[]'); process.exit(1); }
-const OUT = path.join(HERE, '..', '..', 'scratchpad', 'acq', `${IMPORTER}-results.jsonl`);
+const OUT = argAfter('--out') || path.join(HERE, '..', '..', 'scratchpad', 'acq', `${IMPORTER}-results.jsonl`);
+const CONCURRENCY = Math.max(1, Math.min(4, +(argAfter('--concurrency') || 1)));
+const SWEEP = manifest.sweep || null;
+if (SWEEP && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(SWEEP)) { console.error(`manifest.sweep must be kebab-case: ${SWEEP}`); process.exit(1); }
 const HOLD = HOLD_REASON ? {
   reason: HOLD_REASON,
-  release: `Held at import by ia-manifest-direct.mjs (--hold ${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  release: manifest.hold_release || argAfter('--hold-release') || `Held at import by ia-manifest-direct.mjs (--hold ${HOLD_REASON}); release with --to queued so OCR runs from scratch.`,
+  ...(manifest.issue ? { issue: Number(manifest.issue) } : {}),
+  release_when: parseReleaseWhen(argAfter('--release-when')),
   source: IMPORTER,
 } : null;
+// An issue-kind release condition is also the hold's issue (the /admin held list and hold-release-check group by it).
+if (HOLD?.release_when?.kind === 'issue') HOLD.issue = Number(HOLD.release_when.ref) || null;
+// Refuse before the first insert: a hold that throws after insertBookIfNew leaves the book imported and unheld (#7860).
+if (HOLD) { try { makeHoldMarker(HOLD); } catch (e) { console.error(`${e.message}\n  pass --release-when issue:<N> | decision:<words> | test:<check> | date:YYYY-MM-DD`); process.exit(2); } }
 const UA = 'SourceLibrary acquisition (contact: derek@sourcelibrary.org)';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Two-failures rule for IA: two 429/503 in a row → back off (shared across workers), doubling to 16 min; past that, exit 75.
+let throttled = 0, backoffMin = 1, pausedUntil = 0;
+async function iaFetch(url, ms) {
+  for (;;) {
+    if (Date.now() < pausedUntil) { await sleep(pausedUntil - Date.now()); continue; }
+    const r = await fetch(url, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(ms) });
+    if (r.status !== 429 && r.status !== 503) { throttled = 0; return r; }
+    if (++throttled < 2) { await sleep(15000); continue; }
+    if (backoffMin > 16) { console.error(`IA throttling persists (${r.status}); exiting 75 — re-run to resume from the manifest`); process.exit(75); }
+    console.log(`BACKOFF ${r.status} from IA — pausing ${backoffMin} min`);
+    pausedUntil = Date.now() + backoffMin * 60000; backoffMin *= 2; throttled = 0;
+  }
+}
 
 const slugify = (t, m = 70) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').substring(0, m).replace(/-$/, '');
@@ -67,7 +104,7 @@ async function pageCountFor(ia, metadata) {
     // build on archive.org's side, and the abort surfaced as `FAIL … operation was aborted due to
     // timeout` — indistinguishable from a dead item. Six of seven such failures across the
     // 2026-09-22 shelf imports (#4966) imported fine on a plain retry once the manifest was warm.
-    const r = await fetch(`https://iiif.archive.org/iiif/${ia}/manifest.json`, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(90000) });
+    const r = await iaFetch(`https://iiif.archive.org/iiif/${ia}/manifest.json`, 90000);
     if (r.ok) { const m = await r.json();
       if (Array.isArray(m.items)) return { n: m.items.length, src: 'iiif_v3' };
       if (m.sequences?.[0]?.canvases) return { n: m.sequences[0].canvases.length, src: 'iiif_v2' }; }
@@ -96,24 +133,22 @@ async function main() {
   }
   console.log(`${IMPORTER}: ${BOOKS.length} books · already held by ia id: ${held.size} · hold: ${HOLD_REASON || 'none'} · mode ${COMMIT ? 'COMMIT' : 'DRY-RUN'}\n`);
 
-  let n = 0, imported = 0, declined = 0, skipped = 0, failed = 0, pagesTotal = 0, heldOk = 0;
-  for (const b of BOOKS) {
-    if (ONLY && b.id !== ONLY) continue;
-    if (n >= LIMIT) break;
-    n++;
-    if (held.has(b.id) || held.has(`ia:${b.id}`)) { console.log(`SKIP  ${b.id} — already held`); skipped++; rec({ id: b.id, outcome: 'already-held' }); continue; }
+  let imported = 0, declined = 0, skipped = 0, failed = 0, pagesTotal = 0, heldOk = 0;
+  const queue = BOOKS.filter(b => !ONLY || b.id === ONLY).slice(0, LIMIT);
+  const one = async (b) => {
+    if (held.has(b.id) || held.has(`ia:${b.id}`)) { console.log(`SKIP  ${b.id} — already held`); skipped++; rec({ id: b.id, outcome: 'already-held' }); return; }
     let metadata;
     try {
-      const mr = await fetch(`https://archive.org/metadata/${b.id}`, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(30000) });
-      if (!mr.ok) { console.log(`FAIL  ${b.id} — metadata ${mr.status}`); failed++; rec({ id: b.id, outcome: 'metadata-http', status: mr.status }); if (mr.status === 403 || mr.status === 429) await sleep(30000); continue; }
+      const mr = await iaFetch(`https://archive.org/metadata/${b.id}`, 30000);
+      if (!mr.ok) { console.log(`FAIL  ${b.id} — metadata ${mr.status}`); failed++; rec({ id: b.id, outcome: 'metadata-http', status: mr.status }); if (mr.status === 403) await sleep(30000); return; }
       metadata = await mr.json();
-    } catch (e) { console.log(`FAIL  ${b.id} — ${e.message}`); failed++; rec({ id: b.id, outcome: 'metadata-error', reason: e.message }); continue; }
+    } catch (e) { console.log(`FAIL  ${b.id} — ${e.message}`); failed++; rec({ id: b.id, outcome: 'metadata-error', reason: e.message }); return; }
     await sleep(500);
     const meta = metadata.metadata || {};
-    if (meta.mediatype !== 'texts') { console.log(`FAIL  ${b.id} — mediatype ${meta.mediatype}`); failed++; rec({ id: b.id, outcome: 'not-text' }); continue; }
-    if (meta['access-restricted-item'] === 'true' || meta['access-restricted-item'] === true) { console.log(`FAIL  ${b.id} — access-restricted`); failed++; rec({ id: b.id, outcome: 'access-restricted' }); continue; }
+    if (meta.mediatype !== 'texts') { console.log(`FAIL  ${b.id} — mediatype ${meta.mediatype}`); failed++; rec({ id: b.id, outcome: 'not-text' }); return; }
+    if (meta['access-restricted-item'] === 'true' || meta['access-restricted-item'] === true) { console.log(`FAIL  ${b.id} — access-restricted`); failed++; rec({ id: b.id, outcome: 'access-restricted' }); return; }
     const { n: pageCount, src: pageCountSource } = await pageCountFor(b.id, metadata);
-    if (!pageCount) { console.log(`FAIL  ${b.id} — no page count`); failed++; rec({ id: b.id, outcome: 'no-page-count' }); continue; }
+    if (!pageCount) { console.log(`FAIL  ${b.id} — no page count`); failed++; rec({ id: b.id, outcome: 'no-page-count' }); return; }
     await sleep(500);
 
     const stripText = s => String(s).replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
@@ -146,8 +181,13 @@ async function main() {
     // US public-domain line: everything published before 1931 is PD as of 2026-01-01 (the line
     // advances one year every January — bump this constant then). Later imprints need a stated licence.
     const PD_LINE = 1931;
-    if ((imprintYear >= PD_LINE || iaYear >= PD_LINE) && !pd) { console.log(`FAIL  ${b.id} — rights: imprint ${imprintYear}, IA date ${iaYear}`); failed++; rec({ id: b.id, outcome: 'rights-refused', imprintYear, iaYear }); continue; }
+    if ((imprintYear >= PD_LINE || iaYear >= PD_LINE) && !pd) { console.log(`FAIL  ${b.id} — rights: imprint ${imprintYear}, IA date ${iaYear}`); failed++; rec({ id: b.id, outcome: 'rights-refused', imprintYear, iaYear }); return; }
 
+    // A multi-volume item names its volume in IA's `volume`, not in its title. Without it every volume carries
+    // the set's one title, keys to one edition_key, and the gate refuses volumes 2..n as duplicates of volume 1
+    // (#8049: Siete Partidas, Münster's Cosmographie, 18 volumes refused). extractVolume() reads "(vol. N)".
+    const iaVolume = firstOf(meta.volume);
+    if (iaVolume && !/\b(vol(ume)?|tom(us|o|e)?|band|teil|deel|pt|part|liber)\b\.?\s*\(?\s*[\divxlcdm]/i.test(b.title)) b.title = `${b.title} (vol. ${iaVolume})`; // imprint-write-ok: the manifest input row before insert, not a books write
     const bookId = new ObjectId(), bookIdStr = bookId.toHexString();
     const slug = await uniqueSlug(db, slugify(`${b.title} ${b.author}`));
     const now = new Date();
@@ -163,9 +203,11 @@ async function main() {
       published: String(b.year), year: b.year,
       ia_identifier: b.id, thumbnail: thumb(0),
       pages_count: pageCount, pages_ocr: 0, pages_translated: 0, content_type: 'book',
+      ...(b.work_id ? { work_id: b.work_id, work_id_source: b.work_id_source || manifest.work_id_source || IMPORTER } : {}),
       ...(b.note ? { curator_notes: b.note } : {}),
       acquisition_campaign: IMPORTER,
-      ...(COLLECTIONS.length ? { collections: COLLECTIONS } : {}),
+      ...(typeof b.processing_priority === 'number' ? { processing_priority: b.processing_priority } : {}),
+      ...((COLLECTIONS.length || b.collections?.length) ? { collections: [...new Set([...COLLECTIONS, ...(b.collections || [])])] } : {}),
       dublin_core: { dc_identifier: [`IA:${b.id}`, ...(iaCatalog.ark ? [String(iaCatalog.ark)] : []),
         ...(iaCatalog.oclc_id ? [`OCLC:${iaCatalog.oclc_id}`] : []), ...(iaCatalog.lccn ? [`LCCN:${iaCatalog.lccn}`] : [])],
         dc_source: `https://archive.org/details/${b.id}`,
@@ -187,20 +229,32 @@ async function main() {
     if (!COMMIT) {
       makeBookDoc(fields);   // validate the shape without writing
       console.log(`DRY   ${b.id.padEnd(64)} ${String(pageCount).padStart(4)}pp  ${b.lang.padEnd(8)} ${(contributor || '-').slice(0, 34).padEnd(34)} "${b.title.slice(0, 48)}"`);
-      imported++; pagesTotal += pageCount; continue;
+      imported++; pagesTotal += pageCount; return;
     }
 
+    if (SWEEP) await recordSweepAction(db, { sweep: SWEEP, book_id: bookIdStr, action: 'import-hidden-held',
+      detail: { ia: b.id, pages: pageCount, work_id: b.work_id || null, hold: HOLD_REASON || null, campaign: IMPORTER } });
+    if (HOLD) fields.pipeline_auto = { status: HOLD_STATUS, hold: makeHoldMarker({ ...HOLD, detail: null }, { from: null, now }), last_updated: now };
     let res;
-    try { res = await insertBookIfNew(db, fields, { importer: IMPORTER, sourceIdentifier: b.id, sourceUrl: `https://archive.org/details/${b.id}` }); }
-    catch (e) { console.log(`FAIL  ${b.id} — insert ${e.message}`); failed++; rec({ id: b.id, outcome: 'insert-error', reason: e.message }); continue; }
+    try { res = await insertBookIfNew(db, fields, { importer: IMPORTER, sourceIdentifier: b.id, sourceUrl: `https://archive.org/details/${b.id}` },
+      b.allow_duplicate ? { allowDuplicate: true } : {}); }
+    catch (e) { console.log(`FAIL  ${b.id} — insert ${e.message}`); failed++; rec({ id: b.id, outcome: 'insert-error', reason: e.message }); return; }
     if (!res.inserted) {
       console.log(`GATE  ${b.id} — ${res.reason}: ${(res.message || '').slice(0, 90)}`);
-      declined++; rec({ id: b.id, outcome: 'gate-declined', reason: res.reason, message: res.message, matches: res.matches?.slice(0, 3) }); continue;
+      declined++; rec({ id: b.id, outcome: 'gate-declined', reason: res.reason, message: res.message, matches: res.matches?.slice(0, 3) }); return;
     }
     const realId = res.bookId;
-    // Hold BEFORE the pages exist, so no Phase 0 tick between insert and hold can enrol the book.
-    const h = HOLD ? await holdBook(db, realId, HOLD) : { outcome: 'not-held' };
-    if (HOLD) { if (h.outcome === 'held') heldOk++; else console.log(`WARN  ${b.id} — hold outcome ${h.outcome}`); }
+    // The hold went in with the insert; record it the way holdBook() does, and confirm it is there.
+    let h = { outcome: 'not-held' };
+    if (HOLD) {
+      await db.collection('book_events').insertOne({ book_id: realId, type: HOLD_EVENT, at: now, source: IMPORTER,
+        details: { reason: HOLD.reason, issue: HOLD.issue ?? null, from_status: null, release: HOLD.release, release_when: fields.pipeline_auto.hold.release_when, at_insert: true } });
+      const back = await db.collection('books').findOne({ id: realId }, { projection: { 'pipeline_auto.hold.reason': 1 } });
+      h = { outcome: back?.pipeline_auto?.hold?.reason === HOLD.reason ? 'held' : 'MISSING' };
+      // Not there (the gate built its own document): hold it now, before any page exists, as the importer did before.
+      if (h.outcome !== 'held') { h = await holdBook(db, realId, HOLD); console.log(`WARN  ${b.id} — hold not found after insert; holdBook: ${h.outcome}`); }
+      if (h.outcome === 'held') heldOk++;
+    }
     const CHUNK = 500;
     for (let s = 0; s < pageCount; s += CHUNK) {
       const docs = [];
@@ -214,8 +268,12 @@ async function main() {
     const written = await db.collection('pages').countDocuments({ book_id: realId });
     console.log(`OK    ${b.id.padEnd(64)} ${String(pageCount).padStart(4)}pp (${written} written)  hold=${h.outcome}  → ${realId}`);
     imported++; pagesTotal += pageCount;
-    rec({ id: b.id, outcome: 'imported', book_id: realId, pages: pageCount, pages_written: written, hold: h.outcome, language: b.lang, contributing_library: contributor });
-  }
+    rec({ id: b.id, outcome: 'imported', book_id: realId, pages: pageCount, pages_written: written, hold: h.outcome, language: b.lang, contributing_library: contributor, work_id: b.work_id || null });
+  };
+  let next = 0;
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
+    while (next < queue.length) { const b = queue[next++]; try { await one(b); } catch (e) { console.log(`FAIL  ${b.id} — ${e.message}`); failed++; rec({ id: b.id, outcome: 'error', reason: e.message }); } }
+  }));
   await client.close();
   console.log(`\n=== ${COMMIT ? 'COMMITTED' : 'DRY-RUN'} — imported:${imported} held:${heldOk} gate-declined:${declined} already-held:${skipped} failed:${failed} · ${pagesTotal.toLocaleString()} pages ===`);
 }

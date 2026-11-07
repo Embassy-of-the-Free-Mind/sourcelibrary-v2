@@ -1,0 +1,259 @@
+{
+ "seed": "armc-refused-7701",
+ "cells": {
+  "la-armc-refused-share": {
+   "frame_pages": 6805,
+   "frame_books": 89,
+   "pages": [
+    {
+     "page_id": "69b6322e1c1c21a37380e5d7",
+     "book_id": "69b6322d1c1c21a37380e5b3",
+     "page_number": 36,
+     "why": "only 24% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261102155427-3581425",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b6322d1c1c21a37380e5b3"
+    },
+    {
+     "page_id": "69b6324e1c1c21a37380f5f3",
+     "book_id": "69b6324d1c1c21a37380f573",
+     "page_number": 128,
+     "why": "only 35% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261103001534-197198",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b6324d1c1c21a37380f573"
+    },
+    {
+     "page_id": "69b632af1c1c21a373812b2e",
+     "book_id": "69b632af1c1c21a373812a99",
+     "page_number": 149,
+     "why": "only 33% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261103234635-2579028",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b632af1c1c21a373812a99"
+    },
+    {
+     "page_id": "69b632861c1c21a373811a1b",
+     "book_id": "69b632861c1c21a373811870",
+     "page_number": 427,
+     "why": "only 32% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104070437-3683844",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632861c1c21a373811870"
+    },
+    {
+     "page_id": "69b632cc1c1c21a3738139aa",
+     "book_id": "69b632cc1c1c21a3738138d7",
+     "page_number": 211,
+     "why": "only 18% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104072848-3761747",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632cc1c1c21a3738138d7"
+    },
+    {
+     "page_id": "69b632e01c1c21a3738141e9",
+     "book_id": "69b632e01c1c21a3738141ac",
+     "page_number": 61,
+     "why": "only 28% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104054705-3475404",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632e01c1c21a3738141ac"
+    },
+    {
+     "page_id": "69b632331c1c21a37380ea1c",
+     "book_id": "69b632331c1c21a37380e7b5",
+     "page_number": 615,
+     "why": "only 32% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261103204223-2010893",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b632331c1c21a37380e7b5"
+    },
+    {
+     "page_id": "69b632501c1c21a37380f7f4",
+     "book_id": "69b632501c1c21a37380f67f",
+     "page_number": 373,
+     "why": "only 35% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261103184807-1766308",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b632501c1c21a37380f67f"
+    },
+    {
+     "page_id": "69b6328b1c1c21a373811f36",
+     "book_id": "69b6328b1c1c21a373811dba",
+     "page_number": 380,
+     "why": "only 37% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104070447-3684158",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b6328b1c1c21a373811dba"
+    },
+    {
+     "page_id": "69b632cf1c1c21a373813bf4",
+     "book_id": "69b632cf1c1c21a373813b4f",
+     "page_number": 165,
+     "why": "only 32% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104053906-3449667",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632cf1c1c21a373813b4f"
+    },
+    {
+     "page_id": "69b632c21c1c21a3738133f4",
+     "book_id": "69b632c21c1c21a3738132eb",
+     "page_number": 265,
+     "why": "only 38% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104072113-3737181",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632c21c1c21a3738132eb"
+    },
+    {
+     "page_id": "69b632db1c1c21a37381408a",
+     "book_id": "69b632db1c1c21a37381407a",
+     "page_number": 16,
+     "why": "only 34% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261103221303-2423719",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b632db1c1c21a37381407a"
+    },
+    {
+     "page_id": "69b6325d1c1c21a3738101ba",
+     "book_id": "69b6325d1c1c21a3738100a7",
+     "page_number": 275,
+     "why": "only 18% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261103185656-1781492",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b6325d1c1c21a3738100a7"
+    },
+    {
+     "page_id": "69b632831c1c21a3738117f8",
+     "book_id": "69b632831c1c21a3738116aa",
+     "page_number": 334,
+     "why": "only 36% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104030236-3083980",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632831c1c21a3738116aa"
+    },
+    {
+     "page_id": "69b632bb1c1c21a373813066",
+     "book_id": "69b632bb1c1c21a373812fb7",
+     "page_number": 175,
+     "why": "only 22% of its words are in the GPU draft: check by eye",
+     "run": "cli-ocr-20261104032440-3126625",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632bb1c1c21a373812fb7"
+    }
+   ],
+   "passed_over": []
+  },
+  "la-armc-refused-putback": {
+   "frame_pages": 9615,
+   "frame_books": 95,
+   "pages": [
+    {
+     "page_id": "69b632351c1c21a37380ed91",
+     "book_id": "69b632351c1c21a37380ec37",
+     "page_number": 346,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261103044437-563541",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b632351c1c21a37380ec37"
+    },
+    {
+     "page_id": "69b632171c1c21a37380d30a",
+     "book_id": "69b632171c1c21a37380d0e0",
+     "page_number": 554,
+     "why": "a diff-guard flag spans a tag: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261102184518-3913153",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b632171c1c21a37380d0e0"
+    },
+    {
+     "page_id": "69b6326a1c1c21a373810bdc",
+     "book_id": "69b6326a1c1c21a373810a64",
+     "page_number": 376,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261104025342-3070982",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b6326a1c1c21a373810a64"
+    },
+    {
+     "page_id": "69b632281c1c21a37380df64",
+     "book_id": "69b632281c1c21a37380df34",
+     "page_number": 48,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261102100534-2908372",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b632281c1c21a37380df34"
+    },
+    {
+     "page_id": "69b632791c1c21a3738112ba",
+     "book_id": "69b632791c1c21a37381119e",
+     "page_number": 284,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261103230910-2497395",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b632791c1c21a37381119e"
+    },
+    {
+     "page_id": "69b6329b1c1c21a373812435",
+     "book_id": "69b6329b1c1c21a3738123db",
+     "page_number": 90,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261103193207-1849186",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b6329b1c1c21a3738123db"
+    },
+    {
+     "page_id": "69b6321a1c1c21a37380d73a",
+     "book_id": "69b6321a1c1c21a37380d64a",
+     "page_number": 240,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261102115341-3104378",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b6321a1c1c21a37380d64a"
+    },
+    {
+     "page_id": "69b6327b1c1c21a373811426",
+     "book_id": "69b6327b1c1c21a373811400",
+     "page_number": 38,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261103033243-478811",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-03/69b6327b1c1c21a373811400"
+    },
+    {
+     "page_id": "69b632d61c1c21a373813ef3",
+     "book_id": "69b632d61c1c21a373813eba",
+     "page_number": 57,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261104034341-3163174",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632d61c1c21a373813eba"
+    },
+    {
+     "page_id": "69b632231c1c21a37380dc5b",
+     "book_id": "69b632231c1c21a37380dc4a",
+     "page_number": 17,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261102085324-2804282",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b632231c1c21a37380dc4a"
+    },
+    {
+     "page_id": "69b632e51c1c21a3738145c7",
+     "book_id": "69b632e51c1c21a373814538",
+     "page_number": 143,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261104101625-104357",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632e51c1c21a373814538"
+    },
+    {
+     "page_id": "69b632b91c1c21a373812daf",
+     "book_id": "69b632b91c1c21a373812cbd",
+     "page_number": 242,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261104052101-3394717",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632b91c1c21a373812cbd"
+    },
+    {
+     "page_id": "69b632111c1c21a37380ce50",
+     "book_id": "69b632111c1c21a37380cd46",
+     "page_number": 266,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261102104100-2945091",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b632111c1c21a37380cd46"
+    },
+    {
+     "page_id": "69b632491c1c21a37380f3e2",
+     "book_id": "69b632491c1c21a37380f39d",
+     "page_number": 69,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261102211543-4099015",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-02/69b632491c1c21a37380f39d"
+    },
+    {
+     "page_id": "69b632ac1c1c21a3738129be",
+     "book_id": "69b632ac1c1c21a3738128b5",
+     "page_number": 265,
+     "why": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "run": "cli-ocr-20261104031611-3112216",
+     "dir": "/root/jobs/armc-first-read-7701/runs/2026-11-04/69b632ac1c1c21a3738128b5"
+    }
+   ],
+   "passed_over": []
+  }
+ }
+}

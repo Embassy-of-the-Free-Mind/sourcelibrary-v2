@@ -1,0 +1,23 @@
+{
+  "read_on": "2026-11-04",
+  "by": "the job session, images opened",
+  "note": "10 positive pages. 7 opened and all 7 upheld; 3 not opened (slots 18, 185, 197, British Library Tibetan boards of the same form as 112 and 131). Slots 119 and 136, drawn from the clean pages with English, were opened too and agree with the judge. Slot 79, the third page drawn, is a map and was not opened: its check did not run.",
+  "positives": [
+    {"slot": 26, "book_id": "69ac7fdd6a7dbd267e0cfe15", "frame": 22, "class": "I1 image one leaf behind its text", "read": "upheld: image p. xvii, text and stored number xviii. The sheet of frames 1-40 shows the same in frames 15-17 and 20-22; images x and xv are stored twice, xiii and xviii are absent from these frames.", "owner": "#5803", "repair_before_draw": "none", "contained": "English withheld on frames 15, 16, 17, 20, 21, 22 on 2026-11-04; the book was already held (title-leaf-recitation-6297)"},
+    {"slot": 143, "book_id": "69aebfdee997cc01b0cab898", "frame": 57, "class": "another book's text", "read": "upheld: an English plate explanation, p. 47, with a Russian transcription", "owner": "#5803", "repair_before_draw": "#5803 hold, English withheld 2026-10-18", "contained": "English already withheld; the transcription is still served"},
+    {"slot": 156, "book_id": "6ac4f7d2e4016f24bafabc80", "frame": 195, "class": "I2 repeat capture", "read": "upheld: frame 195 shows the right-hand page beside a colour card and frame 196 the opening with that page. The book has no transcription and repeat_of is unset.", "owner": "#5056 (its pairs come from OCR text, so an image-only book is not seen)", "repair_before_draw": "none"},
+    {"slot": 87, "book_id": "6a089ad2c00e102b3bb2395c", "frame": 175, "class": "I3 opening in one frame", "read": "upheld: a Loeb opening, Latin p. 324 and English p. 325. Kept as an opening on purpose under the taxonomy's I3 entry.", "owner": "none open (#2454 parked)", "repair_before_draw": "none"},
+    {"slot": 102, "book_id": "69b525aa29577f283b57a5f6", "frame": 9, "class": "I3 opening in one frame", "read": "upheld: an opening, numbered 14 and 13 as printed, in pencil 584 and 585", "owner": "none open (#2454 parked)", "repair_before_draw": "none"},
+    {"slot": 112, "book_id": "69e7ac1e5f1a22ab19aa3e47", "frame": 266, "class": "I5 two leaves on one board", "read": "upheld", "owner": "none open (#5132 closed as a map entry)", "repair_before_draw": "#6948 lane hold"},
+    {"slot": 131, "book_id": "6a14e148311a9edd4621e634", "frame": 444, "class": "I5 two leaves on one board", "read": "upheld", "owner": "none open (#5132 closed as a map entry)", "repair_before_draw": "#6948 lane hold"},
+    {"slot": 18, "book_id": "69e795ea80b52390feb18b1a", "frame": 1, "class": "I5 two leaves on one board", "read": "not opened", "owner": "none open (#5132 closed as a map entry)", "repair_before_draw": "#6948 lane hold"},
+    {"slot": 185, "book_id": "69e792bd80b52390feb1690d", "frame": 2, "class": "I5 two leaves on one board", "read": "not opened", "owner": "none open (#5132 closed as a map entry)", "repair_before_draw": "#6948 lane hold"},
+    {"slot": 197, "book_id": "69e792c180b52390feb16917", "frame": 2, "class": "I5 two leaves on one board", "read": "not opened", "owner": "none open (#5132 closed as a map entry)", "repair_before_draw": "#6948 lane hold"}
+  ],
+  "missed_controls": [
+    {"item": "3aeae2b0bd24", "class": "order_backward", "read": "a plain miss: faded leaves with handwritten numbers, called forward"},
+    {"item": "d8c138a3efa1", "class": "shift_run", "read": "flagged, wrong class: the image is a blank leaf with show-through and the judge said other, not next_leaf"},
+    {"item": "86fd01cf9b2d", "class": "neighbour_text", "read": "a weak control: frames 16 and 17 hold nearly the same text, so the planted text fits this leaf; the judge noted the text was identical to frame 17's"},
+    {"item": "3c716a8c46d2", "class": "number_stamp", "read": "a weak control: the judge saw the band, said it was added to the scan, and read the true printed 517"}
+  ]
+}

@@ -1,0 +1,415 @@
+{
+ "generated_at": "2026-11-01T02:40:38.910Z",
+ "source": "latin-paired-6740 (#6740)",
+ "file": "scripts/eval/latin-paired-6740/results/router-evidence.score.json",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
+ "prompt_template_sha": [
+  null
+ ],
+ "frame": "One unread interior page per book from the latin-blank/print queue (the first-read lane's Latin frame), books drawn by sequential Poisson PPS on pages owed inside century strata, every book a committed eval names excluded; every arm on the same page; a route's rows are the pages it WRITES (a page not written stays scans-only). Preregistered: 2026-11-01-latin-first-read-paired-6740.md.",
+ "calls": {
+  "records": 103,
+  "malformed_not_counted": 0,
+  "judged": 103,
+  "unparsed": 0,
+  "list_usd_equiv": 0
+ },
+ "cells": {
+  "latin-blank": {
+   "task": "ocr",
+   "lang": "Latin",
+   "controls": {
+    "agy-flash-low@4-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 5,
+      "caught": "5/5",
+      "rate": 1,
+      "ci95": [
+       0.566,
+       1
+      ],
+      "named": "5/5",
+      "by_kind": {
+       "B": "2/2",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 5,
+       "caught": "5/5",
+       "rate": 1,
+       "ci95": [
+        0.566,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "pero>agy-flash-low-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 5,
+      "caught": "5/5",
+      "rate": 1,
+      "ci95": [
+       0.566,
+       1
+      ],
+      "named": "5/5",
+      "by_kind": {
+       "B": "2/2",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 5,
+       "caught": "5/5",
+       "rate": 1,
+       "ci95": [
+        0.566,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 5,
+      "caught": "5/5",
+      "rate": 1,
+      "ci95": [
+       0.566,
+       1
+      ],
+      "named": "5/5",
+      "by_kind": {
+       "B": "2/2",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 5,
+       "caught": "5/5",
+       "rate": 1,
+       "ci95": [
+        0.566,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 37,
+     "books": 37,
+     "accept": "30/37",
+     "accept_rate": 0.811,
+     "accept_ci": {
+      "ci95": [
+       0.676,
+       0.919
+      ],
+      "unit": "book",
+      "units": 37
+     },
+     "wrong_text_pages": "5/37",
+     "wrong_text_ci": {
+      "ci95": [
+       0.027,
+       0.243
+      ],
+      "unit": "book",
+      "units": 37
+     },
+     "wrong_text_classes": {
+      "O6": "4/37",
+      "O8": "1/37",
+      "I4": "1/37",
+      "T6": "1/37"
+     },
+     "classes_k_of_n": {
+      "O6": "14/37",
+      "O8": "14/37",
+      "E2": "5/37",
+      "T6": "5/37",
+      "O12": "5/37",
+      "O11": "4/37",
+      "O7": "3/37",
+      "O16": "2/37",
+      "O9": "2/37",
+      "D1": "1/37",
+      "I4": "1/37"
+     },
+     "fidelity_mean": 4.27,
+     "lane": [
+      "latin-paired-6740"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "5/5",
+      "rate": 1,
+      "ci95": [
+       0.566,
+       1
+      ],
+      "validated": null,
+      "all": "5/5"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "30/37",
+       "wrong_text_pages": "5/37",
+       "books": 37
+      }
+     }
+    },
+    "pero>agy-flash-low-written": {
+     "n": 22,
+     "books": 22,
+     "accept": "19/22",
+     "accept_rate": 0.864,
+     "accept_ci": {
+      "ci95": [
+       0.727,
+       1
+      ],
+      "unit": "book",
+      "units": 22
+     },
+     "wrong_text_pages": "1/22",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.136
+      ],
+      "unit": "book",
+      "units": 22
+     },
+     "wrong_text_classes": {
+      "O6": "1/22"
+     },
+     "classes_k_of_n": {
+      "E2": "8/22",
+      "O8": "8/22",
+      "O6": "5/22",
+      "O7": "5/22",
+      "O11": "4/22",
+      "D1": "2/22",
+      "T6": "2/22"
+     },
+     "fidelity_mean": 4.32,
+     "lane": [
+      "latin-paired-6740"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "5/5",
+      "rate": 1,
+      "ci95": [
+       0.566,
+       1
+      ],
+      "validated": null,
+      "all": "5/5"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "19/22",
+       "wrong_text_pages": "1/22",
+       "books": 22
+      }
+     }
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 23,
+     "books": 23,
+     "accept": "22/23",
+     "accept_rate": 0.957,
+     "accept_ci": {
+      "ci95": [
+       0.87,
+       1
+      ],
+      "unit": "book",
+      "units": 23
+     },
+     "wrong_text_pages": "0/23",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 23
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "O8": "9/23",
+      "O6": "5/23",
+      "E2": "5/23",
+      "O12": "3/23",
+      "T6": "2/23",
+      "O15": "2/23",
+      "O7": "2/23",
+      "O11": "2/23",
+      "D1": "1/23",
+      "O16": "1/23"
+     },
+     "fidelity_mean": 4.48,
+     "lane": [
+      "latin-paired-6740"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "5/5",
+      "rate": 1,
+      "ci95": [
+       0.566,
+       1
+      ],
+      "validated": null,
+      "all": "5/5"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "22/23",
+       "wrong_text_pages": "0/23",
+       "books": 23
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  }
+ },
+ "contain_candidates": [],
+ "by_script_cells": {
+  "latin-blank|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 37,
+     "books": 37,
+     "accept": "30/37",
+     "wrong_text_pages": "5/37",
+     "classes_k_of_n": {
+      "O6": "14/37",
+      "O8": "14/37",
+      "E2": "5/37",
+      "T6": "5/37",
+      "O12": "5/37",
+      "O11": "4/37",
+      "O7": "3/37",
+      "O16": "2/37",
+      "O9": "2/37",
+      "D1": "1/37",
+      "I4": "1/37"
+     },
+     "script_basis": {
+      "page": 37
+     }
+    },
+    "pero>agy-flash-low-written": {
+     "n": 22,
+     "books": 22,
+     "accept": "19/22",
+     "wrong_text_pages": "1/22",
+     "classes_k_of_n": {
+      "E2": "8/22",
+      "O8": "8/22",
+      "O6": "5/22",
+      "O7": "5/22",
+      "O11": "4/22",
+      "D1": "2/22",
+      "T6": "2/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 23,
+     "books": 23,
+     "accept": "22/23",
+     "wrong_text_pages": "0/23",
+     "classes_k_of_n": {
+      "O8": "9/23",
+      "O6": "5/23",
+      "E2": "5/23",
+      "O12": "3/23",
+      "T6": "2/23",
+      "O15": "2/23",
+      "O7": "2/23",
+      "O11": "2/23",
+      "D1": "1/23",
+      "O16": "1/23"
+     },
+     "script_basis": {
+      "page": 23
+     }
+    }
+   }
+  }
+ }
+}

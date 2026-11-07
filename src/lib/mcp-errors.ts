@@ -69,7 +69,7 @@ export function classifyApiError(err: unknown): McpErrorPayload {
   if (lower.includes('no approval received') || status === 429) {
     return {
       error: 'rate_limited',
-      message: 'The anonymous request budget for this window is exhausted. This is temporary and not a statement about the corpus.',
+      message: 'A request or page budget is exhausted for now. This is temporary and not a statement about the corpus.',
       retry_after: 3600,
       recovery: 'Wait and retry the identical call, or reduce page range size. Do NOT tell the user the text could not be retrieved — it exists.',
     };
@@ -107,7 +107,7 @@ export function classifyApiError(err: unknown): McpErrorPayload {
       error: 'no_translation',
       message: 'This page exists and has been transcribed, but has no translation yet. The text on it is in a language other than English — an English-original leaf is served as a quote instead, with text_source: "ocr_original" (#3939), so this answer means the source really is foreign.',
       has_original: true,
-      recovery: 'Use get_book_text for the original-language text of this page, or pick a page from a book with pages_translated > 0. The page is not missing.',
+      recovery: 'To quote the page in its own language, call get_quote again with lang set to that language (the API names it as original_lang, e.g. "de"); the transcription comes back as `original`. Or use get_book_text, or pick a page from a book with pages_translated > 0. The page is not missing.',
     };
   }
 

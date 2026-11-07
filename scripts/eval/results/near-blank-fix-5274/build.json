@@ -1,0 +1,23 @@
+{
+ "built_at": "2026-11-04T07:34:06.312Z",
+ "issue": 5274,
+ "targets": 598,
+ "queued": 597,
+ "books": 151,
+ "withheld": 547,
+ "served": 50,
+ "ocr_first": 81,
+ "left_out": {
+  "human": 0,
+  "since": 1,
+  "other_withheld": 0,
+  "no_english": 0,
+  "missing": 0,
+  "logged_5274_not_near_blank": 25
+ },
+ "by_class": {
+  "withheld flash-measured|ocr-ok agy": 516,
+  "withheld flash-measured|reread agy": 31,
+  "served flash-measured|reread agy": 50
+ }
+}

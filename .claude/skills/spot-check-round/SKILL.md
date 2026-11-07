@@ -31,6 +31,13 @@ The laptop's Atlas link resets mid-draw; the job box does not.
   and copy it into `reviews/` yourself.
 - **Trap:** do not `EnterWorktree` while other subagents run Bash in the main checkout — they inherit the isolation and
   every command is refused. Enter the worktree first, then dispatch.
+- **Trap:** inside the worktree, the isolation guard refuses compound shell lines (heredocs, `cd x; node …`, variables
+  in paths). Write each merge/check script to the scratchpad with Write, then run it with one plain command; for
+  Hetzner queries, `scp` the script and `ssh hetzner 'cd /root/sourcelibrary; node --env-file=… /root/qa-6056/x.mjs'`.
+- **Use the language detector before the reviewers report**: `edition-language-vs-ocr.mjs` rows (`strong`) for the
+  drawn ids are free predictions. Round 6 (2026-10-25) it held both I-class books: a wrong language field (slot 5) and
+  a wrong book (slot 8, share 1.0 — the title page named another work). A share near 1.0 is an identity question,
+  not just a language one.
 
 ## 2b. Second reader on the serious calls (precision)
 Every rate rests on the first reader's serious calls, so check them: build one packet of every serious finding grouped
@@ -72,7 +79,10 @@ For a new class, the order is:
 Detectors that exist (use them): `headword-mark-drop.mjs` (丨 in 韻府/類書), `translation-reasoning-leak.mjs`,
 `leaked-markup-census.mjs`, `detect-fabricated-ocr.mjs` + `blank-page-guard` (blank leaves), `scan-title-mismatch.mjs`
 (Latin titles; CJK needs title-pair matching inside one import campaign — see #6660), `page-count-audit.mjs`.
-Does not work: the English/OCR length ratio as a general screen (experiments/2026-10-23-length-ratio-screen-6056.md).
+Does not work: the English/OCR length ratio as a general screen (experiments/2026-10-23-length-ratio-screen-6056.md);
+classical *ae* spelling in early Latin OCR as a paraphrase screen (experiments/2026-10-25-classicized-spelling-screen-6056.md);
+a corpus-lexicon non-word score as a page gate (experiments/2026-09-30-can-a-0-per-page-garble-score-find-the-5313.md).
+Before building a $0 screen for a class, read `scripts/eval/experiments/` for it — most have been tried.
 
 ## 6. Ship and report
 - Commit the run dir + `sprint-clusters.json` by path, `git commit -s`; PR body starts `Part of #6056` (the

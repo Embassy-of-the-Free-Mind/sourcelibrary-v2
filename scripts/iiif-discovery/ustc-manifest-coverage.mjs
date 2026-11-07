@@ -81,7 +81,7 @@ let candIndexed = 0, candThin = 0;
 const cursor = col.find(
   { date_earliest: { $gte: MIN_YEAR, $lte: MAX_YEAR } },
   { projection: { title: 1 } }
-);
+).batchSize(1000);
 for await (const d of cursor) {
   const k = blockKey(d.title, KEYWORDS);
   if (!k) { candThin++; continue; }

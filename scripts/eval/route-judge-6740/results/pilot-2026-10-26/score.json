@@ -1,0 +1,1510 @@
+{
+ "generated_at": "2026-10-26T00:34:53.971Z",
+ "judge": "claude-opus-5-5 (claude -p), reading each output against the page image; no Opus text is the key",
+ "calls": {
+  "judged": 322,
+  "unparsed": 0,
+  "list_usd_equiv": 26.54
+ },
+ "meter": {
+  "account": "derek@playpowerlabs.com",
+  "reading": "api.anthropic.com/api/oauth/usage (the Claude Code usage endpoint; integer percents)",
+  "shared": "SHARED: this orchestrating claude -p session (same account) ran throughout the window; no other job was seen on the account",
+  "judge_window": {
+   "start": {
+    "at": "2026-10-25T23:53:57Z",
+    "session_pct": 46,
+    "weekly_pct": 21
+   },
+   "end": {
+    "at": "2026-10-26T00:32:00Z",
+    "session_pct": 67,
+    "weekly_pct": 25
+   }
+  },
+  "translate_window": {
+   "start": {
+    "at": "2026-10-25T23:47:56Z",
+    "session_pct": 44,
+    "weekly_pct": 21
+   },
+   "end": {
+    "at": "2026-10-25T23:53:57Z",
+    "session_pct": 46,
+    "weekly_pct": 21
+   },
+   "calls": 30,
+   "list_usd_equiv": 1.79
+  },
+  "judge_calls": 323,
+  "images_per_call": 1,
+  "in_tokens_total": 4702543,
+  "out_tokens_total": 499990,
+  "in_tokens_per_call": 14559,
+  "out_tokens_per_call": 1548,
+  "list_usd_equiv_total": 26.54,
+  "list_usd_equiv_per_call": 0.0822,
+  "secs_per_call_median": 17,
+  "weekly_points_delta": 4,
+  "session_pct_delta": 21,
+  "points_per_call": 0.0124,
+  "points_per_call_range_for_integer_meter": [
+   0.0093,
+   0.0155
+  ],
+  "session_pct_per_call": 0.065,
+  "note": "Upper bound: the delta includes this orchestrating session. Weekly is read in whole points, so 4 means 3.5-4.5 at best (bounds use 3-5)."
+ },
+ "cells": {
+  "latin": {
+   "task": "ocr",
+   "lang": "Latin",
+   "frame": {
+    "pages": 225,
+    "books": 9,
+    "note": "#5924 oc-reads: 250 lite Latin pages in 10 books; the wrong-leaf book (25 CONTAIN pages) left out"
+   },
+   "controls": {
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "lite>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "lite": {
+     "served": "served",
+     "n": 30,
+     "books": 9,
+     "accept": "17/30",
+     "accept_rate": 0.57,
+     "accept_ci": {
+      "ci95": [
+       0.29,
+       0.857
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "12/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.143,
+       0.667
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {
+      "O5": "9/30",
+      "O6": "7/30",
+      "O4": "2/30",
+      "O12": "1/30",
+      "O10": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "21/30",
+      "O5": "12/30",
+      "E2": "11/30",
+      "O12": "9/30",
+      "O8": "9/30",
+      "O16": "8/30",
+      "T6": "5/30",
+      "O4": "2/30",
+      "O10": "2/30",
+      "D1": "2/30",
+      "O11": "2/30",
+      "O17": "1/30",
+      "O14": "1/30"
+     },
+     "fidelity_mean": 3.77,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "69b51eba47b06ecd581960d3:141",
+       "quote": "quid sit ignis, & reliqua. & quæ dicturus est",
+       "severity": "wrong_text",
+       "what": "drops 'Proponens in his Plato', the main verb and subject of the sentence"
+      },
+      {
+       "page": "69b51e18efd8df28f2db058d:105",
+       "quote": "illicò materia extruditur",
+       "severity": "wrong_text",
+       "what": "'à' is dropped: the page reads 'illicò à materia extruditur'"
+      },
+      {
+       "page": "69b51eba47b06ecd581960d3:160",
+       "quote": "pyramidis apex siue angulus solidus multo longius latus.",
+       "severity": "wrong_text",
+       "what": "drops 'erit maior angulis planis, ex quibus componitur: quia basis pyramidis integer æquilater est, & quasi' (about two lines) and fuses the remnants into a non-sentence"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "basis": "Flash-Lite Batch list price"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00261
+     },
+     "counts": true
+    },
+    "lite>opus-correct": {
+     "served": "experiment read, not served (#5924 oc-reads)",
+     "n": 30,
+     "books": 9,
+     "accept": "30/30",
+     "accept_rate": 1,
+     "accept_ci": {
+      "ci95": [
+       1,
+       1
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_pages": "0/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0
+      ],
+      "unit": "book",
+      "units": 9
+     },
+     "wrong_text_classes": {},
+     "classes_k_of_n": {
+      "E2": "7/30",
+      "O8": "5/30",
+      "O12": "4/30",
+      "D1": "4/30",
+      "O16": "3/30",
+      "O6": "3/30",
+      "T6": "2/30",
+      "O11": "1/30",
+      "O5": "1/30"
+     },
+     "fidelity_mean": 4.83,
+     "commonest": "E2",
+     "examples": [
+      {
+       "page": "69b638be1c1c21a373839d77:294",
+       "quote": "q tecu sunt. Scimus quia peccauimus in deu",
+       "severity": "cosmetic",
+       "what": "Abbreviation marks are dropped in the early lines (tecū, deū, consiliū, dederūt) but kept later (respōdēs, eū), so the convention is inconsistent within the page."
+      },
+      {
+       "page": "69dc557bcb6f7429748b8d13:85",
+       "quote": "<vocab>Aristoteles, philosophia, phisica, vegetabilia, plante, animalia, methaphisica, theoria, mathesis, mathematica</vocab>",
+       "severity": "cosmetic",
+       "what": "added keyword list that is not on the page; it is outside the transcribed text"
+      },
+      {
+       "page": "69af0a0a4c57359b8d2d0f49:60",
+       "quote": "| ⊕ | 10000 | Ↄ | 5000 |",
+       "severity": "cosmetic",
+       "what": "special glyphs (target-circle, D with inner arc) only approximated by Unicode, as the note already says"
+      }
+     ],
+     "cost": {
+      "usd": 0.00148,
+      "claude_points": 0.0124,
+      "basis": "lite + one Opus call (Claude weekly points per Opus image call, measured on this run's meter)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00148,
+      "claude_points": 0.0124
+     },
+     "counts": true
+    }
+   },
+   "made_worse": {
+    "lite -> lite>opus-correct": {
+     "pairs": 30,
+     "identical_text": 4,
+     "fidelity_diff": 1.07,
+     "fidelity_diff_ci": [
+      0.667,
+      1.485
+     ],
+     "worse": "0/30",
+     "better": "23/30",
+     "accept_lost": "0/30",
+     "accept_gained": "13/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    }
+   }
+  },
+  "chinese": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "frame": {
+    "revisions": 4379,
+    "served_opus_still": 4379,
+    "books": 781,
+    "table_drafts": 1,
+    "table_books": 1,
+    "drawn_tables": 1
+   },
+   "controls": {
+    "paddle": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "paddle>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "paddle": {
+     "served": "served before the correction (page_revisions draft)",
+     "n": 30,
+     "books": 30,
+     "accept": "3/30",
+     "accept_rate": 0.1,
+     "accept_ci": {
+      "ci95": [
+       0,
+       0.233
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "24/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.633,
+       0.933
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O5": "14/30",
+      "O6": "12/30",
+      "O4": "12/30",
+      "O1": "8/30",
+      "O7": "4/30",
+      "O10": "3/30",
+      "O17": "2/30",
+      "O15": "1/30",
+      "O11": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "22/30",
+      "O5": "16/30",
+      "O11": "16/30",
+      "O4": "13/30",
+      "O1": "8/30",
+      "E2": "7/30",
+      "O16": "6/30",
+      "O7": "5/30",
+      "O12": "5/30",
+      "O17": "4/30",
+      "D1": "3/30",
+      "O10": "3/30",
+      "O8": "2/30",
+      "O15": "1/30"
+     },
+     "fidelity_mean": 2.77,
+     "commonest": "O5",
+     "examples": [
+      {
+       "page": "6a3cbf29f9474f825c166192:100",
+       "quote": "\\[\\text{一〇〇〇|||||}",
+       "severity": "wrong_text",
+       "what": "only about 5 garbled rows; most of the page's roughly 13 rows of rod numerals in two registers are missing"
+      },
+      {
+       "page": "6a3cbf0af9474f825c164f46:43",
+       "quote": "月\n辛\n卯",
+       "severity": "wrong_text",
+       "what": "The heading 八月辛卯 is broken apart and 八 is missing."
+      },
+      {
+       "page": "6a3c66c6af3c49b59c5cd5b4:121",
+       "quote": "辰正 三三三三三三 三三三三三三",
+       "severity": "wrong_text",
+       "what": "the hour label 戌正 is missing from the second half of the row"
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "basis": "Paddle VL 1.6 busy-card compute"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.00091
+     },
+     "counts": true
+    },
+    "paddle>opus-correct": {
+     "served": "served (#6561)",
+     "n": 30,
+     "books": 30,
+     "accept": "24/30",
+     "accept_rate": 0.8,
+     "accept_ci": {
+      "ci95": [
+       0.633,
+       0.933
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.2
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O10": "3/30"
+     },
+     "classes_k_of_n": {
+      "O6": "9/30",
+      "E2": "4/30",
+      "O16": "4/30",
+      "O10": "3/30",
+      "O7": "2/30",
+      "O11": "2/30",
+      "O12": "1/30",
+      "O8": "1/30",
+      "O5": "1/30",
+      "O17": "1/30",
+      "O15": "1/30"
+     },
+     "fidelity_mean": 4.37,
+     "commonest": "O10",
+     "examples": [
+      {
+       "page": "6a3c654039b4508b04e2d65d:74",
+       "quote": "<unclear>about 2 columns of Manchu definition, not transcribed</unclear>",
+       "severity": "wrong_text",
+       "what": "Most of the page is clear printed Manchu, but all the Manchu headwords and definitions are replaced with placeholders, so most of the page's text is missing"
+      },
+      {
+       "page": "6a3c654039b4508b04e2d65d:74",
+       "quote": "<unclear>Manchu headword, not transcribed</unclear>",
+       "severity": "wrong_text",
+       "what": "The large Manchu headwords are clearly printed but are not transcribed"
+      },
+      {
+       "page": "6a3c653239b4508b04e2ceaa:118",
+       "quote": "about 8 columns of Manchu script (headwords and definitions), not transcribed",
+       "severity": "wrong_text",
+       "what": "All the Manchu headwords and definitions, which are most of the page's text, are left out. The omission is declared, but it is still an omission."
+      }
+     ],
+     "cost": {
+      "usd": 0.000091,
+      "claude_points": 0.0124,
+      "basis": "Paddle + one Opus call (Claude weekly points per Opus image call, measured on this run's meter)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0.000114,
+      "claude_points": 0.0155
+     },
+     "counts": true
+    }
+   },
+   "made_worse": {
+    "paddle -> paddle>opus-correct": {
+     "pairs": 30,
+     "identical_text": 0,
+     "fidelity_diff": 1.6,
+     "fidelity_diff_ci": [
+      1.233,
+      1.967
+     ],
+     "worse": "0/30",
+     "better": "25/30",
+     "accept_lost": "0/30",
+     "accept_gained": "21/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": []
+    }
+   },
+   "reference": {
+    "name": "Kanripo WYG leaf (paddle-table-6388/align.mjs), Han-only CER of the read against the leaf (lower is better)",
+    "align_status": {
+     "unaligned": 4,
+     "aligned:neighbours": 15,
+     "aligned:neighbours±2": 4,
+     "no-kanripo-work": 5,
+     "aligned:one-neighbour": 2
+    },
+    "leaf_misplaced": 1,
+    "per_route": {
+     "paddle": {
+      "n": 19,
+      "mean": 0.2096,
+      "ci95": [
+       0.119,
+       0.313
+      ]
+     },
+     "paddle>opus-correct": {
+      "n": 19,
+      "mean": 0.0945,
+      "ci95": [
+       0.05,
+       0.147
+      ]
+     }
+    },
+    "pages_with_ref": 19,
+    "pair_min_gap": 0.01,
+    "ordered_pairs": 16,
+    "judge_agrees": 16,
+    "judge_disagrees": 0,
+    "judge_ties": 0,
+    "agreement": 1,
+    "disagreements": [],
+    "ref_mean_accepted": 0.08,
+    "ref_mean_not_accepted": 0.241
+   }
+  },
+  "tibetan": {
+   "task": "ocr",
+   "lang": "Tibetan",
+   "frame": {
+    "folios": 30,
+    "books": 30,
+    "note": "tibetan-proofread-2026-10 Kangyur stratum: one folio per book, Derge identity 0.904-0.969"
+   },
+   "controls": {
+    "yigdzin": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "yigdzin>flash-low-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "yigdzin>opus-correct": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "yigdzin": {
+     "served": "served (as of the 2026-10 manifest)",
+     "n": 30,
+     "books": 30,
+     "accept": "17/30",
+     "accept_rate": 0.57,
+     "accept_ci": {
+      "ci95": [
+       0.4,
+       0.733
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "12/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.233,
+       0.567
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "6/30",
+      "O5": "4/30",
+      "O1": "2/30",
+      "T4": "1/30",
+      "T5": "1/30",
+      "O7": "1/30"
+     },
+     "classes_k_of_n": {
+      "O6": "27/30",
+      "E2": "27/30",
+      "O5": "8/30",
+      "O12": "8/30",
+      "O4": "5/30",
+      "O1": "2/30",
+      "I5": "2/30",
+      "O8": "1/30",
+      "T4": "1/30",
+      "T5": "1/30",
+      "O7": "1/30",
+      "O10": "1/30"
+     },
+     "fidelity_mean": 3.6,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e7aaf75f1a22ab19a907e7:223",
+       "quote": "བདེ་བ་ལུས་ཀྱི་མྱོང་ལ་འཕགས་པ་རྫོགས་པར་བྱས",
+       "severity": "wrong_text",
+       "what": "The leaf says བདེ་བ་ཅན་བསམ་གཏན་གཉིས་པ་ (the second dhyāna). The candidate drops it and puts in a phrase taken from the next line."
+      },
+      {
+       "page": "69e7ac035f1a22ab19aa22e1:228",
+       "quote": "དྲང་སྲོང་དུ་གནས་ན་གནས་པ",
+       "severity": "wrong_text",
+       "what": "phrase garbled; the leaf has a longer reading (nags 'forest' and a verb of becoming), so text is dropped"
+      },
+      {
+       "page": "69e7ac035f1a22ab19aa22e1:228",
+       "quote": "ཁྱེད་ལ་དབུལ་དབུལ་ན",
+       "severity": "wrong_text",
+       "what": "verb doubled and garbled against the leaf's reading"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "basis": "BDRC's own OCR, held"
+     },
+     "cost_per_usable_page": {
+      "usd": 0
+     },
+     "counts": true
+    },
+    "yigdzin>flash-low-correct": {
+     "served": "experiment read, not served (#6560 out/flash-low-corr)",
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "accept_rate": 0.87,
+     "accept_ci": {
+      "ci95": [
+       0.733,
+       0.967
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.233
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O4": "1/30",
+      "O6": "1/30",
+      "O8": "1/30"
+     },
+     "classes_k_of_n": {
+      "O12": "14/30",
+      "O6": "11/30",
+      "E2": "10/30",
+      "O8": "4/30",
+      "O5": "3/30",
+      "O4": "1/30",
+      "O7": "1/30",
+      "I5": "1/30",
+      "O11": "1/30"
+     },
+     "fidelity_mean": 4,
+     "commonest": "O4",
+     "examples": [
+      {
+       "page": "69e7aaf75f1a22ab19a907e7:223",
+       "quote": "བདེ་བ་ལུས་ཀྱིས་མྱོང་ལ་འཕགས་པ་རྣམས་ཀྱིས་\nཏེ་གནས་སོ།",
+       "severity": "wrong_text",
+       "what": "The end of line 2 on the first leaf repeats a phrase from line 3. It replaces what the leaf actually says there, བདེ་བ་ཅན་བསམ་གཏན་གཉིས་པ་རྫོགས་པར་བྱས་, so the second dhyāna drops out of the sequence."
+      },
+      {
+       "page": "69e7aaf75f1a22ab19a907e7:223",
+       "quote": "བདེ་བ་ལུས་ཀྱིས་མྱོང་ལ་འཕགས་པ་རྣམས་ཀྱིས་\nཏེ་གནས་སོ།",
+       "severity": "wrong_text",
+       "what": "The end of line 2 on the first leaf repeats a phrase from line 3. It replaces what the leaf actually says there, བདེ་བ་ཅན་བསམ་གཏན་གཉིས་པ་རྫོགས་པར་བྱས་, so the second dhyāna drops out of the sequence."
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "agy_share": 0.0000043632,
+      "basis": "held Yigdzin + one agy 3.8 Flash low call"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "agy_share": 0.00000503
+     },
+     "counts": true
+    },
+    "yigdzin>opus-correct": {
+     "served": "experiment read, not served (#6560 out/opus-corr)",
+     "n": 30,
+     "books": 30,
+     "accept": "25/30",
+     "accept_rate": 0.83,
+     "accept_ci": {
+      "ci95": [
+       0.7,
+       0.967
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.2
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O6": "1/30",
+      "T5": "1/30",
+      "O4": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "21/30",
+      "O6": "15/30",
+      "O12": "11/30",
+      "I5": "6/30",
+      "O5": "4/30",
+      "O8": "2/30",
+      "O11": "1/30",
+      "O7": "1/30",
+      "T5": "1/30",
+      "O1": "1/30",
+      "O4": "1/30"
+     },
+     "fidelity_mean": 3.87,
+     "commonest": "O6",
+     "examples": [
+      {
+       "page": "69e7ac035f1a22ab19aa22e1:228",
+       "quote": "དྲང་སྲོང་དུ་གནས་ན་གནས་པ",
+       "severity": "wrong_text",
+       "what": "phrase garbled; the leaf has a longer reading (nags 'forest' and a verb of becoming), so text is dropped"
+      },
+      {
+       "page": "69e7ac035f1a22ab19aa22e1:228",
+       "quote": "ཁྱེད་ལ་དབུལ་དབུལ་ན",
+       "severity": "wrong_text",
+       "what": "verb doubled and garbled against the leaf's reading"
+      },
+      {
+       "page": "69e7ac225f1a22ab19aa42a0:96",
+       "quote": "ཕྱིར་ཡང་མ་མིན་ནོ",
+       "severity": "cosmetic",
+       "what": "page reads མ་ཡིན་ནོ; recorded as མ་མིན"
+      }
+     ],
+     "cost": {
+      "usd": 0,
+      "claude_points": 0.0124,
+      "basis": "held Yigdzin + one Opus call (Claude weekly points per Opus image call, measured on this run's meter)"
+     },
+     "cost_per_usable_page": {
+      "usd": 0,
+      "claude_points": 0.0149
+     },
+     "counts": true
+    }
+   },
+   "made_worse": {
+    "yigdzin -> yigdzin>flash-low-correct": {
+     "pairs": 30,
+     "identical_text": 0,
+     "fidelity_diff": 0.4,
+     "fidelity_diff_ci": [
+      0.2,
+      0.633
+     ],
+     "worse": "1/30",
+     "better": "10/30",
+     "accept_lost": "1/30",
+     "accept_gained": "10/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "69e7ab9e5f1a22ab19a9b03b:269",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "Both leaves in the photo are transcribed in full and in order, and the wording follows the page closely. However, the offering of precious things is given as three kinds where the leaf says seven."
+      }
+     ]
+    },
+    "yigdzin -> yigdzin>opus-correct": {
+     "pairs": 30,
+     "identical_text": 6,
+     "fidelity_diff": 0.27,
+     "fidelity_diff_ci": [
+      0.1,
+      0.433
+     ],
+     "worse": "1/30",
+     "better": "8/30",
+     "accept_lost": "1/30",
+     "accept_gained": "9/30",
+     "wrong_text_added": "0/30",
+     "worse_pages": [
+      {
+       "page": "69e7ab9e5f1a22ab19a9b03b:269",
+       "draft": 4,
+       "after": 4,
+       "accept": "true->false",
+       "note": "This one photo shows two separate leaves, and the transcription covers both of them, all 16 lines in order. Most of it matches, but in the gift of jewels the transcription says 'three kinds' where the leaf seems to read 'seven'. I couldn't fully confirm this at the image's resolution."
+      }
+     ]
+    }
+   },
+   "reference": {
+    "name": "Derge e-text (OpenPecha P000001), syllable identity of the read against the folio window (scores-flash.json.gz)",
+    "per_route": {
+     "yigdzin": {
+      "n": 30,
+      "mean": 0.9449,
+      "ci95": [
+       0.939,
+       0.951
+      ]
+     },
+     "yigdzin>flash-low-correct": {
+      "n": 30,
+      "mean": 0.9677,
+      "ci95": [
+       0.962,
+       0.974
+      ]
+     },
+     "yigdzin>opus-correct": {
+      "n": 30,
+      "mean": 0.9595,
+      "ci95": [
+       0.952,
+       0.966
+      ]
+     }
+    },
+    "pages_with_ref": 30,
+    "pair_min_gap": 0.005,
+    "ordered_pairs": 58,
+    "judge_agrees": 25,
+    "judge_disagrees": 2,
+    "judge_ties": 31,
+    "agreement": 0.93,
+    "disagreements": [
+     {
+      "page": "69e7ab9e5f1a22ab19a9b03b:269",
+      "routes": [
+       "yigdzin",
+       "yigdzin>flash-low-correct"
+      ],
+      "ref": [
+       0.9549,
+       0.9658
+      ],
+      "fidelity": [
+       4,
+       4
+      ]
+     },
+     {
+      "page": "69e7ab9e5f1a22ab19a9b03b:269",
+      "routes": [
+       "yigdzin",
+       "yigdzin>opus-correct"
+      ],
+      "ref": [
+       0.9549,
+       0.9659
+      ],
+      "fidelity": [
+       4,
+       4
+      ]
+     }
+    ],
+    "ref_mean_accepted": 0.9587,
+    "ref_mean_not_accepted": 0.9531
+   },
+   "planted": {
+    "n": 10,
+    "caught": 8,
+    "catch_rate": 0.8,
+    "rule": "below 0.80 the Derge score decides the cell, not the judge",
+    "decides": "judge",
+    "accepted_with_plant": 7,
+    "detail": [
+     {
+      "uid": "69e7aad95f1a22ab19a8e519_163",
+      "kind": "vowel",
+      "orig": "གསུམ",
+      "planted": "གསོམ",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7aaf75f1a22ab19a907e7_223",
+      "kind": "swap",
+      "orig": "པར",
+      "planted": "མ",
+      "caught": true,
+      "accept": false,
+      "fidelity": 3
+     },
+     {
+      "uid": "69e7ab3a5f1a22ab19a94fa2_87",
+      "kind": "letter",
+      "orig": "ལས",
+      "planted": "ཡས",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7ab4c5f1a22ab19a9622c_310",
+      "kind": "vowel",
+      "orig": "ཐེག",
+      "planted": "ཐིག",
+      "caught": true,
+      "accept": false,
+      "fidelity": 3
+     },
+     {
+      "uid": "69e7ab585f1a22ab19a970a0_149",
+      "kind": "swap",
+      "orig": "དེ",
+      "planted": "ཆོས",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7ab655f1a22ab19a98091_172",
+      "kind": "letter",
+      "orig": "དང",
+      "planted": "ངང",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7aba55f1a22ab19a9b8a4_233",
+      "kind": "vowel",
+      "orig": "མཆོག",
+      "planted": "མཆུག",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7abc55f1a22ab19a9dcfd_225",
+      "kind": "swap",
+      "orig": "པ",
+      "planted": "ལྷ",
+      "caught": true,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7abd15f1a22ab19a9eb6b_215",
+      "kind": "letter",
+      "orig": "ནོ",
+      "planted": "ཏོ",
+      "caught": false,
+      "accept": true,
+      "fidelity": 4
+     },
+     {
+      "uid": "69e7ac035f1a22ab19aa22e1_228",
+      "kind": "vowel",
+      "orig": "པོ",
+      "planted": "པུ",
+      "caught": false,
+      "accept": false,
+      "fidelity": 3
+     }
+    ]
+   }
+  },
+  "german": {
+   "task": "translation",
+   "lang": "German",
+   "frame": {
+    "books": 5942,
+    "routes": {
+     "flash3": {
+      "pages": 306784,
+      "books": 1245
+     },
+     "flash-lite": {
+      "pages": 151361,
+      "books": 1025
+     }
+    },
+    "note": "visible German books dated 1500-1800; English newer than the OCR"
+   },
+   "controls": {
+    "flash3": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "flash-lite": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "opus-cli": {
+     "n": 2,
+     "passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "flash3": {
+     "served": "served",
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "accept_rate": 0.73,
+     "accept_ci": {
+      "ci95": [
+       0.567,
+       0.867
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "6/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.067,
+       0.367
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "O13": "2/30",
+      "O6": "2/30",
+      "I1": "1/30",
+      "T9": "1/30",
+      "T5": "1/30",
+      "T7": "1/30",
+      "I4": "1/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "13/30",
+      "T10": "13/30",
+      "O6": "10/30",
+      "T15": "8/30",
+      "T8": "8/30",
+      "T6": "6/30",
+      "T9": "5/30",
+      "O12": "2/30",
+      "O8": "2/30",
+      "T5": "2/30",
+      "T7": "2/30",
+      "O13": "2/30",
+      "O7": "2/30",
+      "I4": "2/30",
+      "O11": "1/30",
+      "I1": "1/30",
+      "T16": "1/30",
+      "O4": "1/30",
+      "O1": "1/30",
+      "O5": "1/30",
+      "O16": "1/30"
+     },
+     "fidelity_mean": 3.87,
+     "commonest": "O13",
+     "examples": [
+      {
+       "page": "69b51e1a768235dc6598c4a1:18",
+       "quote": "20 Ancient stone emperor heads",
+       "severity": "wrong_text",
+       "what": "'stein' is struck through and replaced by 'runde'. The heads are round, not stone."
+      },
+      {
+       "page": "69b418902b0edf3eaa2dd408:348",
+       "quote": "<term>Antimony Antimony Antimony Antimony Antimony Antimony Antimony Antimony</term>",
+       "severity": "wrong_text",
+       "what": "four struck-through lines of text are shown as rows of 'Antimony' instead of being marked as deleted"
+      },
+      {
+       "page": "69b51e1a768235dc6598c4a1:18",
+       "quote": "20 Ancient stone emperor heads",
+       "severity": "wrong_text",
+       "what": "'stein' is struck through and replaced by 'runde'. The heads are round, not stone."
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "basis": "not in route-costs.json (an OCR table); 3 Flash translation price not measured per page"
+     },
+     "cost_per_usable_page": {},
+     "counts": true
+    },
+    "flash-lite": {
+     "served": "served",
+     "n": 30,
+     "books": 30,
+     "accept": "15/30",
+     "accept_rate": 0.5,
+     "accept_ci": {
+      "ci95": [
+       0.333,
+       0.667
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "10/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0.167,
+       0.5
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "T5": "3/30",
+      "T9": "3/30",
+      "O6": "2/30",
+      "T8": "1/30",
+      "T6": "1/30",
+      "O1": "1/30"
+     },
+     "classes_k_of_n": {
+      "E2": "17/30",
+      "O6": "10/30",
+      "T8": "9/30",
+      "T6": "7/30",
+      "T9": "7/30",
+      "T10": "5/30",
+      "T5": "4/30",
+      "D1": "3/30",
+      "T7": "2/30",
+      "O8": "2/30",
+      "O5": "2/30",
+      "T13": "1/30",
+      "O12": "1/30",
+      "O1": "1/30",
+      "O11": "1/30",
+      "T15": "1/30",
+      "T16": "1/30"
+     },
+     "fidelity_mean": 3.67,
+     "commonest": "T5",
+     "examples": [
+      {
+       "page": "6a267cb06c1f37c9c4f36c8f:86",
+       "quote": "one carries the iron filings in after it and pours it out into a pouring-mold; thus everything that is good will settle into a <term>regulum</term> <gloss>metal",
+       "severity": "wrong_text",
+       "what": "The page stops at 'trägt man was Ei-' with a catchword. Everything after that comes from the next page or is invented."
+      },
+      {
+       "page": "6a267eca6c1f37c9c4f3cbf7:3",
+       "quote": "House and the Lords of the States, is maintained; as well as for the sake of the common interests, cannot refrain from most urgently beseeching and requesting t",
+       "severity": "wrong_text",
+       "what": "The page stops at 'zwischen Ihrer Maje-' (catchword 'stät'). Everything after 'His Majesty's' comes from the following page(s), roughly as long again as this page's text."
+      },
+      {
+       "page": "6991d67e8c1030b12444b708:169",
+       "quote": "may offer prayers, intercession, sacrifices of praise, thanks, and reconciliation",
+       "severity": "wrong_text",
+       "what": "The page ends at 'Juden/ Türken und Heiden/' with the catchword 'die'. This verb phrase is taken from the following page."
+      }
+     ],
+     "cost": {
+      "usd": null,
+      "basis": "not in route-costs.json (an OCR table)"
+     },
+     "cost_per_usable_page": {},
+     "counts": true
+    },
+    "opus-cli": {
+     "served": "this run's reads, not served (claude-translate.mjs read, one page a call)",
+     "n": 30,
+     "books": 30,
+     "accept": "26/30",
+     "accept_rate": 0.87,
+     "accept_ci": {
+      "ci95": [
+       0.733,
+       0.967
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_pages": "3/30",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.2
+      ],
+      "unit": "book",
+      "units": 30
+     },
+     "wrong_text_classes": {
+      "I1": "1/30",
+      "T9": "1/30",
+      "T6": "1/30",
+      "T10": "1/30"
+     },
+     "classes_k_of_n": {
+      "T10": "16/30",
+      "T15": "10/30",
+      "E2": "10/30",
+      "O6": "5/30",
+      "T9": "4/30",
+      "T8": "3/30",
+      "T6": "2/30",
+      "O8": "2/30",
+      "O12": "2/30",
+      "O11": "1/30",
+      "I1": "1/30",
+      "T7": "1/30",
+      "O7": "1/30",
+      "I3": "1/30",
+      "O5": "1/30"
+     },
+     "fidelity_mean": 4.1,
+     "commonest": "I1",
+     "examples": [
+      {
+       "page": "6a243c290c702665db1d10fc:25",
+       "quote": "<header>On the Action of Quicklime. 17</header>",
+       "severity": "wrong_text",
+       "what": "The image shows page 16 (header '16 I. Des Grafen v. Saluces Abhandl.', §. 32 with the 'Fortsetzung' margin note). The transcription and translation are of page 17, the next page."
+      },
+      {
+       "page": "6a243c290c702665db1d10fc:25",
+       "quote": "<header>On the Action of Quicklime. 17</header>",
+       "severity": "wrong_text",
+       "what": "The image shows page 16 (header '16 I. Des Grafen v. Saluces Abhandl.', §. 32 with the 'Fortsetzung' margin note). The transcription and translation are of page 17, the next page."
+      }
+     ],
+     "cost": {
+      "claude_points": 0.0124,
+      "basis": "one Opus text call per page here (production sends 10 pages a call) (Claude weekly points per Opus image call, measured on this run's meter)"
+     },
+     "cost_per_usable_page": {
+      "claude_points": 0.0143
+     },
+     "counts": true
+    }
+   },
+   "made_worse": {
+    "flash3 -> opus-cli": {
+     "pairs": 15,
+     "identical_text": 0,
+     "fidelity_diff": 0,
+     "fidelity_diff_ci": [
+      -0.333,
+      0.4
+     ],
+     "worse": "4/15",
+     "better": "4/15",
+     "accept_lost": "1/15",
+     "accept_gained": "2/15",
+     "wrong_text_added": "0/15",
+     "worse_pages": [
+      {
+       "page": "69c83bb46c6f3cc53c84f75c:105",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful, complete translation of p. 55. It keeps the unfinished first sentence of the original as it is, and the only slip is the added word \"true\" before \"substantial testimony\"."
+      },
+      {
+       "page": "6970b969c208a2e2cbe86818:71",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "The translation is faithful and complete. The only things a reader would notice are that the first sentence has been made into a question because of an assumed lead-in from the previous page, and that the explanatory notes are the editor's own."
+      },
+      {
+       "page": "69c833fa6c6f3cc53c84e3bf:121",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "This is a faithful and complete translation of page 101. It leaves out one hedge ('almost enough'), and the editorial note adds an unsupported claim about how Pietist writers read Isaiah 58:14."
+      },
+      {
+       "page": "6a243eba0f0e4f405e6348d0:43",
+       "draft": 4,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The translation reads well and is complete, but it calls the witnesses' sworn testimony 'final testimony', and the article number is probably 56, not 16."
+      }
+     ]
+    },
+    "flash-lite -> opus-cli": {
+     "pairs": 15,
+     "identical_text": 0,
+     "fidelity_diff": 0.67,
+     "fidelity_diff_ci": [
+      0.133,
+      1.133
+     ],
+     "worse": "3/15",
+     "better": "10/15",
+     "accept_lost": "1/15",
+     "accept_gained": "7/15",
+     "wrong_text_added": "2/15",
+     "worse_pages": [
+      {
+       "page": "69f337f1876dd827cbc53156:24",
+       "draft": 3,
+       "after": 3,
+       "accept": "false->false",
+       "note": "The list of names is mostly right, but the bracketed label is cut off as \"Penalty-\" when the page says \"Strafherren\" (penalty lords). A few first and last names in the right-hand column look misread."
+      },
+      {
+       "page": "6a9058b07f6818cc17cd5a93:8",
+       "draft": 5,
+       "after": 4,
+       "accept": "true->true",
+       "note": "A faithful, complete translation of the last part of the preface; only 'for a thousand years' (the page says 'a thousand years ago') is slightly loose, and the hedged notes are plausible."
+      },
+      {
+       "page": "69b51de0261c58d63664c471:66",
+       "draft": 5,
+       "after": 3,
+       "accept": "true->false",
+       "note": "The only text on the plate is 'N° 12', and the candidate renders it correctly as 'No. 12'. Its notes, however, name the source book and claim an index on earlier pages, and nothing on this page supports either claim."
+      }
+     ]
+    }
+   }
+  }
+ },
+ "contain_candidates": [
+  {
+   "cell": "tibetan",
+   "route": "yigdzin",
+   "page_id": "69e7ab3c5f1a22ab19a951a9",
+   "book_id": "69e7ab3c5f1a22ab19a9514b",
+   "page_number": 94,
+   "defects": [
+    {
+     "class": "O5",
+     "quote": "སངས་རྒྱས་ཀྱི་ཆོས་མ་འདྲེ་པ་རྣམ་པར་དག་པའོ། གཟུགས་རྣམ་པར་དག་པ་དང་གཟུགས་རྣམ་པ་ཐམས་ཅད་མཁྱེནཔ་ཉིད་ཀྱི་བར་དུ་རྣམ་པར་དག་པ་སྟེ། དེ་ཕྱིར་ན་ཤེས་རབ་ཀྱི་",
+     "severity": "wrong_text",
+     "what": "leaf 2 line 5: drops 'འདི་ནི་གཉིས་སུ་མེད་དེ…གཅད་དུ་མེད་དོ། །རབ་འབྱོར་གཞན་ཡང་' and 'ཕ་རོལ་ཏུ་ཕྱིན་པ་རྣམ་པར'"
+    },
+    {
+     "class": "O1",
+     "quote": "གཟུགས་རྣམ་པར་དག་པ་དང་གཟུགས་རྣམ་པ་ཐམས་ཅད་མཁྱེནཔ་ཉིད་ཀྱི་བར་དུ་རྣམ་པར་དག་པ་སྟེ། དེ་ཕྱིར་ན",
+     "severity": "wrong_text",
+     "what": "invented phrase not on this line"
+    },
+    {
+     "class": "O6",
+     "quote": "གཟུགས་རྣམ་པར་དག་པ་དང་། གཟུགས\nཅད་མཁྱེན་པ",
+     "severity": "wrong_text",
+     "what": "line end should be 'རྣམ་པ་ཐམས', not གཟུགས"
+    }
+   ],
+   "note": "Mostly follows both leaves, but there are many spelling misreads, a duplicated seam, and leaf 2 line 5 is rewritten: a whole clause is dropped and text not on the leaf is inserted."
+  },
+  {
+   "cell": "tibetan",
+   "route": "yigdzin",
+   "page_id": "69e7ab385f1a22ab19a94efc",
+   "book_id": "69e7ab385f1a22ab19a94da7",
+   "page_number": 341,
+   "defects": [
+    {
+     "class": "O1",
+     "quote": "ཤུག །མེད་པ་ཕུན་སུམ་ཚོགས་པའི་སྤྲིན",
+     "severity": "wrong_text",
+     "what": "the second leaf opens with ༄༅། །མེད་པ; 'ཤུག' is invented and the ༄༅ opening mark is dropped"
+    }
+   ],
+   "note": "Both leaves in the photo are transcribed line for line in the right order, but they run together with no break, the second leaf's opening mark is replaced by an invented 'ཤུག', and the Buddha-name list is full of garbled spellings (བཤེགས, གཤེས, བསྙེས, བ་ཀུར, ཧོ)."
+  },
+  {
+   "cell": "german",
+   "route": "flash3",
+   "page_id": "6a243c290c702665db1d1115",
+   "book_id": "6a243c290c702665db1d10fc",
+   "page_number": 25,
+   "defects": [
+    {
+     "class": "I1",
+     "quote": "<header>Of the effect of quicklime. 17</header>",
+     "severity": "wrong_text",
+     "what": "The image is page 16 (header '16 I. Des Grafen v. Saluces Abhandl.', §. 32, margin 'Fortsetzung'). The transcription and translation are of page 17, the next page."
+    }
+   ],
+   "note": "This English doesn't match the facing image: the scan shows page 16 (§. 32, on the three cases of dissolution of sal ammoniac), but the translation is of page 17, about quicklime and Hofmann."
+  },
+  {
+   "cell": "german",
+   "route": "flash3",
+   "page_id": "69f72d24e9847152754ce9ae",
+   "book_id": "69b418902b0edf3eaa2dd408",
+   "page_number": 348,
+   "defects": [
+    {
+     "class": "I4",
+     "quote": "My dear <unclear>f-</unclear>\n<unclear>trinüm</unclear>\nTake putrefied",
+     "severity": "wrong_text",
+     "what": "the right column is the cut-off edge of the facing page (p. 9), not a second column of page 8; it is translated as if it were this page's text"
+    },
+    {
+     "class": "O1",
+     "quote": "Write us. At\nhim gentle",
+     "severity": "wrong_text",
+     "what": "fluent readings made up from clipped line starts on the neighbouring page"
+    },
+    {
+     "class": "O6",
+     "quote": "<term>Antimony</term> <gloss>represented by the symbol ♁</gloss> and <term>Sol</term>",
+     "severity": "wrong_text",
+     "what": "the page's different alchemical signs (mercury ☿, silver/moon, and others) are all turned into 'Antimony'"
+    },
+    {
+     "class": "O6",
+     "quote": "The end is the proposed increase",
+     "severity": "wrong_text",
+     "what": "the heading reads roughly 'Ein tinctur ... ist augmentum perpetuum' (a tincture that is a perpetual increase), not 'Finitio ... propositum'"
+    },
+    {
+     "class": "O13",
+     "quote": "<term>Antimony Antimony Antimony Antimony Antimony Antimony Antimony Antimony</term>",
+     "severity": "wrong_text",
+     "what": "four struck-through lines of text are shown as rows of 'Antimony' instead of being marked as deleted"
+    }
+   ],
+   "note": "The translation calls every alchemical sign 'Antimony', renders crossed-out lines as rows of symbols, and treats the edge of the facing page as a second column of this page."
+  },
+  {
+   "cell": "german",
+   "route": "flash-lite",
+   "page_id": "6a26b9d361b3857ed05abaa6",
+   "book_id": "6a26b9d361b3857ed05aba8f",
+   "page_number": 23,
+   "defects": [
+    {
+     "class": "T9",
+     "quote": "Namely, they mean",
+     "severity": "wrong_text",
+     "what": "opening word 'gemeldet.' (reported), the end of the previous page's sentence, silently dropped"
+    },
+    {
+     "class": "O1",
+     "quote": "<unclear>Since I have</unclear>",
+     "severity": "wrong_text",
+     "what": "'Since' is invented; the page reads 'so habe ich doch' (so I have nevertheless), and 'doch' is dropped"
+    }
+   ],
+   "note": "The censored two-line gap is invisible in the English: legible words are flagged unclear instead, an invented 'Since' bridges the gap, and 'gemeldet' and 'in part' are missing."
+  }
+ ]
+}

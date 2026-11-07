@@ -18,8 +18,19 @@
  * scripts/batch/cli-translate-lane.mjs, and never falls to the API.
  *
  * A `match` is { provider } (books.image_source.provider) or { language_prefix: [...] } (the FIRST language label,
- * case-insensitive, whole word, any run of spaces for a space). validateTranslationTable throws on a row the routers
- * cannot run, so a bad edit fails the tests and the import instead of routing somewhere nobody chose.
+ * case-insensitive, whole word, any run of spaces for a space). A row may also carry `unless: { title_words: [...],
+ * publisher_words: [...], providers: [...] }`: a book whose title or publisher holds one of those words (whole word,
+ * case-insensitive), or whose image_source.provider is one of `providers`, skips the row and falls to the next one. A
+ * caller must project `title`, `publisher` and `image_source.provider` for it to see them. `providers` exists because
+ * a cli row overlays every batch row: the European cli rows (#7263) would otherwise take BPH's Latin books from the
+ * `bph` row.
+ * A cli row naming gemini-3.8-flash+agy-cli may carry `per_call` (1-4): its books are read in blocks of that many pages
+ * a call by scripts/batch/claude-translate.mjs --cli=agy, the configuration its adoption sample measured (#7263:
+ * agy-flash-low@4), instead of cli-translate.mjs read (one page, or a folio-marked pair, a call).
+ * The Greek cli row skips Loebs this way (#7075, 2026-10-26): the facing page is printed English, and on Plutarch
+ * Loeb 99 p.94 the 3.8 Flash read reproduced that English word for word instead of translating the Greek.
+ * validateTranslationTable throws on a row the routers cannot run, so a bad edit fails the tests and the import
+ * instead of routing somewhere nobody chose.
  */
 
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -53,6 +64,7 @@ export const CLI_TRANSLATE_HOLD = Object.freeze({
   reason: 'translate-cli-7075',
   issue: 7075,
   release: 'scripts/batch/cli-translate-lane.mjs has translated every untranslated page through the reader the routing table names; it releases the book itself (or by hand: scripts/maintenance/hold-pipeline-books.mjs --release-held --reason translate-cli-7075 --book <id> --apply)',
+  release_when: { kind: 'test', ref: 'scripts/batch/cli-translate-lane.mjs releases the book when every untranslated page is translated' },
 });
 
 const channelOf = (row) => row.channel ?? 'batch';
@@ -61,7 +73,13 @@ const compiled = new WeakMap();
 function compile(table) {
   let rows = compiled.get(table);
   if (!rows) {
-    rows = (table?.rows ?? []).map((row) => ({ row, re: row.match?.language_prefix ? prefixRegex(row.match.language_prefix, row.match.optional_lead ?? []) : null }));
+    rows = (table?.rows ?? []).map((row) => ({
+      row,
+      re: row.match?.language_prefix ? prefixRegex(row.match.language_prefix, row.match.optional_lead ?? []) : null,
+      unlessTitle: row.unless?.title_words?.length ? new RegExp(`\\b(${words(row.unless.title_words)})\\b`, 'i') : null,
+      unlessPublisher: row.unless?.publisher_words?.length ? new RegExp(`\\b(${words(row.unless.publisher_words)})\\b`, 'i') : null,
+      unlessProviders: row.unless?.providers?.length ? new Set(row.unless.providers) : null,
+    }));
     compiled.set(table, rows);
   }
   return rows;
@@ -69,9 +87,14 @@ function compile(table) {
 
 function firstFit(table, book, channel) {
   const language = String(book?.language ?? '');
-  for (const { row, re } of compile(table)) {
+  const title = String(book?.title ?? '');
+  const publisher = String(book?.publisher ?? '');
+  const provider = book?.image_source?.provider;
+  for (const { row, re, unlessTitle, unlessPublisher, unlessProviders } of compile(table)) {
     if (channelOf(row) !== channel) continue;
-    if (row.match?.provider && book?.image_source?.provider === row.match.provider) return row;
+    if (unlessTitle?.test(title) || unlessPublisher?.test(publisher) || (provider && unlessProviders?.has(provider))) continue;
+    if (row.match?.any === true) return row;
+    if (row.match?.provider && provider === row.match.provider) return row;
     if (re && re.test(language)) return row;
   }
   return null;
@@ -91,6 +114,26 @@ export function translateLaneForBook(table, book) {
   const cli = firstFit(table, book, 'cli');
   if (cli) return { channel: 'cli', engine: cli.engine, ...CLI_TRANSLATE_LANES[cli.engine], row: cli };
   return { channel: 'batch', engine: translateEngineFor(table, book), row: tableRowFor(table, book) };
+}
+
+/**
+ * A Mongo filter over `books` selecting exactly the books translateLaneForBook routes to a cli row (#7263): one
+ * clause per cli row, its language regex plus its `unless` as negations. A book no cli row fits is batch, whatever
+ * batch row it fits, so the union of the cli clauses is the whole cli set. The pipeline orchestrator's Phase 4 selects
+ * by it while the translate brake is on, so a Batch-bound book never takes a slot it cannot use. Provider rows are
+ * Batch-only today; a cli `match.provider` row is matched by provider. Returns null when the table has no cli row.
+ */
+export function cliBookFilter(table) {
+  const clauses = compile(table).filter(({ row }) => channelOf(row) === 'cli').map(({ row, re, unlessTitle, unlessPublisher, unlessProviders }) => ({
+    ...(row.match?.any === true
+      ? (unlessProviders ? { 'image_source.provider': { $nin: [...unlessProviders] } } : {})
+      : re
+        ? { language: re, ...(unlessProviders ? { 'image_source.provider': { $nin: [...unlessProviders] } } : {}) }
+        : { 'image_source.provider': row.match.provider }),
+    ...(unlessTitle ? { title: { $not: unlessTitle } } : {}),
+    ...(unlessPublisher ? { publisher: { $not: unlessPublisher } } : {}),
+  }));
+  return clauses.length ? { $or: clauses } : null;
 }
 
 export function translateEngineFor(table, book) {
@@ -116,9 +159,22 @@ export function validateTranslationTable(table, engines) {
       // #7075: a cli row goes live only after a blind sample against the reader it replaces.
       if (!row.adoption?.sample || !row.adoption?.replaces) throw new Error(`translation-routing-table: cli row ${row.id} needs adoption.sample and adoption.replaces (the blind sample against the old reader)`);
     }
-    const kinds = ['provider', 'language_prefix'].filter((k) => row.match?.[k] != null);
-    if (kinds.length !== 1) throw new Error(`translation-routing-table: row ${row.id} needs exactly one of match.provider / match.language_prefix`);
+    if (row.per_call != null && (channel !== 'cli' || row.engine !== 'gemini-3.8-flash+agy-cli' || !Number.isInteger(row.per_call) || row.per_call < 1 || row.per_call > 4)) throw new Error(`translation-routing-table: row ${row.id} has per_call ${row.per_call}; per_call is an integer 1-4 on a cli row naming gemini-3.8-flash+agy-cli (claude-translate.mjs --cli=agy caps a call at 4 pages)`);
+    const kinds = ['provider', 'language_prefix', 'any'].filter((k) => row.match?.[k] != null);
+    if (kinds.length !== 1) throw new Error(`translation-routing-table: row ${row.id} needs exactly one of match.provider / match.language_prefix / match.any`);
+    // match.any (2026-11-06, Derek "everything on agy"): a catch-all, so only a cli row may carry it, and it must be the
+    // last cli row (a cli row after it would never be reached).
+    if (row.match.any != null) {
+      if (row.match.any !== true || channel !== 'cli') throw new Error(`translation-routing-table: row ${row.id}: match.any is true and only on a cli row`);
+      const later = (table.rows ?? []).slice(table.rows.indexOf(row) + 1).filter((r) => channelOf(r) === 'cli');
+      if (later.length) throw new Error(`translation-routing-table: row ${row.id} matches every book, so cli row ${later[0].id} after it is unreachable`);
+    }
     if (row.match.language_prefix && (!Array.isArray(row.match.language_prefix) || !row.match.language_prefix.length)) throw new Error(`translation-routing-table: row ${row.id} has an empty language_prefix`);
+    if (row.unless != null) {
+      const lists = ['title_words', 'publisher_words', 'providers'].filter((k) => row.unless[k] != null);
+      const bad = (l) => !Array.isArray(l) || !l.length || l.some((w) => typeof w !== 'string' || !w.trim());
+      if (!lists.length || lists.some((k) => bad(row.unless[k])) || Object.keys(row.unless).some((k) => !lists.includes(k))) throw new Error(`translation-routing-table: row ${row.id} has an unless that is not { title_words?, publisher_words?, providers? } with non-empty lists`);
+    }
     if (!row.evidence?.length) throw new Error(`translation-routing-table: row ${row.id} has no evidence`);
   }
   return table;

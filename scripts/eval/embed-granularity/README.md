@@ -26,7 +26,7 @@ concepts (c01–c06) and the 19 others with the most traditions. `gold.json`:
 25 queries, 252 passages, 3–8 traditions each.
 
 **Arms.** `run-arms.mjs` lists them. One embedding model throughout
-(`gemini-embedding-2-preview`, 768-d, no task type: the production request), so
+(`gemini-embedding-2`, 768-d, no task type: the production request), so
 arms differ in unit, text and ranking only.
 
 **Judging.** The gold set was found lexically, so it misses relevant pages that

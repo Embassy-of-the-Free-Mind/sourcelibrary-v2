@@ -62,6 +62,26 @@ describe('setPublication', () => {
     expect(b!.hidden_at).toBeInstanceOf(Date);
   });
 
+  it("refuses to hide a partner's own scan as a duplicate of a non-partner copy (#7702)", async () => {
+    const db = await seed();
+    await db.collection('books').insertMany([
+      { _id: new ObjectId(), id: 'efm-copy', visible: true, tenantId: 'efm' },
+      { _id: new ObjectId(), id: 'outside-keeper', visible: true },
+      { _id: new ObjectId(), id: 'efm-keeper', visible: true, tenantId: 'efm' },
+    ]);
+    const opts = { state: 'hidden' as const, reason: 'duplicate' as const, duplicateOf: 'outside-keeper', by: BY };
+    for (const lib of [{ setPublication, setPublicationMany }, mjs]) {
+      await expect(lib.setPublication(db, 'efm-copy', opts)).rejects.toThrow(/partner efm/);
+      expect((await lib.setPublicationMany(db, ['efm-copy'], opts)).refused).toEqual(['efm-copy']);
+    }
+    expect((await db.collection('books').findOne({ id: 'efm-copy' }))!.visible).toBe(true);
+    expect(await db.collection('publication_events').countDocuments()).toBe(0);
+    // A keeper inside the same partner, or the explicit override, still hides it.
+    expect((await setPublication(db, 'efm-copy', { ...opts, duplicateOf: 'efm-keeper' })).status).toBe('written');
+    await setPublication(db, 'efm-copy', { state: 'public', by: BY });
+    expect((await mjs.setPublication(db, 'efm-copy', { ...opts, allowPartnerCopyHide: true })).status).toBe('written');
+  });
+
   it('resolves a book by _id when _id and id differ', async () => {
     const db = await seed();
     const r = await setPublication(db, 'remint-oid', { state: 'hidden', reason: 'quality', by: BY });

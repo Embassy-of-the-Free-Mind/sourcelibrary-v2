@@ -1,0 +1,52 @@
+[
+  {
+    "book_id": "b13-r", "slot": 1, "title": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An alchemical miscellany: a medieval 'Speculum luminum' recipe for lye made from the ashes of human blood (p45), a 17th-century English/Latin treatise on the materia prima citing the Turba and Morienus (p88), and Ripley's 'Pupilla Alchymiae' (p132). It belongs on an alchemy/Rosicrucian shelf. No tradition or collection is given in the packet, so the fit is judged on content alone.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The volume is composite or bound from several hands: p45 is a late-medieval Gothic cursive with its own foliation ('17' at image 45), while p88 and p132 are in a 17th-century English secretary/italic hand. So the '17th Century' date fits only part of the volume. That is a cataloguing nuance, not a defect. No translations exist for any of the three pages.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "tunc accipe unam earum per se", "image": "tūc accipe unā i(st)arum p(er) se (superscript 'arum' over i)", "problem": "'istarum' normalised to 'earum'; same sense", "severity": "minor", "class": "O8" },
+          { "ocr": "fac per omnia ut <unclear>primo</unclear> et 2o sicut cum prima et 2a parte", "image": "fac p(er) o(mn)ia · p(ri)o · 2o · & 2o si(cu)t cu(m) p(rim)a & 2a p(ar)te", "problem": "the repeated ordinals were reconstructed as 'ut primo et 2o' with an <unclear>; the gist is kept", "severity": "minor" },
+          { "ocr": "pone .2am partem cinerum in eandem quam fecisti lixivium", "image": "pone · 2am p(ar)te(m) ciner(um) in eand(em) aq(uam) q(ua) fecisti lixiviu(m)", "problem": "'aquam qua' read as 'quam' (a dropped word). Also, this scribe writes 2 and 3 alike, so the ordinals rest on context; the OCR's choices fit the procedure", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation for this page: a reader of the English pane gets nothing", "severity": "minor" } ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 88,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<language>Latin</language>", "image": "the page is about half English (first paragraph, last clause before §2)", "problem": "language tag gives only Latin for a mixed English/Latin page", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation for this page", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 132,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "howbeit there be <gloss>more</gloss> more mercuries then 2", "image": "howbeit there be ^more mercuries then 2 (one caret insertion)", "problem": "the interlinear insertion is output twice, once as a <gloss> and once in the line, so the reader sees 'more more'", "severity": "minor", "class": "O12" },
+          { "ocr": "Thus ends breefely my preface theoricall.", "image": "Thus ends breefely my preface theoricall.", "problem": "none; checked the Latin tags and the Ripley heading, and all are correct, as is the '*desunt ista in al. mss.' margin note", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation for this page", "severity": "minor" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcriptions are faithful on all three pages, including a heavily abbreviated medieval Gothic cursive (p45) and two 17th-century English/Latin pages that are near-perfect. The slips are minor normalisations and one doubled interlinear word. Nothing here would mislead a reader, but there is no English translation yet."
+  }
+]

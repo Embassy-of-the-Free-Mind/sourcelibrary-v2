@@ -70,7 +70,7 @@ try {
       thumbnail: 1, thumbnail_blob: 1,
       thumbnail_source: 1,
     },
-  });
+  }).batchSize(1000);
 
   let checked = 0;
   let skippedManual = 0;

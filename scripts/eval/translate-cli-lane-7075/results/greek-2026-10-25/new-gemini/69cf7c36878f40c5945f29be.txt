@@ -1,0 +1,35 @@
+<header>THE OXYRHYNCHUS PAPYRI</header>
+
+1 <unclear>31 letters</unclear> together all the notable of God
+<gloss>a . <unclear>...</unclear> . <unclear>..[ar</unclear>....</gloss>
+
+2 <unclear>28 letters</unclear> <gloss>ix ix ph ph s ph k s ph : x i t x x e x</gloss> ? while we sing to the Ruler of all, let silence hold, nor let the light-bearing stars
+<gloss>z i i ph i i</gloss>
+fail
+
+3 in their courses. <unclear>. . lei . .... .]r[................</unclear> <gloss>x i : z e : i z x th i z x i k s ph : x i</gloss> of roaring rivers, all while we hymn
+<gloss>ph : o x k</gloss>
+
+4 Father and Son and Holy Spirit, let all powers acclaim together: Amen,
+<gloss>] s s ph s k : ph s ph x <unclear>..</unclear> z k x ph ph ph x o o o y oi o z : z e x</gloss>
+<gloss>z i i x <unclear></unclear> x o ph</gloss>
+Amen! Dominion, praise,
+
+5 <unclear>................</unclear> <gloss>]. s s ph s k ph s s o x x i i o x s x i i x o ph s ph s o x : x i x o ph s ph</gloss> to the only Giver of all good things! Amen, Amen!
+
+---
+
+<note>Musical notation on five staves with Greek lyrics underneath. The notation uses modern five-line staves with a 2/4 time signature and a C-clef on the second line. The notes are modern quarter and eighth notes with some ligatures and rhythmic markings. The Greek text is aligned syllabically with the notes.</note>
+
+...while we sing to the Ruler of all, let silence hold, nor let the light-
+
+bearing stars fail in their courses... of roaring rivers, all
+
+while we hymn Father and
+
+Son and Holy Spirit, let all powers
+
+acclaim together: Amen, Amen! Dominion, praise...
+
+<summary>This page presents the text and musical notation of the Oxyrhynchus hymn, the earliest known Christian musical piece with both lyrics and notation, calling for the silence of nature and the heavens as creation joins in praising the Trinity.</summary>
+<keywords>Oxyrhynchus hymn, Greek Christian hymn, early Christian music, ancient musical notation, Trinity, doxology, liturgy, papyrology</keywords>

@@ -1,0 +1,14688 @@
+{
+ "ed-0425b5da276941ae93dd76624ba8236a-p86__lite": {
+  "slug": "ed-0425b5da276941ae93dd76624ba8236a-p86",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "L",
+    "f"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69526046ab34727b1f04660c-p342__lite": {
+  "slug": "ed-69526046ab34727b1f04660c-p342",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-695595ec7bd6d2cd1d620aba-p26__lite": {
+  "slug": "ed-695595ec7bd6d2cd1d620aba-p26",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L",
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6955d3d828a09ca65927ed03-p93__lite": {
+  "slug": "ed-6955d3d828a09ca65927ed03-p93",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69568595be7c607c5f03b9e4-p22__lite": {
+  "slug": "ed-69568595be7c607c5f03b9e4-p22",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6958e07cd34d35c8156624c8-p86__lite": {
+  "slug": "ed-6958e07cd34d35c8156624c8-p86",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6970e37d9b09d309d780a2c2-p61__lite": {
+  "slug": "ed-6970e37d9b09d309d780a2c2-p61",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69905cfcaaa7f10ed4cfd289-p588__lite": {
+  "slug": "ed-69905cfcaaa7f10ed4cfd289-p588",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69905e152fd6a039938a0ebe-p46__lite": {
+  "slug": "ed-69905e152fd6a039938a0ebe-p46",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906056ef12272ffdc8cdee-p43__lite": {
+  "slug": "ed-69906056ef12272ffdc8cdee-p43",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906059ef12272ffdc8cef1-p22__lite": {
+  "slug": "ed-69906059ef12272ffdc8cef1-p22",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990618a322e01b1349a5136-p49__lite": {
+  "slug": "ed-6990618a322e01b1349a5136-p49",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "A": [
+    "L",
+    "f"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-699061933d9181cce82fb5aa-p55__lite": {
+  "slug": "ed-699061933d9181cce82fb5aa-p55",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990619a3d9181cce82fb669-p17__lite": {
+  "slug": "ed-6990619a3d9181cce82fb669-p17",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990619d3d9181cce82fb688-p9__lite": {
+  "slug": "ed-6990619d3d9181cce82fb688-p9",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906319ef12272ffdc8f380-p107__lite": {
+  "slug": "ed-69906319ef12272ffdc8f380-p107",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906537726f64800c10a08c-p8__lite": {
+  "slug": "ed-69906537726f64800c10a08c-p8",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990668a2ec9f7db5717ab11-p28__lite": {
+  "slug": "ed-6990668a2ec9f7db5717ab11-p28",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d6508c1030b12444acd8-p26__lite": {
+  "slug": "ed-6991d6508c1030b12444acd8-p26",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d65e8c1030b12444ae97-p118__lite": {
+  "slug": "ed-6991d65e8c1030b12444ae97-p118",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d6648c1030b12444b0ec-p351__lite": {
+  "slug": "ed-6991d6648c1030b12444b0ec-p351",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "L",
+    "a2"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d66e8c1030b12444b4a3-p26__lite": {
+  "slug": "ed-6991d66e8c1030b12444b4a3-p26",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d6778c1030b12444b4d4-p43__lite": {
+  "slug": "ed-6991d6778c1030b12444b4d4-p43",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d67a8c1030b12444b537-p26__lite": {
+  "slug": "ed-6991d67a8c1030b12444b537-p26",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e175b53cae6bb602470e-p28__lite": {
+  "slug": "ed-6991e175b53cae6bb602470e-p28",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L",
+    "f"
+   ],
+   "D": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e194339ebc850994a230-p98__lite": {
+  "slug": "ed-6991e194339ebc850994a230-p98",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e7dec91ce7d733e50228-p17__lite": {
+  "slug": "ed-6991e7dec91ce7d733e50228-p17",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6992017d7c226bdd25f99444-p9__lite": {
+  "slug": "ed-6992017d7c226bdd25f99444-p9",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-699fcd429ff0f1d2c4517fff-p28__lite": {
+  "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69ac7f0f20878c5c9ba524b5-p366__lite": {
+  "slug": "ed-69ac7f0f20878c5c9ba524b5-p366",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-69aebe60c0472fef6455a8f2-p14__lite": {
+  "slug": "ed-69aebe60c0472fef6455a8f2-p14",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-69aebfdea41a7e10e5a71d19-p27__lite": {
+  "slug": "ed-69aebfdea41a7e10e5a71d19-p27",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69aebfdee997cc01b0cab897-p27__lite": {
+  "slug": "ed-69aebfdee997cc01b0cab897-p27",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69aebfeb36a4ffb2dcfb62e3-p100__lite": {
+  "slug": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "L",
+    "f"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b18619c4be2cdd0edc524e-p6__lite": {
+  "slug": "ed-69b18619c4be2cdd0edc524e-p6",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b18625c4be2cdd0edc549e-p137__lite": {
+  "slug": "ed-69b18625c4be2cdd0edc549e-p137",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69bf60fd065df5d87d778bb3-p153__lite": {
+  "slug": "ed-69bf60fd065df5d87d778bb3-p153",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69de0cf180210ba13d79fa39-p98__lite": {
+  "slug": "ed-69de0cf180210ba13d79fa39-p98",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69e748a685f786e884a4c8c5-p68__lite": {
+  "slug": "ed-69e748a685f786e884a4c8c5-p68",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69e7833a0fc6fc955e36317c-p94__lite": {
+  "slug": "ed-69e7833a0fc6fc955e36317c-p94",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69ee46ef6dd925d126f40e22-p581__lite": {
+  "slug": "ed-69ee46ef6dd925d126f40e22-p581",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "L",
+    "f"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a08fd2e25e3a402b23b3bca-p26__lite": {
+  "slug": "ed-6a08fd2e25e3a402b23b3bca-p26",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a08fd6325e3a402b23b3e15-p27__lite": {
+  "slug": "ed-6a08fd6325e3a402b23b3e15-p27",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a3d29e1af872ba37a51ab17-p22__lite": {
+  "slug": "ed-6a3d29e1af872ba37a51ab17-p22",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425310343d756d34e34ea7-p15__lite": {
+  "slug": "ed-6a425310343d756d34e34ea7-p15",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425634dfbbb4d07aa5382e-p15__lite": {
+  "slug": "ed-6a425634dfbbb4d07aa5382e-p15",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a426869aedf4c943f91eac4-p14__lite": {
+  "slug": "ed-6a426869aedf4c943f91eac4-p14",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4270ed62d175ca9e4e1aa5-p15__lite": {
+  "slug": "ed-6a4270ed62d175ca9e4e1aa5-p15",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-6a42aecb5207af7c42f5333c-p17__lite": {
+  "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42d56d1894955eb725e97f-p22__lite": {
+  "slug": "ed-6a42d56d1894955eb725e97f-p22",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42ec4006e6ead3ac544b8f-p14__lite": {
+  "slug": "ed-6a42ec4006e6ead3ac544b8f-p14",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42eff906e6ead3ac54bab4-p16__lite": {
+  "slug": "ed-6a42eff906e6ead3ac54bab4-p16",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43001a4e06bc233ecf5ef6-p16__lite": {
+  "slug": "ed-6a43001a4e06bc233ecf5ef6-p16",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4300764e06bc233ecf660a-p15__lite": {
+  "slug": "ed-6a4300764e06bc233ecf660a-p15",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4308144e06bc233ed03513-p15__lite": {
+  "slug": "ed-6a4308144e06bc233ed03513-p15",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-6a430a2a22c0c8edb0f8c8d4-p16__lite": {
+  "slug": "ed-6a430a2a22c0c8edb0f8c8d4-p16",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4376a3e296c55144956689-p15__lite": {
+  "slug": "ed-6a4376a3e296c55144956689-p15",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43851557a09c2c0fcc0005-p17__lite": {
+  "slug": "ed-6a43851557a09c2c0fcc0005-p17",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d985df05f7ea342b77fb-p16__lite": {
+  "slug": "ed-6a48d985df05f7ea342b77fb-p16",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4a26ba9dda7124b26753a5-p38__lite": {
+  "slug": "ed-6a4a26ba9dda7124b26753a5-p38",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4a4551c0f3ec200c7de18c-p16__lite": {
+  "slug": "ed-6a4a4551c0f3ec200c7de18c-p16",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4ad920d6371d99e766879c-p83__lite": {
+  "slug": "ed-6a4ad920d6371d99e766879c-p83",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4f71ca1cba01ec54e763c3-p15__lite": {
+  "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a506fd980b7658fae261d6e-p16__lite": {
+  "slug": "ed-6a506fd980b7658fae261d6e-p16",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a58ec9ac6cd8f987106886f-p6__lite": {
+  "slug": "ed-6a58ec9ac6cd8f987106886f-p6",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a58ecbfc6cd8f98710688e0-p15__lite": {
+  "slug": "ed-6a58ecbfc6cd8f98710688e0-p15",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a58ecd0c6cd8f987106893f-p9__lite": {
+  "slug": "ed-6a58ecd0c6cd8f987106893f-p9",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a8f6229ddd2f57fe0f810c4-p16__lite": {
+  "slug": "ed-6a8f6229ddd2f57fe0f810c4-p16",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a8f6267e408ab73f484d28b-p15__lite": {
+  "slug": "ed-6a8f6267e408ab73f484d28b-p15",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6ab5a4089e89e2a1f4139348-p26__lite": {
+  "slug": "ed-6ab5a4089e89e2a1f4139348-p26",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-606a74d72ac1420b924dde761439fb3f-p27__lite": {
+  "slug": "ed-606a74d72ac1420b924dde761439fb3f-p27",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6953e4fa77f38f6761bef1dc-p53__lite": {
+  "slug": "ed-6953e4fa77f38f6761bef1dc-p53",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6958e912d3a8928334814c19-p8__lite": {
+  "slug": "ed-6958e912d3a8928334814c19-p8",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6970e3599b09d309d780a252-p61__lite": {
+  "slug": "ed-6970e3599b09d309d780a252-p61",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-697a6e5cb981745f5fac1d7e-p31__lite": {
+  "slug": "ed-697a6e5cb981745f5fac1d7e-p31",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-697a8014e680cef7cedae395-p31__lite": {
+  "slug": "ed-697a8014e680cef7cedae395-p31",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "L",
+    "a2"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990505e7d19f3f2aac1e2b7-p72__lite": {
+  "slug": "ed-6990505e7d19f3f2aac1e2b7-p72",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b2f46f5ef23d31023f6f1c-p176__lite": {
+  "slug": "ed-69b2f46f5ef23d31023f6f1c-p176",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b51e49cf111105c4299e5d-p40__lite": {
+  "slug": "ed-69b51e49cf111105c4299e5d-p40",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b51e9947b06ecd581940dc-p309__lite": {
+  "slug": "ed-69b51e9947b06ecd581940dc-p309",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b63e841c1c21a3738655d6-p40__lite": {
+  "slug": "ed-69b63e841c1c21a3738655d6-p40",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "f"
+  ]
+ },
+ "ed-69b649aa18b87551bfc5e743-p59__lite": {
+  "slug": "ed-69b649aa18b87551bfc5e743-p59",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "f"
+  ]
+ },
+ "ed-69b64c0318b87551bfc70acd-p13__lite": {
+  "slug": "ed-69b64c0318b87551bfc70acd-p13",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "a2"
+  ]
+ },
+ "ed-69b64c9618b87551bfc76fcf-p20__lite": {
+  "slug": "ed-69b64c9618b87551bfc76fcf-p20",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "a2",
+   "f"
+  ]
+ },
+ "ed-69b64da218b87551bfc7fe19-p70__lite": {
+  "slug": "ed-69b64da218b87551bfc7fe19-p70",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "f"
+  ]
+ },
+ "ed-69b64f1818b87551bfc907fb-p125__lite": {
+  "slug": "ed-69b64f1818b87551bfc907fb-p125",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "f"
+  ]
+ },
+ "ed-69b6542618b87551bfcc6072-p119__lite": {
+  "slug": "ed-69b6542618b87551bfcc6072-p119",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b660aeb3f4fc0441533e16-p29__lite": {
+  "slug": "ed-69b660aeb3f4fc0441533e16-p29",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "a2",
+   "f"
+  ]
+ },
+ "ed-69b6e47ea8d7b8d17a676440-p218__lite": {
+  "slug": "ed-69b6e47ea8d7b8d17a676440-p218",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b6f32ab1a3146c05278d5a-p72__lite": {
+  "slug": "ed-69b6f32ab1a3146c05278d5a-p72",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S",
+   "f"
+  ]
+ },
+ "ed-69c821446c6f3cc53c84aa06-p433__lite": {
+  "slug": "ed-69c821446c6f3cc53c84aa06-p433",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69c8a3f26c6f3cc53c85e777-p36__lite": {
+  "slug": "ed-69c8a3f26c6f3cc53c85e777-p36",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a0b351d688e6a8e15f6759f-p18__lite": {
+  "slug": "ed-6a0b351d688e6a8e15f6759f-p18",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "f"
+  ]
+ },
+ "ed-6a26bc6cd6b178e5aad8300b-p18__lite": {
+  "slug": "ed-6a26bc6cd6b178e5aad8300b-p18",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a26beae0e247ebad6de8612-p18__lite": {
+  "slug": "ed-6a26beae0e247ebad6de8612-p18",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-6a26c136aad44c98627bfb47-p21__lite": {
+  "slug": "ed-6a26c136aad44c98627bfb47-p21",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4252e5343d756d34e33e36-p9__lite": {
+  "slug": "ed-6a4252e5343d756d34e33e36-p9",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4253fe343d756d34e37966-p18__lite": {
+  "slug": "ed-6a4253fe343d756d34e37966-p18",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425bef744db9e3105a3b00-p18__lite": {
+  "slug": "ed-6a425bef744db9e3105a3b00-p18",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425df3dfbbb4d07aa634cb-p21__lite": {
+  "slug": "ed-6a425df3dfbbb4d07aa634cb-p21",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4263b1744db9e3105b1125-p23__lite": {
+  "slug": "ed-6a4263b1744db9e3105b1125-p23",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a429a398e351c27eb859980-p20__lite": {
+  "slug": "ed-6a429a398e351c27eb859980-p20",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a429c378e351c27eb85cd66-p6__lite": {
+  "slug": "ed-6a429c378e351c27eb85cd66-p6",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a",
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42abe85207af7c42f4b6d7-p10__lite": {
+  "slug": "ed-6a42abe85207af7c42f4b6d7-p10",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42acc65207af7c42f4db34-p13__lite": {
+  "slug": "ed-6a42acc65207af7c42f4db34-p13",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42b1d25207af7c42f57a9c-p25__lite": {
+  "slug": "ed-6a42b1d25207af7c42f57a9c-p25",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42b7ee5207af7c42f63a27-p21__lite": {
+  "slug": "ed-6a42b7ee5207af7c42f63a27-p21",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42bbf75207af7c42f6f607-p6__lite": {
+  "slug": "ed-6a42bbf75207af7c42f6f607-p6",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42ca0be76baa13aa84c734-p23__lite": {
+  "slug": "ed-6a42ca0be76baa13aa84c734-p23",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42d91f1894955eb72629fe-p18__lite": {
+  "slug": "ed-6a42d91f1894955eb72629fe-p18",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42eb2806e6ead3ac541e30-p21__lite": {
+  "slug": "ed-6a42eb2806e6ead3ac541e30-p21",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42ebca06e6ead3ac543887-p8__lite": {
+  "slug": "ed-6a42ebca06e6ead3ac543887-p8",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42f62b3ad4d80da1237aed-p18__lite": {
+  "slug": "ed-6a42f62b3ad4d80da1237aed-p18",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a434784201f98f53c3eff29-p17__lite": {
+  "slug": "ed-6a434784201f98f53c3eff29-p17",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43779193aef4a7d61477df-p21__lite": {
+  "slug": "ed-6a43779193aef4a7d61477df-p21",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4388a857a09c2c0fcc46bb-p8__lite": {
+  "slug": "ed-6a4388a857a09c2c0fcc46bb-p8",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a448ab6bd67d80f01c767fe-p18__lite": {
+  "slug": "ed-6a448ab6bd67d80f01c767fe-p18",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a479e7ce1b3ba9165a14c27-p23__lite": {
+  "slug": "ed-6a479e7ce1b3ba9165a14c27-p23",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "L",
+    "a",
+    "a2",
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d782df05f7ea342b7309-p21__lite": {
+  "slug": "ed-6a48d782df05f7ea342b7309-p21",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d783df05f7ea342b730a-p21__lite": {
+  "slug": "ed-6a48d783df05f7ea342b730a-p21",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48e1881e36bf8015227aa8-p21__lite": {
+  "slug": "ed-6a48e1881e36bf8015227aa8-p21",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4f92c0d7f4f9119ff22b41-p9__lite": {
+  "slug": "ed-6a4f92c0d7f4f9119ff22b41-p9",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a509b82ad1859a71f41b8d6-p18__lite": {
+  "slug": "ed-6a509b82ad1859a71f41b8d6-p18",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9057a0ab26ecd307a0cd7c-p9__lite": {
+  "slug": "ed-6a9057a0ab26ecd307a0cd7c-p9",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906153ce57ddf536207e42-p9__lite": {
+  "slug": "ed-6a906153ce57ddf536207e42-p9",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9061f6c21b989bffd757b3-p8__lite": {
+  "slug": "ed-6a9061f6c21b989bffd757b3-p8",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a",
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90658feb8fb726ee3b3f2a-p18__lite": {
+  "slug": "ed-6a90658feb8fb726ee3b3f2a-p18",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9066caeb8fb726ee3b6d69-p6__lite": {
+  "slug": "ed-6a9066caeb8fb726ee3b6d69-p6",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L",
+    "f"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906748eb8fb726ee3b7bad-p18__lite": {
+  "slug": "ed-6a906748eb8fb726ee3b7bad-p18",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90675ceb8fb726ee3b7f5a-p9__lite": {
+  "slug": "ed-6a90675ceb8fb726ee3b7f5a-p9",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a",
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906bf4336010794b0d2ab0-p18__lite": {
+  "slug": "ed-6a906bf4336010794b0d2ab0-p18",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9078467f9d520dd42e41e2-p18__lite": {
+  "slug": "ed-6a9078467f9d520dd42e41e2-p18",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9085af8696e74449c320be-p21__lite": {
+  "slug": "ed-6a9085af8696e74449c320be-p21",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a909914b7feee6e9c427a2a-p21__lite": {
+  "slug": "ed-6a909914b7feee6e9c427a2a-p21",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90991fb7feee6e9c427bf0-p18__lite": {
+  "slug": "ed-6a90991fb7feee6e9c427bf0-p18",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9099bbb7feee6e9c42915e-p9__lite": {
+  "slug": "ed-6a9099bbb7feee6e9c42915e-p9",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a909b5ab7feee6e9c429605-p18__lite": {
+  "slug": "ed-6a909b5ab7feee6e9c429605-p18",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90a3b93a69baad5d30cf72-p9__lite": {
+  "slug": "ed-6a90a3b93a69baad5d30cf72-p9",
+  "group": "lite",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90a3c03a69baad5d30d34e-p21__lite": {
+  "slug": "ed-6a90a3c03a69baad5d30d34e-p21",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90b8fdfea824c8068281d6-p18__lite": {
+  "slug": "ed-6a90b8fdfea824c8068281d6-p18",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "F": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90ce08354ec8f981e30277-p9__lite": {
+  "slug": "ed-6a90ce08354ec8f981e30277-p9",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90ce1d2efcf696ead70a9b-p23__lite": {
+  "slug": "ed-6a90ce1d2efcf696ead70a9b-p23",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90e2d81a02a5cb2d7325f2-p21__lite": {
+  "slug": "ed-6a90e2d81a02a5cb2d7325f2-p21",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90e7e5544007b776b3806a-p18__lite": {
+  "slug": "ed-6a90e7e5544007b776b3806a-p18",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "L",
+    "a2"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a94341a7680120fac24d808-p18__lite": {
+  "slug": "ed-6a94341a7680120fac24d808-p18",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9437f67e41ac276318823e-p21__lite": {
+  "slug": "ed-6a9437f67e41ac276318823e-p21",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "F": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a94184aa4ed5935447a82d2-p9__lite": {
+  "slug": "ed-6a94184aa4ed5935447a82d2-p9",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "F": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-95-thesen-pdf-p3__lite": {
+  "slug": "ws-de-95-thesen-pdf-p3",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-abschied-der-casselaner-vom-koenig-von-westphale-p6__lite": {
+  "slug": "ws-de-abschied-der-casselaner-vom-koenig-von-westphale-p6",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4__lite": {
+  "slug": "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15__lite": {
+  "slug": "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L",
+    "f"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3__lite": {
+  "slug": "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-agrumi-august-kopisch-1838-pdf-p3__lite": {
+  "slug": "ws-de-agrumi-august-kopisch-1838-pdf-p3",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-ah-ca-ira-pdf-p2__lite": {
+  "slug": "ws-de-ah-ca-ira-pdf-p2",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allemannischegedichte-hebel-pdf-p179__lite": {
+  "slug": "ws-de-allemannischegedichte-hebel-pdf-p179",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L",
+    "f"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3__lite": {
+  "slug": "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2__lite": {
+  "slug": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19__lite": {
+  "slug": "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354__lite": {
+  "slug": "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a",
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2__lite": {
+  "slug": "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26__lite": {
+  "slug": "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43__lite": {
+  "slug": "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3__lite": {
+  "slug": "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-anmerkungen-bers-theater-pdf-p15__lite": {
+  "slug": "ws-de-anmerkungen-bers-theater-pdf-p15",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26__lite": {
+  "slug": "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-ansichten-l-beck-marienkirche-pdf-p2__lite": {
+  "slug": "ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L",
+    "f"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2__lite": {
+  "slug": "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-apolls-gericht-1769-pdf-p3__lite": {
+  "slug": "ws-de-apolls-gericht-1769-pdf-p3",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2__lite": {
+  "slug": "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2__lite": {
+  "slug": "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4__lite": {
+  "slug": "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4__lite": {
+  "slug": "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19__lite": {
+  "slug": "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17__lite": {
+  "slug": "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L",
+    "f"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151__lite": {
+  "slug": "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-beethoven-s-neunte-symphonie-pdf-p2__lite": {
+  "slug": "ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-28233-pdf-pdf-p4__lite": {
+  "slug": "ws-la-28233-pdf-pdf-p4",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-agricola-de-re-metallica-djvu-p406__lite": {
+  "slug": "ws-la-agricola-de-re-metallica-djvu-p406",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-apocalypsis-revelata-djvu-p3__lite": {
+  "slug": "ws-la-apocalypsis-revelata-djvu-p3",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-arcana-coelestia-vol-i-djvu-p16__lite": {
+  "slug": "ws-la-arcana-coelestia-vol-i-djvu-p16",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-ars-memorativa-leporeus-djvu-p33__lite": {
+  "slug": "ws-la-ars-memorativa-leporeus-djvu-p33",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20__lite": {
+  "slug": "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-bodleian-library-byw-k-4-6-pdf-p17__lite": {
+  "slug": "ws-la-bodleian-library-byw-k-4-6-pdf-p17",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-cl-ver-germania-antiqua-1616-pdf-p23__lite": {
+  "slug": "ws-la-cl-ver-germania-antiqua-1616-pdf-p23",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-columbus-carmen-epicum-pdf-p7__lite": {
+  "slug": "ws-la-columbus-carmen-epicum-pdf-p7",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-columellae-opera-djvu-p26__lite": {
+  "slug": "ws-la-columellae-opera-djvu-p26",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15__lite": {
+  "slug": "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-coppernicus-monete-djvu-p4__lite": {
+  "slug": "ws-la-coppernicus-monete-djvu-p4",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-de-bello-rustico-valentino-pdf-p24__lite": {
+  "slug": "ws-la-de-bello-rustico-valentino-pdf-p24",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347__lite": {
+  "slug": "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17__lite": {
+  "slug": "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L",
+    "f"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2__lite": {
+  "slug": "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17__lite": {
+  "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "B": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721__lite": {
+  "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369__lite": {
+  "slug": "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "B": [
+    "f"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22__lite": {
+  "slug": "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38__lite": {
+  "slug": "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri-p19__lite": {
+  "slug": "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri-p19",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-foliot-canticum-pdf-p32__lite": {
+  "slug": "ws-la-foliot-canticum-pdf-p32",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L",
+    "f"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25__lite": {
+  "slug": "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204__lite": {
+  "slug": "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-gallia-christiana-1720-t2-djvu-p2__lite": {
+  "slug": "ws-la-gallia-christiana-1720-t2-djvu-p2",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-grammatica-fennica-pdf-p48__lite": {
+  "slug": "ws-la-grammatica-fennica-pdf-p48",
+  "group": "lite",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-historia-naturalis-brasiliae-1648-pdf-p198__lite": {
+  "slug": "ws-la-historia-naturalis-brasiliae-1648-pdf-p198",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "D": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-hortus-malabaricus-volume-1-pdf-p4__lite": {
+  "slug": "ws-la-hortus-malabaricus-volume-1-pdf-p4",
+  "group": "lite",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a2"
+   ],
+   "E": [
+    "f"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-houghtonianus-latinus-224-pdf-p33__lite": {
+  "slug": "ws-la-houghtonianus-latinus-224-pdf-p33",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "a"
+  ]
+ },
+ "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189__lite": {
+  "slug": "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-machumetis-saracenorum-principis-eiusque-success-p259__lite": {
+  "slug": "ws-la-machumetis-saracenorum-principis-eiusque-success-p259",
+  "group": "lite",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "C": [
+    "f"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20__lite": {
+  "slug": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+  "group": "lite",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a2"
+   ],
+   "A": [
+    "f"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-nicolaus-machiavellus-de-principe-pdf-p17__lite": {
+  "slug": "ws-la-nicolaus-machiavellus-de-principe-pdf-p17",
+  "group": "lite",
+  "labels": {
+   "C": [
+    "L",
+    "f"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a2"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69905cfcaaa7f10ed4cfd289-p588__noimg": {
+  "slug": "ed-69905cfcaaa7f10ed4cfd289-p588",
+  "group": "noimg",
+  "labels": {
+   "F": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d65e8c1030b12444ae97-p118__noimg": {
+  "slug": "ed-6991d65e8c1030b12444ae97-p118",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "D": [
+    "a-noimg"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d66e8c1030b12444b4a3-p26__noimg": {
+  "slug": "ed-6991d66e8c1030b12444b4a3-p26",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e194339ebc850994a230-p98__noimg": {
+  "slug": "ed-6991e194339ebc850994a230-p98",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "C": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "D": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69aebfeb36a4ffb2dcfb62e3-p100__noimg": {
+  "slug": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+  "group": "noimg",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "A": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69cfa93f80eb0ccd3e739280-p101__noimg": {
+  "slug": "ed-69cfa93f80eb0ccd3e739280-p101",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69de0cf180210ba13d79fa39-p98__noimg": {
+  "slug": "ed-69de0cf180210ba13d79fa39-p98",
+  "group": "noimg",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69de1c99d10d4b0d3f6f3175-p26__noimg": {
+  "slug": "ed-69de1c99d10d4b0d3f6f3175-p26",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4308144e06bc233ed03513-p15__noimg": {
+  "slug": "ed-6a4308144e06bc233ed03513-p15",
+  "group": "noimg",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "B": [
+    "a-noimg"
+   ],
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43851557a09c2c0fcc0005-p17__noimg": {
+  "slug": "ed-6a43851557a09c2c0fcc0005-p17",
+  "group": "noimg",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "E": [
+    "a-noimg"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4a26ba9dda7124b26753a5-p38__noimg": {
+  "slug": "ed-6a4a26ba9dda7124b26753a5-p38",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6ab5a4019e89e2a1f4139282-p94__noimg": {
+  "slug": "ed-6ab5a4019e89e2a1f4139282-p94",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6ab5a4089e89e2a1f4139348-p26__noimg": {
+  "slug": "ed-6ab5a4089e89e2a1f4139348-p26",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b649aa18b87551bfc5e743-p59__noimg": {
+  "slug": "ed-69b649aa18b87551bfc5e743-p59",
+  "group": "noimg",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "E": [
+    "a-noimg"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69c8a3f26c6f3cc53c85e777-p36__noimg": {
+  "slug": "ed-69c8a3f26c6f3cc53c85e777-p36",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "E": [
+    "a-noimg"
+   ],
+   "F": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a26c136aad44c98627bfb47-p21__noimg": {
+  "slug": "ed-6a26c136aad44c98627bfb47-p21",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "C": [
+    "a-noimg"
+   ],
+   "F": [
+    "G"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a479e7ce1b3ba9165a14c27-p23__noimg": {
+  "slug": "ed-6a479e7ce1b3ba9165a14c27-p23",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "L",
+    "a",
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d783df05f7ea342b730a-p21__noimg": {
+  "slug": "ed-6a48d783df05f7ea342b730a-p21",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "a-noimg"
+   ],
+   "F": [
+    "G"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9061f6c21b989bffd757b3-p8__noimg": {
+  "slug": "ed-6a9061f6c21b989bffd757b3-p8",
+  "group": "noimg",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906bf4336010794b0d2ab0-p18__noimg": {
+  "slug": "ed-6a906bf4336010794b0d2ab0-p18",
+  "group": "noimg",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90ce1d2efcf696ead70a9b-p23__noimg": {
+  "slug": "ed-6a90ce1d2efcf696ead70a9b-p23",
+  "group": "noimg",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a-noimg"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90e7e5544007b776b3806a-p18__noimg": {
+  "slug": "ed-6a90e7e5544007b776b3806a-p18",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L",
+    "a-noimg"
+   ],
+   "B": [
+    "a"
+   ],
+   "A": [
+    "G"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-haller_anfangsgruende08_1776-p29__noimg": {
+  "slug": "dta-haller_anfangsgruende08_1776-p29",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-swedenborg_schriften01_1776-p24__noimg": {
+  "slug": "dta-swedenborg_schriften01_1776-p24",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-tuckermann_predigt_1616-p23__noimg": {
+  "slug": "dta-tuckermann_predigt_1616-p23",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wiedeburg_leichpredigt_1624-p59__noimg": {
+  "slug": "dta-wiedeburg_leichpredigt_1624-p59",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wolff_naturwuerckungen_1723-p32__noimg": {
+  "slug": "dta-wolff_naturwuerckungen_1723-p32",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-zesen_helikon01_1640-p112__noimg": {
+  "slug": "dta-zesen_helikon01_1640-p112",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-adresse-pour-les-n-gres-d-tenus-en-esclavage-179-p16__noimg": {
+  "slug": "ws-fr-adresse-pour-les-n-gres-d-tenus-en-esclavage-179-p16",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-alembert-trait-de-dynamique-1758-djvu-p19__noimg": {
+  "slug": "ws-fr-alembert-trait-de-dynamique-1758-djvu-p19",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-alletz-dictionnaire-des-richesses-1770-djvu-p2__noimg": {
+  "slug": "ws-fr-alletz-dictionnaire-des-richesses-1770-djvu-p2",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-andry-de-boisregard-de-la-g-n-ration-des-vers-17-p26__noimg": {
+  "slug": "ws-fr-andry-de-boisregard-de-la-g-n-ration-des-vers-17-p26",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26__noimg": {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p51__noimg": {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p51",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-aulnoy-relation-du-voyage-d-espagne-1705-tome-1-p14__noimg": {
+  "slug": "ws-fr-aulnoy-relation-du-voyage-d-espagne-1705-tome-1-p14",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bacon-uvres-tome-7-djvu-p296__noimg": {
+  "slug": "ws-fr-bacon-uvres-tome-7-djvu-p296",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-batteux-les-quatre-po-tiques-d-aristote-d-horace-p363__noimg": {
+  "slug": "ws-fr-batteux-les-quatre-po-tiques-d-aristote-d-horace-p363",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-behn-oronoko-1745-djvu-p21__noimg": {
+  "slug": "ws-fr-behn-oronoko-1745-djvu-p21",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bernier-th-ologie-portative-1768-djvu-p18__noimg": {
+  "slug": "ws-fr-bernier-th-ologie-portative-1768-djvu-p18",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-alfieri-la-virt-sconosciuta-djvu-p30__noimg": {
+  "slug": "ws-it-alfieri-la-virt-sconosciuta-djvu-p30",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-chizzola-risposta-di-donn-ippolito-chizzuola-all-p208__noimg": {
+  "slug": "ws-it-chizzola-risposta-di-donn-ippolito-chizzuola-all-p208",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-condivi-vita-di-michelagnolo-buonarroti-1553-b-d-p28__noimg": {
+  "slug": "ws-it-condivi-vita-di-michelagnolo-buonarroti-1553-b-d-p28",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-del-coraggio-nelle-malattie-djvu-p18__noimg": {
+  "slug": "ws-it-del-coraggio-nelle-malattie-djvu-p18",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-discorso-filosofico-politico-sopra-la-carcere-de-p37__noimg": {
+  "slug": "ws-it-discorso-filosofico-politico-sopra-la-carcere-de-p37",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-inventione-de-nicol-tartaglia-djvu-p4__noimg": {
+  "slug": "ws-it-inventione-de-nicol-tartaglia-djvu-p4",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-isotta-da-rimino-mazzucchelli-djvu-p4__noimg": {
+  "slug": "ws-it-isotta-da-rimino-mazzucchelli-djvu-p4",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-la-dafne-ia-ladafne01rinu-pdf-p18__noimg": {
+  "slug": "ws-it-la-dafne-ia-ladafne01rinu-pdf-p18",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-narrazione-e-disegno-della-terra-di-prato-di-tos-p19__noimg": {
+  "slug": "ws-it-narrazione-e-disegno-della-terra-di-prato-di-tos-p19",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-ordini-della-magnifica-comunit-di-alzano-di-sott-p30__noimg": {
+  "slug": "ws-it-ordini-della-magnifica-comunit-di-alzano-di-sott-p30",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-osservazioni-di-giovanni-lovrich-djvu-p19__noimg": {
+  "slug": "ws-it-osservazioni-di-giovanni-lovrich-djvu-p19",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19__noimg": {
+  "slug": "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19",
+  "group": "noimg",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "D": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43__noimg": {
+  "slug": "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "B": [
+    "a-noimg"
+   ],
+   "E": [
+    "G"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3__noimg": {
+  "slug": "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3",
+  "group": "noimg",
+  "labels": {
+   "E": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "F": [
+    "a-noimg"
+   ],
+   "C": [
+    "G"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-anmerkungen-bers-theater-pdf-p15__noimg": {
+  "slug": "ws-de-anmerkungen-bers-theater-pdf-p15",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "D": [
+    "a-noimg"
+   ],
+   "E": [
+    "G"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-ansichten-l-beck-marienkirche-pdf-p2__noimg": {
+  "slug": "ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "E": [
+    "a"
+   ],
+   "D": [
+    "a-noimg"
+   ],
+   "B": [
+    "G"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17__noimg": {
+  "slug": "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+  "group": "noimg",
+  "labels": {
+   "D": [
+    "L"
+   ],
+   "F": [
+    "a"
+   ],
+   "C": [
+    "a-noimg"
+   ],
+   "A": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-coppernicus-monete-djvu-p4__noimg": {
+  "slug": "ws-la-coppernicus-monete-djvu-p4",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "L"
+   ],
+   "A": [
+    "a"
+   ],
+   "B": [
+    "a-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20__noimg": {
+  "slug": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+  "group": "noimg",
+  "labels": {
+   "A": [
+    "L"
+   ],
+   "B": [
+    "a"
+   ],
+   "C": [
+    "a-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-andr-r-futation-du-nouvel-ouvrage-de-jean-jacque-p29__noimg": {
+  "slug": "ws-fr-andr-r-futation-du-nouvel-ouvrage-de-jean-jacque-p29",
+  "group": "noimg",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-petrarca-le-cose-volgari-aldo-1501-djvu-p22__noimg": {
+  "slug": "ws-it-petrarca-le-cose-volgari-aldo-1501-djvu-p22",
+  "group": "noimg",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "b-noimg"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-0425b5da276941ae93dd76624ba8236a-p86__gpu": {
+  "slug": "ed-0425b5da276941ae93dd76624ba8236a-p86",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69526046ab34727b1f04660c-p342__gpu": {
+  "slug": "ed-69526046ab34727b1f04660c-p342",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-695595ec7bd6d2cd1d620aba-p26__gpu": {
+  "slug": "ed-695595ec7bd6d2cd1d620aba-p26",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6955d3d828a09ca65927ed03-p93__gpu": {
+  "slug": "ed-6955d3d828a09ca65927ed03-p93",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69568595be7c607c5f03b9e4-p22__gpu": {
+  "slug": "ed-69568595be7c607c5f03b9e4-p22",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6958e07cd34d35c8156624c8-p86__gpu": {
+  "slug": "ed-6958e07cd34d35c8156624c8-p86",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6970e37d9b09d309d780a2c2-p61__gpu": {
+  "slug": "ed-6970e37d9b09d309d780a2c2-p61",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69905cfcaaa7f10ed4cfd289-p588__gpu": {
+  "slug": "ed-69905cfcaaa7f10ed4cfd289-p588",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69905e152fd6a039938a0ebe-p46__gpu": {
+  "slug": "ed-69905e152fd6a039938a0ebe-p46",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906056ef12272ffdc8cdee-p43__gpu": {
+  "slug": "ed-69906056ef12272ffdc8cdee-p43",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906059ef12272ffdc8cef1-p22__gpu": {
+  "slug": "ed-69906059ef12272ffdc8cef1-p22",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990618a322e01b1349a5136-p49__gpu": {
+  "slug": "ed-6990618a322e01b1349a5136-p49",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-699061933d9181cce82fb5aa-p55__gpu": {
+  "slug": "ed-699061933d9181cce82fb5aa-p55",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990619a3d9181cce82fb669-p17__gpu": {
+  "slug": "ed-6990619a3d9181cce82fb669-p17",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990619d3d9181cce82fb688-p9__gpu": {
+  "slug": "ed-6990619d3d9181cce82fb688-p9",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906319ef12272ffdc8f380-p107__gpu": {
+  "slug": "ed-69906319ef12272ffdc8f380-p107",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69906537726f64800c10a08c-p8__gpu": {
+  "slug": "ed-69906537726f64800c10a08c-p8",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990668a2ec9f7db5717ab11-p28__gpu": {
+  "slug": "ed-6990668a2ec9f7db5717ab11-p28",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d6508c1030b12444acd8-p26__gpu": {
+  "slug": "ed-6991d6508c1030b12444acd8-p26",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d65e8c1030b12444ae97-p118__gpu": {
+  "slug": "ed-6991d65e8c1030b12444ae97-p118",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d6648c1030b12444b0ec-p351__gpu": {
+  "slug": "ed-6991d6648c1030b12444b0ec-p351",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d66e8c1030b12444b4a3-p26__gpu": {
+  "slug": "ed-6991d66e8c1030b12444b4a3-p26",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d6778c1030b12444b4d4-p43__gpu": {
+  "slug": "ed-6991d6778c1030b12444b4d4-p43",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991d67a8c1030b12444b537-p26__gpu": {
+  "slug": "ed-6991d67a8c1030b12444b537-p26",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e175b53cae6bb602470e-p28__gpu": {
+  "slug": "ed-6991e175b53cae6bb602470e-p28",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e194339ebc850994a230-p98__gpu": {
+  "slug": "ed-6991e194339ebc850994a230-p98",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6991e7dec91ce7d733e50228-p17__gpu": {
+  "slug": "ed-6991e7dec91ce7d733e50228-p17",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6992017d7c226bdd25f99444-p9__gpu": {
+  "slug": "ed-6992017d7c226bdd25f99444-p9",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-699fcd429ff0f1d2c4517fff-p28__gpu": {
+  "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69ac7f0f20878c5c9ba524b5-p366__gpu": {
+  "slug": "ed-69ac7f0f20878c5c9ba524b5-p366",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-69aebe60c0472fef6455a8f2-p14__gpu": {
+  "slug": "ed-69aebe60c0472fef6455a8f2-p14",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-69aebfdea41a7e10e5a71d19-p27__gpu": {
+  "slug": "ed-69aebfdea41a7e10e5a71d19-p27",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69aebfdee997cc01b0cab897-p27__gpu": {
+  "slug": "ed-69aebfdee997cc01b0cab897-p27",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69aebfeb36a4ffb2dcfb62e3-p100__gpu": {
+  "slug": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b18619c4be2cdd0edc524e-p6__gpu": {
+  "slug": "ed-69b18619c4be2cdd0edc524e-p6",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b18625c4be2cdd0edc549e-p137__gpu": {
+  "slug": "ed-69b18625c4be2cdd0edc549e-p137",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69bf60fd065df5d87d778bb3-p153__gpu": {
+  "slug": "ed-69bf60fd065df5d87d778bb3-p153",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69cfa93f80eb0ccd3e739280-p101__gpu": {
+  "slug": "ed-69cfa93f80eb0ccd3e739280-p101",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69de0cf180210ba13d79fa39-p98__gpu": {
+  "slug": "ed-69de0cf180210ba13d79fa39-p98",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69de1c99d10d4b0d3f6f3175-p26__gpu": {
+  "slug": "ed-69de1c99d10d4b0d3f6f3175-p26",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69e748a685f786e884a4c8c5-p68__gpu": {
+  "slug": "ed-69e748a685f786e884a4c8c5-p68",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69e7833a0fc6fc955e36317c-p94__gpu": {
+  "slug": "ed-69e7833a0fc6fc955e36317c-p94",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69ee46ef6dd925d126f40e22-p581__gpu": {
+  "slug": "ed-69ee46ef6dd925d126f40e22-p581",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a08fd2e25e3a402b23b3bca-p26__gpu": {
+  "slug": "ed-6a08fd2e25e3a402b23b3bca-p26",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a08fd6325e3a402b23b3e15-p27__gpu": {
+  "slug": "ed-6a08fd6325e3a402b23b3e15-p27",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a3d29e1af872ba37a51ab17-p22__gpu": {
+  "slug": "ed-6a3d29e1af872ba37a51ab17-p22",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425310343d756d34e34ea7-p15__gpu": {
+  "slug": "ed-6a425310343d756d34e34ea7-p15",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425634dfbbb4d07aa5382e-p15__gpu": {
+  "slug": "ed-6a425634dfbbb4d07aa5382e-p15",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a426869aedf4c943f91eac4-p14__gpu": {
+  "slug": "ed-6a426869aedf4c943f91eac4-p14",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4270ed62d175ca9e4e1aa5-p15__gpu": {
+  "slug": "ed-6a4270ed62d175ca9e4e1aa5-p15",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-6a42aecb5207af7c42f5333c-p17__gpu": {
+  "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42d56d1894955eb725e97f-p22__gpu": {
+  "slug": "ed-6a42d56d1894955eb725e97f-p22",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42ec4006e6ead3ac544b8f-p14__gpu": {
+  "slug": "ed-6a42ec4006e6ead3ac544b8f-p14",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42eff906e6ead3ac54bab4-p16__gpu": {
+  "slug": "ed-6a42eff906e6ead3ac54bab4-p16",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43001a4e06bc233ecf5ef6-p16__gpu": {
+  "slug": "ed-6a43001a4e06bc233ecf5ef6-p16",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4300764e06bc233ecf660a-p15__gpu": {
+  "slug": "ed-6a4300764e06bc233ecf660a-p15",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4308144e06bc233ed03513-p15__gpu": {
+  "slug": "ed-6a4308144e06bc233ed03513-p15",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-6a430a2a22c0c8edb0f8c8d4-p16__gpu": {
+  "slug": "ed-6a430a2a22c0c8edb0f8c8d4-p16",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4376a3e296c55144956689-p15__gpu": {
+  "slug": "ed-6a4376a3e296c55144956689-p15",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43851557a09c2c0fcc0005-p17__gpu": {
+  "slug": "ed-6a43851557a09c2c0fcc0005-p17",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d985df05f7ea342b77fb-p16__gpu": {
+  "slug": "ed-6a48d985df05f7ea342b77fb-p16",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4a26ba9dda7124b26753a5-p38__gpu": {
+  "slug": "ed-6a4a26ba9dda7124b26753a5-p38",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4a4551c0f3ec200c7de18c-p16__gpu": {
+  "slug": "ed-6a4a4551c0f3ec200c7de18c-p16",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4ad920d6371d99e766879c-p83__gpu": {
+  "slug": "ed-6a4ad920d6371d99e766879c-p83",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4f71ca1cba01ec54e763c3-p15__gpu": {
+  "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a506fd980b7658fae261d6e-p16__gpu": {
+  "slug": "ed-6a506fd980b7658fae261d6e-p16",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a58ec9ac6cd8f987106886f-p6__gpu": {
+  "slug": "ed-6a58ec9ac6cd8f987106886f-p6",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a58ecbfc6cd8f98710688e0-p15__gpu": {
+  "slug": "ed-6a58ecbfc6cd8f98710688e0-p15",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a58ecd0c6cd8f987106893f-p9__gpu": {
+  "slug": "ed-6a58ecd0c6cd8f987106893f-p9",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a8f6229ddd2f57fe0f810c4-p16__gpu": {
+  "slug": "ed-6a8f6229ddd2f57fe0f810c4-p16",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a8f6267e408ab73f484d28b-p15__gpu": {
+  "slug": "ed-6a8f6267e408ab73f484d28b-p15",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6ab5a4019e89e2a1f4139282-p94__gpu": {
+  "slug": "ed-6ab5a4019e89e2a1f4139282-p94",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6ab5a4089e89e2a1f4139348-p26__gpu": {
+  "slug": "ed-6ab5a4089e89e2a1f4139348-p26",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-606a74d72ac1420b924dde761439fb3f-p27__gpu": {
+  "slug": "ed-606a74d72ac1420b924dde761439fb3f-p27",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6953e4fa77f38f6761bef1dc-p53__gpu": {
+  "slug": "ed-6953e4fa77f38f6761bef1dc-p53",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6958e912d3a8928334814c19-p8__gpu": {
+  "slug": "ed-6958e912d3a8928334814c19-p8",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6970e3599b09d309d780a252-p61__gpu": {
+  "slug": "ed-6970e3599b09d309d780a252-p61",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-697a6e5cb981745f5fac1d7e-p31__gpu": {
+  "slug": "ed-697a6e5cb981745f5fac1d7e-p31",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-697a8014e680cef7cedae395-p31__gpu": {
+  "slug": "ed-697a8014e680cef7cedae395-p31",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6990505e7d19f3f2aac1e2b7-p72__gpu": {
+  "slug": "ed-6990505e7d19f3f2aac1e2b7-p72",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b2f46f5ef23d31023f6f1c-p176__gpu": {
+  "slug": "ed-69b2f46f5ef23d31023f6f1c-p176",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b51e49cf111105c4299e5d-p40__gpu": {
+  "slug": "ed-69b51e49cf111105c4299e5d-p40",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b51e9947b06ecd581940dc-p309__gpu": {
+  "slug": "ed-69b51e9947b06ecd581940dc-p309",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b63e841c1c21a3738655d6-p40__gpu": {
+  "slug": "ed-69b63e841c1c21a3738655d6-p40",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b649aa18b87551bfc5e743-p59__gpu": {
+  "slug": "ed-69b649aa18b87551bfc5e743-p59",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b64c0318b87551bfc70acd-p13__gpu": {
+  "slug": "ed-69b64c0318b87551bfc70acd-p13",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b64c9618b87551bfc76fcf-p20__gpu": {
+  "slug": "ed-69b64c9618b87551bfc76fcf-p20",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b64da218b87551bfc7fe19-p70__gpu": {
+  "slug": "ed-69b64da218b87551bfc7fe19-p70",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b64f1818b87551bfc907fb-p125__gpu": {
+  "slug": "ed-69b64f1818b87551bfc907fb-p125",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b6542618b87551bfcc6072-p119__gpu": {
+  "slug": "ed-69b6542618b87551bfcc6072-p119",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69b660aeb3f4fc0441533e16-p29__gpu": {
+  "slug": "ed-69b660aeb3f4fc0441533e16-p29",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b6e47ea8d7b8d17a676440-p218__gpu": {
+  "slug": "ed-69b6e47ea8d7b8d17a676440-p218",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69b6f32ab1a3146c05278d5a-p72__gpu": {
+  "slug": "ed-69b6f32ab1a3146c05278d5a-p72",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "S"
+  ]
+ },
+ "ed-69c821446c6f3cc53c84aa06-p433__gpu": {
+  "slug": "ed-69c821446c6f3cc53c84aa06-p433",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-69c8a3f26c6f3cc53c85e777-p36__gpu": {
+  "slug": "ed-69c8a3f26c6f3cc53c85e777-p36",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a0b351d688e6a8e15f6759f-p18__gpu": {
+  "slug": "ed-6a0b351d688e6a8e15f6759f-p18",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a26bc6cd6b178e5aad8300b-p18__gpu": {
+  "slug": "ed-6a26bc6cd6b178e5aad8300b-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a26beae0e247ebad6de8612-p18__gpu": {
+  "slug": "ed-6a26beae0e247ebad6de8612-p18",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ed-6a26c136aad44c98627bfb47-p21__gpu": {
+  "slug": "ed-6a26c136aad44c98627bfb47-p21",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4252e5343d756d34e33e36-p9__gpu": {
+  "slug": "ed-6a4252e5343d756d34e33e36-p9",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4253fe343d756d34e37966-p18__gpu": {
+  "slug": "ed-6a4253fe343d756d34e37966-p18",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425bef744db9e3105a3b00-p18__gpu": {
+  "slug": "ed-6a425bef744db9e3105a3b00-p18",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a425df3dfbbb4d07aa634cb-p21__gpu": {
+  "slug": "ed-6a425df3dfbbb4d07aa634cb-p21",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4263b1744db9e3105b1125-p23__gpu": {
+  "slug": "ed-6a4263b1744db9e3105b1125-p23",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a429a398e351c27eb859980-p20__gpu": {
+  "slug": "ed-6a429a398e351c27eb859980-p20",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a429c378e351c27eb85cd66-p6__gpu": {
+  "slug": "ed-6a429c378e351c27eb85cd66-p6",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42abe85207af7c42f4b6d7-p10__gpu": {
+  "slug": "ed-6a42abe85207af7c42f4b6d7-p10",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42acc65207af7c42f4db34-p13__gpu": {
+  "slug": "ed-6a42acc65207af7c42f4db34-p13",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42b1d25207af7c42f57a9c-p25__gpu": {
+  "slug": "ed-6a42b1d25207af7c42f57a9c-p25",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42b7ee5207af7c42f63a27-p21__gpu": {
+  "slug": "ed-6a42b7ee5207af7c42f63a27-p21",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42bbf75207af7c42f6f607-p6__gpu": {
+  "slug": "ed-6a42bbf75207af7c42f6f607-p6",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42ca0be76baa13aa84c734-p23__gpu": {
+  "slug": "ed-6a42ca0be76baa13aa84c734-p23",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42d91f1894955eb72629fe-p18__gpu": {
+  "slug": "ed-6a42d91f1894955eb72629fe-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42eb2806e6ead3ac541e30-p21__gpu": {
+  "slug": "ed-6a42eb2806e6ead3ac541e30-p21",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42ebca06e6ead3ac543887-p8__gpu": {
+  "slug": "ed-6a42ebca06e6ead3ac543887-p8",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a42f62b3ad4d80da1237aed-p18__gpu": {
+  "slug": "ed-6a42f62b3ad4d80da1237aed-p18",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a434784201f98f53c3eff29-p17__gpu": {
+  "slug": "ed-6a434784201f98f53c3eff29-p17",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a43779193aef4a7d61477df-p21__gpu": {
+  "slug": "ed-6a43779193aef4a7d61477df-p21",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4388a857a09c2c0fcc46bb-p8__gpu": {
+  "slug": "ed-6a4388a857a09c2c0fcc46bb-p8",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a448ab6bd67d80f01c767fe-p18__gpu": {
+  "slug": "ed-6a448ab6bd67d80f01c767fe-p18",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a479e7ce1b3ba9165a14c27-p23__gpu": {
+  "slug": "ed-6a479e7ce1b3ba9165a14c27-p23",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d782df05f7ea342b7309-p21__gpu": {
+  "slug": "ed-6a48d782df05f7ea342b7309-p21",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48d783df05f7ea342b730a-p21__gpu": {
+  "slug": "ed-6a48d783df05f7ea342b730a-p21",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a48e1881e36bf8015227aa8-p21__gpu": {
+  "slug": "ed-6a48e1881e36bf8015227aa8-p21",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a4f92c0d7f4f9119ff22b41-p9__gpu": {
+  "slug": "ed-6a4f92c0d7f4f9119ff22b41-p9",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a509b82ad1859a71f41b8d6-p18__gpu": {
+  "slug": "ed-6a509b82ad1859a71f41b8d6-p18",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9057a0ab26ecd307a0cd7c-p9__gpu": {
+  "slug": "ed-6a9057a0ab26ecd307a0cd7c-p9",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906153ce57ddf536207e42-p9__gpu": {
+  "slug": "ed-6a906153ce57ddf536207e42-p9",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9061f6c21b989bffd757b3-p8__gpu": {
+  "slug": "ed-6a9061f6c21b989bffd757b3-p8",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90658feb8fb726ee3b3f2a-p18__gpu": {
+  "slug": "ed-6a90658feb8fb726ee3b3f2a-p18",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9066caeb8fb726ee3b6d69-p6__gpu": {
+  "slug": "ed-6a9066caeb8fb726ee3b6d69-p6",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906748eb8fb726ee3b7bad-p18__gpu": {
+  "slug": "ed-6a906748eb8fb726ee3b7bad-p18",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90675ceb8fb726ee3b7f5a-p9__gpu": {
+  "slug": "ed-6a90675ceb8fb726ee3b7f5a-p9",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "G": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a906bf4336010794b0d2ab0-p18__gpu": {
+  "slug": "ed-6a906bf4336010794b0d2ab0-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9078467f9d520dd42e41e2-p18__gpu": {
+  "slug": "ed-6a9078467f9d520dd42e41e2-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9085af8696e74449c320be-p21__gpu": {
+  "slug": "ed-6a9085af8696e74449c320be-p21",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a909914b7feee6e9c427a2a-p21__gpu": {
+  "slug": "ed-6a909914b7feee6e9c427a2a-p21",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90991fb7feee6e9c427bf0-p18__gpu": {
+  "slug": "ed-6a90991fb7feee6e9c427bf0-p18",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9099bbb7feee6e9c42915e-p9__gpu": {
+  "slug": "ed-6a9099bbb7feee6e9c42915e-p9",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "G": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a909b5ab7feee6e9c429605-p18__gpu": {
+  "slug": "ed-6a909b5ab7feee6e9c429605-p18",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90a3b93a69baad5d30cf72-p9__gpu": {
+  "slug": "ed-6a90a3b93a69baad5d30cf72-p9",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90a3c03a69baad5d30d34e-p21__gpu": {
+  "slug": "ed-6a90a3c03a69baad5d30d34e-p21",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90b8fdfea824c8068281d6-p18__gpu": {
+  "slug": "ed-6a90b8fdfea824c8068281d6-p18",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90ce08354ec8f981e30277-p9__gpu": {
+  "slug": "ed-6a90ce08354ec8f981e30277-p9",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "G": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90ce1d2efcf696ead70a9b-p23__gpu": {
+  "slug": "ed-6a90ce1d2efcf696ead70a9b-p23",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "G": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90e2d81a02a5cb2d7325f2-p21__gpu": {
+  "slug": "ed-6a90e2d81a02a5cb2d7325f2-p21",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a90e7e5544007b776b3806a-p18__gpu": {
+  "slug": "ed-6a90e7e5544007b776b3806a-p18",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a94341a7680120fac24d808-p18__gpu": {
+  "slug": "ed-6a94341a7680120fac24d808-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "S"
+   ],
+   "A": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "G": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a9437f67e41ac276318823e-p21__gpu": {
+  "slug": "ed-6a9437f67e41ac276318823e-p21",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "S"
+   ],
+   "G": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-haller_anfangsgruende07_1775-p1191__gpu": {
+  "slug": "dta-haller_anfangsgruende07_1775-p1191",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-haller_anfangsgruende07_1775-p1211__gpu": {
+  "slug": "dta-haller_anfangsgruende07_1775-p1211",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-haller_anfangsgruende08_1776-p17__gpu": {
+  "slug": "dta-haller_anfangsgruende08_1776-p17",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-haller_anfangsgruende08_1776-p29__gpu": {
+  "slug": "dta-haller_anfangsgruende08_1776-p29",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-lindnerin_kochbuch_1780-p34__gpu": {
+  "slug": "dta-lindnerin_kochbuch_1780-p34",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "c"
+   ]
+  },
+  "not_delivered": [
+   "b",
+   "d",
+   "e"
+  ]
+ },
+ "dta-lindnerin_kochbuch_1780-p48__gpu": {
+  "slug": "dta-lindnerin_kochbuch_1780-p48",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "b",
+   "c",
+   "e"
+  ]
+ },
+ "dta-logau_sinngetichte_1654-p433__gpu": {
+  "slug": "dta-logau_sinngetichte_1654-p433",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "b"
+  ]
+ },
+ "dta-logau_sinngetichte_1654-p587__gpu": {
+  "slug": "dta-logau_sinngetichte_1654-p587",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": [
+   "b"
+  ]
+ },
+ "dta-staden_landschafft_1557-p101__gpu": {
+  "slug": "dta-staden_landschafft_1557-p101",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-staden_landschafft_1557-p71__gpu": {
+  "slug": "dta-staden_landschafft_1557-p71",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-swedenborg_schriften01_1776-p24__gpu": {
+  "slug": "dta-swedenborg_schriften01_1776-p24",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-swedenborg_schriften01_1776-p30__gpu": {
+  "slug": "dta-swedenborg_schriften01_1776-p30",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-trichter_ritterexercitienlexikon_1742-p610__gpu": {
+  "slug": "dta-trichter_ritterexercitienlexikon_1742-p610",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-trichter_ritterexercitienlexikon_1742-p752__gpu": {
+  "slug": "dta-trichter_ritterexercitienlexikon_1742-p752",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-tuckermann_predigt_1616-p14__gpu": {
+  "slug": "dta-tuckermann_predigt_1616-p14",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-tuckermann_predigt_1616-p23__gpu": {
+  "slug": "dta-tuckermann_predigt_1616-p23",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-valentini_museum_1704-p35__gpu": {
+  "slug": "dta-valentini_museum_1704-p35",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-valentini_museum_1704-p657__gpu": {
+  "slug": "dta-valentini_museum_1704-p657",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-walter_beschreibung_1609-p118__gpu": {
+  "slug": "dta-walter_beschreibung_1609-p118",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-walter_beschreibung_1609-p68__gpu": {
+  "slug": "dta-walter_beschreibung_1609-p68",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-weise_jugend_1701-p27__gpu": {
+  "slug": "dta-weise_jugend_1701-p27",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-weise_jugend_1701-p37__gpu": {
+  "slug": "dta-weise_jugend_1701-p37",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wiedeburg_leichpredigt_1620-p27__gpu": {
+  "slug": "dta-wiedeburg_leichpredigt_1620-p27",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wiedeburg_leichpredigt_1620-p40__gpu": {
+  "slug": "dta-wiedeburg_leichpredigt_1620-p40",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wiedeburg_leichpredigt_1624-p32__gpu": {
+  "slug": "dta-wiedeburg_leichpredigt_1624-p32",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wiedeburg_leichpredigt_1624-p59__gpu": {
+  "slug": "dta-wiedeburg_leichpredigt_1624-p59",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wolff_naturwuerckungen_1723-p28__gpu": {
+  "slug": "dta-wolff_naturwuerckungen_1723-p28",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-wolff_naturwuerckungen_1723-p32__gpu": {
+  "slug": "dta-wolff_naturwuerckungen_1723-p32",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-zesen_helikon01_1640-p112__gpu": {
+  "slug": "dta-zesen_helikon01_1640-p112",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-zesen_helikon01_1640-p93__gpu": {
+  "slug": "dta-zesen_helikon01_1640-p93",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-zschackwitz_schauplatz_1724-p32__gpu": {
+  "slug": "dta-zschackwitz_schauplatz_1724-p32",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "dta-zschackwitz_schauplatz_1724-p559__gpu": {
+  "slug": "dta-zschackwitz_schauplatz_1724-p559",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr--bourdoise-cat-chisme-contenant-l-ordre-des-mati-p14__gpu": {
+  "slug": "ws-fr--bourdoise-cat-chisme-contenant-l-ordre-des-mati-p14",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-a-history-and-defence-of-magna-charta-djvu-p250__gpu": {
+  "slug": "ws-fr-a-history-and-defence-of-magna-charta-djvu-p250",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-abeille-coriolan-1676-djvu-p40__gpu": {
+  "slug": "ws-fr-abeille-coriolan-1676-djvu-p40",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-abundance-le-testament-de-carmentrant-viii-perso-p3__gpu": {
+  "slug": "ws-fr-abundance-le-testament-de-carmentrant-viii-perso-p3",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-adresse-pour-les-n-gres-d-tenus-en-esclavage-179-p16__gpu": {
+  "slug": "ws-fr-adresse-pour-les-n-gres-d-tenus-en-esclavage-179-p16",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-alembert-trait-de-dynamique-1758-djvu-p19__gpu": {
+  "slug": "ws-fr-alembert-trait-de-dynamique-1758-djvu-p19",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b",
+    "c",
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-alletz-dictionnaire-des-richesses-1770-djvu-p2__gpu": {
+  "slug": "ws-fr-alletz-dictionnaire-des-richesses-1770-djvu-p2",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-almanach-des-muses-de-l-cole-centrale-du-d-parte-p203__gpu": {
+  "slug": "ws-fr-almanach-des-muses-de-l-cole-centrale-du-d-parte-p203",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-an-mc-et-xxxv-403-minute-notariale-du-mariage-de-p2__gpu": {
+  "slug": "ws-fr-an-mc-et-xxxv-403-minute-notariale-du-mariage-de-p2",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-andry-de-boisregard-de-la-g-n-ration-des-vers-17-p25__gpu": {
+  "slug": "ws-fr-andry-de-boisregard-de-la-g-n-ration-des-vers-17-p25",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-andry-de-boisregard-de-la-g-n-ration-des-vers-17-p26__gpu": {
+  "slug": "ws-fr-andry-de-boisregard-de-la-g-n-ration-des-vers-17-p26",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-andry-r-flexions-sur-l-usage-pr-sent-de-la-langu-p116__gpu": {
+  "slug": "ws-fr-andry-r-flexions-sur-l-usage-pr-sent-de-la-langu-p116",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anecdotes-pour-servir-l-histoire-secr-te-des-ebu-p25__gpu": {
+  "slug": "ws-fr-anecdotes-pour-servir-l-histoire-secr-te-des-ebu-p25",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-angran-de-rueneuve-observations-sur-l-agricultur-p24__gpu": {
+  "slug": "ws-fr-angran-de-rueneuve-observations-sur-l-agricultur-p24",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-ann-e-galante-ou-trenne-l-amour-1773-djvu-p37__gpu": {
+  "slug": "ws-fr-ann-e-galante-ou-trenne-l-amour-1773-djvu-p37",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p18__gpu": {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p18",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26__gpu": {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p350__gpu": {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p350",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p51__gpu": {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p51",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-anonyme-relation-envoy-e-de-brest-au-sujet-d-un-p2__gpu": {
+  "slug": "ws-fr-anonyme-relation-envoy-e-de-brest-au-sujet-d-un-p2",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-apul-e-les-m-tamorphoses-bastien-1787-i-djvu-p258__gpu": {
+  "slug": "ws-fr-apul-e-les-m-tamorphoses-bastien-1787-i-djvu-p258",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-ar-tin-la-puttana-errante-1776-djvu-p30__gpu": {
+  "slug": "ws-fr-ar-tin-la-puttana-errante-1776-djvu-p30",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-arbeau-orchesographie-1589-djvu-p26__gpu": {
+  "slug": "ws-fr-arbeau-orchesographie-1589-djvu-p26",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-30-ao-t-1784-dj-p2__gpu": {
+  "slug": "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-30-ao-t-1784-dj-p2",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-arr-t-du-conseil-d-tat-du-roi-portant-cassation-p2__gpu": {
+  "slug": "ws-fr-arr-t-du-conseil-d-tat-du-roi-portant-cassation-p2",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-aulnoy-relation-du-voyage-d-espagne-1705-tome-1-p14__gpu": {
+  "slug": "ws-fr-aulnoy-relation-du-voyage-d-espagne-1705-tome-1-p14",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-auverni-m-thode-nouvelle-concise-et-raisonn-e-po-p236__gpu": {
+  "slug": "ws-fr-auverni-m-thode-nouvelle-concise-et-raisonn-e-po-p236",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bacon-uvres-tome-7-djvu-p296__gpu": {
+  "slug": "ws-fr-bacon-uvres-tome-7-djvu-p296",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-baif-pri-res-1587-djvu-p2__gpu": {
+  "slug": "ws-fr-baif-pri-res-1587-djvu-p2",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-baltasar-graci-n-l-homme-de-cour-djvu-p16__gpu": {
+  "slug": "ws-fr-baltasar-graci-n-l-homme-de-cour-djvu-p16",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-batteux-les-beaux-arts-r-duits-un-m-me-principe-p21__gpu": {
+  "slug": "ws-fr-batteux-les-beaux-arts-r-duits-un-m-me-principe-p21",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-batteux-les-quatre-po-tiques-d-aristote-d-horace-p363__gpu": {
+  "slug": "ws-fr-batteux-les-quatre-po-tiques-d-aristote-d-horace-p363",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-behn-oronoko-1745-djvu-p21__gpu": {
+  "slug": "ws-fr-behn-oronoko-1745-djvu-p21",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-belon-l-histoire-naturelle-des-estranges-poisson-p4__gpu": {
+  "slug": "ws-fr-belon-l-histoire-naturelle-des-estranges-poisson-p4",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-benserade-le-ballet-des-arts-djvu-p23__gpu": {
+  "slug": "ws-fr-benserade-le-ballet-des-arts-djvu-p23",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bernard-brutus-djvu-p38__gpu": {
+  "slug": "ws-fr-bernard-brutus-djvu-p38",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bernard-mandeville-la-fable-des-abeilles-ou-les-p19__gpu": {
+  "slug": "ws-fr-bernard-mandeville-la-fable-des-abeilles-ou-les-p19",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bernier-th-ologie-portative-1768-djvu-p18__gpu": {
+  "slug": "ws-fr-bernier-th-ologie-portative-1768-djvu-p18",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-bertereau-v-ritable-d-claration-de-la-descouvert-p3__gpu": {
+  "slug": "ws-fr-bertereau-v-ritable-d-claration-de-la-descouvert-p3",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-aa-vv-il-rapimento-d-elena-e-altre-opere-djvu-p175__gpu": {
+  "slug": "ws-it-aa-vv-il-rapimento-d-elena-e-altre-opere-djvu-p175",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-alberti-della-architettura-della-pittura-e-della-p26__gpu": {
+  "slug": "ws-it-alberti-della-architettura-della-pittura-e-della-p26",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-alcippo-djvu-p25__gpu": {
+  "slug": "ws-it-alcippo-djvu-p25",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-alfieri-la-virt-sconosciuta-djvu-p30__gpu": {
+  "slug": "ws-it-alfieri-la-virt-sconosciuta-djvu-p30",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-annua-della-cina-1610-beic-ie5926481-djvu-p26__gpu": {
+  "slug": "ws-it-annua-della-cina-1610-beic-ie5926481-djvu-p26",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-chizzola-risposta-di-donn-ippolito-chizzuola-all-p208__gpu": {
+  "slug": "ws-it-chizzola-risposta-di-donn-ippolito-chizzuola-all-p208",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-colonna-rime-1760-djvu-p19__gpu": {
+  "slug": "ws-it-colonna-rime-1760-djvu-p19",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-condivi-vita-di-michelagnolo-buonarroti-1553-b-d-p28__gpu": {
+  "slug": "ws-it-condivi-vita-di-michelagnolo-buonarroti-1553-b-d-p28",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-del-coraggio-nelle-malattie-djvu-p18__gpu": {
+  "slug": "ws-it-del-coraggio-nelle-malattie-djvu-p18",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-dello-squadro-1625-pdf-p16__gpu": {
+  "slug": "ws-it-dello-squadro-1625-pdf-p16",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-dieci-lettere-di-publio-virgilio-marone-djvu-p4__gpu": {
+  "slug": "ws-it-dieci-lettere-di-publio-virgilio-marone-djvu-p4",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-discorso-filosofico-politico-sopra-la-carcere-de-p37__gpu": {
+  "slug": "ws-it-discorso-filosofico-politico-sopra-la-carcere-de-p37",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-elogio-di-lazaro-spallanzani-ia-b22014019-pdf-p7__gpu": {
+  "slug": "ws-it-elogio-di-lazaro-spallanzani-ia-b22014019-pdf-p7",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-francesco-valentini-descrittione-del-sontuoso-to-p5__gpu": {
+  "slug": "ws-it-francesco-valentini-descrittione-del-sontuoso-to-p5",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-gerusalemme-liberata-ii-djvu-p22__gpu": {
+  "slug": "ws-it-gerusalemme-liberata-ii-djvu-p22",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-giornale-di-un-viaggio-da-costantinopoli-in-polo-p19__gpu": {
+  "slug": "ws-it-giornale-di-un-viaggio-da-costantinopoli-in-polo-p19",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ws-it-giovanbattista-giraldi-cinzio-de-gli-hecatommiti-p622__gpu": {
+  "slug": "ws-it-giovanbattista-giraldi-cinzio-de-gli-hecatommiti-p622",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-giovanni-da-pian-del-carpine-opera-dilettevole-d-p4__gpu": {
+  "slug": "ws-it-giovanni-da-pian-del-carpine-opera-dilettevole-d-p4",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-giro-del-mondo-del-dottor-d-gio-francesco-gemell-p26__gpu": {
+  "slug": "ws-it-giro-del-mondo-del-dottor-d-gio-francesco-gemell-p26",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-il-divino-pietro-aretino-a-lo-imperadore-ne-la-m-p4__gpu": {
+  "slug": "ws-it-il-divino-pietro-aretino-a-lo-imperadore-ne-la-m-p4",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-interiano-la-vita-et-sito-de-zychi-aldo-1502-djv-p18__gpu": {
+  "slug": "ws-it-interiano-la-vita-et-sito-de-zychi-aldo-1502-djv-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-inventione-de-nicol-tartaglia-djvu-p4__gpu": {
+  "slug": "ws-it-inventione-de-nicol-tartaglia-djvu-p4",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-isotta-da-rimino-mazzucchelli-djvu-p4__gpu": {
+  "slug": "ws-it-isotta-da-rimino-mazzucchelli-djvu-p4",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-la-dafne-ia-ladafne01rinu-pdf-p18__gpu": {
+  "slug": "ws-it-la-dafne-ia-ladafne01rinu-pdf-p18",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-le-antichita-romane-piranesi-1-pdf-p21__gpu": {
+  "slug": "ws-it-le-antichita-romane-piranesi-1-pdf-p21",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-lezioni-accademiche-pdf-p15__gpu": {
+  "slug": "ws-it-lezioni-accademiche-pdf-p15",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-lucrezio-e-fedro-i-djvu-p19__gpu": {
+  "slug": "ws-it-lucrezio-e-fedro-i-djvu-p19",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-luigi-novarini-alchimia-spirituale-djvu-p7__gpu": {
+  "slug": "ws-it-luigi-novarini-alchimia-spirituale-djvu-p7",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-marinelladellanobilt-etdell-eccellenzadelledonne-p25__gpu": {
+  "slug": "ws-it-marinelladellanobilt-etdell-eccellenzadelledonne-p25",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-meditazioni-sulla-economia-politica-djvu-p19__gpu": {
+  "slug": "ws-it-meditazioni-sulla-economia-politica-djvu-p19",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-michiel-notizia-d-opere-di-disegno-1800-djvu-p20__gpu": {
+  "slug": "ws-it-michiel-notizia-d-opere-di-disegno-1800-djvu-p20",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-moneti-cortona-convertita-1797-djvu-p146__gpu": {
+  "slug": "ws-it-moneti-cortona-convertita-1797-djvu-p146",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-narrazione-e-disegno-della-terra-di-prato-di-tos-p19__gpu": {
+  "slug": "ws-it-narrazione-e-disegno-della-terra-di-prato-di-tos-p19",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-ordini-della-magnifica-comunit-di-alzano-di-sott-p30__gpu": {
+  "slug": "ws-it-ordini-della-magnifica-comunit-di-alzano-di-sott-p30",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-osservazioni-di-giovanni-lovrich-djvu-p19__gpu": {
+  "slug": "ws-it-osservazioni-di-giovanni-lovrich-djvu-p19",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-pallavicino-la-rettorica-delle-puttane-djvu-p4__gpu": {
+  "slug": "ws-it-pallavicino-la-rettorica-delle-puttane-djvu-p4",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-pilati-ragionamenti-intorno-la-legge-naturale-e-p29__gpu": {
+  "slug": "ws-it-pilati-ragionamenti-intorno-la-legge-naturale-e-p29",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-ragguagli-di-parnaso-djvu-p37__gpu": {
+  "slug": "ws-it-ragguagli-di-parnaso-djvu-p37",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ed-6a94184aa4ed5935447a82d2-p9__gpu": {
+  "slug": "ed-6a94184aa4ed5935447a82d2-p9",
+  "group": "gpu",
+  "labels": {
+   "G": [
+    "S"
+   ],
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-95-thesen-pdf-p3__gpu": {
+  "slug": "ws-de-95-thesen-pdf-p3",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-abschied-der-casselaner-vom-koenig-von-westphale-p6__gpu": {
+  "slug": "ws-de-abschied-der-casselaner-vom-koenig-von-westphale-p6",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4__gpu": {
+  "slug": "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15__gpu": {
+  "slug": "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3__gpu": {
+  "slug": "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-agrumi-august-kopisch-1838-pdf-p3__gpu": {
+  "slug": "ws-de-agrumi-august-kopisch-1838-pdf-p3",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-ah-ca-ira-pdf-p2__gpu": {
+  "slug": "ws-de-ah-ca-ira-pdf-p2",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allemannischegedichte-hebel-pdf-p179__gpu": {
+  "slug": "ws-de-allemannischegedichte-hebel-pdf-p179",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3__gpu": {
+  "slug": "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2__gpu": {
+  "slug": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19__gpu": {
+  "slug": "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354__gpu": {
+  "slug": "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2__gpu": {
+  "slug": "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26__gpu": {
+  "slug": "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43__gpu": {
+  "slug": "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3__gpu": {
+  "slug": "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3__gpu": {
+  "slug": "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ]
+  },
+  "not_delivered": [
+   "e"
+  ]
+ },
+ "ws-de-anmerkungen-bers-theater-pdf-p15__gpu": {
+  "slug": "ws-de-anmerkungen-bers-theater-pdf-p15",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26__gpu": {
+  "slug": "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-ansichten-l-beck-marienkirche-pdf-p2__gpu": {
+  "slug": "ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2__gpu": {
+  "slug": "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-apolls-gericht-1769-pdf-p3__gpu": {
+  "slug": "ws-de-apolls-gericht-1769-pdf-p3",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2__gpu": {
+  "slug": "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2__gpu": {
+  "slug": "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4__gpu": {
+  "slug": "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4__gpu": {
+  "slug": "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19__gpu": {
+  "slug": "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17__gpu": {
+  "slug": "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151__gpu": {
+  "slug": "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-de-beethoven-s-neunte-symphonie-pdf-p2__gpu": {
+  "slug": "ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-28233-pdf-pdf-p4__gpu": {
+  "slug": "ws-la-28233-pdf-pdf-p4",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-agricola-de-re-metallica-djvu-p406__gpu": {
+  "slug": "ws-la-agricola-de-re-metallica-djvu-p406",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-apocalypsis-revelata-djvu-p3__gpu": {
+  "slug": "ws-la-apocalypsis-revelata-djvu-p3",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-arcana-coelestia-vol-i-djvu-p16__gpu": {
+  "slug": "ws-la-arcana-coelestia-vol-i-djvu-p16",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-ars-memorativa-leporeus-djvu-p33__gpu": {
+  "slug": "ws-la-ars-memorativa-leporeus-djvu-p33",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20__gpu": {
+  "slug": "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-bodleian-library-byw-k-4-6-pdf-p17__gpu": {
+  "slug": "ws-la-bodleian-library-byw-k-4-6-pdf-p17",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-cl-ver-germania-antiqua-1616-pdf-p23__gpu": {
+  "slug": "ws-la-cl-ver-germania-antiqua-1616-pdf-p23",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-columbus-carmen-epicum-pdf-p7__gpu": {
+  "slug": "ws-la-columbus-carmen-epicum-pdf-p7",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-columellae-opera-djvu-p26__gpu": {
+  "slug": "ws-la-columellae-opera-djvu-p26",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15__gpu": {
+  "slug": "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-coppernicus-monete-djvu-p4__gpu": {
+  "slug": "ws-la-coppernicus-monete-djvu-p4",
+  "group": "gpu",
+  "labels": {
+   "C": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-de-bello-rustico-valentino-pdf-p24__gpu": {
+  "slug": "ws-la-de-bello-rustico-valentino-pdf-p24",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347__gpu": {
+  "slug": "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17__gpu": {
+  "slug": "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2__gpu": {
+  "slug": "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17__gpu": {
+  "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721__gpu": {
+  "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369__gpu": {
+  "slug": "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22__gpu": {
+  "slug": "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "B": [
+    "d"
+   ],
+   "A": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38__gpu": {
+  "slug": "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "D": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri-p19__gpu": {
+  "slug": "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri-p19",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-foliot-canticum-pdf-p32__gpu": {
+  "slug": "ws-la-foliot-canticum-pdf-p32",
+  "group": "gpu",
+  "labels": {
+   "E": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "F": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25__gpu": {
+  "slug": "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+  "group": "gpu",
+  "labels": {
+   "A": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204__gpu": {
+  "slug": "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-gallia-christiana-1720-t2-djvu-p2__gpu": {
+  "slug": "ws-la-gallia-christiana-1720-t2-djvu-p2",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "A": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "D": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-grammatica-fennica-pdf-p48__gpu": {
+  "slug": "ws-la-grammatica-fennica-pdf-p48",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "F": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-historia-naturalis-brasiliae-1648-pdf-p198__gpu": {
+  "slug": "ws-la-historia-naturalis-brasiliae-1648-pdf-p198",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-hortus-malabaricus-volume-1-pdf-p4__gpu": {
+  "slug": "ws-la-hortus-malabaricus-volume-1-pdf-p4",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "E": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-houghtonianus-latinus-224-pdf-p33__gpu": {
+  "slug": "ws-la-houghtonianus-latinus-224-pdf-p33",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189__gpu": {
+  "slug": "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "D": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "E": [
+    "c"
+   ],
+   "C": [
+    "d"
+   ],
+   "F": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-machumetis-saracenorum-principis-eiusque-success-p259__gpu": {
+  "slug": "ws-la-machumetis-saracenorum-principis-eiusque-success-p259",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "B": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20__gpu": {
+  "slug": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+  "group": "gpu",
+  "labels": {
+   "D": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "C": [
+    "b"
+   ],
+   "A": [
+    "c"
+   ],
+   "F": [
+    "d"
+   ],
+   "B": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-la-nicolaus-machiavellus-de-principe-pdf-p17__gpu": {
+  "slug": "ws-la-nicolaus-machiavellus-de-principe-pdf-p17",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "E": [
+    "X"
+   ],
+   "B": [
+    "b"
+   ],
+   "C": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-fr-andr-r-futation-du-nouvel-ouvrage-de-jean-jacque-p29__gpu": {
+  "slug": "ws-fr-andr-r-futation-du-nouvel-ouvrage-de-jean-jacque-p29",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-delli-componimenti-diversi-di-carlo-goldoni-1-dj-p13__gpu": {
+  "slug": "ws-it-delli-componimenti-diversi-di-carlo-goldoni-1-dj-p13",
+  "group": "gpu",
+  "labels": {
+   "B": [
+    "G"
+   ],
+   "C": [
+    "X"
+   ],
+   "A": [
+    "b"
+   ],
+   "F": [
+    "c"
+   ],
+   "E": [
+    "d"
+   ],
+   "D": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ },
+ "ws-it-petrarca-le-cose-volgari-aldo-1501-djvu-p22__gpu": {
+  "slug": "ws-it-petrarca-le-cose-volgari-aldo-1501-djvu-p22",
+  "group": "gpu",
+  "labels": {
+   "F": [
+    "G"
+   ],
+   "B": [
+    "X"
+   ],
+   "E": [
+    "b"
+   ],
+   "D": [
+    "c"
+   ],
+   "A": [
+    "d"
+   ],
+   "C": [
+    "e"
+   ]
+  },
+  "not_delivered": []
+ }
+}

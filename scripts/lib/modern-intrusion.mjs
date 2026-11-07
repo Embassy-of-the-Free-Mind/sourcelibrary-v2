@@ -103,3 +103,37 @@ export function screenBookPages(book, pages) {
   }
   return out;
 }
+
+// ── The imprint (2026-11-07) ──────────────────────────────────────────────────────────
+// One book's `published` said 1533 and page 6 of our own OCR carried a 2010 copyright notice and an
+// ISBN. It reached a DOI because nothing compared them, and the screen above reads only the English.
+// A hit here means a person reads the colophon before anything permanent happens, as above. It says
+// nothing about the rights in a book that has no hit: an imprint can sit at the back or be missing.
+//
+// Left out on purpose: "all rights reserved" (it is on books from the 1880s) and a © with no year
+// (a library's scan watermark). Neither dates the book.
+
+/** How far into a book to look. */
+export const IMPRINT_PAGES = 14;
+
+const IMPRINT_MARKS = [
+  ['isbn', /\bISBN(?:-1[03])?[\s:]*[\dX][\dX\s-]{8,}/i],
+  ['dated copyright', /(?:©|\(c\)|copyright)\s*(?:by\s+)?(?:19|20)\d\d\b/i],
+];
+
+/** Modern imprint marks in one page's transcription, outside the model's own apparatus. */
+export function findImprintMarks(text) {
+  const body = intrusionBody(text);
+  return IMPRINT_MARKS.filter(([, re]) => re.test(body)).map(([marker]) => ({ marker }));
+}
+
+/** Same shape as screenBookPages. `pages` need `page_number` and `ocr.data`. */
+export function screenImprint(pages) {
+  const out = [];
+  for (const p of pages || []) {
+    if (!(p?.page_number <= IMPRINT_PAGES)) continue;
+    const hits = findImprintMarks(p?.ocr?.data);
+    if (hits.length) out.push({ page_number: p.page_number, hits });
+  }
+  return out;
+}

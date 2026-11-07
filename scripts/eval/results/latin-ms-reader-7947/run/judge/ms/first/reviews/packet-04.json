@@ -1,0 +1,165 @@
+[
+  {
+    "book_id": "b04-k", "slot": 1, "title": "Pontificalis liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "gnis auxilijs", "image": "gnius auxilijs", "problem": "first word of the carried-over sentence truncated", "severity": "minor" },
+          { "ocr": "Dicto pontifex", "image": "[Q]uo / dicto pontifex (rubricated initial at end of preceding line)", "problem": "rubric initial word dropped", "severity": "minor" },
+          { "ocr": "<script>printed</script>", "image": "a handwritten Italian Gothic liturgical book hand", "problem": "script self-tag wrong: the leaf is a manuscript; the initial is also described as a 'woodcut'", "severity": "moderate", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "(nothing between 'impla-' and the column break)", "image": "Ne reminiscaris domine delicta nostra uel parentum nostrorum neque uindictas sumas de peccatis nostris (chant text under the staves in column 1)", "problem": "whole chant text of column 1 omitted", "severity": "serious", "class": "O5" },
+          { "ocr": "i benedictione cum abbate: qui electus", "image": "i bñdictiõe electi in abbatē: qñ Elect'", "problem": "'electi in abbatem: quando' misread as 'cum abbate: qui'", "severity": "moderate", "class": "O6" },
+          { "ocr": "ipsum excitantibus: solemniter benedicit: et etiam heri-supra", "image": "ipsm decātātib': solēniter benedicit': q etiā hētur supra", "problem": "'decantantibus … benedicitur: quod etiam habetur' garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "dicto per crucem sine notis impla-", "image": "pdicto per errorē sine notis impssa", "problem": "'predicto per errorem … impressa' (printed in error without notes) read as 'per crucem … impla-'; sense lost", "severity": "serious", "class": "O6" },
+          { "ocr": "Domine cliam e- dificet: p- usque po- tificis in- diao lo- cus atrui de dignetur", "image": "[N]emo ecclesiam edificet: priusquam pontificis iudicio locus et atrium designetur", "problem": "illuminated N read as 'Domine'; 'Nemo … priusquam … iudicio … atrium designetur' garbled into nonsense — the prohibition 'no one shall build a church' is lost", "severity": "serious", "class": "O6" },
+          { "ocr": "et pe- ci uel ex auctoritate placer uote crux", "image": "et per eum uel eius auctoritate per sacerdotem crux", "problem": "garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "Incipit. Et post benedictione impositione primaria lapidis ecclesia", "image": "Incipit. Et primo De benedictione et impositione primarii lapidis pro ecclesia … edificanda", "problem": "heading mangled; 'Domine ne in fu[rore]' caption and 'edificanda' missing", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "image-desc calls the initial a 'D'; it is an N", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 24, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ubi supra faldistorium pendeat", "image": "ubi sup Faldistori/ũ pcũbat", "problem": "'procumbat' (lies prostrate) read as 'pendeat' (hangs)", "severity": "moderate", "class": "O6" },
+          { "ocr": "qua cum dictum fuerit", "image": "i qua cũ dictũ fuerit", "problem": "'in' dropped", "severity": "minor" },
+          { "ocr": "(no margin note)", "image": "marginal 'or / nau / tu' beside 'procumbat'", "problem": "marginal note dropped", "severity": "minor" },
+          { "ocr": "<script>printed</script>", "image": "manuscript hand", "problem": "script self-tag wrong; initial described as 'woodcut'", "severity": "moderate", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Pages 9 and 24 are close, faithful readings with abbreviations expanded, though tagged 'printed'. Page 16 (chant page) is a garbled partial read: column-1 chant text omitted, the 'Nemo ecclesiam edificet' rubric turned to nonsense."
+  },
+  {
+    "book_id": "b04-m", "slot": 2, "title": "Pontificalis liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "mysteria capiamus in omnibus", "image": "mysterijs capiam⁹ 7 moribus", "problem": "'et moribus' (in conduct) read as 'in omnibus'; meaning changed", "severity": "moderate", "class": "O6" },
+          { "ocr": "ad beniuolendum", "image": "ad beneuiuẽdũ", "problem": "'beneuiuendum' (living well) read as 'well-wishing'", "severity": "moderate", "class": "O6" },
+          { "ocr": "Inde dicat", "image": "[D]e/inde dicat", "problem": "'De-' dropped", "severity": "minor" },
+          { "ocr": "sacra rui … lauante: nisi prius loti fuerit … offertorui", "image": "sacrariũ … lauant: nisi prius loti fuerĩt … offertoriũ", "problem": "abbreviations misread", "severity": "minor" },
+          { "ocr": "seu electioni … ad sede apostolica … pertinet … ecclesia", "image": "electionũ … ad sedẽ aplicam … ptinẽt … ecclesijs", "problem": "endings wrong", "severity": "minor" },
+          { "ocr": "gnus auxilius", "image": "gnius auxilijs", "problem": "misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "(nothing between 'impla-' and the column break)", "image": "Ne reminiscaris domine delicta nostra uel parentum nostrorum neque uindictas sumas de peccatis nostris", "problem": "whole chant text of column 1 omitted", "severity": "serious", "class": "O5" },
+          { "ocr": "i benedictione cum abbate: qui electus", "image": "i bñdictiõe electi in abbatē: qñ Elect'", "problem": "'electi in abbatem: quando' misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "dicto per crucem sine notis impla-", "image": "pdicto per errorē sine notis impssa", "problem": "'per errorem … impressa' read as 'per crucem … impla-'; sense lost", "severity": "serious", "class": "O6" },
+          { "ocr": "Domine cliam e- dificet: p- usque po- tificis in- diao lo- cus atrui de dignetur", "image": "[N]emo ecclesiam edificet: priusquam pontificis iudicio locus et atrium designetur", "problem": "initial N read as 'Domine'; the prohibition garbled into nonsense", "severity": "serious", "class": "O6" },
+          { "ocr": "et pe- ci uel ex auctoritate placer uote crux", "image": "et per eum uel eius auctoritate per sacerdotem crux", "problem": "garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "ipsum excitantibus … et etiam heri-supra", "image": "ipsm decātātib' … q etiā hētur supra", "problem": "garbled", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "image-desc calls the initial a 'D'; it is an N", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 24, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<page-num>cc.xxxix.</page-num>", "image": "cc.xxxij.", "problem": "folio number misread (239 for 232)", "severity": "moderate", "class": "O7" },
+          { "ocr": "Uimiterius benedictus", "image": "[Q]uãdo Cimiteriũ bñdictũ", "problem": "initial Q and 'Quando' lost; opening word misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "et ipsea Cimiterio uolato … non beatur. priolata", "image": "7 ppea Cimiterio uiolato … nõ hẽatur ꝓ uiolata", "problem": "'propterea … habeatur pro uiolata' garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "vas aq misce benedicende", "image": "uas aq mũde benedicẽde", "problem": "'munde' (clean) read as 'misce' (mix)", "severity": "moderate", "class": "O6" },
+          { "ocr": "maneant scificati … Per omnia etc.", "image": "maneat ſcificatũ … Per dñm 7c.", "problem": "endings and 'dominum' misread", "severity": "minor" },
+          { "ocr": "Omibus dictis", "image": "[Q]ui/bus dictis", "problem": "misread", "severity": "minor" },
+          { "ocr": "(no ✠ signs, no column break)", "image": "five crosses in the text and margin; two columns", "problem": "crosses and column structure dropped; many abbreviations left half-expanded", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "image-desc calls the initial a 'U'; it is a Q", "severity": "minor" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Usable but slipshod on pages 9 and 24 (meaning-changing misreads, wrong folio number); page 16 is a garbled partial read with the column-1 chant text omitted and the 'Nemo ecclesiam' rubric reduced to nonsense."
+  },
+  {
+    "book_id": "b04-r", "slot": 3, "title": "Pontificalis liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 9, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Romanam ecclesiarum cathedralium", "image": "[Q]uoniam ecclesiarum cathedrali/um", "problem": "historiated initial Q read as R; 'Quoniam' became 'Romanam' (also described as 'initial R')", "severity": "moderate", "class": "O6" },
+          { "ocr": "capiamur", "image": "capiam⁹ (capiamus)", "problem": "-us abbreviation expanded as -ur", "severity": "minor" },
+          { "ocr": "consideret … susceperit", "image": "consiterẽt … susceperĩt", "problem": "plural nasal marks ignored", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "uindictam", "image": "uindi/ctaȝ (uindictas)", "problem": "ending", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 24, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "non <unclear>censeatur</unclear>", "image": "nõ hẽatur (habeatur)", "problem": "a guessed word supplied under an unclear tag where the abbreviation reads habeatur", "severity": "moderate", "class": "O8" },
+          { "ocr": "diei quo … parentur", "image": "diei q̃ … parẽt'", "problem": "small expansion slips", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "The strongest reader: complete, correctly expanded transcriptions of all three pages including the chant text and marginal note; one misidentified initial (Q→'Romanam') and one guessed word under an unclear tag."
+  },
+  {
+    "book_id": "b04-t", "slot": 4, "title": "Pontificalis liber", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "considərēt", "image": "consiterẽt", "problem": "stray schwa character", "severity": "minor" },
+          { "ocr": "sacrariu3", "image": "sacrariũ", "problem": "'3' for the nasal mark", "severity": "minor" },
+          { "ocr": "<script>printed</script>", "image": "manuscript hand", "problem": "script self-tag wrong", "severity": "moderate", "class": "O16" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "invented '<note>Rubric:</note>' and '<note>Response:</note>' labels inserted into the reader text", "severity": "moderate", "class": "O15" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 16, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Reminiscaris domine delicta nostra", "image": "[N]e reminiscaris domine delicta nostra", "problem": "initial 'Ne' dropped: the petition 'Remember not our sins' becomes 'Remember our sins' — sense reversed", "severity": "serious", "class": "O6" },
+          { "ocr": "offitium ipsum exercitantibus", "image": "officij ipsm decãtãtib'", "problem": "'decantantibus' (chanting) read as 'exercitantibus'", "severity": "moderate", "class": "O6" },
+          { "ocr": "auctoritate plastere crux", "image": "auctoritate p sacer/dotẽ crux", "problem": "'per sacerdotem' read as nonsense 'plastere'", "severity": "moderate", "class": "O6" },
+          { "ocr": "(caption missing)", "image": "Dñe ne in fu[rore]. (label over the miniature)", "problem": "caption incipit dropped", "severity": "minor" },
+          { "ocr": "hebetur … quod ad luminaria", "image": "hẽtur … qd ad luminaria", "problem": "minor slips", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 24, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ubi supra faldistorium peribat", "image": "ubi sup Faldistori/ũ pcũbat", "problem": "'procumbat' (lies prostrate) read as 'peribat' (perished)", "severity": "moderate", "class": "O6" },
+          { "ocr": "Dictis dictis pontifex iterum", "image": "[Q]ui/bus dictis Pontifex iter", "problem": "'Quibus' read as a doubled 'Dictis'", "severity": "minor" },
+          { "ocr": "debuit … mundev … persequuntur", "image": "debebit … mũde … ꝓsequũtur", "problem": "small slips and a typo", "severity": "minor" },
+          { "ocr": "(no margin note, first marginal ✠ omitted)", "image": "marginal 'or/nau/tu' and a cross after 'digneris'", "problem": "marginalia dropped", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      }
+    ],
+    "book_verdict": "Generally close and complete, but on page 16 the dropped 'Ne' inverts the penitential antiphon, and page 9 inserts invented 'Rubric:'/'Response:' note labels into the text."
+  }
+]
