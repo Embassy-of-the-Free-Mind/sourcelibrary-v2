@@ -11,12 +11,15 @@
 //   node overmerge-audit.mjs planted S <planted.jsonl>                                        # the gate: read this BEFORE any rate
 //   node overmerge-audit.mjs readlist <live-books.jsonl> S                                    # second-read packet, route-blind
 //   node overmerge-audit.mjs score S <second-read.jsonl>                                      # confirmed rates per route
+// #8293 census (same instrument; a fresh seed only reorders batches and draws new plants):
+//   node overmerge-audit.mjs census S0 S model_unjudged,legacy_seed    # every cluster of the routes that S0's draw did not judge
+//   OVERMERGE_SEED=<new> node overmerge-audit.mjs candidates <live-books.jsonl> S --exclude a.jsonl,b.jsonl
 import fs from 'fs';
 import crypto from 'crypto';
 import { spawn } from 'child_process';
 import { claudeSubscriptionEnv } from '../../lib/claude-cli-env.mjs';
 
-const SEED = 'overmerge-8291-2026-11-07';
+const SEED = process.env.OVERMERGE_SEED || 'overmerge-8291-2026-11-07';
 const DRAW = { model_second_judged: 100, model_unjudged: 100, title_author: 100, wikidata_catalogue: 100, kanripo: 50, legacy_seed: 50, rule_merge: 50 };
 const TOPUP_6PLUS = { model_second_judged: 25, model_unjudged: 25, title_author: 25 }; // the 6+ band of these is thin in a uniform draw
 const MAX_TITLES = 40, PER = 6;
@@ -97,6 +100,8 @@ const line = b => `"${(b.title || '').replace(/\s+/g, ' ').slice(0, 260)}" | ${b
 
 function candidates(booksF, S) {
   const clusters = loadClusters(booksF), sample = new Set(readJsonl(`${S}/sample.jsonl`).map(c => c.id));
+  // --exclude: earlier draws and plants, so a new gate does not reuse a cluster the old one already showed
+  for (const f of (opt('exclude', '') || '').split(',').filter(Boolean)) for (const r of readJsonl(f)) for (const k of ['id', 'work_id', 'a', 'b']) if (r[k]) sample.add(r[k]);
   const byAuthor = new Map();
   for (const [id, bs] of clusters) {
     if (sample.has(id) || bs.length > 3 || /^kr:/.test(id)) continue;
@@ -125,6 +130,17 @@ function candidates(booksF, S) {
   const all = readJsonl(`${S}/all-clusters.jsonl`).filter(c => c.route === 'model_second_judged' && !sample.has(c.id) && c.n <= 8).map(c => ({ ...c, h: sha(`${SEED}:control:${c.id}`) })).sort(ord).slice(0, 45);
   fs.writeFileSync(`${S}/control-candidates.txt`, all.map(c => `\n#${c.id}\n${clusters.get(c.id).map(line).map(l => '  ' + l).join('\n')}`).join('\n'));
   console.log(`easy pairs ${easy.length} (one per author ${E.length}), hard pairs ${hard.length} (${H.length}), control candidates ${all.length}`);
+}
+
+// #8293: the whole of the named routes, less the clusters S0's uniform draw and top-up already judged.
+function census(S0, S, routes) {
+  const want = new Set(routes.split(',')), done = new Set(readJsonl(`${S0}/sample.jsonl`).map(c => c.id));
+  const all = readJsonl(`${S0}/all-clusters.jsonl`), list = all.filter(c => want.has(c.route) && !done.has(c.id)).map(c => ({ ...c, topup: false }));
+  fs.writeFileSync(`${S}/sample.jsonl`, list.map(c => JSON.stringify(c)).join('\n') + '\n');
+  fs.writeFileSync(`${S}/all-clusters.jsonl`, all.map(c => JSON.stringify(c)).join('\n') + '\n');
+  fs.copyFileSync(`${S0}/frame.json`, `${S}/frame.json`);
+  const t = {}; for (const c of list) t[c.route] = (t[c.route] || 0) + 1;
+  console.log(`census: ${list.length} clusters not judged in ${S0}`, t, `≈ ${Math.ceil(list.length / PER)} calls`);
 }
 
 // Every distinct title, not the first 4 per id. Books sharing a title collapse to one line with their years.
@@ -288,4 +304,5 @@ else if (cmd === 'judge') await judge(a, b, c, +opt('conc', 3));
 else if (cmd === 'planted') planted(a, b);
 else if (cmd === 'readlist') readlist(a, b);
 else if (cmd === 'score') score(a, b);
+else if (cmd === 'census') census(a, b, c);
 else { console.error('usage: see the header'); process.exit(2); }
