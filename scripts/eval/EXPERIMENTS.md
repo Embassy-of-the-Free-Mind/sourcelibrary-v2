@@ -12488,6 +12488,58 @@ The 40-author pilot (the largest normal blocks) was worse, 6/20, with the Suyuti
 
 **Re-run on changed blocks, 2026-10-31.** The author-link work after the first pass gave 6,006 authors new links; 609 of their blocks hold two or more work items (6,191 books, 8 mega). `llm-verify-work-merges.mjs --authors=<file>` (new flag) proposed 274 + 65 HIGH groups; Sonnet accepted **167/339 (49.3% [44.0–54.6])**: volume or part 34, container 72, different work 38, unsure 28. The lower rate fits blocks newly built from looser author links. 20 accepted groups read by hand: 20/20 right (Xuanzang *Da Tang Xiyu ji* in Chinese, French and English; Arrian's *Anabasis*; Olivetan's French Bible 1535–1563; Ammonius on *De interpretatione*, Greek and Latin; Hartlieb's *Alexander*, the 1514 print and Cod. Pal. germ. 88). Applied: 218 books moved (9 hidden), 194 retired ids kept as aliases, `books_catalog` synced. The 10-29 frame now misses **42/291 = 14.4% [10.9–18.9]** (was 46/291 = 15.8%). Backups in ops `backups/work-merges-7761/`.
 
+## 2026-10-30 · Are the books the first-read lane holds as possible spreads really spreads? (#7605)
+
+PRIOR ART: `2026-10-29-split-cut-review-sheet-format-7605.md` picked Opus on contact sheets, one sheet per call, to
+CHECK cuts. This uses the same judge to answer an earlier question: is there anything to cut?
+
+**Decision it changes.** The brief for job split-unread-7605 assumed the lane's ~2,284 `spread_wait` books were
+spreads waiting on `split-spreads-agy.mjs`. The lane's own `spreadReason()` said otherwise. 2,833 of the 2,834 books
+carry its second reason: no crop data and no `pipeline_auto.split_checked`. Phase 1.25 never ran on them because they
+are held. Sources: e-rara 2,074, MDZ/BSB 566, IA 179, other 14.
+
+**Free AR screen** (stored `image_width/height` on every live page; Phase 1.25's 1.2 threshold):
+- every page portrait: 1,420 books;
+- some pages wider than 1.2: 26;
+- most pages wider than 1.2: 10;
+- some pages with no stored dimensions: 1,378.
+
+AR alone was not trusted: it has missed narrow spreads before (#7605, ~50 books).
+
+**Screen.**
+- One contact-sheet row per book: pages at 25/50/75%, plus the widest page when any is wider than 1.2. Books with
+  missing dimensions are measured from 12 thumbnails.
+- 10 books a sheet, 284 sheets.
+- `claude -p --model claude-opus-5-5`, Read tool only, one sheet per call, asked per image: one page, or two
+  facing pages. Calls take about 5 s each, on the subscription.
+
+**Control.** 10 books from the 2026-10-29 agy census: 4 multi, 6 single (one of them since split, so its live pages
+are leaves). Opus matched a by-eye reading on all 10 rows, identically in two runs. That includes a two-page opening
+in three books the census had called `single` (6a1dda33 p.25, 6a19d4e0 p.45, 6ac7e948 p.1). The widest-page slot is
+what catches them.
+
+**Result.** 2,812 single, 9 with a two-page image, 12 unclear.
+- **The 21, opened at 420 px by eye.** Every one is single:
+  - folding plates with blank or offset backs (the Wiegleb *Magie* volumes);
+  - maps;
+  - an oblong pattern book;
+  - a diagram, a table and processional engravings printed across an opening (kept whole: cutting them splits
+    the image);
+  - an inserted folded letter, rear binding openings, a book photographed in its box;
+  - single pages showing a strip of the facing page (trimming: #5876).
+- **Spot checks of "single" rows with wide pages** (screen-071, -079, -082, -114): oblong writing-master books,
+  maps with colour bars, oblong battle plates. All correct.
+
+**Limits.** At most 4 pages are shown per book (12 thumbnails measured where dimensions are missing). A two-page
+frame that is no wider than the book's single pages could be missed. That is the narrow-spread case, and its
+signature here would be two text blocks in a portrait frame, which no sampled row showed. A missed frame is read
+whole by the lane (both leaves on one page). It does not invent text.
+
+**Not a cut, one book.** 69aeab17 (*Geschichte und Klassenbewußtsein*, IA) is still held by `spreadReason()`
+because it checks `needs_splitting` alone. The book is already split (`split_completed`, 368 frames → 736 leaves) and
+carries `needs_resplit`. `isUnsplitSpread()` in `pipeline-hold.mjs` respects `split_completed`; `spreadReason()` does
+not. Left for the `ocr-spreads-7605` job: it has OCR.
+
 ## 2026-10-30 · What share of 1400–1700 works in each vernacular has ever been published in English, and how many are scanned? (#7751)
 <!-- PRIOR ART: scripts/analysis/gap-validation-sample.mjs, gap-validation-cli-adjudicate.mjs, gap-validation-estimate.mjs (the June Latin study, n=1000, #2684: its prompt, verdict schema and binary rule are reused); scripts/translation-layer/09-scan-coverage.mjs (the Latin cluster scan matcher, generalised here); the #7751 over-merge sample (40 Latin works, by hand). -->
 
