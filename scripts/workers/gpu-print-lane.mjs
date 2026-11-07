@@ -46,7 +46,7 @@
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/gpu-print-lane.mjs frame
  * Options: --dir <lane dir> (default $LANE_DIR or /root/jobs/gpu-print-6871)  --book <id>  --books <file>  --limit N
- *   --lang en|fr (default $LANE_LANG or en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
+ *   --lang en|en19|fr (default $LANE_LANG, else the lane dir's `lang` file, else en; LANGS: the books and the ocr.pipeline stamp)  --cell <euro cell> (plan also
   *   applies that book rule; fr: fr19r)  --from-manifest (plan only pages already in this dir's manifest.tsv, image unchanged)
  *   --max-pages N (plan: N pages spread through each book, for a pilot)
  * French (#6871, Derek 2026-11-07): the French 1800+ pages Flash-Lite refused, read by the GPU steward, written bare:
@@ -82,7 +82,9 @@ const LIMIT = Number(arg('--limit', 0)) || 0;
 // stamp (LN) that sweep_log, the run ids and a later correction pass key on. --cell adds a cli-ocr-lane.mjs euro cell's
 // book rule to plan (holds, year, manuscript, page records; default the profile's). --from-manifest: plan only the
 // pages already in this dir's manifest.tsv (reads the GPU made before the plan, e.g. a steward's), appending nothing.
-const LANG = arg('--lang', process.env.LANE_LANG || 'en');
+// the lane dir's `lang` file names its profile, so ocr-filler.sh's gpu-print task (which passes only --dir) runs it right
+const LANG_FILE = path.join(DIR, 'lang');
+const LANG = arg('--lang', process.env.LANE_LANG || (fs.existsSync(LANG_FILE) ? fs.readFileSync(LANG_FILE, 'utf8').trim() : 'en'));
 if (!LANGS[LANG]) { console.error(`--lang must be one of ${Object.keys(LANGS).join('|')}`); process.exit(2); }
 const L = LANGS[LANG];
 const LN = L.lane;
