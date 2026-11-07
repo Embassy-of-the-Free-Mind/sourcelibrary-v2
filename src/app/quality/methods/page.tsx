@@ -72,7 +72,7 @@ const MAP: { path: string; name: string; what: string; kind: string }[] = [
   { path: '/quality/methods', name: 'How we measure', what: 'This page: the rules, the instruments and the gaps.', kind: 'Register' },
   { path: '/research/quality/open', name: 'Open quality work', what: 'Known defects and the work under way, each linked to its issue.', kind: 'Register' },
   { path: `${REPO}blob/main/scripts/eval/EXPERIMENTS.md`, name: 'Experiment log', what: 'Every measurement we have run and what it concluded, newest first.', kind: 'Register' },
-  { path: `${REPO}blob/main/scripts/eval/DECISIONS.md`, name: 'Decision ledger', what: 'What we currently do for each kind of text, and the evidence for it.', kind: 'Register' },
+  { path: `${REPO}blob/main/.claude/docs/routing.md`, name: 'Routing table', what: 'Which route reads and translates each kind of text, from the router table and its judged pages.', kind: 'Register' },
   { path: '/research/quality', name: 'How page quality is measured', what: 'The working paper behind the measurements.', kind: 'Report' },
   { path: '/research/canon-quality', name: 'How we check each canon', what: 'The canon-by-canon evidence, prepared for the Eternity working session.', kind: 'Report' },
   { path: '/research/page-errors', name: 'What goes wrong on a page', what: 'The defect classes, from pages read by eye.', kind: 'Report' },
