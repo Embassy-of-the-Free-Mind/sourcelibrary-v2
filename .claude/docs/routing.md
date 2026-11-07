@@ -119,7 +119,7 @@ From `current.json` (`2026-11-01-validated-7263`, set 2026-11-01; 5 cells moved 
 1. **A lane without provenance does not run.** `ocr.source` names the producer, the engine block comes from `write-provenance.{mjs,ts}`, and every write snapshots to `page_revisions` and refuses a human edit. Registry and rules → `data-provenance.md` §5.
 2. **No OCR on the paid API** (`API_OCR_MODELS` is empty, `assertApiOcrModel` refuses). Gemini runs on the agy CLI (`cli-ocr.mjs`), Claude on `claude -p`, both on the subscription. A lane with no quota waits; it never falls through.
 3. **No Tesseract**, as an engine or as a free reference (Derek). Never Gemini below v3.
-4. **Split spreads before any read.** A two-leaf page is two discontinuous halves.
+4. **Split spreads before any read.** A two-leaf page is two discontinuous halves. A photo of several pecha leaves is split into one page per leaf, and each leaf is read and translated alone (Derek, #5771). A whole-page read invents lines where the leaves meet, so never keep it over its own leaf reads because it is longer. Cutting a stored whole-page read is not a split: re-read the leaves. A leaf read alone needs a blank- and title-leaf guard. Evidence: `scripts/eval/experiments/2026-10-25-split-leaf-reread-gate-5771.md`.
 5. **`language` is the EDITION's language** (`invariants/language-fields.md`). Fix a wrong one before routing.
 6. **A write is actuation.** Gap-fill retranslates a released book whose English is older than its OCR. Hold first if that needs approval.
 
