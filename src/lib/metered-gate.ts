@@ -22,6 +22,7 @@ import { anonymizeIp } from '@/lib/anonymize-ip';
 import { hasCronAuth } from '@/lib/book-access';
 import { isTrustedBot } from '@/lib/bot-gate';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
+import { clientCountry } from '@/lib/client-ip';
 
 /**
  * One row per walled request in analytics_events (same shape as
@@ -30,7 +31,7 @@ import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-pre
  */
 function logGateHit(request: Request, pagesGated: number): void {
   try {
-    const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
+    const country = clientCountry(request.headers) || 'Unknown';
     const ip = anonymizeIp(getClientIp(request) || 'unknown');
     Promise.race([
       (async () => {

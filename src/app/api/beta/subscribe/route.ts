@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
+import { clientCountry } from '@/lib/client-ip';
 
 // Every new address here triggers a welcome email to that address. Uncapped,
 // that is a spam relay: a script can make sourcelibrary.org mail strangers,
@@ -144,8 +145,7 @@ export async function POST(request: NextRequest) {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
       || request.headers.get('x-real-ip')
       || 'unknown';
-    const country = request.headers.get('x-vercel-ip-country')
-      || request.headers.get('cf-ipcountry')
+    const country = clientCountry(request.headers)
       || null;
 
     const doc: Record<string, unknown> = {

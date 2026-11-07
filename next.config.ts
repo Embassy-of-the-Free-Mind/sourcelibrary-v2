@@ -6,9 +6,14 @@ import { pageStatusSources } from './src/lib/page-status';
 import { dropServerSourcemaps } from './src/lib/drop-server-sourcemaps';
 import { waitForTurbopackRelease } from './src/lib/wait-for-turbopack-release';
 import { MAP_THEMES, sourcesHref } from './src/lib/explore-maps';
+import { assetPrefixFromEnv, withAssetOrigin } from './src/lib/asset-prefix';
+
+// Unset on Vercel. Set only on the reader-origin box (#8384, trap 1).
+const ASSETS = assetPrefixFromEnv(process.env.SL_ASSET_PREFIX);
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  ...(ASSETS.assetPrefix ? { assetPrefix: ASSETS.assetPrefix } : {}),
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   // The type check runs in CI, not in the Vercel build. `next build` type-checks after compiling, in the same 8 GB
@@ -170,7 +175,7 @@ const nextConfig: NextConfig = {
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-            ].join('; '),
+            ].map((d) => withAssetOrigin(d, ASSETS.cspOrigin)).join('; '),
           },
           {
             key: 'Strict-Transport-Security',

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse, after } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { clientIpFromHeaders } from '@/lib/analytics-ingest';
 import { classifyTraffic, type TrafficClass } from '@/lib/traffic-classification';
+import { clientCountry } from '@/lib/client-ip';
 
 const SITE_HOST = 'sourcelibrary.org';
 
@@ -165,7 +166,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Detect country (basic - from IP via headers)
-    const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
+    const country = clientCountry(request.headers) || 'Unknown';
 
     // Client hints, log-only (#4476). Chromium sends its real brand/version in
     // sec-ch-ua even when the User-Agent string is overridden, so a fleet that
