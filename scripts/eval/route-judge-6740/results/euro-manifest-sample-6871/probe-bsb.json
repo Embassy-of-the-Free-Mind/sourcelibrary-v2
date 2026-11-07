@@ -1,0 +1,31 @@
+{
+ "probed_at": "2026-11-07T10:08:08.624Z",
+ "library": "bsb",
+ "relay": "root@65.108.136.89",
+ "rows": [
+  {
+   "book_id": "6ae0dc4516de29adc66fe407",
+   "manifest": "ok direct",
+   "manifest_secs": 0.349,
+   "canvases": 34,
+   "image": "ok direct 396101 bytes",
+   "image_secs": 0.809
+  },
+  {
+   "book_id": "6ae20b1316de29adc673927c",
+   "manifest": "ok direct",
+   "manifest_secs": 0.212,
+   "canvases": 42,
+   "image": "ok direct 484812 bytes",
+   "image_secs": 0.428
+  },
+  {
+   "book_id": "6ae2426d16de29adc6743dd3",
+   "manifest": "ok direct",
+   "manifest_secs": 0.221,
+   "canvases": 372,
+   "image": "ok direct 466385 bytes",
+   "image_secs": 0.465
+  }
+ ]
+}

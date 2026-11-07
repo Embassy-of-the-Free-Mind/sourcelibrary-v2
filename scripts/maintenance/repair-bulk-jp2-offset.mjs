@@ -34,6 +34,8 @@
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id>            # dry run
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id> --apply
  *   … --book <id> --text-matches-source-by-eye S1,S2   finish a half-done text repair (#8266)
+ *   … --no-purge   skip the per-book Cloudflare purge (#8277); otherwise --apply refuses to start
+ *                  without CLOUDFLARE_ZONE_ID + a purge-capable CLOUDFLARE_API_TOKEN
  */
 
 import { MongoClient } from 'mongodb';
@@ -44,6 +46,7 @@ import { dirname, resolve } from 'path';
 import { uploadPageVariants } from '../workers/lib/display-image.mjs';
 import { preserveObjectVersion } from '../lib/r2-version.mjs';
 import { checkAlignment, halfRepairWitness, hashBuffer, readerVisibleShift } from '../lib/page-alignment.mjs';
+import { assertPurgeCredentials, purgeUrls } from '../lib/cloudflare-purge.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../..');
@@ -53,6 +56,9 @@ const args = process.argv.slice(2);
 const flag = (n, d) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
 const APPLY = args.includes('--apply');
 const VERIFY_ONLY = args.includes('--verify-only');
+// After a book is re-archived, purge its image URLs so readers stop getting the old scan from
+// the edge (#8277: after #8266, Cloudflare served the pre-repair bytes until a hand purge).
+const NO_PURGE = args.includes('--no-purge');
 const FROM_AUDIT = flag('from-audit');       // JSONL from scripts/audit/bulk-archive-alignment.mjs
 const REOCR_ISSUE = flag('reocr-issue');    // issue that owns re-OCR of pages this repair strands (#5309)
 const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a), []);
@@ -168,7 +174,7 @@ async function repairBook(db, bookId) {
 
   const pages = await db.collection('pages').find({ book_id: bookId })
     .project({ id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1,
-               display_photo: 1, archive_metadata: 1, 'ocr.updated_at': 1, 'ocr.created_at': 1 })
+               display_photo: 1, thumbnail: 1, archive_metadata: 1, 'ocr.updated_at': 1, 'ocr.created_at': 1 })
     .sort({ page_number: 1 }).toArray();
   const bulk = pages.filter(p => p.archive_metadata?.source === SOURCE);
 
@@ -235,6 +241,7 @@ async function repairBook(db, bookId) {
   }
 
   let done = 0, failed = 0, idx = 0;
+  const written = new Set(); // every URL readers may hold for a page we overwrote
   async function worker() {
     while (idx < targets.length) {
       const p = targets[idx++];
@@ -243,6 +250,11 @@ async function repairBook(db, bookId) {
         // Everything versions (#3756): keep the pre-repair object reachable
         await preserveObjectVersion(s3, process.env.R2_BUCKET_NAME, `archived/${bookId}/${p.page_number}.jpg`);
         const urls = await uploadPageVariants(buf, bookId, p.page_number, uploadToR2);
+        // The bare URLs just written, plus the stored ones (which may carry a ?v= query) — the
+        // edge caches each exact URL separately.
+        for (const u of [urls.archived, urls.display, urls.thumb, p.archived_photo, p.display_photo, p.thumbnail]) {
+          if (typeof u === 'string' && u.startsWith(R2_PUBLIC_URL)) written.add(u);
+        }
         // Record what we stored (#4406). Free — the buffer is already decoded —
         // and without it nothing downstream can tell what this repair produced.
         const dims = {};
@@ -261,6 +273,13 @@ async function repairBook(db, bookId) {
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   console.log(`  re-archived ${done}, failed ${failed}`);
+  if (written.size && !NO_PURGE) {
+    // Purged whatever the post-check says: R2 now holds the new images either way.
+    const r = await purgeUrls([...written]);
+    console.log(`  cloudflare purge: ${r.purged}/${r.requested} URLs${r.failed ? ` — FAILED ${r.failed}: ${r.errors.slice(0, 2).join('; ')}` : ''}`);
+  } else if (written.size) {
+    console.log(`  [NO PURGE] ${written.size} image URLs still cached at the edge — purge them by URL (#8277)`);
+  }
 
   const after = await verifyRepair(db, bookId);
   console.log(`  post-check: ${after.verdict} (${after.detail})`);
@@ -333,6 +352,11 @@ if (FROM_AUDIT && APPLY) {
   if (before !== queue.length) console.log(`resume: skipping ${before - queue.length} already repaired`);
 }
 
+// Fail before any write, not after a book's images are already replaced (#8277).
+if (APPLY && !VERIFY_ONLY && !NO_PURGE) {
+  try { assertPurgeCredentials(); } catch (e) { console.error(e.message); process.exit(1); }
+}
+
 console.log(APPLY ? `*** APPLY MODE — writing to R2 *** (${queue.length} books, page concurrency ${CONCURRENCY})` : '--- dry run ---');
 let n = 0;
 for (const b of queue) {
@@ -342,5 +366,4 @@ for (const b of queue) {
   catch (err) { console.log(`  [ERR] ${b}: ${err.message?.slice(0, 120)}`); }
 }
 await client.close();
-console.log('\nDONE. Purge Cloudflare so readers stop seeing pre-repair scans:');
-console.log(`  curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json" --data '{"purge_everything":true}'`);
+console.log('\nDONE.');

@@ -24,6 +24,8 @@
  *   node run.mjs pooled   --out=DIR,DIR2                        a first and second draw scored together → DIR/pooled.json
  *   node --env-file=… run.mjs apply   --out=DIR [--apply]       write each test page's ACCEPTED read (first reads only,
  *                                                               holds kept); a rejected page stays unread
+ *   --study=euro-manifest-6871: draw [--dry] [--relay=root@host] materializes the sampled manifest-only books only
+ *                                                               (drawManifest); probe --library=X fetches, writes nothing
  * Read-only except `apply --apply`.
  */
 import fs from 'node:fs';
@@ -50,6 +52,9 @@ const STUDY = arg('study') || 'jcb-8049';
 const STUDIES = {
   'jcb-8049': { salt: '8049', lane: 'gpu-agy-first-read-jcb-8049', job: 'jcb-1600-8049-cell', reason: '#8049 JCB pre-1600 cell test' },
   'euro-6871': { salt: '6871', lane: 'gpu-agy-first-read-euro-6871', job: 'euro-1800-cells-6871', reason: '#6871 French/Spanish/Italian 1600-1929 cell test' },
+  // --study=euro-manifest-6871: the same route over French 1800-1929 books held manifest-only-lazy-pages (e-rara, NB
+  // Norway, IA, BSB), drawn by drawManifest, which materializes ONLY the sampled books (trigger below).
+  'euro-manifest-6871': { salt: 'm6871', lane: 'gpu-agy-first-read-euro-manifest-6871', job: 'euro-manifest-sample-6871', reason: '#6871 French 1800-1929 manifest-only sample', trigger: 'eval-euro-manifest-6871', evidence: 'euro-manifest-sample-6871' },
 };
 const ST = STUDIES[STUDY]; if (!ST) throw new Error(`--study must be one of ${Object.keys(STUDIES).join(', ')}`);
 const LANE = ST.lane;
@@ -76,6 +81,7 @@ const EURO_CELLS = {
   it19: { lang: 'Italian', code: 'ita', years: [1800, 1929], engine: 'lo' }, it17: { lang: 'Italian', code: 'ita', years: [1600, 1799], engine: 'lo' },
 };
 if (STUDY === 'euro-6871') { for (const k of Object.keys(CELLS)) delete CELLS[k]; Object.assign(CELLS, EURO_CELLS); }
+if (STUDY === 'euro-manifest-6871') { for (const k of Object.keys(CELLS)) delete CELLS[k]; CELLS.frm19 = { ...EURO_CELLS.fr19 }; }
 const routeOf = (cell) => (CELLS[cell].engine === 'none' ? `agy-flash-low@${CELLS[cell].perCall}` : `${CELLS[cell].engine === 'pero' ? 'pero' : 'lighton'}>agy-flash-low`);
 const corrDir = (cell) => path.join(OUT, 'corr', cell);
 
@@ -154,9 +160,187 @@ async function drawEuro() {
   W('sample.json', sample);
 }
 
+/**
+ * #6871 manifest-only frame (drawManifest, --study=euro-manifest-6871): drawEuro's book filters, but over books whose
+ * pages_state is manifest_only and whose ONLY hold is manifest-only-lazy-pages (no other hold, no pipeline_auto.held).
+ * Pages are allotted to libraries (image_source.provider) by their share of the frame's pages (largest remainder), and a
+ * library's books are walked in seeded order. For each book, BEFORE any state change: fetch its manifest, pick a body
+ * page (canvas between 5% and 95%, seeded), fetch that page's image and refuse a multi-leaf frame (wider than 1.15x its
+ * height). Only then materializePages() (trigger ST.trigger, fed the manifest already fetched, so it makes no second GET),
+ * with the book's state recorded before and after. A book whose manifest or image cannot be fetched stays manifest-only
+ * and is counted for its library. --relay=root@host: a GET this box is refused is retried over ssh curl from that host
+ * (e-rara answers 403 to clawdbot). A host whose final fetch fails twice with the same error is dropped, and its pages
+ * are drawn from the other libraries. --dry: everything but materializePages().
+ */
+const MANIFEST_HOLD = 'manifest-only-lazy-pages';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
+async function getBytes(url, relay) {
+  let direct;
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(60_000) });
+    if (r.ok) return { buf: Buffer.from(await r.arrayBuffer()), via: 'direct' };
+    direct = `HTTP ${r.status}`;
+  } catch (e) { direct = String(e?.cause?.code || e?.message || e).slice(0, 120); }
+  if (!relay) return { error: direct, direct_error: direct };
+  if (/['\s]/.test(url)) throw new Error(`relay: unsafe url ${url}`);
+  const r = spawnSync('ssh', ['-o', 'BatchMode=yes', '-o', 'ConnectTimeout=15', relay, `curl -sS -f -A '${UA}' --max-time 90 '${url}'`], { maxBuffer: 256 << 20, timeout: 120_000 });
+  if (r.status === 0 && r.stdout?.length) return { buf: r.stdout, via: 'relay', direct_error: direct };
+  return { error: `relay: ${String(r.stderr || r.error || r.status).trim().replace(/^curl: \(\d+\) /, '').slice(0, 120)}`, direct_error: direct };
+}
+const snapshot = async (db, id) => {
+  const b = await db.collection('books').findOne({ id }, { projection: { _id: 0, pages_state: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold.reason': 1, 'pipeline_auto.held': 1, pages_count: 1, pages_ocr: 1, pages_archived: 1, pages_translated: 1, visible: 1, hidden: 1, archive_status: 1, 'archive_metadata.blocked': 1, 'archive_metadata.blocked_reason': 1 } });
+  return { ...b, page_docs: await db.collection('pages').countDocuments({ book_id: id }) };
+};
+async function drawManifest() {
+  const { getCanvases } = await import('../../../iiif-discovery/lib/manifest-store.mjs');
+  const { buildPageDocs, materializePages } = await import('../../../lib/lazy-pages.mjs');
+  const { getPageSource } = await import('../../../lib/page-image-url.mjs');
+  const { isHeld, isUnsplitSpread } = await import('../../../lib/pipeline-hold.mjs');
+  const { manuscriptReason, firstReadLanguage } = await import('../../../batch/cli-ocr-lane.mjs');
+  const sharp = (await import('sharp')).default;
+  const DRY = process.argv.includes('--dry'), RELAY = arg('relay') || null;
+  const [cell, C] = Object.entries(CELLS)[0];
+  const c = await mongo(), db = c.db('bookstore');
+  for (const d of ['img', 'manifests']) fs.mkdirSync(path.join(OUT, d), { recursive: true });
+  const EX = arg('exclude-from') ? new Set(Object.values(JSON.parse(fs.readFileSync(arg('exclude-from'), 'utf8')).cells).flatMap((x) => x.pages.map((p) => p.book_id))) : new Set();
+  const all = await db.collection('books').find({ language: { $regex: `^${C.lang}` }, year: { $gte: C.years[0], $lte: C.years[1] }, pages_count: { $gt: 0 }, 'pages_state.state': 'manifest_only' },
+    { projection: { id: 1, title: 1, published: 1, language: 1, year: 1, pages_count: 1, pages_state: 1, image_source: 1, pipeline_auto: 1, needs_splitting: 1, split_completed: 1, visible: 1 } }).toArray();
+  const t = { books: all.length, other_language_first: 0, unsplit_spread: 0, manuscript: 0, other_hold: {}, failed_before: 0, sampled_before: 0, in_frame: 0, pages_in_frame: 0 };
+  const byLib = new Map();
+  for (const b of all) {
+    if (firstReadLanguage(b) !== C.code) { t.other_language_first++; continue; }
+    if (isUnsplitSpread(b)) { t.unsplit_spread++; continue; }
+    if (manuscriptReason(b)) { t.manuscript++; continue; }
+    const hold = isHeld(b) ? b.pipeline_auto.hold.reason : null;
+    if (hold !== MANIFEST_HOLD || b.pipeline_auto?.held === true) { const k = b.pipeline_auto?.held === true ? 'held-flag' : (hold ?? 'not held'); t.other_hold[k] = (t.other_hold[k] ?? 0) + 1; continue; }
+    if (b.pages_state?.failed_at) { t.failed_before++; continue; }   // an earlier materialize failed: its cooldown and its error are another run's
+    if (EX.has(b.id)) { t.sampled_before++; continue; }
+    t.in_frame++; t.pages_in_frame += b.pages_count;
+    const lib = b.image_source?.provider ?? 'unknown';
+    if (!byLib.has(lib)) byLib.set(lib, []);
+    byLib.get(lib).push(b);
+  }
+  // largest-remainder allotment by pages
+  const libs = [...byLib].map(([lib, bs]) => ({ lib, books: bs.sort((a, b) => h(`${ST.salt}-${cell}-${a.id}`).localeCompare(h(`${ST.salt}-${cell}-${b.id}`))), pages: bs.reduce((s, b) => s + b.pages_count, 0) })).sort((a, b) => b.pages - a.pages);
+  for (const L of libs) { L.exact = (N * L.pages) / t.pages_in_frame; L.quota = Math.floor(L.exact); }
+  for (const L of [...libs].sort((a, b) => (b.exact - b.quota) - (a.exact - a.quota)).slice(0, N - libs.reduce((s, L) => s + L.quota, 0))) L.quota++;
+  const S = Object.fromEntries(libs.map((L) => [L.lib, { books: L.books.length, pages: L.pages, page_share: +(L.pages / t.pages_in_frame).toFixed(4), allotted: L.quota, walked: 0, manifest_failed: 0, no_body_page: 0, image_failed: 0, multi_leaf: 0, materialize_failed: 0, drawn: 0, via: {}, errors: [], host_dropped: null, bytes: 0, fetch_secs: 0 }]));
+  const errSeen = new Map();   // host|error -> count
+  const dead = new Set();
+  const picks = [];
+  const tryBook = async (L, b) => {
+    const s = S[L.lib]; s.walked++;
+    const host = (() => { try { return new URL(b.image_source.iiif_manifest).hostname; } catch { return 'none'; } })();
+    const fail = (kind, err) => {
+      s[kind]++; s.errors.push({ book_id: b.id, kind, error: err });
+      const k = `${host}|${err}`; errSeen.set(k, (errSeen.get(k) ?? 0) + 1);
+      if (errSeen.get(k) >= 2 && !dead.has(L.lib)) { dead.add(L.lib); s.host_dropped = `${host}: "${err}" twice`; console.log(`  ${L.lib}: host ${host} dropped (${err} twice)`); }
+      return false;
+    };
+    const mf = path.join(OUT, 'manifests', `${b.id}.json`);
+    let manifest;
+    if (fs.existsSync(mf)) manifest = JSON.parse(fs.readFileSync(mf, 'utf8'));
+    else {
+      const t0 = Date.now(), r = await getBytes(b.image_source.iiif_manifest, RELAY);
+      s.fetch_secs += (Date.now() - t0) / 1000;
+      if (r.error) return fail('manifest_failed', r.error);
+      try { manifest = JSON.parse(r.buf.toString('utf8')); } catch { return fail('manifest_failed', 'manifest not JSON'); }
+      s.via[`manifest:${r.via}`] = (s.via[`manifest:${r.via}`] ?? 0) + 1;
+      if (r.direct_error) s.via[`direct_refused:${r.direct_error}`] = (s.via[`direct_refused:${r.direct_error}`] ?? 0) + 1;
+      fs.writeFileSync(mf, JSON.stringify(manifest));
+      await new Promise((res) => setTimeout(res, 1000));
+    }
+    const n = getCanvases(manifest).length;
+    const docs = buildPageDocs(b.id, manifest).filter((d) => d.page_number > 0.05 * n && d.page_number <= 0.95 * n && getPageSource(d));
+    if (!docs.length) { s.no_body_page++; s.errors.push({ book_id: b.id, kind: 'no_body_page', error: `${n} canvases` }); return false; }
+    const rng = makeRng(parseInt(h(`${ST.salt}-${cell}-${b.id}-page`).slice(0, 8), 16));
+    const d = docs[Math.floor(rng() * docs.length)];
+    const img = path.join(OUT, 'img', `${d.id}.jpg`);
+    if (!fs.existsSync(img)) {
+      const t0 = Date.now(), r = await getBytes(getPageSource(d), RELAY);
+      s.fetch_secs += (Date.now() - t0) / 1000;
+      if (r.error) return fail('image_failed', r.error);
+      s.via[`image:${r.via}`] = (s.via[`image:${r.via}`] ?? 0) + 1; s.bytes += r.buf.length;
+      fs.writeFileSync(img, r.buf);
+      await new Promise((res) => setTimeout(res, 1000));
+    }
+    const meta = await sharp(img).metadata().catch(() => null);
+    if (!meta?.width) { fs.rmSync(img); return fail('image_failed', 'not an image'); }
+    if (meta.width > 1.15 * meta.height) { s.multi_leaf++; s.errors.push({ book_id: b.id, kind: 'multi_leaf', error: `${meta.width}x${meta.height}` }); fs.renameSync(img, `${img}.multileaf`); return false; }
+    const before = await snapshot(db, b.id);
+    let res = { status: 'dry_run' }, after = null;
+    if (!DRY) {
+      res = await materializePages(db, b.id, { trigger: ST.trigger, fetchManifest: async () => manifest });
+      after = await snapshot(db, b.id);
+      const pd = await db.collection('pages').findOne({ id: d.id, book_id: b.id }, { projection: { photo: 1, page_number: 1 } });
+      if (res.status !== 'materialized' || !pd || pd.photo !== d.photo || pd.page_number !== d.page_number) {
+        s.materialize_failed++; s.errors.push({ book_id: b.id, kind: 'materialize_failed', error: `${res.status} ${res.error ?? ''} page ${pd ? 'present' : 'absent'}` });
+        return false;
+      }
+    }
+    s.drawn++;
+    picks.push({ page_id: d.id, book_id: b.id, page_number: d.page_number, canvases: n, pages_count: b.pages_count, year: b.year, hold: MANIFEST_HOLD, visible: !!b.visible, provider: L.lib, library: L.lib, title: String(b.title || '').slice(0, 80), width: meta.width, height: meta.height, bytes: fs.statSync(img).size, materialize: res.status, before, after });
+    console.log(`  ${L.lib} ${b.id} p${d.page_number}/${n} ${meta.width}x${meta.height} → ${res.status}`);
+    return true;
+  };
+  for (const L of libs) {
+    let got = 0;
+    for (const b of L.books) { if (got >= L.quota || dead.has(L.lib)) break; L.cursor = (L.cursor ?? 0) + 1; if (await tryBook(L, b)) got++; }
+  }
+  // a library that was dropped or ran out: its pages come from the rest, in allotment order, one book at a time
+  for (let guard = 0; picks.length < N && guard < 10 * N; guard++) {
+    const open = libs.filter((L) => !dead.has(L.lib) && (L.cursor ?? 0) < L.books.length);
+    if (!open.length) break;
+    const L = open[guard % open.length];
+    const b = L.books[L.cursor ?? 0]; L.cursor = (L.cursor ?? 0) + 1;
+    if (await tryBook(L, b)) S[L.lib].refilled = (S[L.lib].refilled ?? 0) + 1;
+  }
+  await c.close();
+  const sample = { drawn_at: new Date().toISOString(), study: STUDY, trigger: ST.trigger, dry: DRY, relay: RELAY, frame: { [cell]: t }, libraries: S,
+    cells: { [cell]: { lang: C.lang, years: C.years, engine: C.engine, route: routeOf(cell), books: picks.length, pages: picks } } };
+  const st = path.join(OUT, 'stage', C.engine); fs.mkdirSync(st, { recursive: true });
+  for (const x of picks) { try { fs.linkSync(path.join(OUT, 'img', `${x.page_id}.jpg`), path.join(st, `${x.page_id}.jpg`)); } catch (e) { if (e.code !== 'EEXIST') throw e; } }
+  W(DRY ? 'sample-dry.json' : 'sample.json', sample);
+  console.log(`${cell}: ${picks.length} drawn${DRY ? ' (dry)' : ''} from ${t.in_frame} books / ${t.pages_in_frame} pages in frame`, JSON.stringify(t));
+  for (const [lib, s] of Object.entries(S)) console.log(`  ${lib}: share ${s.page_share} allotted ${s.allotted} walked ${s.walked} drawn ${s.drawn} manifest_failed ${s.manifest_failed} image_failed ${s.image_failed} multi_leaf ${s.multi_leaf} ${JSON.stringify(s.via)}${s.host_dropped ? ` DROPPED ${s.host_dropped}` : ''}`);
+}
+
+/**
+ * probe --out=DIR --library=bsb [--n=3] [--relay=..]: can this library be read at all? For n seeded frame books of the
+ * library, one manifest GET and one body-page image GET each, timed. Nothing is written to Mongo and nothing is
+ * materialized: for a library the proportional draw allots no page.
+ */
+async function probe() {
+  const { buildPageDocs } = await import('../../../lib/lazy-pages.mjs');
+  const { getCanvases } = await import('../../../iiif-discovery/lib/manifest-store.mjs');
+  const { getPageSource } = await import('../../../lib/page-image-url.mjs');
+  const lib = arg('library'), n = Number(arg('n') || 3), RELAY = arg('relay') || null;
+  const [cell, C] = Object.entries(CELLS)[0];
+  const c = await mongo();
+  const bs = (await c.db('bookstore').collection('books').find({ language: { $regex: `^${C.lang}` }, year: { $gte: C.years[0], $lte: C.years[1] }, 'pages_state.state': 'manifest_only', 'image_source.provider': lib, 'pipeline_auto.hold.reason': MANIFEST_HOLD }, { projection: { id: 1, image_source: 1 } }).toArray())
+    .sort((a, b) => h(`${ST.salt}-probe-${a.id}`).localeCompare(h(`${ST.salt}-probe-${b.id}`))).slice(0, n);
+  await c.close();
+  const rows = [];
+  for (const b of bs) {
+    const t0 = Date.now(), m = await getBytes(b.image_source.iiif_manifest, RELAY);
+    const row = { book_id: b.id, manifest: m.error ? m.error : `ok ${m.via}`, manifest_secs: (Date.now() - t0) / 1000 };
+    if (!m.error) {
+      const man = JSON.parse(m.buf.toString('utf8')), k = getCanvases(man).length;
+      const d = buildPageDocs(b.id, man)[Math.floor(k / 2)];
+      const t1 = Date.now(), im = d ? await getBytes(getPageSource(d), RELAY) : { error: 'no canvas' };
+      Object.assign(row, { canvases: k, image: im.error ? im.error : `ok ${im.via} ${im.buf.length} bytes`, image_secs: (Date.now() - t1) / 1000 });
+    }
+    rows.push(row); console.log(JSON.stringify(row));
+    await new Promise((res) => setTimeout(res, 1000));
+  }
+  fs.mkdirSync(OUT, { recursive: true });
+  W(`probe-${lib}.json`, { probed_at: new Date().toISOString(), library: lib, relay: RELAY, rows });
+}
+
 /** draw: tiers A/B only (what will be read); A: an interior page, B: a page the screen hit. Unread pages only. */
 async function draw() {
   if (STUDY === 'euro-6871') return drawEuro();
+  if (STUDY === 'euro-manifest-6871') return drawManifest();
   const { getPageSource } = await import('../../../lib/page-image-url.mjs');
   const tiers = jsonl(arg('tiers') || path.join(process.env.JOB_SCRATCH || '.', 's5/tiers/tiers-abc.jsonl')).filter((t) => t.tier === 'A' || t.tier === 'B');
   const c = await mongo(), db = c.db('bookstore');
@@ -274,7 +458,9 @@ async function packet() {
   const add = (cell, sp, kind, text, extra = {}) => {
     const tag = kind === 'item' ? `${cell}:${sp.page_id}:${h(text.trim())}` : `${kind}:${cell}:${sp.page_id}:${extra.other ?? ''}`;
     const id = `j${h(tag).slice(0, 10)}`;
-    if (!items.has(id)) items.set(id, { id, task: 'ocr', lang: CELLS[cell].lang, image_url: getPageSource(pages.get(sp.page_id)), text });
+    // A manifest-only library may refuse this box (e-rara: 403), so the judge opens the image drawn, by file.
+    const image_file = STUDY === 'euro-manifest-6871' ? path.join(OUT, 'img', `${sp.page_id}.jpg`) : undefined;
+    if (!items.has(id)) items.set(id, { id, task: 'ocr', lang: CELLS[cell].lang, image_url: getPageSource(pages.get(sp.page_id)), ...(image_file && { image_file }), text });
     key.push({ id: `k${h(`${kind}:${cell}:${sp.page_id}:${extra.other ?? ''}`).slice(0, 10)}`, judged_as: id, cell, route: routeOf(cell), kind, page_id: sp.page_id, book_id: sp.book_id, page_number: sp.page_number, ...extra });
   };
   for (const cell of Object.keys(s.cells).filter((c) => wr[c])) {
@@ -311,7 +497,7 @@ function plant() {
         const p = plantError(it.text, { kind, lang: CELLS[cell].lang, seed: parseInt(h(`${k.judged_as}${kind}`).slice(0, 8), 16) });
         if (!p) continue;
         const id = `j${h(`planted:${k.judged_as}:${kind}`).slice(0, 10)}`;
-        pk.items.push({ id, task: 'ocr', lang: CELLS[cell].lang, image_url: it.image_url, text: p.text });
+        pk.items.push({ id, task: 'ocr', lang: CELLS[cell].lang, image_url: it.image_url, ...(it.image_file && { image_file: it.image_file }), text: p.text });
         key.push({ id: `k${h(`planted:${cell}:${k.page_id}:${kind}`).slice(0, 10)}`, judged_as: id, cell, route: k.route, kind: 'planted', page_id: k.page_id, book_id: k.book_id, source_item: k.judged_as, plant: p.plant });
         got++; slot++; break;
       }
@@ -410,7 +596,7 @@ function apply() {
  */
 async function record() {
   const METHOD = 'euro-gpu-agy-cell-6871';
-  if (STUDY !== 'euro-6871') throw new Error('record is for --study=euro-6871 (its method file)');
+  if (!['euro-6871', 'euro-manifest-6871'].includes(STUDY)) throw new Error('record is for --study=euro-6871 or euro-manifest-6871 (its method file)');
   const { recordPageVerdicts, readMethod } = await import('../../../lib/book-checks.mjs');
   const dirs = String(arg('out')).split(',').map((d) => path.resolve(d));
   const verdicts = [];
@@ -436,7 +622,7 @@ async function record() {
     const res = await recordPageVerdicts(c.db('bookstore'), {
       method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `${ST.job}-${new Date().toISOString().slice(0, 10)}`, checked_at: new Date(),
       selection: 'random', stages: ['ocr'], reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },
-      evidence_path: 'scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/', reader_warning: false, exposure: 'unrecorded',
+      evidence_path: `scripts/eval/route-judge-6740/results/${ST.evidence ?? 'euro-gpu-agy-cells-6871'}/`, reader_warning: false, exposure: 'unrecorded',
       note: 'One unread page of the book read by LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image (#6871 cell test), judged blind by Opus against the image.',
       frame: { route: 'lighton>agy-flash-low', study: STUDY, pages: verdicts.length },
       verdicts,
@@ -463,6 +649,6 @@ async function fallback() {
   console.log(`la4: ${pages.length} drawn pages, ${read_ids.length} to read`);
 }
 
-const STAGES = { draw, collect, read, written, packet, plant, score, pooled, apply, fallback, record };
+const STAGES = { draw, probe, collect, read, written, packet, plant, score, pooled, apply, fallback, record };
 if (!STAGES[STAGE]) { console.error(`stage must be one of ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
 await STAGES[STAGE]();

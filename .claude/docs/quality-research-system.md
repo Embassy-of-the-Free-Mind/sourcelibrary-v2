@@ -74,7 +74,7 @@ experiment front matter for everything else (study-level rows, flagged as such).
   decision rows. One row per chunk, with the experiment id and date. RPC `match_quality_docs`.
   - Uses: the planner attaches prior art to every new brief automatically. A session asks "have we tested Opus as
     translator?" and gets xlref-t5. Two briefs that test the same thing are flagged before they run.
-  - Model: the existing `gemini-embedding-2-preview` pipeline is on the paid API, and Derek's Gemini rule allows
+  - Model: the existing `gemini-embedding-2` pipeline is on the paid API, and Derek's Gemini rule allows
     only flash-lite there without asking. Backfilling about 255 documents costs well under $0.10. **Decision for
     Derek:** approve that, or run an open embedding model on Hetzner CPU at $0.
 - **Page-level dedupe:** by `page_id`, then by `edition_key` / `work_id`. The same leaf scored in five experiments

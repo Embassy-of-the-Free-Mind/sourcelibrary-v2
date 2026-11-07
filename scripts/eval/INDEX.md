@@ -285,7 +285,7 @@ Read these for the house conventions before designing a new study.
 | `embed-granularity/run-arms.mjs` | mjs — ranks one pool by one vector set per arm and scores a single gold page; no fusion, no diversity re-ranking, no query expansion. |
 | `embed-granularity/score.mjs` | mjs — recall@10 / MRR for one gold page per query with Wilson intervals; no graded judgments, no per-tradition measure. |
 | `embed-models/build-pool-t.mjs` | mjs — the same seeded book/page draw, but over UNTRANSLATED books and OCR text only; here every page needs BOTH texts (OCR and the stored translation) and the vector production already holds, so it… |
-| `embed-models/gemini-dual.mjs` | mjs --fill-pool — the same production-shaped call (gemini-embedding-2-preview, 768, plain text, 50 per batchEmbedContents) over pool A; this one embeds the ORIGINAL text of pages that already hold … |
+| `embed-models/gemini-dual.mjs` | mjs --fill-pool — the same production-shaped call (gemini-embedding-2, 768, plain text, 50 per batchEmbedContents) over pool A; this one embeds the ORIGINAL text of pages that already hold a transl… |
 | `embed-models/score.mjs` | mjs — the same rank-by-cosine recall@10 over pool A, with arm names hard-wired (gemini/e5/bge-m3) and a one-page relevant set; this scorer adds book-grain relevance (gold set B), max-score fusion o… |
 | `embedding-survey.mjs` | Embedding Alignment Survey Properly designed experiment measuring OCR→Translation embedding distance across languages and document types (manuscript vs print). |
 | `en-ocr-reference-5124.mjs` | — |
@@ -940,7 +940,7 @@ Read these for the house conventions before designing a new study.
 | `route-judge-6740/fresh-gate-7517.mjs` | #7517: may a FRESH 3.8 Flash-low read (agy, second account) replace Flash-Lite Batch on the German, French and Latin lite cells? Reads a route-judge DIR (judge.mjs score has run) and, for the cells… |
 | `route-judge-6740/german-cheaper-7701/run.mjs` | #7701 german-cheaper (job german-cheaper-7701): German print with no OCR, the live read@4 against three cheaper routes on the SAME pages: R8 = read@8; G = a GPU draft alone (LightOnOCR-3-1B; PERO-O… |
 | `route-judge-6740/jcb-1600-8049/defect-rates.mjs` | py (the per-1,000-words measure the experiments header asks for). |
-| `route-judge-6740/jcb-1600-8049/run.mjs` | #8049 cell test: first reads of pre-1600 print (the JCB scans) by GPU draft > agy Flash-low, per language, before the language's pages are queued. |
+| `route-judge-6740/jcb-1600-8049/run.mjs` | mjs (#7701's cell tests: one unread page per book, the written set from cli-ocr.mjs apply's own GPU-draft guards in a dry run, blind packet with wrong-page and planted controls, Beta(1+k,1+n-k) rul… |
 | `route-judge-6740/judge.mjs` | mjs — its draw (one page per book, seeded by page id), blind packet with a key, wrong-page control and two-family judge loop are reused here (claudeCall's env scrub, parseJson, agy-cli's gated call). |
 | `route-judge-6740/lane-accept-7263.mjs` | Production acceptance of the live lite>agy-flash-low route (#7263). |
 | `route-judge-6740/paired-arm.mjs` | mjs — the instrument this is the recipe for: its draw (one page per book), its blind packet and key (key.json: kind item \| wrong_page \| planted, judged_as an opaque id), its verdict files (verdicts… |
