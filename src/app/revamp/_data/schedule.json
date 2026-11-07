@@ -1,0 +1,8 @@
+{
+  "note": "Example entries to show the mechanism. Not a suggestion for what to feature.",
+  "entries": [
+    { "collection": "slime-moulds", "start": "2026-12-01", "end": "2026-12-07", "hook": null, "article": null, "askExamples": [] },
+    { "collection": "harmony-east-west", "start": "2026-12-08", "end": "2026-12-14", "hook": null, "article": null, "askExamples": [] },
+    { "collection": "signs-in-the-sky", "start": "2026-12-15", "end": "2026-12-21", "hook": null, "article": null, "askExamples": [] }
+  ]
+}
