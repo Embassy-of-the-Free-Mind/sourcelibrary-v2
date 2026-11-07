@@ -33,21 +33,19 @@ describe('assistant guide', () => {
     expect(homeAssistantGuide()).toContain('https://sourcelibrary.org/llms.txt');
   });
 
-  it('names the full text, a passage search and a quote on a book page', () => {
+  it('names a passage search and a quote on a book page, and not the whole book', () => {
     const line = bookAssistantGuide({ id: 'b1', slug: 'de-secretis', pages_count: 12 }, 'x')!;
-    expect(line).toContain('https://sourcelibrary.org/book/de-secretis/read');
+    expect(line).not.toContain('/read');
     expect(line).toContain('https://sourcelibrary.org/book/de-secretis/search/text?q=YOUR+WORDS');
-    // The short passage page comes before the long document, which fetch tools truncate.
-    expect(line.indexOf('/search/text')).toBeLessThan(line.indexOf('/read'));
     expect(line).toContain('check a quotation against the scan');
     expect(line).toContain('https://sourcelibrary.org/api/books/b1/quote?page=N');
   });
 
   it('falls back to the id when a book has no slug', () => {
-    expect(bookAssistantGuide({ pages_count: 3 }, 'abc')).toContain('/book/abc/read');
+    expect(bookAssistantGuide({ pages_count: 3 }, 'abc')).toContain('/book/abc/search/text');
   });
 
-  it('says nothing about /read for a book with no pages, where it is a 404', () => {
+  it('says nothing for a book with no pages', () => {
     expect(bookAssistantGuide({ id: 'b1', slug: 's', pages_count: 0 }, 'x')).toBeNull();
     expect(bookAssistantGuide({ id: 'b1', slug: 's' }, 'x')).toBeNull();
   });

@@ -105,6 +105,7 @@ export async function checkPageBudget(input: {
  * a dead end, while the reader page still opens: HTML is not metered by this
  * budget (its limits are at the edge, see crawler-access-gate.md). That also
  * keeps this from being a bulk path: one page, with the crawl brake in front.
+ * The exception is /book/<id>/read, which is many pages at once: src/lib/read-budget.ts.
  */
 export function bulkBudgetExceededBody(check: BudgetCheck, readOnSite?: string) {
   const next = check.tier === 'apikey'
