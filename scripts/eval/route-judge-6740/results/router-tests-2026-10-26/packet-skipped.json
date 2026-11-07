@@ -1,0 +1,18 @@
+[
+ {
+  "cell": "de-flash3",
+  "route": "3flash>opus-correct",
+  "page_id": "69c808616c6f3cc53c845d0f",
+  "book_id": "69c808356c6f3cc53c845c41",
+  "why": "no usable answer after 3 tries",
+  "contain": false
+ },
+ {
+  "cell": "fr-lite",
+  "route": "lite>agy-flash-low",
+  "page_id": "69af4a490c7af0237dfb99bc",
+  "book_id": "69af4a490c7af0237dfb9792",
+  "why": "CONTAIN: The draft is from page 541 of the work, whereas this image is page 544.",
+  "contain": true
+ }
+]

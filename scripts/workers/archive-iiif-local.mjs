@@ -299,9 +299,10 @@ async function main() {
             consecutiveFails = Math.max(0, consecutiveFails - n404);   // one book's 404s, not the host's
             const res = await db.collection('pages').updateMany(
               { book_id: page.book_id, $or: [{ archived_photo: { $exists: false } }, { archived_photo: null }, { archived_photo: '' }] },
-              { $set: { archived_photo: 'failed:source-not-found (5+ consecutive 404s)', updated_at: new Date() } }
+              // Skipped for this run only; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
+              { $set: { 'archive_metadata.last_failure_reason': 'source-not-found (5+ consecutive 404s)', 'archive_metadata.last_failure_at': new Date() } }
             );
-            console.log(`  [BOOK-SKIP] ${page.book_id}: marked ${res.modifiedCount} pages source-not-found`);
+            console.log(`  [BOOK-SKIP] ${page.book_id}: ${res.modifiedCount} pages noted source-not-found, skipped for this run`);
           }
         }
       }

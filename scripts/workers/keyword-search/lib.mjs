@@ -42,13 +42,14 @@ export function writeJsonAtomic(p, obj) {
 export const log = (...a) => console.log(new Date().toISOString(), ...a);
 
 /** The page fields every reader of `pages` here projects. */
-export const PAGE_PROJECTION = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, 'translation.data': 1, 'ocr.data': 1, 'translation.updated_at': 1, 'ocr.updated_at': 1 };
+export const PAGE_PROJECTION = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, repeat_of: 1, 'translation.data': 1, 'ocr.data': 1, 'translation.updated_at': 1, 'ocr.updated_at': 1 };
 
-/** A page document → the row this service stores, or null when it has nothing the Atlas lane can match. */
+/** A page document → the row this service stores, or null when it has nothing the Atlas lane can match (or is a hidden repeat). */
 export function pageRow(p) {
   const tr = p.translation?.data || '';
   const ocr = p.ocr?.data || '';
   if (!(p.page_number > 0) || (!tr && !ocr) || !p.id || !p.book_id) return null;
+  if (p.repeat_of != null) return null; // a hidden repeat capture: its leaf is indexed already (#5056); the delta removes it
   const tu = p.translation?.updated_at ? +new Date(p.translation.updated_at) : 0;
   const ou = p.ocr?.updated_at ? +new Date(p.ocr.updated_at) : 0;
   return { i: String(p.id), b: String(p.book_id), n: p.page_number, t: p.page_type || '', tr, o: ocr, u: Math.max(tu, ou) || 0 };

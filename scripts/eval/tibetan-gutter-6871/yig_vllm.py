@@ -27,6 +27,7 @@ ap.add_argument("--bands", type=int, default=3)
 ap.add_argument("--batch", type=int, default=32)
 ap.add_argument("--limit", type=int, default=0)
 ap.add_argument("--gpu-util", type=float, default=0.6)
+ap.add_argument("--enforce-eager", action="store_true", help="no CUDA graphs / torch.compile (hang fallback, #6871)")
 a = ap.parse_args()
 os.makedirs(a.out, exist_ok=True)
 
@@ -34,7 +35,7 @@ sys.path.insert(0, os.path.dirname(hf_hub_download(REPO, "dry_logits_processor.p
 from dry_logits_processor import DRYLogitsProcessor  # noqa: E402
 
 llm = LLM(model=REPO, revision=REV, logits_processors=[DRYLogitsProcessor], gpu_memory_utilization=a.gpu_util,
-          max_model_len=8192, limit_mm_per_prompt={"image": 1})
+          max_model_len=8192, limit_mm_per_prompt={"image": 1}, enforce_eager=a.enforce_eager)
 sp = SamplingParams(temperature=0, max_tokens=4096,
                     extra_args={"dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 12})
 tok = llm.get_tokenizer()

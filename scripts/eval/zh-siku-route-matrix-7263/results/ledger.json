@@ -1,0 +1,12 @@
+{
+ "cap": 1000,
+ "reads": {
+  "F": 60,
+  "PO": 120,
+  "O_setB": 30,
+  "F_print_prior_job": 0
+ },
+ "transcription_judge": 395,
+ "english_judge": 349,
+ "total": 954
+}

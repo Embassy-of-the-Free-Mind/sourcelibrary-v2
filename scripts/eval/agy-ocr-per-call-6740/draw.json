@@ -1,0 +1,779 @@
+{
+ "drawn_at": "2026-10-27T10:36:25.423Z",
+ "salt": "6740-ppc",
+ "T1": {
+  "task": "fresh OCR read",
+  "lang": "Chinese",
+  "frame": {
+   "books": 57,
+   "walked": 16,
+   "no_partner": 1,
+   "rule": "paddle-zh-qa-6388/kanripo.jsonl scored books, seeded; anchor = its page; partner = next else previous page; both with own trusted qa_screen (dice >= 0.6) on adjacent Kanripo pages, >= 40 Han each"
+  },
+  "books": [
+   {
+    "book_id": "6a3c6a3daf3c49b59c5e4fa1",
+    "title": "三易洞璣·卷三~卷四 (vol 2)",
+    "kanripo": "kanripo/KR3g0016",
+    "witness_sha": "c677924a604c550c28a9f7f18831333c112adcc9",
+    "pages": [
+     {
+      "page_id": "6a3c6a3daf3c49b59c5e500d",
+      "page_number": 108,
+      "image": "https://images.sourcelibrary.org/archived/6a3c6a3daf3c49b59c5e4fa1/108.jpg",
+      "ref_pb": "KR3g0016_WYG_004-25b",
+      "ref_chars": 320,
+      "dice": 0.967,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c6a3daf3c49b59c5e500e",
+      "page_number": 109,
+      "image": "https://images.sourcelibrary.org/archived/6a3c6a3daf3c49b59c5e4fa1/109.jpg",
+      "ref_pb": "KR3g0016_WYG_004-26a",
+      "ref_chars": 320,
+      "dice": 0.987,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c721a01fe4f593c1dc2a3",
+    "title": "周官新義·卷六~卷八 (vol 3)",
+    "kanripo": "kanripo/KR1d0004",
+    "witness_sha": "989d35fef9fe457f841bbd008d5849c154ef330d",
+    "pages": [
+     {
+      "page_id": "6a3c721b01fe4f593c1dc2dd",
+      "page_number": 58,
+      "image": "https://images.sourcelibrary.org/archived/6a3c721a01fe4f593c1dc2a3/58.jpg",
+      "ref_pb": "KR1d0004_WYG_006-2b",
+      "ref_chars": 153,
+      "dice": 0.962,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c721b01fe4f593c1dc2de",
+      "page_number": 59,
+      "image": "https://images.sourcelibrary.org/archived/6a3c721a01fe4f593c1dc2a3/59.jpg",
+      "ref_pb": "KR1d0004_WYG_006-3a",
+      "ref_chars": 130,
+      "dice": 0.951,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c67a939b4508b04e37db1",
+    "title": "御定孝經衍義·卷八十六~卷八十七 (vol 57)",
+    "kanripo": "kanripo/KR3a0105",
+    "witness_sha": "4d750c06cee7d8625f0ccac614e586361034e41f",
+    "pages": [
+     {
+      "page_id": "6a3c67a939b4508b04e37e39",
+      "page_number": 136,
+      "image": "https://images.sourcelibrary.org/archived/6a3c67a939b4508b04e37db1/136.jpg",
+      "ref_pb": "KR3a0105_WYG_089-25b",
+      "ref_chars": 137,
+      "dice": 0.696,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c67a939b4508b04e37e3a",
+      "page_number": 137,
+      "image": "https://images.sourcelibrary.org/archived/6a3c67a939b4508b04e37db1/137.jpg",
+      "ref_pb": "KR3a0105_WYG_089-26a",
+      "ref_chars": 134,
+      "dice": 0.662,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3cbfedf9474f825c16c745",
+    "title": "六藝之一錄·卷三百八十~卷三百八十一 (vol 167)",
+    "kanripo": "kanripo/KR3h0070",
+    "witness_sha": "d18de7383cd9a4a735a49595a52b78b1ebbc9bec",
+    "pages": [
+     {
+      "page_id": "6a3cbfedf9474f825c16c798",
+      "page_number": 83,
+      "image": "https://images.sourcelibrary.org/archived/6a3cbfedf9474f825c16c745/83.jpg",
+      "ref_pb": "KR3h0070_WYG_339-1a",
+      "ref_chars": 104,
+      "dice": 0.928,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3cbfedf9474f825c16c799",
+      "page_number": 84,
+      "image": "https://images.sourcelibrary.org/archived/6a3cbfedf9474f825c16c745/84.jpg",
+      "ref_pb": "KR3h0070_WYG_339-1b",
+      "ref_chars": 152,
+      "dice": 0.952,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c63d5af3c49b59c5c8e88",
+    "title": "御定佩文韻府·卷二十二之一 (vol 390)",
+    "kanripo": "kanripo/KR3k0059",
+    "witness_sha": "416c6a195bfb87cca9aa07318d522e822582a7b3",
+    "pages": [
+     {
+      "page_id": "6a3c63d5af3c49b59c5c8ee1",
+      "page_number": 89,
+      "image": "https://images.sourcelibrary.org/archived/6a3c63d5af3c49b59c5c8e88/89.jpg",
+      "ref_pb": "KR3k0059_WYG_195-43a",
+      "ref_chars": 389,
+      "dice": 0.933,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c63d5af3c49b59c5c8ee2",
+      "page_number": 90,
+      "image": "https://images.sourcelibrary.org/archived/6a3c63d5af3c49b59c5c8e88/90.jpg",
+      "ref_pb": "KR3k0059_WYG_195-43b",
+      "ref_chars": 331,
+      "dice": 0.912,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c66bcaf3c49b59c5cd02c",
+    "title": "歷算全書·卷六 (vol 3)",
+    "kanripo": "kanripo/KR3f0026",
+    "witness_sha": "3a1e85aa268672b621f989c632813462a9a8f6b3",
+    "pages": [
+     {
+      "page_id": "6a3c66bcaf3c49b59c5cd07e",
+      "page_number": 82,
+      "image": "https://images.sourcelibrary.org/archived/6a3c66bcaf3c49b59c5cd02c/82.jpg",
+      "ref_pb": "KR3f0026_WYG_006-41a",
+      "ref_chars": 168,
+      "dice": 0.943,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c66bcaf3c49b59c5cd07f",
+      "page_number": 83,
+      "image": "https://images.sourcelibrary.org/archived/6a3c66bcaf3c49b59c5cd02c/83.jpg",
+      "ref_pb": "KR3f0026_WYG_006-41b",
+      "ref_chars": 119,
+      "dice": 0.975,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c64a339b4508b04e28b59",
+    "title": "御定佩文韻府·卷八十之一 (vol 595)",
+    "kanripo": "kanripo/KR3k0059",
+    "witness_sha": "416c6a195bfb87cca9aa07318d522e822582a7b3",
+    "pages": [
+     {
+      "page_id": "6a3c64a339b4508b04e28bbf",
+      "page_number": 102,
+      "image": "https://images.sourcelibrary.org/archived/6a3c64a339b4508b04e28b59/102.jpg",
+      "ref_pb": "KR3k0059_WYG_652-49b",
+      "ref_chars": 363,
+      "dice": 0.78,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c64a339b4508b04e28bc0",
+      "page_number": 103,
+      "image": "https://images.sourcelibrary.org/archived/6a3c64a339b4508b04e28b59/103.jpg",
+      "ref_pb": "KR3k0059_WYG_652-50a",
+      "ref_chars": 362,
+      "dice": 0.803,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c5e9540c88a541d8e39c6",
+    "title": "御定康熙字典·卷四 (vol 39)",
+    "kanripo": "kanripo/KR1j0048",
+    "witness_sha": "a7d6419cec1d74ce21b1c3108a47795e9c925274",
+    "pages": [
+     {
+      "page_id": "6a3c5e9540c88a541d8e3a27",
+      "page_number": 97,
+      "image": "https://images.sourcelibrary.org/archived/6a3c5e9540c88a541d8e39c6/97.jpg",
+      "ref_pb": "KR1j0048_WYG_005-48a",
+      "ref_chars": 373,
+      "dice": 0.759,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c5e9540c88a541d8e3a28",
+      "page_number": 98,
+      "image": "https://images.sourcelibrary.org/archived/6a3c5e9540c88a541d8e39c6/98.jpg",
+      "ref_pb": "KR1j0048_WYG_005-48b",
+      "ref_chars": 302,
+      "dice": 0.815,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3cee024701a906f10e55d0",
+    "title": "御定淵鑑類函·卷一百三十三 (vol 76)",
+    "kanripo": "kanripo/KR3k0055",
+    "witness_sha": "f0b45e5082d39e3e88b3e4425051b0eb39b1e815",
+    "pages": [
+     {
+      "page_id": "6a3cee024701a906f10e5620",
+      "page_number": 80,
+      "image": "https://images.sourcelibrary.org/archived/6a3cee024701a906f10e55d0/80.jpg",
+      "ref_pb": "KR3k0055_WYG_138-39b",
+      "ref_chars": 168,
+      "dice": 0.898,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3cee024701a906f10e5621",
+      "page_number": 81,
+      "image": "https://images.sourcelibrary.org/archived/6a3cee024701a906f10e55d0/81.jpg",
+      "ref_pb": "KR3k0055_WYG_138-40a",
+      "ref_chars": 168,
+      "dice": 0.94,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c6738af3c49b59c5d165d",
+    "title": "性理大全書·卷八 (vol 5)",
+    "kanripo": "kanripo/KR3a0078",
+    "witness_sha": "1ce6426d44b6cb3f2765ae45adea054ddc8c568b",
+    "pages": [
+     {
+      "page_id": "6a3c6738af3c49b59c5d168e",
+      "page_number": 49,
+      "image": "https://images.sourcelibrary.org/archived/6a3c6738af3c49b59c5d165d/49.jpg",
+      "ref_pb": "KR3a0078_WYG_008-24a",
+      "ref_chars": 102,
+      "dice": 0.866,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c6738af3c49b59c5d168f",
+      "page_number": 50,
+      "image": "https://images.sourcelibrary.org/archived/6a3c6738af3c49b59c5d165d/50.jpg",
+      "ref_pb": "KR3a0078_WYG_008-24b",
+      "ref_chars": 153,
+      "dice": 0.809,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3cc158ec254ff6cae0b749",
+    "title": "鶴林玉露·卷五~卷八 (vol 2)",
+    "kanripo": "kanripo/KR3j0127",
+    "witness_sha": "44c14e3af3abf78a60d08a3ce0d11e70afc90f9b",
+    "pages": [
+     {
+      "page_id": "6a3cc158ec254ff6cae0b83b",
+      "page_number": 93,
+      "image": "https://images.sourcelibrary.org/archived/6a3cc158ec254ff6cae0b749/93.jpg",
+      "ref_pb": "KR3j0127_WYG_007-9a",
+      "ref_chars": 143,
+      "dice": 0.972,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3cc158ec254ff6cae0b83c",
+      "page_number": 94,
+      "image": "https://images.sourcelibrary.org/archived/6a3cc158ec254ff6cae0b749/94.jpg",
+      "ref_pb": "KR3j0127_WYG_007-9b",
+      "ref_chars": 143,
+      "dice": 0.972,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3cc25bec254ff6cae105e8",
+    "title": "書經集傳·卷五~卷六 (vol 9)",
+    "kanripo": "kanripo/KR1b0017",
+    "witness_sha": "08dd185bafae719fe80a2cb2714bcca95bac830c",
+    "pages": [
+     {
+      "page_id": "6a3cc25bec254ff6cae10733",
+      "page_number": 140,
+      "image": "https://images.sourcelibrary.org/archived/6a3cc25bec254ff6cae105e8/140.jpg",
+      "ref_pb": "KR1b0017_WYG_006-21b",
+      "ref_chars": 222,
+      "dice": 0.832,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3cc25bec254ff6cae10734",
+      "page_number": 141,
+      "image": "https://images.sourcelibrary.org/archived/6a3cc25bec254ff6cae105e8/141.jpg",
+      "ref_pb": "KR1b0017_WYG_006-22a",
+      "ref_chars": 259,
+      "dice": 0.781,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c6181879008ba7e15eb10",
+    "title": "御定駢字類編·卷二百三十八: Imperial Parallel Characters (vol 410)",
+    "kanripo": "kanripo/KR3k0056",
+    "witness_sha": "7b2ae86a5909c4f61d2d193fc31fe7e2fab3769e",
+    "pages": [
+     {
+      "page_id": "6a3c6181879008ba7e15eb37",
+      "page_number": 39,
+      "image": "https://images.sourcelibrary.org/archived/6a3c6181879008ba7e15eb10/39.jpg",
+      "ref_pb": "KR3k0056_WYG_238-19a",
+      "ref_chars": 205,
+      "dice": 0.731,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c6181879008ba7e15eb38",
+      "page_number": 40,
+      "image": "https://images.sourcelibrary.org/archived/6a3c6181879008ba7e15eb10/40.jpg",
+      "ref_pb": "KR3k0056_WYG_238-19b",
+      "ref_chars": 207,
+      "dice": 0.738,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3ced054701a906f10dcd97",
+    "title": "玉海·卷一百九十八~卷一百九十九 (vol 112)",
+    "kanripo": "kanripo/KR3k0032",
+    "witness_sha": "25d9d76f0ea1f2cc09a1d36461bb6a20062e0234",
+    "pages": [
+     {
+      "page_id": "6a3ced054701a906f10dcdf1",
+      "page_number": 90,
+      "image": "https://images.sourcelibrary.org/archived/6a3ced054701a906f10dcd97/90.jpg",
+      "ref_pb": "KR3k0032_WYG_199-17b",
+      "ref_chars": 171,
+      "dice": 0.929,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3ced054701a906f10dcdf2",
+      "page_number": 91,
+      "image": "https://images.sourcelibrary.org/archived/6a3ced054701a906f10dcd97/91.jpg",
+      "ref_pb": "KR3k0032_WYG_199-18a",
+      "ref_chars": 172,
+      "dice": 0.942,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a3c66abaf3c49b59c5cc4de",
+    "title": "肘後備急方·卷七~卷八 (vol 5)",
+    "kanripo": "kanripo/KR3e0010",
+    "witness_sha": "1fe0298f872b8bd2ed9eac3cf1c24bb25c482103",
+    "pages": [
+     {
+      "page_id": "6a3c66abaf3c49b59c5cc55b",
+      "page_number": 125,
+      "image": "https://images.sourcelibrary.org/archived/6a3c66abaf3c49b59c5cc4de/125.jpg",
+      "ref_pb": "KR3e0010_WYG_008-14a",
+      "ref_chars": 112,
+      "dice": 0.896,
+      "anchor": true
+     },
+     {
+      "page_id": "6a3c66abaf3c49b59c5cc55c",
+      "page_number": 126,
+      "image": "https://images.sourcelibrary.org/archived/6a3c66abaf3c49b59c5cc4de/126.jpg",
+      "ref_pb": "KR3e0010_WYG_008-14b",
+      "ref_chars": 125,
+      "dice": 0.891,
+      "anchor": false
+     }
+    ]
+   }
+  ]
+ },
+ "T2": {
+  "task": "correction of a Flash-Lite draft",
+  "lang": "German",
+  "frame": {
+   "router_test_pages": 30,
+   "walked": 15,
+   "draft_changed": 0,
+   "no_partner": 0,
+   "rule": "router-tests de-lite pages (#7434), seeded; anchor draft unchanged; partner = next else previous page with a Flash-Lite draft >= 300 chars, not handwritten"
+  },
+  "books": [
+   {
+    "book_id": "69c634823e8cae136d1497fa",
+    "title": "Versuch über die Beschuldigungen welche dem Tempelherrenorden gemacht worden, un",
+    "pages": [
+     {
+      "page_id": "69f512c72c50c99ed1a66846",
+      "page_number": 109,
+      "image": "https://images.sourcelibrary.org/pages/69c634823e8cae136d1497fa/sp69f512c72c50c99ed1a66846.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "f2ac031bc19620be",
+      "draft_chars": 1672,
+      "anchor": true
+     },
+     {
+      "page_id": "69f512cc2c50c99ed1a66847",
+      "page_number": 110,
+      "image": "https://images.sourcelibrary.org/pages/69c634823e8cae136d1497fa/sp69f512cc2c50c99ed1a66847.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "81c2e8e60c89436b",
+      "draft_chars": 1526,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69b51eae9a81ef7feb3d948a",
+    "title": "Lullius Redivivus Denudatus. Oder neu-belebter und gründlich-erklärter Lullius :",
+    "pages": [
+     {
+      "page_id": "69b51eae9a81ef7feb3d94cf",
+      "page_number": 69,
+      "image": "https://images.sourcelibrary.org/archived/69b51eae9a81ef7feb3d948a/69.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "01079791b9632dd2",
+      "draft_chars": 1312,
+      "anchor": true
+     },
+     {
+      "page_id": "69b51eae9a81ef7feb3d94d0",
+      "page_number": 70,
+      "image": "https://images.sourcelibrary.org/archived/69b51eae9a81ef7feb3d948a/70.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "75f4667314386b20",
+      "draft_chars": 1768,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69c836d36c6f3cc53c84ecd6",
+    "title": "Hertzens-Theologie",
+    "pages": [
+     {
+      "page_id": "69f76214b2b698b3bb82f75c",
+      "page_number": 383,
+      "image": "https://images.sourcelibrary.org/pages/69c836d36c6f3cc53c84ecd6/sp69f76214b2b698b3bb82f75c.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "f5a908255b7747db",
+      "draft_chars": 1333,
+      "anchor": true
+     },
+     {
+      "page_id": "69f76215b2b698b3bb82f75d",
+      "page_number": 384,
+      "image": "https://images.sourcelibrary.org/pages/69c836d36c6f3cc53c84ecd6/sp69f76215b2b698b3bb82f75d.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "71f560b0c2c46a73",
+      "draft_chars": 1246,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69b51e73cf111105c429d61f",
+    "title": "Unparteiische Samlungen zur Historie der Rosenkreuzer. 1",
+    "pages": [
+     {
+      "page_id": "69b51e73cf111105c429d641",
+      "page_number": 34,
+      "image": "https://images.sourcelibrary.org/archived/69b51e73cf111105c429d61f/34.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "392355f457199138",
+      "draft_chars": 1605,
+      "anchor": true
+     },
+     {
+      "page_id": "69b51e73cf111105c429d642",
+      "page_number": 35,
+      "image": "https://images.sourcelibrary.org/archived/69b51e73cf111105c429d61f/35.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "2f2c543442fdf051",
+      "draft_chars": 1557,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69c85caf6c6f3cc53c854d2f",
+    "title": "Ueber das erste Wesensgesetz in der Schöpfung",
+    "pages": [
+     {
+      "page_id": "69d372c3495a5d8dfb42581e",
+      "page_number": 26,
+      "image": "https://images.sourcelibrary.org/pages/69c85caf6c6f3cc53c854d2f/spylkv-0026.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "b84bb7053c80b55d",
+      "draft_chars": 2183,
+      "anchor": true
+     },
+     {
+      "page_id": "69d372c3495a5d8dfb42581f",
+      "page_number": 27,
+      "image": "https://images.sourcelibrary.org/pages/69c85caf6c6f3cc53c854d2f/spylkv-0027.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "d33c535cc5867dfd",
+      "draft_chars": 2062,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69b51e5bff09e4fe943ad0b5",
+    "title": "Augsburgs Buchdruckergeschichte : nebst den Jahrbüchern derselben. 2, Vom Jahre ",
+    "pages": [
+     {
+      "page_id": "69b51e5bff09e4fe943ad190",
+      "page_number": 219,
+      "image": "https://images.sourcelibrary.org/archived/69b51e5bff09e4fe943ad0b5/219.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "cc1c88fc3eb2bf87",
+      "draft_chars": 2165,
+      "anchor": true
+     },
+     {
+      "page_id": "69b51e5bff09e4fe943ad191",
+      "page_number": 220,
+      "image": "https://images.sourcelibrary.org/archived/69b51e5bff09e4fe943ad0b5/220.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "77d06defee3a291f",
+      "draft_chars": 2518,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69c808226c6f3cc53c845bd5",
+    "title": "Der gülden Gesundbrunnen",
+    "pages": [
+     {
+      "page_id": "69d377a5d2177ffd1ddf8dbf",
+      "page_number": 31,
+      "image": "https://images.sourcelibrary.org/pages/69c808226c6f3cc53c845bd5/spbc2v-0031.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "2603c9d79d772866",
+      "draft_chars": 1376,
+      "anchor": true
+     },
+     {
+      "page_id": "69d377a5d2177ffd1ddf8dc0",
+      "page_number": 32,
+      "image": "https://images.sourcelibrary.org/pages/69c808226c6f3cc53c845bd5/spbc2v-0032.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "2cdf1974bbabaa20",
+      "draft_chars": 1270,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69dbcabf1040d1d5e20ae5b5",
+    "title": "Prognosticatio [German]",
+    "pages": [
+     {
+      "page_id": "69dbcabf1040d1d5e20ae5f9",
+      "page_number": 68,
+      "image": "https://images.sourcelibrary.org/archived/69dbcabf1040d1d5e20ae5b5/68.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "9da2ffb04cc89aea",
+      "draft_chars": 694,
+      "anchor": true
+     },
+     {
+      "page_id": "69dbcabf1040d1d5e20ae5fa",
+      "page_number": 69,
+      "image": "https://images.sourcelibrary.org/archived/69dbcabf1040d1d5e20ae5b5/69.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "8aec4a650e95b035",
+      "draft_chars": 1663,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a243c5a0f0e4f405e62e1f8",
+    "title": "Allgemeines pharmazeutisches, chymisches, mineralogisches Wörterbuch oder alphab",
+    "pages": [
+     {
+      "page_id": "6a243c5a0f0e4f405e62e42c",
+      "page_number": 564,
+      "image": "https://images.sourcelibrary.org/archived/6a243c5a0f0e4f405e62e1f8/564.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "cba86986a2cc5d2c",
+      "draft_chars": 1999,
+      "anchor": true
+     },
+     {
+      "page_id": "6a243c5a0f0e4f405e62e42d",
+      "page_number": 565,
+      "image": "https://images.sourcelibrary.org/archived/6a243c5a0f0e4f405e62e1f8/565.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "a3dfbd63a506615c",
+      "draft_chars": 1944,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69099e2acf28baa1b4caeafb",
+    "title": "Colloquium Rhodostauroticum",
+    "pages": [
+     {
+      "page_id": "69d387c69453b2919745bf54",
+      "page_number": 77,
+      "image": "https://images.sourcelibrary.org/pages/69099e2acf28baa1b4caeafb/spp0mw-0077.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "2b82744e1cc39e05",
+      "draft_chars": 571,
+      "anchor": true
+     },
+     {
+      "page_id": "69d387c69453b2919745bf55",
+      "page_number": 78,
+      "image": "https://images.sourcelibrary.org/pages/69099e2acf28baa1b4caeafb/spp0mw-0078.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "52323a0583f20891",
+      "draft_chars": 865,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a212212f88bd9944a5840d7",
+    "title": "Osiliana (Jahresbericht des Arensburgschen Gymnasiums 1872)",
+    "pages": [
+     {
+      "page_id": "6a212212f88bd9944a5840ed",
+      "page_number": 22,
+      "image": "https://images.sourcelibrary.org/archived/6a212212f88bd9944a5840d7/22.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "068d6b89edaa8d10",
+      "draft_chars": 2073,
+      "anchor": true
+     },
+     {
+      "page_id": "6a212212f88bd9944a5840ee",
+      "page_number": 23,
+      "image": "https://images.sourcelibrary.org/archived/6a212212f88bd9944a5840d7/23.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "dcd89c21154c3da0",
+      "draft_chars": 2344,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6958dfb3dbe0f678e5c5272c",
+    "title": "Kreuter Buch",
+    "pages": [
+     {
+      "page_id": "6958dfb4dbe0f678e5c52971",
+      "page_number": 581,
+      "image": "https://images.sourcelibrary.org/archived/6958dfb3dbe0f678e5c5272c/581.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "64998438a1c29995",
+      "draft_chars": 3747,
+      "anchor": true
+     },
+     {
+      "page_id": "6958dfb4dbe0f678e5c52972",
+      "page_number": 582,
+      "image": "https://images.sourcelibrary.org/archived/6958dfb3dbe0f678e5c5272c/582.jpg",
+      "draft_model": "gemini-3.1-flash-lite-preview",
+      "draft_sha": "3339c138124443f6",
+      "draft_chars": 3188,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a267f6e88f11913ee9c919b",
+    "title": "Zürnerischer Kurtzer Extract Der nach einer mit Schlesien und Mähren angefangene",
+    "pages": [
+     {
+      "page_id": "6a267f6e88f11913ee9c91b5",
+      "page_number": 26,
+      "image": "https://images.sourcelibrary.org/archived/6a267f6e88f11913ee9c919b/26.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "bb0fa36e5bdc2e62",
+      "draft_chars": 765,
+      "anchor": true
+     },
+     {
+      "page_id": "6a267f6e88f11913ee9c91b6",
+      "page_number": 27,
+      "image": "https://images.sourcelibrary.org/archived/6a267f6e88f11913ee9c919b/27.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "7238accfb6ed1576",
+      "draft_chars": 372,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "69ef37016c5c0455cc3f69e5",
+    "title": "Tuba visitationis [...] Posaune der Heymsuchung [...] Postilion, dess grossen un",
+    "pages": [
+     {
+      "page_id": "6a26ceaf11e2d87b58a93dfe",
+      "page_number": 19,
+      "image": "https://images.sourcelibrary.org/pages/69ef37016c5c0455cc3f69e5/spswg6-0019.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "4a919f4d88d6cb11",
+      "draft_chars": 3280,
+      "anchor": true
+     },
+     {
+      "page_id": "6a26ceaf11e2d87b58a93dff",
+      "page_number": 20,
+      "image": "https://images.sourcelibrary.org/pages/69ef37016c5c0455cc3f69e5/spswg6-0020.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "59ea7aa9597c48ab",
+      "draft_chars": 2854,
+      "anchor": false
+     }
+    ]
+   },
+   {
+    "book_id": "6a267d246c1f37c9c4f38c16",
+    "title": "Chymischer und Alchymischer Particular-Zeiger",
+    "pages": [
+     {
+      "page_id": "6a267d246c1f37c9c4f38c73",
+      "page_number": 93,
+      "image": "https://images.sourcelibrary.org/archived/6a267d246c1f37c9c4f38c16/93.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "4e3fc1d5ee82171f",
+      "draft_chars": 1710,
+      "anchor": true
+     },
+     {
+      "page_id": "6a267d246c1f37c9c4f38c74",
+      "page_number": 94,
+      "image": "https://images.sourcelibrary.org/archived/6a267d246c1f37c9c4f38c16/94.jpg",
+      "draft_model": "gemini-3.1-flash-lite",
+      "draft_sha": "c440e18cb1763571",
+      "draft_chars": 1694,
+      "anchor": false
+     }
+    ]
+   }
+  ]
+ }
+}

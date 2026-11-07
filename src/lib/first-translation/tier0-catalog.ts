@@ -25,7 +25,7 @@
 import type { Tier, ResolvableBook } from './tier';
 import type { FirstTranslationAttempt, PriorTranslation } from './attempt-log';
 import { makeAttemptId } from './attempt-log';
-import type { FirstTranslation, MatchKey } from './types';
+import { MODERN_ENGLISH_FROM, type FirstTranslation, type MatchKey, type PriorRegister } from './types';
 import { evaluatePrior, type CitedPriorInput } from '../ft-prior-guard';
 import { canonicalLanguage } from './source-language-match';
 
@@ -33,7 +33,16 @@ import { canonicalLanguage } from './source-language-match';
 export interface CatalogPrior {
   english_title?: string;
   translator?: string;
+  /**
+   * Year of the EDITION the row cites. For a modern edition of an old
+   * translation (an EETS or Oxford critical text, a Tudor Translations
+   * reprint, a facsimile) this is NOT when the translation was made.
+   */
   pub_year?: string;
+  /** Year the English translation was first made or published (#7797). Dates the prior when known. */
+  tr_year?: string;
+  /** The translation's English register (#7797); outranks either year. */
+  register?: PriorRegister;
   /** 'complete' | 'partial' | 'excerpts' | 'unknown' */
   completeness?: string;
   /** Source language of the translated text (catalog stores ISO or name). */
@@ -92,6 +101,8 @@ function toPrior(p: CatalogPrior): PriorTranslation {
     english_title: p.english_title,
     translator: p.translator,
     pub_year: p.pub_year,
+    ...(p.tr_year ? { tr_year: p.tr_year } : {}),
+    ...(p.register ? { register: p.register } : {}),
     publisher: p.publisher,
     completeness: p.completeness,
     source_url: p.source_url,
@@ -118,6 +129,30 @@ export function isDecisivePrior(book: ResolvableBook, p: CatalogPrior): boolean 
   return sameLang && complete && guard;
 }
 
+const firstYear = (y?: string): number | null => {
+  const m = String(y ?? '').match(/\d{3,4}/);
+  return m ? parseInt(m[0], 10) : null;
+};
+
+/** The year a prior translation is dated by: its own year when known, else the edition's. */
+export function priorTranslationYear(p: Pick<CatalogPrior, 'tr_year' | 'pub_year'>): number | null {
+  return firstYear(p.tr_year) ?? firstYear(p.pub_year);
+}
+
+/**
+ * Is this prior antiquated English, which a modern reader cannot read as a
+ * translation (#7797)? Antiquated priors grade first_modern, not not_first.
+ *
+ * A stated register decides. Otherwise the translation's date does, falling
+ * back to the edition's. An undated prior is NOT antiquated: it still defeats,
+ * as it did before this rule knew about dates.
+ */
+export function isAntiquatedPrior(p: Pick<CatalogPrior, 'tr_year' | 'pub_year' | 'register'>): boolean {
+  if (p.register) return p.register !== 'modern';
+  const y = priorTranslationYear(p);
+  return y !== null && y < MODERN_ENGLISH_FROM;
+}
+
 /**
  * Build the Tier-0 catalog matcher. `lookup` supplies candidate priors (the I/O);
  * this function owns only the deterministic decision.
@@ -127,7 +162,44 @@ export function makeTier0Catalog(lookup: CatalogLookup): Tier {
     const bookId = book.id ?? String(book._id ?? 'unknown');
     const date = ctx.now;
     const candidates = await lookup(book);
-    const defeats = candidates.filter((p) => isDecisivePrior(book, p));
+    const decisive = candidates.filter((p) => isDecisivePrior(book, p));
+    // Only a MODERN complete prior defeats the claim. When every complete prior
+    // is antiquated (Trevisa's c.1398 Bartholomaeus, even in Seymour's 1975
+    // edition), the text grades first_modern.
+    const defeats = decisive.filter((p) => !isAntiquatedPrior(p));
+
+    if (decisive.length > 0 && defeats.length === 0) {
+      // first_modern also asserts that NO modern translation exists, and a
+      // catalog miss is weak absence: propose it, never terminate on it.
+      const matchKey: MatchKey = decisive.some((p) => p.matched_by === 'work_id') ? 'work_id' : 'author_title';
+      const dated = decisive.map((p) => `${p.translator ?? '?'} ${priorTranslationYear(p) ?? '?'}`).join('; ');
+      const attempt: FirstTranslationAttempt = {
+        attempt_id: makeAttemptId(bookId, 'tier0_linked', date),
+        book_id: bookId,
+        work_id: book.work_id ?? null,
+        date,
+        method: 'tier0_linked',
+        match_key: matchKey,
+        sources_checked: [...new Set(['translation_catalogs', ...decisive.map((p) => p.source).filter(Boolean) as string[]])],
+        queries: [],
+        result: 'found',
+        priors: decisive.map(toPrior),
+        evidence_strength: 'weak',
+        independence_score: 0.5,
+        model: 'deterministic-catalog',
+        notes: `Tier-0 catalog match (${matchKey}): only antiquated English (${dated}); first_modern proposed, needs a search for a modern translation.`,
+      };
+      const verdict: FirstTranslation = {
+        verdict: 'first_modern',
+        evidence_strength: 'weak',
+        our_completeness: 'unknown',
+        match_key: matchKey,
+        prior_relationship: 'same_text',
+        resolver: 'tier0_linked',
+        resolved_at: date,
+      };
+      return { verdict, attempt, terminal: false };
+    }
 
     if (defeats.length > 0) {
       const matchKey: MatchKey = defeats.some((p) => p.matched_by === 'work_id') ? 'work_id' : 'author_title';

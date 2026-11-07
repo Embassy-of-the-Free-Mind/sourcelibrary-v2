@@ -10,9 +10,8 @@ import { deduplicateByDHash } from '@/lib/dhash';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { withIiifRefs } from '@/lib/iiif-refs';
 import { mergedGalleryBrowse, artworkToGalleryItem, galleryMemo, filterKey } from '@/lib/gallery-merge';
-import { subjectStringsForTopic } from '@/lib/image-subject-map';
-import { getPartnerByProvider, getProviderKeys } from '@/lib/library-partners';
-import { queryTerms, termVariants, isNoSpaceTerm, evidenceScore, plateFields, artworkFields, EVIDENCE_WEIGHTS } from '@/lib/search-grounding';
+import { queryTerms, evidenceScore, plateFields, artworkFields } from '@/lib/search-grounding';
+import { parseGalleryNarrowing, narrowingMatch, galleryMinQuality, resolveGalleryBookIds, intersectBookIds, gallerySearchStage, gallerySearchMatch } from '@/lib/gallery-query';
 import { parseGallerySort, parseSeed, findSorted, searchSortStage, searchSortStages, compareGalleryItems } from '@/lib/gallery-sort';
 
 export const maxDuration = 30;
@@ -203,24 +202,15 @@ export async function GET(request: NextRequest) {
     const bookId = searchParams.get('bookId') || searchParams.get('book');
     // Allow higher limit when fetching all images for a single book (for navigation)
     const maxLimit = bookId ? 1000 : 200;
-    const limit = Math.min(parseInt(searchParams.get('limit') || '24'), maxLimit);
-    const offset = parseInt(searchParams.get('offset') || '0');
+    // Clamped: a negative or non-numeric offset reached Mongo's $skip and was a 500.
+    const limit = Math.min(Math.max(1, parseInt(searchParams.get('limit') || '24') || 24), maxLimit);
+    const offset = Math.max(0, parseInt(searchParams.get('offset') || '0') || 0);
     const collectionSlug = searchParams.get('collection');
     const libraryFilter = searchParams.get('library');
-    const imageType = searchParams.get('type');
-    // `topic` is a browse-vocabulary id (#4856) and expands to every raw subject string
-    // mapped to it; `subject` is one raw string, matched exactly. Either way the value
-    // lands on `metadata.subjects`, which is indexed.
-    const topicParam = searchParams.get('topic');
-    const subjectFilter: string | { $in: string[] } | null = topicParam
-      ? { $in: subjectStringsForTopic(topicParam) }
-      : searchParams.get('subject');
-    const figureFilter = searchParams.get('figure');
-    const symbolFilter = searchParams.get('symbol');
-    const iconclassFilter = searchParams.get('iconclass');
-    const yearStart = searchParams.get('yearStart') ? parseInt(searchParams.get('yearStart')!) : null;
-    const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
-    const includeArchive = searchParams.get('includeArchive') === 'true';
+    // `topic` expands to every raw subject string mapped to it; either way the
+    // value lands on `metadata.subjects`, which is indexed. See gallery-query.ts.
+    const narrowing = parseGalleryNarrowing(searchParams);
+    const { imageType, subjectFilter, figureFilter, symbolFilter, iconclassFilter, yearStart, yearEnd } = narrowing;
     // Uncapped by DEFAULT for API callers (#4509 follow-up). The cap exists so
     // one heavily-illustrated volume cannot dominate the human gallery — and
     // that surface sets its own value (src/app/gallery/page.tsx's server render
@@ -230,10 +220,7 @@ export async function GET(request: NextRequest) {
     // CEILING: it put ~120,000 of our own images out of reach however far a
     // consumer paginated. Pass maxPerBook=3 to get the curated spread back.
     const maxPerBook = parseInt(searchParams.get('maxPerBook') || '1000');
-    // Quality thresholds
-    let minQuality = 0.7; // default: gallery quality
-    if (includeArchive) minQuality = 0.5;
-    if (searchParams.get('minQuality')) minQuality = parseFloat(searchParams.get('minQuality')!);
+    const minQuality = galleryMinQuality(searchParams);
 
     const db = await getReadDb();
 
@@ -266,42 +253,13 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // If filtering by collection, resolve to book IDs
-    let collectionBookIds: string[] | null = null;
-    if (collectionSlug) {
-      // Memoized: a failed lookup throws out of the route (500, uncached),
-      // never caches an empty list. Hidden books are also excluded downstream
-      // by gallery_images.book_visible, so a 10-min-old list can't leak one.
-      collectionBookIds = await galleryMemo(`coll-ids:${tenantId || ''}:${collectionSlug}`, () =>
-        db.collection('books').distinct('id', {
-          ...(tenantId ? { tenantId } : {}),
-          collections: collectionSlug,
-          visible: true,
-          pages_count: { $gt: 0 },
-        }, { maxTimeMS: 10000 }) as Promise<string[]>);
-    }
-
-    // If filtering by library/provider, resolve to book IDs
-    let libraryBookIds: string[] | null = null;
-    if (libraryFilter) {
-      // A partner's books can sit under alias keys too (mdz/bsb, ndl_japan/ndl).
-      const libraryPartner = getPartnerByProvider(libraryFilter);
-      const providerKeys = libraryPartner ? getProviderKeys(libraryPartner) : [libraryFilter];
-      libraryBookIds = await galleryMemo(`lib-ids:${tenantId || ''}:${libraryFilter}`, () =>
-        db.collection('books').distinct('id', {
-          ...(tenantId ? { tenantId } : {}),
-          'image_source.provider': { $in: providerKeys },
-          visible: true,
-          pages_count: { $gt: 0 },
-        }, { maxTimeMS: 10000 }) as Promise<string[]>);
-    }
+    // A collection or library resolves to its book ids (memoized; a failed lookup throws, uncached).
+    const { collectionBookIds, libraryBookIds } = await resolveGalleryBookIds(db, tenantId, collectionSlug, libraryFilter);
 
     // The core of the filter comes from the shared scope (src/lib/gallery-scope),
     // so a page showing a count for this URL counts exactly what this route
     // serves. Anything added below — search, subject, year — narrows it further.
-    const bookIdsForScope = collectionBookIds && libraryBookIds
-      ? collectionBookIds.filter(id => libraryBookIds!.includes(id))
-      : (collectionBookIds || libraryBookIds || undefined);
+    const bookIdsForScope = intersectBookIds(collectionBookIds, libraryBookIds);
     const scope: GalleryScope = {
       bookId: bookId || undefined,
       bookIds: bookIdsForScope || undefined,
@@ -309,21 +267,7 @@ export async function GET(request: NextRequest) {
       maxPerBook,
     };
     const filter: Record<string, unknown> = galleryFilter(scope, { tenantId });
-    if (imageType) filter.type = imageType;
-    if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
-    if (figureFilter) filter['metadata.figures'] = figureFilter;
-    if (symbolFilter) filter['metadata.symbols'] = symbolFilter;
-    if (iconclassFilter) {
-      // Prefix match: ?iconclass=49 matches 49E39, 49C11, etc.
-      filter['metadata.iconclass'] = { $regex: `^${iconclassFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}` };
-    }
-
-    if (yearStart !== null || yearEnd !== null) {
-      const yearFilter: Record<string, number> = {};
-      if (yearStart !== null) yearFilter.$gte = yearStart;
-      if (yearEnd !== null) yearFilter.$lte = yearEnd;
-      filter.book_year = yearFilter;
-    }
+    Object.assign(filter, narrowingMatch(narrowing, { iconclass: true }));
 
     // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
     // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
@@ -390,72 +334,11 @@ export async function GET(request: NextRequest) {
     // A query with no checkable words (punctuation only) is unjudgeable: it
     // returns nothing rather than everything.
     if (searchQuery && qTerms?.judgeable) {
-      // Primary: Atlas Search (gallery_search index) — searches description,
-      // museum_description, subjects, figures. Same index used by unified search.
-      // Shared $search + $match stages so the count pipeline can't drift from
-      // the results pipeline.
-      const searchStage = {
-        $search: {
-          index: 'gallery_search',
-          compound: {
-            // Every query term must match (AND), each as a whole word or its
-            // plural in some field — the same rule the grounding check applies,
-            // so this lane is grounded by construction and its $count is the
-            // real total. No fuzzy (edits turned "rose" into "rosy"/"rise") and
-            // no autocomplete (prefixes turned "cat" into "cathedral").
-            // Boosts are the grounding module's evidence weights, so "Best match"
-            // ranks an image TAGGED with the term above one that mentions it.
-            must: qTerms!.terms.map(t => {
-              const fields: [string, number][] = [
-                ['metadata.subjects', EVIDENCE_WEIGHTS.tags],
-                ['metadata.figures', EVIDENCE_WEIGHTS.tags],
-                ['description', EVIDENCE_WEIGHTS.description],
-                ['museum_description', EVIDENCE_WEIGHTS.secondary],
-              ];
-              // Scripts without word spaces: the standard analyzer splits them
-              // per character, so a text match would OR the characters. Phrase
-              // keeps them contiguous.
-              return {
-                compound: {
-                  should: fields.map(([path, boost]) => isNoSpaceTerm(t)
-                    ? { phrase: { query: t, path, score: { boost: { value: boost } } } }
-                    : { text: { query: termVariants(t), path, score: { boost: { value: boost } } } }),
-                  minimumShouldMatch: 1,
-                },
-              };
-            }),
-            filter: [
-              { range: { path: 'gallery_quality', gte: minQuality } },
-            ],
-          },
-        },
-      };
-      const matchStage = {
-        $match: {
-          book_visible: true,
-          extracted_url: { $ne: null },
-          image_url: { $ne: null },
-          ...(tenantBooks ? { $and: tenantBooks } : {}),
-          ...(!bookId && maxPerBook < 100 ? { book_rank: { $lte: maxPerBook } } : {}),
-          ...(bookId ? { book_id: bookId } : {}),
-          ...(collectionBookIds && libraryBookIds
-            ? { book_id: { $in: collectionBookIds.filter(id => libraryBookIds!.includes(id)) } }
-            : collectionBookIds ? { book_id: { $in: collectionBookIds } }
-            : libraryBookIds ? { book_id: { $in: libraryBookIds } }
-            : {}),
-          // Ownership marks out unless asked for by type — as galleryFilter (#5200).
-          type: imageType || { $nin: [...OWNERSHIP_IMAGE_TYPES] },
-          ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
-          ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
-          ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
-          ...(yearStart !== null || yearEnd !== null ? {
-            book_year: {
-              ...(yearStart !== null ? { $gte: yearStart } : {}),
-              ...(yearEnd !== null ? { $lte: yearEnd } : {}),
-            },
-          } : {}),
-        },
-      };
+      // Primary: Atlas Search (gallery_search index). Shared $search + $match
+      // stages (gallery-query.ts) so the count pipeline, and /api/gallery/stats,
+      // can't drift from the results pipeline.
+      const searchStage = gallerySearchStage(qTerms!.terms, minQuality);
+      const matchStage = gallerySearchMatch({ tenantBooks, bookId, bookIds: bookIdsForScope, maxPerBook, narrowing });
       try {
         // Relevance unless the reader picked an explicit order.
         textItems = await timed('atlas', () => db.collection('gallery_images').aggregate([

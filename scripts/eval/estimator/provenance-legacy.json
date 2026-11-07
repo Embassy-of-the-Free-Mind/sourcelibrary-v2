@@ -938,6 +938,36 @@
     }
    },
    "note": "POOLING BUG: engine 'gemini-3-flash-preview' pools the fresh v19.1 re-read (11 rows) with 2 served reads under prompts 12 and v5.1.2026-03; the rows carry an `arm` field but the route key does not."
+  },
+  "kraus-7341": {
+   "source": "scripts/eval/experiments/2026-10-26-kraus-print-route-7341.md; scripts/eval/kraus-print-7341/; scripts/eval/results/kraus-print-7341/kraus-rows.jsonl",
+   "prompt": "Flash-Lite arm = production OCR prompt (production-v19.1, hash 9d8f959e053491362b2c4acec1e20c9a); agy 3.8 Flash low and Opus arms = #6544's diplomatic READ prompt, print variant ('all the text on this printed page, footnotes included'), via arabic-mss-gate-7341/prep.py unchanged",
+   "read_mode": "image",
+   "access": "mixed (see by_route)",
+   "engine_stated": "gemini-3.1-flash-lite (paid API, temperature 0.1, no thinking); Gemini 3.8 Flash low via agy -p (--retry-refusal); Opus 5.5 via claude -p --restricted",
+   "judge": "reference scorer: KEY-O skeleton CER against a MODEL key (Opus referee over the Opus read and the agy read, or the Flash-Lite read where agy was filter-cut; #6544 build-keys.py, DIRECTIONAL); the usability column is the stricter of two model judges (Opus claude -p and Gemini 3.8 Flash low agy -p; judge prompt = scripts/eval/arabic-mss-gate-7341/judge.py PROMPT, planted controls drawn by scripts/eval/kraus-print-7341/judge_requests.py)",
+   "quote": "Same arms, key procedure and judges as the #7341 gate, on 25 more Kraus 1935 pages.",
+   "by_route": {
+    "gemini-3.1-flash-lite": {
+     "prompt": "Production OCR prompt (production-v19.1, hash 9d8f959e053491362b2c4acec1e20c9a)",
+     "read_mode": "image",
+     "access": "api",
+     "engine_stated": "gemini-3.1-flash-lite, temperature 0.1, no thinking"
+    },
+    "gemini-3.8-flash+antigravity-cli": {
+     "prompt": "#6544's diplomatic READ prompt, print variant ('Transcribe all the text on this printed page, footnotes included, exactly as written...'), sentinel appended",
+     "read_mode": "image",
+     "access": "cli",
+     "engine_stated": "Gemini 3.8 Flash low via agy -p"
+    },
+    "claude-opus-5-5": {
+     "prompt": "#6544's diplomatic READ prompt, print variant ('Transcribe all the text on this printed page, footnotes included, exactly as written...'), sentinel appended",
+     "read_mode": "image",
+     "access": "cli",
+     "engine_stated": "Opus 5.5 via claude -p --restricted"
+    }
+   },
+   "note": "All 25 pages are Kraus 1935 print (chart arabic-print, panel jabir-7341); one prompt variant per engine."
   }
  },
  "ocr-gate-4763": {

@@ -84,7 +84,7 @@ for (let i = 0; i < books.length; i++) {
         const partial = {
           cover_page: update.cover_page,
           cover_selected_at: update.cover_selected_at,
-          field_provenance: update.field_provenance,
+          'field_provenance.thumbnail': update['field_provenance.thumbnail'],
           updated_at: new Date(),
         };
         await db.collection('books').updateOne({ id: book.id }, { $set: partial });

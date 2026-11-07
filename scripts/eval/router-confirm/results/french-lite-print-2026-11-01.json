@@ -1,0 +1,574 @@
+{
+ "at": "2026-11-01T09:24:53.669Z",
+ "cell": "french-lite/print",
+ "table": "2026-11-01-reread-7853",
+ "decision": "switch (k/n: the live route lite>opus has no defect verdicts)",
+ "pages_waiting": 143663,
+ "winner": {
+  "route": "agy-flash-low@4-read",
+  "kind": "read",
+  "per_call": 4,
+  "calls_per_page": 1,
+  "table_kn": "55/60",
+  "fresh": "24/29",
+  "fresh_ci90": [
+   0.686,
+   0.913
+  ],
+  "wrong_text": 3,
+  "served_outcomes": {
+   "written": 20,
+   "reply wrapper: reply cut before <<<END>>>": 6,
+   "letters outside the book's scripts": 2,
+   "more than one transcription header: restarted or refused read": 1
+  }
+ },
+ "current": {
+  "route": "lite>agy-flash-low",
+  "source": "cron lane (lite>agy-flash-low)",
+  "kind": "correct",
+  "calls_per_page": 1,
+  "table_kn": "108/132",
+  "fresh": "22/29",
+  "fresh_ci90": [
+   0.61,
+   0.863
+  ],
+  "wrong_text": 3,
+  "served_outcomes": {
+   "correction changes 167% of the draft's words: check by eye": 1,
+   "corrector: UNCHANGED (the draft stands)": 7,
+   "correction changes 56% of the draft's words: check by eye": 2,
+   "written": 14,
+   "letters outside the book's scripts": 2,
+   "corrector: CONTAIN (a claim to check by eye)": 1,
+   "correction changes 97% of the draft's words: check by eye": 1,
+   "correction changes 28% of the draft's words: check by eye": 1
+  }
+ },
+ "rule": {
+  "within": 0.08,
+  "wrong_text_max": 0.04,
+  "source": "rules.json switch",
+  "max_unparsed_share": 0.1
+ },
+ "verdict": "PASS",
+ "why": "d 0.069 >= -0.08; wrong text 3/29 within 0.04 of 3/29",
+ "d": 0.069,
+ "d_ci95": [
+  0,
+  0.172
+ ],
+ "separated_from_margin": true,
+ "gained": 2,
+ "lost": 0,
+ "sign_test_p": 0.5,
+ "pairs": 29,
+ "unparsed_pairs": 0,
+ "identical_texts": 7,
+ "dropped_no_image": [
+  "V4-69b51eb1cf111105c42a2f84"
+ ],
+ "controls": {
+  "n": 2,
+  "accepted": 0
+ },
+ "judge_calls": 53,
+ "frame": {
+  "base": "french-lite",
+  "lang": "french",
+  "language_re": "^French",
+  "script": "print",
+  "books_in_frame": 845,
+  "excluded_books_in_frame": 113,
+  "books_tried": 75,
+  "skipped": {
+   "no interior page waiting": 5,
+   "no Flash-Lite page waiting": 39,
+   "script unknown, not print": 1
+  },
+  "exclusion_dirs": [
+   "scripts/eval/correction-pass-7818/results",
+   "scripts/eval/queue-routes-7853/results",
+   "scripts/eval/route-judge-6740/results/fresh-7517-2026-10-27",
+   "scripts/eval/route-judge-6740/results/lane-accept-7263-2026-10-28",
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26"
+  ],
+  "exclusion_files": {
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json": 103,
+   "scripts/eval/estimator/router-table/evidence/queue-routes-7853.score.json": 28,
+   "scripts/eval/estimator/router-table/evidence/correction-pass-7818.score.json": 6,
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/kanripo-align.jsonl.gz": 60,
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/key.json": 1250,
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/names-opus.jsonl.gz": 27,
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/packet-skipped.json": 4,
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/sample.json": 540,
+   "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/translation-rows.jsonl": 180,
+   "scripts/eval/queue-routes-7853/results/router-evidence.score.json": 28,
+   "scripts/eval/queue-routes-7853/results/score.json": 101,
+   "scripts/eval/queue-routes-7853/results/writeback-applied.json": 356,
+   "scripts/eval/queue-routes-7853/results/writeback-dry.json": 356,
+   "scripts/eval/queue-routes-7853/results/writeback.json": 356,
+   "scripts/eval/correction-pass-7818/results/release/frame.json": 326,
+   "scripts/eval/correction-pass-7818/results/release/items.json": 727,
+   "scripts/eval/correction-pass-7818/results/release/pairs-key.json": 74,
+   "scripts/eval/correction-pass-7818/results/release/pairs-opus.jsonl.gz": 152,
+   "scripts/eval/correction-pass-7818/results/release/verdicts-agy.jsonl.gz": 177,
+   "scripts/eval/correction-pass-7818/results/release/verdicts-opus.jsonl.gz": 228,
+   "scripts/eval/correction-pass-7818/results/release/wg-collect.json": 5,
+   "scripts/eval/correction-pass-7818/results/release/wikisource-set.json": 3,
+   "scripts/eval/correction-pass-7818/results/release/ws-drafts.jsonl": 160,
+   "scripts/eval/correction-pass-7818/results/router-evidence.score.json": 6,
+   "scripts/eval/route-judge-6740/results/lane-accept-7263-2026-10-28/rejected-pages.json": 42,
+   "scripts/eval/route-judge-6740/results/lane-accept-7263-2026-10-28/sample.json.gz": 488,
+   "scripts/eval/route-judge-6740/results/lane-accept-7263-2026-10-28/score.json": 54,
+   "scripts/eval/route-judge-6740/results/lane-accept-7263-2026-10-28/verdicts-opus.jsonl.gz": 178,
+   "scripts/eval/route-judge-6740/results/fresh-7517-2026-10-27/key.json": 310,
+   "scripts/eval/route-judge-6740/results/fresh-7517-2026-10-27/packet-skipped.json": 146,
+   "scripts/eval/route-judge-6740/results/fresh-7517-2026-10-27/sample.json": 180,
+   "scripts/eval/route-judge-6740/results/fresh-7517-2026-10-27/score.json": 25
+  },
+  "evidence_ids": 1286,
+  "excluded_ids_and_books": 1528,
+  "unit": "one page a book, books uniform in a seeded order"
+ },
+ "n_drawn": 30,
+ "seed": 20261101,
+ "per_page": [
+  {
+   "book_id": "69b51eae768235dc65997645",
+   "page_id": "69b51eae768235dc65997664",
+   "page_number": 31,
+   "win": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3
+   }
+  },
+  {
+   "book_id": "69b51eb1cf111105c42a2f8a",
+   "page_id": "69b51eb1cf111105c42a2fca",
+   "page_number": 64,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69e750c660c089f2df48eea8",
+   "page_id": "69e750c660c089f2df48eefa",
+   "page_number": 82,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69de9bd71ac4c04c63e420cd",
+   "page_id": "69de9bd71ac4c04c63e42110",
+   "page_number": 67,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69de0b374a4b38a1e32c8f06",
+   "page_id": "69de0b384a4b38a1e32c8fd9",
+   "page_number": 211,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69ac8e61e54b190acc1d3bab",
+   "page_id": "69ac8e61e54b190acc1d3ea2",
+   "page_number": 759,
+   "win": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69ef2f7972c1376fdf2af491",
+   "page_id": "69ef2f7972c1376fdf2af51b",
+   "page_number": 138,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69de1c5fd10d4b0d3f6f1fcf",
+   "page_id": "69de1c5fd10d4b0d3f6f20e9",
+   "page_number": 282,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69c8158a6c6f3cc53c84868b",
+   "page_id": "69f66ddffc7f8cfe952c90be",
+   "page_number": 145,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "6909f75fcf28baa1b4cb0f71",
+   "page_id": "69f6a9ebb6ebee470a7a2ae1",
+   "page_number": 282,
+   "win": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3
+   },
+   "cur": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 3
+   }
+  },
+  {
+   "book_id": "69b660e2b3f4fc04415350b9",
+   "page_id": "69b660e2b3f4fc0441535164",
+   "page_number": 171,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69ef3e3a72c1376fdf2b0d3d",
+   "page_id": "69ef3e3a72c1376fdf2b0e47",
+   "page_number": 266,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69af5946522dc3dfdf725a23",
+   "page_id": "69af5946522dc3dfdf725b51",
+   "page_number": 302,
+   "win": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1
+   },
+   "cur": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1
+   }
+  },
+  {
+   "book_id": "69b51e42ff09e4fe943aabc1",
+   "page_id": "69b51e42ff09e4fe943aac46",
+   "page_number": 133,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69b3031abb4f21532b4f8c7c",
+   "page_id": "69b3031abb4f21532b4f8ec2",
+   "page_number": 582,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69af5956569075d6ffc07222",
+   "page_id": "69af5956569075d6ffc07329",
+   "page_number": 263,
+   "win": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1
+   },
+   "cur": {
+    "accept": false,
+    "wrong": true,
+    "fidelity": 1
+   }
+  },
+  {
+   "book_id": "69b51eaeff09e4fe943b35fd",
+   "page_id": "69b51eaeff09e4fe943b3617",
+   "page_number": 26,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69c819dc6c6f3cc53c849548",
+   "page_id": "69f66f8027ebedd42314d8de",
+   "page_number": 47,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69aea413f7e8488296c56f0f",
+   "page_id": "69aea413f7e8488296c5701b",
+   "page_number": 268,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69b51e5847b06ecd5818e2ad",
+   "page_id": "69b51e5847b06ecd5818e300",
+   "page_number": 83,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69b51ead768235dc65997614",
+   "page_id": "69b51ead768235dc6599762e",
+   "page_number": 26,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69aea4867ce4835d66c24700",
+   "page_id": "6a26edb9836d7b609b240aeb",
+   "page_number": 109,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69e7927a80b52390feb16002",
+   "page_id": "69e7927a80b52390feb160c1",
+   "page_number": 191,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69de1c85d10d4b0d3f6f2bec",
+   "page_id": "69de1c85d10d4b0d3f6f2c81",
+   "page_number": 149,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69e41a388a8dae1074c53551",
+   "page_id": "69e41a388a8dae1074c5361e",
+   "page_number": 205,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69b51eaf47b06ecd58195210",
+   "page_id": "69b51eaf47b06ecd5819523e",
+   "page_number": 46,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69e41a328a8dae1074c53464",
+   "page_id": "69e41a328a8dae1074c53527",
+   "page_number": 195,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   }
+  },
+  {
+   "book_id": "69c7d03425ec2ba5ccd8031c",
+   "page_id": "69f6b21ba8c1a3bc26c31c91",
+   "page_number": 116,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 5
+   },
+   "cur": {
+    "accept": false,
+    "wrong": false,
+    "fidelity": 4
+   }
+  },
+  {
+   "book_id": "69bda0fef6d63c919748c2d6",
+   "page_id": "69bda0fef6d63c919748c56c",
+   "page_number": 662,
+   "win": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   },
+   "cur": {
+    "accept": true,
+    "wrong": false,
+    "fidelity": 4
+   }
+  }
+ ]
+}

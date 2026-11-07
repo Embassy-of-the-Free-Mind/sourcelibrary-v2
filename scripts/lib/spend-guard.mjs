@@ -174,7 +174,7 @@ export async function budgetAllowsDispatch(db, label, { bypass = false, control:
 // ─── Scope envelopes (#4540) ────────────────────────────────────────────────
 //
 // A scope in processing_control.allow_scopes may carry its own budget:
-//   allow_scopes.<tag> = { book_ids, collections, budget_usd, created_at, created_by, expires_at, lanes?, meter_endpoints? }
+//   allow_scopes.<tag> = { book_ids, collections, budget_usd, created_at, created_by, expires_at, lanes?, meter_endpoints?, all_books? }
 // A book in such a scope may dispatch while the SCOPE's envelope has room,
 // even when the global daily dial is closed. This is a second, separately
 // accounted ceiling — never an absence of one (#3826 is why the dial is
@@ -222,6 +222,27 @@ export function nextEnvelopeExpiry({ existing = null, now = new Date(), expires 
 }
 
 /**
+ * Why an envelope's shape is refused, or null when it is valid (#7402).
+ *
+ * `all_books: true` is a LANE-WIDE envelope: no book list, it funds one worker site-wide (the
+ * embed-gemini cron, whose new and corrected pages can be any book). It is only valid together
+ * with `lanes` (else every worker that asks the scoped gate would dispatch unscoped on it) and
+ * `meter_endpoints` (its meter has no book filter, so without one it would count the whole
+ * site's spend and close at once).
+ * set-scope.mjs refuses to write such a shape; readScopeEnvelopes keeps one written by hand
+ * CLOSED (the gate reports it misconfigured) rather than guessing.
+ */
+export function envelopeShapeError(s) {
+  if (!s || s.all_books == null || s.all_books === false) return null;
+  if (s.all_books !== true) return 'all_books must be true or absent';
+  const nonEmpty = (a) => Array.isArray(a) && a.filter(Boolean).length > 0;
+  if (!nonEmpty(s.lanes)) return 'all_books needs lanes (it would fund every worker site-wide)';
+  if (!nonEmpty(s.meter_endpoints)) return 'all_books needs meter_endpoints (its meter has no book filter)';
+  if (nonEmpty(s.book_ids) || nonEmpty(s.collections)) return 'all_books cannot also carry book_ids/collections';
+  return null;
+}
+
+/**
  * Scopes that carry a positive budget envelope and have not expired.
  *
  * An envelope whose expires_at is in the past is CLOSED: it is left out, so no gate opens on
@@ -263,10 +284,22 @@ export function readScopeEnvelopes(control, { now = new Date(), includeExpired =
         meter_endpoints: Array.isArray(s.lanes) && s.lanes.length
           && Array.isArray(s.meter_endpoints) && s.meter_endpoints.length
           ? s.meter_endpoints.filter(Boolean).map(String) : null,
+        // Lane-wide (#7402): funds its lanes on every book, metered by endpoint alone. A shape
+        // envelopeShapeError refuses is still listed, with `misconfigured`, and never opens.
+        all_books: s.all_books === true,
+        misconfigured: envelopeShapeError(s),
       });
     }
   }
   return out;
+}
+
+/**
+ * The ids argument getScopeSpendUsd should meter an envelope with: null (every book, by
+ * endpoint) for a lane-wide one, else its resolved book-id list.
+ */
+export async function envelopeMeterIds(db, env) {
+  return env.all_books ? null : [...await resolveEnvelopeIds(db, env)];
 }
 
 /** Resolve one envelope's full book-id set (book_ids ∪ collection members). */
@@ -281,7 +314,10 @@ async function resolveEnvelopeIds(db, env) {
   return ids;
 }
 
-/** Spend attributed to a set of book ids in the Supabase primary store. */
+/**
+ * Spend attributed to a set of book ids in the Supabase primary store. ids === null is a
+ * lane-wide envelope's meter: no book filter, so the caller must pass endpoints.
+ */
 async function getSupabaseScopeSpend(ids, since, endpoints = null) {
   if (!SUPABASE_SERVICE_KEY) {
     return { usd: 0, rows: 0, error: 'SUPABASE_SERVICE_ROLE_KEY missing' };
@@ -289,16 +325,20 @@ async function getSupabaseScopeSpend(ids, since, endpoints = null) {
   let usd = 0, rows = 0;
   const sinceClause = (since ? `&timestamp=gte.${since.toISOString()}` : '')
     + (endpoints ? `&endpoint=in.(${endpoints.map((e) => encodeURIComponent(`"${e}"`)).join(',')})` : '');
+  if (ids === null && !endpoints) return { usd, rows, error: 'lane-wide meter needs endpoints' };
+  // One "chunk" with no book clause for a lane-wide meter; else chunk the in-list (keep URLs sane).
+  const chunks = [];
+  if (ids === null) chunks.push('');
+  else for (let i = 0; i < ids.length; i += 80) chunks.push(`&book_id=in.(${ids.slice(i, i + 80).map(encodeURIComponent).join(',')})`);
   try {
-    for (let i = 0; i < ids.length; i += 80) { // chunk the in-list: keep URLs sane
-      const inList = ids.slice(i, i + 80).map(encodeURIComponent).join(',');
+    for (const bookClause of chunks) {
       for (let pageNo = 0; ; pageNo++) {
         if (pageNo >= SUPABASE_MAX_PAGES) {
           return { usd, rows, error: `>${SUPABASE_MAX_PAGES * 1000} rows for one chunk — sum truncated` };
         }
         const from = pageNo * 1000;
         const resp = await fetch(
-          `${SUPABASE_URL}/rest/v1/gemini_usage?select=cost_usd&book_id=in.(${inList})${sinceClause}&order=id.asc`,
+          `${SUPABASE_URL}/rest/v1/gemini_usage?select=cost_usd${bookClause}${sinceClause}&order=id.asc`,
           {
             headers: {
               apikey: SUPABASE_SERVICE_KEY,
@@ -333,10 +373,15 @@ export function _setSupabaseScopeSpendReaderForTests(fn) {
 /**
  * Measured spend attributed to a book-id set across BOTH stores, since a
  * given time (or all-time when since is null — tighter, never looser).
+ * ids === null meters a lane-wide envelope (#7402): every book, by endpoint only — refused
+ * (meterError) without endpoints, since that would be the whole site's spend.
  * meterError non-null means the envelope is UNREADABLE; callers fail closed.
  */
 export async function getScopeSpendUsd(db, { ids, since = null, endpoints = null }) {
-  const mongoMatch = { book_id: { $in: ids } };
+  if (ids === null && !(Array.isArray(endpoints) && endpoints.length)) {
+    return { usd: 0, rows: 0, meterError: 'lane-wide meter needs meter_endpoints' };
+  }
+  const mongoMatch = ids === null ? {} : { book_id: { $in: ids } };
   if (since) mongoMatch._id = { $gte: ObjectId.createFromTime(Math.floor(since.getTime() / 1000)) };
   if (endpoints) mongoMatch.endpoint = { $in: endpoints };
   const [agg] = await db.collection('gemini_usage').aggregate([
@@ -357,7 +402,9 @@ export async function getScopeSpendUsd(db, { ids, since = null, endpoints = null
  * envelope has room opens dispatch FOR ITS BOOKS ONLY.
  *
  * Returns { allowed, envelopeIds }:
- *   allowed=true,  envelopeIds=null  → global dial open, dispatch normally
+ *   allowed=true,  envelopeIds=null  → global dial open, dispatch normally — or a
+ *                                      lane-wide (all_books) envelope for THIS label's
+ *                                      lane has room (#7402): unscoped, for that lane only
  *   allowed=true,  envelopeIds=Set   → SCOPED dispatch: the caller MUST
  *                                      confine candidates to these book ids.
  *                                      A caller that cannot confine must use
@@ -402,7 +449,9 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
   }
   const open = new Set();
   const parts = [];
+  let laneWide = null; // tag of an open all_books envelope for this label's lane
   for (const env of envelopes) {
+    if (env.misconfigured) { parts.push(`${env.tag}: MISCONFIGURED (${env.misconfigured}) — closed`); continue; }
     // Listed only so the log says why it is shut: an expired envelope never opens (#4599).
     if (env.expired) {
       const when = Number.isNaN(env.expires_at.getTime()) ? '(unparseable expires_at)' : env.expires_at.toISOString();
@@ -417,6 +466,18 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
       parts.push(`${env.tag}: lane-restricted to ${env.lanes.join(',')}`);
       continue;
     }
+    if (env.all_books) {
+      // envelopeShapeError guarantees lanes + meter_endpoints, and the lane check above passed.
+      const s = await getScopeSpendUsd(db, { ids: null, since: env.created_at, endpoints: env.meter_endpoints });
+      if (s.meterError) { parts.push(`${env.tag}: METER UNREADABLE (${s.meterError}) — closed`); continue; }
+      if (s.usd < env.budget_usd) {
+        laneWide ??= env.tag;
+        parts.push(`${env.tag}: $${s.usd.toFixed(2)}/$${env.budget_usd.toFixed(2)} OPEN (all books, lanes ${env.lanes.join(',')})`);
+      } else {
+        parts.push(`${env.tag}: $${s.usd.toFixed(2)}/$${env.budget_usd.toFixed(2)} ENVELOPE SPENT`);
+      }
+      continue;
+    }
     const ids = await resolveEnvelopeIds(db, env);
     if (ids.size === 0) { parts.push(`${env.tag}: empty scope`); continue; }
     const s = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at, endpoints: env.meter_endpoints });
@@ -429,6 +490,10 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
     }
   }
   const globalNote = budget === null ? 'global dial unset' : 'global daily ceiling reached';
+  if (laneWide) {
+    console.log(`  [spend-guard] ${label}: ${globalNote} → DISPATCH unscoped on lane-wide envelope ${laneWide}. Envelopes: ${parts.join('; ')}`);
+    return { allowed: true, envelopeIds: null };
+  }
   if (open.size > 0) {
     console.log(`  [spend-guard] ${label}: ${globalNote} → SCOPED DISPATCH, confined to ${open.size} book(s). Envelopes: ${parts.join('; ')}`);
     return { allowed: true, envelopeIds: open };

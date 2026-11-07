@@ -43,7 +43,7 @@ const LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('
 const DELAY_MS = parseInt(process.argv.find(a => a.startsWith('--delay='))?.split('=')[1] || '2500', 10);
 const BATCH_SIZE = 50; // MediaWiki API max titles per query for non-bot clients
 
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org) commons-source-ids-backfill';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) commons-source-ids-backfill';
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 

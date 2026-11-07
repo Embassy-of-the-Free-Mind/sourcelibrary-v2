@@ -24,8 +24,9 @@
  *             labelled as such, never silently promoted).
  *
  * Bulk runs go on Hetzner (import-cost-and-egress.md), one host at a time with
- * a per-host interval, hosts in parallel. Gallica blocks datacenter IPs → run
- * `--provider gallica` from the laptop. Harvard 429s every path today.
+ * a per-host interval, hosts in parallel. Gallica's own host challenges every script
+ * (403 from the laptop too, 2026-10-30), so Gallica manifests are read from BnF's open
+ * API, openapi.bnf.fr (#7771). e-rara 403s main's IP; run it from gex45. Harvard 429s every path.
  *
  *   node --env-file=.env.production.local scripts/maintenance/backfill-rights-provenance.mjs --lane stored --plan
  *   node --env-file=.env.production.local scripts/maintenance/backfill-rights-provenance.mjs --lane manifest --provider mdz --limit 5 --plan
@@ -47,7 +48,7 @@
 import { MongoClient } from 'mongodb';
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
-import { readManifestRights, readMetsRights, classifyStored, commercialUse } from '../lib/rights-normalize.mjs';
+import { readManifestRights, readMetsRights, readIaRights, classifyStored, commercialUse } from '../lib/rights-normalize.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -65,7 +66,7 @@ const HOST_INTERVAL = parseInt(opt('host-interval', '400'), 10);
 const ALL_BOOKS = flag('all-books');
 const PER_HOST = parseInt(opt('per-host', '0'), 10) || 0; // sampling: at most N books per host (spot-checks, smoke runs)
 const SWEEP = 'rights-provenance-2026-09';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; rights-provenance backfill; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) rights-provenance-backfill';
 
 if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 console.log(`${WRITE ? 'WRITE' : 'PLAN (no writes; add --write)'} · lane=${LANE} · providers=${PROVIDERS?.join(',') || 'all'}${EXCLUDE.length ? ' minus ' + EXCLUDE.join(',') : ''} · limit=${LIMIT || 'none'} · out=${OUT || '-'}`);
@@ -115,13 +116,27 @@ if (LANE === 'stored' || LANE === 'all') {
 }
 
 // ── Lane 2: manifest re-read for the still-unknown ─────────────────────────
-function fetchPlan(s) {
+function fetchPlan(s, iaIdentifier) {
   const man = typeof s.iiif_manifest === 'string' && /^https?:/.test(s.iiif_manifest) ? s.iiif_manifest : null;
   const src = typeof s.source_url === 'string' && /^https?:/.test(s.source_url) ? s.source_url : null;
   if (s.provider === 'slub_dresden') {
     const m = (man || src || '').match(/digital\.slub-dresden\.de\/(?:id)?(\d+)/);
     if (m) return { kind: 'mets', url: `https://digital.slub-dresden.de/oai?verb=GetRecord&metadataPrefix=mets&identifier=oai:de:slub-dresden:db:id-${m[1]}` };
     return null;
+  }
+  // Gallica: the same manifest from BnF's open API (IIIF v3; `rights` states e.g. NoC-NC per item)
+  if (s.provider === 'gallica') {
+    const m = (man || src || '').match(/ark:\/12148\/([a-z0-9]+)/i);
+    if (m) return { kind: 'iiif', url: `https://openapi.bnf.fr/iiif/presentation/v3/ark:/12148/${m[1]}/manifest.json` };
+  }
+  // e-rara's IIIF manifests state no rights; its OAI METS record does (mods:accessCondition, PDM 1.0)
+  if (s.provider === 'e-rara' || s.provider === 'erara') {
+    const m = (man || src || '').match(/e-rara\.ch\/(?:i3f\/v2\d\/|[a-z_]+\/[a-z]+\/(?:titleinfo\/)?)(\d+)/);
+    if (m) return { kind: 'mets', url: `https://www.e-rara.ch/oai?verb=GetRecord&metadataPrefix=mets&identifier=${m[1]}` };
+  }
+  // Internet Archive: the item's own metadata (licenseurl / rights / possible-copyright-status)
+  if (s.provider === 'internet_archive' && typeof iaIdentifier === 'string' && /^[A-Za-z0-9._-]+$/.test(iaIdentifier)) {
+    return { kind: 'ia', url: `https://archive.org/metadata/${iaIdentifier}/metadata` };
   }
   if (s.provider === 'harvard' && src && /nrs\.lib\.harvard\.edu\/.*MANIFEST/i.test(src)) return { kind: 'iiif', url: src };
   if (man) return { kind: 'iiif', url: man };
@@ -155,6 +170,7 @@ async function fetchManifest(plan) {
       hostStrikes.set(host, 0);
       if (status !== 200) return { http_status: status, error: `HTTP ${status}` };
       if (plan.kind === 'mets') { const oaiErr = text.match(/<error code="([^"]+)"/); return oaiErr ? { http_status: 200, error: `oai-error:${oaiErr[1]}` } : { http_status: 200, mets: text }; } // an OAI error page is HTTP 200
+      if (plan.kind === 'ia') { try { const j = JSON.parse(text); return j?.result && typeof j.result === 'object' ? { http_status: 200, ia: j.result } : { http_status: 200, error: 'ia-no-item' }; } catch { return { http_status: 200, error: 'not-json' }; } }
       try { return { http_status: 200, manifest: JSON.parse(text) }; }
       catch { return { http_status: 200, error: 'not-json' }; }
     } catch (e) { last = { http_status: null, error: e.name === 'TimeoutError' ? 'timeout' : (e.cause?.code || e.message).slice(0, 120) }; await sleep(3000); }
@@ -164,8 +180,8 @@ async function fetchManifest(plan) {
 
 if (LANE === 'manifest' || LANE === 'all') {
   const q = { ...scope };
-  if (!FORCE) q.$or = [{ 'image_source.rights_normalized': { $exists: false } }, { 'image_source.rights_normalized.class': 'unknown' }, { 'image_source.rights_normalized.status': { $in: ['fetch-failed', 'stated-from-import'] } }];
-  const list = await books.find(q, { projection: { id: 1, title: 1, image_source: 1 } }).toArray();
+  if (!FORCE) q.$or = [{ 'image_source.rights_normalized': { $exists: false } }, { 'image_source.rights_normalized.class': 'unknown' }, { 'image_source.rights_normalized.status': { $in: ['fetch-failed', 'stated-from-import', 'assumed-by-importer'] } }];
+  const list = await books.find(q, { projection: { id: 1, title: 1, ia_identifier: 1, image_source: 1 } }).toArray();
   // a book with no rights_normalized yet (stored lane not run) only belongs here if its stored value is unknown
   const stillUnknown = (b) => FORCE || b.image_source?.rights_normalized ? true : classifyStored({ license: b.image_source?.license, license_url: b.image_source?.license_url, attribution: b.image_source?.attribution, rights: b.image_source?.rights, provider: b.image_source?.provider }).class === 'unknown';
   const todo = list.filter(b => !done.has(b.id) && stillUnknown(b)).slice(0, PER_HOST ? undefined : (LIMIT || undefined));
@@ -174,7 +190,9 @@ if (LANE === 'manifest' || LANE === 'all') {
   // group by host so each host is sequential with an interval; hosts run in parallel
   const byHost = new Map();
   for (const b of todo) {
-    const plan = fetchPlan(b.image_source || {});
+    const plan = fetchPlan(b.image_source || {}, b.ia_identifier);
+    // an importer assumption is worth re-reading only where a source can state otherwise
+    if (b.image_source?.rights_normalized?.status === 'assumed-by-importer' && plan?.kind !== 'ia') continue;
     const host = plan ? new URL(plan.url).host : '(no-manifest)';
     if (!byHost.has(host)) byHost.set(host, []);
     byHost.get(host).push({ b, plan });
@@ -195,9 +213,22 @@ if (LANE === 'manifest' || LANE === 'all') {
       doc = { class: 'unknown', statement_uri: null, class_from: null, attribution_required: s.attribution ? String(s.attribution) : null, attribution_from: s.attribution ? 'image_source.attribution' : null, terms_text: null, raw: { license: s.license, license_url: s.license_url || undefined, attribution: s.attribution || undefined }, status: 'no-manifest', source: 'importer-license-field', manifest_url: null, read_at: now() };
     } else {
       const res = await fetchManifest(plan);
-      if (res.manifest || res.mets) {
+      if (res.ia) {
+        const r = readIaRights(res.ia);
+        // The archive silent: keep the importer's labelled assumption rather than replace it with
+        // 'unknown' (the dataset API serves class). The JSONL row records that we looked.
+        if (r.status !== 'stated' && s.rights_normalized?.status === 'assumed-by-importer') {
+          emit({ id: b.id, provider: prov, status: 'ia-silent-kept-assumed', class: s.rights_normalized.class, manifest_url: plan.url, raw: r.raw });
+          count(prov, 'ia-silent-kept-assumed', s.rights_normalized.class); processed++; return;
+        }
+        doc = { ...r, source: 'ia-metadata', manifest_url: plan.url, read_at: now(), http_status: 200 };
+      } else if (res.manifest || res.mets) {
         const r = res.mets ? readMetsRights(res.mets) : readManifestRights(res.manifest);
         doc = { ...r, source: res.mets ? 'oai-mets' : 'iiif-manifest', manifest_url: plan.url, read_at: now(), http_status: 200 };
+      } else if (s.rights_normalized?.status === 'assumed-by-importer') {
+        // IA re-read failed: the labelled assumption stands (never relabel it stated-from-import)
+        emit({ id: b.id, provider: prov, status: 'ia-fetch-failed-kept-assumed', manifest_url: plan.url, http_status: res.http_status, error: res.error });
+        count(prov, 'ia-fetch-failed-kept-assumed', s.rights_normalized.class); processed++; return;
       } else {
         // fetch failed: fall back to what the importer captured from the manifest at import time, labelled as such
         const fb = classifyStored({ license: s.license, license_url: s.license_url, attribution: s.attribution, rights: s.rights, provider: s.provider }, { captured: true });

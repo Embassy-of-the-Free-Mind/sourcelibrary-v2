@@ -1,0 +1,53 @@
+[
+  {
+    "book_id": "b20-r", "slot": 1, "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Freher's emblem manuscript (Boehmist Christian theosophy, c.1720) is squarely within the library's esoteric scope; no tradition or collection given in the packet to test against.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. Pen numbering of the emblems runs forward across the run (58–60 on p.36, 81–83 on p.45, 135–136 on p.74), consistent with ~2–3 emblems per leaf; no backsteps seen. None of the three pages carries a translation, so a reader gets the Latin mottos untranslated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page; the three Latin mottos are left unrendered for an English reader.", "severity": "minor", "class": "other:no-translation" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Gläntze in der Sonnen Licht, wie du wilt, etc.", "image": "Gläntze in der Sonnen Lufft [or Lust], wie du wilt, etc", "problem": "the German motto's noun is read as the expected 'Licht'; the hand shows an L-u-f/s-t word, not 'Licht' — the motto's image (preen in the sun's air/pleasure) is normalised", "severity": "moderate", "class": "O8" },
+          { "ocr": "Ex una mente semper Totâ.", "image": "Ex una Mente semper Totâ.", "problem": "capital M of Mente lowered", "severity": "minor" },
+          { "ocr": "<image-desc …>In the center is a radiant sun or monstrance-like object on an altar", "image": "a small seated figure holding a branch on a block, inside rays", "problem": "the central figure of emblem 81 is described as a sun/monstrance; the eye in the clouds is not mentioned", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page.", "severity": "minor", "class": "other:no-translation" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 74,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "No translation stored for this page.", "severity": "minor", "class": "other:no-translation" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of the emblem mottos is essentially exact on all three leaves, with sensible image descriptions; the one real slip is the German motto on p.45 normalised to 'Sonnen Licht'. No translations exist for these pages, so the book is readable only to Latinists."
+  }
+]

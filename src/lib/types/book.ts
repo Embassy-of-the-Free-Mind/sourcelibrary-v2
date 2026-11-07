@@ -32,6 +32,10 @@ export interface Book {
   // resolved image + link + caption (re-pickable if a URL ever goes stale).
   about_visual?: { src: string; href: string; caption?: string } | null;
 
+  // A facing-page edition whose English leaves are the PUBLISHED translation (a Loeb, #8321).
+  // Read through src/lib/facing-translation.ts; written by scripts/maintenance/loeb-facing-census.mjs.
+  facing_translation?: import('@/lib/facing-translation').FacingTranslation | null;
+
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
@@ -103,6 +107,7 @@ export interface Book {
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_archived?: number;     // CACHED — pages with archived_photo on R2 (excludes failed archives)
   pages_translated_es?: number; // CACHED — pages with a Spanish edition (translations.es / legacy translation_es); synced by scripts/maintenance/sync-pages-translated-es.mjs
+  pages_translated_zh?: number; // CACHED — pages with a Chinese edition (translations.zh), written by the job that writes the text (#7537)
   translation_percent?: number; // Computed at read time from pages_translated/pages_ocr (never stored). Uses pages_ocr as denominator so blank pages don't penalize the percentage.
   created_at?: Date;
   updated_at?: Date;
@@ -386,7 +391,7 @@ export interface SourceWorkDate {
 
 // Provenance entry for a single metadata field
 export interface FieldProvenanceEntry {
-  source: string;  // 'ai_enrichment' | 'import' | 'metadata_verification' | 'admin_edit' | 'manual' | 'ustc_catalog' | 'bph_catalogue' | 'cross_reference' | 'ai_generation' | 'ustc_enrichments'
+  source: string;  // 'ai_enrichment' | 'import' | 'metadata_verification' | 'admin_edit' | 'manual' | 'ustc_catalog' | 'bph_catalogue' | 'cross_reference' | 'ai_generation' | 'ustc_enrichments' | 'source_catalogue'
   model?: string;
   date?: string | Date;
   confidence?: 'high' | 'medium' | 'low';

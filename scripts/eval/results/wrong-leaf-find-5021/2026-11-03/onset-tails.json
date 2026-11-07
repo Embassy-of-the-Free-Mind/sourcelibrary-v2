@@ -1,0 +1,50 @@
+{
+ "ends mid-word (hyphen)": {
+  "onset": [
+   121,
+   453,
+   0.267,
+   0.228,
+   0.31
+  ],
+  "same_calls_other_pages": [
+   196,
+   1321,
+   0.148,
+   0.13,
+   0.169
+  ]
+ },
+ "ends mid-sentence": {
+  "onset": [
+   275,
+   453,
+   0.607,
+   0.561,
+   0.651
+  ],
+  "same_calls_other_pages": [
+   834,
+   1321,
+   0.631,
+   0.605,
+   0.657
+  ]
+ },
+ "has catchword tag": {
+  "onset": [
+   0,
+   453,
+   0,
+   0,
+   0.008
+  ],
+  "same_calls_other_pages": [
+   0,
+   1321,
+   0,
+   0,
+   0.003
+  ]
+ }
+}

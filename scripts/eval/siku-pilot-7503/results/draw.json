@@ -1,0 +1,205 @@
+{
+ "seed": 7503,
+ "reason": "paddle-zh-5600-ocr-only",
+ "frame_books": 6975,
+ "held_books": 7004,
+ "excluded_other_jobs": 29,
+ "quartile_cuts": [
+  127,
+  146,
+  170
+ ],
+ "drawn_at": "2026-10-27T12:26:36.807Z",
+ "skipped": [
+  {
+   "id": "6a3c6163879008ba7e15dd91",
+   "why": "has English"
+  },
+  {
+   "id": "6a3c6980af3c49b59c5e01d6",
+   "why": "sibling translated"
+  },
+  {
+   "id": "6a3c648039b4508b04e278d5",
+   "why": "has English"
+  },
+  {
+   "id": "6a3c644139b4508b04e2597f",
+   "why": "has English"
+  },
+  {
+   "id": "6a3c738f01fe4f593c1e97c7",
+   "why": "sibling translated"
+  },
+  {
+   "id": "6a3c639593327f06e8351760",
+   "why": "has English"
+  },
+  {
+   "id": "6a3cb6d957c1f37219c4cea9",
+   "why": "sibling translated"
+  }
+ ],
+ "books": [
+  {
+   "book_id": "6a3c6e7e01fe4f593c1c35dd",
+   "title": "儀禮析疑·卷一~卷二 (vol 1)",
+   "quartile": 1,
+   "pages_count": 122,
+   "visible": true,
+   "translatable": 119
+  },
+  {
+   "book_id": "6a3cbef2f9474f825c1644ad",
+   "title": "皇極經世書解·卷三 (vol 14)",
+   "quartile": 1,
+   "pages_count": 110,
+   "visible": true,
+   "translatable": 102
+  },
+  {
+   "book_id": "6a3cba213dce6cfad7499c52",
+   "title": "本草乘雅半偈·卷七 (vol 7)",
+   "quartile": 1,
+   "pages_count": 126,
+   "visible": true,
+   "translatable": 124
+  },
+  {
+   "book_id": "6a3c75dc39b4508b04e5e2ac",
+   "title": "傳信適用方·卷上 (vol 1)",
+   "quartile": 1,
+   "pages_count": 124,
+   "visible": true,
+   "translatable": 123
+  },
+  {
+   "book_id": "6a3c767401fe4f593c1fb25a",
+   "title": "樂書·卷一百四十九~卷一百五十五 (vol 22)",
+   "quartile": 1,
+   "pages_count": 126,
+   "visible": true,
+   "translatable": 100
+  },
+  {
+   "book_id": "6a3c74c339b4508b04e593bc",
+   "title": "萬姓統譜·卷三十七~卷三十九 (vol 13)",
+   "quartile": 2,
+   "pages_count": 146,
+   "visible": true,
+   "translatable": 143
+  },
+  {
+   "book_id": "6a3cbcc3ec254ff6cadf2e44",
+   "title": "禮書綱目·卷三十三~卷三十五 (vol 15)",
+   "quartile": 2,
+   "pages_count": 128,
+   "visible": true,
+   "translatable": 126
+  },
+  {
+   "book_id": "6a3c6847af3c49b59c5d7916",
+   "title": "山堂肆考·卷一百九十三~卷一百九十四 (vol 86)",
+   "quartile": 2,
+   "pages_count": 146,
+   "visible": true,
+   "translatable": 143
+  },
+  {
+   "book_id": "6a3ce7ab0a0011cb4bc0a847",
+   "title": "詩總聞·卷八~卷十 (vol 12)",
+   "quartile": 2,
+   "pages_count": 145,
+   "visible": true,
+   "translatable": 139
+  },
+  {
+   "book_id": "6a3c800801fe4f593c21f140",
+   "title": "童溪易傳·卷一~卷三 (vol 1)",
+   "quartile": 2,
+   "pages_count": 129,
+   "visible": true,
+   "translatable": 121
+  },
+  {
+   "book_id": "6a3c70de01fe4f593c1d5b26",
+   "title": "管子補注·卷八~卷十 (vol 3)",
+   "quartile": 3,
+   "pages_count": 149,
+   "visible": true,
+   "translatable": 148
+  },
+  {
+   "book_id": "6a3c6c0c01fe4f593c1afc3e",
+   "title": "疑耀·卷四~卷五 (vol 3)",
+   "quartile": 3,
+   "pages_count": 147,
+   "visible": true,
+   "translatable": 146
+  },
+  {
+   "book_id": "6a3c6ad6af3c49b59c5eaa11",
+   "title": "日講四書解義·卷二十二~卷二十三 (vol 14)",
+   "quartile": 3,
+   "pages_count": 165,
+   "visible": true,
+   "translatable": 164
+  },
+  {
+   "book_id": "6a3c6f2201fe4f593c1c9538",
+   "title": "簡端錄·卷一~卷三 (vol 1)",
+   "quartile": 3,
+   "pages_count": 155,
+   "visible": true,
+   "translatable": 151
+  },
+  {
+   "book_id": "6a3ce8230a0011cb4bc0c42c",
+   "title": "六家詩名物疏·提要上~提要下 (vol 1)",
+   "quartile": 3,
+   "pages_count": 157,
+   "visible": true,
+   "translatable": 156
+  },
+  {
+   "book_id": "6a3c67f9af3c49b59c5d53b9",
+   "title": "山堂肆考·卷十二~卷十四 (vol 6)",
+   "quartile": 4,
+   "pages_count": 184,
+   "visible": true,
+   "translatable": 181
+  },
+  {
+   "book_id": "6a3c6c4339b4508b04e47ebd",
+   "title": "日知錄·卷二十~卷二十一 (vol 12)",
+   "quartile": 4,
+   "pages_count": 177,
+   "visible": true,
+   "translatable": 176
+  },
+  {
+   "book_id": "6a3c716e01fe4f593c1d78cb",
+   "title": "御纂朱子全書·卷三十九~卷四十 (vol 83)",
+   "quartile": 4,
+   "pages_count": 199,
+   "visible": true,
+   "translatable": 192
+  },
+  {
+   "book_id": "6a3c711839b4508b04e51b03",
+   "title": "格物通·卷九十~卷九十四 (vol 19)",
+   "quartile": 4,
+   "pages_count": 185,
+   "visible": true,
+   "translatable": 179
+  },
+  {
+   "book_id": "6a3c6c2701fe4f593c1b0da1",
+   "title": "通雅·卷四十一~卷四十三 (vol 22)",
+   "quartile": 4,
+   "pages_count": 195,
+   "visible": true,
+   "translatable": 193
+  }
+ ]
+}

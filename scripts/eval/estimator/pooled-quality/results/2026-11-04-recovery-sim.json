@@ -1,0 +1,359 @@
+{
+ "simulation_only": true,
+ "sig_true": {
+  "wsys": 0.5,
+  "lang": 0.5,
+  "eng": 0.75,
+  "round": 0.35,
+  "book": 1.0,
+  "page": 0.5
+ },
+ "stages": {
+  "ocr": {
+   "design": {
+    "pages": 4125,
+    "p": 872
+   },
+   "simulation": [
+    {
+     "sig_true": {
+      "wsys": 0.5,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.5
+     },
+     "sig_fit": {
+      "wsys": 0.35,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 0.75,
+      "page": 0.05
+     },
+     "within_factor2": {
+      "wsys": true,
+      "lang": true,
+      "eng": true,
+      "round": true,
+      "book": true,
+      "page": false
+     },
+     "method_offsets": {
+      "fortnightly-spot-check": {
+       "true": 0.0,
+       "est": 0.081,
+       "sd": 0.212,
+       "inside90": true
+      },
+      "judged-pages": {
+       "true": 0.6,
+       "est": -0.219,
+       "sd": 0.768,
+       "inside90": true
+      },
+      "ocr-convergence": {
+       "true": -0.5,
+       "est": -0.554,
+       "sd": 0.258,
+       "inside90": true
+      },
+      "served-audit": {
+       "true": 0.3,
+       "est": 0.178,
+       "sd": 0.273,
+       "inside90": true
+      },
+      "shelf-overview": {
+       "true": -0.3,
+       "est": -0.259,
+       "sd": 0.209,
+       "inside90": true
+      }
+     }
+    },
+    {
+     "sig_true": {
+      "wsys": 0.5,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.5
+     },
+     "sig_fit": {
+      "wsys": 0.75,
+      "lang": 0.2,
+      "eng": 1.0,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.05
+     },
+     "within_factor2": {
+      "wsys": true,
+      "lang": false,
+      "eng": true,
+      "round": true,
+      "book": true,
+      "page": false
+     },
+     "method_offsets": {
+      "fortnightly-spot-check": {
+       "true": 0.0,
+       "est": 0.039,
+       "sd": 0.235,
+       "inside90": true
+      },
+      "judged-pages": {
+       "true": 0.6,
+       "est": 0.771,
+       "sd": 0.903,
+       "inside90": true
+      },
+      "ocr-convergence": {
+       "true": -0.5,
+       "est": -0.285,
+       "sd": 0.279,
+       "inside90": true
+      },
+      "served-audit": {
+       "true": 0.3,
+       "est": 0.067,
+       "sd": 0.285,
+       "inside90": true
+      },
+      "shelf-overview": {
+       "true": -0.3,
+       "est": -0.106,
+       "sd": 0.22,
+       "inside90": true
+      }
+     }
+    },
+    {
+     "sig_true": {
+      "wsys": 0.5,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.5
+     },
+     "sig_fit": {
+      "wsys": 0.2,
+      "lang": 0.75,
+      "eng": 0.75,
+      "round": 0.5,
+      "book": 0.75,
+      "page": 0.05
+     },
+     "within_factor2": {
+      "wsys": false,
+      "lang": true,
+      "eng": true,
+      "round": true,
+      "book": true,
+      "page": false
+     },
+     "method_offsets": {
+      "fortnightly-spot-check": {
+       "true": 0.0,
+       "est": 0.131,
+       "sd": 0.278,
+       "inside90": true
+      },
+      "judged-pages": {
+       "true": 0.6,
+       "est": 0.716,
+       "sd": 0.798,
+       "inside90": true
+      },
+      "ocr-convergence": {
+       "true": -0.5,
+       "est": -0.322,
+       "sd": 0.348,
+       "inside90": true
+      },
+      "served-audit": {
+       "true": 0.3,
+       "est": 0.27,
+       "sd": 0.363,
+       "inside90": true
+      },
+      "shelf-overview": {
+       "true": -0.3,
+       "est": -0.401,
+       "sd": 0.266,
+       "inside90": true
+      }
+     }
+    }
+   ]
+  },
+  "translation": {
+   "design": {
+    "pages": 1111,
+    "p": 519
+   },
+   "simulation": [
+    {
+     "sig_true": {
+      "wsys": 0.5,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.5
+     },
+     "sig_fit": {
+      "wsys": 0.5,
+      "lang": 0.2,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 0.75,
+      "page": 0.05
+     },
+     "within_factor2": {
+      "wsys": true,
+      "lang": false,
+      "eng": true,
+      "round": true,
+      "book": true,
+      "page": false
+     },
+     "method_offsets": {
+      "fortnightly-spot-check": {
+       "true": 0.067,
+       "est": 0.331,
+       "sd": 0.214,
+       "inside90": true
+      },
+      "judged-pages": {
+       "true": 0.667,
+       "est": 0.156,
+       "sd": 0.661,
+       "inside90": true
+      },
+      "served-audit": {
+       "true": -0.433,
+       "est": -0.395,
+       "sd": 0.278,
+       "inside90": true
+      },
+      "shelf-overview": {
+       "true": 0.367,
+       "est": 0.064,
+       "sd": 0.209,
+       "inside90": true
+      }
+     }
+    },
+    {
+     "sig_true": {
+      "wsys": 0.5,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.5
+     },
+     "sig_fit": {
+      "wsys": 0.05,
+      "lang": 0.75,
+      "eng": 0.35,
+      "round": 0.5,
+      "book": 0.75,
+      "page": 0.05
+     },
+     "within_factor2": {
+      "wsys": false,
+      "lang": true,
+      "eng": false,
+      "round": true,
+      "book": true,
+      "page": false
+     },
+     "method_offsets": {
+      "fortnightly-spot-check": {
+       "true": 0.067,
+       "est": -0.042,
+       "sd": 0.279,
+       "inside90": true
+      },
+      "judged-pages": {
+       "true": 0.667,
+       "est": 1.391,
+       "sd": 0.68,
+       "inside90": true
+      },
+      "served-audit": {
+       "true": -0.433,
+       "est": -0.164,
+       "sd": 0.37,
+       "inside90": true
+      },
+      "shelf-overview": {
+       "true": 0.367,
+       "est": 0.206,
+       "sd": 0.267,
+       "inside90": true
+      }
+     }
+    },
+    {
+     "sig_true": {
+      "wsys": 0.5,
+      "lang": 0.5,
+      "eng": 0.75,
+      "round": 0.35,
+      "book": 1.0,
+      "page": 0.5
+     },
+     "sig_fit": {
+      "wsys": 0.75,
+      "lang": 0.1,
+      "eng": 1.5,
+      "round": 0.5,
+      "book": 1.0,
+      "page": 3.0
+     },
+     "within_factor2": {
+      "wsys": true,
+      "lang": false,
+      "eng": true,
+      "round": true,
+      "book": true,
+      "page": false
+     },
+     "method_offsets": {
+      "fortnightly-spot-check": {
+       "true": 0.067,
+       "est": -0.203,
+       "sd": 0.285,
+       "inside90": true
+      },
+      "judged-pages": {
+       "true": 0.667,
+       "est": 0.003,
+       "sd": 0.788,
+       "inside90": true
+      },
+      "served-audit": {
+       "true": -0.433,
+       "est": -0.039,
+       "sd": 0.37,
+       "inside90": true
+      },
+      "shelf-overview": {
+       "true": 0.367,
+       "est": 0.243,
+       "sd": 0.277,
+       "inside90": true
+      }
+     }
+    }
+   ]
+  }
+ }
+}

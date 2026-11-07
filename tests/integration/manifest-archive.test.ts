@@ -14,7 +14,7 @@ import type { Db } from 'mongodb';
 import { getTestDb, cleanDb } from '../setup';
 import { materializePages, initialPagesState } from '../../scripts/lib/lazy-pages.mjs';
 import { archiveFromManifest } from '../../scripts/lib/manifest-archive.mjs';
-import { openLedger, ledgerKey, manifestFingerprint } from '../../scripts/lib/manifest-ledger.mjs';
+import { openLedger, ledgerKey, manifestFingerprint, LEDGER_LAYOUT } from '../../scripts/lib/manifest-ledger.mjs';
 import { makeBookDoc } from '../../scripts/lib/book-docs.mjs';
 
 const BOOK = 'lazy-arch-book';
@@ -80,7 +80,7 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     expect(r.status).toBe('complete');
     expect(r.archived).toBe(N - 1);              // canvas 4 has no image
     expect(await db.collection('pages').countDocuments({ book_id: BOOK })).toBe(0); // no page docs
-    expect([...store.objects.keys()].sort()).toEqual([1, 2, 3, 5, 6].map(n => ledgerKey(BOOK, n)).sort());
+    expect([...store.objects.keys()].sort()).toEqual([1, 2, 3, 5, 6].map(n => ledgerKey(BOOK, n, LEDGER_LAYOUT)).sort());
 
     const book = await db.collection('books').findOne({ id: BOOK });
     expect(book?.pages_state?.state).toBe('manifest_only');
@@ -98,7 +98,7 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     expect(pages).toHaveLength(N);
     for (const p of pages) {
       if (p.page_number === 4) { expect(p.archived_photo).toBeUndefined(); continue; }
-      expect(p.archived_photo).toBe(`${BASE}/${ledgerKey(BOOK, p.page_number)}`);
+      expect(p.archived_photo).toBe(`${BASE}/${ledgerKey(BOOK, p.page_number, LEDGER_LAYOUT)}`);
       // It SERVES: the object exists, and it is canvas n's image, not a neighbour's.
       const bytes = store.objects.get(p.archived_photo.slice(BASE.length + 1))!;
       expect(bytes).toBeDefined();
@@ -164,7 +164,7 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     const store = fakeStore();
     const r = await archiveFromManifest(db, BOOK, { put: store.put, download: fakeImages({}, new Set([3])).download, fetchManifest: async () => manifest() });
     expect(r.failed).toBe(1);
-    expect(store.objects.has(ledgerKey(BOOK, 3))).toBe(false);
+    expect(store.objects.has(ledgerKey(BOOK, 3, LEDGER_LAYOUT))).toBe(false);
     expect(openLedger(await ledgerOf(db)).isDone(3)).toBe(false);
   });
 
@@ -192,5 +192,43 @@ describe('manifest-direct archiving (#5448 step 2)', () => {
     const r = await archiveFromManifest(db, BOOK, { put: store.put, download: fakeImages().download, fetchManifest: async () => manifest() });
     expect(r.status).toBe('not_lazy');
     expect(store.objects.size).toBe(0);
+  });
+});
+
+describe('a manifest-only book whose pages all 500 (#5448)', () => {
+  it('is abandoned after FAIL_STREAK requests without pausing the host', async () => {
+    await cleanDb();
+    const db = getTestDb();
+    await seed(db);
+    const { createHostBreaker } = await import('../../scripts/lib/host-breaker.mjs');
+    const { FAIL_STREAK } = await import('../../scripts/lib/archive-miss.mjs');
+    const breaker = createHostBreaker();
+    const calls: string[] = [];
+    const r = await archiveFromManifest(db, BOOK, {
+      put: fakeStore().put, breaker, pageConcurrency: 1, fetchManifest: async () => manifest(),
+      download: async (u: string) => { calls.push(u); throw new Error('HTTP 500'); },
+    });
+    expect(calls).toHaveLength(FAIL_STREAK);
+    expect(r.status).toBe('partial');
+    expect(breaker.allow('img.example.org')).toBe(true);
+  });
+});
+
+describe('a miss from a host that has served nothing this run is not kept (#5448)', () => {
+  it('outage-time 404s leave the ledger clean; once the host serves, a 404 is recorded', async () => {
+    await cleanDb();
+    const db = getTestDb();
+    await seed(db);
+    const { createHostBreaker } = await import('../../scripts/lib/host-breaker.mjs');
+    const { openLedger } = await import('../../scripts/lib/manifest-ledger.mjs');
+    // Run 1: the host answers 404 to everything (an outage). Nothing is kept.
+    await archiveFromManifest(db, BOOK, { put: fakeStore().put, breaker: createHostBreaker(), pageConcurrency: 1, fetchManifest: async () => manifest(), download: async () => { throw new Error('HTTP 404'); } });
+    let led = (await db.collection('books').findOne({ id: BOOK }))!.archive_metadata.manifest_ledger;
+    for (const p of [1, 2, 3, 5, 6]) expect(openLedger(led).missCount(p)).toBe(0);
+    // Run 2: the host serves, but page 6 is really gone. That miss is kept.
+    const img = fakeImages({ 6: 404 });
+    await archiveFromManifest(db, BOOK, { put: fakeStore().put, breaker: createHostBreaker(), pageConcurrency: 1, fetchManifest: async () => manifest(), download: img.download });
+    led = (await db.collection('books').findOne({ id: BOOK }))!.archive_metadata.manifest_ledger;
+    expect(openLedger(led).missCount(6)).toBe(1);
   });
 });

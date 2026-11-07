@@ -33,7 +33,9 @@ describe('leaf-shift gate in dropDriftedPages', () => {
     const { pages, tr } = block(1);
     expect(blockLeafShiftRuns(pages, tr).map((r: any) => [r.dir, r.start, r.end])).toEqual([['next', 292, 296]]);
     const { translations, drifted } = dropDriftedPages(pages, tr);
-    expect(drifted.map((d: any) => d.kind)).toEqual(['leaf-shift']);
+    // The whole block goes (leaf-shift), and each slipped page is named on its own too (#5021 block-page-guard.mjs).
+    expect(drifted.filter((d: any) => d.kind === 'leaf-shift')).toHaveLength(1);
+    expect(drifted.filter((d: any) => d.kind === 'number-next').map((d: any) => d.prev)).toEqual([292, 293, 294, 295, 296]);
     expect(translations.size).toBe(0);
   });
 

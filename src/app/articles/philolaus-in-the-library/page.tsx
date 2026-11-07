@@ -43,7 +43,6 @@ const BOOK = {
   gellius: '/book/aulus-gellius-noctes-atticae-aldine-press-2nd-ed-gellius',
   reuchlin: '/book/ioannis-revchlin-phorcensis-ll-doc-de-arte-cabalistica-reuchlin',
   hoogstraten: '/book/destructio-cabale-seu-cabalistice-perfidie-ab-ioanne-hoogstraten',
-  campanella: '/book/the-city-of-the-sun-campanella',
   claudianus: '/book/claudiani-mamerti-opera-csel-xi-engelbrecht',
   pythagoras: '/articles/pythagoras-in-the-library',
   diels: '/book/die-fragmente-der-vorsokratiker-diels',
@@ -97,7 +96,7 @@ export default function PhilolausInTheLibraryPage() {
         <p className={p}>
           For Philolaus the centre of the world was not the sun but a fire, the hearth of the whole, with the
           earth and a counter-earth turning round it. After Copernicus that difference was often dropped, and he
-          became a forerunner. In Campanella’s <Link href={`${BOOK.campanella}?page=72`}><em>City of the Sun</em></Link> the
+          became a forerunner. In Campanella’s <em>City of the Sun</em> the
           citizens “praise Ptolemy, admire Copernicus, but place Aristarchus and Philolaus before him.”
         </p>
 

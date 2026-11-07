@@ -21,6 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
+import { linkHistorySources } from './link-history-sources.mjs';
 
 const argv = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const ATLAS = argv('--atlas');
@@ -150,3 +151,5 @@ await withMongo(async (db) => {
 });
 // the /explore/maps index reads its card figures from here, not from the megabyte artifacts
 if (!DRY) fs.writeFileSync(SUMMARY, JSON.stringify(summary, null, 1) + '\n');
+// a new map moves which works the conceptual histories cite on it (#7646)
+if (!DRY) linkHistorySources();

@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+<image-desc size="large" type="decorative" significance="low">The text is contained within a traditional woodblock-printed double-line border with vertical column dividers.</image-desc>
+
+<term>羊蹄菜</term>能殺<term>胡夷鮭魚</term><term>檀胡魚</term>毒<term>瀕湖</term>註云胡夷鮭當治<term>河豚</term>名檀胡未詳敏按檀胡即<term>彈塗</term>二字之誤也彈塗乃跳魚餘姚甯波皆有
+之沿海沙塗上甚多形如<term>土附</term>有刺能螫人閩中及甯人皆呼為彈塗食其中毒者羊蹄葉可解之
+吾杭<term>西湖</term>岳墳後山生一種草高三四寸一莖直上頂生四葉繞著白花與<term>細辛</term>無二土人呼為<term>四葉蓮</term>按此即<term>網目</term>所載<term>樟耳細辛</term>乃<term>薺</term>也
+也瀕湖於薺條下載其形狀云開白花後方生葉三片皆誤
+<term>瀕湖</term><term>綱目</term><term>菎葵</term>列於<term>黃蜀葵</term>上<term>蜀葵</term>之下必以其形狀與蜀葵不甚相遠較之<term>秋葵</term>葉作雞爪花則單黃而大迥非蜀葵之狀者可比也然細
+閱其解下如蘇公所說苗如<term>石龍芮</term>花白如梅<term>郭璞</term>所註則又以為似薺而小葉狀如葵有毛如<term>寇宗奭</term>所說又以菎葵為<term>錦葵</term>紛紛聚
+訟無定識瀕湖於釋名下引圖經云菎葵即<term>天葵</term>而於集解中又不載圖經所云形狀而獨取<term>郭氏通志</term>云菎葵天葵也狀如薺米葉大
+如錢而厚面青背紫生於崖石按此即<term>紫背天葵</term>也其葉分三歧如<term>三葉酸草</term>而大有根根下有子年深者其子大如指俗呼<term>千年老鼠屎</term>
+以其形黑皮粗如鼠屎狀也故<term>外丹本草</term>目<term>雷丸草</term>以其根下有子如<term>雷丸</term>也此則全非葵類不過有葵之名而已不知瀕湖何所據而以
+為即菎葵援引諸說又無折衷蓋瀕湖本未識菎葵且亦不識天葵故釋名引外丹本草雷丸之名而釋名下亦不能註出其所以得此名
+之故不皆失之疎畧乎考紫背天葵其功用全在根而瀕湖於主治條僅言其苗不著其根之用予故於<term>拾遺</term>中補之而備其說於此
+<term>陸英</term>即<term>蒴藋</term><term>龔樵</term><term>樂性論</term>云田野村墟甚多人家所植高丈色赤陸英由野所生葉上有粉者是蒴藋一味所生太率相類其論頗明舅
+
+<meta>Catchword at bottom left: 舅</meta>
+
+<vocab>羊蹄菜, 彈塗, 菎葵, 天葵, 紫背天葵, 陸英, 蒴藋, 綱目拾遺, 趙學敏, 瀕湖</vocab>

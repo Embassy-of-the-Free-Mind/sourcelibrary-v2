@@ -1,0 +1,240 @@
+{
+ "karl": {
+  "book_id": "69b51e05768235dc6598b5c1",
+  "as_of": "2026-11-02T00:00:00Z",
+  "by_eye": "EN(n) = DE(n+1) on pp.16-19; p.20 EN = p.19 footnotes (by eye, #7968, 2026-11-03)",
+  "pages": [
+   {
+    "page_number": 13,
+    "ocr": "<header>11</header>\ntext\n14",
+    "tr": "text\n14"
+   },
+   {
+    "page_number": 14,
+    "ocr": "<header>12</header>\ntext\n18 1810",
+    "tr": "text\n18 1810"
+   },
+   {
+    "page_number": 15,
+    "ocr": "text\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 16,
+    "ocr": "<header>14</header>\ntext\n",
+    "tr": "text\n1788 1803"
+   },
+   {
+    "page_number": 17,
+    "ocr": "<header>15</header>\ntext\n1788 1803",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 18,
+    "ocr": "<header>16</header>\ntext\n",
+    "tr": "text\n1744"
+   },
+   {
+    "page_number": 19,
+    "ocr": "<header>17</header>\ntext\n1744 309 110 54 73 112 257 92 832",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 20,
+    "ocr": "<header>18</header>\ntext\n",
+    "tr": "text\n309 110 54 73 112 257 92 832"
+   },
+   {
+    "page_number": 21,
+    "ocr": "<header>19</header>\ntext\n13 1753 1754 20 1758 1775 715 735",
+    "tr": "text\n13 1753 1754 20 1758 1775 715 735"
+   },
+   {
+    "page_number": 22,
+    "ocr": "<header>26</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 23,
+    "ocr": "<header>21</header>\ntext\n1759 28 1761",
+    "tr": "text\n28 1759 1761"
+   }
+  ]
+ },
+ "corpus-medicorum": {
+  "book_id": "69af49c4d6be7ec9cc3246fd",
+  "as_of": "2026-11-02T00:00:00Z",
+  "by_eye": "p.83 EN = p.84 Latin; p.84 EN a model note (by eye, #7968, 2026-11-03)",
+  "pages": [
+   {
+    "page_number": 79,
+    "ocr": "<header>37 108</header>\ntext\n14 15 16 17 18 19 20 21 22 42 50 78 100 11 43 29 10 94 31 313 27 92 24 26 32",
+    "tr": "<header>108</header>\ntext\n15 16 17 18 19 20 21 22"
+   },
+   {
+    "page_number": 80,
+    "ocr": "<header>38</header>\ntext\n10 30 48 12 270 14 15 19 20 13 29 269 21 23 25",
+    "tr": "text\n10"
+   },
+   {
+    "page_number": 81,
+    "ocr": "<header>39 28</header>\ntext\n10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 270 269 67 69 164 79 80 34",
+    "tr": "<header>28</header>\ntext\n10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28"
+   },
+   {
+    "page_number": 82,
+    "ocr": "<header>40</header>\ntext\n34 13 12 35 28 163 164 38 75 39 40 16 11 14 15 262 22 20 24 33 30 118",
+    "tr": "text\n41 42 43 44 46 47 49 50 51 53 54 55 56 57 58 59 60 61 62"
+   },
+   {
+    "page_number": 83,
+    "ocr": "<header>41 28 62</header>\ntext\n41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 75 19 21 76 20 23 77 11 16 18 22 78 17 28 243 34 26 149 35 154 10",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 84,
+    "ocr": "<header>42</header>\ntext\n63 64 65 66 67 68 69 268 13 30 144 269 28 163 21 14 19 22 24 31",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 85,
+    "ocr": "<header>43 62 12</header>\ntext\n10 11 12 314 16 35 195 75 76 14 13 22 29 39",
+    "tr": "<header>62 12</header>\ntext\n10 11 12 314 16 35 195 75 76 14 13 22 29 39"
+   },
+   {
+    "page_number": 86,
+    "ocr": "<header>44 13</header>\ntext\n14 15 16 17 18 19 20 13 105 41 23 148 28 163",
+    "tr": "text\n13"
+   },
+   {
+    "page_number": 87,
+    "ocr": "<header>45 12 24</header>\ntext\n10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 263 1342 50 215 399 25 29 106 270 107",
+    "tr": "<header>12 24</header>\ntext\n10 11 12 13 14 15 16 17 18 19 20 21 22 23 24"
+   }
+  ]
+ },
+ "postel": {
+  "book_id": "69b51e39768235dc6598dede",
+  "as_of": "2026-10-20T00:00:00Z",
+  "by_eye": "scans 179-184: EN(n) = Latin(n+1) (by eye, #5021, 2026-10-21)",
+  "pages": [
+   {
+    "page_number": 176,
+    "ocr": "<header>168</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 177,
+    "ocr": "<header>169</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 178,
+    "ocr": "<header>170</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 179,
+    "ocr": "<header>171</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 180,
+    "ocr": "<header>172</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 181,
+    "ocr": "<header>173</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 182,
+    "ocr": "<header>174</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 183,
+    "ocr": "<header>175</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 184,
+    "ocr": "<header>176</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 185,
+    "ocr": "<header>177</header>\ntext\n",
+    "tr": "text\n16 12"
+   },
+   {
+    "page_number": 186,
+    "ocr": "<header>178</header>\ntext\n",
+    "tr": "text\n"
+   },
+   {
+    "page_number": 187,
+    "ocr": "<header>179</header>\ntext\n",
+    "tr": "text\n"
+   }
+  ]
+ },
+ "sakuntala": {
+  "book_id": "69dea23c4d19ec2e9ba75f5e",
+  "as_of": "2026-10-12T00:00:00Z",
+  "by_eye": "pp.291-294 EN = next leaf, verse numbers 171-174 (by eye, #6672)",
+  "pages": [
+   {
+    "page_number": 288,
+    "ocr": "<header>273</header>\ntext\n168 86 268 64 126 331 271 142 27 31 157",
+    "tr": "text\n168"
+   },
+   {
+    "page_number": 289,
+    "ocr": "<header>274</header>\ntext\n169 20 155 272 29 41 107 121 126 142 156 158 166",
+    "tr": "text\n169"
+   },
+   {
+    "page_number": 290,
+    "ocr": "<header>275 255</header>\ntext\n170 212 272 230 240 27 31 168",
+    "tr": "<header>275 255</header>\ntext\n170"
+   },
+   {
+    "page_number": 291,
+    "ocr": "<header>276</header>\ntext\n260 11 86 331",
+    "tr": "text\n171"
+   },
+   {
+    "page_number": 292,
+    "ocr": "<header>277 299</header>\ntext\n171 275 10 19 20 38 55 109 110 120",
+    "tr": "<header>277 299</header>\ntext\n172"
+   },
+   {
+    "page_number": 293,
+    "ocr": "<header>278</header>\ntext\n172 253 23 113 12 14 30 36 39 40 63 79 85 149",
+    "tr": "<header>278</header>\ntext\n173"
+   },
+   {
+    "page_number": 294,
+    "ocr": "<header>279 299</header>\ntext\n173 87 11 12 26 47 50 51 164",
+    "tr": "<header>279 299</header>\ntext\n174"
+   },
+   {
+    "page_number": 295,
+    "ocr": "<header>280</header>\ntext\n174 22 86 142 173 91 68 159 205 18 23 161",
+    "tr": "<header>280</header>\ntext\n"
+   },
+   {
+    "page_number": 296,
+    "ocr": "<header>281</header>\ntext\n175 11 70 46 238 120 201 14 172",
+    "tr": "<header>281</header>\ntext\n175"
+   },
+   {
+    "page_number": 297,
+    "ocr": "<header>282</header>\ntext\n272 176",
+    "tr": "<header>282</header>\ntext\n"
+   }
+  ]
+ }
+}

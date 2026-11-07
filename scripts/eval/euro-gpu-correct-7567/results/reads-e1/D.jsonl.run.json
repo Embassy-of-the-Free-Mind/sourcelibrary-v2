@@ -1,0 +1,12 @@
+{
+ "mode": "dotsocr",
+ "model": "m",
+ "pages_this_pass": 327,
+ "clients": 8,
+ "wall_secs": 806.9,
+ "pages_per_hour": 1459,
+ "errors": 0,
+ "hit_cap": 4,
+ "out_tok": 209494,
+ "in_tok": 600747
+}

@@ -36,6 +36,7 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
+import { uploadPageVariants, displayKeyFor } from '../workers/lib/display-image.mjs';
 import {
   upgradeToFullRes, rateLimitedFetch, capDomainLimit,
   fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS, gallicaOpenApiUrl,
@@ -49,7 +50,8 @@ import { LEDGER_FIELD } from '../lib/manifest-ledger.mjs';
 import { laneSelectionTiers } from './archive-lanes.mjs';
 import { openIaZip } from '../lib/ia-zip-ledger.mjs';
 import {
-  isMissFor, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
+  isMissFor, isBookScopedFailure, isPermanentMiss, missUpdate, bookVerdict, createBookMissGuard, ROTATION_SORT, MISS_LIMIT, MISS_PROJECTION,
+  notCoolingDown, cooldownUntil,
 } from '../lib/archive-miss.mjs';
 const execFileP = promisify(execFile);
 /**
@@ -263,9 +265,14 @@ async function main() {
   // host hears about it only when whole books keep missing with nothing served.
   const missGuard = createBookMissGuard();
   const urlOf = (p: any) => fetchUrlOf(upgradeToFullRes(p.photo_original || p.photo));
+  /** Is a miss from this host evidence worth keeping? Only once the host has served a page this run. */
+  const missesCount = (host: string) => (breaker.stateOf(host)?.ok ?? 0) > 0;
 
-  /** @returns how many pages were actually REQUESTED, and how many were skipped for a paused host. */
-  async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number }> {
+  /**
+   * @returns how many pages were actually REQUESTED, how many were skipped for a paused host,
+   * how many were eligible to ask at all, and whether the book was abandoned with nothing served.
+   */
+  async function archiveIiif(bookId: string, { retryMisses = false } = {}): Promise<{ requested: number; pausedSkips: number; eligible: number; abandoned: boolean }> {
     const all = await pages.find({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { _id: 1, page_number: 1, photo: 1, photo_original: 1, ...MISS_PROJECTION } }).toArray();
     // A page that has missed this exact URL MISS_LIMIT times is not asked again.
     // A repaired URL is a different URL, so it is eligible again by construction.
@@ -290,6 +297,9 @@ async function main() {
         currentHost = host;
         // A paused host is skipped without a request, and cheaply: the point is
         // to hand this worker back to the pool, not to fail faster.
+        // A page whose only copy sits at the display key is not a page to fetch: writing the variant
+        // would overwrite that copy (#4406). display-backfill gives it a sibling key instead.
+        if (displayKeyFor({ book_id: bookId, page_number: p.page_number, photo: p.photo, photo_original: p.photo_original }).canonicalHoldsMaster) { pagesSkipped++; continue; }
         if (!breaker.allow(host)) { breaker.skipped(host); pagesSkipped++; pausedSkips++; continue; }
         requested++;
         // Did the bytes arrive? Everything after that point is OUR machinery —
@@ -340,25 +350,26 @@ async function main() {
 
           // Archive at source fidelity: no resolution cap (#3897, matches archive-ia-bulk).
           const jpg = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
-          const padded = String(p.page_number).padStart(4, '0');
-          const blob = await storagePut(`pages/${bookId}/${padded}.jpg`, jpg, { contentType: 'image/jpeg', access: 'public' });
-          const upd: any = { $set: { archived_photo: blob.url } };
+          // The master goes under archived/, the marked 1200px variant and the thumb under pages/,
+          // through the path every other archiver uses. This lane wrote the master to the display
+          // key until #4406, and display-backfill then pointed display_photo at it: readers were
+          // served an unmarked master.
+          const urls = await uploadPageVariants(jpg, bookId, p.page_number, async (key: string, body: Buffer, contentType: string) => (await storagePut(key, body, { contentType, access: 'public' })).url);
+          const upd: any = { $set: { archived_photo: urls.archived, display_photo: urls.display, image_thumb: urls.thumb, thumbnail_blob: urls.thumb } };
+          if (urls.displayWidth) upd.$set.display_width = urls.displayWidth;
+          if (urls.displayHeight) upd.$set.display_height = urls.displayHeight;
           // Record what we actually stored, and (when we know it) what the source
           // says native is. Without this, "did we get the master?" can only be
           // answered by re-fetching from the institution — which is why the
           // MASTER tier is sampled rather than known, and why this debt went
           // uncounted for months. Stored dims are free: sharp already decoded it.
-          try {
-            const dims = await sharp(jpg).metadata();
-            if (dims.width) upd.$set.image_width = dims.width;
-            if (dims.height) upd.$set.image_height = dims.height;
-          } catch { /* dimensions are a nice-to-have; never fail an archive over them */ }
+          if (urls.width) upd.$set.image_width = urls.width;
+          if (urls.height) upd.$set.image_height = urls.height;
           if (info?.width) {
             upd.$set['iiif_info.width'] = info.width;
             upd.$set['iiif_info.height'] = info.height;
           }
           if (stitchedTiles) upd.$set.stitched_tiles = stitchedTiles;
-          try { const th = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer(); upd.$set.thumbnail_blob = (await storagePut(`pages/${bookId}/${padded}-thumb.jpg`, th, { contentType: 'image/jpeg', access: 'public' })).url; } catch {}
           await pages.updateOne({ _id: p._id }, upd);
           pagesDone++;
           hostFailures.clear(); // a success clears the streak
@@ -371,7 +382,13 @@ async function main() {
             missGuard.miss(bookId);
             // Bookkeeping only: never let a failed Mongo write turn into a thrown
             // error that reads as the source's fault.
-            try { await pages.updateOne({ _id: p._id }, { $set: missUpdate(p, url, code) }); } catch { /* next run re-records it */ }
+            // Recorded only once the host has served something THIS run. During an outage openapi.bnf.fr
+            // answered 404 for pages that served 200 an hour later (2026-10-26 12:30–13:40: 1,268 Gallica
+            // pages took 1–2 such misses), and a third would have made real pages permanent gaps. A miss
+            // from a host that has served nothing is still counted for this run (the book guard), never kept.
+            if (missesCount(host)) {
+              try { await pages.updateOne({ _id: p._id }, { $set: missUpdate(p, url, code) }); } catch { /* next run re-records it */ }
+            }
             if (!abandoned && missGuard.abandoned(bookId)) {
               abandoned = true;
               booksAbandoned++;
@@ -384,6 +401,18 @@ async function main() {
             continue;
           }
           pagesFailed++;
+          if (!fetched && isBookScopedFailure(code) && missGuard.fresh(bookId)) {
+            // A 400/500 from a book that has served nothing yet is about the book (archive-miss.mjs).
+            missGuard.fail(bookId);
+            breaker.pageMiss(host, code); // reported per host, but neither trips nor closes it
+            if (!abandoned && missGuard.abandoned(bookId)) {
+              abandoned = true;
+              booksAbandoned++;
+              log(`book ${bookId}: ${missGuard.stateOf(bookId)?.fail} page failures [${code}] and nothing served — leaving it for a later run`);
+              if ((breaker.stateOf(host)?.ok ?? 0) === 0) breaker.failure(host, `dead-book-${code}`);
+            }
+            continue;
+          }
           if (!fetched) {
             try {
               noteFailure(url, e); // rethrows HostBlocked once the host looks blocked
@@ -403,7 +432,7 @@ async function main() {
     };
     await Promise.all(Array.from({ length: Math.min(PAGE_CONCURRENCY, ps.length) }, () => worker()));
     if (pageBlocked) throw pageBlocked;
-    return { requested, pausedSkips };
+    return { requested, pausedSkips, eligible: ps.length, abandoned };
   }
 
   /** Pages of a book that are permanent misses at their CURRENT url. */
@@ -452,6 +481,9 @@ async function main() {
     // into the book's ledger, creating no page docs (#5448 step 2). One whose ledger says nothing is
     // left to fetch is not drawn again. A book named with --book is materialized in processBook.
     ...(BOOK_IDS ? {} : { [`${LEDGER_FIELD}.exhausted`]: { $ne: true } }),
+    // A book the last run could not advance at all sits out for a day (archive-miss.mjs,
+    // NO_PROGRESS_COOLDOWN_MS); a book named with --book is always drawn.
+    ...(BOOK_IDS ? {} : notCoolingDown()),
   };
 
   // ── Host lanes (#4397): the host filter belongs to SELECTION ─────────────
@@ -603,11 +635,15 @@ async function main() {
     // A named book (--book) retries its permanent misses too: a human asked.
     const misses0 = BOOK_IDS ? 0 : await countPermanentMisses(w.book_id);
     let attempted = false;
+    // Could this run not advance the book at all? Then it sits out the draw for a day.
+    let noProgressReason: string | null = null;
     if (have0 + misses0 < (b.pages_count || 0) * (BOOK_IDS ? 1 : 0.99)) {
       if (w.source === 'erara' || w.source === 'iiif' || w.source === 'mdz' || w.source === 'gallica') {
         const r = await archiveIiif(w.book_id, { retryMisses: !!BOOK_IDS });
         // Skipped ONLY because the host is paused: not an attempt, keep its place.
         attempted = r.requested > 0 || r.pausedSkips === 0;
+        if (r.abandoned) noProgressReason = 'abandoned: nothing served';
+        else if (r.eligible === 0) noProgressReason = 'no page left to ask (failed: markers or permanent misses)';
       } else { attempted = true; try { await execFileP('node', ['scripts/maintenance/archive-ia-bulk.mjs', `--book-id=${w.book_id}`], { timeout: 300000 }); } catch {} }
     }
     const r2 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
@@ -620,7 +656,12 @@ async function main() {
       // The rotation key (see the book-mode draw). Stamped on every attempt that
       // asked the source, success or not — that is the whole point of it.
       // Never fatal: a failed stamp must not skip the completion write below.
-      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date() } }); }
+      // A run that got nothing new for a reason no rerun can change today also sets the
+      // day's cooldown (archive-miss.mjs, NO_PROGRESS_COOLDOWN_MS).
+      const cool = noProgressReason && r2 <= have0
+        ? { 'archive_metadata.cooldown_until': cooldownUntil(), 'archive_metadata.cooldown_reason': noProgressReason }
+        : {};
+      try { await books.updateOne({ id: w.book_id }, { $set: { 'archive_metadata.last_attempt_at': new Date(), ...cool } }); }
       catch (e) { log(`book ${w.book_id}: rotation stamp failed (${String((e as Error)?.message ?? e).slice(0, 80)})`); }
     }
     const verdict = bookVerdict({ pagesCount: b.pages_count || 0, archived: r2, misses });

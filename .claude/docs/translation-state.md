@@ -168,9 +168,20 @@ Each is a GitHub issue linked from #3402. Writer first, then readers, then the a
 
 **Nearly 15,000 books are readable in English on sourcelibrary.org: 14,852 on 2026-09-30, counting every live book with at least 90% of its translatable pages translated and at least 90% of the book transcribed, plus English originals at least 90% transcribed. 12,417 of them were translated from other languages.** Provisional until step 1 stamps the field and the audit has been green once. The homepage currently shows 16,488 (2026-09-29 refresh, old rule); the "close to 18,000" figure matches the any-translated-page count (17,097) and is not defensible as "translated".
 
+## `translation_withheld` is an archive, not a state
+
+**A page's English is withheld only when `translation_withheld` is present AND the page has no text.** The field holds the *old* English; a page that was repaired and re-translated keeps its record forever. The reader is the authority and it checks the text first — `!translationHtml && !!p.translation_withheld` (`src/app/book/[id]/read/page.tsx`, the same in `ReaderV2Bits.tsx`).
+
+Measured 2026-11-02 over `pages`: 438,083 pages carry a `translation_withheld.reason`, and **245,810 of them (56%) have live `translation.data` and read normally.** A majority of records are archives of repaired pages, so code that treats the field as a boolean is wrong more often than right. (Top reasons: `stale_after_reocr` 181,809, `unverified_script_ocr` 175,072, `source_loop` 53,557.)
+
+This has now cost twice. A 2026-10-27 Tibetan census first counted 259K pages as "English withheld" and the lesson was written down. Five days later the enrichment lane shipped the identical bug: `hasWithheldPages` asked only whether a record existed, so it was true for **343 of 343** books in the enrichment queue and both enrichment lanes selected **0 books** for as long as that code existed (#7934, part of #7628). 100% of a queue is the tell — a filter that excludes everything is a bug in the filter, not a fact about the corpus.
+
+Because prose has failed here once already, **#7936 tracks turning this into a sweeping guard**; prefer that over another sentence. Note that a Mongo-query call site cannot route through an accessor (an accessor cannot run inside a query), which is why #7934 joined the #5942 `translation.data` baseline instead.
+
 ## Do not
 
 - Do not add a threshold. 90 and 100 are the only bars; a surface that wants "mostly" uses `readable`.
 - Do not compute a rung at a call site. Read `translation_state.rung`; if the field is absent, the book is unstamped, not untranslated — show the percentage and no badge.
 - Do not divide by `pages_count` or by `pages_ocr − pages_blank` for a book-level claim. The first hides plates (#4442), the second hides unread pages (#5063). See `visibility-and-stats.md` for both incidents.
 - Do not backfill the legacy flags. They are read-compatible until step 7 and then gone.
+- Do not treat `translation_withheld` as a state. Test the text first; see the section above and #7936.

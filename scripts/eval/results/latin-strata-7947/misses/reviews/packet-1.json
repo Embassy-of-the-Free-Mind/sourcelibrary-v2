@@ -1,0 +1,605 @@
+[
+  {
+    "book_id": "69d66608bf5afe33937f8c15",
+    "slot": 78,
+    "title": "Clavicula Salomonis Regis",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "An 18th-century manuscript Key of Solomon (Penn Colenda); core grimoire material for a library of the magical and Hermetic tradition. No tradition or collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "245 pages, all with OCR, 228 translated. Page 58 and page 184 are in visibly different hands (a formal italic cursive with a ruled red margin; a looser cursive), so this may be a composite manuscript or written by more than one scribe. Page 122 is a pasted-in blank blue paper roundel (a pentacle that was never filled in), with show-through from the verso below it.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 58,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>43</page-num>",
+            "image": "'43' written in the left margin beside the prayer 'Adonaij Potentissime', not at the head of the page",
+            "problem": "a marginal number (probably numbering the prayer or a section) is tagged as the page number",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "accensis",
+            "image": "accenssis",
+            "problem": "scribal spelling silently normalised",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Vas terreum Capax, Carbonibus plenum",
+            "english": "an earthen vessel capable of holding <note>coals</note>, full of coals",
+            "problem": "redundant inline note: 'Capax' just means 'capacious'",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<note> tags appear inline in the reader translation ('<note>coals</note>', '<note>mercy</note>')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Below the diagram, there are traces of very faint, illegible handwritten text, likely in Latin, which has faded significantly over time.",
+            "image": "the faint lines below the roundel are show-through from the verso (reversed writing), not faded text on this page",
+            "problem": "show-through from the other side of the leaf is described as faded text on this page",
+            "severity": "moderate",
+            "class": "O16"
+          },
+          {
+            "ocr": "A circular diagram or seal, lightly drawn or faded ... faint geometric or sigillic markings",
+            "image": "a pasted-on pale blue paper disc, essentially blank apart from a few pen strokes and an ink smear, set in a faint ruled pencil square",
+            "problem": "an unfinished pasted roundel is described as a faded talismanic seal",
+            "severity": "moderate",
+            "class": "O14"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "<image-desc>…</image-desc> <unclear>…</unclear>",
+            "english": "<note>A circular diagram or seal…</note> <unclear>…</unclear> <summary>This page contains a faded and largely illegible talismanic diagram, consistent with the protective seals found elsewhere in the manuscript.</summary>",
+            "problem": "the translation pane carries a page description in place of a translation, and the summary claims the leaf is a faded seal like others in the manuscript, which the image does not show",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "Raw <note>, <unclear>, <summary> and <keywords> tags make up the whole translation of a near-blank plate",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 184,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<summary> and <keywords> tags at the end of the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of the text pages is very good and so are the translations. The defect is the plate leaf (p.122): a blank pasted roundel comes out as a 'faded talismanic seal', faded text that is really show-through, and a translation pane made of tags."
+  },
+  {
+    "book_id": "6a4e381c806e65f390cf11aa",
+    "slot": 49,
+    "title": "Carmina congratulatoria. In honorem ... D. Adami myriciani chrimnicensis ...",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 1565 Ingolstadt pamphlet of occasional verse congratulating a new doctor of medicine. It is genuine period humanist material and touches on medicine (Machaon, Hippocrates, Galen), but sits outside the library's core esoteric and early-science traditions. No tradition or collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "16 pages, 14 translated, which fits a short pamphlet with blank or title leaves. Signatures A3 (p.5), B (p.9) and Biij (p.13) run in order.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<script>handwritten</script> … <warning>Handwritten [Italian humanist hand]</warning>",
+            "image": "printed italic type",
+            "problem": "a printed page is tagged as handwritten",
+            "severity": "moderate",
+            "class": "O16"
+          },
+          {
+            "ocr": "Deferuit patriæ natalia mænia terræ",
+            "image": "Deſeruit",
+            "problem": "long s read as f, giving a non-word ('Deferuit' for 'Deseruit'); the translation still renders 'abandoned'",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Hic igitur primum de Bacca nomine lauri / Pro studij fructu ... potitus / Ritè creabatur dicebaturque Magister",
+            "english": "Here, therefore, first, from the berry of the laurel / He was duly created and called Master, having obtained / The fruit of study",
+            "problem": "the lines first record the baccalaureate (the 'name from the laurel berry') and then the master's degree; the translation merges them, so the bachelor's degree is lost",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Vt uel in Hippocratis libris, uel in arte Galeni,",
+            "english": "As if in the books of Hippocrates, or in the art of Galen,",
+            "problem": "'Ut vel … vel' means 'so that, whether in … or in …', not 'as if'",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Ac seruare datam caelestum munere uitam",
+            "image": "cœleſtûm",
+            "problem": "œ and circumflex normalised",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Atque salutarem captabant numinis auram.",
+            "english": "And they sought the healthy air of his divinity.",
+            "problem": "'salutarem auram' is the saving or healing breath of the godhead; 'healthy air' is flat and misleading",
+            "severity": "minor",
+            "class": "T8"
+          },
+          {
+            "source": "Nec uanus quisque facilè id persuaserit author,",
+            "english": "And no vain author could easily persuade one that,",
+            "problem": "the line carries on to the next page; the rendering is awkward and leaves the sense unclear",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Chrimnicensis",
+            "english": "of Chrimnicz",
+            "problem": "inconsistent with 'Crimnitz' on p.5; the place is Chemnitz",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "The woodcut-initial description is wrapped in a <meta> tag inside the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, faithful reading of a short printed congratulatory pamphlet. The only blemishes are a wrong 'handwritten' tag on a printed page and one couplet where the bachelor's degree is lost in translation."
+  },
+  {
+    "book_id": "699062f1ef12272ffdc8e56e",
+    "slot": 24,
+    "title": "Contra Celsum (1481 editio princeps)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Origen against Celsus, Latin translation by Persona, Rome: Herolt 1481. It is a core text for late-antique polemic over pagan philosophy and Christianity, including the Platonist views of soul and daemons.",
+    "rights_flag": null,
+    "structure_note": "538 pages, all with OCR, 524 translated, which is consistent. Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 135,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Erat igitur iſtiuſmodi Ieſus ut Celſus exiſtimat",
+            "image": "Ieſus uti Celſus",
+            "problem": "'uti' read as 'ut'",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "nisi dementibus & freneſi laborantibus: uel furentibus",
+            "english": "except to those suffering from madness, frenzy, or madness",
+            "problem": "the three terms (the demented, the frenzied, the raving) collapse into a repeated 'madness'",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation opens with '<meta>Continuity: Continues the defense of the resurrection …</meta>', which is model apparatus visible in the reader text",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 270,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "…apertius que ſupradicta ſunt demonſtrabimus: quis autem qui moderatior ſit … non huius comprimat impudentiam … brutorum animantium cauſa: ut condita fuerint hec omnia demõſtrare.",
+            "english": "\"… we will demonstrate more openly what was said above. For who, being more moderate … would not suppress the impudence of this man … to demonstrate that all these things were founded not more for the sake of men than for brute animals.\"",
+            "problem": "the quotation mark for Celsus's words is closed only after Origen's own rebuttal, so Origen's attack on Celsus's 'impudence' reads as Celsus speaking",
+            "severity": "moderate",
+            "class": "other:quote-boundary"
+          },
+          {
+            "source": "earum rerum inſimulent: in quibus ſibi amantiſſimi quidam collaudantur",
+            "english": "of those things in which they themselves are highly praised by their most loving friends",
+            "problem": "the sense is 'things for which some of those dearest to them are praised'; the translation makes the accusers the ones praised",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "nihil aduertit uel Stoicos ſe philoſophos criminari",
+            "english": "notices nothing, or that he is criticizing Stoic philosophers",
+            "problem": "'vel' means 'even' here: he does not notice that he is even accusing the Stoics. Rendered as 'or', which garbles the point",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<term>/<gloss> tags inline ('<term>Epiforos</term> <gloss>market-overseers/purveyors</gloss>')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 404,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "cūq̄ ea uelit dicta p̄bare",
+            "image": "cūqȝ ea puelit dicta p bare",
+            "problem": "an abbreviation mark is dropped or regularised ('puelit')",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "quia inter ſe nihil conſtituant & filios ſinant ſe debellare",
+            "english": "because they determine nothing among themselves and allow their sons to destroy them",
+            "problem": "'sinant [filios] se debellare' means 'let the sons fight it out among themselves', not 'destroy them [the parents]'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "si diuinus ierat et in corpore ſpiritus",
+            "english": "if He was divine and the spirit was in a body",
+            "problem": "the sense is 'if a divine spirit was in a body'",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<term> tags throughout the reader translation (<term>Marcion</term>, <term>Celsus</term>, <term>Jesus</term>)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The incunable is transcribed accurately and the translations are mostly faithful. There are a few moderate slips in the hard Latin of the polemic, including one misplaced quotation mark on p.270 that puts Origen's rebuttal in Celsus's mouth."
+  },
+  {
+    "book_id": "6a4e4abfd6b40547a16a0119",
+    "slot": 52,
+    "title": "Carmen elegia gratulatoria in honorem et gratiam Martini Fabricii zuellichiensis ...",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 1583 Frankfurt-an-der-Oder congratulatory elegy for a master's degree. It is minor occasional humanist verse, outside the core esoteric and early-science traditions. No tradition or collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "Pages 9 and 13 are not part of the 1583 elegy. They are leaves of a later handwritten index to the composite volume the pamphlet was bound into: numbered entries 89–106 and 161–173 for congratulatory prints dated 1588–1610. The printed elegy only begins around p.19 (signature A2). Readers who open 'Elegia gratulatoria 1583' meet manuscript lists of 1599–1610 prints first. 29 pages, 19 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "92. Eorundem — a Johanne Sculteto. (Lipsiae) 1588.",
+            "image": "92 Eorundem — a Tob. Sculteto. (Lips.) 1588",
+            "problem": "the author's forename 'Tob.' (Tobias, cf. entry 102 'Tobiae Sculteti') is read as Johannes; the translation repeats 'by Johannes Scultetus'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Johannis Oetwini … Lipsiae … ab amicis",
+            "image": "Joh. Oetwini … Lips. … ab amic.",
+            "problem": "every abbreviation ('Joh.', 'Andr.', 'Lips.', 'franc.', 'ab amic.') is silently expanded, so the transcription is not what the page shows",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "98. Calebi Frygophori",
+            "image": "Calebi [I/T]rygophori, underlined",
+            "problem": "the initial looks like I/T, not F (probably Caleb Trygophorus of Frankfurt); I am not certain at this resolution",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Eorundem — a Johanne Sculteto",
+            "english": "The same — by Johannes Scultetus",
+            "problem": "carries the OCR forename error",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> calls the list a 'Register of academic acknowledgments and student collective publications'. It is an index of congratulatory prints bound in the volume. Raw <summary>/<keywords> tags are shown in the reader text.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Johannis Hornicoi",
+            "image": "Joh: Hornicæi",
+            "problem": "æ ligature read as 'oi'",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "abbreviations expanded ('Gryphiswaldi', 'Rostochii', 'scripta', 'autore')",
+            "image": "Gryphiswald., Rostoch., scr., aut.",
+            "problem": "silent expansion of abbreviations",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Johannis Jacobi Greissen — fautoribus & amicis",
+            "english": "to patrons and friends",
+            "problem": "the entry means '[written] by patrons and friends', not 'to' them",
+            "severity": "minor",
+            "class": "T8"
+          },
+          {
+            "source": "Christophori Henscheri — gratia amicis (image: grat. amic.)",
+            "english": "thanks to friends",
+            "problem": "'grat. amic.' is the friends' congratulation (gratulatio), not 'thanks to friends'",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Vinea vite carens",
+            "english": "A vine lacking grapes",
+            "problem": "it is a vineyard lacking vines",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR carries literal '&nbsp;' entities for the pentameter indent, which may show as text in the reader",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The printed elegy (p.19) is read and translated very well. The record opens with leaves of a later manuscript index to the bound volume (1588–1610 entries), which a reader would take for part of the 1583 pamphlet, and one name in that list is misread."
+  },
+  {
+    "book_id": "69f334a7876dd827cbc4d248",
+    "slot": 16,
+    "title": "M. T. Ciceronis officiorum ad Marcum Ciceronem filium",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 15th-century Italian humanist manuscript of Cicero's De officiis (Harvard), with rubricated marginal summaries and illuminated white-vine initials. A classical text; a reasonable shelf for a library of the early modern learned tradition.",
+    "rights_flag": null,
+    "structure_note": "274 pages, 272 with OCR, 265 translated. The red running-head letter ('I' on p.67, 'L' on pp.134 and 200) is tagged <page-num> on two pages and <header> on the third, an inconsistent convention; it is not a printed page number.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Parvis res concordia crescunt …</margin>",
+            "image": "Parve res concordia crescunt discordia maxime dilabuntur",
+            "problem": "'Parve' read as 'Parvis' in the rubricated margin note",
+            "severity": "minor",
+            "class": "O12"
+          },
+          {
+            "ocr": "<page-num>1</page-num>",
+            "image": "a red running-head 'I' with a cross-stroke above, not a page number",
+            "problem": "running head tagged as the page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<page-num>, <meta>, <term>/<gloss> and <summary>/<keywords> tags are visible in the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 134,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "sic sex. pompeii et Gnaei pompeii in hispania",
+            "image": "Ite[m] Sex. pompeii & Cn. pompeii ī hispania",
+            "problem": "'Item Sex(ti)' is misread as 'sic sex', which the translation renders 'thus six', turning Sextus Pompey into a number",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Imperia. prope",
+            "image": "Impia · psp̄ (prospera?)",
+            "problem": "abbreviation in the margin note misread",
+            "severity": "minor",
+            "class": "O12"
+          },
+          {
+            "ocr": "**Haec igitur ipsa fortuna caeteros**",
+            "image": "red initial H only",
+            "problem": "markdown bold spans invented to mark red initials, covering whole phrases",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ut proxime trium, saepe multorum clades imperatorum: ut nuper summi ac singularis viri; invidiae praeterea multitudinis",
+            "english": "as recently the slaughter of three many commanders, as lately the invidiousness of the highest and singular man, furthermore of the multitude",
+            "problem": "the sense is 'as lately of three [armies], often the defeats of many commanders; as recently [the fall] of one supreme man; besides, the hostility of the multitude'. The translation runs the clauses together into nonsense and ties the 'invidia' to the great man",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "sic sex. pompeii",
+            "english": "thus six. Pompey's",
+            "problem": "carries the OCR misread: Sextus Pompey becomes 'six'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "<meta>catchword: oratio</meta>",
+            "english": "<meta>catchword: speech</meta>",
+            "problem": "catchword translated",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "<header>, <margin>, <meta>, <summary> tags visible in the reader translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 200,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Turpe inter honestum et utile facta comparationem",
+            "image": "Turpe inter honestum et utile facere comparationem (faded rubric)",
+            "problem": "'facere' read as 'facta'; the translation's 'Shameful comparison' loses 'it is shameful to make'",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "hoc ipsum sensisse quod dixerit solere modo non oportere etiam",
+            "english": "felt the same thing—that they should not just be accustomed to it, but that it is not even fitting",
+            "problem": "the sense is 'he meant only that they usually do, not that they also ought to'; the rendering is muddled",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<margin> blocks inserted mid-sentence in the translation ('to kill not / <margin>… / only a man')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A well-read humanist manuscript of De officiis with accurate main text and decent translation. Page 134's margin turns Sextus Pompey into 'six', and the clauses about the destroyed armies are run together in translation."
+  }
+]

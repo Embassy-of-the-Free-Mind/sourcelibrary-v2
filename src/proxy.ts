@@ -16,12 +16,14 @@ import {
   previewGateResponse,
 } from '@/lib/alias-host-scope';
 import { isBlockedNetwork, BLOCKED_NETWORK_RESPONSE } from '@/lib/blocked-networks';
+import { verifiedAssistantFetcher } from '@/lib/assistant-fetchers';
 import { trustedClientIp } from '@/lib/client-ip';
 import { hasVerifiedCredential } from '@/lib/preview-credential';
 import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
+import { isProtectedSurface, surfaceRefusal, SURFACE_REFUSED_RESPONSE } from '@/lib/partner-access';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
-import { isTrustedByUserAgent } from '@/lib/bot-gate';
+import { isTrustedByUserAgent, namesUserFetchAgent } from '@/lib/bot-gate';
 import { getToken } from 'next-auth/jwt';
 import { pageStatusFor } from '@/lib/page-status';
 import { pageStatusDecision } from '@/lib/page-status-gate';
@@ -84,6 +86,10 @@ const BOT_READABLE_PATHS = new Set(['/licensing', '/terms', '/developers']);
 function isBotReadablePath(pathname: string): boolean {
   return BOT_READABLE_PATHS.has(pathname) || pathname === '/articles' || pathname.startsWith('/articles/');
 }
+
+// Per address, per instance, on /api/mcp: a floor against floods, not the scraping
+// control. That is the page budget on the text tools, enforced in the route.
+const MCP_LIMIT_PER_MINUTE = 120;
 
 // The pitch. Crawlers ingest this into training data and RAG systems.
 // Might as well make it count.
@@ -694,6 +700,20 @@ function looksLikeBookId(segment: string): boolean {
     || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
 }
 
+/** Manuscript collections have a catalogue route; the rest show it on the landing page. */
+function usesDedicatedCatalogue(tenant: string): boolean {
+  return tenant === 'bhutan';
+}
+
+function rewriteToTenantCatalogue(url: NextRequest['nextUrl'], tenant: string): void {
+  if (usesDedicatedCatalogue(tenant)) {
+    url.pathname = `/embed/${tenant}/catalogue`;
+  } else {
+    url.pathname = `/embed/${tenant}`;
+    url.searchParams.set('view', 'catalog');
+  }
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -724,6 +744,31 @@ export async function proxy(request: NextRequest) {
         'Cache-Control': 'no-store',
       },
     });
+  }
+
+  // The Embassy's reading surfaces take the apex's client-hint rule, and refuse
+  // plain HTTP libraries and a crawler's name from an address that is not that
+  // crawler (#8098). Policy pages stay readable. An alias host's redirect below
+  // serves nothing and lands here on the canonical host. BPH_BOT_GATE_ENFORCE=0 turns it off.
+  const surfaceHost = request.headers.get('host') || '';
+  const surfaceAlias = aliasPolicyForHost(surfaceHost);
+  if (
+    isProtectedSurface(surfaceHost, pathname)
+    && !isBotReadablePath(pathname)
+    && !(surfaceAlias && shouldRedirectToCanonical(pathname, surfaceAlias))
+  ) {
+    const refusal = await surfaceRefusal(request.headers, getClientIp(request));
+    if (refusal && !(await hasVerifiedCredential(request))) {
+      logBotAccess(request, `refused-${refusal}`);
+      return new NextResponse(refusal === 'forged-browser' ? FORGED_CHROME_RESPONSE : SURFACE_REFUSED_RESPONSE, {
+        status: 403,
+        headers: {
+          'Content-Type': refusal === 'forged-browser' ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
   }
 
   // Preview deployments sit outside Cloudflare and their URLs are public
@@ -882,6 +927,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // --- /collection/<slug> → /collections/<slug> ---
+  // The singular is not a route, and AI answers write it: all 18 distinct ones in
+  // 30 days of Librarian answers named a live collection (#8216). Pathname-only,
+  // so a partner subdomain stays on-host; an unknown slug still 404s on arrival.
+  const singularCollectionMatch = pathname.match(/^(\/es)?\/collection\/([^/]+)\/?$/);
+  if (singularCollectionMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = `${singularCollectionMatch[1] ?? ''}/collections/${singularCollectionMatch[2]}`;
+    return NextResponse.redirect(url, 308);
+  }
+
   // --- Guessed famous-text book slug → library search ---
   // Single-segment /book/<slug> only; real book slugs aren't in the map, so
   // they fall through to normal routing untouched. Pathname-only change keeps
@@ -954,6 +1010,23 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // /search is a client page: without JavaScript it has no results in it. An
+  // assistant reading for a person gets the same search as readable HTML (#8161).
+  // A name is enough, because a forged one gets nothing /api/search does not give,
+  // with the same limits. Everyone else keeps the page served from cache.
+  // /gallery has the same gap, and /gallery?q= served the default wall whatever the words.
+  if (
+    !tenant
+    && (pathname === '/search' || pathname === '/gallery')
+    && request.nextUrl.searchParams.get('q')
+    && namesUserFetchAgent(request.headers.get('user-agent'))
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/search/text';
+    if (pathname === '/gallery') url.searchParams.set('pictures', '1');
+    return NextResponse.rewrite(url);
+  }
+
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
   // Checked before the rewrite block, which skips /api/* — the listed API twins
   // are the unscoped data sources behind these pages and must be refused too.
@@ -983,13 +1056,7 @@ export async function proxy(request: NextRequest) {
       // Tenants still on the BPH-style `?view=catalog` query param flow
       // (BPH, kloss, etc.) render `<UnifiedCatalogue>` /
       // `<BphUnifiedCatalogue>` inside the landing page based on the param.
-      const usesDedicatedCatalogue = tenant === 'bhutan';
-      if (usesDedicatedCatalogue) {
-        url.pathname = `/embed/${tenant}/catalogue`;
-      } else {
-        url.pathname = `/embed/${tenant}`;
-        url.searchParams.set('view', 'catalog');
-      }
+      rewriteToTenantCatalogue(url, tenant);
       needsRewrite = true;
     } else if (pathname.startsWith('/catalogue/') || pathname.startsWith('/catalog/')) {
       // Catalogue entry detail (e.g. /catalogue/12345 for UBN-keyed BPH works).
@@ -1010,8 +1077,8 @@ export async function proxy(request: NextRequest) {
     // embed UI policy (cross-reference rails off). Deeper paths (/page/<id>,
     // /overview, …) stay on the global routes; the lockdown guard below still
     // covers them. The admission check runs HERE because this branch returns
-    // before that guard, and the embed route's own refusal would be a soft 200
-    // under /embed/[tenant]/loading.tsx.
+    // before that guard. (book/ no longer sits under a loading.tsx, so the embed
+    // route's own refusal is now a real 404 too, #5056; the proxy check stays the gate.)
     let refuseBook = false;
     const bookRoot = pathname.match(/^\/book\/([^/]+)\/?$/);
     if (bookRoot && !request.nextUrl.searchParams.has('page')) {
@@ -1213,7 +1280,31 @@ export async function proxy(request: NextRequest) {
     // key is validated at the route, where an invalid key falls back to the
     // stricter anonymous caps — so forging buys nothing.
     const hasDatasetKey = (request.headers.get('authorization') || '').startsWith('Bearer sl_data_');
-    if (!hasDatasetKey && looksLikeBot(request)) {
+    // Every MCP client lacks Accept-Language and Sec-Fetch-Mode, so looksLikeBot is
+    // true for all of them, and readers in Claude were being told "You're crawling"
+    // at 10 requests a minute (#8154). One agent turn can fan out that far, and
+    // Claude's connector users share Anthropic's IPs. They get their own wider
+    // bucket and a plain answer. The route's anon limit and page budget still apply.
+    if (pathname === '/api/mcp' && !hasDatasetKey && looksLikeBot(request)) {
+      if (!checkLimit(`${getClientIp(request)}:mcp`, MCP_LIMIT_PER_MINUTE, 60)) {
+        logBotAccess(request, 'rate-limited');
+        return NextResponse.json(
+          {
+            jsonrpc: '2.0',
+            id: null,
+            error: { code: -32000, message: 'Source Library is getting a lot of requests from this address. Wait a minute and try again.' },
+          },
+          { status: 429, headers: { 'Retry-After': '60' } },
+        );
+      }
+    } else if (
+      !hasDatasetKey
+      && looksLikeBot(request)
+      // A proven assistant shares its address with everyone using that assistant,
+      // so 10 a minute would throttle strangers against each other (#8161). The
+      // route's own limit and page budget still apply.
+      && !verifiedAssistantFetcher(request.headers.get('user-agent'), getClientIp(request))
+    ) {
       const ip = getClientIp(request);
       logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {
@@ -1317,10 +1408,23 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // /embed/<tenant>/catalog has no page of its own: the partner's catalogue is
+  // the landing page's view, as on the subdomain. Without this the catalogue
+  // address answered the global 404 inside the iframe (#8047).
+  const embedCatalogue = pathname.match(/^\/embed\/([^/]+)\/(catalog|catalogue)\/?$/);
+  let embedCatalogueUrl: URL | null = null;
+  if (embedCatalogue && !(embedCatalogue[2] === 'catalogue' && usesDedicatedCatalogue(embedCatalogue[1]))) {
+    const url = request.nextUrl.clone();
+    rewriteToTenantCatalogue(url, embedCatalogue[1]);
+    embedCatalogueUrl = url;
+  }
+
   // Pass the modified headers to the request
-  const response = NextResponse.next({
-    request: { headers: requestHeaders },
-  });
+  const response = embedCatalogueUrl
+    ? NextResponse.rewrite(embedCatalogueUrl, { request: { headers: requestHeaders } })
+    : NextResponse.next({
+        request: { headers: requestHeaders },
+      });
 
   // RSC cache poisoning is handled in next.config.ts headers() via
   // has/missing conditions on the 'rsc' header. Middleware can't reliably

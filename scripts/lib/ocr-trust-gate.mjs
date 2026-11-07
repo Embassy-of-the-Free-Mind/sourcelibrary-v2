@@ -93,7 +93,7 @@ export const OCR_TRUST_TABLE = Object.freeze([
     hand: 'not-manuscript',
     yearFrom: 1450,
     yearTo: 1500,
-    evidence: '#5695 T1 (xlref-t1-2026-10): served fidelity 3.55, n = 10 only — DIRECTIONAL. Gated because the pending volume is small (4,786 pages in 493 books, census 2026-10-03), so waiting costs little; set gated: false if Derek prefers to translate on ten pages of evidence (scripts/eval/DECISIONS.md).',
+    evidence: '#5695 T1 (xlref-t1-2026-10): served fidelity 3.55, n = 10 only — DIRECTIONAL. Gated because the pending volume is small (4,786 pages in 493 books, census 2026-10-03), so waiting costs little; set gated: false if Derek prefers to translate on ten pages of evidence.',
     since: OCR_TRUST_GATE_SINCE,
     readers: DEFAULT_BETTER_READERS,
   },

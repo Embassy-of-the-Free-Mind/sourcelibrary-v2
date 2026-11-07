@@ -1,0 +1,126 @@
+{
+ "date": "2026-11-01",
+ "how": "top 20 of the ranked list at 02:40Z (12 image-shift, then 4 text-on-blank and 4 repeat books); each page image opened and read against the stored text",
+ "books": [
+  {
+   "book": "69b51dfbefd8df28f2daed03",
+   "cls": "image-shift +2",
+   "verdict": "consistent on screen: image 387 shows p.387's text (BSB numbering drift; the source pointer is off)"
+  },
+  {
+   "book": "69af2362f98f6eff774ce011",
+   "cls": "image-shift -5",
+   "verdict": "READER-VISIBLE: image 439 shows p.434's text; the 425 pages OCR'd before the 2026-04-05 archive are 5 leaves off; p.444 (OCR after) is consistent. Contained p.439"
+  },
+  {
+   "book": "69af37bc677cd73a3221b510",
+   "cls": "image-shift -3",
+   "verdict": "READER-VISIBLE: image 433 shows p.430's text (523 pages OCR'd before the archive). Contained p.433"
+  },
+  {
+   "book": "6a09e9982111a8b71cc38883",
+   "cls": "image-shift -3",
+   "verdict": "consistent on screen at p.386 (OCR after the archive); its text-on-blank p.40 is a washed-out contents page (the false alarm that set the 15-level ink rule)"
+  },
+  {
+   "book": "6a09e9bd3ca4edcd1ef0189d",
+   "cls": "image-shift -3",
+   "verdict": "consistent on screen at p.355 (OCR after the archive)"
+  },
+  {
+   "book": "69af13c57536c480a9d2563e",
+   "cls": "image-shift -3",
+   "verdict": "READER-VISIBLE: image 120 shows the Drusias table, p.117's text (472 pages OCR'd before the archive). Contained p.120"
+  },
+  {
+   "book": "6a4a18973a9243f77368d9b8",
+   "cls": "image-shift -1",
+   "verdict": "not checkable: no OCR on the sampled pages"
+  },
+  {
+   "book": "69af55b0ec9e6c278212d88d",
+   "cls": "image-shift -5",
+   "verdict": "consistent on screen at p.57 (OCR after the archive; 94 pages OCR'd before)"
+  },
+  {
+   "book": "6a3e763e28fae891bf27ce0e",
+   "cls": "image-shift -1",
+   "verdict": "consistent on screen at p.105"
+  },
+  {
+   "book": "69e75379095c302d3fddab0c",
+   "cls": "image-shift -3",
+   "verdict": "consistent on screen at p.100"
+  },
+  {
+   "book": "69b51db5ff09e4fe943a7ad6",
+   "cls": "image-shift -2",
+   "verdict": "consistent on screen at p.74 (BSB numbering drift)"
+  },
+  {
+   "book": "69f8c13a0c0c281d4bd32e1c",
+   "cls": "image-shift -1",
+   "verdict": "consistent on screen at p.9"
+  },
+  {
+   "book": "6a357a2a82bf3ff3f867b5dd",
+   "cls": "text-on-blank",
+   "verdict": "TRUE: p.7 blank leaf with the title text; pair 520=533 a true misplacement. Contained 7, 520"
+  },
+  {
+   "book": "69e745f641cd2831dd2104e6",
+   "cls": "text-on-blank",
+   "verdict": "TRUE: p.13 blank with the Preface; p.24 image is the Contents, text is the Illustrations list (p.27). Contained 13, 24"
+  },
+  {
+   "book": "69b63e852a1dde00d5a9e472",
+   "cls": "text-on-blank",
+   "verdict": "TRUE: p.5 blank with the title; p.17 image is page (8), text is page (9). Contained 5, 17"
+  },
+  {
+   "book": "69e72994a409200ea79f093f",
+   "cls": "text-on-blank",
+   "verdict": "TRUE: p.7 blank with the title. Pair 389=391 FALSE: printed p.350 photographed twice (opening and flat). Contained 7"
+  },
+  {
+   "book": "69af43957872e4f8698c77ce",
+   "cls": "repeat",
+   "verdict": "TRUE: image 516 is printed p.483, text is p.504 (image 537). Contained 516"
+  },
+  {
+   "book": "69af3988102120ca71f00a1d",
+   "cls": "repeat",
+   "verdict": "TRUE: image 516 is p.487, text is p.500 (image 529). Contained 516"
+  },
+  {
+   "book": "69af453b3b5ae860a90bd0f0",
+   "cls": "repeat",
+   "verdict": "TRUE: image 515 is cols 915-916, text is cols 929-930 (image 522). Contained 515"
+  },
+  {
+   "book": "69af4a2f0c7af0237dfb8b88",
+   "cls": "repeat",
+   "verdict": "TRUE: image 500 is Carmina Vergiliana p.183, text is Anthologia Latina p.188 (image 505). Contained 500"
+  }
+ ],
+ "tally": {
+  "image_shift": {
+   "opened": 12,
+   "reader_visible": 3,
+   "consistent_on_screen": 8,
+   "not_checkable": 1
+  },
+  "text_on_blank": {
+   "opened": 4,
+   "true": 4
+  },
+  "repeat": {
+   "opened": 4,
+   "true": 4
+  },
+  "repeat_pairs_in_opened_books": {
+   "true": 5,
+   "re_capture": 1
+  }
+ }
+}

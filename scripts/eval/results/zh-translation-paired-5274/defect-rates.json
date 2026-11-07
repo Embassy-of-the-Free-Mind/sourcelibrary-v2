@@ -1,0 +1,58 @@
+{
+ "about": "#5274, 2026-11-04: per route, misleads and wrong_text defects per 1,000 English words (words7824) and mean fidelity, blind Opus judge with the scan. zh-paddle-3flash-tr = test 1, S stored 3 Flash, F / N / F4 3.8 Flash low (zh-translation-paired-5274); the second cell = test 2, 3.8 Flash low English on the Paddle (tP), Opus-corrected (tO) and Flash-low-corrected (tFl) transcriptions (zh-ocr-gap-translation-5274).",
+ "cells": {
+  "zh-paddle-3flash-tr": {
+   "S": {
+    "pages": 60,
+    "words": 21395,
+    "misleads_per_1k": 6.96,
+    "wrong_text_per_1k": 4.16,
+    "fidelity_mean": 3.1
+   },
+   "F": {
+    "pages": 60,
+    "words": 21746,
+    "misleads_per_1k": 4.46,
+    "wrong_text_per_1k": 2.21,
+    "fidelity_mean": 3.57
+   },
+   "N": {
+    "pages": 60,
+    "words": 21631,
+    "misleads_per_1k": 4.07,
+    "wrong_text_per_1k": 2.17,
+    "fidelity_mean": 3.63
+   },
+   "F4": {
+    "pages": 58,
+    "words": 20197,
+    "misleads_per_1k": 3.47,
+    "wrong_text_per_1k": 1.58,
+    "fidelity_mean": 3.64
+   }
+  },
+  "zh-ocr-gap-translation-5274 (Opus judge)": {
+   "tP": {
+    "pages": 40,
+    "words": 22918,
+    "misleads_per_1k": 6.41,
+    "wrong_text_per_1k": 4.63,
+    "fidelity_mean": 2.88
+   },
+   "tO": {
+    "pages": 40,
+    "words": 24750,
+    "misleads_per_1k": 2.55,
+    "wrong_text_per_1k": 0.57,
+    "fidelity_mean": 3.8
+   },
+   "tFl": {
+    "pages": 38,
+    "words": 23126,
+    "misleads_per_1k": 3.81,
+    "wrong_text_per_1k": 2.25,
+    "fidelity_mean": 3.29
+   }
+  }
+ }
+}

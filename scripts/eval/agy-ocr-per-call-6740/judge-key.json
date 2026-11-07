@@ -1,0 +1,1642 @@
+{
+ "j1b9a1b4e0d": {
+  "task": "T1",
+  "page_id": "6a3c6a3daf3c49b59c5e500d",
+  "book_id": "6a3c6a3daf3c49b59c5e4fa1",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j3126807e30": {
+  "task": "T1",
+  "page_id": "6a3c6a3daf3c49b59c5e500e",
+  "book_id": "6a3c6a3daf3c49b59c5e4fa1",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jb88a786079": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2dd",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j4c4cd368fd": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2dd",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j293da1af73": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2dd",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j6a13abfbe1": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2de",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j4c3a4c9c2a": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2de",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jcad2ef5abe": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2de",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j4c5bd56f66": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e39",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j3ef1a06134": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e39",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jfb95711321": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e39",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc1f79b2ff3": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e3a",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jbb2f664a9f": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e3a",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jdc1d939c75": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e3a",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j513d77a54f": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c798",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j8a74f84205": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c798",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j1698e94f97": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c798",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j0e545875c6": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c799",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j7023d109b1": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c799",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j1687daf247": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c799",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf94de862e7": {
+  "task": "T1",
+  "page_id": "6a3c63d5af3c49b59c5c8ee1",
+  "book_id": "6a3c63d5af3c49b59c5c8e88",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jc1fd4ba54a": {
+  "task": "T1",
+  "page_id": "6a3c63d5af3c49b59c5c8ee1",
+  "book_id": "6a3c63d5af3c49b59c5c8e88",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j779b13f5d6": {
+  "task": "T1",
+  "page_id": "6a3c63d5af3c49b59c5c8ee1",
+  "book_id": "6a3c63d5af3c49b59c5c8e88",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc4555ef62b": {
+  "task": "T1",
+  "page_id": "6a3c63d5af3c49b59c5c8ee2",
+  "book_id": "6a3c63d5af3c49b59c5c8e88",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jfb47ff9a16": {
+  "task": "T1",
+  "page_id": "6a3c63d5af3c49b59c5c8ee2",
+  "book_id": "6a3c63d5af3c49b59c5c8e88",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jc6db10d7fc": {
+  "task": "T1",
+  "page_id": "6a3c63d5af3c49b59c5c8ee2",
+  "book_id": "6a3c63d5af3c49b59c5c8e88",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jefe349ac06": {
+  "task": "T1",
+  "page_id": "6a3c66bcaf3c49b59c5cd07e",
+  "book_id": "6a3c66bcaf3c49b59c5cd02c",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j349f554395": {
+  "task": "T1",
+  "page_id": "6a3c66bcaf3c49b59c5cd07e",
+  "book_id": "6a3c66bcaf3c49b59c5cd02c",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jcdbd57301e": {
+  "task": "T1",
+  "page_id": "6a3c66bcaf3c49b59c5cd07e",
+  "book_id": "6a3c66bcaf3c49b59c5cd02c",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jd34953005e": {
+  "task": "T1",
+  "page_id": "6a3c66bcaf3c49b59c5cd07f",
+  "book_id": "6a3c66bcaf3c49b59c5cd02c",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j895a3787ab": {
+  "task": "T1",
+  "page_id": "6a3c66bcaf3c49b59c5cd07f",
+  "book_id": "6a3c66bcaf3c49b59c5cd02c",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j4712236f32": {
+  "task": "T1",
+  "page_id": "6a3c66bcaf3c49b59c5cd07f",
+  "book_id": "6a3c66bcaf3c49b59c5cd02c",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jdc0271ec81": {
+  "task": "T1",
+  "page_id": "6a3c64a339b4508b04e28bbf",
+  "book_id": "6a3c64a339b4508b04e28b59",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j1a041438bf": {
+  "task": "T1",
+  "page_id": "6a3c64a339b4508b04e28bbf",
+  "book_id": "6a3c64a339b4508b04e28b59",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jafcf262e51": {
+  "task": "T1",
+  "page_id": "6a3c64a339b4508b04e28bc0",
+  "book_id": "6a3c64a339b4508b04e28b59",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j7aa720e49d": {
+  "task": "T1",
+  "page_id": "6a3c64a339b4508b04e28bc0",
+  "book_id": "6a3c64a339b4508b04e28b59",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jf7a1a90000": {
+  "task": "T1",
+  "page_id": "6a3c64a339b4508b04e28bc0",
+  "book_id": "6a3c64a339b4508b04e28b59",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j68921729d2": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a27",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jf98da6e9fa": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a27",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j19da9a2707": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a27",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j6283d8e179": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a28",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j250ba5b248": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a28",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j6b45676d5d": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a28",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j360a3e691a": {
+  "task": "T1",
+  "page_id": "6a3cee024701a906f10e5620",
+  "book_id": "6a3cee024701a906f10e55d0",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j19b7dc88f8": {
+  "task": "T1",
+  "page_id": "6a3cee024701a906f10e5620",
+  "book_id": "6a3cee024701a906f10e55d0",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jdbbad620b7": {
+  "task": "T1",
+  "page_id": "6a3cee024701a906f10e5620",
+  "book_id": "6a3cee024701a906f10e55d0",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j8964d38cd8": {
+  "task": "T1",
+  "page_id": "6a3cee024701a906f10e5621",
+  "book_id": "6a3cee024701a906f10e55d0",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j99ab699b29": {
+  "task": "T1",
+  "page_id": "6a3cee024701a906f10e5621",
+  "book_id": "6a3cee024701a906f10e55d0",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j00289759c8": {
+  "task": "T1",
+  "page_id": "6a3cee024701a906f10e5621",
+  "book_id": "6a3cee024701a906f10e55d0",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j719165007a": {
+  "task": "T1",
+  "page_id": "6a3c6738af3c49b59c5d168e",
+  "book_id": "6a3c6738af3c49b59c5d165d",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "ja046904407": {
+  "task": "T1",
+  "page_id": "6a3c6738af3c49b59c5d168e",
+  "book_id": "6a3c6738af3c49b59c5d165d",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jfb5cda5cc3": {
+  "task": "T1",
+  "page_id": "6a3c6738af3c49b59c5d168e",
+  "book_id": "6a3c6738af3c49b59c5d165d",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j3c912a56e4": {
+  "task": "T1",
+  "page_id": "6a3c6738af3c49b59c5d168f",
+  "book_id": "6a3c6738af3c49b59c5d165d",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j469bb45b0f": {
+  "task": "T1",
+  "page_id": "6a3c6738af3c49b59c5d168f",
+  "book_id": "6a3c6738af3c49b59c5d165d",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j1fcec04c3b": {
+  "task": "T1",
+  "page_id": "6a3c6738af3c49b59c5d168f",
+  "book_id": "6a3c6738af3c49b59c5d165d",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jde7e619cdf": {
+  "task": "T1",
+  "page_id": "6a3cc158ec254ff6cae0b83b",
+  "book_id": "6a3cc158ec254ff6cae0b749",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j898cfa0db2": {
+  "task": "T1",
+  "page_id": "6a3cc158ec254ff6cae0b83b",
+  "book_id": "6a3cc158ec254ff6cae0b749",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jd6a06898bf": {
+  "task": "T1",
+  "page_id": "6a3cc158ec254ff6cae0b83b",
+  "book_id": "6a3cc158ec254ff6cae0b749",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j4dd42d65a2": {
+  "task": "T1",
+  "page_id": "6a3cc158ec254ff6cae0b83c",
+  "book_id": "6a3cc158ec254ff6cae0b749",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jc5b03d352b": {
+  "task": "T1",
+  "page_id": "6a3cc158ec254ff6cae0b83c",
+  "book_id": "6a3cc158ec254ff6cae0b749",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j69a827f01b": {
+  "task": "T1",
+  "page_id": "6a3cc158ec254ff6cae0b83c",
+  "book_id": "6a3cc158ec254ff6cae0b749",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jafea5186c2": {
+  "task": "T1",
+  "page_id": "6a3cc25bec254ff6cae10733",
+  "book_id": "6a3cc25bec254ff6cae105e8",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jfe96076056": {
+  "task": "T1",
+  "page_id": "6a3cc25bec254ff6cae10733",
+  "book_id": "6a3cc25bec254ff6cae105e8",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j465c77bdb9": {
+  "task": "T1",
+  "page_id": "6a3cc25bec254ff6cae10733",
+  "book_id": "6a3cc25bec254ff6cae105e8",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jb37e499090": {
+  "task": "T1",
+  "page_id": "6a3cc25bec254ff6cae10734",
+  "book_id": "6a3cc25bec254ff6cae105e8",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j5967e33811": {
+  "task": "T1",
+  "page_id": "6a3cc25bec254ff6cae10734",
+  "book_id": "6a3cc25bec254ff6cae105e8",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jfca294dec5": {
+  "task": "T1",
+  "page_id": "6a3cc25bec254ff6cae10734",
+  "book_id": "6a3cc25bec254ff6cae105e8",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j01a8951509": {
+  "task": "T1",
+  "page_id": "6a3c6181879008ba7e15eb37",
+  "book_id": "6a3c6181879008ba7e15eb10",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j454f1d5ba4": {
+  "task": "T1",
+  "page_id": "6a3c6181879008ba7e15eb37",
+  "book_id": "6a3c6181879008ba7e15eb10",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j6c77403800": {
+  "task": "T1",
+  "page_id": "6a3c6181879008ba7e15eb37",
+  "book_id": "6a3c6181879008ba7e15eb10",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j2ea4a1dac6": {
+  "task": "T1",
+  "page_id": "6a3c6181879008ba7e15eb38",
+  "book_id": "6a3c6181879008ba7e15eb10",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j692bd407d0": {
+  "task": "T1",
+  "page_id": "6a3c6181879008ba7e15eb38",
+  "book_id": "6a3c6181879008ba7e15eb10",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jfe9f6d8639": {
+  "task": "T1",
+  "page_id": "6a3c6181879008ba7e15eb38",
+  "book_id": "6a3c6181879008ba7e15eb10",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j5a950cfbd4": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf1",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jc22f797d85": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf1",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jb561327324": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf1",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jd6a9566315": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf2",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jb950b4c82d": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf2",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jc01275c1b1": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf2",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc67c47fb5d": {
+  "task": "T1",
+  "page_id": "6a3c66abaf3c49b59c5cc55b",
+  "book_id": "6a3c66abaf3c49b59c5cc4de",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j06a29fee74": {
+  "task": "T1",
+  "page_id": "6a3c66abaf3c49b59c5cc55b",
+  "book_id": "6a3c66abaf3c49b59c5cc4de",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j52dea7500b": {
+  "task": "T1",
+  "page_id": "6a3c66abaf3c49b59c5cc55b",
+  "book_id": "6a3c66abaf3c49b59c5cc4de",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf1e6bc4815": {
+  "task": "T1",
+  "page_id": "6a3c66abaf3c49b59c5cc55c",
+  "book_id": "6a3c66abaf3c49b59c5cc4de",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j1d970a8830": {
+  "task": "T1",
+  "page_id": "6a3c66abaf3c49b59c5cc55c",
+  "book_id": "6a3c66abaf3c49b59c5cc4de",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc5e540c9bf": {
+  "task": "T1",
+  "page_id": "6a3ced054701a906f10dcdf1",
+  "book_id": "6a3ced054701a906f10dcd97",
+  "arms": [
+   "CTL"
+  ],
+  "control": "drop"
+ },
+ "je81416c330": {
+  "task": "T1",
+  "page_id": "6a3c67a939b4508b04e37e39",
+  "book_id": "6a3c67a939b4508b04e37db1",
+  "arms": [
+   "CTL"
+  ],
+  "control": "drop"
+ },
+ "ja03e49cb9f": {
+  "task": "T1",
+  "page_id": "6a3c5e9540c88a541d8e3a27",
+  "book_id": "6a3c5e9540c88a541d8e39c6",
+  "arms": [
+   "CTL"
+  ],
+  "control": "drop"
+ },
+ "jfa5e54cd07": {
+  "task": "T1",
+  "page_id": "6a3cbfedf9474f825c16c798",
+  "book_id": "6a3cbfedf9474f825c16c745",
+  "arms": [
+   "CTL"
+  ],
+  "control": "bleed"
+ },
+ "j6001cab4eb": {
+  "task": "T1",
+  "page_id": "6a3c721b01fe4f593c1dc2dd",
+  "book_id": "6a3c721a01fe4f593c1dc2a3",
+  "arms": [
+   "CTL"
+  ],
+  "control": "bleed"
+ },
+ "j6056da3b97": {
+  "task": "T2",
+  "page_id": "69f512c72c50c99ed1a66846",
+  "book_id": "69c634823e8cae136d1497fa",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j912db991cd": {
+  "task": "T2",
+  "page_id": "69f512c72c50c99ed1a66846",
+  "book_id": "69c634823e8cae136d1497fa",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j3b125b1089": {
+  "task": "T2",
+  "page_id": "69f512c72c50c99ed1a66846",
+  "book_id": "69c634823e8cae136d1497fa",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j48cf5b9904": {
+  "task": "T2",
+  "page_id": "69f512cc2c50c99ed1a66847",
+  "book_id": "69c634823e8cae136d1497fa",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j48f4fc2959": {
+  "task": "T2",
+  "page_id": "69f512cc2c50c99ed1a66847",
+  "book_id": "69c634823e8cae136d1497fa",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j6255b4215a": {
+  "task": "T2",
+  "page_id": "69f512cc2c50c99ed1a66847",
+  "book_id": "69c634823e8cae136d1497fa",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jb846b419d5": {
+  "task": "T2",
+  "page_id": "69b51eae9a81ef7feb3d94cf",
+  "book_id": "69b51eae9a81ef7feb3d948a",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j324dbbe4a7": {
+  "task": "T2",
+  "page_id": "69b51eae9a81ef7feb3d94cf",
+  "book_id": "69b51eae9a81ef7feb3d948a",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j6814252f74": {
+  "task": "T2",
+  "page_id": "69b51eae9a81ef7feb3d94cf",
+  "book_id": "69b51eae9a81ef7feb3d948a",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j5e66ba436d": {
+  "task": "T2",
+  "page_id": "69b51eae9a81ef7feb3d94d0",
+  "book_id": "69b51eae9a81ef7feb3d948a",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jecb17807f6": {
+  "task": "T2",
+  "page_id": "69b51eae9a81ef7feb3d94d0",
+  "book_id": "69b51eae9a81ef7feb3d948a",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j7e351cabb5": {
+  "task": "T2",
+  "page_id": "69b51eae9a81ef7feb3d94d0",
+  "book_id": "69b51eae9a81ef7feb3d948a",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j142957cb1b": {
+  "task": "T2",
+  "page_id": "69f76214b2b698b3bb82f75c",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j1b91536372": {
+  "task": "T2",
+  "page_id": "69f76214b2b698b3bb82f75c",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j68149c7a32": {
+  "task": "T2",
+  "page_id": "69f76214b2b698b3bb82f75c",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j12242d5b4d": {
+  "task": "T2",
+  "page_id": "69f76215b2b698b3bb82f75d",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j5f61624c4b": {
+  "task": "T2",
+  "page_id": "69f76215b2b698b3bb82f75d",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jf853b2f5ec": {
+  "task": "T2",
+  "page_id": "69f76215b2b698b3bb82f75d",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jfee08be323": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d641",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j46e4bc7621": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d641",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j13b0700a43": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d641",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf1938eca5c": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d642",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j527deb9d0f": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d642",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j712b7ed723": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d642",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j597326cae9": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581e",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jd59fc20643": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581e",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jc7ea9898cb": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581e",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jded0da892a": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581f",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j3508e8bf5c": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581f",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jea1735097e": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581f",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf123d12252": {
+  "task": "T2",
+  "page_id": "69b51e5bff09e4fe943ad190",
+  "book_id": "69b51e5bff09e4fe943ad0b5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jc4233fcdf4": {
+  "task": "T2",
+  "page_id": "69b51e5bff09e4fe943ad190",
+  "book_id": "69b51e5bff09e4fe943ad0b5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j375987bd4f": {
+  "task": "T2",
+  "page_id": "69b51e5bff09e4fe943ad190",
+  "book_id": "69b51e5bff09e4fe943ad0b5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j27b977244d": {
+  "task": "T2",
+  "page_id": "69b51e5bff09e4fe943ad191",
+  "book_id": "69b51e5bff09e4fe943ad0b5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j15c17d20d9": {
+  "task": "T2",
+  "page_id": "69b51e5bff09e4fe943ad191",
+  "book_id": "69b51e5bff09e4fe943ad0b5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j6d30a2afd7": {
+  "task": "T2",
+  "page_id": "69b51e5bff09e4fe943ad191",
+  "book_id": "69b51e5bff09e4fe943ad0b5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "je15373a0a9": {
+  "task": "T2",
+  "page_id": "69d377a5d2177ffd1ddf8dbf",
+  "book_id": "69c808226c6f3cc53c845bd5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j6f41c1f647": {
+  "task": "T2",
+  "page_id": "69d377a5d2177ffd1ddf8dbf",
+  "book_id": "69c808226c6f3cc53c845bd5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j170a5cd654": {
+  "task": "T2",
+  "page_id": "69d377a5d2177ffd1ddf8dbf",
+  "book_id": "69c808226c6f3cc53c845bd5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j0e225b0048": {
+  "task": "T2",
+  "page_id": "69d377a5d2177ffd1ddf8dc0",
+  "book_id": "69c808226c6f3cc53c845bd5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jc8410ad78e": {
+  "task": "T2",
+  "page_id": "69d377a5d2177ffd1ddf8dc0",
+  "book_id": "69c808226c6f3cc53c845bd5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "je8ed9bdfe5": {
+  "task": "T2",
+  "page_id": "69d377a5d2177ffd1ddf8dc0",
+  "book_id": "69c808226c6f3cc53c845bd5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j9e3c311038": {
+  "task": "T2",
+  "page_id": "69dbcabf1040d1d5e20ae5f9",
+  "book_id": "69dbcabf1040d1d5e20ae5b5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j6ce9d19be6": {
+  "task": "T2",
+  "page_id": "69dbcabf1040d1d5e20ae5f9",
+  "book_id": "69dbcabf1040d1d5e20ae5b5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j054f9e8126": {
+  "task": "T2",
+  "page_id": "69dbcabf1040d1d5e20ae5f9",
+  "book_id": "69dbcabf1040d1d5e20ae5b5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf0313378a5": {
+  "task": "T2",
+  "page_id": "69dbcabf1040d1d5e20ae5fa",
+  "book_id": "69dbcabf1040d1d5e20ae5b5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j04908b0de0": {
+  "task": "T2",
+  "page_id": "69dbcabf1040d1d5e20ae5fa",
+  "book_id": "69dbcabf1040d1d5e20ae5b5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j4e0208863d": {
+  "task": "T2",
+  "page_id": "69dbcabf1040d1d5e20ae5fa",
+  "book_id": "69dbcabf1040d1d5e20ae5b5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf12da395e2": {
+  "task": "T2",
+  "page_id": "6a243c5a0f0e4f405e62e42c",
+  "book_id": "6a243c5a0f0e4f405e62e1f8",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j6c43b81e65": {
+  "task": "T2",
+  "page_id": "6a243c5a0f0e4f405e62e42c",
+  "book_id": "6a243c5a0f0e4f405e62e1f8",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j132bc1b095": {
+  "task": "T2",
+  "page_id": "6a243c5a0f0e4f405e62e42c",
+  "book_id": "6a243c5a0f0e4f405e62e1f8",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j7acca12ef3": {
+  "task": "T2",
+  "page_id": "6a243c5a0f0e4f405e62e42d",
+  "book_id": "6a243c5a0f0e4f405e62e1f8",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j89fd52b752": {
+  "task": "T2",
+  "page_id": "6a243c5a0f0e4f405e62e42d",
+  "book_id": "6a243c5a0f0e4f405e62e1f8",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j381e62dcce": {
+  "task": "T2",
+  "page_id": "6a243c5a0f0e4f405e62e42d",
+  "book_id": "6a243c5a0f0e4f405e62e1f8",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc94d399eef": {
+  "task": "T2",
+  "page_id": "69d387c69453b2919745bf54",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j4846af5665": {
+  "task": "T2",
+  "page_id": "69d387c69453b2919745bf54",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j57f71f8df4": {
+  "task": "T2",
+  "page_id": "69d387c69453b2919745bf54",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "je40d0d8a75": {
+  "task": "T2",
+  "page_id": "69d387c69453b2919745bf55",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j995a2d624b": {
+  "task": "T2",
+  "page_id": "69d387c69453b2919745bf55",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j04f563014b": {
+  "task": "T2",
+  "page_id": "69d387c69453b2919745bf55",
+  "book_id": "69099e2acf28baa1b4caeafb",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "ja4ce7f6017": {
+  "task": "T2",
+  "page_id": "6a212212f88bd9944a5840ed",
+  "book_id": "6a212212f88bd9944a5840d7",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j9eb00f2f13": {
+  "task": "T2",
+  "page_id": "6a212212f88bd9944a5840ed",
+  "book_id": "6a212212f88bd9944a5840d7",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j1c77b5bd62": {
+  "task": "T2",
+  "page_id": "6a212212f88bd9944a5840ed",
+  "book_id": "6a212212f88bd9944a5840d7",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc219c06b55": {
+  "task": "T2",
+  "page_id": "6a212212f88bd9944a5840ee",
+  "book_id": "6a212212f88bd9944a5840d7",
+  "arms": [
+   "A1",
+   "A1b"
+  ],
+  "control": null
+ },
+ "jc56498f82b": {
+  "task": "T2",
+  "page_id": "6a212212f88bd9944a5840ee",
+  "book_id": "6a212212f88bd9944a5840d7",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j9d8d5e1b77": {
+  "task": "T2",
+  "page_id": "6958dfb4dbe0f678e5c52971",
+  "book_id": "6958dfb3dbe0f678e5c5272c",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j4295698d8e": {
+  "task": "T2",
+  "page_id": "6958dfb4dbe0f678e5c52971",
+  "book_id": "6958dfb3dbe0f678e5c5272c",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "jfd923bd76b": {
+  "task": "T2",
+  "page_id": "6958dfb4dbe0f678e5c52971",
+  "book_id": "6958dfb3dbe0f678e5c5272c",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jc3d2e16de2": {
+  "task": "T2",
+  "page_id": "6958dfb4dbe0f678e5c52972",
+  "book_id": "6958dfb3dbe0f678e5c5272c",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j953da6d336": {
+  "task": "T2",
+  "page_id": "6958dfb4dbe0f678e5c52972",
+  "book_id": "6958dfb3dbe0f678e5c5272c",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j3c9eb5843a": {
+  "task": "T2",
+  "page_id": "6958dfb4dbe0f678e5c52972",
+  "book_id": "6958dfb3dbe0f678e5c5272c",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j1bd9d12a61": {
+  "task": "T2",
+  "page_id": "6a267f6e88f11913ee9c91b5",
+  "book_id": "6a267f6e88f11913ee9c919b",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j8edb808761": {
+  "task": "T2",
+  "page_id": "6a267f6e88f11913ee9c91b5",
+  "book_id": "6a267f6e88f11913ee9c919b",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j2b7ef2bb51": {
+  "task": "T2",
+  "page_id": "6a267f6e88f11913ee9c91b5",
+  "book_id": "6a267f6e88f11913ee9c919b",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j04927e9d24": {
+  "task": "T2",
+  "page_id": "6a267f6e88f11913ee9c91b6",
+  "book_id": "6a267f6e88f11913ee9c919b",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j6e9c16ee5c": {
+  "task": "T2",
+  "page_id": "6a267f6e88f11913ee9c91b6",
+  "book_id": "6a267f6e88f11913ee9c919b",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j744e63dceb": {
+  "task": "T2",
+  "page_id": "6a267f6e88f11913ee9c91b6",
+  "book_id": "6a267f6e88f11913ee9c919b",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "je7d557277e": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dfe",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j0fc5bf8ce1": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dfe",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j24b667f366": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dfe",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jd4772e55c4": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dff",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "j9e697a1c19": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dff",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "je1bc3c4f0b": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dff",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "je125110739": {
+  "task": "T2",
+  "page_id": "6a267d246c1f37c9c4f38c73",
+  "book_id": "6a267d246c1f37c9c4f38c16",
+  "arms": [
+   "A1"
+  ],
+  "control": null
+ },
+ "jc8ab5eb098": {
+  "task": "T2",
+  "page_id": "6a267d246c1f37c9c4f38c73",
+  "book_id": "6a267d246c1f37c9c4f38c16",
+  "arms": [
+   "A1b"
+  ],
+  "control": null
+ },
+ "j8ffb8b4524": {
+  "task": "T2",
+  "page_id": "6a267d246c1f37c9c4f38c73",
+  "book_id": "6a267d246c1f37c9c4f38c16",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "j2834730432": {
+  "task": "T2",
+  "page_id": "6a267d246c1f37c9c4f38c74",
+  "book_id": "6a267d246c1f37c9c4f38c16",
+  "arms": [
+   "A1",
+   "A1b"
+  ],
+  "control": null
+ },
+ "jc160c9ebbf": {
+  "task": "T2",
+  "page_id": "6a267d246c1f37c9c4f38c74",
+  "book_id": "6a267d246c1f37c9c4f38c16",
+  "arms": [
+   "B2"
+  ],
+  "control": null
+ },
+ "jf72fdab1a3": {
+  "task": "T2",
+  "page_id": "69f76214b2b698b3bb82f75c",
+  "book_id": "69c836d36c6f3cc53c84ecd6",
+  "arms": [
+   "CTL"
+  ],
+  "control": "drop"
+ },
+ "j382ed9dc0e": {
+  "task": "T2",
+  "page_id": "6a212212f88bd9944a5840ed",
+  "book_id": "6a212212f88bd9944a5840d7",
+  "arms": [
+   "CTL"
+  ],
+  "control": "drop"
+ },
+ "je7826cd547": {
+  "task": "T2",
+  "page_id": "69d372c3495a5d8dfb42581e",
+  "book_id": "69c85caf6c6f3cc53c854d2f",
+  "arms": [
+   "CTL"
+  ],
+  "control": "drop"
+ },
+ "j2975161b1d": {
+  "task": "T2",
+  "page_id": "6a26ceaf11e2d87b58a93dfe",
+  "book_id": "69ef37016c5c0455cc3f69e5",
+  "arms": [
+   "CTL"
+  ],
+  "control": "bleed"
+ },
+ "j1704aa8fdc": {
+  "task": "T2",
+  "page_id": "69b51e73cf111105c429d641",
+  "book_id": "69b51e73cf111105c429d61f",
+  "arms": [
+   "CTL"
+  ],
+  "control": "bleed"
+ }
+}

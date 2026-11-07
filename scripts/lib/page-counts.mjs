@@ -21,12 +21,30 @@
 
 import { isLazyPagesBook } from './pages-state.mjs';
 
-/** Match fragment selecting only visible (renderable) pages. */
-export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } };
+/**
+ * Match fragment: pages that are not a hidden repeat capture (#5056). A page
+ * with `repeat_of` (the `id` of the kept capture of the same leaf) keeps its
+ * page_number and id, so shortlinks and citations still resolve, but no reader
+ * list, counter or OCR/translation lane sees it. `null`, not `$exists`, so a
+ * restore that `$set`s null instead of `$unset`ting still restores.
+ */
+export const NOT_REPEAT_CAPTURE = { repeat_of: null };
 
-/** True iff a page renders in the reader (soft-hidden pages have page_number <= 0). */
+/** Match fragment selecting only visible (renderable) pages. */
+export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE };
+
+/** True iff a page is a hidden repeat capture of another page (#5056). */
+export function isRepeatCapture(page) {
+  return page?.repeat_of != null;
+}
+
+/**
+ * True iff a page renders in the reader (soft-hidden pages have page_number <= 0;
+ * repeat captures carry `repeat_of`). A caller's projection must include
+ * `repeat_of`, or a repeat reads as visible.
+ */
 export function isVisiblePage(page) {
-  return (page?.page_number ?? 0) > 0;
+  return (page?.page_number ?? 0) > 0 && !isRepeatCapture(page);
 }
 
 /** True iff a page carries non-empty OCR text. */
@@ -391,6 +409,21 @@ export function recountSet(after, now) {
 }
 
 /**
+ * `last_translation_at` when a recount finds MORE translated pages than were stored
+ * ({} otherwise). The homepage "Recently Translated" slider and the library's
+ * recent-translation sort read this field, and only the old translate-worker set it:
+ * on 2026-10-27, 274 of the 279 public books the CLI lanes translated that week
+ * carried no stamp, so none of them appeared on either surface. Stamping it at the
+ * one counter writer covers every lane. A retranslation over existing English does
+ * not move the count and is not stamped.
+ */
+export function translationAdvancedSet(before, after, now) {
+  // A book never counted before (null) is not stamped: its pages may be years old.
+  const was = before?.pages_translated;
+  return typeof was === 'number' && (after?.pages_translated ?? 0) > was ? { last_translation_at: now } : {};
+}
+
+/**
  * THE writer of a book's page counters (#5325, `.claude/docs/page-counts.md`).
  *
  * Recounts the book's visible pages with buildVisiblePageCountPipeline() and
@@ -433,7 +466,7 @@ export async function recountBook(db, bookId, { reason, now = new Date() } = {})
   const { before, after, changed } = diffPageCounters(book, row);
   if (!book) return { matched: false, reason, before: null, after, changed: [] };
 
-  const $set = recountSet(after, now);
+  const $set = { ...recountSet(after, now), ...translationAdvancedSet(before, after, now) };
   const state = computeTranslationState(after, { language: book.language, content_type: book.content_type });
   const stored = book.translation_state;
   if (translationStateChanged(stored, state)) $set.translation_state = { ...state, computed_at: now };

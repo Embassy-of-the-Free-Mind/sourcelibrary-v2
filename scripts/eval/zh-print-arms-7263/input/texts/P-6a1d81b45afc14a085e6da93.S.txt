@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>Double-page spread from a woodblock printed book. Vertical text columns with traditional Chinese punctuation (dots) and small-character glosses.</meta>
+
+時則缺銜毀首碎胸意有所至而愛有所亡可不慎耶
+> 朱氏曰闔之傳噴始君命不可辭故有此問為子擇傳而得闔亦靈公不喪之一端也只是正身為本迹就心和外盡恭敬不忤之道內存調停誘掖之心此亦必善養人之方然必身正而後成就或和不過其則也達之入於無疵者通其情使漸入於無顯惡此之謂就入於無疵也出其緣而不知不特言牧馬者拍馬身之蚊虻出於忽然馬之不懌之拍必然驚詫決裂致傷則我平日愛馬之心皆忘之矣此蓋反應達入無疵句實欲訓迪頑鈍者漸責而不驟也此承美成在父惡不及改之意
+
+匠石之齊至乎曲轅見櫟社樹其大蔽牛絜之百圍其高臨山十仞而後有枝其可以為舟者旁十數觀者如市匠伯不顧遂行不輟弟子厭觀之走及匠石曰自吾執斧斤以隨夫子未嘗見材如此其美也先生不肯視行不輟何耶曰已矣勿言之矣散木也以為舟則沈以為棺槨則速腐以為器則速毀以為門戶則液樠<gloss>莫于反</gloss>以為柱則蠹是不材之木也無所可用故能若是之壽匠石歸櫟社見夢曰女將惡乎比予哉若將比予於文木耶夫柤梨橘柚果蓏<gloss>力果反</gloss>之屬實熟則剝則辱大枝折小枝泄此以其能苦其生者也故不終其天年而中道夭自掊擊於世俗者也
+
+<vocab>匠石 (Carpenter Shi), 櫟社 (Oak of the Shrine), 散木 (Useless wood), 莊子 (Zhuangzi), 內聖外王</vocab>

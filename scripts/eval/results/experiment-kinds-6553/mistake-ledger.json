@@ -1,0 +1,1181 @@
+{
+ "classes": [
+  {
+   "name": "harness-bug-corrupted-result",
+   "definition": "A code, parser or harness bug made a result or arm label wrong, or shipped a wrong output, and it had to be fixed and re-run.",
+   "preventer": "Harness self-check that fails loudly when an arm substitutes nothing, plus a golden-fixture test that each arm's inputs differ before any judge packet is built."
+  },
+  {
+   "name": "wrong-reference-ground-truth",
+   "definition": "The reference, label or comparison source (TCP, catalogue, Wikisource, stored revision) was itself wrong, so scores or conclusions were wrong.",
+   "preventer": "By-eye audit of a random 50-item sample of the reference before scoring, and report the reference error rate beside every score."
+  },
+  {
+   "name": "overclaimed-headline-claim",
+   "definition": "A headline claim was reported from in-sample, first-pass or interim data and later retracted, shrunk or failed to replicate.",
+   "preventer": "Preregistered rule with a held-out draw; no number leaves the worktree without a held-out or replicate check."
+  },
+  {
+   "name": "unmeasured-or-wrong-denominator-claim",
+   "definition": "A number was asserted without measurement, or measured against the wrong population or denominator, and was later corrected.",
+   "preventer": "Script that prints numerator, denominator and population definition with every figure; spot-check against production rows before asserting."
+  },
+  {
+   "name": "blind-or-wrong-instrument",
+   "definition": "The detector, screen, label or probe could not see the thing measured, or measured the wrong element, so findings were false or missing.",
+   "preventer": "Planted-positive and negative control set run through every instrument before use, plus a by-eye check of about 40 flagged items."
+  },
+  {
+   "name": "judge-bias-or-confound",
+   "definition": "Judge bias (same-family or self-preference, invented defects) or a confound (cross-round, engine and version, bad OCR) distorted the comparison.",
+   "preventer": "Cross-family judge, a wrong-page control arm in every packet, and same-round arms."
+  },
+  {
+   "name": "stale-or-wrong-premise",
+   "definition": "A starting assumption or earlier conclusion was out of date or false, so the question or recommendation had to be replaced.",
+   "preventer": "Premise check in the prereg: re-measure the baseline against current production before designing the arms."
+  },
+  {
+   "name": "stratum-conflation",
+   "definition": "Different populations (manuscript and print, ages, scripts) were pooled and the pooled effect was misread.",
+   "preventer": "Form and script labelled by eye from the image and stratified in the design before analysis."
+  },
+  {
+   "name": "pairing-identity-error",
+   "definition": "Image, text, ID or entity was paired with the wrong counterpart (offset, wrong QID, wrong field, wrong page).",
+   "preventer": "Pairing-sanity check comparing image against text on a sample, plus live identity verification (P31/P50/VIAF) before writes."
+  },
+  {
+   "name": "env-config-failure",
+   "definition": "Environment, PATH, auth, bundling or checkout configuration caused a failure or false refusal that needed a re-run.",
+   "preventer": "Preflight script in the job wrapper that verifies PATH, binaries and checkout, with /root/.local/bin added to claude-job.sh."
+  },
+  {
+   "name": "leakage-contamination",
+   "definition": "Test material leaked into the prompt, design or ids, so the measure was contaminated.",
+   "preventer": "Leakage guard that diffs prompt examples against the eval set and uses opaque ids; refuse to run on violation."
+  },
+  {
+   "name": "no-noise-floor-design-flaw",
+   "definition": "The design had an unreachable bound or lacked a same-arm rerun noise floor.",
+   "preventer": "Noise floor = same-arm rerun before comparing arms; a power check that the preregistered bound is reachable."
+  },
+  {
+   "name": "untested-on-real-data",
+   "definition": "Logic passed synthetic tests but was wrong on real, dirty production data.",
+   "preventer": "Hand spot-check of about 7 production items before trusting a derivation or unit test."
+  }
+ ],
+ "items": [
+  {
+   "id": "W:2026-09-02-does-ocr-prompt-v17-reduce-fabrication-vs-v15.md",
+   "class": "overclaimed-headline-claim",
+   "why": "First-pass finding retracted; result inconclusive."
+  },
+  {
+   "id": "W:2026-09-03-bench-2-first-arms-superseded-by-the-entry-above.md",
+   "class": "planned-followup",
+   "why": "First arms extended by complete bench."
+  },
+  {
+   "id": "W:2026-09-13-which-model-should-translate-classical-chinese-preview-pages-result.md",
+   "class": "planned-followup",
+   "why": "Re-judged within larger six-arm read."
+  },
+  {
+   "id": "W:2026-09-16-is-our-syriac-ocr-a-reading-of-the-page-4883.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Withdraw-by-book recommendation replaced same day by Kraken lane."
+  },
+  {
+   "id": "W:2026-09-17-does-translation-survive-the-batch-api-the-block-boundary-4681.md",
+   "class": "no-noise-floor-design-flaw",
+   "why": "H1 bound unreachable; production run against itself exposed noise."
+  },
+  {
+   "id": "W:2026-09-24-batch-api-translation-lane-first-live-shadow-run-on-4681.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Arm label wrong; first build leaked pair type."
+  },
+  {
+   "id": "W:2026-09-24-batch-seam-repair-lane-vs-production-at-mid-flow-4681.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Judges read plain draft, never the repair."
+  },
+  {
+   "id": "W:2026-09-24-can-jev-judge-page-break-continuity-pilot-against-the-4681.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Fluency question cannot catch leaked previous page."
+  },
+  {
+   "id": "W:2026-09-24-contact-sheet-screen-for-illustrated-pages-5009.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Instrument wrong twice; contrast hypothesis withdrawn."
+  },
+  {
+   "id": "W:2026-09-25-retraction-of-the-arm-label-on-both-4681-seam-4681.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Repair never substituted; arm label retracted."
+  },
+  {
+   "id": "W:2026-09-25-which-engine-should-retranslate-the-re-ocr-d-kanjur-4742.md",
+   "class": "wrong-reference-ground-truth",
+   "why": "Reference text was the wrong sutra."
+  },
+  {
+   "id": "W:2026-09-28-for-which-english-ia-books-may-the-archive-s-5124.md",
+   "class": "wrong-reference-ground-truth",
+   "why": "Wikisource reference was wrong on several numbers."
+  },
+  {
+   "id": "W:2026-09-30-what-does-the-internet-archives-ocr-get-wrong-5186.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "First report retracted same day, before numbers left."
+  },
+  {
+   "id": "W:2026-10-01-chinese-ocr-cohort-5547.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Benchmark's 20% rate did not hold here."
+  },
+  {
+   "id": "W:2026-10-01-does-the-yigdzin-leaf-cut-drop-the-lower-leaf-s-first-line-4523.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Premise retracted; leaf cut does not drop the line."
+  },
+  {
+   "id": "W:2026-10-01-how-strong-are-the-quality-papers-numbers-once-corrected-for-chance-and-held-out-5495.md",
+   "class": "overclaimed-headline-claim",
+   "why": "In-sample recall overstated versus held-out."
+  },
+  {
+   "id": "W:2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md",
+   "class": "none",
+   "why": "Confirmatory redraw replicated; no error."
+  },
+  {
+   "id": "W:2026-10-01-what-kinds-of-error-make-up-ocr-cer-5488.md",
+   "class": "wrong-reference-ground-truth",
+   "why": "Reference wrong in 16 of 94 examples."
+  },
+  {
+   "id": "W:2026-10-02-are-the-facts-translation-notes-add-right-5624.md",
+   "class": "planned-followup",
+   "why": "Superseded by full Tibetan run."
+  },
+  {
+   "id": "W:2026-10-02-greek-manuscripts-fit-open-edition-5619.md",
+   "class": "planned-followup",
+   "why": "Followed by full Kraken read."
+  },
+  {
+   "id": "W:2026-10-02-ocr-v18-blank-insert-4195.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Evidence insufficient; needed by-eye labels."
+  },
+  {
+   "id": "W:2026-10-02-ocr-v19-showthrough-4195.md",
+   "class": "planned-followup",
+   "why": "Led to v19.1 variant."
+  },
+  {
+   "id": "W:2026-10-02-translation-flash-vs-lite-sanskrit-pali-chinese-5606.md",
+   "class": "planned-followup",
+   "why": "Absorbed by larger xlref run."
+  },
+  {
+   "id": "W:2026-10-03-quality-census-backfill-sizes-5700.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Detector counted soft-hidden negative-page spreads as reversed."
+  },
+  {
+   "id": "W:2026-10-03-seam-ab-markers-5678.md",
+   "class": "planned-followup",
+   "why": "Confirmatory run followed."
+  },
+  {
+   "id": "W:2026-10-04-human-ceiling-translation-5762.md",
+   "class": "judge-bias-or-confound",
+   "why": "Wrong OCR pages confounded the Greek comparison."
+  },
+  {
+   "id": "W:2026-10-06-ai-exposure-refresh-6038.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Self-reported recognition replaced by fact test."
+  },
+  {
+   "id": "W:2026-10-06-term-definition-cleanup-applied-5901.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Correction needed after apply; chip-in-span pages skipped."
+  },
+  {
+   "id": "W:2026-10-06-transcription-error-three-ways-and-by-prompt-5939.md",
+   "class": "wrong-reference-ground-truth",
+   "why": "Reference wrong in 9 of 55."
+  },
+  {
+   "id": "W:2026-10-06-translation-reasoning-leak-6056.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Rule false-positived on book text; four phrases removed."
+  },
+  {
+   "id": "W:2026-10-07-ai-exposure-run2-6038.md",
+   "class": "overclaimed-headline-claim",
+   "why": "'About a third' retracted for works."
+  },
+  {
+   "id": "W:2026-10-07-embedding-granularity-cross-tradition.md",
+   "class": "none",
+   "why": "Unchecked abstracts are a stated limitation."
+  },
+  {
+   "id": "W:2026-10-07-tengyur-verse-memory-6141.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Line matching misaligned 28 of 259 renderings."
+  },
+  {
+   "id": "W:2026-10-10-ocr-convergence-gate-6420.md",
+   "class": "planned-followup",
+   "why": "Scaled by larger main200 run."
+  },
+  {
+   "id": "W:2026-10-11-invented-text-qualitative-recheck-6420.md",
+   "class": "overclaimed-headline-claim",
+   "why": "Earlier claim overstated on recheck."
+  },
+  {
+   "id": "W:2026-10-11-paddle-stale-english-retranslate-6388.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Old reading was wrong; English stale."
+  },
+  {
+   "id": "W:2026-10-11-praetorius-syntagma-ref-page-repin.md",
+   "class": "pairing-identity-error",
+   "why": "Reference pinned to wrong page number."
+  },
+  {
+   "id": "W:2026-10-12-pro-opus-correction-hardest-languages-6545.md",
+   "class": "overclaimed-headline-claim",
+   "why": "Correction to earlier Pro claim."
+  },
+  {
+   "id": "W:2026-10-12-replicate-published-llm-transcription-6547.md",
+   "class": "none",
+   "why": "Replication; paper gain did not carry to strong readers."
+  },
+  {
+   "id": "W:2026-10-12-stale-siku-english-gate-6567.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Diff-scoped correction wrong for stale English."
+  },
+  {
+   "id": "W:2026-10-13-opus-translation-10-pages-per-call-6690.md",
+   "class": "judge-bias-or-confound",
+   "why": "Needed same-round comparison versus Flash."
+  },
+  {
+   "id": "W:2026-10-15-ocr-estimator-v0-accuracy-failure-rates-6740.md",
+   "class": "stale-or-wrong-premise",
+   "why": "One-page-per-book assumption fails in batch lanes."
+  },
+  {
+   "id": "W:2026-10-15-stale-siku-opus-correct-pilot-6561.md",
+   "class": "overclaimed-headline-claim",
+   "why": "v2 did not hold on held-out draw."
+  },
+  {
+   "id": "W:2026-10-17-local-seam-screener-prereg-6742.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by score."
+  },
+  {
+   "id": "W:2026-10-18-image-gain-guessed-text-detector-6871.md",
+   "class": "planned-followup",
+   "why": "Interim superseded by full run."
+  },
+  {
+   "id": "W:2026-10-18-mongol-real-ground-truth-5664.md",
+   "class": "none",
+   "why": "Limits stated; no error."
+  },
+  {
+   "id": "W:2026-10-18-mongol-synth-prereg-5664.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by score."
+  },
+  {
+   "id": "W:2026-10-18-zh-guarded-paddle-prereg-6871.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by result."
+  },
+  {
+   "id": "W:2026-10-18-zh-residue-bakeoff-prereg-6871.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by result."
+  },
+  {
+   "id": "W:2026-10-19-mongol-real-pilot-prereg-5664.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by score."
+  },
+  {
+   "id": "W:2026-10-22-can-a-prompt-make-flash-lite-read-long-s-on-latin-5924.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Starting point wrong; live prompt already covered long-s."
+  },
+  {
+   "id": "W:2026-10-22-greek-ms-lora-prereg-5730.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by score."
+  },
+  {
+   "id": "W:2026-10-22-image-gain-full-run-6871.md",
+   "class": "overclaimed-headline-claim",
+   "why": "Interim leads did not hold on full set."
+  },
+  {
+   "id": "W:2026-10-22-latin-gpu25-predicts-gpu-ok-5924.md",
+   "class": "stale-or-wrong-premise",
+   "why": "First-25 pages unrepresentative; sample through book."
+  },
+  {
+   "id": "W:2026-10-24-latin-lite-flash-correct-four-arms-5924.md",
+   "class": "none",
+   "why": "Negative result, no error."
+  },
+  {
+   "id": "W:2026-10-24-notes-as-anchored-layer-5942.md",
+   "class": "none",
+   "why": "Rule met; leak finding is a result."
+  },
+  {
+   "id": "W:2026-10-26-planetary-hours-order-detector-7274.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Detector artifacts found by eye and fixed."
+  },
+  {
+   "id": "W:2026-10-26-pre-read-page-classifier-5122.md",
+   "class": "wrong-reference-ground-truth",
+   "why": "Catalogue script label wrong; relabelled Manchu."
+  },
+  {
+   "id": "W:2026-10-26-translation-prompt-v19-cognates-4741.md",
+   "class": "none",
+   "why": "Negative result; v13 kept."
+  },
+  {
+   "id": "W:2026-10-27-correct-vs-reread-wave1-prereg-7568.md",
+   "class": "planned-followup",
+   "why": "Prereg followed by result."
+  },
+  {
+   "id": "W:2026-10-27-opus-image-attached-tibetan-six-books-6948.md",
+   "class": "none",
+   "why": "One Opus note wrong, reported."
+  },
+  {
+   "id": "W:2026-10-27-tibetan-corrector-profiles-diff-qa-6560.md",
+   "class": "leakage-contamination",
+   "why": "Profile examples leaked from audits choosing test pages."
+  },
+  {
+   "id": "W:2026-10-27-tibetan-router-30-6740.md",
+   "class": "none",
+   "why": "Fresh 30-folio extension; no error."
+  },
+  {
+   "id": "W:2026-10-27-tibetan-severity-recheck-6560.md",
+   "class": "overclaimed-headline-claim",
+   "why": "Recheck showed written lane fails severity rule."
+  },
+  {
+   "id": "W:2026-10-28-agy-opus-fallback-7545.md",
+   "class": "none",
+   "why": "Format failure reported; route gated."
+  },
+  {
+   "id": "W:2026-10-28-correct-vs-reread-wave1-zh-de-grc-7568.md",
+   "class": "none",
+   "why": "Result entry; no error."
+  },
+  {
+   "id": "W:2026-10-28-latin-diffqa-three-way-vote-7591.md",
+   "class": "none",
+   "why": "Negative result, not written."
+  },
+  {
+   "id": "W:2026-10-28-router-next-print-manuscript-split-7263.md",
+   "class": "overclaimed-headline-claim",
+   "why": "Prior calibration fit in-sample but lost held-out."
+  },
+  {
+   "id": "W:2026-10-28-split-cuts-agy-flash-low-5771.md",
+   "class": "none",
+   "why": "Route move; ledger cut error found by eye."
+  },
+  {
+   "id": "W:2026-10-29-print1800-gpu-engine-lanes-6871.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Guard front-matter strip was wrong, fixed."
+  },
+  {
+   "id": "W:2026-10-31-fraktur-paired-7835.md",
+   "class": "none",
+   "why": "Recommendation; no error."
+  },
+  {
+   "id": "W:2026-10-31-queue-routes-7853.md",
+   "class": "none",
+   "why": "Re-read beat correction; no error."
+  },
+  {
+   "id": "W:2026-11-01-flash-tier-judge-7611.md",
+   "class": "judge-bias-or-confound",
+   "why": "Flash invented 76 false defect claims."
+  },
+  {
+   "id": "W:2026-11-02-detector-tasks-7611.md",
+   "class": "none",
+   "why": "Design entry; no error."
+  },
+  {
+   "id": "W:2026-11-02-latin-by-age-7933.md",
+   "class": "stratum-conflation",
+   "why": "Pre-1501 group mixed manuscripts with early print."
+  },
+  {
+   "id": "W:2026-11-03-router-v4-latin-lite-7263.md",
+   "class": "none",
+   "why": "Adopted default; no error."
+  },
+  {
+   "id": "W:2026-11-03-zh-ditto-restore-5274.md",
+   "class": "none",
+   "why": "CER overstated noted; recommendation sound."
+  },
+  {
+   "id": "W:2026-11-03-zh-reocr-cheap-arms-7263.md",
+   "class": "judge-bias-or-confound",
+   "why": "Judge and arm same model; Opus preference risk."
+  },
+  {
+   "id": "H:lessons-learned.md",
+   "class": "untested-on-real-data",
+   "why": "Derivation passed synthetic tests, wrong on legacy ledger."
+  },
+  {
+   "id": "H:2026-06-21-ft-rebuild-session.md",
+   "class": "none",
+   "why": "Process lesson about force-push."
+  },
+  {
+   "id": "H:2026-07-05-r2-reclaim-3005.md",
+   "class": "pairing-identity-error",
+   "why": "book id field versus mongo _id confusion."
+  },
+  {
+   "id": "H:2026-07-10-romanization-and-trace-three-pane.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Containment test systematically wrong on early-modern text."
+  },
+  {
+   "id": "H:2026-07-12-email-endpoint-rate-limits.md",
+   "class": "env-config-failure",
+   "why": "Proxy bot limiter broke curl tests."
+  },
+  {
+   "id": "H:2026-07-18-sound-lab-plates.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "Quoted source text not verified before use."
+  },
+  {
+   "id": "H:2026-07-19-ngram-viewer.md",
+   "class": "none",
+   "why": "Operational lessons only."
+  },
+  {
+   "id": "H:2026-07-19-noncanon-eval-continuation.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Earlier 'no versions' assumption was wrong."
+  },
+  {
+   "id": "H:2026-07-19-search-filter-lanes.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Date filter wrong field type; wrong claim."
+  },
+  {
+   "id": "H:2026-07-22-browser-translation-reader-crash.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Code bug crashed the reader."
+  },
+  {
+   "id": "H:2026-07-22-note-provenance-and-render-fix.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Render bug at markdown block boundary."
+  },
+  {
+   "id": "H:2026-07-22-pdf-download-500-pdfkit-bundling.md",
+   "class": "env-config-failure",
+   "why": "pdfkit bundling failed only in prod."
+  },
+  {
+   "id": "H:2026-07-23-weekly-digest-routine.md",
+   "class": "none",
+   "why": "Monitor-respects-pause lesson only."
+  },
+  {
+   "id": "H:2026-07-24-corpus-snapshot-data-products.md",
+   "class": "none",
+   "why": "Lessons encoded as guards."
+  },
+  {
+   "id": "H:2026-07-25-ocr-quality-research-blitz.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "sharp resize silently shifts composite."
+  },
+  {
+   "id": "H:2026-07-27-bulk-jp2-leaf-offset.md",
+   "class": "pairing-identity-error",
+   "why": "IA page number conflated with zip ordinal."
+  },
+  {
+   "id": "H:2026-07-27-entity-page-attribution-and-tenant-leaks.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "First matcher round wrong; items got wrong."
+  },
+  {
+   "id": "H:2026-07-28-entity-index-embeddings.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "'Fixed everywhere' declared wrongly twice."
+  },
+  {
+   "id": "H:2026-07-28-instruments-lied-translation-streaming-crash.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Instruments gave wrong readings; wrong field names."
+  },
+  {
+   "id": "H:2026-07-29-pr-backlog-and-dependency-blindspot.md",
+   "class": "none",
+   "why": "Monitoring lessons."
+  },
+  {
+   "id": "H:2026-07-30-ocr-provenance-and-revision-corpus.md",
+   "class": "wrong-reference-ground-truth",
+   "why": "Revision text wrong, live data right."
+  },
+  {
+   "id": "H:2026-07-31-search-term-became-the-author.md",
+   "class": "pairing-identity-error",
+   "why": "Search term became wrong author attribution."
+  },
+  {
+   "id": "H:2026-08-01-repeat-ocr-as-a-quality-signal.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "Five plausible aggregate claims wrong."
+  },
+  {
+   "id": "H:2026-08-01-search-instrumentation-blind-spot.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Broken instrument produced wrong readings."
+  },
+  {
+   "id": "H:2026-08-01-thibault-acquisition-and-archive-failure-classes.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Prior smaller-IIIF fix and HTTP reading wrong."
+  },
+  {
+   "id": "H:2026-08-01-welcome-gate-lockout-and-blank-form-overwrite.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "update() GET and blank-form overwrite bugs."
+  },
+  {
+   "id": "H:2026-08-04-cover-showed-another-works-title-page.md",
+   "class": "pairing-identity-error",
+   "why": "Cover and description from wrong work's page."
+  },
+  {
+   "id": "H:2026-08-04-false-split-repair-and-seven-detectors.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Detectors shipped wrong answers, found by opening images."
+  },
+  {
+   "id": "H:2026-08-04-revision-corpus-source-and-five-retractions.md",
+   "class": "overclaimed-headline-claim",
+   "why": "Five claims retracted about revision corpus."
+  },
+  {
+   "id": "H:2026-08-08-canonical-loci-and-citation-honesty.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Citation apparatus wrong in unreported direction."
+  },
+  {
+   "id": "H:2026-08-08-greek-five-acquisition-and-work-identity.md",
+   "class": "pairing-identity-error",
+   "why": "Two wrong Wikidata anchors in production."
+  },
+  {
+   "id": "H:2026-08-08-status-truth-and-batch-collection.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Earlier 'empty book' framing was wrong."
+  },
+  {
+   "id": "H:2026-08-09-author-identity-tails.md",
+   "class": "pairing-identity-error",
+   "why": "5 of 6 suggested QIDs wrong."
+  },
+  {
+   "id": "H:2026-08-09-tag-apparatus-sweep.md",
+   "class": "none",
+   "why": "Lessons already recorded."
+  },
+  {
+   "id": "H:2026-08-10-artwork-source-ids.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "sha1 equality unreliable for wrong-image detection."
+  },
+  {
+   "id": "H:2026-08-11-suda-sol-benchmark.md",
+   "class": "judge-bias-or-confound",
+   "why": "Same-family judge leniency, kappa 0.107."
+  },
+  {
+   "id": "H:2026-08-12-attribution-health-loop.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "Headline numbers wrong; wrong denominator."
+  },
+  {
+   "id": "H:2026-08-13-lexicon-arc.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Granularity bugs in text transforms."
+  },
+  {
+   "id": "H:2026-08-17-titlepage-attribution-pilot.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "Every unmeasured number asserted was wrong."
+  },
+  {
+   "id": "H:2026-08-18-attribution-bylines-and-typed-relations.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "261 was bound from wrong denominator."
+  },
+  {
+   "id": "H:2026-08-18-field-sprawl-consolidation.md",
+   "class": "stale-or-wrong-premise",
+   "why": "126K records to promote framing wrong."
+  },
+  {
+   "id": "H:2026-08-18-mcp-images-gallery-app-deploy-incident.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Wrong param name failed silently."
+  },
+  {
+   "id": "H:2026-08-19-artwork-book-linking.md",
+   "class": "pairing-identity-error",
+   "why": "Plausible but wrong links, wrong QID types."
+  },
+  {
+   "id": "H:2026-08-19-blind-detectors-and-false-findings.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Detectors exited wrongly, loud or silent."
+  },
+  {
+   "id": "H:2026-08-21-es-collection-copy-empty-store.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Collection copy fed empty store."
+  },
+  {
+   "id": "H:2026-08-21-ocr-fabricates-blank-pages.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Prompt caused fabrication on blank pages."
+  },
+  {
+   "id": "H:2026-08-25-bilingual-source-columns.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Premise about concatenation was wrong."
+  },
+  {
+   "id": "H:2026-08-27-fludd-followups.md",
+   "class": "pairing-identity-error",
+   "why": "Wrong edition_key language; wrong param probe."
+  },
+  {
+   "id": "H:2026-08-27-reset-cleanup-and-pr-sweep.md",
+   "class": "env-config-failure",
+   "why": "Read wrong checkout, misread phantom diff."
+  },
+  {
+   "id": "H:2026-08-29-house-model-finetune.md",
+   "class": "none",
+   "why": "Lessons placement only."
+  },
+  {
+   "id": "H:2026-08-29-metered-access-and-illustration-seo.md",
+   "class": "none",
+   "why": "Lessons worth keeping only."
+  },
+  {
+   "id": "H:2026-08-29-visitations-swedenborg-hand-fed-shelf.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Public API strips page text, misleading checks."
+  },
+  {
+   "id": "H:2026-08-30-acquisition-status-mcp-triage-collections.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Wrong-section items corrected."
+  },
+  {
+   "id": "H:2026-08-30-api-hardening-and-r2-egress.md",
+   "class": "none",
+   "why": "Hardening lesson, no measurement error."
+  },
+  {
+   "id": "H:2026-08-30-archive-fixes-metric-and-docs-backlog.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Archive metric measured inconsistently."
+  },
+  {
+   "id": "H:2026-08-30-r2-archive-livelock-and-one-metric.md",
+   "class": "unmeasured-or-wrong-denominator-claim",
+   "why": "Counter wrong in both directions."
+  },
+  {
+   "id": "H:2026-08-30-r2-cost-to-resolution-debt.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Wrong key gave wrong z-score."
+  },
+  {
+   "id": "H:2026-08-31-issue-batch-fleet-revalidate.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "Revalidate fail-open and never-worked caller."
+  },
+  {
+   "id": "H:2026-09-01-ft-estimate-tibetan-ocr-and-eleven-corrections.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Eleven corrections; obvious store was wrong one."
+  },
+  {
+   "id": "H:2026-09-03-harkhuf-and-the-fabrication-class.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Means wrong estimator for loop rate; license error."
+  },
+  {
+   "id": "H:2026-09-03-spend-audit-thinking-tokens.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Stale stat in CLAUDE.md corrected."
+  },
+  {
+   "id": "H:2026-09-05-first-translation-claims-and-pipeline-check.md",
+   "class": "stale-or-wrong-premise",
+   "why": "Claim being defended was wrong shape."
+  },
+  {
+   "id": "H:2026-09-13-split-audit-rtl-order-and-detector.md",
+   "class": "harness-bug-corrupted-result",
+   "why": "RTL order bug in split audit."
+  },
+  {
+   "id": "H:2026-09-26-accessibility-track.md",
+   "class": "blind-or-wrong-instrument",
+   "why": "Walk script measured wrong element."
+  },
+  {
+   "id": "T:8",
+   "class": "none",
+   "why": "Routine decision."
+  },
+  {
+   "id": "T:13",
+   "class": "none",
+   "why": "Routine containment decision."
+  },
+  {
+   "id": "T:15",
+   "class": "none",
+   "why": "Stood down on duplicate fix."
+  },
+  {
+   "id": "T:16",
+   "class": "wrong-reference-ground-truth",
+   "why": "Objection rested on own mis-scored ground truth."
+  },
+  {
+   "id": "T:21",
+   "class": "none",
+   "why": "Rewording choice."
+  },
+  {
+   "id": "T:26",
+   "class": "none",
+   "why": "Design choice."
+  },
+  {
+   "id": "T:29",
+   "class": "none",
+   "why": "Scoping choice."
+  },
+  {
+   "id": "T:36",
+   "class": "none",
+   "why": "Merge ordering choice."
+  },
+  {
+   "id": "T:59",
+   "class": "none",
+   "why": "Tooling choice."
+  },
+  {
+   "id": "T:65",
+   "class": "none",
+   "why": "Reporting choice."
+  },
+  {
+   "id": "T:81",
+   "class": "none",
+   "why": "CI time limit, not a failure."
+  },
+  {
+   "id": "T:93",
+   "class": "none",
+   "why": "Avoided post-hoc choice."
+  },
+  {
+   "id": "T:104",
+   "class": "none",
+   "why": "Scoping choice."
+  },
+  {
+   "id": "T:135",
+   "class": "none",
+   "why": "PR wording choice."
+  },
+  {
+   "id": "T:164",
+   "class": "none",
+   "why": "Claim resolution."
+  },
+  {
+   "id": "T:171",
+   "class": "none",
+   "why": "Scoping choice."
+  },
+  {
+   "id": "T:180",
+   "class": "none",
+   "why": "Repair choice."
+  },
+  {
+   "id": "T:182",
+   "class": "none",
+   "why": "Scope choice."
+  },
+  {
+   "id": "T:186",
+   "class": "none",
+   "why": "PR wording choice."
+  },
+  {
+   "id": "T:203",
+   "class": "none",
+   "why": "Code reuse choice."
+  },
+  {
+   "id": "T:207",
+   "class": "none",
+   "why": "Routing table status."
+  },
+  {
+   "id": "T:208",
+   "class": "none",
+   "why": "Push repeated for new notes."
+  },
+  {
+   "id": "T:209",
+   "class": "none",
+   "why": "File location choice."
+  },
+  {
+   "id": "T:212",
+   "class": "none",
+   "why": "Import choice."
+  },
+  {
+   "id": "T:228",
+   "class": "none",
+   "why": "Identification rule."
+  },
+  {
+   "id": "T:231",
+   "class": "none",
+   "why": "PR wording choice."
+  },
+  {
+   "id": "T:259",
+   "class": "none",
+   "why": "Scope choice."
+  },
+  {
+   "id": "T:261",
+   "class": "none",
+   "why": "Label choice."
+  },
+  {
+   "id": "T:263",
+   "class": "none",
+   "why": "Placement choice."
+  },
+  {
+   "id": "T:265",
+   "class": "none",
+   "why": "Baseline choice."
+  },
+  {
+   "id": "T:268",
+   "class": "none",
+   "why": "Retry for partial result."
+  },
+  {
+   "id": "T:270",
+   "class": "harness-bug-corrupted-result",
+   "why": "Reply parser froze client; fixed mid-run."
+  },
+  {
+   "id": "T:272",
+   "class": "none",
+   "why": "Design choice."
+  },
+  {
+   "id": "T:286",
+   "class": "none",
+   "why": "Redirect choice."
+  },
+  {
+   "id": "T:288",
+   "class": "none",
+   "why": "Sequencing choice."
+  },
+  {
+   "id": "T:301",
+   "class": "none",
+   "why": "Session ended per brief."
+  },
+  {
+   "id": "T:306",
+   "class": "none",
+   "why": "Matches production withholding."
+  },
+  {
+   "id": "T:313",
+   "class": "none",
+   "why": "Inbox note applied."
+  },
+  {
+   "id": "T:321",
+   "class": "none",
+   "why": "Logged amendment before judging."
+  },
+  {
+   "id": "T:324",
+   "class": "none",
+   "why": "Accepted partial run."
+  },
+  {
+   "id": "T:348",
+   "class": "none",
+   "why": "Controller design choice."
+  },
+  {
+   "id": "T:364",
+   "class": "none",
+   "why": "Approved write after check."
+  },
+  {
+   "id": "T:365",
+   "class": "harness-bug-corrupted-result",
+   "why": "Caption rule matched Senatus/Donatus; wrongly excluded imprints."
+  },
+  {
+   "id": "T:380",
+   "class": "none",
+   "why": "Teacher choice under quota."
+  },
+  {
+   "id": "T:392",
+   "class": "none",
+   "why": "Conservative labelling."
+  },
+  {
+   "id": "T:393",
+   "class": "none",
+   "why": "Source choice."
+  },
+  {
+   "id": "T:399",
+   "class": "none",
+   "why": "Preview branch handling."
+  },
+  {
+   "id": "T:405",
+   "class": "none",
+   "why": "Second-hand citation labelled."
+  },
+  {
+   "id": "T:412",
+   "class": "env-config-failure",
+   "why": "claude not on job PATH; false refusal."
+  },
+  {
+   "id": "T:413",
+   "class": "env-config-failure",
+   "why": "PATH missing CLI; false refusal."
+  },
+  {
+   "id": "T:414",
+   "class": "env-config-failure",
+   "why": "PATH missing CLI; reader refused."
+  },
+  {
+   "id": "T:415",
+   "class": "env-config-failure",
+   "why": "PATH missing claude; check failed."
+  },
+  {
+   "id": "T:419",
+   "class": "none",
+   "why": "Design choice."
+  },
+  {
+   "id": "T:426",
+   "class": "env-config-failure",
+   "why": "PATH lacked claude; re-ran."
+  },
+  {
+   "id": "T:472",
+   "class": "none",
+   "why": "Usage gating workaround."
+  },
+  {
+   "id": "T:479",
+   "class": "none",
+   "why": "Cost source choice."
+  },
+  {
+   "id": "T:481",
+   "class": "none",
+   "why": "Scheduling choice."
+  },
+  {
+   "id": "T:483",
+   "class": "none",
+   "why": "Duplicate branch deleted."
+  },
+  {
+   "id": "T:500",
+   "class": "none",
+   "why": "Scope choice."
+  },
+  {
+   "id": "T:501",
+   "class": "none",
+   "why": "Status choice."
+  },
+  {
+   "id": "T:502",
+   "class": "none",
+   "why": "Stopped runs at cap."
+  },
+  {
+   "id": "T:522",
+   "class": "none",
+   "why": "Design choice."
+  },
+  {
+   "id": "T:525",
+   "class": "none",
+   "why": "Quota source choice."
+  },
+  {
+   "id": "T:530",
+   "class": "none",
+   "why": "Concurrency choice."
+  },
+  {
+   "id": "T:542",
+   "class": "none",
+   "why": "Grading choice."
+  },
+  {
+   "id": "T:548",
+   "class": "none",
+   "why": "Census covered skipped Sanskrit."
+  },
+  {
+   "id": "T:552",
+   "class": "none",
+   "why": "Cell threshold."
+  },
+  {
+   "id": "T:573",
+   "class": "none",
+   "why": "Label correction per brief."
+  },
+  {
+   "id": "T:590",
+   "class": "none",
+   "why": "Bias stated as bound."
+  },
+  {
+   "id": "T:592",
+   "class": "none",
+   "why": "Subset design."
+  },
+  {
+   "id": "T:604",
+   "class": "none",
+   "why": "Control design."
+  },
+  {
+   "id": "T:611",
+   "class": "none",
+   "why": "Decision rule."
+  },
+  {
+   "id": "T:616",
+   "class": "none",
+   "why": "PR title choice."
+  },
+  {
+   "id": "T:635",
+   "class": "none",
+   "why": "Judge choice for comparability."
+  },
+  {
+   "id": "T:637",
+   "class": "none",
+   "why": "Seeded redraw."
+  },
+  {
+   "id": "T:638",
+   "class": "none",
+   "why": "Draw margin."
+  },
+  {
+   "id": "T:647",
+   "class": "none",
+   "why": "Cap handling."
+  },
+  {
+   "id": "T:649",
+   "class": "none",
+   "why": "Design choice."
+  },
+  {
+   "id": "T:657",
+   "class": "none",
+   "why": "Policy-based exclusion."
+  },
+  {
+   "id": "T:667",
+   "class": "none",
+   "why": "Followed brief rule."
+  }
+ ]
+}

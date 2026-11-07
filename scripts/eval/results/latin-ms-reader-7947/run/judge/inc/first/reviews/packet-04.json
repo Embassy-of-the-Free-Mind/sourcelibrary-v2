@@ -1,0 +1,108 @@
+[
+  {
+    "book_id": "b04-k", "slot": 1, "title": "Speculum de honestate vitae. Octo puncta perfectionis assequendae", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 6, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "commozabitur", "image": "commoꝛabitur", "problem": "r rotunda transcribed as z (also 'glozia', 'fozte'), inconsistently with 'doctores', 'corona' elsewhere; hurts search but sense is recoverable", "severity": "minor", "class": "O8" },
+          { "ocr": "tua. Semper cogita illum aut positum", "image": "tua· Semper cogita illum· aut positum", "problem": "medial interpuncts dropped or turned into full stops throughout", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 11, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "habere fixam: ad quam destinationem", "image": "habere fixam· ꝛ ad quam destinationem", "problem": "the 'et' (ꝛ) is dropped", "severity": "minor" },
+          { "ocr": "nosse debes q3 diuina virtus plus potest facere q3 homo", "image": "ꝙ diuina virtus plus potest facere q̄ꝫ homo", "problem": "'quod' and 'quam' both rendered with the same 'q3', so the two abbreviations are no longer distinct", "severity": "minor" },
+          { "ocr": "fortaffis … referuando", "image": "fortassis … reseruando", "problem": "long s read as f", "severity": "minor" },
+          { "ocr": "Noli emulari multitudinem eor:", "image": "eoꝝ", "problem": "the -rum abbreviation is rendered as a colon", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "all 33 printed lines are run together into one paragraph, so the page's lineation is lost", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "piis sensibus", "image": "priis sensibus", "problem": "the tail of '[pro]priis' (own senses) is misread as 'piis' (pious senses), which changes the sense", "severity": "moderate", "class": "O6" },
+          { "ocr": "instabile:pusum:inozdinatum", "image": "instabile:ꝓfusum:inoꝛdinatum", "problem": "'profusum' misread as 'pusum', which is not a word", "severity": "moderate", "class": "O6" },
+          { "ocr": "rationem erige", "image": "rationem exige", "problem": "'exige' (demand an account) misread as 'erige' (raise)", "severity": "moderate", "class": "O6" },
+          { "ocr": "fentina omnium malorum", "image": "sentina omnium maloꝛum", "problem": "long s read as f", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "'->¶Finis.<-' centring arrows sit in the reader text; they leak if the renderer does not interpret them", "severity": "minor", "class": "D1" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A close, diplomatic-style reading with no inventions. It slips repeatedly on letter forms (r rotunda as z, long s as f), and on p.14 three misreads change words ('piis', 'pusum', 'erige'); p.11 loses its lineation."
+  },
+  {
+    "book_id": "b04-m", "slot": 2, "title": "Speculum de honestate vitae. Octo puncta perfectionis assequendae", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 6, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "aut positum in presepe", "image": "aut positum in presepio", "problem": "word form normalised (presepio → presepe); the meaning is unchanged", "severity": "minor", "class": "O8" },
+          { "ocr": "inter ubera … Ad ultimum … quemdam", "image": "inter vbera … Ad vltimum … quendam", "problem": "spelling normalised away from the print", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the heading '¶ De superbia detestanda·' is given a markdown '###' prefix; the heading itself is genuinely on the page", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "ut scias ubi … ita ut", "image": "vt scias vbi … ita vt", "problem": "v→u spelling normalisation", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Discas tibipsi preesse", "image": "Discas tibiipsi preesse", "problem": "one letter dropped (the next line correctly reads 'Tibiipsi')", "severity": "minor" },
+          { "ocr": "vel quacunque temptatione", "image": "vel quacumqꝫ temptatione", "problem": "the abbreviation is expanded with n where the print has m", "severity": "minor" },
+          { "ocr": "Octauum et ultimum", "image": "Octauum ꝛ vltimum", "problem": "spelling normalised", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "'->¶Finis.<-' centring arrows sit in the reader text; they leak if the renderer does not interpret them", "severity": "minor", "class": "D1" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The most accurate of the readings at word level: it gets 'priis', 'profusum' and 'exige' right on p.14. It does normalise spelling (presepe, ubera, ultimum), and the line-end slashes and a markdown heading are cosmetic."
+  },
+  {
+    "book_id": "b04-r", "slot": 3, "title": "Speculum de honestate vitae. Octo puncta perfectionis assequendae", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 6, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "commozabitur", "image": "commoꝛabitur", "problem": "r rotunda transcribed as z (also 'glozia', 'fozte'), inconsistently with 'doctores', 'corona' elsewhere; hurts search but sense is recoverable", "severity": "minor", "class": "O8" },
+          { "ocr": "tua. Semper cogita illum aut positum", "image": "tua· Semper cogita illum· aut positum", "problem": "medial interpuncts dropped or turned into full stops throughout", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 11, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": null, "tr_errors": [], "other": [], "confidence": "high"
+      },
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "instabile: confusum: inordinatum", "image": "instabile:ꝓfusum:inoꝛdinatum", "problem": "'profusum' (ꝓ abbreviation) is replaced by the plausible but wrong 'confusum'", "severity": "moderate", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "'->¶ Finis.<-' centring arrows sit in the reader text; they leak if the renderer does not interpret them", "severity": "minor", "class": "D1" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Sound and faithful to the lineation. P.11 is essentially perfect and p.14 has a single word substituted ('confusum' for 'profusum'). P.6 renders r rotunda as z throughout, which is cosmetic but harms search."
+  }
+]

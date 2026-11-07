@@ -9,7 +9,9 @@
  *                                                        book facet (top 1,000 books) with each book's work date
  *   node measure.mjs passages  → OUT/cand-passages.jsonl per node: up to 14 candidate quotes, verbatim, from live books
  *   node measure.mjs edges     → OUT/cand-edges.jsonl    per edge: up to 6 pages that name both ends, with the window
- *   node measure.mjs verify    → OUT/verify.json         re-reads every quoted page; exit 1 if any quote is no longer verbatim on it
+ *   node measure.mjs verify    → OUT/verify.json         re-reads every quoted page; exit 1 if any quote is not an exact span of
+ *                                                        the text the page serves (whitespace and tags normalised, nothing else)
+ *   node measure.mjs recut     → OUT/recut-proposals.json for each failing quote, the page's own span that carries it, or a drop
  *   node measure.mjs baseline  → OUT/baseline.json       pages of live books by century of the work (the denominator)
  *   node measure.mjs redate    → rewrites the year/basis of every book in OUT/counts.json, cand-passages.jsonl and
  *                                cand-edges.jsonl with the current dating rule, in place, order kept (the verdicts
@@ -27,6 +29,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { stripEditorialWrappers } from '../../../lib/strip-editorial-wrappers.mjs';
+import { servesTranscriptionInsteadOfTranslation } from '../../../lib/english-original-text.mjs';
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const OUT = process.env.ONTO_OUT || path.join(process.env.JOB_SCRATCH || '/tmp', 'ontology');
@@ -232,24 +235,158 @@ if (mode === 'edges') {
   }
   w.end();
 }
+/**
+ * The words a reader is served on this page, for the exact check (#7458). The same text the quote API serves:
+ * the transcription where the leaf is an English original (#7100: the stored `translation` there is a model's
+ * rewording — "color" for Podmore's "colour"), else the translation. Editorial wrappers go
+ * (quote-and-snippet-integrity.md); inline marks keep their CONTENT — a `<note>` is on the page, so a quote that
+ * skips one is not a span of it. Only two normalisations: tags are removed (a gloss renders as `[…]`, the form
+ * the page shows), and runs of whitespace collapse to one space. Nothing else: no case, accent, spelling or
+ * punctuation folding. The old check passed quotes cut from the stored translation of an English original and
+ * quotes that jumped a note.
+ */
+export function servedText(page, book) {
+  const raw = servesTranscriptionInsteadOfTranslation(page, book) ? page.ocr?.data : page.translation?.data;
+  return exactNorm(stripEditorialWrappers(String(raw || '')).replace(/<gloss(?:\s[^>]*)?>([\s\S]*?)<\/gloss>/gi, '[$1]'));
+}
+export const exactNorm = (s) => String(s).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
 if (mode === 'verify') {
-  // Re-read every page ontology.json quotes and confirm the quote is still verbatim on it (and the page not withheld).
-  const o = JSON.parse(fs.readFileSync(path.join(HERE, 'ontology.json'), 'utf8'));
+  // Re-read every page ontology.json quotes and confirm the quote is a verbatim span of what the page serves now
+  // (book live, page not withheld). Writes the served text of each failing page, for re-cutting.
+  const o = JSON.parse(fs.readFileSync(process.env.ONTO_JSON || path.join(HERE, 'ontology.json'), 'utf8'));
   const qs = [...o.nodes.flatMap((n) => n.passages.map((p) => ({ where: n.id, ...p }))),
     ...o.edges.filter((e) => e.provenance.kind === 'passage').map((e) => ({ where: `${e.from}|${e.type}|${e.to}`, ...e.provenance.passage }))];
   const bad = [];
+  const books = new Map();
   for (let i = 0; i < qs.length; i += 50) {
     const chunk = qs.slice(i, i + 50).map((q) => { const m = q.url.match(/book\/([^?]+)\?page=(\d+)/); return { ...q, book_id: m[1], page_number: +m[2] }; });
-    const txt = await pageTexts(chunk);
+    const want = [...new Set(chunk.map((q) => q.book_id))].filter((id) => !books.has(id));
+    if (want.length) {
+      const rows = await retry(() => db.collection('books').find({ id: { $in: want } }, { projection: { _id: 0, id: 1, language: 1, visible: 1, hidden: 1, pages_count: 1, 'translation_state.english_original': 1 } }).toArray());
+      for (const b of rows) books.set(b.id, b);
+      for (const id of want) if (!books.has(id)) books.set(id, null);
+    }
+    const rows = await retry(() => pages.find({ $or: chunk.map((q) => ({ book_id: q.book_id, page_number: q.page_number })) },
+      { projection: { book_id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, translation_withheld: 1 } }).toArray());
+    const txt = new Map(rows.map((r) => [`${r.book_id}#${r.page_number}`, r]));
     for (const q of chunk) {
       const p = txt.get(`${q.book_id}#${q.page_number}`);
-      const ok = p && !p.translation_withheld && plain(texts(p.translation?.data).clean).includes(q.quote);
-      if (!ok) bad.push({ where: q.where, url: q.url, why: !p ? 'page missing' : p.translation_withheld ? 'withheld' : 'quote not on page' });
+      const b = books.get(q.book_id);
+      const live = b && b.visible === true && b.hidden !== true && b.pages_count > 0;
+      const served = p && live && !p.translation_withheld ? servedText(p, b) : '';
+      const why = !p ? 'page missing' : !live ? 'book not live' : p.translation_withheld ? 'withheld'
+        : !served ? 'page serves no text' : !served.includes(exactNorm(q.quote)) ? 'quote not on page' : null;
+      if (why) bad.push({ where: q.where, url: q.url, why, quote: q.quote,
+        english_original: !!(p && b && servesTranscriptionInsteadOfTranslation(p, b)), served });
     }
   }
   fs.writeFileSync(path.join(OUT, 'verify.json'), JSON.stringify({ checked: qs.length, bad }, null, 1));
   console.log(`verified ${qs.length - bad.length}/${qs.length} quotes`); for (const b of bad) console.log('  BAD', b.where, b.why, b.url);
   if (bad.length) process.exitCode = 1;
+}
+
+/** `servedText` with the ontology's sentinels kept (term → \u0001…\u0002, gloss → \u0003…\u0004), so plain() of it is servedText. */
+function servedMarked(page, book) {
+  const raw = servesTranscriptionInsteadOfTranslation(page, book) ? page.ocr?.data : page.translation?.data;
+  return stripEditorialWrappers(String(raw || ''))
+    .replace(/<term(?:\s[^>]*)?>([\s\S]*?)<\/term>/gi, '\u0001$1\u0002').replace(/<gloss(?:\s[^>]*)?>([\s\S]*?)<\/gloss>/gi, '\u0003$1\u0004')
+    .replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+}
+const fold = (w) => w.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ſ/g, 's');
+function lev(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+// A word matches its period or re-translated twin: colour/color, vertue/virtue, euery/every.
+const sameWord = (a, b) => a === b || (Math.min(a.length, b.length) >= 4 && lev(a, b) <= Math.max(1, Math.floor(Math.max(a.length, b.length) / 4)));
+const words = (t) => [...t.matchAll(/[\p{L}\p{N}]+/gu)].map((m) => ({ w: fold(m[0]), at: m.index, end: m.index + m[0].length }));
+/**
+ * Where on the served page does an off-page quote's passage sit? Local alignment (Smith-Waterman) over words,
+ * fuzzy word equality. Returns the page span from the first to the last aligned word, widened to whole
+ * sentences when that adds little, and the share of the quote's words it covers.
+ */
+function locate(quote, page) {
+  const Q = words(quote), P = words(page);
+  if (!Q.length || !P.length) return null;
+  const H = Array.from({ length: Q.length + 1 }, () => new Float64Array(P.length + 1));
+  let best = 0, bi = 0, bj = 0;
+  for (let i = 1; i <= Q.length; i++) for (let j = 1; j <= P.length; j++) {
+    const m = H[i - 1][j - 1] + (sameWord(Q[i - 1].w, P[j - 1].w) ? 2 : -1);
+    const v = Math.max(0, m, H[i - 1][j] - 1, H[i][j - 1] - 1);
+    H[i][j] = v; if (v > best) { best = v; bi = i; bj = j; }
+  }
+  // trace back to the start, counting matched quote words
+  let i = bi, j = bj, matched = 0, j0 = bj;
+  while (i > 0 && j > 0 && H[i][j] > 0) {
+    const diag = H[i - 1][j - 1] + (sameWord(Q[i - 1].w, P[j - 1].w) ? 2 : -1);
+    if (H[i][j] === diag) { if (sameWord(Q[i - 1].w, P[j - 1].w)) matched++; j0 = j; i--; j--; }
+    else if (H[i][j] === H[i - 1][j] - 1) i--;
+    else { j0 = j; j--; }
+  }
+  let a = P[j0 - 1].at, b = P[bj - 1].end;
+  // widen to the sentence start when it is close (≤ 60 chars) AND the words added are the quote's own (a running
+  // head, a page number or OCR debris is not), else keep the cut and say so
+  const before = page.slice(0, a); const sb = Math.max(before.lastIndexOf('. '), before.lastIndexOf('? '), before.lastIndexOf('! '), before.lastIndexOf('; '));
+  const a2 = sb >= 0 ? sb + 2 : 0;
+  const qw = Q.slice(0, 12).map((x) => x.w);
+  if (a - a2 <= 60 && words(page.slice(a2, a)).every((x) => qw.some((w) => sameWord(w, x.w)))) a = a2;
+  const after = page.slice(b); const m = after.match(/^[^.!?;]{0,60}[.!?;]+["”’)\]]?/);
+  if (m) b += m[0].length;
+  else { const t = after.match(/^["”’)\],:]*/); b += t[0].length; }
+  const span = page.slice(a, b).trim();
+  return { span, a, b, cut: cutOf(page, a, b), coverage: matched / Q.length };
+}
+/** The cut flags of a span [a, b) of `page`: does it start or end inside a sentence? */
+function cutOf(page, a, b) {
+  return [a > 0 && !/[.!?;]["”’)\]]?\s*$/.test(page.slice(0, a)), b < page.length && !/[.!?;]["”’)\]]?$/.test(page.slice(a, b).trim())];
+}
+/** Map a span of plain(marked) back onto `marked`, dropping orphaned sentinels. */
+function markedSlice(marked, a, b) {
+  const map = []; let out = '';
+  for (let k = 0; k < marked.length; k++) { const ch = marked[k]; const pc = plain(ch); for (let r = 0; r < pc.length; r++) map.push(k); out += pc; }
+  let q = marked.slice(map[a] ?? marked.length, (map[b - 1] ?? marked.length - 1) + 1);
+  for (const [o, c] of [['\u0001', '\u0002'], ['\u0003', '\u0004']]) {
+    let depth = 0, outq = '';
+    for (const ch of q) { if (ch === o) { depth++; outq += ch; } else if (ch === c) { if (depth) { depth--; outq += ch; } } else outq += ch; }
+    if (depth) { let k = outq.length; while (depth && k--) if (outq[k] === o) { outq = outq.slice(0, k) + outq.slice(k + 1); depth--; } }
+    q = outq;
+  }
+  return q.trim();
+}
+
+if (mode === 'recut') {
+  // For every quote verify failed: re-cut it from the page's served text where one span carries the same passage
+  // (≥ RECUT_MIN of its words, fuzzy), else propose dropping it. Writes OUT/recut-proposals.json for review; the
+  // reviewed list is committed as recuts.json, which build.py applies (#7458).
+  const MIN = +(process.env.RECUT_MIN || 0.7);
+  // Spans chosen by eye where the aligner's word overlap is too low to decide: a re-translated page says the same
+  // thing in other words. Each `new` must be an exact span of the served text, or it is refused below.
+  const manual = new Map(JSON.parse(fs.readFileSync(path.join(HERE, 'recut-manual.json'), 'utf8')).map((x) => [`${x.url}\n${x.old}`, x.new]));
+  const v = JSON.parse(fs.readFileSync(path.join(OUT, 'verify.json'), 'utf8'));
+  const out = [];
+  for (const b of v.bad) {
+    const rec = { where: b.where, url: b.url, why: b.why, old: b.quote };
+    if (b.why !== 'quote not on page') { out.push({ ...rec, action: 'drop', reason: b.why }); continue; }
+    const m = b.url.match(/book\/([^?]+)\?page=(\d+)/);
+    const [p] = await retry(() => pages.find({ book_id: m[1], page_number: +m[2] }, { projection: { 'ocr.data': 1, 'translation.data': 1 } }).toArray());
+    const [bk] = await retry(() => db.collection('books').find({ id: m[1] }, { projection: { language: 1, 'translation_state.english_original': 1 } }).toArray());
+    const marked = servedMarked(p, bk); const served = plain(marked);
+    if (served !== servedText(p, bk)) { out.push({ ...rec, action: 'drop', reason: 'served text and marked text disagree' }); continue; }
+    const pick = manual.get(`${b.url}\n${b.quote}`);
+    const at = pick ? served.indexOf(pick) : -1;
+    if (pick && at < 0) { out.push({ ...rec, action: 'drop', reason: 'manual span is not on the page' }); continue; }
+    const loc = pick ? { a: at, b: at + pick.length, cut: cutOf(served, at, at + pick.length), coverage: null, manual: true } : locate(b.quote, served);
+    if (!loc || (!loc.manual && loc.coverage < MIN)) { out.push({ ...rec, action: 'drop', reason: `no span carries the passage (coverage ${loc ? loc.coverage.toFixed(2) : 0})`, nearest: loc?.span }); continue; }
+    const q = markedSlice(marked, loc.a, loc.b);
+    if (!served.includes(exactNorm(plain(q)))) { out.push({ ...rec, action: 'drop', reason: 're-cut span failed the exact check' }); continue; }
+    out.push({ ...rec, action: 'recut', english_original: b.english_original, coverage: loc.manual ? 'by eye' : +loc.coverage.toFixed(3), new: plain(q), new_marked: q, cut: loc.cut });
+  }
+  fs.writeFileSync(path.join(OUT, 'recut-proposals.json'), JSON.stringify(out, null, 1));
+  const n = (a) => out.filter((x) => x.action === a).length;
+  console.log(`recut ${n('recut')}, drop ${n('drop')} of ${out.length}`);
 }
 
 if (mode === 'baseline') {

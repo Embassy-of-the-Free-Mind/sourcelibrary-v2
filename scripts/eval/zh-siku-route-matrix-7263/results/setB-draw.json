@@ -1,0 +1,439 @@
+{
+ "seed": 20261104,
+ "frame": {
+  "books_in_frame": 10985,
+  "print_books": 1130,
+  "print_pages": 20235,
+  "books_tried": 51,
+  "skipped": {
+   "no interior print body page of 100+ Han": 13,
+   "no leaf at Dice 0.6": 1,
+   "book in evidence": 5,
+   "no WYG branch": 2
+  },
+  "unit": "one page a book, books with probability proportional to print frame pages",
+  "repair_holds_left_out": "/contain|invented|wrong-leaf|scrambled|unsettled|served-audit|qa-/i"
+ },
+ "pages": [
+  {
+   "key": "V4-6a3c6a11af3c49b59c5e491c",
+   "book_id": "6a3c6a11af3c49b59c5e4911",
+   "page_id": "6a3c6a11af3c49b59c5e491c",
+   "page_number": 11,
+   "title": "顱顖經·卷下~卷下",
+   "kanripo": {
+    "kr": "KR3e0016",
+    "pb": "KR3e0016_WYG_001-1a",
+    "dice": 0.84,
+    "runner_up": 0.073,
+    "sha": "2ddede4f8b75c79efe9056bdff121f39dd235c09"
+   }
+  },
+  {
+   "key": "V4-6a3c5f1b879008ba7e153093",
+   "book_id": "6a3c5f1b879008ba7e153083",
+   "page_id": "6a3c5f1b879008ba7e153093",
+   "page_number": 16,
+   "title": "景岳全書·卷三十七 (vol 20)",
+   "kanripo": {
+    "kr": "KR3e0086",
+    "pb": "KR3e0086_WYG_037-7b",
+    "dice": 0.809,
+    "runner_up": 0.096,
+    "sha": "2f0c07f83ef433bb7513f730038a4c69001f0991"
+   }
+  },
+  {
+   "key": "V4-6a3c719301fe4f593c1d9053",
+   "book_id": "6a3c719301fe4f593c1d903d",
+   "page_id": "6a3c719301fe4f593c1d9053",
+   "page_number": 22,
+   "title": "御纂朱子全書·卷五十二 (vol 116)",
+   "kanripo": {
+    "kr": "KR3a0108",
+    "pb": "KR3a0108_WYG_052-10b",
+    "dice": 0.881,
+    "runner_up": 0.098,
+    "sha": "ee6e4571a532c83f02f3fb76f369835cbfc8395f"
+   }
+  },
+  {
+   "key": "V4-6a3c714839b4508b04e534e3",
+   "book_id": "6a3c714839b4508b04e534cc",
+   "page_id": "6a3c714839b4508b04e534e3",
+   "page_number": 23,
+   "title": "御纂朱子全書·卷六十一 (vol 44)",
+   "kanripo": {
+    "kr": "KR3a0108",
+    "pb": "KR3a0108_WYG_061-11a",
+    "dice": 0.785,
+    "runner_up": 0.09,
+    "sha": "ee6e4571a532c83f02f3fb76f369835cbfc8395f"
+   }
+  },
+  {
+   "key": "V4-6a3cbbd7ec254ff6cadeb31d",
+   "book_id": "6a3cbbd7ec254ff6cadeb305",
+   "page_id": "6a3cbbd7ec254ff6cadeb31d",
+   "page_number": 24,
+   "title": "禮記注疏·卷五十二~卷五十三 (vol 27)",
+   "kanripo": {
+    "kr": "KR1d0053",
+    "pb": "KR1d0053_WYG_052-11b",
+    "dice": 0.81,
+    "runner_up": 0.246,
+    "sha": "0429e7cafc366722cb9106eb390495cfc30b2acc"
+   }
+  },
+  {
+   "key": "V4-6a3c6c5239b4508b04e487f8",
+   "book_id": "6a3c6c5239b4508b04e487e3",
+   "page_id": "6a3c6c5239b4508b04e487f8",
+   "page_number": 21,
+   "title": "論衡·卷十三~卷十五 (vol 6)",
+   "kanripo": {
+    "kr": "KR3j0080",
+    "pb": "KR3j0080_WYG_013-10a",
+    "dice": 0.931,
+    "runner_up": 0.931,
+    "sha": "3fa406996ced8651ced1d1416ac15cbe030b1097"
+   }
+  },
+  {
+   "key": "V4-6a3cc2ccaf74b230c69096b7",
+   "book_id": "6a3cc2ccaf74b230c690969f",
+   "page_id": "6a3cc2ccaf74b230c69096b7",
+   "page_number": 24,
+   "title": "毛詩注疏·卷十~卷十一 (vol 8)",
+   "kanripo": {
+    "kr": "KR1c0004",
+    "pb": "KR1c0004_WYG_010-12a",
+    "dice": 0.832,
+    "runner_up": 0.202,
+    "sha": "4174bc25047effb41bf55e3b695706a5d0350893"
+   }
+  },
+  {
+   "key": "V4-6a3c655939b4508b04e2e158",
+   "book_id": "6a3c655939b4508b04e2e13f",
+   "page_id": "6a3c655939b4508b04e2e158",
+   "page_number": 25,
+   "title": "御定子史精華·卷七十六~卷七十九 (vol 25)",
+   "kanripo": {
+    "kr": "KR3k0058",
+    "pb": "KR3k0058_WYG_076-12b",
+    "dice": 0.752,
+    "runner_up": 0.055,
+    "sha": "328af594e23ac73ffcdaa77ad1eb91deb4993ce7"
+   }
+  },
+  {
+   "key": "V4-6a3c713339b4508b04e52951",
+   "book_id": "6a3c713339b4508b04e52939",
+   "page_id": "6a3c713339b4508b04e52951",
+   "page_number": 24,
+   "title": "御纂朱子全書·卷三十二 (vol 25)",
+   "kanripo": {
+    "kr": "KR3a0108",
+    "pb": "KR3a0108_WYG_032-11b",
+    "dice": 0.934,
+    "runner_up": 0.089,
+    "sha": "ee6e4571a532c83f02f3fb76f369835cbfc8395f"
+   }
+  },
+  {
+   "key": "V4-6a3c756d01fe4f593c1f5a84",
+   "book_id": "6a3c756d01fe4f593c1f5a6c",
+   "page_id": "6a3c756d01fe4f593c1f5a84",
+   "page_number": 24,
+   "title": "御覽經史講義·卷二 (vol 3)",
+   "kanripo": {
+    "kr": "KR3a0110",
+    "pb": "KR3a0110_WYG_039-11b",
+    "dice": 0.885,
+    "runner_up": 0.218,
+    "sha": "f21c30b4f8a18c55b042924ea5f00f1a8a1c9978"
+   }
+  },
+  {
+   "key": "V4-6a3cedd94701a906f10e4105",
+   "book_id": "6a3cedd84701a906f10e40ed",
+   "page_id": "6a3cedd94701a906f10e4105",
+   "page_number": 24,
+   "title": "御定淵鑑類函·卷七十三~卷七十四 (vol 42)",
+   "kanripo": {
+    "kr": "KR3k0055",
+    "pb": "KR3k0055_WYG_078-11b",
+    "dice": 0.77,
+    "runner_up": 0.106,
+    "sha": "f0b45e5082d39e3e88b3e4425051b0eb39b1e815"
+   }
+  },
+  {
+   "key": "V4-6a3c6ffc01fe4f593c1cf8f0",
+   "book_id": "6a3c6ffc01fe4f593c1cf8d8",
+   "page_id": "6a3c6ffc01fe4f593c1cf8f0",
+   "page_number": 24,
+   "title": "儀禮集說·卷二 (vol 34)",
+   "kanripo": {
+    "kr": "KR1d0035",
+    "pb": "KR1d0035_WYG_002-11b",
+    "dice": 0.675,
+    "runner_up": 0.187,
+    "sha": "5bb61fc03eda4ef49e451f12cb7b0d7f6062a93d"
+   }
+  },
+  {
+   "key": "V4-6a3c6fa701fe4f593c1ce2cf",
+   "book_id": "6a3c6fa701fe4f593c1ce21b",
+   "page_id": "6a3c6fa701fe4f593c1ce2cf",
+   "page_number": 23,
+   "title": "孟子傳·卷一~卷三 (vol 1)",
+   "kanripo": {
+    "kr": "KR1h0013",
+    "pb": "KR1h0013_WYG_000-11a",
+    "dice": 0.908,
+    "runner_up": 0.127,
+    "sha": "fb7b547714fea301edab9dff252e157c461c0e59"
+   }
+  },
+  {
+   "key": "V4-6a3c5ec440c88a541d8e5a69",
+   "book_id": "6a3c5ec440c88a541d8e5a50",
+   "page_id": "6a3c5ec440c88a541d8e5a69",
+   "page_number": 25,
+   "title": "御定康熙字典·卷十 (vol 84)",
+   "kanripo": {
+    "kr": "KR1j0048",
+    "pb": "KR1j0048_WYG_011-12a",
+    "dice": 0.639,
+    "runner_up": 0.152,
+    "sha": "a7d6419cec1d74ce21b1c3108a47795e9c925274"
+   }
+  },
+  {
+   "key": "V4-6a3cb77f57c1f37219c50631",
+   "book_id": "6a3cb77f57c1f37219c5061d",
+   "page_id": "6a3cb77f57c1f37219c50631",
+   "page_number": 20,
+   "title": "欽定禮記義疏·卷九 (vol 7)",
+   "kanripo": {
+    "kr": "KR1d0068",
+    "pb": "KR1d0068_WYG_009-9b",
+    "dice": 0.916,
+    "runner_up": 0.184,
+    "sha": "ca8c66012ccea250b5c3f25b30e3b36994d00bf8"
+   }
+  },
+  {
+   "key": "V4-6a3c744a01fe4f593c1efdd0",
+   "book_id": "6a3c744a01fe4f593c1efdb7",
+   "page_id": "6a3c744a01fe4f593c1efdd0",
+   "page_number": 25,
+   "title": "春秋屬辭·卷四~卷五 (vol 3)",
+   "kanripo": {
+    "kr": "KR1e0070",
+    "pb": "KR1e0070_WYG_004-12a",
+    "dice": 0.765,
+    "runner_up": 0.121,
+    "sha": "94e72f07d8eaee8cfc7e10f3251fab7dd1116b54"
+   }
+  },
+  {
+   "key": "V4-6a3cbbc587ee3d48c89d1073",
+   "book_id": "6a3cbbc587ee3d48c89d105a",
+   "page_id": "6a3cbbc587ee3d48c89d1073",
+   "page_number": 25,
+   "title": "禮記注疏·卷十三~卷十四 (vol 8)",
+   "kanripo": {
+    "kr": "KR1d0053",
+    "pb": "KR1d0053_WYG_013-12b",
+    "dice": 0.891,
+    "runner_up": 0.215,
+    "sha": "0429e7cafc366722cb9106eb390495cfc30b2acc"
+   }
+  },
+  {
+   "key": "V4-6a3cebbd8642f0445b156d4b",
+   "book_id": "6a3cebbd8642f0445b156c81",
+   "page_id": "6a3cebbd8642f0445b156d4b",
+   "page_number": 20,
+   "title": "揚子法言·卷八~卷十 (vol 5)",
+   "kanripo": {
+    "kr": "KR3a0009",
+    "pb": "KR3a0009_WYG_008-9b",
+    "dice": 0.746,
+    "runner_up": 0.055,
+    "sha": "0b7e2929fb64172ee243b32fbdad6f26241e2461"
+   }
+  },
+  {
+   "key": "V4-6a3c6776af3c49b59c5d38e0",
+   "book_id": "6a3c6776af3c49b59c5d38c7",
+   "page_id": "6a3c6776af3c49b59c5d38e0",
+   "page_number": 25,
+   "title": "御定孝經衍義·卷二十三~卷二十五 (vol 7)",
+   "kanripo": {
+    "kr": "KR3a0105",
+    "pb": "KR3a0105_WYG_026-1b",
+    "dice": 0.884,
+    "runner_up": 0.094,
+    "sha": "4d750c06cee7d8625f0ccac614e586361034e41f"
+   }
+  },
+  {
+   "key": "V4-6a3cc0d5ec254ff6cae06d34",
+   "book_id": "6a3cc0d5ec254ff6cae06d1d",
+   "page_id": "6a3cc0d5ec254ff6cae06d34",
+   "page_number": 23,
+   "title": "周易本義通釋·卷十一~卷十二 (vol 21)",
+   "kanripo": {
+    "kr": "KR1a0078",
+    "pb": "KR1a0078_WYG_011-11a",
+    "dice": 0.879,
+    "runner_up": 0.139,
+    "sha": "7b8e92c07cd495b832227e5a379cf497a80fe6c1"
+   }
+  },
+  {
+   "key": "V4-6a3c7a5801fe4f593c216997",
+   "book_id": "6a3c7a5801fe4f593c21698c",
+   "page_id": "6a3c7a5801fe4f593c216997",
+   "page_number": 11,
+   "title": "續名醫類案·卷一 (vol 1)",
+   "kanripo": {
+    "kr": "KR3e0096",
+    "pb": "KR3e0096_WYG_001-3b",
+    "dice": 0.906,
+    "runner_up": 0.058,
+    "sha": "8716eeefa67c1372186d2e803dbf2ad76aedd4ba"
+   }
+  },
+  {
+   "key": "V4-6a3c6bec01fe4f593c1aed04",
+   "book_id": "6a3c6bec01fe4f593c1aeceb",
+   "page_id": "6a3c6bec01fe4f593c1aed04",
+   "page_number": 25,
+   "title": "周易會通·卷九 (vol 9)",
+   "kanripo": {
+    "kr": "KR1a0086",
+    "pb": "KR1a0086_WYG_009-12a",
+    "dice": 0.9,
+    "runner_up": 0.112,
+    "sha": "03054bb707b08185649c736050a54485f528dfe1"
+   }
+  },
+  {
+   "key": "V4-6a3c6faf39b4508b04e4c5eb",
+   "book_id": "6a3c6fae39b4508b04e4c5d9",
+   "page_id": "6a3c6faf39b4508b04e4c5eb",
+   "page_number": 18,
+   "title": "孟子傳·卷二十八~卷二十九 (vol 8)",
+   "kanripo": {
+    "kr": "KR1h0013",
+    "pb": "KR1h0013_WYG_024-9a",
+    "dice": 0.885,
+    "runner_up": 0.493,
+    "sha": "fb7b547714fea301edab9dff252e157c461c0e59"
+   }
+  },
+  {
+   "key": "V4-6a3c78ea01fe4f593c20bf3c",
+   "book_id": "6a3c78ea01fe4f593c20bf30",
+   "page_id": "6a3c78ea01fe4f593c20bf3c",
+   "page_number": 12,
+   "title": "紺珠集·卷十三 (vol 7)",
+   "kanripo": {
+    "kr": "KR3j0179",
+    "pb": "KR3j0179_WYG_013-6a",
+    "dice": 0.788,
+    "runner_up": 0.091,
+    "sha": "d718f481ca31dc4c690db2c1d00d6825b360e21d"
+   }
+  },
+  {
+   "key": "V4-6a3cb6aa3dce6cfad74854ef",
+   "book_id": "6a3cb6aa3dce6cfad74854da",
+   "page_id": "6a3cb6aa3dce6cfad74854ef",
+   "page_number": 21,
+   "title": "尚書說·卷七 (vol 8)",
+   "kanripo": {
+    "kr": "KR1b0014",
+    "pb": "KR1b0014_WYG_007-10b",
+    "dice": 0.73,
+    "runner_up": 0.202,
+    "sha": "7e234618bb9fa67d062485768fbfe19eea39b0f2"
+   }
+  },
+  {
+   "key": "V4-6a3c6f7301fe4f593c1cc878",
+   "book_id": "6a3c6f7301fe4f593c1cc85f",
+   "page_id": "6a3c6f7301fe4f593c1cc878",
+   "page_number": 25,
+   "title": "孟子注疏·卷八上~卷九下 (vol 6)",
+   "kanripo": {
+    "kr": "KR1h0003",
+    "pb": "KR1h0003_WYG_008-12a",
+    "dice": 0.871,
+    "runner_up": 0.284,
+    "sha": "f986c5c8e4ff7570c5a24fc3fad3539815b944b9"
+   }
+  },
+  {
+   "key": "V4-6a3cbc0eec254ff6caded369",
+   "book_id": "6a3cbc0eec254ff6caded356",
+   "page_id": "6a3cbc0eec254ff6caded369",
+   "page_number": 19,
+   "title": "禮記注疏·卷三十三~卷三十四 (vol 82)",
+   "kanripo": {
+    "kr": "KR1d0053",
+    "pb": "KR1d0053_WYG_033-12a",
+    "dice": 0.889,
+    "runner_up": 0.329,
+    "sha": "0429e7cafc366722cb9106eb390495cfc30b2acc"
+   }
+  },
+  {
+   "key": "V4-6a3cee9d4701a906f10eafbe",
+   "book_id": "6a3cee9d4701a906f10eafa7",
+   "page_id": "6a3cee9d4701a906f10eafbe",
+   "page_number": 23,
+   "title": "御定淵鑑類函·卷三百八十七 (vol 214)",
+   "kanripo": {
+    "kr": "KR3k0055",
+    "pb": "KR3k0055_WYG_392-11a",
+    "dice": 0.854,
+    "runner_up": 0.247,
+    "sha": "f0b45e5082d39e3e88b3e4425051b0eb39b1e815"
+   }
+  },
+  {
+   "key": "V4-6a3cbc20ec254ff6cadedde5",
+   "book_id": "6a3cbc20ec254ff6cadeddcc",
+   "page_id": "6a3cbc20ec254ff6cadedde5",
+   "page_number": 25,
+   "title": "禮記注疏·卷六十一 (vol 96)",
+   "kanripo": {
+    "kr": "KR1d0053",
+    "pb": "KR1d0053_WYG_061-12b",
+    "dice": 0.827,
+    "runner_up": 0.126,
+    "sha": "0429e7cafc366722cb9106eb390495cfc30b2acc"
+   }
+  },
+  {
+   "key": "V4-6a3c760339b4508b04e5ef80",
+   "book_id": "6a3c760339b4508b04e5ef6f",
+   "page_id": "6a3c760339b4508b04e5ef80",
+   "page_number": 17,
+   "title": "陳氏禮記集說補正·卷三十五~卷三十八 (vol 8)",
+   "kanripo": {
+    "kr": "KR1d0070",
+    "pb": "KR1d0070_WYG_036-2b",
+    "dice": 0.807,
+    "runner_up": 0.116,
+    "sha": "212a825d01dd061e45a501c1c043b9edd97a91d4"
+   }
+  }
+ ]
+}

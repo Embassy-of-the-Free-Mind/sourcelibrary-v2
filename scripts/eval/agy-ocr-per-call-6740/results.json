@@ -1,0 +1,384 @@
+{
+ "scored_at": "2026-10-27T11:06:05.745Z",
+ "weight_output": 6,
+ "weight_note": "assumed (#7518), not a measured agy rate",
+ "tasks": {
+  "T1": {
+   "arms": {
+    "A1": {
+     "pages": 30,
+     "read": 28,
+     "judged": 28,
+     "accepted": 8,
+     "accepted_ci": [
+      0.142,
+      0.444
+     ],
+     "wrong_text": 17,
+     "fidelity_mean": 3.393,
+     "cer_mean": 0.223,
+     "cer_median": 0.047,
+     "cross_flag_pages": 6,
+     "cross_flag_novel_pages": 1,
+     "cross_fault_pages": 1,
+     "cross_fault_ids": [
+      "6a3c6181879008ba7e15eb38"
+     ],
+     "unchanged": 0,
+     "contain": 0,
+     "failed": 2,
+     "refused_block_pages": 0,
+     "calls": 32,
+     "failed_calls": 0,
+     "tokens_per_page": {
+      "input": 28145,
+      "output": 472,
+      "thinking": 0,
+      "cache_read": 8934
+     },
+     "quota_index": 30977,
+     "quota_index_uncached": 22043,
+     "weekly_remaining": {
+      "start": 0.6684774160385132,
+      "end": 0.6677974462509155
+     },
+     "quota_rel_A1": 1,
+     "quota_rel_A1_uncached": 1
+    },
+    "A1b": {
+     "pages": 30,
+     "read": 26,
+     "judged": 26,
+     "accepted": 7,
+     "accepted_ci": [
+      0.118,
+      0.409
+     ],
+     "wrong_text": 15,
+     "fidelity_mean": 3.423,
+     "cer_mean": 0.231,
+     "cer_median": 0.06,
+     "cross_flag_pages": 7,
+     "cross_flag_novel_pages": 2,
+     "cross_fault_pages": 2,
+     "cross_fault_ids": [
+      "6a3c64a339b4508b04e28bbf",
+      "6a3c66abaf3c49b59c5cc55c"
+     ],
+     "unchanged": 0,
+     "contain": 0,
+     "failed": 4,
+     "refused_block_pages": 0,
+     "calls": 34,
+     "failed_calls": 0,
+     "tokens_per_page": {
+      "input": 28136,
+      "output": 470,
+      "thinking": 0,
+      "cache_read": 11237
+     },
+     "quota_index": 30954,
+     "quota_index_uncached": 19717,
+     "weekly_remaining": {
+      "start": 0.6674802899360657,
+      "end": 0.6669114232063293
+     },
+     "quota_rel_A1": 0.999,
+     "quota_rel_A1_uncached": 0.894,
+     "accept_diff_vs_A1": {
+      "pts": -3.333,
+      "ci95": [
+       -16.667,
+       10
+      ],
+      "n": 30
+     },
+     "cer_diff_vs_A1_both_read": {
+      "pages": 26,
+      "mean_pts": -4.315,
+      "ci95": [
+       -10.963,
+       0.1
+      ]
+     }
+    },
+    "B2": {
+     "pages": 30,
+     "read": 30,
+     "judged": 30,
+     "accepted": 8,
+     "accepted_ci": [
+      0.142,
+      0.444
+     ],
+     "wrong_text": 18,
+     "fidelity_mean": 3.3,
+     "cer_mean": 0.159,
+     "cer_median": 0.065,
+     "cross_flag_pages": 4,
+     "cross_flag_novel_pages": 2,
+     "cross_fault_pages": 0,
+     "cross_fault_ids": [],
+     "unchanged": 0,
+     "contain": 0,
+     "failed": 0,
+     "refused_block_pages": 0,
+     "calls": 17,
+     "failed_calls": 0,
+     "tokens_per_page": {
+      "input": 22886,
+      "output": 465,
+      "thinking": 0,
+      "cache_read": 7844
+     },
+     "quota_index": 25677,
+     "quota_index_uncached": 17833,
+     "weekly_remaining": {
+      "start": 0.6678786277770996,
+      "end": 0.667320728302002
+     },
+     "quota_rel_A1": 0.829,
+     "quota_rel_A1_uncached": 0.809,
+     "accept_diff_vs_A1": {
+      "pts": 0,
+      "ci95": [
+       -20,
+       16.667
+      ],
+      "n": 30
+     },
+     "cer_diff_vs_A1_both_read": {
+      "pages": 28,
+      "mean_pts": -0.607,
+      "ci95": [
+       -4.54,
+       2.908
+      ]
+     }
+    }
+   },
+   "controls": [
+    {
+     "id": "jc5e540c9bf",
+     "kind": "drop",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": null
+    },
+    {
+     "id": "je81416c330",
+     "kind": "drop",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": null
+    },
+    {
+     "id": "ja03e49cb9f",
+     "kind": "drop",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": null
+    },
+    {
+     "id": "jfa5e54cd07",
+     "kind": "bleed",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": true
+    },
+    {
+     "id": "j6001cab4eb",
+     "kind": "bleed",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": true
+    }
+   ],
+   "controls_caught": "5/5",
+   "bleed_controls_cross_check": "2/2"
+  },
+  "T2": {
+   "arms": {
+    "A1": {
+     "pages": 30,
+     "read": 30,
+     "judged": 30,
+     "accepted": 27,
+     "accepted_ci": [
+      0.744,
+      0.965
+     ],
+     "wrong_text": 2,
+     "fidelity_mean": 4.433,
+     "cer_mean": null,
+     "cer_median": null,
+     "cross_flag_pages": 0,
+     "cross_flag_novel_pages": 0,
+     "cross_fault_pages": 0,
+     "cross_fault_ids": [],
+     "unchanged": 0,
+     "contain": 0,
+     "failed": 0,
+     "refused_block_pages": 0,
+     "calls": 30,
+     "failed_calls": 0,
+     "tokens_per_page": {
+      "input": 26726,
+      "output": 683,
+      "thinking": 0,
+      "cache_read": 10295
+     },
+     "quota_index": 30825,
+     "quota_index_uncached": 20530,
+     "weekly_remaining": {
+      "start": 0.6667605042457581,
+      "end": 0.6664906144142151
+     },
+     "quota_rel_A1": 1,
+     "quota_rel_A1_uncached": 1
+    },
+    "A1b": {
+     "pages": 30,
+     "read": 30,
+     "judged": 30,
+     "accepted": 27,
+     "accepted_ci": [
+      0.744,
+      0.965
+     ],
+     "wrong_text": 3,
+     "fidelity_mean": 4.333,
+     "cer_mean": null,
+     "cer_median": null,
+     "cross_flag_pages": 0,
+     "cross_flag_novel_pages": 0,
+     "cross_fault_pages": 0,
+     "cross_fault_ids": [],
+     "unchanged": 0,
+     "contain": 0,
+     "failed": 0,
+     "refused_block_pages": 0,
+     "calls": 30,
+     "failed_calls": 0,
+     "tokens_per_page": {
+      "input": 28403,
+      "output": 688,
+      "thinking": 0,
+      "cache_read": 9888
+     },
+     "quota_index": 32531,
+     "quota_index_uncached": 22643,
+     "weekly_remaining": {
+      "start": 0.6660402417182922,
+      "end": 0.6655198931694031
+     },
+     "quota_rel_A1": 1.055,
+     "quota_rel_A1_uncached": 1.103,
+     "accept_diff_vs_A1": {
+      "pts": 0,
+      "ci95": [
+       -10,
+       10
+      ],
+      "n": 30
+     }
+    },
+    "B2": {
+     "pages": 30,
+     "read": 30,
+     "judged": 30,
+     "accepted": 23,
+     "accepted_ci": [
+      0.591,
+      0.882
+     ],
+     "wrong_text": 3,
+     "fidelity_mean": 4.3,
+     "cer_mean": null,
+     "cer_median": null,
+     "cross_flag_pages": 0,
+     "cross_flag_novel_pages": 0,
+     "cross_fault_pages": 0,
+     "cross_fault_ids": [],
+     "unchanged": 2,
+     "contain": 0,
+     "failed": 0,
+     "refused_block_pages": 0,
+     "calls": 15,
+     "failed_calls": 0,
+     "tokens_per_page": {
+      "input": 19531,
+      "output": 626,
+      "thinking": 0,
+      "cache_read": 6772
+     },
+     "quota_index": 23287,
+     "quota_index_uncached": 16515,
+     "weekly_remaining": {
+      "start": 0.6664906144142151,
+      "end": 0.6661889553070068
+     },
+     "quota_rel_A1": 0.755,
+     "quota_rel_A1_uncached": 0.804,
+     "accept_diff_vs_A1": {
+      "pts": -13.333,
+      "ci95": [
+       -36.667,
+       6.667
+      ],
+      "n": 30
+     }
+    }
+   },
+   "controls": [
+    {
+     "id": "jf72fdab1a3",
+     "kind": "drop",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": null
+    },
+    {
+     "id": "j382ed9dc0e",
+     "kind": "drop",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": null
+    },
+    {
+     "id": "je7826cd547",
+     "kind": "drop",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": null
+    },
+    {
+     "id": "j2975161b1d",
+     "kind": "bleed",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": true
+    },
+    {
+     "id": "j1704aa8fdc",
+     "kind": "bleed",
+     "judged": true,
+     "caught_by_judge": true,
+     "accept": false,
+     "caught_by_cross_check": true
+    }
+   ],
+   "controls_caught": "5/5",
+   "bleed_controls_cross_check": "2/2"
+  }
+ }
+}

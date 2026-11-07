@@ -1,0 +1,61 @@
+{
+ "cells": {
+  "latin-flash3|print": {
+   "routes": {
+    "3flash>agy-flash-low": {
+     "n": 34,
+     "books": 34,
+     "accept": "28/34",
+     "wrong_text_pages": "4/34",
+     "classes_k_of_n": {
+      "O11": "1/34",
+      "O6": "13/34",
+      "O5": "3/34",
+      "O12": "4/34",
+      "O8": "18/34",
+      "O7": "2/34",
+      "E2": "9/34",
+      "T6": "4/34",
+      "O16": "8/34",
+      "O10": "2/34",
+      "O3": "1/34",
+      "O1": "1/34"
+     },
+     "script_basis": {
+      "page": 26,
+      "book": 8
+     }
+    }
+   }
+  },
+  "latin-lite|print": {
+   "routes": {
+    "agy-flash-low": {
+     "n": 34,
+     "books": 34,
+     "accept": "22/34",
+     "wrong_text_pages": "2/34",
+     "classes_k_of_n": {
+      "O6": "10/34",
+      "O5": "2/34",
+      "O8": "14/34",
+      "E2": "13/34",
+      "O10": "1/34",
+      "O16": "4/34",
+      "O7": "2/34",
+      "O1": "1/34",
+      "T4": "1/34",
+      "T6": "1/34",
+      "O11": "1/34",
+      "filter_cut": "8/34"
+     },
+     "script_basis": {
+      "page": 34
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/router-next-7263.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

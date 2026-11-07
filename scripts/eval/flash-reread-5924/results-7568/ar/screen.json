@@ -1,0 +1,86 @@
+{
+ "6a08a754871243dce9def039": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Modern typeset Arabic theological prose with Arabic footnotes, both pages full text"
+ },
+ "69f32843aeeee0fa38c642f2": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Arabic",
+  "why": "Handwritten Arabic astronomical commentary (qawluhu lemmas in red), both pages full text"
+ },
+ "69e4209e813af15d2bdc1eb7": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Despite 'French' title, pages are a typeset Arabic edition (verse + prose); only tiny French apparatus notes"
+ },
+ "69ef3d4272c1376fdf2aff50": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Typeset Arabic ethics text, two-page spreads per image (pp.78-79, 138-139)"
+ },
+ "69d5abced0bd3547a5654189": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Arabic",
+  "why": "Handwritten Arabic medical text with red rubrics, both pages full text"
+ },
+ "6a9fb207732b9e75e96ba46f": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Typeset Arabic Maqrizi text body; French critical apparatus in footnotes only"
+ },
+ "69ea3ea1300d991d0f1d3bd6": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Typeset Arabic geography text (BGA style); Latin apparatus in footnotes only"
+ },
+ "6a477ce51874da9b1a9a5552": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Dense Bulaq-style typeset Arabic Khitat, both pages full text"
+ },
+ "6a20333618654bf8e1904946": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Arabic",
+  "why": "Handwritten vocalized Quran text with red recitation marks; sampled pages are Arabic, not the Malay notes"
+ },
+ "69d66592daca889caf92725b": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Arabic",
+  "why": "Handwritten Maghribi-style Arabic astronomical text; one page has a geometric diagram but is mainly text"
+ },
+ "6a08a751871243dce9deee4c": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Modern typeset Arabic prose on Suhrawardi, both pages full text"
+ },
+ "69d6659cdaca889caf9273c3": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Arabic",
+  "why": "Handwritten Arabic alchemical text with red overlines, both pages full text"
+ },
+ "69d5abfd4dc55b8478ddd5c2": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Arabic",
+  "why": "Handwritten Arabic materia medica (Qanun), negative microfilm two-page spreads"
+ },
+ "6aa84cd9483bd3ad2caed139": {
+  "pass": true,
+  "format": "print",
+  "language": "Arabic",
+  "why": "Typeset Arabic BGA geography text; Latin apparatus in footnotes only"
+ }
+}

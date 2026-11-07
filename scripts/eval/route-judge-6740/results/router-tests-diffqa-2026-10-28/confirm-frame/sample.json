@@ -1,0 +1,263 @@
+{
+ "drawn_at": "2026-10-28T10:31:09.844Z",
+ "n": 30,
+ "router_tests": true,
+ "cells": {
+  "latin-lite": {
+   "task": "ocr",
+   "lang": "Latin",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "lite",
+   "routes": [
+    "lite",
+    "lite>agy-flash-low",
+    "agy-flash-low",
+    "lite>agy-flash-low+diffqa"
+   ],
+   "correctors": {
+    "lite>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    },
+    "agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low",
+     "fresh": true
+    },
+    "lite>agy-flash-low+diffqa": {
+     "by": "agy-diffqa",
+     "model": "gemini-3.8-flash-low",
+     "judge_model": "gemini-3.8-flash-high",
+     "calls_per_page": 2.733
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "lite": "served (the stored draft)",
+    "lite>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+    "agy-flash-low": "this run's fresh read of the image, not served (agy gemini-3.8-flash-low)",
+    "lite>agy-flash-low+diffqa": "CONFIRMATION frame, rules frozen at round 2 before this frame was drawn: cli-ocr apply guards, then latin-diffqa-7591 (fresh agy flash-low read as the vote, agy flash-high span judge, revert only on evidence); a page the guards refuse serves the draft; not served"
+   },
+   "pages": [
+    {
+     "page_id": "69dbccc50f8c5edf20f4d351",
+     "book_id": "69dbccc50f8c5edf20f4d158",
+     "page_number": 505,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "ed21823b7da08727"
+    },
+    {
+     "page_id": "69dbc7ad1040d1d5e2093302",
+     "book_id": "69dbc7ad1040d1d5e20932a0",
+     "page_number": 98,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "cf674a4b3f13eba2"
+    },
+    {
+     "page_id": "69904dd77d19f3f2aac1d557",
+     "book_id": "69904dd67d19f3f2aac1d49d",
+     "page_number": 186,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "88d96ec85584f595"
+    },
+    {
+     "page_id": "69f5365adfb8a222687187c0",
+     "book_id": "69c8006e6c6f3cc53c843f4c",
+     "page_number": 71,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "99783c72244cdd32"
+    },
+    {
+     "page_id": "69b00e4c312120db3b488aea",
+     "book_id": "69b00e4c312120db3b488a88",
+     "page_number": 98,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "c29c8c6906e03e96"
+    },
+    {
+     "page_id": "69b51e92ff09e4fe943b0f8a",
+     "book_id": "69b51e92ff09e4fe943b0ea2",
+     "page_number": 232,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "061b5449c77057e4"
+    },
+    {
+     "page_id": "69dbcad01040d1d5e20aefcd",
+     "book_id": "69dbcad01040d1d5e20aeefd",
+     "page_number": 208,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "a07b9aee49b28b0d"
+    },
+    {
+     "page_id": "69b4c14b779e2e78e20e76b7",
+     "book_id": "69b4c14b779e2e78e20e7605",
+     "page_number": 178,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "3b7519357cdde599"
+    },
+    {
+     "page_id": "69b51e329a81ef7feb3d1987",
+     "book_id": "69b51e329a81ef7feb3d194a",
+     "page_number": 61,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "356a12d7c26b0624"
+    },
+    {
+     "page_id": "69b30049a1a4246ddb45c157",
+     "book_id": "69b30049a1a4246ddb45c0aa",
+     "page_number": 173,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "6639321ea9b57f0b"
+    },
+    {
+     "page_id": "69942ceeb2f6748db4abf3f1",
+     "book_id": "69942ceeb2f6748db4abf2f1",
+     "page_number": 256,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "2f13acc022ac8572"
+    },
+    {
+     "page_id": "69b51e0dcf111105c42962e8",
+     "book_id": "69b51e0dcf111105c4296270",
+     "page_number": 120,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "5e7d8253bf756a73"
+    },
+    {
+     "page_id": "69dbcbd51040d1d5e20bb06e",
+     "book_id": "69dbcbd51040d1d5e20bb054",
+     "page_number": 26,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "1e3fa1ac4f36a060"
+    },
+    {
+     "page_id": "69dbcce10f8c5edf20f4f6a5",
+     "book_id": "69dbcce10f8c5edf20f4f697",
+     "page_number": 14,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "911160fa3b922d7d"
+    },
+    {
+     "page_id": "6a98d33013613b314fd63715",
+     "book_id": "6a98d33013613b314fd636cc",
+     "page_number": 73,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "c39a5f017bf3c907"
+    },
+    {
+     "page_id": "6a4e46ebdc886f1f5abb6465",
+     "book_id": "6a4e46ebdc886f1f5abb645e",
+     "page_number": 7,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "44442b737d7e928e"
+    },
+    {
+     "page_id": "69f71506a6c8f03765392f1e",
+     "book_id": "69c88ae96c6f3cc53c85a7c3",
+     "page_number": 662,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "c093d64705945975"
+    },
+    {
+     "page_id": "69b62fe81c1c21a3737fc114",
+     "book_id": "69b62fe81c1c21a3737fc0b3",
+     "page_number": 97,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "6e0e03da0adf4ac9"
+    },
+    {
+     "page_id": "69b65ed9b3f4fc0441524ecc",
+     "book_id": "69b65ed9b3f4fc0441524ec6",
+     "page_number": 6,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "b6b04607bff8ab91"
+    },
+    {
+     "page_id": "69b51dca261c58d63664acee",
+     "book_id": "69b51dca261c58d63664accf",
+     "page_number": 31,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "790403407ddbf377"
+    },
+    {
+     "page_id": "6a42bc8d5207af7c42f70f42",
+     "book_id": "6a42bc8d5207af7c42f70f1f",
+     "page_number": 35,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "2562f14d1dc6ed49"
+    },
+    {
+     "page_id": "69f700759b4a8a87e93d4a8d",
+     "book_id": "69c8168e6c6f3cc53c848b0c",
+     "page_number": 584,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "a6d4147fe9945ed4"
+    },
+    {
+     "page_id": "6a4b738d998fdd30218fac07",
+     "book_id": "6a4b738d998fdd30218fabb9",
+     "page_number": 26,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "139adad66297ba1c"
+    },
+    {
+     "page_id": "69f33683876dd827cbc50af6",
+     "book_id": "69f33683876dd827cbc50aed",
+     "page_number": 9,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "efa61b80413a19fa"
+    },
+    {
+     "page_id": "69b631051c1c21a373804f70",
+     "book_id": "69b631051c1c21a373804f50",
+     "page_number": 32,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "24b57fe50a08ffe7"
+    },
+    {
+     "page_id": "6a4362fbf920db620cce3242",
+     "book_id": "6a4362fbf920db620cce3223",
+     "page_number": 31,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "cc779369115a07d4"
+    },
+    {
+     "page_id": "69b51db7cf111105c428ead7",
+     "book_id": "69b51db7cf111105c428ea03",
+     "page_number": 212,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "e1374f234ab5b396"
+    },
+    {
+     "page_id": "69f50cddd27627ef4897d241",
+     "book_id": "69c808006c6f3cc53c845b18",
+     "page_number": 68,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "6c38487b8d753950"
+    },
+    {
+     "page_id": "69b51ddc768235dc65988f55",
+     "book_id": "69b51ddc768235dc65988f14",
+     "page_number": 65,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "ac3a997bfb368a8c"
+    },
+    {
+     "page_id": "6a26badd61b3857ed05b0fa5",
+     "book_id": "6a26badd61b3857ed05b0fa1",
+     "page_number": 4,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "c14550a19edf1ceb"
+    }
+   ],
+   "frame": {
+    "books": 15739,
+    "books_walked": 128,
+    "held_or_hidden": 0,
+    "no_eligible_page": 98,
+    "rule": "visible Latin books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   }
+  }
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "issue": 7947,
+ "note": "Confirmed serious calls (second reader) per (form on the image | age | OCR route). Not stratum-weighted: these are the drawn books. One reader per page plus a second reader on serious calls; REVIEWER.md scale, not the #6740 judge prompt.",
+ "study_cells": {
+  "manuscript|1501+|3-flash": {
+   "books": 7,
+   "pages": 20,
+   "words": 3159,
+   "misleads_per_1k": 1.58,
+   "wrong_text_per_1k": 1.58,
+   "fidelity_mean": 3.95
+  },
+  "manuscript|1501+|flash-lite": {
+   "books": 24,
+   "pages": 70,
+   "words": 11957,
+   "misleads_per_1k": 2.34,
+   "wrong_text_per_1k": 3.26,
+   "fidelity_mean": 3.16
+  },
+  "manuscript|before-1501|3-flash": {
+   "books": 15,
+   "pages": 41,
+   "words": 13198,
+   "misleads_per_1k": 1.52,
+   "wrong_text_per_1k": 2.05,
+   "fidelity_mean": 2.9
+  },
+  "manuscript|before-1501|flash-lite": {
+   "books": 6,
+   "pages": 16,
+   "words": 5514,
+   "misleads_per_1k": 2.54,
+   "wrong_text_per_1k": 3.99,
+   "fidelity_mean": 2.13
+  },
+  "manuscript|undated|3-flash": {
+   "books": 5,
+   "pages": 12,
+   "words": 8099,
+   "misleads_per_1k": 0.49,
+   "wrong_text_per_1k": 0.99,
+   "fidelity_mean": 3
+  },
+  "manuscript|undated|flash-lite": {
+   "books": 4,
+   "pages": 9,
+   "words": 3649,
+   "misleads_per_1k": 3.29,
+   "wrong_text_per_1k": 4.93,
+   "fidelity_mean": 2.11
+  },
+  "print|1501+|3-flash": {
+   "books": 27,
+   "pages": 74,
+   "words": 21810,
+   "misleads_per_1k": 0.64,
+   "wrong_text_per_1k": 0.46,
+   "fidelity_mean": 3.78
+  },
+  "print|1501+|flash-lite": {
+   "books": 12,
+   "pages": 28,
+   "words": 8363,
+   "misleads_per_1k": 0.48,
+   "wrong_text_per_1k": 0.72,
+   "fidelity_mean": 3.64
+  },
+  "print|before-1501|3-flash": {
+   "books": 2,
+   "pages": 6,
+   "words": 1662,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4
+  },
+  "print|before-1501|flash-lite": {
+   "books": 8,
+   "pages": 24,
+   "words": 11750,
+   "misleads_per_1k": 0.68,
+   "wrong_text_per_1k": 0.94,
+   "fidelity_mean": 2.88
+  },
+  "print|undated|3-flash": {
+   "books": 8,
+   "pages": 24,
+   "words": 7738,
+   "misleads_per_1k": 0.39,
+   "wrong_text_per_1k": 0.39,
+   "fidelity_mean": 3.92
+  },
+  "print|undated|flash-lite": {
+   "books": 1,
+   "pages": 3,
+   "words": 1860,
+   "misleads_per_1k": 0.54,
+   "wrong_text_per_1k": 0.54,
+   "fidelity_mean": 2.67
+  }
+ }
+}

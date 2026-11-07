@@ -53,6 +53,7 @@
 
 /** `ocr.pipeline` value and `sweep_log.sweep` name — one id for the whole lane. */
 import { contentHash } from './write-provenance.mjs';
+import { laneForWrite } from './lanes.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 export const LANE = 'syriac-kraken-2026-09';
@@ -307,6 +308,7 @@ export function ocrSetFields(text, engineKey, route, { run, now = new Date(), se
     'ocr.model': `kraken/${e.key}`,
     'ocr.source': 'kraken',
     'ocr.pipeline': LANE,
+    'ocr.lane': laneForWrite('ocr', { call_site: 'scripts/lib/syriac-kraken-lane.mjs' }),
     'ocr.updated_at': now,
     'ocr.engine': {
       name: KRAKEN.name, version: KRAKEN.version, model: e.key, model_label: e.label,

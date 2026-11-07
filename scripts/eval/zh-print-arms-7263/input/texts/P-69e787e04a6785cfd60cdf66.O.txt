@@ -1,0 +1,23 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese, Japanese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>本草金石第一圖</header>
+<page-num>卷之上</page-num>
+<meta>This page is from a Japanese woodblock-printed edition of the "Bencao Gangmu" (Compendium of Materia Medica), specifically the volume of illustrations. The text features katakana glosses (kun-ten) to aid Japanese readers. A large red modern seal of the National Diet Library (国立国会図書館蔵) is visible at the top left.</meta>
+
+# 本草綱目圖卷上
+
+從來<gloss>ヨリ</gloss>圖繪。絢飾<gloss>ケンシキ</gloss>為<gloss>ナシ</gloss>工<gloss>タクミノ</gloss>。未<gloss>イマタ</gloss>暇<gloss>イトマ</gloss>折<gloss>セツ</gloss>其<gloss>ソノ</gloss>形似。是以<gloss>ココニヲイテ</gloss>博物君子。每<gloss>ツネニ</gloss>多<gloss>オホシ</gloss>指<gloss>シ</gloss>棃橘柚之疑。茲集<gloss>コノシュウ</gloss>詳考<gloss>シャウコウ</gloss>互訂<gloss>コウテイ</gloss>。擬<gloss>キ</gloss>於目<gloss>マナコニ</gloss>逼真<gloss>ヒクシン</gloss>。雖<gloss>イヘトモ</gloss>遠<gloss>エン</gloss>方<gloss>ホウ</gloss>異<gloss>イ</gloss>物<gloss>フツ</gloss>。按<gloss>アン</gloss>圖<gloss>ト</gloss>可<gloss>ヘシ</gloss>索<gloss>サク</gloss>矣。博<gloss>ハク</gloss>多<gloss>オホシ</gloss>識<gloss>シキ</gloss>其<gloss>ソノ</gloss>名<gloss>ナ</gloss>而已<gloss>ノミ</gloss>也。
+
+---
+
+<image-desc size="medium" type="woodcut" significance="high">
+A rectangular woodcut illustration depicting a coastal or river landscape with stylized waves in the foreground and rolling hills in the background. A small rectangular label in the upper right of the frame reads "水金" (Shuijin - Water Gold/Metal). To the left of the frame, vertical text identifies the artist: "武林睦鷲隱" (Mu Jiuyin of Wulin). A large red square institutional seal overlaps the upper left portion of the image.
+</image-desc>
+
+<image-desc size="medium" type="woodcut" significance="high">
+A rectangular woodcut illustration showing a steep, craggy cliff face with scattered rocks and minimal vegetation, representing a mountainous source. A small rectangular label in the upper right reads "山金" (Shanjin - Mountain Gold/Metal). A circular red seal is stamped in the bottom right corner of the illustration.
+</image-desc>
+
+<vocab>本草綱目, 水金, 山金, 武林睦鷲隱, 博物君子, 棃橘柚</vocab>

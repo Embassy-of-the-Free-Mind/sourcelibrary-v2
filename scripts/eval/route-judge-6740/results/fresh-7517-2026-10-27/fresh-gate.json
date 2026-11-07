@@ -1,0 +1,194 @@
+{
+ "rule": {
+  "within": 0.05,
+  "p": 0.9,
+  "wrong_text_max": 0.02,
+  "draws": 40000
+ },
+ "generated_at": "2026-10-27T10:02:17.056Z",
+ "cells": {
+  "de-lite": {
+   "lang": "German",
+   "n": 30,
+   "best": "lite>agy-flash-low",
+   "routes": {
+    "lite": {
+     "k": 21,
+     "w": 5,
+     "judged": 30,
+     "n": 30,
+     "mean": 0.6875478082706541,
+     "ci90": [
+      0.55,
+      0.81
+     ]
+    },
+    "lite>agy-flash-low": {
+     "k": 28,
+     "w": 2,
+     "judged": 30,
+     "n": 30,
+     "source": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json (same pages)",
+     "mean": 0.9063891675969767,
+     "ci90": [
+      0.81,
+      0.97
+     ]
+    },
+    "fresh": {
+     "k": 16,
+     "w": 1,
+     "judged": 18,
+     "n": 30,
+     "delivered": 18,
+     "not_delivered": 12,
+     "why_not": [
+      [
+       "reply cut before <<<END>>>",
+       12
+      ]
+     ],
+     "mean": 0.5316559619961985,
+     "ci90": [
+      0.39,
+      0.67
+     ]
+    },
+    "fresh|lite": {
+     "k": 24,
+     "w": 3,
+     "judged": 30,
+     "n": 30,
+     "mean": 0.7813535688307708,
+     "ci90": [
+      0.65,
+      0.89
+     ]
+    }
+   },
+   "verdict": {
+    "lite": {
+     "p_within": 0.036,
+     "wrong_text_ok": false,
+     "passes": false
+    },
+    "lite>agy-flash-low": {
+     "p_within": 1,
+     "wrong_text_ok": true,
+     "passes": true
+    },
+    "fresh": {
+     "p_within": 0.001,
+     "wrong_text_ok": true,
+     "passes": false
+    },
+    "fresh|lite": {
+     "p_within": 0.192,
+     "wrong_text_ok": false,
+     "passes": false
+    }
+   },
+   "on_delivered": {
+    "pages": 18,
+    "fresh": 16,
+    "lite": 13,
+    "fresh_wrong_text": 1,
+    "lite_wrong_text": 3
+   }
+  },
+  "fr-lite": {
+   "lang": "French",
+   "n": 30,
+   "best": "lite>agy-flash-low",
+   "routes": {
+    "lite": {
+     "k": 22,
+     "w": 6,
+     "judged": 30,
+     "n": 30,
+     "mean": 0.7192959123039282,
+     "ci90": [
+      0.58,
+      0.84
+     ]
+    },
+    "lite>agy-flash-low": {
+     "k": 27,
+     "w": 2,
+     "judged": 29,
+     "n": 29,
+     "source": "scripts/eval/route-judge-6740/results/router-tests-2026-10-26/score.json (same pages)",
+     "mean": 0.9033480467788908,
+     "ci90": [
+      0.8,
+      0.97
+     ]
+    },
+    "fresh": {
+     "k": 23,
+     "w": 2,
+     "judged": 25,
+     "n": 30,
+     "delivered": 25,
+     "not_delivered": 5,
+     "why_not": [
+      [
+       "reply cut before <<<END>>>",
+       5
+      ]
+     ],
+     "mean": 0.7502185650143218,
+     "ci90": [
+      0.62,
+      0.86
+     ]
+    },
+    "fresh|lite": {
+     "k": 26,
+     "w": 3,
+     "judged": 30,
+     "n": 30,
+     "mean": 0.8438085155973517,
+     "ci90": [
+      0.73,
+      0.93
+     ]
+    }
+   },
+   "verdict": {
+    "lite": {
+     "p_within": 0.075,
+     "wrong_text_ok": false,
+     "passes": false
+    },
+    "lite>agy-flash-low": {
+     "p_within": 1,
+     "wrong_text_ok": true,
+     "passes": true
+    },
+    "fresh": {
+     "p_within": 0.124,
+     "wrong_text_ok": true,
+     "passes": false
+    },
+    "fresh|lite": {
+     "p_within": 0.457,
+     "wrong_text_ok": false,
+     "passes": false
+    }
+   },
+   "on_delivered": {
+    "pages": 25,
+    "fresh": 23,
+    "lite": 19,
+    "fresh_wrong_text": 2,
+    "lite_wrong_text": 5
+   }
+  },
+  "latin-lite": {
+   "lang": "Latin",
+   "n": 30,
+   "not_measured": "judged: lite 0, fresh 0; fresh reads cut or failed 30"
+  }
+ }
+}

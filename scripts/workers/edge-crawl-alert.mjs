@@ -20,7 +20,8 @@
  *     runs no JavaScript writes none; the proxy logs only blocked bots.
  * It was found six days later, by accident, in a Vercel bill review (#4753).
  *
- * What it measures: book-page requests (/book/*) in the window that REACHED
+ * What it measures: book-page requests (/book/*, /es/book/* and the other
+ * translated forms) in the window that REACHED
  * the site (not blocked or challenged at the edge), grouped two ways:
  *   1. one address   - more than ADDRESS_LIMIT/hour
  *   2. one user agent on one network - more than AGENT_LIMIT/hour
@@ -49,10 +50,18 @@
  * filter or dataset change). Either failure pages ntfy; a pass is logged only.
  */
 import { MongoClient } from 'mongodb';
+import { ntfyPost } from '../lib/ntfy-send.mjs';
 
 const ZONE = process.env.CF_ZONE_ID || '2a9b9c5c8eaf11ed3f9279ad50a0d06c';
 const TOKEN = process.env.CLOUDFLARE_API_TOKEN_READ;
 const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
+
+// Book pages, in every URL form a reader page has. A translated URL is the same
+// page, and watching only /book/ left this detector silent while ~315K requests
+// a day went through /es, /zh, /la and /nl (2026-11-04). This cannot import
+// src/lib/locale-path.ts; tests/unit/edge-locale-paths.test.ts pins it to that list.
+export const BOOK_PATH_LIKES = ['/book/%', '/es/book/%', '/la/book/%', '/nl/book/%', '/zh/book/%'];
+const BOOK_PATH_FILTER = `OR:[${BOOK_PATH_LIKES.map((p) => `{clientRequestPath_like:"${p}"}`).join(', ')}]`;
 
 // 1,500, not 500: Cloudflare's per-hour counts are sample-adjusted estimates,
 // and at 500 a 7-day backtest flagged ~18 home connections for one hour each
@@ -94,7 +103,7 @@ async function gql(query) {
 async function pushNtfy(title, message, priority) {
   if (NO_PUSH) { console.log('[edge-crawl] --no-push: skipping ntfy'); return; }
   try {
-    await fetch(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'spider' }, body: message });
+    await ntfyPost(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'spider' }, body: message });
     console.log('[edge-crawl] ntfy push sent');
   } catch (err) {
     console.error(`[edge-crawl] ntfy push failed: ${err.message}`);
@@ -161,7 +170,7 @@ async function run() {
   // are the reader's in-app navigation and prefetch (a real browser running
   // our JavaScript); a crawler fetches whole HTML pages and never sends them,
   // so excluding them keeps a fast human reader under the limits.
-  const filter = `{datetime_geq:"${from.toISOString()}", datetime_lt:"${to.toISOString()}", clientRequestPath_like:"/book/%", requestSource:"eyeball", clientRequestQuery_notlike:"%_rsc=%"}`;
+  const filter = `{datetime_geq:"${from.toISOString()}", datetime_lt:"${to.toISOString()}", ${BOOK_PATH_FILTER}, requestSource:"eyeball", clientRequestQuery_notlike:"%_rsc=%"}`;
   const z = await gql(`{ viewer { zones(filter:{zoneTag:"${ZONE}"}) {
     byAddress: httpRequestsAdaptiveGroups(limit:60, filter:${filter}, orderBy:[count_DESC]) {
       count dimensions { clientIP clientAsn clientASNDescription clientCountryName userAgent securityAction } }

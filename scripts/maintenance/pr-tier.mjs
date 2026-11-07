@@ -100,6 +100,24 @@ export function scannableAddedLines(diff) {
   return out;
 }
 
+const sizeIgnoreRes = [...ignoreRes, ...(RULES.sizeIgnoreGlobs || []).map(globToRe)];
+
+/**
+ * Added lines of code for the size rule (#8353): every added line outside the
+ * data, results, fixtures, lockfile and prose files that diffIgnoreGlobs and
+ * sizeIgnoreGlobs name. Comments count: a human still has to read them.
+ */
+export function countedAddedLines(diff) {
+  let file = '';
+  let n = 0;
+  for (const l of diff.split('\n')) {
+    if (l.startsWith('+++ ')) { file = l.slice(4).replace(/^b\//, ''); continue; }
+    if (!l.startsWith('+') || sizeIgnoreRes.some((re) => re.test(file))) continue;
+    n++;
+  }
+  return n;
+}
+
 function dependabotMajor(title) {
   // "Bump stripe from 20.4.1 to 22.6.2" / grouped "Bump the security group ... with 2 updates"
   const m = title.match(/from (\d+)\.[\d.]+ to (\d+)\./);
@@ -198,6 +216,10 @@ export function classifyPR(number, run = sh) {
   result.reasons.push(...extraReasons);
   if (diffError) result.reasons.push({ reason: `diff could not be read, so its lines were not checked — ${diffError}`, paths: [], lines: [] });
   if (unread.length) result.reasons.push({ reason: `GitHub served no patch for ${unread.length} file${unread.length === 1 ? '' : 's'} too large to show, so their lines were not checked`, paths: unread.slice(0, 8), lines: [] });
+  const counted = RULES.maxAddedLines ? countedAddedLines(diff) : 0;
+  if (RULES.maxAddedLines && counted > RULES.maxAddedLines) {
+    result.reasons.push({ reason: `very large PR: ${counted} added lines of code (limit ${RULES.maxAddedLines}, data/results/fixtures/lockfiles not counted); a human reads it`, paths: [], lines: [] });
+  }
   const author = pr.author?.login || '';
   const isBot = /dependabot/.test(author);
   if (!RULES.autoMergeAuthors.some((a) => a === author || a.replace('app/', '') === author)) {

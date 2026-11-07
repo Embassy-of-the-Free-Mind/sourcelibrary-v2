@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// provenance-ok: splitPagePaths is defined here and never written to; this file writes no display image (#4406).
 /**
  * Pipeline Orchestrator Worker
  *
@@ -29,7 +30,7 @@ import {
 } from '../lib/image-extraction-request.mjs';
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { getTranslateModelForBook, translateLaneForBook, CLI_TRANSLATE_HOLD, CLI_TRANSLATE_BOOK_FILTER, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
@@ -56,13 +57,14 @@ import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
 import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
-import { holdViolation, holdBook } from '../lib/pipeline-hold.mjs';
+import { holdViolation, holdBook, isUnsplitSpread, NOT_UNSPLIT_SPREAD } from '../lib/pipeline-hold.mjs';
 import { PAGES_MATERIALIZED_FILTER, LAZY_PAGES_FILTER, isLazyPagesBook, ensurePages } from '../lib/lazy-pages.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { ACTIVE_OCR_JOB_STATUSES, claimBookForOcrSubmit, releaseOcrSubmitClaims, loadOcrPagesInFlight, partitionGuardedPages, describeSkips } from '../lib/ocr-submit-guard.mjs';
+import { reuseKeptReads } from '../lib/kept-read-reuse.mjs';
 import { projectCanonicals, projectTotal, projectMembers, keysWithRoom, isFileQuotaError } from '../lib/gemini-batch-keys.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
@@ -1491,7 +1493,7 @@ async function routeBookToCliOcrLane(db, book, model) {
   const label = (book.title || '').substring(0, 40);
   const unread = await db.collection('pages').countDocuments({
     book_id: book.id,
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.recitation_blocked': { $ne: true },
     $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
   });
@@ -1520,7 +1522,7 @@ async function routeBookToCliTranslateLane(db, book, lane) {
   const label = (book.title || '').substring(0, 50);
   const untranslated = await db.collection('pages').countDocuments({
     book_id: book.id,
-    page_number: { $gt: 0 },
+    ...VISIBLE_PAGE_MATCH,
     'ocr.data': { $exists: true, $nin: [null, ''] },
     page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
     'translation.health_blocked': { $exists: false },
@@ -1559,6 +1561,17 @@ async function submitOcrDirectly(db, book, opts = {}) {
 }
 
 async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, promptVariant } = {}) {
+  // Split before read (#7605): a needs_splitting book is never OCR'd whole any more. Phase 2 used to read it
+  // with the spread prompt (<split-position>/<page-break/>) and Phase 3.1 cut it afterwards; that put 1,149 pages
+  // of two-leaf text on spread records in two weeks. Phase 1.3 splits such books first; books that already
+  // carry spread OCR are still cut by Phase 3.1. The spread-prompt branch below is now unreachable from here.
+  // Read the flags fresh: callers pass books from many projections, and a missing field must not read as "split".
+  const splitState = await db.collection('books').findOne({ id: book.id }, { projection: { needs_splitting: 1, split_completed: 1 } });
+  if (isUnsplitSpread(splitState)) {
+    console.log(`    needs_splitting and not split — not OCR'd until it is split (#7605)`);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
+  }
+
   const ocrModel = modelOverride || getOcrModelForBook(book);
   const pageLimit = maxPages || MAX_PAGES_PER_BOOK;
   // Guard: check for existing active batch_jobs for this book
@@ -1585,7 +1598,7 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
   let pages = await db.collection('pages')
     .find({
       book_id: book.id,
-      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
       $or: [
         { 'ocr.data': { $exists: false } },
@@ -1635,6 +1648,14 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
   }
   pages = guarded.keep;
 
+  // #7075: a page we already read for free and kept is applied, not bought again.
+  const reuse = await reuseKeptReads(db, { bookId: book.id, field: 'ocr', pageIds: pages.map((p) => p.id), minModel: ocrModel });
+  if (reuse.applied) {
+    console.log(`    ${reuse.applied} page(s) applied from kept reads instead of bought`);
+    pages = pages.filter((p) => !reuse.appliedIds.has(p.id));
+    if (pages.length === 0) return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true, skipReason: `all ${reuse.applied} page(s) applied from kept reads (#7075)` };
+  }
+
   // Minimum batch size gate — don't burn a batch API call for a handful of pages.
   // Small batches (1-20 pages) are usually RECITATION/failure retries that won't succeed.
   // Skip them and let them accumulate or get accepted as gaps in Phase 3.
@@ -1662,10 +1683,8 @@ async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, 
   }
 
   // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
-  // These would send two-page images to OCR, producing garbled results
-  // EXCEPTION: if book.needs_splitting, we USE the spread OCR prompt which handles
-  // two-page images directly — no physical split needed before OCR.
-  // Also: if the book was already split_checked, it passed Phase 1.25 and was determined
+  // These would send two-page images to OCR, producing garbled results.
+  // If the book was already split_checked, it passed Phase 1.25 and was determined
   // to be portrait/single-page — no crop data expected, safe to OCR as-is.
   if (!book.needs_splitting) {
     const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
@@ -2066,7 +2085,7 @@ async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
     const remaining = maxPagesPerBook ? Math.min(poolRoom, maxPagesPerBook) : wholeBooksOnly ? poolRoom + 1 : poolRoom;
     const pageFilter = {
       book_id: book.id,
-      page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+      ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
       'ocr.recitation_blocked': { $ne: true }, // Skip pages permanently blocked after N=3 recitation hits
       $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
       $and: [
@@ -2107,6 +2126,13 @@ async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
       guardSkipped.push(...guarded.skipped);
     }
     pages = guarded.keep;
+
+    // #7075: a page we already read for free and kept is applied, not bought again.
+    const reuse = await reuseKeptReads(db, { bookId: book.id, field: 'ocr', pageIds: pages.map((p) => p.id), minModel: model });
+    if (reuse.applied) {
+      console.log(`    ${(book.title || '').substring(0, 40)}: ${reuse.applied} page(s) applied from kept reads instead of bought`);
+      pages = pages.filter((p) => !reuse.appliedIds.has(p.id));
+    }
 
     if (pages.length === 0) continue;
     if (wholeBooksOnly && pages.length > poolRoom) {
@@ -2796,10 +2822,16 @@ async function run() {
             },
             updated_at: new Date(),
           };
-          await db.collection('books').updateOne(
-            { id: book.id },
+          // The filter repeats `pipeline_auto: {$exists:false}`: this replaces the WHOLE
+          // object, and an importer's holdBook() can land between the find above and this
+          // write. Filtered on id alone, it erased `pipeline_auto.hold` from 5 of 17,907
+          // hidden Siku volumes imported under a hold on 2026-11-04, and one was routed to
+          // OCR (#8053). A book that gained pipeline_auto meanwhile is not ours to enrol.
+          const r = await db.collection('books').updateOne(
+            { id: book.id, pipeline_auto: { $exists: false } },
             { $set: updates }
           );
+          if (r.modifiedCount !== 1) continue;
           log.enrolled++;
           if (likelyFT) ftFlagged++;
         }
@@ -2828,8 +2860,8 @@ async function run() {
         const ENGLISH_VARIANTS_STRAY = ['english', 'eng', 'en'];
         for (const book of strays) {
           const lang = (book.language || '').toLowerCase();
-          await db.collection('books').updateOne(
-            { id: book.id },
+          const r = await db.collection('books').updateOne(
+            { id: book.id, pipeline_auto: { $exists: false } }, // same race as Phase 0 above (#8053)
             { $set: {
               pipeline_auto: {
                 status: 'queued', source: 'cron-convergence', queued_at: new Date(),
@@ -2839,7 +2871,7 @@ async function run() {
               updated_at: new Date(),
             } }
           );
-          log.enrolled++;
+          if (r.modifiedCount === 1) log.enrolled++;
         }
         if (strays.length) console.log(`  Convergence-enrolled (oldest-first, pre-window): ${strays.length}`);
       }
@@ -3522,7 +3554,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       const stillNeedPreview = [];
       for (const book of readyForPreview) {
         const firstPages = await db.collection('pages')
-          .find({ book_id: book.id, page_number: { $gt: 0 } })
+          .find({ book_id: book.id, ...VISIBLE_PAGE_MATCH })
           .sort({ page_number: 1 })
           .limit(PREVIEW_PAGE_COUNT)
           .project({ _id: 0, 'ocr.data': 1 })
@@ -4085,6 +4117,7 @@ Rules:
               'pipeline_auto.recitation_blocked': { $ne: true },
               'pipeline_auto.recitation_retry': { $ne: true }, // Recitation books go to Pass 2 w/ fallback model
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
+              ...NOT_UNSPLIT_SPREAD, // split before read (#7605): Phase 1.3 splits these first
               ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
               // FREE TEXT FIRST. Do not pay to OCR a book the IA lane is about to fill for
               // nothing. Phase 1.45 takes 20 books a run and this pass takes ~200, so without
@@ -4222,6 +4255,7 @@ Rules:
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
             'pipeline_auto.recitation_blocked': { $ne: true },
+            ...NOT_UNSPLIT_SPREAD, // split before read (#7605): no more spread-prompt reads of a whole spread
             ...dedupGate, // Phase 1.97 must run first (relaxed when 1.97 paused)
             $or: [
               { pages_ocr: { $gt: 0 } }, // Already has some OCR (preview pass done)
@@ -4902,9 +4936,23 @@ Rules:
         // either lane; the reapers above and jobs already dispatched carry on.
         const translateGate = await enrolBrake(db, 'translate');
         const effectiveLimit = translateGate.paused ? 0 : Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
+        // The brake stops the two API lanes, not the routing to a subscription CLI lane (#7263). The CLI lanes do not
+        // ask the brake (lanes-registry exemption, #7387: their own adoption sample and OCR-first gate), but their books
+        // reach them only through the hold below, so under a standing NO-GO (2026-10-10) they received none:
+        // `translate-cli-7075` held 0 books while 991 Latin books sat at ocr_complete. Under the brake Phase 4 selects
+        // only the books a cli row takes (CLI_TRANSLATE_BOOK_FILTER) and holds them; nothing is dispatched to an API lane.
+        // A book Phase 4 cannot act on stays where it is (refused by the OCR trust gate: 32 fresh and 63 gap-fill cli
+        // books on 2026-11-03), so a fixed slot count would fill with them and starve the rest. Under the brake the
+        // queries scan up to CLI_ONLY_SCAN books and the loop stops at TRANSLATE_SUBMIT_LIMIT holds instead.
+        const cliOnly = translateGate.paused && CLI_TRANSLATE_BOOK_FILTER != null;
+        const CLI_ONLY_SCAN = 1000;
+        const selectLimit = cliOnly ? CLI_ONLY_SCAN : effectiveLimit;
+        let cliHolds = 0;
+        const p4Guard = [...(cliOnly ? [CLI_TRANSLATE_BOOK_FILTER] : [])];
         console.log(`  In-flight translations: ${inFlight}/${MAX_INFLIGHT_TRANSLATIONS} — dispatching up to ${effectiveLimit}`);
+        if (cliOnly) console.log(`  Translate brake on: routing only books a CLI lane takes to their hold, up to ${TRANSLATE_SUBMIT_LIMIT} holds (#7263)`);
 
-        if (effectiveLimit === 0) {
+        if (selectLimit === 0) {
           console.log('  SKIP: at in-flight cap, waiting for existing translations to complete');
         }
 
@@ -4924,19 +4972,20 @@ Rules:
         const chainedGuard = chainedOn
           ? [{ $or: [{ processing_priority: { $gte: REALTIME_PRIORITY_FLOOR } }, { id: { $nin: chainedBusy } }] }]
           : [];
+        p4Guard.push(...chainedGuard);
         let chainedRoom = chainedOn
           ? Math.max(0, PHASE4_MAX_OPEN - await db.collection(TRANSLATE_RUNS_COLLECTION).countDocuments({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL } }))
           : 0;
         let chainedPrompts = null;
         if (chainedOn) console.log(`  Chained lane: ${chainedBusy.length} book(s) busy in a run, room for ${chainedRoom} new run(s) (max ${PHASE4_MAX_OPEN})`);
 
-        let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
+        let freshBooks = selectLimit > 0 ? await db.collection('books').aggregate([
           // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
           // translating them produces two-page texts the split then discards.
           { $match: {
             'pipeline_auto.status': { $in: ['ocr_complete'] },
             $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
-            ...(chainedGuard.length ? { $and: chainedGuard } : {}),
+            ...(p4Guard.length ? { $and: p4Guard } : {}),
           } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
@@ -4959,10 +5008,10 @@ Rules:
           // and a projected-away field reads as undefined — which would let every
           // English book back onto the translation lane.
           // processing_priority must survive too: it picks the lane below.
-          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
-          { $limit: effectiveLimit }
+          { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, publisher: 1 } },
+          { $limit: selectLimit }
         ]).toArray() : [];
-        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
+        if (SCOPE_ACTIVE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, publisher: 1, pages_count: 1, pages_ocr: 1, language: 1, processing_priority: 1, published: 1, year: 1, pipeline_auto: 1, image_source: 1 });
 
         // THE PIPELINE DOES NOT MODERNIZE ENGLISH (#4958).
         //
@@ -5021,14 +5070,18 @@ Rules:
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
         // Books at chapters_complete/complete often have untranslated pages from batch failures or splits.
         let partialBooks = [];
-        if (freshBooks.length === 0 && effectiveLimit > 0) {
+        // Under the brake the gap-fill is scanned after the fresh list every tick (#7263): a fresh cli book the OCR trust
+        // gate refuses stays at ocr_complete, so "no fresh books" would never come and the gap-fill pool (5,147 Latin
+        // books whose OCR passes the lane's gate) would never be held. The loop below stops at the hold cap.
+        const gapLimit = selectLimit;
+        if ((cliOnly || freshBooks.length === 0) && gapLimit > 0) {
           partialBooks = await db.collection('books').aggregate([
             { $match: {
               'pipeline_auto.status': { $in: ['translate_partial', 'translate_complete', 'chapters_complete', 'complete'] },
               pages_ocr: { $gt: 0 },
               // Spread guard (#2449)
               $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
-              ...(chainedGuard.length ? { $and: chainedGuard } : {}),
+              ...(p4Guard.length ? { $and: p4Guard } : {}),
             }},
             // English books are never gap-filled (#4958): an English book at `complete` has
             // 0 translated pages BY POLICY, so it always reads as "under-translated" here, and
@@ -5039,15 +5092,15 @@ Rules:
             { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
             // processing_priority + pages_translated + created_at must survive the
             // projection for the sort below to see them (#3756, #5082).
-            { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, created_at: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            { $project: { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, created_at: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, publisher: 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             // Reader requests first (#3750) — see the fresh-books sort above.
             { $sort: { processing_priority: -1, _isBph: 1, pages_translated: -1, ...NEWEST_FIRST } },
-            { $limit: effectiveLimit },
+            { $limit: gapLimit },
           ]).toArray();
-          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, image_source: 1, pipeline_auto: 1 });
+          if (SCOPE_ACTIVE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, publisher: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, language: 1, image_source: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
-            console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
+            console.log(`  ${freshBooks.length ? `After ${freshBooks.length} fresh book(s)` : "No fresh books"} — gap-filling ${partialBooks.length} under-translated books`);
           }
         }
 
@@ -5056,11 +5109,12 @@ Rules:
         console.log(`  Books ready for translation: ${readyForTranslate.length}`);
 
         for (const book of readyForTranslate) {
+          if (cliOnly && cliHolds >= TRANSLATE_SUBMIT_LIMIT) break;
           try {
             const pages = await db.collection('pages')
               .find({
                 book_id: book.id,
-                page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+                ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
                 'ocr.data': { $exists: true, $nin: [null, ''] },
                 page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
                 // translate-worker skips these, so a job for them does nothing (#5108).
@@ -5076,6 +5130,11 @@ Rules:
               .project({ id: 1 })
               .toArray();
 
+            if (pages.length === 0 && cliOnly && !freshBooks.includes(book)) {
+              // Under the brake a gap-fill book is only held or left alone (#7263): re-flowing a `complete` book to
+              // translate_complete or archive_complete is the unbraked loop's call, not this routing pass's.
+              continue;
+            }
             if (pages.length === 0) {
               // Name what is left instead of dispatching a job that cannot touch it (#5108). A block is
               // lifted by the lane that re-reads the page, or by hand — never by re-dispatching.
@@ -5113,11 +5172,17 @@ Rules:
             const translateLane = translateLaneForBook(book);
             if (translateLane.channel === 'cli') {
               const held = await routeBookToCliTranslateLane(db, book, translateLane);
+              if (held.outcome === 'held' || held.outcome === 'dry_run') cliHolds++;
               // A fresh book (ocr_complete) would otherwise be selected again every tick; a gap-fill book stays put.
               if (held.outcome === 'only_stale' && !DRY_RUN && freshBooks.includes(book)) {
                 await setPipelineStatus(db, book.id, 'translate_complete');
                 log.translate_advanced++;
               }
+              continue;
+            }
+            // Under the brake only the hold above runs (a book a scope override added is not dispatched).
+            if (cliOnly) {
+              console.log(`  Not dispatched (translate brake ${translateGate.gate_id}): ${label}`);
               continue;
             }
 
@@ -5471,7 +5536,7 @@ Rules:
               const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
-                  page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+                  ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
@@ -5587,7 +5652,7 @@ Rules:
               const rawPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
-                  page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
+                  ...VISIBLE_PAGE_MATCH, // Skip hidden pages (page_number ≤ 0) and repeat captures (#5056)
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
                     { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },

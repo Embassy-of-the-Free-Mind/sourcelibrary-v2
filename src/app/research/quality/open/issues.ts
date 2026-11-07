@@ -72,7 +72,7 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 5924,
         title: 'Which engine reads Latin print best, century by century',
-        detail: 'Latin is the largest share of the pages still to read, about 7.5 million. Random runs of three pages from random books in each century are read by every candidate engine, including Gemini Pro and two open models, and scored against published transcriptions of the same editions. The most accurate engine for each century wins. Costs are in',
+        detail: 'Latin is the largest share of the pages still to read, about 7.5 million. Random runs of three pages from random books in each century are read by every candidate engine, including the largest model and two open models, and scored against published transcriptions of the same editions. The most accurate engine for each century wins. Costs are in',
         status: 'running',
         example: { href: '/research/reading-plan', label: 'the reading plan' },
       },
@@ -85,7 +85,7 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 4686,
         title: 'Pages the transcription engine refuses to read',
-        detail: 'On famous English texts the engine returns nothing, so 715 pages of the Philosophical Transactions and Birch’s History of the Royal Society are blank. A free engine, Kraken, reads them at 0.9% character error, but it reads old-style figures as letters (“66” as “cé”). Taking only the numbers from a second engine, GLM-OCR, raised the printed numbers read right from 79% to 89%, and to 96% in the body text, with no loss in the letters. That is one number short of the 90% bar set before the test, so nothing has been written yet.',
+        detail: 'On famous English texts the engine returns nothing, so 715 pages of the Philosophical Transactions and Birch’s History of the Royal Society are blank. A free engine, Kraken, reads them at 0.9% character error, but it reads old-style figures as letters (“66” as “cé”). Taking only the numbers from a second engine raised the printed numbers read right from 79% to 89%, and to 96% in the body text, with no loss in the letters. That is one number short of the 90% bar set before the test, so nothing has been written yet.',
         status: 'defect',
         example: { href: '/book/6ac2798d02c7f994f8506911?page=287', label: 'Birch 1756, vol. II, page 287' },
       },
@@ -194,7 +194,7 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 6338,
         title: 'How much the AI reviewers miss, and whether a second one helps',
-        detail: 'Each page check is read by one AI reviewer, Claude Opus, whose miss rate has not been measured. A preregistered study plants known errors on some pages of three scripts and compares a second Opus read with a Gemini read, counting only errors confirmed against the page image. Every outcome will be published, with the data.',
+        detail: 'Each page check is read by one AI reviewer, whose miss rate has not been measured. A preregistered study plants known errors on some pages of three scripts and compares a second read by the same reviewer with a read by a reviewer from another model family, counting only errors confirmed against the page image. Every outcome will be published, with the data.',
         status: 'planned',
       },
       {
@@ -227,7 +227,7 @@ export const GROUPS: IssueGroup[] = [
 
 /** Changes already in production that came out of the October 2026 measurements. */
 export const SHIPPED: { pr: number; text: string }[] = [
-  { pr: 5740, text: 'Greek, Hebrew, Arabic, Persian, Sanskrit, Pali and Chinese are translated on the stronger engine (Flash) instead of Flash-Lite.' },
+  { pr: 5740, text: 'Greek, Hebrew, Arabic, Persian, Sanskrit, Pali and Chinese are translated on the stronger engine (the mid-tier model) instead of the lightest model.' },
   { pr: 5761, text: 'Greek manuscripts, Greek print before 1600 and Latin incunabula are not translated until their transcription is redone.' },
   { pr: 5767, text: '277,832 translated pages cleaned: decorative-initial notes moved to the page-information panel and broken markup repaired, with a revision kept for every page.' },
   { pr: 5877, text: 'A written rule for how much evidence is enough before changing an engine, spending on re-reading, changing a prompt or adding a gate.' },

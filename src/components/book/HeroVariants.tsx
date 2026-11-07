@@ -101,7 +101,7 @@ export default function HeroVariants({
         </div>
         {/* Mobile: a clean band of the bg up top (drifting), then a fixed strong
             gradient into the dark so the author eyebrow sits on the dark. */}
-        <div className="md:hidden absolute inset-x-0 top-0 h-[42vh] overflow-hidden">
+        <div className="md:hidden absolute inset-x-0 top-0 h-[calc(42*var(--hero-vh))] overflow-hidden">
           <div className="absolute inset-x-0 -top-[14%] h-[128%] will-change-transform" style={drift}>
             <Bg />
             <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 70% at 74% 18%, rgba(165,80,61,0.2) 0%, transparent 55%)' }} />
@@ -118,7 +118,7 @@ export default function HeroVariants({
           become grid items), and the actions live inline in `meta` instead. */}
       <div
         className="relative max-w-[var(--container-wide)] mx-auto px-5 md:px-12
-          pt-[29vh] md:pt-16 pb-9 md:pb-16 min-h-[60vh] md:min-h-[75vh]
+          pt-[calc(29*var(--hero-vh))] md:pt-16 pb-9 md:pb-16 min-h-[calc(60*var(--hero-vh))] md:min-h-[calc(75*var(--hero-vh))]
           flex flex-col gap-6
           md:grid md:gap-14 md:items-center md:grid-cols-[auto_minmax(0,1fr)]"
       >

@@ -203,7 +203,17 @@ describe('every unattended enroler of a paid step asks the brake', () => {
   });
   it('every scheduled, metered ocr/translate lane in the registry has a file that asks', () => {
     const exempt: Record<string, string> = {
-      'specialist-ocr': 'free CPU / leased GPU, one approved script each; its lease or relaunch line is its switch',
+      'kraken-syriac': 'free CPU, one approved script; its relaunch line is its switch',
+      'paddle-zh': 'leased GPU fleet over books held for it; its STOP file and lease are its switch',
+      'paddle-zh-guarded': 'GEX45 reads (rented by the month), applied by hand over a finished task',
+      'paddle-print': 'GEX45 reads (rented by the month), applied by hand over a finished task',
+      // The subscription lanes (#7301) spend quota, not metered money. The translate brake has stood NO-GO since
+      // 2026-10-10 while these lanes wrote most of the week's English, so asking it would stop them on merge.
+      // Whether a quality NO-GO also stops subscription enrolment is Derek's call (DECISION on #7301), not a test's.
+      'agy-flash-ocr': 'subscription quota (#7301); R7 brake for subscription lanes undecided',
+      'agy-flash-translate': 'subscription quota (#7301); R7 brake for subscription lanes undecided',
+      'claude-opus-ocr': 'subscription quota (#7301); R7 brake for subscription lanes undecided',
+      'claude-opus-translate': 'subscription quota (#7301); R7 brake for subscription lanes undecided',
     };
     const lanes = (LANES as Doc[]).filter((l) => ['ocr', 'translate'].includes(l.serves) && !/^manual/.test(l.trigger) && !exempt[l.name]);
     expect(lanes.length).toBeGreaterThanOrEqual(5);

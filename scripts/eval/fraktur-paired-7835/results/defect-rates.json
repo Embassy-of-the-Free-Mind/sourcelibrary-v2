@@ -1,0 +1,124 @@
+{
+ "unit": "defects per 1,000 words (#7824 words())",
+ "study_cells": {
+  "t1-fraktur/a": {
+   "n": 37,
+   "misleads_per_1k": 1.538,
+   "wrong_text_per_1k": 0.439,
+   "fidelity_mean": 4.108,
+   "accept": "29/37"
+  },
+  "t1-fraktur/b": {
+   "n": 37,
+   "misleads_per_1k": 1.53,
+   "wrong_text_per_1k": 0.546,
+   "fidelity_mean": 4.216,
+   "accept": "31/37"
+  },
+  "t1-fraktur/c": {
+   "n": 37,
+   "misleads_per_1k": 1.096,
+   "wrong_text_per_1k": 0.548,
+   "fidelity_mean": 4.135,
+   "accept": "31/37"
+  },
+  "t1-antiqua/a": {
+   "n": 11,
+   "misleads_per_1k": 0.533,
+   "wrong_text_per_1k": 0.266,
+   "fidelity_mean": 4.545,
+   "accept": "10/11"
+  },
+  "t1-antiqua/b": {
+   "n": 11,
+   "misleads_per_1k": 0.532,
+   "wrong_text_per_1k": 0.266,
+   "fidelity_mean": 4.636,
+   "accept": "10/11"
+  },
+  "t1-antiqua/c": {
+   "n": 11,
+   "misleads_per_1k": 0.533,
+   "wrong_text_per_1k": 0.266,
+   "fidelity_mean": 4.455,
+   "accept": "10/11"
+  },
+  "t2-fraktur/a": {
+   "n": 40,
+   "misleads_per_1k": 4.592,
+   "wrong_text_per_1k": 2.638,
+   "fidelity_mean": 3.8,
+   "accept": "25/40"
+  },
+  "t2-fraktur/b": {
+   "n": 40,
+   "misleads_per_1k": 3.113,
+   "wrong_text_per_1k": 0.875,
+   "fidelity_mean": 4.075,
+   "accept": "27/40"
+  },
+  "t2-fraktur/c": {
+   "n": 40,
+   "misleads_per_1k": 1.814,
+   "wrong_text_per_1k": 0.382,
+   "fidelity_mean": 4.3,
+   "accept": "33/40"
+  },
+  "t3-fraktur/lite": {
+   "n": 35,
+   "misleads_per_1k": 3.64,
+   "wrong_text_per_1k": 1.348,
+   "fidelity_mean": 4.114,
+   "accept": "24/35"
+  },
+  "t3-fraktur/a": {
+   "n": 31,
+   "misleads_per_1k": 0.74,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.581,
+   "accept": "30/31"
+  },
+  "t3-fraktur/b": {
+   "n": 31,
+   "misleads_per_1k": 0.592,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.613,
+   "accept": "31/31"
+  },
+  "t3-fraktur/c": {
+   "n": 35,
+   "misleads_per_1k": 1.897,
+   "wrong_text_per_1k": 0.949,
+   "fidelity_mean": 4.314,
+   "accept": "29/35"
+  },
+  "t3-antiqua/lite": {
+   "n": 5,
+   "misleads_per_1k": 2.165,
+   "wrong_text_per_1k": 1.443,
+   "fidelity_mean": 4.2,
+   "accept": "3/5"
+  },
+  "t3-antiqua/a": {
+   "n": 4,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.75,
+   "accept": "4/4"
+  },
+  "t3-antiqua/b": {
+   "n": 4,
+   "misleads_per_1k": 0,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.75,
+   "accept": "4/4"
+  },
+  "t3-antiqua/c": {
+   "n": 5,
+   "misleads_per_1k": 2.143,
+   "wrong_text_per_1k": 1.429,
+   "fidelity_mean": 4.4,
+   "accept": "3/5"
+  }
+ }
+}

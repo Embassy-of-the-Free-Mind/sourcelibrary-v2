@@ -1,0 +1,520 @@
+{
+ "scored_at": "2026-10-29T21:07:16.861Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled",
+ "cells": {
+  "de-blank-r2": {
+   "lang": "German",
+   "live": "agy-flash-low@4>agy-flash-low",
+   "frame": {
+    "books_in_frame": 3100,
+    "books_left_out": 90,
+    "books_walked": 78,
+    "spread_wait": 47,
+    "no_interior_unread": 1,
+    "no_ocr_books": 1546,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=deu, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   },
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "19/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "19/20",
+      "wrong_text": "0/20",
+      "p_acc_ge_080": 0.942,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "reply wrapper": 8,
+      "reader tags the page <script>mixed</script>": 1,
+      "letters outside the book's scripts": 1
+     },
+     "served_base_read": 0,
+     "agy_calls_per_page": 1.026,
+     "calls": {
+      "route": {
+       "calls": 120,
+       "pages": 117,
+       "per_page": 1.026
+      },
+      "base": null
+     },
+     "usd_per_accepted_page": 0.00141,
+     "wrong_text_pages": [],
+     "eligible": true,
+     "written_n60": {
+      "accept": "42/44",
+      "wrong_text": "0/44",
+      "p_acc_ge_080": 0.997,
+      "wrong_text_ok": true
+     }
+    },
+    "agy-flash-low@4>agy-flash-low": {
+     "all_drawn": {
+      "accept": "20/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "20/20",
+      "wrong_text": "0/20",
+      "p_acc_ge_080": 0.991,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "agy-flash-low@4": 10
+     },
+     "served_base_read": 6,
+     "agy_calls_per_page": 2.026,
+     "calls": {
+      "route": {
+       "calls": 22,
+       "pages": 22,
+       "per_page": 1
+      },
+      "base": {
+       "calls": 120,
+       "pages": 117,
+       "per_page": 1.026
+      }
+     },
+     "usd_per_accepted_page": 0.00264,
+     "wrong_text_pages": [],
+     "eligible": true,
+     "written_n60": {
+      "accept": "43/44",
+      "wrong_text": "0/44",
+      "p_acc_ge_080": 0.999,
+      "wrong_text_ok": true
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "20/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "20/20",
+      "wrong_text": "0/20",
+      "p_acc_ge_080": 0.991,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "agy-flash-low@4": 10
+     },
+     "served_base_read": 8,
+     "agy_calls_per_page": 1.392,
+     "calls": {
+      "route": {
+       "calls": 34,
+       "pages": 93,
+       "per_page": 0.366
+      },
+      "base": {
+       "calls": 120,
+       "pages": 117,
+       "per_page": 1.026
+      }
+     },
+     "usd_per_accepted_page": 0.00182,
+     "wrong_text_pages": [],
+     "eligible": true
+    }
+   },
+   "paired": {
+    "agy-flash-low@4|agy-flash-low@4>agy-flash-low": {
+     "n": 44,
+     "both": 41,
+     "a_only": 1,
+     "b_only": 2,
+     "neither": 0,
+     "books": 44,
+     "p_a_within_008": 0.907,
+     "rule": "P(acc_agy-flash-low@4 >= acc_agy-flash-low@4>agy-flash-low - 0.08) >= 0.9, Dirichlet(1 + counts)",
+     "with_7701_pages": 24
+    },
+    "agy-flash-low@4>agy-flash-low@4|agy-flash-low@4>agy-flash-low": {
+     "n": 20,
+     "both": 20,
+     "a_only": 0,
+     "b_only": 0,
+     "neither": 0,
+     "books": 20,
+     "p_a_within_008": 0.926,
+     "rule": "P(acc_agy-flash-low@4>agy-flash-low@4 >= acc_agy-flash-low@4>agy-flash-low - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    },
+    "agy-flash-low@4>agy-flash-low@4|agy-flash-low@4": {
+     "n": 20,
+     "both": 19,
+     "a_only": 1,
+     "b_only": 0,
+     "neither": 0,
+     "books": 20,
+     "p_a_within_008": 0.963,
+     "rule": "P(acc_agy-flash-low@4>agy-flash-low@4 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "kind": "C",
+      "route": "agy-flash-low@4>agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "kind": "D",
+      "route": "agy-flash-low@4>agy-flash-low",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "candidates": [
+     "agy-flash-low@4>agy-flash-low",
+     "agy-flash-low@4",
+     "agy-flash-low@4>agy-flash-low@4"
+    ],
+    "why": "routes that replace agy-flash-low@4>agy-flash-low by RULE.md 2, cheapest per accepted page"
+   }
+  },
+  "fr-blank-r2": {
+   "lang": "French",
+   "live": "agy-flash-low",
+   "frame": {
+    "books_in_frame": 882,
+    "books_left_out": 90,
+    "books_walked": 327,
+    "spread_wait": 295,
+    "no_interior_unread": 2,
+    "no_ocr_books": 736,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=fra, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   },
+   "routes": {
+    "agy-flash-low": {
+     "all_drawn": {
+      "accept": "20/30",
+      "wrong_text": "1/30"
+     },
+     "written": {
+      "accept": "20/21",
+      "wrong_text": "1/21",
+      "p_acc_ge_080": 0.95,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "letters outside the book's scripts": 3,
+      "more than one transcription header": 2,
+      "reply wrapper": 4
+     },
+     "served_base_read": 0,
+     "agy_calls_per_page": 1.267,
+     "calls": {
+      "route": {
+       "calls": 38,
+       "pages": 30,
+       "per_page": 1.267
+      },
+      "base": null
+     },
+     "usd_per_accepted_page": 0.00165,
+     "wrong_text_pages": [
+      {
+       "page_id": "69bd9e016120d54bd037a879",
+       "written": true,
+       "defects": [
+        "O1: vn — Invented catchword. The page ends at 'signifier à ceux' and has no 'vn' catchword, but the candidate adds it as a final text line and in the meta tag."
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "24/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "24/24",
+      "wrong_text": "0/24",
+      "p_acc_ge_080": 0.996,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "letters outside the book's scripts": 3,
+      "reply wrapper": 2,
+      "more than one transcription header": 1
+     },
+     "served_base_read": 0,
+     "agy_calls_per_page": 0.708,
+     "calls": {
+      "route": {
+       "calls": 80,
+       "pages": 113,
+       "per_page": 0.708
+      },
+      "base": null
+     },
+     "usd_per_accepted_page": 0.00077,
+     "wrong_text_pages": [],
+     "eligible": true
+    }
+   },
+   "paired": {
+    "agy-flash-low@4|agy-flash-low": {
+     "n": 21,
+     "both": 20,
+     "a_only": 1,
+     "b_only": 0,
+     "neither": 0,
+     "books": 21,
+     "p_a_within_008": 0.965,
+     "rule": "P(acc_agy-flash-low@4 >= acc_agy-flash-low - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "kind": "E",
+      "route": "agy-flash-low",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "kind": "E",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "why": "agy-flash-low@4 is eligible and paired within 0.08 of agy-flash-low"
+   }
+  },
+  "la-armc": {
+   "lang": "Latin",
+   "live": null,
+   "frame": {
+    "books_in_frame": 15326,
+    "books_left_out": 90,
+    "books_walked": 37,
+    "spread_wait": 7,
+    "no_interior_unread": 0,
+    "no_ocr_books": 15304,
+    "rule": "the first-read lane's frame (cli-ocr-lane.mjs FIRST_READ_BOOKS, firstReadSkip languages=lat, spreadReason): visible books held as scans only, print route, not a manuscript by library/title/date; one interior page with no OCR per book; read in blocks of 4"
+   },
+   "routes": {
+    "pero>agy-flash-low": {
+     "all_drawn": {
+      "accept": "18/30",
+      "wrong_text": "0/30"
+     },
+     "written": {
+      "accept": "18/18",
+      "wrong_text": "0/18",
+      "p_acc_ge_080": 0.985,
+      "wrong_text_ok": true
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "a diff-guard flag is not a like-for-like substitution": 4,
+      "not read": 1,
+      "letters outside the book's scripts": 7
+     },
+     "served_base_read": 0,
+     "agy_calls_per_page": 1.034,
+     "calls": {
+      "route": {
+       "calls": 30,
+       "pages": 29,
+       "per_page": 1.034
+      },
+      "base": null
+     },
+     "usd_per_accepted_page": 0.00198,
+     "wrong_text_pages": [],
+     "eligible": true
+    },
+    "pero>agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "14/30",
+      "wrong_text": "1/30"
+     },
+     "written": {
+      "accept": "14/16",
+      "wrong_text": "1/16",
+      "p_acc_ge_080": 0.694,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "not read": 1,
+      "a diff-guard flag is not a like-for-like substitution": 4,
+      "corrector tags the page <script>handwritten</script>": 1,
+      "letters outside the book's scripts": 8
+     },
+     "served_base_read": 0,
+     "agy_calls_per_page": 0.271,
+     "calls": {
+      "route": {
+       "calls": 32,
+       "pages": 118,
+       "per_page": 0.271
+      },
+      "base": null
+     },
+     "usd_per_accepted_page": 0.00112,
+     "wrong_text_pages": [
+      {
+       "page_id": "69b6f7463c7947b468d60844",
+       "written": true,
+       "defects": [
+        "O7: ut *EC* ad $\\frac{1}{A E$ — The page reads 'ut EC ad ½ AE' (half of AE). The candidate turns this into 1/AE, which changes the ratio in the theorem."
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "pero>agy-flash-low@4|pero>agy-flash-low": {
+     "n": 15,
+     "both": 14,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0,
+     "books": 15,
+     "p_a_within_008": 0.657,
+     "rule": "P(acc_pero>agy-flash-low@4 >= acc_pero>agy-flash-low - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "kind": "B",
+      "route": "pero>agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "kind": "C",
+      "route": "pero>agy-flash-low",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "pero>agy-flash-low",
+    "why": "the eligible arm"
+   }
+  }
+ }
+}

@@ -55,6 +55,8 @@ export interface PublicationOpts {
   override?: typeof RIGHTS_CLEARED;
   /** Keeper id, recorded when reason = duplicate. */
   duplicateOf?: string;
+  /** Hide a partner's own scan as a duplicate of a non-partner keeper anyway (see partnerCopyRefusal). */
+  allowPartnerCopyHide?: boolean;
   /** Only write when the current state is one of these; otherwise `skipped`. */
   from?: PublicationState[];
   now?: Date;
@@ -258,7 +260,30 @@ function bookRefsFilter(refs: string[]): Filter<Document> {
   return { $or: [{ id: { $in: refs } }, { _id: { $in: [...refs, ...oids] as never[] } }] };
 }
 
-const PROJECTION = { _id: 1, id: 1, slug: 1, pages_count: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1, pages_state: 1 };
+const PROJECTION = { _id: 1, id: 1, slug: 1, pages_count: 1, visible: 1, hidden: 1, hidden_reason: 1, publication: 1, pages_state: 1, tenantId: 1 };
+
+/**
+ * A partner's own scan is never hidden as a duplicate of a copy outside that
+ * partner (#7702). The partner's site shows only its own books, so the hide
+ * leaves the partner nothing: on 2026-10-03 a duplicate sweep hid the
+ * Embassy's own Atalanta Fugiens in favour of a Gallica copy, and both 404'd
+ * on the Embassy site. `allowPartnerCopyHide: true` is the explicit override,
+ * for a keeper the partner's catalogue admits.
+ * Returns the copy's tenant when the hide must be refused, else null.
+ */
+export function partnerCopyRefusal(
+  book: Document | null | undefined, keeperTenantId: string | null, opts: PublicationOpts,
+): string | null {
+  if (opts?.state !== 'hidden' || opts?.reason !== 'duplicate' || !opts?.duplicateOf || opts?.allowPartnerCopyHide) return null;
+  const tenant = (book?.tenantId as string | undefined) ?? null;
+  return tenant && tenant !== (keeperTenantId ?? null) ? tenant : null;
+}
+
+async function keeperTenantId(books: ReturnType<Db['collection']>, opts: PublicationOpts): Promise<string | null> {
+  if (opts?.state !== 'hidden' || opts?.reason !== 'duplicate' || !opts?.duplicateOf) return null;
+  const keeper = await books.findOne(bookRefFilter(opts.duplicateOf), { projection: { _id: 0, tenantId: 1 } });
+  return (keeper?.tenantId as string | undefined) ?? null;
+}
 
 function eventFor(
   book: Document, from: CurrentPublication, state: PublicationState,
@@ -309,6 +334,10 @@ export async function setPublication(db: Db, bookRef: string, opts: PublicationO
 
   if (opts.from && !opts.from.includes(from.state)) return { status: 'skipped', ...base };
   checkTransition(from.state, opts);
+  const partner = partnerCopyRefusal(book, await keeperTenantId(books, opts), opts);
+  if (partner) {
+    throw new Error(`publication: ${base.book_id} is partner ${partner}'s own scan and its keeper is not; pass allowPartnerCopyHide only if the partner's catalogue admits the keeper`);
+  }
   if (isUnchanged(book, state, reason, opts.note ?? null)) return { status: 'unchanged', ...base };
   // Publishing a manifest-only book (#7343) creates its pages first; if they
   // cannot be created, ensurePages throws and the book is not published.
@@ -340,6 +369,7 @@ export async function setPublicationMany(
   const reason = effectiveReason(state, opts.reason);
 
   const out: SetPublicationManyResult = { written: [], unchanged: [], skipped: [], refused: [], not_found: [] };
+  const keeperTenant = await keeperTenantId(books, opts);
   const nowPublic: Document[] = [];
   const refs = [...new Set((bookRefs || []).map(String))];
   for (let i = 0; i < refs.length; i += batchSize) {
@@ -362,6 +392,7 @@ export async function setPublicationMany(
         out.refused.push(id);
         continue;
       }
+      if (partnerCopyRefusal(book, keeperTenant, opts)) { out.refused.push(id); continue; }
       if (isUnchanged(book, state, reason, opts.note ?? null)) { out.unchanged.push(id); continue; }
       // A manifest-only book (#7343) is published only once its pages exist.
       if (state === 'public' && isLazyPagesBook(book)) {

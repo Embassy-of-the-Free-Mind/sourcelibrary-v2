@@ -253,10 +253,12 @@ describe('getBookThumbnailUrl — browser-renderability screen', () => {
   // A stored cover the browser cannot load must read as "no cover" (null), so
   // cards render the typographic placeholder instead of an <Image> stuck in
   // its shimmer state (the pre-hydration CSP block means onError never runs).
-  it('returns null for archive.org/download covers (302s off the CSP allowlist)', () => {
+  // Never the BookReader URL itself (it serves IA's master at any size); IA's
+  // small item thumbnail stands in until the cover is rehosted (#7743).
+  it('maps archive.org/download covers to the IA item thumbnail, never the master URL', () => {
     const book = { thumbnail: 'https://archive.org/download/some_item/page/n0/full/pct:15/0/default.jpg' };
-    expect(getBookThumbnailUrl(book, 'display')).toBeNull();
-    expect(getBookThumbnailUrl(book, 'thumb')).toBeNull();
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://archive.org/services/img/some_item');
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://archive.org/services/img/some_item');
   });
 
   it('returns null for hosts absent from the CSP img-src allowlist', () => {

@@ -4,7 +4,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
-import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
+import { isHiddenBook, findVisibleDuplicateKeeper, findDeletedDuplicateKeeper } from '@/lib/book-access';
 import { pickArtworkRecord } from '@/lib/artwork-slug';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { jsonLdHtml } from '@/lib/json-ld';
@@ -137,9 +137,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const artworkTitle = resolveTitle(artwork);
   const provenanceNote = titleProvenanceNote(artwork);
   const baseDescription =
-    (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`;
+    (artwork as any).commons_description?.slice(0, 200) || (artwork.author ? `${artwork.title} by ${artwork.author}` : artwork.title);
   return {
-    title: `${artworkTitle.display}, ${artwork.author} | Source Library`,
+    title: `${artworkTitle.display}${artwork.author ? `, ${artwork.author}` : ''} | Source Library`,
     description: artworkTitle.isDescriptive && provenanceNote
       ? `${provenanceNote} ${baseDescription}`
       : baseDescription,
@@ -150,12 +150,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       // "<label> by <author>" is a bibliographic claim. When the label is an AI
       // description of the picture, the card names the source record's title
       // instead — the author attribution is true, the title must be too.
-      title: artworkTitle.isDescriptive
+      title: !artwork.author
+        ? (artworkTitle.isDescriptive ? artworkTitle.citation : artworkTitle.display)
+        : artworkTitle.isDescriptive
         ? `${artworkTitle.citation} by ${artwork.author}`
         : `${artworkTitle.display} by ${artwork.author}`,
       // Omit rather than emit an empty url when the record has no image.
       ...((artwork.thumbnail_blob || artwork.thumbnail)
-        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: `${artworkTitle.display}, ${artwork.author}` }] }
+        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: artwork.author ? `${artworkTitle.display}, ${artwork.author}` : artworkTitle.display }] }
         : {}),
     },
   };
@@ -164,7 +166,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ArtworkPage({ params }: PageProps) {
   const { slug } = await params;
   const data = await getArtwork(slug);
-  if (!data) notFound();
+  if (!data) {
+    // A deleted dedup twin (#2209): send the old URL to the copy the dedup kept.
+    const keeper = await findDeletedDuplicateKeeper(await getReadDb(), [slug, `art-${slug}`]);
+    if (keeper) permanentRedirect(keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}` : `/book/${keeper.slug}`);
+    notFound();
+  }
   if ('hiddenId' in data) {
     const keeper = data.hiddenId ? await findVisibleDuplicateKeeper(await getReadDb(), data.hiddenId) : null;
     if (keeper) permanentRedirect(keeper.artworkSlug ? `/artwork/${keeper.artworkSlug}` : `/book/${keeper.slug}`);
@@ -176,6 +183,8 @@ export default async function ArtworkPage({ params }: PageProps) {
   const artImage = (art as any).archived_full_url || (art as any).commons_full_url || art.thumbnail_blob || art.thumbnail;
   const artUrl = `${BASE_URL}/artwork/${art.slug || slug}`;
   const artLicense = (art as any).commons_license as string | undefined;
+  const artLicenseMapped = artLicense && (/public domain/i.test(artLicense) ? PUBLIC_DOMAIN_MARK_URL : getLicenseUrl(artLicense));
+  const artLicenseUrl = artLicenseMapped && /^https?:/.test(artLicenseMapped) ? artLicenseMapped : undefined;
   const hasAuthor = art.author && !/^\s*(various|unknown|anonymous)\s*$/i.test(art.author);
   const imageObject = {
     '@context': 'https://schema.org',
@@ -186,11 +195,9 @@ export default async function ArtworkPage({ params }: PageProps) {
     caption: `${artTitle.display}${hasAuthor ? `, by ${art.author}` : ''}${art.published && !/^\d{4}-\d{2}-\d{2}/.test(art.published) ? ` (${art.published})` : ''}`,
     ...(artImage ? { contentUrl: artImage, thumbnailUrl: art.thumbnail_blob || art.thumbnail } : {}),
     ...(hasAuthor ? { creator: { '@type': 'Person', name: art.author } } : {}),
-    // Only a real license URL is valid here; free-text values ("CC BY-SA 4.0") are omitted.
-    ...(!artLicense || /public domain/i.test(artLicense)
-      ? { license: PUBLIC_DOMAIN_MARK_URL }
-      : /^https?:/.test(getLicenseUrl(artLicense)) ? { license: getLicenseUrl(artLicense) } : {}),
-    acquireLicensePage: artUrl,
+    // Only a real license URL is valid here; free-text values ("CC BY-SA 4.0") are omitted,
+    // and a record with no stated licence claims none.
+    ...(artLicenseUrl ? { license: artLicenseUrl, acquireLicensePage: artUrl } : {}),
   };
 
   return (
