@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { buildFlowEpub, footnotesFor, rankHeadings, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
+import JSZip from 'jszip';
+import { buildFlowEpub, dropCarriedRunningHead, footnotesFor, rankHeadings, renderFlowEpub, PAGES_PER_SECTION } from '@/lib/export-flow-epub';
 
 /**
  * The continuous EPUB (#7118): one reading text in sections, not one chapter per page — on a Kindle every chapter
@@ -44,6 +45,54 @@ describe('footnotesFor', () => {
   });
 });
 
+/** Captured from production 2026-11-07 (#8333), cut after the first sentence or two; not written to fit. */
+const OLAUS_420 = {
+  ocr: "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>231</page-num>\n<header>LIBER DECIMVS</header>\n<meta>Image quality: Good, some bleed-through from reverse page.</meta>\n\nperforata, ad sagittas, ac cætera tela in hostes emittenda.",
+  translation: "# BOOK TEN\n\nperforated for the purpose of firing arrows and other projectiles at the enemy, or, as it is asserted elsewhere, so that they might wound the enemy from the holes themselves while remaining safe.",
+};
+const OLAUS_213 = {
+  ocr: "<language>Latin</language>\n<page-type>text</page-type>\n<page-num>123</page-num>\n<header>LIBER TERTIUS</header>\n\n### De eisdem Magis, & similibus.\n\n### CAP. XIX.\n\n<margin>Hadingus rex illusus.</margin>\nDEINDE Othinus maior, atq; senior inter magos,",
+  translation: "<header>THIRD BOOK</header>\n\n### Concerning the same Magicians, and similar ones.\n\n### CHAP. XIX.\n\n<margin>King Hadingus deluded.</margin>\nAFTERWARDS, Othinus <note>Odin</note>, the greatest and most senior among the magicians,",
+};
+const HERODOTUS_321 = {
+  ocr: "<language>Ancient Greek</language>\n<page-type>text</page-type>\n<page-num>296</page-num>\n<header>HERODOTUS</header>\n<meta>Digitized by Google watermark at bottom right</meta>\n\nἄνω πρὸς τὸν οὐρανὸν ἀπειλέουσι τῷ θεῷ, οὐδένα ἄλλον θεὸν νομίζοντες εἶναι εἰ μὴ τὸν σφέτερον.",
+  translation: "<meta>This page continues the account of the Getae, a Thracian people who believe in immortality.</meta>\n\n<page-num>296</page-num>\n\n->**HERODOTUS**<-\n\n...upward toward the sky they shoot arrows and threaten the god, believing that there is no other god but their own.",
+};
+
+describe('dropCarriedRunningHead (#8333)', () => {
+  it('drops the running head a translation set as its first heading when the transcription tags it as furniture', () => {
+    const out = dropCarriedRunningHead(OLAUS_420.translation, OLAUS_420.ocr);
+    expect(out).not.toContain('BOOK TEN');
+    expect(out).toContain('perforated for the purpose of firing arrows');
+  });
+  it('drops a running head set as a centred bold line, past the page\'s editorial tags', () => {
+    const out = dropCarriedRunningHead(HERODOTUS_321.translation, HERODOTUS_321.ocr);
+    expect(out).not.toContain('HERODOTUS');
+    expect(out).toContain('<meta>This page continues');
+    expect(out).toContain('...upward toward the sky');
+  });
+  it('keeps a chapter title at the top of a page: the transcription has it as a heading too', () => {
+    expect(dropCarriedRunningHead(OLAUS_213.translation, OLAUS_213.ocr)).toBe(OLAUS_213.translation);
+  });
+  it('changes nothing when the transcription tags no running head', () => {
+    const ocr = OLAUS_420.ocr.replace('<header>LIBER DECIMVS</header>\n', '');
+    expect(dropCarriedRunningHead(OLAUS_420.translation, ocr)).toBe(OLAUS_420.translation);
+    expect(dropCarriedRunningHead(OLAUS_420.translation, undefined)).toBe(OLAUS_420.translation);
+  });
+  it('keeps the running head out of the exported flow text, not only out of the helper', async () => {
+    const book = { id: 'b', chapters: [] };
+    const flow = await buildFlowEpub(db() as never, book, [{ id: 'p1', page_number: 1, ...{ ocr: { data: OLAUS_420.ocr }, translation: { data: OLAUS_420.translation } } }], { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    const text = flow.chapters.map(c => c.content).join('').replace(/[\u200b-\u200f\u2060-\u2064\ufeff]/g, '');
+    expect(text).not.toContain('BOOK TEN');
+    expect(text).toContain('perforated for the purpose');
+  });
+  it('shows the printed page number on the marker where the book vouches for one', async () => {
+    const book = { id: 'b', chapters: [] };
+    const flow = await buildFlowEpub(db() as never, book, [{ id: 'p1', page_number: 420, printed_page: { label: '231' }, ocr: { data: OLAUS_420.ocr }, translation: { data: OLAUS_420.translation } }], { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    expect(flow.chapters[0].content).toMatch(/<a class="page-marker" id="p420"[^>]*>\|231<\/a>/);
+  });
+});
+
 describe('buildFlowEpub', () => {
   it('cuts a book with no chapters into even sections, joining pages inside each', async () => {
     const flow = await buildFlowEpub(db() as never, { id: 'b' }, pages(PAGES_PER_SECTION * 2 + 3), { text: 'translation', baseUrl: 'https://x', includeImages: false });
@@ -56,6 +105,29 @@ describe('buildFlowEpub', () => {
     const flow = await buildFlowEpub(db() as never, book, pages(4), { text: 'translation', baseUrl: 'https://x', includeImages: false });
     expect(flow.chapters.map(c => c.title)).toEqual(['Liber I', 'Book II']);
     expect(flow.chapters[1].content.startsWith('<h2>Book II</h2>')).toBe(true);
+  });
+
+  it('cuts a book with parts and chapters at its parts, its chapters nested under each in both contents (#8333)', async () => {
+    // Olaus Magnus's shape: a book (level 1) whose first chapter (level 2) begins on the same page.
+    const book = { id: 'b', chapters: [
+      { title: 'Liber Primus', titleEn: 'Book One', pageNumber: 1, level: 1 }, { title: 'Cap. I', titleEn: 'Chap. I: On Biarmia', pageNumber: 1, level: 2 },
+      { title: 'Cap. II', titleEn: 'Chap. II: On Finmarchia', pageNumber: 2, level: 2 },
+      { title: 'Liber Secundus', titleEn: 'Book Two', pageNumber: 3, level: 1 }, { title: 'Cap. I', titleEn: 'Chap. I: On the combustion of waters', pageNumber: 4, level: 2 },
+    ] };
+    const flow = await buildFlowEpub(db() as never, book, pages(4), { text: 'translation', baseUrl: 'https://x', includeImages: false });
+    expect(flow.chapters.map(c => c.title)).toEqual(['Book One', 'Book Two']);
+    expect(flow.chapters[0].children).toEqual([{ title: 'Chap. I: On Biarmia', anchor: 'p1' }, { title: 'Chap. II: On Finmarchia', anchor: 'p2' }]);
+    expect(flow.chapters[1].children).toEqual([{ title: 'Chap. I: On the combustion of waters', anchor: 'p4' }]);
+
+    const zip = await JSZip.loadAsync(await renderFlowEpub({ title: 't', author: 'a', lang: 'en' } as never, flow.chapters, { hasImages: false, sourceUrl: 'https://x/book/b' }));
+    const nav = await zip.file('OEBPS/toc.xhtml')!.async('string');
+    expect(nav).toMatch(/Book One\s*<\/a><ol><li><a href="[^"]+#p1">Chap\. I: On Biarmia<\/a><\/li><li><a href="[^"]+#p2">Chap\. II: On Finmarchia<\/a><\/li><\/ol>/);
+    const ncx = await zip.file('OEBPS/toc.ncx')!.async('string');
+    const orders = [...ncx.matchAll(/playOrder="(\d+)"[\s\S]*?<content src="([^"]+)"/g)].map(m => [m[2], Number(m[1])] as const);
+    expect(orders.length).toBe(1 + 2 + 3); // contents, two parts, three chapters
+    for (const [src, n] of orders) expect(orders.filter(o => o[0] === src).every(o => o[1] === n)).toBe(true);
+    expect(new Set(orders.map(o => o[1])).size).toBe(new Set(orders.map(o => o[0])).size);
+    expect(ncx).toContain('<meta name="dtb:depth" content="2"/>');
   });
 
   it('marks each illustration where it stands, with a link, when the scans may not be redistributed', async () => {
