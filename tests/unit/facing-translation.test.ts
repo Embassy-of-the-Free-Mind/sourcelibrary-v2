@@ -254,3 +254,47 @@ describe('/api/books/[id]/text — get_book_text', () => {
     expect(JSON.stringify(body)).not.toContain(REWORDING);
   });
 });
+
+// ── Page turning by opening (#8321 inbox 2026-11-07 10:59Z) ──────────────────
+// L118 scans 22–30 and 36–40 as stored: two preface leaves (unpaired English),
+// a leaf too short to classify, then openings 25|26, 27|28, 29|30. Scan 37's
+// printed number was fitted as non-arabic, so 37 and 38 turn one at a time.
+describe('facingStepIndex: the reader turns by opening', () => {
+  type Run = Array<{ page_number: number }>;
+  const run = fixtures.l118_run.pages as unknown as Run;
+  const runA = run.filter((p) => p.page_number <= 30);
+  const runB = run.filter((p) => p.page_number >= 36);
+  const idx = (r: Run, n: number) => r.findIndex((p) => p.page_number === n);
+  const turn = async (r: Run, from: number, dir: 1 | -1, missing: number[] = []) => {
+    const { facingStepIndex } = await import('@/lib/facing-translation');
+    const at = (i: number) => (missing.includes(r[i]?.page_number) ? undefined : r[i]);
+    const to = facingStepIndex(idx(r, from), dir, r.length, at as never);
+    return to == null ? null : r[to].page_number;
+  };
+
+  it('steps from an original past its English leaf to the next opening, and back', async () => {
+    expect(await turn(runA, 25, 1)).toBe(27);
+    expect(await turn(runA, 27, -1)).toBe(25);
+  });
+  it('from the English leaf of an opening (an old link) turns as the opening does', async () => {
+    expect(await turn(runA, 26, 1)).toBe(27);
+    expect(await turn(runA, 28, -1)).toBe(25);
+  });
+  it('unpaired introduction leaves turn one at a time, into and out of the first opening', async () => {
+    expect(await turn(runA, 22, 1)).toBe(23);
+    expect(await turn(runA, 23, 1)).toBe(24);
+    expect(await turn(runA, 24, 1)).toBe(25);
+    expect(await turn(runA, 25, -1)).toBe(24);
+    expect(await turn(runA, 23, -1)).toBe(22);
+  });
+  it('a misnumbered leaf breaks the pair and turns singly', async () => {
+    expect(await turn(runB, 37, 1)).toBe(38);
+    expect(await turn(runB, 38, 1)).toBe(39);
+    expect(await turn(runB, 39, -1)).toBe(38);
+  });
+  it('stops at the ends of the book, and an unloaded neighbour falls back to one leaf', async () => {
+    expect(await turn(runA, 29, 1)).toBeNull();
+    expect(await turn(runA, 22, -1)).toBeNull();
+    expect(await turn(runA, 25, 1, [26])).toBe(26);
+  });
+});

@@ -65,7 +65,7 @@ import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
 import { useFacingPartner } from './useFacingPartner';
-import { FacingPaneHeader, FacingEnglishLeafNote, SourceLibraryTranslationNote, withFacingEnglish } from './FacingTranslation';
+import { FacingPaneHeader, FacingEnglishLeafNote, SourceLibraryTranslationNote, withFacingEnglish, FacingOpening, openingOf, openingPagesLabel } from './FacingTranslation';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -3530,6 +3530,23 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
     ? r.settings.translationLang : null;
   // Named for history: true while the pane shows any non-English edition.
   const showingSpanish = showingEdition != null;
+  // The book lying open (#8321): on a facing-page edition a paired leaf shows
+  // as its whole opening, both scans and both texts. Editing, a pinned
+  // citation and a Spanish edition keep the one-leaf desk they work on.
+  const opening = !editing && !showingSpanish && pinnedTranslation == null ? openingOf(r.currentPage, facing) : null;
+  const openingPages = opening ? openingPagesLabel(opening, t.facing.openingPages) : null;
+  const openingView = opening && (
+    <FacingOpening
+      book={r.book}
+      opening={opening}
+      currentId={r.currentPageId}
+      settings={r.settings}
+      showOurs={showOurTranslation}
+      onToggleOurs={() => setShowOurTranslation((v) => !v)}
+      onSelectLeaf={(id) => r.goToPage(id)}
+      stacked={!isDesktop}
+    />
+  );
 
   // Trace aligns the transcription against the ENGLISH translation, so it has
   // nothing to align while the pane is showing Spanish.
@@ -3859,7 +3876,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   style={{ ...barControlStyle(), color: '#fdfcf9' }}
                 >
                   p. {pageNum}<span style={{ color: onInk(0.55) }}> / {r.pageList.length ? r.pageList[r.pageList.length - 1].page_number : r.totalPages}</span>
-                  {printedHereShown && <span data-printed-number="" title={printedHereShown.title} className="ml-1" style={{ color: onInk(0.55) }}>· {t.toolbar.printedPage(printedHereShown.text)}</span>}
+                  {openingPages ? <span data-printed-number="" className="ml-1" style={{ color: onInk(0.55) }}>· {openingPages}</span>
+                    : printedHereShown && <span data-printed-number="" title={printedHereShown.title} className="ml-1" style={{ color: onInk(0.55) }}>· {t.toolbar.printedPage(printedHereShown.text)}</span>}
                 </button>
               )}
               <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
@@ -3957,6 +3975,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
+          {openingView || (<>
           {scanPaneShown && (
             <section
               data-scan-pane
@@ -4186,10 +4205,12 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             </section>
           )}
 
+          </>)}
+
           {/* With no scan on screen, the page turns sit at the panes' edges
               instead (see ScanPageTurns); the left one steps clear of an open
               drawer. <main> does not scroll, so they hold still. */}
-          {!scanPaneShown && (
+          {(!scanPaneShown || opening) && (
             <ScanPageTurns
               onPrev={prevPage ? r.goPrev : undefined}
               onNext={nextPage ? r.goNext : undefined}
@@ -4392,6 +4413,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           {/* The floating bar's share of the column. Fixed, so the reading
               area never changes size and the text never shifts. */}
           <div className="shrink-0" style={{ height: PHONE_BAR_H }} aria-hidden="true" />
+          {openingView || (<>
           {r.views.scan && !scan.display && !witness && (
             /* No facsimile: one quiet line instead of a scan-sized empty bed.
                The full-height placeholder read as an image that failed to
@@ -4585,6 +4607,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             </section>
           )}
 
+          </>)}
+
           {/* Fills whatever is left when the page is short, in the last
               visible pane's colour, so no white band shows above the pager */}
           <div className="flex-1" style={{ background: lastSurface }} />
@@ -4630,8 +4654,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 className="min-h-[56px] font-sans text-[12.5px] tabular-nums"
                 style={{ color: 'var(--text-faint)' }}
               >
-                p. {r.currentPage.page_number}
-                {printedHereShown && <span data-printed-number="" title={printedHereShown.title}> · {t.toolbar.printedPage(printedHereShown.text)}</span>}
+                {openingPages ?? <>p. {r.currentPage.page_number}
+                {printedHereShown && <span data-printed-number="" title={printedHereShown.title}> · {t.toolbar.printedPage(printedHereShown.text)}</span>}</>}
               </button>
             ) : r.currentPage?.page_number != null && (
               <span className="font-sans text-[12.5px] tabular-nums" style={{ color: 'var(--text-faint)' }}>

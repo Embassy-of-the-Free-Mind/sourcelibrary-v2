@@ -179,3 +179,31 @@ export async function findFacingPartner<P extends LeafLike & { id?: string }>(
     return null;
   }
 }
+
+/**
+ * Where a page turn lands in a facing-page edition: it steps by OPENING, as a
+ * printed book does. An opening is an original leaf and the English leaf
+ * facing it; every other leaf (introduction, index, plates) is an opening of
+ * one and turns as it always did. Returns the index to land on, or null at
+ * either end of the book.
+ *
+ * `at(i)` is the leaf at index i when its text is loaded, undefined when it is
+ * not. An unloaded neighbour reads as unpaired, so the turn falls back to one
+ * leaf, never past a page: at worst it lands on the English half of the next
+ * opening, which the reader shows as that same opening.
+ */
+export function facingStepIndex(
+  index: number,
+  dir: 1 | -1,
+  length: number,
+  at: (i: number) => LeafLike | null | undefined,
+): number | null {
+  if (index < 0 || index >= length) return null;
+  const pairsAt = (i: number) => i >= 0 && i + 1 < length && isFacingPair(at(i), at(i + 1));
+  const start = pairsAt(index - 1) ? index - 1 : index;
+  const end = pairsAt(start) ? start + 1 : start;
+  if (dir > 0) return end + 1 < length ? end + 1 : null;
+  const prev = start - 1;
+  if (prev < 0) return null;
+  return pairsAt(prev - 1) ? prev - 1 : prev;
+}

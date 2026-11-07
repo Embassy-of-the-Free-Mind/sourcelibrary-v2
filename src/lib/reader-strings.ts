@@ -302,6 +302,10 @@ export interface ReaderStrings {
     /** On the English leaf itself: it is the translation of the page opposite. */
     englishLeafNote: (printedPage: string) => string;
     goToOriginal: string;
+    /** The page counter on an opening: the two printed pages it shows. */
+    openingPages: (left: string, right: string) => string;
+    /** The original leaf's column label, before " · p. N". */
+    originalLeaf: string;
   };
 
   /** Contents panel. */
@@ -947,6 +951,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       sourceLibraryTranslationNote: 'Our AI translation of the original on this page, not the published one.',
       englishLeafNote: (p: string) => `This page is the published English translation of p. ${p}, printed facing it.`,
       goToOriginal: 'Go to the original',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Original',
     },
     contents: {
       noContentsTranscribed: 'This edition’s table of contents has not been transcribed yet. Use the reading guide or the page strip to move around.',
@@ -1454,6 +1460,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       sourceLibraryTranslationNote: 'Nuestra traducción automática del original de esta página, no la publicada.',
       englishLeafNote: (p: string) => `Esta página es la traducción inglesa publicada de la p. ${p}, impresa enfrente.`,
       goToOriginal: 'Ir al original',
+      openingPages: (a: string, b: string) => `págs. ${a}–${b}`,
+      originalLeaf: 'Original',
     },
     contents: {
       noContentsTranscribed: 'El índice de esta edición aún no se ha transcrito. Usa la guía de lectura o la tira de páginas para moverte.',
@@ -1986,6 +1994,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       sourceLibraryTranslationNote: 'Versio nostra machinalis huius paginae, non edita.',
       englishLeafNote: (p: string) => `Haec pagina est versio Anglica edita paginae ${p}, ex adverso impressa.`,
       goToOriginal: 'Ad textum primigenium',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Textus primigenius',
     },
     contents: {
       noContentsTranscribed: 'Index capitum huius editionis nondum transcriptus est. Duce legendi vel serie paginarum utere, ut per librum eas.',
@@ -2501,6 +2511,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       sourceLibraryTranslationNote: 'Onze AI-vertaling van het origineel op deze pagina, niet de gepubliceerde.',
       englishLeafNote: (p: string) => `Deze pagina is de gepubliceerde Engelse vertaling van p. ${p}, er tegenover gedrukt.`,
       goToOriginal: 'Naar het origineel',
+      openingPages: (a: string, b: string) => `pp. ${a}–${b}`,
+      originalLeaf: 'Origineel',
     },
     contents: {
       noContentsTranscribed: 'De inhoudsopgave van deze editie is nog niet getranscribeerd. Gebruik de leeswijzer of de paginastrook om door het boek te gaan.',
@@ -3011,6 +3023,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       sourceLibraryTranslationNote: '这是我们对本页原文的 AI 译文，并非出版译本。',
       englishLeafNote: (p: string) => `本页是第 ${p} 页的出版英译，印在其对页。`,
       goToOriginal: '前往原文',
+      openingPages: (a: string, b: string) => `第 ${a}–${b} 页`,
+      originalLeaf: '原文',
     },
     contents: {
       noContentsTranscribed: '本版本的目录尚未转录。可以通过阅读指南或页面缩略条在书中跳转。',
