@@ -1,0 +1,196 @@
+{
+ "scored_at": "2026-10-31T13:02:40.017Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled",
+ "strata": {
+  "all": {
+   "n_drawn": 30,
+   "routes": {
+    "agy-flash-low@4": {
+     "all_drawn": {
+      "accept": "17/30",
+      "wrong_text": "5/30"
+     },
+     "written": {
+      "accept": "17/25",
+      "wrong_text": "5/25",
+      "invented_or_wrong_leaf": "0/25",
+      "p_acc_ge_080": 0.059,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "not read": 4,
+      "reply wrapper": 1
+     },
+     "agy_calls_per_page": 0.424,
+     "calls": {
+      "calls": 42,
+      "pages": 99,
+      "per_page": 0.424,
+      "usd": 1.4548255500000002,
+      "usd_per_1k_pages": 14.695
+     },
+     "gpu_secs_per_page": null,
+     "quota_usd_per_1k_pages": 14.695,
+     "quota_usd_per_1k_accepted": 25.932,
+     "usd_per_accepted_page": 0.00065,
+     "wrong_text_pages": [
+      {
+       "page_id": "6ac4fcf84ba7223afef768ae",
+       "written": true,
+       "defects": [
+        "O6: vñ am̃ mit=\ntem uff fassend die Edlen — page reads 'mit=tern tisch sassend' (at the middle table sat); the candidate has 'tem uff fassend', which drops 'tisch' and garbles the verb"
+       ]
+      },
+      {
+       "page_id": "6a26c3acaad44c98627cb17f",
+       "written": true,
+       "defects": [
+        "O6: ein Krafftcantor — the page reads 'Krafftwürtze' (a strengthening spice), not a nonsense word"
+       ]
+      },
+      {
+       "page_id": "6ac512804ba7223afe05cdae",
+       "written": true,
+       "defects": [
+        "O7: M D XXiiij — page prints 'M D XXiij' (1523); the candidate adds an extra i, making it 1524"
+       ]
+      },
+      {
+       "page_id": "6ac512594ba7223afe05b944",
+       "written": true,
+       "defects": [
+        "O6: Hertz kum vns zů dyn Rych. — page reads 'Herr kum̃' (Lord), not 'Hertz' (heart); the prayer's sense changes"
+       ]
+      },
+      {
+       "page_id": "6ac511944ba7223afe05a67f",
+       "written": true,
+       "defects": [
+        "O6: daß ein grewliche Menge/ — page reads 'Metzge' (slaughter), not 'Menge' (crowd), so the sense changes"
+       ]
+      }
+     ],
+     "eligible": false
+    },
+    "agy-flash-low@8": {
+     "all_drawn": {
+      "accept": "22/30",
+      "wrong_text": "2/30"
+     },
+     "written": {
+      "accept": "22/25",
+      "wrong_text": "2/25",
+      "invented_or_wrong_leaf": "0/25",
+      "p_acc_ge_080": 0.794,
+      "wrong_text_ok": false
+     },
+     "control": {
+      "wrong_page": [
+       {
+        "accept": false,
+        "fidelity": 1
+       },
+       {
+        "accept": false,
+        "fidelity": 1
+       }
+      ],
+      "passed": true
+     },
+     "not_written": {
+      "not read": 4,
+      "reply wrapper": 1
+     },
+     "agy_calls_per_page": 0.247,
+     "calls": {
+      "calls": 48,
+      "pages": 194,
+      "per_page": 0.247,
+      "usd": 1.2486519,
+      "usd_per_1k_pages": 6.436
+     },
+     "gpu_secs_per_page": null,
+     "quota_usd_per_1k_pages": 6.436,
+     "quota_usd_per_1k_accepted": 8.776,
+     "usd_per_accepted_page": 0.00029,
+     "wrong_text_pages": [
+      {
+       "page_id": "6ac4fcf84ba7223afef768ae",
+       "written": true,
+       "defects": [
+        "O7: Psa. 115. — the margin citation reads Psal. 118, not 115",
+        "O6: iñan: mittem ußsaffend — garbled; the page reads 'vñ am mittern tisch sassend', so 'tisch' is lost and the phrase makes no sense"
+       ]
+      },
+      {
+       "page_id": "6ac511944ba7223afe05a67f",
+       "written": true,
+       "defects": [
+        "O6: daß ein grewliche Menge/ vnd Laniena — page reads 'Metzge' (slaughter), which 'Laniena' glosses; 'Menge' (crowd) changes the sense"
+       ]
+      }
+     ],
+     "eligible": false
+    }
+   },
+   "paired": {
+    "agy-flash-low@8|agy-flash-low@4": {
+     "n": 25,
+     "books": 25,
+     "both": 17,
+     "a_only": 5,
+     "b_only": 0,
+     "neither": 3,
+     "p_a_within_008": 0.998,
+     "rule": "P(acc_agy-flash-low@8 >= acc_agy-flash-low@4 - 0.08) >= 0.9, Dirichlet(1 + counts)"
+    }
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "face": "all",
+      "kind": "B",
+      "route": "agy-flash-low@8",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "face": "all",
+      "kind": "C",
+      "route": "agy-flash-low@4",
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "decision": {
+    "pick": "agy-flash-low@4",
+    "replaces": [],
+    "voided": false,
+    "why": "routes that replace agy-flash-low@4 by RULE.md 2, cheapest per accepted page"
+   }
+  }
+ },
+ "decision": {
+  "passes": false,
+  "pick": "agy-flash-low@4"
+ }
+}

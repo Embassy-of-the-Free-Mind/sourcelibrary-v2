@@ -70,3 +70,25 @@ collection holds **257 OCR'd + 244 translated** on hidden records. `/book/kmastr
 This is the same shape as the entries above — two artifacts produced by different code at
 different times, assumed to correspond — except nothing looks broken from either side: the
 reader shows real page images, and the text is intact where it was written.
+
+---
+
+**Fixing the IMAGE side does not fix the pair (#7949, 2026-11-02).** Huser's Paracelsus
+(`69bd9d546120d54bd0375241`) was archived from e-rara's whole-book PDF (cover sheet + one leaf
+shot twice), batch-OCR'd from those images, then re-fetched slot by slot from the IIIF canvases
+by the resolution upgrade (2026-07-20). The images became right; the text, read from the old
+images, stayed 1 leaf late to leaf 79 and 3 late after. 4,150 translated pages and a DOI'd
+edition carried it for 3½ months.
+
+- **A writer that replaces a page image under existing text must prove the new image is the
+  leaf the text was read from.** Both re-archivers now run the dHash guard before overwriting
+  (`rearchive-iiif-fullres.mjs` since #3359, `rearchive-iiif-manifest.mjs` since #7949) and skip
+  the book on anything but `aligned`.
+- **Detect a text-side shift against an EXTERNAL numbering**: `scripts/audit/canvas-label-alignment.mjs`
+  reads OCR `<page-num>` against the IIIF canvas labels. A uniform shift is one non-zero offset there,
+  where the `<page-num>` sequence alone sees nothing. Bracketed labels (`[78]`) are canvas ordinals and
+  are not read as numbers; reading them made 493 of 661 e-rara books look shifted on the first survey.
+- **The offset need not be constant.** Repair by stretch with `scripts/maintenance/repair-text-offset-segments.mjs
+  --segments "1-79:+1,80-4162:+3"`; it simulates the move and refuses unless ≥95% of scored pages land at 0.
+- A text-vs-canvas offset is reader-visible only when the shown image IS the canvas. Volume 2
+  (`6a100962…`, never upgraded) has image and text from the same PDF: they agree, only the source pointer is off.

@@ -73,7 +73,7 @@ export default function DublinCoreMeta({
         <meta key={`kw-${i}`} name="DC.subject" content={kw} />
       ))}
       {publisher && <meta name="DC.publisher" content={publisher} />}
-      <meta name="DC.rights" content={rights || 'CC BY-SA 4.0'} />
+      <meta name="DC.rights" content={rights || 'CC BY-NC-SA 4.0'} />
       <meta name="DC.identifier" content={identifier} />
       <meta name="DC.type" content="Text" />
       {source && <meta name="DC.source" content={source} />}

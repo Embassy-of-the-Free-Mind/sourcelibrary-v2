@@ -43,11 +43,17 @@ export const ALLOWED_EVENTS = new Set([
   // single one. Pairs with the /give pageview count (total arrivals) and
   // donate_click (actual gives) to make a three-step funnel.
   //
-  // `source` names the CONTROL ('header' | 'footer'), `url` its DESTINATION —
+  // `source` names the CONTROL ('header' | 'header_mobile' | 'footer'; the
+  // phone-width header button has its own value from 2026-10-29), `url` its DESTINATION —
   // they differ: the header pill goes to /give, the footer link to /support.
   // Recording only the control would silently merge two funnels with different
   // pages and different conversion odds.
   'give_nav_click',
+  // giving_banner_view / giving_banner_dismiss: the year-end appeal on book
+  // pages (src/components/donate/GivingSeasonBanner.tsx). A view is logged once
+  // per time it appears, so view → give_nav_click(source=book_banner) → donate_click
+  // is its funnel, and dismissals separate "saw it, declined" from "never saw it".
+  'giving_banner_view', 'giving_banner_dismiss',
 ]);
 
 // Only these prop keys are persisted; everything else is dropped.

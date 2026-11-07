@@ -94,7 +94,7 @@ const STRINGS: Record<Locale, SupportStrings> = withEnglishFallback({
     whereTitle: 'Where your support goes',
     where: [
       { title: 'Digitization', text: 'High-resolution scanning of fragile manuscripts and rare printed books.' },
-      { title: 'Translation', text: 'AI-assisted translation of Latin, Greek, and German, with scholarly review. The largest cost.' },
+      { title: 'Translation', text: 'AI-assisted translation of Latin, Greek, and German, with scholarly review.' },
       { title: 'Open platform', text: 'A free reading interface with bilingual pages, search, and image galleries.' },
     ],
     followTitle: 'Follow the work',
@@ -121,7 +121,7 @@ const STRINGS: Record<Locale, SupportStrings> = withEnglishFallback({
     whereTitle: 'Adónde va tu apoyo',
     where: [
       { title: 'Digitalización', text: 'Escaneo de alta resolución de manuscritos frágiles y libros impresos raros.' },
-      { title: 'Traducción', text: 'Traducción asistida por IA del latín, griego y alemán, con revisión académica. El mayor coste.' },
+      { title: 'Traducción', text: 'Traducción asistida por IA del latín, griego y alemán, con revisión académica.' },
       { title: 'Plataforma abierta', text: 'Una interfaz de lectura gratuita con páginas bilingües, búsqueda y galerías de imágenes.' },
     ],
     followTitle: 'Sigue el trabajo',
@@ -258,7 +258,7 @@ export default function SupportView({
             <div className="flex flex-wrap items-center gap-4">
               <Link href={homeHref} className="hover:text-stone-900 transition-colors">{s.home}</Link>
               <Link href="/licensing" className="hover:text-stone-900 transition-colors">
-                Public domain originals · CC BY-SA translations
+                Public domain originals · CC BY-NC-SA translations
               </Link>
               <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent-rust hover:text-accent-gold-dark transition-colors">
                 {CONTACT_EMAIL}

@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage } from '../../lib/embedding-usage.mjs';
 
-export const MODEL = 'gemini-embedding-2-preview';
+export const MODEL = 'gemini-embedding-2';
 export const DIMS = 768;
 export const ENDPOINT = 'eval/embed-granularity';
 

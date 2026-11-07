@@ -46,9 +46,9 @@ const LOCATIONS = ['above-crown','crown','brow','back-of-head','eyes','ears','th
 async function embed(text) {
   for (let a = 0; a < 3; a++) {
     try {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${KEY}`,
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${KEY}`,
         { method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ requests:[{ model:'models/gemini-embedding-2-preview', content:{parts:[{text}]}, outputDimensionality:768 }] }),
+          body: JSON.stringify({ requests:[{ model:'models/gemini-embedding-2', content:{parts:[{text}]}, outputDimensionality:768 }] }),
           signal: AbortSignal.timeout(20000) });
       if (r.ok) return (await r.json())?.embeddings?.[0]?.values;
     } catch {}

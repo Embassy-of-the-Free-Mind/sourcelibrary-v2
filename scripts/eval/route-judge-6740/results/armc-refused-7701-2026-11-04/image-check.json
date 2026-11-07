@@ -1,0 +1,303 @@
+[
+ {
+  "page_id": "69b6322e1c1c21a37380e5d7",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6322d1c1c21a37380e5b3/36.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6324e1c1c21a37380f5f3",
+  "served": 200,
+  "same_bytes_as_read": false,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6324d1c1c21a37380f573/128.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632af1c1c21a373812b2e",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632af1c1c21a373812a99/149.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632861c1c21a373811a1b",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632861c1c21a373811870/427.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632cc1c1c21a3738139aa",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632cc1c1c21a3738138d7/211.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632e01c1c21a3738141e9",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632e01c1c21a3738141ac/61.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632331c1c21a37380ea1c",
+  "served": 200,
+  "same_bytes_as_read": false,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632331c1c21a37380e7b5/615.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632501c1c21a37380f7f4",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632501c1c21a37380f67f/373.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6328b1c1c21a373811f36",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6328b1c1c21a373811dba/380.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632cf1c1c21a373813bf4",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632cf1c1c21a373813b4f/165.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632c21c1c21a3738133f4",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632c21c1c21a3738132eb/265.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632db1c1c21a37381408a",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632db1c1c21a37381407a/16.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6325d1c1c21a3738101ba",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6325d1c1c21a3738100a7/275.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632831c1c21a3738117f8",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632831c1c21a3738116aa/334.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632bb1c1c21a373813066",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632bb1c1c21a373812fb7/175.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632351c1c21a37380ed91",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632351c1c21a37380ec37/346.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632171c1c21a37380d30a",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632171c1c21a37380d0e0/554.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6326a1c1c21a373810bdc",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6326a1c1c21a373810a64/376.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632281c1c21a37380df64",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632281c1c21a37380df34/48.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632791c1c21a3738112ba",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632791c1c21a37381119e/284.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6329b1c1c21a373812435",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6329b1c1c21a3738123db/90.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6321a1c1c21a37380d73a",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6321a1c1c21a37380d64a/240.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b6327b1c1c21a373811426",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b6327b1c1c21a373811400/38.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632d61c1c21a373813ef3",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632d61c1c21a373813eba/57.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632231c1c21a37380dc5b",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632231c1c21a37380dc4a/17.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632e51c1c21a3738145c7",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632e51c1c21a373814538/143.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632b91c1c21a373812daf",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632b91c1c21a373812cbd/242.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632111c1c21a37380ce50",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632111c1c21a37380cd46/266.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ },
+ {
+  "page_id": "69b632491c1c21a37380f3e2",
+  "served": 200,
+  "same_bytes_as_read": false,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632491c1c21a37380f39d/69.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file",
+   "search_web:deny"
+  ]
+ },
+ {
+  "page_id": "69b632ac1c1c21a3738129be",
+  "served": 200,
+  "same_bytes_as_read": true,
+  "read_url": "https://images.sourcelibrary.org/archived/69b632ac1c1c21a3738128b5/265.jpg",
+  "tool_calls": [
+   "run_command:deny",
+   "read_file"
+  ]
+ }
+]

@@ -51,6 +51,7 @@ function matches(doc: Doc, filter: Doc): boolean {
   return Object.entries(filter).every(([k, cond]) => {
     if (k === '$or') return (cond as Doc[]).some((f) => matches(doc, f));
     const v = k === '_id' ? doc.id : get(doc, k);
+    if (cond === null) return v == null; // Mongo: null matches missing or null
     if (cond && typeof cond === 'object' && !Array.isArray(cond)) {
       const c = cond as Doc;
       if ('$in' in c) return (c.$in as unknown[]).map(String).includes(String(v));

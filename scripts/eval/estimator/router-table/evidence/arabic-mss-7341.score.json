@@ -1,0 +1,47 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill_all.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#7341 (2026-10-25) Jabir manuscripts gate, scripts/eval/results/arabic-mss-gate-7341/gate-rows.jsonl: 2 pages a manuscript, screened by eye, held books. Three reads a page, judged blind by Opus and by Gemini 3.8 Flash (judge.py).",
+ "judge": "claude-opus-5-5 (claude -p), judge.py USABLE / NOTICEABLE / MISLEADING / FAILED against the image; the Gemini judge's misleading count is recorded, not used. Opus judges its own read here (self-preference unmeasured).",
+ "mapping": "wrong_text = MISLEADING; accept = USABLE or NOTICEABLE; FAILED (no read: agy filter cut / did_not_read) = not accepted, not wrong text",
+ "cells": {
+  "ar-mss": {
+   "task": "ocr",
+   "lang": "Arabic",
+   "pages": 26,
+   "routes": {
+    "lite": {
+     "served": "gemini-3.1-flash-lite, production OCR prompt, temp 0.1 (paid API)",
+     "n": 26,
+     "books": 13,
+     "accept": "17/26",
+     "wrong_text_pages": "9/26",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {},
+     "gemini_judge_misleading": "14/26"
+    },
+    "agy-flash-low-read-diplomatic": {
+     "served": "agy gemini-3.8-flash-low, the #6544 diplomatic READ prompt (not cli-ocr's live prompt: its own route), one page a call",
+     "n": 26,
+     "books": 13,
+     "accept": "8/26",
+     "wrong_text_pages": "2/26",
+     "classes_k_of_n": {
+      "FAILED": "16/26"
+     },
+     "wrong_text_classes": {},
+     "gemini_judge_misleading": "1/26"
+    },
+    "opus-read": {
+     "served": "claude-opus-5-5 claude -p --restricted, the same diplomatic READ prompt, one page a call",
+     "n": 26,
+     "books": 13,
+     "accept": "26/26",
+     "wrong_text_pages": "0/26",
+     "classes_k_of_n": {},
+     "wrong_text_classes": {},
+     "gemini_judge_misleading": "4/26"
+    }
+   }
+  }
+ }
+}

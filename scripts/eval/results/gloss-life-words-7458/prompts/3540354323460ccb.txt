@@ -1,0 +1,171 @@
+You are translating a manuscript transcription into accessible English.
+
+**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
+
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
+
+**Output contract (CRITICAL):**
+- Your ENTIRE response must consist of the translation plus the tags defined below. Never address the reader or the requester.
+- NEVER add untagged commentary: no introductions ("Here is the translation…"), no remarks about the language or the request, no apologies, no explanations. Your response must begin either with a tag (e.g. <meta>) or with the first translated words of the page.
+- If you need to remark on anything — the source language differing from what was expected, OCR quality, uncertainty — put the remark INSIDE <meta>…</meta> or <warning>…</warning>. Any text outside tags is treated as part of the translation and corrupts the edition.
+- If the page cannot be translated at all, output ONLY a <warning> explaining why — never a conversational refusal.
+
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
+- Line breaks and paragraph structure
+
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
+- <margin>X</margin> — translate and keep marginal notes
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
+
+**<unclear> marks text that was NOT read (CRITICAL):**
+- <unclear>…</unclear> in the OCR means the transcriber could not read that region. Reproduce the tag and its contents unchanged.
+- NEVER translate, expand, paraphrase or reconstruct an <unclear> span, and never supply plausible content for it — no invented lines, verses, formulae, titles or epithets.
+- If the OCR reads <unclear>20 lines of hieroglyphic text, not transcribed</unclear>, your output carries that same tag for that region and nothing else. Do NOT emit twenty translated lines.
+- Every line you write must correspond to text actually present in the OCR input. Where the input has no readable text, your output has none either.
+- If the OCR describes unread material in square brackets instead of a tag, convert it to <unclear>…</unclear>. Do NOT render it as content — a bracketed note of what could not be read is not a passage to be translated.
+- A page whose OCR is mostly <unclear> yields a translation that is mostly <unclear>. That is correct, and far better than fluent invention.
+
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
+
+**Do NOT use:**
+- Square brackets [] for ANY purpose — no [interpolations], no [...continuation], no [L]etter repairs. Use XML tags instead:
+  - Context from previous page → <meta>continues from previous page: ...</meta>
+  - Interpolated clarifications → <note>...</note>
+  - Uncertain readings → <unclear>...</unclear>
+  - Repairing broken words at page boundaries → just write the complete word naturally
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
+
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
+
+**Words for breath, life and lifespan (in the text and in <gloss>, <term> and <note>):**
+- Render these words by what they say in this source, never by a modern idea of a "life force" or "energy":
+  - 氣 / qi: "breath", "vapour" or "air", as the context requires; where no one English word fits, keep <term>qi</term> <gloss>breath, vapour</gloss>. Never "vital energy", "life force" or "energy".
+  - prāṇa: "breath" (its five kinds are breaths or winds); āyus: "lifespan"; 命: "life", "lifespan" or "allotted fate", as the context requires.
+  - pneuma, spiritus, ruach, rlung, srog: "breath", "spirit", "wind" or "life", as the source uses the word.
+- Write "life force", "vital force" or "vital energy" only where the source itself names such a force: vis vitalis, Lebenskraft, force vitale or an equivalent. A note may say what a word meant to its author; it must not add a later vitalist reading.
+
+**Instructions:**
+1. If the page continues a sentence from the previous page, start with <meta>continues from previous page</meta> then begin the translation mid-sentence naturally (no brackets, no ellipsis). Just write the continued text.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
+**Source language:** German
+**Target language:** English
+
+**Final output format:**
+Translated text here (no wrapper brackets).
+
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English, for indexing</keywords>
+
+**Source work:** Title: The Masnavi (Mesnevi) | Author: Jalal al-Din Rumi / Rosen (trans.) | Date: 1913
+
+**Note:** This is a public domain work published in 1913. It is not under copyright.
+
+**Text to translate:**
+<language>German</language>
+<page-type>text</page-type>
+<page-num>160</page-num>
+<meta>Digitized by Google watermark at bottom</meta>
+
+In deinem Trotz, daß dich mein Zorn ereile!“ —
+Dann ward das Volk von vierzig Ellen langen
+Flammen umkreist, die zehrend es verschlangen. 401
+Ihr Ursprung war die Glut im Anbeginn,
+Ihr Ende führte drum zur Glut sie hin. 402
+Sie kehrten heim zur Glut, der sie entstammten,
+Denn allzeit strebt der Teil heim zum Gesamten.
+Den Christen zündete der Schah ein Feuer,
+Doch brannte selbst drin loh wie leichte Spreu er;
+Denn wem die Hölle Ursprung ist und Quelle,
+Der findet keine Rast als in der Hölle! 403
+
+Es sucht ja, wie die Mutter ihren Kleinen,
+Das Ganze stets den Teilen sich zu einen!
+Umdämme ein Gewässer rings: der Wind
+Entführt das freie Element geschwind;
+Unmerklich holt die Luft aus seiner Haft
+Zum Quell es heim; nicht siehst du, was sie schafft.
+So holt unmerklich unsre Seelen 404 auch
+Aus dieser Kerkerwelt derselbe Hauch.
+Zu Gott erhebt sich unsrer Worte Duft, 405
+
+Menschen. 401. Nach einer weiteren Stelle aus der oben angeführten
+Sure des Koran „die Burgen“ (V. 10): Wahrlich, die, welche den
+Gläubigen, Männern und Weibern, Prüfungen auferlegten und dann
+nicht Buße taten, ihnen ist die Strafe der Hölle (in der andern Welt)
+und die Strafe des Brandes (in dieser Welt) bereitet. 402. D. h., sie
+waren in der anfangslosen Ewigkeit auf der Schicksalstafel als der
+Glut angehörig bezeichnet worden, in welche sie nunmehr nach dem
+arabischen Sprichwort: Ein jedes Ding kehrt zu seinem Ursprung zu-
+rück, wieder eingingen. 403. Nach den Koranversen (101, 6 ff.): Wessen
+Wagschalen leicht sind (an guten Werken), dessen Mutter ist die Hāwije
+(d. h. der Höllenabgrund). Woher aber wüßtest du, was sie (die Hāwije)
+ist? Ein glühendes Feuer. 404. Das Wort dschān, welches ich durch
+Seele wiedergegeben habe, bedeutet zugleich das Leben. Die belebende
+Seele ist dem Menschen von Gott eingehaucht; ihm führt deshalb
+jeder Hauch einen Teil derselben wieder zu. 405. Alle Kreatur ist aus
+
+<vocab>Koran, Hāwije, dschān, Schicksalstafel, Schah, Ellen, Höllenabgrund</vocab>
+
+**Previous page translation for continuity:**
+The moist clay, which Jesus's breath brought to life, 397
+Became a bird, took flight, and soared.
+Your prayer also wafts from the clay <note>referring to the human body made of earth</note>, from the breaths
+Of a pure heart, birds of Eden emerge! 398
+The rocky mountains of *Horeb* <note>Mount Sinai</note> became like a *Sufi*, 399
+Whirling in dance before God’s splendor!
+Is it a wonder that a mountain should become a *Sufi*?
+Was not *Moses* also a clod of earth? 400
+
+Indeed, the Shah <note>referring to the proud Kārūn or a similar tyrannical figure</note> saw these miracles, yet mockingly
+He d
+[…]
+ntly persevere shall be given a portion.” *(81)* <note>A reference to the Quran, Surah Al-Qasas 28:80-81</note> Thereupon, We caused him and his dwelling to sink into the earth: there he found neither a host to provide him assistance against God, nor was he able to defend himself. See the appendix.
+
+397. The Koran alludes to this well-known legend from the childhood of Jesus in the third chapter (Verse 43), where it has Jesus say to the Jews: “I have come to you with a sign from your Lord, (namely) that I fashion for you out of clay the likeness of birds, and then I breathe into them, whereupon they become birds by the permission of God.” 398. That is, the prayer of the pure heart—which rises from the earthly body like the fragrance of a sacrifice offered to the Almighty—finds its way to the abode of eternal bliss, like a bird from the Garden of Eden returning to its home. 399. Cf. Note 14. As is well known, the <term>Dervishes</term> of the <term>Mevlevi</term> order, founded by the Sheikh *Mewlānā* <note>Rumi</note>, express the ecstasy into which they are transported by mystical songs and flute-playing through a peculiar dance, to which this passage perhaps refers. 400. That is, an earthly body to which God has given life, power, and prophetic knowledge. The Almighty is also able to grant the same grace to a mountain, which is composed of the same elements as the human body.
+<summary>This page explores the mystical transformation of matter through divine breath, citing Jesus’s clay birds and the "dancing" of Mount Sinai, while contrasting these miracles with the pride and subsequent downfall of a wealthy, mocking ruler (Korah).</summary>
+<keywords>Jesus, miracles, Sufi dance, Mount Sinai, Moses, Korah (Kārūn), Mevlevi Order, Rumi, breath of life</keywords>...
+
+Do not open, read or write any file and do not use any tool: the text is above. Write the translation between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.

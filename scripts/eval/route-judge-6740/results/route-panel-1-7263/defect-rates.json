@@ -1,0 +1,264 @@
+{
+ "generated_by": "route-panel-7263/analyze.mjs results.json; fidelity over judged reads, failed reads counted apart (#7263)",
+ "issue": 7263,
+ "cells": {
+  "latin-flash3/print": {
+   "agy-flash-low@4-read": {
+    "fidelity_mean": 4.06,
+    "misleads_per_1k": 3.69,
+    "wrong_text_per_1k": 1.23,
+    "sense_errors_per_1k": 4.91,
+    "sense_errors_per_1k_ci95": [
+     3.03,
+     7.01
+    ],
+    "accept": {
+     "k": 65,
+     "n": 100,
+     "wilson95": [
+      0.553,
+      0.736
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 15,
+     "n": 100,
+     "wilson95": [
+      0.093,
+      0.233
+     ]
+    },
+    "failed": 10,
+    "words": 26045
+   },
+   "pero>agy-flash-low@4": {
+    "fidelity_mean": 4.39,
+    "misleads_per_1k": 1.36,
+    "wrong_text_per_1k": 0.45,
+    "sense_errors_per_1k": 1.82,
+    "sense_errors_per_1k_ci95": [
+     0.59,
+     3.4
+    ],
+    "accept": {
+     "k": 43,
+     "n": 60,
+     "wilson95": [
+      0.592,
+      0.815
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 2,
+     "n": 60,
+     "wilson95": [
+      0.009,
+      0.114
+     ]
+    },
+    "failed": 14,
+    "words": 13190
+   },
+   "3flash>agy-flash-low": {
+    "fidelity_mean": 4.19,
+    "misleads_per_1k": 2.86,
+    "wrong_text_per_1k": 1.31,
+    "sense_errors_per_1k": 4.17,
+    "sense_errors_per_1k_ci95": [
+     2.4,
+     6.28
+    ],
+    "accept": {
+     "k": 62,
+     "n": 100,
+     "wilson95": [
+      0.522,
+      0.709
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 12,
+     "n": 100,
+     "wilson95": [
+      0.07,
+      0.198
+     ]
+    },
+    "failed": 17,
+    "words": 24442
+   },
+   "3flash": {
+    "fidelity_mean": 3.85,
+    "misleads_per_1k": 4.93,
+    "wrong_text_per_1k": 2.13,
+    "sense_errors_per_1k": 7.06,
+    "sense_errors_per_1k_ci95": [
+     5.33,
+     8.8
+    ],
+    "accept": {
+     "k": 59,
+     "n": 100,
+     "wilson95": [
+      0.492,
+      0.681
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 31,
+     "n": 100,
+     "wilson95": [
+      0.228,
+      0.406
+     ]
+    },
+    "failed": 0,
+    "words": 31034
+   }
+  },
+  "greek-flash3/print": {
+   "agy-flash-low@4-read": {
+    "fidelity_mean": 3.85,
+    "misleads_per_1k": 6.92,
+    "wrong_text_per_1k": 5.28,
+    "sense_errors_per_1k": 12.2,
+    "sense_errors_per_1k_ci95": [
+     7.94,
+     16.42
+    ],
+    "accept": {
+     "k": 16,
+     "n": 40,
+     "wilson95": [
+      0.263,
+      0.554
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 17,
+     "n": 40,
+     "wilson95": [
+      0.285,
+      0.578
+     ]
+    },
+    "failed": 6,
+    "words": 17621
+   },
+   "3flash": {
+    "fidelity_mean": 3.58,
+    "misleads_per_1k": 6.44,
+    "wrong_text_per_1k": 6.39,
+    "sense_errors_per_1k": 12.83,
+    "sense_errors_per_1k_ci95": [
+     8.61,
+     16.97
+    ],
+    "accept": {
+     "k": 12,
+     "n": 40,
+     "wilson95": [
+      0.181,
+      0.454
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 23,
+     "n": 40,
+     "wilson95": [
+      0.422,
+      0.715
+     ]
+    },
+    "failed": 0,
+    "words": 19408
+   }
+  },
+  "german-tr-lite/print": {
+   "agy-flash-low-tr@1": {
+    "fidelity_mean": 3.64,
+    "misleads_per_1k": 4.22,
+    "wrong_text_per_1k": 1.77,
+    "sense_errors_per_1k": 5.99,
+    "sense_errors_per_1k_ci95": [
+     4.68,
+     7.44
+    ],
+    "accept": {
+     "k": 54,
+     "n": 100,
+     "wilson95": [
+      0.443,
+      0.634
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 30,
+     "n": 100,
+     "wilson95": [
+      0.219,
+      0.396
+     ]
+    },
+    "failed": 1,
+    "words": 24857
+   },
+   "agy-flash-low-tr@4": {
+    "fidelity_mean": 3.6,
+    "misleads_per_1k": 4.24,
+    "wrong_text_per_1k": 1.79,
+    "sense_errors_per_1k": 6.03,
+    "sense_errors_per_1k_ci95": [
+     4.85,
+     7.33
+    ],
+    "accept": {
+     "k": 54,
+     "n": 100,
+     "wilson95": [
+      0.443,
+      0.634
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 31,
+     "n": 100,
+     "wilson95": [
+      0.228,
+      0.406
+     ]
+    },
+    "failed": 0,
+    "words": 25208
+   },
+   "flash-lite": {
+    "fidelity_mean": 3.32,
+    "misleads_per_1k": 7.14,
+    "wrong_text_per_1k": 2.98,
+    "sense_errors_per_1k": 10.12,
+    "sense_errors_per_1k_ci95": [
+     8.31,
+     12
+    ],
+    "accept": {
+     "k": 40,
+     "n": 100,
+     "wilson95": [
+      0.309,
+      0.498
+     ]
+    },
+    "wrong_text_pages": {
+     "k": 39,
+     "n": 100,
+     "wilson95": [
+      0.3,
+      0.488
+     ]
+    },
+    "failed": 0,
+    "words": 25208
+   }
+  }
+ }
+}

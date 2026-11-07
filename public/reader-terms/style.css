@@ -1,0 +1,117 @@
+/*
+ * Styling for the terms form that Cloudflare serves (#8286). Cloudflare limits that
+ * page to 2 KB, so its look lives here. The page stays readable if this fails to load.
+ * Colours are the site's own tokens from src/app/globals.css.
+ */
+@font-face {
+  font-family: 'Playfair Display';
+  font-weight: 400 900;
+  font-display: swap;
+  src: url(/fonts/google/playfairdisplay-v40-nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2) format('woff2');
+}
+
+* { box-sizing: border-box; }
+
+html { background: #f5f0e8; }
+
+/* A blurred picture of the reader: one shared file, so it costs nothing per visitor. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(26, 22, 18, 0.42), rgba(26, 22, 18, 0.42)),
+    url(/reader-terms/backdrop.jpg) left top / cover no-repeat;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 16px;
+  color: #1a1612;
+  font: 17px/1.55 Georgia, 'Times New Roman', serif;
+}
+
+main {
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+  background: #fdfcf9;
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(26, 22, 18, 0.45);
+}
+
+a { color: #9e4a3a; text-underline-offset: 2px; }
+
+.b {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #1a1612;
+  font: 300 14px/1 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.b b { font-weight: 600; }
+.b svg { width: 28px; height: 28px; }
+
+h1 {
+  margin: 24px 0 12px;
+  font: 500 32px/1.15 'Playfair Display', Georgia, serif;
+}
+
+p { margin: 0 0 14px; }
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 16px;
+  padding: 12px 14px;
+  background: #f5f0e8;
+  border: 1px solid #e8e4dc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+label input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: #9e4a3a;
+}
+
+button {
+  width: 100%;
+  padding: 13px 20px;
+  color: #fff;
+  background: #1a1612;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+button:hover { background: #9e4a3a; }
+
+.a { margin: 18px 0 0; text-align: center; }
+
+small {
+  display: block;
+  margin-top: 18px;
+  padding-top: 14px;
+  color: #6b6560;
+  border-top: 1px solid #e8e4dc;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@media (max-width: 480px) {
+  main { padding: 24px 20px; }
+  h1 { font-size: 28px; }
+}

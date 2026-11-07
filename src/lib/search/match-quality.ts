@@ -56,3 +56,46 @@ export function assessMatchQuality(query: string, haystacks: string[]): MatchQua
   }
   return 'weak';
 }
+
+/** True when `text` contains every token of a query of two or more tokens. */
+export function coversEveryToken(query: string, text: string): boolean {
+  const tokens = [...new Set(tokenize(query))];
+  if (tokens.length < 2 || !text) return false;
+  const folded = fold(text);
+  return tokens.every(t => folded.includes(t));
+}
+
+/**
+ * Pictures for a query that names an author. Rows whose text names the person come
+ * first ("Roger Bacon as a monk" beats a coat of arms on the binding of his book);
+ * pictures from the author's own books fill what is left, because a caption rarely
+ * names the author (Bouvet's book has a portrait captioned "Kangxi Emperor").
+ */
+export function namedAuthorGallery<T extends { id: string; description?: string; bookTitle?: string; matchText?: string }>(
+  query: string,
+  laneRows: T[],
+  fromAuthorBooks: T[],
+  limit: number,
+): T[] {
+  const named = laneRows.filter(r => coversEveryToken(query, [r.description, r.bookTitle, r.matchText].filter(Boolean).join(' ')));
+  const seen = new Set(named.map(r => r.id));
+  return [...named, ...fromAuthorBooks.filter(r => !seen.has(r.id))].slice(0, limit);
+}
+
+/** Words that may stand beside a surname without making it someone else. */
+const NAME_HONORIFICS = new Set(['father', 'fr', 'p', 'pere', 'pater', 'padre', 'dr', 'saint', 'st', 'sir', 'mr', 'rev']);
+
+/**
+ * An index term that means the person the query names: "Joachim Bouvet" accepts
+ * "Joachim Bouvet", "Bouvet" and "Father Bouvet"; it refuses "Joachim" and
+ * "Joachim of Fiore" (first name only) and "Lozier Bouvet" (another man's surname
+ * match). Whole tokens, so "Bouvety" is not "Bouvet".
+ */
+export function termIsNamedPerson(query: string, term: string): boolean {
+  const queryTokens = tokenize(query);
+  if (queryTokens.length < 2) return false;
+  const termTokens = tokenize(term).filter(t => !NAME_HONORIFICS.has(t));
+  if (termTokens.length === 0) return false;
+  return termTokens.includes(queryTokens[queryTokens.length - 1])
+    && termTokens.every(t => queryTokens.includes(t));
+}

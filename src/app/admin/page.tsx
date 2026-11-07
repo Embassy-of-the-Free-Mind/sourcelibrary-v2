@@ -288,7 +288,7 @@ export default async function AdminDashboard() {
             <Tiles tiles={[
               { l: 'Images on R2', v: `${(s.r2_bytes / 1e12).toFixed(1)} TB`, n: `${fmtK(s.r2_objects)} objects` },
               { l: 'Text held', v: `${(s.text_bytes_est / 1e9).toFixed(0)} GB`, n: `OCR and translation, ${fmtK(s.pages_total)} page records` },
-              { l: 'Held books', v: fmtFull(L.totals.held), n: 'kept out of every lane on purpose' },
+              { l: 'Held books', v: fmtFull(L.totals.held), n: L.totals.notAcquired != null ? `kept out of every lane on purpose; ${fmtK(L.totals.notAcquired)} catalogue records not yet acquired are not counted` : 'kept out of every lane on purpose' },
               { l: 'Enriched', v: snap ? fmtFull(snap.data.enrichment.with_summary) : '–', n: snap ? `summaries · ${fmtFull(snap.data.enrichment.with_index)} indexes · ${fmtFull(snap.data.enrichment.with_images)} with images` : undefined },
             ]} />
           ) : null; })()}
@@ -428,7 +428,7 @@ function Backlog({ L }: { L: LibraryDashboard }) {
     return { ...r, b, c };
   });
   const trOnly = [g('translate:body').pages_live + g('translate:tail').pages_live, g('translate:body').live + g('translate:tail').live];
-  const order: [string, string][] = [['archive', 'Archive'], ['ocr', 'Transcribe (OCR)'], ['translate:body', 'Translate'], ['translate:tail', 'Translate last 10%'], ['enrich', 'Summary and chapters'], ['done', 'Done'], ['blocked:held', 'Blocked: held'], ['blocked:source_unreachable', 'Blocked: source unreachable'], ['blocked:source_restricted', 'Blocked: source restricted'], ['blocked:source_dead', 'Blocked: source dead'], ['blocked:unstamped', 'Blocked: no rung stamped']];
+  const order: [string, string][] = [['archive', 'Archive'], ['ocr', 'Transcribe (OCR)'], ['translate:body', 'Translate'], ['translate:tail', 'Translate last 10%'], ['enrich', 'Summary and chapters'], ['done', 'Done'], ['blocked:held', 'Blocked: held'], ['blocked:not_acquired', 'Not acquired (catalogue record, no pages)'], ['blocked:source_unreachable', 'Blocked: source unreachable'], ['blocked:source_restricted', 'Blocked: source restricted'], ['blocked:source_dead', 'Blocked: source dead'], ['blocked:unstamped', 'Blocked: no rung stamped']];
   const top = L.nextStep.ocrBacklog.slice(0, 8), rest = L.nextStep.ocrBacklog.slice(8).reduce((o, r) => ({ books: o.books + r.books, pages: o.pages + r.pages }), { books: 0, pages: 0 });
   const totOcr = L.nextStep.ocrBacklog.reduce((a, r) => a + r.pages, 0), ch = L.nextStep.ocrBacklog.find(r => r.name === 'Chinese');
   return (

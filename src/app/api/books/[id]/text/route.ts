@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { NOT_REPEAT_CAPTURE, isReaderListedPage } from '@/lib/reader-pages';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
@@ -6,12 +7,15 @@ import { logBotRead } from '@/lib/bot-reads';
 import { getChapterTexts, CHAPTER_TEXT_FIELDS_TRANSLATION } from '@/lib/chapter-text';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
 import { checkPageBudget, bulkBudgetExceededBody } from '@/lib/api-budget';
-import { isBookReadable } from '@/lib/book-access';
-import { CONTENT_LICENSE } from '@/lib/license-info';
+import { isBookReadable, canReadHiddenBook, hasCronAuth } from '@/lib/book-access';
+import { isProtectedPartnerBook, partnerTextAccess } from '@/lib/partner-access';
+import { PARTNER_TERMS_URL } from '@/lib/partner-terms-version';
+import { CONTENT_LICENSE, AI_TRAINING_NOTICE } from '@/lib/license-info';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { markForExport } from '@/lib/provenance';
 import { attributionBlock, attributionMeta, clientKeyFor, extractionRef, keyRef } from '@/lib/bot-attribution';
 import { poolRefFor } from '@/lib/suspected-pool';
+import { traceRefFor } from '@/lib/trace-ref';
 import { getTranslation } from '@/lib/page-translations';
 import { isMeteredAnonRequest } from '@/lib/metered-gate';
 import { serveEnglishOriginalPage, isEnglishOriginalBook, ENGLISH_ORIGINAL_BOOK_PROJECTION } from '@/lib/english-original-text';
@@ -34,6 +38,12 @@ function cleanText(text: string | undefined | null): string {
 }
 
 export const maxDuration = 30;
+
+// A body here depends on who asked (the clamp, the budget, the caller's ref), and
+// a shared-cache hit never reaches this route, so it would skip the clamp and the
+// budget for whoever came next (#8098). No answer from this route may be stored by
+// a shared cache.
+const NO_SHARED_CACHE = 'private, no-store';
 
 /**
  * Said once per English-edition response (#7100): the reading text is the
@@ -101,7 +111,7 @@ export const GET = withApiAuth(async (
     const enforce = process.env.API_AUTH_ENFORCE === '1';
     const budget = await checkPageBudget({ identity, request });
     if (enforce && !budget.allowed) {
-      return NextResponse.json(bulkBudgetExceededBody(budget), {
+      return NextResponse.json(bulkBudgetExceededBody(budget, `https://sourcelibrary.org/book/${encodeURIComponent(bookId)}`), {
         status: 429,
         headers: { 'Retry-After': '3600' },
       });
@@ -112,7 +122,7 @@ export const GET = withApiAuth(async (
     // Find book by id or _id. `translation_state.english_original`: on an
     // English edition an English leaf serves its transcription, never a stored
     // English-to-English rewording (#7100).
-    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
+    const TEXT_BOOK_PROJECTION = { id: 1, title: 1, display_title: 1, author: 1, published: 1, year: 1, pages_count: 1, visible: 1, tenantId: 1, ...ENGLISH_ORIGINAL_BOOK_PROJECTION };
     let book = await db.collection('books').findOne(
       { id: bookId },
       { projection: TEXT_BOOK_PROJECTION }
@@ -142,7 +152,16 @@ export const GET = withApiAuth(async (
     // otherwise hand the reader wall's content out the side door.
     const isBotRequest = isBot(request) && !(await isTrustedBot(request));
     const meteredAnon = !isBotRequest && (await isMeteredAnonRequest(request));
-    const botPageLimit = isBotRequest || meteredAnon ? botMaxPage(book.pages_count || 0) : undefined;
+    // A protected partner's book (#8098): what is not a browser, a credential or
+    // a proven crawler gets the same first 20%; a client that says it reads for
+    // a person gets its next stretch per call instead.
+    const partnerAccess = !hasCronAuth(request) && (await isProtectedPartnerBook(book))
+      ? partnerTextAccess(request, identity, isBotRequest)
+      : { kind: 'full' as const };
+    const partnerPreview = partnerAccess.kind === 'preview';
+    const partnerWindow = partnerAccess.kind === 'window' ? partnerAccess.pages : undefined;
+    const clampedCaller = isBotRequest || partnerPreview;
+    const botPageLimit = clampedCaller || meteredAnon ? botMaxPage(book.pages_count || 0) : undefined;
     if (isBot(request)) {
       // Chapter mode resolves its span later; the log keeps the requested span,
       // and an unbounded request is clamped whenever the book exceeds the ceiling.
@@ -176,13 +195,22 @@ export const GET = withApiAuth(async (
     //     address per request) gets a per-pool ref keyed on its user-agent
     //     string (#6950). Invisible only: the string is byte-identical to a
     //     real browser, so a real reader sharing it must not see a notice.
-    const pool = !isBotRequest && !(identity.kind === 'apikey' && identity.apiKeyId)
+    const pool = !clampedCaller && !(identity.kind === 'apikey' && identity.apiKeyId)
       ? await poolRefFor(request) : undefined;
-    const ref = isBotRequest ? extractionRef(clientKeyFor(request), new Date())
+    const baseRef = clampedCaller ? extractionRef(clientKeyFor(request), new Date())
       : identity.kind === 'apikey' && identity.apiKeyId ? keyRef(identity.apiKeyId)
       : pool;
     // Visible notice: unchanged for bots and key holders; never for a pool.
-    const noticeRef = pool ? undefined : ref;
+    const noticeRef = pool ? undefined : baseRef;
+    // Traced bulk copies (#8150 slice 8, dark unless TRACED_COPIES=on): a key
+    // or signed-in account gets the opaque SLA- ref in the invisible colophon
+    // instead. Never a bot (it keeps its campaign ref) and never the visible
+    // notice. This response is always private, no-store.
+    const traced = clampedCaller ? undefined : traceRefFor({
+      apiKeyId: identity.kind === 'apikey' ? identity.apiKeyId : null,
+      userId: identity.kind === 'session' ? identity.userId : null,
+    });
+    const ref = traced ?? baseRef;
     const mark = (text: string) => (text ? markForExport(text, resolvedBookId, { ref }) : text);
     const bookSubject = {
       title: book.display_title || book.title,
@@ -218,12 +246,22 @@ export const GET = withApiAuth(async (
     // an English leaf is a model's rewording, so the chapter is served from its
     // pages, each resolved to the transcription.
     let localizedChapterRange: { from: number; to: number; title?: string } | null = null;
-    if (chapterParam !== null && (isLocalized || englishEdition)) {
+    //
+    // A clamped or windowed caller takes it too: a stored chapter can run past its
+    // limit (a one-chapter book is the whole book), and pages can be cut (#8098).
+    if (chapterParam !== null && (isLocalized || englishEdition || botPageLimit !== undefined || partnerWindow !== undefined)) {
       const chapterIndex = parseInt(chapterParam);
       const withChapters = await db.collection('books').findOne(
-        { id: resolvedBookId }, { projection: { chapters: 1 } });
+        { id: resolvedBookId }, { projection: { chapters: 1, reading_summary: 1, pages_count: 1 } });
       const ch = withChapters?.chapters?.[chapterIndex];
       if (!ch) return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+      // Bot page limit: block chapters that start beyond the accessible range
+      if (botPageLimit !== undefined && ch.pageStart > botPageLimit) {
+        return NextResponse.json(
+          botGateResponse({ ...book, ...withChapters, id: resolvedBookId }),
+          { status: 200, headers: { 'Cache-Control': NO_SHARED_CACHE } }
+        );
+      }
       localizedChapterRange = { from: ch.pageStart, to: ch.pageEnd ?? ch.pageStart, title: ch.titleEn || ch.title };
     }
 
@@ -231,21 +269,6 @@ export const GET = withApiAuth(async (
       const chapterIndex = parseInt(chapterParam);
       if (isNaN(chapterIndex) || chapterIndex < 0) {
         return NextResponse.json({ error: 'chapter must be a non-negative integer' }, { status: 400 });
-      }
-
-      // Bot page limit: block chapters that start beyond the accessible range
-      if (botPageLimit !== undefined) {
-        const bookWithChapters = await db.collection('books').findOne(
-          { id: resolvedBookId },
-          { projection: { chapters: 1, reading_summary: 1, pages_count: 1 } },
-        );
-        const chapter = bookWithChapters?.chapters?.[chapterIndex];
-        if (chapter && chapter.pageStart > botPageLimit) {
-          return NextResponse.json(
-            botGateResponse({ ...book, ...bookWithChapters, id: resolvedBookId }),
-            { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
-          );
-        }
       }
 
       // `both` and `ocr` read `ocr_text` (ocr falls back to `text`); only a
@@ -295,7 +318,7 @@ export const GET = withApiAuth(async (
         return new Response(header, {
           headers: {
             'Content-Type': 'text/plain; charset=utf-8',
-            'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
+            'Cache-Control': NO_SHARED_CACHE,
             'X-Pages-Served': String(chapterPageCount),
             ...budgetHdrs,
           },
@@ -324,7 +347,7 @@ export const GET = withApiAuth(async (
         ...(noticeRef ? { attribution: attributionMeta(noticeRef) } : {}),
       }, {
         headers: {
-          'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
+          'Cache-Control': NO_SHARED_CACHE,
           'X-Pages-Served': String(chapterPageCount),
             ...budgetHdrs,
         },
@@ -337,14 +360,20 @@ export const GET = withApiAuth(async (
     // where one big range would otherwise serve past the daily cap in a single call.
     const startPage = localizedChapterRange?.from ?? fromPage ?? 1;
     const budgetMaxPage = budgetPageCap !== undefined ? startPage + budgetPageCap - 1 : undefined;
-    const pageCaps = [localizedChapterRange?.to ?? toPage, botPageLimit, budgetMaxPage].filter((v): v is number => v !== undefined);
+    const windowMaxPage = partnerWindow !== undefined ? Math.max(startPage, 1) + partnerWindow - 1 : undefined;
+    const pageCaps = [localizedChapterRange?.to ?? toPage, botPageLimit, budgetMaxPage, windowMaxPage].filter((v): v is number => v !== undefined);
     const effectiveToPage = pageCaps.length ? Math.min(...pageCaps) : undefined;
 
     const effectiveFromPage = localizedChapterRange?.from ?? fromPage;
-    const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
-    if (effectiveFromPage !== undefined || effectiveToPage !== undefined) {
+    // A repeat capture (#5056) is a second copy of a leaf already served; leave it out.
+    // The reader's list is the public book: a negative number is a soft-hidden
+    // duplicate or split parent, and only the pipeline and editors see those (#8098).
+    const seesHiddenRows = hasCronAuth(request) || (identity.kind === 'session' && await canReadHiddenBook(request));
+    const pageFloor = seesHiddenRows ? effectiveFromPage : Math.max(effectiveFromPage ?? 0, 0);
+    const pageFilter: Record<string, unknown> = { book_id: resolvedBookId, ...NOT_REPEAT_CAPTURE };
+    if (pageFloor !== undefined || effectiveToPage !== undefined) {
       pageFilter.page_number = {};
-      if (effectiveFromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = effectiveFromPage;
+      if (pageFloor !== undefined) (pageFilter.page_number as Record<string, number>).$gte = pageFloor;
       if (effectiveToPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = effectiveToPage;
     }
 
@@ -355,7 +384,7 @@ export const GET = withApiAuth(async (
       && requestedEnd > budgetMaxPage;
 
     // Build projection — only fetch what's needed
-    const projection: Record<string, number> = { page_number: 1, _id: 0 };
+    const projection: Record<string, number> = { page_number: 1, page_type: 1, _id: 0 };
     if (content === 'ocr' || content === 'both') {
       projection['ocr.data'] = 1;
       if (includeMetadata) {
@@ -381,10 +410,7 @@ export const GET = withApiAuth(async (
         }
       }
     }
-    if (includeMetadata) {
-      projection.page_type = 1;
-      projection.columns = 1;
-    }
+    if (includeMetadata) projection.columns = 1;
     // The per-page English-original test reads the OCR, so a translation-only
     // export of an English edition still needs it (it is not emitted).
     if (englishEdition) projection['ocr.data'] = 1;
@@ -394,7 +420,22 @@ export const GET = withApiAuth(async (
       .project(projection)
       .sort({ page_number: 1 })
       .toArray())
+      .filter((p) => seesHiddenRows || isReaderListedPage(p))
       .map((p) => serveEnglishOriginalPage(p, book, { modernized: false }));
+
+    // The window cut this call short: say where the next one starts, so a reader's
+    // assistant carries on and nobody takes the cut for the end of the book.
+    const windowTruncated = windowMaxPage !== undefined
+      && effectiveToPage === windowMaxPage
+      && (localizedChapterRange?.to ?? requestedEnd) > windowMaxPage;
+    const windowNote = windowTruncated
+      ? `Served up to p.${windowMaxPage}: this collection is served ${partnerWindow} pages per call. Ask again with from=${windowMaxPage! + 1} to continue.`
+      : undefined;
+
+    // A program reading a protected partner's book is told the terms in the response itself.
+    const partnerTermsNote = partnerAccess.kind !== 'full'
+      ? `This book is from the Embassy of the Free Mind's collection. Terms of use: ${PARTNER_TERMS_URL}`
+      : undefined;
 
     // Plain text format — concatenated text with page markers
     if (format === 'plain') {
@@ -407,7 +448,10 @@ export const GET = withApiAuth(async (
       if (localizedChapterRange) lines.push(`# Chapter: ${localizedChapterRange.title ?? chapterParam} (pages ${localizedChapterRange.from}–${localizedChapterRange.to})`);
       lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
       lines.push(`# Source: https://sourcelibrary.org/book/${resolvedBookId}`);
-      lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
+      lines.push(`# License: CC BY-NC-SA 4.0 (https://sourcelibrary.org/terms)`);
+      lines.push(`# ${AI_TRAINING_NOTICE}`);
+      if (windowNote) lines.push(`# ${windowNote}`);
+      if (partnerTermsNote) lines.push(`# ${partnerTermsNote}`);
       lines.push('');
 
       // Notice once at the head, fenced so it can never read as page text.
@@ -450,11 +494,7 @@ export const GET = withApiAuth(async (
       return new Response(lines.join('\n'), {
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',
-          // The body is request-dependent once a ref is woven in (the notice
-          // and the campaign ref differ per caller), so it must never enter a
-          // shared cache — a cached bot-marked body would otherwise be served
-          // to ordinary readers.
-          'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
+          'Cache-Control': NO_SHARED_CACHE,
           'X-Pages-Served': String(pages.length),
           ...budgetHdrs,
         },
@@ -505,7 +545,9 @@ export const GET = withApiAuth(async (
           pageEnd: localizedChapterRange.to,
           note: isLocalized
             ? `Chapter text is materialized in English only; this "${requestedLang}" response is assembled from the chapter's page range.`
-            : 'English edition: this chapter is assembled from its pages\' transcriptions, not the materialized chapter text.',
+            : englishEdition
+              ? 'English edition: this chapter is assembled from its pages\' transcriptions, not the materialized chapter text.'
+              : 'This chapter is assembled from the pages of its range that this call may read.',
         },
       } : {}),
       total_pages: book.pages_count || pages.length,
@@ -517,6 +559,15 @@ export const GET = withApiAuth(async (
           pages_total: book.pages_count || pages.length,
           full_access: 'Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server',
           partnership: 'https://sourcelibrary.org/llms.txt',
+        },
+      } : {}),
+      ...(partnerTermsNote ? { terms_of_use: partnerTermsNote } : {}),
+      ...(windowTruncated ? {
+        reading_window: {
+          truncated: true,
+          last_page_served: windowMaxPage,
+          next_from: windowMaxPage! + 1,
+          note: windowNote,
         },
       } : {}),
       ...(budgetTruncated ? {
@@ -580,11 +631,7 @@ export const GET = withApiAuth(async (
 
     return NextResponse.json(result, {
       headers: {
-        // Ref-carrying bodies are per-caller — a shared cache would serve one
-        // caller's ref to everyone. The other branches already guard this; the
-        // JSON branch was the one unconditional `public` left (latent since
-        // bot refs shipped).
-        'Cache-Control': ref ? 'private, no-store' : 'public, max-age=3600',
+        'Cache-Control': NO_SHARED_CACHE,
         'X-Pages-Served': String(pagesWithContent.length),
         ...budgetHdrs,
       },

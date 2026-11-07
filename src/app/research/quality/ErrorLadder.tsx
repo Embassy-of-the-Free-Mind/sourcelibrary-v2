@@ -125,7 +125,6 @@ export default function ErrorLadder() {
             </div>
           </div>
           <p className="text-sm text-muted leading-relaxed mt-3">{r.note}</p>
-          <p className="text-sm text-primary leading-relaxed mt-2"><span className="font-semibold">What this level allows.</span> {r.allows}</p>
         </Rung>
       ))}
 
@@ -148,7 +147,6 @@ export default function ErrorLadder() {
             </div>
           </div>
           <p className="text-sm text-muted leading-relaxed mt-3"><span className="font-semibold">Judge.</span> {r.defect}</p>
-          <p className="text-sm text-primary leading-relaxed mt-2"><span className="font-semibold">What this level allows.</span> {r.allows}</p>
         </Rung>
       ))}
 

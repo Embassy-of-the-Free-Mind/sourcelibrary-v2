@@ -23,7 +23,8 @@
 import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 import {
-  loadWatchlist, classesForLanguage, screenPage, TRANSLATION_PREFILTER, OCR_PREFILTER,
+  loadWatchlist, classesForLanguage, screenPage,
+  TRANSLATION_PREFILTER as regexFilterTranslation, OCR_PREFILTER as regexFilterOcr,
 } from '../lib/loaded-terms.mjs';
 
 const args = process.argv.slice(2);
@@ -78,9 +79,9 @@ for (const b of books) {
   const cls = classesForLanguage(classes, b.language, b.collections);
   if (!cls.length) { skippedEnglish++; continue; }
   const cursor = db.collection('pages').find(
-    { book_id: b.id, 'translation.data': TRANSLATION_PREFILTER, 'ocr.data': OCR_PREFILTER },
+    { book_id: b.id, 'translation.data': regexFilterTranslation, 'ocr.data': regexFilterOcr },
     { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, 'word_alignment.pairs': 1 } },
-  );
+  ).batchSize(1000);
   for await (const p of cursor) {
     pagesScanned++;
     const hits = screenPage(

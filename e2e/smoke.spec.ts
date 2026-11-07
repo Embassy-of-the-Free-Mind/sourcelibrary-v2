@@ -26,7 +26,6 @@ const FAST_PAGES = [
   '/encyclopedia',
   '/encyclopedia/Archimedes',
   '/shwep',
-  '/rithmomachia',
   '/taxonomy',
   '/learn',
   '/dataset',

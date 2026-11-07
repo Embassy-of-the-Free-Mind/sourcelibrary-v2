@@ -284,7 +284,7 @@ export function RosterTable() {
           ))}
         </ul>
         <p className="text-sm text-stone-600 mt-2 max-w-3xl">
-          Checked {ROSTER.checked}. The command-line models are the ones <code>agy models</code> listed that day
+          Checked {ROSTER.checked}. The command-line models are the ones Google&rsquo;s Antigravity command-line tool (<code>agy models</code>) listed that day
           ({listOf(ROSTER.agy_models.models.filter(x => !/^claude-/.test(x)))}; Claude is never run through it).{' '}
           <a href={`${GH}${ROSTER.agy_models.source}`} className="underline decoration-stone-300 hover:text-amber-800">Recorded output</a>.
         </p>

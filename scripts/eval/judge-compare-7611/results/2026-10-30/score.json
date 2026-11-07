@@ -1,0 +1,2061 @@
+{
+ "generated_at": "2026-10-31T00:59:51.946Z",
+ "calls": {
+  "flash": {
+   "calls": 585,
+   "parsed": 539,
+   "failed": {
+    "unparsed": 15
+   }
+  },
+  "argon": {
+   "calls": 589,
+   "parsed": 540,
+   "failed": {
+    "timeout": 4,
+    "image_not_opened": 15
+   }
+  }
+ },
+ "planted": {
+  "opus": {
+   "caught": {
+    "k": 143,
+    "n": 144,
+    "rate": 0.993,
+    "wilson95": [
+     0.962,
+     0.999
+    ]
+   },
+   "caught_ci_book": [
+    0.979,
+    1
+   ],
+   "named": {
+    "k": 142,
+    "n": 144,
+    "rate": 0.986,
+    "wilson95": [
+     0.951,
+     0.996
+    ]
+   },
+   "clean_reaccepted": {
+    "k": 35,
+    "n": 36,
+    "rate": 0.972,
+    "wilson95": [
+     0.858,
+     0.995
+    ]
+   },
+   "clean_false_alarm": {
+    "k": 1,
+    "n": 36,
+    "rate": 0.028,
+    "wilson95": [
+     0.005,
+     0.142
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "C": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "D": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "E": {
+     "k": 35,
+     "n": 36,
+     "rate": 0.972,
+     "wilson95": [
+      0.858,
+      0.995
+     ]
+    }
+   },
+   "by_lang": {
+    "French": {
+     "k": 47,
+     "n": 48,
+     "rate": 0.979,
+     "wilson95": [
+      0.891,
+      0.996
+     ]
+    },
+    "German": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "wilson95": [
+      0.926,
+      1
+     ]
+    },
+    "Latin": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "wilson95": [
+      0.926,
+      1
+     ]
+    }
+   }
+  },
+  "flash": {
+   "caught": {
+    "k": 130,
+    "n": 144,
+    "rate": 0.903,
+    "wilson95": [
+     0.843,
+     0.941
+    ]
+   },
+   "caught_ci_book": [
+    0.861,
+    0.944
+   ],
+   "named": {
+    "k": 126,
+    "n": 144,
+    "rate": 0.875,
+    "wilson95": [
+     0.811,
+     0.919
+    ]
+   },
+   "clean_reaccepted": {
+    "k": 30,
+    "n": 36,
+    "rate": 0.833,
+    "wilson95": [
+     0.681,
+     0.921
+    ]
+   },
+   "clean_false_alarm": {
+    "k": 6,
+    "n": 36,
+    "rate": 0.167,
+    "wilson95": [
+     0.079,
+     0.319
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 35,
+     "n": 36,
+     "rate": 0.972,
+     "wilson95": [
+      0.858,
+      0.995
+     ]
+    },
+    "C": {
+     "k": 35,
+     "n": 36,
+     "rate": 0.972,
+     "wilson95": [
+      0.858,
+      0.995
+     ]
+    },
+    "D": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "E": {
+     "k": 24,
+     "n": 36,
+     "rate": 0.667,
+     "wilson95": [
+      0.503,
+      0.798
+     ]
+    }
+   },
+   "by_lang": {
+    "French": {
+     "k": 42,
+     "n": 48,
+     "rate": 0.875,
+     "wilson95": [
+      0.753,
+      0.941
+     ]
+    },
+    "German": {
+     "k": 44,
+     "n": 48,
+     "rate": 0.917,
+     "wilson95": [
+      0.804,
+      0.967
+     ]
+    },
+    "Latin": {
+     "k": 44,
+     "n": 48,
+     "rate": 0.917,
+     "wilson95": [
+      0.804,
+      0.967
+     ]
+    }
+   }
+  },
+  "argon": {
+   "caught": {
+    "k": 143,
+    "n": 144,
+    "rate": 0.993,
+    "wilson95": [
+     0.962,
+     0.999
+    ]
+   },
+   "caught_ci_book": [
+    0.979,
+    1
+   ],
+   "named": {
+    "k": 142,
+    "n": 144,
+    "rate": 0.986,
+    "wilson95": [
+     0.951,
+     0.996
+    ]
+   },
+   "clean_reaccepted": {
+    "k": 33,
+    "n": 36,
+    "rate": 0.917,
+    "wilson95": [
+     0.782,
+     0.971
+    ]
+   },
+   "clean_false_alarm": {
+    "k": 3,
+    "n": 36,
+    "rate": 0.083,
+    "wilson95": [
+     0.029,
+     0.218
+    ]
+   },
+   "by_kind": {
+    "B": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "C": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "D": {
+     "k": 36,
+     "n": 36,
+     "rate": 1,
+     "wilson95": [
+      0.904,
+      1
+     ]
+    },
+    "E": {
+     "k": 35,
+     "n": 36,
+     "rate": 0.972,
+     "wilson95": [
+      0.858,
+      0.995
+     ]
+    }
+   },
+   "by_lang": {
+    "French": {
+     "k": 47,
+     "n": 48,
+     "rate": 0.979,
+     "wilson95": [
+      0.891,
+      0.996
+     ]
+    },
+    "German": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "wilson95": [
+      0.926,
+      1
+     ]
+    },
+    "Latin": {
+     "k": 48,
+     "n": 48,
+     "rate": 1,
+     "wilson95": [
+      0.926,
+      1
+     ]
+    }
+   }
+  }
+ },
+ "real": {
+  "flash": {
+   "GEM": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 51,
+     "n": 90,
+     "rate": 0.567,
+     "wilson95": [
+      0.464,
+      0.664
+     ]
+    },
+    "pass_opus": {
+     "k": 48,
+     "n": 90,
+     "rate": 0.533,
+     "wilson95": [
+      0.431,
+      0.633
+     ]
+    },
+    "pass_diff": 0.033,
+    "pass_diff_ci_book": [
+     -0.056,
+     0.122
+    ],
+    "agree": {
+     "k": 73,
+     "n": 90,
+     "rate": 0.811,
+     "wilson95": [
+      0.718,
+      0.879
+     ]
+    },
+    "agree_ci_book": [
+     0.733,
+     0.889
+    ],
+    "kappa": 0.619,
+    "gemini_pass_opus_fail": 10,
+    "gemini_fail_opus_pass": 7,
+    "both_fail_class_overlap": {
+     "k": 29,
+     "n": 32,
+     "rate": 0.906,
+     "wilson95": [
+      0.758,
+      0.968
+     ]
+    },
+    "wrong_text": {
+     "gemini": 35,
+     "opus": 36
+    },
+    "fidelity_mean": {
+     "gemini": 4.01,
+     "opus": 3.71
+    },
+    "by_lang": {
+     "French": {
+      "n": 15,
+      "pass_gemini": 14,
+      "pass_opus": 14,
+      "agree": 13
+     },
+     "Chinese": {
+      "n": 15,
+      "pass_gemini": 3,
+      "pass_opus": 1,
+      "agree": 13
+     },
+     "German": {
+      "n": 15,
+      "pass_gemini": 12,
+      "pass_opus": 11,
+      "agree": 12
+     },
+     "Hebrew": {
+      "n": 15,
+      "pass_gemini": 6,
+      "pass_opus": 5,
+      "agree": 14
+     },
+     "Latin": {
+      "n": 15,
+      "pass_gemini": 6,
+      "pass_opus": 10,
+      "agree": 9
+     },
+     "Arabic": {
+      "n": 15,
+      "pass_gemini": 10,
+      "pass_opus": 7,
+      "agree": 12
+     }
+    }
+   },
+   "GPU": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 14,
+     "n": 90,
+     "rate": 0.156,
+     "wilson95": [
+      0.095,
+      0.244
+     ]
+    },
+    "pass_opus": {
+     "k": 43,
+     "n": 90,
+     "rate": 0.478,
+     "wilson95": [
+      0.378,
+      0.58
+     ]
+    },
+    "pass_diff": -0.322,
+    "pass_diff_ci_book": [
+     -0.433,
+     -0.222
+    ],
+    "agree": {
+     "k": 57,
+     "n": 90,
+     "rate": 0.633,
+     "wilson95": [
+      0.53,
+      0.726
+     ]
+    },
+    "agree_ci_book": [
+     0.533,
+     0.733
+    ],
+    "kappa": 0.244,
+    "gemini_pass_opus_fail": 2,
+    "gemini_fail_opus_pass": 31,
+    "both_fail_class_overlap": {
+     "k": 40,
+     "n": 45,
+     "rate": 0.889,
+     "wilson95": [
+      0.765,
+      0.952
+     ]
+    },
+    "wrong_text": {
+     "gemini": 72,
+     "opus": 39
+    },
+    "fidelity_mean": {
+     "gemini": 3.03,
+     "opus": 3.58
+    },
+    "by_lang": {
+     "Chinese": {
+      "n": 45,
+      "pass_gemini": 8,
+      "pass_opus": 17,
+      "agree": 34
+     },
+     "Tibetan": {
+      "n": 45,
+      "pass_gemini": 6,
+      "pass_opus": 26,
+      "agree": 23
+     }
+    }
+   },
+   "GPU>GEM": {
+    "n": 89,
+    "books": 89,
+    "pass_gemini": {
+     "k": 57,
+     "n": 89,
+     "rate": 0.64,
+     "wilson95": [
+      0.537,
+      0.732
+     ]
+    },
+    "pass_opus": {
+     "k": 66,
+     "n": 89,
+     "rate": 0.742,
+     "wilson95": [
+      0.642,
+      0.821
+     ]
+    },
+    "pass_diff": -0.101,
+    "pass_diff_ci_book": [
+     -0.202,
+     0
+    ],
+    "agree": {
+     "k": 66,
+     "n": 89,
+     "rate": 0.742,
+     "wilson95": [
+      0.642,
+      0.821
+     ]
+    },
+    "agree_ci_book": [
+     0.652,
+     0.831
+    ],
+    "kappa": 0.402,
+    "gemini_pass_opus_fail": 7,
+    "gemini_fail_opus_pass": 16,
+    "both_fail_class_overlap": {
+     "k": 15,
+     "n": 16,
+     "rate": 0.938,
+     "wilson95": [
+      0.717,
+      0.989
+     ]
+    },
+    "wrong_text": {
+     "gemini": 31,
+     "opus": 19
+    },
+    "fidelity_mean": {
+     "gemini": 4.31,
+     "opus": 4.34
+    },
+    "by_lang": {
+     "Latin": {
+      "n": 40,
+      "pass_gemini": 26,
+      "pass_opus": 34,
+      "agree": 28
+     },
+     "Chinese": {
+      "n": 40,
+      "pass_gemini": 22,
+      "pass_opus": 23,
+      "agree": 29
+     },
+     "Italian": {
+      "n": 9,
+      "pass_gemini": 9,
+      "pass_opus": 9,
+      "agree": 9
+     }
+    }
+   },
+   "TR": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 59,
+     "n": 90,
+     "rate": 0.656,
+     "wilson95": [
+      0.553,
+      0.746
+     ]
+    },
+    "pass_opus": {
+     "k": 57,
+     "n": 90,
+     "rate": 0.633,
+     "wilson95": [
+      0.53,
+      0.726
+     ]
+    },
+    "pass_diff": 0.022,
+    "pass_diff_ci_book": [
+     -0.078,
+     0.122
+    ],
+    "agree": {
+     "k": 66,
+     "n": 90,
+     "rate": 0.733,
+     "wilson95": [
+      0.634,
+      0.814
+     ]
+    },
+    "agree_ci_book": [
+     0.644,
+     0.822
+    ],
+    "kappa": 0.418,
+    "gemini_pass_opus_fail": 13,
+    "gemini_fail_opus_pass": 11,
+    "both_fail_class_overlap": {
+     "k": 16,
+     "n": 20,
+     "rate": 0.8,
+     "wilson95": [
+      0.584,
+      0.919
+     ]
+    },
+    "wrong_text": {
+     "gemini": 26,
+     "opus": 22
+    },
+    "fidelity_mean": {
+     "gemini": 4.27,
+     "opus": 3.78
+    },
+    "by_lang": {
+     "German": {
+      "n": 60,
+      "pass_gemini": 40,
+      "pass_opus": 37,
+      "agree": 41
+     },
+     "Classical Chinese": {
+      "n": 30,
+      "pass_gemini": 19,
+      "pass_opus": 20,
+      "agree": 25
+     }
+    }
+   },
+   "ALL": {
+    "n": 359,
+    "books": 339,
+    "pass_gemini": {
+     "k": 181,
+     "n": 359,
+     "rate": 0.504,
+     "wilson95": [
+      0.453,
+      0.556
+     ]
+    },
+    "pass_opus": {
+     "k": 214,
+     "n": 359,
+     "rate": 0.596,
+     "wilson95": [
+      0.545,
+      0.646
+     ]
+    },
+    "pass_diff": -0.092,
+    "pass_diff_ci_book": [
+     -0.144,
+     -0.039
+    ],
+    "agree": {
+     "k": 262,
+     "n": 359,
+     "rate": 0.73,
+     "wilson95": [
+      0.682,
+      0.773
+     ]
+    },
+    "agree_ci_book": [
+     0.686,
+     0.774
+    ],
+    "kappa": 0.459,
+    "gemini_pass_opus_fail": 32,
+    "gemini_fail_opus_pass": 65,
+    "both_fail_class_overlap": {
+     "k": 100,
+     "n": 113,
+     "rate": 0.885,
+     "wilson95": [
+      0.813,
+      0.932
+     ]
+    },
+    "wrong_text": {
+     "gemini": 164,
+     "opus": 116
+    },
+    "fidelity_mean": {
+     "gemini": 3.91,
+     "opus": 3.85
+    },
+    "by_lang": {
+     "French": {
+      "n": 15,
+      "pass_gemini": 14,
+      "pass_opus": 14,
+      "agree": 13
+     },
+     "German": {
+      "n": 75,
+      "pass_gemini": 52,
+      "pass_opus": 48,
+      "agree": 53
+     },
+     "Latin": {
+      "n": 55,
+      "pass_gemini": 32,
+      "pass_opus": 44,
+      "agree": 37
+     },
+     "Chinese": {
+      "n": 100,
+      "pass_gemini": 33,
+      "pass_opus": 41,
+      "agree": 76
+     },
+     "Tibetan": {
+      "n": 45,
+      "pass_gemini": 6,
+      "pass_opus": 26,
+      "agree": 23
+     },
+     "Classical Chinese": {
+      "n": 30,
+      "pass_gemini": 19,
+      "pass_opus": 20,
+      "agree": 25
+     },
+     "Hebrew": {
+      "n": 15,
+      "pass_gemini": 6,
+      "pass_opus": 5,
+      "agree": 14
+     },
+     "Italian": {
+      "n": 9,
+      "pass_gemini": 9,
+      "pass_opus": 9,
+      "agree": 9
+     },
+     "Arabic": {
+      "n": 15,
+      "pass_gemini": 10,
+      "pass_opus": 7,
+      "agree": 12
+     }
+    }
+   },
+   "self_preference_GEM_minus_GPU": {
+    "diff": 0.356,
+    "ci_book": [
+     0.22,
+     0.502
+    ]
+   },
+   "self_preference_GPUGEM_minus_GPU": {
+    "diff": 0.221,
+    "ci_book": [
+     0.078,
+     0.367
+    ]
+   },
+   "self_preference_within_Chinese": {
+    "n": {
+     "GEM": 15,
+     "GPU": 45,
+     "GPU>GEM": 40
+    },
+    "GEM_minus_GPU": {
+     "diff": 0.333,
+     "ci_book": [
+      0.13,
+      0.576
+     ]
+    },
+    "GPUGEM_minus_GPU": {
+     "diff": 0.175,
+     "ci_book": [
+      -0.036,
+      0.382
+     ]
+    }
+   }
+  },
+  "argon": {
+   "GEM": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 46,
+     "n": 90,
+     "rate": 0.511,
+     "wilson95": [
+      0.41,
+      0.612
+     ]
+    },
+    "pass_opus": {
+     "k": 48,
+     "n": 90,
+     "rate": 0.533,
+     "wilson95": [
+      0.431,
+      0.633
+     ]
+    },
+    "pass_diff": -0.022,
+    "pass_diff_ci_book": [
+     -0.078,
+     0.033
+    ],
+    "agree": {
+     "k": 84,
+     "n": 90,
+     "rate": 0.933,
+     "wilson95": [
+      0.862,
+      0.969
+     ]
+    },
+    "agree_ci_book": [
+     0.878,
+     0.978
+    ],
+    "kappa": 0.866,
+    "gemini_pass_opus_fail": 2,
+    "gemini_fail_opus_pass": 4,
+    "both_fail_class_overlap": {
+     "k": 38,
+     "n": 40,
+     "rate": 0.95,
+     "wilson95": [
+      0.835,
+      0.986
+     ]
+    },
+    "wrong_text": {
+     "gemini": 41,
+     "opus": 36
+    },
+    "fidelity_mean": {
+     "gemini": 3.84,
+     "opus": 3.71
+    },
+    "by_lang": {
+     "French": {
+      "n": 15,
+      "pass_gemini": 15,
+      "pass_opus": 14,
+      "agree": 14
+     },
+     "Chinese": {
+      "n": 15,
+      "pass_gemini": 1,
+      "pass_opus": 1,
+      "agree": 15
+     },
+     "German": {
+      "n": 15,
+      "pass_gemini": 10,
+      "pass_opus": 11,
+      "agree": 14
+     },
+     "Hebrew": {
+      "n": 15,
+      "pass_gemini": 6,
+      "pass_opus": 5,
+      "agree": 14
+     },
+     "Latin": {
+      "n": 15,
+      "pass_gemini": 7,
+      "pass_opus": 10,
+      "agree": 12
+     },
+     "Arabic": {
+      "n": 15,
+      "pass_gemini": 7,
+      "pass_opus": 7,
+      "agree": 15
+     }
+    }
+   },
+   "GPU": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 29,
+     "n": 90,
+     "rate": 0.322,
+     "wilson95": [
+      0.235,
+      0.424
+     ]
+    },
+    "pass_opus": {
+     "k": 43,
+     "n": 90,
+     "rate": 0.478,
+     "wilson95": [
+      0.378,
+      0.58
+     ]
+    },
+    "pass_diff": -0.156,
+    "pass_diff_ci_book": [
+     -0.256,
+     -0.056
+    ],
+    "agree": {
+     "k": 68,
+     "n": 90,
+     "rate": 0.756,
+     "wilson95": [
+      0.658,
+      0.833
+     ]
+    },
+    "agree_ci_book": [
+     0.667,
+     0.844
+    ],
+    "kappa": 0.503,
+    "gemini_pass_opus_fail": 4,
+    "gemini_fail_opus_pass": 18,
+    "both_fail_class_overlap": {
+     "k": 41,
+     "n": 43,
+     "rate": 0.953,
+     "wilson95": [
+      0.845,
+      0.987
+     ]
+    },
+    "wrong_text": {
+     "gemini": 51,
+     "opus": 39
+    },
+    "fidelity_mean": {
+     "gemini": 3.44,
+     "opus": 3.58
+    },
+    "by_lang": {
+     "Chinese": {
+      "n": 45,
+      "pass_gemini": 17,
+      "pass_opus": 17,
+      "agree": 39
+     },
+     "Tibetan": {
+      "n": 45,
+      "pass_gemini": 12,
+      "pass_opus": 26,
+      "agree": 29
+     }
+    }
+   },
+   "GPU>GEM": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 62,
+     "n": 90,
+     "rate": 0.689,
+     "wilson95": [
+      0.587,
+      0.775
+     ]
+    },
+    "pass_opus": {
+     "k": 67,
+     "n": 90,
+     "rate": 0.744,
+     "wilson95": [
+      0.646,
+      0.823
+     ]
+    },
+    "pass_diff": -0.056,
+    "pass_diff_ci_book": [
+     -0.122,
+     0.011
+    ],
+    "agree": {
+     "k": 79,
+     "n": 90,
+     "rate": 0.878,
+     "wilson95": [
+      0.794,
+      0.93
+     ]
+    },
+    "agree_ci_book": [
+     0.811,
+     0.944
+    ],
+    "kappa": 0.7,
+    "gemini_pass_opus_fail": 3,
+    "gemini_fail_opus_pass": 8,
+    "both_fail_class_overlap": {
+     "k": 15,
+     "n": 20,
+     "rate": 0.75,
+     "wilson95": [
+      0.531,
+      0.888
+     ]
+    },
+    "wrong_text": {
+     "gemini": 24,
+     "opus": 19
+    },
+    "fidelity_mean": {
+     "gemini": 4.43,
+     "opus": 4.33
+    },
+    "by_lang": {
+     "Latin": {
+      "n": 40,
+      "pass_gemini": 34,
+      "pass_opus": 34,
+      "agree": 36
+     },
+     "Chinese": {
+      "n": 41,
+      "pass_gemini": 19,
+      "pass_opus": 24,
+      "agree": 34
+     },
+     "Italian": {
+      "n": 9,
+      "pass_gemini": 9,
+      "pass_opus": 9,
+      "agree": 9
+     }
+    }
+   },
+   "TR": {
+    "n": 90,
+    "books": 90,
+    "pass_gemini": {
+     "k": 54,
+     "n": 90,
+     "rate": 0.6,
+     "wilson95": [
+      0.497,
+      0.695
+     ]
+    },
+    "pass_opus": {
+     "k": 57,
+     "n": 90,
+     "rate": 0.633,
+     "wilson95": [
+      0.53,
+      0.726
+     ]
+    },
+    "pass_diff": -0.033,
+    "pass_diff_ci_book": [
+     -0.133,
+     0.067
+    ],
+    "agree": {
+     "k": 71,
+     "n": 90,
+     "rate": 0.789,
+     "wilson95": [
+      0.694,
+      0.86
+     ]
+    },
+    "agree_ci_book": [
+     0.7,
+     0.867
+    ],
+    "kappa": 0.554,
+    "gemini_pass_opus_fail": 8,
+    "gemini_fail_opus_pass": 11,
+    "both_fail_class_overlap": {
+     "k": 23,
+     "n": 25,
+     "rate": 0.92,
+     "wilson95": [
+      0.75,
+      0.978
+     ]
+    },
+    "wrong_text": {
+     "gemini": 31,
+     "opus": 22
+    },
+    "fidelity_mean": {
+     "gemini": 4.14,
+     "opus": 3.78
+    },
+    "by_lang": {
+     "German": {
+      "n": 60,
+      "pass_gemini": 34,
+      "pass_opus": 37,
+      "agree": 47
+     },
+     "Classical Chinese": {
+      "n": 30,
+      "pass_gemini": 20,
+      "pass_opus": 20,
+      "agree": 24
+     }
+    }
+   },
+   "ALL": {
+    "n": 360,
+    "books": 340,
+    "pass_gemini": {
+     "k": 191,
+     "n": 360,
+     "rate": 0.531,
+     "wilson95": [
+      0.479,
+      0.582
+     ]
+    },
+    "pass_opus": {
+     "k": 215,
+     "n": 360,
+     "rate": 0.597,
+     "wilson95": [
+      0.546,
+      0.647
+     ]
+    },
+    "pass_diff": -0.067,
+    "pass_diff_ci_book": [
+     -0.109,
+     -0.025
+    ],
+    "agree": {
+     "k": 302,
+     "n": 360,
+     "rate": 0.839,
+     "wilson95": [
+      0.797,
+      0.873
+     ]
+    },
+    "agree_ci_book": [
+     0.802,
+     0.877
+    ],
+    "kappa": 0.674,
+    "gemini_pass_opus_fail": 17,
+    "gemini_fail_opus_pass": 41,
+    "both_fail_class_overlap": {
+     "k": 117,
+     "n": 128,
+     "rate": 0.914,
+     "wilson95": [
+      0.853,
+      0.951
+     ]
+    },
+    "wrong_text": {
+     "gemini": 147,
+     "opus": 116
+    },
+    "fidelity_mean": {
+     "gemini": 3.97,
+     "opus": 3.85
+    },
+    "by_lang": {
+     "French": {
+      "n": 15,
+      "pass_gemini": 15,
+      "pass_opus": 14,
+      "agree": 14
+     },
+     "German": {
+      "n": 75,
+      "pass_gemini": 44,
+      "pass_opus": 48,
+      "agree": 61
+     },
+     "Latin": {
+      "n": 55,
+      "pass_gemini": 41,
+      "pass_opus": 44,
+      "agree": 48
+     },
+     "Chinese": {
+      "n": 101,
+      "pass_gemini": 37,
+      "pass_opus": 42,
+      "agree": 88
+     },
+     "Tibetan": {
+      "n": 45,
+      "pass_gemini": 12,
+      "pass_opus": 26,
+      "agree": 29
+     },
+     "Classical Chinese": {
+      "n": 30,
+      "pass_gemini": 20,
+      "pass_opus": 20,
+      "agree": 24
+     },
+     "Hebrew": {
+      "n": 15,
+      "pass_gemini": 6,
+      "pass_opus": 5,
+      "agree": 14
+     },
+     "Italian": {
+      "n": 9,
+      "pass_gemini": 9,
+      "pass_opus": 9,
+      "agree": 9
+     },
+     "Arabic": {
+      "n": 15,
+      "pass_gemini": 7,
+      "pass_opus": 7,
+      "agree": 15
+     }
+    }
+   },
+   "self_preference_GEM_minus_GPU": {
+    "diff": 0.133,
+    "ci_book": [
+     0.021,
+     0.246
+    ]
+   },
+   "self_preference_GPUGEM_minus_GPU": {
+    "diff": 0.1,
+    "ci_book": [
+     -0.015,
+     0.219
+    ]
+   },
+   "self_preference_within_Chinese": {
+    "n": {
+     "GEM": 15,
+     "GPU": 45,
+     "GPU>GEM": 41
+    },
+    "GEM_minus_GPU": {
+     "diff": 0,
+     "ci_book": [
+      -0.106,
+      0.106
+     ]
+    },
+    "GPUGEM_minus_GPU": {
+     "diff": -0.122,
+     "ci_book": [
+      -0.277,
+      0.023
+     ]
+    }
+   }
+  }
+ },
+ "noise": {
+  "opus": {
+   "n": 30,
+   "agree": {
+    "k": 28,
+    "n": 30,
+    "rate": 0.933,
+    "wilson95": [
+     0.787,
+     0.982
+    ]
+   },
+   "agree_ci_book": [
+    0.833,
+    1
+   ],
+   "kappa": 0.861,
+   "fidelity_same": 24
+  },
+  "flash": {
+   "n": 29,
+   "agree": {
+    "k": 25,
+    "n": 29,
+    "rate": 0.862,
+    "wilson95": [
+     0.694,
+     0.945
+    ]
+   },
+   "agree_ci_book": [
+    0.724,
+    0.966
+   ],
+   "kappa": 0.717,
+   "fidelity_same": 23
+  },
+  "argon": {
+   "n": 30,
+   "agree": {
+    "k": 28,
+    "n": 30,
+    "rate": 0.933,
+    "wilson95": [
+     0.787,
+     0.982
+    ]
+   },
+   "agree_ci_book": [
+    0.833,
+    1
+   ],
+   "kappa": 0.864,
+   "fidelity_same": 27
+  },
+  "flash_vs_opus_same30": {
+   "n": 30,
+   "agree": {
+    "k": 26,
+    "n": 30,
+    "rate": 0.867,
+    "wilson95": [
+     0.703,
+     0.947
+    ]
+   }
+  },
+  "argon_vs_opus_same30": {
+   "n": 30,
+   "agree": {
+    "k": 27,
+    "n": 30,
+    "rate": 0.9,
+    "wilson95": [
+     0.744,
+     0.965
+    ]
+   }
+  }
+ },
+ "adjudication": {
+  "flash": {
+   "n": 74,
+   "winner": {
+    "opus": 46,
+    "gemini": 24,
+    "neither": 4
+   },
+   "by_kind": {
+    "gemini failed, opus passed -> opus right": 25,
+    "gemini passed, opus failed -> opus right": 21,
+    "gemini failed, opus passed -> gemini right": 23,
+    "gemini failed, opus passed -> neither right": 4,
+    "gemini passed, opus failed -> gemini right": 1
+   },
+   "by_author": {
+    "TR": {
+     "gemini failed, opus passed -> opus right": 3,
+     "gemini failed, opus passed -> neither right": 2,
+     "gemini passed, opus failed -> opus right": 8,
+     "gemini failed, opus passed -> gemini right": 4
+    },
+    "GEM": {
+     "gemini passed, opus failed -> opus right": 7,
+     "gemini failed, opus passed -> opus right": 5,
+     "gemini failed, opus passed -> gemini right": 2
+    },
+    "GPU": {
+     "gemini failed, opus passed -> gemini right": 15,
+     "gemini failed, opus passed -> neither right": 2,
+     "gemini failed, opus passed -> opus right": 11,
+     "gemini passed, opus failed -> gemini right": 1,
+     "gemini passed, opus failed -> opus right": 1
+    },
+    "GPU>GEM": {
+     "gemini failed, opus passed -> gemini right": 2,
+     "gemini passed, opus failed -> opus right": 5,
+     "gemini failed, opus passed -> opus right": 6
+    }
+   }
+  },
+  "argon": {
+   "n": 58,
+   "winner": {
+    "opus": 22,
+    "gemini": 36
+   },
+   "by_kind": {
+    "gemini passed, opus failed -> opus right": 16,
+    "gemini failed, opus passed -> gemini right": 35,
+    "gemini failed, opus passed -> opus right": 6,
+    "gemini passed, opus failed -> gemini right": 1
+   },
+   "by_author": {
+    "TR": {
+     "gemini passed, opus failed -> opus right": 8,
+     "gemini failed, opus passed -> gemini right": 9,
+     "gemini failed, opus passed -> opus right": 2
+    },
+    "GPU": {
+     "gemini failed, opus passed -> gemini right": 16,
+     "gemini passed, opus failed -> gemini right": 1,
+     "gemini failed, opus passed -> opus right": 2,
+     "gemini passed, opus failed -> opus right": 3
+    },
+    "GEM": {
+     "gemini failed, opus passed -> gemini right": 3,
+     "gemini passed, opus failed -> opus right": 2,
+     "gemini failed, opus passed -> opus right": 1
+    },
+    "GPU>GEM": {
+     "gemini failed, opus passed -> gemini right": 7,
+     "gemini failed, opus passed -> opus right": 1,
+     "gemini passed, opus failed -> opus right": 3
+    }
+   }
+  }
+ },
+ "screen": {
+  "flash": {
+   "GEM": {
+    "n": 90,
+    "opus_confirmed_failures": 44,
+    "gemini_passed_failures": 10,
+    "missed_share": 0.182,
+    "missed_share_ci_book": [
+     0.086,
+     0.286
+    ],
+    "opus_calls_per_100": 54.7,
+    "saved_per_100": 45.3,
+    "gemini_alone_missed_share": 0.227,
+    "gemini_alone_false_alarms": 5
+   },
+   "GPU": {
+    "n": 90,
+    "opus_confirmed_failures": 63,
+    "gemini_passed_failures": 1,
+    "missed_share": 0.013,
+    "missed_share_ci_book": [
+     0,
+     0.041
+    ],
+    "opus_calls_per_100": 87.6,
+    "saved_per_100": 12.4,
+    "gemini_alone_missed_share": 0.016,
+    "gemini_alone_false_alarms": 14
+   },
+   "GPU>GEM": {
+    "n": 89,
+    "opus_confirmed_failures": 25,
+    "gemini_passed_failures": 7,
+    "missed_share": 0.224,
+    "missed_share_ci_book": [
+     0.086,
+     0.373
+    ],
+    "opus_calls_per_100": 48.8,
+    "saved_per_100": 51.2,
+    "gemini_alone_missed_share": 0.28,
+    "gemini_alone_false_alarms": 14
+   },
+   "TR": {
+    "n": 90,
+    "opus_confirmed_failures": 39,
+    "gemini_passed_failures": 13,
+    "missed_share": 0.267,
+    "missed_share_ci_book": [
+     0.147,
+     0.388
+    ],
+    "opus_calls_per_100": 47.6,
+    "saved_per_100": 52.4,
+    "gemini_alone_missed_share": 0.333,
+    "gemini_alone_false_alarms": 5
+   },
+   "ALL": {
+    "n": 359,
+    "opus_confirmed_failures": 171,
+    "gemini_passed_failures": 31,
+    "missed_share": 0.145,
+    "missed_share_ci_book": [
+     0.1,
+     0.192
+    ],
+    "opus_calls_per_100": 59.7,
+    "saved_per_100": 40.3,
+    "gemini_alone_missed_share": 0.181,
+    "gemini_alone_false_alarms": 38
+   }
+  },
+  "argon": {
+   "GEM": {
+    "n": 90,
+    "opus_confirmed_failures": 45,
+    "gemini_passed_failures": 2,
+    "missed_share": 0.036,
+    "missed_share_ci_book": [
+     0,
+     0.093
+    ],
+    "opus_calls_per_100": 59.1,
+    "saved_per_100": 40.9,
+    "gemini_alone_missed_share": 0.044,
+    "gemini_alone_false_alarms": 1
+   },
+   "GPU": {
+    "n": 90,
+    "opus_confirmed_failures": 62,
+    "gemini_passed_failures": 3,
+    "missed_share": 0.039,
+    "missed_share_ci_book": [
+     0,
+     0.086
+    ],
+    "opus_calls_per_100": 74.2,
+    "saved_per_100": 25.8,
+    "gemini_alone_missed_share": 0.048,
+    "gemini_alone_false_alarms": 2
+   },
+   "GPU>GEM": {
+    "n": 90,
+    "opus_confirmed_failures": 30,
+    "gemini_passed_failures": 3,
+    "missed_share": 0.08,
+    "missed_share_ci_book": [
+     0,
+     0.178
+    ],
+    "opus_calls_per_100": 44.9,
+    "saved_per_100": 55.1,
+    "gemini_alone_missed_share": 0.1,
+    "gemini_alone_false_alarms": 1
+   },
+   "TR": {
+    "n": 90,
+    "opus_confirmed_failures": 42,
+    "gemini_passed_failures": 8,
+    "missed_share": 0.152,
+    "missed_share_ci_book": [
+     0.06,
+     0.26
+    ],
+    "opus_calls_per_100": 52,
+    "saved_per_100": 48,
+    "gemini_alone_missed_share": 0.19,
+    "gemini_alone_false_alarms": 2
+   },
+   "ALL": {
+    "n": 360,
+    "opus_confirmed_failures": 179,
+    "gemini_passed_failures": 16,
+    "missed_share": 0.072,
+    "missed_share_ci_book": [
+     0.04,
+     0.108
+    ],
+    "opus_calls_per_100": 57.6,
+    "saved_per_100": 42.4,
+    "gemini_alone_missed_share": 0.089,
+    "gemini_alone_false_alarms": 6
+   }
+  }
+ },
+ "vs_adjudicated": {
+  "flash": {
+   "GEM": {
+    "n": 90,
+    "fails": 44,
+    "unadjudicated_disagreements": 3,
+    "gemini_miss": {
+     "k": 10,
+     "n": 44,
+     "rate": 0.227,
+     "wilson95": [
+      0.128,
+      0.37
+     ]
+    },
+    "opus_miss": {
+     "k": 2,
+     "n": 44,
+     "rate": 0.045,
+     "wilson95": [
+      0.013,
+      0.151
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 5,
+     "n": 46,
+     "rate": 0.109,
+     "wilson95": [
+      0.047,
+      0.23
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 0,
+     "n": 46,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.077
+     ]
+    }
+   },
+   "GPU": {
+    "n": 90,
+    "fails": 63,
+    "unadjudicated_disagreements": 3,
+    "gemini_miss": {
+     "k": 1,
+     "n": 63,
+     "rate": 0.016,
+     "wilson95": [
+      0.003,
+      0.085
+     ]
+    },
+    "opus_miss": {
+     "k": 17,
+     "n": 63,
+     "rate": 0.27,
+     "wilson95": [
+      0.176,
+      0.39
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 14,
+     "n": 27,
+     "rate": 0.519,
+     "wilson95": [
+      0.34,
+      0.693
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 1,
+     "n": 27,
+     "rate": 0.037,
+     "wilson95": [
+      0.007,
+      0.183
+     ]
+    }
+   },
+   "GPU>GEM": {
+    "n": 89,
+    "fails": 25,
+    "unadjudicated_disagreements": 10,
+    "gemini_miss": {
+     "k": 7,
+     "n": 25,
+     "rate": 0.28,
+     "wilson95": [
+      0.143,
+      0.476
+     ]
+    },
+    "opus_miss": {
+     "k": 2,
+     "n": 25,
+     "rate": 0.08,
+     "wilson95": [
+      0.022,
+      0.25
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 14,
+     "n": 64,
+     "rate": 0.219,
+     "wilson95": [
+      0.135,
+      0.334
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 0,
+     "n": 64,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.057
+     ]
+    }
+   },
+   "TR": {
+    "n": 90,
+    "fails": 39,
+    "unadjudicated_disagreements": 7,
+    "gemini_miss": {
+     "k": 13,
+     "n": 39,
+     "rate": 0.333,
+     "wilson95": [
+      0.206,
+      0.49
+     ]
+    },
+    "opus_miss": {
+     "k": 6,
+     "n": 39,
+     "rate": 0.154,
+     "wilson95": [
+      0.072,
+      0.297
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 5,
+     "n": 51,
+     "rate": 0.098,
+     "wilson95": [
+      0.043,
+      0.21
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 0,
+     "n": 51,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.07
+     ]
+    }
+   },
+   "ALL": {
+    "n": 359,
+    "fails": 171,
+    "unadjudicated_disagreements": 23,
+    "gemini_miss": {
+     "k": 31,
+     "n": 171,
+     "rate": 0.181,
+     "wilson95": [
+      0.131,
+      0.246
+     ]
+    },
+    "opus_miss": {
+     "k": 27,
+     "n": 171,
+     "rate": 0.158,
+     "wilson95": [
+      0.111,
+      0.22
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 38,
+     "n": 188,
+     "rate": 0.202,
+     "wilson95": [
+      0.151,
+      0.265
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 1,
+     "n": 188,
+     "rate": 0.005,
+     "wilson95": [
+      0.001,
+      0.03
+     ]
+    }
+   },
+   "miss_GEM_minus_GPU": {
+    "gemini": {
+     "diff": 0.211,
+     "ci_book": [
+      0.085,
+      0.341
+     ]
+    },
+    "opus": {
+     "diff": -0.224,
+     "ci_book": [
+      -0.35,
+      -0.093
+     ]
+    }
+   }
+  },
+  "argon": {
+   "GEM": {
+    "n": 90,
+    "fails": 45,
+    "unadjudicated_disagreements": 0,
+    "gemini_miss": {
+     "k": 2,
+     "n": 45,
+     "rate": 0.044,
+     "wilson95": [
+      0.012,
+      0.148
+     ]
+    },
+    "opus_miss": {
+     "k": 3,
+     "n": 45,
+     "rate": 0.067,
+     "wilson95": [
+      0.023,
+      0.179
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 1,
+     "n": 45,
+     "rate": 0.022,
+     "wilson95": [
+      0.004,
+      0.116
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 0,
+     "n": 45,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.079
+     ]
+    }
+   },
+   "GPU": {
+    "n": 90,
+    "fails": 62,
+    "unadjudicated_disagreements": 0,
+    "gemini_miss": {
+     "k": 3,
+     "n": 62,
+     "rate": 0.048,
+     "wilson95": [
+      0.017,
+      0.133
+     ]
+    },
+    "opus_miss": {
+     "k": 16,
+     "n": 62,
+     "rate": 0.258,
+     "wilson95": [
+      0.166,
+      0.379
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 2,
+     "n": 28,
+     "rate": 0.071,
+     "wilson95": [
+      0.02,
+      0.226
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 1,
+     "n": 28,
+     "rate": 0.036,
+     "wilson95": [
+      0.006,
+      0.177
+     ]
+    }
+   },
+   "GPU>GEM": {
+    "n": 90,
+    "fails": 30,
+    "unadjudicated_disagreements": 0,
+    "gemini_miss": {
+     "k": 3,
+     "n": 30,
+     "rate": 0.1,
+     "wilson95": [
+      0.035,
+      0.256
+     ]
+    },
+    "opus_miss": {
+     "k": 7,
+     "n": 30,
+     "rate": 0.233,
+     "wilson95": [
+      0.118,
+      0.409
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 1,
+     "n": 60,
+     "rate": 0.017,
+     "wilson95": [
+      0.003,
+      0.089
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 0,
+     "n": 60,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.06
+     ]
+    }
+   },
+   "TR": {
+    "n": 90,
+    "fails": 42,
+    "unadjudicated_disagreements": 0,
+    "gemini_miss": {
+     "k": 8,
+     "n": 42,
+     "rate": 0.19,
+     "wilson95": [
+      0.1,
+      0.333
+     ]
+    },
+    "opus_miss": {
+     "k": 9,
+     "n": 42,
+     "rate": 0.214,
+     "wilson95": [
+      0.117,
+      0.359
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 2,
+     "n": 48,
+     "rate": 0.042,
+     "wilson95": [
+      0.012,
+      0.14
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 0,
+     "n": 48,
+     "rate": 0,
+     "wilson95": [
+      0,
+      0.074
+     ]
+    }
+   },
+   "ALL": {
+    "n": 360,
+    "fails": 179,
+    "unadjudicated_disagreements": 0,
+    "gemini_miss": {
+     "k": 16,
+     "n": 179,
+     "rate": 0.089,
+     "wilson95": [
+      0.056,
+      0.14
+     ]
+    },
+    "opus_miss": {
+     "k": 35,
+     "n": 179,
+     "rate": 0.196,
+     "wilson95": [
+      0.144,
+      0.26
+     ]
+    },
+    "gemini_false_alarm": {
+     "k": 6,
+     "n": 181,
+     "rate": 0.033,
+     "wilson95": [
+      0.015,
+      0.07
+     ]
+    },
+    "opus_false_alarm": {
+     "k": 1,
+     "n": 181,
+     "rate": 0.006,
+     "wilson95": [
+      0.001,
+      0.031
+     ]
+    }
+   },
+   "miss_GEM_minus_GPU": {
+    "gemini": {
+     "diff": -0.004,
+     "ci_book": [
+      -0.084,
+      0.079
+     ]
+    },
+    "opus": {
+     "diff": -0.191,
+     "ci_book": [
+      -0.326,
+      -0.055
+     ]
+    }
+   }
+  }
+ }
+}

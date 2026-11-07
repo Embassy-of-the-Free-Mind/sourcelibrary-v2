@@ -1,0 +1,94 @@
+[
+ {
+  "at": "2026-11-02T08:47:30.146Z",
+  "arm": "C",
+  "calls": 330,
+  "stop": null,
+  "quota_before": {
+   "weekly": 0.6152745485305786,
+   "fiveHour": 0.9642589688301086
+  },
+  "quota_after": {
+   "weekly": 0.6032693386077881,
+   "fiveHour": 0.9169518947601318
+  }
+ },
+ {
+  "at": "2026-11-02T08:50:17.823Z",
+  "arm": "S",
+  "calls": 366,
+  "stop": null,
+  "quota_before": null,
+  "quota_after": null
+ },
+ {
+  "at": "2026-11-02T08:54:16.136Z",
+  "arm": "R",
+  "calls": 306,
+  "stop": null,
+  "quota_before": {
+   "weekly": 0.6152745485305786,
+   "fiveHour": 0.9642589688301086
+  },
+  "quota_after": {
+   "weekly": 0.5972535014152527,
+   "fiveHour": 0.8929961323738098
+  }
+ },
+ {
+  "at": "2026-11-02T08:54:55.404Z",
+  "arm": "C",
+  "calls": 1,
+  "stop": null,
+  "quota_before": {
+   "weekly": 0.59701007604599,
+   "fiveHour": 0.8920225501060486
+  },
+  "quota_after": {
+   "weekly": 0.5970041155815125,
+   "fiveHour": 0.8919986486434937
+  }
+ },
+ {
+  "at": "2026-11-02T08:56:27.419Z",
+  "arm": "R",
+  "calls": 19,
+  "stop": null,
+  "quota_before": {
+   "weekly": 0.5975262522697449,
+   "fiveHour": 0.8905910849571228
+  },
+  "quota_after": {
+   "weekly": 0.5930199027061462,
+   "fiveHour": 0.8814658522605896
+  }
+ },
+ {
+  "at": "2026-11-02T08:56:32.790Z",
+  "arm": "C",
+  "calls": 0,
+  "stop": null,
+  "quota_before": {
+   "weekly": 0.5926874876022339,
+   "fiveHour": 0.8785130977630615
+  },
+  "quota_after": {
+   "weekly": 0.5930166244506836,
+   "fiveHour": 0.8814527988433838
+  }
+ },
+ {
+  "at": "2026-11-02T08:57:19.706Z",
+  "arm": "R",
+  "calls": 7,
+  "stop": null,
+  "quota_before": {
+   "weekly": 0.5930166244506836,
+   "fiveHour": 0.8814527988433838
+  },
+  "quota_after": {
+   "weekly": 0.5929409861564636,
+   "fiveHour": 0.88114994764328
+  }
+ }
+]

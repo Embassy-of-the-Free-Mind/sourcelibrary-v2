@@ -80,12 +80,24 @@ const INCLUDE_BACKLOG = process.argv.includes('--include-backlog');
  * there are no pages. Linking rule is unchanged and exact.
  */
 const ARTWORKS = process.argv.includes('--artworks');
-const liveScope = ARTWORKS
+/**
+ * --campaign <tag>: restrict to one acquisition campaign's books
+ * (`acquisition_campaign`), hidden ones included — an import job links its own
+ * books without sweeping every other job's backlog (#8049). Own run id, so
+ * `--campaign <tag> --undo` reverts exactly that campaign's links.
+ */
+const CAMPAIGN = (() => { const i = process.argv.indexOf('--campaign'); return i > -1 ? process.argv[i + 1] : null; })();
+if (process.argv.includes('--campaign') && (!CAMPAIGN || CAMPAIGN.startsWith('--'))) {
+  console.error('--campaign needs a tag'); process.exit(1);
+}
+const liveScope = CAMPAIGN ? { acquisition_campaign: CAMPAIGN }
+  : ARTWORKS
   ? { content_type: 'artwork', ...(INCLUDE_BACKLOG ? {} : { visible: { $ne: false } }) }
   : INCLUDE_BACKLOG ? {} : { visible: { $ne: false }, pages_count: { $gt: 0 } };
 // Separate run id so a backlog or artwork pass can be reverted on its own,
 // without also undoing the live linkage an earlier run wrote.
-const RUN_ID = ARTWORKS ? 'backfill-2250-artworks' : INCLUDE_BACKLOG ? 'backfill-2250-backlog' : 'backfill-2250';
+const RUN_ID = CAMPAIGN ? `backfill-2250-campaign-${CAMPAIGN}`
+  : ARTWORKS ? 'backfill-2250-artworks' : INCLUDE_BACKLOG ? 'backfill-2250-backlog' : 'backfill-2250';
 
 const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 
@@ -329,7 +341,8 @@ for (const b of liveEntityLinked) {
 
 console.log('=== backfill-author-canonical-links (#2250) ===');
 console.log(`scope: ${
-  ARTWORKS ? `ARTWORKS${INCLUDE_BACKLOG ? ' (all, incl. hidden)' : ' (visible)'} — content_type: artwork`
+  CAMPAIGN ? `acquisition_campaign: ${CAMPAIGN} (hidden included)`
+  : ARTWORKS ? `ARTWORKS${INCLUDE_BACKLOG ? ' (all, incl. hidden)' : ' (visible)'} — content_type: artwork`
   : INCLUDE_BACKLOG ? 'ALL books (live + hidden/unprocessed backlog)'
   : 'LIVE books only (visible && pages_count>0) — pass --include-backlog for the rest'}`);
 console.log(`mode: ${APPLY ? 'APPLY (writing)' : 'DRY RUN (no writes)'}`);

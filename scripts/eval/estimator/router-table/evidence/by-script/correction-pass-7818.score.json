@@ -1,0 +1,68 @@
+{
+ "source": "correction-pass-7818 (#7818 Arm P)",
+ "generated_at": "2026-10-31T00:48:40.731Z",
+ "of": "scripts/eval/estimator/router-table/evidence/correction-pass-7818.score.json",
+ "cells": {
+  "french-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 43,
+     "books": 43,
+     "accept": "34/43",
+     "wrong_text_pages": "4/43",
+     "classes_k_of_n": {
+      "O8": "11/43",
+      "O16": "11/43",
+      "O6": "10/43",
+      "E2": "8/43",
+      "O5": "6/43",
+      "O12": "5/43",
+      "O14": "4/43",
+      "O11": "4/43",
+      "O1": "3/43",
+      "I4": "2/43",
+      "O10": "2/43",
+      "D1": "1/43",
+      "T8": "1/43",
+      "O7": "1/43",
+      "T10": "1/43"
+     },
+     "script_basis": {
+      "page": 43
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "lite>agy-flash-low": {
+     "n": 60,
+     "books": 60,
+     "accept": "45/60",
+     "wrong_text_pages": "8/60",
+     "classes_k_of_n": {
+      "O8": "42/60",
+      "O6": "27/60",
+      "T6": "14/60",
+      "E2": "9/60",
+      "O16": "7/60",
+      "O11": "6/60",
+      "O12": "6/60",
+      "O5": "5/60",
+      "O7": "4/60",
+      "D1": "2/60",
+      "O10": "2/60",
+      "I3": "1/60",
+      "I4": "1/60",
+      "O17": "1/60",
+      "O1": "1/60",
+      "O14": "1/60"
+     },
+     "script_basis": {
+      "page": 60
+     }
+    }
+   }
+  }
+ }
+}

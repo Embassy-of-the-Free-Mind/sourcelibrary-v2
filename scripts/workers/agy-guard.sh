@@ -27,6 +27,7 @@ else
   REAL="${AGY_REAL:-/root/.local/bin/agy}"; SELF_DIR=/root/bin/agy-guard; RCS="/root/.bashrc /root/.profile"
   GUARD_DIR="${AGY_GUARD_DIR:-/root/agy-quota/heavy}"
 fi
+QUOTA_DIR="${AGY_QUOTA_CACHE:-$(dirname "$GUARD_DIR")/quota}"
 CAP="${AGY_HEAVY_BOX_CAP:-40}"
 HEAVY='argon|-pro'
 MARK='# agy-guard PATH (#7075)'
@@ -99,6 +100,52 @@ if [ -n "$AGY_HOME" ] && [ -s "$AGY_HOME/allowed-model" ]; then
     echo "agy-guard: quota reached (refused (config)): $(basename "$AGY_HOME") runs $only only, not $model" >&2
     exit 75
   fi
+fi
+
+# Claude (and GPT, the same agy pool) only once this account's Gemini pool is empty (#7545; Derek 2026-10-27/28): the
+# Gemini WEEKLY bucket must be empty (remaining_fraction under 0.005, AGY_GEMINI_EMPTY in agy-cli.mjs; a spent pool
+# keeps a residue such as 0.00028 and never reads exactly 0) and both Claude buckets at least 10%. Read from `/quota` (free),
+# cached 10 min in $QUOTA_DIR/<account>.json, the file agy-cli.mjs agyQuota() reads and writes too, so a reset is seen
+# within one cache period and the call goes back to Gemini. Fails CLOSED: an unreadable quota refuses. Checked after
+# the one-model rule above: an account held to one model (allowed-model) runs that model only, Claude included.
+if echo "$model" | grep -qiE '^(claude|gpt)'; then
+  acct=main; [ -n "$AGY_HOME" ] && acct=$(basename "$AGY_HOME")
+  qf="$QUOTA_DIR/$acct.json"
+  # Prints nothing when Claude may run, "stale" when the cache is missing, older than 10 min or dated in the future
+  # (a minute of clock skew allowed), else the reason it may not.
+  qcheck() { python3 - "$qf" "$acct" <<'PY' 2>/dev/null || echo "quota for $acct unreadable"
+import json, os, sys, time
+try:
+    age = time.time() - os.path.getmtime(sys.argv[1])
+except OSError:
+    age = None
+if age is None or not -60 <= age < 600:
+    print('stale'); sys.exit()
+try:
+    g = {x['name']: {b['window']: b['remaining_fraction'] for b in x['buckets']} for x in json.load(open(sys.argv[1]))['command']['data']['groups']}
+except Exception:
+    print('quota for %s unreadable' % sys.argv[2]); sys.exit()
+gem = next((v for k, v in g.items() if k.lower().startswith('gemini')), {}).get('weekly')
+cl = next((v for k, v in g.items() if 'claude' in k.lower()), {})
+if not isinstance(gem, (int, float)): print('quota for %s unreadable' % sys.argv[2])
+elif gem >= 0.005: print('%s Gemini weekly %.1f%% left' % (sys.argv[2], gem * 100))
+else:
+    low = [w for w in ('weekly', '5h') if not (isinstance(cl.get(w), (int, float)) and cl[w] >= 0.10)]
+    print('%s Claude %s under 10%%' % (sys.argv[2], low[0]) if low else '')
+PY
+  }
+  why=$(qcheck)
+  if [ "$why" = stale ]; then
+    mkdir -p "$QUOTA_DIR" && "$REAL" -p /quota --output-format json --model gemini-3.8-flash-low > "$qf.tmp$$" 2>/dev/null \
+      && grep -q '"remaining_fraction"' "$qf.tmp$$" && mv "$qf.tmp$$" "$qf"
+    rm -f "$qf.tmp$$"
+    why=$(qcheck); [ "$why" = stale ] && why="quota for $acct unreadable"
+  fi
+  if [ -n "$why" ]; then
+    echo "agy-guard: quota reached (refused (config)): $model runs on agy only once the Gemini pool is empty ($why); use claude -p (#7545)" >&2
+    exit 75
+  fi
+  exec "$REAL" "$@"
 fi
 
 if [ -z "$model" ]; then

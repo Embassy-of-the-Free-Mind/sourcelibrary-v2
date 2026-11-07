@@ -30,7 +30,7 @@ const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('
 const LIMIT = parseInt(args.limit) || 0;
 const DELAY = parseInt(args['delay-ms']) || 1000;
 const DRY = 'dry-run' in args;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; j.d.lomas@tudelft.nl)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const OAI = 'https://digi.ub.uni-heidelberg.de/cgi-bin/digioai.cgi';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const unxml = s => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").trim();

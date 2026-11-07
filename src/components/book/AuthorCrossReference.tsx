@@ -4,6 +4,7 @@ import { BookOpen, Paintbrush } from 'lucide-react';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 import { authorUrl } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { displayPublished } from '@/lib/publication-date';
 
 export interface CrossRefItem {
   slug: string;
@@ -131,7 +132,7 @@ export default function AuthorCrossReference({ author, authorId, crossRef, conte
                   {b.display_title || b.title}
                 </p>
                 <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                  {[b.published, b.language].filter(Boolean).join(' · ')}
+                  {[displayPublished(b.published), b.language].filter(Boolean).join(' · ')}
                   {b.pages_translated ? ` · ${b.pages_translated} pages translated` : ''}
                 </p>
               </div>

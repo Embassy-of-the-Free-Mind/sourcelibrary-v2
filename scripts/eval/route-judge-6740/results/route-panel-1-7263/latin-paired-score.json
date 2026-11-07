@@ -1,0 +1,208 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "route",
+  "issue": 7263,
+  "stage": "ocr",
+  "languages": [
+   "Latin"
+  ],
+  "baseline": "3flash",
+  "arms": [
+   "3flash",
+   "3flash>agy-flash-low",
+   "agy-flash-low@4-read",
+   "pero>agy-flash-low@4"
+  ],
+  "batch": {
+   "pages_per_call": 4,
+   "tested": "not tested — block size is one of the settings under test; position in block reported per arm, and the judge reads one output per call"
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — proposal only per brief",
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "latin-flash3/print": {
+     "routes": {
+      "agy-flash-low@4-read": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "65/100",
+       "accept_wilson": [
+        0.553,
+        0.736
+       ],
+       "accept_by_book": [
+        0.56,
+        0.74
+       ],
+       "wrong_text_pages": "15/100",
+       "wrong_text_wilson": [
+        0.093,
+        0.233
+       ],
+       "fidelity_mean": 3.75,
+       "counts": true
+      },
+      "pero>agy-flash-low@4": {
+       "n": 60,
+       "books": 60,
+       "unjudged": 0,
+       "accept": "43/60",
+       "accept_wilson": [
+        0.592,
+        0.815
+       ],
+       "accept_by_book": [
+        0.6,
+        0.817
+       ],
+       "wrong_text_pages": "2/60",
+       "wrong_text_wilson": [
+        0.009,
+        0.114
+       ],
+       "fidelity_mean": 3.6,
+       "counts": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "62/100",
+       "accept_wilson": [
+        0.522,
+        0.709
+       ],
+       "accept_by_book": [
+        0.53,
+        0.71
+       ],
+       "wrong_text_pages": "12/100",
+       "wrong_text_wilson": [
+        0.07,
+        0.198
+       ],
+       "fidelity_mean": 3.65,
+       "counts": true
+      },
+      "3flash": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "59/100",
+       "accept_wilson": [
+        0.492,
+        0.681
+       ],
+       "accept_by_book": [
+        0.49,
+        0.69
+       ],
+       "wrong_text_pages": "31/100",
+       "wrong_text_wilson": [
+        0.228,
+        0.406
+       ],
+       "fidelity_mean": 3.85,
+       "counts": true
+      }
+     },
+     "controls": {
+      "agy-flash-low@4-read": {
+       "n": 2,
+       "passed": true
+      },
+      "pero>agy-flash-low@4": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 56,
+      "accept_flips": "2/56",
+      "flip_rate": 0.04,
+      "fidelity_abs_diff": 0.04
+     },
+     "against_baseline": {
+      "3flash -> agy-flash-low@4-read": {
+       "shared_pages": 100,
+       "better": "26/100",
+       "worse": "27/100",
+       "accept_gained": 18,
+       "accept_lost": 12,
+       "accept_sign_test_p": 0.36,
+       "fidelity_diff": -0.1
+      },
+      "3flash -> pero>agy-flash-low@4": {
+       "shared_pages": 60,
+       "better": "16/60",
+       "worse": "16/60",
+       "accept_gained": 10,
+       "accept_lost": 5,
+       "accept_sign_test_p": 0.3,
+       "fidelity_diff": -0.32
+      },
+      "3flash -> 3flash>agy-flash-low": {
+       "shared_pages": 100,
+       "better": "18/100",
+       "worse": "19/100",
+       "accept_gained": 12,
+       "accept_lost": 9,
+       "accept_sign_test_p": 0.66,
+       "fidelity_diff": -0.2
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "4 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque (no packet.json kept; ids only)",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 4 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "56 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "4 pages a call; tested: not tested — block size is one of the settings under test; position in block reported per arm, and the judge reads one output per call",
+   "waived": false
+  }
+ ]
+}

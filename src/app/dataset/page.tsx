@@ -215,8 +215,8 @@ export default async function DatasetPage() {
             { name: 'Explorer', price: 'Free', scope: '2,000 pages/day, any language', note: 'Self-serve, instant' },
             { name: 'Single Language', price: '$4,990/yr', scope: 'One language corpus, unlimited', note: 'or $499/mo' },
             { name: 'Domain', price: '$14,990/yr', scope: 'One scholarly domain, unlimited', note: 'or $1,499/mo' },
-            { name: 'Full Collection', price: '$49,990/yr', scope: 'All languages, all domains + unmarked image serving', note: 'or $4,999/mo' },
-            { name: 'Enterprise', price: 'Custom', scope: 'Parquet exports, custom scopes, SLA + unmarked image serving', note: null },
+            { name: 'Full Collection', price: '$49,990/yr', scope: 'All languages, all domains', note: 'or $4,999/mo' },
+            { name: 'Enterprise', price: 'Custom', scope: 'Parquet exports, custom scopes, SLA', note: null },
           ].map((tier) => (
             <div key={tier.name} className="flex items-baseline justify-between gap-4 px-5 py-4 bg-white">
               <div className="flex-1">
@@ -241,7 +241,7 @@ export default async function DatasetPage() {
           quarterly refresh), and it is the basis on which unlicensed training
           use is invoiced. See{' '}
           <Link href="/licensing" className="text-[#1a1a18] underline hover:no-underline">
-            AI &amp; Data-Mining Licensing
+            AI &amp; Data Licensing
           </Link>{' '}
           for the full policy.
         </p>

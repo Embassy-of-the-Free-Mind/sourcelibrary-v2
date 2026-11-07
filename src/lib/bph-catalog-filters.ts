@@ -88,6 +88,61 @@ export function isUnfiltered(f: BphFilters): boolean {
   );
 }
 
+/** A term of only digits, and the shape that may be a publication year. */
+const isNumber = (term: string) => /^\p{N}+$/u.test(term);
+const isYearShaped = (term: string) => /^\d{3,4}$/.test(term);
+/** One letter or digit, with or without an initial's full stop: "m", "2", "j.". */
+const isLone = (term: string) => /^[\p{L}\p{N}]\.?$/u.test(term);
+
+/**
+ * Split a search into terms that must all appear in a record, in any order, so
+ * "bruno giordano" finds what "giordano bruno" finds and a reader need not guess
+ * how the record words it. Terms are normalised like `search_norm`.
+ *
+ * Double quotes keep an exact phrase, as in a library catalogue.
+ *
+ * Two shapes stay together as a phrase, because apart they match nearly every
+ * record and bury the one the librarian asked for:
+ *   - a lone letter or digit, with its neighbour: "M 309", "PH 2", "Myst Alg S";
+ *   - a number after a short word: "PH 144", "BPH 131", "Ms 12".
+ *
+ * Initials keep their full stops, because records print them that way: "c.g. jung"
+ * must look for "c.g.", and "j. dee" stays the phrase it always was.
+ */
+export function parseBphSearchTerms(q: string): string[] {
+  const terms: Array<{ text: string; quoted: boolean }> = [];
+  for (const match of q.matchAll(/"([^"]+)"|(?:\p{L}\.)+|[\p{L}\p{M}\p{N}]+/gu)) {
+    const quoted = match[1] !== undefined;
+    // Inside a phrase the characters a PostgREST filter reserves become wildcards,
+    // so "Fludd, Robert" still reaches the comma in the record.
+    const text = normalizeBphSearchText(match[1] ?? match[0]).replace(/[,()"]/g, '%').trim();
+    if (text) terms.push({ text, quoted });
+  }
+
+  const merged: Array<{ text: string; quoted: boolean }> = [];
+  for (const term of terms) {
+    const previous = merged[merged.length - 1];
+    const staysWithPrevious = previous && !previous.quoted && !term.quoted && (
+      isLone(term.text) ||
+      isLone(previous.text) ||
+      (isNumber(term.text) && !isNumber(previous.text) && [...previous.text].length <= 4)
+    );
+    if (staysWithPrevious) previous.text = `${previous.text} ${term.text}`;
+    else merged.push({ ...term });
+  }
+  return merged.map((term) => term.text);
+}
+
+/**
+ * One term as a PostgREST filter. A year-shaped term also matches the year
+ * column, which the text columns do not carry, so "hermes 1650" works.
+ */
+function termFilter(term: string): string {
+  return isYearShaped(term)
+    ? `or(search_norm.ilike.%${term}%,year.eq.${term})`
+    : `search_norm.ilike.%${term}%`;
+}
+
 /** What the current schema can answer. Detected and cached by the browsing route. */
 export interface SchemaCaps {
   mode: 'new' | 'legacy';
@@ -127,8 +182,13 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
       if (yearQ) {
         query = query.or(`search_norm.ilike.%${yearQ}%,year.eq.${yearQ},${ubnLane}`);
       } else {
-        const normQ = sanitizeFilterValue(normalizeBphSearchText(f.q));
-        query = normQ.length > 0 ? query.or(`search_norm.ilike.%${normQ}%,${ubnLane}`) : query.or(ubnLane);
+        const terms = parseBphSearchTerms(f.q);
+        if (terms.length === 0) {
+          query = query.or(ubnLane);
+        } else {
+          const words = terms.map(termFilter);
+          query = query.or(`${words.length === 1 ? words[0] : `and(${words.join(',')})`},${ubnLane}`);
+        }
       }
     } else if (mode === 'new') {
       if (yearQ) {
@@ -152,7 +212,9 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
   const ilikeFilter = (col: string, val: string) => {
     if (!val) return;
     const safe = sanitizeFilterValue(val);
-    const normVal = sanitizeFilterValue(normalizeBphSearchText(val));
+    // Not sanitised: `.ilike()` is a single filter rather than an `.or()` string, so
+    // a comma is safe here, and the catalogue files every author as "Surname, Name".
+    const normVal = normalizeBphSearchText(val);
     if (mode === 'new') {
       if (useNormCols && normVal.length > 0) {
         query = query.ilike(col === 'shelf_mark' ? 'shelf_mark_norm' : `${col}_norm`, `%${normVal}%`);
@@ -224,25 +286,66 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
     }
   }
 
-  return applyBphSort(query, f.sort);
+  return applyBphSort(query, f.sort, mode);
 }
 
 /** Result ordering. nullsFirst:false everywhere so null titles never lead. */
-export function applyBphSort<T extends FilterableQuery<T>>(query: T, sort: string): T {
+export function applyBphSort<T extends FilterableQuery<T>>(query: T, sort: string, mode: 'new' | 'legacy' = 'new'): T {
+  // Filing order: `author_sort` and `title_sort` ignore leading brackets and
+  // quotes, so "[Fludd, Robert]" files under F as on a card catalogue
+  // (scripts/migration/add-bph-filing-sort-columns.sql). The legacy schema lacks them.
+  const author = mode === 'new' ? 'author_sort' : 'author';
+  const title = mode === 'new' ? 'title_sort' : 'title';
+  const ordered = applySortColumns(query, sort, author, title);
+  // A final unique key, so records that tie (copies of one edition share author
+  // and title) keep one order across pages and a paged walk neither repeats nor
+  // skips a record. The legacy schema has no uuid.
+  return mode === 'new' ? ordered.order('uuid', { ascending: true }) : ordered;
+}
+
+function applySortColumns<T extends FilterableQuery<T>>(query: T, sort: string, author: string, title: string): T {
   switch (sort) {
     case 'year_asc':
-      return query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+      return query.order('year', { ascending: true, nullsFirst: false }).order(title, { ascending: true });
     case 'year_desc':
-      return query.order('year', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+      return query.order('year', { ascending: false, nullsFirst: false }).order(title, { ascending: true });
+    // Best match orders each of its tiers by author (see bphBestMatchTiers).
+    case 'relevance':
     case 'author':
-      return query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+      return query.order(author, { ascending: true, nullsFirst: false }).order(title, { ascending: true });
     case 'author_desc':
-      return query.order('author', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+      return query.order(author, { ascending: false, nullsFirst: false }).order(title, { ascending: true });
     case 'title_desc':
-      return query.order('title', { ascending: false, nullsFirst: false });
+      return query.order(title, { ascending: false, nullsFirst: false });
     case 'shelfmark':
-      return query.order('shelf_mark', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
+      return query.order('shelf_mark', { ascending: true, nullsFirst: false }).order(title, { ascending: true });
     default:
-      return query.order('title', { ascending: true });
+      return query.order(title, { ascending: true });
   }
+}
+
+/**
+ * Best match, as a catalogue files it: works BY the name, then works whose
+ * title holds the words (often works ABOUT the name), then works that mention
+ * the words only elsewhere (notes, imprint, bibliography). "Every search word"
+ * in each case. Each tier is in author order. No score: the rule is one sentence
+ * a librarian can check against any result.
+ *
+ * Returns the three tiers, each as the `.or()` filters that select it, or null
+ * when Best match does not apply (another sort, no words, or a schema without the
+ * *_norm columns), in which case the caller runs one query as usual. author_norm
+ * and title_norm are non-null on every row, so the tiers partition the result
+ * exactly: their counts add up to the plain search's.
+ */
+export function bphBestMatchTiers(f: BphFilters, caps: SchemaCaps): string[][] | null {
+  if (f.sort !== 'relevance' || caps.mode !== 'new' || !caps.hasNormalizedColumns || f.q.length < 2) return null;
+  const terms = parseBphSearchTerms(f.q);
+  if (terms.length === 0) return null;
+  const byAuthor = `and(${terms.map((t) => `author_norm.ilike.%${t}%`).join(',')})`;
+  const inTitle = `and(${terms.map((t) => `title_norm.ilike.%${t}%`).join(',')})`;
+  return [
+    [byAuthor],
+    [inTitle, `not.${byAuthor}`],
+    [`not.${byAuthor}`, `not.${inTitle}`],
+  ];
 }

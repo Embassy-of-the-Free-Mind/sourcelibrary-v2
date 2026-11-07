@@ -1,0 +1,86 @@
+{
+ "6993898ace15387065947977": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Both pages are a single column of Greek minuscule text with marginal Greek scholia."
+ },
+ "699383a150654cbbe29179f7": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Both pages are dense, faded Greek minuscule prose on parchment (Vatican), with marginal notes."
+ },
+ "6993881574305116d72cef37": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Two-column Greek minuscule text with geometric diagrams and scholia (Vat.gr.190); mainly text."
+ },
+ "6993890e0f04c37dcfa6065c": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Both pages are full single-column Greek cursive prose with heavy abbreviations."
+ },
+ "6993831850654cbbe2916010": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Greek verse lines; p126 has Greek marginal glosses and sparse Latin interlinear glosses, p266 is plain Greek elegiacs."
+ },
+ "6993881f74305116d72cf3c3": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Both pages are a single column of Greek minuscule prose (Platonic dialogue)."
+ },
+ "6993832950654cbbe29163fb": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Large Greek cursive with heavy ligatures and abbreviations, a few lines per page; Greek text throughout."
+ },
+ "69b51ebb47b06ecd581961e6": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Black-and-white scans of single-column Greek cursive prose with marginal Greek notes."
+ },
+ "699389e61075be7d320556aa": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Greek minuscule homily text; p532 has a homily heading and an initial."
+ },
+ "69e8b23d2ff2a8dc09e77073": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Dense single-column Greek cursive prose with heavy abbreviations."
+ },
+ "6993897b0f04c37dcfa614b9": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Greek tragic verse in a central column with extensive Greek scholia in the margins (Medicean codex)."
+ },
+ "6993831384cf5845c644cb68": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Single-column Greek cursive prose in a later hand; p377 has the heading 'βιβλ. η'."
+ },
+ "699389a10f04c37dcfa61d51": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Greek comic verse lines in a minuscule hand; text pages."
+ },
+ "699389190f04c37dcfa60717": {
+  "pass": true,
+  "format": "manuscript",
+  "language": "Greek",
+  "why": "Single-column Greek cursive commentary prose in a clear hand."
+ }
+}

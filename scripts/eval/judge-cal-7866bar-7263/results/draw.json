@@ -1,0 +1,2452 @@
+{
+ "seeds": {
+  "books": 72631,
+  "pages": 72632,
+  "queue": 72633,
+  "wrongPage": 72634,
+  "repeats": 72635,
+  "sim": 72636
+ },
+ "n": {
+  "German": 20,
+  "English": 20,
+  "Latin": 20,
+  "Chinese": 40
+ },
+ "drawn_at": "2026-11-01T11:45:55.553Z",
+ "rule": "run.mjs draw (header comments)",
+ "counts": {
+  "German": 20,
+  "English": 20,
+  "Latin": 20,
+  "Chinese": 40
+ },
+ "drawn": [
+  {
+   "uid": "ge-69aec6aca1e0be599604f1c8",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69aec6aca1e0be599604f1c8",
+   "book_language": "German",
+   "page_id": "69aec6aca1e0be599604f1d3",
+   "page_number": 11,
+   "image": "https://images.sourcelibrary.org/archived/69aec6aca1e0be599604f1c8/11.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "goethe_divan_1819",
+    "index": 12,
+    "offset": -1
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "fec6d96e41901354"
+  },
+  {
+   "uid": "ge-69ade7eeda7f32a00bedaa7c",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69ade7eeda7f32a00bedaa7c",
+   "book_language": "German",
+   "page_id": "69ade7eeda7f32a00bedaaa6",
+   "page_number": 42,
+   "image": "https://images.sourcelibrary.org/archived/69ade7eeda7f32a00bedaa7c/42.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "herder_abhandlung_1772",
+    "index": 41,
+    "offset": 1
+   },
+   "engine": "gemini-2.5-flash",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "0f87d0397c5f6894"
+  },
+  {
+   "uid": "ge-69e726dfa409200ea79efcc6",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69e726dfa409200ea79efcc6",
+   "book_language": "German",
+   "page_id": "69e726dfa409200ea79efde2",
+   "page_number": 284,
+   "image": "https://images.sourcelibrary.org/archived/69e726dfa409200ea79efcc6/284.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "grimm_maerchen01_1857",
+    "index": 283,
+    "offset": 1
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "61ab1fe223fa04f1"
+  },
+  {
+   "uid": "ge-698fb77b6b95eeda7d2d1eaf",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "698fb77b6b95eeda7d2d1eaf",
+   "book_language": "German",
+   "page_id": "698fb77c6b95eeda7d2d1f71",
+   "page_number": 194,
+   "image": "https://images.sourcelibrary.org/archived/698fb77b6b95eeda7d2d1eaf/194.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "humboldt_kosmos01_1845",
+    "index": 192,
+    "offset": 2
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "2cb3c5c81eb04fb4"
+  },
+  {
+   "uid": "ge-6a49329d1bbf4176e1e92100",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "6a49329d1bbf4176e1e92100",
+   "book_language": "German",
+   "page_id": "6a49329d1bbf4176e1e92384",
+   "page_number": 17,
+   "image": "https://images.sourcelibrary.org/archived/6a49329d1bbf4176e1e92100/17.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "thomasius_ausuebungsittenlehre_1696",
+    "index": 14,
+    "offset": 3
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "11aaed3a1a231f6a"
+  },
+  {
+   "uid": "ge-698fb7856b95eeda7d2d257f",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "698fb7856b95eeda7d2d257f",
+   "book_language": "German",
+   "page_id": "698fb7856b95eeda7d2d2603",
+   "page_number": 132,
+   "image": "https://images.sourcelibrary.org/archived/698fb7856b95eeda7d2d257f/132.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "goethe_farbenlehre01_1810",
+    "index": 133,
+    "offset": -1
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "pipeline_preview",
+   "ocr_hash": "c7b0e77c171fd753"
+  },
+  {
+   "uid": "ge-69afe1882aed98f61157f62b",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69afe1882aed98f61157f62b",
+   "book_language": "German",
+   "page_id": "69afe1892aed98f61157f640",
+   "page_number": 21,
+   "image": "https://images.sourcelibrary.org/archived/69afe1882aed98f61157f62b/21.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "herder_philosophie_1774",
+    "index": 18,
+    "offset": 3
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "711e4accabe1594c"
+  },
+  {
+   "uid": "ge-6a4939a11bbf4176e1e980f4",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "6a4939a11bbf4176e1e980f4",
+   "book_language": "German",
+   "page_id": "6a4939a11bbf4176e1e98104",
+   "page_number": 16,
+   "image": "https://images.sourcelibrary.org/archived/6a4939a11bbf4176e1e980f4/16.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "blankaart_schauplatz_1690",
+    "index": 15,
+    "offset": 1
+   },
+   "engine": "gemini-3.1-flash-lite",
+   "pipeline": null,
+   "ocr_source": "pipeline_preview",
+   "ocr_hash": "aae5e98892046b3b"
+  },
+  {
+   "uid": "ge-69aea8acb3730458c4378ef8",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69aea8acb3730458c4378ef8",
+   "book_language": "German",
+   "page_id": "69aea8acb3730458c437906b",
+   "page_number": 371,
+   "image": "https://images.sourcelibrary.org/archived/69aea8acb3730458c4378ef8/371.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "dilthey_geisteswissenschaften_1883",
+    "index": 367,
+    "offset": 4
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "482ec4a78477b3c8"
+  },
+  {
+   "uid": "ge-69afe356cf56258c93891081",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69afe356cf56258c93891081",
+   "book_language": "German",
+   "page_id": "69afe357cf56258c93891143",
+   "page_number": 194,
+   "image": "https://images.sourcelibrary.org/archived/69afe356cf56258c93891081/194.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "hegel_logik0101_1812",
+    "index": 195,
+    "offset": -1
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "9e6b2d0fec1b792b"
+  },
+  {
+   "uid": "ge-69aebe72c0472fef6455ab10",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69aebe72c0472fef6455ab10",
+   "book_language": "German",
+   "page_id": "69aebe72c0472fef6455ac57",
+   "page_number": 21,
+   "image": "https://images.sourcelibrary.org/archived/69aebe72c0472fef6455ab10/21.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "mach_mechanik_1883",
+    "index": 17,
+    "offset": 4
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "fc4ba218afd0ab21"
+  },
+  {
+   "uid": "ge-69c834a36c6f3cc53c84e5de",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69c834a36c6f3cc53c84e5de",
+   "book_language": "German",
+   "page_id": "69c846a11d54fe7ac6a5d0ec",
+   "page_number": 18,
+   "image": "https://images.sourcelibrary.org/pages/69c834a36c6f3cc53c84e5de/split-69c846a11d54fe7ac6a5d0ec-full.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "524261",
+    "index": 16,
+    "offset": 2
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "df771aa506d501d7"
+  },
+  {
+   "uid": "ge-698fb7926b95eeda7d2d3406",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "698fb7926b95eeda7d2d3406",
+   "book_language": "German",
+   "page_id": "698fb7926b95eeda7d2d3451",
+   "page_number": 75,
+   "image": "https://images.sourcelibrary.org/archived/698fb7926b95eeda7d2d3406/75.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "goethe_metamorphose_1790",
+    "index": 79,
+    "offset": -4
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "aa402ea234d88229"
+  },
+  {
+   "uid": "ge-6a426abd28e9db2e39bfe99e",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "6a426abd28e9db2e39bfe99e",
+   "book_language": "German",
+   "page_id": "6a426abd28e9db2e39bfe9a6",
+   "page_number": 8,
+   "image": "https://images.sourcelibrary.org/archived/6a426abd28e9db2e39bfe99e/8.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "thomasius_einleitungsittenlehre_1692",
+    "index": 5,
+    "offset": 3
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "064418dc971a1209"
+  },
+  {
+   "uid": "ge-69e748b385f786e884a4cd8d",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69e748b385f786e884a4cd8d",
+   "book_language": "German",
+   "page_id": "69e748b385f786e884a4cdf8",
+   "page_number": 107,
+   "image": "https://images.sourcelibrary.org/archived/69e748b385f786e884a4cd8d/107.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "goethe_faustfragment_1790",
+    "index": 112,
+    "offset": -5
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "c699e64bfa1b3614"
+  },
+  {
+   "uid": "ge-698fb7806b95eeda7d2d20b9",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "698fb7806b95eeda7d2d20b9",
+   "book_language": "German",
+   "page_id": "698fb7816b95eeda7d2d2120",
+   "page_number": 103,
+   "image": "https://images.sourcelibrary.org/archived/698fb7806b95eeda7d2d20b9/103.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "humboldt_kosmos04_1858",
+    "index": 99,
+    "offset": 4
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "b0122d2f9c0ad7da"
+  },
+  {
+   "uid": "ge-69e75440095c302d3fddd9e4",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69e75440095c302d3fddd9e4",
+   "book_language": "German",
+   "page_id": "69e75440095c302d3fddda5d",
+   "page_number": 121,
+   "image": "https://images.sourcelibrary.org/archived/69e75440095c302d3fddd9e4/121.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "schiller_raeuber_1781",
+    "index": 126,
+    "offset": -5
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "69dc9bf641e1014d"
+  },
+  {
+   "uid": "ge-6a8f61f6e408ab73f484c285",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "6a8f61f6e408ab73f484c285",
+   "book_language": "German",
+   "page_id": "6a8f61f6e408ab73f484c293",
+   "page_number": 14,
+   "image": "https://images.sourcelibrary.org/pages/6a8f61f6e408ab73f484c285/0014.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "herbart_psychologie01_1824",
+    "index": 15,
+    "offset": -1
+   },
+   "engine": "gemini-2.5-flash",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "ea0df650b5964d88"
+  },
+  {
+   "uid": "ge-69aea30a803d5b811fc12658",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69aea30a803d5b811fc12658",
+   "book_language": "German",
+   "page_id": "69aea30a803d5b811fc1285c",
+   "page_number": 349,
+   "image": "https://images.sourcelibrary.org/archived/69aea30a803d5b811fc12658/349.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "nietzsche_zarathustra03_1884",
+    "index": 89,
+    "offset": 260
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "12454551119bc9e2"
+  },
+  {
+   "uid": "ge-69e792379adaf7b110e3a437",
+   "stratum": "print",
+   "lang": "German",
+   "book_id": "69e792379adaf7b110e3a437",
+   "book_language": "German",
+   "page_id": "69e792379adaf7b110e3a4a3",
+   "page_number": 108,
+   "image": "https://images.sourcelibrary.org/archived/69e792379adaf7b110e3a437/108.jpg",
+   "ref": {
+    "source": "dta",
+    "dir": "dta",
+    "source_id": "goethe_lehrjahre01_1795",
+    "index": 107,
+    "offset": 1
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "7542e925a6013f86"
+  },
+  {
+   "uid": "en-6991d8a58c1030b12444c22f",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6991d8a58c1030b12444c22f",
+   "book_language": "English",
+   "page_id": "6991d8a78c1030b12444c4d8",
+   "page_number": 681,
+   "image": "https://images.sourcelibrary.org/archived/6991d8a58c1030b12444c22f/681.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A61291",
+    "index": 87,
+    "offset": 594
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "bc20a8e20d1a98a1"
+  },
+  {
+   "uid": "en-69aebe725e312cf82457c95c",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69aebe725e312cf82457c95c",
+   "book_language": "English",
+   "page_id": "69aebe725e312cf82457c9a4",
+   "page_number": 72,
+   "image": "https://images.sourcelibrary.org/archived/69aebe725e312cf82457c95c/72.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A16845",
+    "index": 60,
+    "offset": 12
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "f59d054b83a061a4"
+  },
+  {
+   "uid": "en-6990522a8d19cbc90d9d554f",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6990522a8d19cbc90d9d554f",
+   "book_language": "English",
+   "page_id": "6990522a8d19cbc90d9d5564",
+   "page_number": 21,
+   "image": "https://images.sourcelibrary.org/archived/6990522a8d19cbc90d9d554f/21.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A04243",
+    "index": 21,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "e8f8eb576d343d47"
+  },
+  {
+   "uid": "en-69c842ce6c6f3cc53c850db1",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69c842ce6c6f3cc53c850db1",
+   "book_language": "English",
+   "page_id": "69c842df6c6f3cc53c850de6",
+   "page_number": 25,
+   "image": "https://images.sourcelibrary.org/pages/69c842ce6c6f3cc53c850db1/0013-full.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A68824",
+    "index": 24,
+    "offset": 1
+   },
+   "engine": "gemini-2.5-flash",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "453b14ae6350cc1b"
+  },
+  {
+   "uid": "en-69e786db6846fc56c490f5d2",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69e786db6846fc56c490f5d2",
+   "book_language": "English",
+   "page_id": "69e786db6846fc56c490f643",
+   "page_number": 113,
+   "image": "https://images.sourcelibrary.org/archived/69e786db6846fc56c490f5d2/113.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A03364",
+    "index": 111,
+    "offset": 2
+   },
+   "engine": "gemini-3.1-flash-lite",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "41af2acb1ea6a496"
+  },
+  {
+   "uid": "en-695690527df2d231f8f9a858",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "695690527df2d231f8f9a858",
+   "book_language": "English",
+   "page_id": "695699801479a63c1108ed02",
+   "page_number": 249,
+   "image": "https://images.sourcelibrary.org/archived/695690527df2d231f8f9a858/249.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A42237",
+    "index": 241,
+    "offset": 8
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "f6167f94dca2e871"
+  },
+  {
+   "uid": "en-6a455ce689beae48d3af8e4f",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6a455ce689beae48d3af8e4f",
+   "book_language": "English",
+   "page_id": "6a455ce689beae48d3af8e65",
+   "page_number": 22,
+   "image": "https://images.sourcelibrary.org/archived/6a455ce689beae48d3af8e4f/22.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A00918",
+    "index": 22,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "a2b3cde6e4fa0c80"
+  },
+  {
+   "uid": "en-695595ee7bd6d2cd1d620af6",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "695595ee7bd6d2cd1d620af6",
+   "book_language": "English",
+   "page_id": "695595ee7bd6d2cd1d620b22",
+   "page_number": 44,
+   "image": "https://images.sourcelibrary.org/archived/695595ee7bd6d2cd1d620af6/44.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A44319",
+    "index": 47,
+    "offset": -3
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "f363322df0319569"
+  },
+  {
+   "uid": "en-6955d3d828a09ca65927ed03",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6955d3d828a09ca65927ed03",
+   "book_language": "English",
+   "page_id": "6955d3d928a09ca65927edbe",
+   "page_number": 187,
+   "image": "https://images.sourcelibrary.org/archived/6955d3d828a09ca65927ed03/187.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A29017",
+    "index": 187,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "a2cba50e86521ba7"
+  },
+  {
+   "uid": "en-69ac840ff37088db51918695",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69ac840ff37088db51918695",
+   "book_language": "English",
+   "page_id": "69ac840ff37088db519186b6",
+   "page_number": 33,
+   "image": "https://images.sourcelibrary.org/archived/69ac840ff37088db51918695/33.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A42444",
+    "index": 33,
+    "offset": 0
+   },
+   "engine": "gemini-3.1-flash-lite",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "41dd7e126ab43946"
+  },
+  {
+   "uid": "en-69ac83f15d2908b26341c734",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69ac83f15d2908b26341c734",
+   "book_language": "English",
+   "page_id": "69ac83f15d2908b26341c743",
+   "page_number": 15,
+   "image": "https://images.sourcelibrary.org/archived/69ac83f15d2908b26341c734/15.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A96634",
+    "index": 9,
+    "offset": 6
+   },
+   "engine": null,
+   "pipeline": null,
+   "ocr_source": null,
+   "ocr_hash": "e3b0c44298fc1c14"
+  },
+  {
+   "uid": "en-69e7833a0fc6fc955e36317c",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69e7833a0fc6fc955e36317c",
+   "book_language": "English",
+   "page_id": "69e7833a0fc6fc955e36323b",
+   "page_number": 191,
+   "image": "https://images.sourcelibrary.org/archived/69e7833a0fc6fc955e36317c/191.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A14064",
+    "index": 191,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "4ae913ff97235c69"
+  },
+  {
+   "uid": "en-6958e07cd34d35c8156624c8",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6958e07cd34d35c8156624c8",
+   "book_language": "English",
+   "page_id": "6958e07cd34d35c815662505",
+   "page_number": 61,
+   "image": "https://images.sourcelibrary.org/archived/6958e07cd34d35c8156624c8/61.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A38792",
+    "index": 60,
+    "offset": 1
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "6dc7c1daea43dbc7"
+  },
+  {
+   "uid": "en-6a4fa91eb5772a3dacaac370",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6a4fa91eb5772a3dacaac370",
+   "book_language": "English",
+   "page_id": "6a4fa91eb5772a3dacaac380",
+   "page_number": 16,
+   "image": "https://images.sourcelibrary.org/archived/6a4fa91eb5772a3dacaac370/16.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A29815",
+    "index": 14,
+    "offset": 2
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "0141b2b8e5c306b1"
+  },
+  {
+   "uid": "en-6a5837f26701425b99305757",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6a5837f26701425b99305757",
+   "book_language": "English",
+   "page_id": "6a5837f26701425b99305770",
+   "page_number": 25,
+   "image": "https://images.sourcelibrary.org/archived/6a5837f26701425b99305757/25.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A58336",
+    "index": 25,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "bdf3a7f9de512779"
+  },
+  {
+   "uid": "en-69e41131f41cc469d687fdc6",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69e41131f41cc469d687fdc6",
+   "book_language": "English",
+   "page_id": "69e41131f41cc469d68800be",
+   "page_number": 760,
+   "image": "https://images.sourcelibrary.org/archived/69e41131f41cc469d687fdc6/760.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A11954",
+    "index": 762,
+    "offset": -2
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "8852bdd6fa457b8e"
+  },
+  {
+   "uid": "en-69e75402095c302d3fddcd4b",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "69e75402095c302d3fddcd4b",
+   "book_language": "English",
+   "page_id": "69e75402095c302d3fddcd73",
+   "page_number": 40,
+   "image": "https://images.sourcelibrary.org/archived/69e75402095c302d3fddcd4b/40.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A07009",
+    "index": 40,
+    "offset": 0
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "pipeline_preview",
+   "ocr_hash": "be830d3c1a620b07"
+  },
+  {
+   "uid": "en-6984e84f99e67a12430e0685",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6984e84f99e67a12430e0685",
+   "book_language": "English",
+   "page_id": "6984f4ca335585fd6a6e650d",
+   "page_number": 83,
+   "image": "https://images.sourcelibrary.org/cropped/6984e84f99e67a12430e0685/6984f4ca335585fd6a6e650d.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A90641",
+    "index": 75,
+    "offset": 8
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "ca7234e1d62c42e0"
+  },
+  {
+   "uid": "en-6a42c583e76baa13aa845f28",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6a42c583e76baa13aa845f28",
+   "book_language": "English",
+   "page_id": "6a42c583e76baa13aa845f41",
+   "page_number": 25,
+   "image": "https://images.sourcelibrary.org/archived/6a42c583e76baa13aa845f28/25.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A49852",
+    "index": 24,
+    "offset": 1
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "5bd5703870ce52c0"
+  },
+  {
+   "uid": "en-6955d3db28a09ca65927eed3",
+   "stratum": "print",
+   "lang": "English",
+   "book_id": "6955d3db28a09ca65927eed3",
+   "book_language": "English",
+   "page_id": "6955d3db28a09ca65927ef3c",
+   "page_number": 105,
+   "image": "https://images.sourcelibrary.org/archived/6955d3db28a09ca65927eed3/105.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A29052",
+    "index": 99,
+    "offset": 6
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "2a64236d3137c54f"
+  },
+  {
+   "uid": "la-6a426869aedf4c943f91eac4",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a426869aedf4c943f91eac4",
+   "book_language": "Latin",
+   "page_id": "6a426869aedf4c943f91eacb",
+   "page_number": 7,
+   "image": "https://images.sourcelibrary.org/archived/6a426869aedf4c943f91eac4/7.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A44021",
+    "index": 6,
+    "offset": 1
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "b290b234fa297616"
+  },
+  {
+   "uid": "la-6a42ec4006e6ead3ac544b8f",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a42ec4006e6ead3ac544b8f",
+   "book_language": "Latin",
+   "page_id": "6a42ec4006e6ead3ac544ba5",
+   "page_number": 22,
+   "image": "https://images.sourcelibrary.org/archived/6a42ec4006e6ead3ac544b8f/22.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A36017",
+    "index": 22,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "39bc3543491a697c"
+  },
+  {
+   "uid": "la-69bda035f6d63c91974856ae",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "69bda035f6d63c91974856ae",
+   "book_language": "Latin",
+   "page_id": "69bda035f6d63c91974857d2",
+   "page_number": 292,
+   "image": "https://images.sourcelibrary.org/archived/69bda035f6d63c91974856ae/292.jpg",
+   "ref": {
+    "source": "camena",
+    "dir": "camena",
+    "source_id": "thesaurus/Masen_speculum_1",
+    "index": 226,
+    "offset": 66
+   },
+   "engine": "gemini-3.1-flash-lite-preview",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "88799ec882dbbebb"
+  },
+  {
+   "uid": "la-6a48e2591e36bf8015227d14",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a48e2591e36bf8015227d14",
+   "book_language": "Latin",
+   "page_id": "6a48e2591e36bf8015227d1a",
+   "page_number": 6,
+   "image": "https://images.sourcelibrary.org/archived/6a48e2591e36bf8015227d14/6.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A58151",
+    "index": 5,
+    "offset": 1
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "350d436f8f5a7347"
+  },
+  {
+   "uid": "la-6953e4fa77f38f6761bef1dc",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6953e4fa77f38f6761bef1dc",
+   "book_language": "Latin",
+   "page_id": "6953e4fa77f38f6761bef2cf",
+   "page_number": 243,
+   "image": "https://images.sourcelibrary.org/archived/6953e4fa77f38f6761bef1dc/243.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A52251",
+    "index": 233,
+    "offset": 10
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "f41c5a93358cf20c"
+  },
+  {
+   "uid": "la-6a425634dfbbb4d07aa5382e",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a425634dfbbb4d07aa5382e",
+   "book_language": "Latin",
+   "page_id": "6a425634dfbbb4d07aa5383e",
+   "page_number": 16,
+   "image": "https://images.sourcelibrary.org/archived/6a425634dfbbb4d07aa5382e/16.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A03932",
+    "index": 16,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "fce89ad1a3350934"
+  },
+  {
+   "uid": "la-6a42aecb5207af7c42f5333c",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a42aecb5207af7c42f5333c",
+   "book_language": "Latin",
+   "page_id": "6a42aecb5207af7c42f53408",
+   "page_number": 21,
+   "image": "https://images.sourcelibrary.org/archived/6a42aecb5207af7c42f5333c/21.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A43130",
+    "index": 21,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "cbf3607c0aa69538"
+  },
+  {
+   "uid": "la-6a430dd522c0c8edb0f92411",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a430dd522c0c8edb0f92411",
+   "book_language": "Latin",
+   "page_id": "6a430dd522c0c8edb0f92418",
+   "page_number": 7,
+   "image": "https://images.sourcelibrary.org/archived/6a430dd522c0c8edb0f92411/7.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A03486",
+    "index": 7,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "5d3903eb394f2339"
+  },
+  {
+   "uid": "la-6a4e14c2e6c28ebd246c8899",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a4e14c2e6c28ebd246c8899",
+   "book_language": "Latin",
+   "page_id": "6a4e14c2e6c28ebd246c88a1",
+   "page_number": 6,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11103920_00006/full/full/0/default.jpg",
+   "ref": {
+    "source": "camena",
+    "dir": "camena",
+    "source_id": "poemata/balticuspoemata_1",
+    "index": 6,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "fddfe3f09b97815b"
+  },
+  {
+   "uid": "la-6a4d368b2c93d3a790e96539",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a4d368b2c93d3a790e96539",
+   "book_language": "Latin",
+   "page_id": "6a4d36a82c93d3a790e96793",
+   "page_number": 21,
+   "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11730478_00021/full/full/0/default.jpg",
+   "ref": {
+    "source": "camena",
+    "dir": "camena",
+    "source_id": "poemata/taubmannpostuma",
+    "index": 16,
+    "offset": 5
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "8f32ea6f69e2a3cc"
+  },
+  {
+   "uid": "la-6a503c772f6539fb38937d92",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a503c772f6539fb38937d92",
+   "book_language": "Latin",
+   "page_id": "6a503c772f6539fb38937d9b",
+   "page_number": 9,
+   "image": "https://images.sourcelibrary.org/archived/6a503c772f6539fb38937d92/9.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A09349",
+    "index": 6,
+    "offset": 3
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "6f1abc2d6db0c152"
+  },
+  {
+   "uid": "la-6a44603a335f9b32ac49615d",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a44603a335f9b32ac49615d",
+   "book_language": "Latin",
+   "page_id": "6a44603a335f9b32ac496174",
+   "page_number": 23,
+   "image": "https://images.sourcelibrary.org/archived/6a44603a335f9b32ac49615d/23.jpg",
+   "ref": {
+    "source": "camena",
+    "dir": "camena",
+    "source_id": "poemata/flitnerusnebulo",
+    "index": 19,
+    "offset": 4
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "25b38ef3151ac2ed"
+  },
+  {
+   "uid": "la-6a463e29b000203b37d3e7b5",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a463e29b000203b37d3e7b5",
+   "book_language": "Latin",
+   "page_id": "6a463e29b000203b37d3e7c5",
+   "page_number": 16,
+   "image": "https://images.sourcelibrary.org/archived/6a463e29b000203b37d3e7b5/16.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A68344",
+    "index": 12,
+    "offset": 4
+   },
+   "engine": "gemini-2.5-flash",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "864e000b13788bae"
+  },
+  {
+   "uid": "la-69b51e9947b06ecd581940dc",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "69b51e9947b06ecd581940dc",
+   "book_language": "Latin",
+   "page_id": "69b51e9947b06ecd5819421b",
+   "page_number": 319,
+   "image": "https://images.sourcelibrary.org/archived/69b51e9947b06ecd581940dc/319.jpg",
+   "ref": {
+    "source": "camena",
+    "dir": "camena",
+    "source_id": "poemata/baldeelegiae",
+    "index": 72,
+    "offset": 247
+   },
+   "engine": "gemini-3.1-flash-lite",
+   "pipeline": null,
+   "ocr_source": "batch_api",
+   "ocr_hash": "669cc41e4f75d607"
+  },
+  {
+   "uid": "la-6a432b29e797132cc665b266",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a432b29e797132cc665b266",
+   "book_language": "Latin",
+   "page_id": "6a432b2ae797132cc665b26b",
+   "page_number": 5,
+   "image": "https://images.sourcelibrary.org/archived/6a432b29e797132cc665b266/5.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A01809",
+    "index": 5,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "8bbe35f3a1f219e9"
+  },
+  {
+   "uid": "la-6a51d78d612243b274118e89",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a51d78d612243b274118e89",
+   "book_language": "Latin",
+   "page_id": "6a51d78d612243b274118e90",
+   "page_number": 7,
+   "image": "https://images.sourcelibrary.org/archived/6a51d78d612243b274118e89/7.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A04717",
+    "index": 9,
+    "offset": -2
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "8c62285e2bcd6a13"
+  },
+  {
+   "uid": "la-6a4f7c25a13ff00e22df18f1",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a4f7c25a13ff00e22df18f1",
+   "book_language": "Latin",
+   "page_id": "6a4f7c25a13ff00e22df1902",
+   "page_number": 17,
+   "image": "https://images.sourcelibrary.org/archived/6a4f7c25a13ff00e22df18f1/17.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A19865",
+    "index": 17,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "146ea06bde3160db"
+  },
+  {
+   "uid": "la-6a42a33fdec0f9e2ecca5a38",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a42a33fdec0f9e2ecca5a38",
+   "book_language": "Latin",
+   "page_id": "6a42a33fdec0f9e2ecca5a42",
+   "page_number": 10,
+   "image": "https://images.sourcelibrary.org/archived/6a42a33fdec0f9e2ecca5a38/10.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A30431",
+    "index": 10,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "cd2f9306a88455d3"
+  },
+  {
+   "uid": "la-6a42acc65207af7c42f4db34",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a42acc65207af7c42f4db34",
+   "book_language": "Latin",
+   "page_id": "6a42acc65207af7c42f4db3e",
+   "page_number": 10,
+   "image": "https://images.sourcelibrary.org/archived/6a42acc65207af7c42f4db34/10.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A07382",
+    "index": 10,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "d8678c97140099aa"
+  },
+  {
+   "uid": "la-6a90b21b549dee7bdfbf20dc",
+   "stratum": "print",
+   "lang": "Latin",
+   "book_id": "6a90b21b549dee7bdfbf20dc",
+   "book_language": "Latin",
+   "page_id": "6a90b21b549dee7bdfbf20e3",
+   "page_number": 7,
+   "image": "https://images.sourcelibrary.org/archived/6a90b21b549dee7bdfbf20dc/7.jpg",
+   "ref": {
+    "source": "eebo-tcp",
+    "dir": "eebo",
+    "source_id": "A68029",
+    "index": 7,
+    "offset": 0
+   },
+   "engine": "gemini-3-flash-preview",
+   "pipeline": null,
+   "ocr_source": "ai",
+   "ocr_hash": "8131fab964ec9038"
+  },
+  {
+   "uid": "zh-6a3c6752af3c49b59c5d2343",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c6752af3c49b59c5d2343",
+   "book_language": "Chinese",
+   "page_id": "6a3c6752af3c49b59c5d2369",
+   "page_number": 38,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6752af3c49b59c5d2343/38.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3a0078",
+    "witness": "WYG",
+    "juans": [
+     49
+    ],
+    "pb": "KR3a0078_WYG_049-18b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "41c043c672ab7f56"
+  },
+  {
+   "uid": "zh-6a3cec878642f0445b15d62b",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cec878642f0445b15d62b",
+   "book_language": "Chinese",
+   "page_id": "6a3cec888642f0445b15d6a5",
+   "page_number": 122,
+   "image": "https://images.sourcelibrary.org/archived/6a3cec878642f0445b15d62b/122.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0032",
+    "witness": "WYG",
+    "juans": [
+     14
+    ],
+    "pb": "KR3k0032_WYG_014-6a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "0e3b2bead3f69bad"
+  },
+  {
+   "uid": "zh-6a3cbba287ee3d48c89cfbf2",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbba287ee3d48c89cfbf2",
+   "book_language": "Chinese",
+   "page_id": "6a3cbba287ee3d48c89cfc1d",
+   "page_number": 43,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbba287ee3d48c89cfbf2/43.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1d0003",
+    "witness": "WYG",
+    "juans": [
+     38
+    ],
+    "pb": "KR1d0003_WYG_038-21a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "5e8c63630e774154"
+  },
+  {
+   "uid": "zh-6a3cec698642f0445b15c3f3",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cec698642f0445b15c3f3",
+   "book_language": "Chinese",
+   "page_id": "6a3cec6a8642f0445b15c509",
+   "page_number": 131,
+   "image": "https://images.sourcelibrary.org/archived/6a3cec698642f0445b15c3f3/131.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0020",
+    "witness": "WYG",
+    "juans": [
+     12
+    ],
+    "pb": "KR3k0020_WYG_012-13b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "20f648205139df1b"
+  },
+  {
+   "uid": "zh-6a3c6a2539b4508b04e3f491",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c6a2539b4508b04e3f491",
+   "book_language": "Chinese",
+   "page_id": "6a3c6a2539b4508b04e3f4d0",
+   "page_number": 63,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6a2539b4508b04e3f491/63.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1j0057",
+    "witness": "WYG",
+    "juans": [
+     6
+    ],
+    "pb": "KR1j0057_WYG_006-31a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "e6b61b550f2fadce"
+  },
+  {
+   "uid": "zh-6a3cc013f9474f825c16db26",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cc013f9474f825c16db26",
+   "book_language": "Chinese",
+   "page_id": "6a3cc013f9474f825c16db48",
+   "page_number": 34,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc013f9474f825c16db26/34.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0047",
+    "witness": "WYG",
+    "juans": [
+     5
+    ],
+    "pb": "KR3k0047_WYG_005-16b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "ca2844d058d5b01b"
+  },
+  {
+   "uid": "zh-6a3cbfedf9474f825c16c6aa",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbfedf9474f825c16c6aa",
+   "book_language": "Chinese",
+   "page_id": "6a3cbfedf9474f825c16c6e0",
+   "page_number": 54,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbfedf9474f825c16c6aa/54.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3h0070",
+    "witness": "WYG",
+    "juans": [
+     336
+    ],
+    "pb": "KR3h0070_WYG_336-27a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "fd153b3e27ab72b0"
+  },
+  {
+   "uid": "zh-6a3c746301fe4f593c1f0ad9",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c746301fe4f593c1f0ad9",
+   "book_language": "Chinese",
+   "page_id": "6a3c746401fe4f593c1f0b25",
+   "page_number": 76,
+   "image": "https://images.sourcelibrary.org/archived/6a3c746301fe4f593c1f0ad9/76.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1e0101",
+    "witness": "WYG",
+    "juans": [
+     5
+    ],
+    "pb": "KR1e0101_WYG_005-37b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "775ba334bc6bbb38"
+  },
+  {
+   "uid": "zh-6a3ce88f0a0011cb4bc0d100",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3ce88f0a0011cb4bc0d100",
+   "book_language": "Chinese",
+   "page_id": "6a3ce88f0a0011cb4bc0d210",
+   "page_number": 72,
+   "image": "https://images.sourcelibrary.org/archived/6a3ce88f0a0011cb4bc0d100/72.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1d0037",
+    "witness": "WYG",
+    "juans": [
+     27
+    ],
+    "pb": "KR1d0037_WYG_027-35b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "597b4629d8b74f46"
+  },
+  {
+   "uid": "zh-6a3c70e501fe4f593c1d5f24",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c70e501fe4f593c1d5f24",
+   "book_language": "Chinese",
+   "page_id": "6a3c70e501fe4f593c1d5f59",
+   "page_number": 52,
+   "image": "https://images.sourcelibrary.org/archived/6a3c70e501fe4f593c1d5f24/52.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3e0075",
+    "witness": "WYG",
+    "juans": [
+     5
+    ],
+    "pb": "KR3e0075_WYG_005-25b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "42e52da1ad2bc171"
+  },
+  {
+   "uid": "zh-6a3cea6e1b8b95f7c4221e2a",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cea6e1b8b95f7c4221e2a",
+   "book_language": "Chinese",
+   "page_id": "6a3cea6e1b8b95f7c4221e88",
+   "page_number": 94,
+   "image": "https://images.sourcelibrary.org/archived/6a3cea6e1b8b95f7c4221e2a/94.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1e0093",
+    "witness": "WYG",
+    "juans": [
+     15
+    ],
+    "pb": "KR1e0093_WYG_015-26b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "52128bc37832e29a"
+  },
+  {
+   "uid": "zh-6a3c662139b4508b04e322a9",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c662139b4508b04e322a9",
+   "book_language": "Chinese",
+   "page_id": "6a3c662139b4508b04e3230c",
+   "page_number": 98,
+   "image": "https://images.sourcelibrary.org/archived/6a3c662139b4508b04e322a9/98.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0058",
+    "witness": "WYG",
+    "juans": [
+     91
+    ],
+    "pb": "KR3k0058_WYG_091-22b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "af67b079ba473846"
+  },
+  {
+   "uid": "zh-6a3c793b01fe4f593c20e0c8",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c793b01fe4f593c20e0c8",
+   "book_language": "Chinese",
+   "page_id": "6a3c793b01fe4f593c20e0f5",
+   "page_number": 45,
+   "image": "https://images.sourcelibrary.org/archived/6a3c793b01fe4f593c20e0c8/45.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0003",
+    "witness": "WYG",
+    "juans": [
+     23
+    ],
+    "pb": "KR3k0003_WYG_023-22b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "df0af8ac860995d6"
+  },
+  {
+   "uid": "zh-6a3ce9720a0011cb4bc10176",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3ce9720a0011cb4bc10176",
+   "book_language": "Chinese",
+   "page_id": "6a3ce9730a0011cb4bc101b3",
+   "page_number": 61,
+   "image": "https://images.sourcelibrary.org/archived/6a3ce9720a0011cb4bc10176/61.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1d0049",
+    "witness": "WYG",
+    "juans": [
+     21
+    ],
+    "pb": "KR1d0049_WYG_021-30a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "482302435e8ea453"
+  },
+  {
+   "uid": "zh-6a3c6a05af3c49b59c5e4300",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c6a05af3c49b59c5e4300",
+   "book_language": "Chinese",
+   "page_id": "6a3c6a05af3c49b59c5e4339",
+   "page_number": 57,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6a05af3c49b59c5e4300/57.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3e0067",
+    "witness": "WYG",
+    "juans": [
+     413
+    ],
+    "pb": "KR3e0067_WYG_413-28a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "cdf308fea57bcee2"
+  },
+  {
+   "uid": "zh-6a3c77b301fe4f593c2041ed",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c77b301fe4f593c2041ed",
+   "book_language": "Chinese",
+   "page_id": "6a3c77b401fe4f593c204253",
+   "page_number": 102,
+   "image": "https://images.sourcelibrary.org/archived/6a3c77b301fe4f593c2041ed/102.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1j0088",
+    "witness": "WYG",
+    "juans": [
+     1
+    ],
+    "pb": "KR1j0088_WYG_001-42b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "fcabfa26f1aa03d7"
+  },
+  {
+   "uid": "zh-6a3cc273ec254ff6cae1155f",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cc273ec254ff6cae1155f",
+   "book_language": "Chinese",
+   "page_id": "6a3cc274ec254ff6cae1157a",
+   "page_number": 27,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc273ec254ff6cae1155f/27.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1b0029",
+    "witness": "WYG",
+    "juans": [
+     5
+    ],
+    "pb": "KR1b0029_WYG_005-13b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "3b9acb389641921d"
+  },
+  {
+   "uid": "zh-6a3c774401fe4f593c200d36",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c774401fe4f593c200d36",
+   "book_language": "Chinese",
+   "page_id": "6a3c774501fe4f593c200da4",
+   "page_number": 110,
+   "image": "https://images.sourcelibrary.org/archived/6a3c774401fe4f593c200d36/110.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1a0098",
+    "witness": "WYG",
+    "juans": [
+     4
+    ],
+    "pb": "KR1a0098_WYG_004-54b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "c42a4fc68fdb5943"
+  },
+  {
+   "uid": "zh-6a3c70ba01fe4f593c1d448a",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c70ba01fe4f593c1d448a",
+   "book_language": "Chinese",
+   "page_id": "6a3c70bb01fe4f593c1d4516",
+   "page_number": 140,
+   "image": "https://images.sourcelibrary.org/archived/6a3c70ba01fe4f593c1d448a/140.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1e0114",
+    "witness": "WYG",
+    "juans": [
+     8
+    ],
+    "pb": "KR1e0114_WYG_008-69b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "f6bad68c2bc278e0"
+  },
+  {
+   "uid": "zh-6a3c6005879008ba7e159a6c",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c6005879008ba7e159a6c",
+   "book_language": "Chinese",
+   "page_id": "6a3c6005879008ba7e159b15",
+   "page_number": 169,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6005879008ba7e159a6c/169.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0056",
+    "witness": "WYG",
+    "juans": [
+     44
+    ],
+    "pb": "KR3k0056_WYG_044-32b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "33d981bd2b1f8e17"
+  },
+  {
+   "uid": "zh-6a3cef944701a906f10f0e9d",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cef944701a906f10f0e9d",
+   "book_language": "Chinese",
+   "page_id": "6a3cef944701a906f10f0efb",
+   "page_number": 94,
+   "image": "https://images.sourcelibrary.org/archived/6a3cef944701a906f10f0e9d/94.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0055",
+    "witness": "WYG",
+    "juans": [
+     85
+    ],
+    "pb": "KR3k0055_WYG_085-15b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "427ba34fd3ea0535"
+  },
+  {
+   "uid": "zh-6a3c68daaf3c49b59c5dd161",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c68daaf3c49b59c5dd161",
+   "book_language": "Chinese",
+   "page_id": "6a3c68daaf3c49b59c5dd232",
+   "page_number": 29,
+   "image": "https://images.sourcelibrary.org/archived/6a3c68daaf3c49b59c5dd161/29.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3e0067",
+    "witness": "WYG",
+    "juans": [
+     26
+    ],
+    "pb": "KR3e0067_WYG_026-14a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "49cba85d0d0786b4"
+  },
+  {
+   "uid": "zh-6a3cbfe8f9474f825c16c42f",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbfe8f9474f825c16c42f",
+   "book_language": "Chinese",
+   "page_id": "6a3cbfe8f9474f825c16c444",
+   "page_number": 21,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbfe8f9474f825c16c42f/21.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3h0070",
+    "witness": "WYG",
+    "juans": [
+     324
+    ],
+    "pb": "KR3h0070_WYG_324-10b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "bc69d9b45d8a33db"
+  },
+  {
+   "uid": "zh-6a3c758239b4508b04e5c210",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c758239b4508b04e5c210",
+   "book_language": "Chinese",
+   "page_id": "6a3c758239b4508b04e5c280",
+   "page_number": 112,
+   "image": "https://images.sourcelibrary.org/archived/6a3c758239b4508b04e5c210/112.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3a0110",
+    "witness": "WYG",
+    "juans": [
+     62
+    ],
+    "pb": "KR3a0110_WYG_062-55b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "9710b71d10243cae"
+  },
+  {
+   "uid": "zh-6a3c73a801fe4f593c1ea429",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c73a801fe4f593c1ea429",
+   "book_language": "Chinese",
+   "page_id": "6a3c73a801fe4f593c1ea462",
+   "page_number": 57,
+   "image": "https://images.sourcelibrary.org/archived/6a3c73a801fe4f593c1ea429/57.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0008",
+    "witness": "WYG",
+    "juans": [
+     78
+    ],
+    "pb": "KR3k0008_WYG_078-28a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "08016a6f27141076"
+  },
+  {
+   "uid": "zh-6a3c645e39b4508b04e2672d",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c645e39b4508b04e2672d",
+   "book_language": "Chinese",
+   "page_id": "6a3c645e39b4508b04e26781",
+   "page_number": 84,
+   "image": "https://images.sourcelibrary.org/archived/6a3c645e39b4508b04e2672d/84.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0059",
+    "witness": "WYG",
+    "juans": [
+     514
+    ],
+    "pb": "KR3k0059_WYG_514-40b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "796d7421220badfb"
+  },
+  {
+   "uid": "zh-6a3cbafc3d799518cd71f060",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbafc3d799518cd71f060",
+   "book_language": "Chinese",
+   "page_id": "6a3cbafc3d799518cd71f16b",
+   "page_number": 111,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbafc3d799518cd71f060/111.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1d0087",
+    "witness": "WYG",
+    "juans": [
+     113
+    ],
+    "pb": "KR1d0087_WYG_113-55a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "bee89e03ed2993e6"
+  },
+  {
+   "uid": "zh-6a3cb90c3dce6cfad749220d",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cb90c3dce6cfad749220d",
+   "book_language": "Chinese",
+   "page_id": "6a3cb90c3dce6cfad74922ab",
+   "page_number": 158,
+   "image": "https://images.sourcelibrary.org/archived/6a3cb90c3dce6cfad749220d/158.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1e0012",
+    "witness": "WYG",
+    "juans": [
+     8
+    ],
+    "pb": "KR1e0012_WYG_008-78b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "43ddae6f160102da"
+  },
+  {
+   "uid": "zh-6a3cbe01ec254ff6cadfc3a3",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbe01ec254ff6cadfc3a3",
+   "book_language": "Chinese",
+   "page_id": "6a3cbe01ec254ff6cadfc413",
+   "page_number": 111,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbe01ec254ff6cadfc3a3/111.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3e0078",
+    "witness": "WYG",
+    "juans": [
+     106
+    ],
+    "pb": "KR3e0078_WYG_106-55a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "3bc0daeb698b7740"
+  },
+  {
+   "uid": "zh-6a3c6bdd39b4508b04e46d76",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c6bdd39b4508b04e46d76",
+   "book_language": "Chinese",
+   "page_id": "6a3c6bdd39b4508b04e46dd4",
+   "page_number": 94,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6bdd39b4508b04e46d76/94.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3g0018",
+    "witness": "WYG",
+    "juans": [
+     100
+    ],
+    "pb": "KR3g0018_WYG_100-5a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "e666b6b2b6a97966"
+  },
+  {
+   "uid": "zh-6a3cbab73dce6cfad749e213",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbab73dce6cfad749e213",
+   "book_language": "Chinese",
+   "page_id": "6a3cbab73dce6cfad749e24d",
+   "page_number": 58,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbab73dce6cfad749e213/58.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1d0087",
+    "witness": "WYG",
+    "juans": [
+     9
+    ],
+    "pb": "KR1d0087_WYG_009-28b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "9d46dd2ade41948f"
+  },
+  {
+   "uid": "zh-6a3cbfaef9474f825c16a3b3",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cbfaef9474f825c16a3b3",
+   "book_language": "Chinese",
+   "page_id": "6a3cbfaef9474f825c16a42f",
+   "page_number": 124,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbfaef9474f825c16a3b3/124.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3h0070",
+    "witness": "WYG",
+    "juans": [
+     199
+    ],
+    "pb": "KR3h0070_WYG_199-7b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "648c48a8b5252701"
+  },
+  {
+   "uid": "zh-6a3c759439b4508b04e5cbca",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c759439b4508b04e5cbca",
+   "book_language": "Chinese",
+   "page_id": "6a3c759439b4508b04e5cc52",
+   "page_number": 136,
+   "image": "https://images.sourcelibrary.org/archived/6a3c759439b4508b04e5cbca/136.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3a0110",
+    "witness": "WYG",
+    "juans": [
+     46
+    ],
+    "pb": "KR3a0110_WYG_046-67b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "17709a4cef12bff2"
+  },
+  {
+   "uid": "zh-6a3ce6d60a0011cb4bc074bb",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3ce6d60a0011cb4bc074bb",
+   "book_language": "Chinese",
+   "page_id": "6a3ce6d60a0011cb4bc07595",
+   "page_number": 102,
+   "image": "https://images.sourcelibrary.org/archived/6a3ce6d60a0011cb4bc074bb/102.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1b0007",
+    "witness": "WYG",
+    "juans": [
+     36
+    ],
+    "pb": "KR1b0007_WYG_036-50b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "690cb48d59378d41"
+  },
+  {
+   "uid": "zh-6a3cb8bc3dce6cfad748ffcb",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cb8bc3dce6cfad748ffcb",
+   "book_language": "Chinese",
+   "page_id": "6a3cb8bc3dce6cfad7490090",
+   "page_number": 37,
+   "image": "https://images.sourcelibrary.org/archived/6a3cb8bc3dce6cfad748ffcb/37.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3j0076",
+    "witness": "WYG",
+    "juans": [
+     52
+    ],
+    "pb": "KR3j0076_WYG_052-18a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "904fdfce6aa6045e"
+  },
+  {
+   "uid": "zh-6a3c77b201fe4f593c20403a",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c77b201fe4f593c20403a",
+   "book_language": "Chinese",
+   "page_id": "6a3c77b201fe4f593c2040ed",
+   "page_number": 178,
+   "image": "https://images.sourcelibrary.org/archived/6a3c77b201fe4f593c20403a/178.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1a0113",
+    "witness": "WYG",
+    "juans": [
+     11
+    ],
+    "pb": "KR1a0113_WYG_011-53a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "fad240c524aac17b"
+  },
+  {
+   "uid": "zh-6a3cc070f9474f825c16ee9c",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cc070f9474f825c16ee9c",
+   "book_language": "Chinese",
+   "page_id": "6a3cc070f9474f825c16eec3",
+   "page_number": 38,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc070f9474f825c16ee9c/38.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1a0097",
+    "witness": "WYG",
+    "juans": [
+     7
+    ],
+    "pb": "KR1a0097_WYG_007-18b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "15759ab09db9bea3"
+  },
+  {
+   "uid": "zh-6a3cba853dce6cfad749c5bd",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3cba853dce6cfad749c5bd",
+   "book_language": "Chinese",
+   "page_id": "6a3cba853dce6cfad749c5e9",
+   "page_number": 44,
+   "image": "https://images.sourcelibrary.org/archived/6a3cba853dce6cfad749c5bd/44.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3k0025",
+    "witness": "WYG",
+    "juans": [
+     67
+    ],
+    "pb": "KR3k0025_WYG_067-4b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "f87d26f240ab2afe"
+  },
+  {
+   "uid": "zh-6a3c6861af3c49b59c5d87b2",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c6861af3c49b59c5d87b2",
+   "book_language": "Chinese",
+   "page_id": "6a3c6861af3c49b59c5d8829",
+   "page_number": 119,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6861af3c49b59c5d87b2/119.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR3j0077",
+    "witness": "WYG",
+    "juans": [
+     15
+    ],
+    "pb": "KR3j0077_WYG_015-15a",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "c34296221b77aa21"
+  },
+  {
+   "uid": "zh-6a3c76f901fe4f593c1fedc7",
+   "stratum": "manuscript",
+   "lang": "Chinese",
+   "book_id": "6a3c76f901fe4f593c1fedc7",
+   "book_language": "Chinese",
+   "page_id": "6a3c76fa01fe4f593c1fee49",
+   "page_number": 130,
+   "image": "https://images.sourcelibrary.org/archived/6a3c76f901fe4f593c1fedc7/130.jpg",
+   "ref": {
+    "source": "kanripo",
+    "repo": "KR1j0074",
+    "witness": "WYG",
+    "juans": [
+     9
+    ],
+    "pb": "KR1j0074_WYG_009-25b",
+    "leaf_rule": "neighbours"
+   },
+   "engine": "PaddleOCR-VL-1.6-0.9B",
+   "pipeline": "paddle-zh-2026-10",
+   "ocr_source": "paddle",
+   "ocr_hash": "b2fb563944f5dc83"
+  }
+ ],
+ "skipped": [
+  {
+   "book": "6a50be7db5e5291460a65897",
+   "why": "no page passed in 12 tries"
+  },
+  {
+   "book": "69aebe72c0472fef6455ab0f",
+   "why": "not live"
+  },
+  {
+   "book": "6a4ba1e2a25898ec8788c4db",
+   "why": "not live"
+  },
+  {
+   "book": "6a905d0b785d9b40577fc97e",
+   "why": "not live"
+  },
+  {
+   "book": "6a9061f6c21b989bffd757b3",
+   "why": "not live"
+  },
+  {
+   "book": "69b51db1768235dc6598620a",
+   "why": "not live"
+  },
+  {
+   "book": "6a42d6aa1894955eb72600fa",
+   "why": "not live"
+  },
+  {
+   "book": "6a94341a7680120fac24d808",
+   "why": "not live"
+  },
+  {
+   "book": "6a4b446e9f73a2728aab92bf",
+   "why": "not live"
+  },
+  {
+   "book": "6a48e1881e36bf8015227aa8",
+   "why": "not live"
+  },
+  {
+   "book": "6a908d3c49e09ee136412569",
+   "why": "not live"
+  },
+  {
+   "book": "6a90b1e3fea824c806827124",
+   "why": "not live"
+  },
+  {
+   "book": "6a4ab479193f71077b4682bd",
+   "why": "not live"
+  },
+  {
+   "book": "6a4252e5343d756d34e33e36",
+   "why": "not live"
+  },
+  {
+   "book": "6a42abe85207af7c42f4b6d7",
+   "why": "not live"
+  },
+  {
+   "book": "6a9083274e70467f35234ba3",
+   "why": "not live"
+  },
+  {
+   "book": "6a48279d2dd0016448f12f0f",
+   "why": "not live"
+  },
+  {
+   "book": "69b658d818b87551bfcf6b7c",
+   "why": "not live"
+  },
+  {
+   "book": "6a42d1c8e76baa13aa857a60",
+   "why": "not live"
+  },
+  {
+   "book": "6a496e86ff00b397e11984f3",
+   "why": "not live"
+  },
+  {
+   "book": "69b51ce704616a7c1dfb2a9f",
+   "why": "not live"
+  },
+  {
+   "book": "6a90e7e5544007b776b3806a",
+   "why": "not live"
+  },
+  {
+   "book": "6a4263b1744db9e3105b1125",
+   "why": "not live"
+  },
+  {
+   "book": "6a42a01edec0f9e2ecc9de93",
+   "why": "not live"
+  },
+  {
+   "book": "6a506fd980b7658fae261d6e",
+   "why": "no page passed in 12 tries"
+  },
+  {
+   "book": "6a90991fb7feee6e9c427bf0",
+   "why": "not live"
+  },
+  {
+   "book": "6a4f1546ce720e255f3c080d",
+   "why": "not live"
+  },
+  {
+   "book": "6a90675ceb8fb726ee3b7f5a",
+   "why": "not live"
+  },
+  {
+   "book": "6a4b18817622bb5aba12ac2e",
+   "why": "not live"
+  },
+  {
+   "book": "69b65bf018b87551bfd0f968",
+   "why": "not live"
+  },
+  {
+   "book": "6a42b7ee5207af7c42f63a27",
+   "why": "not live"
+  },
+  {
+   "book": "6a48d783df05f7ea342b730a",
+   "why": "not live"
+  },
+  {
+   "book": "6a434778201f98f53c3efe9d",
+   "why": "no page passed in 12 tries"
+  },
+  {
+   "book": "6a90a3993a69baad5d30bf15",
+   "why": "not live"
+  },
+  {
+   "book": "6a42e98906e6ead3ac53e443",
+   "why": "not live"
+  },
+  {
+   "book": "6a4b9981a25898ec8788bad3",
+   "why": "not live"
+  },
+  {
+   "book": "6a4a67067b720133514b047f",
+   "why": "not live"
+  },
+  {
+   "book": "6a9078467f9d520dd42e41e2",
+   "why": "not live"
+  },
+  {
+   "book": "6a44c24c0529d09bdf5ac205",
+   "why": "not live"
+  },
+  {
+   "book": "6a90e2d81a02a5cb2d7325f2",
+   "why": "not live"
+  },
+  {
+   "book": "6a9442802aee69fe0c623fea",
+   "why": "not live"
+  },
+  {
+   "book": "6a4253fe343d756d34e37966",
+   "why": "not live"
+  },
+  {
+   "book": "6a4adfef9a3f4fa983d99fb9",
+   "why": "not live"
+  },
+  {
+   "book": "6a3ceac4c895e71c6023ca2f",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6992ce0c3ea667fbac827c85",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6a3c74dc01fe4f593c1f308a",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6992ce0f3ea667fbac827e2c",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6992cde281c9d7efb84d09ce",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6a3c6a5eaf3c49b59c5e6356",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6a3c61e040c88a541d8f0a85",
+   "why": "no page with two trusted neighbours in 12 tries"
+  },
+  {
+   "book": "6a3c6d5201fe4f593c1b9f7c",
+   "why": "no page with two trusted neighbours in 12 tries"
+  }
+ ]
+}

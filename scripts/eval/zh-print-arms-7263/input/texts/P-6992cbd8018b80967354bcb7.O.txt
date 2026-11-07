@@ -1,0 +1,21 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>四</page-num>
+<header>卷四五</header>
+<warning>The folio number on the fold at the right edge is partly cut off; only 四 can be read with confidence.</warning>
+
+花可食五種
+花葉可食五種
+花葉及實皆可食二種
+葉皮及實皆可食二種
+莖可食三種
+笋可食一種
+笋及實皆可食一種
+
+---
+
+農政全書卷之四十五終
+
+<vocab>農政全書, 花, 葉, 皮, 實, 莖, 笋, 可食</vocab>

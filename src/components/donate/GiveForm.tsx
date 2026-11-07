@@ -58,7 +58,7 @@ const COPY: Record<'en' | 'es', Copy> = {
     monthly: 'Monthly',
     amountLabel: 'Amount',
     custom: 'Other',
-    give: 'Give',
+    give: 'Donate',
     giveMonthly: 'a month',
     usRoute: 'US tax-deductible · Netherland-America Foundation',
     intlRoute: 'International · Embassy of the Free Mind',

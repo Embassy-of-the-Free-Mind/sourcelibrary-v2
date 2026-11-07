@@ -56,6 +56,7 @@
  */
 
 import { blockLeafShiftRuns } from './leaf-shift.mjs';
+import { blockPageRefusals } from './block-page-guard.mjs';
 
 export const MIN_FRAGMENT_LETTERS = 20;
 export const FRAGMENT_WINDOW = 400;
@@ -464,10 +465,14 @@ export function blockDriftBoundaries(pages, translations, { caseless = false } =
  * (the misses are runs cut by a block edge); 7 of 3,321 single-page-lane blocks (0.21%) are
  * rejected, which costs those 8 pages a single-page translation, never a wrong text.
  */
-export function dropDriftedPages(pages, translations, { caseless = false } = {}) {
+export function dropDriftedPages(pages, translations, { caseless = false, anchors = null, prevOcr = null, nextOcr = null, k = null } = {}) {
   const drifted = blockDriftBoundaries(pages, translations, { caseless });
   // Read before any page is dropped: a dropped page breaks a run in two.
   const shifted = blockLeafShiftRuns(pages, translations);
+  // Wrong-leaf pages one at a time (#5021, block-page-guard.mjs): the anchor (when the call asked for one), the
+  // per-call absorption check and the single-page number vote. Each refused page is reported as a boundary of
+  // itself (prev = next = page), so every caller's "read prev and next again alone" path takes just that page.
+  for (const r of blockPageRefusals(pages, translations, { anchors, prevOcr, nextOcr, k })) drifted.push({ prev: r.page_number, next: r.page_number, kind: r.reason, fragment: r.detail });
   for (const d of drifted) { translations.delete(d.prev); translations.delete(d.next); }
   for (const run of shifted) {
     drifted.push({ prev: run.start, next: run.end, kind: 'leaf-shift', fragment: `${run.dir} leaf's numbers ${run.pages.map((x) => x.n.join('/')).join(', ')}` });

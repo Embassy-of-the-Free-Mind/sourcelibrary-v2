@@ -144,13 +144,15 @@ test.describe('BPH iframe — search (/embed/bph/search)', () => {
     const catalogBadge = page.locator('text=/CATALOG ONLY/i').first();
     await expect(catalogBadge).toBeVisible({ timeout: 10_000 });
 
-    // "Open all N catalogue matches" link present and stays in-tenant.
+    // "Open all N catalogue matches" link present and stays in the room.
     // The button text uses "catalogue" (en-GB) — match both spellings since
-    // the copy has flipped before.
+    // the copy has flipped before. On the apex the link keeps the /embed/bph
+    // prefix: a bare /catalog is the global catalogue, which refuses to be
+    // framed (#8047, #8058).
     const openAll = page.locator('a', { hasText: /catalogue? matches/i }).first();
     await expect(openAll).toBeVisible();
     const href = await openAll.getAttribute('href');
-    expect(href).toMatch(/^\/catalog\?cq=/);
+    expect(href).toMatch(/^\/embed\/bph\/catalog\?cq=/);
 
     await measurePerf(page, 'bph search: catalog matches section');
   });
@@ -217,7 +219,8 @@ test.describe('BPH iframe — cross-mode params preserved on deep links', () => 
     expect(page.url()).toContain('q=stale');
     expect(page.url()).toContain('view=catalog');
 
-    await expect(page.locator('h2', { hasText: BPH_HEADING })).toBeVisible({ timeout: 15_000 });
+    // .first(): while the deep link hydrates the heading can briefly render twice.
+    await expect(page.locator('h2', { hasText: BPH_HEADING }).first()).toBeVisible({ timeout: 15_000 });
   });
 });
 

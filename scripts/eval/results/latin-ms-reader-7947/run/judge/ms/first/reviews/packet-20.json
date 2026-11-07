@@ -1,0 +1,326 @@
+[
+ {
+  "book_id": "b20-k",
+  "slot": 1,
+  "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "qui causam materialem ... in centro non morantur",
+      "image": "qui Caüsam materialem ... in Centro non morantur",
+      "problem": "capitals lowered",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers 58, 59, 60 tagged as <page-num> (three page numbers on one leaf)",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Gläntze in der Sonnen Licht, wie du wilt, etc.",
+      "image": "Gläntze in der Sonnen Lufft (Luft), wie du wilt, etc",
+      "problem": "German motto: the word after 'Sonnen' is written L-u-ſ/f-t (no i-dot, no h-loop); read as the expected 'Licht'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Fulmina bruta ... Ex una mente ... Cognitio centri",
+      "image": "Fulmina Bruta ... Ex una Mente ... Cognitio Centri",
+      "problem": "capitals of the manuscript lowered",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Image description of emblem 81 calls the seated figure with a branch 'a radiant sun or monstrance-like object on an altar' and the horned tailed beast 'a donkey'",
+      "severity": "minor",
+      "class": "O14"
+     },
+     {
+      "note": "Emblem numbers tagged as one <page-num> list ('81, 82, 83' / '135, 136')",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 74,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers tagged as one <page-num> list ('81, 82, 83' / '135, 136')",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "All Latin mottoes on the three emblem pages are read correctly, including the 'Ex' ligature; one German word on emblem 83 is probably normalised to 'Licht', and emblem numbers are tagged as page numbers. Image descriptions on p.45 misname two figures."
+ },
+ {
+  "book_id": "b20-m",
+  "slot": 2,
+  "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "Ex una Mente semper Tota. ... Fulmina bruta",
+      "image": "Ex una Mente semper Totâ ... Fulmina Bruta",
+      "problem": "circumflex on Totâ dropped (the image's 'Ex' ligature is read correctly here); capital lowered",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta> note explaining why the emblem numbers are kept in the body (model commentary in the transcription)",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 74,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Et Uno (mirum! non mirum) innumera.",
+      "image": "Ex Uno (mirum! non mirum) innumera.",
+      "problem": "the scribe's Ex ligature (distinct from the plain 'Et' of 'Et Tria' / 'et Septem' on the same page) read as 'Et'; 'from one, innumerable' becomes 'and in one'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta> note explaining the emblem numbers (model commentary in the transcription)",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The most complete reader: every motto, the inner inscription and the cross words are transcribed, and 'Lufft' is right. One moderate misread ('Et Uno' for 'Ex Uno' on emblem 136), and the transcriptions include model <meta> notes."
+ },
+ {
+  "book_id": "b20-r",
+  "slot": 3,
+  "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "qui causam materialem ... in centro non morantur",
+      "image": "qui Caüsam materialem ... in Centro non morantur",
+      "problem": "capitals lowered",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers 58, 59, 60 tagged as <page-num> (three page numbers on one leaf)",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Gläntze in der Sonnen Licht, wie du wilt, etc.",
+      "image": "Gläntze in der Sonnen Lufft (Luft), wie du wilt, etc",
+      "problem": "German motto: the word after 'Sonnen' is written L-u-ſ/f-t (no i-dot, no h-loop); read as the expected 'Licht'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Fulmina bruta ... Ex una mente ... Cognitio centri",
+      "image": "Fulmina Bruta ... Ex una Mente ... Cognitio Centri",
+      "problem": "capitals of the manuscript lowered",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Image description of emblem 81 calls the seated figure with a branch 'a radiant sun or monstrance-like object on an altar' and the horned tailed beast 'a donkey'",
+      "severity": "minor",
+      "class": "O14"
+     },
+     {
+      "note": "Emblem numbers tagged as one <page-num> list ('81, 82, 83' / '135, 136')",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 74,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers tagged as one <page-num> list ('81, 82, 83' / '135, 136')",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "All Latin mottoes on the three emblem pages are read correctly, including the 'Ex' ligature; one German word on emblem 83 is probably normalised to 'Licht', and emblem numbers are tagged as page numbers. Image descriptions on p.45 misname two figures."
+ },
+ {
+  "book_id": "b20-t",
+  "slot": 4,
+  "title": "Paradoxa, Emblemata, Aenigmata: Dionysius Andreas Freher (PH357)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 36,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers 58, 59, 60 tagged as <page-num>",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 45,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Et una mente semper Totâ.",
+      "image": "Ex una Mente semper Totâ.",
+      "problem": "the scribe's Ex ligature (same form as 'Ex Uno' on p.74, distinct from his plain 'Et') read as 'Et'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "gläntze in der sonnen Liecht, wie du wilt, etc.",
+      "image": "Gläntze in der Sonnen Lufft (Luft), wie du wilt, etc",
+      "problem": "the word written L-u-ſ/f-t read as 'Liecht'; capitals lowered",
+      "severity": "moderate",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers 82 and 83 rendered as markdown '#' headings",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 74,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Emblem numbers tagged as <page-num>",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Latin mottoes are read accurately on all three pages, but emblem 82's 'Ex una Mente' becomes 'Et una mente' and the German line on emblem 83 is probably normalised to 'Liecht'; emblem numbers are tagged as page numbers or headings."
+ }
+]

@@ -7,7 +7,8 @@
 /**
  * score.mjs — Devanagari page CER for the #7243 Sanskrit GPU-vs-Flash test (PREREG.md in this directory).
  *
- *   node score.mjs <arms dir> [--refs <dir>] [--out results.json]      node score.mjs --self-test
+ *   node score.mjs <arms dir> [--refs <dir>] [--pages pages.json] [--out results.json]      node score.mjs --self-test
+ * --pages: the manifest (default ./pages.json; the confirmation run, CONFIRM.md, passes pages-confirm.json).
  * <arms dir>/<ARM>.jsonl(.gz): rows {page_id | uid, text, finish?, error?}; the last row per page wins. A page with no row,
  * an error or empty text scores CER 1.0 and counts as catastrophic. Refs: <refs>/<slug>.txt (default ./refs).
  *
@@ -162,7 +163,7 @@ function selfTest() {
 function main() {
   if (args.includes('--self-test')) return selfTest();
   const dir = args[0]; const refs = opt('refs') || path.join(HERE, 'refs');
-  const manifest = JSON.parse(fs.readFileSync(path.join(HERE, 'pages.json'), 'utf8')).pages;
+  const manifest = JSON.parse(fs.readFileSync(opt('pages') || path.join(HERE, 'pages.json'), 'utf8')).pages;
   const arms = {};
   for (const f of fs.readdirSync(dir).filter((x) => /^[A-Za-z0-9-]+\.jsonl(\.gz)?$/.test(x))) arms[f.split('.')[0]] = loadArm(path.join(dir, f));
   const pages = [];
@@ -192,6 +193,7 @@ function main() {
         const fc = P.filter((p) => p.arms[BASE].catastrophic).length, fp = P.filter((p) => p.arms[BASE].passages > 0).length;
         s.gate = { ci_upper_le_2pt: !!(s.vs_F.ci_d && s.vs_F.ci_d[1] <= 0.02), catastrophic_ok: s.catastrophic <= fc + 1, passages_ok: s.passage_pages <= fp + 1 };
         s.gate.passes = s.gate.ci_upper_le_2pt && s.gate.catastrophic_ok && s.gate.passages_ok;
+        s.gate.no_rise_catastrophic = s.catastrophic <= fc;   // CONFIRM.md condition 2 (stricter than the 7243 + 1)
       }
       c.arms[a] = s;
     }

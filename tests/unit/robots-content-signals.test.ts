@@ -19,6 +19,14 @@ describe('robots.txt content signals', () => {
     expect(text).toContain('https://sourcelibrary.org/licensing');
   });
 
+  it('names the Embassy collection terms in a block of its own, after the preamble', async () => {
+    const blocks = (await body()).split('\n\n');
+    const note = blocks.findIndex(b => b.includes('https://sourcelibrary.org/terms#embassy-collection'));
+    expect(note).toBeGreaterThan(0);
+    expect(blocks[0]).toContain('# As a condition of accessing this website');
+    expect(blocks[0]).not.toContain('Embassy');
+  });
+
   it('declares search=yes, ai-input=yes, ai-train=no on every group', async () => {
     const text = await body();
     const groups = text.split(/\n\n/).filter((b) => b.startsWith('User-agent:'));
@@ -60,6 +68,27 @@ describe('robots.txt content signals', () => {
     expect(sogou).toMatch(/^Disallow: \/book\/\*\/page\/$/m);
     expect(sogou).toMatch(/^Disallow: \/api\/$/m);
     expect(sogou).not.toMatch(/^Disallow: \/book\/$/m);
+  });
+
+  // /llms.txt tells a person's assistant to search and quote through these
+  // routes. If a group disallows them, an assistant that obeys robots.txt
+  // cannot do what the page it just read told it to do (#8161).
+  it('lets assistants fetching for a person search and quote, but not take whole books', async () => {
+    const text = await body();
+    for (const ua of ['Claude-User', 'ChatGPT-User', 'Perplexity-User']) {
+      const group = text.split(/\n\n/).find((b) => b.startsWith(`User-agent: ${ua}\n`));
+      expect(group, ua).toBeTruthy();
+      for (const path of ['/api/search', '/api/books/*/quote', '/api/books/*/search']) {
+        expect(group).toContain(`Allow: ${path}\n`);
+      }
+      expect(group).toMatch(/^Disallow: \/api\/$/m);
+      expect(group).toMatch(/^Disallow: \/admin\/$/m);
+      expect(group).not.toMatch(/^Allow: \/api\/books\/$/m);
+      expect(group).not.toMatch(/^Allow: \/api\/.*\/text$/m);
+    }
+    // The default group does not get the same door: unnamed crawlers stay off the API.
+    const star = text.split(/\n\n/).find((b) => b.startsWith('User-agent: *\n'))!;
+    expect(star).not.toContain('Allow: /api/');
   });
 
   // The tripwire (#5995) is only evidence if EVERY crawler was told to stay

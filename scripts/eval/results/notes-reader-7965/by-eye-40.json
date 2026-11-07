@@ -1,0 +1,657 @@
+[
+ {
+  "k": 1,
+  "id": "698264a629da4782928039fb",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "\"John says Chapter 1.\" and \"Matt. 22:30.\" as stand-alone margin-style lines: no such marginal notes are printed on the page (both references are only in the body of para 3)"
+  ],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "notes ON: paragraph numbers are doubled, e.g. \"19.\" on its own line, then \"19. From the fire…\"; same for \"2.\"/\"2. God\", \"3.\", \"4.\" (and \"1.\" stands alone before para 1)"
+  ],
+  "note": "The printed footnote \"* Aushauchen\" is on the page and appears translated as \"Breathing forth.\" with notes OFF, so dropping \"original German: Aushauchen\" is right. Today's notes-OFF \"governance governance\" and notes-ON \"governanceoriginal\" are both fixed in the layer. All 4 notes sit on the right words."
+ },
+ {
+  "k": 2,
+  "id": "69907da0aee9f4aa585930bc",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "borderline: \"the phala result/correction of the planet\": a slash gloss next to the transliteration, left inline in the book text"
+  ],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "hidden bracketed insertions leave double spaces and stranded dashes: \"in the middle place,  one sees\", \"the deception —the five-sentence —being asked\"",
+   "annotation 1 is an empty [definition] with an empty anchor"
+  ],
+  "note": "Today's notes-OFF view dropped a whole stretch (\"result/correction … at some length:\") that the Devanagari shows on lines 2-3 (…phalam… ityarthah… ata uktam…), so the layer is right. With the editorial [but]/[is avoided]/[teaching] hidden, the OFF sentences read a little broken. Margin \"Si. Go.\" and the pencilled 17 are shown, as they are on the leaf."
+ },
+ {
+  "k": 3,
+  "id": "69b269d32a2dfd041c5e7685",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "\"Βλέφαρα eyelids and βλεφαρίδες differ\": \"eyelids\" is a model definition (annotation 4 has an empty anchor and empty text, so the gloss stayed in the book text)"
+  ],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "annotation 4 is an empty [definition] with an empty anchor, which is why \"eyelids\" leaks into notes OFF"
+  ],
+  "note": "Today's notes OFF lost the whole Βλέφαρα/βλεφαρίδες entry (it is on the page, left column) and leaked several glosses (\"ox (living)\", \"council/deliberation\", \"helper\"). The layer restores the entry and drops those glosses, but still leaks one: \"eyelids\". The sheet text is cut off, so the end of the right column was not checked. Notes ON put each definition right after its Greek word."
+ },
+ {
+  "k": 4,
+  "id": "695004d6f426a210d1099df2",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "hidden [proposition]/[book] insertions leave stray spaces before punctuation: \"by the 32nd  of the first ,\", \"by the 4th  of this ,\", \"the 30th  of the third ,\", \"the previous ,\"",
+   "\"to the total angle a. .\": the hidden \"[which is a right angle]\" leaves a stranded period"
+  ],
+  "note": "Today's notes OFF showed the three figure descriptions as body text. The layer removes them, which is right: they are model descriptions of the woodcut figures in the left margin. All body text for the end of prop. 8 and props 9-11 is present. The running head LIBER is not shown."
+ },
+ {
+  "k": 5,
+  "id": "69500525f426a210d109eb53",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "\"⚠Right margin heavily faded and partially obscured by a repair patch. Marginal notes are in a smaller, more cursive script…\": a model condition note, shown as the first line with notes OFF"
+  ],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "\"they : so that he has not\": the hidden \"[say]\" leaves a stray space before the colon",
+   "\"the furnace  a muffle\": double space where \"[is]\" was hidden"
+  ],
+  "note": "The long run of short lines at the top (\"mineral from / customary. / mouth of water…\") translates the cut-off edge of the facing left-hand leaf, not this folio. That is a transcription-scope problem, not a layer one. Today leaked the aludel definition with notes OFF; the layer does not. The sheet is cut off, so the heavily annotated bottom margin and the right-margin \"primus ignis gradus\" could not be checked for presence."
+ },
+ {
+  "k": 6,
+  "id": "6952e4bc77f38f6761bc8276",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "Today's notes OFF leaked \"original: enallage constructi pro absoluto\" and the Qamets note. The layer removes both and keeps \"Qamets Bo'q\", which is printed in the right margin (קמץ בו\"ק). The note-letter rows (\"a b c d e f\") reflect the printed superscripts. The sheet is cut off after the start of the lower notes, so they were not fully checked."
+ },
+ {
+  "k": 7,
+  "id": "69557475f63a7571091735b1",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "footnote number \"1)\" is dropped at the start of the apparatus with notes OFF (\"76, 10 coordinate) systoichos…\"); notes ON has \"1) 76, 10\""
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "a line reading \"****\" with notes OFF, where notes ON has the editorial heading \"[ON THE TIMAEUS]\"; the printed head is only ΠΡΟΚΛΟΥ",
+   "double space in the apparatus: \"in B.  \\\"What is opinion?\\\"\""
+  ],
+  "note": "Today leaked \"original: systoichou\" with notes OFF; the layer does not. Inline transliterations (\"Intellect nous\", \"Reason logos\", \"doxa\", \"episteme\") stay in the OFF text. They mirror Greek words that are printed on the page, so I did not count them as commentary, but a maintainer may want to decide. Notes ON are all on the right words."
+ },
+ {
+  "k": 8,
+  "id": "69792f467591811d23d41422",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "running head \"der Geestelijcke Bruyloft\" (with notes ON shown as \"[of the Spiritual Espousals.]\") is absent with notes OFF because it is bracketed. Minor: a running head"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "margin notes run into the body text: \"1 Corinthians 12.spirit /\" and \"…cooperation of creatures.heard and saw it\" (in both ON and OFF)"
+  ],
+  "note": "The margin notes \"1 Cor. 12\" and \"wat God alleen inden mensch sonder middel…\" are printed on the page and present, but they are glued to the next body word with no space. Today leaked the \"sonder middel\" note with notes OFF; the layer does not. Both notes are on the right words."
+ },
+ {
+  "k": 9,
+  "id": "697e0a3843a4b5f7d1e29e54",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "running head \"CHAPITRE XVII.\" not shown (neither ON nor OFF). Minor"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "\"The same , p. 66.\": a space before the comma where \"[Libavius]\" was hidden",
+   "notes ON only: \"thistles suffice? for them\": a stray \"?\" (absent with notes OFF)"
+  ],
+  "note": "The margin names (Geber, Ventura, Libavius, Vieux Autheur) and the pencilled 435/444/424/440 are on the leaf and present. Today leaked the Geber and Ventura biographies with notes OFF; the layer does not. The notes-ON diff is whitespace-only."
+ },
+ {
+  "k": 10,
+  "id": "6982b120e1c5a511494432b3",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "The \"*Or (tot) Gerechtigheid…\" margin footnote and the \"* Righteousness\" asterisk are both printed on the page, so they are correct. All margin headings are present, though grouped before the body. Today leaked the \"tot geregtigheid\" commentary with notes OFF; the layer does not. The sheet is cut off near the end of the body."
+ },
+ {
+  "k": 11,
+  "id": "6990799759c453700d93ca33",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "Printed Hindi p. 186 (sheet p. 193 is the scan index). Every heading, both paragraphs and items 1-6 are present. Today's reader runs words into their glosses (periodDashakal, AscendantLagnesh, TrineTrikon) and, with notes OFF, still shows definitions ('Dashakal; the specific timing...', 'the planet ruling the 1st house...'). The layer fixes both, and all 24 notes sit on the right terms."
+ },
+ {
+  "k": 12,
+  "id": "6992c93c69b777d72c7637ac",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "table cells run together in the flattened render: 'Interpreters of the Nine Provinces 1LongitudeLatitudeMansion DegreeStar Magnitude...', '58 degrees 39 minutes10 degrees 41 minutes Equatorial North6th Degree of the NetFifth Magnitude' (also in today's reader, not a layer regression; may just be how the sheet prints a table)"
+  ],
+  "note": "One leaf of a star table: 畢 margin label, two 九州殊口 stars, Earth/Central Palace, coordinates, 畢六度, 五等, and 共 in the lower margin, all present. With notes OFF, today shows the 畢 and 共 'original:' glosses, and with notes ON it repeats 'Mansion Degree'. The layer removes both. An annotation anchor contains a literal '<br>' (it is not in the rendered text)."
+ },
+ {
+  "k": 13,
+  "id": "6992cd7043713c66ea6366d0",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "notes ON only: the last gloss 'original: \"Baqia.\"' renders as its own paragraph after 'China Root' rather than inline (it is still next to the right entry)"
+  ],
+  "note": "Index of Bencao Gangmu vol. 2, 8 columns x 9 names. I checked column by column against the image: all 72 names are present in order, and all 18 romanisation glosses (Shihu=石斛, Luhui=盧會, Chun=蓴, Dulan=杜蘭, Heshouwu=何首烏, Baqia=菝葜, etc.) sit on the right name. With notes OFF, today shows 15 'original:' glosses and the layer shows none."
+ },
+ {
+  "k": 14,
+  "id": "6992cd7343713c66ea63690a",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "cow-milk entry: 服取汁 ('take the juice') not rendered",
+   "the small category label 穀菜 (grains/vegetables) beside 香附子 has no clear English counterpart (perhaps the stray trailing 'Section')"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "The notes-OFF text opens with 'Second, Third, ... Tenth', nine ordinals that are on neither the page nor any margin. They are spurious stored text, shared with today's reader, not commentary. Translation errors the layer passes through unchanged: 豨薟, split across a column break, becomes two herbs ('Siegesbeckia' + 'Pepper Leaf' from 薟 misread as 蔞), and 商陸, split the same way, gives 'Pokeberry' twice. The only diff is today leaking 'Approx. 6–9 grams' with notes OFF, so the layer is right."
+ },
+ {
+  "k": 15,
+  "id": "69938a84d5a98fd66f42c9b5",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "'substances ousia alone' (transliteration gloss left inline)",
+   "'underlie hypokeimenon that which'",
+   "'Because substance ousia alone'"
+  ],
+  "offtext_missing": [
+   "the right-margin predication schema (four Greek lines: ἐξ ἀμούσου μουσικός / ὁ ἄμουσος μουσικός / ἐξ ἀμούσου ἀνθρώπου μουσικὸς ἄνθρωπος / ὁ ἄμουσος ἄνθρωπος μουσικὸς ἄνθρωπος) is written on the page, but the layer files it as an [image] annotation and hides it with notes OFF",
+   "translator's bracketed supplements [bronze], [is], [comes], [becomes], [are used], [in an absolute sense], [come-to-be] are dropped with notes OFF, leaving holes"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "mixed",
+  "defects": [
+   "empty slots and double spaces where the bracketed words were removed: 'comes-to-be from ; we do not say the bronze  the statue', 'both \"this  from that\" and \"this  that\"', '\"come-to-be\"  but'",
+   "stray rubric letters 'p' and 'o' in running text ('becomes musical\" . p But', 'substance. o That')",
+   "notes ON: 'substances ousia original: \"ousia\" — ...' repeats the word"
+  ],
+  "note": "Aristotle Physics I.7, Barocci 70 f.161. The leading phrase 'A schematic diagram summarizing...' is model commentary and is rightly hidden, but the four predication lines below it are marginal TEXT on the page. Today shows them with notes OFF and the layer drops them, so the diff is mixed and leans 'today' on content. The hole-leaving removal of [bracketed] supplements is shared with today but is reader-visible."
+ },
+ {
+  "k": 16,
+  "id": "69942f5cb2f6748db4ac09d9",
+  "image_opened": true,
+  "image_matches": false,
+  "offtext_commentary": [
+   "'does not possess hypostasis individual existence' (inline gloss)"
+  ],
+  "offtext_missing": [
+   "probably most of the page: the folio carries about 15 sections, each opening with a red initial and with Greek section numbers (ξε, ξϛ, ξζ ...) in the margin, while the text is a few paragraphs of looping litany"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "The stored translation is a repetition loop ('as that which does not possess being around nature, ... concerning nature' x30) and does not match the structure of this dense, rubricated Maximus folio. It looks invented and should be routed to containment (containment-on-finding.md); I wrote nothing. The layer correctly hides the five unanchored 'A small cross.' notes that today shows with notes OFF. I could not see the crosses, so I could not check where they sit."
+ },
+ {
+  "k": 17,
+  "id": "69a5e5f385fa13e734e4212f",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "'⚠The manuscript page exhibits significant fading, particularly along the top margin and the left edge. There is also some minor water staining...' (condition note shown as body text with notes OFF)"
+  ],
+  "offtext_missing": [
+   "translator supplement [oneself] dropped, leaving 'to not accuse  because'"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "'⚠' glyph and the condition paragraph in reader text",
+   "'rhetoric rhetoric' duplicated word (in the base text, also with notes OFF)",
+   "double space 'accuse  because'",
+   "notes ON: the condition paragraph appears twice (once as body with ⚠, once as a note)"
+  ],
+  "note": "Plato Gorgias (c. 480b-481b), main block plus a small cruciform scholion in the left margin ('Oppositions' list) and a short lower-left marginal note (Antalcidas). Those are present but I could not verify them word by word at this resolution. The layer hides the Antalcidas commentary that today leaks. The ⚠ condition note is shared with today, is not on the page, and needs fixing separately."
+ },
+ {
+  "k": 18,
+  "id": "69af0ed3be5fc7f363546c03",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "'the varied parrotfish scaro' (Latin term left inline)",
+   "'as long as a flute tibia' (Latin term left inline)"
+  ],
+  "offtext_missing": [],
+  "notes_misplaced": 1,
+  "notes_misplaced_examples": [
+   "'by Oppian original: εὐωπὸς and αὐλωπός' — the Greek names of the fish are attached after 'Oppian', so it reads as Oppian's original name (borderline; the model wrote the anchor there)"
+  ],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "Rondelet p. 192: the top paragraph, the 'De quarta Anthiae specie' heading, CAPUT XIIII, the margin 'Lib. 1. ἁλιευτικῶν', the three Greek verses, the Latin couplet and the body down to the catchword 'appro' are all present. The woodcut description is a notes-ON annotation only. Today leaks the Halieutica gloss with notes OFF and the layer does not."
+ },
+ {
+  "k": 19,
+  "id": "69b1cac3a282e3475aab36f9",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "garbled fragments from the cut-off facing page in the gutter strip ('The proximate matter. Great', 'and of that it does not seem to the choice after ions? ...', 'sediments from chyle tabilit ia from are, grow produced preserve of the alls condition, stones'). Shared with today, not a layer regression",
+   "notes ON: 'first source of all things.. Great' has a double period"
+  ],
+  "note": "The PRAEFATIO page is fully rendered (two paragraphs plus the catchword 'pro-'). The fragments come from the edge of the next page visible at right ('roxima / materia. / Magna ... ex chylo ... lapides'), not from this page. The layer hides the proxima-materia and chyle glosses that today shows with notes OFF."
+ },
+ {
+  "k": 20,
+  "id": "69b525a42f891867c1ae42a6",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "the two right-page (739) margin mode labels (beside 'Հաստատեցան...' and 'Ի գիշերաց...') are absent, while the left-page labels զհ and ծան are kept"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "A two-page spread (pp. 738-739). The translation covers both pages in order, from 'Christ who came...' to 'the torments of the cross...'. The only diff is today showing 'Musical mode indicator' twice with notes OFF, which the layer hides. The bare Armenian mode labels զհ/ծան staying in the English text is acceptable, since they are on the page."
+ },
+ {
+  "k": 21,
+  "id": "69c6ea5fda9771c716314767",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "printed parenthesis on p.75 '(des rechten Dreyeinigen Steins, an deme am meisten gelegen)' = 'of the right Triune Stone, which is of the greatest importance' is stored as a [note] and hidden with notes OFF",
+   "printed parenthesis '(in Wahrheit zu reden)' = 'to speak the truth' is stored as a [note] and hidden with notes OFF"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "catchword duplicated: '...to its own part' / running head / 'part 1 Corinthians 2' (catchword 'Theil' plus first word of p.75 both rendered; same in today's reader)"
+  ],
+  "note": "Diff removes the model gloss 'original: \"Niemand kommt zum Vater\"' from notes OFF, which is correct (the margin reads 'Joh. 14. Niemand kommt zum Vater'; the English is already there). Two printed parentheticals are mis-typed as notes, so notes OFF now drops real book text; a classification error in the annotations, not in the renderer."
+ },
+ {
+  "k": 22,
+  "id": "69c711d7da9771c716316332",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "printed margin label 'Matth. 11.' is inlined mid-sentence as 'the Matthew 11 aging and foolish king' (on the page it sits beside 'Discite a me...'); same in today's reader"
+  ],
+  "note": "Checked the full notes-OFF text from final.jsonl against both pages (154-155, through CAPUT V); body, lemmata and chapter heading are all present. The diff removes two 'original: ...; see Ecclesiastes' glosses, which is correct. Two notes have wrong content: #13 calls the decorative initial a 'C' and #14 reads 'E felines in ore tuo' as a printer's error, but the page plainly has a decorated N + 'E festines' = 'Ne festines'. #13 has an empty anchor."
+ },
+ {
+  "k": 23,
+  "id": "695004b2f426a210d10972a4",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "Newton Principia p.376, Corollaries 2-6 plus the closing line all present; the side label 'De Motu Corporum' is the heading. The notes-ON diff only adds the missing space/break between a word and its note (today runs them together: 'timesThe', 'radiioriginal'), so the layer is better."
+ },
+ {
+  "k": 24,
+  "id": "695004e6f426a210d109a5a7",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "stray space before colon where the hidden editorial bracket was: 'Book 13, Proposition 8 : which can also' (same in today's reader, off=html-identical)"
+  ],
+  "note": "Kepler p.50: the body, the XLIII Propositio heading, the enunciation and the start of the proof are all present; diagram labels are not text. Notes ON: the diff fixes words running into notes ('proportionallyMeaning', 'ExpressibleOriginal'). The notes are accurate and sit next to the right words (Effabilis/Mizon/Elasson/Meson, Icosigoni)."
+ },
+ {
+  "k": 25,
+  "id": "6953a88977f38f6761bd18f4",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "printed citation '(AND 2024; ESC 928)' after 'Soudales the Saracen' is absent; it survives only as note #3 'References to the Andros (AND) and Escorial (ESC)...'",
+   "printed citation '(TRE 1275; AND 2075; but two of them in GRO iv. 610 and PAS, p. 359)' absent; it is only paraphrased in note #8",
+   "printed italic words 'Kore' and 'Korasion' absent from notes OFF; they are stored as 'original:' definitions"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "both-acceptable",
+  "defects": [],
+  "note": "This is an English-language book (a modern introduction), so the 'translation' rewrites it: the Romeo and Juliet quotations are modernized ('if the intent of your love is honorable' for 'if that thy bent of love be honourable'), and TRE/Kyriak. are expanded. The printed scholarly citations and the Greek terms were turned into notes, so notes OFF loses printed content. The diff is an empty whitespace change."
+ },
+ {
+  "k": 26,
+  "id": "69557399f63a757109171fed",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "the start of footnote 10 ('10) μηδὲ] Ciz. ...' = '10) nor] The Cizensis manuscript') is folded into note #2 with 'Translator's note on the critical apparatus:' and hidden, so the printed footnote begins mid-sentence"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "orphan fragment with notes OFF: 'writes this as two words. The same manuscript uses \"nothing of them\" instead of \"nothing of them\". — Kiessling.' (no subject; the Greek ουδεν/μηδεν contrast is translated to identical words; same in today's reader)"
+  ],
+  "note": "The body (cap. 30, p.357) is complete. The notes-ON diff is a spacing fix (layer better), and the notes-OFF diff is whitespace only. Note #2 mixes model text ('Translator's note...') with printed footnote text ('10) nor] The Cizensis manuscript'); that is a classification error that hides printed text, and today's reader does the same."
+ },
+ {
+  "k": 27,
+  "id": "69557dcd57e3b773024f3e54",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "printed Sanskrit glosses in footnote 6 'Handy: ribhum. That rules the skilful ones: ribhukshanam. The Strong: vâjî' are stored as 'original:' annotations and hidden with notes OFF"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [
+   "dangling punctuation where the hidden words were: 'Handy:. That rules the skilful ones:. The Strong:.' (same in today's reader, off=html-identical)"
+  ],
+  "note": "Verses 6-10, the Decade II heading and the footnotes are present. The printed Sanskrit words are on the page, so hiding them is a content loss that leaves ':.' garbage. The notes-ON diff fixes words running into notes ('IndraThe', 'kineCows'). All 18 definitions sit next to their terms."
+ },
+ {
+  "k": 28,
+  "id": "695592827bd6d2cd1d61ab92",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "layer",
+  "defects": [],
+  "note": "Kircher p.48. The visible ~3,000 chars match the page, and the margin labels (Luna generationes..., Anomalia motus..., Fundamentum Astrologiae iudiciariae) render as standalone lines. I could not check the last ~1,500 chars of notes OFF (sheet truncated, and final.jsonl stores no layer text for html-identical pages), so the 'Astrologus non certo...' margin label and the closing lines are unchecked. The notes-ON diff is a spacing fix."
+ },
+ {
+  "k": 29,
+  "id": "6958e968813ea03889c32a33",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "both-acceptable",
+  "defects": [
+   "section letters run into margin citations: 'BBook 20, ch. 11.', 'CA serpent skin 120 feet long.', 'DBook 5, ch. 18'",
+   "marginal citations inlined mid-sentence: 'in warmer regions, In the book On Length and Shortness of Life; Book 8 of History of Animals, ch. 28. snakes of admirable magnitude' (both same in today's reader, off=html-identical)"
+  ],
+  "note": "The scan is a small text block in a mostly white frame; the structure (header, DIFFERENTIAE, drop-cap S, margin letters A-D, Lib. citations) is legible and matches. The notes are well placed (drop cap correctly 'S', dodrans arithmetic correct). The notes-ON diff is an empty whitespace change. The truncated tail of the text was not checked word for word."
+ },
+ {
+  "k": 30,
+  "id": "6976c76791f2580d2ee63d14",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "both-acceptable",
+  "defects": [
+   "hidden editorial brackets leave a broken ending: 'until it  into the natu' (double space and truncated word; notes ON shows 'until it [came] into the natu[re]')",
+   "stray space before dash: 'the fire-flash —shot'",
+   "heading broken over three lines following print line breaks: 'how / these two planets came to / be.'"
+  ],
+  "note": "Böhme p.554, right edge of the page cropped by the binding. All paragraphs and the heading are present. The notes-ON diff fixes 'astrologersoriginal' and similar run-ons, so the layer is better; the notes-OFF diff is whitespace only. Hiding the bracketed editorial supplements makes the last sentence unreadable with notes OFF."
+ },
+ {
+  "k": 31,
+  "id": "69aebe605e312cf82457c694",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "Blank endpaper with only a modern pencilled shelfmark '17411/C' at top left; 'Blank page.' is a fair render. No annotations."
+ },
+ {
+  "k": 32,
+  "id": "69af0d64ca8f47eb1206b7ac",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "Handwritten manuscript marginalia in the left margin (about 12 lines, largely illegible cursive beside the Morienus passage and near 'Marsilii Ficini') not represented; printed body text, running head 'LIGNUM VITAE' and the verse block are all present"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "Body text checked against the printed Latin, including the four verse lines and the DISCIP./RAIM. dialogue turns. All 9 definition notes sit on their own term (calcine, Mars, Venus, arsenicum, coagulate, per minima, digestion, Arnaldus, Marsilio Ficino). The sheet truncates the tail of the text, so the last ~1,000 chars were not checked."
+ },
+ {
+  "k": 33,
+  "id": "69b1caa1b7da27b8f120bdcd",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "Running head 'Cap. 20. en verderven des menschen' absent (page number, signature 'P 3' and catchword 'hitte' also absent, which is normal)"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "Continuation text and paragraphs 30-33 all present and in order. Ends at 'in their bodies was...' which matches the last line ('wierd'). The single note on 'qualify' (exercise their properties) is in the right place."
+ },
+ {
+  "k": 34,
+  "id": "69af22b3b5227118e60e4950",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "Critical-apparatus footnote line at the foot ('9 prosit || 14 conieci pudor et || 16 praemissum Eumolpus | ingratum Rohdius || 30 supplicis || 34 puto gratiam te legato') absent",
+   "Printed bracketed word '[legatum]' (after 'ad hoc officium') became the annotation 'as mediator', so with notes OFF it is gone from the text",
+   "Centred asterisk divider '*' between the sections is only in notes ON, as an image description; with notes OFF there is no break mark (minor)"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "Body text matches the Latin, including the 107 section marker. Annotation 1 (the asterisk description) has an empty anchor string (after “”) but renders at the right spot. The editor's printed bracketed word turned into machine commentary is worth flagging as a pattern."
+ },
+ {
+  "k": 35,
+  "id": "695584065336c55c8910fe49",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "\"the doorkeeper\" where the page prints 'the ostiarius'",
+   "\"the “man of humble cottage-holding”\" where the page prints 'the “mbidboth”-man'",
+   "\"the “noble of vengeance”\" where the page prints 'the “aire-echta”'"
+  ],
+  "offtext_missing": [
+   "Printed terms 'ostiarius', '“mbidboth”-man' and '“aire-echta”' are absent with notes OFF; they appear only inside the 'original:' notes",
+   "Footnote '* Page 333.' rendered mid-text between the two paragraphs instead of at the foot (present but out of place)"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "This page is already English (the 1865+ Commissioners' introduction). The 'translation' swapped the printed technical terms for modern English glosses and moved the real words into notes, so a notes-OFF reader gets wording the page does not have. That is a translation problem the layer passes through, not a layer bug. Notes are anchored correctly; the stray '*' in the anchor string 'laity, the *doorkeeper' does not show in the render."
+ },
+ {
+  "k": 36,
+  "id": "699209c4bed8f4b5ff5b3778",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [
+   "\"Left Column\" (a structural label added by the machine; not printed)"
+  ],
+  "offtext_missing": [
+   "Not fully checkable: the sheet truncates both renders (~5.8K chars), so the right column (Vuph / Vur entries) could not be confirmed present",
+   "Running heads 'Oon. / ע / Vuph. Vur. / Fo. cxiiij' not shown as such (only 'Left Column')"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [
+   "Margin labels interleaved mid-sentence in the notes-OFF text: 'For which the The Unjust Hebrews read', 'that is, עלוֹת Little ones those that give suck', 'with a double Little child עוֹלָלִים lamed', 'Introduce me To enter. To introduce. into the presence of the king', 'For which Habitation. Temple. the Hebrews read', 'And they struck Inhabitants. their tents'",
+   "Duplicated words: 'For which the The Unjust', 'Oon. Oon עוּן (Oon)'"
+  ],
+  "note": "Complutensian Hebrew lexicon page. The printed margin glosses (Infans, Iniqui, Parvuli, Lactantes, Ingredi, Habitaculum, Templum...) are real page content, but they render inline in the middle of sentences and garble the reading. This comes from the stored translation, not the layer split, and is identical on both paths. The 13 notes shown ('original: 1. Reg. 6', the Chaldean = Aramaic note, etc.) all sit on the right citation."
+ },
+ {
+  "k": 37,
+  "id": "6985f296a9bfd7ff0bca4c02",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "Handwritten marginal correction 'rubri' (written beside 'fermentu albi Elyxiris') is rendered as a separate line 'of the red' at the top of the page, so it is present but out of place and without context"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "Body text checked against the printed Latin from 'spermata' to 'ex occulto eius'. Running head 'PHILOSOPH.' is present; page number and signature 'm 2' are absent (normal). All 12 notes sit on their own terms (putrefaction, Elixir, digestion, Sun, Moon, ferment, Hermes, tincture, sulfur, fugitive, quicksilver)."
+ },
+ {
+  "k": 38,
+  "id": "6991f3e10d82ea4dc111d6fe",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "One block of incunable Italian, from 'dipiu huomini & dalcune bombarde' to 'Nicolo efacto'. The translation covers it start to end, with Brunelleschi, the Serchio, Benevento, Parma and Antonio dal Ponte all present. The single note (Filippo Brunelleschi) is attached to 'di Ser Brunellesco', which is correct."
+ },
+ {
+  "k": 39,
+  "id": "69a97a26f3f3d2fb7de2701f",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [
+   "Top of left column (continuation of the previous entry, about 15 lines: 'γουσι τὴν δ. 168, 9 qualis sit δ. 176, 25 quomodo fiat ... τῆς τοῦ Διός 186, 37') entirely absent; the text starts at διακρίνω",
+   "Printed Latin 'sollertia disputandi' (before 33, 14) is absent with notes OFF: it was moved into an 'original:' note, leaving 'II 38, 11; 33, 14'",
+   "Header translated without 'Index' ('of words, notions, and matters...')"
+  ],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [
+   "Double space where an editorial '[function]' supply was stripped in notes OFF: \"same person's  to discourse\" (twice; likely collapsed by HTML)"
+  ],
+  "note": "Stoic index page. Greek headwords are rendered as transliterations with glosses. The 23 definition notes shown all sit on their own headword, including the two separate dialelēthōs notes. The missing continuation block at the top of the left column is a real gap in the stored translation."
+ },
+ {
+  "k": 40,
+  "id": "6a3c73e401fe4f593c1ec5b8",
+  "image_opened": true,
+  "image_matches": true,
+  "offtext_commentary": [],
+  "offtext_missing": [],
+  "notes_misplaced": 0,
+  "notes_misplaced_examples": [],
+  "diff_verdict": "n/a",
+  "defects": [],
+  "note": "Checked the vertical columns from 使人君常思敬慎 to 秋八月甲寅滕子結卒, with the ○ break before 程子曰 shown as a new paragraph. The margin title 春秋本義 and folio 十四 are absent, which is normal. The single note on 'jiayin' (51st day of the sexagenary cycle) is correct and in the right place."
+ }
+]

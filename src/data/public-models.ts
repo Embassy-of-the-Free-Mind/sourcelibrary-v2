@@ -8,7 +8,7 @@
  * facts written for a paper's reader, OCR only and with no page counts; this module adds the
  * jobs beyond OCR and the provenance match. Routing lives in getOcrModelForBook
  * (scripts/lib/ocr-routing.mjs) and getTranslateModelForBook (src/lib/types/ai-models.ts);
- * the evidence in scripts/eval/DECISIONS.md. Update those first, then this.
+ * the evidence in the router table (.claude/docs/routing.md). Update those first, then this.
  *
  * Plain TypeScript with no path aliases and no runtime-only syntax: node imports this file
  * directly (type stripping), so keep it erasable.
@@ -256,7 +256,7 @@ export const MODELS: PublicModel[] = [
 
   // ── Searching by meaning ────────────────────────────────────────────────
   {
-    id: 'search-gemini-embedding', job: 'search', name: 'Gemini Embedding 2', version: 'gemini-embedding-2-preview',
+    id: 'search-gemini-embedding', job: 'search', name: 'Gemini Embedding 2', version: 'gemini-embedding-2',
     maker: 'Google', access: 'commercial service', status: 'in use',
     books: 'Every translated page, every book summary and every picture label.',
     why: 'One model for every kind of text, so a search can compare a page with a picture label.',

@@ -73,7 +73,7 @@ async function main() {
 
         // Fetch image
         const resp = await fetch(imageUrl, {
-          headers: { 'User-Agent': 'SourceLibrary/1.0' },
+          headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' },
           signal: AbortSignal.timeout(15000),
         });
         if (!resp.ok) { errors++; return; }

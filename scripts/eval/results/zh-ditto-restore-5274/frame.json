@@ -1,0 +1,39 @@
+{
+ "date": "2026-11-03",
+ "books_live": 1216,
+ "books_with_paddle_body_pages": 790,
+ "held_books": 185,
+ "body_pages": 62892,
+ "zero_pages": 20265,
+ "zero_books": 756,
+ "zero_with_alt_bar_forms": 318,
+ "zero_translated": 18987,
+ "zero_held": 2923,
+ "zero_by_family": {
+  "駢字類編": 1018,
+  "佩文韻府": 18788,
+  "韻府拾遺": 459
+ },
+ "body_by_family": {
+  "駢字類編": 7200,
+  "佩文韻府": 53167,
+  "韻府拾遺": 2525
+ },
+ "zero_by_pipeline": {
+  "paddle-zh-2026-10": 20265
+ },
+ "body_by_pipeline": {
+  "paddle-zh-2026-10": 62892
+ },
+ "zero_by_stored_width": {
+  "<1000 px": 20265
+ },
+ "keep_by_stored_width": {
+  "<1000 px": 42618,
+  "1000-1499 px": 9
+ },
+ "zero_by_qa": {
+  "screened": 20265
+ },
+ "mean_marks_on_keep_pages": 27.105215004574564
+}

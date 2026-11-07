@@ -36,7 +36,7 @@ const SIZE = 100;
 // Measured 2026-10-24: page*size past 5,000 answers HTTP 400.
 const WINDOW_MAX = 4900;
 const API = 'https://api.nb.no/catalog/v1/items';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library; NB catalogue harvest)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) nb-catalogue-harvest';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function search(from, to, page, size = SIZE) {

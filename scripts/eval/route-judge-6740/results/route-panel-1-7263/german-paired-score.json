@@ -1,0 +1,173 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "route",
+  "issue": 7263,
+  "stage": "translation",
+  "languages": [
+   "German"
+  ],
+  "baseline": "flash-lite",
+  "arms": [
+   "agy-flash-low-tr@1",
+   "agy-flash-low-tr@4",
+   "flash-lite"
+  ],
+  "batch": {
+   "pages_per_call": 4,
+   "tested": "not tested — block size is one of the settings under test; position in block reported per arm, and the judge reads one output per call"
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — proposal only per brief",
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "german-tr-lite/print": {
+     "routes": {
+      "agy-flash-low-tr@1": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "54/100",
+       "accept_wilson": [
+        0.443,
+        0.634
+       ],
+       "accept_by_book": [
+        0.44,
+        0.64
+       ],
+       "wrong_text_pages": "30/100",
+       "wrong_text_wilson": [
+        0.219,
+        0.396
+       ],
+       "fidelity_mean": 3.61,
+       "counts": true
+      },
+      "agy-flash-low-tr@4": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "54/100",
+       "accept_wilson": [
+        0.443,
+        0.634
+       ],
+       "accept_by_book": [
+        0.44,
+        0.63
+       ],
+       "wrong_text_pages": "31/100",
+       "wrong_text_wilson": [
+        0.228,
+        0.406
+       ],
+       "fidelity_mean": 3.6,
+       "counts": true
+      },
+      "flash-lite": {
+       "n": 100,
+       "books": 100,
+       "unjudged": 0,
+       "accept": "40/100",
+       "accept_wilson": [
+        0.309,
+        0.498
+       ],
+       "accept_by_book": [
+        0.3,
+        0.5
+       ],
+       "wrong_text_pages": "39/100",
+       "wrong_text_wilson": [
+        0.3,
+        0.488
+       ],
+       "fidelity_mean": 3.32,
+       "counts": true
+      }
+     },
+     "controls": {
+      "agy-flash-low-tr@1": {
+       "n": 2,
+       "passed": true
+      },
+      "agy-flash-low-tr@4": {
+       "n": 2,
+       "passed": true
+      },
+      "flash-lite": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 60,
+      "accept_flips": "2/60",
+      "flip_rate": 0.03,
+      "fidelity_abs_diff": 0.1
+     },
+     "against_baseline": {
+      "flash-lite -> agy-flash-low-tr@1": {
+       "shared_pages": 100,
+       "better": "38/100",
+       "worse": "11/100",
+       "accept_gained": 25,
+       "accept_lost": 11,
+       "accept_sign_test_p": 0.03,
+       "fidelity_diff": 0.29
+      },
+      "flash-lite -> agy-flash-low-tr@4": {
+       "shared_pages": 100,
+       "better": "31/100",
+       "worse": "9/100",
+       "accept_gained": 22,
+       "accept_lost": 8,
+       "accept_sign_test_p": 0.02,
+       "fidelity_diff": 0.28
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "3 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque (no packet.json kept; ids only)",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 3 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "60 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "4 pages a call; tested: not tested — block size is one of the settings under test; position in block reported per arm, and the judge reads one output per call",
+   "waived": false
+  }
+ ]
+}

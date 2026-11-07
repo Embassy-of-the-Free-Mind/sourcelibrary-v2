@@ -48,6 +48,6 @@ export function ocrMeasure(chartId: string): OcrMeasure | null {
     ci95: [point.accuracy_ci95[0], point.accuracy_ci95[1]],
     pages: panel.n_pages,
     date: panel.date,
-    href: `/quality#pareto-${chartId}`,
+    href: `/quality/record#pareto-${chartId}`,
   };
 }
