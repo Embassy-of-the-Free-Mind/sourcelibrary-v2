@@ -1,0 +1,404 @@
+{
+ "design": "Definitive Screening Design, 3 three-level continuous + 2 two-level categorical factors (Jones & Nachtsheim 2011, 2013)",
+ "construction": "conference matrix of order 6 (Paley, GF(5)); rows C and −C, columns 1–5; categorical zeros +1 in C, −1 in −C; two centre runs with categorical (+1,−1), (−1,+1)",
+ "conference_matrix": [
+  [
+   0,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  [
+   1,
+   0,
+   1,
+   -1,
+   -1,
+   1
+  ],
+  [
+   1,
+   1,
+   0,
+   1,
+   -1,
+   -1
+  ],
+  [
+   1,
+   -1,
+   1,
+   0,
+   1,
+   -1
+  ],
+  [
+   1,
+   -1,
+   -1,
+   1,
+   0,
+   1
+  ],
+  [
+   1,
+   1,
+   -1,
+   -1,
+   1,
+   0
+  ]
+ ],
+ "factors": [
+  {
+   "key": "ppc",
+   "name": "pages a call",
+   "kind": "continuous",
+   "levels": [
+    1,
+    4,
+    8
+   ]
+  },
+  {
+   "key": "edge",
+   "name": "image long edge (px)",
+   "kind": "continuous",
+   "levels": [
+    1024,
+    1600,
+    2400
+   ]
+  },
+  {
+   "key": "think",
+   "name": "thinking",
+   "kind": "continuous (ordinal)",
+   "levels": [
+    "low",
+    "medium",
+    "high"
+   ]
+  },
+  {
+   "key": "prompt",
+   "name": "prompt",
+   "kind": "categorical",
+   "levels": [
+    "live",
+    "live + script line"
+   ]
+  },
+  {
+   "key": "prep",
+   "name": "image prep",
+   "kind": "categorical",
+   "levels": [
+    "as served",
+    "grayscale + normalise + unsharp"
+   ]
+  }
+ ],
+ "runs": [
+  {
+   "id": "S01",
+   "x": [
+    0,
+    1,
+    1,
+    1,
+    1
+   ],
+   "ppc": 4,
+   "edge": 2400,
+   "think": "high",
+   "prompt": "live + script line",
+   "prep": "grayscale + normalise + unsharp"
+  },
+  {
+   "id": "S02",
+   "x": [
+    1,
+    0,
+    1,
+    -1,
+    -1
+   ],
+   "ppc": 8,
+   "edge": 1600,
+   "think": "high",
+   "prompt": "live",
+   "prep": "as served"
+  },
+  {
+   "id": "S03",
+   "x": [
+    1,
+    1,
+    0,
+    1,
+    -1
+   ],
+   "ppc": 8,
+   "edge": 2400,
+   "think": "medium",
+   "prompt": "live + script line",
+   "prep": "as served"
+  },
+  {
+   "id": "S04",
+   "x": [
+    1,
+    -1,
+    1,
+    1,
+    1
+   ],
+   "ppc": 8,
+   "edge": 1024,
+   "think": "high",
+   "prompt": "live + script line",
+   "prep": "grayscale + normalise + unsharp"
+  },
+  {
+   "id": "S05",
+   "x": [
+    1,
+    -1,
+    -1,
+    1,
+    1
+   ],
+   "ppc": 8,
+   "edge": 1024,
+   "think": "low",
+   "prompt": "live + script line",
+   "prep": "grayscale + normalise + unsharp"
+  },
+  {
+   "id": "S06",
+   "x": [
+    1,
+    1,
+    -1,
+    -1,
+    1
+   ],
+   "ppc": 8,
+   "edge": 2400,
+   "think": "low",
+   "prompt": "live",
+   "prep": "grayscale + normalise + unsharp"
+  },
+  {
+   "id": "S07",
+   "x": [
+    0,
+    -1,
+    -1,
+    -1,
+    -1
+   ],
+   "ppc": 4,
+   "edge": 1024,
+   "think": "low",
+   "prompt": "live",
+   "prep": "as served"
+  },
+  {
+   "id": "S08",
+   "x": [
+    -1,
+    0,
+    -1,
+    1,
+    1
+   ],
+   "ppc": 1,
+   "edge": 1600,
+   "think": "low",
+   "prompt": "live + script line",
+   "prep": "grayscale + normalise + unsharp"
+  },
+  {
+   "id": "S09",
+   "x": [
+    -1,
+    -1,
+    0,
+    -1,
+    1
+   ],
+   "ppc": 1,
+   "edge": 1024,
+   "think": "medium",
+   "prompt": "live",
+   "prep": "grayscale + normalise + unsharp"
+  },
+  {
+   "id": "S10",
+   "x": [
+    -1,
+    1,
+    -1,
+    -1,
+    -1
+   ],
+   "ppc": 1,
+   "edge": 2400,
+   "think": "low",
+   "prompt": "live",
+   "prep": "as served"
+  },
+  {
+   "id": "S11",
+   "x": [
+    -1,
+    1,
+    1,
+    -1,
+    -1
+   ],
+   "ppc": 1,
+   "edge": 2400,
+   "think": "high",
+   "prompt": "live",
+   "prep": "as served"
+  },
+  {
+   "id": "S12",
+   "x": [
+    -1,
+    -1,
+    1,
+    1,
+    -1
+   ],
+   "ppc": 1,
+   "edge": 1024,
+   "think": "high",
+   "prompt": "live + script line",
+   "prep": "as served"
+  },
+  {
+   "id": "S13",
+   "x": [
+    0,
+    0,
+    0,
+    1,
+    -1
+   ],
+   "ppc": 4,
+   "edge": 1600,
+   "think": "medium",
+   "prompt": "live + script line",
+   "prep": "as served"
+  },
+  {
+   "id": "S14",
+   "x": [
+    0,
+    0,
+    0,
+    -1,
+    1
+   ],
+   "ppc": 4,
+   "edge": 1600,
+   "think": "medium",
+   "prompt": "live",
+   "prep": "grayscale + normalise + unsharp"
+  }
+ ],
+ "main_effect_correlation": [
+  [
+   1,
+   0,
+   0,
+   0.169,
+   0.169
+  ],
+  [
+   0,
+   1,
+   0,
+   -0.169,
+   -0.169
+  ],
+  [
+   0,
+   0,
+   1,
+   0.169,
+   -0.169
+  ],
+  [
+   0.169,
+   -0.169,
+   0.169,
+   1,
+   0.143
+  ],
+  [
+   0.169,
+   -0.169,
+   -0.169,
+   0.143,
+   1
+  ]
+ ],
+ "run_order": {
+  "de": [
+   "S09",
+   "S12",
+   "S04",
+   "S02",
+   "S14",
+   "S11",
+   "S01",
+   "S05",
+   "S08",
+   "S13",
+   "S07",
+   "S10",
+   "S03",
+   "S06"
+  ],
+  "la": [
+   "S08",
+   "S02",
+   "S05",
+   "S10",
+   "S13",
+   "S01",
+   "S07",
+   "S14",
+   "S09",
+   "S03",
+   "S12",
+   "S11",
+   "S06",
+   "S04"
+  ],
+  "en": [
+   "S04",
+   "S01",
+   "S03",
+   "S10",
+   "S12",
+   "S13",
+   "S02",
+   "S14",
+   "S06",
+   "S09",
+   "S11",
+   "S08",
+   "S05",
+   "S07"
+  ]
+ },
+ "seed": 6740
+}

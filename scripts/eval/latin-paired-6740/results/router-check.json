@@ -1,0 +1,150 @@
+{
+ "main_sha": "bb93bc614",
+ "evidence_added": [
+  "pero>agy-flash-low-written",
+  "pero>agy-flash-low@4-written",
+  "agy-flash-low@4-written"
+ ],
+ "defect_counts_pooled": [
+  "pero>agy-flash-low-written",
+  "pero>agy-flash-low@4-written",
+  "agy-flash-low@4-written"
+ ],
+ "baseline": [
+  {
+   "id": "latin-blank/print",
+   "decision": "HOLD (defects: the pick moves with the misleads weight, $0.001 → pero>agy-flash-low@4-written, $0.01 → pero>agy-flash-low@4-written, $0.1 → agy-flash-low@4-written)",
+   "route": "pero>agy-flash-low@4-written",
+   "decision_kn": "switch",
+   "route_kn": "pero>agy-flash-low-written",
+   "defects": null,
+   "routes": [
+    {
+     "id": "scans-only",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5004302877770348
+    },
+    {
+     "id": "agy-flash-low@4",
+     "k": 24,
+     "n": 30,
+     "wrong": 1,
+     "mean": 0.7819649407090212
+    },
+    {
+     "id": "agy-flash-low@4-written",
+     "k": 29,
+     "n": 31,
+     "wrong": 1,
+     "mean": 0.9088173584421675
+    },
+    {
+     "id": "agy-flash-low@8-1600px-written",
+     "k": 13,
+     "n": 14,
+     "wrong": 1,
+     "mean": 0.8752475808992225
+    },
+    {
+     "id": "agy-flash-low@4>agy-flash-low",
+     "k": 24,
+     "n": 30,
+     "wrong": 1,
+     "mean": 0.7812392663784533
+    },
+    {
+     "id": "agy-flash-low@4>agy-flash-low-written",
+     "k": 17,
+     "n": 19,
+     "wrong": 1,
+     "mean": 0.8571974748339111
+    },
+    {
+     "id": "pero>agy-flash-low-written",
+     "k": 18,
+     "n": 18,
+     "wrong": 0,
+     "mean": 0.9493659720700409
+    },
+    {
+     "id": "pero>agy-flash-low@4-written",
+     "k": 14,
+     "n": 16,
+     "wrong": 1,
+     "mean": 0.8333450147110331
+    }
+   ]
+  }
+ ],
+ "with_6740": [
+  {
+   "id": "latin-blank/print",
+   "decision": "switch",
+   "route": "pero>agy-flash-low@4-written",
+   "decision_kn": "switch",
+   "route_kn": "pero>agy-flash-low-written",
+   "defects": null,
+   "routes": [
+    {
+     "id": "scans-only",
+     "k": null,
+     "n": null,
+     "wrong": null,
+     "mean": 0.5004302877770348
+    },
+    {
+     "id": "agy-flash-low@4",
+     "k": 24,
+     "n": 30,
+     "wrong": 1,
+     "mean": 0.7819649407090212
+    },
+    {
+     "id": "agy-flash-low@4-written",
+     "k": 59,
+     "n": 68,
+     "wrong": 6,
+     "mean": 0.8568439070682471
+    },
+    {
+     "id": "agy-flash-low@8-1600px-written",
+     "k": 13,
+     "n": 14,
+     "wrong": 1,
+     "mean": 0.8751724615883748
+    },
+    {
+     "id": "agy-flash-low@4>agy-flash-low",
+     "k": 24,
+     "n": 30,
+     "wrong": 1,
+     "mean": 0.7812328557918001
+    },
+    {
+     "id": "agy-flash-low@4>agy-flash-low-written",
+     "k": 17,
+     "n": 19,
+     "wrong": 1,
+     "mean": 0.8572672035452761
+    },
+    {
+     "id": "pero>agy-flash-low-written",
+     "k": 37,
+     "n": 40,
+     "wrong": 1,
+     "mean": 0.9047889267596041
+    },
+    {
+     "id": "pero>agy-flash-low@4-written",
+     "k": 36,
+     "n": 39,
+     "wrong": 1,
+     "mean": 0.9026817145807771
+    }
+   ]
+  }
+ ],
+ "note": "what build.py decides with this export and these defect counts pooled; the checkout's rules.json and defect-rates.json are NOT changed by this stage"
+}

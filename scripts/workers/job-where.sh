@@ -9,7 +9,7 @@
 # Why: on 2026-10-09 the main box sat at load 17 on 16 cores with its root disk 86% full while cloudlayer
 # ran no jobs at all. Nothing told a dispatching session where there was room.
 # A box is skipped when it is not ready (no Claude login, no gh login, no env file), has under 4 GB of
-# memory or 15 GB of job disk free, has a 5-minute load above 1.5 per core, or does not answer. The load
+# memory or 15 GB of job disk free, has under 15% of its root disk free (claude-job.sh refuses there, #6223), has a 5-minute load above 1.5 per core, or does not answer. The load
 # ceiling came on 2026-10-15: main ran 42 model processes at load 50 on 16 cores (3.1 per core) and this
 # script still called it "ok".
 #
@@ -23,7 +23,7 @@
 # account map comes from each box's `where` (account=), else the logins in JOB-HOSTS.md.
 set -u
 BOXES=${SL_JOB_BOXES:-"main=root@46.224.122.120 cloudlayer=root@46.224.208.175 l7a=root@167.233.32.250 gex45=root@65.108.136.89"}
-MIN_MEM_MB=${MIN_MEM_MB:-4096}; MIN_DISK_GB=${MIN_DISK_GB:-15}; MAX_LOAD_PER_CORE=${MAX_LOAD_PER_CORE:-1.5}
+MIN_MEM_MB=${MIN_MEM_MB:-4096}; MIN_DISK_GB=${MIN_DISK_GB:-15}; MIN_ROOT_FREE_PCT=${MIN_ROOT_FREE_PCT:-15}; MAX_LOAD_PER_CORE=${MAX_LOAD_PER_CORE:-1.5}
 MAX_SESSION_PCT=${MAX_SESSION_PCT:-80}; MAX_WEEK_PCT=${MAX_WEEK_PCT:-90}
 # Used only while a box's installed wrapper predates `account=` in `where` (logins change: check JOB-HOSTS.md).
 DEFAULT_ACCOUNTS="main=milolomas200921@gmail.com cloudlayer=derek@playpowerlabs.com l7a=derek@sourcelibrary.org"
@@ -87,8 +87,8 @@ for b in $BOXES; do
   label=${b%%=*}; target=${b#*=}
   line=$(ask "$label" "$target" | grep -m1 '^host=')
   if [ -z "$line" ]; then printf '%-11s %s\n' "$label" "no answer (ssh failed, or the wrapper there has no \`where\` yet)"; continue; fi
-  cores=1 load1=0 load5= mem_free_mb=0 job_disk_free_gb=0 root_free_gb=0 live_jobs=0 ready=no account=
-  for kv in $line; do case "$kv" in cores=*|load1=*|load5=*|mem_free_mb=*|job_disk_free_gb=*|root_free_gb=*|live_jobs=*|ready=*|account=*) eval "${kv%%=*}='${kv#*=}'" ;; esac; done
+  cores=1 load1=0 load5= mem_free_mb=0 job_disk_free_gb=0 root_free_gb=0 root_free_pct= live_jobs=0 ready=no account=
+  for kv in $line; do case "$kv" in cores=*|load1=*|load5=*|mem_free_mb=*|job_disk_free_gb=*|root_free_gb=*|root_free_pct=*|live_jobs=*|ready=*|account=*) eval "${kv%%=*}='${kv#*=}'" ;; esac; done
   acct=$account
   if [ -z "$acct" ] || [ "$acct" = "?" ]; then
     acct="?"; for m in $DEFAULT_ACCOUNTS; do [ "${m%%=*}" = "$label" ] && acct="${m#*=}*" assumed=1; done
@@ -102,6 +102,7 @@ for b in $BOXES; do
   [ "$ready" = yes ] || verdict="skip: $ready"
   [ "$verdict" = ok ] && [ "$mem_free_mb" -lt "$MIN_MEM_MB" ] && verdict="skip: memory"
   [ "$verdict" = ok ] && [ "$job_disk_free_gb" -lt "$MIN_DISK_GB" ] && verdict="skip: disk"
+  [ "$verdict" = ok ] && [ -n "$root_free_pct" ] && [ "$root_free_pct" -lt "$MIN_ROOT_FREE_PCT" ] && verdict="skip: root ${root_free_pct}% free"
   [ "$verdict" = ok ] && awk -v p="$per" -v m="$MAX_LOAD_PER_CORE" 'BEGIN{exit !(p>m)}' && verdict="skip: load"
   ge() { awk -v a="$1" -v b="$2" 'BEGIN{exit !(a+0>=b+0)}'; }  # a percent may come back as 80.5
   [ "$verdict" = ok ] && [ "$sp" != "?" ] && ge "$sp" "$MAX_SESSION_PCT" && verdict="skip: 5-hour ${sp}%"

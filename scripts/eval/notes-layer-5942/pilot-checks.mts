@@ -54,8 +54,10 @@ const S: any = {
   annotations_doc: { with_doc: 0, doc_count_matches: 0, doc_hash_current: 0 },
 };
 const rows: any[] = [];
+S.gone_since = 0; // withheld or re-written without data after the pilot (e.g. a containment)
 for (const p of pages) {
   const t = p.translation;
+  if (!t || typeof t.data !== 'string' || !t.data || typeof t.text !== 'string') { S.gone_since++; continue; }
   const data: string = t.data;
   if (translationTextIsCurrent(t)) S.current++;
   if (getTranslationText(p) === t.text) S.served_from_store++;

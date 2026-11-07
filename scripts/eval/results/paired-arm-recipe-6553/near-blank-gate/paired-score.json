@@ -1,0 +1,208 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "leaf",
+  "issue": 5274,
+  "stage": "translation",
+  "languages": [
+   "lzh"
+  ],
+  "baseline": "stored",
+  "arms": [
+   "stored",
+   "new"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — a repair gate on one queue, no router cell",
+  "waive": {},
+  "_note": "Reconstructed after the fact from wrong-leaf-fix-5021.mjs's gate (#8029) by paired-arm-recipe-6553: the design as the gate ran it, not a preregistration."
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "gate-1": {
+     "routes": {
+      "new": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "17/30",
+       "accept_wilson": [
+        0.392,
+        0.726
+       ],
+       "accept_by_book": [
+        0.4,
+        0.733
+       ],
+       "wrong_text_pages": "13/30",
+       "wrong_text_wilson": [
+        0.274,
+        0.608
+       ],
+       "fidelity_mean": 4.13,
+       "counts": false
+      },
+      "stored": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "0/30",
+       "accept_wilson": [
+        0,
+        0.114
+       ],
+       "accept_by_book": [
+        0,
+        0
+       ],
+       "wrong_text_pages": "30/30",
+       "wrong_text_wilson": [
+        0.886,
+        1
+       ],
+       "fidelity_mean": 3,
+       "counts": false
+      }
+     },
+     "controls": {
+      "new": {
+       "n": 0,
+       "passed": false
+      },
+      "stored": {
+       "n": 0,
+       "passed": false
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {
+      "stored -> new": {
+       "shared_pages": 30,
+       "better": "17/30",
+       "worse": "0/30",
+       "accept_gained": 17,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.13
+      }
+     }
+    },
+    "gate-2": {
+     "routes": {
+      "new": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "26/30",
+       "accept_wilson": [
+        0.703,
+        0.947
+       ],
+       "accept_by_book": [
+        0.733,
+        0.967
+       ],
+       "wrong_text_pages": "4/30",
+       "wrong_text_wilson": [
+        0.053,
+        0.297
+       ],
+       "fidelity_mean": 4.73,
+       "counts": false
+      },
+      "stored": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "3/30",
+       "accept_wilson": [
+        0.035,
+        0.256
+       ],
+       "accept_by_book": [
+        0,
+        0.233
+       ],
+       "wrong_text_pages": "27/30",
+       "wrong_text_wilson": [
+        0.744,
+        0.965
+       ],
+       "fidelity_mean": 3.2,
+       "counts": false
+      }
+     },
+     "controls": {
+      "new": {
+       "n": 0,
+       "passed": false
+      },
+      "stored": {
+       "n": 0,
+       "passed": false
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {
+      "stored -> new": {
+       "shared_pages": 30,
+       "better": "23/30",
+       "worse": "0/30",
+       "accept_gained": 23,
+       "accept_lost": 0,
+       "accept_sign_test_p": 0,
+       "fidelity_diff": 1.53
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "4 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque (no packet.json kept; ids only)",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": false,
+   "detail": "no wrong_page control for gate-1/new, gate-1/stored, gate-2/new, gate-2/stored",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": false,
+   "detail": "no noise floor: 0 'repeat' rows (need >= 5) and no recipe.noise_floor.from",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  },
+  {
+   "rule": "R6",
+   "ok": true,
+   "detail": "every item carries its neighbours",
+   "waived": false
+  }
+ ]
+}

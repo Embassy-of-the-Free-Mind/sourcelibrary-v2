@@ -298,3 +298,36 @@ describe('hires: Internet Archive master (#5679)', () => {
     expect(isBrowserRenderableImageUrl('https://ia803101.us.archive.org/BookReader/BookReaderImages.php?id=x')).toBe(false);
   });
 });
+
+describe('restored plate display copy (#8042)', () => {
+  const whole = `${R2}/archived/${BOOK}/126.jpg`;
+  const copy = `${R2}/pages/${BOOK}/plate-6a27018e8613997bc84aacbf-display.jpg`;
+  const kept: PageImageFields = {
+    split_from_spread: true,
+    photo: `${R2}/pages/${BOOK}/spwmc8-0237.jpg`,
+    archived_photo: `${R2}/pages/${BOOK}/spwmc8-0237-full.jpg`,
+    cropped_photo: whole,
+    display_photo: copy,
+    plate_whole: { display: { url: copy, of: whole } },
+  };
+  it('display serves the stored copy of the whole plate', () => {
+    expect(getPageImageUrl(kept, 'display')).toBe(copy);
+  });
+  it('hires and original still come from the whole scan, not the copy', () => {
+    expect(getPageImageUrl(kept, 'original')).toBe(whole);
+    expect(getPageImageUrl(kept, 'hires')).toContain(encodeURIComponent(whole));
+  });
+  it('thumb is unchanged', () => {
+    expect(getPageImageUrl(kept, 'thumb')).not.toBe(copy);
+  });
+  it('a copy of some other image is ignored (source repointed or reverted)', () => {
+    const moved = { ...kept, cropped_photo: `${R2}/archived/${BOOK}/127.jpg` };
+    expect(getPageImageUrl(moved, 'display')).not.toBe(copy);
+    const reverted = { ...kept, cropped_photo: null };
+    expect(getPageImageUrl(reverted, 'display')).not.toBe(copy);
+  });
+  it('a display_photo that is not the recorded copy is still refused on a cropped page', () => {
+    const other = { ...kept, display_photo: `${R2}/pages/${BOOK}/spwmc8-0237.jpg` };
+    expect(getPageImageUrl(other, 'display')).toContain('/api/image?');
+  });
+});

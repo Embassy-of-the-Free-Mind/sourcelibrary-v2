@@ -44,7 +44,6 @@ export interface HomeStrings {
   heroSignupCta: string;
   heroSearchInstead: string;
   // "Ask the source" librarian band (below the hero)
-  askSourceEyebrow: string;
   askSourceHeading: string;
   askSourceSubtitle: string;
 
@@ -126,28 +125,26 @@ export interface HomeStrings {
   tagCollection: string;
 
   // About section
-  aboutHeading: string;
-  aboutP1: string;
-  aboutP2: string;
-  aboutP3Before: string;
-  efmLinkText: string;
-  aboutP3After: string;
 
   // Be part of this
-  bePartEyebrow: string;
-  bePartHeading: string;
-  supportTitle: string;
-  supportBody: string;
-  howToSupport: string;
-  createAccount: string;
+  // The about wall and the support section under it (home-about/).
+  wallTitle: string;
+  wallBody: string;
+  wallCta: string;
+  joinTitle: string;
+  joinBody: string;
+  joinDonate: string;
+  joinAccount: string;
+  joinAccountBody: string;
+  joinVolunteer: string;
+  joinVolunteerBody: string;
+  joinBuild: string;
+  joinBuildBody: string;
   contribute: string;
-  contributeDesc: string;
   developers: string;
-  developersDesc: string;
 
   // Search section
   searchHeading: string;
-  searchStats: (books: string, authors: string, langs: number) => string;
   searchPlaceholder: string;
   browseBy: string;
   byTitle: string;
@@ -156,13 +153,6 @@ export interface HomeStrings {
   byImages: string;
 
   // Footer essay
-  inSpiritOf: string;
-  ficinoRole: string;
-  ficinoBio: string;
-  cosimoRole: string;
-  cosimoBio: string;
-  closingStrong: string;
-  closingRest: string;
 }
 
 const en: HomeStrings = {
@@ -192,7 +182,6 @@ const en: HomeStrings = {
   heroSignupLead: 'New here? Sign up to save your reading.',
   heroSignupCta: 'Sign up to save your reading →',
   heroSearchInstead: 'Or search the collection →',
-  askSourceEyebrow: 'The Librarian',
   askSourceHeading: 'Ask the source',
   askSourceSubtitle: 'Put a question to thousands of primary sources and get an answer, with citations to the originals you can read for yourself.',
 
@@ -242,31 +231,23 @@ const en: HomeStrings = {
   tagDeepDive: 'Deep dive',
   tagCollection: 'Collection',
 
-  aboutHeading:
-    'The rediscovery of ancient wisdom helped spark the Renaissance. It’s time for another.',
-  aboutP1:
-    'Centuries of humanity’s deepest thinking sit locked in Latin and other inaccessible languages. These aren’t just inaccessible to humans; contemporary AI systems were trained on Reddit but not the Renaissance. Millions of books and manuscripts are unscanned and untranslated. These aren’t obscure footnotes. They are the roots of modern science, psychology, philosophy of mind, and the perennial questions about what it means to be human.',
-  aboutP2:
-    'The Source Library uses scholarship and AI systems to recover this knowledge and make it accessible to all. We are building the world’s largest open-access collection of translated primary sources, so that scholars, seekers, and AI systems can draw on the full depth of the human intellectual tradition. This work is sustained by the people who use and value it.',
-  aboutP3Before: 'The Source Library is an initiative of the ',
-  efmLinkText: 'Embassy of the Free Mind',
-  aboutP3After:
-    ' in Amsterdam, home to the Bibliotheca Philosophica Hermetica: one of the world’s most important collections of Hermetic, alchemical, and esoteric books.',
 
-  bePartEyebrow: 'Be part of this',
-  bePartHeading: 'Help recover the lost intellectual heritage of humanity.',
-  supportTitle: 'Support the Library',
-  supportBody:
-    'Thousands of texts from the ancient and early modern world remain untranslated and unread. Your support funds the digitization, OCR, and AI-assisted translation of these works, making them freely available to scholars, seekers, and the public for the first time.',
-  howToSupport: 'How to Support?',
-  createAccount: 'Create a Free Account',
+  wallTitle: 'We think it is time for another Renaissance',
+  wallBody: 'In the 1400s, translating Plato and other ancient writers helped spark the Renaissance. Today, fewer than 1 in 100 historical texts can be read in English. Our mission is to translate humanity’s written heritage, with help from AI, so anyone can read it.',
+  wallCta: 'Read our story',
+  joinTitle: 'Help fund the next first translation',
+  joinBody: 'The translations are free to read. Donations fund the scanning, the translating and keeping the library online.',
+  joinDonate: 'Donate',
+  joinAccount: 'Create a free account',
+  joinAccountBody: 'Save books and keep track of your reading.',
+  joinVolunteer: 'Volunteer',
+  joinVolunteerBody: 'Help translate, review or improve the collection.',
+  joinBuild: 'Build on it',
+  joinBuildBody: 'An API, a CLI and an MCP server for research tools and AI.',
   contribute: 'Contribute',
-  contributeDesc: 'Help translate, review, or improve the collection',
   developers: 'Developers',
-  developersDesc: 'MCP server, CLI, and API for research tools',
 
   searchHeading: 'Search the collection',
-  searchStats: (books, authors, langs) => `${books} books · ${authors}+ authors · ${langs}+ languages`,
   searchPlaceholder: 'Try “Hermes Trismegistus” or “prima materia”...',
   browseBy: 'or browse by',
   byTitle: 'title',
@@ -275,16 +256,6 @@ const en: HomeStrings = {
   byImages: 'images',
 
 
-  inSpiritOf: 'In the spirit of',
-  ficinoRole: '1433–1499 · Philosopher & Translator',
-  ficinoBio:
-    'Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin, making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the prisca theologia: the belief in an ancient wisdom tradition uniting all seekers of truth.',
-  cosimoRole: '1389–1464 · Florence',
-  cosimoBio:
-    'The inventor of modern banking, Cosimo de’ Medici used his wealth to fund the Renaissance. In addition to commissioning art, he funded Ficino to make translations of Plato and other lost works into Latin so that they could be read. Around 1460, a Greek manuscript of the Corpus Hermeticum arrived in Florence, brought from Macedonia by a monk named Leonardo of Pistoia. The dying Cosimo asked Ficino to pause his translation of Plato so that he could read it, sensing that Hermes held the key to the most ancient wisdom.',
-  closingStrong: 'The Source Library continues in the spirit of their work.',
-  closingRest:
-    ' Translating ancient wisdom and sharing it freely has the power to transform civilization. Centuries after Ficino, thousands of texts remain untranslated and unread, including many of Ficino’s own works. We are recovering them for scholars, for seekers, and for the AI systems that will shape how future generations think.',
 };
 
 const es: HomeStrings = {
@@ -314,7 +285,6 @@ const es: HomeStrings = {
   heroSignupLead: '¿Primera vez aquí? Regístrate para guardar tu lectura.',
   heroSignupCta: 'Regístrate para guardar tu lectura →',
   heroSearchInstead: 'O busca en la colección →',
-  askSourceEyebrow: 'El Bibliotecario',
   askSourceHeading: 'Pregúntale a la fuente',
   askSourceSubtitle: 'Haz una pregunta a miles de fuentes primarias y recibe una respuesta, con citas a los originales que puedes leer por ti mismo.',
 
@@ -364,31 +334,23 @@ const es: HomeStrings = {
   tagDeepDive: 'Análisis',
   tagCollection: 'Colección',
 
-  aboutHeading:
-    'El redescubrimiento de la sabiduría antigua ayudó a encender el Renacimiento. Es hora de otro.',
-  aboutP1:
-    'Siglos del pensamiento más profundo de la humanidad permanecen encerrados en latín y otras lenguas inaccesibles. No solo son inaccesibles para las personas: los sistemas de IA actuales se entrenaron con Reddit, pero no con el Renacimiento. Millones de libros y manuscritos siguen sin digitalizar ni traducir. No son notas al pie oscuras. Son las raíces de la ciencia moderna, la psicología, la filosofía de la mente y las preguntas perennes sobre qué significa ser humano.',
-  aboutP2:
-    'Source Library combina la erudición y los sistemas de IA para recuperar este conocimiento y hacerlo accesible a todos. Estamos construyendo la mayor colección de acceso abierto de fuentes primarias traducidas del mundo, para que estudiosos, buscadores y sistemas de IA puedan recurrir a toda la profundidad de la tradición intelectual humana. Este trabajo se sostiene gracias a quienes lo usan y lo valoran.',
-  aboutP3Before: 'Source Library es una iniciativa de la ',
-  efmLinkText: 'Embassy of the Free Mind',
-  aboutP3After:
-    ' en Ámsterdam, sede de la Bibliotheca Philosophica Hermetica: una de las colecciones más importantes del mundo de libros herméticos, alquímicos y esotéricos.',
 
-  bePartEyebrow: 'Sé parte de esto',
-  bePartHeading: 'Ayuda a recuperar el patrimonio intelectual perdido de la humanidad.',
-  supportTitle: 'Apoya la biblioteca',
-  supportBody:
-    'Miles de textos del mundo antiguo y de la primera Edad Moderna siguen sin traducir y sin leer. Tu apoyo financia la digitalización, el OCR y la traducción asistida por IA de estas obras, poniéndolas gratuitamente al alcance de estudiosos, buscadores y el público por primera vez.',
-  howToSupport: '¿Cómo apoyar?',
-  createAccount: 'Crea una cuenta gratis',
+  wallTitle: 'Creemos que es hora de otro Renacimiento',
+  wallBody: 'En el siglo XV, traducir a Platón y a otros clásicos ayudó a encender el Renacimiento. Hoy, menos de 1 de cada 100 textos históricos puede leerse en inglés. Nuestra misión: traducir el legado escrito humano, con ayuda de la IA, para que todos lo lean.',
+  wallCta: 'Conócenos',
+  joinTitle: 'Apoya la próxima primera traducción',
+  joinBody: 'Leer las traducciones es gratis. Las donaciones pagan el escaneo, la traducción y la biblioteca en línea.',
+  joinDonate: 'Donar',
+  joinAccount: 'Crea tu cuenta gratis',
+  joinAccountBody: 'Guarda libros y sigue tus lecturas.',
+  joinVolunteer: 'Colabora',
+  joinVolunteerBody: 'Ayuda a traducir, revisar o mejorar la colección.',
+  joinBuild: 'Desarrolla',
+  joinBuildBody: 'API, CLI y servidor MCP para investigación e IA.',
   contribute: 'Contribuye',
-  contributeDesc: 'Ayuda a traducir, revisar o mejorar la colección',
   developers: 'Desarrolladores',
-  developersDesc: 'Servidor MCP, CLI y API para herramientas de investigación',
 
   searchHeading: 'Busca en la colección',
-  searchStats: (books, authors, langs) => `${books} libros · ${authors}+ autores · ${langs}+ idiomas`,
   searchPlaceholder: 'Prueba «Hermes Trismegisto» o «prima materia»...',
   browseBy: 'o explora por',
   byTitle: 'título',
@@ -397,16 +359,6 @@ const es: HomeStrings = {
   byImages: 'imágenes',
 
 
-  inSpiritOf: 'En el espíritu de',
-  ficinoRole: '1433–1499 · Filósofo y traductor',
-  ficinoBio:
-    'Ficino tradujo al latín las obras completas de Platón, Plotino, Proclo, Jámblico y los escritos herméticos, haciéndolas accesibles a toda Europa por primera vez. Su labor encendió la recuperación renacentista del neoplatonismo, el hermetismo y la prisca theologia: la creencia en una antigua tradición de sabiduría que une a todos los buscadores de la verdad.',
-  cosimoRole: '1389–1464 · Florencia',
-  cosimoBio:
-    'Inventor de la banca moderna, Cosimo de’ Medici usó su riqueza para financiar el Renacimiento. Además de encargar obras de arte, financió a Ficino para traducir al latín a Platón y otras obras perdidas, de modo que pudieran leerse. Hacia 1460, un manuscrito griego del Corpus Hermeticum llegó a Florencia, traído desde Macedonia por un monje llamado Leonardo de Pistoia. En su lecho de muerte, Cosimo pidió a Ficino que interrumpiera su traducción de Platón para poder leerlo, intuyendo que Hermes guardaba la llave de la sabiduría más antigua.',
-  closingStrong: 'Source Library continúa en el espíritu de su obra.',
-  closingRest:
-    ' Traducir la sabiduría antigua y compartirla libremente tiene el poder de transformar la civilización. Siglos después de Ficino, miles de textos siguen sin traducir y sin leer, incluidas muchas de las propias obras de Ficino. Las estamos recuperando, para estudiosos, para buscadores y para los sistemas de IA que darán forma al pensamiento de las generaciones futuras.',
 };
 
 // Latin (#6254). The corpus is the reverse of the Spanish case: nothing is
@@ -443,7 +395,6 @@ const la: HomeStrings = {
   heroSignupLead: 'Novus hic es? Nomen da, ut lecta serves.',
   heroSignupCta: 'Nomen da, ut lecta serves →',
   heroSearchInstead: 'Vel in bibliotheca quaere →',
-  askSourceEyebrow: 'Bibliothecarius',
   askSourceHeading: 'Fontes interroga',
   askSourceSubtitle: 'Quaestionem milibus fontium primariorum propone et responsum accipe, locis ex ipsis libris allatis quos tute legere potes.',
 
@@ -495,31 +446,23 @@ const la: HomeStrings = {
   tagDeepDive: 'Disquisitio',
   tagCollection: 'Collectio',
 
-  aboutHeading:
-    'Sapientia antiqua denuo reperta Renascentiam accendit. Tempus est alterius.',
-  aboutP1:
-    'Saecula altissimae hominum cogitationis in lingua Latina aliisque linguis paucis notis clausa iacent. Neque hominibus tantum inaccessa sunt: systemata intellegentiae artificialis nostrae aetatis e Reddit didicerunt, non e Renascentia. Decies centena milia librorum et codicum manu scriptorum nondum photographice descripta neque conversa sunt. Haec non sunt obscurae adnotatiunculae: radices sunt scientiae recentioris, psychologiae, philosophiae mentis, et quaestionum perennium de eo quid sit hominem esse.',
-  aboutP2:
-    'Source Library eruditione et intellegentia artificiali utitur, ut haec scientia recuperetur et omnibus pateat. Maximam orbis terrarum collectionem fontium primariorum conversorum, omnibus libere patentem, condimus, ut docti, quaerentes, et systemata intellegentiae artificialis ex tota traditionis humanae altitudine haurire possint. Hoc opus ab iis sustentatur qui eo utuntur idque magni aestimant.',
-  aboutP3Before: 'Source Library inceptum est domus cui nomen ',
-  efmLinkText: 'Embassy of the Free Mind',
-  aboutP3After:
-    ' Amstelodami, ubi Bibliotheca Philosophica Hermetica servatur: una ex praestantissimis orbis terrarum collectionibus librorum Hermeticorum, alchemicorum, esotericorum.',
 
-  bePartEyebrow: 'Particeps esto',
-  bePartHeading: 'Adiuva ut hereditas ingenii humani amissa recuperetur.',
-  supportTitle: 'Bibliothecam sustenta',
-  supportBody:
-    'Milia textuum antiquae et recentioris aetatis nondum conversa neque lecta manent. Liberalitate tua haec opera photographice describuntur, machina leguntur, intellegentia artificiali adiuvante convertuntur, ut doctis, quaerentibus, omnibus gratis nunc primum pateant.',
-  howToSupport: 'Quomodo sustentem?',
-  createAccount: 'Rationem gratuitam crea',
+  wallTitle: 'Tempus novae Renascentiae adesse putamus',
+  wallBody: 'Saeculo XV Plato aliique antiqui conversi Renascentiam accendere adiuverunt. Hodie minus quam unum e centum scriptis historicis Anglice legi potest. Propositum est hereditatem hominum, intellegentia artificiali adiuvante, convertere, ut omnes legant.',
+  wallCta: 'Historiam lege',
+  joinTitle: 'Proximam primam conversionem adiuva',
+  joinBody: 'Conversiones gratis leguntur. Dona sustentant imagines, conversiones, bibliothecam in rete servatam.',
+  joinDonate: 'Dona',
+  joinAccount: 'Rationem gratis crea',
+  joinAccountBody: 'Libros serva et lecta tua sequere.',
+  joinVolunteer: 'Adiuva',
+  joinVolunteerBody: 'Converte, recense, bibliothecam emenda.',
+  joinBuild: 'Aedifica',
+  joinBuildBody: 'API, CLI, servus MCP ad instrumenta investigationis.',
   contribute: 'Operam confer',
-  contributeDesc: 'Adiuva in convertendo, recensendo, bibliotheca emendanda',
   developers: 'Programmatores',
-  developersDesc: 'Servus MCP, CLI, API ad instrumenta investigationis',
 
   searchHeading: 'In bibliotheca quaere',
-  searchStats: (books, authors, langs) => `${books} libri · ${authors}+ auctores · ${langs}+ linguae`,
   searchPlaceholder: 'Tempta “Hermes Trismegistus” vel “prima materia”...',
   browseBy: 'vel perlustra per',
   byTitle: 'titulos',
@@ -528,16 +471,6 @@ const la: HomeStrings = {
   byImages: 'imagines',
 
 
-  inSpiritOf: 'Eorum exemplo',
-  ficinoRole: '1433–1499 · Philosophus et interpres',
-  ficinoBio:
-    'Ficinus opera omnia Platonis et Plotini, scripta Procli et Iamblichi, libros Hermeticos Latine vertit, ut tum primum toti Europae paterent. Opere eius accensum est Renascentiae studium Platonicorum recentiorum, Hermeticorum, et priscae theologiae: opinionis scilicet antiquam sapientiae traditionem omnes veri quaesitores coniungere.',
-  cosimoRole: '1389–1464 · Florentia',
-  cosimoBio:
-    'Cosmus Medices, argentariae recentioris inventor, divitiis suis Renascentiam aluit. Non solum opera artis facienda locavit, sed etiam Ficino sumptus praebuit, ut Platonem aliaque opera amissa Latine verteret, quo legi possent. Circa annum 1460 codex Graecus Corporis Hermetici Florentiam pervenit, e Macedonia a monacho Leonardo Pistoriensi allatus. Cosmus iam moriturus Ficinum rogavit ut Platonem vertendum intermitteret, quo ipse eum codicem legere posset: sentiebat enim Hermetem clavem antiquissimae sapientiae tenere.',
-  closingStrong: 'Source Library eorum operis vestigia sequitur.',
-  closingRest:
-    ' Sapientia antiqua conversa et libere communicata civitatem humanam mutare potest. Saeculis post Ficinum milia textuum nondum conversa neque lecta manent, in iis multa ipsius Ficini opera. Ea recuperamus: doctis, quaerentibus, et systematis intellegentiae artificialis quae cogitationem posterorum formabunt.',
 };
 
 // Dutch (#6382). The mirror of the Latin case: nothing is translated INTO
@@ -570,7 +503,6 @@ const nl: HomeStrings = {
   heroSignupLead: 'Nieuw hier? Meld je aan en bewaar wat je leest.',
   heroSignupCta: 'Meld je aan en bewaar wat je leest →',
   heroSearchInstead: 'Of doorzoek de collectie →',
-  askSourceEyebrow: 'De bibliothecaris',
   askSourceHeading: 'Vraag het de bronnen',
   askSourceSubtitle: 'Leg een vraag voor aan duizenden primaire bronnen en krijg een antwoord, met verwijzingen naar de originelen die je zelf kunt lezen.',
 
@@ -623,31 +555,23 @@ const nl: HomeStrings = {
   tagDeepDive: 'Verdieping',
   tagCollection: 'Collectie',
 
-  aboutHeading:
-    'De herontdekking van oude wijsheid gaf mede de aanzet tot de renaissance. Het is tijd voor een nieuwe.',
-  aboutP1:
-    'Eeuwen van het diepste denken van de mensheid liggen opgesloten in het Latijn en andere ontoegankelijke talen. Niet alleen voor mensen: hedendaagse AI-systemen zijn getraind op Reddit, niet op de renaissance. Miljoenen boeken en handschriften zijn nog niet gescand en niet vertaald. Het gaat niet om obscure voetnoten. Het zijn de wortels van de moderne wetenschap, de psychologie, de filosofie van de geest en de eeuwige vragen over wat het betekent mens te zijn.',
-  aboutP2:
-    'Source Library zet wetenschappelijk onderzoek en AI-systemen in om deze kennis terug te winnen en voor iedereen toegankelijk te maken. We bouwen de grootste vrij toegankelijke collectie vertaalde primaire bronnen ter wereld, zodat wetenschappers, zoekers en AI-systemen kunnen putten uit de volle diepte van de menselijke denktraditie. Dit werk wordt gedragen door de mensen die het gebruiken en waarderen.',
-  aboutP3Before: 'Source Library is een initiatief van de ',
-  efmLinkText: 'Embassy of the Free Mind',
-  aboutP3After:
-    ' in Amsterdam, het huis van de Bibliotheca Philosophica Hermetica: een van de belangrijkste collecties hermetische, alchemistische en esoterische boeken ter wereld.',
 
-  bePartEyebrow: 'Doe mee',
-  bePartHeading: 'Help het verloren intellectuele erfgoed van de mensheid terug te winnen.',
-  supportTitle: 'Steun de bibliotheek',
-  supportBody:
-    'Duizenden teksten uit de oudheid en de vroegmoderne tijd zijn nog altijd onvertaald en ongelezen. Met jouw steun worden deze werken gedigitaliseerd, met OCR gelezen en met hulp van AI vertaald, zodat ze voor het eerst vrij beschikbaar komen voor wetenschappers, zoekers en iedereen die wil lezen.',
-  howToSupport: 'Hoe kun je steunen?',
-  createAccount: 'Maak een gratis account',
+  wallTitle: 'Het is tijd voor een nieuwe renaissance',
+  wallBody: 'In de 15e eeuw hielpen vertalingen van Plato en andere antieken de renaissance op gang. Nu is minder dan 1 op de 100 historische teksten in het Engels te lezen. Onze missie: het geschreven erfgoed van de mensheid vertalen, met hulp van AI, voor iedereen.',
+  wallCta: 'Ons verhaal',
+  joinTitle: 'Steun de volgende eerste vertaling',
+  joinBody: 'De vertalingen zijn gratis te lezen. Donaties betalen scannen, vertalen en de online bibliotheek.',
+  joinDonate: 'Doneer',
+  joinAccount: 'Gratis account maken',
+  joinAccountBody: 'Bewaar boeken en houd je lezen bij.',
+  joinVolunteer: 'Help mee',
+  joinVolunteerBody: 'Help vertalen, controleren of verbeteren.',
+  joinBuild: 'Bouw mee',
+  joinBuildBody: 'Een API, CLI en MCP-server voor onderzoek en AI.',
   contribute: 'Bijdragen',
-  contributeDesc: 'Help de collectie te vertalen, te controleren of te verbeteren',
   developers: 'Ontwikkelaars',
-  developersDesc: 'MCP-server, CLI en API voor onderzoekstools',
 
   searchHeading: 'Doorzoek de collectie',
-  searchStats: (books, authors, langs) => `${books} boeken · ${authors}+ auteurs · ${langs}+ talen`,
   searchPlaceholder: 'Probeer “Hermes Trismegistus” of “prima materia”...',
   browseBy: 'of blader op',
   byTitle: 'titel',
@@ -656,16 +580,6 @@ const nl: HomeStrings = {
   byImages: 'afbeeldingen',
 
 
-  inSpiritOf: 'In de geest van',
-  ficinoRole: '1433–1499 · Filosoof en vertaler',
-  ficinoBio:
-    'Ficino vertaalde het volledige werk van Plato, Plotinus, Proclus en Iamblichus en de hermetische geschriften in het Latijn, waardoor ze voor het eerst voor heel Europa toegankelijk werden. Zijn werk bracht de renaissance van het neoplatonisme, het hermetisme en de prisca theologia op gang: het geloof in een oude wijsheidstraditie die alle zoekers naar waarheid verenigt.',
-  cosimoRole: '1389–1464 · Florence',
-  cosimoBio:
-    'Cosimo de’ Medici, de uitvinder van het moderne bankwezen, financierde met zijn rijkdom de renaissance. Hij gaf niet alleen opdrachten voor kunst, maar betaalde Ficino ook om Plato en andere verloren werken in het Latijn te vertalen, zodat ze gelezen konden worden. Rond 1460 kwam in Florence een Grieks handschrift van het Corpus Hermeticum aan, uit Macedonië meegebracht door een monnik, Leonardo van Pistoia. De stervende Cosimo vroeg Ficino zijn vertaling van Plato te onderbreken zodat hij het kon lezen, in het besef dat Hermes de sleutel tot de oudste wijsheid in handen had.',
-  closingStrong: 'Source Library zet hun werk in dezelfde geest voort.',
-  closingRest:
-    ' Oude wijsheid vertalen en vrij delen kan de beschaving veranderen. Eeuwen na Ficino zijn duizenden teksten nog onvertaald en ongelezen, waaronder veel werken van Ficino zelf. We winnen ze terug: voor wetenschappers, voor zoekers en voor de AI-systemen die zullen bepalen hoe toekomstige generaties denken.',
 };
 
 // Chinese (#6382). The mirror of the Latin case: nothing is translated INTO
@@ -676,9 +590,9 @@ const nl: HomeStrings = {
 const zh: HomeStrings = {
   locale: 'zh-CN',
 
-  heroTitle: '古代智慧的新文艺复兴',
-  heroSubtitleLine1: '欢迎来到全球最大的',
-  heroSubtitleLine2: 'AI 翻译古代文献图书馆。',
+  heroTitle: '对照原书，阅读古籍原文',
+  heroSubtitleLine1: '一万多册中文古籍，原文可检索，每页附书影。',
+  heroSubtitleLine2: '中文与欧洲典籍同在一库，可对照研读。',
   emailPlaceholder: '您的邮箱地址',
   join: '加入我们',
   sending: '正在发送…',
@@ -700,7 +614,6 @@ const zh: HomeStrings = {
   heroSignupLead: '第一次来？注册即可保存阅读记录。',
   heroSignupCta: '注册以保存阅读记录 →',
   heroSearchInstead: '或搜索馆藏 →',
-  askSourceEyebrow: '图书馆员',
   askSourceHeading: '向原典提问',
   askSourceSubtitle: '向数千部原始文献提出问题，得到附有出处的回答，出处指向您可以亲自阅读的原书。',
 
@@ -716,8 +629,8 @@ const zh: HomeStrings = {
   collectionsWord: '个专题',
   curatedExhibitions: '浏览策展',
   allCollections: '全部专题',
-  showcaseEyebrow: '中文专题',
-  showcaseSubtitle: '馆藏中文古籍的几个专题，均可对照原书影像阅读原文。',
+  showcaseEyebrow: '专题精选',
+  showcaseSubtitle: '中西典籍，对照而读：每部书都附原书影像。',
   allExhibitions: (n) => `全部 ${n} 个策展`,
   featuredCollectionEyebrow: '精选专题',
   exploreCollectionBooks: (n) => `浏览 ${n} 本书`,
@@ -731,7 +644,7 @@ const zh: HomeStrings = {
   spanishHeading: '西班牙文阅读',
   nativeShelfHeading: '中文书籍',
   nativeShelfSubtitle: '以中文写成的书，在这里阅读原文。',
-  nativeShelfTotal: (n) => `馆藏以中文写成的书 ${n.toLocaleString('zh-CN')} 部，均可对照原书影像阅读原文。`,
+  nativeShelfTotal: (n) => `馆藏中文书籍 ${n.toLocaleString('zh-CN')} 册，均可对照原书影像阅读原文。`,
   nativeShelfAll: '全部中文书籍',
   beginnerShelfHeading: '入门读物',
   beginnerShelfSubtitle: '较易读的中文：世世代代学童用来启蒙的蒙学读本、对话、寓言和简史。',
@@ -753,31 +666,23 @@ const zh: HomeStrings = {
   tagDeepDive: '深度解读',
   tagCollection: '专题',
 
-  aboutHeading:
-    '古代智慧的重新发现曾点燃文艺复兴。如今是再来一次的时候了。',
-  aboutP1:
-    '人类数百年来最深刻的思想，被封存在拉丁文和其他难以读懂的语言里。读不到它们的不只是人：当代 AI 系统学的是 Reddit，而不是文艺复兴。数以百万计的书籍和手稿既未扫描，也未翻译。它们不是冷僻的脚注，而是现代科学、心理学、心灵哲学的根源，也关乎人之为人这一永恒的追问。',
-  aboutP2:
-    'Source Library 借助学术研究和 AI 系统找回这些知识，让所有人都能读到。我们正在建设全球最大的开放获取原始文献译本馆藏，让学者、求索者和 AI 系统都能汲取人类思想传统的全部深度。这项工作依靠使用并珍视它的人们来维持。',
-  aboutP3Before: 'Source Library 是位于阿姆斯特丹的 ',
-  efmLinkText: 'Embassy of the Free Mind',
-  aboutP3After:
-    ' 发起的项目。那里收藏着 Bibliotheca Philosophica Hermetica，这是世界上最重要的赫尔墨斯主义、炼金术和秘传学书籍收藏之一。',
 
-  bePartEyebrow: '参与其中',
-  bePartHeading: '帮助找回人类失落的思想遗产。',
-  supportTitle: '支持本馆',
-  supportBody:
-    '数以千计的古代和近代早期文本至今未被翻译，也无人阅读。您的支持将用于这些作品的数字化、OCR 和 AI 辅助翻译，让学者、求索者和公众第一次能够免费读到它们。',
-  howToSupport: '如何支持？',
-  createAccount: '免费注册账户',
+  wallTitle: '我们认为，又一次文艺复兴的时候到了',
+  wallBody: '十五世纪，柏拉图等古代作家著作的翻译，助力点燃了文艺复兴。如今，能用英文阅读的历史文献不足百分之一。我们的使命是借助人工智能翻译人类的文字遗产，让每个人都能读到。',
+  wallCta: '阅读我们的故事',
+  joinTitle: '资助下一部首译作品',
+  joinBody: '译本可免费阅读。捐款用于扫描、翻译和维持图书馆在线运行。',
+  joinDonate: '捐赠',
+  joinAccount: '免费注册账户',
+  joinAccountBody: '收藏书籍、记录阅读进度。',
+  joinVolunteer: '成为志愿者',
+  joinVolunteerBody: '帮助翻译、审校或改进馆藏。',
+  joinBuild: '在此基础上开发',
+  joinBuildBody: '面向研究工具和人工智能的 API、CLI 和 MCP 服务器。',
   contribute: '贡献',
-  contributeDesc: '帮助翻译、审校或改进馆藏',
   developers: '开发者',
-  developersDesc: '面向研究工具的 MCP 服务器、CLI 和 API',
 
   searchHeading: '搜索馆藏',
-  searchStats: (books, authors, langs) => `${books} 部书 · ${authors}+ 位作者 · ${langs}+ 种语言`,
   searchPlaceholder: '试试“Hermes Trismegistus”或“prima materia”……',
   browseBy: '或按以下方式浏览：',
   byTitle: '书名',
@@ -786,16 +691,6 @@ const zh: HomeStrings = {
   byImages: '图像',
 
 
-  inSpiritOf: '承其精神',
-  ficinoRole: '1433–1499 · 哲学家、翻译家',
-  ficinoBio:
-    '斐奇诺将柏拉图、普罗提诺、普罗克洛、扬布里柯的全部著作以及赫尔墨斯文献译成拉丁文，使全欧洲第一次能够读到它们。他的工作点燃了文艺复兴时期对新柏拉图主义、赫尔墨斯主义和“古代神学”（prisca theologia）的复兴。“古代神学”相信，有一种古老的智慧传统将所有求真者联系在一起。',
-  cosimoRole: '1389–1464 · 佛罗伦萨',
-  cosimoBio:
-    '现代银行业的开创者科西莫·德·美第奇用他的财富资助了文艺复兴。除了委托创作艺术品，他还资助斐奇诺将柏拉图和其他失传的著作译成拉丁文，让人们得以阅读。约 1460 年，一部希腊文的《赫尔墨斯文集》手稿由修士皮斯托亚的莱奥纳多从马其顿带到佛罗伦萨。病危的科西莫请斐奇诺暂停翻译柏拉图，好让自己先读这部手稿，因为他感到赫尔墨斯握有最古老智慧的钥匙。',
-  closingStrong: 'Source Library 延续着他们的事业。',
-  closingRest:
-    '翻译古代智慧并将其自由分享，具有改变文明的力量。斐奇诺之后数百年，仍有数以千计的文本未被翻译、无人阅读，其中包括斐奇诺本人的许多著作。我们正在为学者、为求索者，也为将塑造后人思维方式的 AI 系统，找回这些文本。',
 };
 
 export const HOME_STRINGS: Record<HomeLang, HomeStrings> = { en, es, la, nl, zh };
@@ -1055,6 +950,8 @@ export const ZH_COLLECTION_NAMES: Record<string, string> = {
   'indic-traditions': '印度传统',
   'chinese-classics': '中国经典',
   // The /zh showcase (NATIVE_SHOWCASE_SLUGS).
+  'harmony-east-west': '律吕与和谐',
+  'china-through-european-eyes': '中学西传',
   'chinese-natural-knowledge': '中国自然知识',
   'chinese-divination-cosmology': '术数与宇宙论',
   'confucian-classics': '儒家经典',
@@ -1172,6 +1069,17 @@ export const NATIVE_SHELF_LANGUAGE: Partial<Record<HomeLang, string>> = {
 };
 
 /**
+ * Books that open the native shelf ahead of the read-count order, because
+ * read count alone put a book with a known misread first on /zh (#8035). Add
+ * only a book whose pages someone has opened against the scans. These three
+ * were opened by eye on 2026-10-27 (#7537): 天工開物 (woodblock with plates),
+ * 三才圖會 卷二十八, and P.3847 《景教三威蒙度赞》.
+ */
+export const NATIVE_SHELF_LEAD_IDS: Partial<Record<HomeLang, string[]>> = {
+  zh: ['69af0e7f067c0c26ee26e3ad', '6992cd7243713c66ea636785', '6992ca18d4d545ae73fed7ce'],
+};
+
+/**
  * Subject shelves for an original-text homepage whose sections are filled with
  * books in its own language (`NATIVE_FIRST_LANGS` in home-data.ts). Each shelf
  * is one collection, filtered to books written in the page's language; a shelf
@@ -1199,11 +1107,15 @@ export const NATIVE_SUBJECT_SHELVES: Partial<Record<HomeLang, NativeSubjectShelv
  * The collections the showcase shows on a native-first homepage, in place of the
  * random draw of curated exhibitions. Only six curated exhibitions hold any Chinese
  * book (ten at most), so the draw put Hogwarts and Indonesian manuscripts on /zh
- * (#7537). These are the published Chinese collections the subject shelves below
- * do not already show. Each needs a name in COLLECTION_NAMES for the language.
+ * (#7537). Decided 2026-10-27 (Derek): four cards, each proving one message, "we
+ * read the traditions side by side": harmony in Chinese and European theory, how
+ * Europe read China, Chinese natural knowledge, and the Hogwarts library as the
+ * friendly door into the Western books. In this order; the first is the lead card.
+ * A collection not yet published simply drops out. Each needs a name in
+ * COLLECTION_NAMES for the language.
  */
 export const NATIVE_SHOWCASE_SLUGS: Partial<Record<HomeLang, string[]>> = {
-  zh: ['chinese-natural-knowledge', 'chinese-divination-cosmology', 'confucian-classics', 'chinese-astrology'],
+  zh: ['harmony-east-west', 'china-through-european-eyes', 'chinese-natural-knowledge', 'hogwarts-library'],
 };
 
 /** Hand-written collection names per locale. English is the stored name. */

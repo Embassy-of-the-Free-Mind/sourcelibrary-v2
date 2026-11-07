@@ -1,8 +1,15 @@
 import type { ReactNode } from 'react';
-import pareto from '@/data/ocr-pareto.json';
-import xlate from '@/data/translation-pareto.json';
-import roster from '@/data/model-roster.json';
+import rawPareto from '@/data/ocr-pareto.json';
+import rawXlate from '@/data/translation-pareto.json';
+import rawRoster from '@/data/model-roster.json';
 import ParetoDownload from './ParetoDownload';
+import { aliasEngines, buildEngineAliases } from './pareto-alias';
+
+// Engines by number, not by name, on everything below (#7263; pareto-alias.ts).
+const { words: engineWords } = buildEngineAliases(rawPareto, rawXlate, rawRoster);
+const pareto = aliasEngines(rawPareto, engineWords);
+const xlate = aliasEngines(rawXlate, engineWords);
+const roster = aliasEngines(rawRoster, engineWords);
 
 // Quality against price or time, one section per script (OCR) or per language (translation) (#5983, rebuilt in
 // #6386, laid out around the decision in #6524, drawn as model-comparison scatters in #6776). Server-rendered; the
@@ -284,8 +291,7 @@ export function RosterTable() {
           ))}
         </ul>
         <p className="text-sm text-stone-600 mt-2 max-w-3xl">
-          Checked {ROSTER.checked}. The command-line models are the ones <code>agy models</code> listed that day
-          ({listOf(ROSTER.agy_models.models.filter(x => !/^claude-/.test(x)))}; Claude is never run through it).{' '}
+          Checked {ROSTER.checked}. The command-line models are the ones the command-line tool listed that day.{' '}
           <a href={`${GH}${ROSTER.agy_models.source}`} className="underline decoration-stone-300 hover:text-amber-800">Recorded output</a>.
         </p>
       </details>

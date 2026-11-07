@@ -1,0 +1,19 @@
+karl size 2: caught 4/6 alignments; refusals outside shifted pages 1
+karl size 4: caught 8/8 alignments; refusals outside shifted pages 3
+karl size 8: caught 4/4 alignments; refusals outside shifted pages 6
+corpus-medicorum size 2: caught 3/4 alignments; refusals outside shifted pages 0
+corpus-medicorum size 4: caught 4/6 alignments; refusals outside shifted pages 0
+corpus-medicorum size 8: caught 2/2 alignments; refusals outside shifted pages 5
+postel size 2: caught 1/8 alignments; refusals outside shifted pages 0
+postel size 4: caught 3/9 alignments; refusals outside shifted pages 0
+postel size 8: caught 3/5 alignments; refusals outside shifted pages 1
+sakuntala size 2: caught 5/5 alignments; refusals outside shifted pages 0
+sakuntala size 4: caught 7/7 alignments; refusals outside shifted pages 0
+sakuntala size 8: caught 3/3 alignments; refusals outside shifted pages 0
+latin clean: 0 pages refused of 80 
+greek clean: 0 pages refused of 80 
+han clean: 0 pages refused of 80 
+tibetan clean: 0 pages refused of 80 
+devanagari clean: 0 pages refused of 80 
+arabic clean: 0 pages refused of 80 
+hebrew clean: 1 pages refused of 80 6990630be7b7642c081de08b:510 number-next prints the next leaf's 14/17

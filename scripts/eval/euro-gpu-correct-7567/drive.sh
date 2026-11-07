@@ -10,7 +10,7 @@
 # copied). Arms here: PV PaddleOCR-VL-1.6 (layout off), Q Qwen3-VL-8B-FP8 (the zh bake-off flags), D dots.ocr, P5 PP-OCRv5
 # Devanagari, C Chandra OCR 2 (wave-2 recipe), S Surya 2 (its vLLM flags, served here instead of its docker spawn).
 set -uo pipefail
-J=${J:-/root/jobs/euro-gpu-correct-7567}; VL=/root/bench/vl; SU=/root/bench/surya; UTIL=${UTIL:-0.85}; IMG=${IMG:-$J/img}; C=$J/code
+J=${J:-/root/jobs/euro-gpu-correct-7567}; VL=/root/bench/vl; SU=/root/bench/surya; UTIL=${UTIL:-0.85}; IMG=${IMG:-$J/img}; C=${C:-$J/code}
 export VLLM_USE_FLASHINFER_SAMPLER=0 HF_HUB_OFFLINE=1
 log() { echo "$(date -u +%FT%TZ) [$ARM] $*" >> "$J/drive.log"; }
 gpu_mib() { nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits; }

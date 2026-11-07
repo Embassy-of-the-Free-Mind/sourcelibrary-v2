@@ -119,9 +119,12 @@ export default function TranslationGapPage() {
         <Section kicker="How it was built" title="Method">
           <p className="mb-4">
             <strong>The denominator: USTC.</strong> The Universal Short Title Catalogue is the standard census of
-            early-modern European print; its expansion to 1700 brings the total to <strong>~1.4 million distinct
-            works</strong> (USTC&rsquo;s own figure). The dataset used here comprises 1,391,970 distinct works across
-            1,593,766 edition records, in 181 languages. Latin alone accounts for 444,120 works (32%).
+            early-modern European print. The dataset used here comprises 1,593,766 edition records in 181 languages.
+            This study grouped them into 1,391,970 &ldquo;works&rdquo; (444,120 in Latin) with a key built from the
+            author&rsquo;s surname and the first six words of the title. That key split much-printed works into many
+            pieces, so it overstated the number of works. The October 2026 work-level census, which groups editions by
+            matching the distinctive words of their titles within each author, finds about 306,000 Latin works and about
+            855,000 in Latin and the five largest vernaculars; see the <Link href="/census" className="text-amber-800 underline hover:text-amber-900">census</Link>.
           </p>
           <p className="mb-4">
             <strong>The numerator: a federated catalogue.</strong> Rather than trust any single source (each mislabels
@@ -224,8 +227,7 @@ export default function TranslationGapPage() {
 
         <p className="py-8 font-body text-sm text-stone-500 leading-relaxed">
           A data study by Source Library, May 2026. Denominator: the Universal Short Title Catalogue (University of St
-          Andrews); the ~1.39M distinct-work count is consistent with USTC&rsquo;s stated ~1.4 million distinct items for
-          its expansion to 1700. Translation census federated from 30+ catalogues and publishers; author reconciliation via
+          Andrews); the 1.39M figure counts title-prefix clusters, not works (corrected October 2026). Translation census federated from 30+ catalogues and publishers; author reconciliation via
           VIAF, Wikidata, GND, and CERL. Figures are conservative lower bounds and will be updated as sources are added.
           Contact: <a className="text-amber-800 underline" href="mailto:team@sourcelibrary.org">team@sourcelibrary.org</a>.
         </p>

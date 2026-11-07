@@ -1,0 +1,1632 @@
+{
+ "scored_at": "2026-11-04T12:20:12.108Z",
+ "rule": "RULE.md (committed before the judge stage)",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt against the page image, blind, shuffled, one at a time",
+ "cells": {
+  "la-armc-refused-share": {
+   "frame_pages": 6805,
+   "frame_books": 89,
+   "n": 15,
+   "accept": "7/15",
+   "wrong_text_pages": "8/15",
+   "p_acc_ge_080": 0.001,
+   "fidelity": {
+    "3": 8,
+    "4": 5,
+    "5": 2
+   },
+   "classes_pages": {
+    "O6": 12,
+    "O8": 7,
+    "O5": 4,
+    "O16": 3,
+    "E2": 3,
+    "O7": 3,
+    "T6": 2,
+    "O1": 1,
+    "O12": 1,
+    "O4": 1,
+    "T5": 1
+   },
+   "severity_defects": {
+    "wrong_text": 29,
+    "misleads": 51,
+    "cosmetic": 43
+   },
+   "control": {
+    "n": 2,
+    "refused": 2
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "kind": "B",
+      "source_accepted": true,
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "kind": "C",
+      "source_accepted": true,
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "voided": false,
+   "route": "re-read with read@4",
+   "rows": [
+    {
+     "page_id": "69b6322e1c1c21a37380e5d7",
+     "book_id": "69b6322d1c1c21a37380e5b3",
+     "page_number": 36,
+     "refusal": "only 24% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "Idem laborem preter illam rationem",
+       "what": "The chapter opens 'Quem laborem': blue initial Q with guide letter q and printed 'uem'. The candidate reads 'Idem'."
+      },
+      {
+       "class": "O16",
+       "severity": "misleads",
+       "quote": "Rubricated capital I with long penwork flourished descender",
+       "what": "The initial is a blue Q with a long tail, not a rubricated I."
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "noctisquosque af-falsascunt",
+       "what": "Garbled non-words. The page has 'noctisque' followed by a verb in '-sascunt' ('lassescunt' in sense), with no 'quosque'."
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "cum rationabili affec-tione",
+       "what": "The page has the contracted 'assig/tione' (assignatione), not 'affectione', so the sense changes."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "extenderet buaret",
+       "what": "The page has the abbreviated 'servaret' (long s with er-stroke). 'buaret' is a non-word."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "exercere pretendunt",
+       "what": "The abbreviation appears to be con- ('contendunt'), the same sign as 'concedunt' just above, so 'pretendunt' changes the"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "per eo quod nec dum",
+       "what": "The page has the pro-abbreviation ('pro eo quod'), expanded here as 'per'."
+      },
+      {
+       "class": "O8",
+       "severity": "misleads",
+       "quote": "ut ar-dentioribus quidem spatium",
+       "what": "The page appears to read 'fide spacium'. 'quidem' looks like the expected text, not what is printed."
+      },
+      {
+       "class": "O5",
+       "severity": "cosmetic",
+       "quote": "mini-me gigneretur nimietate fastidium",
+       "what": "Drops the printed 'de' before 'nimietate'."
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "semperque indesinenter",
+       "what": "The page has 'semper' + tironian et ('semper et indesinenter')."
+      }
+     ],
+     "note": "Most of the page reads correctly, but chapter xiij opens with the wrong word ('Idem' for 'Quem', with its blue Q described as a red I), and several misreads or non-words ('af-falsascunt', 'buaret', 'affectione') garble the sense."
+    },
+    {
+     "page_id": "69b6324e1c1c21a37380f5f3",
+     "book_id": "69b6324d1c1c21a37380f573",
+     "page_number": 128,
+     "refusal": "only 35% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Volo mundare Sanctus Da=",
+       "what": "page has the abbreviation 'Vñ' (Unde); 'Sanctus' is not on the page, so the attribution to Damascene is altered"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "nihil a deo sibi negat.",
+       "what": "page appears to have 'negat' with a final -ur abbreviation (negatur); dropping the passive garbles the sense"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "quod notat",
+       "what": "final -ur abbreviation dropped (notatur), also in 'quod tangit'; the same form is expanded correctly as 'notatur' later"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "imparficitur",
+       "what": "faulty expansion of 'impficit᷑'; should be 'imperficitur'"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "nec chri=",
+       "what": "page reads 'neq;' (neque), silently changed to 'nec'"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "Secute sunt eum turbe etc.",
+       "what": "'etc.' added where the page has only a closing lemma bracket"
+      }
+     ],
+     "note": "A complete, in-order and reliable transcription of both columns, with numerals correct; the reader would only meet a few small abbreviation slips, the most visible being 'Sanctus' for 'Unde' before Damascene's name."
+    },
+    {
+     "page_id": "69b632af1c1c21a373812b2e",
+     "book_id": "69b632af1c1c21a373812a99",
+     "page_number": 149,
+     "refusal": "only 33% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 5,
+     "defects": [],
+     "note": "A faithful expanded reading of the page, from the end of the litany through the Agnus Dei and Kyrie to the red rubric breaking off at 'passionem do'; abbreviations are silently expanded and line breaks are not kept, but no words are lost or changed."
+    },
+    {
+     "page_id": "69b632861c1c21a373811a1b",
+     "book_id": "69b632861c1c21a373811870",
+     "page_number": 427,
+     "refusal": "only 32% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "regulam beati Viti vel Augustini",
+       "what": "page has 'beati Dñici' (Dominici); the wrong saint and rule are named"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "et clericis cum ex eo. libro. vj.",
+       "what": "page has 'de elec. cū ex eo' (de electione); the citation title is corrupted"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "nisi degrauetur",
+       "what": "page has 'degra-detur' (degradetur); degradation from orders, the topic here, becomes 'be burdened'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "damnat dictum Vlini",
+       "what": "page reads 'Vin.' (apparently Vincentius); the cited authority's name is wrong"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "sed dicit quod extra preuenta est iurisdictio",
+       "what": "page appears to have the abbreviation for 'ex quo' (since), not 'extra'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "extra tales vbi habitum mutant",
+       "what": "same misreading in column 2; 'ex quo tales' fits the abbreviation and sense"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "et quia ex vno ex substantialibus",
+       "what": "page appears to have 'quandocunque vno'; the 'quia ex' is misread and alters the construction"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "et expone infamatus. l. inde preuenit",
+       "what": "page has 'infamatur. i. inde preuenitur'; 'id est' becomes a false lex siglum and the verbs change"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "de bonis eius quibus vel que obuenerunt",
+       "what": "page has 'que habet vel que obuenerunt'; the verb 'habet' is lost and the phrase garbled"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "si qua vnde scripta aliorum librorum",
+       "what": "page has 'vl' (vel), not 'vnde'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Hec dicta omnia confirmat",
+       "what": "page has 'pdicta' (predicta), not 'Hec dicta'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "alias ibi vide quod possit",
+       "what": "page has 'videtur' across the line break; imperative replaces the passive"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "l. si defuncto",
+       "what": "page has 'defunct9' (defunctus); the lex incipit is altered"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "cum dilecto. de symonia",
+       "what": "page has 'dilect9' (dilectus); the decretal incipit is altered"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "sit et personalis",
+       "what": "page has 'ē' (est), not 'et'"
+      }
+     ],
+     "note": "The whole page is present and in order, and most abbreviations are expanded soundly, but scattered misreadings distort names and citations, such as 'Viti' for Dominici, 'et clericis' for de electione and 'degrauetur' for degradetur."
+    },
+    {
+     "page_id": "69b632cc1c1c21a3738139aa",
+     "book_id": "69b632cc1c1c21a3738138d7",
+     "page_number": 211,
+     "refusal": "only 18% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "quasi 35 nam etcetera",
+       "what": "page has abbreviated 'contra naturam est' (ʒ nāʒ ē); candidate gives a nonsense numeral and 'etcetera'"
+      },
+      {
+       "class": "O1",
+       "severity": "wrong_text",
+       "quote": "concupiscentie ceti etcetera perducat",
+       "what": "page reads 'cuius comparatione ceti grex dicatur'; candidate's words are not on the page"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "Ioannes volens exponere",
+       "what": "page has 'Gian⁹' (Gratianus), so the gloss is attributed to the wrong person"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "accipitur a Damaso",
+       "what": "page has 'a Gīano' (Gratiano), not Damasus"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "boni officiunt",
+       "what": "page has 'ɔficiūt' (conficiunt, confect the sacraments); 'officiunt' means hinder"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "ex deliberatione omissum",
+       "what": "page has 'ɔmissū' (commissum): committed, not omitted"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "Illis .namque. sacramenta divinitus ministrare",
+       "what": "page reads 'His .n. sacra de iure ministrare': by right, not divinely"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "romana ecclesia in his maculam",
+       "what": "page has 'n̄ hn̄s' (non habens), so 'not having stain' is lost"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "neque aliquid habere",
+       "what": "page has 'neq₃ aliqd hi⁹' (huius), not 'habere'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "c. nisi per",
+       "what": "canon incipit on the page is 'nūc p' (nunc per), so the citation is wrong"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "ad Occeaniam scribentem",
+       "what": "page has 'ad Oceanū' (Oceanum, a man), not a female addressee"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "carmina per dictum",
+       "what": "page has 'q̄ dic̄' (relative clause with a verb of saying), not 'per dictum'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "tres igitur agamus vias",
+       "what": "page has 'igram⁹' (apparently a form of ingredi, 'let us enter'), not 'igitur agamus'"
+      },
+      {
+       "class": "O5",
+       "severity": "cosmetic",
+       "quote": "Oportet episcopum esse irreprehensibilem",
+       "what": "drops the 'iqt' (inquit) printed after 'Oportet'"
+      },
+      {
+       "class": "O5",
+       "severity": "misleads",
+       "quote": "Secundarius est respectu corporis christi mistici. et dependet a primo",
+       "what": "drops the subject 'z⁹' (secundus) before 'dependet'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "Primaria est respectu",
+       "what": "page has 'Primari⁹' (Primarius), agreeing with 'actus'"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "alios similiter apostolos",
+       "what": "added word: 'similiter' is not on the page"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "boni officiunt et ministrant sacramenta",
+       "what": "page has 'sacra' here; expanded to 'sacramenta'"
+      }
+     ],
+     "note": "All lines of both columns are present and mostly right, but repeated misreads damage the sense: Gratian becomes 'Ioannes' and 'Damaso', Jerome's text turns to nonsense ('35 nam', 'concupiscentie'), and 'conficiunt', 'commissum', 'de iure' and 'non habens' are all replaced with wrong words."
+    },
+    {
+     "page_id": "69b632e01c1c21a3738141e9",
+     "book_id": "69b632e01c1c21a3738141ac",
+     "page_number": 61,
+     "refusal": "only 28% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 5,
+     "defects": [],
+     "note": "All 27 lines appear in order with abbreviations expanded and the references (Colossians iij, Ecclesiastes viij, Romans viij) correct; only 'transfixari' at the blurry end of line 5 is hard to confirm, and the sense supports it."
+    },
+    {
+     "page_id": "69b632331c1c21a37380ea1c",
+     "book_id": "69b632331c1c21a37380e7b5",
+     "page_number": 615,
+     "refusal": "only 32% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "pore famis cum totius egypti populum terram Pharao eme",
+       "what": "with the preceding line, the page reads 'Vnde et cum tempore famis cunctorum egyptiorum terram'; the candidate rewords i"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "ctos seruituti subijceret",
+       "what": "the line break is cun|ctos, 'fame cunctos' on the page; the candidate's 'di|ctos' gives 'dictos', a different word"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "habere in actu et posse esse ad",
+       "what": "page reads 'habere rem in actu et prope esse ad': 'prope' misread as 'posse', 'rem' dropped"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "communitatum quis faceret hoc. scilicet. super hoc",
+       "what": "page has 'faceret hns .s.' (habens scilicet super hoc auctoritatem); 'habens' misread as 'hoc'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "erat vnicuique sui iuris",
+       "what": "page has 'vtique', not 'vnicuique'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "aufertur etiam fructus ieorum vsu",
+       "what": "'in eorum' (i with abbreviation, then eorum) run together as a non-word"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "et huiusmodi que peccat mor",
+       "what": "page has the q2 abbreviation for 'quia', not 'que'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "nimali casu quo est in culpa",
+       "what": "page appears to read 'pro se quando est in culpa'; 'casu quo' is not on the page"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "rusticum detines violenter",
+       "what": "page has 'detinens' with a nasal abbreviation mark; the participle is lost"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "illicite et rapine sunt / quia mortaliter peccant",
+       "what": "page appears to have the et sign, not 'quia', so a causal link is introduced"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "locutionibus circa hec\nmodi",
+       "what": "page has 'circa h9|modi' (huiusmodi), not 'hec modi'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "imponunt non peccant",
+       "what": "page has the passive 'imponuntur' by abbreviation"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "iniustis guerris peccant vn",
+       "what": "last word of the page reads 'vtique' (vtiqz); the candidate truncates it to 'vn'"
+      },
+      {
+       "class": "O5",
+       "severity": "cosmetic",
+       "quote": "<term>Tho.</term> <term>Pe.</term> non ad totum",
+       "what": "the et sign between 'Tho.' and 'Pe.' is dropped"
+      },
+      {
+       "class": "O5",
+       "severity": "cosmetic",
+       "quote": "num datum hoc nisi ratione",
+       "what": "the et sign before 'hoc' is dropped"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "priuarentur aut nudarentur",
+       "what": "page has the et sign, not 'aut'"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "domino ex tunc pronunciam\nte",
+       "what": "typo for 'pronuncian|te'"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "damnum infectum",
+       "what": "the vocab list carries a legal term not found on this page"
+      }
+     ],
+     "note": "The whole page is present and in order, but a line-by-line reader meets repeated abbreviation misreads and one reworded phrase on the Pharaoh passage, so it needs correction before publishing."
+    },
+    {
+     "page_id": "69b632501c1c21a37380f7f4",
+     "book_id": "69b632501c1c21a37380f67f",
+     "page_number": 373,
+     "refusal": "only 35% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "dixit Therusalem ciuitas dei",
+       "what": "The initial is misread: the page has 'Jherusalem', and the column's own 'iherusalem' shows the word is clear. The error "
+      }
+     ],
+     "note": "Every line of both columns is present and in order, with abbreviations sensibly expanded; the only slip a reader would notice is 'Therusalem' for the page's 'Jherusalem' at the start of the Tobit quotation."
+    },
+    {
+     "page_id": "69b6328b1c1c21a373811f36",
+     "book_id": "69b6328b1c1c21a373811dba",
+     "page_number": 380,
+     "refusal": "only 37% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "de eodem quod est impossibilis verum est",
+       "what": "the page has 'si est impossibilis' ('eodē ſi eſt'); 'quod' replaces the conditional that the argument turns on"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "nec formaliter nec habitualiter",
+       "what": "the page has the abbreviated 'virtualiter' (vir-sign + 'tualit̃'), not 'habitualiter'"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "in sensu presso et cathegorico",
+       "what": "the page appears to read 'ɔcesso' (concesso), with the con- sign, not 'presso'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "unum convertibilium distribuit et alterum",
+       "what": "the page has the abbreviated passive 'distribuit̃' (distribuitur), rendered as active"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "cuius totale subiectum distribuit",
+       "what": "again the page has 'distribuit̃' (distribuitur), rendered as active"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "stativum a parte subiecti",
+       "what": "typo: with the preceding 'sub-', this gives 'substativum' where the page has 'ſtantiuū' (substantivum)"
+      }
+     ],
+     "note": "All lines are present and in order and most abbreviations are expanded well, but several wrong words in this logical argument (quod for si, habitualiter for virtualiter, presso for concesso, active distribuit for distribuitur) change what the page says."
+    },
+    {
+     "page_id": "69b632cf1c1c21a373813bf4",
+     "book_id": "69b632cf1c1c21a373813b4f",
+     "page_number": 165,
+     "refusal": "only 32% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "ad maxima altius vitae bona",
+       "what": "page has abbreviated 'alt'ius' = alterius ('of the other life'); candidate's 'altius' loses the sense"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "vel negligentia per ignavia",
+       "what": "the page's barred-l sign means 'vel', misread as 'per', which gives ungrammatical Latin"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "seque videat per ignorantem",
+       "what": "same barred-l sign misread: page reads 'vel ignorantem'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "Sola enim mors aequa est",
+       "what": "page has the contraction for 'aequalis'; expanded as the different word 'aequa', with similar sense"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "dum vivit et corpus",
+       "what": "page 'ēt' is the contraction for 'etiam', given as 'et'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "nos comitat:",
+       "what": "page 'comitat'' carries the -ur mark for 'comitatur'; ending dropped"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "quicquid aut agimus",
+       "what": "page has the 'vel' sign here, as in the next two members of the series; 'aut' substituted"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "amores adamat",
+       "what": "page has 'adamāt' (adamant), plural with 'pueri'; given as singular"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "utrumne nos illa",
+       "what": "page has only the contraction for 'utrum'; '-ne' added"
+      },
+      {
+       "class": "T6",
+       "severity": "cosmetic",
+       "quote": "an imparatos inter oscitantes",
+       "what": "page ends with 'oscitātis-', hyphenated and running over to the next page; candidate completes it as a whole word and dr"
+      },
+      {
+       "class": "O12",
+       "severity": "cosmetic",
+       "quote": "<margin>Paulus\nChristus</margin>mam nobis",
+       "what": "side-notes stand beside the 'obiecta' and 'crum' lines; anchored one line too early"
+      }
+     ],
+     "note": "All 39 lines and both side-notes are present and in order, but several abbreviations are expanded wrongly: 'altius' for 'alterius' and 'per' for 'vel' twice, which garbles the Latin in those places."
+    },
+    {
+     "page_id": "69b632c21c1c21a3738133f4",
+     "book_id": "69b632c21c1c21a3738132eb",
+     "page_number": 265,
+     "refusal": "only 38% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "protestatio decipiat per verba sonantia futurum tempus",
+       "what": "page has the contraction ɔcipiat = concipiatur ('is framed'), not decipiat ('deceives')"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "si cui plus quam per legem falcidiam liberum esse dicatur",
+       "what": "page has 'p le. fal. li. le. esse dica.', the title 'licuerit legatum esse dicatur'; 'liberum' is a false expansion"
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "ff. de dam. infec. l. iij. in principio",
+       "what": "page appears to read l. iiij.; wrong law number in the citation"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "vt notat per eum bar. et Bal.",
+       "what": "page reads 'p bu. bar.', apparently an added authority (Bu.), replaced by 'eum'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "vide .s. procurator per vnum circa finem",
+       "what": "page appears to have a q-form contraction before 'vnum', not 'per'; the '§.' is also dropped"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "de noui ope. nunci. Idem videtur velle",
+       "what": "page has '7 idem'; the 'et' is dropped and a new sentence made"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "Et dicitur pendere a iure cum quis procedit",
+       "what": "page has qñ = quando, rendered as 'cum'"
+      },
+      {
+       "class": "O16",
+       "severity": "misleads",
+       "quote": "Woodcut printer's device or floral ornament at the top right of the left column",
+       "what": "the item is the rubricated section letter P at top centre of the page; no device exists, and the letter is not transcrib"
+      },
+      {
+       "class": "T6",
+       "severity": "cosmetic",
+       "quote": "quia continentia non est pars substantialis",
+       "what": "page ends on the split word 'substantia-'; the candidate silently completes it"
+      }
+     ],
+     "note": "The page is complete and in order, but a few misread words and citations, notably 'decipiat' for 'concipiatur', 'liberum' in a legal title and 'l. iij.', would mislead someone relying on the legal text or its references."
+    },
+    {
+     "page_id": "69b632db1c1c21a37381408a",
+     "book_id": "69b632db1c1c21a37381407a",
+     "page_number": 16,
+     "refusal": "only 34% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "plenissime demo=\nstrasti",
+       "what": "the page has demō/strasti with a macron; the expansion drops the n, giving 'demostrasti' for demonstrasti"
+      },
+      {
+       "class": "O16",
+       "severity": "cosmetic",
+       "quote": "encompassing two lines of text",
+       "what": "the blue initial B spans three lines on the page, not two"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "Joannem",
+       "what": "the page's abbreviated form appears to read Joh̄em (Johannem); the h is dropped"
+      }
+     ],
+     "note": "All lines, the heading and the signature a 4 are present and in order, with abbreviations correctly expanded; only tiny slips remain, such as 'demostrasti' and the initial's line count."
+    },
+    {
+     "page_id": "69b6325d1c1c21a3738101ba",
+     "book_id": "69b6325d1c1c21a3738100a7",
+     "page_number": 275,
+     "refusal": "only 18% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O4",
+       "severity": "wrong_text",
+       "quote": "actoris probauerit res auferenda est illi et debet dari actori. quamuis non probet rem suam esse.",
+       "what": "A long stretch of gloss e is given in full, then repeated after the column break, though the page prints it once."
+      },
+      {
+       "class": "O4",
+       "severity": "wrong_text",
+       "quote": "postea ad interrogationes aduersarij respondere non cogitur. tamen si dixerit tenet responsio.",
+       "what": "The end of gloss e appears a second or third time, with variant wording between copies."
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "esse disponis. si per te ipsum pro sindicum vel actorem elegeris litigare",
+       "what": "The page has 'esse proponis, non per te sed per sindicum', so the negated sense 'not by yourself but by a syndic' is rev"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "petitio per ipsum archiepiscopum per procuratorem eius fecimus exhiberi",
+       "what": "The page reads 'petitionem ipsius archiepiscopi per procuratorem eius', so the case relations are garbled."
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "aliter coram nobis plenissime protestata",
+       "what": "The page has 'lite coram nobis plenissime contestata', i.e. joinder of issue, a key legal term that is lost here."
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "quod est verum quia ibi loquitur",
+       "what": "The page has 'non est contra quia ibi loquitur'; the phrase resolving the contradiction is replaced."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "et contra decreta decretalium de titulo isto",
+       "what": "The page reads 'contraria decretalibus de titulo isto'."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "generaliter vel procuratores appellat",
+       "what": "The page reads 'generali verbo procuratores appellat'."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "collatio nona. vita tam iure canonico",
+       "what": "The page reads 'col. ix. et ita tam iure canonico'; 'vita' is a nonsense word."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "capitulo campator",
+       "what": "The page reads 'c. imperator', so the citation is corrupted."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Dic per hoc quod collegium",
+       "what": "The page reads 'Hic patet quod collegium'."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "sed in sacro de veritate dicenda",
+       "what": "The abbreviation on the page reads 'sacramento', the oath of truth-telling, not 'sacro'."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "cum inter alios cum in potestate sua esset",
+       "what": "The page reads 'cum inter. alioquin in potestate sua esset'; 'alioquin' is misread."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "omnis tamen tangit sacra",
+       "what": "The page reads 'quandoque tamen tangit sacra', so 'sometimes' becomes 'every'."
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "collatio nona. vij. q. v. qua de causa",
+       "what": "The page's allegation reads 'ij. q. v.', so the cause number is wrong."
+      },
+      {
+       "class": "O5",
+       "severity": "misleads",
+       "quote": "que non debent omitti ante litem contestatam debet interrogari",
+       "what": "The word 'reus' on the page is dropped, losing the subject of the sentence."
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "super ecclesia walten",
+       "what": "The page reads 'super ecclesia de alten.', so the place name is altered."
+      }
+     ],
+     "note": "The text is recognisably this page, but gloss e is visibly repeated across the column break and misreadings distort the sense in both the canon and the gloss, such as 'si per te ipsum' for 'non per te' and 'protestata' for 'contestata'."
+    },
+    {
+     "page_id": "69b632831c1c21a3738117f8",
+     "book_id": "69b632831c1c21a3738116aa",
+     "page_number": 334,
+     "refusal": "only 36% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Probandum adulterium",
+       "what": "page has abbreviated 'Probat[ur] adulterium'; wrong verb form in the entry opening"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "de proba. lex causam",
+       "what": "page reads 'lȝ causaȝ', i.e. c. 'licet causam' (as cited later on the page), not a lex; the 'et' before 'de proba.' is a"
+      },
+      {
+       "class": "O8",
+       "severity": "misleads",
+       "quote": "in capitulo. pastoralis. perpetuus",
+       "what": "page appears to show only 'c. §. ppetuus'; 'pastoralis' seems supplied, not printed (read at page-image resolution)"
+      },
+      {
+       "class": "O8",
+       "severity": "misleads",
+       "quote": "si parentes nominent",
+       "what": "page seems to have only a short abbreviation here ('si q̃'); 'parentes' looks like an expansion from context (tentative)"
+      },
+      {
+       "class": "T5",
+       "severity": "cosmetic",
+       "quote": "te",
+       "what": "the last line ends at 'pbā-'; the extra line completing 'probante' is not visible on this leaf and appears to come from "
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "de officii dele.",
+       "what": "page has 'de offi. dele.'; the expansion should be 'officio'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "non sufficit quod unus testium",
+       "what": "page reads 'sufficiat'; the mood is changed without affecting the sense"
+      }
+     ],
+     "note": "All lines of both columns are present and in order, with abbreviations faithfully expanded; a few word slips ('Probandum', 'lex causam', a possibly supplied 'pastoralis' and 'parentes') affect the wording and one citation, and a stray 'te' ends the page."
+    },
+    {
+     "page_id": "69b632bb1c1c21a373813066",
+     "book_id": "69b632bb1c1c21a373812fb7",
+     "page_number": 175,
+     "refusal": "only 22% of its words are in the GPU draft: check by eye",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "oribus et scribis et universo",
+       "what": "Inserts an 'et' absent from the page, which reads 'oribus scribis et universo'; this silently matches the Vulgate wordin"
+      },
+      {
+       "class": "O7",
+       "severity": "cosmetic",
+       "quote": "<unclear>XXVI</unclear>",
+       "what": "The faint ghost numeral at the head looks longer, about 'LXXXI', though it is flagged unclear and is barely legible"
+      }
+     ],
+     "note": "All 60 lines of Mark 14-15 are present and in order, with abbreviations expanded; a reader would notice only one added 'et' and a doubtful reading of the faint numeral at the head."
+    }
+   ]
+  },
+  "la-armc-refused-putback": {
+   "frame_pages": 9615,
+   "frame_books": 95,
+   "n": 15,
+   "accept": "8/15",
+   "wrong_text_pages": "3/15",
+   "p_acc_ge_080": 0.007,
+   "fidelity": {
+    "3": 7,
+    "4": 8
+   },
+   "classes_pages": {
+    "O6": 13,
+    "O7": 6,
+    "O8": 6,
+    "E2": 4,
+    "O12": 3,
+    "O11": 1,
+    "O2": 1,
+    "O16": 1,
+    "O14": 1
+   },
+   "severity_defects": {
+    "misleads": 27,
+    "cosmetic": 31,
+    "wrong_text": 6
+   },
+   "control": {
+    "n": 2,
+    "refused": 2
+   },
+   "planted": {
+    "n": 2,
+    "caught": 2,
+    "detail": [
+     {
+      "kind": "D",
+      "source_accepted": true,
+      "accepted": false,
+      "named": true,
+      "caught": true
+     },
+     {
+      "kind": "E",
+      "source_accepted": true,
+      "accepted": false,
+      "named": true,
+      "caught": true
+     }
+    ]
+   },
+   "voided": false,
+   "route": "re-read with read@4",
+   "rows": [
+    {
+     "page_id": "69b632351c1c21a37380ed91",
+     "book_id": "69b632351c1c21a37380ec37",
+     "page_number": 346,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "Iaco.iij.",
+       "what": "page appears to read Iaco.iiij. (James 4, the humility verse); one minim short"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "Idem Bern\nhardus",
+       "what": "page has abbreviated Jō, i.e. Ideo, rather than Idem"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "Est ei\nopus mirabile",
+       "what": "abbreviation at line end probably means enim, rendered as ei"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "Intuemin quanto",
+       "what": "other: truncated expansion of Intuemini"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "i nobis est",
+       "what": "other: abbreviation for in left unexpanded, unlike the surrounding text"
+      }
+     ],
+     "note": "All lines of both columns are present and in order; a reader would meet only a few small slips, chiefly the James chapter number at the head (iij for iiij) and a couple of mis-expanded abbreviations."
+    },
+    {
+     "page_id": "69b632171c1c21a37380d30a",
+     "book_id": "69b632171c1c21a37380d0e0",
+     "page_number": 554,
+     "refusal": "a diff-guard flag spans a tag: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": false,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Si ergo accidit ei.",
+       "what": "page has abbreviated 'Un̄' (Unde), opening a question answered by 'certe a sole...'; 'Si' turns it into a conditional"
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "vide. O.j.xix",
+       "what": "cross-reference on the page reads P.xj.xix; both the letter and the number are wrong"
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "B.ij.iij.",
+       "what": "rubricated locator letter appears to be H, not B (H.ij.iij); gothic capital, reading fairly but not fully certain"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "a nobismetipsis est",
+       "what": "page appears to read 'nobisipsis'; the same sense but a different word form"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "Vnde Anselmus homo",
+       "what": "page spells the name Ancelmus/Ancelinus; silently normalised"
+      },
+      {
+       "class": "O11",
+       "severity": "cosmetic",
+       "quote": "<page-num>270</page-num>",
+       "what": "handwritten number at top right is overwritten and unclear (27 plus a stroked digit); 0 is not evident"
+      }
+     ],
+     "note": "The text is complete and in order, and nearly all of it is accurate, but a reader following the cross-references would be misdirected (P.xj.xix given as O.j.xix, probably H.ij.iij as B.ij.iij), and 'Si ergo' replaces 'Unde ergo', breaking a rhetorical question."
+    },
+    {
+     "page_id": "69b6326a1c1c21a373810bdc",
+     "book_id": "69b6326a1c1c21a373810a64",
+     "page_number": 376,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "aggre-\ngationis fidelium",
+       "what": "page has the con- abbreviation plus 'gre-gationis' (congregationis); candidate reads aggregationis, a near-synonym"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "et a veritate quidem auditum avertent",
+       "what": "page appears to print 'quidam'; candidate gives the Vulgate's 'quidem'"
+      }
+     ],
+     "note": "A complete, line-by-line and correctly expanded transcription of both columns, with the header, signature and margin letter present; the only slips are 'aggregationis' for 'congregationis' and probably 'quidem' for 'quidam'."
+    },
+    {
+     "page_id": "69b632281c1c21a37380df64",
+     "book_id": "69b632281c1c21a37380df34",
+     "page_number": 48,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O2",
+       "severity": "wrong_text",
+       "quote": "vel跳转tesum est",
+       "what": "Chinese characters inserted in the Latin; the page has abbreviated 'ptesum' (pertesum)"
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "circiter. xxxiij.",
+       "what": "page appears to read xxxiiij (34), not 33; a stroke is lost from the count of impersonal verbs"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Itur vbi scit nescitur quando redit",
+       "what": "page has 'vñ' (vnde, as in 'Vñ Alexander' on the same line), not vbi; 'scit' also drops the abbreviated -tur ending of s"
+      }
+     ],
+     "note": "Nearly every line and word follows the page, but a reader meets stray Chinese characters in 'pertesum', a count of impersonal verbs that appears one short (xxxiij for xxxiiij), and a misread 'vbi' in the example 'Itur vnde scitur'."
+    },
+    {
+     "page_id": "69b632791c1c21a3738112ba",
+     "book_id": "69b632791c1c21a37381119e",
+     "page_number": 284,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": false,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "cogitatio libenter sola pascat",
+       "what": "page has pascat̃ (pascatur); the -ur abbreviation is dropped, turning passive into active"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "nec facienda decernant mala",
+       "what": "page has decernant̃ (decernantur); -ur mark dropped, so the voice changes"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "in recordatione teneant",
+       "what": "page has teneant̃ (teneantur); -ur mark dropped"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "solius cogitationis sentiunt esse peccata",
+       "what": "page has sentiūt̃ (sentiuntur); active form alters the construction"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "quia sic ecclesie dicit",
+       "what": "page has dicit̃ (dicitur), 'it is said to the church', not 'says'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "nihil aliud agit cum ad peccatum",
+       "what": "page has agit̃ (agitur), 'nothing else is done', not 'does'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "Nec enim",
+       "what": "page has Neq; em̄ (Neque enim); same sense"
+      }
+     ],
+     "note": "All lines of both columns, the headings, the commentary and the margin note are present and in order, but six passive verbs lose their -ur abbreviation (pascat, decernant, teneant, sentiunt, dicit, agit), which distorts the grammar of the Augustine passages."
+    },
+    {
+     "page_id": "69b6329b1c1c21a373812435",
+     "book_id": "69b6329b1c1c21a3738123db",
+     "page_number": 90,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "tu foue nos .i. resuscita",
+       "what": "page appears to print 'foue vos' (likely a misprint); silently regularised to 'nos', which the context expects"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "apostolis · hoc est.",
+       "what": "the tironian 'et' after 'apostolis' is rendered as a mid-dot, so the word is lost"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "auge decus ecclesie elide",
+       "what": "page's contraction looks like 'esse' or 'ecce' and is expanded to the expected 'ecclesie'; plausible but not certain"
+      },
+      {
+       "class": "O12",
+       "severity": "cosmetic",
+       "quote": "apo/\nstolorum gloria",
+       "what": "printed guide letter 'e' in the margin beside the initial space is not recorded"
+      }
+     ],
+     "note": "A complete, in-order transcription with abbreviations expanded; a reader would notice only tiny slips, such as 'nos' for the page's apparent 'vos' and a lost 'et' in line 1."
+    },
+    {
+     "page_id": "69b6321a1c1c21a37380d73a",
+     "book_id": "69b6321a1c1c21a37380d64a",
+     "page_number": 240,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "rescripsit elrisorie in parabo=",
+       "what": "page reads 'et risorie'; the candidate has a non-word and loses 'et'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Multo commendat humilitas",
+       "what": "page has the -ur abbreviation, 'commendatur'; the passive is read as active"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "nola pendit ad collum",
+       "what": "page has 'pendit'' with the -ur abbreviation, i.e. 'penditur'; sense is unchanged"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "Ita quantumcunque homo=",
+       "what": "spurious line-end hyphen; 'homo' is a complete word on the page"
+      }
+     ],
+     "note": "Complete and in order in both columns, with abbreviations expanded; a reader would notice only the garbled 'elrisorie' (for 'et risorie') and a couple of dropped -ur endings."
+    },
+    {
+     "page_id": "69b6327b1c1c21a373811426",
+     "book_id": "69b6327b1c1c21a373811400",
+     "page_number": 38,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": false,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "de consecratione di. j. c. finali in .v. ampliauerat",
+       "what": "page reads 'c.j.', not 'c. fi[nali]'; wrong canon cited (same citation appears correctly as c. j. under Ca. XVIIII)"
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "de penitentia di. i. si ei.",
+       "what": "page appears to read 'di.ij.', not di. i; wrong distinction number"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "ibi. muri premorupti",
+       "what": "page has 'muri ṗmo rupti' (two words, primo rupti); misexpanded into a non-word"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "et .j. c. sequenti",
+       "what": "the distinct marked sign, probably 'infra', is flattened to the numeral-like '.j.' here and at '.j. c. xxv', '.j. c. xxv"
+      }
+     ],
+     "note": "All lines of both columns are present and in order, but a few of the legal citations are wrong (c. finali for c. j, di. i for di. ij) and 'primo rupti' is garbled, so a reader following the references could be misdirected."
+    },
+    {
+     "page_id": "69b632d61c1c21a373813ef3",
+     "book_id": "69b632d61c1c21a373813eba",
+     "page_number": 57,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "<sig>d ij</sig>",
+       "what": "the page's signature reads d iij; the candidate gives d ij, one leaf off"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "deus imme=",
+       "what": "other: macron on printed immē- not expanded at the line break (imme=se for immen-se), though abbreviations are expanded "
+      }
+     ],
+     "note": "All 20 lines of text match the page in order, with abbreviations expanded; the only real slip is the signature at the foot, printed d iij but given as d ij."
+    },
+    {
+     "page_id": "69b632231c1c21a37380dc5b",
+     "book_id": "69b632231c1c21a37380dc4a",
+     "page_number": 17,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": false,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "B levi et brevi addito",
+       "what": "the abbreviation for 'sed' (same sign as in 'anime: sed desperatio') is misread as a capital B, leaving a stray letter a"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "sunt finita · quam nulla potest ibi esse",
+       "what": "the page has the barred-g abbreviation for 'ergo/igitur', so the inference is turned into a meaningless 'quam'"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "cent quandoque non placent",
+       "what": "the page has q-n with a tilde, 'quando' (when they do not please), not 'quandoque' (sometimes/whenever)"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "Omne\nenim iniquitas",
+       "what": "the page has O-i-s with a macron, 'Omnis'; 'Omne' is a wrong and ungrammatical word"
+      },
+      {
+       "class": "O12",
+       "severity": "cosmetic",
+       "quote": "tes. ¶ Vicesimitertij",
+       "what": "the printed marginal section letter beside this line in column a is dropped"
+      },
+      {
+       "class": "E2",
+       "severity": "cosmetic",
+       "quote": "Penitenta que ex fiducia",
+       "what": "typo: the page reads 'Penitentia'"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "non condemnant nec iudicant",
+       "what": "the page's abbreviated 'neque' (neq-) is given as 'nec'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "Unde Lucam.xij.",
+       "what": "'Luc.' is expanded in the wrong case; it should be 'Luce'"
+      }
+     ],
+     "note": "Every line of both columns is present and in order, but several expanded abbreviations are wrong: a stray 'B' for 'sed', 'quam' for 'ergo', 'quandoque' for 'quando' and 'Omne' for 'Omnis', and the marginal section letter is missing."
+    },
+    {
+     "page_id": "69b632e51c1c21a3738145c7",
+     "book_id": "69b632e51c1c21a373814538",
+     "page_number": 143,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "non statis",
+       "what": "page reads 'nō ſtate' (imperative, glossing 'Ite'); candidate gives indicative 'statis'"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "[accessit et ro=",
+       "what": "the abbreviation after 'accessit' appears to be g-with-tilde (ergo), rendered as 'et'; sense barely affected"
+      }
+     ],
+     "note": "All lines of both columns are present and in order, and the numerals match; a reader would meet only two small word slips ('statis' for 'state', 'et' for 'ergo') in an otherwise faithful expansion."
+    },
+    {
+     "page_id": "69b632b91c1c21a373812daf",
+     "book_id": "69b632b91c1c21a373812cbd",
+     "page_number": 242,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "Da mihi domine locum",
+       "what": "page prints 'michi' (mi-chi under the notes); normalised to classical 'mihi'"
+      },
+      {
+       "class": "O16",
+       "severity": "cosmetic",
+       "quote": "<page-type>text</page-type>",
+       "what": "every line is chant with printed notation, which is neither tagged nor noted; only the underlaid words are given"
+      }
+     ],
+     "note": "All nine text lines and the rubric are present and in order, with syllables correctly joined; the reader would notice only 'mihi' for the printed 'michi' and that the musical notation is left to the image."
+    },
+    {
+     "page_id": "69b632111c1c21a37380ce50",
+     "book_id": "69b632111c1c21a37380cd46",
+     "page_number": 266,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "titulo.l.capitulo.ij",
+       "what": "page reads titulo.i. (one); the candidate's 'l' reads as a wrong title number"
+      },
+      {
+       "class": "O7",
+       "severity": "misleads",
+       "quote": "capitulo.iij.§.iiij.",
+       "what": "page reads §.iij. at the top of column 2; the wrong paragraph number also breaks the page's §.i to §.xi sequence"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "etcetera detur et declaratur",
+       "what": "page has an abbreviated 'rn̄detur' (apparently respondetur), not 'etcetera'; the abbreviation is expanded wrongly and th"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "descendon/\ntes",
+       "what": "misprint for page's descenden/tes"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "pa/\ngrapho v.",
+       "what": "page reads pa/ragrapho; 'ra' dropped at the line break"
+      },
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "compe/\ndiosa",
+       "what": "page's compē/diosa has a nasal bar; the 'n' of compendiosa is not expanded"
+      }
+     ],
+     "note": "All lines are present and in order and most of the text is right, but a reader would be misdirected by two wrong index references (titulo.l, §.iiij) and would meet a garbled 'etcetera detur' in the Terminus entry."
+    },
+    {
+     "page_id": "69b632491c1c21a37380f3e2",
+     "book_id": "69b632491c1c21a37380f39d",
+     "page_number": 69,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": false,
+     "wrong_text": true,
+     "fidelity": 3,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "cum ergo fons misericordie proportionem tra/",
+       "what": "page has the abbreviated 'pro peccato' (ꝓ pctō) before 'traditionis'; 'proportionem' is not on the page"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "perditus pro proditore turbatur",
+       "what": "page has ꝓditus = 'proditus' (betrayed), matching 'proditore'; 'perditus' (lost) changes the sense"
+      },
+      {
+       "class": "O6",
+       "severity": "misleads",
+       "quote": "sicut vnius delicti",
+       "what": "page reads 'delictū' (delictum), the accusative object of 'diffudit'; the case is changed"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "reuertamur ad hystorie persecutionem",
+       "what": "page has ꝓsecutionē = 'prosecutionem' (continuing the narrative); 'persecutionem' means persecution"
+      },
+      {
+       "class": "O6",
+       "severity": "wrong_text",
+       "quote": "hominis innocentis blasphemiam",
+       "what": "page reads 'domini innocentis', not 'hominis'"
+      }
+     ],
+     "note": "All 33 lines are present and in order, but several misexpanded or misread words change the sense, such as 'proportionem' for 'pro peccato', 'persecutionem' for 'prosecutionem' and 'hominis' for 'domini'."
+    },
+    {
+     "page_id": "69b632ac1c1c21a3738129be",
+     "book_id": "69b632ac1c1c21a3738128b5",
+     "page_number": 265,
+     "refusal": "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the page stays unread",
+     "judged": true,
+     "accept": true,
+     "wrong_text": false,
+     "fidelity": 4,
+     "defects": [
+      {
+       "class": "O6",
+       "severity": "cosmetic",
+       "quote": "qui letificet iuuentutem meam",
+       "what": "page reads 'le ti fi cat' (letificat); the candidate has the wrong verb ending, though the sense barely shifts"
+      },
+      {
+       "class": "O14",
+       "severity": "cosmetic",
+       "quote": "<page-type>text</page-type>",
+       "what": "square-note chant staves above every text line are neither transcribed nor mentioned, and the page is tagged plain text"
+      },
+      {
+       "class": "O12",
+       "severity": "cosmetic",
+       "quote": "Vsque quo domine obliuisceris me in finem",
+       "what": "red versicle sign before the verse is dropped, and the verse is marked as a heading"
+      },
+      {
+       "class": "O8",
+       "severity": "cosmetic",
+       "quote": "<insert>Graduale</insert>",
+       "what": "abbreviated red 'Gr' silently expanded to Graduale"
+      }
+     ],
+     "note": "All the chant text is present and in order apart from one wrong verb ending (letificet for letificat), but the transcription never signals the musical notation that fills the page."
+    }
+   ]
+  }
+ }
+}

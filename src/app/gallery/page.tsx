@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { unstable_cache } from 'next/cache';
 import { getReadDb } from '@/lib/mongodb';
 import { mergedGalleryBrowse } from '@/lib/gallery-merge';
@@ -8,21 +9,15 @@ import GalleryClient from '@/components/gallery/GalleryClient';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
+import { BOOK_VIEW_PAGE_SIZE, bookViewHref, bookViewPageLinks, parseBookViewPage } from '@/lib/gallery-book-view';
 
 // Per-tenant cached wrappers. The DB work runs at most once per revalidate
-// window per (tenant, bookId) — warm requests skip Mongo entirely. tenantId is
-// part of the cache key, so tenant isolation is preserved.
-const getGalleryInitial = (tenantId: string | null, bookId?: string) =>
+// window per (tenant, bookId, page) — warm requests skip Mongo entirely. tenantId
+// is part of the cache key, so tenant isolation is preserved.
+const getGalleryInitial = (tenantId: string | null, bookId?: string, page = 1) =>
   unstable_cache(
-    () => fetchInitialGalleryData(tenantId, bookId),
-    ['gallery-initial-v2', tenantId || 'main', bookId || 'all'],
-    { revalidate: 3600 },
-  )();
-
-const getGalleryFeatured = (tenantId: string | null) =>
-  unstable_cache(
-    () => fetchFeaturedCollections(tenantId),
-    ['gallery-featured-v2', tenantId || 'main'],
+    () => fetchInitialGalleryData(tenantId, bookId, page),
+    ['gallery-initial-v3', tenantId || 'main', bookId || 'all', String(page)],
     { revalidate: 3600 },
   )();
 
@@ -38,14 +33,14 @@ export const revalidate = 3600; // ISR: rebuild every hour (unfiltered landing o
 const GALLERY_TITLE = 'Image Gallery | Source Library';
 const GALLERY_DESCRIPTION = 'Browse illustrations, engravings, woodcuts, alchemical emblems, and diagrams extracted from rare historical texts, searchable by subject, technique, and period.';
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: GALLERY_TITLE,
   description: GALLERY_DESCRIPTION,
   alternates: {
     canonical: '/gallery',
   },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image-gallery.jpg', width: 1600, height: 840, alt: 'Illustrations from rare books in the Source Library gallery' }],
     title: GALLERY_TITLE,
     description: GALLERY_DESCRIPTION,
     type: 'website',
@@ -55,6 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    images: ['https://sourcelibrary.org/og-image-gallery.jpg'],
     title: GALLERY_TITLE,
     description: GALLERY_DESCRIPTION,
   },
@@ -62,6 +58,33 @@ export const metadata: Metadata = {
 
 interface GalleryPageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
+
+/** The one book a request is for, and which page of its pictures. */
+function bookViewFrom(params: Record<string, string | string[] | undefined>) {
+  const raw = params.bookId ?? params.book;
+  const bookId = typeof raw === 'string' && raw ? raw : undefined;
+  return { bookId, page: bookId ? parseBookViewPage(params.page) : 1 };
+}
+
+/**
+ * One book's pictures are their own page, and a crawler's way to them: declaring
+ * /gallery as canonical called this a duplicate of a page with none of its links.
+ * An id with no pictures keeps the plain metadata.
+ */
+export async function generateMetadata({ searchParams }: GalleryPageProps): Promise<Metadata> {
+  const { bookId, page } = bookViewFrom((await searchParams) ?? {});
+  if (!bookId) return metadata;
+  const data = await getGalleryInitial((await headers()).get('x-tenant-id'), bookId, page);
+  if (!data.bookInfo || data.items.length === 0) return metadata;
+  const title = `Illustrations from ${data.bookInfo.title}${page > 1 ? `, page ${page}` : ''} | Source Library`;
+  return {
+    ...metadata,
+    title,
+    alternates: { canonical: bookViewHref(bookId, page) },
+    openGraph: { ...metadata.openGraph, title, url: bookViewHref(bookId, page) },
+    twitter: { ...metadata.twitter, title },
+  };
 }
 
 /**
@@ -78,8 +101,14 @@ export default function GalleryPage({ searchParams }: GalleryPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header renders instantly; the data-heavy grid streams in below. */}
-      <ConditionalSiteHeader variant="light" />
-      <h1 className="sr-only">Image Gallery: Illustrations from Rare Historical Texts</h1>
+      <ConditionalSiteHeader variant="dark" />
+      <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-6 md:pt-11 flex items-baseline justify-between gap-4">
+        <h1 className="text-2xl md:text-4xl font-display text-primary">The Gallery</h1>
+        {/* The curated image collections have their own page, as the book collections do. */}
+        <Link href="/gallery/collections" className="text-[13px] sm:text-sm text-secondary underline decoration-border-medium underline-offset-[3px] hover:text-primary whitespace-nowrap">
+          Image collections
+        </Link>
+      </div>
       <Suspense fallback={<GalleryShell />}>
         <GalleryData searchParams={searchParams} />
       </Suspense>
@@ -93,36 +122,54 @@ async function GalleryData({ searchParams }: GalleryPageProps) {
   const h = await headers();
   const tenantId = h.get('x-tenant-id');
   const params = (await searchParams) ?? {};
-  const bookIdParam = params.bookId ?? params.book;
-  const bookId = typeof bookIdParam === 'string' ? bookIdParam : undefined;
+  const { bookId, page } = bookViewFrom(params);
 
-  const [initialData, initialCollections, bookCollections] = await Promise.all([
-    getGalleryInitial(tenantId, bookId),
-    getGalleryFeatured(tenantId),
+  const [initialData, bookCollections] = await Promise.all([
+    getGalleryInitial(tenantId, bookId, page),
     getGalleryBookCollections(tenantId),
   ]);
+  const pageLinks = bookId ? bookViewPageLinks(initialData.total ?? 0, page) : [];
 
   return (
-    <GalleryClient
-      initialData={initialData}
-      initialCollections={initialCollections}
-      bookCollections={bookCollections}
-      initialBookId={bookId}
-    />
+    <>
+      <GalleryClient
+        initialData={initialData}
+        bookCollections={bookCollections}
+        initialBookId={bookId}
+      />
+      {/* The pagination on screen is buttons, which a crawler cannot follow. Same device
+          as the citation line on reader pages: for machines, and no second control. */}
+      {pageLinks.length > 0 && (
+        <nav aria-label="All pages of this book's pictures" className="sr-only">
+          {pageLinks.map(n => (
+            <a key={n} href={bookViewHref(bookId as string, n)} aria-current={n === page ? 'page' : undefined}>
+              Pictures, page {n}
+            </a>
+          ))}
+        </nav>
+      )}
+    </>
   );
 }
 
 function GalleryShell() {
+  // The controls' shape (two bars, a numbers line, the tools row) so nothing jumps when they arrive.
   return (
-    <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-6">
-      <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
-        <div className="flex-1 min-w-0 sm:min-w-[200px] max-w-md h-9 bg-stone-200/70 rounded-lg animate-pulse" />
-        <div className="min-w-0 sm:min-w-[200px] max-w-sm flex-1 h-9 bg-stone-200/70 rounded-lg animate-pulse" />
-        <div className="h-9 w-24 bg-stone-200/70 rounded-lg animate-pulse" />
+    <div className="max-w-[var(--container-wide)] mx-auto px-4 sm:px-6 md:px-12 pt-4 md:pt-[26px] pb-6" aria-hidden>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-7">
+        {[0, 1].map((i) => (
+          <div key={i}>
+            <div className="h-3.5 w-32 bg-stone-200/70 mb-2" />
+            <div className="h-10 sm:h-[52px] bg-white border border-border-light" />
+            <div className="h-3 w-56 bg-stone-200/60 mt-2.5" />
+          </div>
+        ))}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {Array.from({ length: 18 }).map((_, i) => (
-          <div key={i} className="aspect-square bg-stone-200/70 rounded-lg animate-pulse" />
+      <div className="h-4 w-64 bg-stone-200/60 mt-6" />
+      <div className="h-9 w-40 bg-white border border-border-light mt-4" />
+      <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div key={i} className="bg-stone-200/70 animate-pulse" style={{ aspectRatio: i % 3 === 0 ? '3 / 4' : i % 3 === 1 ? '1 / 1' : '4 / 5' }} />
         ))}
       </div>
     </div>
@@ -134,10 +181,11 @@ function GalleryShell() {
  * When `bookId` is provided we drop the per-book rank cap so all of that
  * book's images show up immediately, and we resolve bookInfo for the header.
  */
-async function fetchInitialGalleryData(tenantId: string | null, bookId?: string): Promise<GalleryResponse> {
+async function fetchInitialGalleryData(tenantId: string | null, bookId?: string, page = 1): Promise<GalleryResponse> {
   try {
     const db = await getReadDb();
-    const limit = 48;
+    const limit = bookId ? BOOK_VIEW_PAGE_SIZE : 48;
+    const offset = (page - 1) * limit;
     const minQuality = 0.7;
     const maxPerBook = 1000; // uncapped: variety comes from the book_rank sort
 
@@ -205,7 +253,8 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
     const [items, total, bookInfo] = await Promise.all([
       db.collection('gallery_images')
         .find(filter, { projection: { _id: 0 } })
-        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1, detection_index: 1 })
+        .skip(offset)
         .limit(limit)
         .toArray(),
       db.collection('gallery_images').countDocuments(filter),
@@ -238,7 +287,7 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
       items: mappedItems,
       total,
       limit,
-      offset: 0,
+      offset,
       bookInfo,
       filters: {
         types: typesResult.map(t => t._id as string).filter(Boolean),
@@ -327,81 +376,5 @@ async function fetchBookCollections(tenantId: string | null) {
   } catch (error) {
     console.error('Failed to fetch book collections:', error);
     return [];
-  }
-}
-
-/**
- * Fetch all collections for SSR (shown on gallery landing page).
- */
-async function fetchFeaturedCollections(tenantId: string | null) {
-  try {
-    const db = await getReadDb();
-    const query: Record<string, unknown> = {};
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-
-    const collections = await db.collection('gallery_collections')
-      .find(query)
-      .sort({ featured: -1, sort_order: 1 })
-      .toArray();
-
-    if (collections.length === 0) return undefined;
-
-    // Resolve cover images from gallery_images. Fetch the explicit cover plus a
-    // few of each collection's own images, so collections without a (resolvable)
-    // cover_image_id fall back to their first available image instead of showing
-    // an empty placeholder.
-    const FALLBACK_DEPTH = 4;
-    const idsToFetch = new Set<string>();
-    for (const c of collections) {
-      if (c.cover_image_id) idsToFetch.add(c.cover_image_id as string);
-      for (const imgId of ((c.image_ids as string[]) || []).slice(0, FALLBACK_DEPTH)) {
-        if (imgId) idsToFetch.add(imgId);
-      }
-    }
-    const galleryDocs = idsToFetch.size > 0
-      ? await db.collection('gallery_images')
-        .find({ id: { $in: [...idsToFetch] } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
-        .toArray()
-      : [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const galleryMap = new Map(galleryDocs.map((d: any) => [d.id, d]));
-    const coverFrom = (id: string | undefined, fallbackTitle: string) => {
-      if (!id) return null;
-      const gImg = galleryMap.get(id) as { thumbnail_url?: string; extracted_url?: string; description?: string } | undefined;
-      if (!gImg) return null;
-      const url = gImg.thumbnail_url || gImg.extracted_url;
-      if (!url) return null;
-      return { url, description: gImg.description || fallbackTitle };
-    };
-
-    const result = await Promise.all(
-      collections.map(async (col) => {
-        const title = col.title as string;
-        // Prefer the explicit cover; otherwise use the collection's own images.
-        let coverImage = coverFrom(col.cover_image_id as string | undefined, title);
-        if (!coverImage) {
-          for (const imgId of ((col.image_ids as string[]) || []).slice(0, FALLBACK_DEPTH)) {
-            coverImage = coverFrom(imgId, title);
-            if (coverImage) break;
-          }
-        }
-        return {
-          id: col.id as string,
-          slug: col.slug as string,
-          title: col.title as string,
-          description: (col.description || '') as string,
-          imageCount: (col.image_ids as string[])?.length || 0,
-          featured: col.featured as boolean,
-          coverImage,
-        };
-      })
-    );
-
-    return result;
-  } catch (error) {
-    console.error('Failed to fetch featured collections:', error);
-    return undefined;
   }
 }

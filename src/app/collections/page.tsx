@@ -359,15 +359,20 @@ async function CuratedPathwaysSection() {
 async function AllCollectionsLink() {
   const { slug: tenantSlug } = getTenantContextFromRequest(await headers());
   const href = tenantSlug ? `/${tenantSlug}/collections/all` : '/collections/all';
+  const linkClass = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border-light text-sm text-secondary hover:border-accent-gold/40 hover:text-primary transition-colors';
   return (
-    <div className="mt-10 text-center">
-      <Link
-        href={href}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border-light text-sm text-secondary hover:border-accent-gold/40 hover:text-primary transition-colors"
-      >
+    <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-center">
+      <Link href={href} className={linkClass}>
         Browse the complete index of collections
         <span aria-hidden>→</span>
       </Link>
+      {/* Corpus-wide, so refused on tenant hosts (tenant-global-paths.ts). */}
+      {!tenantSlug && (
+        <Link href="/sibu" className={linkClass}>
+          Every Chinese book, by the Four Branches
+          <span aria-hidden>→</span>
+        </Link>
+      )}
     </div>
   );
 }

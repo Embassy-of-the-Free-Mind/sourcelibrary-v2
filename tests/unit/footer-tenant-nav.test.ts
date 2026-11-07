@@ -62,3 +62,11 @@ describe('GlobalFooter tenant nav', () => {
     }
   });
 });
+
+describe('catalogue link by host', () => {
+  const texts = (tenant: boolean) => visibleFooterNavColumns(tenant).flatMap((c) => c.links).find((l) => l.key === 'texts');
+  it('opens /library on the main site and the partner catalogue on a partner host', () => {
+    expect(texts(false)?.href).toBe('/library');
+    expect(texts(true)?.href).toBe('/catalog');
+  });
+});

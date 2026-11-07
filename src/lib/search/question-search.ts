@@ -26,6 +26,7 @@
  *   no question-level re-rank; its passageWindow is reused here.
  */
 
+import { NOT_REPEAT_CAPTURE } from '@/lib/page-counts';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { semanticPageSearchGlobal, semanticPageSearchUntranslated } from '@/lib/semantic-search';
@@ -205,7 +206,7 @@ async function keywordLane(question: string): Promise<{ rows: Array<{ book_id: s
     delete stage.$search.highlight;
     const rows = await db.collection('pages').aggregate([
       stage,
-      { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
+      { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES }, ...NOT_REPEAT_CAPTURE } },
       { $limit: KEYWORD_CANDIDATES },
       { $project: { _id: 0, book_id: 1, page_number: 1 } },
     ], { maxTimeMS: KEYWORD_TIMEOUT_MS }).toArray();
@@ -267,7 +268,7 @@ export async function questionSearch(question: string, opts: { feature?: string 
   const books = new Map(
     (bookIds.length ? await db.collection('books').find(
       { id: { $in: bookIds }, visible: true, pages_count: { $gt: 0 }, hidden: { $ne: true }, tenantId: { $in: [null, undefined] } },
-      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1, 'translation_state.english_original': 1 } },
+      { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, author_id: 1, published: 1, year: 1, language: 1, 'translation_state.english_original': 1, facing_translation: 1 } },
     ).toArray() : []).map(b => [b.id as string, b]),
   );
   const kept = order.filter(c => books.has(c.book_id));

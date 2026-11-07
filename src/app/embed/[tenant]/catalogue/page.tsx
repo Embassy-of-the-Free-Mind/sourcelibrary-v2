@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
 import { getDb } from '@/lib/mongodb';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import TenantCatalogueTable, { type CatalogueRow, type CatalogueSort } from '@/components/libraries/TenantCatalogueTable';
 
 interface Props {
@@ -102,7 +103,7 @@ export default async function TenantCataloguePage({ params, searchParams }: Prop
 
   const rows: CatalogueRow[] = (data || []) as unknown as CatalogueRow[];
   const total = count || 0;
-  const basePath = `/catalogue`;
+  const room = await getRoomHref(tenant);
 
   return (
     <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -119,7 +120,8 @@ export default async function TenantCataloguePage({ params, searchParams }: Prop
         page={page}
         pageSize={PAGE_SIZE}
         sort={sort}
-        basePath={basePath}
+        basePath={room('/catalogue')}
+        bookBasePath={room('/book')}
       />
     </div>
   );

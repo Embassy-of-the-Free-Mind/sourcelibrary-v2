@@ -1,0 +1,299 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_v4_latin_7263.py",
+ "source": "scripts/eval/results/router-v4-latin-lite/latin-lite-print-2026-11-03.json (scripts/eval/router-confirm/confirm.mjs, PR #8000)",
+ "judge": "claude -p --model opus, judgeAbsolute, blind, image open",
+ "controls": {
+  "n": 2,
+  "judged": 2,
+  "accepted": 0,
+  "fidelity": [
+   1,
+   1
+  ]
+ },
+ "frame": "30 fresh Latin print books, seed 20261103, one body page each; none in the cell's earlier evidence",
+ "english_not_pooled": {
+  "why": "no router cell for re-translating a page (latin-tr-first is first English); see the header",
+  "arms": {
+   "E1": {
+    "pages": 26,
+    "wrong_end_to_end": 15,
+    "wrong_e2e_rate": 0.577,
+    "wrong_e2e_ci95": [
+     0.385,
+     0.769
+    ],
+    "major_pages": 6,
+    "misread_pages": 14,
+    "fidelity_ge4": 20,
+    "fidelity_ge4_share": 0.769,
+    "fidelity_mean": 4,
+    "english_words": 12129,
+    "majors": 7,
+    "major_per_1k": 0.58,
+    "major_per_1k_ci95": [
+     0.18,
+     1
+    ],
+    "translated_fresh": 0,
+    "reused_e2": 0,
+    "failed_stored_served": 0,
+    "agy_calls": 0
+   },
+   "E2": {
+    "pages": 30,
+    "wrong_end_to_end": 18,
+    "wrong_e2e_rate": 0.6,
+    "wrong_e2e_ci95": [
+     0.433,
+     0.767
+    ],
+    "major_pages": 1,
+    "misread_pages": 18,
+    "fidelity_ge4": 29,
+    "fidelity_ge4_share": 0.967,
+    "fidelity_mean": 4.5,
+    "english_words": 14581,
+    "majors": 1,
+    "major_per_1k": 0.07,
+    "major_per_1k_ci95": [
+     0,
+     0.23
+    ],
+    "translated_fresh": 30,
+    "reused_e2": 0,
+    "failed_stored_served": 0,
+    "agy_calls": 35
+   },
+   "E3": {
+    "pages": 30,
+    "wrong_end_to_end": 14,
+    "wrong_e2e_rate": 0.467,
+    "wrong_e2e_ci95": [
+     0.3,
+     0.633
+    ],
+    "major_pages": 0,
+    "misread_pages": 14,
+    "fidelity_ge4": 30,
+    "fidelity_ge4_share": 1,
+    "fidelity_mean": 4.63,
+    "english_words": 14597,
+    "majors": 0,
+    "major_per_1k": 0,
+    "major_per_1k_ci95": [
+     0,
+     0
+    ],
+    "translated_fresh": 16,
+    "reused_e2": 14,
+    "failed_stored_served": 0,
+    "agy_calls": 18
+   },
+   "E4": {
+    "pages": 30,
+    "wrong_end_to_end": 7,
+    "wrong_e2e_rate": 0.233,
+    "wrong_e2e_ci95": [
+     0.1,
+     0.4
+    ],
+    "major_pages": 0,
+    "misread_pages": 7,
+    "fidelity_ge4": 30,
+    "fidelity_ge4_share": 1,
+    "fidelity_mean": 4.67,
+    "english_words": 13588,
+    "majors": 0,
+    "major_per_1k": 0,
+    "major_per_1k_ci95": [
+     0,
+     0
+    ],
+    "translated_fresh": 26,
+    "reused_e2": 4,
+    "failed_stored_served": 0,
+    "agy_calls": 33
+   }
+  },
+  "vs_E1": [
+   {
+    "arm": "E2",
+    "vs": "E1",
+    "n": 26,
+    "wrong_arm": 16,
+    "wrong_vs": 15,
+    "d_wrong_rate_reduction": -0.038,
+    "ci95": [
+     -0.192,
+     0.115
+    ],
+    "fixed": 2,
+    "broke": 3,
+    "sign_test_p": 1,
+    "fid_ge4_arm": 25,
+    "fid_ge4_vs": 20
+   },
+   {
+    "arm": "E3",
+    "vs": "E1",
+    "n": 26,
+    "wrong_arm": 12,
+    "wrong_vs": 15,
+    "d_wrong_rate_reduction": 0.115,
+    "ci95": [
+     -0.115,
+     0.346
+    ],
+    "fixed": 6,
+    "broke": 3,
+    "sign_test_p": 0.5078,
+    "fid_ge4_arm": 26,
+    "fid_ge4_vs": 20
+   },
+   {
+    "arm": "E4",
+    "vs": "E1",
+    "n": 26,
+    "wrong_arm": 7,
+    "wrong_vs": 15,
+    "d_wrong_rate_reduction": 0.308,
+    "ci95": [
+     0.154,
+     0.5
+    ],
+    "fixed": 8,
+    "broke": 0,
+    "sign_test_p": 0.0078,
+    "fid_ge4_arm": 26,
+    "fid_ge4_vs": 20
+   }
+  ],
+  "gate": {
+   "pass": true,
+   "checks": {
+    "swap": {
+     "n": 15,
+     "k": 15,
+     "need": 0.9333333333333333,
+     "rate": 1,
+     "pass": true
+    },
+    "drop": {
+     "n": 15,
+     "k": 15,
+     "need": 0.8666666666666667,
+     "rate": 1,
+     "pass": true
+    },
+    "repeat": {
+     "n": 15,
+     "k": 15,
+     "need": 0.9333333333333333,
+     "rate": 1,
+     "pass": true
+    }
+   }
+  }
+ },
+ "cells": {
+  "latin-lite-v4|print": {
+   "task": "ocr",
+   "lang": "Latin",
+   "routes": {
+    "lite": {
+     "n": 30,
+     "books": 30,
+     "accept": "9/30",
+     "wrong_text_pages": "15/30",
+     "classes_k_of_n": {},
+     "served": {
+      "stored text": 30
+     },
+     "defects": {
+      "pages": 30,
+      "words": 9495,
+      "severe": 116,
+      "severe_per_1k": 12.22,
+      "severe_per_1k_ci95": [
+       8.51,
+       16.68
+      ],
+      "wrong_text_defects": 45,
+      "wrong_text_per_1k": 4.74,
+      "wrong_text_per_1k_ci95": [
+       2.79,
+       7.23
+      ]
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 30,
+     "books": 30,
+     "accept": "14/30",
+     "wrong_text_pages": "12/30",
+     "classes_k_of_n": {},
+     "served": {
+      "correction changes 94% of the draft's words: check by eye": 1,
+      "written": 16,
+      "letters outside the book's scripts": 1,
+      "correction changes 29% of the draft's words: check by eye": 2,
+      "correction changes 53% of the draft's words: check by eye": 1,
+      "corrector: UNCHANGED (the draft stands)": 4,
+      "correction changes 40% of the draft's words: check by eye": 1,
+      "correction changes 42% of the draft's words: check by eye": 1,
+      "correction changes 52% of the draft's words: check by eye": 1,
+      "corrector: CONTAIN (a claim to check by eye)": 1,
+      "correction changes 26% of the draft's words: check by eye": 1
+     },
+     "defects": {
+      "pages": 30,
+      "words": 9495,
+      "severe": 89,
+      "severe_per_1k": 9.37,
+      "severe_per_1k_ci95": [
+       5.64,
+       13.95
+      ],
+      "wrong_text_defects": 37,
+      "wrong_text_per_1k": 3.9,
+      "wrong_text_per_1k_ci95": [
+       1.9,
+       6.47
+      ]
+     }
+    },
+    "agy-flash-low@4-read": {
+     "n": 30,
+     "books": 30,
+     "accept": "20/30",
+     "wrong_text_pages": "6/30",
+     "classes_k_of_n": {},
+     "served": {
+      "only 14% of its words are in the stored read: check by eye": 1,
+      "written": 26,
+      "letters outside the book's scripts": 1,
+      "only 28% of its words are in the stored read: check by eye": 1,
+      "more than one transcription header: restarted or refused read": 1
+     },
+     "defects": {
+      "pages": 30,
+      "words": 9495,
+      "severe": 39,
+      "severe_per_1k": 4.11,
+      "severe_per_1k_ci95": [
+       2.13,
+       6.61
+      ],
+      "wrong_text_defects": 12,
+      "wrong_text_per_1k": 1.26,
+      "wrong_text_per_1k_ci95": [
+       0.33,
+       2.45
+      ]
+     }
+    }
+   }
+  }
+ }
+}

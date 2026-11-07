@@ -17,6 +17,8 @@ const smallIndexes = [
   { collection: 'pipeline_snapshots', key: { timestamp: -1 }, name: 'pipeline_snapshots_ts_idx' },
   { collection: 'loading_metrics', key: { received_at: -1 }, name: 'loading_metrics_received_at_idx' },
   { collection: 'loading_metrics', key: { name: 1, received_at: -1 }, name: 'loading_metrics_name_ts_idx' },
+  // /artwork/<slug> looks up a deleted dedup twin by slug to redirect to its keeper (findDeletedDuplicateKeeper).
+  { collection: 'deleted_books', key: { slug: 1 }, name: 'deleted_books_slug_idx' },
 ];
 
 for (const idx of smallIndexes) {

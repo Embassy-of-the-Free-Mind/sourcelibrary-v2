@@ -1,0 +1,159 @@
+{
+ "note": "live = visible && pages_count > 0 && language Latin; frame = live && pages_translated >= 3. Hand from pages.script_type where >= 3 pages are tagged, else the era default.",
+ "cells": {
+  "1601-1700|print": {
+   "era": "1601-1700",
+   "hand": "print",
+   "live_books": 12631,
+   "live_pages": 2687631,
+   "live_pages_ocr": 596337,
+   "live_pages_translated": 489147,
+   "hand_from_pages": 5116,
+   "frame_books": 2938,
+   "frame_pages_translated": 489124
+  },
+  "1551-1600|print": {
+   "era": "1551-1600",
+   "hand": "print",
+   "live_books": 5617,
+   "live_pages": 1763720,
+   "live_pages_ocr": 396539,
+   "live_pages_translated": 351046,
+   "hand_from_pages": 2266,
+   "frame_books": 1557,
+   "frame_pages_translated": 351009
+  },
+  "1450-1500|print": {
+   "era": "1450-1500",
+   "hand": "print",
+   "live_books": 1843,
+   "live_pages": 486605,
+   "live_pages_ocr": 258053,
+   "live_pages_translated": 245568,
+   "hand_from_pages": 1045,
+   "frame_books": 1080,
+   "frame_pages_translated": 245563
+  },
+  "pre-1450|manuscript": {
+   "era": "pre-1450",
+   "hand": "manuscript",
+   "live_books": 249,
+   "live_pages": 51068,
+   "live_pages_ocr": 46651,
+   "live_pages_translated": 44209,
+   "hand_from_pages": 186,
+   "frame_books": 235,
+   "frame_pages_translated": 44203
+  },
+  "1701+|print": {
+   "era": "1701+",
+   "hand": "print",
+   "live_books": 4540,
+   "live_pages": 1541082,
+   "live_pages_ocr": 371737,
+   "live_pages_translated": 340690,
+   "hand_from_pages": 861,
+   "frame_books": 951,
+   "frame_pages_translated": 340689
+  },
+  "unknown|print": {
+   "era": "unknown",
+   "hand": "print",
+   "live_books": 3295,
+   "live_pages": 237712,
+   "live_pages_ocr": 89173,
+   "live_pages_translated": 36527,
+   "hand_from_pages": 3168,
+   "frame_books": 1110,
+   "frame_pages_translated": 36499
+  },
+  "1501-1550|print": {
+   "era": "1501-1550",
+   "hand": "print",
+   "live_books": 3444,
+   "live_pages": 989310,
+   "live_pages_ocr": 330157,
+   "live_pages_translated": 305958,
+   "hand_from_pages": 1271,
+   "frame_books": 999,
+   "frame_pages_translated": 305954
+  },
+  "unknown|manuscript": {
+   "era": "unknown",
+   "hand": "manuscript",
+   "live_books": 101,
+   "live_pages": 11935,
+   "live_pages_ocr": 10671,
+   "live_pages_translated": 9739,
+   "hand_from_pages": 101,
+   "frame_books": 85,
+   "frame_pages_translated": 9738
+  },
+  "1551-1600|manuscript": {
+   "era": "1551-1600",
+   "hand": "manuscript",
+   "live_books": 30,
+   "live_pages": 2862,
+   "live_pages_ocr": 2688,
+   "live_pages_translated": 2363,
+   "hand_from_pages": 30,
+   "frame_books": 27,
+   "frame_pages_translated": 2363
+  },
+  "1501-1550|manuscript": {
+   "era": "1501-1550",
+   "hand": "manuscript",
+   "live_books": 36,
+   "live_pages": 6393,
+   "live_pages_ocr": 4993,
+   "live_pages_translated": 4515,
+   "hand_from_pages": 36,
+   "frame_books": 28,
+   "frame_pages_translated": 4515
+  },
+  "1450-1500|manuscript": {
+   "era": "1450-1500",
+   "hand": "manuscript",
+   "live_books": 125,
+   "live_pages": 34146,
+   "live_pages_ocr": 31106,
+   "live_pages_translated": 29304,
+   "hand_from_pages": 125,
+   "frame_books": 120,
+   "frame_pages_translated": 29304
+  },
+  "pre-1450|print": {
+   "era": "pre-1450",
+   "hand": "print",
+   "live_books": 5,
+   "live_pages": 291,
+   "live_pages_ocr": 277,
+   "live_pages_translated": 248,
+   "hand_from_pages": 5,
+   "frame_books": 5,
+   "frame_pages_translated": 248
+  },
+  "1601-1700|manuscript": {
+   "era": "1601-1700",
+   "hand": "manuscript",
+   "live_books": 28,
+   "live_pages": 5342,
+   "live_pages_ocr": 5120,
+   "live_pages_translated": 4594,
+   "hand_from_pages": 28,
+   "frame_books": 24,
+   "frame_pages_translated": 4594
+  },
+  "1701+|manuscript": {
+   "era": "1701+",
+   "hand": "manuscript",
+   "live_books": 15,
+   "live_pages": 3651,
+   "live_pages_ocr": 3641,
+   "live_pages_translated": 3368,
+   "hand_from_pages": 15,
+   "frame_books": 15,
+   "frame_pages_translated": 3368
+  }
+ }
+}

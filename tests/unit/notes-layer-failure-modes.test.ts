@@ -83,10 +83,11 @@ describe('empty, placeholder and blank translations', () => {
     '[This page could not be translated due to content safety restrictions.]',
     '[This page could not be translated due to content recitation restrictions.]',
     '[Blank page — no translatable content]',
-  ])('%s: text is the placeholder, no annotations', (m) => {
+  ])('%s: text is the placeholder, under one interp span (the reader hides it with notes off)', (m) => {
     const { text, annotations } = layers(m);
     expect(text).toBe(m);
-    expect(annotations).toHaveLength(0);
+    expect(annotations).toHaveLength(1);
+    expect(annotations[0]).toMatchObject({ type: 'interp', kind: 'mark', exact: m, start: 0, end: m.length });
   });
   it('no data → no text, whatever text is stored', () => {
     expect(getTranslationText({ translation: { text: 'withheld words', text_from: { data_hash: 'x' } } })).toBe('');

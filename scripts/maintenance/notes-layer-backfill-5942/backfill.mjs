@@ -13,7 +13,8 @@
  * WHAT IT TOUCHES, and nothing else:
  *   pages.translation.text, pages.translation.text_from      ($set; never updated_at, never
  *     translation.updated_at, never pipeline_auto, never data)
- *   page_annotations                                         (upsert per page + source, tagged run_id)
+ *   page_annotations                                         (INSERT per page + source + run_id; an existing
+ *     doc is never overwritten or deleted — a re-run adds its own, the reader picks by data_hash)
  *   page_revisions   one row per written page: field 'translation.text', source
  *     'notes-layer-backfill-5942', the previous text/text_from (null on a first write) — what
  *     undo.mjs reads. field is NOT 'translation', so revision history, edition-reader and the
@@ -23,26 +24,36 @@
  * parsed from. A page whose data changed between read and write (the correction lane, #7499
  * benchmarks) matches nothing and is skipped; its revision row is marked aborted: 'conflict'.
  *
- * INTERLOCK: scripts/audit/entities-sweep-active.mjs before the run and every --check-every pages.
- * Only exit 0 with its "Quiet" line counts as clear; anything else waits (60 s) and gives up after
- * 30 min.
+ * INTERLOCK: scripts/audit/entities-sweep-active.mjs before the first batch that will write, then
+ * again once --check-every pages have been written to. A stretch of pages already done reads and
+ * skips without asking (or throttling). Only exit 0 with its "Quiet" line counts as clear; anything
+ * else waits (60 s) and gives up after 30 min, exiting 75 (EX_TEMPFAIL). Exit 0 means the scan ended.
+ *
+ * RESUME (--full): the scan walks pages in `id` order and, after every batch, writes a checkpoint
+ * file with the last id it fully processed. --resume reads it back (a missing file starts at the
+ * beginning); --resume-from <page id> starts after that id. The id-ordered walk re-queries in pages
+ * (`id > last`), so a long interlock wait cannot lose a cursor.
  *
  * USAGE (dry run unless --apply):
  *   node --env-file=.env.production.local scripts/maintenance/notes-layer-backfill-5942/backfill.mjs \
  *     --pilot 1000 [--seed 5942] [--apply] [--out $JOB_SCRATCH/pilot.jsonl]
  *   --ids-file <file>      these page ids (whitespace-separated), e.g. to re-apply after an undo test
- *   --full                 every translated page (waits for Derek's go on #5942; not run yet)
- *   --batch 50 --throttle-ms 300 --check-every 500
+ *   --full                 every translated page (pass --go-5942: Derek's go on #5942)
+ *   --resume               --full: start after the id in the checkpoint file
+ *   --resume-from <id>     --full: start after this page id
+ *   --checkpoint <file>    default $JOB_SCRATCH/<run-id>.checkpoint.json (none without JOB_SCRATCH)
+ *   --batch 50 --throttle-ms 300 --check-every 500 --interlock-tries 30 --interlock-wait-ms 60000
  *   --run-id <id>          default notes-layer-backfill-5942-<UTC timestamp>
  * Undo: undo.mjs --run-id <id> [--apply]
  */
 import { MongoClient, BSON } from 'mongodb';
 import { spawnSync } from 'node:child_process';
-import { createWriteStream, readFileSync } from 'node:fs';
+import { createWriteStream, readFileSync, writeFileSync, renameSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomBytes } from 'node:crypto';
 import { splitAnnotations, renderInline, renderMarkup } from '../../lib/annotation-layer.mjs';
-import { translationLayers, translationTextIsCurrent, annotationsDoc, parserAnnotation, ANNOTATIONS_COLLECTION, PARSER_VERSION } from '../../lib/translation-text.mjs';
+import { translationLayers, translationTextIsCurrent, annotationsDoc, annotationsInsertOp, parserAnnotation, ANNOTATIONS_COLLECTION, PARSER_VERSION } from '../../lib/translation-text.mjs';
 
 export const SOURCE = 'notes-layer-backfill-5942';
 const args = process.argv.slice(2);
@@ -57,6 +68,12 @@ const CHECK_EVERY = Number(arg('--check-every', 500));
 const RUN_ID = arg('--run-id', `${SOURCE}-${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}`);
 const OUT = arg('--out', null);
 const IDS_FILE = arg('--ids-file', null);
+const INTERLOCK_TRIES = Number(arg('--interlock-tries', 30));
+const INTERLOCK_WAIT_MS = Number(arg('--interlock-wait-ms', 60000));
+const RESUME = args.includes('--resume');
+const RESUME_FROM = arg('--resume-from', null);
+const CHECKPOINT = arg('--checkpoint', process.env.JOB_SCRATCH ? join(process.env.JOB_SCRATCH, `${RUN_ID}.checkpoint.json`) : null);
+export const EXIT_INTERLOCK = 75; // EX_TEMPFAIL: stopped, not finished — a wrapper should retry
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function mulberry32(a) {
@@ -69,10 +86,10 @@ function interlockClear() {
   return r.status === 0 && /Quiet/.test(r.stdout || '');
 }
 async function waitForInterlock() {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < INTERLOCK_TRIES; i++) {
     if (interlockClear()) return true;
-    console.log(`[interlock] entities writer active or unknown — waiting 60s (${i + 1}/30)`);
-    await sleep(60000);
+    console.log(`[interlock] entities writer active or unknown — waiting ${INTERLOCK_WAIT_MS / 1000}s (${i + 1}/${INTERLOCK_TRIES})`);
+    if (i + 1 < INTERLOCK_TRIES) await sleep(INTERLOCK_WAIT_MS);
   }
   return false;
 }
@@ -115,29 +132,52 @@ async function drawPilot(db, n) {
   return picked;
 }
 
-async function* fullIds(db) {
-  const cur = db.collection('pages').find({ 'translation.data': { $type: 'string', $gt: '' } }, { projection: { _id: 0, id: 1 }, batchSize: 2000 });
-  let ids = [];
-  for await (const p of cur) { ids.push(p.id); if (ids.length >= BATCH) { yield ids; ids = []; } }
-  if (ids.length) yield ids;
+/** Every translated page id after `from`, in `id` order, `batch` at a time. Each chunk is its own query. */
+export async function* fullIds(db, { from = null, batch = BATCH, chunk = 2000 } = {}) {
+  let last = from;
+  for (;;) {
+    const q = { 'translation.data': { $type: 'string', $gt: '' }, ...(last != null ? { id: { $gt: last } } : { id: { $type: 'string' } }) };
+    const rows = await db.collection('pages').find(q, { projection: { _id: 0, id: 1 } }).sort({ id: 1 }).limit(chunk).toArray();
+    for (let i = 0; i < rows.length; i += batch) yield rows.slice(i, i + batch).map((p) => p.id);
+    if (rows.length < chunk) return;
+    last = rows[rows.length - 1].id;
+  }
+}
+
+export function readCheckpoint(file) {
+  if (!file || !existsSync(file)) return null;
+  return JSON.parse(readFileSync(file, 'utf8'));
+}
+export function writeCheckpoint(file, cp) {
+  if (!file) return;
+  writeFileSync(`${file}.tmp`, JSON.stringify(cp) + '\n');
+  renameSync(`${file}.tmp`, file);
 }
 
 export function newTotals() {
   return { seen: 0, written: 0, conflict: 0, already: 0, no_data: 0, round_trip: 0, store_matches_parser: 0, term_lifted_pages: 0, orphans: 0, malformed_unclosed: 0, malformed_stray: 0, malformed_pages: 0, text_bytes: 0, ann_bytes: 0, ann_docs: 0 };
 }
 
-/** One batch of page ids. `opts.beforeWrite(page)` is a test seam: it runs between the read and the write. */
-export async function processBatch(db, ids, totals, out, { apply = APPLY, runId = RUN_ID, beforeWrite } = {}) {
-  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, book_id: 1, 'translation.data': 1, 'translation.text': 1, 'translation.text_from': 1, 'translation.prompt_version': 1 } }).toArray();
+export function loadPages(db, ids) {
+  return db.collection('pages').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, book_id: 1, 'translation.data': 1, 'translation.text': 1, 'translation.text_from': 1, 'translation.prompt_version': 1, 'ocr.data': 1 } }).toArray();
+}
+const hasData = (t) => !!t && typeof t.data === 'string' && !!t.data;
+const isDone = (t) => translationTextIsCurrent(t) && t.text_from?.parser_version === PARSER_VERSION;
+/** Would processBatch write this page? (data present and not already current) */
+export const needsWrite = (page) => hasData(page.translation) && !isDone(page.translation);
+
+/** One batch of page ids. `opts.pages` reuses an earlier read; `opts.beforeWrite(page)` is a test seam: it runs between the read and the write. */
+export async function processBatch(db, ids, totals, out, { apply = APPLY, runId = RUN_ID, beforeWrite, pages } = {}) {
+  pages ??= await loadPages(db, ids);
   for (const page of pages) {
     const t = page.translation;
-    if (!t || typeof t.data !== 'string' || !t.data) { totals.no_data++; continue; }
-    if (translationTextIsCurrent(t) && t.text_from?.parser_version === PARSER_VERSION) { totals.already++; continue; }
-    const layers = translationLayers(t.data, { promptVersion: t.prompt_version });
+    if (!hasData(t)) { totals.no_data++; continue; }
+    if (isDone(t)) { totals.already++; continue; }
+    const layers = translationLayers(t.data, { promptVersion: t.prompt_version, ocr: page.ocr?.data ?? null });
     const m = measure(t.data, layers);
     const textBytes = BSON.calculateObjectSize({ text: layers.text, text_from: layers.text_from });
-    const doc = annotationsDoc({ page_id: page.id, book_id: page.book_id, layers });
-    const annBytes = doc ? BSON.calculateObjectSize({ ...doc, run_id: runId }) : 0;
+    const doc = annotationsDoc({ page_id: page.id, book_id: page.book_id, layers, run_id: runId });
+    const annBytes = doc ? BSON.calculateObjectSize(doc) : 0;
     const rec = { page_id: page.id, book_id: page.book_id, data_chars: t.data.length, text_chars: layers.text.length, text_bytes: textBytes, ann_bytes: annBytes, ...m };
     totals.seen++;
     for (const k of ['round_trip', 'store_matches_parser']) if (m[k]) totals[k]++;
@@ -167,7 +207,7 @@ export async function processBatch(db, ids, totals, out, { apply = APPLY, runId 
       await db.collection('page_revisions').updateOne({ id: revId }, { $set: { aborted: 'conflict', aborted_at: new Date() } });
       rec.written = 'conflict';
     } else {
-      if (doc) await db.collection(ANNOTATIONS_COLLECTION).replaceOne({ page_id: doc.page_id, source: doc.source }, { ...doc, run_id: runId }, { upsert: true });
+      if (doc) await db.collection(ANNOTATIONS_COLLECTION).bulkWrite([annotationsInsertOp(doc)]);
       totals.written++;
       rec.written = true;
     }
@@ -175,38 +215,68 @@ export async function processBatch(db, ids, totals, out, { apply = APPLY, runId 
   }
 }
 
+/**
+ * Walk `batches`. Before a batch with a page to write, ask `interlock()` — the first time, then again
+ * after `checkEvery` pages to write; a batch with nothing to write neither asks nor throttles.
+ * `onBatch(lastId, done)` runs after every batch that finished (the checkpoint hook).
+ * Returns { stopped: 'interlock' | null, done, lastId }.
+ */
+export async function runScan(db, batches, totals, out, { apply = APPLY, runId = RUN_ID, checkEvery = CHECK_EVERY, throttleMs = THROTTLE, interlock = waitForInterlock, onBatch, onFirstWrite, log = () => {} } = {}) {
+  let done = 0, pending = Infinity, lastId = null, checked = false;
+  for await (const ids of batches) {
+    const pages = await loadPages(db, ids);
+    const toWrite = pages.filter(needsWrite).length;
+    if (apply && toWrite && pending >= checkEvery) {
+      if (!(await interlock())) return { stopped: 'interlock', done, lastId };
+      pending = 0;
+      if (!checked) { checked = true; await onFirstWrite?.(); }
+    }
+    await processBatch(db, ids, totals, out, { apply, runId, pages });
+    done += ids.length; pending += toWrite;
+    lastId = ids[ids.length - 1];
+    await onBatch?.(lastId, done);
+    if (done % 500 < ids.length) log(done);
+    if (toWrite && throttleMs) await sleep(throttleMs);
+  }
+  return { stopped: null, done, lastId };
+}
+
 async function main() {
   if (!PILOT && !FULL && !IDS_FILE) { console.error('Pass --pilot <n>, --ids-file <file> or --full.'); process.exit(2); }
   if (FULL && !args.includes('--go-5942')) { console.error('--full waits for Derek\'s go on #5942: pass --go-5942 once it is given.'); process.exit(2); }
+  if ((RESUME || RESUME_FROM) && !FULL) { console.error('--resume / --resume-from apply to --full only.'); process.exit(2); }
+  if (RESUME && !CHECKPOINT) { console.error('--resume needs a checkpoint file: --checkpoint <file>, or set JOB_SCRATCH.'); process.exit(2); }
+  let from = RESUME_FROM;
+  if (RESUME && !from) {
+    const cp = readCheckpoint(CHECKPOINT);
+    from = cp?.last_id ?? null;
+    console.log(cp ? `[resume] ${CHECKPOINT}: after ${from} (${cp.done} pages in its attempt, ${cp.at})` : `[resume] no checkpoint at ${CHECKPOINT} — starting at the beginning`);
+  }
   const client = new MongoClient(process.env.MONGODB_URI, { appName: SOURCE, maxPoolSize: 4 });
   await client.connect();
   const db = client.db('bookstore');
-  console.log(`[${SOURCE}] run ${RUN_ID} · ${APPLY ? 'APPLY' : 'dry run'} · ${PILOT ? `pilot ${PILOT}` : 'full'} · batch ${BATCH} · throttle ${THROTTLE}ms`);
-  if (APPLY) {
-    if (!(await waitForInterlock())) { console.error('entities interlock never cleared — stopping.'); process.exit(3); }
-    await db.collection(ANNOTATIONS_COLLECTION).createIndex({ page_id: 1, source: 1 }, { name: 'page_annotations_page_source_uniq', unique: true });
-    await db.collection(ANNOTATIONS_COLLECTION).createIndex({ book_id: 1 }, { name: 'page_annotations_book_idx' });
-  }
-  const out = OUT ? createWriteStream(OUT) : null;
+  console.log(`[${SOURCE}] run ${RUN_ID} · ${APPLY ? 'APPLY' : 'dry run'} · ${PILOT ? `pilot ${PILOT}` : 'full'} · batch ${BATCH} · throttle ${THROTTLE}ms${FULL ? ` · from ${from ?? 'start'} · checkpoint ${CHECKPOINT ?? 'none'}` : ''}`);
+  const out = OUT ? createWriteStream(OUT, { flags: RESUME || RESUME_FROM ? 'a' : 'w' }) : null;
   const totals = newTotals();
   const started = Date.now();
-  let done = 0, sinceCheck = 0;
   const chunks = function* (ids) { for (let i = 0; i < ids.length; i += BATCH) yield ids.slice(i, i + BATCH); };
-  const batches = IDS_FILE ? chunks(readFileSync(IDS_FILE, 'utf8').split(/\s+/).filter(Boolean)) : PILOT ? chunks(await drawPilot(db, PILOT)) : fullIds(db);
-  for await (const ids of batches) {
-    if (APPLY && sinceCheck >= CHECK_EVERY) {
-      sinceCheck = 0;
-      if (!(await waitForInterlock())) { console.error('entities interlock never cleared — stopping mid-run; re-run resumes (written pages are skipped).'); break; }
-    }
-    await processBatch(db, ids, totals, out);
-    done += ids.length; sinceCheck += ids.length;
-    if (done % 500 < BATCH) console.log(`  ${done} pages · ${totals.written} written · ${totals.conflict} conflicts · ${((Date.now() - started) / 1000).toFixed(0)}s`);
-    if (THROTTLE) await sleep(THROTTLE);
-  }
-  out?.end();
+  const batches = IDS_FILE ? chunks(readFileSync(IDS_FILE, 'utf8').split(/\s+/).filter(Boolean)) : PILOT ? chunks(await drawPilot(db, PILOT)) : fullIds(db, { from });
+  const r = await runScan(db, batches, totals, out, {
+    onFirstWrite: async () => {
+      await db.collection(ANNOTATIONS_COLLECTION).createIndex({ page_id: 1, source: 1, run_id: 1, data_hash: 1 }, { name: 'page_annotations_key_uniq', unique: true });
+      await db.collection(ANNOTATIONS_COLLECTION).createIndex({ book_id: 1 }, { name: 'page_annotations_book_idx' });
+    },
+    onBatch: FULL ? (lastId, done) => writeCheckpoint(CHECKPOINT, { run_id: RUN_ID, last_id: lastId, done, at: new Date().toISOString() }) : undefined,
+    log: (done) => console.log(`  ${done} pages · ${totals.written} written · ${totals.already} already · ${totals.conflict} conflicts · ${((Date.now() - started) / 1000).toFixed(0)}s`),
+  });
+  await new Promise((res) => (out ? out.end(res) : res()));
   const secs = (Date.now() - started) / 1000;
-  console.log(JSON.stringify({ run_id: RUN_ID, apply: APPLY, seconds: Math.round(secs), ...totals }, null, 1));
+  console.log(JSON.stringify({ run_id: RUN_ID, apply: APPLY, seconds: Math.round(secs), last_id: r.lastId, stopped: r.stopped, ...totals }, null, 1));
   await client.close();
+  if (r.stopped) {
+    console.error(`entities interlock never cleared — stopped after ${r.lastId ?? '(nothing)'}; exit ${EXIT_INTERLOCK}. Re-run with --resume${CHECKPOINT ? ` (checkpoint ${CHECKPOINT})` : ''}.`);
+    process.exit(EXIT_INTERLOCK);
+  }
 }
 
 const isMain = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;

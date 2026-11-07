@@ -1,0 +1,396 @@
+{
+ "drawn_at": "2026-11-05T22:14:14.309Z",
+ "pool_n": 200,
+ "panel": [
+  {
+   "id": "topic-0",
+   "stratum": "topic",
+   "q": "What did Paracelsus actually say about the three principles?"
+  },
+  {
+   "id": "topic-1",
+   "stratum": "topic",
+   "q": "Find me a quote from Ficino on the immortality of the soul."
+  },
+  {
+   "id": "topic-2",
+   "stratum": "topic",
+   "q": "How did medieval Arabic alchemists describe the philosopher's stone?"
+  },
+  {
+   "id": "topic-3",
+   "stratum": "topic",
+   "q": "What does the Corpus Hermeticum say about the creation of the world?"
+  },
+  {
+   "id": "topic-4",
+   "stratum": "topic",
+   "q": "I'm writing an essay on Renaissance memory palaces. What did Giordano Bruno write about them?"
+  },
+  {
+   "id": "topic-5",
+   "stratum": "topic",
+   "q": "Show me an old illustration of an alembic."
+  },
+  {
+   "id": "topic-6",
+   "stratum": "topic",
+   "q": "How did early modern physicians explain melancholy?"
+  },
+  {
+   "id": "topic-7",
+   "stratum": "topic",
+   "q": "What did John Dee claim the Monas Hieroglyphica meant?"
+  },
+  {
+   "id": "topic-8",
+   "stratum": "topic",
+   "q": "Did Newton write about alchemy, and what did he say?"
+  },
+  {
+   "id": "topic-9",
+   "stratum": "topic",
+   "q": "What did Cornelius Agrippa argue about the dignity of women?"
+  },
+  {
+   "id": "topic-10",
+   "stratum": "topic",
+   "q": "How did 16th-century writers describe the New World's plants?"
+  },
+  {
+   "id": "topic-11",
+   "stratum": "topic",
+   "q": "What is the earliest description of a printing press I can read?"
+  },
+  {
+   "id": "topic-12",
+   "stratum": "topic",
+   "q": "What did Boehme mean by the Ungrund?"
+  },
+  {
+   "id": "topic-13",
+   "stratum": "topic",
+   "q": "Can you give me a citation for Pico della Mirandola on human freedom?"
+  },
+  {
+   "id": "topic-14",
+   "stratum": "topic",
+   "q": "How did Kabbalists explain the sefirot in the Zohar?"
+  },
+  {
+   "id": "topic-15",
+   "stratum": "topic",
+   "q": "What did Roger Bacon write about optics?"
+  },
+  {
+   "id": "topic-16",
+   "stratum": "topic",
+   "q": "I need primary sources on witch trials in 17th-century Germany."
+  },
+  {
+   "id": "topic-17",
+   "stratum": "topic",
+   "q": "What did Rosicrucian manifestos actually promise?"
+  },
+  {
+   "id": "topic-18",
+   "stratum": "topic",
+   "q": "How did Kepler describe the harmony of the world?"
+  },
+  {
+   "id": "topic-19",
+   "stratum": "topic",
+   "q": "What did Galen say about the four humours, in his own words?"
+  },
+  {
+   "id": "topic-20",
+   "stratum": "topic",
+   "q": "Find an old engraving of the zodiac man."
+  },
+  {
+   "id": "topic-21",
+   "stratum": "topic",
+   "q": "How did Renaissance writers think about friendship?"
+  },
+  {
+   "id": "topic-22",
+   "stratum": "topic",
+   "q": "What did Erasmus write about war?"
+  },
+  {
+   "id": "topic-23",
+   "stratum": "topic",
+   "q": "What was believed about comets before Halley?"
+  },
+  {
+   "id": "topic-24",
+   "stratum": "topic",
+   "q": "How did Sufi writers describe divine love before 1500?"
+  },
+  {
+   "id": "topic-25",
+   "stratum": "topic",
+   "q": "What did Vesalius say about Galen's mistakes?"
+  },
+  {
+   "id": "topic-26",
+   "stratum": "topic",
+   "q": "Why did people in the 1600s think tulips were valuable? Anything from the period?"
+  },
+  {
+   "id": "topic-27",
+   "stratum": "topic",
+   "q": "What did Hildegard of Bingen write about plants and healing?"
+  },
+  {
+   "id": "topic-28",
+   "stratum": "topic",
+   "q": "How did Tibetan Buddhist texts describe the stages of meditation?"
+  },
+  {
+   "id": "topic-29",
+   "stratum": "topic",
+   "q": "Help me teach my class what Machiavelli's contemporaries thought of him."
+  },
+  {
+   "id": "work-0",
+   "stratum": "work",
+   "book_id": "6991dc5a79a19ded6bdb452b",
+   "book_slug_hint": "Essay on the Nature of Trade in General",
+   "q": "Is there an English translation of \"Essai sur la Nature du Commerce en Général\" by Richard Cantillon, and where can I read it online?"
+  },
+  {
+   "id": "work-1",
+   "stratum": "work",
+   "book_id": "69af11e4a93b848eee663ebe",
+   "book_slug_hint": "Collected Letters of A.P. Chekhov, Vol. 1",
+   "q": "Is there an English translation of \"Собрание писем А.П. Чехова. Том 1\" by Антон Павлович Чехов, and where can I read it online?"
+  },
+  {
+   "id": "work-2",
+   "stratum": "work",
+   "book_id": "69af1113c59ddc7f44a85649",
+   "book_slug_hint": "History of Animals, Book I: On Viviparous Quadrupeds",
+   "q": "Is there an English translation of \"Historiae Animalium Liber I: De Quadrupedibus Viviparis\" by Conrad Gessner, and where can I read it online?"
+  },
+  {
+   "id": "work-3",
+   "stratum": "work",
+   "book_id": "6990615eef12272ffdc8d5d0",
+   "book_slug_hint": "Treasury of Exorcisms and Terrible Conjurations (Part 2)",
+   "q": "Is there an English translation of \"Thesaurus Exorcismorum Atque Conjurationum Terribilium (Part 2)\" by Menghi; Visconti; Polidoro et al., and where can I read it online?"
+  },
+  {
+   "id": "work-4",
+   "stratum": "work",
+   "book_id": "69b5259b95677df8153c64b6",
+   "book_slug_hint": "\n              De groote lichtende ofte vyerighe colom over de zee custen van 't Wester, Ooster, en Noorder vaer-water.\n...\n        ",
+   "q": "Is there an English translation of \"De groote lichtende ofte vyerighe colom over de zee custen van 't Wester, Ooster, en Noorder vaer-water.\" by Colom, J.A, and where can I read it online?"
+  },
+  {
+   "id": "work-5",
+   "stratum": "work",
+   "book_id": "6a08534849638a50931bc770",
+   "book_slug_hint": "Human Occurrences, Composed by Niccolò Liburnio",
+   "q": "Is there an English translation of \"Le occorrenze humane per Nicolo Liburnio composte.\" by Niccolò Liburnio, and where can I read it online?"
+  },
+  {
+   "id": "work-6",
+   "stratum": "work",
+   "book_id": "6acc3dfa230e9a56175cdd32",
+   "book_slug_hint": "Dictionary of the Maya Language",
+   "q": "Is there an English translation of \"Diccionario de la lengua maya\" by Juan Pío Pérez, and where can I read it online?"
+  },
+  {
+   "id": "work-7",
+   "stratum": "work",
+   "book_id": "69b51e09261c58d63664e470",
+   "book_slug_hint": "Travel in the Bernese Oberland",
+   "q": "Is there an English translation of \"Reise in das Berner Oberland. 1\" by Wyss, Johann Rudolf, and where can I read it online?"
+  },
+  {
+   "id": "work-8",
+   "stratum": "work",
+   "book_id": "6a08517649638a50931b8ef1",
+   "book_slug_hint": "Vulgar Letters of Various Most Noble Men",
+   "q": "Is there an English translation of \"Lettere volgari di diversi nobilissimi uomini\" by Paolo Manuzio, and where can I read it online?"
+  },
+  {
+   "id": "work-9",
+   "stratum": "work",
+   "book_id": "69937991b0a84a5763965383",
+   "book_slug_hint": "Comedies of Aristophanes",
+   "q": "Is there an English translation of \"Aristophanis Comoediae (Dindorf, Greek-Latin)\" by Aristophanes, and where can I read it online?"
+  },
+  {
+   "id": "work-10",
+   "stratum": "work",
+   "book_id": "6954343f1479a63c11088b5b",
+   "book_slug_hint": "Ethics",
+   "q": "Is there an English translation of \"Ethica (Latin Original)\" by Baruch Spinoza, and where can I read it online?"
+  },
+  {
+   "id": "work-11",
+   "stratum": "work",
+   "book_id": "69b51eafcf111105c42a2eb9",
+   "book_slug_hint": "Julie",
+   "q": "Is there an English translation of \"Julie : Comédie En Trois Actes, Mêlée D'Ariettes\" by Dezède, Nicolas, 1745-1792; Boutet de Monvel, Jacques-Marie, and where can I read it online?"
+  },
+  {
+   "id": "work-12",
+   "stratum": "work",
+   "book_id": "6991e967e00017f4a9764e1a",
+   "book_slug_hint": "Codex on the Flight of Birds",
+   "q": "Is there an English translation of \"Il codice sul volo degli uccelli (Codex on the Flight of Birds)\" by Leonardo da Vinci, and where can I read it online?"
+  },
+  {
+   "id": "work-13",
+   "stratum": "work",
+   "book_id": "6a06d3c79a48d513999639e3",
+   "book_slug_hint": "Eight Books of Grammatical Questions Collected from the Most Approved Authors by Nicodemus Frischlin",
+   "q": "Is there an English translation of \"Quaestionum grammaticarum libri 8. ex probatissimis auctoribus collecti a Nicodemo. Frischlino ...\" by Nicodemus Frischlinus, and where can I read it online?"
+  },
+  {
+   "id": "work-14",
+   "stratum": "work",
+   "book_id": "697c8e0f14b7d066516d71b9",
+   "book_slug_hint": "The Blazing Star",
+   "q": "Is there an English translation of \"Der flammende Stern\" by [Tschoudy, Théodore-Henri de], and where can I read it online?"
+  },
+  {
+   "id": "work-15",
+   "stratum": "work",
+   "book_id": "69dbca701040d1d5e20ac423",
+   "book_slug_hint": "Etymologies",
+   "q": "Is there an English translation of \"Etymologiae. Add: De summo bono\" by Isidorus Hispalensis, and where can I read it online?"
+  },
+  {
+   "id": "work-16",
+   "stratum": "work",
+   "book_id": "6909bd18cf28baa1b4caf5a5",
+   "book_slug_hint": "The Universal Wisdom of Raymond Lull",
+   "q": "Is there an English translation of \"La sabiduria universal del Raymundo Lullio\" by Fullana, Bartolomeus Antonius, and where can I read it online?"
+  },
+  {
+   "id": "work-17",
+   "stratum": "work",
+   "book_id": "69e63c211bb6e8b1496accf9",
+   "book_slug_hint": "The Epic of Gilgamish: Text, Transliteration, and Notes",
+   "q": "Is there an English translation of \"The Epic of Gilgamish: Text, Transliteration, and Notes\" by R. Campbell Thompson, and where can I read it online?"
+  },
+  {
+   "id": "work-18",
+   "stratum": "work",
+   "book_id": "6992ce6b77d26f9321776c7e",
+   "book_slug_hint": "Wubei Zhi (Vol. 60)",
+   "q": "Is there an English translation of \"武備志(六十)\" by 茅元儀, and where can I read it online?"
+  },
+  {
+   "id": "work-19",
+   "stratum": "work",
+   "book_id": "6a4273a528e9db2e39c16532",
+   "book_slug_hint": "Defense of Averroes on Mixture",
+   "q": "Is there an English translation of \"Averroys de mixtione defensio\" by Nifo, Agostino, and where can I read it online?"
+  },
+  {
+   "id": "modern-0",
+   "stratum": "modern",
+   "q": "What's the capital of Australia?"
+  },
+  {
+   "id": "modern-1",
+   "stratum": "modern",
+   "q": "Write a Python function that reverses a linked list."
+  },
+  {
+   "id": "modern-2",
+   "stratum": "modern",
+   "q": "What are the side effects of ibuprofen?"
+  },
+  {
+   "id": "modern-3",
+   "stratum": "modern",
+   "q": "Summarise the main causes of the 2008 financial crisis."
+  },
+  {
+   "id": "modern-4",
+   "stratum": "modern",
+   "q": "How do I make sourdough starter?"
+  },
+  {
+   "id": "modern-5",
+   "stratum": "modern",
+   "q": "What is the difference between TCP and UDP?"
+  },
+  {
+   "id": "modern-6",
+   "stratum": "modern",
+   "q": "Who won the 2018 FIFA World Cup?"
+  },
+  {
+   "id": "modern-7",
+   "stratum": "modern",
+   "q": "Draft a polite email declining a meeting."
+  },
+  {
+   "id": "modern-8",
+   "stratum": "modern",
+   "q": "How does an mRNA vaccine work?"
+  },
+  {
+   "id": "modern-9",
+   "stratum": "modern",
+   "q": "Explain quantum entanglement simply."
+  },
+  {
+   "id": "pointed-0",
+   "stratum": "pointed",
+   "q": "What did Paracelsus actually say about the three principles? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-1",
+   "stratum": "pointed",
+   "q": "What does the Corpus Hermeticum say about the creation of the world? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-2",
+   "stratum": "pointed",
+   "q": "How did early modern physicians explain melancholy? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-3",
+   "stratum": "pointed",
+   "q": "What did Cornelius Agrippa argue about the dignity of women? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-4",
+   "stratum": "pointed",
+   "q": "What did Boehme mean by the Ungrund? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-5",
+   "stratum": "pointed",
+   "q": "What did Roger Bacon write about optics? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-6",
+   "stratum": "pointed",
+   "q": "How did Kepler describe the harmony of the world? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-7",
+   "stratum": "pointed",
+   "q": "How did Renaissance writers think about friendship? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-8",
+   "stratum": "pointed",
+   "q": "How did Sufi writers describe divine love before 1500? Use sourcelibrary.org to find it."
+  },
+  {
+   "id": "pointed-9",
+   "stratum": "pointed",
+   "q": "What did Hildegard of Bingen write about plants and healing? Use sourcelibrary.org to find it."
+  }
+ ]
+}

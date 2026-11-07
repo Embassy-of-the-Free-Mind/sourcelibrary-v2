@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { applyBphFilters, readBphFilters } from '@/lib/bph-catalog-filters';
+import { applyBphFilters, bphBestMatchTiers, readBphFilters } from '@/lib/bph-catalog-filters';
 
 /**
  * GET /api/catalog/bph/export — the current catalogue search, as a spreadsheet.
@@ -227,26 +227,29 @@ export async function GET(req: NextRequest) {
   const rows: Array<Record<string, unknown>> = [];
   let truncated = false;
 
-  for (let offset = 0; offset < MAX_ROWS; offset += PAGE) {
-    let query = supabase.from('bph_works').select(EXPORT_COLUMNS.map((c) => c.key).join(', '));
-    query = applyBphFilters(query, filters, {
-      mode: 'new',
-      hasNormalizedColumns: true,
-      hasFirstTranslationColumn: true,
-    });
-    const { data, error } = await query.range(offset, offset + PAGE - 1);
-    if (error) {
-      console.error('[catalog/bph/export] query failed:', error);
-      return NextResponse.json({ error: 'Export failed. Please try again' }, { status: 500 });
+  const caps = { mode: 'new', hasNormalizedColumns: true, hasFirstTranslationColumn: true } as const;
+  // Best match exports in the order the screen shows, one tier after another.
+  // Any other sort is one pass.
+  const passes: string[][] = bphBestMatchTiers(filters, caps) ?? [[]];
+
+  passes: for (const orFilters of passes) {
+    for (let offset = 0; rows.length < MAX_ROWS; offset += PAGE) {
+      const base = supabase.from('bph_works').select(EXPORT_COLUMNS.map((c) => c.key).join(', '));
+      let query = applyBphFilters(base, filters, caps);
+      for (const filter of orFilters) query = query.or(filter);
+      const { data, error } = await query.range(offset, offset + PAGE - 1);
+      if (error) {
+        console.error('[catalog/bph/export] query failed:', error);
+        return NextResponse.json({ error: 'Export failed. Please try again' }, { status: 500 });
+      }
+      const page = (data ?? []) as unknown as Array<Record<string, unknown>>;
+      rows.push(...page);
+      if (page.length < PAGE) continue passes;
     }
-    const page = (data ?? []) as unknown as Array<Record<string, unknown>>;
-    rows.push(...page);
-    if (page.length < PAGE) break;
-    if (rows.length >= MAX_ROWS) {
-      truncated = true;
-      break;
-    }
+    truncated = true;
+    break;
   }
+  if (rows.length > MAX_ROWS) rows.length = MAX_ROWS;
 
   // Never let a cap pass for a complete answer.
   const notes = truncated

@@ -1,0 +1,546 @@
+[
+  {
+    "book_id": "6a4b7062998fdd30218fa2cf",
+    "slot": 103,
+    "title": "Goclenius, Rudolph: Positiones de circulis coelestibus",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection set; a Marburg disputation on the celestial circles (sphere doctrine) sits naturally with early modern science.",
+    "rights_flag": null,
+    "structure_note": "20 pages, all OCR'd, 13 translated. Signatures A 2 (p7) and B (p13) run in order; nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Totus orbis caelestis",
+            "english": "The entire celestial sphere",
+            "problem": "orbis rendered 'sphere'; acceptable but loose",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR image description of the woodcut initial is carried into the translation as a <meta> line ('Decorative woodcut initial letter 'T'…')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "interfecantes",
+            "image": "intersecantes",
+            "problem": "long s read as f (also 'interfecat' for 'intersecat' in §38); translation still right",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "omnes stellas subjectas habet",
+            "english": "stars subject to it",
+            "problem": "'omnes' (all) dropped in the opening fragment",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ΕΠΕΙΣΑΓΜΑΤΑ CORONIDIS vice attexta.",
+            "english": "ADDENDA TO THE CORONIS ->twice attached.<-",
+            "problem": "'vice' (in place of) read as 'twice'; the heading means 'additions attached in place of a coronis (closing flourish)'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "alter verò è regione Antarcticus",
+            "english": "the other truly from the region [called] Antarctic",
+            "problem": "'e regione' means 'opposite' (anti-arctic), not 'from the region'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Trinuni Deo gloria, an verò, trinuno Deo gloria",
+            "english": "\"Glory to the Trinune God\" … or rather, \"Glory to the Trinune God\"",
+            "problem": "the two forms being debated are rendered identically; only the notes keep the distinction",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "centring arrows '->twice attached.<-' kept in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean, accurate transcription of a short disputation; translation is faithful in the astronomy and slips only on two idioms ('vice', 'e regione') on the appendix page."
+  },
+  {
+    "book_id": "6a4e381c806e65f390cf11aa",
+    "slot": 49,
+    "title": "Gameren, Hannard van: Carmina Congratulatoria (Ingolstadt doctorate of Adam Myricianus)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition or collection set; congratulatory Latin verse for a medical doctorate (1565) is ordinary early modern academic print.",
+    "rights_flag": null,
+    "structure_note": "16 pages, all OCR'd, 14 translated. Signatures A 3 (p5), B (p9), B iij (p13) run in order.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<script>handwritten</script> … <warning>Handwritten [Italian humanist hand]</warning>",
+            "image": "printed italic type",
+            "problem": "page self-tagged as handwritten; it is print",
+            "severity": "moderate",
+            "class": "O16"
+          },
+          {
+            "ocr": "Deferuit patriæ natalia mænia terræ",
+            "image": "Deseruit patriæ natalia mænia terræ",
+            "problem": "long s read as f (deferuit 'boiled down' for deseruit 'abandoned'); translation follows the right sense",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Hic igitur primum de Bacca nomine lauri … Ritè creabatur dicebaturque Magister",
+            "english": "Here, therefore, first, from the berry of the laurel He was duly created and called Master",
+            "problem": "the 'Bacca lauri' = baccalaureus pun (first the bachelor's title, then Magister) is lost; reads as if he went straight to Master",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Attamen affectæ patriæ superauit amorem",
+            "english": "he overcame the love of his affected fatherland",
+            "problem": "'affectae' rendered literally and obscurely",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Pæonij proceres",
+            "english": "The Paeonian nobles",
+            "problem": "'leaders of the Paeonian (medical) art', i.e. physicians; 'nobles' obscures it",
+            "severity": "minor"
+          },
+          {
+            "source": "immensi rex, ac pater aetheris idem",
+            "english": "the king of the immense, and the father of the ether",
+            "problem": "'immensi … aetheris' belong together (king and father of the boundless ether)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "ne-\n( gari",
+            "image": "turned-over line end '( gari'",
+            "problem": "typographic turnover kept as written; harmless",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "woodcut-initial description shown as <meta> in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good transcription and a sound, readable verse translation; one moderate loss (the baccalaureate pun) and a wrong 'handwritten' self-tag on a printed page."
+  },
+  {
+    "book_id": "69568909be7c607c5f03c44d",
+    "slot": 54,
+    "title": "Hieronymi Mercurialis De arte gymnastica libri sex (Venice: Giunta, 1587)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Sevilla university library scan; Mercuriale's medical gymnastics is core early modern medicine.",
+    "rights_flag": null,
+    "structure_note": "360 pages, 360 OCR'd, 351 translated. Printed page numbers 69, 159, 248 at image pages 91, 181, 270 — a constant offset of 22, so the sequence is intact.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 91,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ita corrupta, ad adulterata est",
+            "image": "ita corrupta, ac adulterata est",
+            "problem": "ac → ad",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<meta>catchword: Gymnaſtica.</meta>",
+            "image": "footer 'Gymnaſtica.' (direction line), sig 'E iij', catchword 'proij-'",
+            "problem": "running footer labelled as catchword",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ἀγωνιστικὴ δὲ σώματος ἀρετὴ … πένταθλος. i. Agonistica autem corporis uirtus … qui. n. quodammodo crura",
+            "english": "<note>The following is a translation of the Greek quote: \"…\"</note> \"The excellence of the body in competition … For the one who is able to throw his legs Gymnastica. forward...\"",
+            "problem": "the full Aristotle quotation is translated only inside a <note>; the body text gives just the Latin gloss's opening, and the footer word 'Gymnastica.' is spliced into the sentence",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "source": "eos satis atq. gymnasiorum columnis similes effecit",
+            "english": "likened them to the columns of the gymnasium—sturdy but immobile",
+            "problem": "'sturdy but immobile' is added gloss",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "chapter heading rendered as '# ## Concerning Corrupt Gymnastics…' (broken markdown)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 181,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Astrandum consuluisse, ad credendū adducor",
+            "english": "I am led to believe that **Astrandum** <note>This likely refers to a specific authority or a mis-transcription of \"Adstruere\"…</note> advised",
+            "problem": "a word fragment carried over from the previous page is turned into a person who 'advised', with a speculative note",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "<header>TERTIVS</header> (running head)",
+            "english": "# BOOK THREE",
+            "problem": "a running head promoted to an H1 heading mid-chapter",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 270,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ὑδροπικώδεα δέον ταλαιπωρέειν, id est,",
+            "image": "ὑδρωπιώδεα δέον ταλαιπωρέειν, ἱδροῦν.",
+            "problem": "the Greek 'ἱδροῦν' (to sweat) read as Latin 'id est'; the Hippocratic advice loses 'and sweat'",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<margin>2. d tu. val. cap. vlt.</margin>",
+            "english": "<margin>2. Valerius Maximus, last chapter.</margin>",
+            "problem": "Galen's De tuenda valetudine book 2 turned into an invented Valerius Maximus citation",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "<margin>Li. 2. ad Timot.</margin> (Theodorus Priscianus, book 2 to Timotheus)",
+            "english": "<margin>Book 2 to Timothy</margin>",
+            "problem": "reads like the Pauline epistle",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Strong, fluent translation of a dense medical humanist text with accurate transcription; the translation embellishes the apparatus in places (an invented Valerius Maximus citation, a fragment made into a person)."
+  },
+  {
+    "book_id": "6a4a5a3e3f0b4659d1bc10e4",
+    "slot": 72,
+    "title": "Bredelo, Bartholomäus: De Die Oblationis Manipuli Primitialis ac Festo Pentecostes (1673)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition set; a Lutheran disputation on Lev. 23 and the Pentecost reckoning, with rabbinic sources, is ordinary early modern Hebraist theology.",
+    "rights_flag": null,
+    "structure_note": "25 pages, all OCR'd, 16 translated. Signatures A 3 (p9) and B (p13) are in order.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "anno Jubilaeo et intermissionis",
+            "english": "the Year of Jubilee and of rest",
+            "problem": "the sabbatical (remission) year blurred into the Jubilee",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Neque contra Traditionarii pro sua sententia quicquam urgere possunt praeter illud",
+            "english": "Nor can the Traditionalists urge anything against their own opinion beyond that",
+            "problem": "'contra' here means 'on the other side'; the Traditionalists can urge nothing FOR their opinion except this. The English says the opposite",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "intra tres dies hoc est, post tres dies agni praecepit manipulum inferri",
+            "english": "within three days—that is, after three days—the lamb, he commanded the sheaf to be brought in",
+            "problem": "'after the three days of the lamb' garbled into a dangling 'the lamb'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Very good transcription; the translation is mostly faithful but reverses the sense of the key sentence on p13 (the Traditionalists' only argument), which would mislead a reader following the dispute."
+  },
+  {
+    "book_id": "6a4ed795df0b2269c3dbd379",
+    "slot": 102,
+    "title": "Deckers, Jean: Tabula chronographica a capta per Pompeium Ierosolyma usque ad incensam … a Tito … urbem",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "No tradition set; a Jesuit chronological table of Roman and Jewish eras fits early modern chronology and scholarship.",
+    "rights_flag": null,
+    "structure_note": "24 images, each a two-page spread of tables (signatures Bb 3, Dd, Ee 2), all OCR'd and translated. The Bb–Ee signatures suggest this record is a section of a larger volume, not a standalone print. The OCR splits each paired-year cell into extra rows and mixes up several column headers.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "| Literis Iulij Caesaris. | Anni Iuliani cum literis erroneis. | Indictiones cum Daniel. | Anni 70. hebdomadae Augusti à nece Caesaris. | Anni principatus Augusti. | …",
+            "image": "Anni Iuliani cum literis Iulij Caesar. | Indictiones cum literis erroneis. | Anni 70. hebd. Daniel. | Anni principatus Aug. à nece Caes. | Anni aetatis Augusti. | Anni aetatis Herodis. | …",
+            "problem": "right-hand table headers merged and shifted by one column, which produces invented headers ('Indictions with Daniel', '70 weeks of Augustus') and puts every column's numbers under the wrong label",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "ocr": "185 1 | 710 … 186 1 | 714 … 186 1 | 718",
+            "image": "Olympiad 185 begins at 714 and 186 at 718 (the numbers are printed between the year cells)",
+            "problem": "Olympiad numbers for 710–717 are one too high",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "Marcus Aemilius Lepidus. Lucius Munacius Plancus … Gaius Caluinus iterum. Gaius Afinius Pollio.",
+            "image": "M. Æmil. Lepid⁹. L. Munacius Plancus … Caluinus iterum. C. Asinius Pollio.",
+            "problem": "abbreviated names silently expanded, a 'Gaius' added, Asinius misread as Afinius",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Indictiones cum Daniel. | Anni 70. hebdomadae Augusti à nece Caesaris.",
+            "english": "Indictions with Daniel | Years of the 70 weeks of Augustus from the death of Caesar",
+            "problem": "the scrambled headers are translated faithfully, so the reader gets wrong column labels",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "source": "390",
+            "english": "390 <note>error in source; should be 290</note>",
+            "problem": "editorial note added (correct as arithmetic, but apparatus not in the source)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "| >>770 |",
+            "image": "770",
+            "problem": "'>>' markup leaked into the OCR table cells (the translation is clean)",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "ocr": "Pontifices Iudeorum - Iosephus, Caiaphas.",
+            "image": "header 'Pontifices Iudæorum.', plus vertical names 'Iosephus, Caiphas.' inside the column",
+            "problem": "column content merged into the header",
+            "severity": "minor",
+            "class": "O17"
+          },
+          {
+            "ocr": "C. Afinius Pollio.",
+            "image": "C. Asinius Pollio.",
+            "problem": "long s read as f",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "licet pluribus interstinctos lego Pontificibus Annam & Caipham",
+            "english": "although I read that Annas and Caiaphas were distinguished by many more high priests",
+            "problem": "means Annas and Caiaphas were SEPARATED by several (intervening) high priests",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "suo quisque Cyclo tanquam caelesti radio LXXX. indicant annum Dionysianum",
+            "image": "L X X. indicant annum Dionysianum",
+            "problem": "year LXX (AD 70, the fall of Jerusalem: the page's whole point) read as LXXX",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "sub eodem numeri Sacramento Evangelica praedicatio restiterunt",
+            "image": "Euangelicæ prædicationi restiterunt",
+            "problem": "dative 'they resisted the Gospel preaching' turned into a nominative 'the preaching remained'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "ad inscrutabilem iudiciorum Dei quadrantem penetrandam abyssum",
+            "image": "quadantenus penetrandam abyssum",
+            "problem": "'quadantenus' (to some extent) misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "| Anni Diony. cum Dominica | Literis Iulij Caes. | Annis Passione |",
+            "image": "Anni Diony. cum literis Iulij Cæs. | Anni a Passione Dominica.",
+            "problem": "two headers cut and recombined into three",
+            "severity": "moderate",
+            "class": "O17"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "LXXX. indicant annum Dionysianum (image: LXX)",
+            "english": "indicate the 80th Dionysian year",
+            "problem": "wrong year for the destruction of the Temple, carried from the OCR",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "Evangelica praedicatio restiterunt (image: Euangelicae praedicationi restiterunt)",
+            "english": "the Evangelical preaching remained under the same Sacrament of the number",
+            "problem": "sense reversed: the 42 years are those in which the Jews resisted the Gospel preaching",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Vide Annotamentum XX I. Thesium",
+            "english": "See Annotation XX of the <term>Iesu Thesium</term> <gloss>Theses of Jesus</gloss>",
+            "problem": "'XXI' split, and the 'I.' turned into an invented work 'Theses of Jesus'",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Galba 14 / menses … dies …",
+            "english": "months remaining 8 months / 6 days 7 days s.",
+            "problem": "the emperor-reign cells are garbled in both panes",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The tables are mostly right number by number, but the column structure is unreliable (shifted and invented headers on p7). On p18 the key year LXX is misread as LXXX, and the sense of the 42-years passage is reversed. A chronologist would flag this on sight."
+  }
+]

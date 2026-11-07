@@ -29,6 +29,19 @@ export interface PageFinding {
   errors: { stage: FindingStage; class?: string; problem?: string }[];
 }
 
+/** The reader's own words on one page read, clean or not (#7896). Shown only when the row's evidence is public. */
+export interface PageNote {
+  page_number: number;
+  note?: string;
+  /** The judge's 1–5 fidelity, when the method has one. */
+  fidelity?: number;
+  accepted?: boolean;
+  /** recordPageVerdicts() rows (#8069): how the page came out, and the method's own word for it. */
+  outcome?: 'clean' | 'minor' | 'serious';
+  verdict?: string;
+  defects: { severity: 'cosmetic' | 'misleads' | 'wrong_text'; what: string; class?: string; quote?: string }[];
+}
+
 export interface BookCheck {
   book_id: string;
   checked_at: Date;
@@ -44,6 +57,10 @@ export interface BookCheck {
   note?: string;
   /** Absent = the run kept no per-page record; `[]` = every page read was free of serious errors. */
   page_findings?: PageFinding[];
+  /** Every page read, with what the reader wrote about it. Absent on rows written before #7896. */
+  page_notes?: PageNote[];
+  /** false = listed on the checks page, derives no reader warning or "checked" line (#8069). */
+  reader_warning?: false;
   evidence_path: string;
   text_provenance: CheckProvenance[];
   api_usd?: number;

@@ -1,0 +1,190 @@
+[
+  {
+    "book_id": "b10-k", "slot": 1, "title": "Ars artium sive Ars magna cabalistica (PH337)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 50, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<sig>A2</sig>", "image": "catchword \"Aat\" (or \"Ast\") at foot; no signature", "problem": "catchword tagged as an invented signature A2", "severity": "moderate", "class": "O11" },
+          { "ocr": "<script>mixed</script>", "image": "whole page is pen-drawn manuscript", "problem": "self-reported script wrong", "severity": "minor", "class": "O16" },
+          { "ocr": "(labels list)", "image": "\"Exteriores\"/\"exteriores\" on both grids, the P between the grids, and the D C B A / A B C D sector letters of both semicircles", "problem": "several diagram labels omitted", "severity": "minor", "class": "O5" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "<margin> block transcribes the facing leaf's text visible at the right edge (\"gu... 20... lo... a... an... Ar...\") as handwritten marginalia of this page", "severity": "moderate", "class": "I4" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "summam פדק, 175", "image": "summam קעה (=175), 175", "problem": "Hebrew numeral misread; פדק = 184, not 175", "severity": "moderate", "class": "O10" },
+          { "ocr": "si ne=gligatur 22. et initium fias a 2 occurrit tibi in summy 42.", "image": "si negligatur א, et initium fiat a ב occurrit tibi in summa [Hebrew numeral]", "problem": "Hebrew letter-numerals replaced by invented Arabic digits", "severity": "serious", "class": "O10" },
+          { "ocr": "si incipias a 7 halebis summas similes Numen 169; si a 7. post. 11 a 7. 213.", "image": "si incipias a ג habebis summas similes Numeri 189; si a ד. 196. si a ה. 203.", "problem": "the series of sums rising by seven is garbled: 169 for 189, \"post. 11\" for 196, 213 for 203, letters as 7", "severity": "serious", "class": "O7" },
+          { "ocr": "disponas numeros 22, et 7, et 17, et 27, et 8, et 6. ... Item 22, et 7, et 13, et 27 et 6 item 22, et 17, et 27, et 7", "image": "Hebrew letters (א, ג, ה, ז, ט, יא ...; א, ד, ז, י, יג; א, ה, ט, יג)", "problem": "every Hebrew letter in the step sequences rendered as an invented number", "severity": "serious", "class": "O10" },
+          { "ocr": "eamdem ad omni facile repe=riens summam", "image": "eamdem ab omni facile repræ=sentabit summam", "problem": "verb misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "Speculare ergo tec", "image": "Speculare ergo Ecc(e)", "problem": "misread", "severity": "minor" },
+          { "ocr": "si quæsi=bus tuis ... superares", "image": "si quæsi=tus suus ... superaret", "problem": "misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "loco sortis figuræ diuidentis, ueluti si Cubus aurei numen fouet", "image": "loco tertiæ figuræ dividentis, veluti si Cubus aurei numeri foret", "problem": "\"third figure\" read as \"sortis\"; numeri/foret garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "quia excelsis numerum Alphabeticum hebraicum, ut in Regulis Algebræ uidebe eis", "image": "quia excedit numerum Alphabeticum hebraicum, ut in Regulis Algebræ videre erit", "problem": "verb misread; sentence loses its sense", "severity": "moderate", "class": "O6" },
+          { "ocr": "scil. Radicum, quas uato=rum, et Cuborum", "image": "scil. Radicum, Quadrato=rum, et Cuborum", "problem": "\"Quadratorum\" (one of the three divisors) misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "aperuis; agnoscere possis; detractas; ujus; apponeve", "image": "aperuit; agnosci possunt; detrahas; cujus; apponere", "problem": "small misreadings", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "the catchword \"De Sphærica\" at the foot is set as a centred heading \"->De Spherica<-\"", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "11. ad 7. Tripla.", "image": "21. ad 7. Tripla.", "problem": "number misread; 11:7 is not a tripla", "severity": "moderate", "class": "O7" },
+          { "ocr": "Summa 36. ad 15. scilicet Duodecupla. Summa 30. ad 6", "image": "summa est 336. ad 28. scil. duodecupla | summa 30. ad 8.", "problem": "the worked sums of the addition example are wrong (36:15 and 30:6 for 336:28 and 30:8), so the example no longer works", "severity": "serious", "class": "O7" },
+          { "ocr": "Ejus examen erit sequens 24 ad 16. ... productus 24 ad 16 ... 4 ad 3 = 24 ad 16 ... sicuti est 24 ad 16", "image": "24. ad 18. (four times)", "problem": "the check result misread throughout; 24:16 is sesquialtera, not sesquitertia as the text claims", "severity": "serious", "class": "O7" },
+          { "ocr": "quamvis eodem numero denuo non semper in examine coincidere appareat", "image": "quamvis eosdem numeros denuo non semper in examine reviviscere appareat", "problem": "wording substituted", "severity": "moderate", "class": "O8" },
+          { "ocr": "(Nam consequentem primae proportionis scilicet, a qua", "image": "Nam consequens primæ proportionis (illius scilicet, a qua", "problem": "\"illius\" dropped, case changed", "severity": "minor" },
+          { "ocr": "Supersextupertieri; aequalisatio proportionis; Aequalis scilicet; facillima; conficietur; Medis additionis", "image": "supersextupartiens; æqualisatis proportio; Æqualitas scil.; facillime; conficiuntur; medio Additionis", "problem": "small misreadings", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Not reliable for this text: the Hebrew letter-numerals on p. 95 become invented Arabic digits and the worked ratio examples on p. 140 carry wrong numbers, so the mathematics and numerology are misreported. Also the facing leaf is transcribed as marginalia on p. 50."
+  },
+  {
+    "book_id": "b10-m", "slot": 2, "title": "Ars artium sive Ars magna cabalistica (PH337)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 50, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Y Z O P", "image": "Y Z Q P", "problem": "Q read as O", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "\"# Rhomboides sinistra\" / \"# Rhomboides dextra\" rendered as markdown headings for diagram labels", "severity": "minor", "class": "D1" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "summam פדק, 175", "image": "summam קעה (=175), 175", "problem": "Hebrew numeral misread; פדק = 184, not 175", "severity": "moderate", "class": "O10" },
+          { "ocr": "si ne=gligatur 22. et initium fias a 2 occurrit tibi in summy 42.", "image": "si negligatur א, et initium fiat a ב occurrit tibi in summa [Hebrew numeral]", "problem": "Hebrew letter-numerals replaced by invented Arabic digits", "severity": "serious", "class": "O10" },
+          { "ocr": "si incipias a 7 halebis summas similes Numen 169; si a 7. post. 11 a 7. 213.", "image": "si incipias a ג habebis summas similes Numeri 189; si a ד. 196. si a ה. 203.", "problem": "the series of sums rising by seven is garbled", "severity": "serious", "class": "O7" },
+          { "ocr": "disponas numeros 22, et 7, et 17, et 27, et 8, et 6. ... Item 22, et 7, et 13, et 27 et 6 item 22, et 17, et 27, et 7", "image": "Hebrew letters in each step sequence", "problem": "every Hebrew letter rendered as an invented number", "severity": "serious", "class": "O10" },
+          { "ocr": "repe=riens summam; quæsi=bus tuis ... superares; sortis figuræ; numen fouet; excelsis; uidebe eis; quas uato=rum", "image": "repræ=sentabit summam; quæsi=tus suus ... superaret; tertiæ figuræ; numeri foret; excedit; videre erit; Quadrato=rum", "problem": "several meaning-changing misreadings in the prose", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "the catchword \"De Sphærica\" is set as a centred heading \"->De Spherica<-\"", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "summæ erunt 36. ad 25. scilicet Duodecupla", "image": "summa est 336. ad 28. scil. duodecupla", "problem": "the worked sum is wrong", "severity": "moderate", "class": "O7" },
+          { "ocr": "| Ejus examen erit sequens | 24. ad 25. scilicet sesquivigesima |", "image": "Ejus examen erit sequens — 24. ad 18. scil. sesquitertia", "problem": "number and ratio name invented; the text's whole point (the check yields sesquitertia again) is contradicted", "severity": "serious", "class": "O7" },
+          { "ocr": "productus 24 ad 16 ... 4. ad 3 = 24. ad 16 ... sicuti est 24. ad 16.", "image": "24 ad 18 (three times)", "problem": "number misread", "severity": "moderate", "class": "O7" },
+          { "ocr": "contingere; divertimode; conficiebatvr; supersextupartienz", "image": "reviviscere; diversimode; conficiuntur; supersextupartiens", "problem": "small misreadings", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "catchword \"eadem\" wrapped in <meta>; image-desc boxes interleaved in the tables", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Diagram page is good, but p. 95 is identical to b10-k (Hebrew numerals turned into invented digits, sums garbled), and p. 140 invents \"24 ad 25 sesquivigesima\" where the page has 24 ad 18 sesquitertia."
+  },
+  {
+    "book_id": "b10-r", "slot": 3, "title": "Ars artium sive Ars magna cabalistica (PH337)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 50, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Catchword at foot of page: \"Aut\"", "image": "\"Aat\" / \"Ast\" (unclear)", "problem": "catchword reading uncertain", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nempe 22. 23. 24. 25. 26. 27. 28.", "image": "the hand looks like \"22 13 24 15 26 17 28\", but only 23/25/27 make the stated sum 175", "problem": "possibly corrected toward the arithmetic; cannot be sure of the hand's digits", "severity": "minor", "class": "O8" },
+          { "ocr": "Rab. Simeon Benlanges", "image": "Rab. Simeon Bonlanges", "problem": "name misread", "severity": "minor" },
+          { "ocr": "ad quas alluditum fuit <unclear>Ex</unclear> Exod. 27. v. 6.", "image": "ad quas allibitum(?) fuit Es exod. 27. 2. 6.", "problem": "\"v.\" for the hand's 2; reading normalised", "severity": "minor" },
+          { "ocr": "Columnae, reliquae, versus (throughout)", "image": "Columnæ, reliquæ, uersus", "problem": "spelling silently normalised (æ→ae, u→v)", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "sit 10 ad 5 [...] vel sit 6. ad 9.", "image": "sit 10 ad 5 ........ vel sit 6 ad 9", "problem": "dotted leader rendered as an editorial \"[...]\"", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The best reading here: the diagram is complete, the Hebrew letter-numerals are read as letters with honest <unclear> marks, and every ratio on p. 140 (336 ad 28, 30 ad 8, 24 ad 18) matches the page. The only slips are spelling normalisation and one name."
+  },
+  {
+    "book_id": "b10-t", "slot": 4, "title": "Ars artium sive Ars magna cabalistica (PH337)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 50, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<script>printed</script> ... Engraved geometrical or anatomical/mechanical diagram", "image": "pen-drawn manuscript diagram", "problem": "page called printed/engraved", "severity": "moderate", "class": "O16" },
+          { "ocr": "<insert>Ω</insert>", "image": "Q", "problem": "Q read as Omega", "severity": "minor" },
+          { "ocr": "Semicirculus sinister B C D A", "image": "D C B A (top to bottom)", "problem": "sector letters out of order", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95, "right_page": "yes", "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "summam פדק, 175", "image": "summam קעה (=175), 175", "problem": "Hebrew numeral misread; פדק = 184, not 175", "severity": "moderate", "class": "O10" },
+          { "ocr": "si ne=gligatur 22. et initium fias a 2 occurrit tibi in summy 42.", "image": "si negligatur א, et initium fiat a ב occurrit tibi in summa [Hebrew numeral]", "problem": "Hebrew letter-numerals replaced by invented Arabic digits", "severity": "serious", "class": "O10" },
+          { "ocr": "si incipias a 7 halebis summas similes Numen 169; si a 7. post. 11 a 7. 213.", "image": "si incipias a ג habebis summas similes Numeri 189; si a ד. 196. si a ה. 203.", "problem": "the series of sums rising by seven is garbled", "severity": "serious", "class": "O7" },
+          { "ocr": "disponas numeros 22, et 7, et 17, et 27, et 8, et 6. ... Item 22, et 7, et 13, et 27 et 6 item 22, et 17, et 27, et 7", "image": "Hebrew letters in each step sequence", "problem": "every Hebrew letter rendered as an invented number", "severity": "serious", "class": "O10" },
+          { "ocr": "repe=riens summam; quæsi=bus tuis ... superares; sortis figuræ; numen fouet; excelsis; uidebe eis; quas uato=rum", "image": "repræ=sentabit summam; quæsi=tus suus ... superaret; tertiæ figuræ; numeri foret; excedit; videre erit; Quadrato=rum", "problem": "several meaning-changing misreadings in the prose", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "the catchword \"De Sphærica\" is set as a centred heading \"->De Spherica<-\"", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "11. ad 7. Tripla.", "image": "21. ad 7. Tripla.", "problem": "number misread", "severity": "moderate", "class": "O7" },
+          { "ocr": "Summa 36. ad 15. scilicet Duodecupla. Summa 30. ad 6", "image": "summa est 336. ad 28. scil. duodecupla | summa 30. ad 8.", "problem": "worked sums wrong; the example no longer works", "severity": "serious", "class": "O7" },
+          { "ocr": "24 ad 16 (four times)", "image": "24. ad 18.", "problem": "check result misread throughout; 24:16 is not sesquitertia", "severity": "serious", "class": "O7" },
+          { "ocr": "eodem numero ... coincidere; Supersextupertieri; aequalisatio proportionis; Medis additionis; conficietur", "image": "eosdem numeros ... reviviscere; supersextupartiens; æqualisatis proportio; medio Additionis; conficiuntur", "problem": "wording substituted and small misreadings", "severity": "moderate", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Pages 95 and 140 are identical to b10-k and carry the same serious numeric errors (invented digits for Hebrew numerals, wrong ratios). The diagram is read well, but the page is labelled printed/engraved."
+  }
+]

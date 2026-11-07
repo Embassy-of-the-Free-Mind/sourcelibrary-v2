@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { publicUrl } from '@/lib/public-origin';
 
 /**
  * Resolves /book/{id}?page=N to the reader URL /book/{slug}/page/{pageId}.
@@ -12,21 +13,21 @@ export async function GET(request: NextRequest) {
   const pageNum = parseInt(request.headers.get('x-redirect-page') || '', 10);
 
   if (!bookIdOrSlug) {
-    return NextResponse.redirect(new URL('/', request.url), 302);
+    return NextResponse.redirect(publicUrl('/', request), 302);
   }
 
   const db = await getReadDb();
   const result = await findBookByIdOrSlug(db, bookIdOrSlug, { id: 1, slug: 1 });
 
   if (!result) {
-    return NextResponse.redirect(new URL(`/book/${bookIdOrSlug}`, request.url), 302);
+    return NextResponse.redirect(publicUrl(`/book/${bookIdOrSlug}`, request), 302);
   }
 
   const bookId = (result.book.id || result.book._id?.toString()) as string;
   const slug = (result.book.slug || bookId) as string;
 
   if (isNaN(pageNum) || pageNum < 1) {
-    return NextResponse.redirect(new URL(`/book/${slug}`, request.url), 302);
+    return NextResponse.redirect(publicUrl(`/book/${slug}`, request), 302);
   }
 
   const targetPage = await db.collection('pages').findOne(
@@ -36,9 +37,9 @@ export async function GET(request: NextRequest) {
 
   if (targetPage) {
     const pageId = (targetPage.id || targetPage._id?.toString()) as string;
-    return NextResponse.redirect(new URL(`/book/${slug}/page/${pageId}`, request.url), 301);
+    return NextResponse.redirect(publicUrl(`/book/${slug}/page/${pageId}`, request), 301);
   }
 
   // Page number not found — redirect to the book page
-  return NextResponse.redirect(new URL(`/book/${slug}`, request.url), 302);
+  return NextResponse.redirect(publicUrl(`/book/${slug}`, request), 302);
 }

@@ -1,0 +1,853 @@
+[
+  {
+    "book_id": "699051d48d19cbc90d9d51ce",
+    "slot": 61,
+    "title": "Satyricon: De Nuptiis Philologiae et Mercurii",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Grotius's 1599 Raphelengius edition of Martianus Capella, the late-antique Neoplatonic allegory of the liberal arts. It belongs on an early-European-books shelf and next to Hermetic/Neoplatonic material.",
+    "rights_flag": true,
+    "structure_note": "The printed page numbers are consistent with the scan index (scan 115 = p. 80, 231 = p. 196, 347 = p. 312, a constant offset of 35). 458/464 pages have OCR and 452 are translated. Nothing looks broken.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 115,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "vt treflis, lexis",
+            "image": "vt treſſis, ſexis",
+            "problem": "the two example words (tressis, sexis) are misread as non-words, and the translation carries 'treflis, lexis' over",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>ad. productè</margin>",
+            "image": "al. productè",
+            "problem": "the variant-reading siglum 'al.' is misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "an in O mutant",
+            "image": "an in O mutent",
+            "problem": "verb mood slip",
+            "severity": "minor"
+          },
+          {
+            "ocr": "datinum",
+            "image": "datiuum",
+            "problem": "letter slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "vt treflis, lexis",
+            "english": "such as treflis, lexis",
+            "problem": "the misread non-words are passed through untranslated, so a reader cannot tell they are tressis/sexis",
+            "severity": "minor"
+          },
+          {
+            "source": "Species, nominatiuum cum vocatiuo miscet",
+            "english": "mixes the nominative with the vocative",
+            "problem": "the opening word 'species' (the subject carried over from the previous page) is dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "[rights note redacted]",
+            "severity": "moderate",
+            "class": "[rights note redacted]"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 231,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "(missing)",
+            "image": "De quinque Zonis Terræ.",
+            "problem": "the chapter heading is omitted",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "quam habitare illi æstimantur, qui vocantur <term>ἀντίχθονες</term>",
+            "image": "qui vocantur ἀντοῖκοι",
+            "problem": "the Greek term for the people of the southern temperate zone (antoeci) is replaced by the expected 'antichthones'. The passage's whole point is to distinguish antoeci, antipodes and antichthones, so a reader is misled about which people Capella names here",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "Nam cùm æstate toruemur",
+            "image": "tor[r]emur (one letter obscured)",
+            "problem": "'torremur' (we are scorched) misread as 'toruemur', and the translation renders it as 'tormented'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "fascia dico",
+            "image": "fasciæ dico",
+            "problem": "case ending",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<margin>Auli x. &c. Pythagoræorum in obles Kalend. autumnascit 7. IV. 061. 19. p. 373. & 378.</margin>",
+            "image": "later-hand marginal note, partly illegible, followed by the printed 'al. autumnascit'",
+            "problem": "a later hand's note is merged with the printed variant siglum and garbled",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "qui vocantur ἀντίχθονες (image: ἀντοῖκοι)",
+            "english": "those who are called Antichthones/people living on the opposite side of the earth are thought to inhabit",
+            "problem": "follows the OCR substitution, so the southern-temperate dwellers are given the wrong name and a gloss is invented to fit it",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "source": "quos Αὐτοίκες dicimus",
+            "english": "Autoikoi/those living in the same zone",
+            "problem": "the gloss on the misread word is invented and wrong (the printed Αντοίκους are the antoeci)",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Nobis arctoa lumina spectare permissum",
+            "english": "It is permitted to us to watch the northern lights",
+            "problem": "'arctoa lumina' are the northern stars (the Bears), not the aurora",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "[rights note redacted]",
+            "severity": "moderate",
+            "class": "[rights note redacted]"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 347,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<sig>sig3</sig> … ſig3 diui",
+            "image": "permul- / ſiq; diui (permulsique divi)",
+            "problem": "'ſiq;' is misread as a signature mark 'sig3', which is then invented as a page signature tag and shown in both panes",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "Sed quoniam emerſa terris Virgo ruptura vaneſcentia intercapedinata prolixitatis oblita iam ſupero vigore diſcutere",
+            "image": "Virgo nuptura vaneſcentia intercapedinatæ prolixitatis obliuia iam ſupero debet vigore diſcutere",
+            "problem": "'nuptura' (the bride-to-be, i.e. Philology) is read as 'ruptura', 'obliuia' as 'oblita', and 'debet' is dropped, so the sentence loses its subject and its verb",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "<margin>al. effurentia</margin>",
+            "image": "al. efficientiæ",
+            "problem": "variant reading misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "MAR. CAPELLÆ",
+            "image": "MART. CAPELLÆ",
+            "problem": "running head letter dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Voff. de IV. A .9. c. IV. 6. 16. erunt",
+            "image": "later-hand note 'Voss. de IV. A. 9. c. IV. § 16.' beside the printed catchword 'erunt'",
+            "problem": "a later-hand reference is merged into the body text with the catchword",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Virgo ruptura vaneſcentia intercapedinata prolixitatis oblita iam ſupero vigore diſcutere, iuſſa percurram",
+            "english": "But since the Virgin who has emerged from the earth will break the fading interspaces, having forgotten the prolixity, [and] is commanded to discuss now with higher vigor",
+            "problem": "the source says the bride-to-be must now dispel with higher vigour the fading oblivions of the long interval; the English invents 'will break the fading interspaces' and has her 'forgetting'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Ioue admirante diſquiritur",
+            "english": "vigilant care promises … Jupiter wonders as he inquires",
+            "problem": "the construction is lost: the source says it was asked, to Jupiter's admiration, by what industry and means the art is acquired",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The invented '<sig>sig3</sig>' is shown as a page signature in the translation pane",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "note": "[rights note redacted]",
+            "severity": "moderate",
+            "class": "[rights note redacted]"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean Grotius edition with mostly sound OCR on the grammar page. The cosmography and Harmonia pages carry meaning-changing misreads (the Greek antoeci replaced by antichthones; 'nuptura' read as 'ruptura') that the translation turns into fluent but wrong sense. [rights note redacted]"
+  },
+  {
+    "book_id": "69b4193f2b0edf3eaa2df265",
+    "slot": 67,
+    "title": "De Trinitatis Erroribus: Michael Servetus (PH474)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 17th-century manuscript copy of Servetus's anti-Trinitarian treatise from the BPH. It belongs with heterodox and spiritualist theology.",
+    "rights_flag": null,
+    "structure_note": "The photographs are open-book spreads, not split: page 42 carries a strip of the facing leaf, and page 122 carries half of it. The scan index runs 4–6 ahead of the manuscript pagination (42 = p. 38, 82 = p. 76, 122 = p. 116). The OCR's page-num for 82 says 56, which is a misread. 162 pages, all OCR'd, 160 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<column-break/> divinitas agnostro, qui est Spiritus noster ta, licet varie dicuntur i.e. m ab hac sententia jam ad rationem nam dum loquimur Isaac Gen. XXVI. Sophias. …",
+            "image": "the line-beginnings of the facing leaf (p. 39), cut off at the gutter",
+            "problem": "the neighbour leaf's visible strip is transcribed as this page's 'second column', and its truncated line-starts are stitched into pseudo-sentences",
+            "severity": "serious",
+            "class": "I4"
+          },
+          {
+            "ocr": "nisi ubi est sermo de Deo",
+            "image": "nisi ubi est sermo de agendo",
+            "problem": "'de agendo' (about acting) is normalised to 'de Deo'. This changes Servetus's point about where Scripture mentions the Spirit",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "Matth. XXIX.",
+            "image": "Matth. XXIIX.",
+            "problem": "chapter 28 is read as 29",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "tari posset",
+            "image": "tolerari posset",
+            "problem": "word truncated",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "divinitas agnostro, qui est Spiritus noster ta, licet varie dicuntur … Intelligamus tem Deorum creproni, et judaei II. et XI.",
+            "english": "divinity … from our own, which is our Spirit … Let us understand the creation of the Gods, and the Jews in chapters 2 and 11, according to the number of believers. Another says he is the same God…",
+            "problem": "fragments from the neighbour leaf's gutter strip are rendered as a fluent paragraph of Servetus's argument",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "sed probatur Matth. XXIX.",
+            "english": "Matthew 28 <note>The original OCR says 29, but refers to the Great Commission</note>",
+            "problem": "the model's note about the OCR is shown to readers",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "nisi ubi est sermo de Deo",
+            "english": "except where there is a discourse about God",
+            "problem": "carries the OCR's normalisation",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation notes visible to readers: 'The text here appears fragmented in the OCR, likely due to the column structure' and 'The original OCR says 29'",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>56</page-num>",
+            "image": "76",
+            "problem": "page number misread",
+            "severity": "minor",
+            "class": "O7"
+          },
+          {
+            "ocr": "Adeo omni modo",
+            "image": "Ideo omni modo",
+            "problem": "initial misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Exponunt aliqui, ego hodie genui te",
+            "english": "Some explain the phrase \"Today I have begotten you\" <note>Psalm 2</note> as \"Today I have begotten you as King.\"",
+            "problem": "the line is cut at the image edge, and the English completes it with 'as King', which is not on the page",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "quando Principes Judaeorum cum / juraverunt contra Davidem",
+            "english": "when the Princes of the Jews with Absalom swore against David",
+            "problem": "'Absalom' (and later 'vain things') is supplied from outside the visible text without marking it as conjecture",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "tudinem ejus, qui renatus est, dicimur nos renasci",
+            "english": "In his likeness, he who is reborn is said to be reborn of us",
+            "problem": "garbled: the source says we are said to be reborn in the likeness of him who was reborn",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The photograph cuts off the right edge of the text block, losing 1–3 words at every line end. The OCR is honest about the gaps, but the translation fills them silently",
+            "severity": "moderate",
+            "class": "other:scan-cropped"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 122,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Item, non reperies, quod homo directe dicatur imago invisibilis Dei <term>יהוה</term> sed quam in Novo Scriptura talis ad imaginem inquit et similitudinem nostram faciam hominem et ad imaginem es legas, manus, digitos, oculos et secundum imaginem Elohim factus est …",
+            "image": "left page 116: 'Item, non reperies … invisibilis Dei יהוה sed / ad imaginem inquit, et similitudinem nostram faciam hominem et ad imagi[nem] / et secundum imaginem Elohim…'; facing page 117 lines: 'quam in Novo Scriptura tal[i] / es legas, manus, digitos, ocu[los]'",
+            "problem": "the unsplit spread is read line by line straight across both leaves, interleaving the two pages' text throughout",
+            "severity": "serious",
+            "class": "I3"
+          },
+          {
+            "ocr": "<margin>Aperiam in parabolis os meum et eructabo abscondita per Christum</margin>",
+            "image": "Aperiam in parabolis os meum et eructabo abscondita",
+            "problem": "'per Christum' from the body text is pulled into the marginal quotation",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "the interleaved OCR",
+            "english": "Likewise, you will not find that man is directly called the \"image of the invisible God\" … but as we find in the New Testament",
+            "problem": "fluent English is built over two pages' lines shuffled together, so the argument the reader follows is not the one on either leaf",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Inqua sententia tot sunt errores, quam tur vocabulo dum de Natura",
+            "english": "In which opinion there are as many errors as there are words; they do not understand what a person is and they abuse the word when they speak so metaphysically about the Nature of the Word. But properly speaking...",
+            "problem": "a full clause and the start of the next sentence are invented beyond the OCR and are not visible on either leaf",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "abscondita per Christum (margin)",
+            "english": "utter things hidden through Christ",
+            "problem": "inherits the OCR's merged margin",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The photographs are unsplit spreads. The OCR reads the facing leaf as a second column (p. 42) or interleaves both leaves line by line (p. 122), and the translation turns the mix into confident prose with invented completions. A Servetus specialist would reject two of these three pages on sight."
+  },
+  {
+    "book_id": "69f33704876dd827cbc51619",
+    "slot": 18,
+    "title": "Sermons against the Turks",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A late-15th-century humanist manuscript oration urging Pope Sixtus IV ('beatissime pater', 'dominum meum Sixtum') to crusade against the Turks. It has no tradition or collection set; as a primary source it fits a general Latin shelf. 'Sermons' is loose: it reads as one address to the pope.",
+    "rights_flag": null,
+    "structure_note": "34 pages, all OCR'd but only 19 translated, so roughly half the book has no English. There are no printed page numbers to check.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Restat ut proximorum malignitate intelligatis",
+            "image": "Restat ut xp̄ianorum malignitatem intelligatis",
+            "problem": "'christianorum' is expanded as 'proximorum', so the theme sentence ('the malice of Christians') becomes 'the malice of neighbours'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "et apud deum advocata mea a canis meretricis nominatur",
+            "image": "a xp̄ianis meretrix nominatur",
+            "problem": "'by Christians [she] is called a whore' becomes 'a canis meretricis'. This drops who blasphemes and invents a dog",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Quotidie sed frequens omnibus",
+            "image": "Quotidie sc̄i frequent[er] oēs",
+            "problem": "'sancti … omnes' (all the saints) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Namque lex sua est castissima. nunquam facillima. nunquam commodissima.",
+            "image": "Nūqȝ lex sua ē castissima · nūqȝ facillima · nūqȝ cōmodissima",
+            "problem": "the abbreviation is most likely interrogative 'numquid' (is not his law most chaste, easy, convenient?). Expanding it as 'nunquam' (never) inverts the claim",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Cuius equitate posthabita audite.",
+            "image": "…posthabita audistis.",
+            "problem": "verb form misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Quotidie sed frequens omnibus nullo iusticie metu a christianis blasphemantur",
+            "english": "Daily, the holy sacraments are blasphemed by Christians",
+            "problem": "'holy sacraments' is invented: the image has the saints",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "a canis meretricis nominatur",
+            "english": "is called by the name of a dog, a prostitute",
+            "problem": "follows the misread. The source says Christians call the Virgin a whore; no dog appears",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "Restat ut proximorum malignitate intelligatis",
+            "english": "It remains that you understand the malice of neighbors.",
+            "problem": "the section's thesis (malice of Christians) is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "nunquam facillima. nunquam commodissima",
+            "english": "never most easy, never most convenient",
+            "problem": "the rhetorical question is probably turned into a denial",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "pro vita perditorum perfidie christiane defensione",
+            "image": "ꝓ vita perditur[um] ꝓfidei xp̄ane defensione",
+            "problem": "'pro fidei christiane defensione' (for the defence of the Christian faith) is read as 'perfidie'. The pope's pledge becomes 'defence … of Christian treachery'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Utinam ex his duobus calamitosa ruina totius caritate pendet",
+            "image": "Nempe ex hys duobus calamitosa ruina toti[us] xp̄ianitate pendet",
+            "problem": "'christianitatis' is read as 'caritate' and 'nempe' as 'utinam'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "rogemus Virginem clementissimam. si quis ob ut pro nobis intercedat",
+            "image": "rogemus Virginem clementissimam · sanctos oēs vt pro nobis intercedat",
+            "problem": "'sanctos omnes' (all the saints) is lost and replaced by 'si quis ob'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Turcorum mille suat fidem et unus totius Italie donatum mente gerit",
+            "image": "Turc[us] mille suat fidem · Turc[us] toti[us] Italie dñatū mente gerit",
+            "problem": "subject and 'dominatum' are misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "omnes canos christianumque nomen",
+            "image": "oēs xp̄ianos xp̄ianumq[ue] nomen",
+            "problem": "'christianos' is read as 'canos'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "pro vita perditorum perfidie christiane defensione",
+            "english": "for the defense of the life of those lost to Christian treachery",
+            "problem": "nonsense built on the misread: Sixtus pledges his treasures and life for the defence of the faith",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Celum est genere. si obsecro te quibus commune",
+            "english": "The heaven is [born], if I beseech you, for whom is it common?",
+            "problem": "fluent bracketed English over garbled OCR, with no uncertainty shown",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Utinam ex his duobus calamitosa ruina totius caritate pendet",
+            "english": "Would that from these two [we] depend on the calamitous ruin of the whole charity",
+            "problem": "the source says that on 'mine and thine' hangs the ruin of all Christendom",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Improbitas probitati: inopie copia: superbie humilitas: avaricie caritas cessit.",
+            "image": "Improbitati ꝓbitas: inopie copia: sꝑbie humilitas: auaricie caritas cessit",
+            "problem": "the cases of the first pair are swapped, which reverses who yields to whom",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Verumtamen tuam o carissime quia aliquantisper me apprehension ille sermo retardavit",
+            "image": "Verumtamen tacui o carissimi quia aliquantisper me propheticus ille sermo retardavit",
+            "problem": "'tacui' (I kept silent) and 'propheticus' are misread, losing the speaker's admission",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "omnes principes seculi memorabili morbo avaritie",
+            "image": "incurabili morbo auaritie",
+            "problem": "'incurable' is read as 'memorable'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Et os cor meret",
+            "image": "Et oē cor merēs",
+            "problem": "Isaiah 1:5 'omne cor maerens' is misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Hinc magistri et malivoli in veste agetes indices",
+            "image": "in recte agetes iudices",
+            "problem": "'in recte agentes' (against those acting rightly) is read as 'in veste'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Nam cuncta regiones me misteria",
+            "image": "Nā cuncta religionis nr̄e misteria",
+            "problem": "'the mysteries of our religion' is read as 'regions'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Improbitas probitati … cessit",
+            "english": "Improbity has yielded to probity; abundance to poverty; humility to pride; charity to avarice",
+            "problem": "the first clause says the opposite of the source (probity yielded to improbity) and contradicts the rest of the list",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "in veste agetes indices",
+            "english": "masters and malevolent ones acting as judges in fine robes",
+            "problem": "'fine robes' is invented over the misread",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Et os cor meret",
+            "english": "\"And the mouth is putrid\"",
+            "problem": "invented Isaiah quotation: the verse is 'every heart is sorrowful'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Verumtamen tuam o carissime … retardavit",
+            "english": "Nevertheless, my dearest [brethren], it is because that saying delayed me",
+            "problem": "'I kept silent' is dropped, so the sentence has no main verb",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "Nam cuncta regiones me misteria … fundata",
+            "english": "For all regions were founded and increased in humility",
+            "problem": "follows the misread",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A heavily abbreviated Gothic cursive hand. The OCR is a good-faith reading but repeatedly misexpands nomina sacra and abbreviations (christianorum → proximorum/canis/caritate, pro fidei → perfidie). The translation papers over every misreading in fluent English, including one reversed clause. Readable for the gist; not quotable without the image."
+  },
+  {
+    "book_id": "6a45f83a8d74c68ab9b236e1",
+    "slot": 38,
+    "title": "Horoscopion generale dignoscendis horis cuiuscumque generis aptissimum …",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Petrus Apian's 1533 Ingolstadt treatise on a universal time-and-mensuration instrument: early modern science and astronomy. The 'americana' collection tag reflects the John Carter Brown holding, not the content.",
+    "rights_flag": null,
+    "structure_note": "48 pages, all OCR'd, 43 translated. The signatures follow in order (B on 13, C 2 on 23). Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Quamvis in hoc nostro fasciculo",
+            "image": "Quamuis in hoc noſtro ſæculo",
+            "problem": "'in this age of ours' is read as 'in this little bundle', and the translation renders it as 'in this manual of ours'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Et hoc modo … et",
+            "image": "& … ",
+            "problem": "silent normalisation of ampersands, ligatures and abbreviations (et, ae), done consistently",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Quamvis in hoc nostro fasciculo a plerisque … videmus",
+            "english": "Although in this manual of ours we see the hours of the Jews being used by many",
+            "problem": "follows the misread. Apian complains about common usage 'in our age', not 'in this manual'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "table 1 (Markab), row 25, ♑ column: 01 | 02",
+            "image": "02 50",
+            "problem": "one hour/minute cell is wrong in the Markab table. All other cells checked in the four tables match the print (printer's errors such as '1127' and '0587' are reproduced or silently fixed)",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 34,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "instrusissimum",
+            "image": "inſtructiſsimum",
+            "problem": "letter slip",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(missing)",
+            "image": "PROPO- (catchword)",
+            "problem": "catchword dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Multiplica 100. cum 10, & prouenient 100",
+            "english": "Multiply 100 by 10, and 1000 will result",
+            "problem": "the printer's error (100) is silently corrected to 1000 without a note. The correction is right, but the text no longer shows what the page prints",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A good book: accurate OCR of the prose and of four dense star-time tables (one wrong cell found), and faithful translation. The only meaning slip is 'fasciculo' for 'saeculo'."
+  },
+  {
+    "book_id": "69af55c8ec9e6c278212dc48",
+    "slot": 87,
+    "title": "Opuscoli di Leonardo Pisano",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Boncompagni's 1856 edition of Fibonacci's minor works (Flos, Liber quadratorum, Epistola): medieval Latin mathematics with Italian editorial notes. It fits early-science material. The 'americana' tag is an IA collection artefact.",
+    "rights_flag": null,
+    "structure_note": "Scan index vs printed page: 42 = p. 7, 84 = p. 51, 125 = p. 96. That is 42 scans for 44 printed pages, then 41 scans for 45 printed pages, so about 6 printed pages are missing between the sampled leaves. They could be missing leaves in the Google scan, or plates paginated without scans; it should be checked. 167 pages, all OCR'd, 148 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "numero **b c** … **b c** est radix … toti **a c** … radix **a c** … remanebit **c i**",
+            "image": "numero b e … b e est radix … toti a e … radix a e … remanebit e i",
+            "problem": "the italic diagram letter e is read as c from the middle of the page on, so it no longer matches Fig. 2",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<meta>catchword: e t, erit ergo tota superficies e t ratiocinata, cuius unum</meta>",
+            "image": "no catchword: that is the last text line",
+            "problem": "the last line is mislabelled as a catchword",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Equalium uero et unum uni equalem habentium angulum parallilogramorum",
+            "english": "The sides of equal parallelograms, or those having one angle equal to another",
+            "problem": "'and' is turned into 'or': Euclid VI.14 needs both conditions",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 84,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "multiplicanda sunt omnia que habentur per $\\frac{2}{7}$",
+            "image": "per ⁵⁄₇ 2 (i.e. 2 5/7)",
+            "problem": "the multiplier loses its integer part and its numerator",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "census et res $\\frac{2}{7}$ 36 … dragmis $\\frac{2}{7}$ 182 … $\\frac{2}{7}$ 36 … $\\frac{2}{7}$ 182",
+            "image": "res ⁴⁄₇ 36 … dragmis ⁵⁄₇ 182 … ⁴⁄₇ 36 … ⁵⁄₇ 182",
+            "problem": "every fraction on the page is flattened to 2/7. Only the 18 2/7 values are right, so the worked algebra no longer adds up",
+            "severity": "serious",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "per 2/7, et erit census et res 2/7 36, que equantur dragmis 2/7 182",
+            "english": "multiplied by 2/7, and there will be a census and 2/7 of a thing equal to 36, which are equal to 182 drachms",
+            "problem": "carries the wrong fractions, and also misparses 'res 36 2/7' as '2/7 of a thing equal to 36'. The equation a reader sees is wrong",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "$\\frac{2}{7}$ 182 (everywhere)",
+            "english": "182 2/7 drachms; 36 2/7",
+            "problem": "propagates the flattened fractions (should be 182 5/7 and 36 4/7)",
+            "severity": "serious",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "The translation keeps raw LaTeX in the notes ('original: \"$\\frac{2}{7}$ 182\"'), which renders as source code if the reader does not typeset math",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 125,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Si duo quilibet numeri componantur facientes compositum ex his parem numerum, proportio compositi ad re-",
+            "english": "…will not be the same as that which the larger number has to the smaller. Let there be two adjacent numbers a b and b g, and let g d be that by which the larger g b exceeds the smaller b a, and let a g be an even number. I say it is not the case that as g b is to b a, so a g is to g d.",
+            "problem": "the page breaks mid-sentence at 're-', but the translation runs on with a whole proposition setup that is not on this page (from the next page or invented)",
+            "severity": "serious",
+            "class": "T5"
+          },
+          {
+            "source": "Fra queste due linee … postilla (Italian editorial footnote) and the facsimile",
+            "english": "<note>The following section is a modern scholarly commentary … (Facsimile image omitted here). Warning: …</note>",
+            "problem": "the editor's footnote is summarised and wrapped in a note, and pipeline text ('Facsimile image omitted here', 'Warning: …') is shown to readers",
+            "severity": "moderate",
+            "class": "T13"
+          }
+        ],
+        "other": [
+          {
+            "note": "Broken markup in the translation pane: '<margin></margin>' followed by a stray '</margin>'",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "The OCR's '<warning>Handwritten [Medieval Latin cursive …]</warning>' is a pipeline label that has leaked into the transcription of the editor's facsimile",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean modern print, mostly accurate OCR. But the algebra page flattens every fraction to 2/7, which breaks Fibonacci's worked solution in both panes, and the Liber quadratorum page's translation runs past the page break into text that is not there. The scan may also be missing a few leaves."
+  }
+]

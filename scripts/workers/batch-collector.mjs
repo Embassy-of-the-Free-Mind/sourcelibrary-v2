@@ -828,7 +828,7 @@ async function processOneJob(db, job) {
           continue;
         }
         const layers = translationLayers(text, { promptVersion: jobPromptVersion(job) }); // #5942: text + annotations beside data
-        annotationItems.push({ page_id: pageId, book_id: guardSource.get(pageId)?.book_id ?? job.book_id, layers });
+        annotationItems.push({ page_id: pageId, book_id: guardSource.get(pageId)?.book_id ?? job.book_id, run_id: jobIdStr, layers });
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },

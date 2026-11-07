@@ -1,0 +1,630 @@
+[
+ {
+  "book_id": "b16-k",
+  "slot": 1,
+  "title": "Palladis Chymicae Arcana Detecta: Marengus (PH165)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 107,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 207,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<meta> note about the facing page left inside the transcription",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 308,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "adde ex quolibet de supra oleis",
+      "image": "de supr̃tis (supradictis) oleis",
+      "problem": "abbreviation expanded as 'supra' only",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Excellent: an accurate, normalised reading of all three pages with abbreviations expanded correctly (Sol uerò, massam, et aperta, lunę, 30); only a stray <meta> note and one minor expansion."
+ },
+ {
+  "book_id": "b16-m",
+  "slot": 2,
+  "title": "Palladis Chymicae Arcana Detecta: Marengus (PH165)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 107,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "solvetur quasi totum in mercurium resolvetur",
+      "image": "Soluerò quasi totus in mercurium resoluetur (Sol uerò…)",
+      "problem": "the subject Sol (gold) is lost and replaced by a verb; the reader no longer learns which metal resolves into mercury",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ac manum exsicca … hanc manum pone … supra dictam manum",
+      "image": "maã (massam), three times",
+      "problem": "massam (the mass) misread as manum (hand) throughout the Nonus recipe",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "metalla calcinata evapora",
+      "image": "metalla calcinata et aperta",
+      "problem": "'et aperta' (opened) misread as the imperative 'evapora'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "separationis de mercurium",
+      "image": "separationis d.ᵗ mercurium",
+      "problem": "abbreviation for dicta/dictum misread as 'de'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "zuccaro candido",
+      "image": "zuccaro candito",
+      "problem": "candied sugar misspelled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "crucibulo quatuor horis",
+      "image": "crucibulo p̃ quatuor horas",
+      "problem": "'per' dropped, horas → horis",
+      "severity": "minor"
+     },
+     {
+      "ocr": "meliis",
+      "image": "me-lius",
+      "problem": "melius misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Hine",
+      "image": "Hinc",
+      "problem": "c read as e",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 207,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Recipe Mercurij optimi … et sunc cupellatis, et uulgari ter calcinatis, aut foliatis",
+      "image": "et lunę cupellatę, et uulgariter calcinatę, aut foliatę",
+      "problem": "'lunę' (silver) misread as 'sunc': the second ingredient of the Secunda Minera disappears; endings also changed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut 1. … decoque ut 2. … decoque ut 3.",
+      "image": "ut s.ᵃ … ut s.ᵃ … ut s.ᵃ (ut supra)",
+      "problem": "'ut supra' abbreviations turned into invented step numbers 1, 2, 3",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "fundum boccie lumbis",
+      "image": "fundum boccię lutabis",
+      "problem": "'lutabis' (you will lute) misread as 'lumbis'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ne maad metallisetur",
+      "image": "ne maã metallisetur (materia)",
+      "problem": "abbreviation garbled into a non-word",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "aliam unciam pulveris fixi, et faciendo oia ut fusionem",
+      "image": "aliam unciam d. pulueris fixi, et faciendo oia ut s.ᵃ fusionem",
+      "problem": "'d.' (dicti) and 's.ᵃ' (supra) dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ab igne euolat",
+      "image": "ab igne euolans",
+      "problem": "participle ending misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ignem lenem",
+      "image": "ignem leuem",
+      "problem": "u read as n",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pulueribilis … bene pulueritate",
+      "image": "puluerisabilis … benè puluerisatę",
+      "problem": "forms garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "eo radix",
+      "image": "et radix",
+      "problem": "et-ligature read as 'eo'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "About 30 lines of word-fragments from the facing verso, visible at the left edge of the photograph, transcribed as a <margin> block ('lia uncia / autem re: / quousq; …')",
+      "severity": "moderate",
+      "class": "I4"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 308,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "cadet supra 80. partes lunae fine",
+      "image": "cadet supra 3o. partes lunę finę",
+      "problem": "projection ratio misread 30 → 80; the same '3o' glyph is read as 30 on p.193 ('per 30 aut 40 dies') by the same transcription",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "ex recorta",
+      "image": "ex re-torta",
+      "problem": "retorta misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Hine",
+      "image": "Hinc",
+      "problem": "c read as e",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pone supra mercurium, ex quo",
+      "image": "pones supra mercurium, a quo",
+      "problem": "small words misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "solue unciam … congelabit … congelabit",
+      "image": "solues … congelabis … congelabis",
+      "problem": "verb endings misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "cinnabarij",
+      "image": "cinnabaris",
+      "problem": "ending changed",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<unclear>dictae</unclear> tag in the reader text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Readable but unreliable at the points that matter: 'Sol' lost on p.93, 'lunę' (silver) lost on p.193, the projection ratio 30 read as 80 on p.294, plus facing-page fragments transcribed as a margin."
+ },
+ {
+  "book_id": "b16-r",
+  "slot": 3,
+  "title": "Palladis Chymicae Arcana Detecta: Marengus (PH165)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 107,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "solvetur quasi totum in mercurium resolvetur",
+      "image": "Soluerò quasi totus in mercurium resoluetur (Sol uerò…)",
+      "problem": "the subject Sol (gold) is lost and replaced by a verb; the reader no longer learns which metal resolves into mercury",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ac manum exsicca … hanc manum pone … supra dictam manum",
+      "image": "maã (massam), three times",
+      "problem": "massam (the mass) misread as manum (hand) throughout the Nonus recipe",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "metalla calcinata evapora",
+      "image": "metalla calcinata et aperta",
+      "problem": "'et aperta' (opened) misread as the imperative 'evapora'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "separationis de mercurium",
+      "image": "separationis d.ᵗ mercurium",
+      "problem": "abbreviation for dicta/dictum misread as 'de'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "zuccaro candido",
+      "image": "zuccaro candito",
+      "problem": "candied sugar misspelled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "crucibulo quatuor horis",
+      "image": "crucibulo p̃ quatuor horas",
+      "problem": "'per' dropped, horas → horis",
+      "severity": "minor"
+     },
+     {
+      "ocr": "meliis",
+      "image": "me-lius",
+      "problem": "melius misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Hine",
+      "image": "Hinc",
+      "problem": "c read as e",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 207,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Recipe Mercurij optimi … et sunc cupellatis, et uulgari ter calcinatis, aut foliatis",
+      "image": "et lunę cupellatę, et uulgariter calcinatę, aut foliatę",
+      "problem": "'lunę' (silver) misread as 'sunc': the second ingredient of the Secunda Minera disappears; endings also changed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut 1. … decoque ut 2. … decoque ut 3.",
+      "image": "ut s.ᵃ … ut s.ᵃ … ut s.ᵃ (ut supra)",
+      "problem": "'ut supra' abbreviations turned into invented step numbers 1, 2, 3",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "fundum boccie lumbis",
+      "image": "fundum boccię lutabis",
+      "problem": "'lutabis' (you will lute) misread as 'lumbis'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ne maad metallisetur",
+      "image": "ne maã metallisetur (materia)",
+      "problem": "abbreviation garbled into a non-word",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "aliam unciam pulveris fixi, et faciendo oia ut fusionem",
+      "image": "aliam unciam d. pulueris fixi, et faciendo oia ut s.ᵃ fusionem",
+      "problem": "'d.' (dicti) and 's.ᵃ' (supra) dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ab igne euolat",
+      "image": "ab igne euolans",
+      "problem": "participle ending misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ignem lenem",
+      "image": "ignem leuem",
+      "problem": "u read as n",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pulueribilis … bene pulueritate",
+      "image": "puluerisabilis … benè puluerisatę",
+      "problem": "forms garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "eo radix",
+      "image": "et radix",
+      "problem": "et-ligature read as 'eo'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "About 30 lines of word-fragments from the facing verso, visible at the left edge of the photograph, transcribed as a <margin> block ('lia uncia / autem re: / quousq; …')",
+      "severity": "moderate",
+      "class": "I4"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 308,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "cadet supra 80. partes lunae fine",
+      "image": "cadet supra 3o. partes lunę finę",
+      "problem": "projection ratio misread 30 → 80; the same '3o' glyph is read as 30 on p.193 ('per 30 aut 40 dies') by the same transcription",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "ex recorta",
+      "image": "ex re-torta",
+      "problem": "retorta misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Hine",
+      "image": "Hinc",
+      "problem": "c read as e",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pone supra mercurium, ex quo",
+      "image": "pones supra mercurium, a quo",
+      "problem": "small words misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "solue unciam … congelabit … congelabit",
+      "image": "solues … congelabis … congelabis",
+      "problem": "verb endings misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "cinnabarij",
+      "image": "cinnabaris",
+      "problem": "ending changed",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<unclear>dictae</unclear> tag in the reader text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Readable but unreliable at the points that matter: 'Sol' lost on p.93, 'lunę' (silver) lost on p.193, the projection ratio 30 read as 80 on p.294, plus facing-page fragments transcribed as a margin."
+ },
+ {
+  "book_id": "b16-t",
+  "slot": 4,
+  "title": "Palladis Chymicae Arcana Detecta: Marengus (PH165)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 107,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "metalla calcinata euaporata",
+      "image": "metalla calcinata et aperta",
+      "problem": "'et aperta' (opened) misread as 'euaporata' (evaporated)",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 207,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Recipe Mercurij optimi … et sunc cupellatis, et uulgari ter calcinatis, aut foliatis",
+      "image": "et lunę cupellatę, et uulgariter calcinatę, aut foliatę",
+      "problem": "'lunę' (silver) misread as 'sunc': the second ingredient of the Secunda Minera disappears; endings also changed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ut 1. … decoque ut 2. … decoque ut 3.",
+      "image": "ut s.ᵃ … ut s.ᵃ … ut s.ᵃ (ut supra)",
+      "problem": "'ut supra' abbreviations turned into invented step numbers 1, 2, 3",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "fundum boccie lumbis",
+      "image": "fundum boccię lutabis",
+      "problem": "'lutabis' (you will lute) misread as 'lumbis'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ne maad metallisetur",
+      "image": "ne maã metallisetur (materia)",
+      "problem": "abbreviation garbled into a non-word",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "aliam unciam pulveris fixi, et faciendo oia ut fusionem",
+      "image": "aliam unciam d. pulueris fixi, et faciendo oia ut s.ᵃ fusionem",
+      "problem": "'d.' (dicti) and 's.ᵃ' (supra) dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ab igne euolat",
+      "image": "ab igne euolans",
+      "problem": "participle ending misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ignem lenem",
+      "image": "ignem leuem",
+      "problem": "u read as n",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pulueribilis … bene pulueritate",
+      "image": "puluerisabilis … benè puluerisatę",
+      "problem": "forms garbled",
+      "severity": "minor"
+     },
+     {
+      "ocr": "eo radix",
+      "image": "et radix",
+      "problem": "et-ligature read as 'eo'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "About 30 lines of word-fragments from the facing verso, visible at the left edge of the photograph, transcribed as a <margin> block ('lia uncia / autem re: / quousq; …')",
+      "severity": "moderate",
+      "class": "I4"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 308,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "cadet supra 80. partes lunae fine",
+      "image": "cadet supra 3o. partes lunę finę",
+      "problem": "projection ratio misread 30 → 80; the same '3o' glyph is read as 30 on p.193 ('per 30 aut 40 dies') by the same transcription",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "ex recorta",
+      "image": "ex re-torta",
+      "problem": "retorta misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Hine",
+      "image": "Hinc",
+      "problem": "c read as e",
+      "severity": "minor"
+     },
+     {
+      "ocr": "pone supra mercurium, ex quo",
+      "image": "pones supra mercurium, a quo",
+      "problem": "small words misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "solue unciam … congelabit … congelabit",
+      "image": "solues … congelabis … congelabis",
+      "problem": "verb endings misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "cinnabarij",
+      "image": "cinnabaris",
+      "problem": "ending changed",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<unclear>dictae</unclear> tag in the reader text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "p.93 is near-perfect, but p.193 loses 'lunę' (silver), invents step numbers and transcribes facing-page fragments, and p.294 reads the projection ratio 30 as 80."
+ }
+]

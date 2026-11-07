@@ -1,0 +1,698 @@
+[
+ {
+  "book_id": "b08-k",
+  "slot": 1,
+  "title": "Catalogus ingenuorum iuvenum, qui reverendissimi quondam episcopi Viennensis domini D. Joannis Fabri etc. liberalitate, et in Collegio D. Nicolai primum, et postea translato domicilio in Contubernium (sic) in Bruck, in optimorum et honestissimorum artium et philosophiae studiis, propter gloriam dei et amplissimorum studiorum huic et aeternae vitae necessariorum propagationem et conservationem pie alti sunt",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 11,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ex luto mundi tanquam humo sublatum",
+      "image": "ex lucto (ludo/luto) triuiali tanquam humo sublatum",
+      "problem": "'mundi' is not on the leaf; the word is 'triuiali'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "Ego Felix <unclear>Lauber</unclear>, ex <unclear>Lonkierg Almannus</unclear>",
+      "image": "ex [l/L]onkierg Almanganie (place name unclear)",
+      "problem": "place-name reading uncertain, honestly flagged",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Nec animi <unclear>candorius uno restante</unclear>",
+      "image": "Nec animi c[a]ndi[d]ius uno restante (unclear)",
+      "problem": "hard phrase; flagged unclear rather than smoothed",
+      "severity": "minor"
+     },
+     {
+      "ocr": "honesteque integre ac pie vixero",
+      "image": "hone-/stisque integerque ac pie vixero",
+      "problem": "case endings normalised",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 19,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "do receptum in duodecim alumnorum suorum <unclear>numerum</unclear>",
+      "image": "do receptum in duodecim alumnorum suorum retulit",
+      "problem": "'retulit' read as 'numerum' (flagged unclear)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Prius enim <unclear>satisque</unclear> musarum patrono videbatur",
+      "image": "Piu[m] enim sanctumq[ue] musarum patrono videbatur",
+      "problem": "'Pium ... sanctumque' misread, sense of the sentence lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Nec me nuper consulem prudentissimum",
+      "image": "Nec insuper praesulem prudentiss[imum]",
+      "problem": "'praesulem' (the bishop) read as 'consulem'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Antistitem. Virum vnum",
+      "image": "Antistitem Vien[nensem] unum",
+      "problem": "'Vien.' read as 'Virum'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(quod a <unclear>rudentibus</unclear> solum studiosorum propriam rationem habens recte ac restaurari",
+      "image": "quod a ruderib[us] solum studiosorum pia ratione habens refici ac restaurari",
+      "problem": "'pia' read 'propriam', 'refici' read 'recte'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "struck word rendered with Markdown strikethrough '~~<unclear>semper</unclear>~~' — faithful to the deletion, but raw markup in the reader text",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 28,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Est enim ingratitudo omnium malorum sentina",
+      "image": "ingratitudo omnium malorum lerna (proverbial 'Lerna malorum')",
+      "problem": "'sentina' supplied from the expected idiom, not the leaf",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "ex arte diserto",
+      "image": "ex asse diserto",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ad <unclear>gratiam rependendam</unclear> Collegium suum",
+      "image": "ad promo-/vendum Collegium suum",
+      "problem": "'promovendum' read as 'gratiam rependendam' (flagged unclear)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "et venerari",
+      "image": "et demirari",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Jeronimus\nBöpplin",
+      "image": "Id[em] Jeronimus / Böpplin",
+      "problem": "'Id.' before the signature dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "The strongest of the four readers: largely accurate expansions with uncertain words honestly flagged; several moderate misreadings (a word not on the leaf at p.11, 'sentina' for 'lerna', 'numerum' for 'retulit') but no sense-reversing or invented passage."
+ },
+ {
+  "book_id": "b08-m",
+  "slot": 2,
+  "title": "Catalogus ingenuorum iuvenum, qui reverendissimi quondam episcopi Viennensis domini D. Joannis Fabri etc. liberalitate, et in Collegio D. Nicolai primum, et postea translato domicilio in Contubernium (sic) in Bruck, in optimorum et honestissimorum artium et philosophiae studiis, propter gloriam dei et amplissimorum studiorum huic et aeternae vitae necessariorum propagationem et conservationem pie alti sunt",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 11,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "et magno Reipublicae usui collegii uiros , tueri ac defendere velim",
+      "image": "et maxime Nouu[m] suum collegiu[m] iu-/uare, tueri ac defendere velim",
+      "problem": "an invented phrase replaces 'maxime Novum suum collegium iuvare' — the oath to support the New College becomes something else",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "suo collegio nouo , saltem mensis et uariis cultoribus conservato , et Christo penitus dicato",
+      "image": "suo collegio nouo. saltem musis et earu[m] cultorib[us] conservato, et extructo enutriuit",
+      "problem": "'et Christo penitus dicato' is invented; the leaf says 'et extructo enutrivit' (built and nourished)",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "vera fide",
+      "image": "nr̄a fide (nostra)",
+      "problem": "'nostra' read as 'vera'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "manu mea scriptum",
+      "image": "manu p[ro]pria scriptum",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ex Feltkirch Alemannus",
+      "image": "ex [l]onkierg Alman[...]",
+      "problem": "confident place name not supported by the letters",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "in fu-turum dimittit",
+      "image": "in fu-/turu[m] enutriet",
+      "problem": "verb wrong",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Nec animi grati vicem testandi",
+      "image": "Nec animi c[a]ndi[d]ius uno restante",
+      "problem": "smoothed into fluent Latin not on the leaf",
+      "severity": "moderate",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 19,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "quod et sua bonitas me exegit sed habendo",
+      "image": "quod & sua bonitas no[n] exigit sed habendo",
+      "problem": "'non exigit' read 'me exegit' — the bishop's goodness 'demanded' repayment, the reverse of the leaf",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "caeteraque ... atrox aralia katos of-portet utcumque sint aspera tenent observant ac implectuntur",
+      "image": "caeteraq[ue] a[n]i[m]alia ratio[n]e ex-/pertia utcunq[ue] sint aspera ... observant ac amplectuntur",
+      "problem": "nonsense words for 'animalia ratione expertia'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "At cui idipsum ultra atrox est diffi[cile] magis magis amo demulcere",
+      "image": "Ac cu[m] idipsum ultro citroq[ue] ut dixi, ac magis magis animo devolverem",
+      "problem": "garbled; 'difficile' not on the leaf",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Deinde iartum sua amplitudini",
+      "image": "Primu[m] igitur suae amplitudini",
+      "problem": "the first of three promises labelled 'Deinde' (next); breaks the Primum/Deinde/Tertio structure",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Aristotem. Vienn[ensis] vni exstitisse",
+      "image": "Antistitem Vien[nensem] unum extitisse",
+      "problem": "'Antistitem' (the bishop) garbled toward Aristotle",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Tertio aut[em] quod a vetori orthodoxa extra me[?] defectura",
+      "image": "Tertio aut[em] quod a veteri orthodoxa ec[c]l[esi]a nunq[uam] defecturus",
+      "problem": "'ecclesia nunquam' lost; the oath never to defect from the Church is unreadable",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Liberalitate studio- in morem patiet[ur] ac mihi supra[?] suppeditas co[n]- scho[?] studijs bonere iunas",
+      "image": "Liberaliter studio-/ru[m] meoru[m] ratio[n]ib[us] ac mihi sumptib[us] suppeditans co[n]-/silio studioq[ue] benigne iuvans",
+      "problem": "much of the right column is diplomatic garble",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 28,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ingratitudo omnium malorum terra",
+      "image": "ingratitudo omnium malorum lerna",
+      "problem": "'Lerna' read 'terra'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "hic praesertim cum nonnihil temporis",
+      "image": "sit / prosecutus, cum nonnihil temporis",
+      "problem": "the main verb 'sit prosecutus' is lost, leaving the sentence without a predicate",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ad graue=vamen Collegij sui quaecunque re potero uel pau=culo uno",
+      "image": "ad promo-/vendum Collegium suum quacunque re potero me pa-/ratum imo",
+      "problem": "'ad promovendum' (to advance) read toward 'gravamen' (burden); the promise reads as one to burden the college",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "vtile quam eleganter",
+      "image": "vere q[uam] eleganter",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "diuinitus",
+      "image": "dignissimus",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "denique responderet",
+      "image": "benigne responderet",
+      "problem": "misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Mixed: p.28 is mostly readable, but p.11 invents two phrases ('magno Reipublicae usui', 'Christo penitus dicato') and p.19 is largely garbled, with 'non exigit' reversed to 'me exegit'."
+ },
+ {
+  "book_id": "b08-r",
+  "slot": 3,
+  "title": "Catalogus ingenuorum iuvenum, qui reverendissimi quondam episcopi Viennensis domini D. Joannis Fabri etc. liberalitate, et in Collegio D. Nicolai primum, et postea translato domicilio in Contubernium (sic) in Bruck, in optimorum et honestissimorum artium et philosophiae studiis, propter gloriam dei et amplissimorum studiorum huic et aeternae vitae necessariorum propagationem et conservationem pie alti sunt",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 11,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "p que ad ort fadoque uua fide ac religio, ue uelim dicere",
+      "image": "q[uod] unq[uam] ab orthodoxa n[ost]ra fide ac religio-/ne velim deficere",
+      "problem": "the opening clause of the oath is gibberish; 'deficere' (defect) read as 'dicere' (say), so the vow never to abandon the faith is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "et magne Reuerendissimum collegiu uare",
+      "image": "et maxime Nouu[m] suum collegiu[m] iu-/uare",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "totum et manum scriptum uiuum",
+      "image": "Actum et manu p[ro]pria scriptum Vien[nae]",
+      "problem": "the dating formula and the place (Vienna) are garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "quod me ex lecto mirali tangua summo sublata, iam bienni ni amplius",
+      "image": "quod me ex lucto triuiali tanquam humo sublatu[m], iam bienniu[m] in Amplis[simo]",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "et Christo suutunt",
+      "image": "et extructo enutriuit",
+      "problem": "'Christo' is not on the leaf",
+      "severity": "moderate",
+      "class": "O1"
+     },
+     {
+      "ocr": "Nec animi andins uino restanta misi polluere possum",
+      "image": "Nec animi c[a]ndi[d]ius uno restante nisi polliceri possum",
+      "problem": "'polliceri' (promise) read 'polluere' (pollute)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "amphora testatu esse collaturum",
+      "image": "ampliora [struck word] esse collaturum",
+      "problem": "'ampliora' read 'amphora'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 19,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "quod et sua bonitas me exegit sed habendo",
+      "image": "quod & sua bonitas no[n] exigit sed habendo",
+      "problem": "'non exigit' read 'me exegit' — sense reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "atrox aralia katos of-portet ... tenent observant ac implectuntur",
+      "image": "caeteraq[ue] a[n]i[m]alia ratio[n]e ex-/pertia ... observant ac amplectuntur",
+      "problem": "nonsense",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Deinde iartum sua amplitudini",
+      "image": "Primu[m] igitur suae amplitudini",
+      "problem": "the first promise labelled 'Deinde'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Aristotem. Vienn[ensis] vni exstitisse",
+      "image": "Antistitem Vien[nensem] unum extitisse",
+      "problem": "'Antistitem' garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Tertio aut[em] quod a vetori orthodoxa extra me[?] defectura",
+      "image": "Tertio aut[em] quod a veteri orthodoxa ec[c]l[esi]a nunq[uam] defecturus",
+      "problem": "'ecclesia nunquam' lost; the third vow is unreadable",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Liberalitate studio- in morem patiet[ur] ... bonere iunas que in vrae[?] bonu[m] vitam togen[?]",
+      "image": "Liberaliter studioru[m] meoru[m] ratio[n]ib[us] ... benigne iuvans quo in viru[m] bonu[m] vitam integra[m]",
+      "problem": "large stretches of the right column are diplomatic garble",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 28,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "testor me minus horum benefactorum memore fore",
+      "image": "recognosco me nunq[uam] horum beneficioru[m] im-/memore[m] fore",
+      "problem": "'immemorem' read as 'memore', so the writer promises to be LESS mindful of the benefits — the oath is reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Non minus utile quam eleganter publicis minis scripta reliquit",
+      "image": "Non minus vere q[uam] eleganter Publi[us] / Mimus scriptu[m] reliquit",
+      "problem": "the cited author 'Publius Mimus' is lost",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "non possum non praefidendum studium suscipere et semixari et comparatio ingratitudinis sint",
+      "image": "non possu[m] non gratitudinis studiu[m] suspi-/cere et demirari, et e contrario ingratitu-/dinem",
+      "problem": "nonsense",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Quia ipse sum unus ex ipsis patris ac D. D. Joannes",
+      "image": "Qu[i]a ipse [?] R[everendissi]m[u]s in Christo pater ac / D[omi]n[u]s D. Johannes",
+      "problem": "'Reverendissimus in Christo' read as 'sum unus ex ipsis' — a statement not on the leaf",
+      "severity": "moderate",
+      "class": "O1"
+     },
+     {
+      "ocr": "ingratitudo omnium malorum terra",
+      "image": "malorum lerna",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ad grau-uenda Collegium sint qua nunc re potero uel paurate uno",
+      "image": "ad promo-/vendum Collegium suum quacunque re potero me pa-/ratum imo",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "The weakest reader: much of pp. 11 and 19 is letter-by-letter gibberish, and it reverses or loses each of the oath's key clauses ('deficere' read as 'dicere', 'non exigit' as 'me exegit', 'immemorem' as 'memore'). Its p.19 is word-for-word identical to b08-m's."
+ },
+ {
+  "book_id": "b08-t",
+  "slot": 4,
+  "title": "Catalogus ingenuorum iuvenum, qui reverendissimi quondam episcopi Viennensis domini D. Joannis Fabri etc. liberalitate, et in Collegio D. Nicolai primum, et postea translato domicilio in Contubernium (sic) in Bruck, in optimorum et honestissimorum artium et philosophiae studiis, propter gloriam dei et amplissimorum studiorum huic et aeternae vitae necessariorum propagationem et conservationem pie alti sunt",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 11,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "suo collegio nouo: saltem mensis et raro uictoribus conseruato, et Christo seruierint",
+      "image": "suo collegio nouo. saltem musis et earu[m] cultorib[us] conservato, et extructo enutriuit",
+      "problem": "'et Christo seruierint' is not on the leaf; 'extructo enutrivit' is",
+      "severity": "serious",
+      "class": "O1"
+     },
+     {
+      "ocr": "aliquando propitiori fortuna",
+      "image": "aliquando pinguiori fortuna",
+      "problem": "'pinguiori' normalised to 'propitiori'",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "et maxime Nouigiensem collegium",
+      "image": "et maxime Nouu[m] suum collegiu[m]",
+      "problem": "'Novum suum' read as a non-word",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "manu mea scriptum Viennes",
+      "image": "manu p[ro]pria scriptum Vien[nae]",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "in futurum subministret",
+      "image": "in fu-/turu[m] enutriet",
+      "problem": "verb wrong",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Nec animi tantum uino restante nisi polliceor possum",
+      "image": "Nec animi c[a]ndi[d]ius uno restante nisi polliceri possum",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "amphora testatur esse collocaturum",
+      "image": "ampliora [struck word] esse collaturum",
+      "problem": "'ampliora' read 'amphora'",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "no <columns>/<column-break>: the two leaves of the opening are run together into one column",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 19,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Illo quidem gratia referendo (quod et sua bonitas me exegisset sed habendo",
+      "image": "No[n] quide[m] gratia[m] refere[n]-/do (quod & sua bonitas no[n] exigit) sed habendo",
+      "problem": "'Non ... non exigit' read 'Illo ... me exegisset' — sense reversed (the bishop demanded repayment)",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Scilicet locum fabri Aristotelem, Vtemini vnum exstitisse",
+      "image": "Sc[ilice]t locu[m] Fabri / Antistitem Vien[nensem] unum extitisse",
+      "problem": "'Antistitem' (the bishop Fabri) made into 'Aristotelem'; the vocab tag repeats 'Aristotelem' — a wrong name a reader would take at face value",
+      "severity": "serious",
+      "class": "O8"
+     },
+     {
+      "ocr": "At cui idipsum ultra caeteros est difficile",
+      "image": "Ac cu[m] idipsum ultro citroq[ue] ut dixi",
+      "problem": "'difficile' not on the leaf",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Demum igitur sua amplitudini",
+      "image": "Primu[m] igitur suae amplitudini",
+      "problem": "the first promise labelled 'Demum'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "perpetuum ac diuturne seruaturum possi-turi fuero",
+      "image": "perpetuu[m] ubicunq[ue] terraru[m] posi-/tus fuero",
+      "problem": "invented words",
+      "severity": "moderate",
+      "class": "O1"
+     },
+     {
+      "ocr": "Deinde et sancte quod indies merore et deuote sumptum deum praecarentur",
+      "image": "Deinde & s[e]c[un]do quod indesinenter & devote sum[mum] Deu[m] / precaturus",
+      "problem": "garbled",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 28,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "non possum non praestitutis studiis prospicere, et detestari, et e contrario ingratitudine omnibus modis detestari",
+      "image": "non possu[m] non gratitudinis studiu[m] suspi-/cere et demirari, et e contrario ingratitu-/dinem omnibus modis detestari",
+      "problem": "'gratitudinis ... demirari' read as 'praestitutis studiis ... detestari': he now 'detests' in both clauses, so the contrast between admiring gratitude and detesting ingratitude is lost",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "ingratitudo omnium malorum terra",
+      "image": "malorum lerna",
+      "problem": "misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "ad promovendam collectionem",
+      "image": "ad promo-/vendum Collegium suum",
+      "problem": "'Collegium' read 'collectionem'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Quia reverendissimus princeps in Christo",
+      "image": "Qu[i]a ipse [?] R[everendissi]m[u]s in Christo",
+      "problem": "'princeps' not on the leaf",
+      "severity": "minor"
+     },
+     {
+      "ocr": "persecutus",
+      "image": "prosecutus",
+      "problem": "misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Quem senatim priores lego",
+      "image": "Que[m] senariu[m] [?] lego",
+      "problem": "'senarium' misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "centering arrows leak into the reader text: '->Id Jeronimus<-' / '->Böpplin<-'",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Middling: the gist is readable on all three pages, but there is an invented phrase on p.11, a sense reversal on p.19 ('me exegisset'), and the bishop is renamed 'Aristotelem' on p.19; centering-arrow markup leaks on p.28."
+ }
+]

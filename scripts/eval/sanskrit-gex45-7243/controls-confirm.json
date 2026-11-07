@@ -1,0 +1,327 @@
+{
+ "sa-2380f8b8-p481": {
+  "kind": "word",
+  "line": 9,
+  "was": "अविच्युति",
+  "now": "होता",
+  "expected_grade_min": 2
+ },
+ "sa-a4805caa-p543": {
+  "kind": "line",
+  "line": 5,
+  "was": "ईर्षुर्लुब्धो द्युतिमान् वचनपटुः कलहकृद्विशाखासु ।",
+  "expected_grade_min": 3
+ },
+ "sa-f09f57d7-p188": {
+  "kind": "word",
+  "line": 12,
+  "was": "कला",
+  "now": "स्तोभाक्षरैरपि",
+  "expected_grade_min": 2
+ },
+ "sa-9ba75a76-p245": {
+  "kind": "line",
+  "line": 26,
+  "was": "चेटि–तह । ( निष्क्रान्ता । ) [ तथा । ]",
+  "expected_grade_min": 3
+ },
+ "sa-f502c7c1-p213": {
+  "kind": "word",
+  "line": 19,
+  "was": "क्ष्मावायुरत्राम्बुदस्तस्मादावहसंज्ञकः",
+  "now": "वायुगोलश्चकारादुद्वह-",
+  "expected_grade_min": 2
+ },
+ "sa-f09f595b-p573": {
+  "kind": "line",
+  "line": 22,
+  "was": "हस्तमन्तरितं कृत्वा ११",
+  "expected_grade_min": 3
+ },
+ "sa-1052a93c-p345": {
+  "kind": "word",
+  "line": 59,
+  "was": "वीर्यत्वे",
+  "now": "विवर्त",
+  "expected_grade_min": 2
+ },
+ "sa-05c7c071-p209": {
+  "kind": "line",
+  "line": 64,
+  "was": "कुशलाः, स पुनरुदकादनन्य इति । द्वौ रसाविति",
+  "expected_grade_min": 3
+ },
+ "sa-06eb90f6-p1312": {
+  "kind": "word",
+  "line": 11,
+  "was": "तिथि",
+  "now": "श्रीपति",
+  "expected_grade_min": 2
+ },
+ "sa-487f30a6-p240": {
+  "kind": "line",
+  "line": 24,
+  "was": "इदानीं नवस्य सलिलस्य वाह्याभ्यन्तरप्रयोगे वाह्याभ्यन्त-",
+  "expected_grade_min": 3
+ },
+ "sa-3c8397bb-p157": {
+  "kind": "word",
+  "line": 14,
+  "was": "३७०",
+  "now": "ब्रह्मायुर्लक्षवेधकः",
+  "expected_grade_min": 2
+ },
+ "sa-ee26b1c8-p54": {
+  "kind": "line",
+  "line": 18,
+  "was": "बुधाधिपतिः । अथ त्रिंशतः शेषम् ४ । एतावन्ति दिनानि प्रवृत्तस्य ।",
+  "expected_grade_min": 3
+ },
+ "sa-9ba757c7-p165": {
+  "kind": "word",
+  "line": 9,
+  "was": "११५",
+  "now": "११४",
+  "expected_grade_min": 2
+ },
+ "sa-0c10b7a9-p485": {
+  "kind": "line",
+  "line": 11,
+  "was": "शुक्र, गुरु, बुध, शनि,और मङ्गल, ये ग्रह नौ ९ में दो दो की वृद्धि से अर्थात् शुक्र ९, गुरु",
+  "expected_grade_min": 3
+ },
+ "sa-1697c362-p109": {
+  "kind": "word",
+  "line": 11,
+  "was": "यशो",
+  "now": "चापदण्डां",
+  "expected_grade_min": 2
+ },
+ "sa-57449355-p286": {
+  "kind": "line",
+  "line": 8,
+  "was": "तैजसः सप्तधा भिन्नो बुद्धिगर्वख7वायुभिः ।",
+  "expected_grade_min": 3
+ },
+ "sa-c9e1f67c-p238": {
+  "kind": "word",
+  "line": 17,
+  "was": "परि-",
+  "now": "पाक्षिकी",
+  "expected_grade_min": 2
+ },
+ "sa-b109159e-p449": {
+  "kind": "line",
+  "line": 35,
+  "was": "ऋते xi, 32",
+  "expected_grade_min": 3
+ },
+ "sa-9d20bde5-p73": {
+  "kind": "word",
+  "line": 14,
+  "was": "सामर्थ्यम्,",
+  "now": "पदं",
+  "expected_grade_min": 2
+ },
+ "sa-f502b85a-p295": {
+  "kind": "line",
+  "line": 20,
+  "was": "= तथा ; तस्मिं पकारे = तथा ; एवं सब्बथा ; अञ्ञथा ;",
+  "expected_grade_min": 3
+ },
+ "sa-1697d02c-p555": {
+  "kind": "word",
+  "line": 14,
+  "was": "देहिनाम्",
+  "now": "बान्धवा",
+  "expected_grade_min": 2
+ },
+ "sa-5d8bcdfd-p204": {
+  "kind": "line",
+  "line": 10,
+  "was": "थिउल्लिया, गहियव्वा अगहियपुव्वा तिहुयणजयपडागा । एओवमं दुक्करं समणत्तणं ति ॥",
+  "expected_grade_min": 3
+ },
+ "sa-574474fa-p103": {
+  "kind": "word",
+  "line": 12,
+  "was": "सर्व-",
+  "now": "लोकतश्च",
+  "expected_grade_min": 2
+ },
+ "sa-be36eddd-p717": {
+  "kind": "line",
+  "line": 22,
+  "was": "स्वरूपेणैव जनको न पररूपेण, येन चात्मीयेन स्वभावेनासौ जनक इष्यते तस्माच्च",
+  "expected_grade_min": 3
+ },
+ "sa-ee26c1e2-p56": {
+  "kind": "word",
+  "line": 19,
+  "was": "निजभेदानपास्य",
+  "now": "रूपगण-",
+  "expected_grade_min": 2
+ },
+ "sa-5d8be97b-p119": {
+  "kind": "line",
+  "line": 20,
+  "was": "निजलीलाविलासात्तु भासयेत् तदिदन्तया।",
+  "expected_grade_min": 3
+ },
+ "sa-91d255ef-p66": {
+  "kind": "word",
+  "line": 9,
+  "was": "विशेषणों",
+  "now": "उसी",
+  "expected_grade_min": 2
+ },
+ "sa-a0ef5a44-p67": {
+  "kind": "line",
+  "line": 14,
+  "was": "कियन्मेस्यादितिप्रश्नेकृतेसति ॥ २५ ॥ प्रस्ता",
+  "expected_grade_min": 3
+ },
+ "sa-f502c5b5-p135": {
+  "kind": "word",
+  "line": 9,
+  "was": "मूलं",
+  "now": "पुनः",
+  "expected_grade_min": 2
+ },
+ "sa-e5a9d403-p143": {
+  "kind": "line",
+  "line": 20,
+  "was": "॥९०॥ यां ते॑ रु॒द्र इषु॒मास्य॒दङ्गे॑भ्यो हृ॒दया॑य च ।",
+  "expected_grade_min": 3
+ },
+ "sa-1697d5dc-p122": {
+  "kind": "word",
+  "line": 6,
+  "was": "वैश्रवणस्तथा",
+  "now": "मान्धाता",
+  "expected_grade_min": 2
+ },
+ "sa-a5ffb864-p176": {
+  "kind": "line",
+  "line": 28,
+  "was": "व्यतीत होंते चले गये । अकस्मात् अपनी युवास्था को फूटते हुये घड़े के",
+  "expected_grade_min": 3
+ },
+ "sa-f502ba19-p262": {
+  "kind": "word",
+  "line": 14,
+  "was": "शेषरहे",
+  "now": "कही",
+  "expected_grade_min": 2
+ },
+ "sa-be36f107-p107": {
+  "kind": "line",
+  "line": 22,
+  "was": "क्रमव्यवसायो न स्यादाशूत्पत्तेस्तुल्यत्वात्, ततश्च प्रतीतिभेदो न स्यात्, सर्वासां",
+  "expected_grade_min": 3
+ },
+ "sa-a99c0f2f-p78": {
+  "kind": "word",
+  "line": 12,
+  "was": "घटमुखेन",
+  "now": "संभावितः,",
+  "expected_grade_min": 2
+ },
+ "sa-c1af74df-p268": {
+  "kind": "line",
+  "line": 30,
+  "was": "अभिजिद् ब्रह्महृदयं त्रयोदशभिरंशकैः ॥ १२ ॥",
+  "expected_grade_min": 3
+ },
+ "sa-1697bdac-p195": {
+  "kind": "word",
+  "line": 9,
+  "was": "सर्वं",
+  "now": "सभां",
+  "expected_grade_min": 2
+ },
+ "sa-09173f3c-p64": {
+  "kind": "line",
+  "line": 22,
+  "was": "मानस्योत्कर्षापकर्षावाह—गर्भः स्यादित्यादिना । गर्भिण्या राजदर्शने",
+  "expected_grade_min": 3
+ },
+ "sa-c27da5ea-p674": {
+  "kind": "word",
+  "line": 31,
+  "was": "लेकर",
+  "now": "दिनों",
+  "expected_grade_min": 2
+ },
+ "sa-09e780a7-p626": {
+  "kind": "line",
+  "line": 30,
+  "was": "श्रुतिविरोधोत्थापनार्था । अत्र हि लोमकेशयोरोषधिवनस्पतिगमनं दृष्टविरोधाद्भाक्तं तावदभ्युपेयम् । एवं च तन्मध्यपति-",
+  "expected_grade_min": 3
+ },
+ "sa-5744c41d-p150": {
+  "kind": "word",
+  "line": 13,
+  "was": "परस्परसहकारित्वमनयोरे-",
+  "now": "स्यादिति",
+  "expected_grade_min": 2
+ },
+ "sa-05c7c3a0-p171": {
+  "kind": "line",
+  "line": 18,
+  "was": "शब्दो व्यक्तौ प्रयुज्यतइति । यदि गौरित्यस्य पदस्य न व्यक्तिरर्थो ऽस्तु तर्हि ।",
+  "expected_grade_min": 3
+ },
+ "sa-7ec56c99-p579": {
+  "kind": "word",
+  "line": 15,
+  "was": "इसकी",
+  "now": "तद्वि४गुणम्",
+  "expected_grade_min": 2
+ },
+ "sa-574472af-p408": {
+  "kind": "line",
+  "line": 24,
+  "was": "अस्मात्कर्मण इदं फलमनुभवत्विति व्यवस्थापूर्वकं कर्मफलानि निर्मितवन्तमित्यर्थः । अचिन्त्यरूपं चिन्त-",
+  "expected_grade_min": 3
+ },
+ "sa-5d8bd37f-p150": {
+  "kind": "word",
+  "line": 23,
+  "was": "व्यतीतानां",
+  "now": "तरलतरसंसारमतरन्",
+  "expected_grade_min": 2
+ },
+ "sa-18cd7735-p100": {
+  "kind": "line",
+  "line": 22,
+  "was": "विशिष्टम् । तदवगतिसमकालं विगतस्वातिरिक्तवत्स्वरूपो भूत्वा कृतकृत्यो",
+  "expected_grade_min": 3
+ },
+ "sa-05c7c4d9-p190": {
+  "kind": "word",
+  "line": 14,
+  "was": "चिरादन्योन्यदर्शनेन",
+  "now": "द्वादश",
+  "expected_grade_min": 2
+ },
+ "sa-5d8bf7ad-p264": {
+  "kind": "line",
+  "line": 15,
+  "was": "पडतोस हे योग्य नाही.’",
+  "expected_grade_min": 3
+ },
+ "sa-1697ba6d-p651": {
+  "kind": "word",
+  "line": 7,
+  "was": "००२",
+  "now": "कृताञ्जलिः",
+  "expected_grade_min": 2
+ },
+ "sa-0cf222e4-p520": {
+  "kind": "line",
+  "line": 5,
+  "was": "एव राशिः १० वा १७० ॥",
+  "expected_grade_min": 3
+ }
+}

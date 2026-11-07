@@ -1,6 +1,7 @@
 // PRIOR ART: sourcelibrary-atlas src/lib/themes.ts — the same entries, copied for the maps that have moved to
 //   /explore/maps (#4922). Looked in src/lib for an existing maps/theme registry: none (map-* files are the entity map).
-// One entry per timeline map on /explore/maps/<slug>. Its data files are copied build artifacts in
+// One entry per timeline map. A map with a conceptual history is served as that history's sources view,
+// /explore/histories/<slug>/sources (#7646); /explore/maps/<slug> redirects there. Its data files are copied build artifacts in
 // public/data/maps/ (scripts/maintenance/import-atlas-maps.mjs): <slug>.json, and optionally
 // <slug>-l2.json (level 2: summaries, key terms, passages) and lens-<slug>.json (concept lens).
 
@@ -18,7 +19,7 @@ export type MapTheme = {
   level2?: boolean;
   l2Topic?: string;        // "What it says about <topic>" in the catalogue (default: the mind)
   lens?: boolean;
-  history?: string;        // the concept's conceptual history, /explore/histories/<slug> (#7623)
+  history?: string;        // the concept's conceptual history, /explore/histories/<slug> (#7623); the map is its sources view (#7646)
   layers?: boolean;        // <slug>-layers.json: kinds, questions, lines of argument, stories, counter-texts, verdict (#7129)
   views?: boolean;         // tabs: Timeline, Stories (from the layers), Semantic map and Theme river (<slug>-semantic/map.json)
   detailHint?: string;
@@ -66,3 +67,7 @@ export const MAP_THEMES: MapTheme[] = [
 ];
 
 export const mapThemeBySlug = (slug: string) => MAP_THEMES.find((t) => t.slug === slug);
+/** A map whose concept has a conceptual history is that history's sources view (#7646); /explore/maps/<slug> redirects
+ *  there (next.config.ts). The history's concept slug is the map's slug. */
+export const sourcesHref = (t: MapTheme) => (t.history ? `${t.history}/sources` : null);
+export const mapThemeForConcept = (concept: string) => MAP_THEMES.find((t) => t.history === `/explore/histories/${concept}`);

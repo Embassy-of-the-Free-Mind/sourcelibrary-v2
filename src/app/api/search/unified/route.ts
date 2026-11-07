@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readCardFraming } from '@/lib/collection-card-image';
 import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
+import { foldSimplifiedHan } from '@/lib/search/han-fold';
 
 /** book_indexes fields the index-term lane reads (#5184). */
 const SEARCH_INDEX_PROJECTION = { _id: 0, book_id: 1, concepts: 1, people: 1, places: 1, keywords: 1 } as const;
@@ -19,7 +20,7 @@ import { resolveSearchScope, closedScopeResponse, matchClip, type SearchScope } 
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
-import { assessMatchQuality } from '@/lib/search/match-quality';
+import { assessMatchQuality, coversEveryToken, namedAuthorGallery, termIsNamedPerson } from '@/lib/search/match-quality';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
@@ -102,7 +103,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const tenantContext = getTenantContextFromRequest(request.headers);
-    const query = searchParams.get('q') || '';
+    // Every lane below matches the corpus's traditional characters.
+    const query = foldSimplifiedHan(searchParams.get('q') || '');
 
     // Anonymous visitors get ANON_SEARCHES_PER_HOUR (10, Derek 2026-10-06; was 5) distinct searches/hour, then a sign-in prompt.
     // Counts distinct query strings (not raw requests) so typeahead and filter
@@ -711,6 +713,41 @@ export async function GET(request: NextRequest) {
       ],
     };
 
+    // A query that is a person's name ("Joachim Bouvet" has an author page, or is
+    // the author of a book in the keyword lane) asks for THAT person. The index and
+    // gallery lanes match any one word, so without this the reader gets St Joachim
+    // and Joachim of Fiore under the name of a Jesuit in Beijing.
+    const namesAuthor = !isPhrase && (
+      navResults.some(r => r.page_type === 'author' && coversEveryToken(query, r.title))
+      || scopedBooks.results.some((r: any) => coversEveryToken(query, r.author || ''))
+    );
+    if (namesAuthor) {
+      let indexRows = scopedIndex.results.filter((r: any) => termIsNamedPerson(query, r.term));
+      // The person may be indexed by surname alone ("Drebbel"), which popular entities
+      // sharing the first name crowd out of the full-name lookup. Ask for the surname.
+      if (indexRows.length === 0) {
+        const surname = matchQuery.trim().split(/\s+/).pop() || '';
+        const bySurname = await withTimeout(
+          searchIndex(db, surname, limit, tenantId || undefined, yearRange).catch(() => emptyIndex),
+          emptyIndex, 'index-surname', 2500,
+        );
+        indexRows = bySurname.results.filter((r: any) => termIsNamedPerson(query, r.term));
+      }
+      scopedIndex = { ...scopedIndex, results: indexRows, total: indexRows.length, hasMore: false };
+      // A failure here costs pictures, never the search.
+      const authorBookIds = scopedBooks.results
+        .filter((r: any) => coversEveryToken(query, r.author || ''))
+        .map((r: any) => r.book_id || r.id)
+        .filter(Boolean);
+      const fromAuthorBooks = await withTimeout(
+        galleryByBook(db, authorBookIds, galleryLimit, tenantId || undefined, yearRange).catch(() => []),
+        [] as GalleryResult[], 'gallery-by-author', 2500,
+      );
+      const merged = namedAuthorGallery<GalleryResult & { matchText?: string }>(query, scopedGallery.results, fromAuthorBooks, galleryLimit);
+      scopedGallery = { ...scopedGallery, results: merged, total: merged.length };
+    }
+    scopedGallery = { ...scopedGallery, results: scopedGallery.results.map(({ matchText: _matchText, ...r }: any) => r) };
+
     const matchQuality = assessMatchQuality(query, [
       ...siteResult.results.map(r => [r.title, r.snippet].join(' ')),
       ...scopedBooks.results.map((r: any) => [r.title, r.display_title, r.author, r.summary].filter(Boolean).join(' ')),
@@ -865,6 +902,9 @@ async function searchIndex(db: any, query: string, limit: number, tenantId?: str
             should: [
               { autocomplete: { query, path: 'name', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
               { autocomplete: { query, path: 'aliases', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              // The words in order outrank any one of them. Without this a rare full
+              // name loses every slot to popular entities sharing its first name.
+              { autocomplete: { query, path: 'name', tokenOrder: 'sequential', score: { boost: { value: 1000 } } } },
             ],
             minimumShouldMatch: 1,
             // Boost score by book_count so popular entities rank higher
@@ -1000,6 +1040,30 @@ async function searchIndex(db: any, query: string, limit: number, tenantId?: str
   return { results, total: results.length, hasMore: results.length >= limit };
 }
 
+async function galleryByBook(db: any, bookIds: string[], limit: number, tenantId?: string, yearRange?: { min?: number; max?: number }): Promise<GalleryResult[]> {
+  if (bookIds.length === 0) return [];
+  const images = await db.collection('gallery_images')
+    .find(
+      { book_id: { $in: bookIds }, gallery_quality: { $gte: 0.5 }, ...(tenantId ? { tenantId } : {}) },
+      { projection: { page_id: 1, page_number: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1 } },
+    )
+    .sort({ gallery_quality: -1 })
+    .limit(limit)
+    .maxTimeMS(2000)
+    .toArray();
+  const withImages = images.filter((img: any) => img.thumbnail_url || img.extracted_url);
+  const visible = await filterVisibleArtworks(db, withImages as Array<{ book_id: string }>, yearRange);
+  return visible.map((img: any) => ({
+    id: `${img.page_id}-${img.detection_index}`,
+    imageUrl: img.thumbnail_url || img.extracted_url || '',
+    description: img.description || '',
+    type: img.type,
+    bookTitle: img.book_title || '',
+    bookId: img.book_id || '',
+    pageNumber: typeof img.page_number === 'number' ? img.page_number : null,
+  }));
+}
+
 async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number, tenantId?: string, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     // gallery_images denormalizes the owning book's year (book_year, present on
@@ -1023,6 +1087,8 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
                 { text: { query, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
                 { text: { query, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
                 { text: { query, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                // Every word together outranks any one of them (see the entity lane).
+                { text: { query, path: ['museum_description', 'metadata.subjects', 'metadata.figures'], matchCriteria: 'all', score: { boost: { value: 1000 } } } },
               ],
               minimumShouldMatch: 1,
               filter: [
@@ -1034,7 +1100,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         },
         ...(hasYearRange ? [{ $match: { book_year: yearMatch } }] : []),
         { $limit: limit * 2 },
-        { $project: { page_id: 1, page_number: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
+        { $project: { page_id: 1, page_number: 1, detection_index: 1, description: 1, museum_description: 1, 'metadata.figures': 1, 'metadata.subjects': 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
       ], { maxTimeMS: 5000 }).toArray();
     } catch {
       // Fallback to regex if Atlas Search index not ready
@@ -1053,7 +1119,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
               { 'metadata.figures': queryRegex },
             ],
           },
-          { projection: { page_id: 1, page_number: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
+          { projection: { page_id: 1, page_number: 1, detection_index: 1, description: 1, museum_description: 1, 'metadata.figures': 1, 'metadata.subjects': 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
         )
         .sort({ gallery_quality: -1 })
         .limit(limit)
@@ -1078,6 +1144,8 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         bookTitle: img.book_title || '',
         bookId: img.book_id || '',
         pageNumber: typeof img.page_number === 'number' ? img.page_number : null,
+        // What the row can be judged on beyond its caption; removed before the response.
+        matchText: [img.museum_description, img.metadata?.figures, img.metadata?.subjects].flat().filter(Boolean).join(' '),
       })),
       total: visibleImages.length,
     };

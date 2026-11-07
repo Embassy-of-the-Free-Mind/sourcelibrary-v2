@@ -36,6 +36,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
+import { linkHistorySources } from './link-history-sources.mjs';
 
 const argv = (k, d = null) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const SRC = argv('--repo');
@@ -60,7 +61,8 @@ const QUESTION = {
   sympathy: 'Did sympathy move from the cosmos into things, then into the body, the feelings, the brain and society, as the usual story says? And what separates sympathy and resonance (like answering like) from harmony (unlikes joined)?',
 };
 const TITLE = { aliveness: 'Aliveness', consciousness: 'Consciousness', harmony: 'Harmony', magic: 'Magic', markets: 'Markets', nous: 'Intelligence (nous)', soul: 'Soul', sympathy: 'Sympathy' };
-const MAP = { consciousness: '/explore/maps/consciousness', harmony: '/explore/maps/harmony', magic: '/explore/maps/magic' };
+// a concept with a map: the map is the history's sources view (#7646); its slug is the concept's
+const MAP = { consciousness: `${BASE}/consciousness/sources`, harmony: `${BASE}/harmony/sources`, magic: `${BASE}/magic/sources` };
 
 const readJsonl = (f) => fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#') && !l.startsWith('//')).map((l) => JSON.parse(l)) : [];
 const listJsonl = (d) => fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.jsonl')).sort().map((f) => path.join(d, f)) : [];
@@ -110,6 +112,12 @@ function audits() {
   // "Rejected claims were corrected or set `disputed` (not in markets)"
   const nc = txt.match(/corrected or set `disputed` \(not in ([a-z, ]+)\)/);
   out.uncorrected = nc ? nc[1].split(/,\s*|\s+and\s+/).map((s) => s.trim()).filter(Boolean) : [];
+  // what the rejections were, from the audit's own report (quality-statements.md: name the kinds, as counts)
+  const reportFile = path.join(SRC, 'audits', out.ALL.date, 'report.md');
+  const report = fs.readFileSync(reportFile, 'utf8');
+  const kinds = report.match(/^\| ALL \|.*\| misattributed (\d+), not-on-page (\d+), overstates (\d+) \|$/m);
+  if (!kinds) throw new Error(`${reportFile}: no ALL row with kinds — the table format changed`);
+  out.kinds = { overstates: +kinds[3], misattributed: +kinds[1], notOnPage: +kinds[2], noneContradicted: /No sampled claim was flatly contradicted by its page/.test(report) };
   return out;
 }
 
@@ -284,7 +292,7 @@ for (const [c, { reg, claims }] of Object.entries(raw)) {
 }
 
 const essaySlugs = new Map(Object.entries(raw).map(([c, v]) => [c, new Set(v.ideas.map((f) => f.replace(/\.md$/, '')))]));
-const index = { generated: report.generated, audit: { all: AUD.ALL, judge: AUD.judge }, concepts: [] };
+const index = { generated: report.generated, audit: { all: AUD.ALL, kinds: AUD.kinds, judge: AUD.judge }, concepts: [] };
 if (!DRY) fs.mkdirSync(OUT, { recursive: true });
 let total = 0;
 for (const [c, { dir, ideas }] of Object.entries(raw)) {
@@ -320,3 +328,5 @@ report.redactions = redLog;
 console.table(Object.fromEntries(Object.entries(report.concepts).map(([c, s]) => [c, { shown: s.verified + s.partial, partial: s.partial, dropped: s.dropped.unverified + s.dropped.disputed + s.dropped.other, essays: s.essays, quotesKept: s.quotesKept, quotesCopyright: s.quotesDroppedCopyright, quotesNotPublic: s.quotesDroppedNotPublic, refsLinked: s.refsLinked, refsPlain: s.refsPlain }])));
 console.log('skipped', report.skipped, '\nredactions', redLog.length, DRY ? '(dry run, nothing written)' : `\nwrote ${OUT} ${(total / 1e6).toFixed(2)} MB`);
 if (REPORT) fs.writeFileSync(REPORT, JSON.stringify(report, null, 1));
+// new claims move which works each history cites on its map, the sources view (#7646)
+if (!DRY) linkHistorySources();

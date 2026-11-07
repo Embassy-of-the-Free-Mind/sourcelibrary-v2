@@ -1,0 +1,3092 @@
+[
+ {
+  "key": "T3-69aec69ea1e0be599604f14e",
+  "face": "fraktur",
+  "year": 1787,
+  "dta": "goethe_iphigenie_1787",
+  "lite": {
+   "cer_l2": 0.04,
+   "cer_l1": 0.008,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 21.014
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.034,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 18.116
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.034,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 18.116
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.036,
+   "cer_l1": 0.003,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 20,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 21.739
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-698fb7836b95eeda7d2d24d3",
+  "face": "fraktur",
+  "year": 1847,
+  "dta": "humboldt_kosmos02_1847",
+  "lite": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 10.638
+   },
+   "names": {
+    "names": 15,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 15,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 15,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 10.638
+   },
+   "names": {
+    "names": 15,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69e75440095c302d3fddda1d",
+  "face": "fraktur",
+  "year": 1781,
+  "dta": "schiller_raeuber_1781",
+  "lite": {
+   "cer_l2": 0.062,
+   "cer_l1": 0.011,
+   "cer_fold": 0.008,
+   "fca_fold": 0.992,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 50,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 42.857
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  },
+  "a": {
+   "cer_l2": 0.065,
+   "cer_l1": 0.01,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 49.143
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.065,
+   "cer_l1": 0.01,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 49.143
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.06,
+   "cer_l1": 0.006,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 53,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 41.714
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69e759fd095c302d3fdde99e",
+  "face": "fraktur",
+  "year": 1772,
+  "dta": "lessing_emilia_1772",
+  "lite": {
+   "cer_l2": 0.055,
+   "cer_l1": 0.012,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 39.264
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.045,
+   "cer_l1": 0.002,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 32,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 19.632
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.045,
+   "cer_l1": 0.002,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 32,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 19.632
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.044,
+   "cer_l1": 0.001,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 32,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 19.632
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69e748b385f786e884a4cdd7",
+  "face": "fraktur",
+  "year": 1790,
+  "dta": "goethe_faustfragment_1790",
+  "lite": {
+   "cer_l2": 0.519,
+   "cer_l1": 0.501,
+   "cer_fold": 0.007,
+   "fca_fold": 0.992,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 4,
+     "wrong_text": 2
+    },
+    "score": 66.667
+   },
+   "names": {
+    "names": 2,
+    "errors": 1
+   }
+  },
+  "a": {
+   "cer_l2": 0.601,
+   "cer_l1": 0.588,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 28.455
+   },
+   "names": {
+    "names": 2,
+    "errors": 1
+   }
+  },
+  "b": {
+   "cer_l2": 0.601,
+   "cer_l1": 0.588,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 10,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 28.455
+   },
+   "names": {
+    "names": 2,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.006,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 33,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 30.894
+   },
+   "names": {
+    "names": 2,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69ade7095426286aa40cf30a",
+  "face": "fraktur",
+  "year": 1808,
+  "dta": "goethe_faust01_1808",
+  "lite": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.004,
+   "cer_fold": 0,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 31,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 20.395
+   },
+   "names": {
+    "names": 2,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.004,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 31,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 20.395
+   },
+   "names": {
+    "names": 2,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.004,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 31,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 20.395
+   },
+   "names": {
+    "names": 2,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.004,
+   "cer_fold": 0,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 31,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 20.395
+   },
+   "names": {
+    "names": 2,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-6990580b1729589044135344",
+  "face": "fraktur",
+  "year": 1802,
+  "dta": "chladni_akustik_1802",
+  "lite": {
+   "cer_l2": 0.071,
+   "cer_l1": 0.025,
+   "cer_fold": 0.014,
+   "fca_fold": 0.981,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 65,
+     "misleads": 4,
+     "wrong_text": 3
+    },
+    "score": 71.749
+   },
+   "names": {
+    "names": 9,
+    "errors": 1
+   }
+  },
+  "a": {
+   "cer_l2": 0.067,
+   "cer_l1": 0.022,
+   "cer_fold": 0.012,
+   "fca_fold": 0.987,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 50,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 49.327
+   },
+   "names": {
+    "names": 9,
+    "errors": 1
+   }
+  },
+  "b": {
+   "cer_l2": 0.067,
+   "cer_l1": 0.022,
+   "cer_fold": 0.012,
+   "fca_fold": 0.988,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 50,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 49.327
+   },
+   "names": {
+    "names": 9,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.071,
+   "cer_l1": 0.025,
+   "cer_fold": 0.014,
+   "fca_fold": 0.981,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 65,
+     "misleads": 4,
+     "wrong_text": 3
+    },
+    "score": 71.749
+   },
+   "names": {
+    "names": 9,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69aea8acb3730458c437910b",
+  "face": "fraktur",
+  "year": 1883,
+  "dta": "dilthey_geisteswissenschaften_1883",
+  "lite": {
+   "cer_l2": 0.051,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 77,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 31.834
+   },
+   "names": {
+    "names": 13,
+    "errors": 2
+   }
+  },
+  "a": {
+   "cer_l2": 0.05,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 77,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 28.374
+   },
+   "names": {
+    "names": 13,
+    "errors": 1
+   }
+  },
+  "b": {
+   "cer_l2": 0.05,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 78,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 28.72
+   },
+   "names": {
+    "names": 13,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.051,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 77,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 31.834
+   },
+   "names": {
+    "names": 13,
+    "errors": 2
+   }
+  }
+ },
+ {
+  "key": "T3-69e961962beefe2f6f72c173",
+  "face": "fraktur",
+  "year": 1557,
+  "dta": "staden_landschafft_1557",
+  "lite": {
+   "cer_l2": 0.094,
+   "cer_l1": 0.029,
+   "cer_fold": 0.026,
+   "fca_fold": 0.968,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 41,
+     "misleads": 48,
+     "wrong_text": 0
+    },
+    "score": 97.232
+   },
+   "names": {
+    "names": 9,
+    "errors": 5
+   }
+  },
+  "a": {
+   "cer_l2": 0.082,
+   "cer_l1": 0.016,
+   "cer_fold": 0.018,
+   "fca_fold": 0.981,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 45,
+     "misleads": 41,
+     "wrong_text": 0
+    },
+    "score": 86.505
+   },
+   "names": {
+    "names": 9,
+    "errors": 4
+   }
+  },
+  "b": {
+   "cer_l2": 0.08,
+   "cer_l1": 0.014,
+   "cer_fold": 0.018,
+   "fca_fold": 0.981,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 42,
+     "misleads": 41,
+     "wrong_text": 0
+    },
+    "score": 85.467
+   },
+   "names": {
+    "names": 9,
+    "errors": 5
+   }
+  },
+  "c": {
+   "cer_l2": 0.097,
+   "cer_l1": 0.033,
+   "cer_fold": 0.026,
+   "fca_fold": 0.969,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 39,
+     "misleads": 48,
+     "wrong_text": 1
+    },
+    "score": 105.19
+   },
+   "names": {
+    "names": 9,
+    "errors": 4
+   }
+  }
+ },
+ {
+  "key": "T3-69e726dfa409200ea79efe3f",
+  "face": "fraktur",
+  "year": 1857,
+  "dta": "grimm_maerchen01_1857",
+  "lite": {
+   "cer_l2": 0.017,
+   "cer_l1": 0.017,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 7.111
+   },
+   "names": {
+    "names": 8,
+    "errors": 3
+   }
+  },
+  "a": {
+   "cer_l2": 0.025,
+   "cer_l1": 0.025,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 13.778
+   },
+   "names": {
+    "names": 8,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.025,
+   "cer_l1": 0.025,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 4.889
+   },
+   "names": {
+    "names": 8,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.017,
+   "cer_l1": 0.017,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 6,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 7.111
+   },
+   "names": {
+    "names": 8,
+    "errors": 3
+   }
+  }
+ },
+ {
+  "key": "T3-69b51e1d47b06ecd5818a619",
+  "face": "fraktur",
+  "year": 1603,
+  "dta": "valentinus_occulta_1603",
+  "lite": {
+   "cer_l2": 0.048,
+   "cer_l1": 0.008,
+   "cer_fold": 0.007,
+   "fca_fold": 0.993,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 54,
+     "misleads": 4,
+     "wrong_text": 0
+    },
+    "score": 43.529
+   },
+   "names": {
+    "names": 11,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.043,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 56,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 35.882
+   },
+   "names": {
+    "names": 11,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.04,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 55,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 35.294
+   },
+   "names": {
+    "names": 11,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.038,
+   "cer_l1": 0.001,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 52,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 36.471
+   },
+   "names": {
+    "names": 11,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69e75a02095c302d3fddea2d",
+  "face": "fraktur",
+  "year": 1811,
+  "dta": "kleist_krug_1811",
+  "lite": {
+   "cer_l2": 0.055,
+   "cer_l1": 0.009,
+   "cer_fold": 0.003,
+   "fca_fold": 0.994,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 37,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 30.216
+   },
+   "names": {
+    "names": 3,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.397,
+   "cer_l1": 0.361,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 1,
+     "wrong_text": 4
+    },
+    "score": 94.245
+   },
+   "names": {
+    "names": 3,
+    "errors": 1
+   }
+  },
+  "b": {
+   "cer_l2": 0.397,
+   "cer_l1": 0.361,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 1,
+     "wrong_text": 4
+    },
+    "score": 94.245
+   },
+   "names": {
+    "names": 3,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.055,
+   "cer_l1": 0.009,
+   "cer_fold": 0.003,
+   "fca_fold": 0.994,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 37,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 30.216
+   },
+   "names": {
+    "names": 3,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69aea30a803d5b811fc12815",
+  "face": "antiqua",
+  "year": 1893,
+  "dta": "nietzsche_zarathustra03_1884",
+  "lite": {
+   "cer_l2": 0,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.483
+   },
+   "names": {
+    "names": 5,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.002,
+   "cer_l1": 0.002,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.966
+   },
+   "names": {
+    "names": 5,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.002,
+   "cer_l1": 0.002,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0.966
+   },
+   "names": {
+    "names": 5,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 5,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69ade73575e4e0516e246576",
+  "face": "fraktur",
+  "year": 1809,
+  "dta": "goethe_wahlverw01_1809",
+  "lite": {
+   "cer_l2": 0.066,
+   "cer_l1": 0.006,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 37,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 43.357
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.066,
+   "cer_l1": 0.006,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 37,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 43.357
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.066,
+   "cer_l1": 0.006,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 37,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 43.357
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.06,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 40,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 27.972
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-6a494349d2cbca6a18208815",
+  "face": "antiqua",
+  "year": 1676,
+  "dta": "francisci_lusthaus_1676",
+  "lite": {
+   "cer_l2": 0.104,
+   "cer_l1": 0.061,
+   "cer_fold": 0.035,
+   "fca_fold": 0.889,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 47,
+     "misleads": 5,
+     "wrong_text": 1
+    },
+    "score": 55.114
+   },
+   "names": {
+    "names": 11,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.104,
+   "cer_l1": 0.061,
+   "cer_fold": 0.035,
+   "fca_fold": 0.889,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 47,
+     "misleads": 6,
+     "wrong_text": 0
+    },
+    "score": 43.75
+   },
+   "names": {
+    "names": 11,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-6a493b23c73c0a4520237422",
+  "face": "fraktur",
+  "year": 1678,
+  "dta": "nylandt_schauplatz04_1678",
+  "lite": {
+   "cer_l2": 0.121,
+   "cer_l1": 0.119,
+   "cer_fold": 0,
+   "fca_fold": 0.988,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 15,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 34.091
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.131,
+   "cer_l1": 0.131,
+   "cer_fold": 0,
+   "fca_fold": 0.988,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 24.242
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.131,
+   "cer_l1": 0.131,
+   "cer_fold": 0,
+   "fca_fold": 0.988,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 9.091
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.227,
+   "cer_l1": 0.227,
+   "cer_fold": 0,
+   "fca_fold": 0.988,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 2,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 24.242
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69c82fbb7774239312843f5f",
+  "face": "fraktur",
+  "year": 1618,
+  "dta": "weigel_gnothi_1615",
+  "lite": {
+   "cer_l2": 0.072,
+   "cer_l1": 0.015,
+   "cer_fold": 0.005,
+   "fca_fold": 0.922,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 100,
+     "misleads": 15,
+     "wrong_text": 0
+    },
+    "score": 50.725
+   },
+   "names": {
+    "names": 9,
+    "errors": 2
+   }
+  },
+  "a": {
+   "cer_l2": 0.071,
+   "cer_l1": 0.016,
+   "cer_fold": 0.009,
+   "fca_fold": 0.991,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 106,
+     "misleads": 11,
+     "wrong_text": 0
+    },
+    "score": 46.667
+   },
+   "names": {
+    "names": 9,
+    "errors": 1
+   }
+  },
+  "b": {
+   "cer_l2": 0.069,
+   "cer_l1": 0.014,
+   "cer_fold": 0.007,
+   "fca_fold": 0.993,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 108,
+     "misleads": 8,
+     "wrong_text": 0
+    },
+    "score": 42.899
+   },
+   "names": {
+    "names": 9,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.071,
+   "cer_l1": 0.016,
+   "cer_fold": 0.009,
+   "fca_fold": 0.991,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 104,
+     "misleads": 10,
+     "wrong_text": 0
+    },
+    "score": 44.638
+   },
+   "names": {
+    "names": 9,
+    "errors": 2
+   }
+  }
+ },
+ {
+  "key": "T3-6990540738e1fdee57b366d2",
+  "face": "antiqua",
+  "year": 1898,
+  "dta": "boltzmann_gastheorie02_1898",
+  "lite": {
+   "cer_l2": 0,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 14,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 14,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 14,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 14,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-695434de1479a63c1108a266",
+  "face": "fraktur",
+  "year": 1812,
+  "dta": "hegel_logik02_1816",
+  "lite": {
+   "cer_l2": 0.058,
+   "cer_l1": 0.003,
+   "cer_fold": 0.001,
+   "fca_fold": 0.995,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 72,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 31.66
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.063,
+   "cer_l1": 0.008,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 72,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 41.313
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-6a4939a11bbf4176e1e98109",
+  "face": "fraktur",
+  "year": 1690,
+  "dta": "blankaart_schauplatz_1690",
+  "lite": {
+   "cer_l2": 0.024,
+   "cer_l1": 0.024,
+   "cer_fold": 0.003,
+   "fca_fold": 0.992,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 31.405
+   },
+   "names": {
+    "names": 7,
+    "errors": 3
+   }
+  },
+  "a": {
+   "cer_l2": 0.016,
+   "cer_l1": 0.016,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 6.612
+   },
+   "names": {
+    "names": 7,
+    "errors": 2
+   }
+  },
+  "b": {
+   "cer_l2": 0.016,
+   "cer_l1": 0.016,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 6.612
+   },
+   "names": {
+    "names": 7,
+    "errors": 2
+   }
+  },
+  "c": {
+   "cer_l2": 0.024,
+   "cer_l1": 0.024,
+   "cer_fold": 0.003,
+   "fca_fold": 0.992,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 31.405
+   },
+   "names": {
+    "names": 7,
+    "errors": 3
+   }
+  }
+ },
+ {
+  "key": "T3-69b51debefd8df28f2dad563",
+  "face": "fraktur",
+  "year": 1727,
+  "dta": "neickel_museographia_1727",
+  "lite": {
+   "cer_l2": 0.056,
+   "cer_l1": 0.006,
+   "cer_fold": 0.005,
+   "fca_fold": 0.993,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 98,
+     "misleads": 9,
+     "wrong_text": 1
+    },
+    "score": 40.095
+   },
+   "names": {
+    "names": 17,
+    "errors": 2
+   }
+  },
+  "a": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.009,
+   "cer_fold": 0,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 113,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 30.549
+   },
+   "names": {
+    "names": 17,
+    "errors": 3
+   }
+  },
+  "b": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.009,
+   "cer_fold": 0,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 113,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 30.549
+   },
+   "names": {
+    "names": 17,
+    "errors": 3
+   }
+  },
+  "c": {
+   "cer_l2": 0.054,
+   "cer_l1": 0.004,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 114,
+     "misleads": 6,
+     "wrong_text": 1
+    },
+    "score": 40.334
+   },
+   "names": {
+    "names": 17,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69afe357cf56258c938910db",
+  "face": "fraktur",
+  "year": 1812,
+  "dta": "hegel_logik0101_1812",
+  "lite": {
+   "cer_l2": 0.075,
+   "cer_l1": 0.004,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 72,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 35.648
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.071,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 73,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 33.796
+   },
+   "names": {
+    "names": 0,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-6990540438e1fdee57b36595",
+  "face": "antiqua",
+  "year": 1895,
+  "dta": "boltzmann_gastheorie01_1896",
+  "lite": {
+   "cer_l2": 0.212,
+   "cer_l1": 0.212,
+   "cer_fold": 0.106,
+   "fca_fold": 0.785,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 4,
+     "wrong_text": 16
+    },
+    "score": 185.537
+   },
+   "names": {
+    "names": 13,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.367,
+   "cer_l1": 0.367,
+   "cer_fold": 0.213,
+   "fca_fold": 0.637,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 5,
+     "wrong_text": 23
+    },
+    "score": 258.678
+   },
+   "names": {
+    "names": 13,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.367,
+   "cer_l1": 0.367,
+   "cer_fold": 0.213,
+   "fca_fold": 0.637,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 12,
+     "wrong_text": 16
+    },
+    "score": 200.826
+   },
+   "names": {
+    "names": 13,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.212,
+   "cer_l1": 0.212,
+   "cer_fold": 0.106,
+   "fca_fold": 0.785,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 12,
+     "wrong_text": 8
+    },
+    "score": 119.421
+   },
+   "names": {
+    "names": 13,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69ef2b2685daccce30f2dec7",
+  "face": "fraktur",
+  "year": 1780,
+  "dta": "bach_versuch01_1759",
+  "lite": {
+   "cer_l2": 0.056,
+   "cer_l1": 0.009,
+   "cer_fold": 0.007,
+   "fca_fold": 0.99,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 4,
+     "wrong_text": 1
+    },
+    "score": 40
+   },
+   "names": {
+    "names": 12,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.056,
+   "cer_l1": 0.009,
+   "cer_fold": 0.007,
+   "fca_fold": 0.99,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 32.157
+   },
+   "names": {
+    "names": 12,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-698fb78c6b95eeda7d2d30ea",
+  "face": "fraktur",
+  "year": 1810,
+  "dta": "goethe_farbenlehre02_1810",
+  "lite": {
+   "cer_l2": 0.069,
+   "cer_l1": 0.006,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 56,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 33.333
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.066,
+   "cer_l1": 0.004,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 54,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 29.508
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.066,
+   "cer_l1": 0.004,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 54,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 29.508
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.063,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 30.601
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69ae8ee96c4fe8889bb4844f",
+  "face": "antiqua",
+  "year": 1867,
+  "dta": "marx_kapital01_1867",
+  "lite": {
+   "cer_l2": 0.007,
+   "cer_l1": 0.007,
+   "cer_fold": 0.006,
+   "fca_fold": 0.899,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 3,
+     "wrong_text": 2
+    },
+    "score": 24.113
+   },
+   "names": {
+    "names": 27,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.007,
+   "cer_l1": 0.007,
+   "cer_fold": 0.004,
+   "fca_fold": 0.901,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 23.05
+   },
+   "names": {
+    "names": 27,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.006,
+   "cer_l1": 0.006,
+   "cer_fold": 0.004,
+   "fca_fold": 0.901,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 5,
+     "misleads": 2,
+     "wrong_text": 2
+    },
+    "score": 23.05
+   },
+   "names": {
+    "names": 27,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.005,
+   "cer_l1": 0.005,
+   "cer_fold": 0.003,
+   "fca_fold": 0.902,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 3,
+     "misleads": 1,
+     "wrong_text": 2
+    },
+    "score": 20.567
+   },
+   "names": {
+    "names": 27,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69ade7165426286aa40cf49e",
+  "face": "fraktur",
+  "year": 1810,
+  "dta": "goethe_farbenlehre01_1810",
+  "lite": {
+   "cer_l2": 0.058,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 29.474
+   },
+   "names": {
+    "names": 3,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.058,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 29.474
+   },
+   "names": {
+    "names": 3,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.058,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 29.474
+   },
+   "names": {
+    "names": 3,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.058,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 51,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 29.474
+   },
+   "names": {
+    "names": 3,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69b51ee1ff09e4fe943b6f76",
+  "face": "fraktur",
+  "year": 1776,
+  "dta": "swedenborg_schriften03_1776",
+  "lite": {
+   "cer_l2": 0.056,
+   "cer_l1": 0.017,
+   "cer_fold": 0.008,
+   "fca_fold": 0.987,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 38,
+     "misleads": 14,
+     "wrong_text": 0
+    },
+    "score": 50.943
+   },
+   "names": {
+    "names": 4,
+    "errors": 4
+   }
+  },
+  "a": {
+   "cer_l2": 0.044,
+   "cer_l1": 0.005,
+   "cer_fold": 0.006,
+   "fca_fold": 0.993,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 40,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 30.66
+   },
+   "names": {
+    "names": 4,
+    "errors": 2
+   }
+  },
+  "b": {
+   "cer_l2": 0.044,
+   "cer_l1": 0.005,
+   "cer_fold": 0.006,
+   "fca_fold": 0.993,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 40,
+     "misleads": 5,
+     "wrong_text": 0
+    },
+    "score": 30.66
+   },
+   "names": {
+    "names": 4,
+    "errors": 2
+   }
+  },
+  "c": {
+   "cer_l2": 0.052,
+   "cer_l1": 0.013,
+   "cer_fold": 0.003,
+   "fca_fold": 0.995,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 39,
+     "misleads": 13,
+     "wrong_text": 0
+    },
+    "score": 49.057
+   },
+   "names": {
+    "names": 4,
+    "errors": 4
+   }
+  }
+ },
+ {
+  "key": "T3-6aa1d11277169abff1618439",
+  "face": "fraktur",
+  "year": 1729,
+  "dta": "rohr_einleitung_1729",
+  "lite": {
+   "cer_l2": 0.046,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 0.99,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 22.581
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.048,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 26.613
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.046,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 26.613
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.066,
+   "cer_l1": 0.02,
+   "cer_fold": 0.003,
+   "fca_fold": 0.997,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 26,
+     "misleads": 11,
+     "wrong_text": 0
+    },
+    "score": 65.323
+   },
+   "names": {
+    "names": 1,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69c868596c6f3cc53c8566bb",
+  "face": "fraktur",
+  "year": 1618,
+  "dta": "weigel_gnothi02_1618",
+  "lite": {
+   "cer_l2": 0.067,
+   "cer_l1": 0.012,
+   "cer_fold": 0.012,
+   "fca_fold": 0.986,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 83,
+     "misleads": 10,
+     "wrong_text": 0
+    },
+    "score": 52.569
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  },
+  "a": {
+   "cer_l2": 0.056,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 83,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 38.735
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.056,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 83,
+     "misleads": 3,
+     "wrong_text": 0
+    },
+    "score": 38.735
+   },
+   "names": {
+    "names": 4,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.065,
+   "cer_l1": 0.01,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 78,
+     "misleads": 13,
+     "wrong_text": 0
+    },
+    "score": 56.522
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69e792379adaf7b110e3a58d",
+  "face": "fraktur",
+  "year": 1795,
+  "dta": "goethe_lehrjahre01_1795",
+  "lite": {
+   "cer_l2": 0.035,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 17.778
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.035,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 17.778
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.035,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 17.778
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.035,
+   "cer_l1": 0,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 24,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 17.778
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69aebc3b9d616e7d167cf722",
+  "face": "fraktur",
+  "year": 1890,
+  "dta": "simmel_differenzierung_1890",
+  "lite": {
+   "cer_l2": 0.006,
+   "cer_l1": 0.006,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 14,
+     "wrong_text": 0
+    },
+    "score": 18.325
+   },
+   "names": {
+    "names": 17,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.006,
+   "cer_l1": 0.006,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 13,
+     "wrong_text": 0
+    },
+    "score": 17.016
+   },
+   "names": {
+    "names": 17,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.006,
+   "cer_l1": 0.006,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 13,
+     "wrong_text": 0
+    },
+    "score": 17.016
+   },
+   "names": {
+    "names": 17,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.006,
+   "cer_l1": 0.005,
+   "cer_fold": 0.005,
+   "fca_fold": 0.995,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 1,
+     "misleads": 12,
+     "wrong_text": 0
+    },
+    "score": 15.969
+   },
+   "names": {
+    "names": 17,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-698fb7856b95eeda7d2d2682",
+  "face": "fraktur",
+  "year": 1810,
+  "dta": "goethe_farbenlehre01_1810",
+  "lite": {
+   "cer_l2": 0.062,
+   "cer_l1": 0.01,
+   "cer_fold": 0,
+   "fca_fold": 0.996,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 30.4
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  },
+  "a": {
+   "cer_l2": 0.062,
+   "cer_l1": 0.01,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 27.2
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  },
+  "b": {
+   "cer_l2": 0.068,
+   "cer_l1": 0.016,
+   "cer_fold": 0.006,
+   "fca_fold": 0.994,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 29,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 31.2
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  },
+  "c": {
+   "cer_l2": 0.062,
+   "cer_l1": 0.01,
+   "cer_fold": 0,
+   "fca_fold": 0.996,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 28,
+     "misleads": 2,
+     "wrong_text": 0
+    },
+    "score": 30.4
+   },
+   "names": {
+    "names": 4,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-698fb77c6b95eeda7d2d2021",
+  "face": "fraktur",
+  "year": 1845,
+  "dta": "humboldt_kosmos01_1845",
+  "lite": {
+   "cer_l2": 0.02,
+   "cer_l1": 0.02,
+   "cer_fold": 0.004,
+   "fca_fold": 0.996,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 1,
+     "wrong_text": 2
+    },
+    "score": 29.911
+   },
+   "names": {
+    "names": 17,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.02,
+   "cer_l1": 0.02,
+   "cer_fold": 0.004,
+   "fca_fold": 0.996,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 12,
+     "misleads": 1,
+     "wrong_text": 2
+    },
+    "score": 29.911
+   },
+   "names": {
+    "names": 17,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69b51ee2cf111105c42a5747",
+  "face": "fraktur",
+  "year": 1840,
+  "dta": "swedenborg_schriften04_1776",
+  "lite": {
+   "cer_l2": 0.055,
+   "cer_l1": 0.006,
+   "cer_fold": 0.002,
+   "fca_fold": 0.994,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 46,
+     "misleads": 2,
+     "wrong_text": 1
+    },
+    "score": 45
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.051,
+   "cer_l1": 0.002,
+   "cer_fold": 0.001,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 44,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 27.222
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.051,
+   "cer_l1": 0.002,
+   "cer_fold": 0.001,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 44,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 27.222
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.064,
+   "cer_l1": 0.015,
+   "cer_fold": 0.002,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 43,
+     "misleads": 12,
+     "wrong_text": 1
+    },
+    "score": 71.111
+   },
+   "names": {
+    "names": 1,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69e75395095c302d3fddb7e2",
+  "face": "fraktur",
+  "year": 1879,
+  "dta": "buechner_werke_1879",
+  "lite": {
+   "cer_l2": 0.045,
+   "cer_l1": 0.004,
+   "cer_fold": 0.001,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 23.574
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.044,
+   "cer_l1": 0.003,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 21.673
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.044,
+   "cer_l1": 0.003,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 21.673
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.045,
+   "cer_l1": 0.004,
+   "cer_fold": 0.001,
+   "fca_fold": 0.997,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 57,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 23.574
+   },
+   "names": {
+    "names": 1,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-69ef3d9272c1376fdf2b0755",
+  "face": "fraktur",
+  "year": 1764,
+  "dta": "winckelmann_kunstgeschichte01_1764",
+  "lite": {
+   "cer_l2": 0.05,
+   "cer_l1": 0.005,
+   "cer_fold": 0.001,
+   "fca_fold": 0.874,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 61,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 25.681
+   },
+   "names": {
+    "names": 8,
+    "errors": 1
+   }
+  },
+  "a": {
+   "cer_l2": 0.049,
+   "cer_l1": 0.005,
+   "cer_fold": 0.001,
+   "fca_fold": 0.878,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 60,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 25.292
+   },
+   "names": {
+    "names": 8,
+    "errors": 2
+   }
+  },
+  "b": {
+   "cer_l2": 0.049,
+   "cer_l1": 0.005,
+   "cer_fold": 0.001,
+   "fca_fold": 0.878,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 60,
+     "misleads": 1,
+     "wrong_text": 0
+    },
+    "score": 25.292
+   },
+   "names": {
+    "names": 8,
+    "errors": 2
+   }
+  },
+  "c": {
+   "cer_l2": 0.053,
+   "cer_l1": 0.007,
+   "cer_fold": 0.001,
+   "fca_fold": 0.916,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 58,
+     "misleads": 7,
+     "wrong_text": 0
+    },
+    "score": 36.187
+   },
+   "names": {
+    "names": 8,
+    "errors": 1
+   }
+  }
+ },
+ {
+  "key": "T3-69b51e82cf111105c429e742",
+  "face": "fraktur",
+  "year": 1668,
+  "dta": "praetorius_verrichtung_1668",
+  "lite": {
+   "cer_l2": 0.166,
+   "cer_l1": 0.097,
+   "cer_fold": 0.093,
+   "fca_fold": 0.901,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 58,
+     "misleads": 12,
+     "wrong_text": 1
+    },
+    "score": 68.421
+   },
+   "names": {
+    "names": 14,
+    "errors": 3
+   }
+  },
+  "a": {
+   "cer_l2": 0.165,
+   "cer_l1": 0.095,
+   "cer_fold": 0.084,
+   "fca_fold": 0.915,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 54,
+     "misleads": 16,
+     "wrong_text": 2
+    },
+    "score": 88.038
+   },
+   "names": {
+    "names": 14,
+    "errors": 3
+   }
+  },
+  "b": {
+   "cer_l2": 0.165,
+   "cer_l1": 0.095,
+   "cer_fold": 0.084,
+   "fca_fold": 0.915,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 54,
+     "misleads": 18,
+     "wrong_text": 0
+    },
+    "score": 68.9
+   },
+   "names": {
+    "names": 14,
+    "errors": 3
+   }
+  },
+  "c": {
+   "cer_l2": 0.166,
+   "cer_l1": 0.097,
+   "cer_fold": 0.093,
+   "fca_fold": 0.901,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 58,
+     "misleads": 13,
+     "wrong_text": 0
+    },
+    "score": 58.852
+   },
+   "names": {
+    "names": 14,
+    "errors": 3
+   }
+  }
+ },
+ {
+  "key": "T3-698fb7816b95eeda7d2d229d",
+  "face": "fraktur",
+  "year": 1858,
+  "dta": "humboldt_kosmos04_1858",
+  "lite": {
+   "cer_l2": 0.002,
+   "cer_l1": 0.002,
+   "cer_fold": 0.002,
+   "fca_fold": 0.998,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 1,
+     "wrong_text": 1
+    },
+    "score": 12.5
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  },
+  "a": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  },
+  "b": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0,
+   "fca_fold": 1,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 0
+    },
+    "score": 0
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  },
+  "c": {
+   "cer_l2": 0.001,
+   "cer_l1": 0.001,
+   "cer_fold": 0.001,
+   "fca_fold": 0.999,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 0,
+     "misleads": 0,
+     "wrong_text": 1
+    },
+    "score": 10.417
+   },
+   "names": {
+    "names": 10,
+    "errors": 0
+   }
+  }
+ },
+ {
+  "key": "T3-6a0a24030eca358f15e8510d",
+  "face": "fraktur",
+  "year": 1636,
+  "dta": "schwenter_deliciae_1636",
+  "lite": {
+   "cer_l2": 0.078,
+   "cer_l1": 0.024,
+   "cer_fold": 0.018,
+   "fca_fold": 0.954,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 106,
+     "misleads": 28,
+     "wrong_text": 2
+    },
+    "score": 81.994
+   },
+   "names": {
+    "names": 21,
+    "errors": 7
+   }
+  },
+  "a": {
+   "cer_l2": 0.07,
+   "cer_l1": 0.016,
+   "cer_fold": 0.01,
+   "fca_fold": 0.989,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 80,
+     "misleads": 42,
+     "wrong_text": 0
+    },
+    "score": 80.332
+   },
+   "names": {
+    "names": 21,
+    "errors": 7
+   }
+  },
+  "b": {
+   "cer_l2": 0.069,
+   "cer_l1": 0.016,
+   "cer_fold": 0.009,
+   "fca_fold": 0.989,
+   "accept": true,
+   "span": {
+    "counts": {
+     "cosmetic": 81,
+     "misleads": 41,
+     "wrong_text": 0
+    },
+    "score": 79.224
+   },
+   "names": {
+    "names": 21,
+    "errors": 6
+   }
+  },
+  "c": {
+   "cer_l2": 0.078,
+   "cer_l1": 0.024,
+   "cer_fold": 0.018,
+   "fca_fold": 0.954,
+   "accept": false,
+   "span": {
+    "counts": {
+     "cosmetic": 106,
+     "misleads": 28,
+     "wrong_text": 2
+    },
+    "score": 81.994
+   },
+   "names": {
+    "names": 21,
+    "errors": 7
+   }
+  }
+ }
+]

@@ -1,0 +1,635 @@
+{
+ "at": "2026-11-04T13:02:35.383Z",
+ "paired_pages": 60,
+ "pages_with_any_verdict": 60,
+ "arms": {
+  "S": {
+   "all": {
+    "n": 60,
+    "accepted": 13,
+    "accept_rate": 0.217,
+    "accept_ci95": [
+     0.131,
+     0.336
+    ],
+    "wrong_text_pages": 37,
+    "major_pages": 57,
+    "major_rate": 0.95,
+    "words": 21395,
+    "weighted_per_1k": 142.84,
+    "weighted_per_1k_translator": 118.11,
+    "transcription_defect_share": 0.155,
+    "misread_flagged": 37,
+    "fidelity_mean": 3.1,
+    "fidelity": [
+     1,
+     11,
+     31,
+     15,
+     2
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "accepted": 4,
+    "accept_rate": 0.133,
+    "accept_ci95": [
+     0.053,
+     0.297
+    ],
+    "wrong_text_pages": 19,
+    "major_pages": 29,
+    "major_rate": 0.967,
+    "words": 13159,
+    "weighted_per_1k": 115.13,
+    "weighted_per_1k_translator": 86.94,
+    "transcription_defect_share": 0.205,
+    "misread_flagged": 20,
+    "fidelity_mean": 3.07,
+    "fidelity": [
+     1,
+     4,
+     17,
+     8,
+     0
+    ]
+   },
+   "prose": {
+    "n": 30,
+    "accepted": 9,
+    "accept_rate": 0.3,
+    "accept_ci95": [
+     0.167,
+     0.479
+    ],
+    "wrong_text_pages": 18,
+    "major_pages": 28,
+    "major_rate": 0.933,
+    "words": 8236,
+    "weighted_per_1k": 187.11,
+    "weighted_per_1k_translator": 167.92,
+    "transcription_defect_share": 0.099,
+    "misread_flagged": 17,
+    "fidelity_mean": 3.13,
+    "fidelity": [
+     0,
+     7,
+     14,
+     7,
+     2
+    ]
+   }
+  },
+  "F": {
+   "all": {
+    "n": 60,
+    "accepted": 27,
+    "accept_rate": 0.45,
+    "accept_ci95": [
+     0.331,
+     0.575
+    ],
+    "wrong_text_pages": 25,
+    "major_pages": 46,
+    "major_rate": 0.767,
+    "words": 21746,
+    "weighted_per_1k": 80.84,
+    "weighted_per_1k_translator": 43.87,
+    "transcription_defect_share": 0.407,
+    "misread_flagged": 34,
+    "fidelity_mean": 3.57,
+    "fidelity": [
+     0,
+     4,
+     25,
+     24,
+     7
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "accepted": 12,
+    "accept_rate": 0.4,
+    "accept_ci95": [
+     0.246,
+     0.577
+    ],
+    "wrong_text_pages": 15,
+    "major_pages": 26,
+    "major_rate": 0.867,
+    "words": 12945,
+    "weighted_per_1k": 78.56,
+    "weighted_per_1k_translator": 45.5,
+    "transcription_defect_share": 0.349,
+    "misread_flagged": 17,
+    "fidelity_mean": 3.37,
+    "fidelity": [
+     0,
+     3,
+     15,
+     10,
+     2
+    ]
+   },
+   "prose": {
+    "n": 30,
+    "accepted": 15,
+    "accept_rate": 0.5,
+    "accept_ci95": [
+     0.332,
+     0.668
+    ],
+    "wrong_text_pages": 10,
+    "major_pages": 20,
+    "major_rate": 0.667,
+    "words": 8801,
+    "weighted_per_1k": 84.19,
+    "weighted_per_1k_translator": 41.47,
+    "transcription_defect_share": 0.484,
+    "misread_flagged": 17,
+    "fidelity_mean": 3.77,
+    "fidelity": [
+     0,
+     1,
+     10,
+     14,
+     5
+    ]
+   }
+  },
+  "N": {
+   "all": {
+    "n": 60,
+    "accepted": 30,
+    "accept_rate": 0.5,
+    "accept_ci95": [
+     0.377,
+     0.623
+    ],
+    "wrong_text_pages": 20,
+    "major_pages": 44,
+    "major_rate": 0.733,
+    "words": 21631,
+    "weighted_per_1k": 78.36,
+    "weighted_per_1k_translator": 35.23,
+    "transcription_defect_share": 0.452,
+    "misread_flagged": 40,
+    "fidelity_mean": 3.63,
+    "fidelity": [
+     0,
+     4,
+     21,
+     28,
+     7
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "accepted": 12,
+    "accept_rate": 0.4,
+    "accept_ci95": [
+     0.246,
+     0.577
+    ],
+    "wrong_text_pages": 12,
+    "major_pages": 25,
+    "major_rate": 0.833,
+    "words": 12787,
+    "weighted_per_1k": 69.05,
+    "weighted_per_1k_translator": 31.67,
+    "transcription_defect_share": 0.461,
+    "misread_flagged": 20,
+    "fidelity_mean": 3.53,
+    "fidelity": [
+     0,
+     2,
+     13,
+     12,
+     3
+    ]
+   },
+   "prose": {
+    "n": 30,
+    "accepted": 18,
+    "accept_rate": 0.6,
+    "accept_ci95": [
+     0.423,
+     0.754
+    ],
+    "wrong_text_pages": 8,
+    "major_pages": 19,
+    "major_rate": 0.633,
+    "words": 8844,
+    "weighted_per_1k": 91.81,
+    "weighted_per_1k_translator": 40.37,
+    "transcription_defect_share": 0.441,
+    "misread_flagged": 20,
+    "fidelity_mean": 3.73,
+    "fidelity": [
+     0,
+     2,
+     8,
+     16,
+     4
+    ]
+   }
+  },
+  "F4": {
+   "all": {
+    "n": 58,
+    "accepted": 33,
+    "accept_rate": 0.569,
+    "accept_ci95": [
+     0.441,
+     0.688
+    ],
+    "wrong_text_pages": 17,
+    "major_pages": 38,
+    "major_rate": 0.655,
+    "words": 20197,
+    "weighted_per_1k": 61.49,
+    "weighted_per_1k_translator": 27.53,
+    "transcription_defect_share": 0.422,
+    "misread_flagged": 32,
+    "fidelity_mean": 3.64,
+    "fidelity": [
+     0,
+     3,
+     19,
+     32,
+     4
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "accepted": 15,
+    "accept_rate": 0.5,
+    "accept_ci95": [
+     0.332,
+     0.668
+    ],
+    "wrong_text_pages": 10,
+    "major_pages": 21,
+    "major_rate": 0.7,
+    "words": 12386,
+    "weighted_per_1k": 55.47,
+    "weighted_per_1k_translator": 30.76,
+    "transcription_defect_share": 0.407,
+    "misread_flagged": 17,
+    "fidelity_mean": 3.47,
+    "fidelity": [
+     0,
+     2,
+     13,
+     14,
+     1
+    ]
+   },
+   "prose": {
+    "n": 28,
+    "accepted": 18,
+    "accept_rate": 0.643,
+    "accept_ci95": [
+     0.458,
+     0.793
+    ],
+    "wrong_text_pages": 7,
+    "major_pages": 17,
+    "major_rate": 0.607,
+    "words": 7811,
+    "weighted_per_1k": 71.05,
+    "weighted_per_1k_translator": 22.4,
+    "transcription_defect_share": 0.442,
+    "misread_flagged": 15,
+    "fidelity_mean": 3.82,
+    "fidelity": [
+     0,
+     1,
+     6,
+     18,
+     3
+    ]
+   }
+  }
+ },
+ "pairs": {
+  "F_vs_S": {
+   "all": {
+    "n": 60,
+    "gained": 17,
+    "lost": 3,
+    "mcnemar_p": 0.0026,
+    "fidelity_better": 28,
+    "fidelity_worse": 7,
+    "wrong_text_added": 4,
+    "wrong_text_removed": 16,
+    "lost_pages": [
+     "6a1d6855013dfd9d9e18ee39",
+     "6992cafad4d545ae73feecc7",
+     "6992c9022b03ab4dc6e12bda"
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "gained": 8,
+    "lost": 0,
+    "mcnemar_p": 0.0078,
+    "fidelity_better": 10,
+    "fidelity_worse": 3,
+    "wrong_text_added": 3,
+    "wrong_text_removed": 7,
+    "lost_pages": []
+   },
+   "prose": {
+    "n": 30,
+    "gained": 9,
+    "lost": 3,
+    "mcnemar_p": 0.146,
+    "fidelity_better": 18,
+    "fidelity_worse": 4,
+    "wrong_text_added": 1,
+    "wrong_text_removed": 9,
+    "lost_pages": [
+     "6a1d6855013dfd9d9e18ee39",
+     "6992cafad4d545ae73feecc7",
+     "6992c9022b03ab4dc6e12bda"
+    ]
+   }
+  },
+  "N_vs_S": {
+   "all": {
+    "n": 60,
+    "gained": 22,
+    "lost": 5,
+    "mcnemar_p": 0.0015,
+    "fidelity_better": 30,
+    "fidelity_worse": 6,
+    "wrong_text_added": 4,
+    "wrong_text_removed": 21,
+    "lost_pages": [
+     "6992c9022b03ab4dc6e12bda",
+     "6992cfad27dcac3f8ca1b9af",
+     "6a3c6f4301fe4f593c1caa77",
+     "6a3c61b6879008ba7e15fdec",
+     "6a3c5faf879008ba7e156e1e"
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "gained": 10,
+    "lost": 2,
+    "mcnemar_p": 0.0386,
+    "fidelity_better": 12,
+    "fidelity_worse": 2,
+    "wrong_text_added": 4,
+    "wrong_text_removed": 11,
+    "lost_pages": [
+     "6a3c61b6879008ba7e15fdec",
+     "6a3c5faf879008ba7e156e1e"
+    ]
+   },
+   "prose": {
+    "n": 30,
+    "gained": 12,
+    "lost": 3,
+    "mcnemar_p": 0.0352,
+    "fidelity_better": 18,
+    "fidelity_worse": 4,
+    "wrong_text_added": 0,
+    "wrong_text_removed": 10,
+    "lost_pages": [
+     "6992c9022b03ab4dc6e12bda",
+     "6992cfad27dcac3f8ca1b9af",
+     "6a3c6f4301fe4f593c1caa77"
+    ]
+   }
+  },
+  "F4_vs_S": {
+   "all": {
+    "n": 58,
+    "gained": 23,
+    "lost": 3,
+    "mcnemar_p": 0.0001,
+    "fidelity_better": 29,
+    "fidelity_worse": 6,
+    "wrong_text_added": 4,
+    "wrong_text_removed": 22,
+    "lost_pages": [
+     "6992c9022b03ab4dc6e12bda",
+     "6992cfad27dcac3f8ca1b9af",
+     "6a3c61b6879008ba7e15fdec"
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "gained": 12,
+    "lost": 1,
+    "mcnemar_p": 0.0034,
+    "fidelity_better": 13,
+    "fidelity_worse": 3,
+    "wrong_text_added": 3,
+    "wrong_text_removed": 12,
+    "lost_pages": [
+     "6a3c61b6879008ba7e15fdec"
+    ]
+   },
+   "prose": {
+    "n": 28,
+    "gained": 11,
+    "lost": 2,
+    "mcnemar_p": 0.0225,
+    "fidelity_better": 16,
+    "fidelity_worse": 3,
+    "wrong_text_added": 1,
+    "wrong_text_removed": 10,
+    "lost_pages": [
+     "6992c9022b03ab4dc6e12bda",
+     "6992cfad27dcac3f8ca1b9af"
+    ]
+   }
+  },
+  "N_vs_F": {
+   "all": {
+    "n": 60,
+    "gained": 9,
+    "lost": 6,
+    "mcnemar_p": 0.6072,
+    "fidelity_better": 12,
+    "fidelity_worse": 8,
+    "wrong_text_added": 2,
+    "wrong_text_removed": 7,
+    "lost_pages": [
+     "6a3c5f3540c88a541d8e6f0c",
+     "6a3c654baf3c49b59c5cb50d",
+     "6992cfad27dcac3f8ca1b9af",
+     "6a3c6f4301fe4f593c1caa77",
+     "6a3c61b6879008ba7e15fdec",
+     "6a3c5faf879008ba7e156e1e"
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "gained": 3,
+    "lost": 3,
+    "mcnemar_p": 1,
+    "fidelity_better": 7,
+    "fidelity_worse": 2,
+    "wrong_text_added": 1,
+    "wrong_text_removed": 4,
+    "lost_pages": [
+     "6a3c654baf3c49b59c5cb50d",
+     "6a3c61b6879008ba7e15fdec",
+     "6a3c5faf879008ba7e156e1e"
+    ]
+   },
+   "prose": {
+    "n": 30,
+    "gained": 6,
+    "lost": 3,
+    "mcnemar_p": 0.5078,
+    "fidelity_better": 5,
+    "fidelity_worse": 6,
+    "wrong_text_added": 1,
+    "wrong_text_removed": 3,
+    "lost_pages": [
+     "6a3c5f3540c88a541d8e6f0c",
+     "6992cfad27dcac3f8ca1b9af",
+     "6a3c6f4301fe4f593c1caa77"
+    ]
+   }
+  },
+  "F4_vs_F": {
+   "all": {
+    "n": 58,
+    "gained": 10,
+    "lost": 4,
+    "mcnemar_p": 0.1796,
+    "fidelity_better": 12,
+    "fidelity_worse": 8,
+    "wrong_text_added": 5,
+    "wrong_text_removed": 12,
+    "lost_pages": [
+     "6a3c5f3540c88a541d8e6f0c",
+     "6a3c654baf3c49b59c5cb50d",
+     "6992cfad27dcac3f8ca1b9af",
+     "6a3c61b6879008ba7e15fdec"
+    ]
+   },
+   "reference": {
+    "n": 30,
+    "gained": 5,
+    "lost": 2,
+    "mcnemar_p": 0.4531,
+    "fidelity_better": 5,
+    "fidelity_worse": 3,
+    "wrong_text_added": 2,
+    "wrong_text_removed": 7,
+    "lost_pages": [
+     "6a3c654baf3c49b59c5cb50d",
+     "6a3c61b6879008ba7e15fdec"
+    ]
+   },
+   "prose": {
+    "n": 28,
+    "gained": 5,
+    "lost": 2,
+    "mcnemar_p": 0.4531,
+    "fidelity_better": 7,
+    "fidelity_worse": 5,
+    "wrong_text_added": 3,
+    "wrong_text_removed": 5,
+    "lost_pages": [
+     "6a3c5f3540c88a541d8e6f0c",
+     "6992cfad27dcac3f8ca1b9af"
+    ]
+   }
+  }
+ },
+ "controls": {
+  "swap": {
+   "caught": 10,
+   "n": 10,
+   "need": 9,
+   "pass": true
+  },
+  "retest": {
+   "within_one": 10,
+   "exact": 4,
+   "accept_agree": 9,
+   "n": 10,
+   "need": 9,
+   "pass": true
+  }
+ },
+ "misread": {
+  "pages_any_verdict_flags": 44,
+  "pages_majority_flags": 38,
+  "n": 60,
+  "share_majority": 0.633
+ },
+ "gate": "PASS",
+ "decision": {
+  "F_passes": true,
+  "N_passes": true,
+  "chosen": "N",
+  "M_needed": true,
+  "M_passes": null
+ },
+ "tokens": {
+  "F": {
+   "reads": 60,
+   "input": 426227,
+   "output": 38142,
+   "thinking": 0,
+   "cache_read": 211296,
+   "total": 464369,
+   "attempts": 60,
+   "prompt_chars": 657122
+  },
+  "N": {
+   "reads": 60,
+   "input": 474300,
+   "output": 39057,
+   "thinking": 0,
+   "cache_read": 134045,
+   "total": 513357,
+   "attempts": 60,
+   "prompt_chars": 530403
+  },
+  "F4": {
+   "reads": 58,
+   "judged_read_alone": [
+    "6a3c655839b4508b04e2e05d",
+    "6992c9022b03ab4dc6e12bda",
+    "6a3c654e39b4508b04e2dc10",
+    "6992ceca673ee1e40e32196b",
+    "6992ce4600291c2fcb634123",
+    "6a3c661e39b4508b04e321be",
+    "6992cb55d4d545ae73fef0b2"
+   ],
+   "input": 201482,
+   "output": 36616,
+   "thinking": 0,
+   "cache_read": 27446,
+   "total": 238098,
+   "attempts": 72,
+   "prompt_chars": 751514
+  }
+ },
+ "F4_read_alone": {
+  "n": 7,
+  "accepted": 3,
+  "wrong_text_pages": 4,
+  "pages": [
+   "6a3c655839b4508b04e2e05d",
+   "6992c9022b03ab4dc6e12bda",
+   "6a3c654e39b4508b04e2dc10",
+   "6992ceca673ee1e40e32196b",
+   "6992ce4600291c2fcb634123",
+   "6a3c661e39b4508b04e321be",
+   "6992cb55d4d545ae73fef0b2"
+  ]
+ },
+ "verdict_calls": 258,
+ "list_usd_judge": 18.52
+}

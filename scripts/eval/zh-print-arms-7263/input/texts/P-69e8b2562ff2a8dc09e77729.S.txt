@@ -1,0 +1,110 @@
+<scan-quality>good</scan-quality>
+<language>English, Chinese</language>
+<script>printed</script>
+<page-type>index</page-type>
+<columns>2</columns>
+<page-num>489</page-num>
+<header>INDEX III. CHINESE CHARACTERS AND PHRASES. 489</header>
+
+I. 上. v. 1. 長於, older than. VI. 上. v. 3. As a verb, to give the honour due to age. IV. 上. xi. 1: VI. 上. iv. 2, 3, 4. 長者, an elder. I. 上. vii. 3. It is twice used by Mencius for himself. II. 下. xi. 4: IV. 上. xxiv. 2. (2) To grow. II. 上. ii. 16: VI. 上. viii. 3. Well grown, superior. V. 下. v. 4. (3) To preside over. II. 下. ii. 1. Superiors, officers. I. 上. vii. 11; 下. xii. 1, 3. (4) To make long, = to connive at and aid. VI. 下. vii. 4.
+
+間
+këen
+chien
+(1) To occupy the space between. I. 下. xiii. 1. (3) To blame. IV. 上. xx. (3) —間, one interval. VII. 下. vii. 1. (4) 得間, to find an opportunity. VI. 下. v. 2.—It is more correct to write 間, and not 間.
+
+閹
+yen
+閹然, eunuch-like. VII. 下. xxvii. 9.
+
+關
+kwan
+kuan
+A frontier gate; a pass. I. 下. ii. 3; v. 3: III. 上. v. 3: III. 下. viii. 1: V. 下. v. 3; vi. 3: VII. 下. viii. 1.
+
+關
+wan
+To bend a bow. VI. 下. iii. 2.
+
+THE 169TH RADICAL. 門.
+
+門
+mun
+mên
+A door; a gate. III. 上. iv. 1, 7; 下. ii. 2; vii. 2, 3: et al., sæpe. 門戶, VI. 下. xiv. 4. = school. VI. 下. ii. 6: VII. 上. xxiv. 1; xliii. 1. 門人, disciples. III. 上. iv. 13: VII. 下. xxix. 1.
+
+閉
+pe
+pi
+To shut. III. 下. vi. 2: IV. 上. xxix. 7: V. 下. vii. 8. To repress. IV. 上. x. 13.
+
+閔
+min
+(1) To be grieved. II. 上. ii. 16. (2) Appears in a quotation from the Shoo-king for 旼, violent, reckless. V. 下. iv. 4. (3) The surname of one of Confucius' disciples. II. 上. ii. 18, 20.
+
+閑
+hëeu
+hsien
+= to defend. III. 下. ix 10.
+
+閒
+këen
+hsien
+閒暇, to be at leisure. II. 上. iv. iv. 2, 4.
+
+閒
+këen
+chien
+A space, an interval. II. 下. xiii. 3: IV. 下. vii. 1: VII. 下. xxi. ...之間, the space between. I. 上. vi. 6: III. 下. vi. 1: IV. 上. xviii. 4; 下. xviii. 3: VII. 上. xxv. 3. So, 於 (or 于)......之間, II. 上. ii. 13: VI. 下. xv. 1: VII. 上. xviii. Among. IV. 下. xxxiii. 1. 為閒, in a little. III. 上. v. 5: VII. 下. xxi. But in some editions, 間 in these two instances is put in the third tone.
+
+<column-break/>
+
+THE 170TH RADICAL. 阜.
+
+阨
+gih
+ê
+Straits; to be in circumstances of distress. V. 上. viii. 3. 阨窮, II. 上. ix. 2: V. 下. i. 3.
+
+阱
+tsing
+ching
+A pit-fall. I. 下. ii. 3.
+
+防
+fang
+A raised dyke, an embankment. VI. 下. vii. 3.
+
+阻
+tsoc
+chu
+An obstruction, a difficult pass. 險阻, III. 下. ix. 4.
+
+阿
+o
+To flatter. II. 上. ii. 25.
+
+附
+foo
+fu
+(1) To be attached to. 附庸, the name of certain small principalities. V. 下. ii. 4. To join one's-self to. III. 下. v. 5. To add to. VII. 上. xi. (2) 轉附, the name of a place. I. 下. iv. 4.
+
+陋
+low
+lou
+Mean and low. IV. 下. xxix. 2.
+
+降
+keang
+chiang
+(1) To send down, to confer,—spoken of Heaven. VI. 上. vii. 1; 下. xv. 2. To produce. I. 下. iii. 7. (2) To descend, comes down. I. 下. xi. 2: III. 下. v. 4.
+
+陰
+yin
+(1) To be dark and cloudy. II. 上. iv. 3. (2) = the north side. V. 上. vi. 1.
+
+陵
+ling
+(1) A high mound, a height. 丘陵, III. 下. i. 5: IV. 上. i. 6. (2) 棘陵, the name of a place. III. 下. x. 1, 5, 6.
+
+<vocab>Chinese characters, Mencius, Shoo-king, Confucius, radicals, dictionary index</vocab>

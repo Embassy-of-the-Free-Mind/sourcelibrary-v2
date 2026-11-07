@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { downloadChargesEnabled } from '@/lib/payment-flags';
 
 /**
  * Public config endpoint. Returns feature flags for the client.
@@ -7,7 +8,8 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   return NextResponse.json(
     {
-      payments: !!process.env.STRIPE_SECRET_KEY,
+      // Read by the gallery image page: is an image download priced?
+      payments: downloadChargesEnabled(),
     },
     {
       headers: { 'Cache-Control': 'public, s-maxage=3600' },

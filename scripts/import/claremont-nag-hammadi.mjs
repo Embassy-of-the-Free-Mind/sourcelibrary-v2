@@ -56,6 +56,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { makePageDoc } from '../lib/book-docs.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
@@ -80,7 +81,7 @@ const CODEX_FILTER = strArg('codex') ? new Set(strArg('codex').split(',').map((s
 const PAGE_LIMIT = Number(strArg('limit-pages')) || 0; // testing aid: archive at most N pages per book
 
 // ── Constants ────────────────────────────────────────────────────────────────
-const UA = 'SourceLibrary/1.0 (+https://sourcelibrary.org; derek@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const CDM = 'https://ccdl.claremont.edu/digital/bl/dmwebservices/index.php?q=';
 const COLLECTION_URL = 'https://ccdl.claremont.edu/digital/collection/nha';
 const IIIF_HOST = 'ccdl.claremont.edu';
@@ -375,7 +376,7 @@ async function archivePage(book, p) {
   for (const k of Object.values(paths)) assertBookScopedKey(k, book.id, 'claremont-nag-hammadi');
   const master = await sharp(buf).rotate().jpeg({ quality: 90, mozjpeg: true }).toBuffer();
   const stored = await sharp(master).metadata();
-  const display = await sharp(buf).rotate().resize(1200, null, { withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toBuffer();
+  const display = await markDisplay(await sharp(buf).rotate().resize(1200, null, { withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toBuffer(), { bookId: book.id, pageNumber: p.page_number });
   const thumb = await sharp(buf).rotate().resize(150, null, { withoutEnlargement: true }).jpeg({ quality: 60 }).toBuffer();
   const [full, disp, th] = await Promise.all([
     storagePut(paths.full, master, { contentType: 'image/jpeg', access: 'public' }),

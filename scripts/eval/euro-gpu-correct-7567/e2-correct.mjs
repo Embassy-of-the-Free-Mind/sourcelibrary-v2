@@ -16,6 +16,8 @@
  *                       Taken literally agy hunts for the file and answers CONTAIN / UNCHANGED (3/3 in the smoke test), which
  *                       measures nothing; --no-image=told puts one sentence where the attachment was (NOIMG_TOLD below).
  *   Drafts come from $J/drafts/<ENG>.jsonl ({page_id, text}); the image from $J/img/<slug>.jpg.
+ *   --panel=FILE      (#7567 E5) another panel (e5-draw.mjs's panel.json) instead of E0's; its pages run interleaved, the
+ *                     k-th page of every book before any book's (k+1)-th, so a quota stop leaves a balanced sample.
  *   Writes <out>/<arm>/<slug>.json. Before every 40 calls it reads `agy -p /quota`; it stops when the Gemini weekly
  *   remaining_fraction is under --floor (brief: 0.40). Never sets AGY_HOME (the main pool is agy's default home).
  */
@@ -86,10 +88,16 @@ function quota() {
   } catch { return null; }
 }
 
-const panel = JSON.parse(fs.readFileSync(path.join(HERE, 'panel.json'), 'utf8')).pages;
+const PANEL = arg('panel');
+let panel = JSON.parse(fs.readFileSync(PANEL || path.join(HERE, 'panel.json'), 'utf8')).pages;
+if (PANEL) {
+  const k = {}; panel = panel.map((p) => ({ ...p, _k: (k[p.book_id] = (k[p.book_id] ?? -1) + 1) }))
+    .sort((a, b) => a._k - b._k || a.lang.localeCompare(b.lang) || a.book_id.localeCompare(b.book_id));
+}
 const only = arg('only') ? new Set(fs.readFileSync(arg('only'), 'utf8').split('\n').filter(Boolean)) : null;
 const todo = panel.filter((p) => (!only || only.has(p.slug)) && !fs.existsSync(path.join(OUT, `${p.slug}.json`))
-  && D.every((d) => d[p.slug] && d[p.slug].replace(/\W/g, '').length >= 30));
+  && D.every((d) => d[p.slug] && d[p.slug].replace(/\W/g, '').length >= 30)
+  && fs.existsSync(path.join(J, 'img', `${p.slug}.jpg`)));   // E5: two BSB pages served a tiny image and were never fetched
 console.log(`${ARM}: ${todo.length} pages (drafts ${DRAFTS.join('+') || 'none'}), template ${hash(TEMPLATE)}`);
 
 let stop = null; let n = 0; let sinceQuota = 1e9; const qlog = path.join(J, 'e2', 'quota.jsonl');

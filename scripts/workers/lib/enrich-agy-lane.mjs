@@ -30,17 +30,19 @@
  * PACE. The budget is a share of one agy pool's week (Derek, #7628: about a quarter). Three stops, first wins:
  *   --max-calls-day  model requests this job made today (the agy job ledger, AGY_JOB=enrich-agy; a row per
  *                    message), default 600;
- *   the quota floor  the pool's weekly bucket under the straight line to its reset, or its 5-hour bucket under 25%
- *                    (cli-ocr-lane.mjs quotaFloor), read once at start: no pool open → no call;
+ *   the quota floor  the pool's weekly bucket under the other lanes' weekly reserve (agy-pools.mjs weeklyReserve,
+ *                    0 in the last 36 h before the reset, #7911), or its 5-hour bucket under 25% (cli-ocr-lane.mjs
+ *                    quotaFloor), read once at start: no pool open → no call;
  *   a quota reply    stops the run at once; agy-cli.mjs records the limit and never calls a locked model again.
  *
  * PROVENANCE. summary.engine, reading_summary.engine and book_indexes.engine carry a write-provenance.mjs engine
  * block (api 'cli', agy version, model, the hash of every prompt sent, run, issue); chapters get
  * field_provenance.chapters (+ history). The state row keeps calls, seconds and agy's token counts per book.
  *
- * Flags (after --agy): --limit=N books (20), --max-calls-day=N (600), --deadline-min=N (100), --concurrency=N (2),
+ * Flags (after --agy): --limit=N books (20), --max-calls-day=N (600), --pace-off-until=ISO, --deadline-min=N (100), --concurrency=N (2),
  * --max-chars=N (text per conversation, see MAX_CHARS), --max-turns=N (messages per conversation, MAX_TURNS), --agy-home=auto|default|<path> (auto), --model=<gemini> (3.8 Flash
- * low), --floor-5h=F (0.25), --ignore-floor (a hand-run pilot only), --run-tag=TAG, --book=ID / --book-ids-file=PATH.
+ * low), --floor-5h=F (0.25), --ignore-floor (a hand-run pilot only), --run-tag=TAG, --book=ID / --book-ids-file=PATH,
+ * --retry-empty-chapters (named books whose stored chapter list is empty: chapters only, see retryEmptyFilter).
  *
  * --compare-out=DIR (the pilot): read the listed books (--book-ids-file, any book, enriched or not) and write each
  * reply, parsed, beside the stored API-lane output to DIR/<book>.json. Nothing is claimed and nothing is written to
@@ -98,6 +100,24 @@ export async function claimBook(states, bookId, me) {
   return r.modifiedCount === 1 ? 'from_failed' : null;
 }
 
+/**
+ * --retry-empty-chapters (only with --book / --book-ids-file): ask again for the chapters of a named book whose
+ * extraction ran and stored an EMPTY list. `chapters_extracted_at` marks the phase done, so one empty reply is
+ * permanent in both lanes (gapFilter): Olaus Magnus's 22 printed books came back [] on 2026-03-06 and its EPUB
+ * contents read "Pages 1–42" ever after (#8333; 163 live books in that state, 2026-11-07). Chapters only: the
+ * index and summary are not re-read. Named books only, so no lane sweeps them by accident.
+ */
+export function retryEmptyFilter(gap) {
+  const { $or: _missing, ...rest } = gap;
+  return { ...rest, pages_count: { $gte: MIN_CHAPTER_PAGES }, $or: [{ chapters: null }, { chapters: { $size: 0 } }] };
+}
+
+/** Does this candidate (`chapters` projected as its length) need chapters asked? */
+export function needsChapters(b, { retryEmpty = false } = {}) {
+  if ((b.pages_count || 0) < MIN_CHAPTER_PAGES || b.chapters) return false;
+  return retryEmpty || !b.chapters_extracted_at;
+}
+
 async function releaseClaim(states, bookId, me, how) {
   if (how === 'new') await states.deleteOne({ _id: bookId, stage: 'agy_claimed', agy_run: me.run });
   else await states.updateOne({ _id: bookId, stage: 'agy_claimed', agy_run: me.run }, { $set: { stage: 'failed', updated_at: new Date() }, $unset: { lane: '', agy_run: '' } });
@@ -127,6 +147,8 @@ export async function runEnrichAgyLane(o) {
   const maxTurns = Number(argOf(args, 'max-turns', MAX_TURNS));
   const model = argOf(args, 'model', DEFAULT_MODEL);
   const floor5h = Number(argOf(args, 'floor-5h', 0.25));
+  // --pace-off-until=ISO: no weekly reserve until then (cli-ocr-lane.mjs quotaFloor, #7911); an override, no cron line needs it
+  const paceOffUntil = argOf(args, 'pace-off-until', null) ? Date.parse(argOf(args, 'pace-off-until', null)) : null;
   const runTag = argOf(args, 'run-tag', 'enrich-agy-7628');
   const run = `enrich-agy-${new Date().toISOString().replace(/[-:]/g, '').slice(0, 13)}-${process.pid}`;
   const me = { run, runTag };
@@ -141,8 +163,8 @@ export async function runEnrichAgyLane(o) {
   if (want === 'auto') {
     const pools = readPools();
     const toBuckets = (r) => [{ id: 'gemini-weekly', remaining_fraction: r.weekly, reset_time: r.weeklyReset }, { id: 'gemini-5h', remaining_fraction: r.fiveHour }];
-    for (const p of pools) console.log(`[ENRICH-AGY] pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}, ${quotaFloor(toBuckets(p.reading), { floor5h }).why || 'open'}` : 'NO READING'}${p.busy ? ` (busy, pid ${p.busy})` : ''}`);
-    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h }); return { open: q.ok || args.includes('--ignore-floor'), why: q.why }; });
+    for (const p of pools) console.log(`[ENRICH-AGY] pool ${poolName(p)}: ${p.reading ? `weekly ${(100 * p.reading.weekly).toFixed(1)}%, 5h ${p.reading.fiveHour == null ? '-' : (100 * p.reading.fiveHour).toFixed(1) + '%'}, ${quotaFloor(toBuckets(p.reading), { floor5h, paceOffUntil, lane: 'enrich' }).why || 'open'}` : 'NO READING'}${p.busy ? ` (busy, pid ${p.busy})` : ''}`);
+    const pick = choosePool(pools, (r) => { const q = quotaFloor(toBuckets(r), { floor5h, paceOffUntil, lane: 'enrich' }); return { open: q.ok || args.includes('--ignore-floor'), why: q.why }; });
     if (!pick) { report.stop = 'no pool above its quota floor'; console.log(`[ENRICH-AGY] ${report.stop}: nothing called`); return report; }
     home = pick.home;
   } else if (want !== 'default') home = path.resolve(want);
@@ -157,7 +179,9 @@ export async function runEnrichAgyLane(o) {
   if (compareDir && !o.bookIds?.length) { report.stop = '--compare-out needs --book-ids-file or --book'; console.log(`[ENRICH-AGY] ${report.stop}`); return report; }
   if (compareDir) fs.mkdirSync(compareDir, { recursive: true });
   // Compare mode writes nothing, so it may read a held book (the Siku cohort stays held, #5600).
-  const filter = compareDir ? { id: { $in: o.bookIds } } : gapFilter(o.scopeFilter);
+  const retryEmpty = args.includes('--retry-empty-chapters');
+  if (retryEmpty && !o.bookIds?.length) { report.stop = '--retry-empty-chapters needs --book or --book-ids-file'; console.log(`[ENRICH-AGY] ${report.stop}`); return report; }
+  const filter = compareDir ? { id: { $in: o.bookIds } } : retryEmpty ? retryEmptyFilter(gapFilter(o.scopeFilter)) : gapFilter(o.scopeFilter);
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
   const known = new Map((await states.find({}, { projection: { stage: 1, lane: 1 } }).toArray()).map(r => [r._id, r]));
   const cursor = db.collection('books').find(filter).batchSize(1000).sort({ read_count: -1, pages_translated: -1 })
@@ -177,16 +201,16 @@ export async function runEnrichAgyLane(o) {
       if (compareDir) { claimed++; return { id: b.id, needIndex: true, needChapters: (b.pages_count || 0) >= MIN_CHAPTER_PAGES, compareDir }; }
       const prior = known.get(b.id);
       if (prior && !(prior.stage === 'failed' && prior.lane !== 'agy')) continue;
-      if (await hasWithheldPages(db, b.id)) continue;
-      const hasIndexRow = !!(await db.collection('book_indexes').findOne({ book_id: b.id }, { projection: { _id: 1 } }));
-      const needIndex = !b.summary || !hasIndexRow;
-      const needChapters = (b.pages_count || 0) >= MIN_CHAPTER_PAGES && !b.chapters_extracted_at && !b.chapters;
+      if (!retryEmpty && await hasWithheldPages(db, b.id)) continue;
+      const hasIndexRow = retryEmpty || !!(await db.collection('book_indexes').findOne({ book_id: b.id }, { projection: { _id: 1 } }));
+      const needIndex = !retryEmpty && (!b.summary || !hasIndexRow);
+      const needChapters = needsChapters(b, { retryEmpty });
       if (!needIndex && !needChapters) continue;
       if (dryRun) { claimed++; console.log(`  would read ${b.id}: index=${needIndex} chapters=${needChapters}`); continue; }
       const how = await claimBook(states, b.id, me);
       if (!how) continue;
       claimed++;
-      return { id: b.id, needIndex, needChapters, how };
+      return { id: b.id, needIndex, needChapters, how, chaptersOnly: retryEmpty };
     }
   };
 
@@ -345,7 +369,7 @@ async function enrichOne(o, c, { model, maxChars, maxTurns, me, cliVersion, pool
   }
 
   // Write-time recheck: the book may have been held or had a translation withheld during the call.
-  const why = await stillEligible(db, c.id);
+  const why = await stillEligible(db, c.id, { withheld: !c.chaptersOnly });
   if (why) return { dropped: why, calls: row.calls, row };
   const mine = await db.collection(BOOKS_COLL).findOne({ _id: c.id, agy_run: me.run, stage: 'agy_claimed' }, { projection: { _id: 1 } });
   if (!mine) return fail('claim lost before the write');

@@ -1,0 +1,345 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": null,
+ "judges": {
+  "opus": {
+   "cells": {
+    "zh-dice": {
+     "routes": {
+      "paddle>agy-flash-low": {
+       "n": 29,
+       "books": 29,
+       "unjudged": 0,
+       "accept": "19/29",
+       "accept_wilson": [
+        0.473,
+        0.801
+       ],
+       "accept_by_book": [
+        0.483,
+        0.828
+       ],
+       "wrong_text_pages": "9/29",
+       "wrong_text_wilson": [
+        0.173,
+        0.492
+       ],
+       "fidelity_mean": 4.31,
+       "counts": true
+      }
+     },
+     "controls": {
+      "paddle>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    },
+    "latin-gpu": {
+     "routes": {
+      "gpu>agy-flash-low": {
+       "n": 26,
+       "books": 9,
+       "unjudged": 0,
+       "accept": "22/26",
+       "accept_wilson": [
+        0.665,
+        0.938
+       ],
+       "accept_by_book": [
+        0.708,
+        0.963
+       ],
+       "wrong_text_pages": "2/26",
+       "wrong_text_wilson": [
+        0.021,
+        0.241
+       ],
+       "fidelity_mean": 4.27,
+       "counts": true
+      }
+     },
+     "controls": {
+      "gpu>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    },
+    "hebrew-flash3": {
+     "routes": {
+      "3flash": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "7/30",
+       "accept_wilson": [
+        0.118,
+        0.409
+       ],
+       "accept_by_book": [
+        0.1,
+        0.4
+       ],
+       "wrong_text_pages": "22/30",
+       "wrong_text_wilson": [
+        0.556,
+        0.858
+       ],
+       "fidelity_mean": 2.6,
+       "counts": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 28,
+       "books": 28,
+       "unjudged": 0,
+       "accept": "7/28",
+       "accept_wilson": [
+        0.127,
+        0.434
+       ],
+       "accept_by_book": [
+        0.107,
+        0.429
+       ],
+       "wrong_text_pages": "18/28",
+       "wrong_text_wilson": [
+        0.458,
+        0.793
+       ],
+       "fidelity_mean": 2.79,
+       "counts": true
+      }
+     },
+     "controls": {
+      "3flash": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    },
+    "arabic-flash3": {
+     "routes": {
+      "3flash": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "10/30",
+       "accept_wilson": [
+        0.192,
+        0.512
+       ],
+       "accept_by_book": [
+        0.167,
+        0.5
+       ],
+       "wrong_text_pages": "17/30",
+       "wrong_text_wilson": [
+        0.392,
+        0.726
+       ],
+       "fidelity_mean": 3.5,
+       "counts": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 29,
+       "books": 29,
+       "unjudged": 0,
+       "accept": "13/29",
+       "accept_wilson": [
+        0.284,
+        0.625
+       ],
+       "accept_by_book": [
+        0.276,
+        0.621
+       ],
+       "wrong_text_pages": "13/29",
+       "wrong_text_wilson": [
+        0.284,
+        0.625
+       ],
+       "fidelity_mean": 3.72,
+       "counts": true
+      }
+     },
+     "controls": {
+      "3flash": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    },
+    "chinese-flash3": {
+     "routes": {
+      "3flash": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "7/30",
+       "accept_wilson": [
+        0.118,
+        0.409
+       ],
+       "accept_by_book": [
+        0.1,
+        0.4
+       ],
+       "wrong_text_pages": "21/30",
+       "wrong_text_wilson": [
+        0.521,
+        0.833
+       ],
+       "fidelity_mean": 3.13,
+       "counts": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "6/30",
+       "accept_wilson": [
+        0.095,
+        0.373
+       ],
+       "accept_by_book": [
+        0.067,
+        0.367
+       ],
+       "wrong_text_pages": "22/30",
+       "wrong_text_wilson": [
+        0.556,
+        0.858
+       ],
+       "fidelity_mean": 3.27,
+       "counts": true
+      }
+     },
+     "controls": {
+      "3flash": {
+       "n": 2,
+       "passed": true
+      },
+      "3flash>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    },
+    "zh-frame-6871": {
+     "routes": {
+      "paddle": {
+       "n": 9,
+       "books": 9,
+       "unjudged": 21,
+       "accept": "5/9",
+       "accept_wilson": [
+        0.267,
+        0.811
+       ],
+       "accept_by_book": [
+        0.222,
+        0.889
+       ],
+       "wrong_text_pages": "2/9",
+       "wrong_text_wilson": [
+        0.063,
+        0.547
+       ],
+       "fidelity_mean": 4.33,
+       "counts": false
+      },
+      "paddle>agy-flash-low": {
+       "n": 30,
+       "books": 30,
+       "unjudged": 0,
+       "accept": "19/30",
+       "accept_wilson": [
+        0.455,
+        0.781
+       ],
+       "accept_by_book": [
+        0.467,
+        0.8
+       ],
+       "wrong_text_pages": "9/30",
+       "wrong_text_wilson": [
+        0.167,
+        0.479
+       ],
+       "fidelity_mean": 4.27,
+       "counts": true
+      }
+     },
+     "controls": {
+      "paddle": {
+       "n": 0,
+       "passed": false
+      },
+      "paddle>agy-flash-low": {
+       "n": 2,
+       "passed": true
+      }
+     },
+     "noise_floor": null,
+     "against_baseline": {}
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R0",
+   "ok": false,
+   "detail": "no recipe.json: run `init` and state the design before judging"
+  },
+  {
+   "rule": "R1",
+   "ok": false,
+   "detail": "latin-gpu/gpu>agy-flash-low: 8 book(s) with more than one page (69b51e18efd8df28f2db058d×4, 69b638be1c1c21a373839d77×4, 69b51eba47b06ecd581960d3×4)",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque (no packet.json kept; ids only)",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 10 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": false,
+   "detail": "no noise floor: 0 'repeat' rows (need >= 5) and no recipe.noise_floor.from",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": false,
+   "detail": "recipe.batch.pages_per_call not stated",
+   "waived": false
+  }
+ ]
+}

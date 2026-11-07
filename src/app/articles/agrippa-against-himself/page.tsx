@@ -399,7 +399,7 @@ export default function AgrippaAgainstHimselfPage() {
           All of Agrippa’s books in the library are on his{' '}
           <Link href="/author/heinrich-cornelius-agrippa">author page</Link>, in Latin, French, German, Dutch, Italian
           and English, from 1529 to 1798, including an <Link href={BOOK.vanitateEnglish}>English <em>Vanity of Arts
-          and Sciences</em> of 1684</Link>. The <Link href="/explore/maps/magic">Map of Magic</Link> shows where he
+          and Sciences</em> of 1684</Link>. The <Link href="/explore/histories/magic/sources">sources on magic</Link> show where he
           sits among the authors he drew on and the ones who drew on him.
         </p>
 

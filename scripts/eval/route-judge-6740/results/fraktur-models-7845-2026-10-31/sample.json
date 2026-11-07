@@ -1,0 +1,131 @@
+{
+ "from": "scripts/eval/route-judge-6740/results/german-cheaper-7701-2026-10-30 (the 18 Fraktur pages)",
+ "pages": [
+  {
+   "page_id": "6a453286d202169083a37578",
+   "book_id": "6a453286d202169083a374d8",
+   "page_number": 160,
+   "provider": "e-rara",
+   "gate": true
+  },
+  {
+   "page_id": "69b6ba938566c8381463223d",
+   "book_id": "69b6ba938566c838146321b8",
+   "page_number": 133,
+   "provider": "e-rara",
+   "gate": true
+  },
+  {
+   "page_id": "6a26d2def5273a8d907a680a",
+   "book_id": "6a26d2def5273a8d907a67b9",
+   "page_number": 81,
+   "provider": "mdz",
+   "gate": false
+  },
+  {
+   "page_id": "6a26d2bff5273a8d907a62ed",
+   "book_id": "6a26d2bff5273a8d907a627f",
+   "page_number": 110,
+   "provider": "mdz",
+   "gate": false
+  },
+  {
+   "page_id": "6a26d1b1f5273a8d907a00b3",
+   "book_id": "6a26d1b1f5273a8d907a0077",
+   "page_number": 60,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a2679fa6c1f37c9c4f2cc01",
+   "book_id": "6a2679fa6c1f37c9c4f2ca7a",
+   "page_number": 391,
+   "provider": "slub_dresden",
+   "gate": true
+  },
+  {
+   "page_id": "6a26b88661b3857ed05a64d8",
+   "book_id": "6a26b88661b3857ed05a6487",
+   "page_number": 81,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26c938aad44c98627f0993",
+   "book_id": "6a26c938aad44c98627f0974",
+   "page_number": 31,
+   "provider": "mdz",
+   "gate": false
+  },
+  {
+   "page_id": "6a4940bbf36483abc5bbc93d",
+   "book_id": "6a4940bbf36483abc5bbc918",
+   "page_number": 37,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a493adbf36483abc5bba182",
+   "book_id": "6a493adbf36483abc5bba15c",
+   "page_number": 38,
+   "provider": "sbb",
+   "gate": true
+  },
+  {
+   "page_id": "6a26d210f5273a8d907a260b",
+   "book_id": "6a26d210f5273a8d907a25aa",
+   "page_number": 97,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26d8fd774aa3596e88c658",
+   "book_id": "6a26d8fd774aa3596e88c39f",
+   "page_number": 697,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26db4c05d7c1d9b108c6c5",
+   "book_id": "6a26db4c05d7c1d9b108c5a1",
+   "page_number": 292,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26da7a05d7c1d9b10872b5",
+   "book_id": "6a26da7a05d7c1d9b108725f",
+   "page_number": 86,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26cbab5ac5aecc53cec6f0",
+   "book_id": "6a26cbab5ac5aecc53cec68f",
+   "page_number": 97,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a495080b9cd91959af3b84f",
+   "book_id": "6a495080b9cd91959af3b7f5",
+   "page_number": 41,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26c948aad44c98627f0a34",
+   "book_id": "6a26c948aad44c98627f0a00",
+   "page_number": 52,
+   "provider": "mdz",
+   "gate": true
+  },
+  {
+   "page_id": "6a26cba55ac5aecc53cec42b",
+   "book_id": "6a26cba55ac5aecc53cec18b",
+   "page_number": 672,
+   "provider": "mdz",
+   "gate": true
+  }
+ ]
+}

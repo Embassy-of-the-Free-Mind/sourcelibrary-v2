@@ -14,6 +14,8 @@
  *          poolRef() for every string in suspected_pool_fingerprints × every
  *          month it was active. No other store is needed.
  *   SLK-…  an API key: the suffix is the start of the api_keys _id.
+ *   SLA-…  a traced copy (#8150 slice 8): HMAC of a users._id or api_keys._id.
+ *          Resolved here by recomputing it for every account; nothing stored.
  *   SL-…   a bot-classified client (extractionRef over IP+UA hash + month).
  *          Not reversible from the ref alone; printed for a manual api_usage hunt.
  *
@@ -28,6 +30,7 @@ import { readFileSync } from 'fs';
 import { MongoClient } from 'mongodb';
 import { verifyExport } from '../../src/lib/provenance';
 import { poolRef } from '../../src/lib/bot-attribution';
+import { accountRefFor } from '../../src/lib/trace-ref';
 
 const arg = process.argv[2];
 if (!arg) {
@@ -53,7 +56,7 @@ if (!res.authentic) {
   console.log('Mark present but the MAC does not verify under our key: forged, legacy, or a different key.');
 }
 
-const ref = res.message?.match(/\bSL[PK]?-[0-9a-zA-Z]+(?:-\d{4}-\d{2})?/)?.[0];
+const ref = res.message?.match(/\bSL[PKA]?-[0-9a-zA-Z]+(?:-\d{4}-\d{2})?/)?.[0];
 if (!ref) {
   console.log('No extraction ref: this was served on an ordinary reader or export path.');
   process.exit(0);
@@ -94,7 +97,29 @@ async function resolvePoolRef(ref: string): Promise<void> {
   process.exit(1);
 }
 
-if (ref.startsWith('SLP-')) {
+async function resolveAccountRef(ref: string): Promise<void> {
+  const secret = process.env.PROVENANCE_SECRET_KEY as string;
+  const client = await MongoClient.connect(process.env.MONGODB_URI!);
+  const db = client.db('bookstore');
+  let checked = 0;
+  for (const [coll, kind] of [['users', 'user'], ['api_keys', 'key']] as const) {
+    for await (const d of db.collection(coll).find({}, { projection: { _id: 1 }, batchSize: 1000 })) {
+      checked++;
+      if (accountRefFor(kind, String(d._id), secret) === ref) {
+        console.log(`MATCH: ${coll}._id ${String(d._id)} (${kind}). Personal data: handle under the privacy terms.`);
+        await client.close();
+        process.exit(0);
+      }
+    }
+  }
+  await client.close();
+  console.log(`No account reproduces ${ref} (checked ${checked}). Wrong key, or the account was deleted.`);
+  process.exit(1);
+}
+
+if (ref.startsWith('SLA-')) {
+  resolveAccountRef(ref).catch((e) => { console.error(e); process.exit(2); });
+} else if (ref.startsWith('SLP-')) {
   resolvePoolRef(ref).catch((e) => { console.error(e); process.exit(2); });
 } else if (ref.startsWith('SLK-')) {
   console.log(`API key: api_keys._id starts with ${ref.slice(4)}`);

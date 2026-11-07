@@ -50,11 +50,11 @@ const pool = fs.readFileSync(path.join(DIR, 'pool.jsonl'), 'utf8').trim().split(
 
 async function queryEmbedding(text) {
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ requests: [{ model: 'models/gemini-embedding-2-preview', content: { parts: [{ text }] }, outputDimensionality: 768 }] }),
+      body: JSON.stringify({ requests: [{ model: 'models/gemini-embedding-2', content: { parts: [{ text }] }, outputDimensionality: 768 }] }),
     },
   );
   if (!res.ok) throw new Error(`gemini ${res.status}: ${await res.text()}`);
@@ -71,11 +71,11 @@ if (args.includes('--fill-pool')) {
     const idx = todo.slice(k, k + 50);
     const texts = idx.map((i) => pool[i].text.slice(0, 8000));
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ requests: texts.map((text) => ({ model: 'models/gemini-embedding-2-preview', content: { parts: [{ text }] }, outputDimensionality: 768 })) }),
+        body: JSON.stringify({ requests: texts.map((text) => ({ model: 'models/gemini-embedding-2', content: { parts: [{ text }] }, outputDimensionality: 768 })) }),
       },
     );
     if (!res.ok) throw new Error(`gemini ${res.status}: ${await res.text()}`);
@@ -85,7 +85,7 @@ if (args.includes('--fill-pool')) {
     embeddings.forEach((e, j) => { const n = Math.hypot(...e.values) || 1; out.push({ i: idx[j], v: e.values.map((x) => x / n) }); });
   }
   fs.writeFileSync(path.join(DIR, 'vec-gemini-fill.jsonl'), out.map((x) => JSON.stringify(x)).join('\n') + '\n');
-  await logEmbeddingUsage(usage, { model: 'gemini-embedding-2-preview', endpoint: 'eval/orig-lang-recall-5729' });
+  await logEmbeddingUsage(usage, { model: 'gemini-embedding-2', endpoint: 'eval/orig-lang-recall-5729' });
   console.log(`filled ${out.length} pool pages, ${chars} chars ≈ $${estimateUsd(chars).toFixed(4)} (logged)`);
   process.exit(0);
 }

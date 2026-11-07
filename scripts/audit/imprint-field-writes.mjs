@@ -56,8 +56,8 @@ export function runImprintGate({ list = false, writeBaseline = false, log = cons
   if (writeBaseline) {
     writeFileSync(IMPRINT_BASELINE, JSON.stringify({
       _comment: [
-        'Writes of imprint fields (scripts/lib/catalogue-fields.mjs IMPRINT_FIELDS) on books outside',
-        'setCatalogueFields(), as of the PR that introduced the gate (#6327). Each is a writer that can leave a',
+        'Writes of gated catalogue fields (scripts/lib/catalogue-fields.mjs CATALOGUE_FIELDS: imprint, title, author) on books outside',
+        'setCatalogueFields(), as of the PRs that introduced the gate (#6327 imprint, #7673 title and author). Each can leave a',
         'value with no field_provenance stamp. This list may only SHRINK: move a writer onto the helper and',
         'delete its line. A new writer fails CI; it does not get added here.',
       ],
@@ -78,8 +78,8 @@ export function runImprintGate({ list = false, writeBaseline = false, log = cons
   for (const w of fresh) log(`   !! NEW ${w.file}:${w.line}  ${w.how} '${w.field}'`);
   if (stale.length) log(`\nimprint baseline entries no longer present (remove them from ${IMPRINT_BASELINE}): ${stale.join(', ')}`);
   if (fresh.length) {
-    log('\nAn imprint field (year, place, printer) must be written with its provenance stamp — use');
-    log('setCatalogueFields() from scripts/lib/catalogue-fields.mjs (#6327). If the line is not a books write,');
+    log('\nA catalogue field (year, place, printer, title, display_title, english_title, author) must be written with its provenance stamp — use');
+    log('setCatalogueFields() from scripts/lib/catalogue-fields.mjs (#6327, #7673). If the line is not a books write,');
     log('mark it `// imprint-write-ok: <reason>`. Do not add it to the baseline.');
   }
   return fresh.length;

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { NOT_REPEAT_CAPTURE } from '@/lib/reader-pages';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { getTenantContext } from '@/lib/tenant-context';
@@ -84,7 +85,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
   // Use a generous limit but cap at 2000 for sanity
   const pagesRaw = await db.collection('pages')
     .find(
-      { book_id: bookId, page_number: { $gt: 0 } },
+      { book_id: bookId, page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE },
       { projection: PAGE_PROJECTION, maxTimeMS: 10000 },
     )
     .sort({ page_number: 1 })

@@ -5,7 +5,10 @@ import blogRevisions from '@/generated/blog-revisions.json';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 import { languageSlug } from '@/lib/language-utils';
 import { isLivePath } from '@/lib/page-status';
+import { isRepeatCapture } from '@/lib/page-counts';
 import { HISTORIES } from '@/app/explore/histories/histories';
+import { mapThemeForConcept, sourcesHref } from '@/lib/explore-maps';
+import { sibuCodes } from '@/lib/sibu-catalogue';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -173,6 +176,7 @@ export default async function sitemap({
       ...blogPosts(),
       ...categoryPages(),
       ...historyPages(),
+      ...sibuPages(),
     ]);
   }
 
@@ -225,6 +229,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/encyclopedia`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/ai-partners`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/developers`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -241,6 +246,10 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/support`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/es/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/la/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/nl/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/zh/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/es/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   ];
 }
@@ -275,8 +284,19 @@ function blogPosts(): MetadataRoute.Sitemap {
   return [...posts, ...kinds];
 }
 
+// The 四部 catalogue (#8035), in both languages: empty classes included, since the page says plainly what we lack.
+function sibuPages(): MetadataRoute.Sitemap {
+  const at = (path: string, priority: number) => ({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority });
+  return [
+    at('/sibu', 0.6),
+    at('/zh/sibu', 0.7),
+    at('/zh/collections', 0.7),
+    ...sibuCodes().flatMap((code) => [at(`/sibu/${code}`, 0.5), at(`/zh/sibu/${code}`, 0.6)]),
+  ];
+}
+
 // The conceptual histories (#7623): index, each concept, its essays, its
-// claims index and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
+// claims index, its sources view (#7646) and one claims page per domain. Listed here (chunk 0) so embed-site-pages.mjs indexes them into
 // site_pages; it crawls the static routes plus this chunk, and these are dynamic.
 function historyPages(): MetadataRoute.Sitemap {
   const lastModified = new Date(`${HISTORIES.generated}T00:00:00Z`);
@@ -287,6 +307,8 @@ function historyPages(): MetadataRoute.Sitemap {
       at(`/explore/histories/${c.slug}`, 0.7),
       ...c.essays.map((e) => at(`/explore/histories/${c.slug}/${e.slug}`, 0.6)),
       at(`/explore/histories/${c.slug}/claims`, 0.5),
+      // the sources view, where the concept has a map (#7646); its old /explore/maps/<c> address redirects here and is not listed
+      ...(() => { const t = mapThemeForConcept(c.slug); const href = t && sourcesHref(t); return href ? [at(href, 0.6)] : []; })(),
       ...c.domains.map((d) => at(`/explore/histories/${c.slug}/claims/${d}`, 0.5)),
     ]),
   ];
@@ -386,7 +408,7 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const pages = await pagesColl.find(
       { seo_indexable: true, _id: { $gte: start._id } },
       {
-        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1 },
+        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1, repeat_of: 1 },
         sort: { _id: 1 },
         limit: PAGES_PER_CHUNK,
         hint: 'seo_indexable_id_partial',
@@ -406,7 +428,8 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const liveBookIds = new Set(liveBooks.map((b) => b.id as string));
 
     return pages
-      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id))
+      // A hidden repeat capture (#5056) 307s to its kept page: not a URL to list.
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id) && !isRepeatCapture(p))
       .map((p) => {
         let lastModified: Date;
         try {
@@ -474,7 +497,7 @@ async function getArtworks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
     const artworks = await db.collection('books').find(
       ARTWORK_SITEMAP_FILTER,
       {
-        projection: { _id: 0, slug: 1, thumbnail_blob: 1, thumbnail: 1, updated_at: 1 },
+        projection: { _id: 0, slug: 1, archived_full_url: 1, thumbnail_blob: 1, thumbnail: 1, updated_at: 1 },
         sort: { _id: 1 },
         skip: chunkIndex * ARTWORKS_PER_CHUNK,
         limit: ARTWORKS_PER_CHUNK,
@@ -492,8 +515,9 @@ async function getArtworks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
         } catch {
           lastModified = new Date();
         }
-        // Same image preference as the artwork page's own openGraph block.
-        const image = art.thumbnail_blob || art.thumbnail;
+        // Our full-size copy, as the page's ImageObject contentUrl uses: in a sample of 200,
+        // 169 thumbnails were under 300 px on the long side, too small to rank in image search.
+        const image = art.archived_full_url || art.thumbnail_blob || art.thumbnail;
         return {
           url: `${BASE_URL}/artwork/${encodeURIComponent(art.slug)}`,
           lastModified,

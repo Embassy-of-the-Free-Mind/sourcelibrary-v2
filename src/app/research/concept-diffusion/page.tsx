@@ -266,7 +266,7 @@ export default function ConceptDiffusionPage() {
           {corpus.periods[corpus.periods.length - 1] + 50}:
         </p>
         <p className="mb-2">
-          <strong>English keywords</strong> are extracted by AI (Gemini) from each page&apos;s
+          <strong>English keywords</strong> are extracted by AI from each page&apos;s
           translated text. Every page produces a set of &lt;keywords&gt; tags identifying the key
           concepts discussed on that page. The {keywords.length.toLocaleString('en-US')} keywords shown here
           each appear in 50 or more books. Keywords are grouped by subject category based on which
