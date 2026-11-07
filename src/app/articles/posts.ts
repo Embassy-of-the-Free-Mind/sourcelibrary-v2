@@ -125,6 +125,20 @@ export const LINKED_PAGES: BlogPost[] = [
 
 export const posts: BlogPost[] = [
   {
+    slug: 'how-europe-read-mesoamerican-books',
+    title: 'How Europe Read the Books of Mesoamerica',
+    subtitle:
+      'From two books on a list of 1519 to the syllables of 1952: who saw one, who copied whom, and what the people who made them said.',
+    summary:
+      'Two books on a list of 1519, then four centuries of misreading: Martyr, Landa, the Popol Vuh, Humboldt, Förstemann and Brinton on Mesoamerican writing.',
+    date: '6 November 2026',
+    readTime: '18 min read',
+    kind: 'stories',
+    image: '/articles/how-europe-read-mesoamerican-books/humboldt-plate-45.jpg',
+    imageAlt:
+      "Five leaves of the Dresden Codex in the coloured engraving from Humboldt's Vues des cordillères, with columns of signs, bars and dots and painted panels of gods.",
+  },
+  {
     slug: 'kircher-hieroglyphs',
     title: 'Kircher and the Hieroglyphs',
     subtitle:

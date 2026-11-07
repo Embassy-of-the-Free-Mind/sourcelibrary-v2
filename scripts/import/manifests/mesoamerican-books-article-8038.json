@@ -1,0 +1,15 @@
+{
+  "campaign": "mesoamerican-books-article-8038",
+  "issue": 8038,
+  "hold_release": "release after the article's review on #8038, when the article links these books",
+  "collections": ["maya"],
+  "BOOKS": [
+    { "id": "deorbenouopetrim00angh", "title": "De orbe novo decades", "author": "Pietro Martire d'Anghiera", "year": 1530, "lang": "Latin", "note": "Alcalá 1530, all eight Decades; the Ribera remark is Dec. V ch. 10, fol. 86. Our 1533 Basel copy stops at Dec. III." },
+    { "id": "AntiquitiesMexiv3King", "title": "Antiquities of Mexico, Vol. 3", "author": "Edward King, Viscount Kingsborough", "year": 1831, "lang": "English", "note": "Holds the Dresden Codex plates (Aglio); completes our Kingsborough set alongside vols 1, 2, 5, 7, 8." },
+    { "id": "AntiquitiesMexi6King", "title": "Antiquities of Mexico, Vol. 6", "author": "Edward King, Viscount Kingsborough", "year": 1831, "lang": "English", "note": "Notes volume; p. 268 prints Martyr's Ribera passage in the old English." },
+    { "id": "vuesdescordille00humb", "title": "Vues des cordillères, et monumens des peuples indigènes de l'Amérique, Tome 1", "author": "Alexander von Humboldt", "year": 1810, "lang": "French", "note": "Text volume; the Dresden plate 45 discussion is printed pp. 266-268. Plates volume is held (6aeb00fe19312ecd297aa315)." },
+    { "id": "palenquetabletin00rauc", "title": "The Palenque Tablet in the United States National Museum, Washington, D.C.", "author": "Charles Rau", "year": 1879, "lang": "English", "note": "Smithsonian Contributions to Knowledge 331; Brinton's letter of 4 March 1879, pp. 52-53." },
+    { "id": "glimpseatguatema00maud", "title": "A Glimpse at Guatemala, and Some Notes on the Ancient Monuments of Central America", "author": "Anne Cary Maudslay and Alfred Percival Maudslay", "year": 1899, "lang": "English", "note": "p. 255: Landa's alphabet 'probably of a syllabic and not of an alphabetic character'." },
+    { "id": "coleccindedocu01madruoft", "title": "Colección de documentos inéditos para la historia de España, Tomo I", "author": "Martín Fernández de Navarrete et al. (eds.)", "year": 1842, "lang": "Spanish", "note": "The Veracruz inventory of 1519 with the Seville and Vienna variants, pp. 461-472; 'dos libros' on p. 469." }
+  ]
+}
