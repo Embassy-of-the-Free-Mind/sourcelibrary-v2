@@ -21,7 +21,11 @@
  * sentence carries on (src/lib/flow-join.ts) and marks the boundary with a
  * small linked page number. `?view=pages` keeps the page-by-page document
  * above — one heading per page for heading navigation, the original folded
- * under each — and `?text=both` is always page by page. Every
+ * under each — and `?text=both` is always page by page. On a facing-page
+ * edition (a Loeb, #8321) each text keeps its own lane, so no passage reads
+ * twice: the translation is the published English leaves alone, `?text=original`
+ * the Greek or Latin leaves alone, and `?text=both` the pairs, each once, side
+ * by side on a wide screen and stacked on a phone. Every
  * text block carries the `lang` it is written in (#5115). Long books are cut
  * into parts of PART_SIZE pages so no single response is megabytes.
  *
@@ -74,7 +78,7 @@ export const preferredRegion = 'fra1';
 const PART_SIZE = 60;
 
 type TextMode = 'translation' | 'original' | 'both';
-// `facing`: a facing-page edition (a Loeb, #8321) — each original leaf and the published English opposite it, once.
+// `facing`: `?text=both` on a facing-page edition (a Loeb, #8321): each original leaf and the published English opposite it, once.
 type ViewMode = 'flow' | 'pages' | 'facing';
 
 interface Props {
@@ -197,12 +201,13 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   const bookId = (book.id || book._id?.toString()) as string;
   const bookPath = book.slug || bookId;
   const pagesCount = book.pages_count || 0;
-  // A facing-page edition (a Loeb, #8321) reads as its pairs: the original and the
-  // published English beside it, once each. `?view=flow` runs the English on.
+  // A facing-page edition (a Loeb, #8321) is continuous by default like any book,
+  // but each text runs in its own lane: the translation is the published English
+  // leaves, the original the Greek or Latin ones (see outOfLane). `?text=both` is
+  // the pairs, each once, side by side.
   const facingFlag = facingTranslationOf(book);
   // Both texts at once only make sense side by side per page.
-  const view: ViewMode = facingFlag && mode !== 'original'
-    ? (viewParam === 'flow' && mode !== 'both' ? 'flow' : 'facing')
+  const view: ViewMode = facingFlag && mode === 'both' ? 'facing'
     : viewParam === 'pages' || mode === 'both' ? 'pages' : 'flow';
 
   // Who is asking. Same ladder as /api/books/[id]/text: partner reading rooms
@@ -241,6 +246,12 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
   }
   // An English leaf of a flagged book is the published translation: its own words are the text.
   const isPrintedEnglish = (p: { ocr?: { data?: string } }) => !!facingFlag && leafRole(p.ocr?.data) === 'translation';
+  // One text per lane on a Loeb, so no passage reads twice: the translation lane
+  // skips the original leaves (their AI translation restates the English opposite),
+  // the original lane skips the English leaves. Leaves that are neither (title,
+  // blank, plate) stay in both. Only `?text=both` shows the two together.
+  const outOfLane = (p: { ocr?: { data?: string } }) => !!facingFlag && mode !== 'both'
+    && leafRole(p.ocr?.data) === (mode === 'original' ? 'translation' : 'original');
 
   const partCount = Math.max(1, Math.ceil(pages.length / PART_SIZE));
   if (part > partCount) notFound();
@@ -280,17 +291,16 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     const q = new URLSearchParams();
     const t = opts.text ?? mode;
     if (t !== 'translation') q.set('text', t);
-    const v = opts.view ?? view;
-    if (facingFlag && t !== 'original') {
-      if (v === 'flow' && t !== 'both') q.set('view', 'flow');
-    } else if (v === 'pages' && t !== 'both') q.set('view', 'pages');
+    if ((opts.view ?? view) === 'pages' && t !== 'both') q.set('view', 'pages');
     const p = opts.part ?? part;
     if (p !== 1) q.set('part', String(p));
     const qs = q.toString();
     return `/book/${bookPath}/read${qs ? `?${qs}` : ''}${opts.hash ? `#${opts.hash}` : ''}`;
   };
 
-  const modeLabel: Record<TextMode, string> = { translation: 'Translation', original: `Original (${languageLabel})`, both: 'Both' };
+  const modeLabel: Record<TextMode, string> = facingFlag
+    ? { translation: facingTranslationLabel(book), original: `Original (${languageLabel})`, both: 'Side by side' }
+    : { translation: 'Translation', original: `Original (${languageLabel})`, both: 'Both' };
   const first = slice[0]?.page_number;
   const last = slice[slice.length - 1]?.page_number;
 
@@ -335,11 +345,11 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     const pageHref = `/book/${bookPath}/page/${p.id}`;
     // The printed number, so the book's own references ("see p. 279", its index) can be followed in the flow.
     const printed = typeof p.printed_page?.label === 'string' && p.printed_page.label.trim() ? p.printed_page.label.trim() : undefined;
+    // A Loeb (#8321): a leaf outside this lane keeps only its linked number, which joins the next page's.
+    if (outOfLane(p)) return { n, html: null, href: pageHref, label: printed };
     const originalHtml = pageHtml(p.ocr?.data, flowLevel);
     if (mode === 'original') return { n, html: originalHtml, href: pageHref, label: printed };
-    // A Loeb (#8321): the English runs on in the translator's words; an original leaf
-    // whose English faces it adds nothing here, or every passage would read twice.
-    if (facingEnglishOf.has(n)) return { n, html: null, href: pageHref, label: printed };
+    // The published English runs on in the translator's words.
     if (isPrintedEnglish(p)) return { n, html: originalHtml, href: pageHref, label: printed };
     const translationRaw = p.translation?.data ? markForExport(p.translation.data, bookId) : undefined;
     const translationHtml = pageHtml(translationRaw, flowLevel);
@@ -365,9 +375,16 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
     const translationBlock = translationHtml
       ? <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: translationHtml }} />
       : <p className="text-muted italic">{blank ? 'Blank page.' : withheld ? 'Translation withheld: it was made from an earlier reading of this page.' : originalHtml ? 'Not yet translated.' : null}</p>;
+    // A Loeb's English leaf is written in English, whatever the book is catalogued as.
     const originalBlock = originalHtml
-      ? <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />
+      ? (isPrintedEnglish(p)
+        ? <div className="prose-manuscript" lang="en" dangerouslySetInnerHTML={{ __html: originalHtml }} />
+        : <div className="prose-manuscript" lang={originalLang} dir={originalDir} dangerouslySetInnerHTML={{ __html: originalHtml }} />)
       : <p className="text-muted italic">Not transcribed.</p>;
+    // `?text=both` on a Loeb leaf with no facing page (#8321): an English leaf IS the
+    // translation, and an original leaf's AI translation folds away as ours, so a
+    // passage the English leaf beside it prints is never read twice.
+    const loebLeaf = facingFlag && mode === 'both' ? leafRole(p.ocr?.data) : null;
 
     const hasAnyText = !!(translationHtml || originalHtml);
     // A page with no translation shows the ORIGINAL as its text, not a
@@ -400,6 +417,17 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
         </div>
         {!hasAnyText ? (
           <p className="text-muted italic">No transcribed text on this page.</p>
+        ) : loebLeaf ? (
+          <>
+            {originalBlock}
+            {loebLeaf === 'original' && translationHtml && (
+              <details className="mt-3">
+                <summary className="cursor-pointer text-sm text-muted hover:text-accent-rust">Source Library translation</summary>
+                <p className="font-sans text-xs text-muted mt-3 mb-2">Our AI translation of the {languageLabel} on page {n}, not the published one.</p>
+                {translationBlock}
+              </details>
+            )}
+          </>
         ) : mode === 'both' ? (
           <>
             {translationBlock}
@@ -440,6 +468,8 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
           The whole book as one document, {pages.length} pages{partCount > 1 ? ` in ${partCount} parts` : ''}.
           {view === 'facing'
             ? ` Each page of the original sits beside the published English translation printed facing it (${facingTranslationLabel(book)}); pages without a facing translation read on their own.`
+            : facingFlag && mode !== 'both'
+            ? ` ${mode === 'original' ? `The ${languageLabel} runs on by itself` : `The published English (${facingTranslationLabel(book)}) runs on by itself, without our AI translation`}, so no passage reads twice. The small numbers mark where each page begins and open it beside the scan.`
             : view === 'flow'
             ? ' The text runs on across pages. The small numbers after a thin rule mark where each page begins: the number printed on it where the book has one, otherwise the scan; each opens that page beside the scan.'
             : ` Each page is a heading; the ${mode === 'original' ? 'translation' : 'original'} sits under it, folded, and opens on request.`}
@@ -461,7 +491,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
       {mode !== 'both' && (
         <nav aria-label="Layout" className="mb-4 text-sm">
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
-            {((facingFlag ? [['facing', 'Facing pages'], ['flow', 'Continuous']] : [['flow', 'Continuous'], ['pages', 'Page by page']]) as [ViewMode, string][]).map(([v, label]) => (
+            {([['flow', 'Continuous'], ['pages', 'Page by page']] as [ViewMode, string][]).map(([v, label]) => (
               <li key={v}>
                 {v === view
                   ? <span aria-current="true" className="font-semibold">{label}</span>
@@ -610,7 +640,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
             </section>
           );
         })}
-        {view === 'pages' && open.map(p => pageSection(p))}
+        {view === 'pages' && open.filter(p => !outOfLane(p)).map(p => pageSection(p))}
         {gateFrom !== null && (
           <section aria-labelledby="gate-heading" className="mt-10 border-t pt-6" style={{ borderColor: 'var(--border-light)' }}>
             <Heading level={pageLevel} id="gate-heading" className="font-display text-xl">Pages {gateFrom}–{last} are for signed-in readers</Heading>

@@ -83,6 +83,27 @@ vi.mock('@/lib/mongodb', () => ({
   default: Promise.resolve({ db: () => fakeDb }),
 }));
 vi.mock('@/lib/auth', () => ({ auth: async () => null }));
+// /book/[id]/read: the request-side gates, off (a reader in a browser, no tenant).
+vi.mock('next/headers', () => ({ headers: async () => new Headers() }));
+vi.mock('@/lib/tenant-context', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/tenant-context')>()),
+  getTenantContext: async () => null,
+}));
+vi.mock('@/lib/tenant-catalog-books', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/tenant-catalog-books')>()),
+  findBookForTenant: async (db: typeof fakeDb, id: string) => {
+    const book = await db.collection('books').findOne({ id });
+    return book ? { book } : null;
+  },
+}));
+vi.mock('@/lib/metered-gate', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/metered-gate')>()),
+  isMeteredAnonRequest: async () => false,
+}));
+vi.mock('@/lib/hunt-payloads', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/hunt-payloads')>()),
+  primeHuntPayloads: async () => {},
+}));
 vi.mock('@/lib/auth-helpers', () => ({
   withAuth: (h: unknown) => h, withAdminAuth: (h: unknown) => h,
   isInnerCircle: async () => false, getSessionRole: async () => null,
@@ -296,5 +317,84 @@ describe('facingStepIndex: the reader turns by opening', () => {
     expect(await turn(runA, 29, 1)).toBeNull();
     expect(await turn(runA, 22, -1)).toBeNull();
     expect(await turn(runA, 25, 1, [26])).toBe(26);
+  });
+});
+
+// ── /book/[id]/read: no passage twice, in any of the three views ─────────────
+// (#8321 inbox 2026-11-07 11:48Z) On a Loeb the continuous default runs the
+// published English alone, ?text=original the Greek alone, ?text=both the pair
+// once, side by side. Our AI translation of the Greek leaf (OURS) never stands
+// in the running text, and the rewording over the English leaf never shows.
+describe('/read on a Loeb: each passage once', () => {
+  const OURS = 'impoverished lives and were somewhat simple-minded';
+  const GREEK = 'δουλεῦσαι ἐν Σάμῳ';
+  const render = async (book: { id: string }, sp: Record<string, string>) => {
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const { default: LinearReadPage } = await import('@/app/book/[id]/read/page');
+    const el = await LinearReadPage({ params: Promise.resolve({ id: book.id }), searchParams: Promise.resolve(sp) });
+    const html = renderToStaticMarkup(el);
+    const text = stripMarks(html.replace(/<details[\s\S]*?<\/details>/g, ' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
+    const folded = stripMarks((html.match(/<details[\s\S]*?<\/details>/g) || []).join(' ').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
+    const count = (hay: string, needle: string) => hay.split(needle).length - 1;
+    return { html, text, folded, count };
+  };
+  const words = (s: string) => stripMarks(s).replace(/\s+/g, ' ');
+
+  it('fixture: the phrases are on the leaves they name', () => {
+    expect(words(L118_ENGLISH.ocr.data)).toContain(GODLEY);
+    expect(words(L118_GREEK.translation.data)).toContain(OURS);
+    expect(L118_GREEK.ocr.data).toContain(GREEK);
+  });
+
+  it('continuous (default): the Loeb English once; no Greek, no AI translation, no rewording', async () => {
+    const r = await render(L118_BOOK, {});
+    expect(r.count(r.text, GODLEY)).toBe(1);
+    expect(r.count(r.text + r.folded, OURS)).toBe(0);
+    expect(r.count(r.text + r.folded, REWORDING)).toBe(0);
+    expect(r.count(r.text + r.folded, GREEK)).toBe(0);
+    // The page numbers both stay, linked: the Greek leaf's joins the English one's.
+    expect(r.html).toContain(`/page/${L118_GREEK.id}`);
+    expect(r.html).toContain(`/page/${L118_ENGLISH.id}`);
+  });
+
+  it('?text=original: the Greek once, nothing English', async () => {
+    const r = await render(L118_BOOK, { text: 'original' });
+    expect(r.count(r.text, GREEK)).toBe(1);
+    expect(r.count(r.text + r.folded, GODLEY)).toBe(0);
+    expect(r.count(r.text + r.folded, OURS)).toBe(0);
+  });
+
+  it('?text=both: the pair once, side by side; our translation only folded, labelled', async () => {
+    const r = await render(L118_BOOK, { text: 'both' });
+    expect(r.count(r.text, GREEK)).toBe(1);
+    expect(r.count(r.text, GODLEY)).toBe(1);
+    expect(r.count(r.text, OURS)).toBe(0);
+    expect(r.count(r.folded, OURS)).toBe(1);
+    expect(r.folded).toContain('Source Library translation');
+    expect(r.count(r.text + r.folded, REWORDING)).toBe(0);
+    expect(r.html).toMatch(/lg:grid-cols-2/);
+  });
+
+  it('?view=pages keeps the lane too: one heading per page, the English leaf in English', async () => {
+    const r = await render(L118_BOOK, { view: 'pages' });
+    expect(r.count(r.text, GODLEY)).toBe(1);
+    expect(r.count(r.text + r.folded, OURS)).toBe(0);
+    expect(r.html).toContain('id="h-p322"');
+    expect(r.html).not.toContain('id="h-p321"');
+    expect(r.html).toMatch(/<div class="prose-manuscript" lang="en">[^]*meanly-living/);
+  });
+
+  it('every text block says its language', async () => {
+    for (const sp of [{}, { text: 'original' }, { text: 'both' }]) {
+      const r = await render(L118_BOOK, sp);
+      const blocks = r.html.match(/<div class="prose-manuscript[^"]*"[^>]*>/g) || [];
+      expect(blocks.length).toBeGreaterThan(0);
+      for (const b of blocks) expect(b).toMatch(/ lang="/);
+    }
+  });
+
+  it('the unflagged control reads as before: our translation is the running text', async () => {
+    const r = await render(CONTROL_BOOK, {});
+    expect(r.count(r.text, OURS)).toBe(1);
   });
 });
