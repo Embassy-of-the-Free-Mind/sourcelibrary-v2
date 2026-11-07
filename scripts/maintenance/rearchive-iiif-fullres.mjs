@@ -532,8 +532,13 @@ async function realignOne(book) {
   ).sort({ page_number: 1 }).toArray();
   if (!pages.length) return { skipped: 'no-pages' };
   if (isAlreadySplit(pages)) return { skipped: 'already-split' };
-  const repaired = await db.collection('book_events').findOne({ book_id: book.id, type: 'text_shift_repair' });
-  if (!repaired) return { skipped: 'no text_shift_repair event: the text may still follow the archive, not the source' };
+  // The LATEST text move must be July's move to the source leaf. #7949 later moved text onto the
+  // shifted images on some of these same books, with the same event type: correcting their images
+  // would break them again. Anything else stays refused: a by-eye call, not this mode's.
+  const [lastMove] = await db.collection('book_events').find({ book_id: book.id, type: 'text_shift_repair' }).sort({ at: -1 }).limit(1).toArray();
+  if (!lastMove) return { skipped: 'no text_shift_repair event: the text may still follow the archive, not the source' };
+  if (lastMove.source !== 'repair-erara-text-shift') return { skipped: `latest text move is ${lastMove.source || 'unlabelled'} (${lastMove.at?.toISOString?.().slice(0, 10)}): the text may follow the shifted images (#7949)` };
+  if (await db.collection('book_events').findOne({ book_id: book.id, type: 'text_shift_repair_undo' })) return { skipped: 'text_shift_repair_undo on record' };
   const toWrite = pages.filter(p => !p.image_metadata?.realigned_at && isIiifUrl(p.photo_original || p.photo));
   if (!toWrite.length) return { skipped: 'all-pages-realigned' };
   // Judge the shift on pages not yet rewritten: on a resume the rewritten ones read as aligned.
