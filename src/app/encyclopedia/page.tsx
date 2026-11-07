@@ -39,9 +39,11 @@ interface SearchParams {
 }
 
 // No outer try/catch: letting a fetch failure throw here keeps ISR serving
-// the last good page instead of permanently caching an all-empty results
-// page. (The inner letter-count try/catch below is a narrow, non-fatal
-// degradation of a secondary stat — that's fine to keep.)
+// the last good page instead of caching an all-empty results page. supabase-js
+// RETURNS errors rather than throwing them, so the throw below is what makes
+// that true: unstable_cache does not store a throw, but it stored "0 entries"
+// for an hour per URL before it (#8368). (The inner letter-count try/catch below
+// is a narrow, non-fatal degradation of a secondary stat — that's fine to keep.)
 async function getEntitiesRaw(searchParams: SearchParams) {
   const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
   const minBooks = parseInt(searchParams.min_books || '2') || 2;
@@ -78,18 +80,24 @@ async function getEntitiesRaw(searchParams: SearchParams) {
   if (letter && !query) statsQuery = statsQuery.ilike('name', `${letter}%`);
 
   // Run queries in parallel
-  const [entitiesResult, personCount, placeCount, conceptCount] = await Promise.all([
+  const [entitiesResult, personResult, placeResult, conceptResult] = await Promise.all([
     baseQuery,
-    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'person')
-      .then(r => r.count || 0),
-    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'place')
-      .then(r => r.count || 0),
-    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'concept')
-      .then(r => r.count || 0),
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'person'),
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'place'),
+    supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'concept'),
   ]);
+
+  const failed = [entitiesResult, personResult, placeResult, conceptResult].find((r) => r.error);
+  if (failed) {
+    // A HEAD count's error has an empty message, so the status and code go in too.
+    throw new Error(`encyclopedia query failed: ${failed.status} ${failed.error?.code} ${failed.error?.message}`);
+  }
 
   const entities = entitiesResult.data || [];
   const total = entitiesResult.count || 0;
+  const personCount = personResult.count || 0;
+  const placeCount = placeResult.count || 0;
+  const conceptCount = conceptResult.count || 0;
 
   // Letter distribution: use a single RPC call or lightweight query
   // Instead of paginating all names, use SQL to count by first letter
