@@ -12,6 +12,7 @@ decision: "Over-merging is a real gap in two routes and a borderline one in a th
 superseded_by: null
 issue: [8291, 8293, 7761, 4246, 3258]
 router_evidence: "none — a catalogue-identity measurement, no OCR or translation route"
+feeds: [repair]
 ---
 ## 2026-11-07 · How many live work_id clusters hold more than one work, per way the cluster was made? (#8291)
 <!-- PRIOR ART: scripts/eval/work-recall/merge-precision.mjs judges PROPOSED merge groups and cannot sample live clusters or plant errors; gap-validation-cluster-audit.mjs and work-grouping-check.mjs audit USTC clusters and the phase-11 graph, not books.work_id; 2026-10-30-verified-work-merges-7761.md measured the merge lane before it applied, this measures what is live afterwards. -->
