@@ -114,7 +114,7 @@ export const GREEK_FLASH_FROM = new Date('2026-10-02T00:00:00Z');
  * (Hebrew script, family jrb) and "Latin, Arabic" do not qualify.
  *
  * THE LEGACY LABEL (#8283). These families no longer route a book (getOcrModelForBook below reads the router table). They
- * name the lite/flash tier that the probes, the /quality table and routing-drift still read, through { liteOnly }.
+ * name the lite/flash tier that the probes and the /quality table still read, through { liteOnly }.
  */
 export const FLASH_OCR_FROM = Object.freeze({
   grc: GREEK_FLASH_FROM,
@@ -189,7 +189,7 @@ export function ocrRouteForBook(book, table = OCR_ROUTING_TABLE) {
 
 /**
  * THE model for OCR: ocrRouteForBook's. With { liteOnly } it answers the LEGACY LABEL, the lite/flash tier the probes read
- * (build-routing-table, build-ocr-pareto, parity tests), and no lane asks that: lite under OCR_LITE_ONLY but for FLASH_OCR_FROM's
+ * (build-ocr-pareto, parity tests), and no lane asks that: lite under OCR_LITE_ONLY but for FLASH_OCR_FROM's
  * families; with liteOnly false, flash for BPH, non-Latin scripts and an unknown language, else lite.
  */
 export function getOcrModelForBook(book, opts = {}) {
