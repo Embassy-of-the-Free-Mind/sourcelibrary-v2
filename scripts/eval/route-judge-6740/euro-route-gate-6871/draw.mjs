@@ -19,8 +19,10 @@ import { MongoClient } from 'mongodb';
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const h = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
 const CELL = arg('cell'), OUT = path.resolve(arg('out')), N = Number(arg('n') || 30), SINCE = arg('since') ? Date.parse(arg('since')) : 0;
-const CELLS = { es19: { lang: 'Spanish', years: [1800, 1929], engine: 'lo', route: 'lighton>agy-flash-low' }, fr19: { lang: 'French', years: [1800, 1929], engine: 'lo', route: 'lighton>agy-flash-low' } };
-if (!CELLS[CELL]) throw new Error('--cell=es19|fr19');
+const CELLS = { es19: { lang: 'Spanish', years: [1800, 1929], engine: 'lo', route: 'lighton>agy-flash-low' }, fr19: { lang: 'French', years: [1800, 1929], engine: 'lo', route: 'lighton>agy-flash-low' },
+  // #6871 English widening gate (run.mjs --study=en19-6871): its own lane stamp and study
+  en19: { lang: 'English', years: [1800, 1929], engine: 'lo', route: 'lighton>agy-flash-low', lane: 'gpu-agy-first-read-en-6871', study: 'en19-6871' } };
+if (!CELLS[CELL]) throw new Error('--cell=es19|fr19|en19');
 const MARKER = /<<<\s*(?:BEGIN|END)\s*>>>/;
 const rows = fs.readFileSync(arg('ledger'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => Date.parse(r.at) >= SINCE);
 // cell-test pages (both draws): never drawn again
@@ -39,7 +41,7 @@ for (const r of rows) {
 for (const r of written) {
   const p = pages.get(r.page_id);
   if (MARKER.test(p?.ocr?.data || '')) { t.marker_residue++; t.marker_pages.push(r.page_id); }
-  if (p?.ocr?.pipeline !== 'gpu-agy-first-read-euro-6871') t.not_stamped++;
+  if (p?.ocr?.pipeline !== (CELLS[CELL].lane ?? 'gpu-agy-first-read-euro-6871')) t.not_stamped++;
 }
 // the draw: books in seeded order, one random written page a book, then a second round over the same order
 const pool = written.filter((r) => { if (ex.has(r.page_id)) { t.excluded_cell_test++; return false; } return pages.get(r.page_id)?.ocr?.data; });
@@ -51,6 +53,6 @@ const picks = [];
 for (let round = 0; picks.length < N && round < 30; round++) for (const b of books) { if (picks.length >= N) break; const r = byBook.get(b)[round]; if (r) picks.push({ ...r, round }); }
 fs.mkdirSync(OUT, { recursive: true });
 const C = CELLS[CELL];
-fs.writeFileSync(path.join(OUT, 'sample.json'), JSON.stringify({ drawn_at: new Date().toISOString(), study: 'euro-6871', gate: 'euro-route-gate-6871', cells: { [CELL]: { ...C, books: new Set(picks.map((p) => p.book_id)).size, pages: picks.map((r) => ({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, round: r.round })) } }, frame: { [CELL]: { books_written: books.length, ...t } } }, null, 1));
+fs.writeFileSync(path.join(OUT, 'sample.json'), JSON.stringify({ drawn_at: new Date().toISOString(), study: C.study ?? 'euro-6871', gate: 'euro-route-gate-6871', cells: { [CELL]: { ...C, books: new Set(picks.map((p) => p.book_id)).size, pages: picks.map((r) => ({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, round: r.round })) } }, frame: { [CELL]: { books_written: books.length, ...t } } }, null, 1));
 fs.writeFileSync(path.join(OUT, 'written.json'), JSON.stringify({ [CELL]: Object.fromEntries(picks.map((r) => [r.page_id, { text: pages.get(r.page_id).ocr.data }])) }, null, 1));
 console.log(`${CELL}: ${picks.length} pages drawn from ${new Set(picks.map((p) => p.book_id)).size} books (${books.length} books with a written page)`, JSON.stringify(t));

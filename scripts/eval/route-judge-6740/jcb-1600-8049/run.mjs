@@ -49,7 +49,11 @@ const CLI_OCR = path.join(ROOT, 'scripts/batch/cli-ocr.mjs');
 const STUDY = arg('study') || 'jcb-8049';
 const STUDIES = {
   'jcb-8049': { salt: '8049', lane: 'gpu-agy-first-read-jcb-8049', job: 'jcb-1600-8049-cell', reason: '#8049 JCB pre-1600 cell test' },
-  'euro-6871': { salt: '6871', lane: 'gpu-agy-first-read-euro-6871', job: 'euro-1800-cells-6871', reason: '#6871 French/Spanish/Italian 1600-1929 cell test' },
+  'euro-6871': { salt: '6871', lane: 'gpu-agy-first-read-euro-6871', job: 'euro-1800-cells-6871', reason: '#6871 French/Spanish/Italian 1600-1929 cell test', method: 'euro-gpu-agy-cell-6871', evidence: 'scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/' },
+  // --study=en19-6871 (#6871): the English 1800-1929 widening gate. The draw is over the production lane's written pilot
+  // pages (scripts/eval/route-judge-6740/euro-route-gate-6871/draw.mjs --cell=en19); packet, judge, score and record
+  // run here unchanged. The planter has no English: this study carries no planted controls.
+  'en19-6871': { salt: '6871en', lane: 'gpu-agy-first-read-en-6871', job: 'en19-gate-6871', reason: '#6871 English 1800-1929 widening gate', method: 'gpu-print-6871', evidence: 'scripts/eval/route-judge-6740/results/en19-gate-6871/' },
 };
 const ST = STUDIES[STUDY]; if (!ST) throw new Error(`--study must be one of ${Object.keys(STUDIES).join(', ')}`);
 const LANE = ST.lane;
@@ -76,6 +80,7 @@ const EURO_CELLS = {
   it19: { lang: 'Italian', code: 'ita', years: [1800, 1929], engine: 'lo' }, it17: { lang: 'Italian', code: 'ita', years: [1600, 1799], engine: 'lo' },
 };
 if (STUDY === 'euro-6871') { for (const k of Object.keys(CELLS)) delete CELLS[k]; Object.assign(CELLS, EURO_CELLS); }
+if (STUDY === 'en19-6871') { for (const k of Object.keys(CELLS)) delete CELLS[k]; Object.assign(CELLS, { en19: { lang: 'English', code: 'eng', years: [1800, 1929], engine: 'lo' } }); }
 const routeOf = (cell) => (CELLS[cell].engine === 'none' ? `agy-flash-low@${CELLS[cell].perCall}` : `${CELLS[cell].engine === 'pero' ? 'pero' : 'lighton'}>agy-flash-low`);
 const corrDir = (cell) => path.join(OUT, 'corr', cell);
 
@@ -409,8 +414,8 @@ function apply() {
  * defect; minor: accepted with cosmetic defects only.
  */
 async function record() {
-  const METHOD = 'euro-gpu-agy-cell-6871';
-  if (STUDY !== 'euro-6871') throw new Error('record is for --study=euro-6871 (its method file)');
+  const METHOD = ST.method;
+  if (!METHOD) throw new Error(`record: --study=${STUDY} has no method file`);
   const { recordPageVerdicts, readMethod } = await import('../../../lib/book-checks.mjs');
   const dirs = String(arg('out')).split(',').map((d) => path.resolve(d));
   const verdicts = [];
@@ -436,8 +441,9 @@ async function record() {
     const res = await recordPageVerdicts(c.db('bookstore'), {
       method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `${ST.job}-${new Date().toISOString().slice(0, 10)}`, checked_at: new Date(),
       selection: 'random', stages: ['ocr'], reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },
-      evidence_path: 'scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/', reader_warning: false, exposure: 'unrecorded',
-      note: 'One unread page of the book read by LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image (#6871 cell test), judged blind by Opus against the image.',
+      evidence_path: ST.evidence, reader_warning: false, exposure: 'unrecorded',
+      note: STUDY === 'en19-6871' ? 'One page of the book written by the en19 lane (LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image, #6871 widening pilot), judged blind by Opus against the image.'
+        : 'One unread page of the book read by LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image (#6871 cell test), judged blind by Opus against the image.',
       frame: { route: 'lighton>agy-flash-low', study: STUDY, pages: verdicts.length },
       verdicts,
     }, { apply: process.argv.includes('--apply') });

@@ -10,7 +10,7 @@ import os from 'os';
 import path from 'path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
-import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON, armcEuroSkip, ARMC_EURO_CELLS, ARMC_EURO_LANE, dropBookImagesIfDone } from '../../scripts/batch/cli-ocr-lane.mjs';
+import { armcDraftText, armcLang, armcUndrafted, armcPaths, armcTranslateBookOk, ARMC_TRANSLATE_LANGS, ARMC_ENGINES, ARMC_LANE, ARMC_REASON, armcEuroSkip, ARMC_EURO_CELLS, ARMC_EURO_LANE, dropBookImagesIfDone, armcEuroLane } from '../../scripts/batch/cli-ocr-lane.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module
 import { LANES } from '../../scripts/eval/lane-judge-sampler.mjs';
@@ -106,7 +106,7 @@ describe('translate-held frame (#7263): the books the CLI translation lane waits
 describe('euro frame (#6871): 1800-1929 Spanish and French print with page records', () => {
   const book = (o: Record<string, unknown> = {}) => ({ id: 'b1', title: 'Historia de las Indias', language: 'Spanish', year: 1875, visible: true, pages_count: 500, pages_ocr: 26, pipeline_auto: { status: 'held', hold: { reason: 'scans-only-publish-7270' } }, ...o });
   it('has the two cells that passed, on LightOnOCR > agy, stamped as the cell test', () => {
-    expect(Object.keys(ARMC_EURO_CELLS)).toEqual(['es19', 'fr19']);
+    expect(Object.keys(ARMC_EURO_CELLS).filter((c) => ['es19', 'fr19'].includes(c))).toEqual(['es19', 'fr19']);
     expect(ARMC_EURO_CELLS.es19.route).toBe('lighton>agy-flash-low');
     expect(ARMC_EURO_LANE).toBe('gpu-agy-first-read-euro-6871');
   });
@@ -154,5 +154,38 @@ describe('dropBookImagesIfDone (#6871 disk guard)', () => {
     expect(fs.existsSync(path.join(P.drafts, 'b1', 'img'))).toBe(false);
     expect(fs.existsSync(path.join(P.drafts, 'b1', 'p1.json'))).toBe(true);
     fs.rmSync(L, { recursive: true, force: true });
+  });
+});
+
+describe('euro frame cells en19 and fr19r (#6871 widening)', () => {
+  const en = (o: Record<string, unknown> = {}) => ({ id: 'e1', title: 'A Treatise on Magnetism', language: 'English', year: 1851, visible: false, pages_count: 300, pages_ocr: 0, pipeline_auto: { status: 'needs_attention' }, ...o });
+  it('stamps each new cell with its own lane, and es19/fr19 with the euro stamp', () => {
+    expect(armcEuroLane('en19')).toBe('gpu-agy-first-read-en-6871');
+    expect(armcEuroLane('fr19r')).toBe('gpu-agy-first-read-fr-refusal-6871');
+    expect(armcEuroLane('es19')).toBe(ARMC_EURO_LANE);
+    expect(ARMC_EURO_CELLS.en19.route).toBe('lighton>agy-flash-low');
+    expect(ARMC_EURO_CELLS.fr19r.importOnly).toBe(true);
+  });
+  it('en19 takes English 1800-1929 books the pipeline has finished with, or held scans-only', () => {
+    const none = path.join(os.tmpdir(), 'no-such-plan-dir-6871');
+    expect(armcEuroSkip(en(), 'en19', { skipPlannedIn: none })).toBeNull();
+    expect(armcEuroSkip(en({ pipeline_auto: { status: 'held', hold: { reason: 'scans-only-publish-7270' } } }), 'en19', { skipPlannedIn: none })).toBeNull();
+    expect(armcEuroSkip(en({ pipeline_auto: { status: 'archive_complete' } }), 'en19', { skipPlannedIn: none })).toMatch(/pipeline status archive_complete/);
+    expect(armcEuroSkip(en({ pipeline_auto: { status: 'archiving' } }), 'en19', { skipPlannedIn: none })).toMatch(/pipeline status/);
+    expect(armcEuroSkip(en({ year: 1930 }), 'en19', { skipPlannedIn: none })).toBe('year outside the cell');
+    expect(armcEuroSkip(en({ year: undefined }), 'en19', { skipPlannedIn: none })).toBe('year outside the cell');
+    expect(armcEuroSkip(en({ pipeline_auto: { status: 'held', hold: { reason: 'ia-free-text-first-4966' } } }), 'en19', { skipPlannedIn: none })).toMatch(/other hold/);
+    expect(armcEuroSkip(en({ pages_state: { state: 'manifest_only' } }), 'en19', { skipPlannedIn: none })).toMatch(/manifest only/);
+  });
+  it('en19 leaves out a book gpu-print-en planned', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gpu-print-plan-'));
+    fs.writeFileSync(path.join(dir, 'e1.json'), '{}');
+    expect(armcEuroSkip(en(), 'en19', { skipPlannedIn: dir })).toBe('planned by gpu-print-en');
+    expect(armcEuroSkip(en({ id: 'e2' }), 'en19', { skipPlannedIn: dir })).toBeNull();
+  });
+  it('fr19r keeps the hold rule and does not skip the visible-unread books', () => {
+    const fr = { id: 'f1', title: 'Dogme et rituel', language: 'French', year: 1861, visible: true, pages_count: 400, pages_ocr: 380, pipeline_auto: { status: 'complete' } };
+    expect(armcEuroSkip(fr, 'fr19r')).toBeNull();
+    expect(armcEuroSkip({ ...fr, pipeline_auto: { status: 'held', hold: { reason: 'preview-stub-first-read-8181' } } }, 'fr19r')).toMatch(/other hold/);
   });
 });
