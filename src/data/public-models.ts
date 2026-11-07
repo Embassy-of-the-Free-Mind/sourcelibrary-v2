@@ -8,7 +8,7 @@
  * facts written for a paper's reader, OCR only and with no page counts; this module adds the
  * jobs beyond OCR and the provenance match. Routing lives in getOcrModelForBook
  * (scripts/lib/ocr-routing.mjs) and getTranslateModelForBook (src/lib/types/ai-models.ts);
- * the evidence in scripts/eval/DECISIONS.md. Update those first, then this.
+ * the evidence in the router table (.claude/docs/routing.md). Update those first, then this.
  *
  * Plain TypeScript with no path aliases and no runtime-only syntax: node imports this file
  * directly (type stripping), so keep it erasable.

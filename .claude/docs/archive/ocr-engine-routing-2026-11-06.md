@@ -1,5 +1,7 @@
 # OCR engine routing: what the evidence says, per language
 
+**Snapshot of 2026-11-06, not doctrine: the per-language routing notes, merged into `.claude/docs/routing.md` (#8283). Routes are decided in the router table. Kept for the evidence and history.**
+
 PRIOR ART: `/platform/admin/ocr-evidence` (`src/data/ocr-benchmark-evidence.json`) is the cell-level
 evidence table this doc reads from; `.claude/docs/ocr-quality-measurement-loop.md` describes how
 the measurements are made; `scripts/eval/EXPERIMENTS.md` is the run log. Neither turns the evidence
