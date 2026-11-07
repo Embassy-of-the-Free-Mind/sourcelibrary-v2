@@ -25,6 +25,8 @@
  *
  * Flags:
  *   --limit N        stop after N books carrying bulk_jp2 pages (default 50)
+ *   --iiif-sample N  instead: N random visible books from every OTHER IIIF provider (e-rara, ...),
+ *                    our archive against each page's photo_original (#5803)
  *   --all            no limit
  *   --book ID        audit a single book (repeatable)
  *   --concurrency N  parallel books (default 3; be polite to IA)
@@ -58,6 +60,7 @@ const OUT = resolve(REPO_ROOT, flag('out', 'scripts/output/bulk-archive-alignmen
 const ONLY_BOOKS = args.reduce((acc, a, i) => (a === '--book' ? [...acc, args[i + 1]] : acc), []);
 const MIN_BULK_PAGES = 10;
 const SAMPLE = args.includes('--sample') ? parseInt(flag('sample', '50'), 10) : 0;
+const IIIF_SAMPLE = args.includes('--iiif-sample') ? parseInt(flag('iiif-sample', '20'), 10) : 0;
 const BOOK_BATCH = 500; // books fetched per range query (see the pagination note in main)
 
 // IA IIIF page URLs look like .../page/nN/full/pct:50/0/default.jpg — a small
@@ -69,6 +72,42 @@ async function hashUrl(url) {
   const r = await fetch(url, { signal: AbortSignal.timeout(45_000) });
   if (!r.ok) throw new Error(`http ${r.status}`);
   return hashBuffer(Buffer.from(await r.arrayBuffer()));
+}
+
+// Books from every other IIIF provider (e-rara, Gallica, Bodleian, ...), sampled by --iiif-sample.
+// The bulk_jp2 sweep above never looks at them, which is how 45 e-rara books whose archive was
+// rewritten one leaf behind (the PDF cover sheet, #5803) sat unseen by this weekly watch.
+const IIIF_SIZE_RE = /\/full\/[^/]+\/0\/(default|native|color|gray)\.(jpg|png)/;
+const iiifSmall = url => String(url).replace(IIIF_SIZE_RE, '/full/400,/0/$1.$2');
+
+async function auditIiifBook(db, book) {
+  // Pages key on the book's `id`; 16K books carry a re-minted _id that differs (book-deletion-and-identity.md).
+  const bid = book.id || String(book._id);
+  const pages = await db.collection('pages')
+    .find({ book_id: bid, page_number: { $gt: 0 } })
+    .project({ page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, archive_metadata: 1, 'ocr.updated_at': 1, 'ocr.created_at': 1 })
+    .sort({ page_number: 1 })
+    .toArray();
+  const usable = pages.filter(p => p.archived_photo && IIIF_SIZE_RE.test(String(p.photo_original || '')));
+  if (usable.length < MIN_BULK_PAGES) return null;
+  const align = await checkAlignment(pages, {
+    hashUrl,
+    sourceUrlFor: p => iiifSmall(p.photo_original),
+    isUsableSource: p => IIIF_SIZE_RE.test(String(p.photo_original || '')),
+    candidates: usable,
+  });
+  return {
+    book_id: bid,
+    title: (book.title || '').slice(0, 90),
+    provider: book.image_source?.provider || null,
+    visible: book.visible === true,
+    pages: pages.length,
+    bulk_jp2_pages: usable.length, // pages compared; named for the shared report line
+    verdict: align.verdict,
+    detail: align.detail,
+    severity: align.verdict === 'shift+1' ? 'high' : undefined,
+    reader_visible_pages: align.verdict === 'shift+1' ? usable.length : undefined,
+  };
 }
 
 async function auditBook(db, book) {
@@ -181,6 +220,32 @@ async function main() {
   // spot-check (a weekly run covers different books each time), which catches
   // drift from ANY writer — including the archive paths that still have no
   // write-time guard — rather than only the one this audit was built for.
+  if (IIIF_SAMPLE) {
+    // --book ids (repeatable) audit those books instead: the positive control for this mode.
+    const picked = await db.collection('books').aggregate([
+      { $match: ONLY_BOOKS.length ? query : { visible: true, pages_count: { $gt: MIN_BULK_PAGES }, 'image_source.provider': { $exists: true, $nin: ['internet_archive', null] } } },
+      { $sample: { size: ONLY_BOOKS.length || IIIF_SAMPLE } },
+      { $project: { id: 1, title: 1, visible: 1, pages_count: 1, 'image_source.provider': 1 } },
+    ]).toArray();
+    console.log(`sampling ${picked.length} random books from IIIF providers other than the Archive`);
+    for (const book of picked) {
+      scanned++;
+      const task = auditIiifBook(db, book)
+        .then(row => { if (row) record(row); })
+        .catch(err => console.log(`  [ERR] ${book._id}: ${err.message?.slice(0, 80)}`))
+        .finally(() => inFlight.delete(task));
+      inFlight.add(task);
+      if (inFlight.size >= CONCURRENCY) await Promise.race(inFlight);
+    }
+    await Promise.all(inFlight);
+    out.end();
+    const shifted = tally['shift+1'] || 0;
+    console.log(`\nsampled ${scanned}, audited ${audited} with IIIF sources`);
+    console.log('TALLY:', JSON.stringify(tally));
+    await client.close();
+    process.exit(shifted > 0 ? 1 : 0);
+  }
+
   if (SAMPLE) {
     const picked = await db.collection('books').aggregate([
       { $match: query },

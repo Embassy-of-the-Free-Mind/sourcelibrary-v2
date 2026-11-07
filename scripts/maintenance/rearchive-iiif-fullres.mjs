@@ -25,6 +25,15 @@
  *     same R2 path, update page records with new image_metadata
  *     (width, height, source). Sets book.image_resolution_upgraded_at.
  *
+ *   --realign
+ *     For a book whose served images are ONE LEAF BEHIND its own source (#5803: the e-rara PDF
+ *     archiver stored the cover sheet as page 1, after the text had already been moved to the
+ *     IIIF leaf). Rewrites every page's archive AND reader variants from photo_original,
+ *     whatever their resolution, so the image is the leaf the text was read from. Refuses
+ *     unless the dHash guard says shift+1 (archived[N+1] == source[N]) and the book carries a
+ *     text_shift_repair event (its text already follows the source). Requires --book-id or
+ *     --books-file. Resumable: pages carrying image_metadata.realigned_at are skipped.
+ *
  *   --recover-split
  *     For books where the splitter has already run on low-res inputs
  *     (e.g. Hieroglyphica): refetch each unique parent spread URL
@@ -115,6 +124,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import fs from 'node:fs';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
@@ -136,9 +146,10 @@ const ARG = (name, fallback = null) => {
 };
 const FLAG = (name) => process.argv.includes(name);
 
-const MODE = FLAG('--audit') ? 'audit' : FLAG('--recover-split') ? 'recover-split' : 'refetch';
+const MODE = FLAG('--audit') ? 'audit' : FLAG('--recover-split') ? 'recover-split' : FLAG('--realign') ? 'realign' : 'refetch';
 const DRY_RUN = FLAG('--dry-run');
 const BOOK_ID = ARG('--book-id');
+const BOOKS_FILE = ARG('--books-file'); // one book id per line (--realign)
 const PROVIDER = ARG('--provider');
 const CRISIS_ONLY = FLAG('--crisis-only');
 const IA_ONLY = FLAG('--ia-only');
@@ -485,6 +496,72 @@ async function regenerateVariants(page, masterBuffer) {
   });
   if (displayKey) await r2Put(displayKey, display);
   if (thumbKey) await r2Put(thumbKey, thumb);
+}
+
+// ── Realign mode (#5803) ──
+
+async function realignOne(book) {
+  const pages = await db.collection('pages').find(
+    { book_id: book.id },
+    // book_id: watermark key for regenerateVariants (#2651), see refetchOne.
+    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1 } },
+  ).sort({ page_number: 1 }).toArray();
+  if (!pages.length) return { skipped: 'no-pages' };
+  if (isAlreadySplit(pages)) return { skipped: 'already-split' };
+  const repaired = await db.collection('book_events').findOne({ book_id: book.id, type: 'text_shift_repair' });
+  if (!repaired) return { skipped: 'no text_shift_repair event: the text may still follow the archive, not the source' };
+  const toWrite = pages.filter(p => !p.image_metadata?.realigned_at && isIiifUrl(p.photo_original || p.photo));
+  if (!toWrite.length) return { skipped: 'all-pages-realigned' };
+  // Judge the shift on pages not yet rewritten: on a resume the rewritten ones read as aligned.
+  const align = await checkAlignment(toWrite);
+  if (align.verdict !== 'shift+1') return { skipped: `guard:${align.verdict} (${align.detail}), realign needs shift+1` };
+  console.log(`  ${(book.title || '').substring(0, 55)} — realigning ${toWrite.length} pages to their source (${align.detail})`);
+
+  let updated = 0, failed = 0;
+  const updatedPages = [];
+  await parallelMap(toWrite, async (page) => {
+    const result = await fetchUpgraded(page.photo_original || page.photo, { evenIfUrlIsFull: true });
+    if (result.skipped) {
+      console.error(`    page ${page.page_number} ${result.skipped}: ${result.error?.substring(0, 120) || ''}`);
+      failed++;
+      return;
+    }
+    if (DRY_RUN) { updated++; return; }
+    const key = `archived/${book.id}/${page.page_number}.jpg`;
+    assertBookScopedKey(key, book.id, 'rearchive-iiif-fullres realign');
+    try {
+      const newUrl = await r2Put(key, result.processed);
+      await regenerateVariants(page, result.processed);
+      await db.collection('pages').updateOne(
+        { _id: page._id || new ObjectId(page.id) },
+        { $set: {
+          archived_photo: newUrl,
+          photo: newUrl,
+          'image_metadata.width': result.dims?.width,
+          'image_metadata.height': result.dims?.height,
+          'image_metadata.realigned_at': new Date(),
+          'image_metadata.realigned_from': page.archived_photo || null,
+          updated_at: new Date(),
+        } },
+      );
+      updated++;
+      updatedPages.push(page.page_number);
+    } catch (e) {
+      console.error(`    page ${page.page_number} fail: ${e.message?.substring(0, 80)}`);
+      failed++;
+    }
+  }, PAGE_CONCURRENCY);
+
+  if (!DRY_RUN && updated > 0) {
+    await db.collection('book_events').insertOne({
+      book_id: book.id, type: 'image_realign', at: new Date(), source: 'rearchive-iiif-fullres --realign',
+      details: { issue: 5803, guard: align.detail, pages_updated: updated, pages_failed: failed, first: updatedPages[0] ?? null },
+    });
+    if (failed === 0) {
+      await db.collection('books').updateOne({ id: book.id }, { $unset: { rearchive_blocked: '' }, $set: { updated_at: new Date() } });
+    }
+  }
+  return { updated, skipped: 0, failed };
 }
 
 // ── Refetch mode (un-split books) ──
@@ -892,7 +969,11 @@ async function main() {
     return;
   }
 
-  const books = await db.collection('books').find(buildBookQuery(), {
+  if (MODE === 'realign' && !BOOK_ID && !BOOKS_FILE) {
+    throw new Error('--realign needs --book-id or --books-file: it rewrites served images, never a provider-wide sweep');
+  }
+  const query = BOOKS_FILE ? { id: { $in: fs.readFileSync(BOOKS_FILE, 'utf8').split(/\s+/).filter(Boolean) } } : buildBookQuery();
+  const books = await db.collection('books').find(query, {
     projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1, image_resolution_upgraded_at: 1 },
   }).limit(LIMIT || 0).toArray();
   console.log(`Found ${books.length} books to process\n`);
@@ -903,7 +984,7 @@ async function main() {
 
   await parallelMap(queue, async (book) => {
     try {
-      const result = (MODE === 'recover-split') ? await recoverOne(book) : await refetchOne(book);
+      const result = (MODE === 'recover-split') ? await recoverOne(book) : (MODE === 'realign') ? await realignOne(book) : await refetchOne(book);
       // refetchOne also returns a per-page skip COUNT under `skipped`; only a
       // string is a book-level skip.
       if (typeof result.skipped === 'string') {
