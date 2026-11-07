@@ -97,7 +97,7 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 20 7 * * 1 f=/root/sourcelibrary/scripts/audit/image-provenance-coverage.mjs; [ -f $f ] && cd /root/sourcelibrary && flock -n /tmp/sl-image-provenance.lock node --env-file=.env.production.local $f --ntfy --close-issue=4406 --not-before=2026-11-05T00:00:00Z --json=/var/log/sourcelibrary/image-provenance-coverage.json >> /var/log/sourcelibrary/image-provenance-coverage.log 2>&1
 
 # Display-mark backfill watchdog (every 10 min, #4406): restarts dead or stalled shards, pages ntfy on a stall. Idle without OUT/go. flock -o: a shard must not inherit the lock.
-*/10 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/workers/backfill-marks-watchdog.sh; [ -x $f ] && flock -n -o /tmp/sl-backfill-marks-watchdog.lock $f /root/jobs/trithemian-images-4406/backfill 14 3 >> /var/log/sourcelibrary/backfill-marks-watchdog.log 2>&1
+#MOVED-2026-11-07-to-cloudlayer */10 * * * * export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; f=/root/sourcelibrary/scripts/workers/backfill-marks-watchdog.sh; [ -x $f ] && flock -n -o /tmp/sl-backfill-marks-watchdog.lock $f /root/jobs/trithemian-images-4406/backfill 14 3 >> /var/log/sourcelibrary/backfill-marks-watchdog.log 2>&1
 
 # Display-mark backfill (#4406) moved to cloudlayer 2026-11-07. Do not start a watchdog here: two writers on one shard
 # interleave its ledger. The relay recreates the finished-/stopped- files run-chain.sh waits on (#7708).
