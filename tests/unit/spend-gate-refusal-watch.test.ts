@@ -25,13 +25,36 @@ const at = (iso: string) => {
   return judgeWorker(verdicts.filter((v) => v.t <= now), { now });
 };
 
+describe('one streak pages once (#7492)', () => {
+  // The state machine the cron runs: page on firing, clear only when the streak has ended.
+  const pages = (pattern: string, every: number) => {
+    const vs = [...pattern].map((c, i) => ({ t: i * every, ok: c === 'A' }));
+    let paged = false;
+    let n = 0;
+    vs.forEach((_, i) => {
+      const r = judgeWorker(vs.slice(0, i + 1), { now: vs[i].t, minRefusals: 3 });
+      if (r.firing && !paged) { paged = true; n++; }
+      else if (!r.refusing && !r.streak && paged) paged = false;
+    });
+    return n;
+  };
+
+  it('a daily dial allowing 1 run in 6 pages once in 5 days, not once a day', () => {
+    expect(pages('ARRRRR'.repeat(5), 4 * H)).toBe(1);
+  });
+
+  it('a recovered worker that starts refusing again is a new streak and pages again', () => {
+    expect(pages(`${'R'.repeat(10)}${'A'.repeat(20)}${'R'.repeat(10)}`, 4 * H)).toBe(2);
+  });
+});
+
 describe('spend-gate-refusal-watch on the 2026-10-25 expiry (positive control)', () => {
   it('the fixture is the incident: 18 runs, 6 refused, one dial-reset dispatch inside the streak', () => {
     expect(verdicts).toHaveLength(18);
     expect(verdicts.map((v) => (v.ok ? 'A' : 'R')).join('')).toBe('AAAAARARRRRRAAAAAA');
   });
 
-  it('is quiet before 24 h of refusals, fires at 10-26 20:30Z, clears on the next allowed run', () => {
+  it('is quiet before 24 h of refusals, fires at 10-26 20:30Z, stops firing on the next allowed run', () => {
     expect(at('2026-10-25T21:00:00Z')).toMatchObject({ refusing: true, firing: false });
     expect(at('2026-10-26T20:00:00Z').firing).toBe(false);
     const r = at('2026-10-26T20:30:00Z');

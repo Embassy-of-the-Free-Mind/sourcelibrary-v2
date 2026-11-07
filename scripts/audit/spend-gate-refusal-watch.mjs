@@ -56,7 +56,6 @@ const NTFY_TOPIC = process.env.SPEND_GATE_WATCH_TOPIC || 'https://ntfy.sh/source
 export const WORKERS = [
   { name: 'embed-gemini', label: 'embed-gemini', log: 'embed-gemini.log', minRefusals: 3 }, // 30 */4
   { name: 'enrich-worker --batch', label: 'enrich-worker-batch', log: 'enrich-batch.log', minRefusals: 3 }, // */15 + hourly
-  { name: 'embed-site-pages', label: 'embed-site-pages', log: 'site-pages.log', minRefusals: 1 }, // weekly
 ];
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -94,11 +93,12 @@ export function closedEnvelopes(rest) {
 /**
  * Judge one worker's verdicts [{ t, ok, closed? }] (oldest first) at `now`. Finds the longest run of newest
  * verdicts whose refusal share is ≥ REFUSAL_SHARE; it fires if the newest is a refusal, the run starts
- * ≥ STREAK_HOURS before now, and holds ≥ minRefusals refusals.
+ * ≥ STREAK_HOURS before now, and holds ≥ minRefusals refusals. `streak` stays true across an allowed run until
+ * the refusal share falls below REFUSAL_SHARE; that, not the newest verdict, is what ends a streak.
  */
 export function judgeWorker(verdicts, { now, minRefusals = 3, streakHours = STREAK_HOURS, share = REFUSAL_SHARE } = {}) {
   const n = verdicts.length;
-  if (!n || verdicts[n - 1].ok) return { firing: false, refusing: false };
+  if (!n) return { firing: false, refusing: false, streak: false };
   let refused = 0;
   let start = -1;
   let startRefused = 0;
@@ -106,6 +106,10 @@ export function judgeWorker(verdicts, { now, minRefusals = 3, streakHours = STRE
     if (!verdicts[i].ok) refused++;
     if (refused / (n - i) >= share) { start = i; startRefused = refused; }
   }
+  // One allowed run inside a refusing stretch does not end it: a daily dial allows one run and refuses the
+  // rest, and clearing on that would page once a day for one streak (#7492).
+  const streak = start >= 0 && startRefused >= minRefusals;
+  if (verdicts[n - 1].ok) return { firing: false, refusing: false, streak };
   const since = verdicts[start].t;
   const hours = (now - since) / 3.6e6;
   const runs = n - start;
@@ -169,7 +173,7 @@ function replay(args) {
     const seen = verdicts.filter((v) => v.t <= now);
     const r = judgeWorker(seen, { now, minRefusals: worker.minRefusals });
     if (r.firing && !paged) { paged = true; events.push({ at: iso(now), event: 'PAGE', text: pageText(worker, r) }); }
-    if (!r.refusing && paged) { paged = false; events.push({ at: iso(now), event: 'CLEARED' }); }
+    if (!r.refusing && !r.streak && paged) { paged = false; events.push({ at: iso(now), event: 'CLEARED' }); }
   }
   return { worker: worker.name, verdicts: verdicts.map((v) => ({ at: iso(v.t), ok: v.ok })), events };
 }
@@ -209,7 +213,7 @@ async function main() {
         const res = await ntfyPost(NTFY_TOPIC, { headers: { Title: `Spend gate refusing ${w.name} for ${Math.floor(r.hours)} h`, Priority: 'high', Tags: 'money_with_wings,warning' }, body: entry.page });
         if (res.ok) s.paged = true; else { unknown = true; entry.error = `ntfy ${res.status}`; }
       }
-    } else if (!r.refusing && s.paged) { s.paged = false; entry.cleared = true; }
+    } else if (!r.refusing && !r.streak && s.paged) { s.paged = false; entry.cleared = true; }
     state.workers[w.name] = s;
     report.push(entry);
   }
