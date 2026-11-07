@@ -361,6 +361,46 @@ function apply() {
   }
 }
 
+/**
+ * record --out=DIR[,DIR2] [--apply]: every judged ITEM (not a control or a plant) as a recordPageVerdicts() page, method
+ * euro-gpu-agy-cell-6871 (scripts/eval/methods/). Dry run unless --apply. Serious: not accepted, or a wrong_text / misleads
+ * defect; minor: accepted with cosmetic defects only.
+ */
+async function record() {
+  const METHOD = 'euro-gpu-agy-cell-6871';
+  if (STUDY !== 'euro-6871') throw new Error('record is for --study=euro-6871 (its method file)');
+  const { recordPageVerdicts, readMethod } = await import('../../../lib/book-checks.mjs');
+  const dirs = String(arg('out')).split(',').map((d) => path.resolve(d));
+  const verdicts = [];
+  let model = null;
+  for (const dir of dirs) {
+    const key = JSON.parse(fs.readFileSync(path.join(dir, 'key.json'), 'utf8'));
+    const items = new Map(JSON.parse(fs.readFileSync(path.join(dir, 'packet.json'), 'utf8')).items.map((i) => [i.id, i]));
+    const V = new Map(jsonl(path.join(dir, 'verdicts-opus.jsonl')).filter((r) => r.verdict).map((r) => [r.id, r]));
+    for (const k of key.filter((x) => x.kind === 'item' && V.has(x.judged_as))) {
+      const r = V.get(k.judged_as), v = r.verdict; model ??= r.model;
+      const bad = (v.defects || []).filter((d) => d.severity === 'wrong_text' || d.severity === 'misleads');
+      const serious = !v.accept || bad.length > 0;
+      const errors = serious ? (bad.length ? bad.map((d) => ({ stage: 'ocr', class: d.class, kind: d.severity, problem: `${d.what ?? ''}: "${String(d.quote ?? '').slice(0, 200)}"` }))
+        : [{ stage: 'ocr', kind: 'not_accepted', problem: String(v.reader_note || 'the judge did not accept the page').slice(0, 600) }]) : [];
+      verdicts.push({ page_id: k.page_id, outcome: serious ? 'serious' : (v.defects || []).length ? 'minor' : 'clean', page_verdict: serious ? 'fix' : (v.defects || []).length ? 'caveat' : 'show',
+        verdict: `${k.cell} accept=${v.accept} fidelity=${v.fidelity}`, note: v.reader_note, defects: v.defects || [], errors, judged: { ocr: items.get(k.judged_as)?.text ?? '', translation: '' } });
+    }
+  }
+  const c = await mongo();
+  try {
+    const res = await recordPageVerdicts(c.db('bookstore'), {
+      method_id: METHOD, method_version: readMethod(METHOD).version, run_id: `${ST.job}-${new Date().toISOString().slice(0, 10)}`, checked_at: new Date(),
+      selection: 'random', stages: ['ocr'], reader: { kind: 'model', model: model ?? 'claude -p --model opus', image_opened: true },
+      evidence_path: 'scripts/eval/route-judge-6740/results/euro-gpu-agy-cells-6871/', reader_warning: false, exposure: 'unrecorded',
+      note: 'One unread page of the book read by LightOnOCR-3-1B > agy Gemini 3.8 Flash-low with the image (#6871 cell test), judged blind by Opus against the image.',
+      frame: { route: 'lighton>agy-flash-low', study: STUDY, pages: verdicts.length },
+      verdicts,
+    }, { apply: process.argv.includes('--apply') });
+    console.log(`record: ${verdicts.length} pages → rows ${res.rows.length}, inserted ${res.inserted}, already ${res.already}, failed ${res.failed.length}${res.failed.length ? ` ${JSON.stringify(res.failed.slice(0, 5))}` : ''}`);
+  } finally { await c.close(); }
+}
+
 /** fallback --out=DIR --from=D1,D2: the la pages D1..Dn's GPU-draft route did not WRITE, as cell la4; each with the next
  *  three pages of its book that still have no OCR, so a 4-a-call read sees the page among its neighbours. */
 async function fallback() {
@@ -379,6 +419,6 @@ async function fallback() {
   console.log(`la4: ${pages.length} drawn pages, ${read_ids.length} to read`);
 }
 
-const STAGES = { draw, collect, read, written, packet, plant, score, apply, fallback };
+const STAGES = { draw, collect, read, written, packet, plant, score, apply, fallback, record };
 if (!STAGES[STAGE]) { console.error(`stage must be one of ${Object.keys(STAGES).join(', ')}`); process.exit(2); }
 await STAGES[STAGE]();
