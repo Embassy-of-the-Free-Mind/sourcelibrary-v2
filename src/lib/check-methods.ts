@@ -26,6 +26,7 @@ export const CHECK_METHODS: Record<string, CheckMethodInfo> = {
   'ocr-convergence': { label: 'OCR check: a second machine reading compared with the stored one; where they differ, an AI reader checked the page image' },
   'plate-reread-check': { label: 'Plate re-read check: an AI reviewer read a new transcription of a map or plate page against the page image' },
   'euro-gpu-agy-cell-6871': { label: 'Routing test: one newly transcribed page, read by an AI reviewer against the page image' },
+  'gpu-print-6871': { label: 'Lane check: one page the GPU print lane transcribed, read by an AI reviewer against the page image' },
   'reasoning-leak': { label: 'Automated check for the model’s own reasoning stored as the translation', issue: 6117 },
   'refusal-empty': { label: 'Automated check for a transcription that is a refusal or is empty', issue: 4686 },
 };
