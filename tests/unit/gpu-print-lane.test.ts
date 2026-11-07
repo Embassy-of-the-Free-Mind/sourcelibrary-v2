@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { convertRead, pageVerdict, hasNoText, isEnglishBook, envelope, detectScript, isTransientReadError, doneKeys } from '../../scripts/lib/gpu-print-lane.mjs';
+import { convertRead, pageVerdict, hasNoText, isEnglishBook, envelope, ocrField, LANGS, detectScript, isTransientReadError, doneKeys } from '../../scripts/lib/gpu-print-lane.mjs';
 
 const PAGE = 'It was in the year 1834 that the Society first met in the rooms above the old Exchange, and the minutes record eleven members present.';
 
@@ -84,6 +84,20 @@ describe('gpu-print-lane (#6871)', () => {
     expect(hasNoText({ data: 'x' })).toBe(false);
     expect(isEnglishBook('English; Latin')).toBe(true);
     expect(isEnglishBook('Latin; English')).toBe(false);
+  });
+
+  it('stamps the language profile: French gets its own pipeline, every bare read is marked uncorrected', () => {
+    const fr = ocrField(envelope('Le texte', 'French'), { run: 'r', lang: 'fr' });
+    expect(fr.language).toBe('French');
+    expect(fr.pipeline).toBe(LANGS.fr.lane);
+    expect(fr.source).toBe('lightonocr');
+    expect(fr.engine.corrected).toBe(false);
+    expect(fr.data.startsWith('<language>French</language>')).toBe(true);
+    const en = ocrField('x', { run: 'r' });
+    expect(en.pipeline).toBe('gpu-print-en-2026-10');
+    expect(en.language).toBe('English');
+    expect(LANGS.fr.isBook('French; Latin')).toBe(true);
+    expect(LANGS.fr.isBook('English; French')).toBe(false);
     expect(envelope('body')).toBe('<language>English</language>\n<script>printed</script>\n\nbody');
   });
   it('re-reads a page once after a transient fetch error, never after a broken image path', () => {
