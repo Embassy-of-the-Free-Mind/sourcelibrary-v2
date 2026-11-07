@@ -26,7 +26,7 @@ import path from 'path';
 import { generateScholarlyPdf, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 import { citationLanguageFields } from '../lib/edition-citation-language.mjs';
 import { logUsage, outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
-import { screenBookPages } from '../lib/modern-intrusion.mjs';
+import { IMPRINT_PAGES, screenBookPages, screenImprint } from '../lib/modern-intrusion.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -708,6 +708,14 @@ async function main() {
       const pages = await db.collection('pages')
         .find({ book_id: b.id, 'translation.data': { $exists: true, $ne: '' } }, { projection: { page_number: 1, 'translation.data': 1 } })
         .toArray();
+      const frontMatter = await db.collection('pages')
+        .find({ book_id: b.id, page_number: { $lte: IMPRINT_PAGES } }, { projection: { page_number: 1, 'ocr.data': 1 } })
+        .toArray();
+      const imprints = screenImprint(frontMatter);
+      if (imprints.length) {
+        console.log(`HOLD ${b.id} ${(b.display_title || b.title || '').slice(0, 60)} — modern imprint on p.${imprints.map(i => i.page_number).join(', p.')} (${[...new Set(imprints.flatMap(i => i.hits.map(h => h.marker)))].join(', ')}). Read the colophon.`);
+        continue;
+      }
       const flagged = screenBookPages(b, pages);
       if (!flagged.length) { screened.push(b); continue; }
       console.log(`HOLD ${b.id} ${(b.display_title || b.title || '').slice(0, 60)} — modern intrusion on p.${flagged.map(f => f.page_number).join(', p.')} (${[...new Set(flagged.flatMap(f => f.hits.map(h => h.marker)))].join(', ')}). Read it: node scripts/audit/detect-modern-intrusion.mjs --book-id ${b.id}`);
