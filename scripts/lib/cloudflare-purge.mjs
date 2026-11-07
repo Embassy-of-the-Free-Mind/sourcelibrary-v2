@@ -19,8 +19,8 @@ export function assertPurgeCredentials() {
   if (missing.length) {
     throw new Error(
       `Cloudflare purge credentials missing (${missing.join(', ')}). ` +
-      'Run from a checkout whose env holds a purge-capable CLOUDFLARE_API_TOKEN (the laptop .env.production.local does; ' +
-      'main\'s holds only CLOUDFLARE_API_TOKEN_READ), or pass --no-purge and purge by hand.',
+      'Run from a checkout whose env holds a purge-capable CLOUDFLARE_API_TOKEN (the laptop and main ' +
+      '.env.production.local do; main since 2026-11-07), or pass --no-purge and purge by hand.',
     );
   }
 }
