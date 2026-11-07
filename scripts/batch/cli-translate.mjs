@@ -282,7 +282,7 @@ if (STAGE === 'read') {
     const meta = {
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: r.cls, attempts: r.calls, chars: text.length,
-      prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(r.agent && { agent: r.agent }), ...(caption && { caption_leaf: true }),
+      prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(r.agent && { agent: r.agent }), ...(r.effort && { effort: r.effort }), ...(caption && { caption_leaf: true }),
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
       // agy's own token counts for the call that produced this read (the last attempt; a cut first read's are kept
@@ -346,7 +346,7 @@ for (const m of metas) {
     prompt: { id: m.prompt_ref?.id, name: m.prompt_ref?.name, version: m.prompt_ref?.version, hash: m.prompt_ref?.content_hash, sent_hash: sentHash, sent_chars: m.prompt_sent_chars },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     // A two-pass read (#6865: a Gemini draft reviewed by Opus against the image) lists both passes in its meta.
-    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
+    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.effort && { effort: m.effort }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
     // The lane's suffix (#7499): a read made before the context carried it still names it in its meta.
     input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.prompt_variant && m.context ? { prompt_variant: m.prompt_variant, ...m.context } : m.context }),
   });

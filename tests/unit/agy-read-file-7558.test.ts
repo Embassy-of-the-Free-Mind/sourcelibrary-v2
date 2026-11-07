@@ -81,4 +81,16 @@ describe('installNarrowAgent', () => {
   it('refuses a task it has no list for rather than sending every tool', () => {
     expect(() => inTmp('search')).toThrow(/no narrow agent/);
   });
+  // AGY_EFFORT is off unless set; `medium` returned 0 tokens on gemini-3.8-flash-low, so it is refused, not sent.
+  it('AGY_EFFORT adds --effort, and refuses a value agy answered with nothing', () => {
+    const before = process.env.AGY_EFFORT;
+    try {
+      process.env.AGY_EFFORT = 'low';
+      expect(inTmp('ocr').args).toEqual(['--agent', 'page-reader', '--effort', 'low']);
+      process.env.AGY_EFFORT = 'medium';
+      expect(() => inTmp('translate')).toThrow(/AGY_EFFORT=medium/);
+    } finally {
+      if (before === undefined) delete process.env.AGY_EFFORT; else process.env.AGY_EFFORT = before;
+    }
+  });
 });

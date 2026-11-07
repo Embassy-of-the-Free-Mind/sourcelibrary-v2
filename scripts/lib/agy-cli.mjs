@@ -102,12 +102,24 @@ const NARROW_AGENTS = {
   ocr: { name: 'page-reader', tools: ['read_file'], does: 'Reads the page images it is pointed at.', body: 'Open each named file once with read_file, in one step if you can. Do not open a file twice. Then answer.' },
   translate: { name: 'page-translator', tools: [], does: 'Works on the text in the prompt. No tools.', body: 'Follow the instructions in the request exactly.' },
 };
+/**
+ * #8330: AGY_EFFORT=low adds `--effort low` to a narrowed call; unset sends no flag (agy's default). Narrowed calls
+ * think at length more often than full-tool ones, and low effort was the candidate fix. `medium` returned 0 tokens on
+ * gemini-3.8-flash-low twice, so it is refused. A read records the value it ran with (`effort`).
+ */
+const AGY_EFFORTS = ['low', 'high'];
+export function agyEffort() {
+  const e = process.env.AGY_EFFORT || null;
+  if (e && !AGY_EFFORTS.includes(e)) throw new Error(`AGY_EFFORT=${e}: use one of ${AGY_EFFORTS.join(', ')} or leave it unset`);
+  return e;
+}
 export function installNarrowAgent(dir, task = 'ocr') {
   const a = NARROW_AGENTS[task];
   if (!a) throw new Error(`no narrow agent for task ${task}`);
+  const effort = agyEffort();
   fs.mkdirSync(path.join(dir, '.agents', 'agents'), { recursive: true });
   fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\n${a.body}\n`);
-  return ['--agent', a.name];
+  return ['--agent', a.name, ...(effort ? ['--effort', effort] : [])];
 }
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
 
@@ -422,7 +434,7 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
     if (!r.cls || r.cls === 'quota') break;
   }
   const { text: answer, problem } = unwrapRead(r.text);
-  return { ...r, calls, requests, tool_calls: tools, answer, problem, ...(process.env.AGY_ALL_TOOLS || task !== 'translate' ? {} : { agent: NARROW_AGENTS.translate.name }) };
+  return { ...r, calls, requests, tool_calls: tools, answer, problem, ...(process.env.AGY_ALL_TOOLS || task !== 'translate' ? {} : { agent: NARROW_AGENTS.translate.name, ...(agyEffort() && { effort: agyEffort() }) }) };
 }
 
 /**
