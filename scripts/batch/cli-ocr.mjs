@@ -136,7 +136,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
 import { recordFailedReads, fromCliRead } from '../lib/ocr-failed-read.mjs';
-import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, cliExitCode } from '../lib/agy-cli.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, agyUsage, installToolGate, installNarrowAgent, gateCalls, unwrapRead, ocrBlockInstruction, splitPageBlocks, pageBlockFile, OCR_READ_FILE_INSTRUCTION, correctBlockPrompt, imageNeverOpened, cliExitCode } from '../lib/agy-cli.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
@@ -206,6 +206,9 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.
 // the one tool that works up front; the default stays sentinels-6523 unless the A/B in the experiment record says so.
 const PROMPT_VARIANTS = ['sentinels-6523', 'read-file-7558'];
 const PROMPT_VARIANT = arg('prompt-variant') || 'sentinels-6523';
+// #8330: offer the model read_file alone, not agy's ~60 tools: about 40% fewer input tokens a page at the same quality.
+// Same prompt, so a kept read stays reusable; recorded on the read as `agent`. --all-tools sends the full list.
+const NARROW_TOOLS = !process.argv.includes('--all-tools');
 if (STAGE === 'read' && !PROMPT_VARIANTS.includes(PROMPT_VARIANT)) { console.error(`--prompt-variant must be one of ${PROMPT_VARIANTS.join(', ')}`); process.exit(2); }
 if (STAGE === 'read' && arg('prompt-variant') && CORRECT_PROMPT) { console.error('--prompt-variant is for a plain read; --correct-prompt sends its own file'); process.exit(2); }
 const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === 'read-file-7558'
@@ -355,6 +358,7 @@ if (STAGE === 'read') {
     // --reuse-only (#7075): a paid lane hands its pages here first; a page with no kept read is left to that lane.
     if (REUSE_ONLY) { noKept++; return; }
     const gateLog = installToolGate(path.dirname(img));
+    const agentArgs = NARROW_TOOLS ? installNarrowAgent(path.dirname(img)) : [];
     const t0 = new Date();
     // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
     // (plan note, refusal, restarted or duplicated read) is read once more from scratch (#6420 rule 4). A quota error
@@ -364,7 +368,7 @@ if (STAGE === 'read') {
     const usage = [];
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
-      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img));
+      r = await agyCall(['-p', sent, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS], path.dirname(img));
       // A locked model is not called (agy-cli.mjs → model-limits.mjs): sleep to its quoted reset, not a fixed 30 min.
       if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(p, `locked until ${r.locked_until || '?'}: ${r.err}`);
       if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${p.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
@@ -374,7 +378,7 @@ if (STAGE === 'read') {
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
         nudged = true;
-        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++; usage.push(agyUsage(r.usage));
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++; usage.push(agyUsage(r.usage));
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
       }
       // #5055: a read the write guard calls truncated (a tag left open at its tail, a text ending inside a tag) is read
@@ -391,7 +395,7 @@ if (STAGE === 'read') {
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: r.cls, ...(r.hung_after_reply && { hung_after_reply: true }),
       chars: text.length, nudged, rereads, calls, usage, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       write_guard: text ? checkWrittenText(text, { kind: 'ocr' }).verdict : null,
-      prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
+      prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), wrapper, tool_calls: gateCalls(gateLog),
       image_url: src, image_bytes: buf.length, image_sha256: imageSha, ...(fit && { image_fit: fit }),
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(from && { per_call: PER_CALL, block_fallback: from }),
@@ -438,12 +442,13 @@ if (STAGE === 'read') {
     fs.mkdirSync(ws, { recursive: true });
     imgs.forEach((im, i) => fs.writeFileSync(path.join(ws, pageBlockFile(i)), im.buf));
     const gateLog = installToolGate(ws);
+    const agentArgs = NARROW_TOOLS ? installNarrowAgent(ws) : [];
     const t0 = new Date();
     let r, nudged = false, calls = 0;
     const usage = [];
     for (;;) {
       while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
-      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], ws);
+      r = await agyCall(['-p', sent, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS], ws);
       if (r.not_called && STOP_ON_QUOTA) await stopOnQuota(first, `locked until ${r.locked_until || '?'}: ${r.err}`);
       if (r.not_called) { quotaUntil = Math.max(Date.now() + 60_000, Date.parse(r.locked_until || '') || Date.now() + QUOTA_SLEEP_S * 1000); console.log(`  LOCKED at p.${first.page_number}: no call until ${new Date(quotaUntil).toISOString()}`); continue; }
       calls++; usage.push(agyUsage(r.usage));
@@ -452,7 +457,7 @@ if (STAGE === 'read') {
       if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${first.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
       if (r.cls === 'denied_tool' && r.conversation && !nudged) {
         nudged = true;
-        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], ws); calls++; usage.push(agyUsage(r.usage));
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...agentArgs, ...CLI_SAFE_ARGS, '--conversation', r.conversation], ws); calls++; usage.push(agyUsage(r.usage));
         logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls, pages: n });
       }
       break;
@@ -490,7 +495,7 @@ if (STAGE === 'read') {
         page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
         started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), error_class: null, ...(r.hung_after_reply && { hung_after_reply: true }),
         chars: text.length, nudged, rereads: attempt, calls, usage, chatter: null, write_guard: guard,
-        prompt_variant: PROMPT_VARIANT, per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
+        prompt_variant: PROMPT_VARIANT, ...(NARROW_TOOLS ? { agent: agentArgs[1] } : {}), per_call: PER_CALL, call_id: callId, call_pages: n, call_position: i + 1, call_page_ids: group.map((q) => q.id),
         wrapper: null, tool_calls: tools, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha, image_file: path.join(path.basename(ws), pageBlockFile(i)), ...(imgs[i].fit && { image_fit: imgs[i].fit }),
         prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, stderr_tail: r.err, ...(extra && !CORRECT_PROMPT && { prompt_extra_hash: contentHash(extra) }),
         ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, draft: draftMeta(p) }),
@@ -810,7 +815,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
+    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }), ...(change && change) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),

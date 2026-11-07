@@ -90,6 +90,24 @@ export function installToolGate(dir, { task = 'ocr' } = {}) {
   fs.writeFileSync(path.join(dir, '.agents', 'hooks.json'), JSON.stringify({ [`${task}-tool-gate`]: { PreToolUse: [{ matcher: '*', hooks: [{ type: 'command', command, timeout: 10 }] }] } }));
   return log;
 }
+/**
+ * #8330: by default agy sends about 60 tool definitions with every turn (7.8K input tokens on a one-word prompt, agy
+ * 1.5.3), and each turn of a call re-sends them. A custom agent in the call's workspace narrows that list: 2.9K with
+ * no tools, 3.1K with read_file alone. A tool that is not listed cannot be asked for, so there is no denied-shell turn
+ * either. This does not replace installToolGate: the gate is the safety layer and stays on every call; the agent only
+ * decides what is offered. Returns the arguments that select it.
+ */
+const NARROW_AGENTS = {
+  ocr: { name: 'page-reader', tools: ['read_file'], does: 'Reads the page images it is pointed at.' },
+  translate: { name: 'page-translator', tools: [], does: 'Works on the text in the prompt. No tools.' },
+};
+export function installNarrowAgent(dir, task = 'ocr') {
+  const a = NARROW_AGENTS[task];
+  if (!a) throw new Error(`no narrow agent for task ${task}`);
+  fs.mkdirSync(path.join(dir, '.agents', 'agents'), { recursive: true });
+  fs.writeFileSync(path.join(dir, '.agents', 'agents', `${a.name}.md`), `---\nname: ${a.name}\ndescription: ${a.does}\ntools: [${a.tools.join(', ')}]\n---\nOpen each named file once with read_file, in one step if you can. Do not open a file twice. Then answer.\n`);
+  return ['--agent', a.name];
+}
 export const gateCalls = (log) => { try { return fs.readFileSync(log, 'utf8').split('\n').filter(Boolean).map((l) => { const r = JSON.parse(l); return r.tool + (r.decision === 'allow' ? '' : ':deny'); }); } catch { return []; } };
 
 /**

@@ -8,7 +8,8 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { ocrBlockInstruction, OCR_READ_FILE_INSTRUCTION } from '../../scripts/lib/agy-cli.mjs';
+import os from 'node:os';
+import { ocrBlockInstruction, OCR_READ_FILE_INSTRUCTION, installNarrowAgent } from '../../scripts/lib/agy-cli.mjs';
 
 const sha = (s: string) => createHash('sha256').update(s).digest('hex').slice(0, 16);
 
@@ -57,5 +58,27 @@ describe('correctionHeaderProblem (cli-ocr apply, correct mode)', async () => {
   it('an unheaded (Tibetan) draft may gain no header, as before', () => {
     expect(correctionHeaderProblem('བཀྲ་ཤིས་', 'བཀྲ་ཤིས་')).toBe(false);
     expect(correctionHeaderProblem('བཀྲ་ཤིས་', '<page-type>text</page-type>\nབཀྲ་ཤིས་')).toBe(true);
+  });
+});
+
+// #8330: the agent file is what narrows agy's tool list. A misspelt `tools:` line fails silently: agy falls back to a
+// default set and the only symptom is the bill.
+describe('installNarrowAgent', () => {
+  const inTmp = (task?: string) => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'narrow-'));
+    const args = installNarrowAgent(dir, task);
+    return { args, text: fs.readFileSync(path.join(dir, '.agents', 'agents', `${args[1]}.md`), 'utf8') };
+  };
+  it('an OCR call is offered read_file and nothing else', () => {
+    const { args, text } = inTmp('ocr');
+    expect(args).toEqual(['--agent', 'page-reader']);
+    expect(text).toContain('tools: [read_file]\n');
+    expect(text).toContain('name: page-reader\n');
+  });
+  it('a translation call is offered no tools', () => {
+    expect(inTmp('translate').text).toContain('tools: []\n');
+  });
+  it('refuses a task it has no list for rather than sending every tool', () => {
+    expect(() => inTmp('search')).toThrow(/no narrow agent/);
   });
 });
