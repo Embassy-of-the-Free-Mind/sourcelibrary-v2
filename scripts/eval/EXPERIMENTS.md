@@ -344,6 +344,83 @@ The other 109 cells have no rule pick to be false.
 
 **What it does not say.** The boundary is the least favourable truth, not the likely one: with the table's own estimates as the truth, the rate is under 6% in all but one cell. It measures the rule's margins at these n, not whether any route is good. Reports: issue comment on #8283 (2026-11-07), and rows[].v3 in every table the nightly rebuild builds.
 
+## 2026-11-07 · Does OCR prompt v19.2 type scores and tables without changing anything else? (#7263)
+
+**Result: the posted rule fails on one page, so v19.2 is not promoted.** The new types work. The failure is one map page, and the diagnostic reads suggest it is noise in that one read, but they do not prove it.
+
+**Design.** The rule was posted before any read (issue comment 6709463790).
+- **Reads:** `cli-ocr.mjs read --fresh`, `CANDIDATE_READS=off`, gemini-3.8-flash-low, one page a call, on the `.agy-james` pool. The arms ran at the same time.
+- **Isolation:** `scripts/eval/route-judge-6740/ocr-v192-7263/prompt-swap.mjs` makes Mongo read-only and swaps only the prompt text, so the lane code is the same in both arms. Nothing was written or kept.
+- **Candidate:** md5 `b0aa9d7d2e2c859e7adc0ac61060d7f4`, read from the #8346 branch because that PR is still open.
+- **Labels:** page kinds were labelled by Claude from contact-sheet thumbnails before the reads, not by a human reader.
+- **Spend:** 164 agy calls (150 in the arms, 4 in a smoke test, 10 in the diagnostic) and 30 Opus judge calls, all on subscriptions.
+
+### Set S: 30 Siku pages, 15 scores and 15 tables, 30 books
+
+| | v19.1 | v19.2 |
+|---|---|---|
+| Tagged `musical-score` or `table` | 0/30 | 27/30 |
+| Correct kind | 0/30 | **27/30** (scores 13/15, tables 14/15) |
+
+The three misses stayed `text`, and no page got the other new value. The 15 score pages come from three works (9 from 律呂正義後編, 5 from 欽定詩經樂譜全書, 1 from 樂律表微), so the score figure rests on few works. The tables come from eight. Transcribed Han characters: 5,661 under v19.1, 5,436 under v19.2. Every page kept its text.
+
+### Set O: 30 ordinary pages (18 printed prose, 7 manuscript, 5 title, illustration or map)
+
+- **Tags:** no page got a new value. Agreement was 30/30 in all three pairs.
+- **Text distance, median:** v19.1 vs v19.1 0.099; v19.2 vs v19.1 0.097 and 0.097.
+
+### Judge: Opus, blind, one output a call, with the image
+
+The wrong-page control was rejected in both arms. The same output judged twice flipped accept on 2/7 pages. Pages went to the judge because their v19.2 read stood out, so these are not accept rates for either prompt.
+
+| page | v19.1 | v19.2 | repeat on v19.2 | counts as worse? |
+|---|---|---|---|---|
+| O map, Jiangxi (over the posted bar) | accept, 4 | reject, 3 | reject, 3 | **yes** |
+| O Latin print, bf1304 | accept, 4 | reject, 3 | accept, 4 | no |
+| O Latin print, 64896a | accept, 4 | reject, 4 | accept, 4 | no |
+| O Chinese print, e252ba | reject, 3 | reject, 2 | not called | no; 10 wrong-text defects against 8 |
+| O French manuscript | reject, 3 | reject, 3 | reject, 3 | no |
+| O English manuscript | accept, 4 | accept, 4 | not called | no |
+| S score 163ed3 | reject, 2 | reject, 3 | not called | reported only |
+| S score 1637e3 | reject, 3 | reject, 3 | not called | reported only |
+| S rhyme table 1f3564 | reject, 2 | reject, 2 | not called | reported only |
+| S rhyme table 1f3652 | reject, 3 | reject, 3 | not called | reported only |
+
+Only the map page cleared the posted bar of 0.515. The other pages were added after the distances were seen and before any judge call, because that bar came out too lenient (posted in comment 6709663306). The failure stands under the rule as first posted.
+
+### Against the prompt causing the failure (not part of the rule)
+
+- The second v19.1 read of the map was rejected too (fidelity 3, one call). So v19.1 passes or fails this page depending on the read.
+- The failed v19.2 read is 736 characters and has no 上猶. Five more v19.2 reads run 1,095 to 1,360 characters, and all five have 上猶.
+- Five more v19.1 reads run 614 to 1,401 characters, and all five have 上猶. v19.1 also produces short reads of this page.
+- The re-reads were checked by label and length only; they were not judged.
+
+### Still open: long s on Latin print
+
+Counts on the 5 Latin print pages of common short words: f-form (fed, fi, five…) / s-form (sed, si, sive…) / ſ characters.
+
+| page | v19.1 a | v19.1 b | v19.2 |
+|---|---|---|---|
+| bf1304 | 1/11/0 | 2/10/0 | **12/0/0** |
+| 54ffc5 | 3/0/1 | 0/3/0 | 0/1/**43** |
+| 64896a | 0/10/0 | 0/11/0 | 0/0/**63** |
+| 809424 | 0/20/0 | 0/20/0 | 0/20/0 |
+| 960e63 | 4/3/0 | 2/3/**44** | 4/3/0 |
+
+v19.1 also moves between forms from read to read, and the prompt edit touches nothing about letter forms. But v19.2 differs from both v19.1 reads on 3 of these 5 pages, and five pages cannot say whether that is chance. The text-distance medians do not settle it either, because they pool every language. The judge treated the ſ-to-f read as worse once and as cosmetic on the repeat.
+
+### Reader
+
+The #8346 tests pass locally (17/17 in `tests/unit/page-type-vocabulary.test.ts`), so a table page's text still renders. No page was opened in a browser.
+
+### Files
+
+Everything is in `scripts/eval/route-judge-6740/results/ocr-prompt-v19-2-7263/`: `paired-score.json`, `defect-rates.json` (the same rates, with the caveat that the judged pages were selected), `analysis.json`, `reads.json.gz`, the two sets, the packet, the key and the verdicts.
+
+### Replicated?
+
+No. A fresh draw of Latin print is what would settle the long-s question and the map-page reading.
+
 ## 2026-11-07 · Can OCR flag its own doubt, and does seeing the page image fix the errors the English carries? (#8358)
 
 PRIOR ART:
