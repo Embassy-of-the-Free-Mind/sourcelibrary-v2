@@ -1,0 +1,147 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/paired-arm.mjs score (#6553)",
+ "recipe": {
+  "question": "prompt",
+  "issue": 7263,
+  "stage": "ocr",
+  "languages": [
+   "la",
+   "lzh",
+   "fr",
+   "en"
+  ],
+  "baseline": "v19.1",
+  "arms": [
+   "v19.1",
+   "v19.2"
+  ],
+  "batch": {
+   "pages_per_call": 1,
+   "tested": null
+  },
+  "noise_floor": {
+   "repeat_kind": "repeat",
+   "from": null
+  },
+  "feeds": "route",
+  "router_evidence": "none — a prompt test on the pages that moved, not a route's accept rate on a cell's draw; no router cell changes",
+  "waive": {}
+ },
+ "judges": {
+  "opus": {
+   "cells": {
+    "v192": {
+     "routes": {
+      "v19.1": {
+       "n": 10,
+       "books": 10,
+       "unjudged": 0,
+       "accept": "4/10",
+       "accept_wilson": [
+        0.168,
+        0.687
+       ],
+       "accept_by_book": [
+        0.1,
+        0.7
+       ],
+       "wrong_text_pages": "6/10",
+       "wrong_text_wilson": [
+        0.313,
+        0.832
+       ],
+       "fidelity_mean": 3.2,
+       "counts": true,
+       "words": 1758,
+       "misleads_per_1k": 10.24,
+       "wrong_text_per_1k": 18.2
+      },
+      "v19.2": {
+       "n": 10,
+       "books": 10,
+       "unjudged": 0,
+       "accept": "1/10",
+       "accept_wilson": [
+        0.018,
+        0.404
+       ],
+       "accept_by_book": [
+        0,
+        0.3
+       ],
+       "wrong_text_pages": "7/10",
+       "wrong_text_wilson": [
+        0.397,
+        0.892
+       ],
+       "fidelity_mean": 3,
+       "counts": true,
+       "words": 1744,
+       "misleads_per_1k": 9.17,
+       "wrong_text_per_1k": 24.08
+      }
+     },
+     "controls": {
+      "v19.1": {
+       "n": 1,
+       "passed": true
+      },
+      "v19.2": {
+       "n": 1,
+       "passed": true
+      }
+     },
+     "noise_floor": {
+      "pairs": 7,
+      "accept_flips": "2/7",
+      "flip_rate": 0.29,
+      "fidelity_abs_diff": 0.14
+     },
+     "against_baseline": {
+      "v19.1 -> v19.2": {
+       "shared_pages": 10,
+       "better": "1/10",
+       "worse": "3/10",
+       "accept_gained": 0,
+       "accept_lost": 3,
+       "accept_sign_test_p": 0.25,
+       "fidelity_diff": -0.2
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "rule": "R1",
+   "ok": true,
+   "detail": "2 arm(s), one page per book each",
+   "waived": false
+  },
+  {
+   "rule": "R2",
+   "ok": true,
+   "detail": "ids opaque, packet fields carry no arm name",
+   "waived": false
+  },
+  {
+   "rule": "R3",
+   "ok": true,
+   "detail": "controls for all 2 arm(s)",
+   "waived": false
+  },
+  {
+   "rule": "R4",
+   "ok": true,
+   "detail": "7 same-arm repeat rows",
+   "waived": false
+  },
+  {
+   "rule": "R5",
+   "ok": true,
+   "detail": "1 page a call",
+   "waived": false
+  }
+ ]
+}
