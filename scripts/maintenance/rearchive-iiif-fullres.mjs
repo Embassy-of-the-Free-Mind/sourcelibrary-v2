@@ -500,6 +500,30 @@ async function regenerateVariants(page, masterBuffer) {
 
 // ── Realign mode (#5803) ──
 
+// Page images are cached by Cloudflare for 24h under the same URL, so a rewritten R2 object
+// keeps serving the old leaf until purged. CF caps `files` at 30 per request. Returns the
+// number of URLs purged; the caller records it, so a skipped purge is visible on the event.
+async function purgeImageUrls(urls) {
+  const token = process.env.CLOUDFLARE_API_TOKEN;
+  const zone = process.env.CLOUDFLARE_ZONE_ID;
+  if (!token || !zone) {
+    console.error('  CLOUDFLARE_API_TOKEN/ZONE_ID missing: readers keep the old images for up to 24h');
+    return 0;
+  }
+  let purged = 0;
+  for (let i = 0; i < urls.length; i += 30) {
+    const files = urls.slice(i, i + 30);
+    const r = await fetch(`https://api.cloudflare.com/client/v4/zones/${zone}/purge_cache`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ files }),
+    }).catch(e => ({ ok: false, status: e.message }));
+    if (r.ok) purged += files.length;
+    else console.error(`  purge failed: ${r.status}`);
+  }
+  return purged;
+}
+
 async function realignOne(book) {
   const pages = await db.collection('pages').find(
     { book_id: book.id },
@@ -519,6 +543,7 @@ async function realignOne(book) {
 
   let updated = 0, failed = 0;
   const updatedPages = [];
+  const staleUrls = new Set();
   await parallelMap(toWrite, async (page) => {
     const result = await fetchUpgraded(page.photo_original || page.photo, { evenIfUrlIsFull: true });
     if (result.skipped) {
@@ -547,6 +572,10 @@ async function realignOne(book) {
       );
       updated++;
       updatedPages.push(page.page_number);
+      // image-pick-ok: URLs to purge, every stored copy of the page; split books are refused above
+      for (const u of [newUrl, page.display_photo, page.image_thumb, page.thumbnail_blob]) {
+        if (typeof u === 'string' && u.startsWith('https://images.sourcelibrary.org/')) staleUrls.add(u);
+      }
     } catch (e) {
       console.error(`    page ${page.page_number} fail: ${e.message?.substring(0, 80)}`);
       failed++;
@@ -554,9 +583,10 @@ async function realignOne(book) {
   }, PAGE_CONCURRENCY);
 
   if (!DRY_RUN && updated > 0) {
+    const cdnPurged = await purgeImageUrls([...staleUrls]);
     await db.collection('book_events').insertOne({
       book_id: book.id, type: 'image_realign', at: new Date(), source: 'rearchive-iiif-fullres --realign',
-      details: { issue: 5803, guard: align.detail, pages_updated: updated, pages_failed: failed, first: updatedPages[0] ?? null },
+      details: { issue: 5803, guard: align.detail, pages_updated: updated, pages_failed: failed, first: updatedPages[0] ?? null, cdn_urls: staleUrls.size, cdn_purged: cdnPurged },
     });
     if (failed === 0) {
       await db.collection('books').updateOne({ id: book.id }, { $unset: { rearchive_blocked: '' }, $set: { updated_at: new Date() } });
