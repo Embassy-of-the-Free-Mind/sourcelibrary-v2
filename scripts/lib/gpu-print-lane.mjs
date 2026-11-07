@@ -24,7 +24,7 @@ export { isHumanEdited } from './paddle-zh-lane.mjs';
 export const LANE = 'gpu-print-en-2026-10';
 export const LANE_ISSUE = 6871;
 export const HOLD_REASON = 'gpu-print-6871';
-export const HOLD_RELEASE = 'every page the GPU lane planned for this English print book is applied, skipped or rejected (#6871); `gpu-print-lane.mjs release` then restores the status the book was held from, so the pipeline reads what the GPU left and translates the rest';
+export const HOLD_RELEASE = 'every page the GPU lane planned for this print book is applied, skipped or rejected (#6871); `gpu-print-lane.mjs release` then restores the status the book was held from, so the pipeline reads what the GPU left and translates the rest';
 export const HOLD_RELEASE_WHEN = Object.freeze({ kind: 'test', ref: 'scripts/workers/gpu-print-lane.mjs release (every planned page applied, skipped or rejected)' });
 export const REVISION_REASON = 'ocr_gpu_print_6871';
 export const BOOK_EVENT = 'gpu_print_ocr';
@@ -40,6 +40,21 @@ export const LIGHTON = Object.freeze({
 
 /** The language of the books in this lane's frame (the edition's language field, #5 of the lane decision tree). */
 export const isEnglishBook = (language) => /^English\b/.test(String(language || ''));
+
+/**
+ * The languages the lane writes (#6871, Derek 2026-11-07 "we can use ocr gpu until we later correct"): each a bare
+ * guarded LightOnOCR read where the bare read passed its own test. `lane` is the `ocr.pipeline` stamp, and with
+ * `ocr.source: 'lightonocr'` and `engine.corrected: false` it is how a later agy correction pass finds the page
+ * (scripts/eval/print1800-gpu-6871/correction-frame.mjs). `cell`: the book rule of cli-ocr-lane.mjs ARMC_EURO_CELLS the
+ * plan also applies (null: the English lane's own rule, unchanged since 2026-10-29). English beyond the 10-29 frame plans
+ * with --cell en19.
+ */
+export const LANGS = Object.freeze({
+  en: { language: 'English', isBook: isEnglishBook, lane: LANE, cell: null,
+    measured: 'scripts/eval/experiments/2026-10-29-print1800-gpu-engine-lanes-6871.md: 97 English 1800+ typed-reference pages, median folded CER 0.12% vs flash-lite 0.27%, catastrophic 0 vs 17' },
+  fr: { language: 'French', isBook: (l) => /^French\b/.test(String(l || '')), lane: 'gpu-print-fr-2026-11', cell: 'fr19r',
+    measured: 'scripts/eval/experiments/2026-11-06-fr-refusals-gpu-read-6871.md: 770 French 1800+ pages Flash-Lite refused, read on the GPU, 627 past the guards, 10/10 usable by eye' },
+});
 
 /** A page this lane may write: no text at all (a refusal stamp or a lite model name with no text still counts). */
 export function hasNoText(ocr) {
@@ -166,21 +181,24 @@ export function envelope(body, language = 'English') {
 }
 
 /** The whole `ocr` field this lane writes; the prior field is kept whole in the revision row. */
-export function ocrField(text, { run, now = new Date(), imageUrl = null, imageSha256 = null, box = {}, why = null, finish = null } = {}) {
+export function ocrField(text, { run, now = new Date(), imageUrl = null, imageSha256 = null, box = {}, why = null, finish = null, lang = 'en' } = {}) {
+  const L = LANGS[lang];
   return {
     data: text,
     content_hash: contentHash(text),
-    language: 'English',
+    language: L.language,
     model: LIGHTON.model,
     source: SOURCE,
-    pipeline: LANE,
+    pipeline: L.lane,
     updated_at: now,
     engine: {
       name: LIGHTON.name, model: LIGHTON.model, repo: LIGHTON.repo, licence: LIGHTON.licence,
       ...(box.weights_revision ? { revision: box.weights_revision, revision_source: 'logged: the HF snapshot the box served' } : { revision_source: 'not_recorded: the box run did not report its snapshot' }),
       prompt: LIGHTON.prompt, decode: { ...LIGHTON.decode, finish_reason: finish },
       conventions: `whole page, long side capped at ${LIGHTON.max_side} px; markdown converted (scripts/lib/gpu-print-lane.mjs convertRead); written only where the page had no text`,
-      measured: 'scripts/eval/experiments/2026-10-29-print1800-gpu-engine-lanes-6871.md: 97 English 1800+ typed-reference pages, median folded CER 0.12% vs flash-lite 0.27%, catastrophic 0 vs 17',
+      measured: L.measured,
+      // a bare GPU read, no agy pass yet (#6871, 2026-11-07): the correction frame selects on this
+      corrected: false,
       run, issue: LANE_ISSUE, host: box.host || null, gpu: box.gpu || null,
       serving: box.vllm_version ? { backend: 'vllm', vllm: box.vllm_version } : null,
       input: imageUrl ? { image_url: imageUrl, image_sha256: imageSha256 } : { status: 'not_recorded', reason: 'caller passed no image url' },
@@ -191,7 +209,7 @@ export function ocrField(text, { run, now = new Date(), imageUrl = null, imageSh
 
 /** One page through the one writer (#7058): revision with the whole prior field, CAS on the prior text. */
 export async function writeLanePage(db, pageId, field, { run }) {
-  return writePageText(db, pageId, 'ocr', field, { by: `${LANE} (scripts/workers/gpu-print-lane.mjs)`, reason: REVISION_REASON, run_id: run });
+  return writePageText(db, pageId, 'ocr', field, { by: `${field.pipeline || LANE} (scripts/workers/gpu-print-lane.mjs)`, reason: REVISION_REASON, run_id: run });
 }
 
 /**
