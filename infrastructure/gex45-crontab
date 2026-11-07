@@ -22,7 +22,9 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # Disk (#6223): the alarm pages at 85% only when the steward could not get under it; the steward runs hourly:
 # HF cache trimmed to 50 GB, idle folders archived to R2 (cold/gex45/) while / is above 75%, merged worktrees reaped.
 */15 * * * * f=/root/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
-25 * * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /root/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
+# HF cache cap 75 GB here, not the default 50: Krea-2-Turbo alone is 62 GB (Derek keeps it, 2026-11-07), and the trim
+# evicts by last read, so a 50 GB cap would push out production OCR models that GPU tasks load offline (#6223).
+25 * * * * export HF_CACHE_CAP_GB=75; f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -f /root/sourcelibrary/scripts/workers/cold-r2.mjs ] || f=/root/bin/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
 # agy (Gemini CLI) SQLite WAL checkpoint, hourly (#6223). Source: scripts/workers/agy-wal-checkpoint.py, copied to /root/bin.
 17 * * * * python3 /root/bin/agy-wal-checkpoint.py >> /var/log/sourcelibrary/agy-wal-checkpoint.log 2>&1
 # Load log, same format as main's, so a move off main can be measured on both sides.
