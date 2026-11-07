@@ -6,7 +6,7 @@ scripts: [Latn, Arab]
 canons: []
 n_books: 19
 n_pages: 76
-verdict: "A custom agent listing only read_file cuts agy's one-word overhead from 7,850 to about 3,100 input tokens a turn and removes the denied-shell turn. Input tokens per page: print at 4/call 8,738 -> 4,909, correction 30,331 -> 16,941, Arabic at 1/call 19,255 -> 15,617. Usable: 54/56 -> 55/56, 20/20 -> 20/20, 12/20 -> 14/20, controls 4/4 in each. These samples would catch a large quality drop, not a small one. The agent's instruction to open each file once matters: 6 of 14 calls re-read their images without it, 2 of 14 with it."
+verdict: "A custom agent listing only read_file cuts agy's one-word overhead from 7,850 to about 3,100 input tokens a turn and removes the denied-shell turn. Input tokens per page: print at 4/call 8,738 -> 4,909, correction 30,331 -> 16,941, Arabic at 1/call 19,255 -> 15,617. Usable: 54/56 -> 55/56, 20/20 -> 20/20, 12/20 -> 14/20, controls 4/4 in each. These samples would catch a large quality drop, not a small one. The agent's instruction to open each file once matters: 6 of 14 calls re-read their images without it, 2 of 14 with it. Corrected the same day: these are INPUT tokens as agy reports them, which leave out cached tokens, and the net saving is smaller than they suggest; see the correction at the end."
 status: adopted
 decision: "cli-ocr.mjs narrows the tool list by default (--all-tools restores it), for plain reads and the correction template. Translation and the one-image calls are not switched: not tested here."
 superseded_by: null
@@ -67,3 +67,31 @@ thinking tokens, while medians are flat (Arabic 496 vs 511, print 3,184 vs 3,155
 **Not tested.** Translation (`tools: []`, 2,897 overhead) and the one-image calls (`gatedImageCall`) still send every
 tool. Whether the subscription pool charges these tokens in proportion was not measured; #7518 found 4/call translation
 cost 0.55 of 1/call in quota, which suggests it broadly does.
+
+## Correction, 2026-11-07 (same day, after the translation test)
+
+The table above understates what production sends, and overstates the net saving.
+
+**`input` leaves out cached tokens on agy 1.5.3.** The translation test showed it: the same prompt reads 6.5K input + 4K
+cached, or 10.7K input + 0 cached, and two production runs total 10,414 and 10,417 once the two are added. Production's
+long fixed prefix hits the implicit cache; a narrowed prompt is too short to, and never did. Print ran on the laptop,
+where nothing was cached in either arm, so its saving may be smaller on a box. `score.mjs` computes "uncached" as input
+minus cache_read, which subtracts twice on this version, so ignore that column here.
+
+**Narrowing raises the rate of long-thinking calls.** Calls with any thinking, production vs narrowed: Arabic 0 of 88 vs
+6 of 86, correction 2 of 20 vs 5 of 20, translation 4 of 120 vs 11 of 120, print 5 of 14 vs 1 of 14. Medians do not move:
+these are rare calls of 5K–28K tokens. The cause was not investigated.
+
+**Net, by the #7503 index** (input + 6 × output and thinking; the 6× is an assumption, not a measured quota rate).
+"Cached counted" and "cached free" are the two ends, because how the pool charges cached tokens was not measured.
+
+| set | production, cached counted / free | narrowed | saving, counted / free |
+|---|---|---|---|
+| print, 56 pages (no cache in either arm) | 22,518 | 11,542 | 49% |
+| correction, 20 pages | 50,686 / 42,354 | 34,411 | 32% / 19% |
+| Arabic, 80 pages (4 runs of the 20) | 29,050 / 24,048 | 23,677 / 23,627 | 18% / 2% |
+
+Print's 49% is helped by 3 long calls in production and none narrowed; without calls over 5K it is 25%. The Arabic
+result replaces the first 20-page run, where 2 long calls of 22 made narrowed look 11–37% dearer; the four runs ranged
+from 18,786 to 30,823, so a single 20-page run cannot settle this. Arabic stays narrowed: it is not dearer, and its
+judged usable rate did not fall, though its saving may be close to nil.

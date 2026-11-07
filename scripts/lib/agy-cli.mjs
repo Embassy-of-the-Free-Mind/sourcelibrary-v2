@@ -383,7 +383,11 @@ export function agyCall(args, cwd, { killAfterMs = 360_000, exitGraceMs = EXIT_G
   });
 }
 
-/** agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none. */
+/**
+ * agy's usage envelope in the shape claude-translate.mjs records (`call_usage`), or null when the CLI gave none.
+ * On agy 1.5.3 `input` leaves out `cache_read`: a page's tokens are the two added (#8330; the same prompt read 6.5K + 4K
+ * cached and 10.7K + 0). Comparing `input` alone flatters an arm that hits the cache.
+ */
 export function agyUsage(u) {
   if (!u) return null;
   return { input: u.input_tokens ?? null, output: u.output_tokens ?? null, thinking: u.thinking_tokens ?? null, cache_read: u.cache_read_tokens ?? null, total: u.total_tokens ?? null };
@@ -418,7 +422,7 @@ export async function gatedTextCall(sent, { model, task = 'translate', attempts 
     if (!r.cls || r.cls === 'quota') break;
   }
   const { text: answer, problem } = unwrapRead(r.text);
-  return { ...r, calls, requests, tool_calls: tools, answer, problem };
+  return { ...r, calls, requests, tool_calls: tools, answer, problem, ...(process.env.AGY_ALL_TOOLS || task !== 'translate' ? {} : { agent: NARROW_AGENTS.translate.name }) };
 }
 
 /**
