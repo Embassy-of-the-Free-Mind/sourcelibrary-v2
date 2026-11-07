@@ -3,7 +3,7 @@ import { after } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId, type Db } from 'mongodb';
-import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
+import { streamAgenticResponse, type LibrarianStep, type SourceCard, type ToolCallRecord } from '@/lib/embassy/librarian';
 import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, applyLinkRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { isBareGreeting, greetingReply, isKeepalivePing, pingReply, duplicateReply, sameMessage } from '@/lib/embassy/greeting';
@@ -243,6 +243,9 @@ export async function POST(request: NextRequest) {
   let fullText = '';
   let allSources: SourceCard[] = [];
   let turnUsage: LibrarianStep['usage'] | null = null;
+  // What the turn searched (#8151). Kept apart from `usage`, which arrives last
+  // and so is missing from exactly the turns that die part way through.
+  const toolCalls: ToolCallRecord[] = [];
   // Link repairs from the post-response citation check. Applied to the
   // persisted message (and the non-stream JSON reply); streaming clients get
   // the same fixes as a `citation_fixes` event and apply them on-screen.
@@ -305,6 +308,7 @@ export async function POST(request: NextRequest) {
           inCollection: s.inCollection,
         })),
         usage: turnUsage,
+        ...(toolCalls.length > 0 ? { toolCalls } : {}),
         // Provenance of a replayed answer; also stops a replay being replayed.
         ...(replay ? { cachedFrom: replay.messageId, cachedFromThread: replay.threadId } : {}),
         ...(shortCircuit ? { shortCircuit } : {}),
@@ -323,6 +327,7 @@ export async function POST(request: NextRequest) {
   if (!stream) {
     try {
       for await (const step of agentSteps()) {
+        if (step.toolCall) toolCalls.push(step.toolCall);
         if (step.type === 'text') {
           fullText += step.text || '';
         } else if (step.type === 'sources') {
@@ -347,6 +352,7 @@ export async function POST(request: NextRequest) {
           threadId: activeThreadId,
           message: message.slice(0, 500),
           error: (err instanceof Error ? `${err.message}\n${err.stack}` : String(err)).slice(0, 5000),
+          toolCalls,
           createdAt: new Date(),
         });
       } catch { /* best effort */ }
@@ -397,6 +403,7 @@ export async function POST(request: NextRequest) {
         threadId: activeThreadId,
         message: message.slice(0, 500),
         error: `Approaching maxDuration (${maxDuration}s). Last step: ${lastStepType}. Tool calls so far: ${toolCallCount}. Elapsed: ${Math.round((Date.now() - startedAt) / 1000)}s.`,
+        toolCalls,
         createdAt: new Date(),
       });
     } catch { /* best effort */ }
@@ -412,6 +419,7 @@ export async function POST(request: NextRequest) {
 
       for await (const step of agentSteps()) {
         lastStepType = step.type;
+        if (step.toolCall) toolCalls.push(step.toolCall);
         switch (step.type) {
           case 'thinking':
             await send({ type: 'thinking', text: step.text });
@@ -500,6 +508,7 @@ export async function POST(request: NextRequest) {
           error: errMsg.slice(0, 5000),
           lastStepType,
           toolCallCount,
+          toolCalls,
           elapsedMs: Date.now() - startedAt,
           createdAt: new Date(),
         });
