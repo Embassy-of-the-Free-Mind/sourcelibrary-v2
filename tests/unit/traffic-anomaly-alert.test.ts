@@ -297,3 +297,12 @@ describe('desktop surge (#8353)', () => {
     expect(medianOf([13000, 14000, 95000, 12000, 15000, 13500, 14500])).toBe(14000);
   });
 });
+
+describe('loopback is not an exposed host (#8353)', () => {
+  it('ignores a local dev server, with or without a port', () => {
+    for (const h of ['127.0.0.1', 'localhost', 'localhost:3000', '127.0.0.1:3000', '::1']) expect(isUnexpectedHost(h)).toBe(false);
+  });
+  it('still flags a real outside host, including one that only looks local', () => {
+    for (const h of ['sourcelibrary-v2.vercel.app', 'localhost.evil.example', '127.0.0.1.evil.example']) expect(isUnexpectedHost(h)).toBe(true);
+  });
+});
