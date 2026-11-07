@@ -76,6 +76,11 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   console.log('\n--- Sync Page Counts ---');
   const start = Date.now();
 
+  // The aggregate takes minutes and `books` is read after it, so a book inserted with
+  // its pages in between is missing from statsMap and would recount to zeros — 31 of
+  // 100 #8053 pilot books were zeroed that way (#8070). Anything created or recounted
+  // after this instant is skipped; the next cycle counts it.
+  const snapshotAt = new Date();
   const pageStats = await db.collection('pages')
     .aggregate(buildCorpusPageCountPipeline(), { allowDiskUse: true })
     .toArray();
@@ -83,7 +88,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
 
   const counterProjection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1, pages_state: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, created_at: 1, page_counts_at: 1, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1, pages_state: 1 } })
     .toArray();
 
   // `pipeline_next` (#5477, .claude/docs/pipeline-next-step.md) needs to know whether `book.job` names a
@@ -101,9 +106,14 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   // fixing is a job-time writer that counts it wrong (page-counts.md).
   const counterTally = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 0]));
   let translatableMissing = 0;
+  let skippedAfterSnapshot = 0;
 
   for (const book of books) {
     const bookId = book.id || book._id?.toString();
+    if (isAfter(book.created_at, snapshotAt) || isAfter(book.page_counts_at, snapshotAt)) {
+      skippedAfterSnapshot++;
+      continue;
+    }
     // A book with no visible pages recounts to zeros — its true count — unless it
     // is a manifest-only book (#7343), which keeps its declared count (diffPageCounters).
     const { before, after: actual, changed } = diffPageCounters(book, statsMap.get(bookId));
@@ -205,7 +215,9 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
               pipeline_next: nextStale ? pipeline_next : book.pipeline_next,
             },
           };
-        bulkOps.push({ updateOne: { filter: { _id: book._id }, update } });
+        // A recountBook() that lands between the books read and this write counted
+        // pages the aggregate did not see: keep its counters (#8070).
+        bulkOps.push({ updateOne: { filter: { _id: book._id, page_counts_at: { $not: { $gte: snapshotAt } } }, update } });
       }
     }
   }
@@ -224,6 +236,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   console.log(`  pipeline_next (observe only): ${Object.entries(stepTally).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}=${n}`).join(' ')}`);
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  if (skippedAfterSnapshot > 0) console.log(`  Skipped ${skippedAfterSnapshot} book(s) created or recounted after the aggregate began (#8070)`);
   console.log(`  Books checked: ${books.length} | Mismatches: ${mismatchCount} (translation_state: ${stateMismatchCount}, pipeline_next: ${nextMismatchCount}) | Updated: ${updated} | ${elapsed}s`);
   console.log(`  Counters corrected: ${formatCounterTally(counterTally)} (pages_translatable missing before: ${translatableMissing})${dryRun ? ' — DRY RUN, nothing written' : ''}`);
 
@@ -234,8 +247,16 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
     pipeline_next_mismatches: nextMismatchCount,
     counter_mismatches: counterTally,
     translatable_missing: translatableMissing,
+    skipped_after_snapshot: skippedAfterSnapshot,
     updated,
   };
+}
+
+/** True when a stored timestamp (Date or ISO string) is at or after `t`. */
+function isAfter(value, t) {
+  if (value == null) return false;
+  const ms = new Date(value).getTime();
+  return Number.isFinite(ms) && ms >= t.getTime();
 }
 
 // ── Sync Collection Counts ──
