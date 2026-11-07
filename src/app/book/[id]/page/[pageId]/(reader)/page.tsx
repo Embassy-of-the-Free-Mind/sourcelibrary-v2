@@ -8,12 +8,13 @@ import Reader2C from '@/components/reader-v2/Reader2C';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import HymnPlayer from '@/components/book/HymnPlayer';
 import { isHiddenBook } from '@/lib/book-access';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { getTranscriptionsForPage } from '@/lib/music-transcriptions';
 import { jsonLdHtml } from '@/lib/json-ld';
+import { buildPageJsonLd } from '@/lib/page-json-ld';
 import { generateCitations } from '@/lib/citation';
 import { markPageForReader } from '@/lib/provenance';
-import { serveEnglishOriginalPage, isEnglishOriginalBook } from '@/lib/english-original-text';
+import { serveEnglishOriginalPage } from '@/lib/english-original-text';
+import { findFacingPartner } from '@/lib/facing-translation';
 import { meteredReaderEnabled, isPageFree, stripGatedPage } from '@/lib/free-preview';
 import { localePath, type Locale } from '@/lib/locale-path';
 import { READER_STRINGS } from '@/lib/book-i18n';
@@ -28,51 +29,6 @@ import { getPrintedNumbers } from '@/lib/printed-numbers';
 import { ocrMeasure } from '@/lib/ocr-measure';
 import { getRepeatKeeperId, getSplitLeafId, isArchivedSplit } from '../page-data';
 import { readerPageListFilter, isReaderListedPage, resolveRepeatKeepers, mapChapterPageIds, REPEAT_KEEPER_PROJECTION } from '@/lib/reader-pages';
-
-// Schema.org structured data for a translated page, so it surfaces as a
-// citable scholarly work in web search (#2822). Only emitted for indexable
-// pages (same seo_indexable gate as robots, #2688) — structured data on a
-// noindex page is wasted. The excerpt is wrapper-stripped (the #2232 invariant:
-// never expose editorial <meta>/<summary>/… blocks as page text).
-// isPartOf carries the book's URL and a BreadcrumbList names it, so a search
-// engine that indexes a page is pointed at the book's front page (contents and
-// summary) as the parent: the page is the way in, the book is the place.
-function buildPageJsonLd(book: Book, page: Page, pageUrl: string, bookUrl: string): Record<string, unknown> | null {
-  if ((page as unknown as { seo_indexable?: boolean }).seo_indexable !== true) return null;
-  const bookTitle = book.display_title || book.title;
-  const raw = page.translation?.data || page.ocr?.data || '';
-  const clean = stripEditorialWrappers(raw).trim();
-  const excerpt = clean.length > 500 ? clean.slice(0, 497) + '…' : clean;
-  const work = {
-    '@type': 'CreativeWork',
-    name: `${bookTitle}, Page ${page.page_number}`,
-    url: pageUrl,
-    inLanguage: book.language || undefined,
-    datePublished: book.published || undefined,
-    author: book.author ? { '@type': 'Person', name: book.author } : undefined,
-    ...(isEnglishOriginalBook(book) ? {} : { translator: { '@type': 'Organization', name: 'Source Library' } }),
-    isPartOf: {
-      '@type': 'Book',
-      '@id': bookUrl,
-      url: bookUrl,
-      name: bookTitle,
-      ...(book.author ? { author: { '@type': 'Person', name: book.author } } : {}),
-      ...(book.doi ? { sameAs: `https://doi.org/${book.doi}` } : {}),
-    },
-    license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-    isAccessibleForFree: true,
-    ...(excerpt ? { text: excerpt } : {}),
-  };
-  const breadcrumb = {
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Source Library', item: 'https://sourcelibrary.org' },
-      { '@type': 'ListItem', position: 2, name: bookTitle, item: bookUrl },
-      { '@type': 'ListItem', position: 3, name: `Page ${page.page_number}`, item: pageUrl },
-    ],
-  };
-  return { '@context': 'https://schema.org', '@graph': [work, breadcrumb] };
-}
 
 // ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
 export const revalidate = 86400;
@@ -102,7 +58,7 @@ const BOOK_NAV_PROJECTION = {
   author: 1, published: 1, language: 1, doi: 1, chapters: 1,
   // English edition? Then an English leaf serves its transcription, not the
   // stored English-to-English rewording (#7100).
-  'translation_state.english_original': 1,
+  'translation_state.english_original': 1, facing_translation: 1,
   cdli_witnesses: 1, etcsl_id: 1, visible: 1,
   // The copy clause of the citation panel (#4360): which library's physical
   // copy the scan shows, and its shelfmark there. Sub-paths only — the full
@@ -275,6 +231,20 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
   await primeHuntPayloads(); // #8150: riddle colophons, chosen by book
   const markedPage = markPageForReader(applyReaderTextLayer(servedPage, textLayers), scopedBookId);
 
+  // A facing-page edition (a Loeb, #8321): the leaf opposite this one, so the
+  // first paint already shows the printed English beside the Greek. One indexed
+  // read, on a flagged book only; client page turns find it in the prefetch.
+  const facing = await findFacingPartner<Page>(db, book, currentPage as unknown as Page, READER_PAGE_PROJECTION);
+  const facingSeed = facing
+    ? (() => {
+        const p = serveEnglishOriginalPage(JSON.parse(JSON.stringify(withoutTextLayer(facing.page))) as Page, book);
+        const gated = metered
+          ? (stripGatedPage(p as unknown as Record<string, unknown>, (book as unknown as { pages_count?: number }).pages_count || 0) as unknown as Page)
+          : p;
+        return markPageForReader(gated, scopedBookId);
+      })()
+    : null;
+
   return (
     <>
       {jsonLd && (
@@ -306,6 +276,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
           initialBook={readerBook}
           initialPage={markedPage}
           initialPageList={serializedNavPages}
+          initialFacingPage={facingSeed}
           qualityWarnings={qualityWarnings}
           scanGaps={scanGaps}
           printedNumbers={printedNumbers}

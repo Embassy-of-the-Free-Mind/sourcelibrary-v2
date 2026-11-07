@@ -23,6 +23,9 @@
  *   (`isEnglishOriginalPage` on its OCR) serves no `translation`. Every
  *   downstream reader of `translation.data` then falls through to the OCR the
  *   way it already does for an English page that was never translated.
+ * - The same holds on a book flagged `facing_translation` (a Loeb, #8321),
+ *   whatever its catalogued language: its English leaves are the published
+ *   translator's words, and the stored text over them is a rewording of those.
  * - A bilingual edition keeps its real translations: the test is per page, so
  *   a Latin leaf facing the English keeps the English rendering of the Latin.
  * - Where the stored text is only a LIGHT edit of the transcription (word-bigram
@@ -36,16 +39,19 @@
 import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import { isEnglishOriginal } from '@/lib/page-counts';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { FACING_TRANSLATION_BOOK_PROJECTION, hasPublishedFacingTranslation } from '@/lib/facing-translation';
 
 /** The book fields the decision reads. Project these wherever a door loads the book. */
 export const ENGLISH_ORIGINAL_BOOK_PROJECTION = {
   language: 1,
   'translation_state.english_original': 1,
+  ...FACING_TRANSLATION_BOOK_PROJECTION,
 } as const;
 
 export interface EnglishOriginalBookFields {
   language?: unknown;
   translation_state?: { english_original?: boolean | null } | null;
+  facing_translation?: unknown;
 }
 
 /**
@@ -76,8 +82,9 @@ type PageLike = object;
 
 /**
  * True when this page's stored `translation` must NOT be served: the book is an
- * English edition, the leaf is English, and there is a transcription to serve
- * in its place. A page with no OCR keeps whatever it has — withholding the only
+ * English edition or a facing-page edition with a published translation
+ * (`facing_translation`, #8321), the leaf is English, and there is a
+ * transcription to serve in its place. A page with no OCR keeps whatever it has — withholding the only
  * text would leave the reader with nothing.
  */
 export function servesTranscriptionInsteadOfTranslation(
@@ -89,7 +96,7 @@ export function servesTranscriptionInsteadOfTranslation(
   const ocr = typeof page.ocr?.data === 'string' ? page.ocr.data : '';
   const tr = typeof page.translation?.data === 'string' ? page.translation.data : '';
   if (!tr || !ocr.trim()) return false;
-  if (!isEnglishOriginalBook(book)) return false;
+  if (!isEnglishOriginalBook(book) && !hasPublishedFacingTranslation(book)) return false;
   return isEnglishOriginalPage(ocr);
 }
 
