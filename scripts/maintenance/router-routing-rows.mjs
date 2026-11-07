@@ -1,14 +1,12 @@
 #!/usr/bin/env node
-// PRIOR ART: scripts/eval/build-routing-table.mjs — generates a doc SECTION from the routing constants and fails a test
-// when it drifts (tests/unit/routing-table-fresh.test.ts); the same shape is used here, but its input is the live
-// routers and DECISIONS.md, never the router table. scripts/maintenance/router-board-push.mjs driftReport — reports whether each
-// decided cell has shipped and whether a routing-table row names it, and writes nothing. scripts/eval/estimator/routing/
+// PRIOR ART: scripts/maintenance/router-board-push.mjs driftReport — reports whether each decided cell has shipped and
+// whether a routing-table row names it, and writes nothing. scripts/eval/estimator/routing/
 // derive_routes.py — proposes `route` fields for the hand rows from the routing estimator, not from current.json.
 //
 // router-routing-rows (#7913): the routing tables' CELL-BACKED rows, generated from the router table's current.json.
 //
-//   node scripts/maintenance/router-routing-rows.mjs            # --check: exit 1 when a table is not what this writes
-//   node scripts/maintenance/router-routing-rows.mjs --write    # rewrite the `router_cells` block of both tables
+//   node scripts/maintenance/router-routing-rows.mjs            # --check: exit 1 when a file is not what this writes
+//   node scripts/maintenance/router-routing-rows.mjs --write    # rewrite the `router_cells` blocks and both doc tables
 //
 // Every cell of current.json that binds a route (scripts/lib/router-binding.mjs boundRoute) becomes one row of the `router_cells` block of scripts/lib/ocr-routing-table.json (OCR cells) or
 // translation-routing-table.json (translation cells: a base id ending in -tr or containing -tr-). The block is the LAST
@@ -16,7 +14,9 @@
 // other key stay byte for byte. A decision ships by moving the pointer; the CI test (tests/unit/router-routing-rows-7913
 // .test.ts) fails until the block is regenerated, so the routing table and the decision cannot disagree in main.
 // getOcrModelForBook routes from the OCR block (#8283, `reads`); translation's routers read their hand rows, and
-// tests/unit/router-bound-table.test.ts fails when they disagree. Read-only on everything but the two JSON files.
+// tests/unit/router-bound-table.test.ts fails when they disagree. It also writes the only routing tables people read: the
+// per-cell table of .claude/docs/routing.md (#8283, from the same pointer) and the page-kind table of
+// scripts/eval/ocr-routing/README.md (#6688, from ocr-routing-table.json). Read-only on everything but those four files.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -73,13 +73,97 @@ export function withCellRows(text, rows) {
   return `${body.slice(0, -1).replace(/\s*$/, '')},${block}\n}\n`;
 }
 
-/** {file: {current, wanted}} for both tables. */
+/* ── the doc tables ── */
+
+export const ROUTE_DOC = '.claude/docs/routing.md';
+export const ROUTE_BEGIN = '<!-- BEGIN GENERATED route-table: scripts/maintenance/router-routing-rows.mjs writes this section from the router table. Do not edit it by hand. -->';
+export const ROUTE_END = '<!-- END GENERATED route-table -->';
+export const KIND_DOC = 'scripts/eval/ocr-routing/README.md';
+export const KIND_BEGIN = '<!-- BEGIN GENERATED ocr-routing-table: scripts/maintenance/router-routing-rows.mjs writes this section from scripts/lib/ocr-routing-table.json. Do not edit it by hand. -->';
+export const KIND_END = '<!-- END GENERATED ocr-routing-table -->';
+
+const SCRIPTS = ['print', 'manuscript', 'unknown'];
+const compact = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}K` : String(n));
+
+/** A route id as one of the four routes: the last stage's reader (agy or Opus), over its draft if it has one. Anything else is off the menu. */
+export function routeLabel(route) {
+  const stages = String(route).split('>').map((s) => s.replace(/\+.*$/, ''));
+  const reader = (s) => (/^agy-/.test(s) ? 'agy' : /^opus/.test(s) ? 'Opus' : null);
+  const last = reader(stages[stages.length - 1]);
+  if (!last) return `${route} (off menu)`;
+  return [...stages.slice(0, -1).filter((s) => !reader(s)), last].join('>');
+}
+
+/** One cell of the doc table: the route, marked when the evidence has not decided it. */
+function cellText(row) {
+  if (!row) return '—';
+  const bound = boundRoute(row);
+  const byDefault = /^(keep|switch) \(default:/.test(row.decision || '');
+  return `${routeLabel(bound || row.route)}${!bound ? ' †' : byDefault ? ' *' : ''}`;
+}
+
+/** The generated section of routing.md, markers included: one row per language/source, one column per script type. */
+export function renderRouteTable(table) {
+  const bases = new Map();
+  for (const row of table.rows.values()) {
+    const base = row.base || String(row.id).split('/')[0];
+    const b = bases.get(base) || bases.set(base, { base, pages: 0, by: {}, tr: isTranslationCell(row) }).get(base);
+    b.pages += row.pages_waiting || 0;
+    b.by[row.script || 'print'] = row;
+  }
+  const section = (tr) => [
+    '| cell | pages waiting | print | manuscript | unknown |', '|---|---:|---|---|---|',
+    ...[...bases.values()].filter((b) => b.tr === tr).sort((a, b) => b.pages - a.pages || a.base.localeCompare(b.base))
+      .map((b) => `| \`${b.base}\` | ${compact(b.pages)} | ${SCRIPTS.map((s) => cellText(b.by[s])).join(' | ')} |`),
+  ];
+  return [ROUTE_BEGIN, '',
+    `From \`current.json\` (\`${table.name}\`, set ${table.pointer?.set}; ${Object.keys(table.pointer?.cells || {}).length} cells moved alone, ${(table.waivers || []).length} waivers). \`A>agy\` and \`A>Opus\` correct draft A. \`*\` = agy by default, not measured here. \`†\` = undecided (HOLD, held, planned, untested), showing the route the row names. \`—\` = no such cell.`, '',
+    '**OCR**', '', ...section(false), '', '**Translation**', '', ...section(true), '', ROUTE_END].join('\n');
+}
+
+const EXPERIMENTS = 'scripts/eval/experiments/';
+const kindCell = (s) => String(s).replace(/\|/g, '\\|').replace(/\n/g, ' ');
+/** One evidence item as doc text: the file (with its sample and date), or the issue and its open PR. */
+const evidenceLabel = (e) => `${e.file ? `\`${EXPERIMENTS}${e.file}\`` : `#${e.issue}${e.pr ? ` (write-up in PR #${e.pr})` : ''}`} (${e.n}, ${e.date})`;
+
+/** The generated page-kind section of the ocr-routing README, markers included (#6688). */
+export function renderKindTable(table) {
+  return [
+    KIND_BEGIN, '',
+    `As of ${table.as_of} (#${table.issue}). Status: settled = measured and decided; provisional = decided on thin or by-eye evidence; open = no reader chosen on evidence yet. Routed: whether production does this today.`, '',
+    `"Reader" is what NEW pages get. "Stored now" is what readers have: ${table.census.method} Counted ${table.census.date}; source: ${table.census.source}.`, '',
+    '| page kind (`id`) | reader (new pages) | stored now | status · routed | production today | evidence |',
+    '|---|---|---|---|---|---|',
+    ...table.rows.map((r) => `| ${kindCell(r.kind)} (\`${r.id}\`) | ${kindCell(r.reader)} | ${kindCell(r.stored ?? 'not counted')} | ${r.status} · ${r.routed} | ${kindCell(r.production)} | ${r.evidence.map(evidenceLabel).map(kindCell).join('; ')} |`),
+    '', 'Tested and not adopted:', '',
+    ...table.not_adopted.map((x) => `- **${x.engine}.** ${x.why}`),
+    '', KIND_END,
+  ].join('\n');
+}
+
+/** The section between one pair of markers, or null. */
+export const currentSection = (doc, begin, end) => { const a = doc.indexOf(begin), b = doc.indexOf(end); return a < 0 || b < a ? null : doc.slice(a, b + end.length); };
+/** The doc with one section replaced. Throws if the markers are missing or doubled. */
+export function withSection(doc, section, begin, end) {
+  const a = doc.indexOf(begin), b = doc.indexOf(end);
+  if (a < 0 || b < a || doc.indexOf(begin, a + 1) >= 0) throw new Error(`expected exactly one "${begin}" … "${end}" pair`);
+  return doc.slice(0, a) + section + doc.slice(b + end.length);
+}
+
+/** {file: {current, wanted}} for both tables and both docs. */
 export function plan({ root = ROOT, dir = ROUTER_DIR } = {}) {
-  const rows = cellRows(loadCurrentTable(dir));
-  return Object.fromEntries(Object.entries(TABLES).map(([k, f]) => {
-    const current = fs.readFileSync(path.join(root, f), 'utf8');
-    return [f, { current, wanted: withCellRows(current, rows[k]), rows: rows[k] }];
-  }));
+  const table = loadCurrentTable(dir);
+  const rows = cellRows(table);
+  const read = (f) => fs.readFileSync(path.join(root, f), 'utf8');
+  const route = read(ROUTE_DOC), kind = read(KIND_DOC);
+  return {
+    ...Object.fromEntries(Object.entries(TABLES).map(([k, f]) => {
+      const current = read(f);
+      return [f, { current, wanted: withCellRows(current, rows[k]) }];
+    })),
+    [ROUTE_DOC]: { current: route, wanted: withSection(route, renderRouteTable(table), ROUTE_BEGIN, ROUTE_END) },
+    [KIND_DOC]: { current: kind, wanted: withSection(kind, renderKindTable(JSON.parse(read(TABLES.ocr))), KIND_BEGIN, KIND_END) },
+  };
 }
 
 function main() {
@@ -87,11 +171,10 @@ function main() {
   const stale = Object.entries(p).filter(([, x]) => x.current !== x.wanted);
   if (process.argv.includes('--write')) {
     for (const [f, x] of stale) fs.writeFileSync(path.join(ROOT, f), x.wanted);
-    console.log(stale.length ? `wrote ${stale.map(([f]) => f).join(', ')}` : 'both tables already current');
-    for (const [f, x] of Object.entries(p)) console.log(`${f}: ${x.rows.length} router cells`);
+    console.log(stale.length ? `wrote ${stale.map(([f]) => f).join(', ')}` : 'all four files already current');
     return;
   }
-  for (const [f] of stale) console.error(`${f}: router_cells is not what current.json gives; run node scripts/maintenance/router-routing-rows.mjs --write`);
+  for (const [f] of stale) console.error(`${f}: not what the router table gives; run node scripts/maintenance/router-routing-rows.mjs --write`);
   process.exit(stale.length ? 1 : 0);
 }
 

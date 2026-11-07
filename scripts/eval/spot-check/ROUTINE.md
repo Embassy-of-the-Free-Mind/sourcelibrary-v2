@@ -84,8 +84,8 @@ You are the routine. You start with a fresh checkout of the repo and no other co
       Say "moved" only when the CIs do not overlap; otherwise "no detectable change".
     - **Top 3 defect classes by pages × severity** (`report.json → top_classes` and `window_top_classes`), each with one
       quoted example (source → English → problem).
-    - **Fixes landed and whether their kinds of text moved.** Read the rows of `scripts/eval/DECISIONS.md` whose
-      *Applied in* PR merged since the previous review, and the #5700 comments since then. For each fix, name the text it
+    - **Fixes landed and whether their kinds of text moved.** Read the routing PRs merged since the previous review
+      (`git log -- scripts/eval/estimator/router-table/current.json`), and the #5700 comments since then. For each fix, name the text it
       targets (language, engine, class) and count this window's pages of that kind. Fewer than 10 such pages: say
       "too few pages to tell", not a direction.
     - **Findings with no owner.** For each serious error's class and each on-sight defect, find its owning open issue

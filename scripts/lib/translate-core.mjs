@@ -168,7 +168,7 @@ export const CLI_TRANSLATE_BOOK_FILTER = cliBookFilter(TRANSLATION_ROUTING_TABLE
  * OCR is the problem), Hebrew/Aramaic/Arabic/Persian +0.53 (52), Sanskrit/
  * Pali/classical Chinese +0.40 (64; reversed statements 15 → 6 per 100 pages).
  * Latin (+0.22) and the Latin-script vernaculars (+0.21) also gained, but
- * stay on lite pending Derek's cost call (scripts/eval/DECISIONS.md).
+ * stayed on lite then (routes are now the router table, .claude/docs/routing.md).
  * Matches the book's FIRST language label, so "Greek-Latin" and
  * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
  */

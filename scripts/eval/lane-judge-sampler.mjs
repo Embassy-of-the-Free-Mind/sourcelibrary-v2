@@ -932,7 +932,7 @@ async function autoBind({ OUT, dir, RT, ref, table, stamp, sha }) {
     const { servedByCrontab, defaultCrontabs } = await import('../maintenance/router-board-push.mjs');
     const served = defaultCrontabs(wt).flatMap((f) => servedByCrontab(fs.readFileSync(path.join(wt, f), 'utf8')));
     const mismatches = checkBinding(loadCurrentTable(path.join(wt, RT)), served, { today: stamp }).filter((f) => f.status === 'mismatch');
-    sh('git', ['-C', wt, 'add', RT, 'scripts/lib/ocr-routing-table.json', 'scripts/lib/translation-routing-table.json']);
+    sh('git', ['-C', wt, 'add', RT, 'scripts/lib/ocr-routing-table.json', 'scripts/lib/translation-routing-table.json', '.claude/docs/routing.md', 'scripts/eval/ocr-routing/README.md']);
     sh('git', ['-C', wt, 'commit', '-s', '-q', '-m', `router(#8283): bind ${name}\n\n${plan.moved.length} cell(s) move; made by lane-judge-sampler.mjs rebuild.`]);
     sh('git', ['-C', wt, 'push', '-q', '-f', '-u', 'origin', branch]);
     const body = bindPrBody({ plan, mismatches, sha, name }), repo = ['--repo', 'Embassy-of-the-Free-Mind/sourcelibrary-v2'];
