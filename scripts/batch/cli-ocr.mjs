@@ -206,8 +206,9 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.
 // the one tool that works up front; the default stays sentinels-6523 unless the A/B in the experiment record says so.
 const PROMPT_VARIANTS = ['sentinels-6523', 'read-file-7558'];
 const PROMPT_VARIANT = arg('prompt-variant') || 'sentinels-6523';
-// #8330: offer the model read_file alone, not agy's ~60 tools. Same prompt; recorded on the read as `agent`.
-const NARROW_TOOLS = process.argv.includes('--narrow-tools');
+// #8330: offer the model read_file alone, not agy's ~60 tools: about 40% fewer input tokens a page at the same quality.
+// Same prompt, so a kept read stays reusable; recorded on the read as `agent`. --all-tools sends the full list.
+const NARROW_TOOLS = !process.argv.includes('--all-tools');
 if (STAGE === 'read' && !PROMPT_VARIANTS.includes(PROMPT_VARIANT)) { console.error(`--prompt-variant must be one of ${PROMPT_VARIANTS.join(', ')}`); process.exit(2); }
 if (STAGE === 'read' && arg('prompt-variant') && CORRECT_PROMPT) { console.error('--prompt-variant is for a plain read; --correct-prompt sends its own file'); process.exit(2); }
 const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === 'read-file-7558'
@@ -814,7 +815,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
+    run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.agent && { agent: m.agent }), ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.call_pages > 1 && { read_call: m.call_id, call_pages: m.call_pages, call_position: m.call_position }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
       ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }), ...(change && change) } }),
       ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }),
