@@ -59,7 +59,8 @@ export interface CanonWork {
   locus?: { system: 'bekker' | 'stephanus'; workSlug: string; example: string };
 }
 
-const PLATO_COLLECTED = ['Q139619812', 'plato-opera-ficino']; // Stephanus 1578; Ficino's Latin Opera
+// Stephanus 1578 (edition QID Q139619812 re-keyed to a local id, #8325); Ficino's Latin Opera
+const PLATO_COLLECTED = ['local:a:plato:extant-omnia-opera-quae', 'plato-opera-ficino'];
 const HOMER_COLLECTED = ['Q106691509']; // Homeri Opera (multi-volume)
 
 export const CANON_WORKS: CanonWork[] = [
@@ -74,7 +75,7 @@ export const CANON_WORKS: CanonWork[] = [
     // Q125518202 merged into Q16547641 (2026-08-08, #3759); the two remaining
     // extra ids are combined Iliad+Odyssey volumes, shared with the Odyssey
     // entry on purpose — they are their own work_id, never merged.
-    workIds: ['Q16547641', 'homer-homer-iliad-odyssey', 'Q19090449'],
+    workIds: ['Q16547641', 'homer-homer-iliad-odyssey', 'local:a:homer:iliad-odyssey'], // edition QID Q19090449 re-keyed (#8325)
     collectedWorkIds: HOMER_COLLECTED,
   },
   {
@@ -85,7 +86,7 @@ export const CANON_WORKS: CanonWork[] = [
     authorId: 'homer',
     era: 'c. 8th century BCE',
     originalLanguage: 'Greek',
-    workIds: ['local:a:homer:dolinghe-odyssea-ulysse-van', 'Q19090449', 'homer-homer-iliad-odyssey'],
+    workIds: ['local:a:homer:dolinghe-odyssea-ulysse-van', 'local:a:homer:iliad-odyssey', 'homer-homer-iliad-odyssey'],
     collectedWorkIds: HOMER_COLLECTED,
   },
   {
@@ -229,7 +230,7 @@ export const CANON_WORKS: CanonWork[] = [
     era: '29–19 BCE',
     originalLanguage: 'Latin',
     workIds: ['Q60220'],
-    collectedWorkIds: ['Q21205467'], // Opera (Bucolica, Georgica, Aeneis)
+    collectedWorkIds: ['local:a:virgil:opera'], // Opera (Bucolica, Georgica, Aeneis); edition QID Q21205467 re-keyed (#8325)
   },
   {
     slug: 'metamorphoses',
@@ -239,7 +240,7 @@ export const CANON_WORKS: CanonWork[] = [
     authorId: 'ovid',
     era: '8 CE',
     originalLanguage: 'Latin',
-    workIds: ['Q106595694'],
+    workIds: ['Q184742'], // edition QID Q106595694 re-keyed to the work (#8325)
   },
   {
     slug: 'de-rerum-natura',
@@ -249,7 +250,7 @@ export const CANON_WORKS: CanonWork[] = [
     authorId: 'titus-lucretius',
     era: 'c. 55 BCE',
     originalLanguage: 'Latin',
-    workIds: ['Q137592632'], // local natura-rerum id merged in (2026-08-08, #3759)
+    workIds: ['Q861986'], // local natura-rerum id merged in (2026-08-08, #3759); edition QID Q137592632 re-keyed (#8325)
   },
   {
     slug: 'consolation-of-philosophy',
@@ -259,7 +260,7 @@ export const CANON_WORKS: CanonWork[] = [
     authorId: 'boethius',
     era: '524 CE',
     originalLanguage: 'Latin',
-    workIds: ['Q138752489'], // local consolation id merged in (2026-08-08, #3759)
+    workIds: ['Q861927'], // local consolation id merged in (2026-08-08, #3759); edition QID Q138752489 re-keyed (#8325)
   },
   {
     slug: 'epistulae-morales',

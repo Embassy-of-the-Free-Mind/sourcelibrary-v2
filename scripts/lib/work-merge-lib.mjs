@@ -261,7 +261,11 @@ export function splitPairsFromRows(rows) {
   for (const r of rows || []) {
     if (r.reverted_at) continue;
     const ids = [...new Set([r.work_id, ...(r.moves || []).map((m) => m.to)].filter(Boolean))];
-    for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) pairs.add(pairKey(ids[i], ids[j]));
+    for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) {
+      // a RENAME is not a split: the source id lives on as an alias of renamed_to (#8325)
+      if (r.renamed_to && [ids[i], ids[j]].includes(r.work_id) && [ids[i], ids[j]].includes(r.renamed_to)) continue;
+      pairs.add(pairKey(ids[i], ids[j]));
+    }
   }
   return pairs;
 }
@@ -277,7 +281,7 @@ export function splitPairIn(ids, pairs) {
 /** The one I/O helper here: every live split pair, for the merge writers to pass in. */
 export async function loadSplitPairs(db) {
   return splitPairsFromRows(await db.collection('work_id_splits')
-    .find({ reverted_at: null }, { projection: { work_id: 1, moves: 1, reverted_at: 1 } }).toArray());
+    .find({ reverted_at: null }, { projection: { work_id: 1, moves: 1, renamed_to: 1, reverted_at: 1 } }).toArray());
 }
 
 export function unionMergeClusters(clusters, canonSlugByWorkId = new Map(), inbound, splitPairs) {
