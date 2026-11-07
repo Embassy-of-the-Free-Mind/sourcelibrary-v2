@@ -31,6 +31,12 @@ export interface CardEntry {
   publisher?: string | null;
   /** Plain words: 'complete', 'partial (Book I of IV)', 'excerpts', … */
   completeness?: string | null;
+  /**
+   * The English the translation is written in (#7797). A translation made
+   * before 1900 and never modernised is antiquated for a modern reader, however
+   * late the edition that reprints it. Absent = unknown, which counts as modern.
+   */
+  register?: 'middle_english' | 'early_modern' | 'modern' | null;
   citation_url?: string | null;
   verified?: boolean;
 }
@@ -41,7 +47,8 @@ export interface TranslationCard {
   work_title?: string;
   author?: string | null;
   /**
-   * no_prior_known | prior_exists | not_a_single_work | under_review
+   * no_prior_known | prior_exists | antiquated_or_partial_only |
+   * not_a_single_work | under_review
    * (original_language_is_english and text_unidentified pending — both render
    * as silence, like under_review, so adding them later cannot widen output.)
    */
@@ -110,10 +117,42 @@ export function searchRecordLine(card: TranslationCard | null | undefined): stri
 export interface CardLabel {
   /** The one sentence. */
   sentence: string;
-  /** 'first' renders the assertive register; 'priors' lists the history. */
-  register: 'first' | 'priors';
-  /** Entries to show under the sentence (priors register only). */
+  /**
+   * 'first' renders the assertive register; 'priors' lists the history;
+   * 'first_modern' is a first in modern English over older or partial priors.
+   */
+  register: 'first' | 'priors' | 'first_modern';
+  /** Entries to show under the sentence (priors and first_modern registers). */
   entries: CardEntry[];
+}
+
+/** Partial scope, in the plain words cards use. 'substantial' is NOT partial. */
+const PARTIAL_SCOPE = /^\s*(partial|selection|excerpt|extract|abridg|fragment)/i;
+
+/**
+ * Whether an entry leaves room for a first in modern English (#7797): it is in
+ * Middle or early modern English, or it covers only part of the work. An entry
+ * with no register is NOT antiquated: unknown fails toward the priors sentence.
+ */
+export function entryIsAntiquatedOrPartial(e: CardEntry): boolean {
+  if (e.register === 'middle_english' || e.register === 'early_modern') return true;
+  return PARTIAL_SCOPE.test(String(e.completeness ?? ''));
+}
+
+const entryYear = (e: CardEntry): number =>
+  parseInt(String(e.year ?? '').match(/\d{4}/)?.[0] ?? '', 10);
+
+/** "Trevisa (c.1398, Middle English)", "Steele (1893, selections)". */
+function describeOlderEntry(e: CardEntry, y: number): string {
+  const circa = /^\s*(c\.?|ca\.?|circa)\s*\d/i.test(String(e.year ?? '')) ? 'c.' : '';
+  const scope = String(e.completeness ?? '').trim();
+  let what: string;
+  if (PARTIAL_SCOPE.test(scope)) what = scope.split(/[\s(,;]/)[0].toLowerCase();
+  else if (e.register === 'middle_english') what = 'Middle English';
+  else if (y < 1700) what = 'early modern English';
+  else if (y < 1800) what = '18th-century English';
+  else what = '19th-century English';
+  return `${e.translator ?? e.title} (${circa}${y}, ${what})`;
 }
 
 /**
@@ -122,6 +161,8 @@ export interface CardLabel {
  *  - under_review / not_a_single_work / unknown states → null.
  *  - no_prior_known but the book has no English rendering to point at → null.
  *  - prior_exists with zero surviving entries (contradiction) → null.
+ *  - antiquated_or_partial_only with no English rendering or no entries → null;
+ *    with any entry that may be a complete modern translation → prior_exists.
  * Silence is the fail direction; the legacy badge stays untouched either way.
  */
 export function cardLabel(
@@ -152,11 +193,39 @@ export function cardLabel(
     };
   }
 
+  // A first in modern English (#7797): every English version we know is
+  // antiquated or partial. The guard is the point: if ANY entry is (or may be)
+  // a complete modern translation, this card is prior_exists whatever its
+  // status says, so a later entry appended by another lane can only ever pull
+  // the sentence back toward the priors register, never past it.
+  if (card.status === 'antiquated_or_partial_only') {
+    if (!((book.pages_translated ?? 0) > 0)) return null;
+    const entries = (card.entries ?? []).filter((e) => e.title || e.translator);
+    if (entries.length === 0) return null;
+    if (entries.every(entryIsAntiquatedOrPartial)) {
+      const named = entries
+        .map((e) => ({ e, y: entryYear(e) }))
+        .filter((x) => Number.isFinite(x.y))
+        .sort((a, b) => a.y - b.y)
+        .slice(0, 3)
+        .map((x) => describeOlderEntry(x.e, x.y));
+      const tail = named.length
+        ? `Earlier English versions: ${named.join('; ')}.`
+        : 'Earlier English versions are older or partial.';
+      return {
+        sentence: `Possibly the first complete English translation in modern English. ${tail}`,
+        register: 'first_modern',
+        entries,
+      };
+    }
+    return cardLabel({ ...card, status: 'prior_exists' }, book);
+  }
+
   if (card.status === 'prior_exists') {
     const entries = (card.entries ?? []).filter((e) => e.title || e.translator);
     if (entries.length === 0) return null;
     const named = entries
-      .map((e) => ({ e, y: parseInt(String(e.year ?? '').match(/\d{4}/)?.[0] ?? '', 10) }))
+      .map((e) => ({ e, y: entryYear(e) }))
       .filter((x) => Number.isFinite(x.y))
       .sort((a, b) => a.y - b.y)
       .slice(0, 3)
@@ -168,6 +237,20 @@ export function cardLabel(
   }
 
   return null;
+}
+
+/**
+ * Whether the card's answer outranks the fresh prior-translation search notice
+ * (#7598) on the book page. Only a first-modern card does: it is the reviewed
+ * answer to exactly the question the notice gets wrong, an old translation
+ * credited as if a modern reader could read it (#7797). Every other card keeps
+ * the notice's precedence, so no page that renders today changes.
+ */
+export function cardOutranksSearchNotice(
+  card: TranslationCard | null | undefined,
+  book: { pages_translated?: number | null },
+): boolean {
+  return cardLabel(card, book)?.register === 'first_modern';
 }
 
 /** Thin fetch. Read-only; returns null when the work has no card. */

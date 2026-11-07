@@ -37,6 +37,12 @@ say() {  # ... and to Derek's phone: stops and completion only — both need him
   note "$1"
   curl -s -m 20 -H "Title: page-frame sweep" -H "Priority: high" -d "$1" "$NTFY" >/dev/null || true
 }
+stop_lane() {  # $1 kind (quality|ops), $2 reason: the STOP through the lane-stop helper (#7912) — a ticket,
+  # a registry row and a daily page while it stands. If the helper fails, the bare STOP is still written.
+  node scripts/maintenance/lane-stops.mjs stop --lane="page-frame-sweep $(basename "$DIR")" --stop="$STOP" \
+    --kind="$1" --reason="$2" --issue="$ISSUE" --by=page-frame-sweep-waves.sh \
+    --evidence="contact sheets: $W/sheet-*.jpg on $(hostname)" >>"$DIR/waves.log" 2>&1 || echo "$2" >"$STOP"
+}
 
 # Preflight: the checkout must parse and still frame the reference page (page 13
 # of the Bodhicaryavatara, checked by eye) before any wave writes.
@@ -88,13 +94,13 @@ EOF
   # already exists, so a second run's "pf-review-1" never started and its wave
   # went unreviewed for an hour before the stop (run2, 2026-10-06).
   if ! "$JOB" start "pf-review-$(basename "$DIR")-$i" "$W/brief.txt" >"$W/job.log" 2>&1; then
-    echo "wave $i: review job did not start" >"$STOP"
+    stop_lane ops "wave $i: review job did not start"
     say "wave $i STOPPED: the review job did not start ($(tail -1 "$W/job.log")). Sheets $W/sheet-*.jpg"; exit 4
   fi
   for _ in $(seq 1 120); do [ -s "$W/VERDICT" ] && break; sleep 30; done
   verdict=$(head -1 "$W/VERDICT" 2>/dev/null || echo "STOP no verdict within an hour")
   case "$verdict" in
     OK*) note "wave $i: $totals. $summary. Review: $verdict" ;;
-    *) echo "wave $i: $verdict" >"$STOP"; say "wave $i STOPPED by review: $verdict. Sheets $W/sheet-*.jpg"; exit 4 ;;
+    *) stop_lane quality "wave $i: $verdict"; say "wave $i STOPPED by review: $verdict. Sheets $W/sheet-*.jpg"; exit 4 ;;
   esac
 done

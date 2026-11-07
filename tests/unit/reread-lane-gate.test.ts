@@ -113,7 +113,7 @@ describe('foreign-script guard', () => {
 describe('cli-ocr.mjs apply wiring', () => {
   const src = fs.readFileSync(path.join(__dirname, '../../scripts/batch/cli-ocr.mjs'), 'utf8');
   it('skips fitted text and foreign script before any write, in every mode', () => {
-    const write = src.indexOf('saveRevisionBeforeOverwrite(db, page.id');
+    const write = src.indexOf("await writePageText(db, page.id, 'ocr'");
     expect(src.indexOf('fittedTextReason(page.ocr)')).toBeGreaterThan(0);
     expect(src.indexOf('fittedTextReason(page.ocr)')).toBeLessThan(write);
     expect(src.indexOf('foreignScriptReason(text')).toBeLessThan(write);

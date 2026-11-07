@@ -18,8 +18,29 @@
 import type { Db, Document } from 'mongodb';
 import { isLazyPagesBook } from '../../scripts/lib/pages-state.mjs';
 
+/**
+ * Match fragment: pages that are not a hidden repeat capture (#5056). Mirror of
+ * the .mjs twin — `repeat_of` names the kept capture of the same leaf; the page
+ * keeps its number and id so citations resolve, but no list or counter sees it.
+ */
+export const NOT_REPEAT_CAPTURE = { repeat_of: null } as const;
+
 /** Match fragment selecting only visible (renderable) pages. */
-export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } } as const;
+export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE } as const;
+
+/**
+ * Match fragment: pages that ARE a hidden repeat capture, in the shape the
+ * partial index `pages_book_repeat_of_partial` (ensure-indexes.mjs) answers
+ * without fetching a document. A count over a book's page list subtracts this
+ * from the covered `{ book_id, page_number }` count rather than adding
+ * `repeat_of: null` to it, which no index on `pages` can cover.
+ */
+export const IS_REPEAT_CAPTURE = { repeat_of: { $type: 'string' } } as const;
+
+/** True iff a page is a hidden repeat capture of another page (#5056). */
+export function isRepeatCapture(page: object | null | undefined): boolean {
+  return (page as { repeat_of?: unknown } | null | undefined)?.repeat_of != null;
+}
 
 /**
  * Page types that will never carry a translation. Mirror of the .mjs list.
@@ -181,6 +202,22 @@ export interface RecountResult {
 }
 
 /**
+ * `last_translation_at` when a recount finds MORE translated pages than were stored
+ * ({} otherwise). Twin of translationAdvancedSet() in scripts/lib/page-counts.mjs,
+ * which says why: the Recently Translated surfaces sort on this field, and the CLI
+ * lanes never set it.
+ */
+export function translationAdvancedSet(
+  before: { pages_translated?: number | null } | null | undefined,
+  after: { pages_translated?: number | null } | null | undefined,
+  now: Date,
+): { last_translation_at?: Date } {
+  // A book never counted before (null) is not stamped: its pages may be years old.
+  const was = before?.pages_translated;
+  return typeof was === 'number' && (after?.pages_translated ?? 0) > was ? { last_translation_at: now } : {};
+}
+
+/**
  * THE writer of a book's page counters. Mirror of the .mjs recountBook(): recounts
  * the book's visible pages and `$set`s all six counters plus `page_counts_at`;
  * never a subset, never `$inc`. `bookId` is the book's string `id` (what
@@ -206,7 +243,7 @@ export async function recountBook(
 
   const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book[c] ?? null])) as Record<PageCounter, number | null>;
   const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
-  const $set: Document = { ...after, page_counts_at: now };
+  const $set: Document = { ...after, page_counts_at: now, ...translationAdvancedSet(before, after, now) };
   const state = computeTranslationState(after, { language: book.language, content_type: book.content_type });
   const stored = book.translation_state as Partial<TranslationState> | undefined;
   if (translationStateChanged(stored, state)) $set.translation_state = { ...state, computed_at: now };

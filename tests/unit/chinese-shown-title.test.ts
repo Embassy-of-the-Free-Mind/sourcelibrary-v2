@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { chineseShownTitle, localizedTitle, originalTitleIfDifferent } from '@/lib/localized';
+import { chineseShownTitle, localizedAuthor, localizedTitle, originalTitleIfDifferent } from '@/lib/localized';
 
 describe('chineseShownTitle: the stored title of a Chinese book on /zh (#6382)', () => {
   it('writes a volume note in Chinese', () => {
@@ -33,5 +33,20 @@ describe('chineseShownTitle: the stored title of a Chinese book on /zh (#6382)',
     expect(originalTitleIfDifferent(book, 'zh')).toBeNull();
     expect(localizedTitle(book, 'en')).toBe('The Great Meaning of the Five Elements');
     expect(localizedTitle(book, 'nl')).toBe(book.title);
+  });
+});
+
+describe('localizedAuthor: the byline on a localized card (#8035)', () => {
+  const book = { author: 'Shen Kuo', localized: { zh: { author: '沈括' } } };
+
+  it('shows the language\'s own form, and the catalogue string everywhere else', () => {
+    expect(localizedAuthor(book, 'zh')).toBe('沈括');
+    expect(localizedAuthor(book, 'en')).toBe('Shen Kuo');
+    expect(localizedAuthor(book, 'es')).toBe('Shen Kuo');
+  });
+
+  it('falls back to the stored author, and to nothing when there is none', () => {
+    expect(localizedAuthor({ author: '（宋）邵雍' }, 'zh')).toBe('（宋）邵雍');
+    expect(localizedAuthor({ author: null }, 'zh')).toBeUndefined();
   });
 });

@@ -1,0 +1,53 @@
+{
+ "scored_at": "2026-11-07T04:16:23.575Z",
+ "cells": {
+  "fr19": {
+   "lang": "French",
+   "route": "lighton>agy-flash-low",
+   "drawn": 30,
+   "books": 30,
+   "written": 15,
+   "judged": 15,
+   "accepted": 14,
+   "wrong_text": 0,
+   "p_acc_ge_08": 0.861,
+   "all_drawn_accepted": "14/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "2/2",
+   "decision": "HOLD",
+   "why": "P(acc>=0.8) 0.861"
+  },
+  "fr17": {
+   "lang": "French",
+   "route": "lighton>agy-flash-low",
+   "drawn": 30,
+   "books": 30,
+   "written": 15,
+   "judged": 15,
+   "accepted": 13,
+   "wrong_text": 0,
+   "p_acc_ge_08": 0.647,
+   "all_drawn_accepted": "13/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "2/2",
+   "decision": "HOLD",
+   "why": "P(acc>=0.8) 0.647"
+  },
+  "es17": {
+   "lang": "Spanish",
+   "route": "lighton>agy-flash-low",
+   "drawn": 5,
+   "books": 5,
+   "written": 4,
+   "judged": 4,
+   "accepted": 4,
+   "wrong_text": 0,
+   "p_acc_ge_08": 0.671,
+   "all_drawn_accepted": "4/5",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "0/0",
+   "decision": "HOLD",
+   "why": "under 10 judged; P(acc>=0.8) 0.671"
+  }
+ }
+}

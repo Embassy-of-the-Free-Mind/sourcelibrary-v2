@@ -1,0 +1,64 @@
+[
+  {
+    "book_id": "b04-m", "slot": 1, "title": "Pontificalis liber", "tradition": null,
+    "shelf_fit": "doubtful", "shelf_note": "An illuminated Italian manuscript Pontifical (rites of ordination, consecration of a bishop, foundation of a church, reconciliation of a cemetery). A genuine primary source of liturgy, but no tradition or collection is given in the packet, so fit to an esoteric/early-science shelf cannot be confirmed.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The run is images 9, 16 and 24, but the leaf numbers on the images jump from 'xxxiiij' (image 9) to 'cc.xxxij' (image 24, OCR reads 'cc.xxxix'): ~200 folios in 15 images, so this is a selective photograph set (excerpted openings), not a complete scan. No translation on any of the three pages.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "et mysteria capiamus in omnibus", "image": "et mysteriis capiamus in moribus ('imo|ribus')", "problem": "'in moribus' (in our conduct) read as 'in omnibus'", "severity": "moderate", "class": "O6" },
+          { "ocr": "ad beniuolendum", "image": "ad beneuiuendum", "problem": "'to live well' misread as a non-word suggesting 'benevolence'", "severity": "moderate", "class": "O6" },
+          { "ocr": "uersus illos uoce competenti", "image": "uersus illos dicens uoce competenti", "problem": "'dicens' dropped", "severity": "minor" },
+          { "ocr": "Deinde intrant sacra rui et ibi manus fricant", "image": "Deinde intrant sacrarium et ibi manus fricant", "problem": "'sacrarium' split into garble across the line break", "severity": "minor" },
+          { "ocr": "gnus auxilius", "image": "gnius auxilijs", "problem": "word fragments misread", "severity": "minor" },
+          { "ocr": "post offertorui ... electioni ... ab eadem ecclesia pastore", "image": "post offertorium ... electionum ... ab eadem ecclesiis pastore", "problem": "inflection slips", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation stored for this page: an English reader gets nothing.", "severity": "moderate", "class": "other:no-translation" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "(nothing between 'impla-' and the right column)", "image": "left column chant text under the staves: 'Ne reminiscaris domine delicta nostra vel parentum nostrorum neque vindictam sumas de peccatis nostris'", "problem": "the whole sung antiphon under four staves silently omitted; only image-desc of notation given", "severity": "serious", "class": "O5" },
+          { "ocr": "Domine cliam e- dificet", "image": "Nemo ecclesiam edificet", "problem": "'Nemo' (no one may build a church) read as 'Domine' — the prohibition becomes an invocation", "severity": "serious", "class": "O6" },
+          { "ocr": "p- usque po- tificis in- diao lo- cus atrui de dignetur", "image": "priusquam pontificis iudicio locus et atrium designetur", "problem": "garbled; 'priusquam' and 'iudicio' lost, the condition unreadable", "severity": "serious", "class": "O6" },
+          { "ocr": "et pe- ci uel ex auctoritate placer uote crux", "image": "et precio uel ex auctoritate pro sacerdote crux", "problem": "garbled", "severity": "moderate", "class": "O6" },
+          { "ocr": "nitenciales i benedictione cum abbate: qui electus", "image": "nitenciales in benedictione electi in abbatem: quam electus", "problem": "'electi in abbatem' read as 'cum abbate'", "severity": "moderate", "class": "O6" },
+          { "ocr": "officiu ipsum excitantibus ... et etiam heri- supra ... per crucem sine notis impla-", "image": "officium ipsum decantantibus ... quod etiam habetur supra ... per errorem sine notis impressa", "problem": "several misreadings ('decantantibus', 'habetur', 'errorem', 'impressa')", "severity": "moderate", "class": "O6" },
+          { "ocr": "Incipit. Et post benedictione impositione primaria lapidis ecclesia", "image": "Incipit. Et post de benedictione et impositione primarii lapidis pro ecclesia", "problem": "rubric scrambled", "severity": "minor" },
+          { "ocr": "(absent)", "image": "caption in the miniature: 'Domine ne in fu[rore] ... edificanda'", "problem": "inscription in the miniature dropped", "severity": "minor" },
+          { "ocr": "Large illuminated drop cap 'D'", "image": "initial is 'N' (of 'Nemo'); a further 'N' initial of 'Ne reminiscaris' on the left not mentioned", "problem": "image description wrong letter", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation stored for this page.", "severity": "moderate", "class": "other:no-translation" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 24,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Uimiterius benedictus seu pollu tum", "image": "Quando Cimiterium benedictum violatum seu pollutum", "problem": "opening 'Quando' lost into the initial and 'violatum' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "<page-num>cc.xxxix.</page-num>", "image": "cc.xxxij.", "problem": "folio number likely misread (ij read as ix)", "severity": "minor" },
+          { "ocr": "et cantores ibidem incipit ... Tercio dicat", "image": "incipiunt ... ", "problem": "inflection slips", "severity": "minor" },
+          { "ocr": "seper / forde", "image": "semper / sorde", "problem": "letter slips", "severity": "minor" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [ { "note": "No translation stored for this page.", "severity": "moderate", "class": "other:no-translation" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A handsome illuminated manuscript Pontifical whose OCR is readable on dense text pages (9, 24) but fails on the mixed chant page 16, where a whole antiphon is dropped and 'Nemo' becomes 'Domine'. No page carries a translation."
+  }
+]

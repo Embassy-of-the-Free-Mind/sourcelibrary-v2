@@ -1,0 +1,68 @@
+{
+ "at": "2026-10-30T21:42:29.332Z",
+ "candidates": 51,
+ "scored": 49,
+ "unaligned": 1,
+ "points": [
+  {
+   "lang": "de",
+   "per_call": 1,
+   "think": "low",
+   "prompt": "job:convergent-ocr-6420",
+   "books": 2,
+   "pages": 16,
+   "cer": 0.0007569216269845969,
+   "v": 2.5784536996820953e-8
+  },
+  {
+   "lang": "de",
+   "per_call": 1,
+   "think": "low",
+   "prompt": "job:correct-vs-reread-7568-de",
+   "books": 1,
+   "pages": 8,
+   "cer": 0.07349761970514403,
+   "v": null
+  },
+  {
+   "lang": "la",
+   "per_call": 1,
+   "think": "low",
+   "prompt": "job:gpu-flash-vs-opus-7263",
+   "books": 2,
+   "pages": 2,
+   "cer": 0.011038739686461074,
+   "v": 0.00009546284354850327
+  },
+  {
+   "lang": "la",
+   "per_call": 1,
+   "think": "low",
+   "prompt": "job:convergent-ocr-6420",
+   "books": 1,
+   "pages": 5,
+   "cer": 0.025634050289522127,
+   "v": null
+  },
+  {
+   "lang": "de",
+   "per_call": 1,
+   "think": "low",
+   "prompt": "v:19.1",
+   "books": 2,
+   "pages": 2,
+   "cer": 0.0016443068634121594,
+   "v": 1.0678765635971558e-7
+  },
+  {
+   "lang": "la",
+   "per_call": 1,
+   "think": "low",
+   "prompt": "v:19.1",
+   "books": 15,
+   "pages": 15,
+   "cer": 0.025660333137984253,
+   "v": 0.00007703054865943409
+  }
+ ]
+}

@@ -1,0 +1,315 @@
+{
+ "n": 1069,
+ "books": 173,
+ "by_verdict": {
+  "invented": {
+   "k": 530,
+   "rate": 0.496,
+   "ci95": [
+    0.466,
+    0.526
+   ]
+  },
+  "fine": {
+   "k": 406,
+   "rate": 0.38,
+   "ci95": [
+    0.351,
+    0.409
+   ]
+  },
+  "commentary": {
+   "k": 65,
+   "rate": 0.061,
+   "ci95": [
+    0.048,
+    0.077
+   ]
+  },
+  "ocr_dropped": {
+   "k": 68,
+   "rate": 0.064,
+   "ci95": [
+    0.05,
+    0.08
+   ]
+  }
+ },
+ "withhold_candidates": 518,
+ "withhold_books": 137,
+ "reocr_candidates": 68,
+ "predicate_undercount": 40,
+ "by_translation_model": {
+  "gemini-3-flash-preview": {
+   "n": 791,
+   "books": 152,
+   "invented": 509,
+   "fine": 206,
+   "commentary": 65,
+   "ocr_dropped": 11,
+   "invented_rate": 0.643,
+   "invented_ci95": [
+    0.609,
+    0.676
+   ]
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "n": 231,
+   "books": 19,
+   "invented": 20,
+   "fine": 171,
+   "commentary": 0,
+   "ocr_dropped": 40,
+   "invented_rate": 0.087,
+   "invented_ci95": [
+    0.057,
+    0.13
+   ]
+  },
+  "gemini-3.1-flash-lite": {
+   "n": 47,
+   "books": 6,
+   "invented": 1,
+   "fine": 29,
+   "commentary": 0,
+   "ocr_dropped": 17,
+   "invented_rate": 0.021,
+   "invented_ci95": [
+    0.004,
+    0.111
+   ]
+  }
+ },
+ "by_family": {
+  "三才圖會": {
+   "n": 450,
+   "books": 60,
+   "invented": 303,
+   "fine": 95,
+   "commentary": 46,
+   "ocr_dropped": 6,
+   "invented_rate": 0.673,
+   "invented_ci95": [
+    0.629,
+    0.715
+   ]
+  },
+  "道德經": {
+   "n": 172,
+   "books": 1,
+   "invented": 5,
+   "fine": 129,
+   "commentary": 0,
+   "ocr_dropped": 38,
+   "invented_rate": 0.029,
+   "invented_ci95": [
+    0.012,
+    0.066
+   ]
+  },
+  "other": {
+   "n": 168,
+   "books": 63,
+   "invented": 86,
+   "fine": 78,
+   "commentary": 1,
+   "ocr_dropped": 3,
+   "invented_rate": 0.512,
+   "invented_ci95": [
+    0.437,
+    0.586
+   ]
+  },
+  "武備志": {
+   "n": 118,
+   "books": 23,
+   "invented": 84,
+   "fine": 28,
+   "commentary": 5,
+   "ocr_dropped": 1,
+   "invented_rate": 0.712,
+   "invented_ci95": [
+    0.624,
+    0.786
+   ]
+  },
+  "Legge Chinese Classics": {
+   "n": 62,
+   "books": 6,
+   "invented": 2,
+   "fine": 40,
+   "commentary": 0,
+   "ocr_dropped": 20,
+   "invented_rate": 0.032,
+   "invented_ci95": [
+    0.009,
+    0.11
+   ]
+  },
+  "植物名實圖考": {
+   "n": 40,
+   "books": 11,
+   "invented": 36,
+   "fine": 4,
+   "commentary": 0,
+   "ocr_dropped": 0,
+   "invented_rate": 0.9,
+   "invented_ci95": [
+    0.769,
+    0.96
+   ]
+  },
+  "名山圖": {
+   "n": 31,
+   "books": 1,
+   "invented": 6,
+   "fine": 25,
+   "commentary": 0,
+   "ocr_dropped": 0,
+   "invented_rate": 0.194,
+   "invented_ci95": [
+    0.092,
+    0.363
+   ]
+  },
+  "本草綱目": {
+   "n": 28,
+   "books": 8,
+   "invented": 8,
+   "fine": 7,
+   "commentary": 13,
+   "ocr_dropped": 0,
+   "invented_rate": 0.286,
+   "invented_ci95": [
+    0.153,
+    0.471
+   ]
+  }
+ },
+ "controls_in_place": {
+  "agree": 19,
+  "n": 20,
+  "rows": [
+   {
+    "book_id": "6958e9ac538549809db82aee",
+    "page_number": -170,
+    "by_eye": "commentary",
+    "opus": "commentary"
+   },
+   {
+    "book_id": "6992c93c69b777d72c76353e",
+    "page_number": 914,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cabbd4d545ae73fee88b",
+    "page_number": 121,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cafcd4d545ae73feed9b",
+    "page_number": 7,
+    "by_eye": "commentary",
+    "opus": "commentary"
+   },
+   {
+    "book_id": "6992cd4243713c66ea635a00",
+    "page_number": 65,
+    "by_eye": "fine",
+    "opus": "fine"
+   },
+   {
+    "book_id": "6992cd6c43713c66ea636575",
+    "page_number": 146,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cdaa43713c66ea637cfc",
+    "page_number": 31,
+    "by_eye": "fine",
+    "opus": "fine"
+   },
+   {
+    "book_id": "6992cdab43713c66ea637dca",
+    "page_number": 136,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cdc043713c66ea638565",
+    "page_number": 49,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cddf81c9d7efb84d0873",
+    "page_number": 171,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992ce273ea667fbac82854a",
+    "page_number": 68,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992ce542960dc4e5cea9195",
+    "page_number": 40,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992ce7c673ee1e40e320b48",
+    "page_number": 44,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992ce8e673ee1e40e32103c",
+    "page_number": 70,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cf45f5b4f75c1a4c86c0",
+    "page_number": 21,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cf87f5b4f75c1a4c9232",
+    "page_number": 80,
+    "by_eye": "invented",
+    "opus": "invented"
+   },
+   {
+    "book_id": "6992cfdaf5b4f75c1a4c9a6b",
+    "page_number": 49,
+    "by_eye": "fine",
+    "opus": "fine"
+   },
+   {
+    "book_id": "6992f3fac8c6ac61574e72e5",
+    "page_number": 84,
+    "by_eye": "fine",
+    "opus": "fine"
+   },
+   {
+    "book_id": "6992f40ec8c6ac61574e74c4",
+    "page_number": 103,
+    "by_eye": "ocr_dropped",
+    "opus": "fine"
+   },
+   {
+    "book_id": "6a087ebab2a99026ccf70177",
+    "page_number": 452,
+    "by_eye": "fine",
+    "opus": "fine"
+   }
+  ]
+ }
+}

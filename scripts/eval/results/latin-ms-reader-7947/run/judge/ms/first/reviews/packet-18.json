@@ -1,0 +1,560 @@
+[
+ {
+  "book_id": "b18-k",
+  "slot": 1,
+  "title": "Index librorum theutonicorum impressorum & manuscriptorum Romae anno 1806. Libri omnes qui in hoc indice allegantur, conservantur Romae in Bibliotheca Vaticana - BSB Cbm Cat. 557",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "1595 Iacobus Choricus",
+      "image": "1593 Jacobus Chericus (last digit read as 3)",
+      "problem": "year and surname misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "ad Francos Aposteato Saxones",
+      "image": "ad Francos et postea ad Saxones",
+      "problem": "'et postea ad' garbled into a non-word",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "1596 Historia novi Orbis",
+      "image": "1590",
+      "problem": "year misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "a Christophoro Columbo reperta",
+      "image": "reperti",
+      "problem": "grammatical ending normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Simonis <unclear>Eiseman</unclear> Eiseman",
+      "image": "Simonis ~~Weiseman~~ Eisseman",
+      "problem": "struck-through word given as a doubled live name, deletion not marked",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Ioannem Worfium",
+      "image": "Joanem Worstium",
+      "problem": "surname misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "auctore Eginharto",
+      "image": "auctore Eghinarto",
+      "problem": "spelling normalised to the expected form",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "Ludovici Regum francorum",
+      "image": "Ludovici Regum franciæ",
+      "problem": "word normalised to a different form",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 229,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "contra 34 articulos pacificos",
+      "image": "contra 34 articulos pa-pisticos",
+      "problem": "'papisticos' (against papist articles) read as 'pacificos' — the title's sense is reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Tiguri 1590: … 1591: … 1592: … 1593: … 1594:",
+      "image": "1390: 1391: 1392: 1393: 1394:",
+      "problem": "every shelf/item number on the page read 15xx for 13xx — the catalogue's finding numbers are all wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "1564 Liber Josue",
+      "image": "1565",
+      "problem": "year misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Tubingae. Tiguri",
+      "image": "~~Tubingae~~ Tiguri (Tubingae struck through)",
+      "problem": "deleted place kept as live text, so the entry gives two imprints",
+      "severity": "moderate",
+      "class": "O13"
+     },
+     {
+      "ocr": "Georgii Ruppelii",
+      "image": "Georgii Kuppelich (Kuppelich?)",
+      "problem": "surname misread / normalised",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Joannis Gareti",
+      "image": "Joanis Garcæi",
+      "problem": "surname misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Luce Osiandri",
+      "image": "Lucæ Osiandri",
+      "problem": "ligature lost",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(no page number)",
+      "image": "113 at top right",
+      "problem": "printed folio number not captured",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 342,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Conciones Nuptiales et De oeconomia",
+      "image": "Conciones Nuptiales et Oeconomia",
+      "problem": "'De' inserted",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Pro:",
+      "image": "Nro:",
+      "problem": "column header misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Readable but a serious page 229: 'articulos pacificos' for 'papisticos' and every item number 1390–1394 read as 1590–1594; several years and names misread on page 115."
+ },
+ {
+  "book_id": "b18-m",
+  "slot": 2,
+  "title": "Index librorum theutonicorum impressorum & manuscriptorum Romae anno 1806. Libri omnes qui in hoc indice allegantur, conservantur Romae in Bibliotheca Vaticana - BSB Cbm Cat. 557",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "1595 Jacobus Chovæus",
+      "image": "1593 Jacobus Chericus",
+      "problem": "year misread; surname replaced by a known author form",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "devoluto etc.",
+      "image": "devento ch (as written)",
+      "problem": "word regularised to the expected Latin",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "Simonis Volderi Historia Marchica",
+      "image": "Simonis Volderi Historia turchica",
+      "problem": "title changed to 'Marchica' (copied from the line above) — wrong book",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "— 837:",
+      "image": "— 834:",
+      "problem": "item number misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Martini Mitter",
+      "image": "Martini Mitii",
+      "problem": "surname misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Simonis <unclear>Weiseman</unclear> Eisseman",
+      "image": "Simonis ~~Weiseman~~ Eisseman",
+      "problem": "deletion shown as an unclear reading instead of a strike",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Joannem Werstium",
+      "image": "Joanem Worstium",
+      "problem": "surname misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 229,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "1571 … 1572 … 1576 … 1575 … 1572 … 1573 … 1570",
+      "image": "1541 … 1542 … 1546 … 1545 … 1542 … 1543 … 1540",
+      "problem": "seven of eight publication years shifted by thirty years (4 read as 7)",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "Tubingae. Tiguri",
+      "image": "~~Tubingae~~ Tiguri",
+      "problem": "struck place kept as live text",
+      "severity": "moderate",
+      "class": "O13"
+     },
+     {
+      "ocr": "Georgii Ruppelii",
+      "image": "Georgii Kuppelich",
+      "problem": "surname misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Ulyssaeae",
+      "image": "Ulyssæ",
+      "problem": "place garbled",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 342,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Hennebergici. <unclear>Sleus</unclear>.",
+      "image": "Henebergici. Jenæ.",
+      "problem": "place of printing (Jena) misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Joannis Mathesii",
+      "image": "Joanis Matthesii",
+      "problem": "spelling normalised",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "<term> tags wrapped around every year would leak into the reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 229 has almost every publication year wrong by thirty years (1571 for 1541, etc.); page 115 swaps a title and an item number, and page 342 leaks <term> markup."
+ },
+ {
+  "book_id": "b18-r",
+  "slot": 3,
+  "title": "Index librorum theutonicorum impressorum & manuscriptorum Romae anno 1806. Libri omnes qui in hoc indice allegantur, conservantur Romae in Bibliotheca Vaticana - BSB Cbm Cat. 557",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Historia novi Orbis … Helmstadii | 837",
+      "image": "834",
+      "problem": "item number misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Simonis ~~Reiseman~~ Eiseman",
+      "image": "~~Weiseman~~ Eisseman",
+      "problem": "struck word and the name slightly misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Jacobus <unclear>Chericus</unclear>",
+      "image": "Jacobus Chericus (doubtful)",
+      "problem": "honestly flagged as unclear; no error",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 229,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Ano: ——— Lbro:",
+      "image": "Ano: … Nro:",
+      "problem": "column header misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Georgii <unclear>Kuppelich</unclear>",
+      "image": "Georgii Kuppelich",
+      "problem": "flagged unclear; plausible",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Joanis <unclear>Garcii</unclear>",
+      "image": "Joanis Garcæi",
+      "problem": "surname slightly misread, flagged unclear",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "page-type tagged 'text' for a catalogue list",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 342,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "page-type tagged 'text' for a catalogue list",
+      "severity": "minor",
+      "class": "O16"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The closest of the four to the image: years, item numbers and the struck-through words are right; one item number on page 115 (837 for 834) and a few names flagged unclear."
+ },
+ {
+  "book_id": "b18-t",
+  "slot": 4,
+  "title": "Index librorum theutonicorum impressorum & manuscriptorum Romae anno 1806. Libri omnes qui in hoc indice allegantur, conservantur Romae in Bibliotheca Vaticana - BSB Cbm Cat. 557",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "1595 Jacobus Chovæus",
+      "image": "1593 Jacobus Chericus",
+      "problem": "year misread; surname replaced by a known author form",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "devoluto etc.",
+      "image": "devento ch (as written)",
+      "problem": "word regularised",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "Simonis Volderi Historia Marchica",
+      "image": "Simonis Volderi Historia turchica",
+      "problem": "title changed to 'Marchica' — wrong book",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "1596 Historia novi Orbis",
+      "image": "1590",
+      "problem": "year misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Alexander Dithenius",
+      "image": "Alexander Citzenius / Sitzenius",
+      "problem": "surname misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Martini Miltii",
+      "image": "Martini Mitii",
+      "problem": "surname misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Joanem Vorstium",
+      "image": "Joanem Worstium",
+      "problem": "initial letter misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<header>56</header>",
+      "image": "56 (folio number)",
+      "problem": "folio number tagged as a header",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 229,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "contra 34 articulos pacificos",
+      "image": "contra 34 articulos pa-pisticos",
+      "problem": "'papisticos' (against papist articles) read as 'pacificos' — the title's sense is reversed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "Tiguri 1590: … 1591: … 1592: … 1593: … 1594:",
+      "image": "1390: 1391: 1392: 1393: 1394:",
+      "problem": "every shelf/item number on the page read 15xx for 13xx — the catalogue's finding numbers are all wrong",
+      "severity": "serious",
+      "class": "O7"
+     },
+     {
+      "ocr": "1564 Liber Josue",
+      "image": "1565",
+      "problem": "year misread",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Tubingae. Tiguri",
+      "image": "~~Tubingae~~ Tiguri (Tubingae struck through)",
+      "problem": "deleted place kept as live text, so the entry gives two imprints",
+      "severity": "moderate",
+      "class": "O13"
+     },
+     {
+      "ocr": "Georgii Ruppelii",
+      "image": "Georgii Kuppelich (Kuppelich?)",
+      "problem": "surname misread / normalised",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Joannis Gareti",
+      "image": "Joanis Garcæi",
+      "problem": "surname misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "Luce Osiandri",
+      "image": "Lucæ Osiandri",
+      "problem": "ligature lost",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(no page number)",
+      "image": "113 at top right",
+      "problem": "printed folio number not captured",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 342,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Page 342 is clean, but page 229 reverses 'papisticos' to 'pacificos' and misreads every item number (1590s for 1390s), and page 115 swaps a title and two years."
+ }
+]

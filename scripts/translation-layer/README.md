@@ -18,7 +18,37 @@ node scripts/translation-layer/03-match-and-gap.mjs          # work-level match 
 node scripts/translation-layer/05-spotcheck.mjs              # Filelfo/Pico/Valla regression
 node scripts/translation-layer/04-write-provenance.mjs       # DRY-RUN; add --write to mutate Supabase
 node scripts/translation-layer/09-scan-coverage.mjs          # evidence-backed scan coverage (IIIF) + scanned x translated 2x2
+node scripts/translation-layer/09-scan-coverage.mjs --lang german  # same, against phase-11 WORKS of any language; writes scan-queue-<lang>.jsonl (#7751)
+node scripts/translation-layer/10-sl-coverage.mjs           # SL holdings/translations x external priors 2x2 (#7751)
+node scripts/translation-layer/11-work-graph.mjs            # real WORK unit over USTC editions + our books; 2x2 at work level (#7751)
 ```
+
+### Multi-language external side, staged (#7769)
+
+```bash
+# staged English-translation sets, one JSONL per source → scripts/output/translation-staging/
+node scripts/enrichment/ingest-loc-bulk.mjs --parts 1-43 --out $JOB_SCRATCH/loc-bulk --staging $JOB_SCRATCH/loc.jsonl
+node scripts/enrichment/ingest-openlibrary-translations.mjs --dumps <ol dump dir> --out $JOB_SCRATCH/openlibrary.jsonl
+node scripts/enrichment/ingest-wikidata-translations.mjs --staging --staging-out $JOB_SCRATCH/wikidata.jsonl
+node scripts/translation-layer/01-build-external-works.mjs --staging   # → external-translation-works-staging.jsonl
+node scripts/translation-layer/11-work-graph.mjs --lang german         # any of the 8 target languages
+```
+
+Staged rows go to `external-translation-works-staging.jsonl` and never over
+`external-translation-works.jsonl`, because 03 reads that file and 04 writes
+its priors into Supabase. Nothing here touches `translation_catalogs`, which feeds the
+public badges and /census. Merging the staged set into it is a separate decision.
+Phase 11 attaches each external work (an x node) to ONE existing work after
+clustering, so the external side cannot reshape the denominator it is measured
+against. `external_landing` in the report gives per-source counts, before and after.
+
+**Newspapers are one work each (#7751).** USTC catalogues every newspaper issue
+as its own record (no sn), which made 31% of German and 28% of Dutch "works"
+single issues. Phase 11 groups issues (`classification_1 = 'Newspapers'`) by
+place + title head, or by printer for issues whose title is only their news,
+and flags those works `newspaper: true`. The report's `newspapers` block gives
+works with each newspaper counted once beside works excluding newspapers; quote
+the latter for book-translation shares. `WG_NEWSPAPERS=0` restores the old count.
 
 Outputs land in `scripts/output/` (gitignored, regenerable):
 `external-translation-works.jsonl`, `quarantine-sl-works.jsonl`,

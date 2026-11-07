@@ -10,7 +10,7 @@ Revision 2 adds the standing driver, budgets, alarms and the quality gate. Their
 And inside it:
 - `scripts/workers/pipeline-health-alert.mjs`, a daily email with no ntfy
 - `OCR_TRUST_TABLE` in `scripts/lib/ocr-trust-gate.mjs`, a routing-shaped table already kept as data
-- `.claude/docs/ocr-engine-routing.md`, the evidence the routing table would hold
+- `.claude/docs/routing.md`, the router table that decides routes
 
 **Read this when:**
 - you are writing a phase selector, a lane or a driver
@@ -20,7 +20,7 @@ And inside it:
 - you are changing which OCR engine reads a language
 - someone asks "why isn't this book moving?" or "what is the line working on?"
 
-**Status:** design.
+**Status:** design. **Not running as of 2026-10-29 (#7759):** the standing driver (`pipeline-driver.mjs`), the alarms (`pipeline-alarms.mjs`), the re-check (`pipeline-recheck.mjs`) and per-lane budgets (`lane_budgets`, 0 rows) do not exist; the standing quality gate ran once, by hand (2026-10-10, NO-GO), and has no scheduler. What runs today: `book-process.md`.
 - Revision 1 is dated 2026-10-01 (PR #5471).
 - Revision 2 is dated 2026-10-04. It was prompted by one day of running translation by hand (the #5469 comment of 2026-10-04).
 - Tracking issue is #5469, under the consolidation program #5302.
@@ -256,7 +256,19 @@ The rules the registry enforces are unchanged from revision 1:
 - **Every lane declares `respectsHold`, `respectsPause` and `budget`.** A `false` needs a reason. `gap: true` marks a known gap.
 - **Budget is a lane property, never a book state.** A closed budget leaves the book's step standing, and the lane idles. `/admin/pipeline` says so.
 
+### Subscription and GPU lanes (R9, #7301)
+
+In the week to 2026-10-23 about 85% of page translations came from subscription jobs that no registry could see. Since #7301 they are lanes like any other:
+- **Registered.** `agy-flash-ocr`, `agy-flash-translate`, `claude-opus-ocr`, `claude-opus-translate`, `paddle-zh`, `paddle-zh-guarded` and `paddle-print` (the GEX45 queue's two writers), `kraken-syriac`, `ndl-koten`. `paddle-zh` runs from a pinned copy of the repo on main (`runsFrom` says why).
+- **Routed.** A lane names the routing hold it drains (`routes.hold`: `ocr-flash-cli-7075`, `translate-cli-7075`) and the cli engines it reads for. The registry test fails when a router hands books to a hold or engine that no lane drains, or when the OCR routing table names a lane file nobody registered.
+- **Budgeted in quota, not dollars.** The budget is `quota-share`: a share of the account's week, read from the climits or agy meter (`scripts/lib/lane-quota.mjs`). This is the default of D13; the decision stays Derek's. A lane out of quota idles and its book waits. It never falls through to the paid API, and the registry test fails if a quota lane's files can reach a paid model client. In the last 48 h before a reset the share is lifted to spare-lane.py's 90%, at $0, because quota left at a reset is lost. Even-burn pacing (`paced: true`) exists but is off: on 2026-10-26 it would have idled l7a's refused-pages cron.
+- **Stamped.** The helper that builds `engine` also stamps `ocr.lane` / `translation.lane` from the registry (`laneForWrite`). A writer the registry does not name writes no `lane`.
+- **Covered on every box.** The coverage test reads the main, gex45 and l7a crontab snapshots. A program a snapshot runs from outside the repo must be a lane's `cron` line or an `OFF_REPO_CRON` entry with a reason.
+- **Book lists until R6.** Each reader's read stage records its job's books in `lane_job_books` (job name and `Lands:` issue from `claude-job.sh`). `/admin/pipeline` shows them under the lane. The record is a label, not a lock. R6 replaces it with the queue's own record.
+
 ## The standing driver (new in revision 2)
+
+> Design, not running (2026-10-29).
 
 **One driver per step, always on, never copied.** `scripts/workers/pipeline-driver.mjs --step <step>` runs on the scheduler every 10 min. It replaces the per-run drivers (readable-20k, translate300, preview-stubs-4719), their `DONE` files and their chain scripts.
 
@@ -298,6 +310,8 @@ A cohort that must go first (a partner collection, a deadline) gets a **queue bo
 
 ### One budget per lane
 
+> Design, not running (2026-10-29): `lane_budgets` has no rows.
+
 The budget is `processing_control.lane_budgets.<step> = { usd_per_day, by, at }`, written with versioning like `set-scope`.
 - **The spend guard checks a lane's measured spend against that lane's budget.** Spend is attributed by **gate label**, meaning the lane that asked, not by book id. A dollar therefore counts once, which ends the stubs4719 double count.
 - **The global dial stays as the ceiling over the sum.** With every lane budget at 0, behaviour is exactly what it is today.
@@ -313,6 +327,8 @@ From revision 2, every envelope carries `purpose`, `issue` and `expires_at` (def
 
 ## Alarms (new in revision 2)
 
+> Design, not running (2026-10-29).
+
 `scripts/workers/pipeline-alarms.mjs` runs every 15 min. It reads the driver ticks, the daily snapshot and the spend meter, and pushes to **ntfy topic `sourcelibrary-uptime`**. It pushes **once per state change** (the `traffic-anomaly-alert.mjs` pattern), with a one-line cause and the `/admin/pipeline` link. It spends nothing.
 
 | alarm | fires when | what it would have caught on 2026-10-03/04 |
@@ -326,6 +342,8 @@ From revision 2, every envelope carries `purpose`, `issue` and `expires_at` (def
 `pipeline-health-alert.mjs` keeps its daily email checks. Its check 5, translation throughput stall, becomes `lane_silent` and leaves the email.
 
 ## The standing quality gate (new in revision 2)
+
+> Design, not running (2026-10-29).
 
 Spend happens at enrolment, so the gate stops enrolment, not spend after the fact.
 
@@ -359,7 +377,7 @@ Spend happens at enrolment, so the gate stops enrolment, not spend after the fac
 ```
 
 - **The router reads the rows.** `ocr-routing.mjs` takes the first matching row. A final catch-all row holds today's default, lite.
-- **The scattered settings become rows or references.** `OCR_LITE_ONLY` and `FLASH_OCR_FROM` become rows. `OCR_TRUST_TABLE` names its trusted readers by the same engine names. `.claude/docs/ocr-engine-routing.md` becomes this table's evidence column instead of a parallel list.
+- **The scattered settings become rows or references.** `OCR_LITE_ONLY` and `FLASH_OCR_FROM` become rows. `OCR_TRUST_TABLE` names its trusted readers by the same engine names. The router table (`.claude/docs/routing.md`) is this table's evidence column, not a parallel list.
 - **sync-worker stamps `ocr_route` on each book from the table.** That stamp is the input to rule 5.
 - **A bench verdict becomes a one-row PR.**
   - It is still `tier:hold`, because a route moves spend.

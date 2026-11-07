@@ -250,6 +250,9 @@ export function engineFromBatchJob(job: BatchJobLike, { batch_job_id, input, col
   };
 }
 
+// The .mjs twin also returns `lane` for a writer scripts/lib/lanes.mjs registers in a lane's `stamps` (#7301). No src/
+// writer is one (they are the admin and Batch paths), so these return no `lane`; tests/unit/lane-stamps.test.ts fails
+// if a lane ever names a src/ call site.
 export function ocrProvenance(text: string, engine: GeminiEngine): { content_hash: string; engine: GeminiEngine } {
   const m = missingProvenance('ocr', { data: text, source: 'ai', updated_at: new Date(), content_hash: contentHash(text), engine });
   if (m.missing.length) throw new Error(`write-provenance: OCR engine block incomplete — ${m.missing.join(', ')}`);
@@ -319,7 +322,7 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     else if (isNotRecorded(i)) markers.push(`${field}.engine.input`);
     else if (field === 'ocr' && !i.image_url) missing.push(`${field}.engine.input.image_url`);
     else if (field === 'translation' && !HEX16.test((i.source_text_hash as string) || '')) missing.push(`${field}.engine.input.source_text_hash`);
-  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle') {
+  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle' || src === 'lightonocr') {
     if (!e) missing.push(`${field}.engine`);
     else {
       if (!e.name) missing.push(`${field}.engine.name`);

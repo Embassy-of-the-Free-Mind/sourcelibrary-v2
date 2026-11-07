@@ -1,0 +1,1809 @@
+{
+ "pages": [
+  {
+   "slug": "sa-2380f8b8-p481",
+   "group": "other",
+   "book_id": "69bd0274f403a9ca2380f8b8",
+   "page_id": "69bd0274f403a9ca2380fa99",
+   "page_number": 481,
+   "image_url": "https://images.sourcelibrary.org/archived/69bd0274f403a9ca2380f8b8/481.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Nandī Sūtra",
+    "author": "ed. Ghasilal",
+    "published": "1958",
+    "language": "Sanskrit",
+    "pages_count": 942,
+    "pages_ocr": 50,
+    "categories": [],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "unprocessed"
+   },
+   "idx": 4,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Hindi prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-a4805caa-p543",
+   "group": "ia",
+   "book_id": "699069442f82e0fda4805caa",
+   "page_id": "699069442f82e0fda4805ec9",
+   "page_number": 543,
+   "image_url": "https://images.sourcelibrary.org/archived/699069442f82e0fda4805caa/543.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Brihat Samhita Part 2 (Bhattotpala Commentary)",
+    "author": "Varahamihira; comm. Bhattotpala",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 600,
+    "pages_ocr": 600,
+    "categories": [
+     "astrology",
+     "astronomy",
+     "botany"
+    ],
+    "script": null,
+    "creator": "Sampurnanand Sanskrit University Varanasi",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 5,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse with commentary"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f09f57d7-p188",
+   "group": "other",
+   "book_id": "69c661b101a26ccff09f57d7",
+   "page_id": "6a7791c95211b48c0e38d3d4",
+   "page_number": 188,
+   "image_url": "https://images.sourcelibrary.org/pages/69c661b101a26ccff09f57d7/spa2ya-0188-full.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sangita Ratnakara Vol. 3: Tala and Nartana",
+    "author": "Sharngadeva",
+    "published": "1230",
+    "language": "Sanskrit",
+    "pages_count": 774,
+    "pages_ocr": 772,
+    "categories": [
+     "music",
+     "sanskrit"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 14,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse and commentary, heavy gutter shadow"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-9ba75a76-p245",
+   "group": "ia",
+   "book_id": "69dea2034d19ec2e9ba75a76",
+   "page_id": "69dea2034d19ec2e9ba75b6b",
+   "page_number": 245,
+   "image_url": "https://images.sourcelibrary.org/archived/69dea2034d19ec2e9ba75a76/245.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Plays Ascribed to Bhāsa (Complete Sanskrit Critical Edition)",
+    "author": "Bhāsa; C.R. Devadhar (ed.)",
+    "published": "1951",
+    "language": "Sanskrit",
+    "pages_count": 632,
+    "pages_ocr": 25,
+    "categories": [],
+    "script": null,
+    "creator": "Oriental Book Agency",
+    "hidden_reason": null
+   },
+   "idx": 15,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+pra",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "drama, Prakrit with Sanskrit chāyā"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f502c7c1-p213",
+   "group": "other",
+   "book_id": "69c6665e5ee2cfa2f502c7c1",
+   "page_id": "69c6665e5ee2cfa2f502c896",
+   "page_number": 213,
+   "image_url": "https://images.sourcelibrary.org/archived/69c6665e5ee2cfa2f502c7c1/213.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Siddhanta Shiromani — Goladhyaya (Astronomy of Spheres)",
+    "author": "Bhaskara II",
+    "published": "1150",
+    "language": "Sanskrit",
+    "pages_count": 723,
+    "pages_ocr": 25,
+    "categories": [
+     "astronomy",
+     "mathematics",
+     "sanskrit"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 16,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse with commentary"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f09f595b-p573",
+   "group": "other",
+   "book_id": "69c661bc01a26ccff09f595b",
+   "page_id": "69c661bc01a26ccff09f5b98",
+   "page_number": 573,
+   "image_url": "https://images.sourcelibrary.org/archived/69c661bc01a26ccff09f595b/573.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sangita Ratnakara Vol. 4: Vadyavinoda",
+    "author": "Sharngadeva",
+    "published": "1230",
+    "language": "Sanskrit",
+    "pages_count": 629,
+    "pages_ocr": 629,
+    "categories": [
+     "music",
+     "instruments",
+     "sanskrit"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 25,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "index",
+    "cols": 2,
+    "hard": "verse index, two columns of numbers",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1052a93c-p345",
+   "group": "ia",
+   "book_id": "6a08550c0ce3b2271052a93c",
+   "page_id": "6a08550c0ce3b2271052aa95",
+   "page_number": 345,
+   "image_url": "https://images.sourcelibrary.org/archived/6a08550c0ce3b2271052a93c/345.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ashtāṅgahṛdayam of Vāgbhaṭa",
+    "author": "Vāgbhaṭa",
+    "published": "1939",
+    "language": "Sanskrit",
+    "pages_count": 1143,
+    "pages_ocr": 1021,
+    "categories": [],
+    "script": null,
+    "creator": "Vagbhata",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 28,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "two-column",
+    "cols": 2,
+    "hard": "two columns, small type",
+    "canonical": false,
+    "note": "āyurveda commentary"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-05c7c071-p209",
+   "group": "ia",
+   "book_id": "6a309054d8c6b8a005c7c071",
+   "page_id": "6a309054d8c6b8a005c7c142",
+   "page_number": 209,
+   "image_url": "https://images.sourcelibrary.org/archived/6a309054d8c6b8a005c7c071/209.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Caraka-saṃhitā — with Cakrapāṇi’s Āyurvedadīpikā (Sanskrit)",
+    "author": "Agniveśa / Caraka",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 812,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": "Nirnaya Sagar Press, Bombay",
+    "hidden_reason": null
+   },
+   "idx": 31,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "two-column",
+    "cols": 2,
+    "hard": "two columns, curved page",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-06eb90f6-p1312",
+   "group": "ia",
+   "book_id": "69af0bd6be1c789306eb90f6",
+   "page_id": "69af0bd6be1c789306eb9616",
+   "page_number": 1312,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0bd6be1c789306eb90f6/1312.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Brahmasphutasiddhanta (Complete Sanskrit Text)",
+    "author": "Brahmagupta",
+    "published": "1966",
+    "language": "Sanskrit",
+    "pages_count": 2512,
+    "pages_ocr": 2512,
+    "categories": [
+     "astronomy",
+     "mathematics"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 33,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Hindi jyotiṣa prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-487f30a6-p240",
+   "group": "other",
+   "book_id": "6a3090dcbec66f86487f30a6",
+   "page_id": "6a309110bec66f86487f3196",
+   "page_number": 240,
+   "image_url": "https://images.sourcelibrary.org/books/6a3090dcbec66f86487f30a6/pages/0239.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Suśruta-saṃhitā — with Ḍalhaṇa’s Nibandhasaṅgraha (Sanskrit)",
+    "author": "Suśruta",
+    "published": "1931",
+    "language": "Sanskrit",
+    "pages_count": 828,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "medicine",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 34,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "two-column",
+    "cols": 2,
+    "hard": "two columns, small type",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-3c8397bb-p157",
+   "group": "ia",
+   "book_id": "69d005e0b2b7abac3c8397bb",
+   "page_id": "69d005e0b2b7abac3c839858",
+   "page_number": 157,
+   "image_url": "https://images.sourcelibrary.org/archived/69d005e0b2b7abac3c8397bb/157.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ānandakanda (critical edition, vol. 1)",
+    "author": "T. Chandrasekharan (ed.)",
+    "published": "1952",
+    "language": "Sanskrit",
+    "pages_count": 785,
+    "pages_ocr": 785,
+    "categories": [],
+    "script": null,
+    "creator": "Chandrasekharan T.",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 42,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-ee26b1c8-p54",
+   "group": "ia",
+   "book_id": "69af0c5d067c0c26ee26b1c8",
+   "page_id": "69af0c5d067c0c26ee26b1fe",
+   "page_number": 54,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0c5d067c0c26ee26b1c8/54.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Khandakhadyaka: An Astronomical Treatise by Brahmagupta",
+    "author": "Brahmagupta; Prabodh Chandra Sengupta",
+    "published": "1941",
+    "language": "Sanskrit",
+    "pages_count": 180,
+    "pages_ocr": 180,
+    "categories": [
+     "astronomy",
+     "mathematics"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 47,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "dense small type",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-9ba757c7-p165",
+   "group": "ia",
+   "book_id": "69dea1f04d19ec2e9ba757c7",
+   "page_id": "69dea1f04d19ec2e9ba7586c",
+   "page_number": 165,
+   "image_url": "https://images.sourcelibrary.org/archived/69dea1f04d19ec2e9ba757c7/165.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Natyashastram (Sanskrit Text)",
+    "author": "Bharata Muni; Kedarnath (ed.)",
+    "published": "1943",
+    "language": "Sanskrit",
+    "pages_count": 680,
+    "pages_ocr": 664,
+    "categories": [],
+    "script": null,
+    "creator": "Pandit Kedarnath Sahityabhushan",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 48,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-0c10b7a9-p485",
+   "group": "ia",
+   "book_id": "69906550726f64800c10b7a9",
+   "page_id": "69906550726f64800c10b98e",
+   "page_number": 485,
+   "image_url": "https://images.sourcelibrary.org/archived/69906550726f64800c10b7a9/485.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Brahma Sphuta Siddhanta (Vol 2)",
+    "author": "Brahmagupta",
+    "published": "1966",
+    "language": "Sanskrit",
+    "pages_count": 553,
+    "pages_ocr": 553,
+    "categories": [
+     "astronomy",
+     "mathematics"
+    ],
+    "script": null,
+    "creator": "Indian Institute of Astronomical and Sanskrit Research",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 50,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+hi",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Sanskrit with Hindi bhāṣya"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697c362-p109",
+   "group": "other",
+   "book_id": "6a3088cceb59f1191697c362",
+   "page_id": "6a3088d1eb59f1191697c3cf",
+   "page_number": 109,
+   "image_url": "https://images.sourcelibrary.org/books/6a3088cceb59f1191697c362/pages/0108.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 4: Virāṭaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 218,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "history",
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 54,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "digital type, numbered verses"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-57449355-p286",
+   "group": "ia",
+   "book_id": "6a9491d031b41d9c57449355",
+   "page_id": "6a9491d031b41d9c57449473",
+   "page_number": 286,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9491d031b41d9c57449355/286.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bhava Prakashana Of Sharada Tanaya ( Sanskrit) Gaekwads Oriental Series 45, Editor K. S. Rama Swami Shastri Siromani, 1930 Oriental Institute, Baroda",
+    "author": "Sharada Tanaya",
+    "published": "1930",
+    "language": "Sanskrit",
+    "pages_count": 526,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "literature",
+     "philosophy",
+     "music"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 56,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse, poor contrast"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-c9e1f67c-p238",
+   "group": "ia",
+   "book_id": "6a30845a636655bcc9e1f67c",
+   "page_id": "6a30845a636655bcc9e1f76a",
+   "page_number": 238,
+   "image_url": "https://images.sourcelibrary.org/archived/6a30845a636655bcc9e1f67c/238.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Manusmṛti — with Medhātithi’s Manubhāṣya (Sanskrit)",
+    "author": "Anonymous (Mānavadharmaśāstra)",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 550,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": "The Asiatic Society of",
+    "hidden_reason": null
+   },
+   "idx": 59,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "commentary prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-b109159e-p449",
+   "group": "other",
+   "book_id": "6a26dceb05d7c1d9b109159e",
+   "page_id": "6a26dceb05d7c1d9b109175f",
+   "page_number": 449,
+   "image_url": "https://images.sourcelibrary.org/archived/6a26dceb05d7c1d9b109159e/449.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bhagavad Gita By Annie Besant And Bhagavan Das 1962 The Theosophical Publishing House Madras",
+    "author": "The Theosophical Publishing House Madras",
+    "published": "2023-08-28 17:34:44",
+    "language": "Sanskrit",
+    "pages_count": 522,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "The Theosophical Publishing House Madras",
+    "hidden_reason": null
+   },
+   "idx": 65,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "index",
+    "cols": 2,
+    "hard": "word index with roman numerals, two columns",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-9d20bde5-p73",
+   "group": "ia",
+   "book_id": "69e13b030dae29249d20bde5",
+   "page_id": "69e13b040dae29249d20be2e",
+   "page_number": 73,
+   "image_url": "https://images.sourcelibrary.org/archived/69e13b030dae29249d20bde5/73.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Netra Tantra with Kṣemarāja's Udyota",
+    "author": "Kṣemarāja, comm.; Madhusudan Kaul Shastri, ed.",
+    "published": "1926",
+    "language": "Sanskrit",
+    "pages_count": 318,
+    "pages_ocr": 318,
+    "categories": [],
+    "script": null,
+    "creator": "KSTS",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 67,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "large-type verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f502b85a-p295",
+   "group": "other",
+   "book_id": "69c665fc5ee2cfa2f502b85a",
+   "page_id": "69c665fc5ee2cfa2f502b981",
+   "page_number": 295,
+   "image_url": "https://images.sourcelibrary.org/archived/69c665fc5ee2cfa2f502b85a/295.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Yajur Veda Samhita (White Yajurveda, Vajasaneyi)",
+    "author": "Vedic tradition",
+    "published": "-1000",
+    "language": "Sanskrit",
+    "pages_count": 446,
+    "pages_ocr": 25,
+    "categories": [
+     "vedas",
+     "scripture"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 69,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "pra+en",
+    "layout": "single",
+    "cols": 1,
+    "hard": "Prakrit grammar with English glosses, worn type",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697d02c-p555",
+   "group": "other",
+   "book_id": "6a308944eb59f1191697d02c",
+   "page_id": "6a308968eb59f1191697d257",
+   "page_number": 555,
+   "image_url": "https://images.sourcelibrary.org/books/6a308944eb59f1191697d02c/pages/0554.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 12: Śāntiparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 1455,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "philosophy",
+     "theology",
+     "history"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 79,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "digital type, numbered verses"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5d8bcdfd-p204",
+   "group": "ia",
+   "book_id": "6a94a0b8bf723b215d8bcdfd",
+   "page_id": "6a94a0b8bf723b215d8bcec9",
+   "page_number": 204,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a0b8bf723b215d8bcdfd/204.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Samaraichcha Kaha Of Haribhadra Suri With Bhagvan Das Sanskrit Chhaya Anuvad Ahmedabad 1938 Sharada Press",
+    "author": "Haribhadra Suri",
+    "published": "1938",
+    "language": "Sanskrit",
+    "pages_count": 990,
+    "pages_ocr": 50,
+    "categories": [
+     "sharada",
+     "literature",
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": "eGangotri Sarayu Trust",
+    "hidden_reason": null
+   },
+   "idx": 82,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "pra",
+    "layout": "framed",
+    "cols": 1,
+    "hard": "framed pothi page, side headings",
+    "canonical": false,
+    "note": "Jaina Prakrit"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-574474fa-p103",
+   "group": "ia",
+   "book_id": "6a9490dc31b41d9c574474fa",
+   "page_id": "6a9490dc31b41d9c57447561",
+   "page_number": 103,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9490dc31b41d9c574474fa/103.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bhagavad Gita With Shankar Bhashya And Explanation Vol. 2 Year 1978 Sharada Press",
+    "author": "Shankaracharya",
+    "published": "1956",
+    "language": "Sanskrit",
+    "pages_count": 476,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "vedanta",
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 84,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "dense commentary, cropped margin",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-be36eddd-p717",
+   "group": "ia",
+   "book_id": "6a308257675ed2bdbe36eddd",
+   "page_id": "6a308257675ed2bdbe36f0aa",
+   "page_number": 717,
+   "image_url": "https://images.sourcelibrary.org/archived/6a308257675ed2bdbe36eddd/717.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Tattvasaṃgraha, Vol. I — with Kamalaśīla’s Pañjikā (Sanskrit, GOS)",
+    "author": "Śāntarakṣita; Kamalaśīla",
+    "published": "1926",
+    "language": "Sanskrit",
+    "pages_count": 807,
+    "pages_ocr": 807,
+    "categories": [
+     "Buddhist philosophy"
+    ],
+    "script": null,
+    "creator": "Krishnamacharya,embar",
+    "hidden_reason": null
+   },
+   "idx": 89,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-ee26c1e2-p56",
+   "group": "ia",
+   "book_id": "69af0cab067c0c26ee26c1e2",
+   "page_id": "69af0cab067c0c26ee26c21a",
+   "page_number": 56,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0cab067c0c26ee26c1e2/56.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Trishatika of Sridharacharya (Sanskrit Mathematics)",
+    "author": "Sridharacharya",
+    "published": "0991",
+    "language": "Sanskrit",
+    "pages_count": 333,
+    "pages_ocr": 24,
+    "categories": [],
+    "script": null,
+    "creator": "Shridhar",
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 100,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "dense compounds and numerals",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5d8be97b-p119",
+   "group": "ia",
+   "book_id": "6a94a692bf723b215d8be97b",
+   "page_id": "6a94a692bf723b215d8be9f2",
+   "page_number": 119,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a692bf723b215d8be97b/119.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Shri Matri Pratyabhigya Of Prof. Kamalesh Jha Sharada Prakashan Varanasi",
+    "author": "Kamalesh Jha",
+    "published": "2019",
+    "language": "Sanskrit",
+    "pages_count": 186,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "mysticism",
+     "theology",
+     "philosophy",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 102,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse, modern type"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-91d255ef-p66",
+   "group": "ia",
+   "book_id": "6a94c8ec8e2a2ffc91d255ef",
+   "page_id": "6a94c8ec8e2a2ffc91d25631",
+   "page_number": 66,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94c8ec8e2a2ffc91d255ef/66.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Lal Vakha Devanagari Printed Many Torn And Missing Pages Jaya Lal Kaul",
+    "author": "Jaya Lal Kaul",
+    "published": "1973",
+    "language": "Sanskrit",
+    "pages_count": 113,
+    "pages_ocr": 49,
+    "categories": [
+     "devanagari",
+     "mysticism",
+     "philosophy",
+     "sufism",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 114,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Hindi prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-a0ef5a44-p67",
+   "group": "ia",
+   "book_id": "69906d8364d44bd0a0ef5a44",
+   "page_id": "69906d8364d44bd0a0ef5a87",
+   "page_number": 67,
+   "image_url": "https://images.sourcelibrary.org/archived/69906d8364d44bd0a0ef5a44/67.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ramal Navaratna",
+    "author": "Param Sukh Upadhyaya",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 172,
+    "pages_ocr": 172,
+    "categories": [
+     "divination"
+    ],
+    "script": null,
+    "creator": "Mahidhar Sharma",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 119,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi+sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Hindi with Sanskrit verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f502c5b5-p135",
+   "group": "other",
+   "book_id": "69c666485ee2cfa2f502c5b5",
+   "page_id": "69c666485ee2cfa2f502c63c",
+   "page_number": 135,
+   "image_url": "https://images.sourcelibrary.org/archived/69c666485ee2cfa2f502c5b5/135.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Ganita Sara Sangraha — Jain Mathematics Compendium",
+    "author": "Mahavira; tr. M. Rangacarya",
+    "published": "850",
+    "language": "Sanskrit",
+    "pages_count": 523,
+    "pages_ocr": 25,
+    "categories": [
+     "mathematics",
+     "jain",
+     "sanskrit"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 120,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "faint type, fractions",
+    "canonical": false,
+    "note": "gaṇita"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-e5a9d403-p143",
+   "group": "ia",
+   "book_id": "6a31b4ef4400787ae5a9d403",
+   "page_id": "6a31b4ef4400787ae5a9d492",
+   "page_number": 143,
+   "image_url": "https://images.sourcelibrary.org/archived/6a31b4ef4400787ae5a9d403/143.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Atharvaveda Saṃhitā — complete text, Śaunaka recension (Sanskrit, ed. Roth & Whitney 1856)",
+    "author": "Anonymous (Atharvaveda)",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 478,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": "Rudolf von Roth, William Dwight Whitney",
+    "hidden_reason": null
+   },
+   "idx": 139,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "Vedic accents, gutter noise",
+    "canonical": false,
+    "note": "Atharvaveda-type saṃhitā"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697d5dc-p122",
+   "group": "other",
+   "book_id": "6a30896feb59f1191697d5dc",
+   "page_id": "6a308981eb59f1191697d656",
+   "page_number": 122,
+   "image_url": "https://images.sourcelibrary.org/books/6a30896feb59f1191697d5dc/pages/0121.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 13: Anuśāsanaparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 750,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "philosophy",
+     "theology",
+     "literature",
+     "law"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 141,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "digital type, numbered verses"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-a5ffb864-p176",
+   "group": "ia",
+   "book_id": "6a2199594b61907ea5ffb864",
+   "page_id": "6a2199594b61907ea5ffb914",
+   "page_number": 176,
+   "image_url": "https://images.sourcelibrary.org/archived/6a2199594b61907ea5ffb864/176.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Yoga Vasistha",
+    "author": "Valmiki",
+    "published": "1986",
+    "language": "Sanskrit",
+    "pages_count": 614,
+    "pages_ocr": 614,
+    "categories": [
+     "mysticism",
+     "philosophy",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "javanesegraviton",
+    "hidden_reason": null
+   },
+   "idx": 142,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-f502ba19-p262",
+   "group": "other",
+   "book_id": "69c666105ee2cfa2f502ba19",
+   "page_id": "69c666105ee2cfa2f502bb1f",
+   "page_number": 262,
+   "image_url": "https://images.sourcelibrary.org/archived/69c666105ee2cfa2f502ba19/262.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Lilavati (लीलावती) — Illustrated Arithmetic",
+    "author": "Bhaskara II (Bhaskaracharya)",
+    "published": "1150",
+    "language": "Sanskrit",
+    "pages_count": 280,
+    "pages_ocr": 25,
+    "categories": [
+     "mathematics",
+     "geometry",
+     "sanskrit"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 150,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+hi",
+    "layout": "framed",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse with Hindi anvaya"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-be36f107-p107",
+   "group": "ia",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page_id": "6a30825e675ed2bdbe36f172",
+   "page_number": 107,
+   "image_url": "https://images.sourcelibrary.org/archived/6a30825e675ed2bdbe36f107/107.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Tattvasaṃgraha, Vol. II — with Kamalaśīla’s Pañjikā (Sanskrit, GOS)",
+    "author": "Śāntarakṣita; Kamalaśīla",
+    "published": "1926",
+    "language": "Sanskrit",
+    "pages_count": 475,
+    "pages_ocr": 468,
+    "categories": [
+     "Buddhist philosophy"
+    ],
+    "script": null,
+    "creator": "Embar Krishnamacharya",
+    "hidden_reason": null
+   },
+   "idx": 152,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "commentary, gutter shadow",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-a99c0f2f-p78",
+   "group": "ia",
+   "book_id": "69e13ce7998131d6a99c0f2f",
+   "page_id": "69e13ce8998131d6a99c0f7d",
+   "page_number": 78,
+   "image_url": "https://images.sourcelibrary.org/archived/69e13ce7998131d6a99c0f2f/78.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part II",
+    "author": "Abhinavagupta",
+    "published": "1938",
+    "language": "Sanskrit",
+    "pages_count": 443,
+    "pages_ocr": 442,
+    "categories": [
+     "philosophy",
+     "mysticism",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "Ajit Gargeshwari",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 159,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "small type, dark gutter",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-c1af74df-p268",
+   "group": "ia",
+   "book_id": "69907971b621b177c1af74df",
+   "page_id": "69907972b621b177c1af75eb",
+   "page_number": 268,
+   "image_url": "https://images.sourcelibrary.org/archived/69907971b621b177c1af74df/268.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Surya Siddhanta with Ranganatha Commentary",
+    "author": "Ranganatha (comm.); RC Panday (ed.)",
+    "published": "1900",
+    "language": "Sanskrit",
+    "pages_count": 387,
+    "pages_ocr": 387,
+    "categories": [
+     "astronomy",
+     "mathematics",
+     "astrology"
+    ],
+    "script": null,
+    "creator": "Shri Rangnath",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 168,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+hi",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Sanskrit with Hindi"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697bdac-p195",
+   "group": "other",
+   "book_id": "6a30889ceb59f1191697bdac",
+   "page_id": "6a3088a3eb59f1191697be6f",
+   "page_number": 195,
+   "image_url": "https://images.sourcelibrary.org/books/6a30889ceb59f1191697bdac/pages/0194.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 2: Sabhāparvan",
+    "author": "Vyāsa",
+    "published": null,
+    "language": "Sanskrit",
+    "pages_count": 276,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "history",
+     "politics",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 171,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "digital type, numbered verses"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-09173f3c-p64",
+   "group": "ia",
+   "book_id": "69557548f63a757109173f3c",
+   "page_id": "69557548f63a757109173f7c",
+   "page_number": 64,
+   "image_url": "https://images.sourcelibrary.org/archived/69557548f63a757109173f3c/64.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sangita Ratnakara",
+    "author": "Sarangadeva",
+    "published": "13th century",
+    "language": "Sanskrit",
+    "pages_count": 327,
+    "pages_ocr": 327,
+    "categories": [
+     "music"
+    ],
+    "script": null,
+    "creator": "Sarangadeva, Srangadeva, Shrangadeva",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 185,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-c27da5ea-p674",
+   "group": "ia",
+   "book_id": "6a94dfe2b24b5a49c27da5ea",
+   "page_id": "6a94dfe2b24b5a49c27da88c",
+   "page_number": 674,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94dfe2b24b5a49c27da5ea/674.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sri Sharada Illustrated Monthly Vol 2 Ed. Narmada Pasad Mishra 1922 Jabalpur Rashtriya Hindi Mandir",
+    "author": "Narmada Prasad Mishra",
+    "published": "1922",
+    "language": "Sanskrit",
+    "pages_count": 848,
+    "pages_ocr": 25,
+    "categories": [
+     "sharada",
+     "literature",
+     "history",
+     "politics",
+     "philosophy"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 189,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "hi",
+    "layout": "two-column",
+    "cols": 2,
+    "hard": "two columns, curved page",
+    "canonical": false,
+    "note": "Hindi prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-09e780a7-p626",
+   "group": "ia",
+   "book_id": "69e8b2962ff2a8dc09e780a7",
+   "page_id": "69e8b2962ff2a8dc09e78319",
+   "page_number": 626,
+   "image_url": "https://images.sourcelibrary.org/archived/69e8b2962ff2a8dc09e780a7/626.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "ब्रह्मसूत्रभाष्य (Brahma Sūtra Bhāṣya)",
+    "author": "Adi Shankara",
+    "published": "1934",
+    "language": "Sanskrit",
+    "pages_count": 942,
+    "pages_ocr": 942,
+    "categories": [
+     "theology",
+     "philosophy",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "Badarayana, Shankaracharya, Vachaspati Misra, Govindananda, Anandagari",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 190,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "commentary, small type",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5744c41d-p150",
+   "group": "ia",
+   "book_id": "6a94985231b41d9c5744c41d",
+   "page_id": "6a94985231b41d9c5744c4b3",
+   "page_number": 150,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94985231b41d9c5744c41d/150.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Khandan Khand Khadya Of Shri Harsh With Sharada Explanation Of Shankar Chaitanya Bharati By Balanand Shastri Part 1 1938 Vishvanath Press Varanasi",
+    "author": "Shri Harsha",
+    "published": "1938",
+    "language": "Sanskrit",
+    "pages_count": 317,
+    "pages_ocr": 36,
+    "categories": [
+     "sharada",
+     "philosophy",
+     "vedanta"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 200,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "dense commentary, small type",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-05c7c3a0-p171",
+   "group": "ia",
+   "book_id": "6a309057d8c6b8a005c7c3a0",
+   "page_id": "6a309057d8c6b8a005c7c44b",
+   "page_number": 171,
+   "image_url": "https://images.sourcelibrary.org/archived/6a309057d8c6b8a005c7c3a0/171.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Nyāyasūtra — with Vātsyāyana’s Nyāyabhāṣya (Sanskrit, ed. Tailaṅga 1896)",
+    "author": "Gautama (Akṣapāda)",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 310,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 203,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "worn type, footnote marks",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-7ec56c99-p579",
+   "group": "ia",
+   "book_id": "69e8b109839ca3f47ec56c99",
+   "page_id": "69e8b109839ca3f47ec56edc",
+   "page_number": 579,
+   "image_url": "https://images.sourcelibrary.org/archived/69e8b109839ca3f47ec56c99/579.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "ब्राह्मस्फुटसिद्धान्त (Brāhma-sphuṭa-siddhānta), Vol. 1",
+    "author": "Brahmagupta",
+    "published": "1966",
+    "language": "Sanskrit",
+    "pages_count": 740,
+    "pages_ocr": 739,
+    "categories": [],
+    "script": null,
+    "creator": "Indian Institute of Astronomical and Sanskrit Research",
+    "hidden_reason": "rights_review_4809"
+   },
+   "idx": 205,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa+hi",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "verse with Hindi variant notes"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-574472af-p408",
+   "group": "ia",
+   "book_id": "6a9490d631b41d9c574472af",
+   "page_id": "6a9490d631b41d9c57447447",
+   "page_number": 408,
+   "image_url": "https://images.sourcelibrary.org/archived/6a9490d631b41d9c574472af/408.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bhagavad Gita With Shankar Bhashya And Explanation Vol. 1 Year 1978 Sharada Press",
+    "author": "Bellamkonda Ramaraya Kavindra",
+    "published": "1956",
+    "language": "Sanskrit",
+    "pages_count": 584,
+    "pages_ocr": 50,
+    "categories": [
+     "sharada",
+     "vedanta",
+     "philosophy",
+     "theology"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 209,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "commentary, curved page",
+    "canonical": false,
+    "note": ""
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5d8bd37f-p150",
+   "group": "ia",
+   "book_id": "6a94a15cbf723b215d8bd37f",
+   "page_id": "6a94a15cbf723b215d8bd415",
+   "page_number": 150,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a15cbf723b215d8bd37f/150.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sharada A Monthly Magazine Varanasi Sangaved Vidyalaya Press",
+    "author": "Unknown",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 199,
+    "pages_ocr": 197,
+    "categories": [
+     "Sharada"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 215,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "journal title page, ornaments"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-18cd7735-p100",
+   "group": "other",
+   "book_id": "6a26e42965df759218cd7735",
+   "page_id": "6a26e42965df759218cd7799",
+   "page_number": 100,
+   "image_url": "https://images.sourcelibrary.org/archived/6a26e42965df759218cd7735/100.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "The Samanya Vedanta Upanishads With The Commentary Of Shri Upanishad Brahma Yogin Edited By A. Mahadeva Shastri Published By Theosophical Society 1921 Madras",
+    "author": "Madras",
+    "published": "2023-07-04 17:35:59",
+    "language": "Sanskrit",
+    "pages_count": 566,
+    "pages_ocr": 0,
+    "categories": [],
+    "script": null,
+    "creator": "Madras",
+    "hidden_reason": null
+   },
+   "idx": 216,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "commentary prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-05c7c4d9-p190",
+   "group": "ia",
+   "book_id": "6a30905ad8c6b8a005c7c4d9",
+   "page_id": "6a30905ad8c6b8a005c7c597",
+   "page_number": 190,
+   "image_url": "https://images.sourcelibrary.org/archived/6a30905ad8c6b8a005c7c4d9/190.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Raghuvaṃśa of Kālidāsa — with Mallinātha’s commentary (Sanskrit)",
+    "author": "Kālidāsa",
+    "published": "Unknown",
+    "language": "Sanskrit",
+    "pages_count": 279,
+    "pages_ocr": 25,
+    "categories": [
+     "Sanskrit literature"
+    ],
+    "script": null,
+    "creator": "Kalidasa, Mallinatha, KP Parab",
+    "hidden_reason": null
+   },
+   "idx": 221,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "kāvya with commentary"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-5d8bf7ad-p264",
+   "group": "ia",
+   "book_id": "6a94a7c6bf723b215d8bf7ad",
+   "page_id": "6a94a7c6bf723b215d8bf8b5",
+   "page_number": 264,
+   "image_url": "https://images.sourcelibrary.org/archived/6a94a7c6bf723b215d8bf7ad/264.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Sri Navnath Kathasar Pune",
+    "author": "Malukavi",
+    "published": "1819",
+    "language": "Sanskrit",
+    "pages_count": 314,
+    "pages_ocr": 25,
+    "categories": [
+     "mysticism",
+     "theology",
+     "literature"
+    ],
+    "script": null,
+    "creator": "eGangotri",
+    "hidden_reason": null
+   },
+   "idx": 223,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "mr",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "Marathi prose"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-1697ba6d-p651",
+   "group": "other",
+   "book_id": "6a308884eb59f1191697ba6d",
+   "page_id": "6a308898eb59f1191697bcf8",
+   "page_number": 651,
+   "image_url": "https://images.sourcelibrary.org/books/6a308884eb59f1191697ba6d/pages/0650.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Mahābhārata (BORI Critical Edition) — Book 1: Ādiparvan",
+    "author": "Vyāsa",
+    "published": "2013",
+    "language": "Sanskrit",
+    "pages_count": 830,
+    "pages_ocr": 25,
+    "categories": [
+     "sanskrit-literature",
+     "literature",
+     "philosophy",
+     "theology",
+     "history"
+    ],
+    "script": null,
+    "creator": null,
+    "hidden_reason": null
+   },
+   "idx": 231,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": null,
+    "canonical": false,
+    "note": "digital type, numbered verses"
+   },
+   "in_test": true
+  },
+  {
+   "slug": "sa-0cf222e4-p520",
+   "group": "ia",
+   "book_id": "69af0bfdf2e68add0cf222e4",
+   "page_id": "69af0bfdf2e68add0cf224ec",
+   "page_number": 520,
+   "image_url": "https://images.sourcelibrary.org/archived/69af0bfdf2e68add0cf222e4/520.jpg",
+   "image_field": "archived_photo",
+   "catalogue": {
+    "title": "Bijaganita of Bhaskaracharya (Sanskrit Algebra with Subhodhini Commentary)",
+    "author": "Bhaskara II; Jivanatha Jha",
+    "published": "1949",
+    "language": "Sanskrit",
+    "pages_count": 643,
+    "pages_ocr": 573,
+    "categories": [
+     "mathematics",
+     "astronomy",
+     "natural-philosophy"
+    ],
+    "script": null,
+    "creator": "Shakti Balay",
+    "hidden_reason": "launch_curation"
+   },
+   "idx": 240,
+   "observed": {
+    "script": "devanagari",
+    "kind": "print",
+    "lang": "sa",
+    "layout": "single",
+    "cols": 1,
+    "hard": "algebra notation",
+    "canonical": false,
+    "note": "bījagaṇita"
+   },
+   "in_test": true
+  }
+ ]
+}

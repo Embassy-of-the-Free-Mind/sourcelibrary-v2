@@ -18,6 +18,7 @@ when months are pooled. Per-language cells of 2–19 books are exploratory every
 | Unit | one interior text page per book (lesson: pages in a book are one observation) |
 | Size | `draw.mjs --scale 0.32` → ~103 books over 15 languages; non-Latin scripts oversampled by the quota table |
 | Weights | post-stratified back by live translated pages per language (`score.mjs`); page-weighted sensitivity from `book-weights.json` |
+| Chinese strata | from 2026-12 (#5274): `--zh-strata 60` adds 60 more Chinese books (kind `zh`), stratified by translation model × transcription engine (`zh-strata.mjs`: 3 Flash / Flash-Lite / 3.8 Flash / Opus × PaddleOCR / Gemini / other; a floor of 6 a stratum, the rest by page share); every Chinese item also records kind of text (reference vs prose) and the page's hand tag. `score.mjs` weights the Chinese cell back by stratum (`w_books`, the book-random draw's own estimand), so the language weights and the headline's meaning do not change; the oversample only narrows the Chinese cell. |
 | Model arm | **not** quota-sampled (`--arm-quota off`) — the arm falls where the book draw puts it, so no arm correction is needed |
 | Seed | the draw date as `YYYYMMDD`, fresh each month |
 | Controls | 15 swap + 15 drop + 15 repeat (`--extra-per-lang 4`), blinded into the packets |
@@ -25,7 +26,7 @@ when months are pooled. Per-language cells of 2–19 books are exploratory every
 | Gate | `score.mjs --gate`: swap ≥ 14/15 rated ≤ 2, drop ≥ 13/15 flagged omission, repeat ≥ 14/15 within one point, ≥ 10 of each. **A run whose controls fail is not reported.** |
 | Measure | `judged` — never "accuracy" |
 | Store | `scripts/eval/store/scores/translation-corpus-audit-judge@1/<YYYY-MM>.jsonl` |
-| Cost | $0 API: the draw is a Mongo read; the judge runs on the claude.ai subscription (~10 Opus subagents a month) |
+| Cost | $0 API: the draw is a Mongo read; the judge runs on the claude.ai subscription (~14 Opus subagents a month with the Chinese strata) |
 
 ## Stage 1 — the draw (Hetzner cron, 1st of the month, 04:30 UTC)
 
@@ -77,9 +78,16 @@ You are the routine. You start with a fresh checkout of the repo and no other co
 ## Reading a month
 
 - Compare months on the corpus estimate and its CI, not on per-language cells.
+- The Chinese strata: `report.md → Chinese strata oversample` shows the Chinese cell strata-weighted and without the
+  oversample. For the per-stratum, per-kind and per-hand tables run `analyze-zh-strata.mjs --dir $DIR --weights books`
+  (no database), and read them pooled by quarter (6–9 books a stratum a month). Stage 2 judges text-only, so its
+  `misread seen` and `wrong end to end` columns are empty; the 2026-11 one-off (`2026-11-03-chinese-translation-strata-5274.md`)
+  judged with the image and is the baseline for both.
 - The draw excludes page ends and non-text pages, so truncation reads zero by construction (#5055 measures it).
 - A text-only judge cannot see a wrong leaf (#4790): every rate is conditional on the served image being the
   transcribed leaf. When track tq1 lands a cheap leaf check, add it here as a stage-2 step.
+- From 2026-11 the draw samples every served model arm (`arm.mjs`, #5274 wave 2): before it, agy Flash, Opus-direct
+  and Argon pages read `other` and were excluded, so months up to 2026-10 cover lite and flash pages only.
 - If a month's controls fail, the judge changed (model, harness) or the packets did. Look at `report.json →
   controls.*.missed` before re-running anything.
 

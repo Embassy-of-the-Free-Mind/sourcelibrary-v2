@@ -1,0 +1,173 @@
+[
+  {
+    "book_id": "b23-k", "slot": 1, "title": "Cabbalistic Texts: Christoph Froschmayr von Scheibenhof (PH239)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45, "right_page": "yes", "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "זהבשבא Sahab Schaba", "image": "זהב שבא Sahab Schaba (two words)", "problem": "Hebrew words run together", "severity": "minor" },
+          { "ocr": "Tiphe-reth", "image": "Tiphe-/-reth (line break)", "problem": "line-break hyphen kept inside the word in running text", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "<unclear> wrapper around a clearly written שמש", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 84, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "calcinetur per sese horas", "image": "per sex horas (x written in the hand's æ-like form, as in 'ex' throughout)", "problem": "the duration 'six hours' is lost to a nonsense word in a recipe step", "severity": "serious", "class": "O7" },
+          { "ocr": "<unclear>bitorium</unclear>", "image": "bihorium", "problem": "'two hours' misread and flagged unclear", "severity": "moderate", "class": "O7" },
+          { "ocr": "Mercurii Aquae", "image": "☿lis Aquæ (Mercurialis)", "problem": "case ending of the expanded symbol misread; note hedges it", "severity": "minor" },
+          { "ocr": "propa=ratum", "image": "præpa=ratum", "problem": "small misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "transcriber <note> and <meta> commentary inline in the reader text (\"written with alchemical symbols: sulphur sign + \\\"r\\\"…\")", "severity": "moderate", "class": "O15" },
+          { "note": "line-break '=' hyphens kept inside words (a=qua, ex=siccetur, ser=vata)", "severity": "minor" }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ex praxei cap: 3.", "image": "ex praxi (x in æ-form)", "problem": "x read as 'xe'", "severity": "minor" },
+          { "ocr": "vivificatur Rese", "image": "Reæ — probably 'Rex' in this hand's x form", "problem": "likely misread of x (low confidence)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [
+          { "note": "heading rendered with arrows: \"->Comentarium.<-\"", "severity": "minor", "class": "D1" },
+          { "note": "inline <note> on the sulphur sign", "severity": "minor", "class": "O15" }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Reads the hand well overall: the Hebrew, the |: :| brackets, the alchemical signs (Sulphur Martis, Mercury) and 'Mai Sahab' all come out right. But p.84 turns 'sex horas' into 'sese horas' and 'bihorium' into an unclear 'bitorium', which loses two recipe durations, and transcriber notes leak into the text."
+  },
+  {
+    "book_id": "b23-m", "slot": 2, "title": "Cabbalistic Texts: Christoph Froschmayr von Scheibenhof (PH239)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "זהב Zahab … זהב שבא Zahab Schaba", "image": "Sahab … Sahab Schaba", "problem": "the scribe's transliteration normalised from Sahab to Zahab, twice", "severity": "moderate", "class": "O8" },
+          { "ocr": "sumitatis au-reæ", "image": "au=reo", "problem": "ending misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the scribe's |…| brackets turned into [ ]", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 84, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Ut autem fiant <image-desc …>Alchemical symbol for Sulfur</image-desc> Aqua ignitiones", "image": "☿lis Aquæ (Mercury sign + 'lis' = Mercurialis Aquae)", "problem": "Mercury sign identified as Sulphur, so the substance named is wrong", "severity": "serious", "class": "O6" },
+          { "ocr": "sic <image-desc>Alchemical symbol for Sulfur</image-desc> erit diligenter paratum", "image": "Sic [sulphur]r ♂is (Sulphur Martis)", "problem": "'Martis' (the ♂ sign) dropped: Sulphur of Mars becomes plain sulphur", "severity": "moderate", "class": "O5" },
+          { "ocr": "Aqua ignitiones", "image": "Aquæ", "problem": "ending", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the sulphur signs are given as image descriptions instead of being expanded to their case forms (Sulphuris, Sulphur)", "severity": "minor", "class": "O14" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "vivificatur Res", "image": "Reæ (probably Rex)", "problem": "final letter dropped (low confidence on the reading)", "severity": "minor" },
+          { "ocr": "מֵי זָהָב", "image": "unpointed מי זהב", "problem": "vowel points added that are not on the page", "severity": "minor", "class": "O8" },
+          { "ocr": "Chaldæicus", "image": "Chaldaicus", "problem": "spelling", "severity": "minor" },
+          { "ocr": "operantis/: … pag: 4. /:", "image": "|: … :|", "problem": "bracket marks inconsistent", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Faithful line-by-line text on pp.45 and 122, apart from normalising the scribe's 'Sahab' to 'Zahab'. On p.84 the Mercury sign is read as Sulphur and 'Martis' is dropped, so a reader gets the wrong substance in the recipe."
+  },
+  {
+    "book_id": "b23-r", "slot": 3, "title": "Cabbalistic Texts: Christoph Froschmayr von Scheibenhof (PH239)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Zahab … Zahab Schaba", "image": "Sahab … Sahab Schaba", "problem": "transliteration normalised to Zahab, twice", "severity": "moderate", "class": "O8" },
+          { "ocr": "vivum ex undis emergens", "image": "ex nudis emergens", "problem": "word changed to the expected 'undis'", "severity": "moderate", "class": "O8" },
+          { "ocr": "fundamentum fumitatis aureæ", "image": "ſumitatis au=reo (summitatis: the golden summit of Dan. 2)", "problem": "long s read as f, giving a nonsense word; ending misread", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 84, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Ut autem fiant <image-desc>Alchemical symbol for Sulfur</image-desc> Aqua ignitiones", "image": "☿lis Aquæ (Mercurialis)", "problem": "Mercury sign identified as Sulphur", "severity": "serious", "class": "O6" },
+          { "ocr": "sic <image-desc>Alchemical symbol for Sulfur</image-desc> erit", "image": "Sic [sulphur]r ♂is (Sulphur Martis)", "problem": "'Martis' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "Aqua ignitiones", "image": "Aquæ", "problem": "ending", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the symbols are described, not expanded", "severity": "minor", "class": "O14" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "aureum <image-desc>alchemical symbol for iron / Mars / vitriol / antimony</image-desc> Martiale", "image": "aureum [sulphur sign]r Martiale (Sulphur Martiale, as named a few lines above: 'Sulphur Ferri')", "problem": "sulphur sign identified as iron/vitriol/antimony, so the 'golden Martial Sulphur' becomes another substance", "severity": "serious", "class": "O6" },
+          { "ocr": "vivificatur Rese", "image": "Reæ (probably Rex)", "problem": "likely x misread (low confidence)", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Good on the running Latin and Hebrew, but it normalises toward the expected ('Zahab', 'undis') and misidentifies alchemical signs on two of three pages: Mercury read as Sulphur, and Sulphur as iron/vitriol/antimony."
+  },
+  {
+    "book_id": "b23-t", "slot": 4, "title": "Cabbalistic Texts: Christoph Froschmayr von Scheibenhof (PH239)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": null, "rights_flag": null, "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "jejunium habet 40. dierum et noctium.", "image": "40. dierum et noc= (catchword break; page ends)", "problem": "the word is completed with text that is not on the page", "severity": "moderate", "class": "O8" },
+          { "ocr": "fundamentum fumitatis aurea", "image": "ſumitatis au=reo", "problem": "long s read as f; ending misread", "severity": "minor" },
+          { "ocr": "Tetragrammati", "image": "Tetragramati", "problem": "spelling normalised", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the scribe's |Pulchritudo| |Tu| brackets dropped", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 84, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Ut autem fiant <image-desc>Alchemical symbol for Sulfur</image-desc> Aqua ignitiones", "image": "☿lis Aquæ (Mercurialis)", "problem": "Mercury sign identified as Sulphur", "severity": "serious", "class": "O6" },
+          { "ocr": "sic <image-desc>Alchemical symbol for Sulfur</image-desc> erit", "image": "Sic [sulphur]r ♂is (Sulphur Martis)", "problem": "'Martis' dropped", "severity": "moderate", "class": "O5" },
+          { "ocr": "Aqua ignitiones", "image": "Aquæ", "problem": "ending", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the symbols are described, not expanded", "severity": "minor", "class": "O14" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 122, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Uxor nominatur <foreign>זהב מי</foreign> Mehetabel: id est Aqua auri", "image": "מי זהב |Mai Sahab| id est Aqua auri", "problem": "the name 'Mai Sahab' is replaced by 'Mehetabel' (pulled from the next line)", "severity": "serious", "class": "O6" },
+          { "ocr": "nec ex fontis hauriri", "image": "nec ex fodinis hauriri", "problem": "'from mines' becomes 'from springs'", "severity": "moderate", "class": "O6" },
+          { "ocr": "aureum <image-desc>Mars symbol</image-desc> Martiale", "image": "aureum [sulphur sign]r Martiale", "problem": "sulphur sign identified as Mars", "severity": "serious", "class": "O6" },
+          { "ocr": "ut dicatur <foreign>מים חיים</foreign>", "image": "מיים חיים מקור (three words)", "problem": "מקור (source) dropped", "severity": "moderate", "class": "O10" },
+          { "ocr": "uiuentium, uiuificatur, uitam", "image": "viventium, vivificatur, vitam", "problem": "u/v normalised to u everywhere, against the hand", "severity": "minor", "class": "O8" },
+          { "ocr": "Hac aqua … qua erit; Mezahabin titulata", "image": "Hæc aqua … quæ erit; Mezahab in=titulata", "problem": "small misreads", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "the |: :| brackets dropped, leaving stray colons", "severity": "minor" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The weakest of the four. It invents the end of a catchword on p.45 and misidentifies the Mercury sign on p.84. On p.122 it substitutes 'Mehetabel' for 'Mai Sahab', reads the sulphur sign as Mars, changes 'fodinis' to 'fontis', drops a Hebrew word and imposes u for v."
+  }
+]

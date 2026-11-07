@@ -1,0 +1,21 @@
+{
+ "scored_at": "2026-11-07T12:40:26.709Z",
+ "cells": {
+  "fr19": {
+   "lang": "French",
+   "route": "lighton>agy-flash-low",
+   "drawn": 30,
+   "books": 30,
+   "written": 30,
+   "judged": 30,
+   "accepted": 29,
+   "wrong_text": 0,
+   "p_acc_ge_08": 0.992,
+   "all_drawn_accepted": "29/30",
+   "wrong_page_controls": "2/2",
+   "planted_caught": "2/2",
+   "decision": "PASS: schedule",
+   "why": null
+  }
+ }
+}

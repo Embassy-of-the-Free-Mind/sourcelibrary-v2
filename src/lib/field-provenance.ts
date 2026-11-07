@@ -117,3 +117,15 @@ export function isStampContradicted(entry: FieldProvenanceEntry | undefined, val
   const claimsUpstream = typeof entry.method === 'string' && /metadata|catalog|manifest|authority/i.test(entry.method);
   return claimsUpstream && placeholder(value);
 }
+
+/**
+ * True if this stamp records a write made since `since`. A reconstructed stamp is
+ * not a write: it attests a value that was already stored (`buildAttestation()`,
+ * #7673), and its date is the day we looked. Counting it would let one backfill
+ * read as a week of well-behaved writers. Used by `scripts/audit/field-provenance.ts`.
+ */
+export function isNewWriteStamp(entry: FieldProvenanceEntry | undefined, since: Date): boolean {
+  if (!entry || entry.reconstructed || entry.method === 'reconstructed_match') return false;
+  const written = new Date(entry.date as string | Date);
+  return !Number.isNaN(written.getTime()) && written >= since;
+}

@@ -41,4 +41,9 @@ describe('strandedByImageRepair', () => {
     expect(strandedByImageRepair(page('2026-06-01T00:00:00Z', { ocr: { data: '' } }), REPAIRED)).toBe('no_text');
     expect(strandedByImageRepair(page('2026-06-01T00:00:00Z', { archive_metadata: { source: 'iiif' } }), REPAIRED)).toBe('not_bulk');
   });
+  it('text re-pointed onto its own leaf after the image repair is resolved (#5803)', () => {
+    const p = page('2026-06-01T00:00:00Z', { text_shift_repaired_at: '2026-11-04T09:15:00Z' });
+    expect(strandedByImageRepair(p, REPAIRED)).toBe('resolved');
+    expect(strandedByImageRepair(page('2026-06-01T00:00:00Z', { text_shift_repaired_at: '2026-01-01T00:00:00Z' }), REPAIRED)).toBe('stranded');
+  });
 });

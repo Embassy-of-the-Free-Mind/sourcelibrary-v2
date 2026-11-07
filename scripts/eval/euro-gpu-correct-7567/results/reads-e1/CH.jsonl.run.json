@@ -1,0 +1,12 @@
+{
+ "mode": "churro",
+ "model": "m",
+ "pages_this_pass": 236,
+ "clients": 6,
+ "wall_secs": 1200.6,
+ "pages_per_hour": 708,
+ "errors": 300,
+ "hit_cap": 1,
+ "out_tok": 97721,
+ "in_tok": 270363
+}

@@ -1,0 +1,233 @@
+{
+ "drawn_at": "2026-11-07T12:38:06.357Z",
+ "study": "euro-6871",
+ "gate": "euro-route-gate-6871",
+ "cells": {
+  "fr19": {
+   "lang": "French",
+   "years": [
+    1800,
+    1929
+   ],
+   "engine": "lo",
+   "route": "lighton>agy-flash-low",
+   "books": 30,
+   "pages": [
+    {
+     "page_id": "69920081768b426600239aee",
+     "book_id": "69920081768b4266002399de",
+     "page_number": 272,
+     "round": 0
+    },
+    {
+     "page_id": "69b63e702a1dde00d5a9d95f",
+     "book_id": "69b63e702a1dde00d5a9d827",
+     "page_number": 312,
+     "round": 0
+    },
+    {
+     "page_id": "69aea5a757ed98c21d25a8b7",
+     "book_id": "69aea5a757ed98c21d25a878",
+     "page_number": 63,
+     "round": 0
+    },
+    {
+     "page_id": "69593349b91a6184ea9446cb",
+     "book_id": "69593349b91a6184ea9443a0",
+     "page_number": 811,
+     "round": 0
+    },
+    {
+     "page_id": "69e7927a80b52390feb1608a",
+     "book_id": "69e7927a80b52390feb16002",
+     "page_number": 136,
+     "round": 0
+    },
+    {
+     "page_id": "6988b6f3abf94fb1dc744d21",
+     "book_id": "6988a59f090ba3597e45028a",
+     "page_number": 74,
+     "round": 0
+    },
+    {
+     "page_id": "69f6ea45e1d9277bf7b0bb8f",
+     "book_id": "69c73a1c6a0f3d112faf7920",
+     "page_number": 307,
+     "round": 0
+    },
+    {
+     "page_id": "69aeaaf167e6731bc13659bf",
+     "book_id": "69aeaaf167e6731bc136594f",
+     "page_number": 112,
+     "round": 0
+    },
+    {
+     "page_id": "6aa35d8de213def30d6c8f0c",
+     "book_id": "6aa35d8de213def30d6c8ebe",
+     "page_number": 78,
+     "round": 0
+    },
+    {
+     "page_id": "6a08f9029c1b82475e1590af",
+     "book_id": "6a08f9029c1b82475e158ebe",
+     "page_number": 497,
+     "round": 0
+    },
+    {
+     "page_id": "69ac5f6f7f20875486da4fa6",
+     "book_id": "69ac5f6f7f20875486da4f5b",
+     "page_number": 75,
+     "round": 0
+    },
+    {
+     "page_id": "69905cd4aaa7f10ed4cfce33",
+     "book_id": "69905cd3aaa7f10ed4cfcdb4",
+     "page_number": 127,
+     "round": 0
+    },
+    {
+     "page_id": "69f6f31c9f7367277fb436f3",
+     "book_id": "69c89a626c6f3cc53c85d135",
+     "page_number": 581,
+     "round": 0
+    },
+    {
+     "page_id": "69ae67684b74f168e0c1602a",
+     "book_id": "69ae67684b74f168e0c15fda",
+     "page_number": 80,
+     "round": 0
+    },
+    {
+     "page_id": "69e792459adaf7b110e3a7fa",
+     "book_id": "69e792459adaf7b110e3a6dc",
+     "page_number": 286,
+     "round": 0
+    },
+    {
+     "page_id": "69e7927280b52390feb15f22",
+     "book_id": "69e7927280b52390feb15ef5",
+     "page_number": 45,
+     "round": 0
+    },
+    {
+     "page_id": "69af594e569075d6ffc07045",
+     "book_id": "69af594e569075d6ffc07004",
+     "page_number": 65,
+     "round": 0
+    },
+    {
+     "page_id": "69b51e319a81ef7feb3d18ea",
+     "book_id": "69b51e319a81ef7feb3d16c9",
+     "page_number": 545,
+     "round": 0
+    },
+    {
+     "page_id": "69aeb644bf00526d1d64c1ce",
+     "book_id": "69aeb644bf00526d1d64c1c1",
+     "page_number": 13,
+     "round": 0
+    },
+    {
+     "page_id": "69f73b42a9dbe7e1e9bbabb8",
+     "book_id": "69c89a786c6f3cc53c85d18d",
+     "page_number": 73,
+     "round": 0
+    },
+    {
+     "page_id": "69ef3e3a72c1376fdf2b0f54",
+     "book_id": "69ef3e3a72c1376fdf2b0d3d",
+     "page_number": 535,
+     "round": 0
+    },
+    {
+     "page_id": "69aea5ac57ed98c21d25aaea",
+     "book_id": "69aea5ac57ed98c21d25aa60",
+     "page_number": 138,
+     "round": 0
+    },
+    {
+     "page_id": "69ac5f687f20875486da4e5e",
+     "book_id": "69ac5f687f20875486da4c17",
+     "page_number": 583,
+     "round": 0
+    },
+    {
+     "page_id": "69ac5fb34f76006bddda3790",
+     "book_id": "69ac5fb34f76006bddda3725",
+     "page_number": 107,
+     "round": 0
+    },
+    {
+     "page_id": "69943cc3a668f66e6953ca12",
+     "book_id": "69943cc3a668f66e6953c8a5",
+     "page_number": 365,
+     "round": 0
+    },
+    {
+     "page_id": "69593343b91a6184ea9442f9",
+     "book_id": "69593342b91a6184ea9441e8",
+     "page_number": 273,
+     "round": 0
+    },
+    {
+     "page_id": "69ac5f89318c66595eb9be3c",
+     "book_id": "69ac5f89318c66595eb9bbdd",
+     "page_number": 607,
+     "round": 0
+    },
+    {
+     "page_id": "69907ca95f855ec553e76ade",
+     "book_id": "69907ca85f855ec553e7690e",
+     "page_number": 464,
+     "round": 0
+    },
+    {
+     "page_id": "69ac7ed820878c5c9ba51c4e",
+     "book_id": "69ac7ed820878c5c9ba51b99",
+     "page_number": 181,
+     "round": 0
+    },
+    {
+     "page_id": "69f68102b6aefaa150d41ce0",
+     "book_id": "69c889fe6c6f3cc53c85a50f",
+     "page_number": 256,
+     "round": 0
+    }
+   ]
+  }
+ },
+ "frame": {
+  "fr19": {
+   "books_written": 39,
+   "tried": 210,
+   "written": 86,
+   "by_outcome": {
+    "no_draft": 26,
+    "other": 86,
+    "written": 86,
+    "put_back_unsafe": 6,
+    "unchanged": 5,
+    "contain": 1
+   },
+   "refused_why": {
+    "GPU draft under 30 word characters": 26,
+    "corrector tags the page <script>handwritten</script>: the GPU-draft route is print only": 41,
+    "letters outside the book's scripts": 19,
+    "the model never opened the page image (every read_file/view_file denied): not a read of th": 10,
+    "a diff-guard flag spans a tag: the put-back cannot be spliced, the page stays unread": 1,
+    "cli exit 3": 2,
+    "reply wrapper: a second marker inside the block": 2,
+    "a diff-guard flag is not a like-for-like substitution: the put-back cannot be spliced, the": 5,
+    "corrector tags the page <script>mixed</script>: the GPU-draft route is print only": 6,
+    "reply wrapper: reply cut before <<<END>>>": 5,
+    "corrector: UNCHANGED (a headerless GPU draft is not written; the page stays unread)": 5,
+    "corrector: CONTAIN (a claim to check by eye)": 1,
+    "reply wrapper: no <<<BEGIN>>> marker": 1
+   },
+   "marker_residue": 0,
+   "marker_pages": [],
+   "not_stamped": 0,
+   "excluded_cell_test": 0
+  }
+ }
+}

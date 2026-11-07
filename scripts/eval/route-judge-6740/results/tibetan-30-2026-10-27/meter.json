@@ -1,0 +1,22 @@
+{
+ "account": "milolomas200921@gmail.com",
+ "reading": "/root/.claude-limits/latest.json (climits poll; integer percents)",
+ "shared": "SHARED: other jobs (zh-translate-route-6871 Opus calls) ran on the same account throughout; no start reading was taken before the run. Not a per-call measure.",
+ "start": {
+  "at": "2026-10-26T18:25:02Z",
+  "weekly_pct": 12,
+  "session_pct": 100,
+  "note": "read mid-run (after the corrections, before the judge)"
+ },
+ "end": {
+  "at": "2026-10-26T18:40:02Z",
+  "weekly_pct": 12,
+  "session_pct": 0
+ },
+ "opus_judge_calls": 99,
+ "opus_correct_calls": 30,
+ "agy_calls": 30,
+ "list_usd_equiv_judge": 11.79,
+ "list_usd_equiv_correct": 4.3,
+ "note": "No points_per_call: the meter is shared and integer; the pilot's 0.0124 stays the upper bound."
+}

@@ -68,7 +68,7 @@ export default function AccountClient({ user }: AccountClientProps) {
   // Member profile editing
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [savingProfile, setSavingProfile] = useState(false);
 
@@ -161,7 +161,7 @@ export default function AccountClient({ user }: AccountClientProps) {
     fetch('/api/membership/profile').then(r => r.json()).then(data => {
       setDisplayName(data.displayName || '');
       setBio(data.bio || '');
-      setVisible(data.visible !== false);
+      setVisible(data.visible === true);
       setProfileLoaded(true);
     });
   }, [isMember]);

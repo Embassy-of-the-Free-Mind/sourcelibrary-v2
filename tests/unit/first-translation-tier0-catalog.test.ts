@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import {
   makeTier0Catalog,
   isDecisivePrior,
+  isAntiquatedPrior,
+  priorTranslationYear,
   langKey,
   type CatalogPrior,
 } from '@/lib/first-translation/tier0-catalog';
@@ -123,5 +125,73 @@ describe('makeTier0Catalog', () => {
     const o = await run([{ ...completePrior, source_language: 'grc' }]);
     expect(o.terminal).toBe(false);
     expect(o.verdict).toBeNull();
+  });
+});
+
+describe('dating a prior by the translation, not the edition (#7797)', () => {
+  const bartholomaeus: ResolvableBook = {
+    id: 'b2',
+    title: 'De proprietatibus rerum',
+    author: 'Bartholomaeus Anglicus',
+    original_language: 'Latin',
+    language: 'Latin',
+    work_id: 'Q1180726',
+  };
+  // Seymour et al.'s Oxford critical text (1975–88) of Trevisa's Middle English translation of c.1398.
+  const seymourTrevisa: CatalogPrior = {
+    english_title: "On the Properties of Things: John Trevisa's Translation of Bartholomaeus Anglicus De Proprietatibus Rerum",
+    translator: 'John Trevisa',
+    pub_year: '1975',
+    tr_year: '1398',
+    completeness: 'complete',
+    source_language: 'la',
+    source_url: 'https://archive.org/details/onpropertiesofth0000bart',
+    publisher: 'Clarendon Press',
+    matched_by: 'work_id',
+  };
+  const runOn = (priors: CatalogPrior[]) => makeTier0Catalog(async () => priors)(bartholomaeus, ctx);
+
+  it('Trevisa in the 1975 edition is a decisive prior, but an antiquated one', () => {
+    expect(isDecisivePrior(bartholomaeus, seymourTrevisa)).toBe(true);
+    expect(priorTranslationYear(seymourTrevisa)).toBe(1398);
+    expect(isAntiquatedPrior(seymourTrevisa)).toBe(true);
+  });
+
+  it('grades the text first_modern, not not_first, and does not terminate on it', async () => {
+    const o = await runOn([seymourTrevisa]);
+    expect(o.verdict?.verdict).toBe('first_modern');
+    expect(o.terminal).toBe(false);
+    expect(o.verdict?.evidence_strength).toBe('weak');
+    expect(o.attempt.priors?.[0]).toMatchObject({ pub_year: '1975', tr_year: '1398' });
+  });
+
+  it('a register outranks the dates: middle_english stays antiquated with no tr_year', async () => {
+    const o = await runOn([{ ...seymourTrevisa, tr_year: undefined, register: 'middle_english' }]);
+    expect(o.verdict?.verdict).toBe('first_modern');
+  });
+
+  it('a modernised edition of an old translation defeats the claim', async () => {
+    const o = await runOn([{ ...seymourTrevisa, tr_year: '1582', register: 'modern' }]);
+    expect(o.verdict?.verdict).toBe('not_first');
+    expect(o.terminal).toBe(true);
+  });
+
+  it('falls back to pub_year when the translation date is unknown (old rows behave as before)', async () => {
+    const o = await runOn([{ ...seymourTrevisa, tr_year: undefined }]);
+    expect(o.verdict?.verdict).toBe('not_first');
+    expect(o.terminal).toBe(true);
+  });
+
+  it('one modern complete prior beside the old one defeats the claim', async () => {
+    const modern: CatalogPrior = { ...seymourTrevisa, english_title: 'On the Properties of Things, a modern translation', translator: 'A. Translator', pub_year: '2020', tr_year: '2020' };
+    const o = await runOn([seymourTrevisa, modern]);
+    expect(o.verdict?.verdict).toBe('not_first');
+    expect(o.attempt.priors).toHaveLength(1);
+    expect(o.attempt.priors?.[0]?.tr_year).toBe('2020');
+  });
+
+  it('an undated prior still defeats', () => {
+    expect(isAntiquatedPrior({})).toBe(false);
+    expect(isAntiquatedPrior({ pub_year: 'n.d.' })).toBe(false);
   });
 });

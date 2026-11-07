@@ -23,7 +23,7 @@ const require = createRequire('/Users/dereklomas/sourcelibrary/package.json');
 const { MongoClient } = require('mongodb');
 
 const HERE = '/private/tmp/claude-501/-Users-dereklomas-sourcelibrary/b4cc9f10-7660-4f2b-b3cf-554d4017f8f7/scratchpad';
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2';
 const DIMS = 768;
 const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 

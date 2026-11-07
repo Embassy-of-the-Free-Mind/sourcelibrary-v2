@@ -5,7 +5,7 @@
   lines, /.well-known/tdmrep.json, and https://sourcelibrary.org/licensing:
 
     - Search indexing and user-directed assistant reading (ai-input): FREE,
-      with attribution (content is CC BY-SA 4.0).
+      with attribution (content is CC BY-NC-SA 4.0).
     - AI training / bulk text-and-data-mining: RESERVED — requires a separate
       license. Standing rate card: $250/book floor, $200,000/yr full corpus.
 
@@ -17,7 +17,7 @@
       <permits type="usage">search</permits>
       <permits type="usage">ai-input</permits>
       <payment type="attribution">
-        <standard>https://creativecommons.org/licenses/by-sa/4.0/</standard>
+        <standard>https://creativecommons.org/licenses/by-nc-sa/4.0/</standard>
       </payment>
     </license>
     <license>
@@ -26,6 +26,6 @@
         <custom>https://sourcelibrary.org/licensing</custom>
       </payment>
     </license>
-    <copyright type="notice">Source Library — Embassy of the Free Mind. Translations CC BY-SA 4.0; AI training requires a separate license (https://sourcelibrary.org/licensing).</copyright>
+    <copyright type="notice">Source Library — Embassy of the Free Mind. Translations CC BY-NC-SA 4.0; commercial AI training requires a separate license (https://sourcelibrary.org/licensing).</copyright>
   </content>
 </rsl>

@@ -1,0 +1,54 @@
+[
+  {
+    "book_id": "b11-t", "slot": 1,
+    "title": "Oratio ad immortalitatem illustriassimae nec non famigerratissimae laudis",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A 1562 humanist civic oration in praise of Lodi (Laus Pompeia): its Roman foundation by Gn. Pompeius, its sackings by the Milanese, its jurists (Oldradus). It is a genuine Latin manuscript, but no tradition or collection is given, and the topic is local history, not alchemy, Hermetica or early science.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The scribe's page numbers (4, 15, 26) match image indices 14, 25 and 36 at a constant offset of 10, so the run is consistent. The translation is null on all three pages: transcription only.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 14, "right_page": "yes", "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "quasit haec structura", "image": "euasit hæc structura", "problem": "'evasit' (became) misread as the non-word 'quasit'; the main verb of the clause is lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "reliquis abo=liorem sustulit", "image": "reliquis atro=ciorem sustulit", "problem": "'atrociorem' (more atrocious) misread as the non-word 'aboliorem'; the comparison of the sackings is lost", "severity": "moderate", "class": "O6" },
+          { "ocr": "supprema in glo=ria", "image": "supprema ue glo= (apparently 'suppremave', 'or the supreme')", "problem": "Enclitic misread as 'in', which changes the construction. Low confidence in my own reading here.", "severity": "minor" },
+          { "ocr": "negotium", "image": "negocium", "problem": "Spelling silently normalised", "severity": "minor" },
+          { "ocr": "Strages autem", "image": "¶ Strages autem", "problem": "Paragraph mark (pilcrow) before the decorated initial S dropped", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "No translation stored for this page (translation is null)", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 25, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Coloneum", "image": "Coto=neum", "problem": "Place name misread: the hand reads 'Cotoneum'", "severity": "moderate", "class": "O6" },
+          { "ocr": "At antè pausillum", "image": "At anteà pauxillum", "problem": "'anteà' and 'pauxillum' misread", "severity": "minor" },
+          { "ocr": "pinguidinem", "image": "pinguedinem", "problem": "Vowel misread", "severity": "minor" },
+          { "ocr": "Hac omnia", "image": "Hæc omnia", "problem": "æ ligature dropped, giving the wrong form 'Hac'", "severity": "minor" },
+          { "ocr": "confluere soleant. Mitto", "image": "confluere soleant? Mitto", "problem": "Punctuation changed", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "No translation stored for this page (translation is null)", "severity": "minor" } ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 36, "right_page": "yes", "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Oldradus Tressonus", "image": "Oldradus Tressenus", "problem": "Jurist's surname misread", "severity": "moderate", "class": "O6" },
+          { "ocr": "effando auspicamur", "image": "effando auspicemur", "problem": "Hortatory subjunctive read as an indicative", "severity": "minor" },
+          { "ocr": "ad rei perpetua memoriam", "image": "ad rei per=petuæ memoriam", "problem": "æ ending dropped, which breaks the agreement", "severity": "minor" },
+          { "ocr": "perdurat et uisitur. Et et", "image": "perdurat et uisitur. C,n et (uncertain: 'Cum et'?)", "problem": "Last word misread as 'Et'. The image does not show 'Et'.", "severity": "minor" },
+          { "ocr": "sive", "image": "siue", "problem": "u/v silently normalised, against the u spelling used elsewhere on the page", "severity": "minor" }
+        ],
+        "tr_score": null, "tr_errors": [],
+        "other": [ { "note": "No translation stored for this page (translation is null)", "severity": "minor" } ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription of this clear italic humanist hand is generally good. All three pages are the right leaves and none has an invented passage. Page 14 has two non-word misreadings ('quasit' for 'euasit', 'aboliorem' for 'atrociorem'), and two proper names are slightly wrong (Coloneum, Tressonus). No translation is stored yet."
+  }
+]

@@ -1,0 +1,593 @@
+[
+  {
+    "book_id": "69b51e02261c58d63664e132",
+    "slot": 79,
+    "title": "Index librorum theutonicorum impressorum & manuscriptorum Romae anno 1806 ... BSB Cbm Cat. 557",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A handwritten 1806 shelf-list of German books in the Vatican library: a bibliographic tool, not a primary source of any tradition we shelve. No tradition and no collection are set. It is useful as provenance reference, but it is off-mission as reading matter.",
+    "rights_flag": null,
+    "structure_note": "456/458 pages have OCR and 451 are translated; nothing odd in the counts. The three sampled pages carry the hand's folio numbers 56, 113 and an unnumbered one, consistent with order. The key data on every page is the right-hand shelf number ('Pro'), and the OCR gets it wrong on whole pages (see p.229).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 115,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "1596 Historia novi Orbis",
+            "image": "1590 Historia novi Orbis",
+            "problem": "year in the left column misread",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "ad Francos Aposteato Saxones devento",
+            "image": "ad Francos et postea ad Saxones devoluto (sic, 'devento')",
+            "problem": "'et postea ad' fused into a non-word",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Contra Ioannem Worfium",
+            "image": "Contra Joannem Worsium (long s)",
+            "problem": "long s read as f; the name is wrong",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Ano 56",
+            "image": "header 'Ano' ... '56' ... 'Pro'",
+            "problem": "the right-hand 'Pro' column header dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "De Imperio Germanico ad Francos [et] postea ad Saxones devento",
+            "english": "on the German Empire devolved to the Saxon Franks",
+            "problem": "the title says the Empire passed to the Franks and afterwards to the Saxons; the translation merges the two peoples into one, which is a different claim",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Ioannem Worfium",
+            "english": "John Worf",
+            "problem": "the OCR misreading is carried into an invented English name",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The <summary> calls this 'This final page', but it is folio 56 of a ~450-page list.",
+            "severity": "minor",
+            "class": "E1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 229,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Tiguri 1590: / 1591: / 1592: / 1593: / 1594:",
+            "image": "1390: / 1391: / 1392: / 1393: / 1394:",
+            "problem": "every Vatican shelf number on the page is misread (13xx read as 15xx), and these numbers are the point of the index",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "contra 34 articulos pacificos",
+            "image": "contra 34 articulos papisticos",
+            "problem": "'papistical' read as 'peaceful', which reverses the polemic",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "1564 Liber Josue",
+            "image": "1565 Liber Josue",
+            "problem": "year misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Tubingae. Tiguri",
+            "image": "'Tubingae' struck through, 'Tiguri' written after it",
+            "problem": "a deleted word is transcribed as text",
+            "severity": "moderate",
+            "class": "O13"
+          },
+          {
+            "ocr": "(no page number)",
+            "image": "'113' at the top",
+            "problem": "folio number dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "contra 34 articulos pacificos [image: papisticos]",
+            "english": "against 34 peaceful articles",
+            "problem": "Osiander's tract was against 34 'papist' articles; the reader is told the opposite",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Ulyssae",
+            "english": "Ulm",
+            "problem": "Ulyssea is Lisbon, not Ulm; the gloss invents a place",
+            "severity": "moderate"
+          },
+          {
+            "source": "Tubingae. Tiguri",
+            "english": "Tübingen. Zurich",
+            "problem": "the deleted place of printing is presented as a second imprint",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 342,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Conciones Nuptiales et De oeconomia",
+            "image": "Conciones Nuptiales et Oeconomia",
+            "problem": "'De' inserted",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Ioannis Matthesii ... (notes)",
+            "english": "<note>original: \"Ioannis Matthesii\"</note>",
+            "problem": "redundant 'original:' notes clutter a simple list",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The pages are right and the prose of the entries is mostly legible. But on p.229 the OCR misreads every shelf number (1390→1590 …) and turns 'papisticos' into 'pacificos', so the index's one job — locating a book — fails. It is also a doubtful fit for the shelves."
+  },
+  {
+    "book_id": "69b00f6ce485bbb15c6b29cb",
+    "slot": 42,
+    "title": "Pedanii Dioscoridis De Medica Materia Libri Quinque (1546)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Ruel's Latin Dioscorides (Cologne 1546) is a core early-modern materia medica; it fits europeanlibraries and early science.",
+    "rights_flag": null,
+    "structure_note": "712 pages, all OCR'd and translated. The printed page numbers (149, 327, 504) track the image index at a steady offset of 30. Nothing stands out.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 179,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(not transcribed)",
+            "image": "margin 'Mellis probatio qualis.'",
+            "problem": "side-note dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "nudam glandem recutitis operit",
+            "english": "it covers the bare glans of the uncircumcised",
+            "problem": "'recutiti' are the circumcised; the translation inverts it, though the next clause partly repairs the sense",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 357,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "muris aranei morsibus auxiliatur",
+            "english": "assists against the bites of spiders",
+            "problem": "mus araneus is the shrew-mouse, not a spider",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 534,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Cui, antequàm aliquid ex ijs accidat, vomitus & aqua mulsa prod [page ends]",
+            "english": "...vomiting and honey-water will be of help: afterwards, natron and wormwood should be taken with sweet wine ... rose oil and vinegar ... eupatorium ... the odor from the extinguishing of lamps ... stir up sneezing",
+            "problem": "Five sentences of mandrake treatment that are not on this leaf are appended after the catchword. This is lookahead from the next page, presented as this page's text.",
+            "severity": "serious",
+            "class": "T5"
+          }
+        ],
+        "other": [
+          {
+            "note": "The <summary> mentions 'the Sardonia herb', which is not named on the page (only 'Sardonio risu').",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is clean and the translation is fluent and mostly faithful. One page carries a translated passage from the next leaf (T5), and there are two moderate lexical slips (spiders for shrews, uncircumcised for circumcised)."
+  },
+  {
+    "book_id": "69f32d7e876dd827cbc42eb1",
+    "slot": 2,
+    "title": "Conpotus (sic) magistri Roperti anglici linconiensis episcopi",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Grosseteste's Computus, a 13th-c. Harvard manuscript: medieval science (calendar and lunar astronomy). It fits the early-science orbit, though no tradition or collection is set.",
+    "rights_flag": null,
+    "structure_note": "Of 62 pages, 61 have OCR and 49 are translated. The pencil foliation on p.43 ('19') matches the OCR page-num. Nothing broken; the problem is the reading of the abbreviated Gothic hand.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "poenitentes. no intellige paschales eidem anni",
+            "image": "p[ro]concurrentes. no[n] intellige p[ro]currentes eidem anni s[ed] sequentis anni",
+            "problem": "'concurrentes' (a technical computus term) is read as 'penitents', 'paschales', 'excelsenau' and 'excelsent' across the page; the abbreviations are not expanded and become non-words",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Inapit autem cyclus iste ad ianuario. et amarao",
+            "image": "Incipit autem cyclus iste no[n] a ianuario s[ed] a martio",
+            "problem": "the negation is lost: the cycle begins NOT in January BUT in March",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "regulare illi mensis ... reglaru iuny ē G.",
+            "image": "regularis ... iunii e[st] 6",
+            "problem": "letters and numerals of the regulars misread",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Inapit autem cyclus iste ad ianuario. et amarao",
+            "english": "This cycle begins at January, and amarao <gloss>bitterness/bitter</gloss>",
+            "problem": "the sense is reversed (the source says it begins in March, not January), and 'a martio' is glossed as 'bitterness'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "excelsenau, phos scirenau, tapiao, lige, ferraze …",
+            "english": "<gloss>high-rising</gloss>, <gloss>light of knowing</gloss>, <gloss>turns</gloss>, <gloss>bond</gloss>…",
+            "problem": "OCR non-words are given confident invented glosses; the 'translation' is word salad with no uncertainty marked",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "fin autem dielem ignota est uni sedi",
+            "image": "s[ecundu]m Arzachelem ...",
+            "problem": "the name of the authority (Arzachel / al-Zarqali) is lost",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "6939 dies et insuper 16. minuta",
+            "image": "6939 dies et insup[er] 44 minuta",
+            "problem": "the key number (excess of the 19-year cycle) is misread, twice",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "16. anni ... 20. luner",
+            "image": "76 anni ... 940 lunationes",
+            "problem": "the Calippic 76-year / 940-lunation period becomes 16 and 20",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "spleene",
+            "image": "complentur / complere (abbreviated)",
+            "problem": "an abbreviation is rendered as a non-word throughout",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "6939 dies et insuper 16. minuta ... 16. anni ... 20. luner",
+            "english": "6939 days and in addition 16 minutes ... 16 years ... 20 of the moon",
+            "problem": "the wrong figures are carried into a fluent but meaningless argument; 'spleene' becomes 'the moon'",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 43,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "9. anno cycli 7. continuat",
+            "image": "8 anno cycli et continuatur",
+            "problem": "numeral misread; 'et' read as '7'",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "beyeus 8. annus cycli",
+            "image": "Sextus n[on]us? annus cycli (Sextus...)",
+            "problem": "the opening word of the sentence becomes a non-word",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "in die talis lune",
+            "image": "incidit saltus lune",
+            "problem": "'saltus lunae' (the moon's leap), the central computus term, is lost",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "in qua in die talis lune",
+            "english": "in which in the day of such moon",
+            "problem": "the saltus lunae is lost, so the passage's point is lost; the rest is a literal word-by-word rendering of garble ('7th night 3', 'impeded place')",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A valuable 13th-c. computus manuscript, but the OCR does not resolve its abbreviations. It produces non-words and wrong numerals (16 for 44 minutes, 16/20 for 76 years/940 lunations), and the translation dresses them in confident invented glosses. An expert would not trust a line of it."
+  },
+  {
+    "book_id": "6980941fbcce774f5bbd7db3",
+    "slot": 90,
+    "title": "Lexicon alchemiae",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Faust's 1727 alchemical lexicon and its companion treatise: squarely alchemy.",
+    "rights_flag": null,
+    "structure_note": "The record holds more than the Lexicon. Pages 202 and 304 carry the running head 'De vera & natur. scientia &c.' (printed pp. 65 and 153), a separate German-Latin treatise bound in or issued with it. The title and language ('Latin') describe only the first part (I7). eligible_pages (394) exceeds pages_count (378), which suggests split/crop records, but the sampled leaves are right.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Pixarii .e. picem",
+            "image": "Pixari i.e. picem",
+            "problem": "small slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Penetratio i.e. submersio",
+            "english": "...; a deep soaking or sinking into a substance.",
+            "problem": "editorial expansions added to the definitions without marking",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The leading <meta> asserts what the previous page ended with ('Pater ante filium'), which cannot be checked from this leaf.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 202,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "nam aqua erit potius",
+            "english": "for it was water before",
+            "problem": "silently emends 'erit potius' to 'erat prius'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 304,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean OCR and good, heavily annotated translations; showable. The catalogue should say the volume also contains the German-Latin 'De vera & naturali scientia' treatise."
+  },
+  {
+    "book_id": "69b418ab2b0edf3eaa2dd947",
+    "slot": 50,
+    "title": "Ars artium sive Ars magna cabalistica (PH337)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A manuscript kabbalistic-arithmetic treatise (BPH): Kabbalah shelf.",
+    "rights_flag": null,
+    "structure_note": "Of 192 pages, 190 are OCR'd and 178 translated. The catalogue date 1566 does not match the copy: p.95 cites 'Esch Mezareph' (published in Knorr's Kabbala Denudata, 1677–84), so this hand is later than 1566. The date probably belongs to the work, not the witness (I7, moderate). Hand page numbers 44, 9, 54 against image indices 50, 95, 140 suggest separately paginated sections, not a defect.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 50,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<sig>A2</sig>",
+            "image": "no signature; catchword 'Aat' bottom right",
+            "problem": "signature invented, catchword dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "<margin>[Partial handwritten text ... 'gu... 20... lo...']</margin>",
+            "image": "the edge of the facing page's text",
+            "problem": "the neighbouring leaf's text is transcribed as a margin of this page",
+            "severity": "moderate",
+            "class": "I4"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The translation has broken markup: an empty '<margin></margin>' followed by a stray '</margin>' after the <unclear> fragments.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ordo supremus 22. ... si ne=gligatur 22. et initium fias a 2 ... in summy 42 ... per saltus disponas numeros 22, et 7, et 17, et 27, et 8, et 6",
+            "image": "Hebrew letters (כב, ב, a three-letter Hebrew word, ז, ח, ט, ...) used as numerals",
+            "problem": "the Hebrew letters are silently turned into (often wrong) Arabic numerals, so the gematria a reader needs is lost",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "quia excelsis numerum Alphabeticum hebraicum",
+            "image": "quia excedit numerum Alphabeticum hebraicum",
+            "problem": "the verb is misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "eamdem ad omni facile repe=riens summam",
+            "image": "eamdem ab omni facile repraesentabit summam",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "quia excelsis [excedit] numerum Alphabeticum hebraicum",
+            "english": "Because of the high Hebrew alphabetic number",
+            "problem": "the source says it exceeds the number of the Hebrew alphabet; the reason is lost",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 140,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "Summa 36. ad 15. scilicet Duodecupla",
+            "image": "Summa est 336 ad 28 scil. Duodecupla",
+            "problem": "both terms of the worked sum are wrong (336:28 = 12; 36:15 is not twelvefold)",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Summa 30. ad 6 scilicet Tripla Supersextupertieri octavas",
+            "image": "Summa 30 ad 8 scil. Tripla Supersextupartiens octavas",
+            "problem": "8 read as 6 (30:8 = 3 6/8), and the ratio name is garbled",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "24 ad 16 (four times)",
+            "image": "24 ad 18",
+            "problem": "the worked check is misread throughout; the transcript then asserts 4:3 = 24:16, which is false",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "11. ad 7. Tripla",
+            "image": "21 ad 7 Tripla",
+            "problem": "numeral misread (11:7 is not triple)",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "24 ad 16 ... 4 ad 3 = 24 ad 16",
+            "english": "Its proof will be the following 24 to 16, namely sesquitertia ... 4 to 3 is equal to 24 to 16",
+            "problem": "the translation repeats the misread figures, so the worked example teaches false arithmetic",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "Supersextupertieri octavas",
+            "english": "Triple Supersextupertieri octavas <note>...complex compound ratio name...</note>",
+            "problem": "the garbled ratio name is left untranslated and covered with a vague note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The prose is read well, but the numbers fail where the book is about numbers. Worked ratios are misread (336:28→36:15, 24:18→24:16), so the arithmetic shown is false, and the Hebrew numeral letters on the magic-square page are flattened into digits. The catalogue date 1566 is too early for a copy that cites Esch Mezareph."
+  }
+]

@@ -1,0 +1,300 @@
+[
+ {
+  "book_id": "b17-k",
+  "slot": 1,
+  "title": "Clavicula Salomonis Regis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 58,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 122,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 184,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Near-diplomatic and accurate on all three pages: keeps the scribe's spellings ('Subtilimum', 'accenssis', 'On Pijssime'), tags the marginal '43' as a margin note and the catchwords as meta, and describes the pasted blue disc on p.122 correctly, without inventing a diagram."
+ },
+ {
+  "book_id": "b17-m",
+  "slot": 2,
+  "title": "Clavicula Salomonis Regis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 58,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "On Zijssime",
+      "image": "On Pijssime",
+      "problem": "divine epithet misread as a non-word",
+      "severity": "moderate"
+     },
+     {
+      "ocr": "suffi-\nmigabis",
+      "image": "suffu-\nmigabis",
+      "problem": "misread u as i",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Subtilissimum",
+      "image": "Subtilimum",
+      "problem": "scribe's form silently normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<page-num>43</page-num> Adonaij",
+      "image": "43 in the left margin beside the prayer, not the page number",
+      "problem": "marginal number tagged as a page number",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "psalm incipits rendered as '> . ' blockquote lines",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 122,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<unclear>[... Below the diagram, there are traces of very faint, illegible handwritten text, likely in Latin, which has faded significantly over time.]</unclear>",
+      "image": "the brown marks below the disc are mirror-reversed show-through from the other side of the leaf, not faded text on this side",
+      "problem": "show-through described as faded text belonging to this page",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "image-desc calls the pasted pale-blue paper disc 'a circular diagram or seal ... faint geometric or sigillic markings' and the warning calls it 'likely a talismanic diagram'; the disc carries only a brown ink stroke and stray marks, and the faint lines are show-through",
+      "severity": "moderate",
+      "class": "O14"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 184,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "ii ... materiis",
+      "image": "ij ... materijs",
+      "problem": "ij silently normalised to ii",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A good read of the text pages, with one misread divine epithet ('Zijssime' for 'Pijssime') and light normalisation. On the blank side with the pasted disc it over-reads the disc as a faint talismanic seal and the show-through as faded text."
+ },
+ {
+  "book_id": "b17-r",
+  "slot": 3,
+  "title": "Clavicula Salomonis Regis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 58,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "inter\nduo Circulos",
+      "image": "inter\nduos Circulos",
+      "problem": "dropped final s",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<page-num>43</page-num> (placed at the head of the page)",
+      "image": "43 in the left margin beside 'Adonaij', not at the head",
+      "problem": "marginal number moved to the top and tagged as the page number",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 122,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<unclear>[... Below the diagram, there are traces of very faint, illegible handwritten text, likely in Latin, which has faded significantly over time.]</unclear>",
+      "image": "the brown marks below the disc are mirror-reversed show-through from the other side of the leaf, not faded text on this side",
+      "problem": "show-through described as faded text belonging to this page",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "image-desc calls the pasted pale-blue paper disc 'a circular diagram or seal ... faint geometric or sigillic markings' and the warning calls it 'likely a talismanic diagram'; the disc carries only a brown ink stroke and stray marks, and the faint lines are show-through",
+      "severity": "moderate",
+      "class": "O14"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 184,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "ii ... materiis",
+      "image": "ij ... materijs",
+      "problem": "ij silently normalised to ii",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The text pages are accurate and keep the scribe's 'Subtilimum' and 'Pijssime'; the only slips are 'duo' and the marginal '43' moved to the top as a page number. On p.122 it over-reads the pasted disc as a faint seal and the show-through as faded text."
+ },
+ {
+  "book_id": "b17-t",
+  "slot": 4,
+  "title": "Clavicula Salomonis Regis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": null,
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 58,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "On Altissime",
+      "image": "On Pijssime",
+      "problem": "divine epithet replaced by a more familiar one ('most high' for 'most pious'): a plausible-looking word that is not on the page",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "suffi-\nmigabis",
+      "image": "suffu-\nmigabis",
+      "problem": "misread u as i",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Subtilissimum",
+      "image": "Subtilimum",
+      "problem": "scribe's form silently normalised",
+      "severity": "minor"
+     },
+     {
+      "ocr": "ibique sit thus,\nmasculum",
+      "image": "ibi que sit thus\nmasculum",
+      "problem": "inserted a comma that splits 'thus masculum'",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<page-num>43</page-num>",
+      "image": "43 in the left margin beside the prayer",
+      "problem": "marginal number tagged as a page number",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 122,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<page-type>blank</page-type> ... circular cutout showing through from facing page",
+      "image": "a pale-blue paper disc in the upper half of the leaf (pasted on, or seen through a cut-out; can't tell at this resolution)",
+      "problem": "it calls the disc a cutout; it may in fact be pasted on",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 184,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": null,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Accurate on p.184 and sound on the blank p.122. On p.58 it normalises silently and swaps the epithet 'Pijssime' for 'Altissime', a fluent substitution that a reader could not detect without the image."
+ }
+]

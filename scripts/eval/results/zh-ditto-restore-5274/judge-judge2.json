@@ -1,0 +1,1895 @@
+{
+ "arms": {
+  "P2-r2|zero": {
+   "n": 30,
+   "misleading": 7,
+   "flawed": 7,
+   "sound": 16,
+   "misleading_ci": [
+    0.11792388080557861,
+    0.40928326306719587
+   ]
+  },
+  "P0|zero": {
+   "n": 30,
+   "misleading": 29,
+   "flawed": 1,
+   "sound": 0,
+   "misleading_ci": [
+    0.8332960885388428,
+    0.9940914096838022
+   ]
+  },
+  "P2-ia|zero": {
+   "n": 30,
+   "misleading": 3,
+   "flawed": 7,
+   "sound": 20,
+   "misleading_ci": [
+    0.03459988847741868,
+    0.256210827331743
+   ]
+  },
+  "P2-r2|keep": {
+   "n": 5,
+   "misleading": 1,
+   "flawed": 1,
+   "sound": 3,
+   "misleading_ci": [
+    0.03622410822563066,
+    0.6244653729700049
+   ]
+  },
+  "P0|keep": {
+   "n": 5,
+   "misleading": 4,
+   "flawed": 0,
+   "sound": 1,
+   "misleading_ci": [
+    0.375534627029995,
+    0.9637758917743693
+   ]
+  },
+  "P2-ia|keep": {
+   "n": 5,
+   "misleading": 2,
+   "flawed": 0,
+   "sound": 3,
+   "misleading_ci": [
+    0.11762077314099711,
+    0.7692757205908813
+   ]
+  }
+ },
+ "pairs": {
+  "zero": {
+   "P0 vs P2-r2": {
+    "tie": 0,
+    "P2-r2": 30,
+    "p_sign": 0
+   },
+   "P2-ia vs P2-r2": {
+    "tie": 10,
+    "P2-r2": 7,
+    "P2-ia": 13,
+    "p_sign": 0.26318
+   },
+   "P0 vs P2-ia": {
+    "tie": 0,
+    "P2-ia": 30,
+    "p_sign": 0
+   }
+  },
+  "keep": {
+   "P0 vs P2-ia": {
+    "tie": 1,
+    "P2-ia": 4,
+    "p_sign": 0.125
+   },
+   "P0 vs P2-r2": {
+    "tie": 1,
+    "P2-r2": 4,
+    "p_sign": 0.125
+   },
+   "P2-ia vs P2-r2": {
+    "tie": 2,
+    "P2-r2": 2,
+    "P2-ia": 1,
+    "p_sign": 1
+   }
+  }
+ },
+ "swaps": [
+  {
+   "uid": "swap0-zero-04e23f7f-p71",
+   "arm": "P0",
+   "verdict": "misleading",
+   "not_this_leaf": true,
+   "others": [
+    "P2-ia:sound",
+    "P2-r2:sound"
+   ]
+  },
+  {
+   "uid": "swap1-zero-04e27aff-p52",
+   "arm": "P2-r2",
+   "verdict": "misleading",
+   "not_this_leaf": true,
+   "others": [
+    "P0:misleading",
+    "P2-ia:sound"
+   ]
+  },
+  {
+   "uid": "swap2-zero-e83515e4-p21",
+   "arm": "P2-ia",
+   "verdict": "misleading",
+   "not_this_leaf": true,
+   "others": [
+    "P2-r2:sound",
+    "P0:misleading"
+   ]
+  },
+  {
+   "uid": "swap3-zero-7d170ebf-p98",
+   "arm": "P0",
+   "verdict": "misleading",
+   "not_this_leaf": true,
+   "others": [
+    "P2-ia:flawed",
+    "P2-r2:sound"
+   ]
+  },
+  {
+   "uid": "swap4-zero-04e24bab-p58",
+   "arm": "P2-r2",
+   "verdict": "misleading",
+   "not_this_leaf": true,
+   "others": [
+    "P2-ia:flawed",
+    "P0:misleading"
+   ]
+  }
+ ],
+ "no_answer": [],
+ "pages": [
+  {
+   "uid": "zero-04e2784d-p65",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P0": "misleading",
+    "P2-ia": "misleading"
+   },
+   "why": "X alone keeps 篁掃, 庾闡 and the headword 淺瀨, where Y and Z have 簟掃, 庚闡 and 瀁瀨. Y also misreads 反騷 as 反驗 and displaces 薪歌於一一 and 森森, breaking the sequence, so Z beats it.",
+   "defects": {
+    "P2-r2": [
+     {
+      "quote": "<header>御定佩文韻府</header>",
+      "print": "欽定四庫全書 御定佩文韻府 (the outer-margin title is partly cut off)",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "簟掃一一",
+      "print": "篁掃丨丨",
+      "material": true
+     },
+     {
+      "quote": "濤瀨反驗終回復",
+      "print": "濤瀨 反騷終回復",
+      "material": true
+     },
+     {
+      "quote": "庚闡揚都賦",
+      "print": "庾闡揚都賦",
+      "material": true
+     },
+     {
+      "quote": "瀁瀨",
+      "print": "淺瀨",
+      "material": true
+     },
+     {
+      "quote": "暉射一一翠/薪歌於一一/色緜/瀁瀨/儲光羲詩…/森森/綿州詩",
+      "print": "鳳吹於洛浦值/薪歌於丨丨 … 暉射丨丨翠/色緜/森森 淺瀨 儲光羲詩…; 薪歌於丨丨 and 森森 are displaced, so the text runs out of sequence",
+      "material": true
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "簟掃丨丨",
+      "print": "篁掃丨丨",
+      "material": true
+     },
+     {
+      "quote": "庚闡揚都賦",
+      "print": "庾闡揚都賦",
+      "material": true
+     },
+     {
+      "quote": "瀁瀨",
+      "print": "淺瀨",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e283fc-p47",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "flawed",
+    "P0": "misleading",
+    "P2-r2": "sound"
+   },
+   "why": "Y drops every ditto mark (丨丨), breaking entries such as 無丨丨處可矣, and invents a closing line, 欠之可息, that is not on the page. X and Z have the same body text and match the page; they differ only in the folio number, where the print appears to read 二十三 as in Z rather than X's 二十二, which is a minor metadata error.",
+   "defects": {
+    "P2-ia": [
+     {
+      "quote": "<page-num>二十二</page-num>",
+      "print": "二十三 (the margin numeral appears to have three strokes below 十; small and not fully certain)",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "市令掌交易禁姦非 / 市事",
+      "print": "禁姦非丨丨市事",
+      "material": true
+     },
+     {
+      "quote": "何州曰但得有蟹無 / 處可矣",
+      "print": "何州曰但得有蟹無丨丨處可矣",
+      "material": true
+     },
+     {
+      "quote": "大功以上非 / 句檢官長",
+      "print": "大功以上非丨丨句檢官長",
+      "material": true
+     },
+     {
+      "quote": "欠之可息",
+      "print": "not on the page; the leaf ends at 乃引杜如 and then 口 closes the preceding column",
+      "material": true
+     },
+     {
+      "quote": "<header>御定佩文韻府</header>",
+      "print": "欽定四庫全書 in the margin as well as 御定佩文韻府",
+      "material": false
+     }
+    ],
+    "P2-r2": []
+   }
+  },
+  {
+   "uid": "zero-04e2abc7-p114",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-ia": "sound",
+    "P2-r2": "misleading"
+   },
+   "why": "X drops 「蘇轍詩修廈欺丨丨」 and nearly all ditto marks, sometimes writing 日 in their place. Z keeps these but misreads 瀼 as 「濃水」 and 櫺 as 「疎擋」, which Y reads correctly (瀼水, 疎櫺, the latter tagged unclear).",
+   "defects": {
+    "P0": [
+     {
+      "quote": "晴\n日\n重簾度細風朱子山",
+      "print": "晴日 蘇轍詩修廈欺丨丨 重簾度細風朱子山",
+      "material": true
+     },
+     {
+      "quote": "暮陸游詩\n日\n明山川",
+      "print": "寺丨丨暮陸游詩丨丨明山川",
+      "material": true
+     },
+     {
+      "quote": "當空\n懸",
+      "print": "當空丨丨懸",
+      "material": true
+     },
+     {
+      "quote": "濃水生紋淺見沙",
+      "print": "瀼水生紋淺見沙",
+      "material": true
+     },
+     {
+      "quote": "上疎擋",
+      "print": "上疎櫺",
+      "material": true
+     }
+    ],
+    "P2-ia": [],
+    "P2-r2": [
+     {
+      "quote": "濃水生紋淺見沙",
+      "print": "瀼水生紋淺見沙",
+      "material": true
+     },
+     {
+      "quote": "上疎擋",
+      "print": "上疎櫺",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-e83513da-p85",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P2-r2": "sound",
+    "P0": "misleading"
+   },
+   "why": "X and Y have identical body text that matches the page, including the ditto marks (丨丨) and 瓦丨丨一枚. Z turns every ditto into the numeral 一, so 一一為禮 no longer points to the headword, and 瓦一一枚 loses a character against 瓦丨丨一枚.",
+   "defects": {
+    "P2-ia": [
+     {
+      "quote": "<script>printed</script>",
+      "print": "hand-copied kaishu Siku manuscript page; a metadata slip only, the body text matches",
+      "material": false
+     }
+    ],
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "今用瓦一一枚",
+      "print": "今用瓦丨丨一枚",
+      "material": true
+     },
+     {
+      "quote": "紫水晶一一一口",
+      "print": "紫水晶丨丨一口",
+      "material": true
+     },
+     {
+      "quote": "南史…車轅 / 一一為禮",
+      "print": "丨丨為禮 (ditto marks for 提壺 are rendered throughout as the numeral 一)",
+      "material": true
+     },
+     {
+      "quote": "金 贝 口 万 今",
+      "print": "欽定四庫全書 (cropped running title, garbled into stray glyphs)",
+      "material": false
+     },
+     {
+      "quote": "掛寒柯",
+      "print": "挂寒柯",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e23c8b-p79",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "misleading",
+    "P2-ia": "flawed",
+    "P0": "misleading"
+   },
+   "why": "Y alone keeps 子皙盛飾入 where X and Z have 盛師, and it flags the doubtful 壟. Z collapses or drops the 丨丨 dittos (年表周/君以周後), displaces 衆 into 為隂出一衆為旱, and tags a ditto as a page number.",
+   "defects": {
+    "P2-r2": [
+     {
+      "quote": "子皙盛師入",
+      "print": "子皙盛飾入",
+      "material": true
+     },
+     {
+      "quote": "石送壟虞部詩",
+      "print": "石送龔(?)虞部詩: the glyph is blotted and looks like a surname such as 龔, not 壟; this reading is uncertain",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "石送<unclear>壟</unclear>虞部詩",
+      "print": "石送龔(?)虞部詩: the glyph is blotted and Y flags it as unclear; this reading is uncertain",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "史記天官書\n星曰天庫樓庫有五",
+      "print": "史記天官書丨丨衆星曰天庫樓庫有五: the dittos are dropped and 衆 is moved to another column",
+      "material": true
+     },
+     {
+      "quote": "為隂出\n一\n衆\n為旱",
+      "print": "為隂出丨丨為旱: a stray 衆 is inserted from the neighbouring column, so the text runs out of sequence",
+      "material": true
+     },
+     {
+      "quote": "侯者年表周\n君以周後",
+      "print": "侯者年表周丨丨君以周後: the dittos are dropped, losing 周子南君",
+      "material": true
+     },
+     {
+      "quote": "在\n一\n街南",
+      "print": "在丨丨 (double ditto for 危南): throughout, each 丨丨 is collapsed to a single 一 that reads as the numeral 'one'",
+      "material": true
+     },
+     {
+      "quote": "周\n<page-num>一</page-num>\n子南執辭",
+      "print": "周丨丨子南執辭: a ditto is tagged as a page number and the printed 三十八 is missing; also 子皙盛師 for 盛飾 and 御定佩文顧府 for 韻府",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-9c5c9f46-p44",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P2-r2": "flawed",
+    "P0": "misleading"
+   },
+   "why": "X matches the page, including the single ditto in \"命丨一\" and \"采物丨一人\". Y inflates these to \"丨丨丨\" without changing the sense, while Z drops every ditto mark, so it loses the headwords, and it also omits \"丨一人\" after \"中宮命\" and the \"又\" before \"郭玉傳\".",
+   "defects": {
+    "P2-ia": [],
+    "P2-r2": [
+     {
+      "quote": "後漢書百官志丨丨令一人丨丨丨一",
+      "print": "後漢書百官志丨丨令一人丨一",
+      "material": false
+     },
+     {
+      "quote": "奉宣中宮命丨丨丨一",
+      "print": "奉宣中宮命丨一",
+      "material": false
+     },
+     {
+      "quote": "采物丨丨丨一人",
+      "print": "采物丨一人",
+      "material": false
+     },
+     {
+      "quote": "漕穀丨丨丨",
+      "print": "漕穀丨",
+      "material": false
+     },
+     {
+      "quote": "諸好器物丨丨丨一人",
+      "print": "諸好器物丨一人",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "秦漢有 / 令 / 後漢亦曰 / 令",
+      "print": "秦漢有丨丨令丨 / 後漢亦曰丨丨令丨",
+      "material": true
+     },
+     {
+      "quote": "大長秋屬 / 一人主中閣道",
+      "print": "大長秋屬丨丨丨一人主中閣道",
+      "material": true
+     },
+     {
+      "quote": "令一人 / 一人郭玉傳和帝時為 / 多",
+      "print": "丨丨令一人丨一人又郭玉傳和帝時為丨丨丨多",
+      "material": true
+     },
+     {
+      "quote": "職掌奉宣中宮命 / 平準丞",
+      "print": "職掌奉宣中宮命丨一人 平準丞",
+      "material": true
+     },
+     {
+      "quote": "金定四庫全書",
+      "print": "欽定四庫全書",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e234a6-p49",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P2-r2": "flawed",
+    "P0": "misleading"
+   },
+   "why": "X and Y match the page except that Y keeps the blemished ditto as 「馬丨卜」, where X reads 「馬丨丨」. Z strips the ditto marks and corrupts or drops text: 「馬羸」, 「各干匹」, 「胙夸」, and 「來入蜀」 and 「以馳逐揚雄」 are missing.",
+   "defects": {
+    "P2-ia": [],
+    "P2-r2": [
+     {
+      "quote": "馬丨卜諸葛恪",
+      "print": "馬 followed by two ditto marks, the second blemished so that it looks like 卜 (馬丨丨諸葛恪)",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "騰 / 反離騷",
+      "print": "騰丨丨以馳逐揚雄反離騷; 以馳逐揚雄 is dropped, and ditto marks are dropped throughout the page",
+      "material": true
+     },
+     {
+      "quote": "馬羸",
+      "print": "馬驘",
+      "material": true
+     },
+     {
+      "quote": "各干匹",
+      "print": "各千匹",
+      "material": true
+     },
+     {
+      "quote": "魏書胙夸傳",
+      "print": "魏書眭夸傳",
+      "material": true
+     },
+     {
+      "quote": "不免 / 一 / 一騾",
+      "print": "不免丨丨 / 來入蜀 / 一騾; 來入蜀 is dropped, and 隨 and the 于闐 line are also out of sequence",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e2bc88-p11",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "misleading"
+   },
+   "why": "X matches the page throughout, including 賈餗 and 掃欃槍于嘒彼. Z misnames the author as 賈欽 and has 喈彼; Y also has 亦奮若, 趕志闔溫, 庚永宣 and 絲絕賦, and drops many ditto marks.",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "亦奮若",
+      "print": "赤奮若",
+      "material": true
+     },
+     {
+      "quote": "趕志闔溫傳注",
+      "print": "魏志閻溫傳注丨丨",
+      "material": true
+     },
+     {
+      "quote": "爾雅太歲在丑曰 / 疏 / 乙丑之歲曰旃蒙 … 東市相斫 / 西市相斫",
+      "print": "曰丨丨丨疏 … 旃蒙丨丨丨 … 東市相斫丨丨丨西市相斫丨丨丨",
+      "material": true
+     },
+     {
+      "quote": "庚永宣朱絲絕賦",
+      "print": "庾承宣朱絲繩賦",
+      "material": true
+     },
+     {
+      "quote": "賈欽 … 掃攙橞于喈彼 / 奏觀",
+      "print": "賈餗 … 掃欃槍于嘒彼 / 秦觀",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "賈欽",
+      "print": "賈餗",
+      "material": true
+     },
+     {
+      "quote": "于喈彼",
+      "print": "于嘒彼",
+      "material": true
+     },
+     {
+      "quote": "攙槍",
+      "print": "欃槍",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e24bab-p58",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "flawed",
+    "P0": "misleading",
+    "P2-r2": "misleading"
+   },
+   "why": "X alone keeps 米龍腦, 利棄我走 and 茶紙; its only doubt is 王律, where the print is hard to tell from 玉律, so that verdict is less certain. Z has 末龍腦 and 利素, and Y adds 一一 for the ditto marks, 齊履諫 and 應能痛.",
+   "defects": {
+    "P2-ia": [
+     {
+      "quote": "王律",
+      "print": "玉律 (the glyph looks like 王 with at most a faint dot; 玉律 is what the sense needs)",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "著一一不能伸",
+      "print": "著丨丨不能伸 (ditto marks for 足底, misread as the numeral 一 throughout)",
+      "material": true
+     },
+     {
+      "quote": "末龍腦",
+      "print": "米龍腦",
+      "material": true
+     },
+     {
+      "quote": "齊履諫傳",
+      "print": "齊履謙傳",
+      "material": true
+     },
+     {
+      "quote": "利素我走",
+      "print": "利棄我走",
+      "material": true
+     },
+     {
+      "quote": "應能痛",
+      "print": "應龍篇",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "末龍腦",
+      "print": "米龍腦",
+      "material": true
+     },
+     {
+      "quote": "利素我走",
+      "print": "利棄我走",
+      "material": true
+     },
+     {
+      "quote": "茶紙 given as 荼紙",
+      "print": "茶紙",
+      "material": false
+     },
+     {
+      "quote": "良巳",
+      "print": "良已",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e2bbee-p103",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P0": "misleading",
+    "P2-ia": "sound"
+   },
+   "why": "X and Z share the same faithful text, keeping the ditto marks and column order (臣丨丨希有不為父師, 豁達而丨丨立事) and differing only in layout. Y scrambles columns, drops every ditto mark and misreads 色→包, 豁→諮, 歇→歌, and its page number 五十 omits the 一 of 五十一.",
+   "defects": {
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "道術者使之與太子居處出入 / 古人君希有不學於人 / 智博 / 潛夫論上聖猶待學問其 / 乃 / 數 / 臣 / 希有不為父師",
+      "print": "columns run in sequence, with each continuation following its own column: 古人君希有不學於人臣丨丨希有不為父師; 潛夫論上聖猶待學問其丨乃丨其德乃碩而況於凡人乎; 數博 申鑒…",
+      "material": true
+     },
+     {
+      "quote": "禮比選天下端士孝悌 / 有; 亦; 少; 儒畢集 / 之 / 之",
+      "print": "孝悌丨丨有; 亦丨丨; 少丨丨; 儒畢集丨丨之: ditto marks are dropped throughout, and 之 is wrongly doubled",
+      "material": true
+     },
+     {
+      "quote": "包辭約謂之要",
+      "print": "色辭約謂之要",
+      "material": true
+     },
+     {
+      "quote": "諮達而",
+      "print": "豁達而丨丨",
+      "material": true
+     },
+     {
+      "quote": "歌有一鬼化為人",
+      "print": "歇有一鬼化為人",
+      "material": true
+     }
+    ],
+    "P2-ia": []
+   }
+  },
+  {
+   "uid": "zero-04e2adb9-p23",
+   "set": "zero",
+   "verdicts": {
+    "P0": "flawed",
+    "P2-ia": "flawed",
+    "P2-r2": "sound"
+   },
+   "why": "All three keep the full text in the right order. X misreads the connective as \"也入唐書\" for 也又唐書, and both X and Y write \"金曰磾\" for the name 金日磾. Z's only slip is the folio, \"十\" for what looks like 十一, which Y gets right but which matters less than the name in the running text.",
+   "defects": {
+    "P0": [
+     {
+      "quote": "也入唐書歷志",
+      "print": "也又唐書歷志",
+      "material": false
+     },
+     {
+      "quote": "金曰磾傳",
+      "print": "金日磾傳",
+      "material": false
+     },
+     {
+      "quote": "<page-num>十</page-num>",
+      "print": "十一",
+      "material": false
+     },
+     {
+      "quote": "<header>御定佩文韻府</header>",
+      "print": "欽定四庫全書 御定佩文韻府",
+      "material": false
+     },
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "woodblock print",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "金曰磾傳",
+      "print": "金日磾傳",
+      "material": false
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "<page-num>十</page-num>",
+      "print": "十一",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-1d8ec548-p59",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-r2": "flawed",
+    "P2-ia": "flawed"
+   },
+   "why": "X turns the ditto marks into 一一, drops 女 from 男呻女吟 and misreads 面面 as 西面. Y and Z share the same body text except that Y has 蒹葭 where Z has a flagged <unclear>蕭</unclear>葭; Y's only slip is the folio 三九 for 二十九, which is metadata, so Y edges Z.",
+   "defects": {
+    "P0": [
+     {
+      "quote": "市一一有四百餘店",
+      "print": "市丨丨有四百餘店 (ditto marks standing for the headword)",
+      "material": true
+     },
+     {
+      "quote": "男呻吟一一靜",
+      "print": "男呻女吟丨丨靜",
+      "material": true
+     },
+     {
+      "quote": "莫教安一一西面看芙蓉",
+      "print": "莫教安丨丨面面看芙蓉",
+      "material": true
+     },
+     {
+      "quote": "簾葭生林下",
+      "print": "蒹葭生林下 (damaged glyph; 蒹 fits the known line of the poem)",
+      "material": true
+     },
+     {
+      "quote": "元",
+      "print": "二十九 (folio number); the header 欽定四庫全書 is also dropped",
+      "material": false
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "<page-num>三九</page-num>",
+      "print": "二十九",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "<unclear>蕭</unclear>葭生林下",
+      "print": "蒹葭生林下 (damaged glyph; 蒹 fits the known line of the poem)",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e2467d-p71",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P2-r2": "sound",
+    "P0": "misleading"
+   },
+   "why": "X and Y give the same text with every ditto mark kept (\"差池若丨丨崱岧如龍鱗\") and differ only in line breaks and 絶/絕. Z drops every ditto mark, loses the headword 八 in \"八羽\", and misreads \"扥深枝\" and \"御定風文韻府\".",
+   "defects": {
+    "P2-ia": [],
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "賦落摩天之\n絕歸飛之好音",
+      "print": "賦落摩天之丨丨絶歸飛之好音",
+      "material": true
+     },
+     {
+      "quote": "羽齊明堂歌六瑚",
+      "print": "八羽齊明堂歌六瑚",
+      "material": true
+     },
+     {
+      "quote": "差池若\n崱岧如龍鱗",
+      "print": "差池若丨丨崱岧如龍鱗",
+      "material": true
+     },
+     {
+      "quote": "扥深枝",
+      "print": "丨丨托深枝",
+      "material": true
+     },
+     {
+      "quote": "御定風文韻府",
+      "print": "御定佩文韻府",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-e8350992-p49",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "misleading"
+   },
+   "why": "X alone keeps 蕭驃騎, 張說詩, 囿極 and 雒樂章, where Z has 蕭驥駒, 張詭詩, 固極 and 維樂章; Y shares those errors, also misreads 病鴟 as 病臨 and drops every 丨丨. All three read 下同丈, possibly 文 by sense, but the glyph looks like 丈, so it is not counted as a defect.",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "高允鹿苑賦覩 / 于",
+      "print": "高允鹿苑賦覩丨丨于 (every ditto mark on the page is dropped, leaving headwords missing from the quotations)",
+      "material": true
+     },
+     {
+      "quote": "蕭驥駒",
+      "print": "蕭驃騎",
+      "material": true
+     },
+     {
+      "quote": "張詭詩",
+      "print": "張說詩",
+      "material": true
+     },
+     {
+      "quote": "韓愈病臨詩",
+      "print": "韓愈病鴟詩",
+      "material": true
+     },
+     {
+      "quote": "固極",
+      "print": "囿極",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "蕭驥駒",
+      "print": "蕭驃騎",
+      "material": true
+     },
+     {
+      "quote": "張詭詩",
+      "print": "張說詩",
+      "material": true
+     },
+     {
+      "quote": "固極丨丨",
+      "print": "囿極丨丨",
+      "material": true
+     },
+     {
+      "quote": "武后拜 / 維樂章",
+      "print": "武后拜 / 雒樂章",
+      "material": true
+     },
+     {
+      "quote": "啓子淑賞",
+      "print": "啓予淑賞",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-9c5c99ce-p26",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "misleading"
+   },
+   "why": "X keeps every ditto mark and reads 「削鑢」「丨丨點/晴」 as printed. Z misreads these as 「削鍼」「丨丨照」, breaking 點睛, while Y makes the same misreadings, strips nearly all ditto marks and drops 「丨丨之劍」.",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "綬腰流黃",
+      "print": "綬腰流黃 丨丨之劍",
+      "material": true
+     },
+     {
+      "quote": "吳王書今臣盡智畢議 / 極慮則無國而不可奸",
+      "print": "吳王書今臣盡智畢議丨丨極慮則無國而不可奸",
+      "material": true
+     },
+     {
+      "quote": "守養生之道也",
+      "print": "守丨丨養生之道也",
+      "material": true
+     },
+     {
+      "quote": "一四年易脈",
+      "print": "丨丨四年易脈",
+      "material": true
+     },
+     {
+      "quote": "史通注履豨削鍼 / 由粗可以 / 照",
+      "print": "史通注履豨削鑢 / 由粗可以丨丨點",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "由粗可以丨丨照",
+      "print": "由粗可以丨丨點",
+      "material": true
+     },
+     {
+      "quote": "史通注履豨削鍼",
+      "print": "史通注履豨削鑢",
+      "material": true
+     },
+     {
+      "quote": "㑹精",
+      "print": "會精",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e23f7f-p71",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "sound"
+   },
+   "why": "X and Z have the same faithful body text, ditto marks included (\"丨丨必通\", \"虛旨\", \"奧旨\", \"宸旨\"). Y drops every ditto mark and \"荅陸澄書施孟異聞周韓\", misreads \"興旨\" and \"寢旨\", replaces \"虛旨\" with \"隠\", and puts text out of sequence (\"必通\", \"寢旨\" before \"精華\").",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "江淹表復聞 / 增其憂迮王儉 / 常旨",
+      "print": "江淹表復聞丨丨增其憂迮王儉荅陸澄書施孟異聞周韓丨丨 常旨",
+      "material": true
+     },
+     {
+      "quote": "隠 / 徐陵書分災恤",
+      "print": "丨丨必通 虛旨 徐陵書分災恤",
+      "material": true
+     },
+     {
+      "quote": "興旨",
+      "print": "奧旨",
+      "material": true
+     },
+     {
+      "quote": "寢旨 / 李適詩豹畧恭 / 精華呂溫承逺和尚碑旁窺 / 密悟真乗",
+      "print": "精華呂溫承逺和尚碑旁窺丨丨密悟真乗 宸旨 李適詩豹畧恭丨丨雄文動睿",
+      "material": true
+     },
+     {
+      "quote": "江淹尚書符信如白水皦然無二臺明 / 詳旨 / 江淹 / 飛火普加宣下文書千里馳驛",
+      "print": "詳旨 江淹尚書符信如白水皦然無二臺明丨丨飛火普加宣下文書千里馳驛 (all ditto marks dropped throughout)",
+      "material": true
+     }
+    ],
+    "P2-r2": []
+   }
+  },
+  {
+   "uid": "zero-1d8ed7b2-p144",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-ia": "sound",
+    "P2-r2": "sound"
+   },
+   "why": "X drops one of the two ditto marks in \"十一年前丨丨客\", giving \"十一年前一客\", and turns every ditto into the numeral 一 (\"衣冠一一\"), besides garbling the header as \"釒定匹庫全書\". Y and Z have identical body text that matches the page, including the ditto marks, and differ only in their <vocab> and <scan-quality> tags.",
+   "defects": {
+    "P0": [
+     {
+      "quote": "十一年前一客四千里外",
+      "print": "十一年前丨丨客四千里外",
+      "material": true
+     },
+     {
+      "quote": "衣冠一一",
+      "print": "衣冠丨丨 (ditto marks standing for the headword; X renders them as the numeral 一 throughout)",
+      "material": true
+     },
+     {
+      "quote": "晉家一一日",
+      "print": "晉家丨丨日",
+      "material": true
+     },
+     {
+      "quote": "釒定匹庫全書",
+      "print": "欽定四庫全書",
+      "material": false
+     },
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "woodblock-printed text",
+      "material": false
+     }
+    ],
+    "P2-ia": [],
+    "P2-r2": []
+   }
+  },
+  {
+   "uid": "zero-e83506a6-p98",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-r2": "flawed",
+    "P2-ia": "flawed"
+   },
+   "why": "X drops nearly all ditto marks, scrambles columns (\"也謝靈運詩\" after 喬松's note) and misreads \"之墜\" for 隥. Y and Z keep the text and order; Z edges Y with \"煦嘘\" and \"古屋丨生丨\" against Y's \"照嘘\" and \"古屋丨丨生\", its only slip being \"干股\".",
+   "defects": {
+    "P0": [
+     {
+      "quote": "之依山巔 / 喬松 / 戰國策…之壽王褒聖主得賢臣頌 / 也謝靈運詩停策倚",
+      "print": "矣潘岳賦若丨丨之依山巔 / 也謝靈運詩停策倚丨丨 / 喬松 戰國策…",
+      "material": true
+     },
+     {
+      "quote": "照嘘呼吸如 / 張衡賦美往昔之 / 注謂王赤也又",
+      "print": "煦嘘呼吸如丨丨張衡賦美往昔之丨丨注謂王丨赤丨也又",
+      "material": true
+     },
+     {
+      "quote": "之墜戰國策",
+      "print": "丨丨之隥戰國策",
+      "material": true
+     },
+     {
+      "quote": "巖蒔松于庭 / 長松 / … / 處士",
+      "print": "巖蒔松于庭 / 號丨丨處士 / 長松",
+      "material": true
+     },
+     {
+      "quote": "瓦松 / 酉陽雜俎…賦序 / 夜落釵干股又藥草名生五臺山",
+      "print": "丨夜落釵千股又藥草名生五臺山 precedes 瓦松 酉陽雜俎…",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "照嘘呼吸",
+      "print": "煦嘘呼吸",
+      "material": false
+     },
+     {
+      "quote": "古屋丨丨生",
+      "print": "古屋丨生丨",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "夜落釵干股",
+      "print": "夜落釵千股 (the glyph is close to 干, but the sense requires 千)",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-9c5cadbd-p122",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P2-ia": "sound",
+    "P0": "misleading"
+   },
+   "why": "X and Y match the page except that X moves one ditto across a column break (欲取丨 / 丨可憑者), which leaves the sequence unchanged. Z drops every ditto mark, misplaces 斗門同塞許有商量 and 淮南子, and misreads 來 as 宋 and 束 as 東.",
+   "defects": {
+    "P2-r2": [
+     {
+      "quote": "省臣欲取丨 / 丨可憑者為淮",
+      "print": "省臣欲取丨丨 / 可憑者為淮",
+      "material": false
+     }
+    ],
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "士卒分屯要害戒諸將嚴守備使左 / 斗門同塞許有商量 / 副元帥志寧",
+      "print": "隄防巳行丨丨斗門同塞許有商量 precedes 移牒; 使左 runs directly into 副元帥志寧",
+      "material": true
+     },
+     {
+      "quote": "陳詣府庭 / 淮南子 / 省闥引仍舊之直",
+      "print": "陳詣府庭丨丨省闥引仍舊之直…; 淮南子丨丨 belongs after 積牒, before 旋石以純修",
+      "material": true
+     },
+     {
+      "quote": "盱眙 / 來上; 奮筆渙若不思 / 盈前; 欲取 / 可憑者",
+      "print": "盱眙丨丨來上; 不思丨丨盈前; 欲取丨丨可憑者 (ditto marks dropped throughout the page)",
+      "material": true
+     },
+     {
+      "quote": "宋屯兵萬五千",
+      "print": "來屯兵萬五千",
+      "material": true
+     },
+     {
+      "quote": "東而投之水",
+      "print": "束而投之水",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-e8351be4-p107",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "flawed",
+    "P0": "misleading",
+    "P2-ia": "sound"
+   },
+   "why": "Z follows the page in order, with all ditto marks, including 二也丨丨, where X has only one. Y drops every 丨, scrambles the sequence (鄱陽言 / 不害物… / 宋書符瑞志…) and misreads 聞 as 閒.",
+   "defects": {
+    "P2-r2": [
+     {
+      "quote": "異蟲不犯境一也虎渡河二也丨",
+      "print": "異蟲不犯境一也虎渡河二也丨丨 (two ditto marks at the column foot)",
+      "material": false
+     },
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "block-printed page in regular script",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "有\n心三也李嶠詩\n懷\n至",
+      "print": "有丨心三也李嶠詩丨丨懷丨至; every ditto mark on the page is dropped, leaving the quotations with gaps",
+      "material": true
+     },
+     {
+      "quote": "十一年五月鄱陽言\n不害物王褒碧雞頌黃龍見兮\n宋書符瑞志王者不暴虐則\n歸來歸來",
+      "print": "十一年五月鄱陽言丨丨丨宋書符瑞志王者不暴虐則丨丨丨 / 不害物王褒碧雞頌黃龍見兮丨丨丨歸來歸來; the text runs out of sequence",
+      "material": true
+     },
+     {
+      "quote": "靈寳閒慙而止",
+      "print": "靈寳聞慙而止",
+      "material": true
+     },
+     {
+      "quote": "大戴禮\n地作富人作治",
+      "print": "大戴禮丨丨丨 / 地作富人作治; the ditto marks that stand for 天作仁 are lost",
+      "material": true
+     },
+     {
+      "quote": "金 欠 口 压 今 / <page-num>三</page-num>",
+      "print": "欽定四庫全書 (running title clipped at the edge); no folio 三 is legible",
+      "material": false
+     }
+    ],
+    "P2-ia": []
+   }
+  },
+  {
+   "uid": "zero-7e166806-p46",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P0": "misleading",
+    "P2-ia": "misleading"
+   },
+   "why": "X matches the page throughout, including 「一日二日念茲在茲」; Z is the same text except that 「二曰念」 breaks that phrase. Y drops nearly all the 丨丨 ditto marks, moves columns out of sequence, and misreads 「虧談錄」「靜甫陳」「梅寛臣」「卷九十九」.",
+   "defects": {
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "或侈于\n或侈于服食",
+      "print": "或侈于丨丨或侈于服食",
+      "material": true
+     },
+     {
+      "quote": "卷九十九",
+      "print": "卷九十之九",
+      "material": true
+     },
+     {
+      "quote": "虧談錄 (placed before 伎等)",
+      "print": "劇談錄 (small note after 啟祝)",
+      "material": true
+     },
+     {
+      "quote": "靜甫陳",
+      "print": "辭甫陳丨丨",
+      "material": true
+     },
+     {
+      "quote": "梅寛臣",
+      "print": "梅堯臣",
+      "material": true
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "二曰念",
+      "print": "二日念",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-e83515e4-p21",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "flawed"
+   },
+   "why": "Y misreads the place name as \"闢中\" for 關中 and turns every ditto mark 丨丨 into \"一一\". X and Z keep 丨丨 and 關中 and differ only at the worn character, where X's \"費\" fits 省百姓灑道之費 and Z's flagged \"貴\" does not.",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "果闢中流民",
+      "print": "果關中流民",
+      "material": true
+     },
+     {
+      "quote": "有一一數千集其旁",
+      "print": "有丨丨數千集其旁 (vertical ditto marks throughout are rendered as the numeral 一, which reads as a real character, e.g. beside the genuine 或一郡)",
+      "material": true
+     },
+     {
+      "quote": "灑道之貴注翻",
+      "print": "灑道之費注翻 (worn in the scan; sense requires 費)",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "灑道之<unclear>貴</unclear>",
+      "print": "灑道之費 (worn in the scan; sense requires 費, and Z flags the reading as uncertain)",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-e8350c4e-p46",
+   "set": "zero",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "sound"
+   },
+   "why": "X and Z match the page, including 庾信 and 為丨御丨 (侍御醫); they differ only in metadata. Y corrupts the name as 庻信, doubles the dittos in 為||御||, and adds 日用, which is not on the page.",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "柱國校方技庻信詩",
+      "print": "柱國校方技庾信詩",
+      "material": true
+     },
+     {
+      "quote": "知名為||御||",
+      "print": "知名為丨御丨",
+      "material": true
+     },
+     {
+      "quote": "日用",
+      "print": "(not on the page; the column ends 宋史)",
+      "material": true
+     },
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "woodblock-printed text",
+      "material": false
+     }
+    ],
+    "P2-r2": []
+   }
+  },
+  {
+   "uid": "zero-04e23bfb-p58",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "flawed",
+    "P2-ia": "misleading",
+    "P0": "misleading"
+   },
+   "defects": {
+    "P2-r2": [
+     {
+      "quote": "裁決十 / 丨丨劾貪風",
+      "print": "裁決丨 / 丨劾貪風",
+      "material": false
+     },
+     {
+      "quote": "濑之客",
+      "print": "瀨之客",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "丨効貪風",
+      "print": "丨劾貪風",
+      "material": true
+     }
+    ],
+    "P0": [
+     {
+      "quote": "加賜金五寸兩",
+      "print": "加賜金五十兩",
+      "material": true
+     },
+     {
+      "quote": "若卿可謂 / 者矣",
+      "print": "若卿可謂丨丨者矣",
+      "material": true
+     },
+     {
+      "quote": "法 / 自 / 克曰節",
+      "print": "法丨丨自克曰節",
+      "material": true
+     },
+     {
+      "quote": "裁決十 / 効貪風",
+      "print": "裁決丨 / 丨劾貪風",
+      "material": true
+     },
+     {
+      "quote": "金文口居今",
+      "print": "欽定四庫全書 (cropped at the edge)",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e2990f-p28",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P0": "misleading",
+    "P2-ia": "sound"
+   },
+   "why": "X and Z have identical body text and match the page, including 淫酒, 持節 and the 丨丨 dittos. Y misreads 涇酒 and 掎節, turns the dittos into 一一, and garbles 寒踈卜一漏.",
+   "defects": {
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "石斌涇酒荒獵",
+      "print": "石斌淫酒荒獵",
+      "material": true
+     },
+     {
+      "quote": "儀掎節監之",
+      "print": "儀持節監之",
+      "material": true
+     },
+     {
+      "quote": "儀持法一一斌怒殺之 (and every ditto throughout)",
+      "print": "thin vertical ditto marks 丨丨 standing for the headword, here 呵禁; 一一 reads as the word 'one by one'",
+      "material": true
+     },
+     {
+      "quote": "寒踈卜一漏夜警",
+      "print": "寒踈丨丨漏夜警: two ditto marks for 清禁, the first with a speck that resembles 卜",
+      "material": true
+     },
+     {
+      "quote": "金 穴 四 月 全 書",
+      "print": "欽定四庫全書, cropped at the right edge",
+      "material": false
+     }
+    ],
+    "P2-ia": []
+   }
+  },
+  {
+   "uid": "zero-04e29792-p13",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-ia": "sound",
+    "P2-r2": "sound"
+   },
+   "why": "X puts 唐書戴至德傳… before 九象而大業 and 詰究, turns ditto marks into 一 (無不一, losing one mark), and misreads 明日 as 明曰 and 佩文 as 師文. Y and Z have identical body text that matches the page (乃丨丨本末, 無不丨丨, 明/日安石) and differ only in tags.",
+   "defects": {
+    "P0": [
+     {
+      "quote": "神明動乎其中故四十 / 唐書戴至德傳遷尚書右僕射時劉 / 九象而大業之用周矣 / 詰究",
+      "print": "神明動乎其中故四十 / 九象而大業之用周矣 / 詰究 唐書戴至德傳遷尚書右僕射時劉",
+      "material": true
+     },
+     {
+      "quote": "無不一",
+      "print": "無不丨丨",
+      "material": true
+     },
+     {
+      "quote": "曰安石召謂之曰",
+      "print": "(明)日安石召謂之曰",
+      "material": true
+     },
+     {
+      "quote": "御定師文韻府",
+      "print": "御定佩文韻府",
+      "material": true
+     },
+     {
+      "quote": "乃一一本末",
+      "print": "乃丨丨本末 (ditto marks rendered as 一 throughout)",
+      "material": true
+     }
+    ],
+    "P2-ia": [],
+    "P2-r2": []
+   }
+  },
+  {
+   "uid": "zero-7d170ebf-p98",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-r2": "sound",
+    "P2-ia": "flawed"
+   },
+   "defects": {
+    "P0": [
+     {
+      "quote": "有三面鼓二形如酒缸高二尺首廣下 / 底博 / 見 / 上 / 魏博 / 唐書藩鎮 / 傳論 / 銳 / 七寸底博四寸",
+      "print": "有三面鼓二形如酒釭高二尺首廣下 / 銳丨丨七寸底博四寸腹廣不過首 / 底博 見上 魏博 唐書藩鎮丨丨傳論丨丨",
+      "material": true
+     },
+     {
+      "quote": "銳 七寸底博四寸",
+      "print": "銳丨丨七寸底博四寸 (ditto marks for the headword)",
+      "material": true
+     },
+     {
+      "quote": "流離失所 / 以北蹂踐一空",
+      "print": "流離失所丨丨以北蹂踐一空",
+      "material": true
+     },
+     {
+      "quote": "奧汪洋 / 多其所自得者",
+      "print": "奧汪洋丨丨多其所自得者",
+      "material": true
+     },
+     {
+      "quote": "金寶正 / 人言",
+      "print": "欽定四庫全書 卷九十九之六",
+      "material": false
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "酒缸",
+      "print": "酒釭",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "唐書藩鎮丨 / 傳論丨丨",
+      "print": "唐書藩鎮丨 / 丨傳論丨丨",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-7e162793-p26",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-ia": "sound",
+    "P2-r2": "sound"
+   },
+   "why": "X drops every ditto mark (\"立丨丨於山上\" becomes \"立 於山上\"), misreads \"濡源\" as \"瀰源\" and \"蜂臺\" as \"峯臺\", and gives \"卷十三\" for \"卷十之三\". Y and Z have identical text and match the page; Z only adds an <unclear> tag on the correct \"蜂\".",
+   "defects": {
+    "P0": [
+     {
+      "quote": "才文思政 / 玉映 / 齊名號 / 休戀 (all ditto marks missing throughout)",
+      "print": "才文思政丨丨, 玉映丨丨, 齊名號丨丨, 休戀丨丨 and so on",
+      "material": true
+     },
+     {
+      "quote": "瀰源立",
+      "print": "濡源立丨丨",
+      "material": true
+     },
+     {
+      "quote": "峯臺",
+      "print": "蜂臺",
+      "material": true
+     },
+     {
+      "quote": "刊定儀注立 / 於山上",
+      "print": "刊定儀注立丨丨於山上",
+      "material": true
+     },
+     {
+      "quote": "<header>卷十三</header>",
+      "print": "欽定四庫全書 卷十之三",
+      "material": true
+     }
+    ],
+    "P2-ia": [],
+    "P2-r2": []
+   }
+  },
+  {
+   "uid": "zero-04e27aff-p52",
+   "set": "zero",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-ia": "sound",
+    "P2-r2": "misleading"
+   },
+   "why": "X drops every ditto mark and the 也 in '丨丨也', leaving entries such as '瞿塘丨丨爲庾公' without their headword. Y and Z differ materially only at 襆/樸 in '淫預如襆本不通': I read the small print as 襆, which also fits the known saying, but the glyph is not fully certain, so Z's verdict rests on that reading.",
+   "defects": {
+    "P0": [
+     {
+      "quote": "若\n還家者亦驗回程給",
+      "print": "若丨丨還家者亦驗回程給",
+      "material": true
+     },
+     {
+      "quote": "往往\n夫鬻所不當有司罪也彼",
+      "print": "往往丨丨夫鬻所不當有司罪也彼",
+      "material": true
+     },
+     {
+      "quote": "爲遯陰來\n中退",
+      "print": "爲遯陰來丨丨也 中退",
+      "material": true
+     },
+     {
+      "quote": "瞿塘\n爲庾公李白詩\n池上熱風生",
+      "print": "瞿塘丨丨爲庾公李白詩丨丨池上熱風生",
+      "material": true
+     },
+     {
+      "quote": "淫預如樸",
+      "print": "淫預如襆",
+      "material": true
+     }
+    ],
+    "P2-ia": [],
+    "P2-r2": [
+     {
+      "quote": "淫預如樸本不通",
+      "print": "淫預如襆本不通",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "zero-04e2303c-p130",
+   "set": "zero",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P0": "misleading",
+    "P2-ia": "sound"
+   },
+   "why": "X and Z have identical body text and differ only in metadata, keeping the ditto marks and the headwords 蔞蒿, 牡蒿 and 菣. Y drops every ditto mark, as in 許慎以為非也 for 許慎以為丨丨非也, and misreads 萋蒿, 壯, 薔 and 菆, which changes the entry words.",
+   "defects": {
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "許慎以為非也本草艾一名",
+      "print": "許慎以為丨丨非也本草艾一名丨丨",
+      "material": true
+     },
+     {
+      "quote": "萋蒿",
+      "print": "蔞蒿",
+      "material": true
+     },
+     {
+      "quote": "雅購薔萋注薔蔞也",
+      "print": "雅購蔏蔞注蔏蔞丨丨也",
+      "material": true
+     },
+     {
+      "quote": "壯",
+      "print": "牡",
+      "material": true
+     },
+     {
+      "quote": "爾雅蒿菆注今",
+      "print": "爾雅蒿菣注今",
+      "material": true
+     }
+    ],
+    "P2-ia": []
+   }
+  },
+  {
+   "uid": "keep-04e29e05-p32",
+   "set": "keep",
+   "verdicts": {
+    "P0": "misleading",
+    "P2-ia": "misleading",
+    "P2-r2": "flawed"
+   },
+   "why": "X and Y splice 長借馬 and 翰林志 into 「惟當就…蟻封耳」, and 紫騮馬 into 「尋花借馬…煩川守」, while Z keeps the true sequence. X also drops most ditto marks (「䇿以 / 又莊子」) and misreads 陌 as 「佰」; Z alone keeps 「丨者丨丨」.",
+   "defects": {
+    "P0": [
+     {
+      "quote": "惟當就 / 長借馬 / 翰林志唐學士初入院 / 蟻封耳于是就蟻封",
+      "print": "惟當就蟻封耳于是就蟻封盤馬果倒踣 / 長借馬 翰林志唐學士初入院賜中廄馬",
+      "material": true
+     },
+     {
+      "quote": "尋花借馬 / 紫騮馬 / 古今樂録丨丨丨從軍久戍 / 煩川守弄水",
+      "print": "尋花借馬煩川守弄水偷船惱令公 / 紫騮馬 古今樂録丨丨丨從軍久戍懷歸而作也",
+      "material": true
+     },
+     {
+      "quote": "以刑罰為䇿以 / 又莊子",
+      "print": "以刑罰為䇿以丨丨丨丨又莊子",
+      "material": true
+     },
+     {
+      "quote": "問狗巳問羊又 / 然後及馬;以類相準則 / 之貴賤;陵文 / 鉤距兼設;輿 / 陰陽為御;者",
+      "print": "又丨丨然後及馬;則丨丨之貴賤;陵文丨丨丨丨鉤距兼設;輿丨丨丨丨陰陽為御;丨者丨丨",
+      "material": true
+     },
+     {
+      "quote": "丨丨逸佰富平車;金定匹庫全書",
+      "print": "丨丨逸陌富平車;欽定四庫全書",
+      "material": true
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "惟當就 / 長借馬 / 翰林志唐學士初入院 / 蟻封耳于是就蟻封",
+      "print": "惟當就蟻封耳于是就蟻封盤馬果倒踣 / 長借馬 翰林志唐學士初入院賜中廄馬",
+      "material": true
+     },
+     {
+      "quote": "尋花借馬 / 紫騮馬 / 古今樂録丨丨丨從軍久戍 / 煩川守弄水",
+      "print": "尋花借馬煩川守弄水偷船惱令公 / 紫騮馬 古今樂録丨丨丨從軍久戍懷歸而作也",
+      "material": true
+     },
+     {
+      "quote": "者丨丨",
+      "print": "丨者丨丨",
+      "material": false
+     },
+     {
+      "quote": "天驥韋來",
+      "print": "天驥牽來 (glyph worn; 牽 likely)",
+      "material": false
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "天驥韋來",
+      "print": "天驥牽來 (glyph worn; 牽 likely)",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "keep-9c5cae45-p76",
+   "set": "keep",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P2-ia": "misleading",
+    "P0": "misleading"
+   },
+   "why": "X alone keeps 沈周「落花詩」, where Y and Z give 「落北詩」. Z also misreads 「問難…啼鶯」 as 「問雜…帝鶯」 and drops ditto marks that stand for headword characters (丨丨弄, 丨丨連池, 詩丨丨, 丨丨問, 丨丨丨安知).",
+   "defects": {
+    "P2-r2": [],
+    "P2-ia": [
+     {
+      "quote": "沈周落北詩",
+      "print": "沈周落花詩",
+      "material": true
+     }
+    ],
+    "P0": [
+     {
+      "quote": "沈周落北詩",
+      "print": "沈周落花詩",
+      "material": true
+     },
+     {
+      "quote": "問雜為說假帝鶯",
+      "print": "丨丨問難為說假啼鶯",
+      "material": true
+     },
+     {
+      "quote": "弄 / 高啓詩萱留 / 連池 / 徐渭白燕雙乳詩",
+      "print": "丨丨弄 / 高啓詩萱留丨丨連池 / 徐渭白燕雙乳詩丨丨",
+      "material": true
+     },
+     {
+      "quote": "丨丨安知人作魚",
+      "print": "丨丨丨安知人作魚",
+      "material": true
+     },
+     {
+      "quote": "金定四庫全書",
+      "print": "欽定四庫全書",
+      "material": false
+     }
+    ]
+   }
+  },
+  {
+   "uid": "keep-e83505b4-p30",
+   "set": "keep",
+   "verdicts": {
+    "P2-ia": "sound",
+    "P0": "misleading",
+    "P2-r2": "misleading"
+   },
+   "why": "X alone keeps 少皥摯, 與兄書 and 白雪何丨. Z has 擊, 與巳書 and 河; Y shares those errors and adds 鵝雉, 搗酒, 之辨, 訖泛之 and a wrong header 欽定司事全書.",
+   "defects": {
+    "P2-ia": [],
+    "P0": [
+     {
+      "quote": "北方曰鵝雉",
+      "print": "北方曰鵗雉",
+      "material": true
+     },
+     {
+      "quote": "少皥擊之立也",
+      "print": "少皥摯之立也",
+      "material": true
+     },
+     {
+      "quote": "搗酒",
+      "print": "攜酒",
+      "material": true
+     },
+     {
+      "quote": "陸雲與巳書",
+      "print": "陸雲與兄書",
+      "material": true
+     },
+     {
+      "quote": "歡愉之辨",
+      "print": "歡愉之辭",
+      "material": true
+     }
+    ],
+    "P2-r2": [
+     {
+      "quote": "少皥擊之立也",
+      "print": "少皥摯之立也",
+      "material": true
+     },
+     {
+      "quote": "陸雲與巳書",
+      "print": "陸雲與兄書",
+      "material": true
+     },
+     {
+      "quote": "白雪河丨",
+      "print": "白雪何丨",
+      "material": true
+     }
+    ]
+   }
+  },
+  {
+   "uid": "keep-1d8ea136-p34",
+   "set": "keep",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P0": "misleading",
+    "P2-ia": "sound"
+   },
+   "why": "Y inserts the garbled 「頁列上頂／又声至為火臥听皮」, doubles the 「杜甫涪城縣…」 column with 「一一」 and misreads 「過析隈」 as 「過折隈」 and 「伐鄀」 as 「伐都」. X and Z match the page in the body text, ditto marks included, and differ only in the header and a spacing gap, which are minor.",
+   "defects": {
+    "P2-r2": [],
+    "P0": [
+     {
+      "quote": "頁列上頂 / 又声至為火臥听皮",
+      "print": "須到上頭 又茅屋為秋風所破歌",
+      "material": true
+     },
+     {
+      "quote": "杜甫涪城縣香積寺官閣詩諸天合在藤蘿外一一應",
+      "print": "the page has this column once, with ditto marks: 杜甫涪城縣香積寺官閣詩諸天合在藤蘿外丨丨應",
+      "material": true
+     },
+     {
+      "quote": "秦人過折隈",
+      "print": "秦人過析隈",
+      "material": true
+     },
+     {
+      "quote": "秦晉伐都",
+      "print": "秦晉伐鄀",
+      "material": true
+     }
+    ],
+    "P2-ia": []
+   }
+  },
+  {
+   "uid": "keep-cae0145c-p51",
+   "set": "keep",
+   "verdicts": {
+    "P2-r2": "sound",
+    "P2-ia": "sound",
+    "P0": "sound"
+   },
+   "why": "All three texts read identically and match the page, keeping the ditto marks (\"丨丨而拔之\", \"丨丨生塵范史雲釡中生魚\") and the small-note columns in order (\"范萊蕪註 / 冉或作丹\"). The only slip is the shared \"handwritten\" tag, which is minor metadata.",
+   "defects": {
+    "P2-r2": [
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "woodblock-printed characters",
+      "material": false
+     }
+    ],
+    "P2-ia": [
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "woodblock-printed characters",
+      "material": false
+     }
+    ],
+    "P0": [
+     {
+      "quote": "<script>handwritten</script>",
+      "print": "woodblock-printed characters",
+      "material": false
+     }
+    ]
+   }
+  }
+ ]
+}

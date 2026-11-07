@@ -46,6 +46,10 @@ import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { initialPublication } from '../lib/publication.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { validateR2Key, assertBookScopedKey } from '../lib/r2-key.mjs';
+import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
+
+// The marked 1200px display variant of a master. The master itself is never marked (#4406).
+const displayOf = async (body, bookId, pageNumber) => (await generateDisplayVariants(body, { bookId, pageNumber })).display;
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const arg = (k) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=');
@@ -68,6 +72,7 @@ const HOLD = {
   reason: CAMPAIGN,
   issue: ISSUE,
   release: 'Opus OCR of the book is done (claude-ocr.mjs, maya-ref-opus-6559 recipe, #6559) and Derek has chosen its translation lane; release with --to ocr_complete only then',
+  release_when: { kind: 'issue', ref: ISSUE },
 };
 const COLLECTIONS = ['maya', 'mesoamerican', 'americas'];
 const BERENDT_PROVENANCE = 'Part of the Berendt-Brinton Linguistic Collection: the papers of C. Hermann Berendt (1817–1878), later acquired by Daniel Garrison Brinton (1837–1899), and from him the University of Pennsylvania.';
@@ -592,19 +597,20 @@ async function repair(tei, plan, itemUrl) {
     const body = readFileSync(p.file);
     const meta = await sharp(body).metadata();
     const num = String(pg.page_number).padStart(4, '0');
-    const [url, thumbUrl] = await Promise.all([
-      put(`pages/${book.id}/${num}.jpg`, body, book.id),
+    const [url, displayUrl, thumbUrl] = await Promise.all([
+      put(`archived/${book.id}/${pg.page_number}.jpg`, body, book.id),
+      put(`pages/${book.id}/${num}.jpg`, await displayOf(body, book.id, pg.page_number), book.id),
       put(`pages/${book.id}/${num}-thumb.jpg`, await thumb(body), book.id),
     ]);
     await db.collection('pages').updateOne({ id: pg.id }, {
-      $set: { photo: url, archived_photo: url, display_photo: url, thumbnail: thumbUrl, image_thumb: thumbUrl, image_width: meta.width, image_height: meta.height, 'archive_metadata.repaired_at': new Date(), updated_at: new Date() },
+      $set: { photo: url, archived_photo: url, display_photo: displayUrl, thumbnail: thumbUrl, image_thumb: thumbUrl, image_width: meta.width, image_height: meta.height, 'archive_metadata.repaired_at': new Date(), updated_at: new Date() },
       $unset: { 'archive_metadata.truncated_download': '' },
     });
     fixed++;
   }
   const left = await db.collection('pages').countDocuments({ book_id: book.id, 'archive_metadata.truncated_download': { $exists: true } });
   if (!left && book.pipeline_auto?.hold?.detail?.truncated_pages) {
-    await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.hold.release': HOLD.release, 'pipeline_auto.hold.detail': null, updated_at: new Date() } });
+    await db.collection('books').updateOne({ id: book.id }, { $set: { 'pipeline_auto.hold.release': HOLD.release, 'pipeline_auto.hold.release_when': HOLD.release_when, 'pipeline_auto.hold.detail': null, updated_at: new Date() } });
   }
   console.log(`  repaired ${fixed}, ${left} still truncated`);
   return { outcome: 'repaired', id: book.id, fixed, left };
@@ -653,7 +659,7 @@ for (const spec of BOOKS.filter((b) => !ONLY || String(b.item) === ONLY)) {
     const existing = await db.collection('pages').countDocuments({ book_id: RESUME_BOOK });
     if (existing) throw new Error(`--resume-book ${RESUME_BOOK} already has ${existing} pages`);
     bookIdStr = RESUME_BOOK;
-    await db.collection('books').updateOne({ id: bookIdStr }, { $set: { 'pipeline_auto.hold.release': hold.release, 'pipeline_auto.hold.detail': hold.detail ?? null, updated_at: now } });
+    await db.collection('books').updateOne({ id: bookIdStr }, { $set: { 'pipeline_auto.hold.release': hold.release, 'pipeline_auto.hold.release_when': hold.release_when, 'pipeline_auto.hold.detail': hold.detail ?? null, updated_at: now } });
     console.log(`  resuming ${bookIdStr} (held, no pages)`);
   } else {
     const bookId = new ObjectId();
@@ -762,8 +768,9 @@ for (const spec of BOOKS.filter((b) => !ONLY || String(b.item) === ONLY)) {
     // complete file can later go to NNNN.jpg without fighting the immutable
     // cache on a key that once held the partial image.
     const suffix = p.truncated ? '-partial' : '';
-    const [url, thumbUrl] = await Promise.all([
-      put(`pages/${bookIdStr}/${num}${suffix}.jpg`, body, bookIdStr),
+    const [url, displayUrl, thumbUrl] = await Promise.all([
+      put(`archived/${bookIdStr}/${i + 1}${suffix}.jpg`, body, bookIdStr),
+      put(`pages/${bookIdStr}/${num}${suffix}.jpg`, await displayOf(body, bookIdStr, i + 1), bookIdStr),
       put(`pages/${bookIdStr}/${num}${suffix}-thumb.jpg`, await thumb(body), bookIdStr),
     ]);
     const pid = new ObjectId();
@@ -775,7 +782,7 @@ for (const spec of BOOKS.filter((b) => !ONLY || String(b.item) === ONLY)) {
       page_label: p.label,
       photo: url,
       archived_photo: url,
-      display_photo: url,
+      display_photo: displayUrl,
       photo_original: `${itemUrl}data/web/${p.name}`,
       thumbnail: thumbUrl,
       image_thumb: thumbUrl,

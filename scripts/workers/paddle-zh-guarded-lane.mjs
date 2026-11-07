@@ -61,6 +61,7 @@ import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { paddleTableRisk, T as TABLE_RULE } from '../lib/paddle-table-detect.mjs';
 import { geminiEngine, imageInput, ocrProvenance, notRecorded, codeVersion, host, NOT_RECORDED } from '../lib/write-provenance.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
 import {
   PADDLE, MIN_HAN, MAX_CHAR_RUN, convertPaddle, envelope, bodyHanCount, longestCharRun, workTitleOf,
   ocrSetFields, isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
@@ -116,6 +117,8 @@ export function pageSet(rec, route, { run, flash, now, codeVer, workTitle }) {
     const text = envelope(body);
     const set = ocrSetFields(text, { run: run.run, now, imageUrl: rec.image.url, box: boxFromRun(run), stats });
     set['ocr.pipeline'] = LANE;
+    // The Paddle $set is paddle-zh-lane.mjs's, which stamps that lane; this page is written by this one (#7301).
+    set['ocr.lane'] = laneForWrite('ocr', { call_site: CALL_SITE });
     set['ocr.engine'] = { ...set['ocr.engine'], issue: LANE_ISSUE, input, serving: { ...set['ocr.engine'].serving, input_long_side_cap: run.engine?.serving?.input_long_side_cap ?? null } };
     set['ocr.verdict'] = verdict;
     return { text, body, set };

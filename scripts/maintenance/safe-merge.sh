@@ -190,7 +190,11 @@ for pr in "${PRS[@]}"; do
 
   # 4. Merge, pinned to the sha that was judged (a later push makes this fail).
   if [ "$DRY" = 1 ]; then echo "  [dry-run] would squash-merge #$pr with --delete-branch"; continue; fi
-  gh pr merge "$pr" --repo "$REPO" --squash --delete-branch --match-head-commit "$sha" || refuse "$pr" "gh pr merge failed"
+  # The squash SUBJECT is set to the PR title explicitly. GitHub's default for a ONE-commit PR is that
+  # commit's message, not the title, so a `[deploy-now]` in the title never reached release.yml, which
+  # reads only the subject (#7478, 2026-10-27: merged, not released).
+  title=$(gh pr view "$pr" --repo "$REPO" --json title -q .title) || refuse "$pr" "could not read the PR title"
+  gh pr merge "$pr" --repo "$REPO" --squash --delete-branch --match-head-commit "$sha" --subject "$title (#$pr)" || refuse "$pr" "gh pr merge failed"
 
   # 5. The merge sha, and the command that shows THIS commit's build.
   merge_sha=""

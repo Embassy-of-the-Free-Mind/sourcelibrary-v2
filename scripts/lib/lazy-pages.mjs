@@ -130,7 +130,7 @@ async function applyLateLedger(db, bookId, photos, appliedAlready) {
   return r.modifiedCount;
 }
 
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 /** Default manifest fetcher: one GET with a timeout. Callers in bulk lanes pass a rate-limited one. */
 async function defaultFetchManifest(url, { timeoutMs = 20_000 } = {}) {

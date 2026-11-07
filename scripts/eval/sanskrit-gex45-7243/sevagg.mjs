@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// PRIOR ART: none (first #6740 severity aggregate). sevagg.mjs <sev dir> [--out sev.json]: grades.json per page + key.json → counts per arm and cell.
+// PRIOR ART: none (first #6740 severity aggregate). [SEV_PAGES=<manifest>] sevagg.mjs <sev dir> [--out sev.json]: grades.json per page + key.json → counts per arm and cell.
 import fs from 'node:fs';
 import path from 'node:path';
 const dir = process.argv[2]; const outI = process.argv.indexOf('--out');
-const pages = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), 'pages.json'), 'utf8')).pages;
+const pages = JSON.parse(fs.readFileSync(process.env.SEV_PAGES || path.join(path.dirname(new URL(import.meta.url).pathname), 'pages.json'), 'utf8')).pages;
 const key = JSON.parse(fs.readFileSync(path.join(dir, 'key.json'), 'utf8'));
 const W = [0, 1, 3, 3, 10];   // #6740 example weights, illustration only
 const res = { per_page: {}, cells: {} };

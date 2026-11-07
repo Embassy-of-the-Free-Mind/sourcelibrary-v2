@@ -1,0 +1,32 @@
+{
+ "cells": {
+  "ar-mss|manuscript": {
+   "routes": {
+    "agy-flash-low-read-diplomatic": {
+     "n": 26,
+     "books": 13,
+     "accept": "8/26",
+     "wrong_text_pages": "2/26",
+     "classes_k_of_n": {
+      "FAILED": "16/26"
+     },
+     "script_basis": {
+      "page": 26
+     }
+    },
+    "lite": {
+     "n": 26,
+     "books": 13,
+     "accept": "17/26",
+     "wrong_text_pages": "9/26",
+     "classes_k_of_n": {},
+     "script_basis": {
+      "page": 26
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/estimator/router-table/evidence/arabic-mss-7341.score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

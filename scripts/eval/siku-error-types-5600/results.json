@@ -1,0 +1,1019 @@
+{
+ "issue": 5600,
+ "scored_at": "2026-10-29T22:34:19.306Z",
+ "judge": "claude-opus-5-5 via claude -p (l7a subscription), image + OCR + English + previous page tail, blind to arm",
+ "arms": {
+  "A": {
+   "n_pages": 30,
+   "n_books": 30,
+   "errors_per_page": {
+    "mean": 2.1,
+    "ci": [
+     1.57,
+     2.67
+    ]
+   },
+   "by_kind": {
+    "INVENTED": {
+     "per_page": 0.13,
+     "ci": [
+      0,
+      0.3
+     ],
+     "pages_with": 3
+    },
+    "WRONG-SENSE": {
+     "per_page": 0.97,
+     "ci": [
+      0.6,
+      1.33
+     ],
+     "pages_with": 17
+    },
+    "OCR-CARRIED": {
+     "per_page": 0.2,
+     "ci": [
+      0.03,
+      0.47
+     ],
+     "pages_with": 4
+    },
+    "OMITTED": {
+     "per_page": 0.07,
+     "ci": [
+      0,
+      0.17
+     ],
+     "pages_with": 2
+    },
+    "SEAM": {
+     "per_page": 0.13,
+     "ci": [
+      0.03,
+      0.27
+     ],
+     "pages_with": 4
+    },
+    "JUNK": {
+     "per_page": 0.23,
+     "ci": [
+      0.07,
+      0.43
+     ],
+     "pages_with": 6
+    },
+    "STYLE": {
+     "per_page": 0.37,
+     "ci": [
+      0.2,
+      0.53
+     ],
+     "pages_with": 11
+    }
+   },
+   "by_risk": {
+    "HIGH": {
+     "per_page": 0.23,
+     "ci": [
+      0.07,
+      0.43
+     ],
+     "total": 7
+    },
+    "MEDIUM": {
+     "per_page": 0.77,
+     "ci": [
+      0.4,
+      1.2
+     ],
+     "total": 23
+    },
+    "LOW": {
+     "per_page": 1.1,
+     "ci": [
+      0.83,
+      1.4
+     ],
+     "total": 33
+    }
+   },
+   "pages_with_high": {
+    "k": 6,
+    "n": 30,
+    "share": 0.2,
+    "wilson": [
+     0.1,
+     0.37
+    ]
+   },
+   "high_by_kind": {
+    "WRONG-SENSE": 4,
+    "OMITTED": 1,
+    "OCR-CARRIED": 1,
+    "INVENTED": 1
+   },
+   "high_by_origin": {
+    "translation": 6,
+    "ocr": 1
+   },
+   "verdicts": {
+    "show": 16,
+    "caveat": 13,
+    "dont": 1
+   },
+   "ocr_matches_image": {
+    "yes": 17,
+    "mostly": 13,
+    "no": 0
+   },
+   "high_findings": [
+    {
+     "name": "P02",
+     "url": "https://sourcelibrary.org/book/vol-4-1782363963836/page/6a3cb73b3dce6cfad7487178",
+     "title": "尚書纂傳·卷十四上~卷十六 (vol 4)",
+     "page": 4,
+     "kind": "WRONG-SENSE",
+     "source_span": "劉殺也",
+     "english_span": "\"Value\" means sparing",
+     "why": "The gloss says 劉 (liu) means 'to kill'. The English attaches it to the wrong word and reverses its meaning to 'sparing'.",
+     "evidence": "both"
+    },
+    {
+     "name": "P21",
+     "url": "https://sourcelibrary.org/book/vol-29-30/page/6a3c732201fe4f593c1e5db9",
+     "title": "欽定春秋傳說彙纂·卷五 (vol 29)",
+     "page": 15,
+     "kind": "WRONG-SENSE",
+     "source_span": "大子無敵",
+     "english_span": "The Crown Prince <note>or sovereign</note> has no equal",
+     "why": "The context makes this the Son of Heaven (天子, here written 大子). 'Crown Prince' brings in a different person, and the note only half fixes it.",
+     "evidence": "both"
+    },
+    {
+     "name": "P30",
+     "url": "https://sourcelibrary.org/book/vol-24-26/page/6a3c6d2b01fe4f593c1b859b",
+     "title": "黃氏日抄·卷三十二 (vol 24)",
+     "page": 60,
+     "kind": "OMITTED",
+     "source_span": "二十七 顏子驕瑯琊伯",
+     "english_span": "Qidiao Lian, Count of Wucheng, 26.\n\nQidiao Tufu, Count of Xuju, 27.",
+     "why": "The entry for Yan Zijiao, Count of Langya, is missing, so the reader gets one disciple fewer.",
+     "evidence": "both"
+    },
+    {
+     "name": "P30",
+     "url": "https://sourcelibrary.org/book/vol-24-26/page/6a3c6d2b01fe4f593c1b859b",
+     "title": "黃氏日抄·卷三十二 (vol 24)",
+     "page": 60,
+     "kind": "WRONG-SENSE",
+     "source_span": "二十八 壤駟赤…三十四 (next page)",
+     "english_span": "Qidiao Tufu, Count of Xuju, 27. … Gongliang Ru, Count of Dongmou, 33.",
+     "why": "The number follows each entry, so these seven should be 28–34 (Qidiao Tufu 28 … Gongliang Ru 34; 三十四 opens the next page), but the dropped entry shifts each one down by one.",
+     "evidence": "both"
+    },
+    {
+     "name": "P37",
+     "url": "https://sourcelibrary.org/book/hou-hanshu-siku-quanshu-vol-33-of-43-fan-ye/page/6ae0c5374adf2ffb52f75ad8",
+     "title": "後漢書[范煜…等撰]·卷九十三~卷九十五 (Hou Hanshu, Siku Quanshu, vol. 33 of 43)",
+     "page": 87,
+     "kind": "WRONG-SENSE",
+     "source_span": "得其人與不在盧生耳",
+     "english_span": "Have suitable men been obtained? Let us not rely solely on master Lu.",
+     "why": "The edict says that whether the right men are found depends on Master Lu (Lu Yu) alone. The English reverses this and tells people not to rely on him.",
+     "evidence": "ocr"
+    },
+    {
+     "name": "P39",
+     "url": "https://sourcelibrary.org/book/vol-24-67/page/6a3cba6c3dce6cfad749ba47",
+     "title": "記纂淵海·卷三十八~卷三十九 (vol 24)",
+     "page": 72,
+     "kind": "OCR-CARRIED",
+     "source_span": "親有嚴客希",
+     "english_span": "When one's parents entertain an honored guest, rarely",
+     "why": "The image shows 帣 ('to roll up the sleeves'), not 希. The English 'rarely' breaks the sentence (Shiji: 帣韝鞠䐐，侍酒於前).",
+     "evidence": "image"
+    },
+    {
+     "name": "P41",
+     "url": "https://sourcelibrary.org/book/hanshu-siku-quanshu-vol-33-of-57-ban-gu/page/6ae0c0414adf2ffb52f73a7e",
+     "title": "前漢書·卷五十五~卷五十六 (Hanshu, Siku Quanshu, vol. 33 of 57)",
+     "page": 47,
+     "kind": "INVENTED",
+     "source_span": "臣召南",
+     "english_span": "<gloss>Quan Zhaonan, 1710–1768, Qing dynasty historian</gloss>",
+     "why": "The Siku Hanshu kaozheng author 召南 is Qi Zhaonan 齊召南 (1703–1768). The gloss gives a surname and dates that are not in the source, and both are wrong.",
+     "evidence": "ocr"
+    }
+   ]
+  },
+  "B": {
+   "n_pages": 20,
+   "n_books": 20,
+   "errors_per_page": {
+    "mean": 5.65,
+    "ci": [
+     3.7,
+     7.95
+    ]
+   },
+   "by_kind": {
+    "INVENTED": {
+     "per_page": 0.55,
+     "ci": [
+      0.25,
+      0.9
+     ],
+     "pages_with": 8
+    },
+    "WRONG-SENSE": {
+     "per_page": 2.55,
+     "ci": [
+      1.35,
+      4.1
+     ],
+     "pages_with": 15
+    },
+    "OCR-CARRIED": {
+     "per_page": 1.4,
+     "ci": [
+      0.35,
+      2.8
+     ],
+     "pages_with": 9
+    },
+    "OMITTED": {
+     "per_page": 0.3,
+     "ci": [
+      0.1,
+      0.55
+     ],
+     "pages_with": 5
+    },
+    "SEAM": {
+     "per_page": 0.25,
+     "ci": [
+      0.1,
+      0.45
+     ],
+     "pages_with": 5
+    },
+    "JUNK": {
+     "per_page": 0.2,
+     "ci": [
+      0.05,
+      0.4
+     ],
+     "pages_with": 4
+    },
+    "STYLE": {
+     "per_page": 0.4,
+     "ci": [
+      0.15,
+      0.65
+     ],
+     "pages_with": 7
+    }
+   },
+   "by_risk": {
+    "HIGH": {
+     "per_page": 1.75,
+     "ci": [
+      0.85,
+      2.8
+     ],
+     "total": 35
+    },
+    "MEDIUM": {
+     "per_page": 2.2,
+     "ci": [
+      1.25,
+      3.25
+     ],
+     "total": 44
+    },
+    "LOW": {
+     "per_page": 1.7,
+     "ci": [
+      1.2,
+      2.25
+     ],
+     "total": 34
+    }
+   },
+   "pages_with_high": {
+    "k": 10,
+    "n": 20,
+    "share": 0.5,
+    "wilson": [
+     0.3,
+     0.7
+    ]
+   },
+   "high_by_kind": {
+    "OCR-CARRIED": 12,
+    "WRONG-SENSE": 15,
+    "SEAM": 2,
+    "INVENTED": 5,
+    "JUNK": 1
+   },
+   "high_by_origin": {
+    "ocr": 12,
+    "translation": 20,
+    "seam": 2,
+    "ocr-furniture": 1
+   },
+   "verdicts": {
+    "show": 3,
+    "caveat": 9,
+    "dont": 8
+   },
+   "ocr_matches_image": {
+    "yes": 5,
+    "mostly": 14,
+    "no": 1
+   },
+   "high_findings": [
+    {
+     "name": "P01",
+     "url": "https://sourcelibrary.org/book/vol-97-2/page/6a3c5fc8879008ba7e157d46",
+     "title": "圖書編·卷一百二十七 (vol 97)",
+     "page": 97,
+     "kind": "OCR-CARRIED",
+     "source_span": "瓊瑰 瓊瑰玉佩 (OCR 瓊瓊 / 璁 璁璁)",
+     "english_span": "Excellent fine jade / Green-colored jade / Brilliant green jade",
+     "why": "The image reads 瓊瑰 / 瓊瑰玉佩 ('fine jade stones and jade pendants'). The OCR's 璁 led to a made-up 'green jade' entry.",
+     "evidence": "image"
+    },
+    {
+     "name": "P01",
+     "url": "https://sourcelibrary.org/book/vol-97-2/page/6a3c5fc8879008ba7e157d46",
+     "title": "圖書編·卷一百二十七 (vol 97)",
+     "page": 97,
+     "kind": "OCR-CARRIED",
+     "source_span": "觿 童子佩觿 (OCR 簫 / 佩鱬)",
+     "english_span": "The jade fish-shaped pendant",
+     "why": "The image reads 佩觿 (a knot-untying spike). The OCR's 鱬 produced an invented fish pendant.",
+     "evidence": "image"
+    },
+    {
+     "name": "P01",
+     "url": "https://sourcelibrary.org/book/vol-97-2/page/6a3c5fc8879008ba7e157d46",
+     "title": "圖書編·卷一百二十七 (vol 97)",
+     "page": 97,
+     "kind": "OCR-CARRIED",
+     "source_span": "瑳兮 (OCR 珽 兮)",
+     "english_span": "The jade tablet <note>original: \"珽\"</note>",
+     "why": "The image reads 瑳兮瑳兮. No jade-tablet entry exists on the page.",
+     "evidence": "image"
+    },
+    {
+     "name": "P03",
+     "url": "https://sourcelibrary.org/book/vol-53/page/6a3c5ea740c88a541d8e4445",
+     "title": "御定康熙字典·卷十八 (vol 53)",
+     "page": 102,
+     "kind": "OCR-CARRIED",
+     "source_span": "猶 (headword; image shows 犭+隋), 集韻選委切音髓",
+     "english_span": "### Yǔ",
+     "why": "The headword is 犭+隋, read suǐ (音髓); the OCR has 猶 and the English heading gives 'Yǔ', a reading that fits neither character.",
+     "evidence": "image"
+    },
+    {
+     "name": "P03",
+     "url": "https://sourcelibrary.org/book/vol-53/page/6a3c5ea740c88a541d8e4445",
+     "title": "御定康熙字典·卷十八 (vol 53)",
+     "page": 102,
+     "kind": "OCR-CARRIED",
+     "source_span": "或作獺…一作獺…本作獺 (image: 犭+隋-type variant forms)",
+     "english_span": "<term>tǎ</term> <gloss>otter-like animal</gloss>",
+     "why": "The variant forms are 犭+隋-type graphs, not 獺; 'otter' is a gloss the source never gives.",
+     "evidence": "image"
+    },
+    {
+     "name": "P03",
+     "url": "https://sourcelibrary.org/book/vol-53/page/6a3c5ea740c88a541d8e4445",
+     "title": "御定康熙字典·卷十八 (vol 53)",
+     "page": 102,
+     "kind": "OCR-CARRIED",
+     "source_span": "獼 (headword; image 犭+麻), 狼狄切音歷",
+     "english_span": "### Mí",
+     "why": "The headword is 犭+麻, read lì; the heading 'Mí' comes from the OCR's 獼.",
+     "evidence": "image"
+    },
+    {
+     "name": "P03",
+     "url": "https://sourcelibrary.org/book/vol-53/page/6a3c5ea740c88a541d8e4445",
+     "title": "御定康熙字典·卷十八 (vol 53)",
+     "page": 102,
+     "kind": "OCR-CARRIED",
+     "source_span": "獫 (headword; image 犭+壹), 虛器切音齂",
+     "english_span": "### Xiǎn … sounding like <term>fú</term>",
+     "why": "The headword is 犭+壹 (xì), not 獫, and the homophone is 齂, not 韍 (fú).",
+     "evidence": "image"
+    },
+    {
+     "name": "P03",
+     "url": "https://sourcelibrary.org/book/vol-53/page/6a3c5ea740c88a541d8e4445",
+     "title": "御定康熙字典·卷十八 (vol 53)",
+     "page": 102,
+     "kind": "WRONG-SENSE",
+     "source_span": "夏后氏有獟獞寒浞子名",
+     "english_span": "the Xia Dynasty official Han Zhuo had sons named <term>Yáo</term> and <term>Tóng</term>",
+     "why": "The source names one person in the Xia era, Han Zhuo's son (the headword); it does not make Han Zhuo a Xia official or give him two sons.",
+     "evidence": "both"
+    },
+    {
+     "name": "P03",
+     "url": "https://sourcelibrary.org/book/vol-53/page/6a3c5ea740c88a541d8e4445",
+     "title": "御定康熙字典·卷十八 (vol 53)",
+     "page": 102,
+     "kind": "OCR-CARRIED",
+     "source_span": "獙 (headword; image 犭+敢), 荒檻切",
+     "english_span": "### Bì",
+     "why": "The headword is 犭+敢, read hǎn (the English body itself says so); the heading 'Bì' comes from the OCR's 獙.",
+     "evidence": "image"
+    },
+    {
+     "name": "P06",
+     "url": "https://sourcelibrary.org/book/vol-143-2/page/6a3c663139b4508b04e32c71",
+     "title": "御定子史精華·卷一百二十三~卷一百二十四 (vol 143)",
+     "page": 62,
+     "kind": "SEAM",
+     "source_span": "不能曰不能行之至也",
+     "english_span": "To say that one \"cannot\" is the peak of being unable to act.",
+     "why": "This finishes the previous page's 能之曰能之: 'when unable, he says he is unable; that is the height of conduct'. The English turns it into a statement about the peak of inability.",
+     "evidence": "both"
+    },
+    {
+     "name": "P06",
+     "url": "https://sourcelibrary.org/book/vol-143-2/page/6a3c663139b4508b04e32c71",
+     "title": "御定子史精華·卷一百二十三~卷一百二十四 (vol 143)",
+     "page": 62,
+     "kind": "WRONG-SENSE",
+     "source_span": "戰者不習使人戰者嚴駔",
+     "english_span": "If those who do not practice are made to fight, it is because their leaders are severe and forceful.",
+     "why": "Here 戰 means 'tremble': 'trembling comes from being unaccustomed; one who makes others tremble is harsh'. It is not about combat, so the 'On Combat' heading is also wrong.",
+     "evidence": "both"
+    },
+    {
+     "name": "P06",
+     "url": "https://sourcelibrary.org/book/vol-143-2/page/6a3c663139b4508b04e32c71",
+     "title": "御定子史精華·卷一百二十三~卷一百二十四 (vol 143)",
+     "page": 62,
+     "kind": "WRONG-SENSE",
+     "source_span": "申向說之而戰…申子說我而戰為吾相也夫",
+     "english_span": "Shen Xiang spoke to him and incited a desire for war. Lord Ta criticized him, saying, \"Master Shen, you speak to me of war because I am the Chancellor.\"",
+     "why": "Shen Xiang trembled while speaking to him. He was not urging war.",
+     "evidence": "both"
+    },
+    {
+     "name": "P06",
+     "url": "https://sourcelibrary.org/book/vol-143-2/page/6a3c663139b4508b04e32c71",
+     "title": "御定子史精華·卷一百二十三~卷一百二十四 (vol 143)",
+     "page": 62,
+     "kind": "WRONG-SENSE",
+     "source_span": "見老者而使之戰",
+     "english_span": "When you see an elder, you make him go to war.",
+     "why": "The meaning is that the lord receives an old man and makes him tremble. There is no going to war.",
+     "evidence": "both"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "SEAM",
+     "source_span": "生輝光",
+     "english_span": "Produces brilliance.",
+     "why": "生輝光 ends the Bai Juyi line from the previous page (拂拭生輝光). The English turns it into a new headword.",
+     "evidence": "both"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "WRONG-SENSE",
+     "source_span": "丨丨 (=拂拭) throughout first entry",
+     "english_span": "<term>shanghui</term> <gloss>producing brilliance</gloss>",
+     "why": "In every quotation 丨丨 stands for the headword 拂拭 'to dust/wipe', not the invented 'shanghui', so all eleven quotations are mistranslated.",
+     "evidence": "both"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "WRONG-SENSE",
+     "source_span": "丨丨魚鱗見",
+     "english_span": "Under the shanghui the fish scales appear",
+     "why": "It means 'when wiped, fish-scale patterns appear'.",
+     "evidence": "ocr"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "WRONG-SENSE",
+     "source_span": "丨丨輕塵宛是昔年之字",
+     "english_span": "the shanghui producing brilliance light dust is exactly as the characters",
+     "why": "It means 'wiping off the light dust, the characters are just as in former years'.",
+     "evidence": "ocr"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "OCR-CARRIED",
+     "source_span": "馬能為繞指丨丨試時人",
+     "english_span": "A horse can wind around the finger",
+     "why": "The character is 焉 'how could', not 馬 'horse': 'how could it become finger-soft? Wipe it and test it on the men of the day'.",
+     "evidence": "image"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "INVENTED",
+     "source_span": "朱博傳",
+     "english_span": "Biography of Zhu Boru",
+     "why": "The man is Zhu Bo (朱博). 'Boru' is invented.",
+     "evidence": "both"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "WRONG-SENSE",
+     "source_span": "府功曹白除禁守尉",
+     "english_span": "reported this and removed Jin from his post as a guard",
+     "why": "除 here means 'appoint': the officer recommended appointing Jin as acting commandant, not removing him.",
+     "evidence": "ocr"
+    },
+    {
+     "name": "P10",
+     "url": "https://sourcelibrary.org/book/vol-719/page/6a3c651daf3c49b59c5caad4",
+     "title": "御定佩文韻府·卷一百二之八 (vol 719)",
+     "page": 47,
+     "kind": "WRONG-SENSE",
+     "source_span": "欲瀧卿恥丨丨用禁能自效不",
+     "english_span": "If you can prove yourself, I will not forbid it.",
+     "why": "It means 'I want to wash away your shame and wipe the slate clean by employing you, Jin; can you exert yourself?' 不禁 is misparsed as 'will not forbid'. 瀧 is a misread of 灑 'wash away'.",
+     "evidence": "both"
+    },
+    {
+     "name": "P17",
+     "url": "https://sourcelibrary.org/book/vol-129-2/page/6a3c661f39b4508b04e3222a",
+     "title": "御定子史精華·卷八十四~卷八十六 (vol 129)",
+     "page": 4,
+     "kind": "WRONG-SENSE",
+     "source_span": "長事袁絲弟畜灌夫籍福之屬",
+     "english_span": "served him. Yuan Si treated him like a younger brother, and people like Guan Fu and Ji Fu were associated with him",
+     "why": "Ji Xin served Yuan Si as an elder brother and treated Guan Fu and Ji Fu as younger brothers. The English reverses who treated whom as a younger brother.",
+     "evidence": "both"
+    },
+    {
+     "name": "P17",
+     "url": "https://sourcelibrary.org/book/vol-129-2/page/6a3c661f39b4508b04e3222a",
+     "title": "御定子史精華·卷八十四~卷八十六 (vol 129)",
+     "page": 4,
+     "kind": "INVENTED",
+     "source_span": "坐其兄蓋侯南鄉自坐東鄉",
+     "english_span": "an act of humility or subordinate positioning",
+     "why": "Facing east was the seat of honour. Tian Fen was claiming precedence over his elder brother, so this note says the opposite of what happened.",
+     "evidence": "both"
+    },
+    {
+     "name": "P18",
+     "url": "https://sourcelibrary.org/book/vol-3-43/page/6a3c61fa40c88a541d8f179b",
+     "title": "武經總要前集·卷六~卷七 (vol 3)",
+     "page": 25,
+     "kind": "JUNK",
+     "source_span": "欠已曰事已",
+     "english_span": "<unclear>Words missing or illegible</unclear> said: \"The matter is finished.\"",
+     "why": "The OCR misread the margin running head (欽定四庫全書) as text. The English turns it into a made-up quotation from an unnamed speaker that is not on the page.",
+     "evidence": "image"
+    },
+    {
+     "name": "P23",
+     "url": "https://sourcelibrary.org/book/vol-718/page/6a3c651baf3c49b59c5ca9f7",
+     "title": "御定佩文韻府·卷一百二之七 (vol 718)",
+     "page": 122,
+     "kind": "WRONG-SENSE",
+     "source_span": "懷慝 魏志武帝紀吏無苛政民無懷慝",
+     "english_span": "**Vicious Evil** <note>original: 凶慝</note> The Records of Wei... the people shall have no vicious evil",
+     "why": "This quote belongs under the 懷慝 headword and reads 'harbor no evil'. The English files it under 凶慝 and renders it 'vicious evil'.",
+     "evidence": "image"
+    },
+    {
+     "name": "P23",
+     "url": "https://sourcelibrary.org/book/vol-718/page/6a3c651baf3c49b59c5ca9f7",
+     "title": "御定佩文韻府·卷一百二之七 (vol 718)",
+     "page": 122,
+     "kind": "OCR-CARRIED",
+     "source_span": "陰搆凶慝大將軍糾度天刑",
+     "english_span": "The military investigated and carried out the heavenly punishment",
+     "why": "The OCR dropped 大將 from 大將軍, so the subject 'the Grand General' became 'the military', which changes who acted.",
+     "evidence": "image"
+    },
+    {
+     "name": "P23",
+     "url": "https://sourcelibrary.org/book/vol-718/page/6a3c651baf3c49b59c5ca9f7",
+     "title": "御定佩文韻府·卷一百二之七 (vol 718)",
+     "page": 122,
+     "kind": "WRONG-SENSE",
+     "source_span": "三垂剪除凶慝好惡同之",
+     "english_span": "eliminate those who harbor emotional evil",
+     "why": "The repeat marks here stand for 凶慝, because the Tang shu quote sits under that headword and comes before the 情慝 heading. The English moves it under 'Emotional Evil'.",
+     "evidence": "image"
+    },
+    {
+     "name": "P31",
+     "url": "https://sourcelibrary.org/book/vol-70-4/page/6a3c65e839b4508b04e2fe41",
+     "title": "御定子史精華·卷六十三~卷六十四 (vol 70)",
+     "page": 39,
+     "kind": "INVENTED",
+     "source_span": "丨丨丨丨丨丨餳酒賦詩",
+     "english_span": "<note>from the context of the Sui Shu</note>",
+     "why": "The note cites the Sui Shu, but this passage comes from Song-history material; nothing in the source supports the note.",
+     "evidence": "ocr"
+    },
+    {
+     "name": "P31",
+     "url": "https://sourcelibrary.org/book/vol-70-4/page/6a3c65e839b4508b04e2fe41",
+     "title": "御定子史精華·卷六十三~卷六十四 (vol 70)",
+     "page": 39,
+     "kind": "INVENTED",
+     "source_span": "由選人至兩地財四年",
+     "english_span": "<note>referring to Li Mi</note>",
+     "why": "Li Mi is not named in the source. This phrase is the heading for Chen Ziqiang's entry, but the note assigns it to an invented person.",
+     "evidence": "ocr"
+    },
+    {
+     "name": "P31",
+     "url": "https://sourcelibrary.org/book/vol-70-4/page/6a3c65e839b4508b04e2fe41",
+     "title": "御定子史精華·卷六十三~卷六十四 (vol 70)",
+     "page": 39,
+     "kind": "WRONG-SENSE",
+     "source_span": "故事比攝官丨丨丨丨(奉饋如真)",
+     "english_span": "Gifts and offerings were presented to him as if to a god.",
+     "why": "奉饋如真 is the heading for Wu Changyi's entry. It means acting officials drew the same stipend as substantive officials. It is not about gifts given to Chen Ziqiang as a god.",
+     "evidence": "both"
+    },
+    {
+     "name": "P31",
+     "url": "https://sourcelibrary.org/book/vol-70-4/page/6a3c65e839b4508b04e2fe41",
+     "title": "御定子史精華·卷六十三~卷六十四 (vol 70)",
+     "page": 39,
+     "kind": "WRONG-SENSE",
+     "source_span": "婁機傳調含山主簿丨丨丨丨(七攝鄰邑)率以治績聞",
+     "english_span": "He served as an acting official for neighboring districts seven times.",
+     "why": "七攝鄰邑 is the heading for Lou Ji's entry and fills the 丨 marks in his text. The English credits it to Wu Changyi, which changes who did it.",
+     "evidence": "both"
+    },
+    {
+     "name": "P45",
+     "url": "https://sourcelibrary.org/book/vol-71-4/page/6a3c65e939b4508b04e2fec4",
+     "title": "御定子史精華·卷六十五~卷六十七 (vol 71)",
+     "page": 70,
+     "kind": "INVENTED",
+     "source_span": "因丨丨丨丨而丨丨丨丨",
+     "english_span": "Because he Zheng Qi Ci Ju refined the phrasing and Shen Qi Tan Lun scrutinized the discussions",
+     "why": "The marks repeat the headword 斟酌前史/譏正得失. The terms Zheng Qi Ci Ju and Shen Qi Tan Lun and their glosses appear nowhere in the source.",
+     "evidence": "both"
+    },
+    {
+     "name": "P45",
+     "url": "https://sourcelibrary.org/book/vol-71-4/page/6a3c65e939b4508b04e2fec4",
+     "title": "御定子史精華·卷六十五~卷六十七 (vol 71)",
+     "page": 70,
+     "kind": "WRONG-SENSE",
+     "source_span": "辨而不華 質而不野",
+     "english_span": "his work was: Elegant but not flowery. Plain but not crude.",
+     "why": "This is the headword for the next entry, Ban Biao's praise of Sima Qian (善述序事理，辨而不華…, which continues on the next page). The English makes it a description of Ban Biao's own work.",
+     "evidence": "both"
+    },
+    {
+     "name": "P47",
+     "url": "https://sourcelibrary.org/book/vol-596/page/6a3c64a339b4508b04e28bd4",
+     "title": "御定佩文韻府·卷八十之二 (vol 596)",
+     "page": 3,
+     "kind": "OCR-CARRIED",
+     "source_span": "茔",
+     "english_span": "*Ying* <gloss>grave mound</gloss>",
+     "why": "The image shows 莝 (cuo, chopped straw), which belongs to the 箇 rhyme. The OCR read it as 茔 (ying, grave), and the English gives a wrong headword and gloss.",
+     "evidence": "image"
+    },
+    {
+     "name": "P47",
+     "url": "https://sourcelibrary.org/book/vol-596/page/6a3c64a339b4508b04e28bd4",
+     "title": "御定佩文韻府·卷八十之二 (vol 596)",
+     "page": 3,
+     "kind": "OCR-CARRIED",
+     "source_span": "礎",
+     "english_span": "*Chu* <gloss>stone plinth</gloss>",
+     "why": "The image shows 磋 (cuo, to polish), a 箇-rhyme word. The OCR read it as 礎 (chu, plinth), which is not in this rhyme group.",
+     "evidence": "image"
+    }
+   ]
+  },
+  "S": {
+   "n_pages": 2,
+   "n_books": 2,
+   "errors_per_page": {
+    "mean": 3,
+    "ci": [
+     3,
+     3
+    ]
+   },
+   "by_kind": {
+    "INVENTED": {
+     "per_page": 1,
+     "ci": [
+      1,
+      1
+     ],
+     "pages_with": 2
+    },
+    "WRONG-SENSE": {
+     "per_page": 0.5,
+     "ci": [
+      0,
+      1
+     ],
+     "pages_with": 1
+    },
+    "OCR-CARRIED": {
+     "per_page": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "pages_with": 0
+    },
+    "OMITTED": {
+     "per_page": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "pages_with": 0
+    },
+    "SEAM": {
+     "per_page": 1,
+     "ci": [
+      1,
+      1
+     ],
+     "pages_with": 2
+    },
+    "JUNK": {
+     "per_page": 0.5,
+     "ci": [
+      0,
+      1
+     ],
+     "pages_with": 1
+    },
+    "STYLE": {
+     "per_page": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "pages_with": 0
+    }
+   },
+   "by_risk": {
+    "HIGH": {
+     "per_page": 0.5,
+     "ci": [
+      0,
+      1
+     ],
+     "total": 1
+    },
+    "MEDIUM": {
+     "per_page": 1.5,
+     "ci": [
+      1,
+      2
+     ],
+     "total": 3
+    },
+    "LOW": {
+     "per_page": 1,
+     "ci": [
+      1,
+      1
+     ],
+     "total": 2
+    }
+   },
+   "pages_with_high": {
+    "k": 1,
+    "n": 2,
+    "share": 0.5,
+    "wilson": [
+     0.09,
+     0.91
+    ]
+   },
+   "high_by_kind": {
+    "SEAM": 1
+   },
+   "high_by_origin": {
+    "seam": 1
+   },
+   "verdicts": {
+    "show": 0,
+    "caveat": 2,
+    "dont": 0
+   },
+   "ocr_matches_image": {
+    "yes": 1,
+    "mostly": 1,
+    "no": 0
+   },
+   "high_findings": [
+    {
+     "name": "P08",
+     "url": "https://sourcelibrary.org/book/vol-22-3/page/6a3c5f70879008ba7e15584d",
+     "title": "圖書編·卷二十四 (vol 22)",
+     "page": 33,
+     "kind": "SEAM",
+     "source_span": "一年始於建寅之月／為正子丑二月雖屬次年",
+     "english_span": "The months of Zi and Chou are regarded as correct for this purpose.",
+     "why": "為正 finishes the previous page's sentence: the Yin month is taken as the first month (正). The English makes Zi and Chou the 'correct' months, which reverses the point.",
+     "evidence": "both"
+    }
+   ]
+  }
+ },
+ "high_per_page_A_minus_B": {
+  "delta": 1.52,
+  "ci": [
+   0.58,
+   2.62
+  ]
+ },
+ "agreement": {
+  "pages": [
+   "P06",
+   "P11",
+   "P17",
+   "P20",
+   "P21",
+   "P25",
+   "P27",
+   "P29",
+   "P34",
+   "P44"
+  ],
+  "verdict": {
+   "agree": 0.9,
+   "kappa": 0.84,
+   "n": 10
+  },
+  "any_high": {
+   "agree": 1,
+   "kappa": 1,
+   "n": 10
+  },
+  "high_count": [
+   [
+    4,
+    4
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    2,
+    2
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ]
+  ],
+  "error_count": [
+   [
+    9,
+    13
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    6,
+    6
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    3,
+    2
+   ],
+   [
+    1,
+    1
+   ],
+   [
+    2,
+    2
+   ],
+   [
+    2,
+    3
+   ],
+   [
+    2,
+    1
+   ],
+   [
+    2,
+    1
+   ]
+  ],
+  "kind_presence": {
+   "INVENTED": {
+    "agree": 1,
+    "kappa": 1,
+    "n": 10
+   },
+   "WRONG-SENSE": {
+    "agree": 1,
+    "kappa": 1,
+    "n": 10
+   },
+   "OCR-CARRIED": {
+    "agree": 0.9,
+    "kappa": 0.74,
+    "n": 10
+   },
+   "OMITTED": {
+    "agree": 1,
+    "kappa": 1,
+    "n": 10
+   },
+   "SEAM": {
+    "agree": 0.9,
+    "kappa": 0.74,
+    "n": 10
+   },
+   "JUNK": {
+    "agree": 0.9,
+    "kappa": 0.62,
+    "n": 10
+   },
+   "STYLE": {
+    "agree": 0.7,
+    "kappa": 0.44,
+    "n": 10
+   }
+  },
+  "kind_presence_all": {
+   "agree": 0.91,
+   "kappa": 0.79,
+   "n": 70
+  },
+  "risk_presence_all": {
+   "agree": 0.93,
+   "kappa": 0.86,
+   "n": 30
+  }
+ }
+}

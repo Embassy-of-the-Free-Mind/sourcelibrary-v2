@@ -1,0 +1,220 @@
+{
+ "judged": 30,
+ "of": 30,
+ "prompt_line": null,
+ "new_clean": 17,
+ "stored_clean": 0,
+ "major_other": {
+  "new": 6,
+  "stored": 3
+ },
+ "by_bucket": {
+  "三才圖會": "7/13",
+  "武備志": "6/7",
+  "植物名實圖考": "1/2",
+  "other": "3/8"
+ },
+ "pass": false,
+ "adds": [
+  {
+   "page_id": "6992ce60673ee1e40e320496",
+   "book_id": "6992ce60673ee1e40e320488",
+   "page": 14,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "associated with sea mirages in traditional Chinese lore",
+     "why": "The summary adds background lore that is neither printed nor visible on the leaf. The same idea in the title note counts as an allowed gloss, but here it is metadata describing the page."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cdf381c9d7efb84d0efd",
+   "book_id": "6992cdf281c9d7efb84d0ee0",
+   "page": 29,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "wears the required unbleached hemp robe",
+     "why": "The robe's material (unbleached hemp) is neither printed on the leaf nor visible in a line woodcut. This is background knowledge."
+    },
+    {
+     "quote": "ritual staff made of paulownia wood with a rounded top and square bottom",
+     "why": "The staff is drawn as a plain stick. Paulownia wood and a round top with a square bottom are not printed and cannot be seen."
+    },
+    {
+     "quote": "distinguishing this grade from the highest grade of mourning (zhancui), which uses an unhemmed garment and a round bamboo staff",
+     "why": "This is ritual background about another mourning grade. Nothing on the leaf says it."
+    },
+    {
+     "quote": "showing the prescribed hemp garments and ritual paulownia staff",
+     "why": "The summary repeats the hemp and paulownia claims, which are neither printed nor visible."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cd3f43713c66ea6359cd",
+   "book_id": "6992cd3e43713c66ea63598e",
+   "page": 63,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "Xiangyang",
+     "why": "Keyword names a place that is neither printed on the leaf nor visible in the picture; it is background knowledge about where Lumen Mountain is."
+    }
+   ]
+  },
+  {
+   "page_id": "6992ce3b3ea667fbac8288eb",
+   "book_id": "6992ce3a3ea667fbac8288d4",
+   "page": 23,
+   "family": "武備志",
+   "adds": [
+    {
+     "quote": "a fast scout boat employed for reconnaissance, dispatch, and rapid offensive maneuvers",
+     "why": "The summary says the boat had these uses. The leaf only has the title and the picture, so this is background, not a description of the page."
+    },
+    {
+     "quote": "used for reconnaissance, rapid dispatch, and raiding",
+     "why": "The title note goes past a short gloss of the term and adds historical claims about how the boat was used. None of this is printed on the leaf."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cefff7519cdd65044b6a",
+   "book_id": "6992cefff7519cdd65044b57",
+   "page": 19,
+   "family": "植物名實圖考",
+   "adds": [
+    {
+     "quote": "likely a version of the Bencao Gangmu (Compendium of Materia Medica)",
+     "why": "The meta block names a source the leaf does not support. The cut-off margin title is 植物名實圖考, not 本草綱目."
+    },
+    {
+     "quote": "from the cereal crops section of the Compendium of Materia Medica (Bencao Gangmu)",
+     "why": "The summary claims the page comes from a work it does not come from. This is not printed on the leaf."
+    },
+    {
+     "quote": "Bencao Gangmu, materia medica",
+     "why": "These keywords repeat the wrong source attribution."
+    }
+   ]
+  },
+  {
+   "page_id": "6992f412c8c6ac61574e754c",
+   "book_id": "6992f412c8c6ac61574e753f",
+   "page": 13,
+   "family": "other",
+   "adds": [
+    {
+     "quote": "during the eighteenth century",
+     "why": "The date appears nowhere on the leaf and cannot be seen in the picture. It is outside background presented in the summary."
+    },
+    {
+     "quote": "Qing dynasty",
+     "why": "A keyword that dates the leaf from outside knowledge. Nothing printed or visible supports it."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cff5f5b4f75c1a4c9cc0",
+   "book_id": "6992cff5f5b4f75c1a4c9c50",
+   "page": 112,
+   "family": "other",
+   "adds": [
+    {
+     "quote": "serving as a provenance mark for tracking the ownership history of the volume",
+     "why": "Background about what the seal is for, going beyond describing the page. It also rests on a misidentified seal: the legend reads 乾隆御覽之寶, an imperial seal, not a Qinghua Pavilion library seal."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cabdd4d545ae73fee984",
+   "book_id": "6992cabdd4d545ae73fee906",
+   "page": 126,
+   "family": "other",
+   "adds": [
+    {
+     "quote": "Zhang Li",
+     "why": "The keyword names the author, who is not printed or visible on the leaf. This is background knowledge."
+    }
+   ]
+  },
+  {
+   "page_id": "6992f3eec8c6ac61574e72b6",
+   "book_id": "6992f3eec8c6ac61574e72a1",
+   "page": 21,
+   "family": "名山圖",
+   "adds": [
+    {
+     "quote": "A celebrated scenic island and Buddhist mountain site",
+     "why": "Background information beyond a short gloss. The leaf does not say the site is Buddhist or an island."
+    },
+    {
+     "quote": "Buddhist mountain",
+     "why": "The keywords claim content that is not on the leaf."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cdc443713c66ea638736",
+   "book_id": "6992cdc343713c66ea63870c",
+   "page": 42,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "used to steam silkworm cocoons and prevent the moths from emerging",
+     "why": "The summary states a purpose that is neither printed nor visible on the leaf."
+    },
+    {
+     "quote": "Ming Dynasty technology",
+     "why": "Background dating in the keywords that is not on the leaf."
+    }
+   ]
+  },
+  {
+   "page_id": "6992ce7f673ee1e40e320cda",
+   "book_id": "6992ce7f673ee1e40e320caa",
+   "page": 48,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "traditionally recognized in Chinese materia medica for mending fractured bones",
+     "why": "The summary states the plant's medicinal use, which is not printed on the leaf. The leaf has only the title and the picture."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cfdaf5b4f75c1a4c9aa6",
+   "book_id": "6992cfdaf5b4f75c1a4c9a6b",
+   "page": 59,
+   "family": "other",
+   "adds": [
+    {
+     "quote": "a late Ming woodblock illustration from the Sancai Tuhui",
+     "why": "The summary says the page comes from the Sancai Tuhui, but the leaf's margin names the 搜神記. The dating and source are not printed or visible."
+    },
+    {
+     "quote": "Taoist and popular pantheon deities",
+     "why": "Adds a religious classification that the leaf does not print."
+    }
+   ]
+  },
+  {
+   "page_id": "6992cdb943713c66ea638309",
+   "book_id": "6992cdb943713c66ea6382fd",
+   "page": 12,
+   "family": "三才圖會",
+   "adds": [
+    {
+     "quote": "representing the bear banner <note>original: \"熊旗\"</note>",
+     "why": "The leaf prints only 旗, not 熊旗. Calling it the 'bear banner' and giving characters as if they were printed is outside identification, not a gloss on printed text."
+    },
+    {
+     "quote": "Sanli tu, Rites of Zhou",
+     "why": "The keywords name source texts that are neither printed nor visible on the leaf."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+<image-desc size="large" type="woodcut" significance="high">Hand-colored woodblock illustration on the left page. Inside a tiled hall with red pillars, an official in blue robes sits with a standing attendant in green, and a man in purple kneels before them. A pine and bamboo rise behind the hall, with stylized green rocks in the foreground.</image-desc>
+
+# 漁人求度
+
+賢愚經云。尒時世尊。向毘舍離城。到犂越河所。不遠而坐。時捕魚人。網得一魚。五百人挽。不能使出。復喚牧牛人衆。共一千人。挽得一魚。身有百頭。若干種類。驢馬駱駝。虎狼猪狗。猿猴狐狸。如斯之形。世尊往至魚所。而問魚言。汝是迦毘梨不。荅言。實是。阿難白佛。此魚何緣。如是。佛告阿難。昔有婆羅門。生一男兒。名迦毘梨。聰明博達。其母問子。汝本高明。更有勝汝者否。荅言。沙門。母言。何以不往學習其法。奉其母教。即往習學。三藏義理。悉皆通曉。若共比丘談論。理若短屈。即便罵言。汝等愚騃。無所識別。劇於畜生。知曉何法。諸百獸頭。皆用比之。緣是果報。今受百頭魚身。時捕魚人。及牧牛人。同時求佛出家。佛為說法。種種苦切。漏盡結解。即成沙門。尒時阿難。及於衆人。聞佛所說。悵然不樂。悲傷交懷。咸共同聲。而作是言。身口意行。不可不慎也。
+
+<vocab>賢愚經, 世尊, 迦毘梨, 阿難, 婆羅門, 三藏, 沙門, 因果</vocab>

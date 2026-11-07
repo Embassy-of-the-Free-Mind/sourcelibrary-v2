@@ -1,0 +1,501 @@
+{
+ "generated_by": "scripts/eval/route-judge-6740/german-cheaper-7701/run.mjs evidence (job german-cheaper-7701, #7701; no model calls in this step)",
+ "cells": {
+  "de-cheap|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 24,
+     "books": 24,
+     "accept": "21/24",
+     "wrong_text_pages": "0/24",
+     "classes_k_of_n": {
+      "O8": "12/24",
+      "E2": "7/24",
+      "O6": "4/24",
+      "O11": "3/24",
+      "T6": "2/24",
+      "O7": "1/24",
+      "O12": "1/24",
+      "O16": "1/24",
+      "O5": "1/24"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-written": {
+     "n": 22,
+     "books": 22,
+     "accept": "18/22",
+     "wrong_text_pages": "1/22",
+     "classes_k_of_n": {
+      "O8": "14/22",
+      "E2": "10/22",
+      "O6": "4/22",
+      "O7": "2/22",
+      "O11": "2/22",
+      "O12": "2/22",
+      "T6": "2/22",
+      "D1": "1/22",
+      "O16": "1/22",
+      "O5": "1/22"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "lighton-written": {
+     "n": 30,
+     "books": 30,
+     "accept": "13/30",
+     "wrong_text_pages": "10/30",
+     "classes_k_of_n": {
+      "O6": "22/30",
+      "O8": "13/30",
+      "E2": "10/30",
+      "O11": "7/30",
+      "O7": "3/30",
+      "O12": "2/30",
+      "O5": "1/30",
+      "T6": "1/30"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "pero-written": {
+     "n": 29,
+     "books": 29,
+     "accept": "11/29",
+     "wrong_text_pages": "8/29",
+     "classes_k_of_n": {
+      "O6": "21/29",
+      "E2": "20/29",
+      "O7": "9/29",
+      "O8": "9/29",
+      "O11": "6/29",
+      "O5": "5/29",
+      "O12": "4/29",
+      "T6": "2/29",
+      "O17": "1/29",
+      "I4": "1/29"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "lighton>agy-flash-low@4-written": {
+     "n": 25,
+     "books": 25,
+     "accept": "20/25",
+     "wrong_text_pages": "2/25",
+     "classes_k_of_n": {
+      "O8": "13/25",
+      "O6": "9/25",
+      "E2": "5/25",
+      "T6": "4/25",
+      "O16": "4/25",
+      "O7": "3/25",
+      "O11": "3/25",
+      "O12": "2/25",
+      "O5": "1/25",
+      "O15": "1/25"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 22,
+     "books": 22,
+     "accept": "17/22",
+     "wrong_text_pages": "2/22",
+     "classes_k_of_n": {
+      "O8": "12/22",
+      "O6": "8/22",
+      "E2": "7/22",
+      "O7": "5/22",
+      "D1": "3/22",
+      "O11": "3/22",
+      "O5": "2/22",
+      "O1": "1/22",
+      "O12": "1/22",
+      "O15": "1/22",
+      "O16": "1/22"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-written|agy-flash-low@4-written": {
+     "n": 21,
+     "books": 21,
+     "both": 17,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 3
+    },
+    "lighton-written|agy-flash-low@4-written": {
+     "n": 24,
+     "books": 24,
+     "both": 9,
+     "a_only": 1,
+     "b_only": 12,
+     "neither": 2
+    },
+    "pero-written|agy-flash-low@4-written": {
+     "n": 23,
+     "books": 23,
+     "both": 7,
+     "a_only": 2,
+     "b_only": 13,
+     "neither": 1
+    },
+    "lighton>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 20,
+     "books": 20,
+     "both": 13,
+     "a_only": 2,
+     "b_only": 4,
+     "neither": 1
+    },
+    "pero>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 19,
+     "books": 19,
+     "both": 13,
+     "a_only": 1,
+     "b_only": 5,
+     "neither": 0
+    }
+   }
+  },
+  "de-cheap-fraktur|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 15,
+     "books": 15,
+     "accept": "13/15",
+     "wrong_text_pages": "0/15",
+     "classes_k_of_n": {
+      "O8": "12/15",
+      "E2": "5/15",
+      "O6": "4/15",
+      "O11": "2/15",
+      "T6": "2/15",
+      "O7": "1/15",
+      "O12": "1/15",
+      "O16": "1/15"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-written": {
+     "n": 15,
+     "books": 15,
+     "accept": "12/15",
+     "wrong_text_pages": "1/15",
+     "classes_k_of_n": {
+      "O8": "11/15",
+      "E2": "6/15",
+      "O6": "4/15",
+      "O7": "2/15",
+      "O11": "2/15",
+      "T6": "2/15",
+      "O12": "1/15",
+      "D1": "1/15"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "lighton-written": {
+     "n": 18,
+     "books": 18,
+     "accept": "2/18",
+     "wrong_text_pages": "10/18",
+     "classes_k_of_n": {
+      "O6": "17/18",
+      "O8": "9/18",
+      "E2": "7/18",
+      "O11": "4/18",
+      "O12": "2/18",
+      "O7": "2/18",
+      "O5": "1/18"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "pero-written": {
+     "n": 18,
+     "books": 18,
+     "accept": "3/18",
+     "wrong_text_pages": "7/18",
+     "classes_k_of_n": {
+      "O6": "17/18",
+      "E2": "13/18",
+      "O7": "7/18",
+      "O8": "7/18",
+      "O11": "5/18",
+      "O12": "4/18",
+      "O5": "4/18",
+      "O17": "1/18",
+      "T6": "1/18"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "lighton>agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "11/14",
+     "wrong_text_pages": "0/14",
+     "classes_k_of_n": {
+      "O8": "10/14",
+      "O6": "8/14",
+      "O16": "4/14",
+      "E2": "3/14",
+      "T6": "3/14",
+      "O11": "3/14",
+      "O7": "2/14",
+      "O12": "1/14"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 13,
+     "books": 13,
+     "accept": "9/13",
+     "wrong_text_pages": "1/13",
+     "classes_k_of_n": {
+      "O6": "7/13",
+      "O8": "7/13",
+      "E2": "4/13",
+      "O7": "4/13",
+      "D1": "2/13",
+      "O11": "2/13",
+      "O5": "1/13",
+      "O1": "1/13"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "kraken-written": {
+     "n": 18,
+     "books": 18,
+     "accept": "0/18",
+     "wrong_text_pages": "17/18",
+     "classes_k_of_n": {
+      "O6": "18/18",
+      "O7": "14/18",
+      "O11": "9/18",
+      "E2": "8/18",
+      "O5": "7/18",
+      "O10": "4/18",
+      "O1": "3/18",
+      "O12": "2/18",
+      "O8": "1/18",
+      "T6": "1/18",
+      "O17": "1/18"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "kraken>agy-flash-low@4-written": {
+     "n": 3,
+     "books": 3,
+     "accept": "0/3",
+     "wrong_text_pages": "1/3",
+     "classes_k_of_n": {
+      "O8": "2/3",
+      "O6": "2/3",
+      "O16": "1/3",
+      "O12": "1/3",
+      "E2": "1/3"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-written|agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "both": 11,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 2
+    },
+    "lighton-written|agy-flash-low@4-written": {
+     "n": 15,
+     "books": 15,
+     "both": 2,
+     "a_only": 0,
+     "b_only": 11,
+     "neither": 2
+    },
+    "pero-written|agy-flash-low@4-written": {
+     "n": 15,
+     "books": 15,
+     "both": 1,
+     "a_only": 1,
+     "b_only": 12,
+     "neither": 1
+    },
+    "lighton>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 11,
+     "books": 11,
+     "both": 7,
+     "a_only": 1,
+     "b_only": 2,
+     "neither": 1
+    },
+    "pero>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 12,
+     "books": 12,
+     "both": 7,
+     "a_only": 1,
+     "b_only": 4,
+     "neither": 0
+    },
+    "kraken-written|agy-flash-low@4-written": {
+     "n": 15,
+     "books": 15,
+     "both": 0,
+     "a_only": 0,
+     "b_only": 13,
+     "neither": 2
+    },
+    "kraken>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 2,
+     "books": 2,
+     "both": 0,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 1
+    }
+   }
+  },
+  "de-cheap-antiqua|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 9,
+     "books": 9,
+     "accept": "8/9",
+     "wrong_text_pages": "0/9",
+     "classes_k_of_n": {
+      "E2": "2/9",
+      "O11": "1/9",
+      "O5": "1/9"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "agy-flash-low@8-written": {
+     "n": 7,
+     "books": 7,
+     "accept": "6/7",
+     "wrong_text_pages": "0/7",
+     "classes_k_of_n": {
+      "E2": "4/7",
+      "O8": "3/7",
+      "O12": "1/7",
+      "O16": "1/7",
+      "O5": "1/7"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "lighton-written": {
+     "n": 12,
+     "books": 12,
+     "accept": "11/12",
+     "wrong_text_pages": "0/12",
+     "classes_k_of_n": {
+      "O6": "5/12",
+      "O8": "4/12",
+      "O11": "3/12",
+      "E2": "3/12",
+      "O7": "1/12",
+      "T6": "1/12"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "pero-written": {
+     "n": 11,
+     "books": 11,
+     "accept": "8/11",
+     "wrong_text_pages": "1/11",
+     "classes_k_of_n": {
+      "E2": "7/11",
+      "O6": "4/11",
+      "O7": "2/11",
+      "O8": "2/11",
+      "O5": "1/11",
+      "I4": "1/11",
+      "O11": "1/11",
+      "T6": "1/11"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "lighton>agy-flash-low@4-written": {
+     "n": 11,
+     "books": 11,
+     "accept": "9/11",
+     "wrong_text_pages": "2/11",
+     "classes_k_of_n": {
+      "O8": "3/11",
+      "E2": "2/11",
+      "O7": "1/11",
+      "O5": "1/11",
+      "O12": "1/11",
+      "O15": "1/11",
+      "T6": "1/11",
+      "O6": "1/11"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 9,
+     "books": 9,
+     "accept": "8/9",
+     "wrong_text_pages": "1/9",
+     "classes_k_of_n": {
+      "O8": "5/9",
+      "E2": "3/9",
+      "O5": "1/9",
+      "O12": "1/9",
+      "O15": "1/9",
+      "O7": "1/9",
+      "D1": "1/9",
+      "O11": "1/9",
+      "O6": "1/9",
+      "O16": "1/9"
+     },
+     "note": "the drawn pages the route writes, judged; a page not written stays scans-only"
+    }
+   },
+   "paired": {
+    "agy-flash-low@8-written|agy-flash-low@4-written": {
+     "n": 7,
+     "books": 7,
+     "both": 6,
+     "a_only": 0,
+     "b_only": 0,
+     "neither": 1
+    },
+    "lighton-written|agy-flash-low@4-written": {
+     "n": 9,
+     "books": 9,
+     "both": 7,
+     "a_only": 1,
+     "b_only": 1,
+     "neither": 0
+    },
+    "pero-written|agy-flash-low@4-written": {
+     "n": 8,
+     "books": 8,
+     "both": 6,
+     "a_only": 1,
+     "b_only": 1,
+     "neither": 0
+    },
+    "lighton>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 9,
+     "books": 9,
+     "both": 6,
+     "a_only": 1,
+     "b_only": 2,
+     "neither": 0
+    },
+    "pero>agy-flash-low@4-written|agy-flash-low@4-written": {
+     "n": 7,
+     "books": 7,
+     "both": 6,
+     "a_only": 0,
+     "b_only": 1,
+     "neither": 0
+    }
+   }
+  }
+ }
+}

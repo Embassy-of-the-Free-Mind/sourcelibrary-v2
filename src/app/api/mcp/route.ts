@@ -1,7 +1,8 @@
 import type { NextRequest } from 'next/server';
+import { pageEnvelope, parseOffset } from '@/lib/mcp-pagination';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
-import { logMcpToolCall, logMcpInitialize } from '@/lib/mcp-usage';
+import { countToolResults, logMcpToolCall, logMcpInitialize, mintMcpSessionId, readMcpSessionId } from '@/lib/mcp-usage';
 import { getClientIp, peekRateLimit } from '@/lib/rate-limit';
 import { editionsForBook } from '@/lib/page-translations';
 import { getShortUrl } from '@/lib/shortlinks';
@@ -53,7 +54,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.12.1';
+const SERVER_VERSION = '4.13.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 //
@@ -83,9 +84,15 @@ async function apiPost(path: string, body: unknown) {
 
 // ── Tool implementations (mirrors mcp-server/src/api.ts) ───────────
 
+/** The envelope minus `total`, for tools whose count is already published as `total_matches`. */
+function pageFields(env: ReturnType<typeof pageEnvelope>) {
+  const { total: _total, ...rest } = env;
+  return rest;
+}
+
 async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) {
   const limit = Math.min(Number(args.limit) || 10, 100);
-  const offset = Number(args.offset) || 0;
+  const offset = parseOffset(args.offset);
   const params = new URLSearchParams({ q: String(args.query), limit: String(limit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (args.year_from) params.set('year_from', String(args.year_from));
@@ -113,8 +120,7 @@ async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) 
   return {
     query: result.query,
     total_matches: result.total,
-    returned: results.length,
-    offset,
+    ...pageFields(pageEnvelope({ total: result.total as number, returned: results.length, offset, limit })),
     results,
     ...(result.nearby ? { nearby: result.nearby } : {}),
   };
@@ -147,7 +153,7 @@ function conceptVocabularyBlock(query: unknown): Record<string, unknown> {
 
 async function searchPassages(args: Record<string, unknown>, caller?: McpCaller) {
   const userLimit = Math.min(Number(args.limit) || 20, 50);
-  const offset = Number(args.offset) || 0;
+  const offset = parseOffset(args.offset);
   // BUG 1 fix: the backend can return page-rows with empty/whitespace snippets,
   // which the empty-snippet .filter(...) below strips AFTER fetching. Requesting
   // exactly userLimit rows could leave the page empty while total_matches stays
@@ -209,8 +215,9 @@ async function searchPassages(args: Record<string, unknown>, caller?: McpCaller)
   return {
     query: result.query,
     total_matches: result.total,
-    returned: passages.length,
-    offset,
+    // next_offset = offset + returned can repeat a row the empty-snippet or author
+    // filter skipped; it never skips one, which is the failure that matters (#7624).
+    ...pageFields(pageEnvelope({ total: result.total as number, returned: passages.length, offset, limit: userLimit })),
     ...constraintBlock,
     lang: textLang,
     ...(textLang !== 'en' ? {
@@ -281,10 +288,11 @@ async function searchConcept(args: Record<string, unknown>, caller?: McpCaller) 
   return {
     query: result.query,
     ...constraintBlock,
-    // total_matches mirrors the post-slice page size here (semantic endpoint does
-    // not return a separate corpus count), so keep it equal to returned.
-    total_matches: passages.length,
+    // No total_matches: the semantic endpoint ranks nearest neighbours and has no
+    // corpus count, and a total equal to the page size reads as one (#7624).
     returned: passages.length,
+    truncated: null,
+    count_note: 'This is a ranked list of the nearest passages, not a count: it cannot say how many passages or books in the library discuss this. For a count use search_translations (total_matches) or list_books (total).',
     lang: (result.lang as string) ?? conceptLang,
     ...(result.lang_note ? { lang_note: result.lang_note } : {}),
     // How the passages were spread, said out loud so a caller does not read a
@@ -359,8 +367,10 @@ function langArg(args: Record<string, unknown>): string {
 
 async function searchWithinBook(args: Record<string, unknown>, caller?: McpCaller) {
   const lang = langArg(args);
+  const offset = parseOffset(args.offset);
   const params = new URLSearchParams({ q: String(args.query) });
   if (lang !== 'en') params.set('lang', lang);
+  if (offset) params.set('offset', String(offset));
   const result = await mcpApiGet(`/books/${args.book_id}/search`, params, caller) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => {
     const matches = r.matches as Array<Record<string, unknown>>;
@@ -397,14 +407,16 @@ async function searchWithinBook(args: Record<string, unknown>, caller?: McpCalle
   const lexicalHit = (results ?? []).some((r) => r.found_by !== 'semantic');
   const absent = !lexicalHit && topScore < 0.55;
   return {
-    book_id: args.book_id, query: result.query, total: result.total, returned: result.returned,
+    book_id: args.book_id, query: result.query,
+    // The book search route returns 50 ranked pages a call (#7624).
+    ...pageEnvelope({ total: result.total as number, returned: Number(result.returned) || 0, offset, limit: 50 }),
     // Which edition of the book's text was searched, and which the snippets are
     // in. Always present so a caller never has to infer it.
     lang: result.lang ?? 'en',
     ...(frontCount ? { front_matter_results: frontCount } : {}),
     ...(coverage ? { semantic_coverage: coverage } : {}),
     results,
-    tip: `${absent ? `No page of this book prints these words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift): this book most likely does not contain what you are looking for. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
+    tip: `${absent ? `No page of this book prints these exact words, and the nearest by meaning scores ${topScore.toFixed(2)} (below 0.55 is drift). Matching here is by spelling, so this does not show the book lacks a name or term: it may be printed in another spelling or Latin case (Zalmoxis, Zamolxis, Zalmoxen). Try those forms before saying the book does not contain it. ` : ''}score is absolute, not relative to the other results: similarity 0.70+ is a strong match, 0.55–0.70 worth reading but verify, below 0.55 mostly drift; phrase_match 1 means the page prints your whole query in order, under about 0.2 only scattered words. Use get_book_text with from/to page numbers to read the full text around these matches. Always cite using short_url when presenting passages to users.${frontCount ? ` ${frontCount} of these are front matter (introduction, preface, contents) and are ordered last — they are the translator's or publisher's words, not the author's.` : ''}${coverage?.caveat ? ` SEMANTIC COVERAGE: ${coverage.caveat}` : ''}`,
   };
 }
 
@@ -432,8 +444,11 @@ async function listBooks(args: Record<string, unknown>) {
   const hasEdition = String(args.has_edition || '').trim().toLowerCase();
   if (/^[a-z]{2,3}$/.test(hasEdition) && hasEdition !== 'en') params.set('has_edition', hasEdition);
   if (args.sort) params.set('sort', String(args.sort));
-  if (args.limit) params.set('limit', String(Math.min(Number(args.limit), 200)));
-  if (args.skip) params.set('skip', String(args.skip));
+  const limit = Math.min(Number(args.limit) || 100, 200);
+  // `offset` is the declared name (#7624); `skip` is what the route takes and stays accepted.
+  const offset = parseOffset(args.offset ?? args.skip);
+  params.set('limit', String(limit));
+  if (offset) params.set('skip', String(offset));
 
   const result = await apiGet('/books/library', params) as Record<string, unknown>;
   const books = (result.books as Array<Record<string, unknown>>)?.map((b) => ({
@@ -463,11 +478,12 @@ async function listBooks(args: Record<string, unknown>) {
     url: `https://sourcelibrary.org/book/${b.slug || b.id}`,
   }));
   return {
-    total: result.total, showing: books?.length || 0,
+    ...pageEnvelope({ total: result.total as number, returned: books?.length || 0, offset, limit, totalIsLowerBound: !!result.total_is_lower_bound }),
+    showing: books?.length || 0,
     // The route's count timed out (#6854): `total` is only what was seen so far.
     ...(result.total_is_lower_bound ? {
       total_is_lower_bound: true,
-      total_note: 'The match count timed out, so `total` is a lower bound, not the number of matching books. Page with skip to see more, or narrow the search.',
+      total_note: 'The match count timed out, so `total` is a lower bound, not the number of matching books. Page with offset to see more, or narrow the search.',
     } : {}),
     ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
     // Canonicalized author echo when filtering by author_id (null-safe: the
@@ -1285,7 +1301,7 @@ async function startReviewShift(args: Record<string, unknown>) {
     first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
       'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
       'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
-      'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
+      'proposed fixes are licensed to Source Library to publish and license as part of the library (terms: https://sourcelibrary.org/terms), and ' +
       'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
       'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
       'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +
@@ -1415,7 +1431,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_library',
     title: 'Search Library',
-    description: 'RETURNS A LIST OF BOOKS (works on a topic) — NOT passages. PICK THIS to discover which works exist on a subject. → For quotable text use search_translations (exact words) or search_concept (by meaning); if the user already named an author/work, call get_book directly (or list_books to find the ID) — the AI summary + chapter outline is usually the right first answer. Searches titles, authors, subjects, and (as a secondary signal) translated text. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination.',
+    description: 'RETURNS A LIST OF BOOKS (works on a topic) — NOT passages. PICK THIS to discover which works exist on a subject. → For quotable text use search_translations (exact words) or search_concept (by meaning); if the user already named an author/work, call get_book directly (or list_books to find the ID) — the AI summary + chapter outline is usually the right first answer. Searches titles, authors, subjects, and (as a secondary signal) translated text. Query tips: single distinctive words or short phrases work best ("memory palace", "ouroboros"); quoted phrases match exactly. Each result includes total_matches (full count) + returned (this page) + offset for pagination. To answer "do you hold X?" call check_duplicate, not this: a ranked list is not a holdings check.',
     annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1494,6 +1510,7 @@ const TOOLS: Tool[] = [
       properties: {
         book_id: { type: 'string', description: 'The book ID to search within' },
         query: { type: 'string', description: 'Search query' },
+        offset: { type: 'number', description: 'Pagination offset. Each call returns up to 50 pages; when truncated is true, call again with next_offset (default 0).' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
       },
       required: ['book_id', 'query'],
@@ -1502,7 +1519,7 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     title: 'List Books',
-    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning).',
+    description: 'BROWSES/FILTERS THE CATALOG by metadata (canonical author via author_id, title/author/summary words via search, language, category, year range, translation recency) — no page-text matching. PICK THIS to see WHAT EXISTS by an author or in a tradition, or to enumerate a date range. Returns books with title, author (string + canonical author_id + author_url), language, year, and translation progress. → For a relevance-ranked topic search use search_library; for passages on a theme use search_translations (exact words) or search_concept (by meaning). To answer "do you hold X?" call check_duplicate: a listing that misses a title is not evidence of absence.',
     annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1517,6 +1534,7 @@ const TOOLS: Tool[] = [
         has_edition: { type: 'string', description: 'ISO code — return only books READABLE in that language, e.g. "es". Different from `language`, which is the language printed on the leaves of the scan: a Latin book with a Spanish edition matches language="Latin" AND has_edition="es". Each result then also carries url_localized.' },
         sort: { type: 'string', enum: ['recent-translation', 'recent', 'title-asc', 'title-desc'] },
         limit: { type: 'number', description: 'Max results (default 100, max 200)' },
+        offset: { type: 'number', description: 'Pagination offset. When truncated is true, call again with next_offset; a full page is not the whole holding (default 0).' },
       },
     },
   },
@@ -1563,7 +1581,7 @@ const TOOLS: Tool[] = [
         page: { type: 'number', description: 'Page number' },
         context: { type: 'boolean', description: 'Also return the full text of the previous and next pages, so a sentence spanning the page break can be read whole. Set this when continuity.continues_from_previous or continues_on_next came back true on an earlier call, or whenever you are about to quote near a page edge.' },
         include_image: { type: 'boolean', description: 'Also return the scan of the cited leaf as an inline image (display size, ≤1200px). Set this when the user would benefit from SEEING the page — an illustrated leaf, a title page, a diagram, disputed OCR — or asks to see it. The image arrives as an MCP image block you can view and the user sees rendered.' },
-        lang: { type: 'string', description: 'ISO code of the EDITION to quote, e.g. "es". Default "en". `quote.lang` on every response says which edition was actually served — where no such edition exists the English translation comes back with lang: "en" and a lang_note, and it must not be presented as the requested edition. The citation link follows the edition served.' },
+        lang: { type: 'string', description: 'ISO code of the EDITION to quote, e.g. "es". Default "en". `quote.lang` on every response says which edition was actually served — where no such edition exists the English translation comes back with lang: "en" and a lang_note, and it must not be presented as the requested edition. The citation link follows the edition served. A page with no translation can be quoted in its OWN language: pass that code (e.g. "de" on a German page; a no_translation answer names it as original_lang) and the transcription comes back as `original` with text_source: "ocr_original" and lang set to that code: the source\'s own words, never ours (#7458).' },
       },
       required: ['book_id', 'page'],
     },
@@ -2137,7 +2155,7 @@ function buildNoResultsHint(tool: string, result: unknown, args: ToolArgs) {
   };
 }
 
-function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest }) {
+function createServer(reqContext: { ip: string; userAgent: string | null; identity: ApiIdentity; request: NextRequest; sessionId: string | null }) {
   const server = new Server(
     { name: 'source-library', version: SERVER_VERSION },
     {
@@ -2156,8 +2174,17 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       // claude.ai was answered with an improvised menu instead of a call to
       // start_review_shift (first live try, 2026-10-10, #6418).
       instructions:
-        'Source Library: historical primary sources with transcriptions and English translations. ' +
-        'To find and cite texts, use search_library, search_translations and get_quote. ' +
+        // The first half decides whether a client reaches for us at all: on 30 history
+        // questions this wording took Claude Code from 17 to 30 calls, and 10 modern
+        // questions stayed at 0 (scripts/eval/experiments/2026-11-04-mcp-trigger-instructions-8154.md).
+        'Source Library: rare historical books and manuscripts, from Sumerian tablets to the 19th century, ' +
+        'with transcriptions, English translations and page images. It covers theology, philosophy, history, ' +
+        'literature, science, medicine, magic and more. Use it whenever an answer would be better for what ' +
+        'historical authors actually wrote: what someone said or believed, a quotation or citation, how an idea ' +
+        'looked before the modern era, primary sources for study or teaching, or an old illustration. Search first ' +
+        '(search_library for books, search_translations for words, search_concept for ideas, search_images for ' +
+        'pictures), then quote with get_quote and give the reader its short_url so they can open the page. It does ' +
+        'not hold modern scholarship or current events, so do not use it for those. ' +
         'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
         'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
         'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
@@ -2269,9 +2296,12 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
               route: `mcp:${name}`, status: 429, ms: Date.now() - started,
               wouldBlock: true, blocked: true, reason: 'page_budget',
             });
+            // Logged as a failure: the reader got no text, and a refusal that reads
+            // ok:true is invisible in the failure table.
             logMcpToolCall({
               tool: name, args: argsObj, ms: Date.now() - started,
-              ip: reqContext.ip, userAgent: reqContext.userAgent,
+              error: `page_budget ${usedPages24h}/${limit}`,
+              ip: reqContext.ip, userAgent: reqContext.userAgent, sessionId: reqContext.sessionId,
             });
             return { content: [{ type: 'text' as const, text: JSON.stringify(refusal, null, 2) }] };
           }
@@ -2305,6 +2335,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started,
         ip: reqContext.ip, userAgent: reqContext.userAgent,
+        sessionId: reqContext.sessionId, resultCount: countToolResults(result),
       });
 
       const upgradeHint = buildUpgradeHint(reqContext.identity, reqContext.ip);
@@ -2350,7 +2381,7 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       const message = error instanceof Error ? error.message : 'Unknown error';
       logMcpToolCall({
         tool: name, args: argsObj, ms: Date.now() - started, error: message,
-        ip: reqContext.ip, userAgent: reqContext.userAgent,
+        ip: reqContext.ip, userAgent: reqContext.userAgent, sessionId: reqContext.sessionId,
       });
       // Structured, not prose. Ten separate AI-client reports (#3083) describe
       // the same failure: an opaque string reads as a NON-DETERMINISTIC error,
@@ -2408,7 +2439,12 @@ export async function GET(req: Request) {
  * Batched JSON-RPC arrives as an array, hence the normalisation. Never throws:
  * a malformed body is the client's problem, not a reason to fail the request.
  */
-function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) {
+function isInitialize(body: unknown): boolean {
+  const messages = Array.isArray(body) ? body : [body];
+  return messages.some((m) => (m as { method?: unknown } | null)?.method === 'initialize');
+}
+
+function logInitializeFrom(body: unknown, ip: string, userAgent: string | null, sessionId: string | null) {
   const messages = Array.isArray(body) ? body : [body];
   for (const msg of messages) {
     const m = msg as { method?: unknown; params?: Record<string, unknown> } | null;
@@ -2422,6 +2458,7 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) 
       protocolVersion: s(m.params?.protocolVersion),
       ip,
       userAgent,
+      sessionId,
     });
   }
 }
@@ -2429,7 +2466,11 @@ function logInitializeFrom(body: unknown, ip: string, userAgent: string | null) 
 export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
   try {
     const body = await req.json();
-    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'));
+    // Measurement only (see mintMcpSessionId). The transport stays stateless: with
+    // no sessionIdGenerator it neither issues nor validates a session id.
+    const initializing = isInitialize(body);
+    const sessionId = initializing ? mintMcpSessionId() : readMcpSessionId(req.headers);
+    logInitializeFrom(body, getClientIp(req), req.headers.get('user-agent'), sessionId);
 
     // Always set the Accept header the SDK requires — clients send varying
     // combinations (just application/json, just text/event-stream, or neither)
@@ -2446,10 +2487,16 @@ export const POST = withApiAuth(async (req: NextRequest, _ctx, identity) => {
       userAgent: req.headers.get('user-agent'),
       identity,
       request: req,
+      sessionId,
     });
     await server.connect(transport);
     try {
-      return await transport.handleRequest(fixedReq, { parsedBody: body });
+      const res = await transport.handleRequest(fixedReq, { parsedBody: body });
+      if (!initializing || !sessionId || !res.ok) return res;
+      const headers = new Headers(res.headers);
+      headers.set('Mcp-Session-Id', sessionId);
+      headers.set('Access-Control-Expose-Headers', 'Mcp-Session-Id');
+      return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
     } finally {
       await transport.close();
       await server.close();

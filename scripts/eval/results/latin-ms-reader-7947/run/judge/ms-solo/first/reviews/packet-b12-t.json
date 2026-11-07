@@ -1,0 +1,57 @@
+[
+  {
+    "book_id": "b12-t", "slot": 1, "title": "Lapis Philosophicus (PH436)", "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Latin alchemical florilegium in a humanist hand (sententiae of Bonellus, Albertus Magnus, Rasis, Hermes on solution, sublimation, nigredo and the generation of metals). It belongs on an alchemy shelf. No tradition or collections are given in the packet to check it against.",
+    "rights_flag": null,
+    "structure_note": "No structure counts in the packet. The scribe's page numbers sit at a steady offset from the scan sequence (scan 51 = p. 43, 101 = p. 93, 151 = p. 143), so these three pages show no splice or reordering. None of the three pages has a translation (translation: null), so on this sample the book has OCR only.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "suam more-diatur aquam", "image": "suam ingre-diatur aquam", "problem": "'ingrediatur' (enter into its water) misread as a non-word. A reader of the transcription loses the verb.", "severity": "moderate", "class": "O6" },
+          { "ocr": "<margin>37. 44. 47.\np. 20.</margin>", "image": "37. 44. 47. / p. 50. 20 (pencil)", "problem": "Later pencil cross-reference partly misread ('50' dropped)", "severity": "minor", "class": "O12" },
+          { "ocr": "nominaverunt", "image": "nominauerunt", "problem": "u/v silently normalised. Elsewhere on the page the scribe's u is kept (Solutione, uasi), so the convention is inconsistent.", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "nihil tamen addit forma, nec materia, nec virtutis", "image": "nihil tamen addit formae, nec materiae, nec virtutis", "problem": "Genitive endings -ae dropped, which breaks the parallel with 'virtutis'", "severity": "minor", "class": "O8" },
+          { "ocr": "(absent)", "image": "138.143 (pencil, right margin, top)", "problem": "Pencil cross-reference in the margin dropped, though 'tria.' lower in the same margin is kept", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "Catchword 'm-' wrapped as <meta>m-</meta> rather than marked as a catchword", "severity": "minor", "class": "O11" }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 151,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "quod natura ipsa in eo incipit", "image": "quod natura ipsa in eo incaepit", "problem": "Perfect 'incaepit' (began) normalised to present 'incipit'", "severity": "minor", "class": "O8" },
+          { "ocr": "(absent)", "image": "'con. de' in ink in the right margin beside 'artem', plus pencil references (p. 138. 95; 87; p. 145. 151; 137. 15 ...)", "problem": "The ink marginal note and all the pencil references are dropped", "severity": "minor", "class": "O12" }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          { "note": "The script warning differs from the neighbouring pages ('Handwritten Italian humanist hand' here, 'Handwritten Latin cursive script' on pp. 51 and 101) although the hand is the same", "severity": "minor", "class": "O9" }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean humanist-hand alchemical manuscript, and the transcription is careful and close to the image. There is one moderate misread ('morediatur' for 'ingrediatur') and the rest are small normalisations and dropped pencil cross-references. There is no translation on any sampled page, so the book is readable only in Latin."
+  }
+]

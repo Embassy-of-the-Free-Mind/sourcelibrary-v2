@@ -1,0 +1,1691 @@
+[
+ {
+  "slug": "ws-de-bekanntmachung-k-niglich-s-chsischer-verein-1825-p5",
+  "lang": "de",
+  "year": 1825,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0.099,
+  "wer_served": 0.099,
+  "ref_chars": 607,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-gn-a-110-gemein-nachrichten-1765-2-pdf-p26",
+  "lang": "de",
+  "year": 1765,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.069,
+  "cer_served": 0.038,
+  "wer_draft": 0.164,
+  "wer_served": 0.099,
+  "ref_chars": 771,
+  "unexplained": {
+   "count": 3,
+   "runs3": 0,
+   "examples": [
+    "kont",
+    "gezehlt",
+    "komen"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-demme-mordwerk-zu-frauenburg-pdf-p2",
+  "lang": "de",
+  "year": 1842,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.012,
+  "cer_served": 0.009,
+  "wer_draft": 0.039,
+  "wer_served": 0.024,
+  "ref_chars": 2041,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-fliegende-bl-tter-1-djvu-p17",
+  "lang": "de",
+  "year": 1845,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.065,
+  "cer_served": 0.065,
+  "wer_draft": 0.028,
+  "wer_served": 0.028,
+  "ref_chars": 706,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-die-vierbeinigten-philosophen-djvu-p3",
+  "lang": "de",
+  "year": 1802,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.005,
+  "cer_served": 0,
+  "wer_draft": 0.018,
+  "wer_served": 0,
+  "ref_chars": 811,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-chronica-pethau-djvu-p2",
+  "lang": "de",
+  "year": 1733,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.017,
+  "cer_served": 0.015,
+  "wer_draft": 0.064,
+  "wer_served": 0.061,
+  "ref_chars": 1504,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-bruder-felix-fabers-gereimtes-pilgerbuechlein-dj-p3",
+  "lang": "de",
+  "year": 1840,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.014,
+  "cer_served": 0.013,
+  "wer_draft": 0.069,
+  "wer_served": 0.063,
+  "ref_chars": 1356,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-der-ahnherr-pdf-p20",
+  "lang": "de",
+  "year": 1827,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.011,
+  "cer_served": 0.004,
+  "wer_draft": 0.056,
+  "wer_served": 0.019,
+  "ref_chars": 555,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-experimental-untersuchungen-ber-elektricit-t-02-p3",
+  "lang": "de",
+  "year": 1832,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.007,
+  "cer_served": 0.007,
+  "wer_draft": 0.004,
+  "wer_served": 0.004,
+  "ref_chars": 1621,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-ber-hmte-krapfen-recepte-und-die-heirath-durch-k-p2",
+  "lang": "de",
+  "year": 1850,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.014,
+  "cer_served": 0.01,
+  "wer_draft": 0.056,
+  "wer_served": 0.045,
+  "ref_chars": 3909,
+  "unexplained": {
+   "count": 6,
+   "runs3": 0,
+   "examples": [
+    "ohngefahr",
+    "gstossenen",
+    "messerfpitz",
+    "iezt",
+    "oudersch",
+    "iezus"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-erinnerungst-felchen-an-die-ausstellung-der-kuns-p3",
+  "lang": "de",
+  "year": 1816,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.004,
+  "cer_served": 0.004,
+  "wer_draft": 0.019,
+  "wer_served": 0.019,
+  "ref_chars": 769,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-das-suggenthal-djvu-p4",
+  "lang": "de",
+  "year": 1830,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.002,
+  "wer_draft": 0.006,
+  "wer_served": 0.006,
+  "ref_chars": 3657,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-95-thesen-pdf-p3",
+  "lang": "de",
+  "year": 1557,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.007,
+  "cer_served": 0.007,
+  "wer_draft": 0.183,
+  "wer_served": 0.183,
+  "ref_chars": 1861,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-die-neue-messaline-1788-pdf-p30",
+  "lang": "de",
+  "year": 1788,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.01,
+  "cer_served": 0.003,
+  "wer_draft": 0.047,
+  "wer_served": 0.02,
+  "ref_chars": 800,
+  "unexplained": {
+   "count": 1,
+   "runs3": 0,
+   "examples": [
+    "schasse"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+  "lang": "de",
+  "year": 1842,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.008,
+  "cer_served": 0.001,
+  "wer_draft": 0.014,
+  "wer_served": 0.006,
+  "ref_chars": 3140,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-deutsche-kunstbl-tter-die-kunstausstellung-zu-dr-p53",
+  "lang": "de",
+  "year": 1800,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.002,
+  "wer_draft": 0.025,
+  "wer_served": 0.025,
+  "ref_chars": 664,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-clementine-schrader-der-hohlweg-1843-pdf-p3",
+  "lang": "de",
+  "year": 1843,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 853,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-caecilia206-229-pdf-p2",
+  "lang": "de",
+  "year": 1829,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.001,
+  "wer_draft": 0.004,
+  "wer_served": 0.004,
+  "ref_chars": 1556,
+  "unexplained": {
+   "count": 1,
+   "runs3": 0,
+   "examples": [
+    "kurzern"
+   ]
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-friedens-instrument-zwischen-den-kayser-und-dem-p3",
+  "lang": "de",
+  "year": 1697,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.042,
+  "cer_served": 0.011,
+  "wer_draft": 0.106,
+  "wer_served": 0.056,
+  "ref_chars": 1860,
+  "unexplained": {
+   "count": 5,
+   "runs3": 0,
+   "examples": [
+    "uergosser",
+    "konigl",
+    "che",
+    "uueder",
+    "do"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-ein-kurtzweilig-lesen-von-dyl-vlenspiegel-djvu-p19",
+  "lang": "de",
+  "year": 1515,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.034,
+  "cer_served": 0.028,
+  "wer_draft": 0.324,
+  "wer_served": 0.272,
+  "ref_chars": 937,
+  "unexplained": {
+   "count": 6,
+   "runs3": 0,
+   "examples": [
+    "gienge",
+    "uueidenda",
+    "bade",
+    "hunalso",
+    "hindzucktund",
+    "zeuuurgeund"
+   ]
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-de-barrikaden-lieder-gottschall-djvu-p24",
+  "lang": "de",
+  "year": 1848,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 574,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-dudalaeus-welt-herum-wandernde-jude-djvu-p3",
+  "lang": "de",
+  "year": 1634,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.004,
+  "cer_served": 0,
+  "wer_draft": 0.017,
+  "wer_served": 0,
+  "ref_chars": 902,
+  "unexplained": {
+   "count": 3,
+   "runs3": 1,
+   "examples": [
+    "uniuersita",
+    "di",
+    "torino"
+   ]
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-ah-ca-ira-pdf-p2",
+  "lang": "de",
+  "year": 1790,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.008,
+  "cer_served": 0.008,
+  "wer_draft": 0.039,
+  "wer_served": 0.039,
+  "ref_chars": 719,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-gn-a-148-gemein-nachrichten-1770-2-pdf-p26",
+  "lang": "de",
+  "year": 1770,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.046,
+  "cer_served": 0.031,
+  "wer_draft": 0.189,
+  "wer_served": 0.14,
+  "ref_chars": 818,
+  "unexplained": {
+   "count": 2,
+   "runs3": 0,
+   "examples": [
+    "uuittuuer",
+    "beyers"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-die-poetische-ukraine-1845-pdf-p15",
+  "lang": "de",
+  "year": 1845,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0,
+  "wer_draft": 0.005,
+  "wer_served": 0,
+  "ref_chars": 1145,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-baumann-kriegs-und-familienscenen-1813-pdf-p16",
+  "lang": "de",
+  "year": 1815,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 1064,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-etwas-ber-die-dresdner-kunstausstellung-1811-zei-p1",
+  "lang": "de",
+  "year": 1811,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.007,
+  "cer_served": 0.007,
+  "wer_draft": 0.032,
+  "wer_served": 0.032,
+  "ref_chars": 3562,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-der-sieg-ber-die-branntweinpest-in-oberschlesien-p33",
+  "lang": "de",
+  "year": 1845,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.005,
+  "wer_served": 0.005,
+  "ref_chars": 1265,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-experimental-untersuchungen-ber-elektricit-t-08-p4",
+  "lang": "de",
+  "year": 1835,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.004,
+  "wer_served": 0.004,
+  "ref_chars": 1448,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-chronica-eckersberg-und-olbersdorff-djvu-p2",
+  "lang": "de",
+  "year": 1732,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.006,
+  "cer_served": 0,
+  "wer_draft": 0.038,
+  "wer_served": 0.008,
+  "ref_chars": 781,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-chronica-hartau-djvu-p3",
+  "lang": "de",
+  "year": 1734,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.017,
+  "cer_served": 0.015,
+  "wer_draft": 0.11,
+  "wer_served": 0.1,
+  "ref_chars": 655,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-de-pfm-1833-05-25-nr-04-djvu-p3",
+  "lang": "de",
+  "year": 1833,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.003,
+  "cer_served": 0.004,
+  "wer_draft": 0.012,
+  "wer_served": 0.01,
+  "ref_chars": 5615,
+  "unexplained": {
+   "count": 6,
+   "runs3": 0,
+   "examples": [
+    "kontinental",
+    "landern",
+    "zug",
+    "arbeitsuiehe",
+    "elfriede",
+    "tisuueilen"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+  "lang": "de",
+  "year": 1847,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 945,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-die-dresdener-gem-lde-galerie-mosen-pdf-p17",
+  "lang": "de",
+  "year": 1844,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.005,
+  "cer_served": 0.003,
+  "wer_draft": 0.013,
+  "wer_served": 0.004,
+  "ref_chars": 1196,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+  "lang": "de",
+  "year": 1823,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.006,
+  "cer_served": 0,
+  "wer_draft": 0.008,
+  "wer_served": 0,
+  "ref_chars": 3434,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-deutsche-gewerbezeitung-nr-37-1849-pdf-p7",
+  "lang": "de",
+  "year": 1849,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.148,
+  "cer_served": 0.148,
+  "wer_draft": 0.194,
+  "wer_served": 0.194,
+  "ref_chars": 4810,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-dresdner-anzeigen-1803-kunstausstellung-djvu-p3",
+  "lang": "de",
+  "year": 1803,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.001,
+  "wer_draft": 0.016,
+  "wer_served": 0.007,
+  "ref_chars": 2419,
+  "unexplained": {
+   "count": 1,
+   "runs3": 0,
+   "examples": [
+    "dern"
+   ]
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-de-feldern-rolf-orangenbluethe-pdf-p2",
+  "lang": "de",
+  "year": 1844,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 1110,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-die-philosophen-aus-dem-uranus-djvu-p18",
+  "lang": "de",
+  "year": 1796,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.008,
+  "cer_served": 0.005,
+  "wer_draft": 0.085,
+  "wer_served": 0.028,
+  "ref_chars": 780,
+  "unexplained": {
+   "count": 1,
+   "runs3": 0,
+   "examples": [
+    "ungestummsten"
+   ]
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-de-deutsches-schimpfw-rterbuch-oder-die-schimpfw-rt-p23",
+  "lang": "de",
+  "year": 1839,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0,
+  "wer_draft": 0.005,
+  "wer_served": 0,
+  "ref_chars": 1042,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-barbier-th-tre-1745-pdf-p258",
+  "lang": "fr",
+  "year": 1745,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.019,
+  "wer_served": 0.019,
+  "ref_chars": 963,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-relation-envoy-e-de-brest-au-sujet-d-un-p2",
+  "lang": "fr",
+  "year": 1725,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.003,
+  "wer_served": 0.006,
+  "ref_chars": 1458,
+  "unexplained": {
+   "count": 2,
+   "runs3": 0,
+   "examples": [
+    "palans",
+    "pendue"
+   ]
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-j-b-p-bacon-belph-gor-dans-marseille-173-p3",
+  "lang": "fr",
+  "year": 1736,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.053,
+  "cer_served": 0.052,
+  "wer_draft": 0.236,
+  "wer_served": 0.23,
+  "ref_chars": 771,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-aboulf-da-vie-de-mohammed-traduction-et-commenta-p21",
+  "lang": "fr",
+  "year": 1837,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.005,
+  "cer_served": 0.004,
+  "wer_draft": 0.02,
+  "wer_served": 0.016,
+  "ref_chars": 1229,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-bacchus-l-amour-et-les-plaisirs-ou-recueil-de-ch-p22",
+  "lang": "fr",
+  "year": 1800,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.004,
+  "wer_draft": 0.008,
+  "wer_served": 0.016,
+  "ref_chars": 552,
+  "unexplained": {
+   "count": 1,
+   "runs3": 0,
+   "examples": [
+    "dalcmene"
+   ]
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-adresse-messieurs-nos-abonn-s-pour-la-no-p2",
+  "lang": "fr",
+  "year": 1835,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.002,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 618,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-barbey-d-aurevilly-aux-h-ros-des-thermopyles-djv-p14",
+  "lang": "fr",
+  "year": 1825,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.003,
+  "cer_served": 0.003,
+  "wer_draft": 0.008,
+  "wer_served": 0.008,
+  "ref_chars": 593,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-abbadie-l-art-de-se-connaitre-soi-meme-djvu-p32",
+  "lang": "fr",
+  "year": 1715,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.036,
+  "cer_served": 0.036,
+  "wer_draft": 0.036,
+  "wer_served": 0.036,
+  "ref_chars": 831,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-ballanche-vision-d-h-bal-djvu-p5",
+  "lang": "fr",
+  "year": 1831,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 639,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-aza-s-seconde-lettre-m-le-vte-de-ch-teaubriand-p-p45",
+  "lang": "fr",
+  "year": 1818,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.006,
+  "wer_served": 0.006,
+  "ref_chars": 801,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-austen-orgueil-et-pr-jug-paschoud-4-djvu-p177",
+  "lang": "fr",
+  "year": 1822,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.006,
+  "cer_served": 0.006,
+  "wer_draft": 0.02,
+  "wer_served": 0.02,
+  "ref_chars": 494,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-austen-la-famille-elliot-t2-djvu-p210",
+  "lang": "fr",
+  "year": 1828,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.016,
+  "cer_served": 0.016,
+  "wer_draft": 0.013,
+  "wer_served": 0.013,
+  "ref_chars": 797,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-alban-s-les-myst-res-du-coll-ge-1845-djvu-p171",
+  "lang": "fr",
+  "year": 1845,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.003,
+  "wer_served": 0.003,
+  "ref_chars": 1538,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-10-septembre-17-p3",
+  "lang": "fr",
+  "year": 1787,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0,
+  "wer_draft": 0.01,
+  "wer_served": 0.01,
+  "ref_chars": 1522,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-abeille-coriolan-1676-djvu-p40",
+  "lang": "fr",
+  "year": 1676,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 713,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-audibert-histoire-et-roman-1834-djvu-p240",
+  "lang": "fr",
+  "year": 1834,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.008,
+  "cer_served": 0.008,
+  "wer_draft": 0.019,
+  "wer_served": 0.019,
+  "ref_chars": 738,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-l-alpha-de-la-r-publique-1848-djvu-p4",
+  "lang": "fr",
+  "year": 1848,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.006,
+  "cer_served": 0.006,
+  "wer_draft": 0.005,
+  "wer_served": 0.005,
+  "ref_chars": 993,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anselme-mission-du-commandant-du-g-nie-guy-tunis-p3",
+  "lang": "fr",
+  "year": 1831,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 710,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-annales-de-math-matiques-pures-et-appliqu-es-182-p3",
+  "lang": "fr",
+  "year": 1829,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.003,
+  "cer_served": 0.003,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 310,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-fr-anonyme-accusation-de-tentative-d-assassinat-sur-p16",
+  "lang": "fr",
+  "year": 1839,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.007,
+  "wer_served": 0.007,
+  "ref_chars": 1374,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": false,
+  "accept_served": false
+ },
+ {
+  "slug": "ws-fr-annales-de-math-matiques-pures-et-appliqu-es-182-p304",
+  "lang": "fr",
+  "year": 1820,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.355,
+  "cer_served": 0.355,
+  "wer_draft": 0.045,
+  "wer_served": 0.045,
+  "ref_chars": 889,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p5",
+  "lang": "fr",
+  "year": 1787,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.012,
+  "cer_served": 0.012,
+  "wer_draft": 0.025,
+  "wer_served": 0.025,
+  "ref_chars": 588,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-auber-de-la-fi-vre-puerp-rale-djvu-p31",
+  "lang": "fr",
+  "year": 1848,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.001,
+  "cer_served": 0.001,
+  "wer_draft": 0.004,
+  "wer_served": 0.004,
+  "ref_chars": 1423,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-austen-la-famille-elliot-t1-djvu-p19",
+  "lang": "fr",
+  "year": 1821,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 1016,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-30-ao-t-1784-dj-p2",
+  "lang": "fr",
+  "year": 1784,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.002,
+  "wer_draft": 0.018,
+  "wer_served": 0.018,
+  "ref_chars": 1463,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-agoult-lettres-r-publicaines-djvu-p145",
+  "lang": "fr",
+  "year": 1848,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.002,
+  "wer_draft": 0.006,
+  "wer_served": 0.006,
+  "ref_chars": 923,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-alfieri-de-la-tyrannie-djvu-p17",
+  "lang": "fr",
+  "year": 1802,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 719,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-aristote-metaphysique-1840-1-djvu-p24",
+  "lang": "fr",
+  "year": 1840,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 1272,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26",
+  "lang": "fr",
+  "year": 1787,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.031,
+  "cer_served": 0.031,
+  "wer_draft": 0.124,
+  "wer_served": 0.124,
+  "ref_chars": 958,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-allart-la-femme-et-la-democratie-de-nos-temps-dj-p16",
+  "lang": "fr",
+  "year": 1836,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0.006,
+  "cer_served": 0.006,
+  "wer_draft": 0.005,
+  "wer_served": 0.005,
+  "ref_chars": 982,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-abrant-s-l-exil-une-rose-au-d-sert-tome-2-djvu-p206",
+  "lang": "fr",
+  "year": 1838,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 737,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-andry-trait-des-aliments-de-car-me-1713-tome-i-d-p26",
+  "lang": "fr",
+  "year": 1713,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.007,
+  "cer_served": 0.007,
+  "wer_draft": 0.01,
+  "wer_served": 0.01,
+  "ref_chars": 985,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anglemont-louis-xviii-1824-djvu-p6",
+  "lang": "fr",
+  "year": 1824,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "other",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 625,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-alexis-de-tocqueville-de-la-d-mocratie-en-am-riq-p22",
+  "lang": "fr",
+  "year": 1848,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 1075,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-anonyme-le-serment-du-jeu-de-paume-1823-pdf-p2",
+  "lang": "fr",
+  "year": 1823,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 686,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-argens-m-moires-historiques-et-secrets-concernan-p18",
+  "lang": "fr",
+  "year": 1739,
+  "level": 4,
+  "fidelity_ref": "glyph",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0.003,
+  "cer_served": 0.003,
+  "wer_draft": 0.007,
+  "wer_served": 0.007,
+  "ref_chars": 595,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-austen-orgueil-et-pr-jug-paschoud-2-djvu-p19",
+  "lang": "fr",
+  "year": 1822,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "written",
+  "aligned": true,
+  "cer_draft": 0.002,
+  "cer_served": 0.002,
+  "wer_draft": 0.01,
+  "wer_served": 0.01,
+  "ref_chars": 530,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ },
+ {
+  "slug": "ws-fr-allart-l-indienne-djvu-p21",
+  "lang": "fr",
+  "year": 1833,
+  "level": 4,
+  "fidelity_ref": "word",
+  "outcome": "unchanged",
+  "aligned": true,
+  "cer_draft": 0,
+  "cer_served": 0,
+  "wer_draft": 0,
+  "wer_served": 0,
+  "ref_chars": 572,
+  "unexplained": {
+   "count": 0,
+   "runs3": 0,
+   "examples": []
+  },
+  "accept_draft": true,
+  "accept_served": true
+ }
+]

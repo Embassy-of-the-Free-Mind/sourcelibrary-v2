@@ -1,0 +1,1120 @@
+{
+ "generated_at": "2026-10-31T12:58:35.169Z",
+ "source": "fraktur-paired-7835 (#7835 T1, T2)",
+ "file": "scripts/eval/fraktur-paired-7835/results/router-evidence.score.json",
+ "judge": "claude-opus-5-5 (claude -p), route-judge-6740 judgePrompt, against the page image",
+ "prompt_template_sha": [
+  null
+ ],
+ "frame": "T1: one interior unread page per book in the first-read lane's German frame, 40 Fraktur + 20 Antiqua by the agy face tag; T2: one Flash-Lite page per book in the #7558 lane's German frame, not yet processed, 40 Fraktur. Every arm on the same page; an arm that served no text counts as not accepted. Preregistered: 2026-10-31-fraktur-paired-7835.md.",
+ "calls": {
+  "records": 324,
+  "malformed_not_counted": 0,
+  "judged": 324,
+  "unparsed": 0,
+  "list_usd_equiv": 0
+ },
+ "cells": {
+  "german-blank-antiqua": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "agy-flash-low@4-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ]
+    }
+   },
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "accept_rate": 0.714,
+     "accept_ci": {
+      "ci95": [
+       0.5,
+       0.929
+      ],
+      "unit": "book",
+      "units": 14
+     },
+     "wrong_text_pages": "1/14",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.214
+      ],
+      "unit": "book",
+      "units": 14
+     },
+     "wrong_text_classes": {
+      "O18": "1/14"
+     },
+     "classes_k_of_n": {
+      "E2": "2/14",
+      "O16": "2/14",
+      "O8": "2/14",
+      "O13": "1/14",
+      "O11": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O17": "1/14",
+      "O6": "1/14",
+      "O12": "1/14"
+     },
+     "fidelity_mean": 3.79,
+     "lane": [
+      "fraktur-7835-t1"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "10/14",
+       "wrong_text_pages": "1/14",
+       "books": 14
+      }
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "accept_rate": 0.714,
+     "accept_ci": {
+      "ci95": [
+       0.5,
+       0.929
+      ],
+      "unit": "book",
+      "units": 14
+     },
+     "wrong_text_pages": "1/14",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.214
+      ],
+      "unit": "book",
+      "units": 14
+     },
+     "wrong_text_classes": {
+      "O18": "1/14"
+     },
+     "classes_k_of_n": {
+      "O8": "3/14",
+      "O13": "1/14",
+      "E2": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O16": "1/14",
+      "O17": "1/14",
+      "O6": "1/14",
+      "O12": "1/14"
+     },
+     "fidelity_mean": 3.71,
+     "lane": [
+      "fraktur-7835-t1"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "10/14",
+       "wrong_text_pages": "1/14",
+       "books": 14
+      }
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "accept_rate": 0.714,
+     "accept_ci": {
+      "ci95": [
+       0.5,
+       0.929
+      ],
+      "unit": "book",
+      "units": 14
+     },
+     "wrong_text_pages": "1/14",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.214
+      ],
+      "unit": "book",
+      "units": 14
+     },
+     "wrong_text_classes": {
+      "O18": "1/14"
+     },
+     "classes_k_of_n": {
+      "E2": "2/14",
+      "O16": "2/14",
+      "O8": "2/14",
+      "O13": "1/14",
+      "O11": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O17": "1/14",
+      "O12": "1/14"
+     },
+     "fidelity_mean": 3.86,
+     "lane": [
+      "fraktur-7835-t1"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": null,
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "10/14",
+       "wrong_text_pages": "1/14",
+       "books": 14
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "german-blank-fraktur": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "agy-flash-low@4-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "29/40",
+     "accept_rate": 0.725,
+     "accept_ci": {
+      "ci95": [
+       0.575,
+       0.85
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "4/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.025,
+       0.2
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "2/40",
+      "O7": "2/40"
+     },
+     "classes_k_of_n": {
+      "O8": "23/40",
+      "O6": "15/40",
+      "E2": "13/40",
+      "O12": "6/40",
+      "O16": "4/40",
+      "O11": "4/40",
+      "O7": "3/40",
+      "T6": "1/40",
+      "D1": "1/40"
+     },
+     "fidelity_mean": 3.88,
+     "lane": [
+      "fraktur-7835-t1"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "29/40",
+       "wrong_text_pages": "4/40",
+       "books": 40
+      }
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "31/40",
+     "accept_rate": 0.775,
+     "accept_ci": {
+      "ci95": [
+       0.65,
+       0.9
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "3/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0,
+       0.175
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "2/40",
+      "O7": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "21/40",
+      "O6": "12/40",
+      "E2": "12/40",
+      "O11": "5/40",
+      "O12": "4/40",
+      "O7": "3/40",
+      "T6": "2/40",
+      "O16": "1/40"
+     },
+     "fidelity_mean": 3.9,
+     "lane": [
+      "fraktur-7835-t1"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "31/40",
+       "wrong_text_pages": "3/40",
+       "books": 40
+      }
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "31/40",
+     "accept_rate": 0.775,
+     "accept_ci": {
+      "ci95": [
+       0.65,
+       0.9
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "5/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.025,
+       0.25
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O7": "2/40",
+      "O15": "1/40",
+      "O6": "1/40",
+      "T5": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "24/40",
+      "O6": "16/40",
+      "E2": "11/40",
+      "O16": "4/40",
+      "O12": "4/40",
+      "O7": "3/40",
+      "T6": "2/40",
+      "O11": "2/40",
+      "O15": "1/40",
+      "O5": "1/40",
+      "D1": "1/40",
+      "T5": "1/40"
+     },
+     "fidelity_mean": 3.98,
+     "lane": [
+      "fraktur-7835-t1"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "31/40",
+       "wrong_text_pages": "5/40",
+       "books": 40
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  },
+  "german-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "controls": {
+    "agy-flash-low@4-read": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lite": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 2,
+     "passed": true,
+     "wrong_page_passed": true,
+     "verdicts": [
+      {
+       "accept": false,
+       "fidelity": 1
+      },
+      {
+       "accept": false,
+       "fidelity": 1
+      }
+     ],
+     "planted": {
+      "n": 4,
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "named": "4/4",
+      "by_kind": {
+       "B": "1/1",
+       "C": "1/1",
+       "D": "1/1",
+       "E": "1/1"
+      },
+      "rolling": {
+       "days": 56,
+       "n": 4,
+       "caught": "4/4",
+       "rate": 1,
+       "ci95": [
+        0.51,
+        1
+       ]
+      },
+      "validated": null,
+      "failed": false,
+      "rule": "rolling catch rate over the last 56 days, counted from 8 plants: below 0.8 the route is not counted"
+     }
+    }
+   },
+   "routes": {
+    "agy-flash-low@4-read": {
+     "n": 40,
+     "books": 40,
+     "accept": "33/40",
+     "accept_rate": 0.825,
+     "accept_ci": {
+      "ci95": [
+       0.7,
+       0.925
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "4/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.025,
+       0.2
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "3/40",
+      "O7": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "25/40",
+      "O6": "15/40",
+      "E2": "11/40",
+      "O11": "5/40",
+      "O16": "5/40",
+      "O7": "2/40",
+      "O12": "2/40",
+      "T6": "2/40",
+      "O10": "2/40",
+      "D1": "1/40"
+     },
+     "fidelity_mean": 4.3,
+     "lane": [
+      "fraktur-7835-t2"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "33/40",
+       "wrong_text_pages": "4/40",
+       "books": 40
+      }
+     }
+    },
+    "lite": {
+     "n": 40,
+     "books": 40,
+     "accept": "25/40",
+     "accept_rate": 0.625,
+     "accept_ci": {
+      "ci95": [
+       0.475,
+       0.775
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "13/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.175,
+       0.475
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O6": "5/40",
+      "O5": "3/40",
+      "O7": "2/40",
+      "I4": "2/40",
+      "O12": "2/40",
+      "O10": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "29/40",
+      "O6": "23/40",
+      "E2": "13/40",
+      "O16": "10/40",
+      "O11": "7/40",
+      "O5": "6/40",
+      "O12": "5/40",
+      "T6": "5/40",
+      "O7": "4/40",
+      "O14": "3/40",
+      "I4": "2/40",
+      "O10": "2/40",
+      "D1": "1/40"
+     },
+     "fidelity_mean": 3.8,
+     "lane": [
+      "fraktur-7835-t2"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "25/40",
+       "wrong_text_pages": "13/40",
+       "books": 40
+      }
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 40,
+     "books": 40,
+     "accept": "27/40",
+     "accept_rate": 0.675,
+     "accept_ci": {
+      "ci95": [
+       0.525,
+       0.825
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_pages": "7/40",
+     "wrong_text_ci": {
+      "ci95": [
+       0.075,
+       0.3
+      ],
+      "unit": "book",
+      "units": 40
+     },
+     "wrong_text_classes": {
+      "O12": "2/40",
+      "O7": "1/40",
+      "O6": "1/40",
+      "O5": "1/40",
+      "O10": "1/40",
+      "O8": "1/40"
+     },
+     "classes_k_of_n": {
+      "O8": "28/40",
+      "O6": "14/40",
+      "E2": "9/40",
+      "O7": "4/40",
+      "O12": "4/40",
+      "O16": "4/40",
+      "T6": "3/40",
+      "O11": "3/40",
+      "O10": "2/40",
+      "O13": "1/40",
+      "T16": "1/40",
+      "O5": "1/40",
+      "O14": "1/40",
+      "D1": "1/40"
+     },
+     "fidelity_mean": 4.08,
+     "lane": [
+      "fraktur-7835-t2"
+     ],
+     "counts": true,
+     "served": "the live lane's applied output (served)",
+     "judge_planted": {
+      "caught": "4/4",
+      "rate": 1,
+      "ci95": [
+       0.51,
+       1
+      ],
+      "validated": null,
+      "all": "4/4"
+     },
+     "evidence_rule": "print cell: print pages only",
+     "by_script": {
+      "print": {
+       "accept": "27/40",
+       "wrong_text_pages": "7/40",
+       "books": 40
+      }
+     }
+    }
+   },
+   "routes_not_counted": {},
+   "drafts_conditioned": {},
+   "made_worse": {}
+  }
+ },
+ "contain_candidates": [],
+ "by_script_cells": {
+  "german-blank-antiqua|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "E2": "2/14",
+      "O16": "2/14",
+      "O8": "2/14",
+      "O13": "1/14",
+      "O11": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O17": "1/14",
+      "O6": "1/14",
+      "O12": "1/14"
+     },
+     "script_basis": {
+      "page": 14
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "O8": "3/14",
+      "O13": "1/14",
+      "E2": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O16": "1/14",
+      "O17": "1/14",
+      "O6": "1/14",
+      "O12": "1/14"
+     },
+     "script_basis": {
+      "page": 14
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 14,
+     "books": 14,
+     "accept": "10/14",
+     "wrong_text_pages": "1/14",
+     "classes_k_of_n": {
+      "E2": "2/14",
+      "O16": "2/14",
+      "O8": "2/14",
+      "O13": "1/14",
+      "O11": "1/14",
+      "D1": "1/14",
+      "O18": "1/14",
+      "O17": "1/14",
+      "O12": "1/14"
+     },
+     "script_basis": {
+      "page": 14
+     }
+    }
+   }
+  },
+  "german-blank-fraktur|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "29/40",
+     "wrong_text_pages": "4/40",
+     "classes_k_of_n": {
+      "O8": "23/40",
+      "O6": "15/40",
+      "E2": "13/40",
+      "O12": "6/40",
+      "O16": "4/40",
+      "O11": "4/40",
+      "O7": "3/40",
+      "T6": "1/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "agy-flash-low@4>agy-flash-low-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "31/40",
+     "wrong_text_pages": "3/40",
+     "classes_k_of_n": {
+      "O8": "21/40",
+      "O6": "12/40",
+      "E2": "12/40",
+      "O11": "5/40",
+      "O12": "4/40",
+      "O7": "3/40",
+      "T6": "2/40",
+      "O16": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "agy-flash-low@4>agy-flash-low@4-written": {
+     "n": 40,
+     "books": 40,
+     "accept": "31/40",
+     "wrong_text_pages": "5/40",
+     "classes_k_of_n": {
+      "O8": "24/40",
+      "O6": "16/40",
+      "E2": "11/40",
+      "O16": "4/40",
+      "O12": "4/40",
+      "O7": "3/40",
+      "T6": "2/40",
+      "O11": "2/40",
+      "O15": "1/40",
+      "O5": "1/40",
+      "D1": "1/40",
+      "T5": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  },
+  "german-lite|print": {
+   "routes": {
+    "agy-flash-low@4-read": {
+     "n": 40,
+     "books": 40,
+     "accept": "33/40",
+     "wrong_text_pages": "4/40",
+     "classes_k_of_n": {
+      "O8": "25/40",
+      "O6": "15/40",
+      "E2": "11/40",
+      "O11": "5/40",
+      "O16": "5/40",
+      "O7": "2/40",
+      "O12": "2/40",
+      "T6": "2/40",
+      "O10": "2/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "lite": {
+     "n": 40,
+     "books": 40,
+     "accept": "25/40",
+     "wrong_text_pages": "13/40",
+     "classes_k_of_n": {
+      "O8": "29/40",
+      "O6": "23/40",
+      "E2": "13/40",
+      "O16": "10/40",
+      "O11": "7/40",
+      "O5": "6/40",
+      "O12": "5/40",
+      "T6": "5/40",
+      "O7": "4/40",
+      "O14": "3/40",
+      "I4": "2/40",
+      "O10": "2/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    },
+    "lite>agy-flash-low": {
+     "n": 40,
+     "books": 40,
+     "accept": "27/40",
+     "wrong_text_pages": "7/40",
+     "classes_k_of_n": {
+      "O8": "28/40",
+      "O6": "14/40",
+      "E2": "9/40",
+      "O7": "4/40",
+      "O12": "4/40",
+      "O16": "4/40",
+      "T6": "3/40",
+      "O11": "3/40",
+      "O10": "2/40",
+      "O13": "1/40",
+      "T16": "1/40",
+      "O5": "1/40",
+      "O14": "1/40",
+      "D1": "1/40"
+     },
+     "script_basis": {
+      "page": 40
+     }
+    }
+   }
+  }
+ }
+}

@@ -39,6 +39,7 @@ import { ocrRefusalFallback } from '../lib/ocr-routing.mjs';
 import { LATIN_SCRIPT_LANGUAGES } from '../lib/translate-core.mjs';
 import { toLanguageCodes, codeFamily } from '../lib/language-normalize.mjs';
 import { bookHand, loadOcrProfile } from '../lib/ocr-trust-gate.mjs';
+import { laneQuota } from '../lib/lane-quota.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
@@ -113,10 +114,12 @@ async function main() {
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (!['count', 'run'].includes(mode)) { console.error('usage: refused-pages.mjs count | run --out=DIR [--max-pages=N] [--apply] [--max-weekly-pct=70]'); process.exit(2); }
   if (mode === 'run') {
-    // A cron spends the box account's subscription; stop well short of its week so sessions keep their headroom.
-    const cap = Number(arg('max-weekly-pct') || 70);
-    const wk = weeklyPct();
-    if (wk != null && wk >= cap) { console.log(`skip: this box's Claude account is at ${wk}% of its week (cap ${cap}%)`); return; }
+    // A cron spends the box account's subscription: the lane's quota gate (lane-quota.mjs, #7301) idles it at its
+    // share of the week (70%) and opens it to 90% in the last 48 h, when the quota would otherwise be lost.
+    // --max-weekly-pct overrides the registered share.
+    const q = laneQuota('claude-opus-ocr', { maxWeeklyPct: arg('max-weekly-pct') ?? null });
+    if (!q.open) { console.log(`skip: lane ${q.lane} idles (${q.state}): ${q.why}`); return; }
+    console.log(`quota: lane ${q.lane} ${q.state}: ${q.why}`);
   }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();

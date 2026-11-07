@@ -1,0 +1,16 @@
+{
+ "judged": 30,
+ "of": 30,
+ "new_own": 30,
+ "stored_own": 2,
+ "defects_weighted": {
+  "new": 22,
+  "stored": 114
+ },
+ "major": {
+  "new": 1,
+  "stored": 24
+ },
+ "pass": true,
+ "not_own": []
+}

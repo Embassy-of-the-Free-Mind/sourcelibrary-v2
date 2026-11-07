@@ -777,7 +777,7 @@ function stageFinalize() {
       slug: d.slug, source: gut ? 'gutenberg' : 'wikisource-en',
       source_url: gut ? d.source_url : `https://en.wikisource.org/w/index.php?title=${encodeURIComponent(d.ws_title)}&oldid=${d.ws_revid}`,
       source_revision: gut ? d.source_revision : `oldid ${d.ws_revid} (${d.ws_timestamp})`,
-      licence: gut ? 'PD-US (Project Gutenberg)' : 'CC-BY-SA-4.0',
+      licence: gut ? 'PD-US' : 'CC-BY-SA-4.0', // PD-US is not worldwide: build-quality-dataset.mjs ships the text only with pd_eu: true, set by hand (#7462)
       proofread_level: gut ? null : d.ws_quality,
       unit: { kind: 'page', chars: text.length },
       alignment: gut ? { method: 'gutenberg-pagenum-markers', guard: 'bag-of-words >= 0.7 vs IA leaf over whole book; leaf/page length ratio 0.8–1.25' } : { method: 'wikisource-page = scan page; IA leaf located by bag-of-words ±10 (fallback: expected leaf)', guard: 'leaf check by eye' },

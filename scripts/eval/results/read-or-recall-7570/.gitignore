@@ -1,0 +1,7 @@
+# Page texts stay out of this public repo (#7570): the obscure pages are the contamination-resistant half.
+# Kept on gex45 under /root/jobs/read-or-recall-7570/private/ (copied there at the end of the run).
+keys.jsonl
+pairs.json
+raw-*.jsonl
+online.json
+phrases.json

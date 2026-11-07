@@ -1,0 +1,921 @@
+[
+  {
+    "book_id": "6ae0bd3d4adf2ffb52f72384",
+    "slot": 1,
+    "title": "史記·卷一百五~卷一百八 (Shiji, Siku Quanshu, vol. 37 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 105-108 (Bian Que/Cang Gong, Wu Wang Pi, Wei Qi/Wu An, Han Changru).",
+    "rights_flag": null,
+    "structure_note": "168 records, 166 with OCR, 160 translated (2 pages lack OCR, 8 lack English). The volume holds four juan and the folio numbers restart with each one, so some backsteps are real. 8 backsteps and 22 repeats out of only 28 pages with a captured printed number also suggest misread folio numerals. This is not a splice. The four sampled pages run in order: juan 105, 105, 106, 108.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金穴口座人三",
+            "image": "欽定四庫全書 (margin label)",
+            "problem": "Garbled page furniture sits at the head of the transcription.",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "不及九分至二分或四分五分此太過",
+            "english": "falling short of nine tenths of an inch, reaching only two tenths, or four or five tenths, this constitutes deficiency",
+            "problem": "The source says 此太過, 'this is EXCESS'. The English says 'deficiency', the opposite, so the pulse doctrine reads backwards.",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "經主病和者其",
+            "english": "When the primary vessels govern the illness, there is harmony.",
+            "problem": "This is a doubtful parse that makes a free-standing sentence out of a clause running into the next line.",
+            "severity": "moderate"
+          },
+          {
+            "source": "竟手關",
+            "english": "reaching the hands",
+            "problem": "手關 is cut to 'hands'. The phrase runs on to the next page.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 63,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "全一 / 厂 / <page-num>二",
+            "image": "欽定四庫全書 margin label; no 全一 or 二 at the head",
+            "problem": "The garbled margin label is transcribed as text and as a page number.",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "肝神六童子三女子三",
+            "english": "the liver spirits are six boys and three girls",
+            "problem": "The source means six spirits: three boys and three girls. The English doubles the boys.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "肺神十四童子七女子七",
+            "english": "the lung spirits are fourteen boys and seven girls",
+            "problem": "The source means fourteen spirits: seven boys and seven girls. The count is wrong.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "云光玉女子母",
+            "english": "Jade Maiden Mother of Radiant Cloud <note>original: \"雲光玉女子母\"</note>",
+            "problem": "The note misquotes the source (雲 for 云).",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Junk furniture is translated into the reader text: 'Complete in one <note>original: \"全一\"</note>', 'structural marker: \"厂\"', 'Two'.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 85,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 157,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "欠巳曰三之",
+            "image": "欽定四庫全書 (margin label)",
+            "problem": "Garbled furniture at the foot. It is not translated.",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "其明年則元光",
+            "english": "In the following year, the first year of the Yuanguang era <note>134 BCE</note>",
+            "problem": "'First year' (元年) comes from the next page.",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      85,
+      157
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 105-108 with the three commentaries. The text is the right one and the main narrative reads accurately. The medical juan (Cang Gong) is weaker: one pulse statement is reversed (excess rendered as deficiency), spirit counts are wrong, and junk from the margin label shows up as text. The narrative chapters can be trusted. Check the technical medical passages against the Chinese.",
+    "book_verdict": "The narrative pages are accurate. In the medical chapter one pulse statement is inverted, which is serious, and two numbers are wrong. Show it with a caveat on the Cang Gong pages."
+  },
+  {
+    "book_id": "6ae0bd8d4adf2ffb52f725c5",
+    "slot": 2,
+    "title": "史記·卷一百十八~卷一百二十二 (Shiji, Siku Quanshu, vol. 41 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 118-122 (Huainan/Hengshan, Xunli, Ji/Zheng, Rulin, Kuli).",
+    "rights_flag": null,
+    "structure_note": "175 records, 170 with OCR, 166 translated. Five juan in one volume, so folio numbers restart and backsteps (12) and repeats (28) are expected. Some are probably misread numerals. Page 59 is a juan title leaf (juan 119), in the right place.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 32,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "金文匹左全言",
+            "image": "欽定四庫全書",
+            "problem": "Garbled margin label. It is not translated.",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 59,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "也巳巳字一也",
+            "image": "(nothing: no such line on the leaf)",
+            "problem": "An invented line at the foot of the transcription, probably the margin label misread as text.",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "率府長史",
+            "english": "Commandant of the Guard",
+            "problem": "長史 is a chief clerk, not a commandant.",
+            "severity": "minor"
+          },
+          {
+            "source": "循吏列傳",
+            "english": "Biographies of Reasonable Officials",
+            "problem": "'Law-abiding' or 'upright' officials is the usual sense.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The invented line is translated as a philological gloss in the reader text: '\"Also\" and \"already\": the characters \"already\" and \"already\" are identical in form.' This apparatus is not on the page.",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 108,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 168,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "獄久者至更數赦十有餘歲而相告言",
+            "english": "Those held long in prison went through several general amnesties. ... For over ten years, the accusations...",
+            "problem": "The English detaches 十有餘歲 from the prisoners' long detention. It is a defensible parse but loose.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Commentary paragraphs are wrapped in <gloss> instead of <note>, so the reader shows them as inline glosses.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      32,
+      108,
+      168
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 118-122 (Huainan, Upright Officials, Confucian Scholars, Harsh Officials) with the commentaries. The transcription is of the right text and the narrative English is faithful. On the juan title leaf, a line that is not on the page is transcribed and then rendered as a scholarly gloss.",
+    "book_verdict": "The narrative is accurate and readable. The one embarrassment is invented apparatus on a title leaf, made from garbled margin text."
+  },
+  {
+    "book_id": "6ae0bd3a4adf2ffb52f722f9",
+    "slot": 3,
+    "title": "史記·卷九十九~卷一百四 (Shiji, Siku Quanshu, vol. 36 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 99-104 (Liu Jing/Shusun Tong ... Tian Shu).",
+    "rights_flag": null,
+    "structure_note": "136 records, 133 with OCR, 126 translated (10 pages without English). Six juan, so folio restarts make backsteps (12) and repeats (24) expected. A few are probably misreads.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "學轡",
+            "image": "擥轡",
+            "problem": "Misread (the translation still has 'seized the reins').",
+            "severity": "minor"
+          },
+          {
+            "ocr": "素昭曰衡車衛 ... 如淳句衣如云欄桷 ... 宮設四局欄花者",
+            "image": "small double-column commentary (Wei Zhao / Ru Chun on 騎衡)",
+            "problem": "The small commentary is garbled in several places (素昭 for 韋昭, nonsense strings).",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "句平考",
+            "image": "(nothing at the foot of the last column)",
+            "problem": "Characters not on the page.",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "聖主不乘危 ... 陛下縱自輕柰高廟太后何上",
+            "english": "The Emperor stopped.",
+            "problem": "The English completes 上[乃止] from the next page.",
+            "severity": "minor",
+            "class": "T5"
+          },
+          {
+            "source": "如淳句衣如云欄桷 ...",
+            "english": "Inquiring into the various commentators, Ru Chun's phrase...",
+            "problem": "The garbled commentary is rendered with a trailing ellipsis and guesses.",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "集解徐廣曰一作睢",
+            "image": "集解徐廣曰一作辯",
+            "problem": "The variant character is misread, so the variant reading is wrong.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<header>卷一</header><header>卷二</header><header>卷三</header> 己",
+            "image": "(nothing: only the margin label and folio 十)",
+            "problem": "Invented headings not on the page.",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "一作睢",
+            "english": "One edition reads 'straight and level' sui instead of 'smooth and easy' bianbian",
+            "problem": "The English follows the misread variant and invents a sense for it.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The reader text shows invented headings 'Fascicle One / Fascicle Two / Fascicle Three' and 'Branch Six <note>hexary cycle indicator</note>'. None of these is on the leaf.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 126,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "玉貝劒",
+            "image": "玉具劒 (standard text; the brush form is close to 貝)",
+            "problem": "Probably a misread of 具.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "玉貝劒",
+            "english": "jade, cowrie shells, and ornamented swords",
+            "problem": "玉具劍 is one object, a jade-fitted sword. The English makes three items.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      8,
+      126
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 99-104 (Liu Jing, Yuan Ang, Zhang Shizhi and others) with commentaries. The main text is transcribed correctly and translated faithfully. The small-print commentary is garbled where the brush is faint, and one chapter-end page carries invented fascicle headings.",
+    "book_verdict": "The main text is sound. The commentary is unreliable where it is small and faint, and invented headings appear on one leaf. Show it with a caveat."
+  },
+  {
+    "book_id": "6ae0bc1f4adf2ffb52f71a90",
+    "slot": 4,
+    "title": "史記·卷四十~卷四十一 (Shiji, Siku Quanshu, vol. 22 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 40-41 (Hereditary Houses of Chu and of Goujian of Yue), with the Siku 考證 collation notes.",
+    "rights_flag": null,
+    "structure_note": "150 records, 147 with OCR, 145 translated. Two juan, each followed by the Qing editors' 考證 notes with their own folio numbers, which accounts for some of the 8 backsteps. Page 102 is a 考證 page, not the main text. That is correct for the edition, but the summary should say so.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "史記 十八",
+            "english": "<note>Shiji, Volume 18</note>",
+            "problem": "十八 is the folio number, not a volume.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 42,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "無忌又曰夜讒",
+            "image": "無忌又日夜讒",
+            "problem": "曰 for 日 (the English correctly has 'day and night').",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 102,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "七月已卯",
+            "image": "七月己卯",
+            "problem": "已 for 己.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "秋七月己卯",
+            "english": "on the seventeenth day jisi of the seventh month",
+            "problem": "己卯 is jimao, not jisi, and 'seventeenth day' is the model's own addition.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "The model adds notes such as '<note>Quotation from the Shiji text.</note>' to the reader text.",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 124,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金 / 金 / 金 / 金",
+            "image": "欽定四庫全書 (margin label)",
+            "problem": "Junk furniture lines in the transcription.",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "子為我從先王試之",
+            "english": "On my behalf, test them out on our late kings!",
+            "problem": "It means 'follow the late king [into death] and try them there'. The English garbles the meaning of the order to die, though the summary has it right.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "(leading commentary on 周元王始命為伯)",
+            "english": "Suoyin commentary:",
+            "problem": "The label is supplied by the model. The note continues from the previous page and no siglum is visible here.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      37,
+      42
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 40-41 (the houses of Chu and of Goujian of Yue) with commentaries and the Qing collation notes. The transcription is of the right text with few slips, and the English is faithful apart from occasional errors in dates and idioms.",
+    "book_verdict": "Sound. There are only moderate slips (a cyclical day name, one idiom) and no serious error on these pages."
+  },
+  {
+    "book_id": "6ae0bca94adf2ffb52f71e1b",
+    "slot": 5,
+    "title": "史記·卷六十一~卷六十六 (Shiji, Siku Quanshu, vol. 28 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 61-66 (Bo Yi, Guan/Yan, Laozi/Han Fei, Sima Rangju, Sunzi/Wu Qi, Wu Zixu).",
+    "rights_flag": null,
+    "structure_note": "132 records, 129 with OCR, 121 translated (11 pages without English). Six juan, so backsteps (5) and repeats (12) are expected from folio restarts.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "金 / 字 / 匹 / 左 / 人 / 言",
+            "image": "欽定四庫全書",
+            "problem": "Garbled margin label, split one character per line. It is not translated.",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Broken markup: '<note>Seeking the Hidden </note><note>original: \"Suoyin\"</note>' splits a label across two notes.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 67,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>三</page-num> 金 矢 口 左 人 言",
+            "image": "欽定四庫全書 margin label",
+            "problem": "Garbled furniture. It is not translated.",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 129,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "也 / 曰 / 事 / 焉 / 二 一 二 三 四 五 六 七 八 九 十",
+            "image": "(nothing: blank columns after the 述贊)",
+            "problem": "Characters and a number row that are not on the page.",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "索隱述贊",
+            "english": "Suoyin summary赞:",
+            "problem": "A Chinese character leaks into the English label.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The reader text shows '<note>Page layout numbers and editorial markers: 史記 十三 二 一 二 三 四 五 六 七 八 九 十</note>'. The number row is invented.",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      27,
+      44,
+      67
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 61-66, including the Laozi and Han Fei biography and the Guan Zhong biography, with commentaries. The transcriptions sampled are accurate and the English is faithful and readable. At a chapter end, an invented row of numbers appears as a note.",
+    "book_verdict": "Strong pages (Laozi meeting Yin Xi at the pass, the death of Han Fei). The only embarrassment is junk numerals at one chapter end."
+  },
+  {
+    "book_id": "6ae0bb854adf2ffb52f7166f",
+    "slot": 6,
+    "title": "史記·卷二十三~卷二十四 (Shiji, Siku Quanshu, vol. 14 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 23-24 (Treatises on Ritual and on Music).",
+    "rights_flag": null,
+    "structure_note": "154 records, 152 with OCR, 149 translated. Two juan, so a folio restart accounts for some of the 5 backsteps. Others are probably misread numerals: page 137's folio 四十七 is read as 四千七.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 28,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "金文巳正全",
+            "image": "欽定四庫全書",
+            "problem": "Garbled margin label. It is not translated.",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "辨尊畀貴賤",
+            "image": "辨尊卑貴賤",
+            "problem": "畀 for 卑 (the English is correct).",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "終於稅稅亦殺也",
+            "english": "ends in ease. Ease also means reduction",
+            "problem": "稅 here means 脫, 'shedding'. 'Ease' is loose.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 70,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "集解鄭元曰成物有功報焉",
+            "english": "Collected Explanations: For their merit...",
+            "problem": "'Zheng Xuan says' is dropped.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Commentary is wrapped in <margin> tags. The reader renders these as margin notes, but the commentary is interlinear on the page.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "次定曰軍人三書",
+            "image": "(nothing: the margin label 欽定四庫全書 / 史記)",
+            "problem": "A line not on the page is appended to the last Zhengyi note.",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "干戈君臣之道",
+            "english": "none tiring of shields, daggers, or the proper Way between ruler and minister",
+            "problem": "Loose parse of the Zhengyi.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The reader text ends a commentary note with 'The next text notes: three books of military figures.' This is invented apparatus made from the garbled margin label.",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 137,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>四千七</page-num>",
+            "image": "四十七",
+            "problem": "The folio numeral is misread.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "則夫武之遲久不亦宜乎",
+            "english": "Was it not proper, then, that King Wu's delay was prolonged?",
+            "problem": "武 here is the Wu dance, whose slow, long performance is under discussion. The English makes it King Wu's delay, and the Jijie note is rendered the same way.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "耕耤耤田也",
+            "english": "refers to cultivating the ancestral domain",
+            "problem": "耤田 is the sacred field ploughed by the ruler, not an 'ancestral domain'.",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      28,
+      70
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 23-24, the Treatises on Ritual and Music (drawing on Xunzi and the Yueji), with commentaries. The transcription is accurate. The English handles the dense ritual and music theory well. It misreads the Wu dance as King Wu once, and one note ends in an invented sentence.",
+    "book_verdict": "Good on the theory of ritual and music. One invented line of apparatus from margin junk, plus a moderate misreading of 武 as King Wu."
+  },
+  {
+    "book_id": "6ae0bbcd4adf2ffb52f7185a",
+    "slot": 7,
+    "title": "史記·卷二十九~卷三十 (Shiji, Siku Quanshu, vol. 17 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. Juan 29-30 (Treatise on Rivers and Canals; Treatise on the Balanced Standard).",
+    "rights_flag": null,
+    "structure_note": "73 records, 71 with OCR, 69 translated. Two juan, so a folio restart is expected. 6 backsteps out of 14 captured numbers suggests misread folio numerals as well. Page 2 is the juan 29 title leaf, as expected.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "宋中郎外兵曹參軍",
+            "english": "Officer of the Outer Military Staff for the Court Gentlemen",
+            "problem": "The title is awkwardly rendered.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "索隱案經訓常",
+            "english": "The canonical texts consistently state",
+            "problem": "It is a gloss: 經 (in 經費) means 常, 'regular'. The English misreads it as 'the canonical texts'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "故吳諸侯也以即",
+            "english": "the King of Wu ... took advantage of his access to copper",
+            "problem": "'Access to copper' (即山鑄錢) comes from the next page.",
+            "severity": "minor",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 60,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "集 / 解 / 次定曰章王書",
+            "image": "集解 [continues on next page]; margin label 欽定四庫全書",
+            "problem": "The garbled margin label is transcribed as the opening of a commentary.",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The reader text ends with '<note>Collected Explanations: Ci Ding says: ...</note>'. The commentator 'Ci Ding' is invented from the garbled 欽定 of the margin label.",
+            "severity": "serious",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      2,
+      40
+    ],
+    "reader_summary": "This is the Siku manuscript of Shiji juan 29-30 (Rivers and Canals; the Balanced Standard on Han coinage and finance) with commentaries. The transcription is accurate and the economic narrative is translated faithfully. At one page end, a commentator 'Ci Ding' is invented from the garbled margin label.",
+    "book_verdict": "Good on the fiscal history. One invented commentator attribution (serious but local), plus a moderate misreading of a gloss."
+  },
+  {
+    "book_id": "6ae0baaf4adf2ffb52f70e01",
+    "slot": 8,
+    "title": "史記·卷一 (Shiji, Siku Quanshu, vol. 1 of 44)",
+    "tradition": "zh-shiji",
+    "shelf_fit": "fits",
+    "shelf_note": "Fits: a volume of the Siku Quanshu manuscript copy of Sima Qian's Shiji with the Jijie, Suoyin and Zhengyi commentaries, on the zh-shiji shelf. The volume holds the front matter (the Qianlong-era memorial of presentation, the full table of contents) and juan 1 (Basic Annals of the Five Emperors).",
+    "rights_flag": null,
+    "structure_note": "237 records, but only 222 with OCR and 217 translated (15 without OCR, perhaps blank or plate leaves). The front matter (memorial, table of contents) has its own folio numbering before juan 1 begins, which explains backsteps (5) and repeats (12). The title '卷一' undersells a volume that is mostly front matter.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 110,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 168,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "歴曰月而迎送之 ... 上迎曰推策 ... 曰月所照",
+            "image": "歴日月 ... 迎日推策 ... 日月所照",
+            "problem": "日 (sun) is transcribed as 曰 (say) throughout. The English reads 'sun' correctly.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 204,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "有頸直短食徑過",
+            "image": "(standard text 有腸直而不旋食徑過; the brush form is unclear at this resolution)",
+            "problem": "Possible misread in the Shenyi jing quotation.",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "Broken markup: '<note>Correct Meaning: \"Te\" </note><note>original: \"慝\"</note>' splits a label across two notes.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      37,
+      110,
+      204
+    ],
+    "reader_summary": "This is the opening volume of the Siku Shiji: the editors' memorial of presentation, the full table of contents, and the Annals of the Five Emperors with commentaries. The transcription is of the right text with one recurring slip (曰 for 日), and the English is faithful, including the Hundun story quoted in the Zhengyi.",
+    "book_verdict": "Sound and showable. The front matter and the Five Emperors pages read well. The OCR confuses 日 and 曰, but the English is not misled."
+  }
+]

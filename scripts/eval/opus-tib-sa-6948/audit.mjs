@@ -165,8 +165,8 @@ if (CMD === 'attribute') {
 
 // ── packet ───────────────────────────────────────────────────────────────────────────────────────────────────
 /** JPEG, PNG, WebP, TIFF or GIF by magic bytes (a provider "image" URL can serve a PDF). */
-const isImage = (b) => (b[0] === 0xff && b[1] === 0xd8) || (b[0] === 0x89 && b[1] === 0x50) || (b.slice(0, 4).toString() === 'RIFF' && b.slice(8, 12).toString() === 'WEBP') || (b[0] === 0x49 && b[1] === 0x49) || (b[0] === 0x4d && b[1] === 0x4d) || b.slice(0, 3).toString() === 'GIF';
-async function fetchImage(page, file) {
+export const isImage = (b) => (b[0] === 0xff && b[1] === 0xd8) || (b[0] === 0x89 && b[1] === 0x50) || (b.slice(0, 4).toString() === 'RIFF' && b.slice(8, 12).toString() === 'WEBP') || (b[0] === 0x49 && b[1] === 0x49) || (b[0] === 0x4d && b[1] === 0x4d) || b.slice(0, 3).toString() === 'GIF';
+export async function fetchImage(page, file) {
   if (fs.existsSync(file) && fs.statSync(file).size > 5000 && isImage(fs.readFileSync(file).subarray(0, 16))) return 'cached';
   for (const f of ['photo_original', 'photo', 'archived_photo']) {
     const url = page[f];

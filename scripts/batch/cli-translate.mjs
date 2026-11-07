@@ -11,11 +11,26 @@
  * exactly as the worker seeds, and that page's English is the read just made (nothing is stored yet), else the stored one.
  * No API key, no API spend.
  *
+ * FOLIO MARKERS (#7118, on by default; TRANSLATE_FOLIO_MARKERS_CLI=0 turns them off): two consecutive Latin-script pages
+ * that both need a read go in ONE call as continuous English with <pb n="N"/> where each page begins
+ * (translate-core FOLIO_MARKER_RULE), and each page keeps its own span (folio-markers.mjs splitMarkedReply). Measured
+ * on this lane: broken joins 35.5 → 16.4 per 100, majors 10 → 3 (scripts/eval/experiments/2026-10-29-seam-prevent-markers-7118.md).
+ * A reply that does not split cleanly, or splits far out of balance, is dropped and the two pages are read one by one.
+ *
  *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low] [--ocr-checked="..."]
  *          Builds translate-core's single-page prompt from the stored OCR, asks the CLI, saves DIR/<page_id>.txt + .meta.json.
- *          Writes NOTHING to the database. Skips pages already read, pages with no translatable OCR, and blank pages.
+ *          Writes no page or book (only the job's book list, lane_job_books, #7301). Skips pages already read, pages
+ *          with no translatable OCR, and blank pages.
+ *          [--no-previous-translation]: leave the page before's English out of the prompt (#5274); recorded as the
+ *          read's prompt_variant and context.previous_translation false, and no folio-marker pairs.
  *          [--instructions-file=F]: JSON { page_id: "one line" } appended to that page's prompt (#6559: a Maya numeral the
  *          first read got wrong, named with its value from Beltrán's table). Recorded as `instruction` in the meta.
+ *          [--own-leaf] (#5274): the page's OWN transcription only — no previous page's English, no neighbour OCR (no
+ *          page-break devices), no folio-marker pairs. On a nearly empty leaf the continuity English was what the model
+ *          translated (Feb–Mar 3 Flash: 470 of 695 near-blank pages written minutes after their n-1 carry n-1's text;
+ *          scripts/eval/experiments/2026-11-04-context-bleed-5274.md). Its own prompt variant, so a kept read made WITH
+ *          context is never reused for it. [--caption-leaves]: with --own-leaf, a page refused only as `no-body` whose
+ *          transcription still has printed words (a 4-character woodcut caption is under MIN_TRANSLATABLE_BODY) is read.
  *
  *   apply  node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *          Dry run unless --apply. Per page refuses: a CLI failure, an empty read, chatter or a refusal in place of a
@@ -24,6 +39,8 @@
  *          read that fails the health check. Writes through writePageTranslation (translate-core: snapshot to
  *          page_revisions, provenance block with api 'cli', the CLI name and version, model and prompt hash), leaves a
  *          sweep_log row per page and one book_events row per book, and recounts the book.
+ *          Each written page also gets a page-text-writer revision row with the run id (#7503), so the run is undone by
+ *          `scripts/maintenance/revert-run.mjs --run-id <run> [--apply]` (it restores, or removes, only English still as written).
  *          It also writes the reads of scripts/batch/claude-translate.mjs (Opus through the Claude CLI, #6559): their meta
  *          says `cli: 'claude'`, so the engine block is recorded as 'anthropic', and the exact prompt each call sent is
  *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused. A meta's
@@ -47,19 +64,28 @@
  * other jobs' quota. `apply` skips what it refuses and says why. Nothing is retried silently.
  */
 import fs from 'node:fs';
+import { randomBytes } from 'node:crypto';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
-import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
+import { cliFolioMarkersEnabled, splitMarkedReply } from '../lib/folio-markers.mjs';
+import { blockPageRefusals, lengthRatioK } from '../lib/block-page-guard.mjs';
+import { sourceProse } from '../lib/block-drift.mjs';
+import { PAGE_BREAK_SCOPED, pageBreakVariant, buildTranslationPrompt, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash, bodyLen } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
-import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
+import { CLI, gatedTextCall, TRANSLATE_SUFFIX, agyUsage, cliExitCode } from '../lib/agy-cli.mjs';
 import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { checkWrittenText } from '../lib/write-text-guard.mjs';
-import { copiesPrintedEnglish } from '../lib/page-integrity.mjs';
+import { copiesPrintedEnglish, dominantScript } from '../lib/page-integrity.mjs';
 import { keepRead, findRead, reuseInto, translationReuseKey, wantsFresh } from '../lib/candidate-reads.mjs';
+import { laneForWrite } from '../lib/lanes.mjs';
+import { recordLaneBooks, laneJob } from '../lib/lane-book-list.mjs';
+import { buildTextRevision } from '../lib/page-text-writer.mjs';
+import { unsplitReadRefusal } from '../lib/pipeline-hold.mjs';
+import { leafNumberOf } from '../lib/split-stage.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
@@ -75,13 +101,30 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-tran
 // #6523: the answer between <<<BEGIN>>> / <<<END>>> markers, nothing outside them (the OCR runner's config), with the
 // tool gate in the call's empty workspace (scripts/lib/agy-cli.mjs). A read made before that records no
 // `prompt_variant`; apply checks it with the chatter guard alone, as before.
-const PROMPT_VARIANT = 'sentinels-6523';
+// --no-previous-translation (#5274 paired test): the page before's English is left out of the prompt (its OCR, for the
+// page-break devices, stays). A different prompt, so a different variant: its reads are kept and reused apart.
+const NO_PREV_EN = process.argv.includes('--no-previous-translation');
+const PROMPT_VARIANT = NO_PREV_EN ? 'sentinels-6523+no-prev-en-5274' : 'sentinels-6523';
+// #7118: two consecutive Latin-script pages in one call, continuous English with folio markers (see readMarkedPair).
+const PROMPT_VARIANT_MARKED = 'sentinels-6523+folio-markers-7118';
+const MARKERS = cliFolioMarkersEnabled();
 const CLI_SUFFIX = TRANSLATE_SUFFIX;
-const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 };
+const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, split_from_spread: 1, split_from_pecha: 1, cropped_photo: 1, crop: 1, staged_split: 1 };
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
 const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
 const FRESH = wantsFresh();
+// --reuse-only (#7075): hand back kept reads, never call the model. Used by scripts/lib/kept-read-reuse.mjs before a
+// paid lane buys a page that a free read already covers.
+const REUSE_ONLY = process.argv.includes('--reuse-only');
+// --own-leaf (#5274): no neighbour context of any kind; --caption-leaves lets a captioned leaf past the no-body floor.
+const OWN_LEAF = process.argv.includes('--own-leaf');
+const CAPTION_LEAVES = OWN_LEAF && process.argv.includes('--caption-leaves');
+const PROMPT_VARIANT_OWN = 'sentinels-6523+own-leaf-5274';
+// printed words left once the apparatus is stripped (bodyLen's strip): a caption, a title, a label
+const hasPrintedWords = (ocr) => bodyLen(ocr) > 0 && /\p{L}/u.test(String(ocr).replace(/<(meta|image-desc|detected-images|vocab|summary|keywords|warning|note|lang|language|page-type)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' '));
+if (REUSE_ONLY && FRESH) { console.error('--reuse-only and --fresh contradict each other'); process.exit(2); }
+let noKept = 0;
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -89,52 +132,147 @@ const db = client.db('bookstore');
 
 if (STAGE === 'read') {
   const ids = readPageIdsFile(arg('page-ids-file'));
-  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
+  // A reuse-only run makes no call, so it does not need the CLI installed (a cron PATH may not have it).
+  const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim() || (REUSE_ONLY ? 'not needed (reuse-only)' : '');
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
   const prompts = await loadTranslationPrompts(db);
   fs.mkdirSync(OUT, { recursive: true });
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PAGE_PROJECTION }).toArray()).map((p) => [p.id, p]));
   console.log(`${found.size} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}`);
   // Check the transcription before paying for a translation on top of it (#6865).
-  const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
+  // --reuse-only spends nothing, and the paid lane it stands in front of would translate the same OCR anyway: the
+  // OCR-first gate (#6865) is a spend gate, so it does not apply to handing back a read already paid for.
+  const gate = REUSE_ONLY ? { ok: true, message: 'reuse-only: OCR-first gate not applied (no call is made)' } : ocrFirstGate([...found.values()], arg('ocr-checked'));
   console.log(gate.message);
   if (!gate.ok) { await client.close(); process.exit(2); }
+  // The job's book list, recorded with the job for the lane registry (#7301 item 5): no page or book is written.
+  await recordLaneBooks(db, { lane: laneForWrite('translation', { call_site: CALL_SITE, name: engineNameForCli(CLI) }), ...laneJob(process.env.CLI_JOB_NAME), pages: [...found.values()] });
   const books = new Map();
-  let reused = 0;
-  for (const id of ids) {   // the file's order, which is page order
+  let reused = 0, paired = 0, pairFallbacks = 0;
+  const latinScript = (...ocrs) => dominantScript(ocrs.map((o) => sourceProse(o || '')).join(' ')) === 'latin';
+  /** One marked call for page p and the page after it (#7118). 'read' | 'fallback' (called, unusable) | null (no pair). */
+  // The book's median log(EN/SRC) over its stored translations (#5021): a pair is too short to measure its own.
+  const kOf = new Map();
+  const bookK = async (bookId) => {
+    if (!kOf.has(bookId)) {
+      const rows = await db.collection('pages').aggregate([{ $match: { book_id: bookId, 'translation.data': { $type: 'string' } } }, { $project: { _id: 0, page_type: 1, s: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, e: { $strLenCP: '$translation.data' } } }]).toArray();
+      kOf.set(bookId, lengthRatioK(rows.map((r) => ({ src: r.s, en: r.e, type: r.page_type })), { min: 5 }));
+    }
+    return kOf.get(bookId);
+  };
+  async function readMarkedPair({ p, book, prev, previousTranslation, prevRead, nextId }) {
+    const q = found.get(nextId);
+    if (!q || q.book_id !== p.book_id || q.page_number !== p.page_number + 1 || INSTRUCTIONS[nextId]) return null;
+    if (!latinScript(p.ocr.data, q.ocr.data)) return null;
+    if (!(await prepare(nextId, { quiet: true }))) return null;
+    const after = await db.collection('pages').findOne({ book_id: p.book_id, page_number: q.page_number + 1 }, { projection: { 'ocr.data': 1 } });
+    // A staged split leaf (#7605) sits at a hidden negative number; the prompt's "--- Page N ---" and the <pb n/> markers
+    // use the number it will have once swapped in (leafNumberOf), never "-999998".
+    const [pn, qn] = [leafNumberOf(p), leafNumberOf(q)];
+    const built = buildBlockTranslationPrompt({ prompts, book, pages: [{ page_number: pn, ocr: p.ocr.data }, { page_number: qn, ocr: q.ocr.data }],
+      previousTranslation: previousTranslation || undefined, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: after?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED, folioMarkers: true });
+    // A kept one-page read of the second page is used as before (it is picked up on its own turn): no pair then.
+    if (!FRESH) {
+      const key = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(q.ocr.data), prompt_variant: PROMPT_VARIANT, instruction: null });
+      if (await findRead({ page_id: nextId, book_id: q.book_id, field: 'translation', model: MODEL, prompt_hash: key, derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) })) return null;
+    }
+    const sent = built.prompt + CLI_SUFFIX;
+    const t0 = new Date();
+    const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate-pair', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls, usage: c.usage }) });
+    if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
+    const fail = r.cls || r.problem || cliChatterReason(r.answer || '');
+    const split = fail ? null : splitMarkedReply(r.answer, [pn, qn], { sources: [p.ocr.data, q.ocr.data] });
+    const cut = split?.ok && split.texts.some((t, k) => checkWrittenText(t, { kind: 'translation', source: [p, q][k].ocr.data, lang: book?.language, type: [p, q][k].page_type }).verdict === 'truncated');
+    // #5021 (block-page-guard.mjs): a span that holds both leaves, or none, or prints only the other leaf's numbers.
+    const wrongLeaf = split?.ok && !cut ? blockPageRefusals([p, q].map((pg) => ({ page_number: pg.page_number, page_type: pg.page_type, ocr: pg.ocr })), new Map([[p.page_number, split.texts[0]], [q.page_number, split.texts[1]]]), { prevOcr: prev?.ocr?.data ?? null, nextOcr: after?.ocr?.data ?? null, k: await bookK(p.book_id) }) : [];
+    if (fail || !split.ok || cut || wrongLeaf.length) {
+      console.log(`  ${p.page_number}+${q.page_number} marked pair not usable (${fail || (!split.ok ? split.why : cut ? 'a span looks cut' : `wrong leaf: ${wrongLeaf.map((w) => `p${w.page_number} ${w.reason}`).join(', ')}`)}): one page per call`);
+      return 'fallback';
+    }
+    for (const [k, pg] of [p, q].entries()) {
+      const text = split.texts[k];
+      fs.writeFileSync(path.join(OUT, `${pg.id}.raw.txt`), r.text);
+      fs.writeFileSync(path.join(OUT, `${pg.id}.txt`), text);
+      const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(pg.ocr.data), prompt_variant: PROMPT_VARIANT_MARKED, instruction: null });
+      const meta = {
+        page_id: pg.id, book_id: pg.book_id, page_number: pg.page_number, cli: CLI, cli_version: version, model: MODEL,
+        started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: null, attempts: r.calls, chars: text.length,
+        prompt_variant: PROMPT_VARIANT_MARKED, wrapper: null, tool_calls: r.tool_calls,
+        ocr_hash: contentHash(pg.ocr.data), ocr_updated_at: pg.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
+        prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), call_usage: agyUsage(r.usage),
+        // Both pages came from ONE call: the raw reply is the same file beside each, and so is its token count.
+        folio_block: { pages: [p.page_number, q.page_number], page_ids: [p.id, q.id], reading: split.reading },
+        context: k === 0
+          ? { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: true, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT_MARKED, folio_markers: true }
+          : { previous_translation: true, previous_from: 'same-call', prev_ocr: true, next_ocr: !!after?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT_MARKED, folio_markers: true },
+        stderr_tail: r.err,
+      };
+      fs.writeFileSync(path.join(OUT, `${pg.id}.meta.json`), JSON.stringify(meta, null, 1));
+      await keepRead({ page_id: pg.id, book_id: pg.book_id, page_number: pg.page_number, field: 'translation', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, source_path: path.join(OUT, `${pg.id}.txt`) });
+    }
+    console.log(`  ${p.page_number}+${q.page_number} marked pair ok (${split.reading}) ${split.texts[0].length}+${split.texts[1].length} chars ${Math.round((Date.now() - t0) / 1000)}s calls ${r.calls}`);
+    return 'read';
+  }
+  // Everything that keeps a page from being read, before any call; `quiet` for the look-ahead at a pair's second page.
+  const prepare = async (id, { quiet = false } = {}) => {
     const p = found.get(id);
-    if (!p) continue;
-    if (fs.existsSync(path.join(OUT, `${id}.meta.json`)) && readOf(id).length > 5) { console.log(`  ${p.page_number} already read`); continue; }
+    const say = (s) => { if (!quiet) console.log(s); };
+    if (!p) return null;
+    if (fs.existsSync(path.join(OUT, `${id}.meta.json`)) && readOf(id).length > 5) { say(`  ${p.page_number} already read`); return null; }
     const tr = isTranslatablePage(p);
-    if (!tr.ok) { console.log(`  ${p.page_number} not translatable (${tr.reason}); skipped`); continue; }
+    const caption = !tr.ok && tr.reason === 'no-body' && CAPTION_LEAVES && hasPrintedWords(p.ocr?.data);
+    if (!tr.ok && !caption) { say(`  ${p.page_number} not translatable (${tr.reason}); skipped`); return null; }
     if (!books.has(p.book_id)) books.set(p.book_id, await db.collection('books').findOne({ id: p.book_id }));
     const book = books.get(p.book_id);
+    const unsplit = unsplitReadRefusal(book, p);
+    if (unsplit) { say(`  ${p.page_number} skipped: ${unsplit}`); return null; }
     const same = sameLanguageReason({ book, page: p });
-    if (same) { console.log(`  ${p.page_number} skipped: ${same}`); continue; }
+    if (same) { say(`  ${p.page_number} skipped: ${same}`); return null; }
+    return { p, book, caption };
+  };
+  for (let i = 0; i < ids.length; i++) {   // the file's order, which is page order
+    const id = ids[i];
+    const prepared = await prepare(id);
+    if (!prepared) continue;
+    const { p, book, caption } = prepared;
     // Context exactly as the worker seeds it: the page before. Its English is the read just made if there is one
     // (nothing is stored until apply), else the stored translation; the neighbours' OCR feeds the scoped page-break devices.
     const near = await db.collection('pages').find({ book_id: p.book_id, page_number: { $in: [p.page_number - 1, p.page_number + 1] } }, { projection: PAGE_PROJECTION }).toArray();
     const prev = near.find((n) => n.page_number === p.page_number - 1), next = near.find((n) => n.page_number === p.page_number + 1);
     const prevRead = prev ? readOf(prev.id) : '';
-    const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
-    const built = buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
+    const previousTranslation = OWN_LEAF || NO_PREV_EN ? null : prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
+    const built = OWN_LEAF
+      ? buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation: null })
+      : buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
+    const variant = OWN_LEAF ? PROMPT_VARIANT_OWN : PROMPT_VARIANT;
     const instruction = INSTRUCTIONS[id] || null;
     const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + CLI_SUFFIX;
-    const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(p.ocr.data), prompt_variant: PROMPT_VARIANT, instruction });
+    const reuseKey = translationReuseKey({ prompt_ref: built.promptRef, ocr_hash: contentHash(p.ocr.data), prompt_variant: variant, instruction });
     if (!FRESH) {
       const hit = await findRead({ page_id: id, book_id: p.book_id, field: 'translation', model: MODEL, prompt_hash: reuseKey, derive: (m) => (m.cli === CLI ? translationReuseKey(m) : null) });
       if (hit && await reuseInto(OUT, id, hit)) { reused++; console.log(`  ${p.page_number} reused a kept read (${hit.body.job ?? '?'}, ${hit.body.read_at?.slice(0, 10) ?? '?'}): no call`); continue; }
     }
+    // --reuse-only (#7075): a paid lane hands its pages here first; a page with no kept read is left to that lane.
+    if (REUSE_ONLY) { noKept++; continue; }
+    // Folio markers (#7118): this page and the next one in the list, when it is page N+1 of the same book and needs a
+    // read too, go in ONE call as continuous English with <pb n="N"/> where each page begins; each page keeps its span.
+    // Measured on Latin-script prose only, so only there. Any reply that does not split cleanly falls back to the
+    // one-page read below, so a pair is never worse off than the lane without markers.
+    if (MARKERS && !OWN_LEAF && !NO_PREV_EN && !instruction && i + 1 < ids.length) {
+      const pair = await readMarkedPair({ p, book, prev, previousTranslation, prevRead, nextId: ids[i + 1] });
+      if (pair === 'read') { paired++; i++; continue; }
+      if (pair === 'fallback') pairFallbacks++;
+    }
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
-    const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    const call = () => gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls, usage: c.usage }) });
     let r = await call();
     // #5055: a reply the write guard calls cut (a tag left open at its tail, the text ending inside a tag, English far
     // shorter than its source) is read once more; apply's door refuses it if the second read is cut too.
     if (!r.cls && !r.problem && checkWrittenText(r.answer, { kind: 'translation', source: p.ocr.data, lang: book?.language, type: p.page_type }).verdict === 'truncated') {
       console.log(`  ${p.page_number} read looks cut (write guard): reading once more`);
       const again = await call();
-      r = { ...again, calls: (r.calls || 1) + (again.calls || 1) };
+      r = { ...again, calls: (r.calls || 1) + (again.calls || 1), usage_first_read: r.usage };
     }
     if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
     // The raw reply is kept beside the translation; `.txt` holds only what was between the markers.
@@ -143,11 +281,16 @@ if (STAGE === 'read') {
     fs.writeFileSync(path.join(OUT, `${id}.txt`), text);
     const meta = {
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
-      prompt_variant: PROMPT_VARIANT, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls,
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: cliExitCode(r), ...(r.hung_after_reply && { hung_after_reply: true }), error_class: r.cls, attempts: r.calls, chars: text.length,
+      prompt_variant: variant, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls, ...(caption && { caption_leaf: true }),
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
-      context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
+      // agy's own token counts for the call that produced this read (the last attempt; a cut first read's are kept
+      // beside it). The quota is charged by token cost, so this is what a page costs (#7503).
+      call_usage: agyUsage(r.usage), ...(r.usage_first_read && { call_usage_first_read: agyUsage(r.usage_first_read) }),
+      context: OWN_LEAF
+        ? { previous_translation: false, previous_from: null, prev_ocr: false, next_ocr: false, page_break: null, prompt_variant: variant, own_leaf: true }
+        : { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: pageBreakVariant(PAGE_BREAK_SCOPED), prompt_variant: PROMPT_VARIANT },
       stderr_tail: r.err,
     };
     fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify(meta, null, 1));
@@ -155,7 +298,9 @@ if (STAGE === 'read') {
     if (!meta.error_class && !meta.wrapper && meta.exit === 0) await keepRead({ page_id: id, book_id: p.book_id, page_number: p.page_number, field: 'translation', text, model: MODEL, prompt_hash: reuseKey, job: JOB, meta, source_path: path.join(OUT, `${id}.txt`) });
     console.log(`  ${p.page_number} ${r.cls || r.problem || 'ok'} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s calls ${r.calls}`);
   }
+  if (MARKERS) console.log(`folio markers: ${paired} page pair(s) read in one marked call; ${pairFallbacks} pair(s) fell back to one page per call`);
   console.log(`reused ${reused} kept read(s) instead of calling${FRESH ? ' (--fresh: none looked up)' : ''}`);
+  if (REUSE_ONLY) console.log(`reuse-only: ${noKept} page(s) had no matching kept read and were not called`);
   await client.close();
   process.exit(0);
 }
@@ -184,6 +329,7 @@ for (const m of metas) {
   if (!page) { skip(m, 'page not found'); continue; }
   if (contentHash(page.ocr?.data || '') !== m.ocr_hash) { skip(m, 'OCR changed since the read'); continue; }
   const book = await db.collection('books').findOne({ id: page.book_id });
+  if (unsplitReadRefusal(book, page)) { skip(m, 'unsplit spread book (#7605)'); continue; }
   // #7075: on a bilingual page whose facing side is printed English (a Loeb), a read can hand that English back instead
   // of translating (Plutarch Loeb 99 p.94: 77% of the read was one verbatim run of the page). The door's echo tier
   // exempts English already in the source, so it is asked here, for the CLI readers only.
@@ -201,12 +347,18 @@ for (const m of metas) {
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     // A two-pass read (#6865: a Gemini draft reviewed by Opus against the image) lists both passes in its meta.
     run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
-    input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.context }),
+    // The lane's suffix (#7499): a read made before the context carried it still names it in its meta.
+    input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.prompt_variant && m.context ? { prompt_variant: m.prompt_variant, ...m.context } : m.context }),
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });
   if (res.protected) { skip(m, 'human-edited translation'); continue; }
   if (res.truncated) { skip(m, res.reason); continue; }
   if (res.unhealthy) { skip(m, `refused by the door: ${res.reason}`); continue; }
+  // #7503: the door snapshots only a page that HAD English, with no run id, so revert-run.mjs found nothing to undo. A
+  // page-text-writer row (the prior field, whole or absent, and the hash of what landed) makes `revert-run.mjs --run-id`
+  // work on this run; it is read back after the write, so next_hash is the stored text, not the read.
+  const landed = await db.collection('pages').findOne({ id: page.id }, { projection: { translation: 1 } });
+  await db.collection('page_revisions').insertOne(buildTextRevision({ page, field: 'translation', next: landed?.translation ?? null, opts: { by: CALL_SITE, reason: REASON, run_id: runId }, now: new Date(), id: randomBytes(6).toString('hex') }));
   await recordSweepAction(db, { sweep: 'cli-translate', book_id: page.book_id, action: 'translated-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.translation?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);
   books[page.book_id].models.add(m.model);

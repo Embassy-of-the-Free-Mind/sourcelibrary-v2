@@ -5,8 +5,7 @@
  *
  * PRIOR ART: scripts/eval/benchmark-dashboard-data.mjs — grades every engine cell and pairs it
  * against the production engine, but carries no cost and never puts three engines on the SAME
- * pages. scripts/eval/build-routing-table.mjs — one routing row per language, from the same
- * evidence, without cost. scripts/eval/bench2-escalation-report.mjs — a blended-cost table for
+ * pages. scripts/eval/bench2-escalation-report.mjs — a blended-cost table for
  * one 11-page bench with its prices typed into the script. None draws a frontier.
  *
  * Run by benchmark-dashboard-data.mjs after every re-score, so the charts move with the evidence
@@ -678,7 +677,7 @@ for (const script of SCRIPTS) {
   // the chains whose draft engine read this chart's pages; never picked by greedy(), added to a panel by chainsFor()
   const byChain = pagesOf(chainRows.filter(r => byEngine.get(chainParts(r.engine).draft)?.has(r.page) && !EXCLUDE.has(r.page)));
   const withChains = (engines, pages) => { const cs = chainsFor(engines, pages, byChain); for (const c of cs) byEngine.set(c, byChain.get(c)); return [...engines, ...cs]; };
-  const production = script.production || LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true });
+  const production = script.production || LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true }, { liteOnly: true });
   const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
   if (nProd < MIN_PAGES) {
     noChart.push({ title: script.title, why: nProd ? `${nProd} page${nProd === 1 ? '' : 's'} with a typed reference; at least ${MIN_PAGES} are needed` : 'no page with a typed reference yet', source: 'scripts/eval/results/benchmark/' });
