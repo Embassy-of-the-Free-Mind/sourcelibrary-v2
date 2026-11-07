@@ -29,5 +29,9 @@
   },
   "reference_error_rate": null,
   "notes": "Body text only: running heads and page numbers are outside the reference (the scorer trims them from engine output). Wikisource footnotes (<ref>) are appended at the end.",
-  "reference_error": "by eye 2026-09-28 (#5182): image markup leaked into the reference (\"center|200px|\" before the Fig. 14 caption)"
+  "reference_error": "by eye 2026-09-28 (#5182): image markup leaked into the reference (\"center|200px|\" before the Fig. 14 caption)",
+  "work_title": "Experiments with alternate currents of high potential and high frequency (Tesla)",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "pd_eu": true,
+  "pd_eu_basis": "authors, editors and translators died before 1956, or the work is anonymous and over 70 years old (judged from the edition, 2026-10-26, #7462)"
 }

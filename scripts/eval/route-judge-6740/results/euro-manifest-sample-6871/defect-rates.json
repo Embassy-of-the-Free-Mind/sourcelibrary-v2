@@ -1,0 +1,18 @@
+{
+ "issue": 6871,
+ "measured": "2026-11-07",
+ "note": "written pages judged; one page a book; blind Opus",
+ "study_cells": {
+  "frm19": {
+   "route": "lighton>agy-flash-low",
+   "draws": [
+    "d1"
+   ],
+   "pages": 26,
+   "words": 6811,
+   "misleads_per_1k": 0.15,
+   "wrong_text_per_1k": 0,
+   "fidelity_mean": 4.88
+  }
+ }
+}

@@ -182,7 +182,7 @@ await withMongo(async (db) => {
   } catch { /* noop */ }
 
   // ─── TRAFFIC SHAPE / TOP CONTENT / REFERRERS (last DAYS, human-filtered) ──
-  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } });
+  const pvCursor = pv.find({ timestamp: { $gte: SINCE }, ...notPool }, { projection: { path: 1, userAgent: 1, referrer: 1, country: 1, timestamp: 1 } }).batchSize(1000);
   let humanPvs = 0, botPvs = 0;
   const dailyHits = new Map(), bookHits = new Map(), collectionHits = new Map(), referrers = new Map(), countries = new Map();
   while (await pvCursor.hasNext()) {
@@ -357,6 +357,21 @@ await withMongo(async (db) => {
     uniqVisitors, returningVisitors: multiDay, returningTotal: totalFp,
     humanPvs7: pvLast7,
   };
+  // The two headline corpus counts, copied from homepage_stats (recomputed 05:00
+  // by prewarm-browse) so "books made readable per day" can be read off history
+  // instead of reconstructed (#7577). Copied, never recomputed: one definition.
+  const hs = await db.collection('system_config').findOne(
+    { _id: 'homepage_stats' },
+    { projection: { readableInEnglish: 1, readableInEnglishAt: 1, firstTranslatedWorks: 1, firstTranslatedWorksProvisional: 1 } },
+  );
+  if (hs) {
+    Object.assign(histDoc, {
+      readableInEnglish: hs.readableInEnglish ?? null,
+      readableInEnglishAt: hs.readableInEnglishAt ?? null,
+      firstTranslatedWorks: hs.firstTranslatedWorks ?? null,
+      firstTranslatedWorksProvisional: hs.firstTranslatedWorksProvisional ?? null,
+    });
+  }
   let histRes;
   try {
     histRes = await db.collection('metrics_history').updateOne(

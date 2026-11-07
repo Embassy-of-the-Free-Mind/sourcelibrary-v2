@@ -1,7 +1,9 @@
 import { getDb } from '@/lib/mongodb';
 import {
   applyGroundingEdits,
+  applyLinkRemovals,
   findCitedArtworkSlugs,
+  findCitedAuthorSlugs,
   findCitedBookLinks,
   findCitedCollectionSlugs,
   findEmbeddedImageUrls,
@@ -38,6 +40,8 @@ import { supabase } from '@/lib/supabase';
 import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
+import { authorPageExists } from '@/lib/author-thesaurus';
+import authorCanonicalRedirects from '@/lib/author-canonical-redirects.json';
 import { authorSlug } from '@/lib/slugify';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { CLIP_URL, clipHeaders } from '@/lib/clip';
@@ -179,7 +183,7 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'grounding_edits';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'link_removals' | 'grounding_edits';
   text?: string;
   // Link repairs computed after citation verification — the route and the
   // streaming clients apply these to the already-emitted text (see
@@ -187,6 +191,8 @@ export interface LibrarianStep {
   fixes?: CitationFix[];
   // Fabricated `![](url)` embeds to strip from the already-emitted text.
   removeUrls?: string[];
+  // Dead author, artwork and collection paths to unlink, keeping the words.
+  removeLinks?: string[];
   // Grounding edits (#5904): exact spans of the already-emitted text and their
   // replacements, applied BEFORE fixes and removals (applyGroundingEdits).
   edits?: GroundingEdit[];
@@ -228,6 +234,12 @@ export interface TurnUsage {
   cachedTokens: number;
   /** Cite-by-ID accounting (#6946): pages given an ID, IDs rendered as links, unknown IDs dropped. */
   citeIds?: CiteIdStats & { pages: number };
+  /**
+   * Grounding counts for EVERY turn (#7190). embassy_errors keeps a `grounding`
+   * row only when an edit was made, so it has no denominator; this is the
+   * per-turn removal rate: blockquotesRemoved / quotesChecked over turns.
+   */
+  grounding?: Pick<GroundingReport, 'checkable' | 'quotesChecked' | 'quotesUnquoted' | 'blockquotesRemoved' | 'sentencesDropped'>;
 }
 
 interface ConversationMessage {
@@ -1384,9 +1396,9 @@ async function executeTool(
     case 'search_site': {
       // The site's own writing (#1180), from `site_pages` (main site only, like
       // the Librarian). Every URL is final: absolute, and locale-prefixed only
-      // where the page has a twin (localePath) — LINK_PATTERNS in
-      // citation-fixes.ts verifies /book links only, so nothing repairs a bad
-      // /blog or /collections link after the fact (agent-tool-results.md).
+      // where the page has a twin (localePath). Nothing checks a /blog link after
+      // the fact, and a dead /collections link is only unlinked
+      // (agent-tool-results.md).
       const query = args.query as string;
       const hits = await semanticSiteSearch(query, 5).catch(() => null);
       const kind = (t: string) => (t === 'blog' ? 'Essay' : t === 'collection' ? 'Collection' : t === 'feature' ? 'Tool' : 'Page');
@@ -2211,6 +2223,14 @@ export async function* streamAgenticResponse(
     yield { type: 'image_removals', removeUrls: fabricatedImages };
   }
 
+  // Dead non-book links: unlink them and keep the name, which stays true. Only a
+  // bare URL, with no words to keep, still needs the note below.
+  if (brokenLinks.length > 0) {
+    yield { type: 'link_removals', removeLinks: brokenLinks };
+  }
+  const unlinkedText = applyLinkRemovals(fullText, brokenLinks);
+  const bareBrokenLinks = brokenLinks.filter(path => unlinkedText.includes(`sourcelibrary.org${path}`));
+
   // Repair before disclaiming: a broken slug is almost always a title-composed
   // near-miss of a book we hold under a different slug (and a hidden book often
   // has a public edition). Resolve each to a held, visible book and emit the
@@ -2248,9 +2268,9 @@ export async function* streamAgenticResponse(
       `${unrepaired.length === 1 ? 'a book link that points' : `${unrepaired.length} book links that point`} to a record not currently available in the collection (${unrepaired.map(s => `\`sourcelibrary.org/book/${s}\``).join(', ')})`,
     );
   }
-  if (brokenLinks.length > 0) {
+  if (bareBrokenLinks.length > 0) {
     clauses.push(
-      `${brokenLinks.length === 1 ? 'a link' : `${brokenLinks.length} links`} to a page that doesn't exist (${brokenLinks.map(p => `\`${p}\``).join(', ')})`,
+      `${bareBrokenLinks.length === 1 ? 'a link' : `${bareBrokenLinks.length} links`} to a page that doesn't exist (${bareBrokenLinks.map(p => `\`${p}\``).join(', ')})`,
     );
   }
   if (fabricatedImages.length > 0) {
@@ -2324,6 +2344,8 @@ export async function* streamAgenticResponse(
   });
 
   if (cite && citeStream) usage.citeIds = { pages: cite.size, ...citeStream.stats };
+  const { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped } = grounding.report;
+  usage.grounding = { checkable, quotesChecked, quotesUnquoted, blockquotesRemoved, sentencesDropped };
   yield { type: 'usage', usage };
 }
 
@@ -2552,9 +2574,9 @@ async function loadGroundingSupport(
  *  - unverifiedPages: a specific page the model never actually retrieved this
  *    turn AND that doesn't exist in the page store (or is out of range) — the
  *    signature of a fabricated or misremembered page number.
- *  - brokenLinks: /artwork/<slug> and /collections/<slug> links that resolve
- *    to nothing. These are reported, never repaired: there is no safe
- *    substitution for a picture or a curated set.
+ *  - brokenLinks: /author/<slug>, /artwork/<slug> and /collections/<slug> links
+ *    that resolve to nothing. These are unlinked, never repointed: there is no
+ *    safe substitution for a person, a picture or a curated set.
  *
  * brokenBooks/hiddenBooks are returned as bare slugs so the caller can try to
  * repair them (see resolveSlugToHeldBook).
@@ -2635,20 +2657,34 @@ export async function verifyCitations(
 }
 
 /**
- * Check the non-book library links the model likes to compose: /artwork/<slug>
- * and /collections/<slug>. Returns the dead ones as paths, for the disclaimer.
+ * Check the non-book library links the model likes to compose: /author/<slug>,
+ * /artwork/<slug> and /collections/<slug>. Returns the dead ones as paths, to
+ * unlink.
  *
- * `/collection/<slug>` (singular) is never a route — it hits the app's 404 —
- * so it is always dead, no lookup needed.
+ * `/collection/<slug>` (singular) 308s to the plural in the proxy, so it lives
+ * or dies with the plural slug.
  */
 async function verifyNonBookLinks(text: string): Promise<string[]> {
   const { plural, singular, spanish } = findCitedCollectionSlugs(text);
   const artworkSlugs = new Set(findCitedArtworkSlugs(text));
-  const collectionSlugs = new Set(plural);
-  const dead: string[] = singular.map(s => `/collection/${s}`);
+  const collectionSlugs = new Set([...plural, ...singular]);
+  const cited = findCitedAuthorSlugs(text);
+  const authorSlugs = [...new Set(cited.english)];
+  // `/author` has no /es twin, so these are dead whatever the slug.
+  const dead: string[] = [...new Set(cited.spanish)].map(s => `/es/author/${s}`);
 
-  if (artworkSlugs.size === 0 && collectionSlugs.size === 0 && spanish.length === 0) return dead;
+  if (artworkSlugs.size === 0 && collectionSlugs.size === 0 && spanish.length === 0 && authorSlugs.length === 0) return dead;
   const db = await getDb();
+
+  // A check that cannot answer in time counts as live: losing a working link
+  // costs the reader more than leaving one unchecked.
+  const canonicalAuthors = authorCanonicalRedirects as Record<string, string>;
+  const authorChecks = await Promise.all(authorSlugs.map(s =>
+    canonicalAuthors[s]
+      ? true
+      : withTimeout(authorPageExists(db, s).catch(() => true), REPAIR_QUERY_TIMEOUT_MS, true),
+  ));
+  authorSlugs.forEach((s, i) => { if (!authorChecks[i]) dead.push(`/author/${s}`); });
 
   if (artworkSlugs.size > 0) {
     // Mirrors /artwork/[slug]: exact slug or an `art-` prefixed variant, and
@@ -2671,7 +2707,13 @@ async function verifyNonBookLinks(text: string): Promise<string[]> {
       .toArray();
     const live = new Set(found.map(c => c.slug as string));
     const redirects = collectionRedirects as Record<string, string>;
-    for (const s of wanted) if (!live.has(s) && !redirects[s]) dead.push(`/collections/${s}`);
+    const singularCited = new Set(singular);
+    const pluralCited = new Set(plural);
+    for (const s of wanted) {
+      if (live.has(s) || redirects[s]) continue;
+      if (pluralCited.has(s)) dead.push(`/collections/${s}`);
+      if (singularCited.has(s)) dead.push(`/collection/${s}`);
+    }
   }
 
   // A slug live in English can still 404 under /es (esCollectionSlugs).

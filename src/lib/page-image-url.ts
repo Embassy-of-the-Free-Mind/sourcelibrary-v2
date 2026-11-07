@@ -52,6 +52,12 @@ export interface PageImageFields {
   thumbnail?: string | null;
   split_from_spread?: boolean;
   crop?: { xStart?: number; xEnd?: number } | null;
+  /**
+   * A plate put back together across the fold (#8042, restore-plate-spreads.mjs). `display` names a sharper
+   * display copy written FROM the whole image (`of`), so the reader is not left with a 1200px resize of a
+   * 5000px plate.
+   */
+  plate_whole?: { display?: { url?: string | null; of?: string | null } | null } | null;
 }
 
 /** Formats a browser cannot render — must never be returned for display/thumb. */
@@ -234,6 +240,13 @@ function variantMatchesSource(variant: string, source: string | null): boolean {
   return a === b;
 }
 
+/** The page's display_photo is a restored plate's display copy of the image it shows now (#8042). */
+function plateDisplayCopy(page: PageImageFields): boolean {
+  const d = page.plate_whole?.display;
+  if (!d?.url || d.url !== page.display_photo || !isUsableImageUrl(d.url) || !isBrowserSafe(d.url)) return false;
+  return !!d.of && d.of === getPageSource(page);
+}
+
 function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string | null {
   const width = size === 'thumb' ? THUMB_WIDTH : DISPLAY_WIDTH;
   const quality = size === 'thumb' ? 60 : 80;
@@ -248,6 +261,12 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
   }
 
   const candidates = new SizedCandidates();
+
+  // (0) A restored plate's own display copy (#8042). The kept page has a `cropped_photo` (the whole plate), which
+  // shuts out every stored variant below, because on an ordinary split page those are resizes of something else.
+  // This one is recorded as a resize OF that cropped_photo, so it is used only while that is still the source:
+  // a revert, or any later repoint of the source, drops straight back to the proxy resize.
+  if (size === 'display' && plateDisplayCopy(page)) return page.display_photo!;
 
   // (A) Pre-sized R2 variant — only when it matches the *displayed* content.
   //
@@ -330,7 +349,13 @@ function resolveHires(page: PageImageFields): string | null {
     // either → it is still the only bounded URL that works at all.
     if (iiif && (isBrowserRenderableImageUrl(iiif) || !isProxyableUrl(base))) return iiif;
   }
-  return proxyUrl(base, HIRES_WIDTH, 85, crop);
+  if (isProxyableUrl(base)) return proxyUrl(base, HIRES_WIDTH, 85, crop);
+  // The proxy refuses this host, so a proxy URL is a guaranteed 403 (#3510: 499
+  // pages of a visible SLUB book, not yet re-hosted on R2, broke zoom and the
+  // page download). The browser may still load the source as-is; failing that,
+  // the display tier is the best bounded URL that works at all.
+  if (!crop && isBrowserRenderableImageUrl(base)) return base;
+  return resolveSized(page, 'display');
 }
 
 /**

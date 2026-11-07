@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import { getRoomHref } from '@/lib/tenant-room-href';
 import type { Metadata } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { auth } from '@/lib/auth';
@@ -69,6 +70,7 @@ export interface PendingRow {
 
 export default async function CatalogReviewPage({ params }: Props) {
   const { tenant } = await params;
+  const room = await getRoomHref(tenant);
   if (tenant !== 'bph') notFound();
 
   const session = await auth();
@@ -86,7 +88,7 @@ export default async function CatalogReviewPage({ params }: Props) {
     // catalog detail page via their own pending list (deferred follow-up).
     // Bounce them back rather than render an empty page that looks like
     // they're authorised.
-    redirect(`/catalog`);
+    redirect(room('/catalog'));
   }
 
   // Fetch pending rows + titles for each UBN in one go. The bph_works
@@ -147,7 +149,7 @@ export default async function CatalogReviewPage({ params }: Props) {
     <div className="bg-cream min-h-screen">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <a
-          href="/catalog"
+          href={room('/catalog')}
           className="inline-flex items-center text-sm text-muted hover:text-primary mb-4 transition-colors"
         >
           ← Catalogue

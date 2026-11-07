@@ -26,7 +26,7 @@ for (const [g, langs] of Object.entries(GROUPS)) {
         u: { $cond: [{ $ifNull: ['$ocr.unreadable', false] }, 1, 0] }, w: { $cond: [{ $ifNull: ['$translation_withheld', false] }, 1, 0] },
         len: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $strLenCP: '$ocr.data' }, 0] } } },
       { $group: { _id: { s: '$s', m: '$m', short: { $lt: ['$len', 40] } }, n: { $sum: 1 }, e: { $sum: '$e' }, u: { $sum: '$u' }, w: { $sum: '$w' } } },
-    ], { allowDiskUse: true });
+    ], { allowDiskUse: true }).batchSize(1000);
     for await (const r of cur) {
       acc.pages += r.n; acc.edited_by += r.e; acc.unreadable += r.u; acc.withheld += r.w;
       if (r._id.s == null) acc.no_ocr += r.n; else if (r._id.short) acc.empty_or_short += r.n;

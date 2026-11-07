@@ -13,7 +13,7 @@ import PairedChart from './PairedChart';
 const IMG = 'https://images.sourcelibrary.org/archived';
 const YUHAI = '/book/vol-64-24?page=118'; // 玉海 vol. 64, Siku Quanshu fair copy, benchmark page chinese-0db3cb-p118
 const WOODBLOCK = '/book/golden-mirror-of-medicine-vol-2-ed?page=109'; // 御纂醫宗金鑑, by-eye class woodblock, chinese-ext-d9f7a0-p109
-const TYPESET = '/book/untitled-27?page=24'; // 冥報記, by-eye class typeset, chinese-ext-1b5581-p24
+const TYPESET = '/book/records-of-miraculous-retribution?page=24'; // 冥報記, by-eye class typeset, chinese-ext-1b5581-p24
 const CATASTROPHE = '/book/vol-81-19?page=21'; // 御定淵鑑類函 vol. 81, chinese-ext-0e588a-p21
 const EVAL_TREE = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval';
 

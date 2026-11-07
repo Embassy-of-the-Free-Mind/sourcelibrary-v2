@@ -1,0 +1,470 @@
+{
+ "ws-de-clementine-schrader-der-hohlweg-1843-pdf-p3": {
+  "lite": "0e73183d3cf7a2bc",
+  "litecorr": "0e73183d3cf7a2bc",
+  "gpu": "d27efb096dd450ab",
+  "gpucorr": "7971bf6ed1aa5f2b"
+ },
+ "ws-de-das-suggenthal-djvu-p4": {
+  "lite": "255bc95ab1511a07",
+  "litecorr": "255bc95ab1511a07",
+  "gpu": "09fcb41146c5407c",
+  "gpucorr": "f765148726800cf9"
+ },
+ "ws-fr-austen-orgueil-et-pr-jug-paschoud-4-djvu-p177": {
+  "lite": "f714e43fa4f21686",
+  "litecorr": "a243162aaac33b61",
+  "gpu": "63bce1c8533c7769",
+  "gpucorr": "c5356f868c10460d"
+ },
+ "ws-de-95-thesen-pdf-p3": {
+  "lite": "255934588fa187a9",
+  "litecorr": "255934588fa187a9",
+  "gpu": "12b4b86f8e0df227",
+  "gpucorr": "b2c081599a80cac0"
+ },
+ "ws-fr-aboulf-da-vie-de-mohammed-traduction-et-commenta-p21": {
+  "lite": "122e140a9c5e38c5",
+  "litecorr": "1948fe80c60b34d2",
+  "gpu": "c87ddc2b8452c524",
+  "gpucorr": "122e140a9c5e38c5"
+ },
+ "ws-fr-anonyme-relation-envoy-e-de-brest-au-sujet-d-un-p2": {
+  "lite": "ed026aec96a61683",
+  "litecorr": "7b945b138680c8b4",
+  "gpu": "02dab1203b07f3f1",
+  "gpucorr": "769f910071603ce2"
+ },
+ "ws-fr-audibert-histoire-et-roman-1834-djvu-p240": {
+  "lite": "8036e8ddbcb9d3b1",
+  "litecorr": "8036e8ddbcb9d3b1",
+  "gpu": "66062a1c1f03a6da",
+  "gpucorr": "8036e8ddbcb9d3b1"
+ },
+ "ws-de-fliegende-bl-tter-1-djvu-p17": {
+  "lite": "8a62e81a0c566727",
+  "litecorr": "75c61e02769727ac",
+  "gpu": "2de38a279c933075",
+  "gpucorr": "717f5b753018b3e2"
+ },
+ "ws-de-ber-hmte-krapfen-recepte-und-die-heirath-durch-k-p2": {
+  "lite": "c6a57d299784a6af",
+  "litecorr": "30feb828d21f5031",
+  "gpu": "c7d167a64b06676b",
+  "gpucorr": "aeafd4c481bf4257"
+ },
+ "ws-de-de-pfm-1833-05-25-nr-04-djvu-p3": {
+  "lite": "8aa1c3c5e7202c67",
+  "litecorr": "4483abe4cf9fd34d",
+  "gpu": "6830e0736be33c20",
+  "gpucorr": "5571f699df7526c9"
+ },
+ "ws-fr-barbey-d-aurevilly-aux-h-ros-des-thermopyles-djv-p14": {
+  "lite": "4263c2b606679084",
+  "litecorr": "4263c2b606679084",
+  "gpu": "6fe8ca08420da15e",
+  "gpucorr": "4263c2b606679084"
+ },
+ "ws-de-baumann-kriegs-und-familienscenen-1813-pdf-p16": {
+  "lite": "ab3ea763ad2afe7e",
+  "litecorr": "ab3ea763ad2afe7e",
+  "gpu": "715b7d9ad703971f",
+  "gpucorr": "509685d638bb7bb4"
+ },
+ "ws-fr-anonyme-accusation-de-tentative-d-assassinat-sur-p16": {
+  "lite": "c82620bc12c813e0",
+  "litecorr": "c82620bc12c813e0",
+  "gpu": "05daf6f79be13004",
+  "gpucorr": "c82620bc12c813e0"
+ },
+ "ws-de-die-poetische-ukraine-1845-pdf-p15": {
+  "lite": "9ee9d3ccfbf58b4b",
+  "litecorr": "f03616e1dfa9fbb5",
+  "gpu": "c6a98d6e3149555f",
+  "gpucorr": "4e86a0990f4b9d5c"
+ },
+ "ws-de-gn-a-110-gemein-nachrichten-1765-2-pdf-p26": {
+  "lite": "d6054e617a27b888",
+  "litecorr": "b8c5c19437c4a4ce",
+  "gpu": "4e6770fb256307a4",
+  "gpucorr": "d6054e617a27b888"
+ },
+ "ws-de-caecilia206-229-pdf-p2": {
+  "lite": "a3053e93b1053a5d",
+  "litecorr": "69175593d1864ce3",
+  "gpu": "7c4bb69723ed4e61",
+  "gpucorr": "2d1719d8acb9e0d6"
+ },
+ "ws-fr-abrant-s-l-exil-une-rose-au-d-sert-tome-2-djvu-p206": {
+  "lite": "734a715315601971",
+  "litecorr": "734a715315601971",
+  "gpu": "a056e639ddf83758",
+  "gpucorr": "734a715315601971"
+ },
+ "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2": {
+  "lite": "0685222feff35a0e",
+  "litecorr": "5b141a37bb7253ae",
+  "gpu": "e2673e4d27c35742",
+  "gpucorr": "b16315da1c2a7982"
+ },
+ "ws-de-chronica-pethau-djvu-p2": {
+  "lite": "24d10471510179a1",
+  "litecorr": "7f871d0a0ddb6d83",
+  "gpu": "bc61669120dafdbb",
+  "gpucorr": "c00724538dfa3739"
+ },
+ "ws-de-die-vierbeinigten-philosophen-djvu-p3": {
+  "lite": "8bacc8bcafbdfdb0",
+  "litecorr": "4cf60d15351a6a42",
+  "gpu": "de25ae1d9217be85",
+  "gpucorr": "858b14ad8f96169b"
+ },
+ "ws-de-der-ahnherr-pdf-p20": {
+  "lite": "ee686ea49489956d",
+  "litecorr": "252c42229046eac4",
+  "gpu": "fabbd06e452e0fd5",
+  "gpucorr": "2b00ec02700619d9"
+ },
+ "ws-fr-anselme-mission-du-commandant-du-g-nie-guy-tunis-p3": {
+  "lite": "c7fd1bfffbeca254",
+  "litecorr": "c7fd1bfffbeca254",
+  "gpu": "67a9e04e156f85e7",
+  "gpucorr": "48efad29ad76c2b9"
+ },
+ "ws-de-ein-kurtzweilig-lesen-von-dyl-vlenspiegel-djvu-p19": {
+  "lite": "01ec2e273333de8b",
+  "litecorr": "99b19153e96e9ba2",
+  "gpu": "52861e12f4bf9e84",
+  "gpucorr": "a271954eec1d807c"
+ },
+ "ws-fr-aristote-metaphysique-1840-1-djvu-p24": {
+  "lite": "e953f01254baa4b3",
+  "litecorr": "b4fa999faaff4729",
+  "gpu": "4342fd24e93ad81e",
+  "gpucorr": "e953f01254baa4b3"
+ },
+ "ws-fr-alban-s-les-myst-res-du-coll-ge-1845-djvu-p171": {
+  "lite": "0c3b08f81f037569",
+  "litecorr": "0c3b08f81f037569",
+  "gpu": "f021ddae8842811e",
+  "gpucorr": "895b7d2e782045fa"
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p26": {
+  "lite": "b629ef5403d61697",
+  "litecorr": "b629ef5403d61697",
+  "gpu": "558c0d253df09c28",
+  "gpucorr": "ca332993e6747393"
+ },
+ "ws-de-demme-mordwerk-zu-frauenburg-pdf-p2": {
+  "lite": "31cdb3fdba8ad33f",
+  "litecorr": "0a5fab7e81935f51",
+  "gpu": "fc5c4a69c2e05713",
+  "gpucorr": "7e75352f0b95e85f"
+ },
+ "ws-fr-ballanche-vision-d-h-bal-djvu-p5": {
+  "lite": "99bbb541e332a490",
+  "litecorr": "4b0b21e2d1fad8cd",
+  "gpu": "b8766cb0e2df6fd6",
+  "gpucorr": "91020c43bdb66fb6"
+ },
+ "ws-fr-austen-orgueil-et-pr-jug-paschoud-2-djvu-p19": {
+  "lite": "4547151f03721a82",
+  "litecorr": "3f4202a7066def30",
+  "gpu": "899f652715b624d9",
+  "gpucorr": "5834d6c78f4e33f0"
+ },
+ "ws-fr-anonyme-j-b-p-bacon-belph-gor-dans-marseille-173-p3": {
+  "lite": "b3f8a0ac94461b14",
+  "litecorr": "bad16409c2bb7dc0",
+  "gpu": "7c11e21bb01b344a",
+  "gpucorr": "aa96876c6a27985b"
+ },
+ "ws-de-dudalaeus-welt-herum-wandernde-jude-djvu-p3": {
+  "lite": "b6e3b55f214071d0",
+  "litecorr": "cec27fdda1244995",
+  "gpu": "f189520bee9aa0a4",
+  "gpucorr": "3d2a2bdf4bfe7b84"
+ },
+ "ws-de-chronica-hartau-djvu-p3": {
+  "lite": "2fb4c7ef2e31f0a7",
+  "litecorr": "f8eae3fd8b5a4c83",
+  "gpu": "373e2e50088ab1e5",
+  "gpucorr": "ecd6e969603ffe9b"
+ },
+ "ws-de-deutsches-schimpfw-rterbuch-oder-die-schimpfw-rt-p23": {
+  "lite": "fc34840610cd7a40",
+  "litecorr": "6dbff79b531feb4f",
+  "gpu": "9758dac21d3c7a86",
+  "gpucorr": "2055e98223ef5c21"
+ },
+ "ws-fr-aza-s-seconde-lettre-m-le-vte-de-ch-teaubriand-p-p45": {
+  "lite": "94ea76510ab151c0",
+  "litecorr": "94ea76510ab151c0",
+  "gpu": "f76b97ab177efd2c",
+  "gpucorr": "94ea76510ab151c0"
+ },
+ "ws-de-ah-ca-ira-pdf-p2": {
+  "lite": "d4f04a7745e4cd53",
+  "litecorr": "d4f04a7745e4cd53",
+  "gpu": "6fedb76ff83d112b",
+  "gpucorr": "be1c8d0f93bdab55"
+ },
+ "ws-de-friedens-instrument-zwischen-den-kayser-und-dem-p3": {
+  "lite": "7c1b6eabaa055cff",
+  "litecorr": "74f0da7a1b332e4a",
+  "gpu": "63e7aa59b181a94a",
+  "gpucorr": "7c1b6eabaa055cff"
+ },
+ "ws-de-der-sieg-ber-die-branntweinpest-in-oberschlesien-p33": {
+  "lite": "104d11dfb72d8df6",
+  "litecorr": "104d11dfb72d8df6",
+  "gpu": "7bb7670716e5cf59",
+  "gpucorr": "b48c6b073b049579"
+ },
+ "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3": {
+  "lite": "2ddcbad0db57b042",
+  "litecorr": "198cd9808c0ef4d5",
+  "gpu": "9542b21b2f6ee73c",
+  "gpucorr": "6be4faa55f120d8d"
+ },
+ "ws-de-die-philosophen-aus-dem-uranus-djvu-p18": {
+  "lite": "3a564f035da9408d",
+  "litecorr": "5318d065824bcded",
+  "gpu": "79e20dc40672c686",
+  "gpucorr": "2301e66b9adcff98"
+ },
+ "ws-de-die-dresdener-gem-lde-galerie-mosen-pdf-p17": {
+  "lite": "90f30865975be778",
+  "litecorr": "b1d2ec0f60d4115c",
+  "gpu": "c3e4006a7322d8ef",
+  "gpucorr": "a0904bd2a8d8e0c1"
+ },
+ "ws-de-chronica-eckersberg-und-olbersdorff-djvu-p2": {
+  "lite": "0fe820a1ad30f616",
+  "litecorr": "07085d2b78d8620f",
+  "gpu": "6feded8484950c05",
+  "gpucorr": "d2a758e00ca84948"
+ },
+ "ws-de-de-barrikaden-lieder-gottschall-djvu-p24": {
+  "lite": "b12068a8aa119857",
+  "litecorr": "c94995138a02fc1d",
+  "gpu": "032336dae24a4e86",
+  "gpucorr": "b12068a8aa119857"
+ },
+ "ws-fr-austen-la-famille-elliot-t1-djvu-p19": {
+  "lite": "631b988bf559c79c",
+  "litecorr": "631b988bf559c79c",
+  "gpu": "a2daace3fdd5ed71",
+  "gpucorr": "da1ac20b0ead896c"
+ },
+ "ws-de-experimental-untersuchungen-ber-elektricit-t-02-p3": {
+  "lite": "b038debd228fccfa",
+  "litecorr": "b038debd228fccfa",
+  "gpu": "433618751936d4ec",
+  "gpucorr": "e92e1c5667e7b079"
+ },
+ "ws-fr-anonyme-le-serment-du-jeu-de-paume-1823-pdf-p2": {
+  "lite": "1ec6a03ca1cbb811",
+  "litecorr": "1ec6a03ca1cbb811",
+  "gpu": "0173e326969023bd",
+  "gpucorr": "72ce988acc4b358f"
+ },
+ "ws-fr-andry-trait-des-aliments-de-car-me-1713-tome-i-d-p26": {
+  "lite": "941416b47f9ce2f8",
+  "litecorr": "0fb9ea8d04f50335",
+  "gpu": "ae2eac064579117e",
+  "gpucorr": "186caf75ec21272a"
+ },
+ "ws-de-deutsche-kunstbl-tter-die-kunstausstellung-zu-dr-p53": {
+  "lite": "bf5bf43f472eaaf0",
+  "litecorr": "bf5bf43f472eaaf0",
+  "gpu": "96ddf5507a9634f0",
+  "gpucorr": "a0e1a53a530a4c22"
+ },
+ "ws-fr-agoult-lettres-r-publicaines-djvu-p145": {
+  "lite": "325929e3ca824989",
+  "litecorr": "325929e3ca824989",
+  "gpu": "7280c9157f62bc50",
+  "gpucorr": "325929e3ca824989"
+ },
+ "ws-de-experimental-untersuchungen-ber-elektricit-t-08-p4": {
+  "lite": "892915cde8b67768",
+  "litecorr": "892915cde8b67768",
+  "gpu": "641659c4ee78a980",
+  "gpucorr": "892915cde8b67768"
+ },
+ "ws-fr-bacchus-l-amour-et-les-plaisirs-ou-recueil-de-ch-p22": {
+  "lite": "62d047e65ae16aca",
+  "litecorr": "4612b516ec7e3aa1",
+  "gpu": null,
+  "gpucorr": null
+ },
+ "ws-fr-abbadie-l-art-de-se-connaitre-soi-meme-djvu-p32": {
+  "lite": "a93ddd6cf21fd1e6",
+  "litecorr": "9857937c5ea46806",
+  "gpu": "b90d59092af9de4f",
+  "gpucorr": "f60efadd5942454e"
+ },
+ "ws-fr-anonyme-ou-collectif-voyages-imaginaires-songes-p5": {
+  "lite": "7c9d4c3b149cce31",
+  "litecorr": "7c9d4c3b149cce31",
+  "gpu": "2144f9c5807d0bfd",
+  "gpucorr": "7722370b34583924"
+ },
+ "ws-fr-anonyme-l-alpha-de-la-r-publique-1848-djvu-p4": {
+  "lite": "d0da4ecd5db3d785",
+  "litecorr": "d0da4ecd5db3d785",
+  "gpu": "f969bd20bc44fbe1",
+  "gpucorr": "d0da4ecd5db3d785"
+ },
+ "ws-fr-allart-la-femme-et-la-democratie-de-nos-temps-dj-p16": {
+  "lite": "18820f27265c9a78",
+  "litecorr": "18820f27265c9a78",
+  "gpu": "53abbe09e357d10a",
+  "gpucorr": "620c4d065df1683a"
+ },
+ "ws-fr-anglemont-louis-xviii-1824-djvu-p6": {
+  "lite": "3b1feb1ce47a14ba",
+  "litecorr": "3b1feb1ce47a14ba",
+  "gpu": "395fecf15233b14a",
+  "gpucorr": "72743a5986e20b06"
+ },
+ "ws-fr-auber-de-la-fi-vre-puerp-rale-djvu-p31": {
+  "lite": "1c9d473f660215ff",
+  "litecorr": "32c8480c054fb2e3",
+  "gpu": "8aa966ddc128c273",
+  "gpucorr": "dae1611b2466ea72"
+ },
+ "ws-de-die-neue-messaline-1788-pdf-p30": {
+  "lite": "3905418769a71323",
+  "litecorr": "b9452dab9e23f0a6",
+  "gpu": "6a0f240ba520e81e",
+  "gpucorr": "3905418769a71323"
+ },
+ "ws-de-feldern-rolf-orangenbluethe-pdf-p2": {
+  "lite": "f44e48da1eb67235",
+  "litecorr": "f44e48da1eb67235",
+  "gpu": "e121aaa39df16136",
+  "gpucorr": "a76e6e3eb0111932"
+ },
+ "ws-de-erinnerungst-felchen-an-die-ausstellung-der-kuns-p3": {
+  "lite": "bf01f069beb13b48",
+  "litecorr": "6e1d0b877b8d5f9a",
+  "gpu": "6196932430a2a4f1",
+  "gpucorr": "f21bc8707bf4658c"
+ },
+ "ws-fr-anonyme-adresse-messieurs-nos-abonn-s-pour-la-no-p2": {
+  "lite": "03df0c425812700c",
+  "litecorr": "03df0c425812700c",
+  "gpu": "b3f5083e76d8b3cb",
+  "gpucorr": "c0a26b82bc6b9013"
+ },
+ "ws-fr-allart-l-indienne-djvu-p21": {
+  "lite": "7d278390b2705d21",
+  "litecorr": "7d278390b2705d21",
+  "gpu": "6da96ce573d21e28",
+  "gpucorr": "7a0d7f0248d47124"
+ },
+ "ws-fr-austen-la-famille-elliot-t2-djvu-p210": {
+  "lite": "00506f6036ff7c93",
+  "litecorr": "0dc74b7764754a7f",
+  "gpu": "38d0a4174c52299e",
+  "gpucorr": "b88a67f319e3daf2"
+ },
+ "ws-de-deutsche-gewerbezeitung-nr-37-1849-pdf-p7": {
+  "lite": "719f804bfd546b01",
+  "litecorr": "719f804bfd546b01",
+  "gpu": "88e98b9568d64783",
+  "gpucorr": "719f804bfd546b01"
+ },
+ "ws-fr-alfieri-de-la-tyrannie-djvu-p17": {
+  "lite": "0665b7cada217130",
+  "litecorr": "0665b7cada217130",
+  "gpu": "60b65339a8db6f07",
+  "gpucorr": "8a248a2fb320d107"
+ },
+ "ws-fr-annales-de-math-matiques-pures-et-appliqu-es-182-p304": {
+  "lite": "5dc37c151b5c57dc",
+  "litecorr": "5dc37c151b5c57dc",
+  "gpu": "6679296bf3ee71fa",
+  "gpucorr": "5dace806d8a8123b"
+ },
+ "ws-de-etwas-ber-die-dresdner-kunstausstellung-1811-zei-p1": {
+  "lite": "cc426610780a52db",
+  "litecorr": "cc426610780a52db",
+  "gpu": "0b52e4d06e887320",
+  "gpucorr": "ae4a17f6de97fa8a"
+ },
+ "ws-fr-abeille-coriolan-1676-djvu-p40": {
+  "lite": "860013b7292d86a1",
+  "litecorr": "860013b7292d86a1",
+  "gpu": "a306ad5c8f53fc40",
+  "gpucorr": "af4dafc16de7e4fb"
+ },
+ "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-30-ao-t-1784-dj-p2": {
+  "lite": "7434ffd226fe765a",
+  "litecorr": "7434ffd226fe765a",
+  "gpu": "22e5f72574d03a6e",
+  "gpucorr": "ea38fbe74259a29c"
+ },
+ "ws-de-gn-a-148-gemein-nachrichten-1770-2-pdf-p26": {
+  "lite": "3abde36f1f93a006",
+  "litecorr": "0c9b0b7951fb8aa8",
+  "gpu": "348ad269f42cfd8b",
+  "gpucorr": "3abde36f1f93a006"
+ },
+ "ws-fr-argens-m-moires-historiques-et-secrets-concernan-p18": {
+  "lite": "b80e186e631e3ed5",
+  "litecorr": "b80e186e631e3ed5",
+  "gpu": "db113e06288e4889",
+  "gpucorr": "2f729ef8cee3ecc8"
+ },
+ "ws-de-bruder-felix-fabers-gereimtes-pilgerbuechlein-dj-p3": {
+  "lite": "eeda0f50db56c0cc",
+  "litecorr": "1d37d9cc5f83b7e4",
+  "gpu": "a2420c03f28d1af3",
+  "gpucorr": "eeda0f50db56c0cc"
+ },
+ "ws-de-dresdner-anzeigen-1803-kunstausstellung-djvu-p3": {
+  "lite": "95110401a26ce7f8",
+  "litecorr": "839d1357c4aa9890",
+  "gpu": "a28de3f6bf593e9c",
+  "gpucorr": "431820e7d1f4500d"
+ },
+ "ws-fr-arr-t-du-conseil-d-tat-du-roi-du-10-septembre-17-p3": {
+  "lite": "b990c74e741a2d12",
+  "litecorr": "c22bae2212409b2a",
+  "gpu": "a9bcf44aaed766d5",
+  "gpucorr": "47c9a77494ae2cc7"
+ },
+ "ws-fr-alexis-de-tocqueville-de-la-d-mocratie-en-am-riq-p22": {
+  "lite": "4f68384dc4f11d09",
+  "litecorr": "4f68384dc4f11d09",
+  "gpu": "2cb017da2651e49c",
+  "gpucorr": "0f92ef997f266e4c"
+ },
+ "ws-de-bekanntmachung-k-niglich-s-chsischer-verein-1825-p5": {
+  "lite": "f99e34400b8c967a",
+  "litecorr": "f99e34400b8c967a",
+  "gpu": "5d206f10e7ab3bfd",
+  "gpucorr": "f17084887c8b7bd1"
+ },
+ "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4": {
+  "lite": "ebc09654d981910f",
+  "litecorr": "7f1d29f0ee1713e0",
+  "gpu": "1f4e2320acf56b30",
+  "gpucorr": "142253385cce0825"
+ },
+ "ws-fr-annales-de-math-matiques-pures-et-appliqu-es-182-p3": {
+  "lite": "0f155c7d186e24e7",
+  "litecorr": "0f155c7d186e24e7",
+  "gpu": "b6bfb244e1267d76",
+  "gpucorr": "db40270fc3f7d70e"
+ },
+ "ws-fr-barbier-th-tre-1745-pdf-p258": {
+  "lite": "1b360b9bb580417e",
+  "litecorr": "1b360b9bb580417e",
+  "gpu": "51046a4ae0b0be11",
+  "gpucorr": "0d2529d110f19fec"
+ }
+}

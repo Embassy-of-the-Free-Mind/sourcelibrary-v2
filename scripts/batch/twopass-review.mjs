@@ -35,6 +35,7 @@ import sharp from 'sharp';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { sanitizeTranslationTags, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
+import { checkWrittenText } from '../lib/write-text-guard.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { splitBlockReply } from './claude-translate.mjs';
@@ -113,7 +114,9 @@ const ids = readPageIdsFile(arg('page-ids-file'));
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
 const db = client.db('bookstore');
-const pages = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, photo: 1, archived_photo: 1, display_photo: 1 } }).toArray()).map((p) => [p.id, p]));
+const pages = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, photo: 1, archived_photo: 1, display_photo: 1 } }).toArray()).map((p) => [p.id, p]));
+// The books' languages, for the write guard's length rule (#5055).
+const booksById = new Map((await db.collection('books').find({ id: { $in: [...new Set([...pages.values()].map((p) => p.book_id))] } }, { projection: { id: 1, language: 1 } }).toArray()).map((b) => [b.id, b]));
 await client.close();
 // Check the transcription before paying for a review on top of it (#6865).
 const gate = ocrFirstGate([...pages.values()], arg('ocr-checked'));
@@ -159,6 +162,10 @@ async function review(group, attempt) {
   const promptFile = `prompts/${sentHash}.txt`;
   fs.writeFileSync(path.join(OUT, promptFile), sent);
   leaves.forEach((g, i) => {
+    // #5055: the write guard on the review as returned, before sanitizeTranslationTags closes a cut tail tag. A cut
+    // review is read once more alone (below); its meta says so, and `cli-translate.mjs apply` refuses it.
+    const p = pages.get(g.id);
+    const cut = checkWrittenText(texts.get(i + 1), { kind: 'translation', source: p.ocr?.data, lang: booksById.get(p.book_id)?.language, type: p.page_type });
     const reviewed = sanitizeTranslationTags(texts.get(i + 1));
     const text = [reviewed, tail(g.d.text)].filter(Boolean).join('\n\n');
     const dm = g.d.meta;
@@ -171,6 +178,7 @@ async function review(group, attempt) {
       ocr_hash: dm.ocr_hash, ocr_updated_at: dm.ocr_updated_at ?? null, prompt_ref: dm.prompt_ref, is_english_book: dm.is_english_book, context: dm.context,
       prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage,
       chars: text.length, draft_chars: g.d.text.length, chatter: cliChatterReason(text),
+      ...(cut.verdict === 'truncated' && { write_guard: 'truncated', write_guard_reasons: cut.reasons }),
       passes: [
         { pass: 'draft', cli: `${dm.cli} ${dm.cli_version}`, model: dm.model, read_site: dm.read_site || 'scripts/batch/cli-translate.mjs', ...(dm.call_id && { call_id: dm.call_id }), started_at: dm.started_at, finished_at: dm.finished_at, prompt_sent_hash: dm.prompt_sent_hash, prompt_sent_chars: dm.prompt_sent_chars, instruction: dm.instruction ?? null },
         { pass: 'review', cli: `claude ${version}`, model: r.model || MODEL, read_site: READ_SITE, prompt_variant: PROMPT_VARIANT, call_id: callId, call_pages: group.length, started_at: t0.toISOString(), finished_at: new Date().toISOString(), prompt_sent_hash: sentHash, image_url: g.image_url, kept_from_draft: ['summary', 'keywords'] },
@@ -196,7 +204,14 @@ for (;;) {
   if (!ready.length && (!pending || !WAIT)) break;
   if (ready.length < PER_CALL && pending && WAIT) { await sleep(60000); continue; }
   const group = ready.slice(0, PER_CALL);
-  if ((await run(group, 0)) === 'ok' || (await run(group, 1)) === 'ok') continue;
+  if ((await run(group, 0)) === 'ok' || (await run(group, 1)) === 'ok') {
+    // #5055: a leaf whose review came back cut is reviewed once more alone; if that fails or is cut too, apply refuses it.
+    for (const g of group) {
+      const f = path.join(OUT, `${g.id}.meta.json`);
+      if (fs.existsSync(f) && JSON.parse(fs.readFileSync(f, 'utf8')).write_guard === 'truncated') await run([g], 3);
+    }
+    continue;
+  }
   for (const g of group) if (!done(g.id) && (await run([g], 2)) !== 'ok') { noted.add(g.id); fs.appendFileSync(path.join(OUT, 'review-failed.jsonl'), JSON.stringify({ page_id: g.id, page_number: pages.get(g.id).page_number }) + '\n'); }
   // a page whose review failed three times is left to its stored English; drop it from this run
   for (const g of group) if (!done(g.id)) pages.delete(g.id);

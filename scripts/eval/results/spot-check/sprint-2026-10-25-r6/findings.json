@@ -1,0 +1,1172 @@
+[
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "invented 'canes' (dogs) and 'paratus', carried into the translation as 'or [his] dogs, or his equipment'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'vim iniustam' is read as 'iniuriam iustam', which inverts 'unjust force' into 'just injury'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "the abbreviated line is rebuilt as plausible Latin rather than transcribed; phrases not on the leaf. The whole page is of this kind: a loose expansion of the gist with large stretches confabulated",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "number of years in the crusade essoin probably misread; low confidence",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "fluent translation of the confabulated OCR; a reader learns that dogs figure in Bracton's law of disseisin",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "nonsense from garbled OCR rendered as confident English",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 148,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=148",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "Translation opens with '<margin></margin>' and then a stray unmatched '</margin>', plus <note> wrappers that restate the margin OCR ('original: ...')",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=149",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'per intervallum' is misread as 'spiritualis'; the translation then speaks of 'spiritual things' transferred",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=149",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "invented 'iunctis in lapis', rendered 'joined in the stone'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=149",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "garbled opening",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=149",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "fluent rendering of a misread; the sense of the passage (transfer after an interval) is lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=149",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "meaningless invented phrase translated as if real",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=149",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "Translation repeatedly shows '<margin></margin>' followed by stray '</margin>' and '<meta>A decorative initial D...</meta>' twice. Markup and image descriptions leak into the reader text",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=150",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "serious",
+    "note": "the case citation is misread: 'sokemanno' becomes 'solemniter', the justice Pattishall becomes 'de placitis', and the regnal year becomes 'quarto'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=150",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "'toto caeli' (whole of heaven) is not on the leaf",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=150",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "anachronism: Bracton died in 1268 and cites Henry III-era cases; Henry IV reigned from 1399. Invented from a misread",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=150",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "nonsense presented as law",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "title": "De legibus Angliae, ca. 1390",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/69f330b1876dd827cbc47bd5?page=150",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "the note invents scholarly comment to explain away an OCR confabulation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b65ed7b3f4fc0441524eb8",
+    "title": "Theses de febre hectica",
+    "page": 7,
+    "url": "https://sourcelibrary.org/book/69b65ed7b3f4fc0441524eb8?page=7",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'inungatur' (be anointed) is misread as 'mungatur' (be wiped)",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b65ed7b3f4fc0441524eb8",
+    "title": "Theses de febre hectica",
+    "page": 7,
+    "url": "https://sourcelibrary.org/book/69b65ed7b3f4fc0441524eb8?page=7",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "should read 'after the bath, let the body be gently anointed with rose or water-lily [oil]'. The therapeutic instruction is changed",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "page": 10,
+    "url": "https://sourcelibrary.org/book/69e759c2095c302d3fdde0e6?page=10",
+    "list": "tr",
+    "class": "T3",
+    "severity": "moderate",
+    "note": "Tisbea's 20-line speech and the offstage cry are hidden inside <note> wrappers as prose, not verse lines of the play",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Spanish",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "page": 11,
+    "url": "https://sourcelibrary.org/book/69e759c2095c302d3fdde0e6?page=11",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "the speaker prefix lost in the gutter was filled in as 'Tisb.', giving Tisbea both lines",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Spanish",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "page": 11,
+    "url": "https://sourcelibrary.org/book/69e759c2095c302d3fdde0e6?page=11",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'salen' (enter) translated as 'exit'; the stage direction is reversed",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Spanish",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "page": 11,
+    "url": "https://sourcelibrary.org/book/69e759c2095c302d3fdde0e6?page=11",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "same inversion: the King and Gonzalo enter",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Spanish",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "page": 11,
+    "url": "https://sourcelibrary.org/book/69e759c2095c302d3fdde0e6?page=11",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'idolatrarte' (to idolise you) mistranslated",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Spanish",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "page": 12,
+    "url": "https://sourcelibrary.org/book/69e759c2095c302d3fdde0e6?page=12",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "place name replaced: Yobregas/Xabregas is a different convent; Odivelas comes 20 lines later. Invented gloss",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Spanish",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69e77a780fc6fc955e360177",
+    "title": "rDo rje gro lod gnam lcags 'bar ba",
+    "page": 6,
+    "url": "https://sourcelibrary.org/book/69e77a780fc6fc955e360177?page=6",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "gshin rje is Yama, not Yamantaka (gshin rje gshed)",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 232,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=232",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "line openings lost in the gutter are garbled or guessed rather than marked as illegible",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 233,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=233",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "an entire column of the index is silently omitted",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 233,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=233",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'verbeest' (turned into a beast) read as 'verbeelt' (depicted), and the folio reference is wrong",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 233,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=233",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "serious",
+    "note": "folio references in the index are wrong in many entries (a run of '65, b' repeated); an index with wrong numbers is useless",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 233,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=233",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'fear of God' read as 'peace of God'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 233,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=233",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "follows the misread; Actaeon is turned into a beast",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "title": "Alle de wercken",
+    "page": 233,
+    "url": "https://sourcelibrary.org/book/69c83bc96c6f3cc53c84f7a2?page=233",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "'wast' is 'washes' (wash day); the note invents a wrong explanation",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=31",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'insunt essentia' (in this essence) misread as 'sunt effeta'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=31",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "passive abbreviation (inquinatur) dropped, so the sense turns active",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=31",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "efficitur read as efficit",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=31",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'adest o' fused into imperative 'adesto'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=31",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "The argument is garbled. The source says this good is polluted by evil, once infected it no longer stays good, and if it does not stay good it becomes evil. The translation inverts the agency and the logic, following the OCR misreads.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 31,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=31",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The statement that only the NAME of good belongs to man becomes a jussive, and 'solum' is misattached to 'man'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 32,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=32",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "abbreviations of 'verum et innumerorum malorum' misexpanded",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 32,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=32",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "Should read 'but may be increased by countless evils and in their size'. 'True' comes from the OCR garble.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 33,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=33",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "inscitiae (ignorance) misread",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b51e0e768235dc6598b8f2",
+    "title": "Contenta In Hoc Volvmine. Pimander. Mercurij Trismegisti liber de de sapientia et potestate dei. Asclepius ... Crater Hermetis A Lazarelo Septempedano",
+    "page": 33,
+    "url": "https://sourcelibrary.org/book/69b51e0e768235dc6598b8f2?page=33",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'the garment of ignorance' and 'depravity' are lost. The list's first item, ignorance, is gone and 'malice' has been invented from the misread.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 111,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=111",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "Sense inverted. 'vacat' + ablative here means the court has leisure for (is given over to) dances and feasts while the empire burns, so the satire is reversed.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 111,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=111",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'oriens' is the East, which will lie waste more widely; 'rising expanse' is meaningless",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 111,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=111",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "Should read 'cities so long ignorant of war'; 'quanto tempore' is misconstrued",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 113,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=113",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'Maius' (greater) misread as nonsense 'Madius'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 113,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=113",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'An gelidam' (or shall I sing of icy Thrace) fused into a pseudo-name",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 113,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=113",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "Sense reversed. The poet says whatever he leaves out will be GREATER; the translation invents 'meager' from the misread.",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 113,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=113",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "Invented person 'Angelida' from the OCR fusion",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b2232756715b0e32476687",
+    "title": "Claudian, Opera (Aldine Press)",
+    "page": 113,
+    "url": "https://sourcelibrary.org/book/69b2232756715b0e32476687?page=113",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "Should read 'his son Stilicho alone would suffice to spread his fame'; the relation is inverted",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b302e53613a84e6806812d",
+    "title": "Schat der Gesontheyt",
+    "page": 210,
+    "url": "https://sourcelibrary.org/book/69b302e53613a84e6806812d?page=210",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "Lucian's dialogue is 'The Cock' (Gallus, the rooster who was once Pythagoras); 'the Gaul' is wrong",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Dutch",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b302e53613a84e6806812d",
+    "title": "Schat der Gesontheyt",
+    "page": 211,
+    "url": "https://sourcelibrary.org/book/69b302e53613a84e6806812d?page=211",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'veteres aegri' are long-standing (chronic) patients, not the aged; a dosing rule is misstated",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Dutch",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b302e53613a84e6806812d",
+    "title": "Schat der Gesontheyt",
+    "page": 211,
+    "url": "https://sourcelibrary.org/book/69b302e53613a84e6806812d?page=211",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "hemitritaeus is a semi-tertian fever, so both the translation and the added gloss are wrong",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Dutch",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b302e53613a84e6806812d",
+    "title": "Schat der Gesontheyt",
+    "page": 212,
+    "url": "https://sourcelibrary.org/book/69b302e53613a84e6806812d?page=212",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "Sophocles' 'φοίνιος σάλος' (bloody surge) normalised to 'νόσος' (disease)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Dutch",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "69b302e53613a84e6806812d",
+    "title": "Schat der Gesontheyt",
+    "page": 212,
+    "url": "https://sourcelibrary.org/book/69b302e53613a84e6806812d?page=212",
+    "list": "tr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "Carries the OCR substitution; Sophocles' phrase is 'bloody surge'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Dutch",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4266e1dfbbb4d07aa70535",
+    "title": "De Memoria Artificiosa Libellus",
+    "page": 21,
+    "url": "https://sourcelibrary.org/book/6a4266e1dfbbb4d07aa70535?page=21",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "'inuisae' paired with 'inauditae' means unseen, not ugly",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4266e1dfbbb4d07aa70535",
+    "title": "De Memoria Artificiosa Libellus",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/6a4266e1dfbbb4d07aa70535?page=22",
+    "list": "other",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "Running head 'DE ARTE' turned into an invented H1 heading '# ON THE ART'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4266e1dfbbb4d07aa70535",
+    "title": "De Memoria Artificiosa Libellus",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/6a4266e1dfbbb4d07aa70535?page=22",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "Empty centring arrows '-><-' left at the end of the translation (catchword removed, markup kept)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4266e1dfbbb4d07aa70535",
+    "title": "De Memoria Artificiosa Libellus",
+    "page": 23,
+    "url": "https://sourcelibrary.org/book/6a4266e1dfbbb4d07aa70535?page=23",
+    "list": "other",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "Running head 'REMINISCENTIÆ.' rendered as an invented H1 heading '# REMINISCENCES.'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4e5c0500c1250433dc2e93",
+    "title": "Disputatio 20. De obligationlbus, quae quasi ex contractu nascuntur ...",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a4e5c0500c1250433dc2e93?page=4",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "Legal sigla expanded into words and the law number '5' dropped; the citation is normalised, not transcribed",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4e5c0500c1250433dc2e93",
+    "title": "Disputatio 20. De obligationlbus, quae quasi ex contractu nascuntur ...",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a4e5c0500c1250433dc2e93?page=4",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The legal sense is that the gestor is sometimes liable even for accident (casus); 'provided for' obscures it",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4e5c0500c1250433dc2e93",
+    "title": "Disputatio 20. De obligationlbus, quae quasi ex contractu nascuntur ...",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/6a4e5c0500c1250433dc2e93?page=5",
+    "list": "tr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "Invented law number '8' in the citation (neither image 5 nor OCR 's.')",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-25-r6",
+    "frame": "public",
+    "book_id": "6a4e5c0500c1250433dc2e93",
+    "title": "Disputatio 20. De obligationlbus, quae quasi ex contractu nascuntur ...",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/6a4e5c0500c1250433dc2e93?page=5",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "The double INCLUDES recovery of the thing (actio mixta); 'is added' states the opposite legal rule",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  }
+]

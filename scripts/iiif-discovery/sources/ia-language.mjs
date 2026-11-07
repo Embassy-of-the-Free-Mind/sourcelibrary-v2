@@ -174,7 +174,7 @@ await withMongo(async (db) => {
     try {
       const res = await fetch(`${SCRAPE_BASE}?${params}`, {
         headers: {
-          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+          'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
         },
         signal: AbortSignal.timeout(120000),
       });

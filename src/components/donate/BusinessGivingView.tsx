@@ -172,7 +172,7 @@ const STRINGS: Record<Locale, BusinessStrings> = withEnglishFallback({
 
     whereTitle: 'What your gift pays for.',
     whereBody:
-      'Digitisation of fragile manuscripts and rare printed books, AI-assisted translation with scholarly review, and a free reading platform where the original and the translation sit side by side. Everything we produce is published openly under CC BY-SA and free to read.',
+      'Digitisation of fragile manuscripts and rare printed books, AI-assisted translation with scholarly review, and a free reading platform where the original and the translation sit side by side. Everything we produce is published openly under CC BY-NC-SA and free to read.',
     whereCta: 'See all the ways to give',
   },
 
@@ -252,7 +252,7 @@ const STRINGS: Record<Locale, BusinessStrings> = withEnglishFallback({
 
     whereTitle: 'A qué se destina tu donativo.',
     whereBody:
-      'A digitalizar manuscritos frágiles y libros impresos raros, a la traducción asistida por IA con revisión académica, y a una plataforma de lectura gratuita donde el original y la traducción aparecen uno junto al otro. Todo lo que producimos se publica abiertamente bajo CC BY-SA y es gratis de leer.',
+      'A digitalizar manuscritos frágiles y libros impresos raros, a la traducción asistida por IA con revisión académica, y a una plataforma de lectura gratuita donde el original y la traducción aparecen uno junto al otro. Todo lo que producimos se publica abiertamente bajo CC BY-NC-SA y es gratis de leer.',
     whereCta: 'Ver todas las formas de donar',
   },
 });

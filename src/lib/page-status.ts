@@ -53,8 +53,12 @@ export interface PageStatusEntry {
 }
 
 export const PAGE_STATUS: Record<string, PageStatusEntry> = {
-  // Empty on purpose: this change adds the mechanism only. Pages move in
-  // follow-up PRs, one state at a time.
+  '/about/previous': {
+    state: 'archived',
+    since: '2026-11-06',
+    note: 'The /about page as it stood until the November 2026 relaunch.',
+    sendTo: '/about',
+  },
 };
 
 interface CompiledPattern {

@@ -53,7 +53,7 @@ await withMongo(async (db) => {
 
   const cursor = books.find({}, {
     projection: { _id: 1, id: 1, visible: 1, hidden: 1, hidden_reason: 1, duplicate_of: 1, publication: 1 },
-  });
+  }).batchSize(1000);
   for await (const book of cursor) {
     total++;
     if (book.publication?.state) { already++; continue; }

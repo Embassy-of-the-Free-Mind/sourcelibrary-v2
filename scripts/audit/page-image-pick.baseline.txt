@@ -64,7 +64,6 @@ scripts/eval/tibetan-proofread/build-page.mjs	const src = r.archived_photo || r.
 scripts/eval/tibetan-proofread/build-page.mjs	reader_url: r.reader_url, full_img: r.archived_photo || r.display_photo, served_text_sha256: r.served_text_sha256,
 scripts/eval/tibetan-proofread/draw.mjs	display_photo: p.display_photo || null,
 scripts/eval/translation-corpus-audit/draw-chained.mjs	image: page.display_photo || page.cropped_photo || page.photo || null,
-scripts/eval/translation-corpus-audit/draw.mjs	image: page.display_photo || page.cropped_photo || page.photo || null,
 scripts/eval/translation-vs-reference/t2/draw-pages.mjs	if (ok) picks.push({ page_number: pn, script: gs >= 0.6 ? 'greek' : 'bilingual', greek_share: +gs.toFixed(3), ocr_chars: o.length, tr_chars: t.length, tr_model: p.translation?.model ?? null, prompt_version: p.translation?.prompt_version ?? null, ocr_model: p.ocr?.model ?? null, image: p.display_photo || p.photo || p.archived_photo || null });
 scripts/eval/two-read-garble-5313.mjs	live.push({ id: r.id, page_id: p.id, book_id: r.book_id, page_number: p.page_number, photo: p.photo ?? null, archived_photo: p.archived_photo ?? null, archive_source: p.archive_metadata?.source ?? null,
 scripts/eval/xlref-t1/page-tool.mjs	console.log(`=== page ${p.page_number} image: ${p.display_photo || p.archived_photo || p.photo}`);

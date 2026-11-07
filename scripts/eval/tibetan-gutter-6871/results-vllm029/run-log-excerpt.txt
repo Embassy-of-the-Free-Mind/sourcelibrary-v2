@@ -1,0 +1,10 @@
+2026-10-26T09:27:31Z rc=0 wall=150s :: /root/jobs/yig-vllm-6871/venv/bin/python /root/jobs/yig-vllm-6871/harness/yig_lea
+2026-10-26T09:28:21Z rc=0 wall=50s :: /root/jobs/yig-vllm-6871/venv/bin/python /root/jobs/yig-vllm-6871/harness/yig_vllm
+2026-10-26T09:30:11Z rc=0 wall=110s :: /root/jobs/yig-vllm-6871/venv/bin/python /root/jobs/yig-vllm-6871/harness/yig_vll
+L rc=0
+P rc=0
+T rc=0
+2026-10-26T09:30:35Z peak VRAM per pid (MiB):
+2693960 14962
+2697845 14674
+2699663 14810

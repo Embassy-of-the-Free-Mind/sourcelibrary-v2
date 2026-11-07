@@ -1,0 +1,26 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>toc</page-type>
+<page-num>四</page-num>
+<header>笠翁詩集 卷之七</header>
+<sig>藏板</sig>
+<meta>This page is from a woodblock-printed book of poetry. The text is arranged in vertical columns within a grid, intended to be read from right to left. Significant ghosting (ink bleed-through) from the reverse side is visible in the background.</meta>
+
+奴子覓火吃煙望則有形求之不得詢之路人知爲鬼火云
+
+月下渡河
+
+嚴陵釣臺
+
+聞笳
+
+贈友三首
+
+製花欄
+
+喜晴二首
+
+新嫁娘四首
+
+<vocab>笠翁詩集, 鬼火, 嚴陵釣臺, 聞笳, 新嫁娘</vocab>

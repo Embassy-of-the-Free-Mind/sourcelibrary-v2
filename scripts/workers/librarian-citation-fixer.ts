@@ -72,7 +72,7 @@ function callFixer(prompt: string): Promise<{ reply: string | null; limit: boole
     const t0 = Date.now();
     const env = { ...process.env };
     delete env.ANTHROPIC_API_KEY; // the subscription, never the API
-    const child = execFile(CLAUDE, ['-p', '--model', MODEL, '--allowedTools', ''], { cwd: os.tmpdir(), env, timeout: 10 * 60e3, maxBuffer: 16 << 20 }, (err, stdout, stderr) => {
+    const child = execFile(CLAUDE, ['-p', '--model', MODEL, '--restricted', '--tools', '', '--strict-mcp-config', '--no-session-persistence'], { cwd: os.tmpdir(), env, timeout: 10 * 60e3, maxBuffer: 16 << 20 }, (err, stdout, stderr) => {
       const out = String(stdout ?? '');
       const limit = /usage limit|hit your limit|limit reached/i.test(out + String(stderr ?? '') + String(err ?? ''));
       resolve({ reply: parseFixerReply(out) ? out : null, limit, ms: Date.now() - t0 });

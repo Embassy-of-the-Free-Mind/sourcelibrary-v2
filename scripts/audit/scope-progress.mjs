@@ -210,14 +210,15 @@ await withMongo(async (db) => {
       const rows = await db.collection('books').find({ collections: { $in: env.collections } }).project({ id: 1 }).toArray();
       for (const b of rows) envIds.add(String(b.id));
     }
-    const s = await getScopeSpendUsd(db, { ids: [...envIds], since: env.created_at, endpoints: env.meter_endpoints });
-    const split = flag('no-split') ? null : await spendByEndpoint(db, [...envIds], env.created_at);
+    const s = await getScopeSpendUsd(db, { ids: env.all_books ? null : [...envIds], since: env.created_at, endpoints: env.meter_endpoints });
+    const split = flag('no-split') || env.all_books ? null : await spendByEndpoint(db, [...envIds], env.created_at);
     envelopes.push({
       tag: env.tag,
       budget_usd: env.budget_usd,
       spent_usd: Number(s.usd.toFixed(2)),
-      books: envIds.size,
-      open: !s.meterError && s.usd < env.budget_usd,
+      books: env.all_books ? 'all' : envIds.size,
+      open: !env.misconfigured && !s.meterError && s.usd < env.budget_usd,
+      misconfigured: env.misconfigured,
       meter_error: s.meterError || null,
       lanes: env.lanes,
       meter_endpoints: env.meter_endpoints,

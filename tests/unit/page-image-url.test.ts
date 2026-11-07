@@ -244,6 +244,26 @@ describe('CSP renderability invariant', () => {
     expect(getPageImageUrl(nowhere, 'display')).toBe('https://blocked.example.org/iiif/x/full/1200,/0/default.jpg');
   });
 
+  it('hires never hands out a proxy URL for a host the proxy refuses (#3510)', () => {
+    // The real shape: a visible SLUB book whose later pages were never archived.
+    // display_photo is on R2; the source is on a CSP-allowed host the proxy
+    // will not fetch. The proxy URL was a 403 (zoom past 1.5x, page download).
+    const slub = 'https://digital.slub-dresden.de/data/kitodo/x/x_tif/jpegs/00000438.tif.original.jpg';
+    const unarchived: PageImageFields = {
+      photo: slub,
+      photo_original: slub,
+      display_photo: `${R2}/pages/${BOOK}/0438.jpg`,
+      image_thumb: `${R2}/pages/${BOOK}/0438-thumb.jpg`,
+    };
+    expect(getPageImageUrl(unarchived, 'hires')).toBe(slub);
+    // Neither list: fall back to the bounded display URL, not a dead proxy URL.
+    const nowhere: PageImageFields = {
+      photo: 'https://blocked.example.org/scans/x/0001.jpg',
+      display_photo: `${R2}/pages/${BOOK}/0001.jpg`,
+    };
+    expect(getPageImageUrl(nowhere, 'hires')).toBe(`${R2}/pages/${BOOK}/0001.jpg`);
+  });
+
   it('an allowlisted IIIF host still gets the free origin-side resize', () => {
     // digi.vatlib.it is in CSP_IMG_HOSTS — must NOT be pushed onto our proxy.
     expect(getPageImageUrl(fixtures.iiif, 'thumb')).toContain('digi.vatlib.it');
@@ -276,5 +296,38 @@ describe('hires: Internet Archive master (#5679)', () => {
   });
   it('the redirect host is in the CSP but stays non-renderable for other resolvers', () => {
     expect(isBrowserRenderableImageUrl('https://ia803101.us.archive.org/BookReader/BookReaderImages.php?id=x')).toBe(false);
+  });
+});
+
+describe('restored plate display copy (#8042)', () => {
+  const whole = `${R2}/archived/${BOOK}/126.jpg`;
+  const copy = `${R2}/pages/${BOOK}/plate-6a27018e8613997bc84aacbf-display.jpg`;
+  const kept: PageImageFields = {
+    split_from_spread: true,
+    photo: `${R2}/pages/${BOOK}/spwmc8-0237.jpg`,
+    archived_photo: `${R2}/pages/${BOOK}/spwmc8-0237-full.jpg`,
+    cropped_photo: whole,
+    display_photo: copy,
+    plate_whole: { display: { url: copy, of: whole } },
+  };
+  it('display serves the stored copy of the whole plate', () => {
+    expect(getPageImageUrl(kept, 'display')).toBe(copy);
+  });
+  it('hires and original still come from the whole scan, not the copy', () => {
+    expect(getPageImageUrl(kept, 'original')).toBe(whole);
+    expect(getPageImageUrl(kept, 'hires')).toContain(encodeURIComponent(whole));
+  });
+  it('thumb is unchanged', () => {
+    expect(getPageImageUrl(kept, 'thumb')).not.toBe(copy);
+  });
+  it('a copy of some other image is ignored (source repointed or reverted)', () => {
+    const moved = { ...kept, cropped_photo: `${R2}/archived/${BOOK}/127.jpg` };
+    expect(getPageImageUrl(moved, 'display')).not.toBe(copy);
+    const reverted = { ...kept, cropped_photo: null };
+    expect(getPageImageUrl(reverted, 'display')).not.toBe(copy);
+  });
+  it('a display_photo that is not the recorded copy is still refused on a cropped page', () => {
+    const other = { ...kept, display_photo: `${R2}/pages/${BOOK}/spwmc8-0237.jpg` };
+    expect(getPageImageUrl(other, 'display')).toContain('/api/image?');
   });
 });

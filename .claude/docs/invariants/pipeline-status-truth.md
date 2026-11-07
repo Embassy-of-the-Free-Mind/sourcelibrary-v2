@@ -2,7 +2,8 @@
 
 **Read this when:** writing or changing a pipeline phase, calling `setPipelineStatus`,
 advancing `pipeline_auto.status` from anywhere, adding a guard that asserts some stage
-"really did its job," or **bulk-writing OCR onto books that are already translated**.
+"really did its job," **bulk-writing OCR onto books that are already translated**, or
+**writing a new OCR lane** (it must stamp a failed read, below).
 
 *Added 2026-08-08 from #3740 / PR #3765.*
 
@@ -143,7 +144,7 @@ replaced, while the memory said "retranslation not approved, no lane exists."
 
 - Before a bulk OCR apply on finished books, decide whether retranslation should follow.
   If it needs approval, **hold the books first**
-  (`hold-pipeline-books.mjs --ids … --reason <x>-awaits-<who> --issue N --release "…" --apply`).
+  (`hold-pipeline-books.mjs --ids … --reason <x>-awaits-<who> --issue N --release "…" --release-when decision:<words> --apply`).
   Page-level writers never touch status, so the apply is unaffected.
 - Release with **`--to ocr_complete`**. A plain release restores the prior status, and
   `loop_quarantine_hold` (common in re-OCR cohorts) is selected by no translate phase.
@@ -161,6 +162,19 @@ or retry can put it back. Release restores `held_from_status` and records a
 wrong, a human should look" but "nothing is wrong yet, and running the lane would make it
 so". `scripts/audit/pipeline-hold-drift.mjs` finds a marker without the status (a writer
 this rule does not know about) and a hold whose release condition has been met.
+
+**A hold names what releases it, in a form a detector can test (#7860).** Placing a hold is one
+line and nothing owned releasing one: on 2026-10-31, 464,263 held books under 108 reasons, and
+1,535 had sat a month on `*-awaits-derek` holds whose decisions were already made. So `holdBook()`
+(and `makeHoldMarker()`, which the insert-time importers use) **refuses a hold without
+`release_when: { kind: decision|issue|test|date, ref, note }`** — a `release` sentence alone is read by
+nobody. `scripts/audit/hold-release-check.mjs` (weekly) lists holds QUIET (over 14 days, their issue
+silent 14 days), DECIDED (the decision is in ops `DECIDED.md` / DECISIONS-PENDING Done, or a
+"decided"/"default taken" comment), DUE (date passed, issue closed) and NO_CONDITION, keeps one issue
+open while any exist, and closes it when clean. The not-acquired catalogue records
+(`NOT_ACQUIRED_HOLD_REASONS`: manifest-only-lazy-pages, acquisition-wave-2026-10b) are counted apart,
+never flagged, and left out of the /admin held count. **Tell:** a hold reason ending `-awaits-<who>`
+older than the decision it waits on.
 
 **The status is not the test; the marker is (#6122).** `archive-erara.mjs` selected e-rara
 books at any status and wrote `archive_complete` with a raw `$set`, lifting **329** holds
@@ -217,3 +231,55 @@ attempted". `gemini_usage` rows carry their own `job_id` and cannot be overwritt
 by those, the same population was 40/40 fully paid. **When measuring what a past run did,
 use a record that is append-only per run, never a last-write-wins field on the object the
 run touched.**
+
+## Archiving ignores the hold (#5448, 2026-10-25)
+
+A hold stops **paid** work: OCR, translation, enrichment. Fetching a book's page images to R2
+costs storage only, and a held book still needs its images preserved — if the source goes down,
+a held book is lost exactly like a live one. Containment holds (wrong leaf, invented text) are
+about the TEXT; the image is the evidence that settles them. So **no archiver filters on the hold**
+(`lanes.mjs` records `respectsHold: false` for every archive lane, with this reason).
+
+The trap was a second flag. The importers of held waves also set `archive_metadata.blocked` —
+the archivers' own "never fetch this book" flag — with a reason naming the hold (tier A, #7343:
+"… pipeline hold acquisition-wave-2026-10b … do not archive until released"; `wave-import.mjs`:
+"… hidden acquisition, images hot-linked"). That kept **5,196 held books / 1.43M pages** out of
+every archiver (measured 2026-10-25), while the lanes registry said the archivers ignore holds.
+
+- **Rule:** an archive selector spreads `ARCHIVE_NOT_BLOCKED` (`scripts/lib/pipeline-hold.mjs`),
+  never a bare `'archive_metadata.blocked': { $ne: true }`. It admits a book that is unblocked or
+  blocked only by a hold, and still refuses every other block (401/403, a dead source, five failed
+  bulk runs — an archiver that fails overwrites the reason with its own).
+- **Only the archive selectors change.** The hold marker, the status, and every paid lane are
+  untouched. Archivers write `archive_status` and page fields, never `pipeline_auto.status`, so
+  archiving a held book cannot lift its hold. A direct status writer must still filter `NOT_HELD`
+  (the #6122 rule above).
+- **Do not widen the reason pattern to "make a book archivable".** A block with a real failure
+  reason means the source refused or broke; clear it with `archive-auto-unblock.mjs` or by hand,
+  after reading `archive-fetch-failures.md`.
+
+## Every OCR writer stamps a failed read (#7378, 2026-10-25)
+
+The route census (#6740) prices each OCR route by its own record: the pages it wrote, and the
+pages it left refused or failed. Only the two Gemini API writers (`batch-collector.mjs`,
+`realtime-ocr.mjs`) stamped a failure. Paddle (1.66M pages), Yigdzin (680K), Kraken, NDL, the
+agy CLI lanes and the Claude lanes wrote nothing when a read failed. So the census read them as
+0 of n and the router priced them as if every call returned a page. **A route with no failure
+stamp reads as a route that never fails.**
+
+- **Rule:** a writer that does not get a usable read back from its engine calls
+  `recordFailedReads()` (`scripts/lib/ocr-failed-read.mjs`) under its write mode. That covers a
+  refusal, an empty read, a timeout, and an engine error or `.err` file. The stamp is
+  realtime-ocr's `ocr.last_skip` shape: `{ reason, finish_reason, at, model, engine, detail }`.
+  `model` is the id the lane writes to `ocr.model` on success, because the census charges the
+  failure to that route. `at` is when the read failed, not when the stamp was written.
+- **What is not stamped:** our own guards refusing a read the engine did return. That covers a
+  loop (already a `page_revisions` row via `recordLoopRefusal`, counted as `guard_refused`), the
+  write guard, the shared-words floor, a faint or under-read leaf, and a table detector. An image
+  fetch failure is not stamped either, because it is not the engine's failure.
+- **It changes no routing.** The helper writes only `ocr.last_skip`. It never writes `fail_count`,
+  `fail_blocked` or `recitation_*`, which the orchestrator and the selectors read to stop sending a
+  page. The human-edit guard and the bare-string guard are in its update filter. A stamp never
+  overwrites one at the same time or later, so a rerun of an apply is a no-op.
+- **Enforced:** `tests/unit/ocr-failed-read.test.ts` fails if a listed writer stops calling the
+  helper, or calls it outside `APPLY`. Add a new lane to its `WRITERS` list.

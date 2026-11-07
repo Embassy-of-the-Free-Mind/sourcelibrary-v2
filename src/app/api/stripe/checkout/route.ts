@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { stripe, MEMBERSHIP_PRICE, MEMBERSHIP_CURRENCY, MEMBERSHIP_NAME, MEMBERSHIP_DESCRIPTION } from '@/lib/stripe';
+import { membershipCheckoutEnabled } from '@/lib/payment-flags';
 import { getDb } from '@/lib/mongodb';
 import { toUserId } from '@/lib/user-id';
 
 export async function POST(request: NextRequest) {
-  if (!stripe) {
+  if (!stripe || !membershipCheckoutEnabled()) {
     return NextResponse.json({ error: 'Payments not configured' }, { status: 503 });
   }
 

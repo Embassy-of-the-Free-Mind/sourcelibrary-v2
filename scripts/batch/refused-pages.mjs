@@ -39,6 +39,7 @@ import { ocrRefusalFallback } from '../lib/ocr-routing.mjs';
 import { LATIN_SCRIPT_LANGUAGES } from '../lib/translate-core.mjs';
 import { toLanguageCodes, codeFamily } from '../lib/language-normalize.mjs';
 import { bookHand, loadOcrProfile } from '../lib/ocr-trust-gate.mjs';
+import { laneQuota } from '../lib/lane-quota.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const NO_OCR = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
@@ -70,6 +71,11 @@ export function eligibleBook(book) {
  * is pushed to every box; the account is the box's own login). null when the meter is absent, stale or unreadable.
  */
 export function weeklyPct(meterFile = '/root/.claude-limits/latest.json', loginFile = '/root/.claude.json') {
+  return weeklyMeter(meterFile, loginFile)?.pct ?? null;
+}
+
+/** weeklyPct plus the hours until that week resets (null when the meter has no resets_at). */
+export function weeklyMeter(meterFile = '/root/.claude-limits/latest.json', loginFile = '/root/.claude.json') {
   try {
     if (Date.now() - fs.statSync(meterFile).mtimeMs > 30 * 60 * 1000) return null;
     const d = JSON.parse(fs.readFileSync(meterFile, 'utf8'));
@@ -77,7 +83,9 @@ export function weeklyPct(meterFile = '/root/.claude-limits/latest.json', loginF
     try { me = JSON.parse(fs.readFileSync(loginFile, 'utf8')).oauthAccount.emailAddress || me; } catch { /* the meter's account */ }
     const acct = (d.accounts ?? []).find((a) => a.email === me && a.ok);
     const l = acct?.limits?.find((x) => x.key === 'weekly_all:all');
-    return l ? Math.round(Number(l.percent) || 0) : null;
+    if (!l) return null;
+    const reset = Date.parse(l.resets_at ?? '');
+    return { pct: Math.round(Number(l.percent) || 0), hoursLeft: Number.isNaN(reset) ? null : (reset - Date.now()) / 3.6e6 };
   } catch { return null; }
 }
 
@@ -106,10 +114,12 @@ async function main() {
   const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
   if (!['count', 'run'].includes(mode)) { console.error('usage: refused-pages.mjs count | run --out=DIR [--max-pages=N] [--apply] [--max-weekly-pct=70]'); process.exit(2); }
   if (mode === 'run') {
-    // A cron spends the box account's subscription; stop well short of its week so sessions keep their headroom.
-    const cap = Number(arg('max-weekly-pct') || 70);
-    const wk = weeklyPct();
-    if (wk != null && wk >= cap) { console.log(`skip: this box's Claude account is at ${wk}% of its week (cap ${cap}%)`); return; }
+    // A cron spends the box account's subscription: the lane's quota gate (lane-quota.mjs, #7301) idles it at its
+    // share of the week (70%) and opens it to 90% in the last 48 h, when the quota would otherwise be lost.
+    // --max-weekly-pct overrides the registered share.
+    const q = laneQuota('claude-opus-ocr', { maxWeeklyPct: arg('max-weekly-pct') ?? null });
+    if (!q.open) { console.log(`skip: lane ${q.lane} idles (${q.state}): ${q.why}`); return; }
+    console.log(`quota: lane ${q.lane} ${q.state}: ${q.why}`);
   }
   const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
   await client.connect();

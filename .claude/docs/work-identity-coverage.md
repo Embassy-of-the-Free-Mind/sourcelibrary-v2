@@ -19,7 +19,7 @@ infer a gap from "we have a translation that isn't linked to an original."**
 Cluster editions by a shared **`work_id`** and read coverage off the cluster.
 
 ## The data model
-- **`books.work_id`** — a Wikidata QID (`Q200655`) or a works-catalog id
+- **`books.work_id`** — a Wikidata QID of the WORK (`Q8276`; never an edition or manuscript item, #8325) or a works-catalog id
   (`catalog:pandit:108641`, or a bare BDRC/gretil id). The join key. Multiple of
   our books (originals + translations + editions) share one `work_id` = one work.
 - **`books.work_title`**, **`work_id_source`** (`local-mint` | `wikidata:P50` |

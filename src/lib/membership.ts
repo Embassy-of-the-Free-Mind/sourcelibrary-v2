@@ -1,5 +1,6 @@
 import { getDb } from './mongodb';
 import { toUserId } from './user-id';
+import { membershipState } from './membership-status';
 
 export interface MembershipInfo {
   active: boolean;
@@ -23,9 +24,9 @@ export async function getMembership(userId: string): Promise<MembershipInfo> {
     return { active: false, plan: null, expiresAt: null, stripeCustomerId: m?.stripeCustomerId || null };
   }
 
-  // Check expiry — but with subscriptions, Stripe handles this via webhooks.
-  // This is a safety net in case the cancellation webhook was missed.
-  if (m.expiresAt && new Date(m.expiresAt) < new Date()) {
+  // With subscriptions, Stripe ends this via webhooks. This is a safety net in
+  // case the cancellation webhook was missed; a student seat is not looked at.
+  if (membershipState({ active: true, expiresAt: m.expiresAt }).kind !== 'paid') {
     await db.collection('users').updateOne(
       { _id: toUserId(userId) as any },
       { $set: { 'membership.active': false } }
@@ -63,10 +64,14 @@ export async function activateMembership(
         'membership.stripeCustomerId': stripeCustomerId,
         'membership.stripeSubscriptionId': stripeSubscriptionId,
       },
-      $setOnInsert: {
-        'membership.activatedAt': new Date(),
-      },
     },
+  );
+
+  // Set once, on first activation; renewals leave it. Dedication counts its
+  // yearly allowance from this date.
+  await db.collection('users').updateOne(
+    { _id: toUserId(userId) as any, 'membership.activatedAt': { $exists: false } },
+    { $set: { 'membership.activatedAt': new Date() } },
   );
 }
 

@@ -1,0 +1,49 @@
+{
+ "account": "derek@playpowerlabs.com",
+ "reading": "api.anthropic.com/api/oauth/usage (the Claude Code usage endpoint; integer percents)",
+ "shared": "SHARED: this orchestrating claude -p session (same account) ran throughout the window; no other job was seen on the account",
+ "judge_window": {
+  "start": {
+   "at": "2026-10-25T23:53:57Z",
+   "session_pct": 46,
+   "weekly_pct": 21
+  },
+  "end": {
+   "at": "2026-10-26T00:32:00Z",
+   "session_pct": 67,
+   "weekly_pct": 25
+  }
+ },
+ "translate_window": {
+  "start": {
+   "at": "2026-10-25T23:47:56Z",
+   "session_pct": 44,
+   "weekly_pct": 21
+  },
+  "end": {
+   "at": "2026-10-25T23:53:57Z",
+   "session_pct": 46,
+   "weekly_pct": 21
+  },
+  "calls": 30,
+  "list_usd_equiv": 1.79
+ },
+ "judge_calls": 323,
+ "images_per_call": 1,
+ "in_tokens_total": 4702543,
+ "out_tokens_total": 499990,
+ "in_tokens_per_call": 14559,
+ "out_tokens_per_call": 1548,
+ "list_usd_equiv_total": 26.54,
+ "list_usd_equiv_per_call": 0.0822,
+ "secs_per_call_median": 17,
+ "weekly_points_delta": 4,
+ "session_pct_delta": 21,
+ "points_per_call": 0.0124,
+ "points_per_call_range_for_integer_meter": [
+  0.0093,
+  0.0155
+ ],
+ "session_pct_per_call": 0.065,
+ "note": "Upper bound: the delta includes this orchestrating session. Weekly is read in whole points, so 4 means 3.5-4.5 at best (bounds use 3-5)."
+}

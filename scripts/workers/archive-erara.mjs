@@ -60,6 +60,7 @@ import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from '../lib/pages-state.mjs';
 import { eraraPdfLeafOffset, pdfIndexForPage } from './lib/erara-pdf-leaves.mjs';
 
 // CLI args
@@ -234,11 +235,11 @@ async function processBook(book, db) {
       pdfSize = await downloadPdf(pdfUrl, pdfPath);
     } catch (err) {
       console.log(`    [FAIL] PDF download: ${err.message?.slice(0, 100)}`);
-      // Mark pages as failed so we don't retry forever
+      // Record the failure on the pages; the failure is recorded in archive_metadata, never in archived_photo: a `failed:` string there hides the page from every archiver for good (archive-fetch-failures.md; lane-gallica stalled on 37 such books, 2026-10-27).
       if (err.message?.includes('403') || err.message?.includes('404')) {
         await db.collection(pagesCol).updateMany(
           { book_id: book.id, archived_photo: { $exists: false } },
-          { $set: { archived_photo: `failed:${err.message.slice(0, 50)}` } }
+          { $set: { 'archive_metadata.last_failure_reason': err.message.slice(0, 50), 'archive_metadata.last_failure_at': new Date() } }
         );
       }
       stats.booksFailed++;
@@ -429,6 +430,8 @@ async function main() {
     ...(refused.length ? { id: { $nin: refused } } : {}),
     pages_count: { $gt: 0 },
     pages_archived: { $not: { $gte: 1 } },  // No pages archived yet (null, 0, or missing)
+    // #7343: a manifest-only book has no pages to archive; a sweep never selects it.
+    ...PAGES_MATERIALIZED_FILTER,
   };
   const eraraProjection = { id: 1, title: 1, image_source: 1, pages_count: 1, language: 1, is_first_translation: 1 };
 

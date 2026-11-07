@@ -1,0 +1,66 @@
+{
+ "generated_by": "scripts/eval/estimator/router-table/evidence/derive_backfill_all.py (2026-10-28, #7263; no model calls)",
+ "provenance": "#5924 (2026-10-22), scripts/eval/spotcheck-latin-5924/results/spotcheck-verdicts.json + spotcheck-draw.json: visible Latin print 1500-1800 stratified by typeface x columns, 3 books a stratum, 3 consecutive pages a book, the page as SERVED (OCR and English). Pages whose stored OCR is neither Flash-Lite nor 3 Flash are left out: {}.",
+ "judge": "claude-opus-5-5 subagent readers (3), Step T against the R2 image and the display photo",
+ "mapping": "wrong_text = misleading (all 5 misleading pages are OCR-caused per the write-up); accept = not misleading; classes = OCR-caused defects",
+ "cells": {
+  "latin-served": {
+   "task": "ocr",
+   "lang": "Latin",
+   "pages": 36,
+   "routes": {
+    "3flash": {
+     "served": "the stored 3flash OCR as served",
+     "n": 24,
+     "books": 8,
+     "accept": "22/24",
+     "wrong_text_pages": "2/24",
+     "classes_k_of_n": {
+      "O6": "12/24",
+      "O9": "11/24",
+      "O11": "7/24",
+      "O8": "5/24",
+      "O12": "5/24",
+      "O7": "3/24",
+      "O5": "2/24",
+      "O3": "1/24",
+      "O13": "1/24"
+     },
+     "wrong_text_classes": {
+      "O9": "1/24",
+      "O6": "1/24",
+      "O5": "1/24",
+      "O8": "1/24",
+      "O12": "1/24"
+     }
+    },
+    "lite": {
+     "served": "the stored lite OCR as served",
+     "n": 12,
+     "books": 4,
+     "accept": "9/12",
+     "wrong_text_pages": "3/12",
+     "classes_k_of_n": {
+      "O6": "7/12",
+      "O11": "3/12",
+      "O15": "2/12",
+      "O9": "2/12",
+      "O8": "2/12",
+      "O7": "2/12",
+      "O5": "1/12",
+      "O12": "1/12",
+      "O14": "1/12"
+     },
+     "wrong_text_classes": {
+      "O6": "3/12",
+      "O9": "1/12",
+      "O12": "1/12",
+      "O11": "1/12",
+      "O8": "1/12",
+      "O14": "1/12"
+     }
+    }
+   }
+  }
+ }
+}

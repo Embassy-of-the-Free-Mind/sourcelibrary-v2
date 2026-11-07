@@ -236,11 +236,11 @@ async function fetchTriple(db, bookId, n) {
 /** Lane indexes: page id → lane, from the run/job collections (both small). */
 async function laneIndex(db) {
   const chained = new Set(), batchRoute = new Map();
-  for await (const r of db.collection('translate_batch_runs').find({ mode: 'chained', shadow: { $ne: true } }, { projection: { queue: 1, blocks: 1 } })) {
+  for await (const r of db.collection('translate_batch_runs').find({ mode: 'chained', shadow: { $ne: true } }, { projection: { queue: 1, blocks: 1 } }).batchSize(1000)) {
     for (const q of r.queue || []) chained.add(q.id);
     for (const b of r.blocks || []) for (const p of b.pages || []) chained.add(p.id);
   }
-  for await (const j of db.collection('batch_jobs').find({ type: 'translation' }, { projection: { page_ids: 1, created_at: 1 } })) {
+  for await (const j of db.collection('batch_jobs').find({ type: 'translation' }, { projection: { page_ids: 1, created_at: 1 } }).batchSize(1000)) {
     for (const id of j.page_ids || []) batchRoute.set(id, j.created_at);
   }
   return { chained, batchRoute };

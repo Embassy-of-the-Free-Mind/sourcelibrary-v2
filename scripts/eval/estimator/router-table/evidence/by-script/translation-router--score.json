@@ -1,0 +1,59 @@
+{
+ "cells": {
+  "tibetan-tr|manuscript": {
+   "routes": {
+    "agy-flash-low@4": {
+     "n": 30,
+     "books": 30,
+     "accept": "22/30",
+     "wrong_text_pages": "4/30",
+     "classes_k_of_n": {
+      "O6": "15/30",
+      "O7": "2/30",
+      "T7": "3/30",
+      "T15": "2/30",
+      "T6": "6/30",
+      "E2": "20/30",
+      "T5": "6/30",
+      "T9": "8/30",
+      "T10": "6/30",
+      "T8": "1/30",
+      "T1": "1/30",
+      "D1": "1/30"
+     },
+     "script_basis": {
+      "page": 1,
+      "book": 29
+     }
+    },
+    "opus-cli@10": {
+     "n": 30,
+     "books": 30,
+     "accept": "27/30",
+     "wrong_text_pages": "1/30",
+     "classes_k_of_n": {
+      "T8": "3/30",
+      "T15": "2/30",
+      "E2": "17/30",
+      "O6": "6/30",
+      "T5": "2/30",
+      "T10": "10/30",
+      "O8": "2/30",
+      "O7": "2/30",
+      "T6": "2/30",
+      "T16": "1/30",
+      "T7": "1/30",
+      "O4": "1/30",
+      "T9": "1/30"
+     },
+     "script_basis": {
+      "page": 1,
+      "book": 29
+     }
+    }
+   }
+  }
+ },
+ "source": "scripts/eval/results/tibetan-correct-6560/profiles-diffqa-6560/translation-router/score.json",
+ "generated_by": "scripts/eval/router-next-7263/split_evidence.py (#7263 router-next; per-page rows: evidence_pages.py, script type: classify-evidence.mjs)"
+}

@@ -47,7 +47,7 @@ async function run() {
   const push = (doc: FirstTranslationAttempt) => { ops.push({ updateOne: { filter: { attempt_id: doc.attempt_id }, update: { $setOnInsert: doc }, upsert: true } }); };
 
   // ── Pass 1: translation_classification ──────────────────────────────
-  for await (const d of db.collection('translation_classification').find({ book_id: { $exists: true } }) as any) {
+  for await (const d of db.collection('translation_classification').find({ book_id: { $exists: true } }).batchSize(1000) as any) {
     const cls = d.classification;
     const found = cls === 'previously_translated' || cls === 'partially_translated';
     const priors: PriorTranslation[] = d.known_translation
@@ -67,7 +67,7 @@ async function run() {
   for await (const b of db.collection('books').find(
     { 'ai_metadata.first_translation': { $exists: true } },
     { projection: { id: 1, 'ai_metadata.first_translation': 1 } },
-  ) as any) {
+  ).batchSize(1000) as any) {
     const bookId = b.id ?? String(b._id);
     const ft = b.ai_metadata.first_translation || {};
     const known: string[] = Array.isArray(ft.known_translations) ? ft.known_translations : [];
@@ -85,7 +85,7 @@ async function run() {
   await flush();
 
   // ── Pass 3: ft_reverify_proposal (STRUCTURED translations) ──────────
-  for await (const d of db.collection('ft_reverify_proposal').find({ book_id: { $exists: true } }) as any) {
+  for await (const d of db.collection('ft_reverify_proposal').find({ book_id: { $exists: true } }).batchSize(1000) as any) {
     const trans: any[] = Array.isArray(d.translations) ? d.translations : [];
     const priors: PriorTranslation[] = trans.map((t) => ({
       english_title: t?.english_title || t?.title, translator: t?.translator, pub_year: t?.pub_year,

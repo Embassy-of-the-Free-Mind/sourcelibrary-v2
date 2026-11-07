@@ -24,7 +24,7 @@ import { isHiddenBook } from '@/lib/book-access';
 import { generateCitations } from '@/lib/citation';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import { readerPageUrl } from '@/lib/slugify';
-import { transcriptProvenance, isUnreviewedMachineTranslation, modelDisplayName, translationCorpus } from '@/lib/text-provenance';
+import { transcriptProvenance, isUnreviewedMachineTranslation, translationCorpus } from '@/lib/text-provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { hashAlignmentText, WORD_ALIGNMENT_VERSION, type WordAlignmentData } from '@/lib/word-alignment';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -107,10 +107,7 @@ function currentAlignment(page: Page & { word_alignment?: WordAlignmentData }): 
 function readByLabel(page: Page): { readBy: string; readByModel: boolean } {
   const prov = transcriptProvenance(page);
   switch (prov?.kind) {
-    case 'model': {
-      const name = modelDisplayName(prov.model);
-      return { readBy: /^gemini/i.test(prov.model) ? 'Gemini' : name, readByModel: true };
-    }
+    case 'model': return { readBy: 'a machine', readByModel: true };
     case 'ia': return { readBy: 'the Internet Archive’s own OCR of the scan', readByModel: false };
     case 'manual': return { readBy: 'a transcription made by hand', readByModel: false };
     case 'corpus': return { readBy: prov.corpus.name, readByModel: false };
@@ -217,8 +214,12 @@ function duringBuild(): boolean {
  *    against the app role's 3 s limit, and five production builds in a row
  *    died on this one optional panel (#6204). The page revalidates daily, so
  *    the panel comes back with the first render that finds the index awake.
+ *
+ * An EMPTY result is treated the same way: during a build it drops the panel
+ * (a build with no embedding key gets no rows, #8306); at request time it throws.
+ * Exported for tests.
  */
-async function loadSearch(
+export async function loadSearch(
   db: Db,
   query: string,
   here: { bookId: string; pageId: string; workId?: string },
@@ -237,7 +238,13 @@ async function loadSearch(
       return undefined;
     }
   }
-  if (!rows.length) throw new Error(`journey: the search "${query}" returned nothing`);
+  if (!rows.length) {
+    // A build with no embedding key gets an empty result, not an error (#8306):
+    // leave the panel out, as a failed search does, rather than fail the build.
+    if (!duringBuild()) throw new Error(`journey: the search "${query}" returned nothing`);
+    console.warn(`[journey] the search "${query}" returned nothing during the build; the panel is left out`);
+    return undefined;
+  }
   const books = await db.collection('books').find(
     { id: { $in: [...new Set(rows.map(r => r.book_id))] } },
     { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, visible: 1, hidden: 1, work_id: 1 } },

@@ -1,0 +1,18 @@
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>六</page-num>
+<header>孫子敘錄 一卷</header>
+<meta>The text is a Japanese woodblock-style print of a Kanbun (Classical Chinese) text, featuring kundoku diacritics (kaeriten and okurigana) to facilitate reading in Japanese.</meta>
+
+與野戰。則必因勢依險。設伏無險。則隱於天氣晦晦昏霧。出其不意。襲其懈怠。可以有功。
+吳王問孫武曰。吾至輕地。始入敵境。士卒思還。難進易退。未背險阻。三軍恐懼。大將欲進。士卒欲退。上下異心。敵守其城壘。整其車騎。或當吾前。或擊吾後。則如之何。武曰。軍至輕地。士卒未專。以入為務。無以戰為。無近其名城。無由其通路。設疑伴惑。示若將去。乃選騎銜枚。先入掠其牛馬六畜。三軍見得。進乃不懼。分吾良卒。密有所伏。敵人若來。擊之勿疑。若其不至。捨之而去。
+
+---
+
+吳王問孫武曰。爭地。敵先至。據要保利。簡兵練卒。或出或守。以備我奇。則如之何。武曰。爭地之法。讓之者得。爭之者失。敵得其處。慎勿攻之。引而伴走。建旗鳴鼓。趣其所愛。曳柴揚塵。惑其耳目。分吾良卒。密有所伏。敵必出救。人欲我與。人棄吾取。此爭先之道。若我先至。而敵用此術。則選吾銳卒。固守其所。輕兵追之。分伏險阻。敵人還闕。伏兵旁起。此全勝之道也。
+吳王問孫武曰。交地。吾將絕敵。令不得來。必全吾邊城。修其所備。深絕通道。固其阨塞。若不先圖。敵人已備。彼可得來。而吾不可往。衆寡又均。則如之何。武曰。既我不可以往。彼可以來。吾分卒匿之。守而易怠。示其不能。敵人且至。設伏隱廬。出其不意。可以有功也。
+吳王問孫武曰。衢地。必先。吾道遠發後。雖馳車驟馬。至不能先。則如之何。武曰。諸侯參屬。其道四通。我與敵相當。而傍有國。所謂先者。必重幣輕使。約和傍國。交親結恩。兵雖後
+
+<vocab>孫武 Sun Wu, 吳王 King of Wu, 爭地 contentious terrain, 輕地 light terrain, 衢地 intersecting terrain, 伏兵 ambush</vocab>

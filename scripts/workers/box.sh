@@ -56,9 +56,36 @@ case "${1:-}" in
   push-limits)  # main box, after climits: other boxes read their own account's weekly % from this file
     src=/root/.claude-limits/latest.json; [ -s "$src" ] || exit 0
     st=/root/.claude-limits/push-state; mkdir -p "$st"
+    # Add each weekly limit's burn over the last 3h from climits' 5-min history, which only this box keeps. The
+    # guests' pace guards sample the meter only while a paced call runs, so after a quiet gap they had no burn
+    # for an hour and let an over-pace account run at full width (#7869). Falls back to the plain meter.
+    paced=$st/latest.paced.json
+    python3 - "$src" "$(dirname "$src")/history.jsonl" "$paced" <<'PY' 2>/dev/null || paced=$src
+import json, os, sys, datetime as dt
+src, histf, out = sys.argv[1:4]
+t = lambda s: dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
+m = json.load(open(src)); now = t(m["checked_at"]); rows = {}
+with open(histf, "rb") as f:
+    f.seek(0, 2); f.seek(max(0, f.tell() - 256 * 1024))
+    for line in f.read().decode(errors="replace").splitlines()[1:]:
+        try: r = json.loads(line); tt = t(r["t"])
+        except Exception: continue
+        if (now - tt).total_seconds() <= 3 * 3600:
+            for k, v in (r.get("limits") or {}).items():
+                if v is not None: rows.setdefault((r.get("email", "").lower(), k), []).append((tt, float(v)))
+for a in m.get("accounts", []):
+    for l in a.get("limits") or []:
+        base = None
+        for tt, v in sorted(rows.get((a.get("email", "").lower(), l.get("key")), [])):
+            if v > (l.get("percent") or 0): base = None; continue   # a reset inside the window
+            if base is None: base = (tt, v)
+        if base and (now - base[0]).total_seconds() >= 1800:
+            l["burn_pct_per_h"] = round(((l.get("percent") or 0) - base[1]) / ((now - base[0]).total_seconds() / 3600), 2)
+json.dump(m, open(out + ".tmp", "w")); os.replace(out + ".tmp", out)
+PY
     for b in $(others); do
       meshed "$b" || continue
-      if call "$b" put-limits < "$src" >/dev/null 2>&1; then
+      if call "$b" put-limits < "$paced" >/dev/null 2>&1; then
         [ -f "$st/$b.fails" ] && [ "$(cat "$st/$b.fails")" -ge 6 ] && \
           curl -s -m 10 -H "Title: Box mesh back: main -> $b" -H "Priority: low" -d "Usage meter copies to $b again." https://ntfy.sh/sourcelibrary-uptime >/dev/null 2>&1
         echo 0 > "$st/$b.fails"

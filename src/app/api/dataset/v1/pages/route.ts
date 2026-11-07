@@ -6,6 +6,7 @@ import { getClientIp } from '@/lib/rate-limit';
 import { DatasetPageRecord } from '@/lib/dataset/types';
 import { markForExport } from '@/lib/provenance';
 import { keyRef } from '@/lib/bot-attribution';
+import { traceRefFor } from '@/lib/trace-ref';
 
 export const maxDuration = 30;
 
@@ -192,7 +193,8 @@ export async function GET(request: NextRequest) {
   // passage. Invisible, deliberately strippable (attribution, not DRM); a
   // negotiated bit-clean corpus is delivered offline, never through this
   // endpoint.
-  const ref = keyRef(String(apiKey._id));
+  // Opaque SLA- ref instead when traced copies are on (#8150 slice 8, dark by default).
+  const ref = traceRefFor({ apiKeyId: String(apiKey._id) }) ?? keyRef(String(apiKey._id));
   const markText = (text: string | undefined, bookId: string) =>
     text ? markForExport(text, bookId, { ref }) : null;
 

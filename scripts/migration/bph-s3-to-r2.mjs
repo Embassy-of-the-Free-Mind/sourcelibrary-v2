@@ -21,6 +21,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, unlinkSync } from '
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 import sharp from 'sharp';
+import { markDisplay } from '../workers/lib/display-image.mjs';
 import { join } from 'path';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
 
@@ -286,7 +287,7 @@ async function importBook(r2, db, bookMeta, pageSourceList, bookIdx, totalBooks)
       // Upload all three to R2
       const [photoUrl, , thumbUrl] = await Promise.all([
         uploadToR2(r2, paths.full, fullBuf),
-        uploadToR2(r2, paths.display, displayBuf),
+        uploadToR2(r2, paths.display, await markDisplay(displayBuf, { bookId: book.id, pageNumber: pageNum })),
         uploadToR2(r2, paths.thumb, thumbBuf),
       ]);
 

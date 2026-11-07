@@ -153,6 +153,22 @@ export function isQuotaPlaceholderSize(width, height) {
 }
 
 /**
+ * Throw a throttled error if `buffer` is an over-quota placeholder rather than a page.
+ * `readSize(buffer)` returns `{ width, height }` (sharp's `metadata`), passed in so this file stays
+ * free of image dependencies. An unreadable image is not judged here (the caller's decode decides).
+ *
+ * Every archiver that can reach BSB/MDZ must call this before it stores bytes as `archived_photo`:
+ * before #7254 only archive-ocr.mjs did, and 1,535 pages on 593 BSB books (310 visible) were found
+ * on 2026-10-25 holding a 457-byte 1×1 JPEG as their master — 435 of them written by an archiver
+ * that does not stamp `archive_metadata.archived_at` (archive-acquired.ts) (#5448).
+ */
+export async function assertNotQuotaPlaceholder(buffer, readSize) {
+  let size;
+  try { size = await readSize(buffer); } catch { return; }
+  if (isQuotaPlaceholderSize(size?.width, size?.height)) throw throttledError('HTTP 429 over-quota placeholder image');
+}
+
+/**
  * The `last_failure_reason` of a page capped by quota refusals rather than real failures. The
  * one-time re-queue (`scripts/maintenance/requeue-throttled-archive-pages-7228.mjs`) re-queues only
  * a page whose LAST recorded failure matches; a page whose last failure is a 404 stays capped.

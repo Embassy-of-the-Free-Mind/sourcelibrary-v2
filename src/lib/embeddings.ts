@@ -3,11 +3,11 @@ import { getGeminiClient, reportRateLimitError } from './gemini-client';
 import { TaskType } from '@google/generative-ai';
 import { GLOBAL_SCOPE, matchGalleryText, type SearchScope } from './tenant-search-scope';
 
-// The gallery_text_embeddings table (~203K rows, verified 2026-07-18) is fully
-// on gemini-embedding-2-preview — the model here MUST match or every similarity
-// lookup returns noise (query with gemini-embedding-001 self-matched at 0.148;
-// with -2-preview at 0.970). See issue #3193.
-const EMBEDDING_MODEL = 'gemini-embedding-2-preview';
+// The gallery_text_embeddings vectors are all in the gemini-embedding-2 space
+// (older rows are labelled -2-preview: same vectors, #6170). The model here MUST
+// match or every similarity lookup returns noise (query with gemini-embedding-001
+// self-matched at 0.148; with -2-preview at 0.970). See issue #3193.
+const EMBEDDING_MODEL = 'gemini-embedding-2';
 const EMBEDDING_DIMENSIONS = 768;
 
 export interface ImageEmbeddingInput {

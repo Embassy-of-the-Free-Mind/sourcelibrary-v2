@@ -34,6 +34,7 @@
  */
 
 import { buildVisiblePageCountPipeline, pageCountersFromStats, PAGE_COUNTERS } from './page-counts.mjs';
+import { PAGES_MATERIALIZED_FILTER } from './pages-state.mjs';
 
 const COUNT_MAX_TIME_MS = 10 * 60_000; // nightly job
 const CONTROL_MAX_TIME_MS = 60_000;
@@ -169,7 +170,8 @@ export function compareCounters(rows) {
 async function checkPageCounters(db, sampleSize = COUNTER_CHECK_BOOKS) {
   const books = await db.collection('books').aggregate(
     [
-      { $match: { pages_count: { $gt: 0 } } },
+      // A manifest-only book (#7343) has no pages by design: not counter drift.
+      { $match: { pages_count: { $gt: 0 }, ...PAGES_MATERIALIZED_FILTER } },
       { $sample: { size: sampleSize } },
       { $project: { _id: 0, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1 } },
     ],

@@ -1,0 +1,72 @@
+{
+ "source": "latin-paired-6740 (#6740)",
+ "generated_at": "2026-11-01T02:40:38.910Z",
+ "of": "scripts/eval/estimator/router-table/evidence/latin-paired-6740.score.json",
+ "cells": {
+  "latin-blank|print": {
+   "routes": {
+    "agy-flash-low@4-written": {
+     "n": 37,
+     "books": 37,
+     "accept": "30/37",
+     "wrong_text_pages": "5/37",
+     "classes_k_of_n": {
+      "O6": "14/37",
+      "O8": "14/37",
+      "E2": "5/37",
+      "T6": "5/37",
+      "O12": "5/37",
+      "O11": "4/37",
+      "O7": "3/37",
+      "O16": "2/37",
+      "O9": "2/37",
+      "D1": "1/37",
+      "I4": "1/37"
+     },
+     "script_basis": {
+      "page": 37
+     }
+    },
+    "pero>agy-flash-low-written": {
+     "n": 22,
+     "books": 22,
+     "accept": "19/22",
+     "wrong_text_pages": "1/22",
+     "classes_k_of_n": {
+      "E2": "8/22",
+      "O8": "8/22",
+      "O6": "5/22",
+      "O7": "5/22",
+      "O11": "4/22",
+      "D1": "2/22",
+      "T6": "2/22"
+     },
+     "script_basis": {
+      "page": 22
+     }
+    },
+    "pero>agy-flash-low@4-written": {
+     "n": 23,
+     "books": 23,
+     "accept": "22/23",
+     "wrong_text_pages": "0/23",
+     "classes_k_of_n": {
+      "O8": "9/23",
+      "O6": "5/23",
+      "E2": "5/23",
+      "O12": "3/23",
+      "T6": "2/23",
+      "O15": "2/23",
+      "O7": "2/23",
+      "O11": "2/23",
+      "D1": "1/23",
+      "O16": "1/23"
+     },
+     "script_basis": {
+      "page": 23
+     }
+    }
+   }
+  }
+ }
+}

@@ -221,7 +221,7 @@ async function main() {
     const cur = db.collection(coll).aggregate(
       [{ $match: { ...scoped, ...match } }, { $group: { _id: '$book_id', n: { $sum: 1 }, ...extraGroup } }],
       { allowDiskUse: true },
-    );
+    ).batchSize(1000);
     for await (const r of cur) if (ids.has(r._id)) m.set(r._id, r);
     return m;
   };

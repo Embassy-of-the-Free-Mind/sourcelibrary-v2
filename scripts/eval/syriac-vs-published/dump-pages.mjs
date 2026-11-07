@@ -15,7 +15,7 @@ const db = c.db('bookstore');
 fs.mkdirSync(outDir, { recursive: true });
 for (const bid of ids) {
   const out = fs.createWriteStream(path.join(outDir, `${bid}.jsonl`));
-  const cur = db.collection('pages').find({ book_id: bid }, { projection: { page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'translation.data': 1, 'translation.model': 1, display_photo: 1, photo: 1, page_type: 1 } }).sort({ page_number: 1 });
+  const cur = db.collection('pages').find({ book_id: bid }, { projection: { page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'translation.data': 1, 'translation.model': 1, display_photo: 1, photo: 1, page_type: 1 } }).batchSize(1000).sort({ page_number: 1 });
   let n = 0, o = 0, t = 0;
   for await (const p of cur) {
     n++; if (p.ocr?.data) o++; if (p.translation?.data) t++;

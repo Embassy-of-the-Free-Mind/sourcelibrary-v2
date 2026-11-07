@@ -1,0 +1,204 @@
+[
+ {
+  "at": "2026-10-30T17:22:20.742Z",
+  "judge": "flash",
+  "repeat": false,
+  "calls": 2,
+  "stop": null,
+  "agy_home": "/root/.agy-james",
+  "quota_before": {
+   "weekly": 0.4029983878135681,
+   "fiveHour": 0.9730743169784546
+  },
+  "quota_after": {
+   "weekly": 0.40276986360549927,
+   "fiveHour": 0.9721603393554688
+  }
+ },
+ {
+  "at": "2026-10-30T17:25:28.583Z",
+  "judge": "opus",
+  "repeat": true,
+  "calls": 30,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": null,
+  "quota_after": null
+ },
+ {
+  "at": "2026-10-30T18:00:09.904Z",
+  "judge": "flash",
+  "repeat": false,
+  "calls": 538,
+  "stop": null,
+  "agy_home": "/root/.agy-james",
+  "quota_before": {
+   "weekly": 0.40276986360549927,
+   "fiveHour": 0.9721603393554688
+  },
+  "quota_after": {
+   "weekly": 0.39126625657081604,
+   "fiveHour": 0.928091287612915
+  }
+ },
+ {
+  "at": "2026-10-30T18:01:42.012Z",
+  "judge": "flash",
+  "repeat": false,
+  "calls": 11,
+  "stop": null,
+  "agy_home": "/root/.agy-james",
+  "quota_before": {
+   "weekly": 0.39123299717903137,
+   "fiveHour": 0.9279581904411316
+  },
+  "quota_after": {
+   "weekly": 0.39218059182167053,
+   "fiveHour": 0.9294646382331848
+  }
+ },
+ {
+  "at": "2026-10-30T18:04:03.972Z",
+  "judge": "flash",
+  "repeat": true,
+  "calls": 30,
+  "stop": null,
+  "agy_home": "/root/.agy-james",
+  "quota_before": {
+   "weekly": 0.39104610681533813,
+   "fiveHour": 0.9249266982078552
+  },
+  "quota_after": {
+   "weekly": 0.39031046628952026,
+   "fiveHour": 0.9214760661125183
+  }
+ },
+ {
+  "at": "2026-10-30T18:05:28.986Z",
+  "judge": "flash",
+  "repeat": false,
+  "calls": 3,
+  "stop": null,
+  "agy_home": "/root/.agy-james",
+  "quota_before": {
+   "weekly": 0.3902873694896698,
+   "fiveHour": 0.9213835597038269
+  },
+  "quota_after": {
+   "weekly": 0.389458030462265,
+   "fiveHour": 0.9207355976104736
+  }
+ },
+ {
+  "at": "2026-10-30T18:07:41.571Z",
+  "judge": "flash",
+  "repeat": true,
+  "calls": 1,
+  "stop": null,
+  "agy_home": "/root/.agy-james",
+  "quota_before": {
+   "weekly": 0.38943105936050415,
+   "fiveHour": 0.9206277132034302
+  },
+  "quota_after": {
+   "weekly": 0.3891264498233795,
+   "fiveHour": 0.9124224185943604
+  }
+ },
+ {
+  "at": "2026-10-30T22:15:11.558Z",
+  "judge": "argon",
+  "repeat": false,
+  "calls": 4,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.9927967190742493,
+   "fiveHour": 0.9741666316986084
+  },
+  "quota_after": {
+   "weekly": 0.9919242858886719,
+   "fiveHour": 0.9706768989562988
+  }
+ },
+ {
+  "at": "2026-10-31T00:05:23.477Z",
+  "judge": "argon",
+  "repeat": false,
+  "calls": 296,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.9869248867034912,
+   "fiveHour": 0.9484100341796875
+  },
+  "quota_after": {
+   "weekly": 0.9683195948600769,
+   "fiveHour": 0.8727635741233826
+  }
+ },
+ {
+  "at": "2026-10-31T00:47:45.025Z",
+  "judge": "argon",
+  "repeat": false,
+  "calls": 255,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.9640051126480103,
+   "fiveHour": 0.8619164228439331
+  },
+  "quota_after": {
+   "weekly": 0.9482796788215637,
+   "fiveHour": 0.7946295738220215
+  }
+ },
+ {
+  "at": "2026-10-31T00:48:49.364Z",
+  "judge": "argon",
+  "repeat": false,
+  "calls": 4,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.9454737901687622,
+   "fiveHour": 0.7920920252799988
+  },
+  "quota_after": {
+   "weekly": 0.9437918663024902,
+   "fiveHour": 0.7966752052307129
+  }
+ },
+ {
+  "at": "2026-10-31T00:52:48.638Z",
+  "judge": "argon",
+  "repeat": true,
+  "calls": 30,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.9478586912155151,
+   "fiveHour": 0.7943614721298218
+  },
+  "quota_after": {
+   "weekly": 0.9426149129867554,
+   "fiveHour": 0.7824049592018127
+  }
+ },
+ {
+  "at": "2026-10-31T00:53:09.213Z",
+  "judge": "argon",
+  "repeat": true,
+  "calls": 0,
+  "stop": null,
+  "agy_home": "default",
+  "quota_before": {
+   "weekly": 0.9434503316879272,
+   "fiveHour": 0.7909196019172668
+  },
+  "quota_after": {
+   "weekly": 0.9426009654998779,
+   "fiveHour": 0.7823492884635925
+  }
+ }
+]

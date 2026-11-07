@@ -128,5 +128,52 @@ const protocols = await clients.aggregate([
 console.log('\nPROTOCOL VERSIONS');
 for (const p of protocols) console.log(String(p.n).padStart(8), ' ', p._id || '(none)');
 
+// The funnel per client, joined on session_id. A row only counts from the deploy
+// that added session_id, and only for clients that echo the id back: the "calls
+// with no session" line says how much traffic this view cannot see.
+const sessions = await clients.aggregate([
+  { $match: { ts: { $gte: since }, session_id: { $type: 'string' } } },
+  { $group: { _id: { $ifNull: ['$client_name', '(none reported)'] }, ids: { $addToSet: '$session_id' } } },
+]).toArray();
+const usedBySession = new Map((await calls.aggregate([
+  { $match: { ts: { $gte: since }, session_id: { $type: 'string' }, user_agent: { $not: /^sl-/ } } },
+  { $group: { _id: '$session_id', n: { $sum: 1 } } },
+]).toArray()).map(s => [s._id, s.n]));
+
+console.log('\nFUNNEL (sessions that went on to call a tool; internal sl-* probes excluded)');
+if (sessions.length === 0) {
+  console.log('  No session ids logged yet in this window.');
+} else {
+  console.log('  sessions    used    rate  calls/used  client');
+  for (const s of sessions.sort((a, b) => b.ids.length - a.ids.length).slice(0, 25)) {
+    const counts = s.ids.map(id => usedBySession.get(id)).filter(Boolean);
+    const sum = counts.reduce((a, b) => a + b, 0);
+    console.log(
+      String(s.ids.length).padStart(10),
+      String(counts.length).padStart(7),
+      `${((100 * counts.length) / s.ids.length).toFixed(1)}%`.padStart(7),
+      (counts.length ? (sum / counts.length).toFixed(1) : '-').padStart(11),
+      ` ${s._id}`,
+    );
+  }
+}
+const noSession = await calls.countDocuments({
+  ts: { $gte: since }, session_id: null, user_agent: { $not: /^sl-/ },
+});
+console.log(`  calls with no session id, not joinable: ${noSession}`);
+
+// Empty results: result_count is null when the tool's shape does not say, which
+// is not the same as zero, so the denominator is only the calls that report one.
+const empties = await calls.aggregate([
+  { $match: { ts: { $gte: since }, result_count: { $type: 'number' }, user_agent: { $not: /^sl-/ } } },
+  { $group: { _id: '$tool', n: { $sum: 1 }, empty: { $sum: { $cond: [{ $eq: ['$result_count', 0] }, 1, 0] } } } },
+  { $sort: { n: -1 } },
+]).toArray();
+console.log('\nEMPTY RESULTS BY TOOL');
+if (empties.length === 0) console.log('  No result counts logged yet in this window.');
+for (const t of empties) {
+  console.log(String(t.n).padStart(8), `${((100 * t.empty) / t.n).toFixed(1)}%`.padStart(7), ` ${t._id}`);
+}
+
 console.log('');
 await client.close();

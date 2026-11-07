@@ -57,7 +57,7 @@ try {
       image_display: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1,
       thumbnail_source: 1,
     },
-  });
+  }).batchSize(1000);
 
   let total = 0;
   let bothSet = 0;

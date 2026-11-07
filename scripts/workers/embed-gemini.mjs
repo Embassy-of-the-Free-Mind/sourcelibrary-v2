@@ -772,7 +772,7 @@ if (BOOK_ID) {
     const inflight = db.collection(EMBED_JOBS).find(
       { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting', 'held'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
       { projection: { page_ids: 1 } },
-    );
+    ).batchSize(1000);
     for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);
   }
   globalThis.SKIP_PAGE_IDS = skip;
@@ -823,7 +823,7 @@ if (BOOK_ID) {
     const inflight = db.collection(EMBED_JOBS).find(
       { book_ids: { $in: targetIds }, $or: [{ status: { $in: ['submitted', 'collecting'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
       { projection: { page_ids: 1 } },
-    );
+    ).batchSize(1000);
     let n = 0;
     for await (const j of inflight) for (const id of j.page_ids || []) { existing.add(id); n++; }
     console.log(`${n.toLocaleString()} pages are in uncollected Batch jobs — skipping those too.`);

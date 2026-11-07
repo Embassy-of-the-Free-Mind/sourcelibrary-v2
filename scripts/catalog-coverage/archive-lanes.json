@@ -1,0 +1,108 @@
+{
+  "_comment": [
+    "THE archiver host-lane table (#5448 step 4). One row per lane: which box runs it, which image hosts",
+    "and provider tags it owns, the per-host rate it may use, and pages in flight.",
+    "scripts/catalog-coverage/archive-lanes-revive.sh (cron, every 10 min, on each box) starts every lane",
+    "whose `box` is this box and that has no tmux session; archive-lanes.mjs turns a row into the",
+    "archive-acquired.ts flags. tests/unit/archive-lanes-table.test.ts refuses: a rate above the host's",
+    "DOMAIN_LIMITS entry, a host in two lanes (one host = one lane = one egress address; never add an",
+    "address to raise a host's rate), an MDZ lane (the MDZ rate waits on BSB's reply, #5448), and a box",
+    "over its page budget.",
+    "",
+    "`rate` is LOWER-ONLY (capDomainLimit): a lane takes a share of a host's polite rate, never more.",
+    "Hosts other archivers also reach (archive-ocr on main reaches SBB, Gottingen, NB, Vatican,",
+    "Heidelberg) get 1/s or less here so the two together stay near the host's existing rate.",
+    "`box: mac` lanes are listed for completeness and started by nothing on the boxes."
+  ],
+  "box_page_budget": {
+    "main": 4,
+    "l7a": 12,
+    "gex45": 16,
+    "mac": 8
+  },
+  "lanes": [
+    {
+      "name": "heidelberg",
+      "box": "main",
+      "hosts": ["digi.ub.uni-heidelberg.de", "iiif.bodleian.ox.ac.uk"],
+      "providers": ["heidelberg"],
+      "rate": { "digi.ub.uni-heidelberg.de": 1, "iiif.bodleian.ox.ac.uk": 1 },
+      "page_concurrency": 2,
+      "note": "Was hand-listed in /etc/sourcelibrary/archive-lanes.conf (campaign acquisition-wave-2026-10); now every Heidelberg book. iiif.bodleian.ox.ac.uk: the 82 Bodleian manuscripts the portal served through its dead iiif-proxy.cgi now point at Bodleian directly (#5448)."
+    },
+    {
+      "name": "vatican",
+      "box": "main",
+      "hosts": ["digi.vatlib.it"],
+      "providers": ["vatican"],
+      "rate": { "digi.vatlib.it": 0.1 },
+      "page_concurrency": 1,
+      "note": "0.1/s as in the /etc conf it replaces."
+    },
+    {
+      "name": "sbb",
+      "box": "l7a",
+      "hosts": ["content.staatsbibliothek-berlin.de"],
+      "providers": ["sbb"],
+      "rate": { "content.staatsbibliothek-berlin.de": 1 },
+      "page_concurrency": 2,
+      "note": "Staatsbibliothek zu Berlin. 200 from l7a, 2026-10-25."
+    },
+    {
+      "name": "goettingen",
+      "box": "l7a",
+      "hosts": ["images.sub.uni-goettingen.de", "manifests.sub.uni-goettingen.de"],
+      "providers": ["goettingen"],
+      "rate": { "images.sub.uni-goettingen.de": 1, "manifests.sub.uni-goettingen.de": 1 },
+      "page_concurrency": 2,
+      "note": "SUB Gottingen. A manifest-only book's lane is its manifest host until its ledger records the image host, so both are listed."
+    },
+    {
+      "name": "nb-norway",
+      "box": "l7a",
+      "hosts": ["www.nb.no", "api.nb.no"],
+      "providers": ["nb_norway"],
+      "rate": { "www.nb.no": 1, "api.nb.no": 1 },
+      "page_concurrency": 2,
+      "note": "Nasjonalbiblioteket: manifests on api.nb.no, images on www.nb.no."
+    },
+    {
+      "name": "e-rara",
+      "box": "l7a",
+      "hosts": ["www.e-rara.ch"],
+      "providers": ["e-rara", "erara"],
+      "rate": { "www.e-rara.ch": 1 },
+      "page_concurrency": 2,
+      "note": "e-rara 403s main's address (tier-A import, 2026-10-25) and archive-ocr excludes it; 200 from l7a the same day. 1/s, half its table rate, because the hourly cron on main also reaches it."
+    },
+    {
+      "name": "gallica",
+      "box": "l7a",
+      "hosts": ["gallica.bnf.fr"],
+      "providers": ["gallica"],
+      "rate": { "openapi.bnf.fr": 2 },
+      "page_concurrency": 2,
+      "flags": ["--gallica-openapi"],
+      "note": "gallica.bnf.fr 403s datacenter addresses; the same IIIF image is served by openapi.bnf.fr (Image API 3.0). Lane chosen by the page's gallica.bnf.fr URL, fetched from openapi.bnf.fr."
+    },
+    {
+      "name": "ia-lazy",
+      "box": "gex45",
+      "hosts": ["iiif.archive.org"],
+      "providers": ["internet_archive", "ia_language", "ia_microfilm", "ia"],
+      "rate": { "iiif.archive.org": 5 },
+      "page_concurrency": 8,
+      "flags": ["--lazy-only", "--ia-zip"],
+      "note": "Manifest-only IA books from the item _jp2.zip when the canvas→member mapping is proven (ia-zip-ledger.mjs), else per page over IIIF. --ia-zip needs opj_decompress + unzip; on a box without them every book falls back before any request . On gex45 (62 GB, x86): on l7a this lane's node reached 4.4 GB RSS on 51 MP IA leaves and the box went global-OOM at 2026-10-26 00:13:59, taking another service's runner with it. Live on gex45 since 2026-10-26 08:00 (revive cron + libopenjp2-tools/unzip installed from the laptop session): exact mapping, 1.35 pages/s at 2 in flight, bound by JP2 decode + re-encode on a box with 20 cores idle, so 8 in flight. The zip route runs page_concurrency decoders; watch the heartbeat's rss (node only; each opj_decompress child adds ~0.6 GB on a 51 MP leaf). Materialized IA books stay with archive-bulk.mjs (item zips, scheduler on main)."
+    },
+    {
+      "name": "harvard",
+      "box": "mac",
+      "hosts": ["mps.lib.harvard.edu"],
+      "providers": ["harvard"],
+      "rate": { "mps.lib.harvard.edu": 1 },
+      "page_concurrency": 2,
+      "note": "Harvard's ELB 429s every Hetzner address (archive-ocr note, 2026-05-25); archive-harvard.mjs runs on the Mac. Listed so the table names every host; no box starts it."
+    }
+  ]
+}

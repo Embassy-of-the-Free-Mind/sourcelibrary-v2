@@ -45,6 +45,7 @@ import {
   buildTranslationPrompt,
   buildBlockTranslationPrompt,
   LEAF_BREAK_ONLY,
+  pageBreakVariant,
   dropLeafSeamBreaches,
   sanitizeTranslationTags,
   assessTranslationHealth,
@@ -58,12 +59,14 @@ import {
   SAFETY_SETTINGS,
 } from './translate-core.mjs';
 import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
+import { checkWrittenText } from './write-text-guard.mjs';
 import { isPaused } from './pause.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from '../workers/lib/selective-unpause.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { ocrTrustGate } from './ocr-trust-gate.mjs';
 import { applyPreTranslationGate, preGateBookReason } from './pre-translation-gate.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
+import { stripAnchor } from './block-page-guard.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { parseFolioMarkedText } from './folio-markers.mjs';
@@ -147,8 +150,8 @@ export function maxOutputTokensFor(pages) {
  * Folio markers (#5678): `TRANSLATE_FOLIO_MARKERS=1` asks a multi-page block for ONE continuous
  * English text with `<pb n="N"/>` where each source page begins (translate-core
  * FOLIO_MARKER_RULE), and parseBlockResponse then splits it into page spans. OFF by default:
- * unset, every prompt and every parse is byte-identical to before. Measured on the Tengyur pilot
- * only (scripts/eval/experiments/2026-10-03-folio-markers-5678.md); no lane runs with it on.
+ * unset, every prompt and every parse is byte-identical to before. Missed its bar on this lane's model
+ * (flash-lite, #5678) and stays off here; the CLI lane (3.8 Flash) runs markers on its page pairs (#7118).
  */
 export function folioMarkersEnabled(env = process.env) {
   return env.TRANSLATE_FOLIO_MARKERS === '1';
@@ -170,12 +173,22 @@ export function blockPrompt({ prompts, book, pages, folioMarkers = folioMarkersE
  * boundary whose opening clause landed on the previous page drops both its pages. A block of
  * one takes the whole response.
  */
-export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers = folioMarkersEnabled() } = {}) {
+export function parseBlockResponse(responseText, pages, { onDrift, onTruncated, lang, folioMarkers = folioMarkersEnabled() } = {}) {
   const out = new Map();
   if (!responseText) return out;
+  // #5055: the write guard on each page's text as returned, before sanitizeTranslationTags closes a cut tail tag. A
+  // truncated page gets no draft, so it goes back to the queue.
+  const cut = (p, raw) => {
+    if (!p) return false;
+    const g = checkWrittenText(raw, { kind: 'translation', source: p.ocr?.data, lang, type: p.page_type });
+    if (g.verdict !== 'truncated') return false;
+    if (onTruncated) onTruncated({ page_number: p.page_number, reasons: g.reasons });
+    return true;
+  };
   if (pages.length === 1) {
-    const text = sanitizeTranslationTags(String(responseText).trim());
-    if (text) out.set(pages[0].page_number, text);
+    const raw = String(responseText).trim();
+    const text = sanitizeTranslationTags(raw);
+    if (text && !cut(pages[0], raw)) out.set(pages[0].page_number, text);
     return out;
   }
   // Folio markers (#5678): each page takes its own span, the markers read by position. A page the
@@ -185,7 +198,7 @@ export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers 
     const parsed = parseFolioMarkedText(responseText, pages.map((p) => p.page_number));
     const overrun = new Set(parsed.overrun);
     for (const pg of parsed.pages) {
-      if (pg.span && !overrun.has(pg.page_number)) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
+      if (pg.span && !overrun.has(pg.page_number) && !cut(pages.find((p) => p.page_number === pg.page_number), pg.span)) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
     }
     return out;
   }
@@ -195,8 +208,11 @@ export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers 
   let m;
   while ((m = re.exec(responseText)) !== null) {
     const n = parseInt(m[1], 10);
-    const text = sanitizeTranslationTags(m[2].trim());
+    // An anchor line (#5021 block-page-guard.mjs) is never English: off before the tags are sanitised.
+    const raw = stripAnchor(m[2]).text;
+    const text = sanitizeTranslationTags(raw);
     if (tooShort(pages.find(p => p.page_number === n), text)) continue;
+    if (cut(pages.find(p => p.page_number === n), raw)) continue;
     out.set(n, text);
     entries.push(text);
   }
@@ -631,11 +647,12 @@ export async function advanceRun(db, run, deps) {
       const pages = b.pages.map(p => pageDocs.get(p.id)).filter(Boolean);
       const r = byKey.get(b.key);
       let drifted = null;
-      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages, { onDrift: (d) => { drifted = d; } });
+      const truncated = [];
+      const parsed = r?.error ? new Map() : parseBlockResponse(r?.text, pages, { onDrift: (d) => { drifted = d; }, onTruncated: (t) => truncated.push(`${t.page_number}:${t.reasons[0]}`) });
       for (const p of pages) if (parsed.has(p.page_number)) drafts.set(p.id, parsed.get(p.page_number));
       if (!r) blockNotes.push({ key: b.key, note: 'no-response' });
       else if (r.error) blockNotes.push({ key: b.key, note: 'request-error', error: r.error });
-      else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason, ...(drifted ? { drifted } : {}) });
+      else if (parsed.size < pages.length) blockNotes.push({ key: b.key, note: `parsed ${parsed.size}/${pages.length}`, finish_reason: r.finishReason, ...(drifted ? { drifted } : {}), ...(truncated.length ? { truncated } : {}) });
     }
     // A SUCCEEDED job is a statement about the job, not about its requests. Every request can
     // come back as an error (2026-09-24: 3 jobs × "The operation was cancelled."), and a run
@@ -789,12 +806,14 @@ export async function writeRun(db, run, deps) {
           prompt_sent_hash: b.prompt_sent_hash || NOT_RECORDED, prompt_sent_chars: b.prompt_sent_chars,
           generationConfig: b.max_output_tokens ? { maxOutputTokens: b.max_output_tokens, thinkingConfig: { thinkingBudget: 0 } } : notRecorded(`run ${run.id} was submitted before #4613 recorded generation settings`),
           run: { batch_job_id: run.translate_job?.name, job_id: run.id, code_version: run.code_version || NOT_RECORDED, host: run.host || NOT_RECORDED },
-          context: { block: { key: b.key, pages: b.pages.length }, seam: seamIds.has(ref.id) ? (seamOutcomes.find((s) => s.id === ref.id)?.source ?? null) : null, previous_translation: true },
+          context: { block: { key: b.key, pages: b.pages.length }, seam: seamIds.has(ref.id) ? (seamOutcomes.find((s) => s.id === ref.id)?.source ?? null) : null, previous_translation: true, page_break: pageBreakVariant(LEAF_BREAK_ONLY) },
         },
       });
       if (res.written) {
         counts.written++;
         if (deps.syncPage) deps.syncPage(page.id, { translation: { data: res.text, language: 'English', model: run.model, source: 'ai', prompt_version: String(promptRef?.version ?? ''), prompt_id: promptRef?.id, prompt_hash: promptRef?.content_hash, prompt_name: promptRef?.name, updated_at: new Date() } });
+      } else if (res.truncated) {
+        counts.truncated = (counts.truncated || 0) + 1; // #5055: recorded by the door; the page stays in the queue
       } else if (res.unhealthy) {
         counts.unhealthy++;
         // Same stamp the realtime worker puts on a refused page, so the page leaves the queue.

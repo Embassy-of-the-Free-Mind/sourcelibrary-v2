@@ -46,10 +46,14 @@ export const supabaseAdmin: SupabaseClient | null = SUPABASE_SERVICE_ROLE_KEY
  *   ( ) — logical grouping
  *   . followed by operator keywords could be interpreted as new filters
  *
+ *   " \ { } — quoting and escaping: a lone one is a PostgREST parse error
+ *       (measured 2026-10-18: `?q="`, `?q=\` and `?q=}` were each a 500 on
+ *       /api/catalog/results). None of them ever helps a title match.
+ *
  * Without this, a search for `%,id.gt.0` could inject additional filter conditions.
  */
 export function sanitizeFilterValue(value: string): string {
-  return value.replace(/[,()]/g, '');
+  return value.replace(/[,()"\\{}]/g, '');
 }
 
 /**

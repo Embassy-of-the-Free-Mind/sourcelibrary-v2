@@ -41,7 +41,7 @@ async function main() {
     const cursor = db.collection('pages').find(
       { book_id: b.id, 'ocr.data': { $type: 'string' } },
       { projection: { 'ocr.data': 1 } }
-    );
+    ).batchSize(1000);
     for await (const p of cursor) {
       pagesSeen++;
       const text = (p.ocr?.data ?? '').replace(/<[^<>]{1,60}>/g, ' ');

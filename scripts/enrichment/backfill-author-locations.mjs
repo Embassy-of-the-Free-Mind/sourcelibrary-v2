@@ -57,7 +57,7 @@ async function fetchAuthorLocations(wikidataIds) {
   try {
     const res = await fetch(
       `https://query.wikidata.org/sparql?query=${encodeURIComponent(sparql)}&format=json`,
-      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } }
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)' } }
     );
     if (!res.ok) {
       console.error(`  SPARQL error: ${res.status} ${res.statusText}`);

@@ -23,11 +23,12 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import {
-  buildCorpusPageCountPipeline, diffPageCounters, recountSet, PAGE_COUNTERS,
+  buildCorpusPageCountPipeline, diffPageCounters, recountSet, translationAdvancedSet, PAGE_COUNTERS,
   computeTranslationMetrics, computeTranslationState, translationStateChanged,
   READABLE_IN_ENGLISH_FILTER, translationStateStampCoverage,
 } from '../lib/page-counts.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { recoverLazyPages } from '../lib/lazy-pages.mjs';
 import { NEXT_STEP_PROJECTION, PIPELINE_NEXT_VERSION, buildPipelineNext, pipelineNextChanged, resolveOpenJobs } from '../lib/pipeline-next-step.mjs';
 
 
@@ -75,6 +76,11 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   console.log('\n--- Sync Page Counts ---');
   const start = Date.now();
 
+  // The aggregate takes minutes and `books` is read after it, so a book inserted with
+  // its pages in between is missing from statsMap and would recount to zeros — 31 of
+  // 100 #8053 pilot books were zeroed that way (#8070). Anything created or recounted
+  // after this instant is skipped; the next cycle counts it.
+  const snapshotAt = new Date();
   const pageStats = await db.collection('pages')
     .aggregate(buildCorpusPageCountPipeline(), { allowDiskUse: true })
     .toArray();
@@ -82,7 +88,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
 
   const counterProjection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, created_at: 1, page_counts_at: 1, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1, pages_state: 1 } })
     .toArray();
 
   // `pipeline_next` (#5477, .claude/docs/pipeline-next-step.md) needs to know whether `book.job` names a
@@ -100,10 +106,16 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   // fixing is a job-time writer that counts it wrong (page-counts.md).
   const counterTally = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 0]));
   let translatableMissing = 0;
+  let skippedAfterSnapshot = 0;
 
   for (const book of books) {
     const bookId = book.id || book._id?.toString();
-    // A book with no visible pages recounts to zeros — its true count.
+    if (isAfter(book.created_at, snapshotAt) || isAfter(book.page_counts_at, snapshotAt)) {
+      skippedAfterSnapshot++;
+      continue;
+    }
+    // A book with no visible pages recounts to zeros — its true count — unless it
+    // is a manifest-only book (#7343), which keeps its declared count (diffPageCounters).
     const { before, after: actual, changed } = diffPageCounters(book, statsMap.get(bookId));
     for (const c of changed) counterTally[c]++;
     if (before.pages_translatable === null) translatableMissing++;
@@ -188,6 +200,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
           ? {
             $set: {
               ...recountSet(actual, now),
+              ...translationAdvancedSet(book, actual, now),
               translation_pct,
               is_fully_translated,
               over_90_translated,
@@ -202,7 +215,9 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
               pipeline_next: nextStale ? pipeline_next : book.pipeline_next,
             },
           };
-        bulkOps.push({ updateOne: { filter: { _id: book._id }, update } });
+        // A recountBook() that lands between the books read and this write counted
+        // pages the aggregate did not see: keep its counters (#8070).
+        bulkOps.push({ updateOne: { filter: { _id: book._id, page_counts_at: { $not: { $gte: snapshotAt } } }, update } });
       }
     }
   }
@@ -221,6 +236,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   console.log(`  pipeline_next (observe only): ${Object.entries(stepTally).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}=${n}`).join(' ')}`);
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  if (skippedAfterSnapshot > 0) console.log(`  Skipped ${skippedAfterSnapshot} book(s) created or recounted after the aggregate began (#8070)`);
   console.log(`  Books checked: ${books.length} | Mismatches: ${mismatchCount} (translation_state: ${stateMismatchCount}, pipeline_next: ${nextMismatchCount}) | Updated: ${updated} | ${elapsed}s`);
   console.log(`  Counters corrected: ${formatCounterTally(counterTally)} (pages_translatable missing before: ${translatableMissing})${dryRun ? ' — DRY RUN, nothing written' : ''}`);
 
@@ -231,8 +247,16 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
     pipeline_next_mismatches: nextMismatchCount,
     counter_mismatches: counterTally,
     translatable_missing: translatableMissing,
+    skipped_after_snapshot: skippedAfterSnapshot,
     updated,
   };
+}
+
+/** True when a stored timestamp (Date or ISO string) is at or after `t`. */
+function isAfter(value, t) {
+  if (value == null) return false;
+  const ms = new Date(value).getTime();
+  return Number.isFinite(ms) && ms >= t.getTime();
 }
 
 // ── Sync Collection Counts ──
@@ -501,18 +525,56 @@ async function syncGalleryImages(db) {
  *
  * One direction only. A row marked hidden whose book is no longer `hidden` is
  * NOT un-hidden here: not-hidden is not the same as published (`visible`), so
- * showing those plates is a publication decision, not a sync.
+ * showing those plates is a publication decision, not a sync. The rows that
+ * drifted that way are counted and logged (`stale_hidden`), never written.
+ *
+ * It walks the GALLERY's book ids, not the books collection's hidden ones. Until
+ * #8318 it began with `books.distinct('id', { hidden: true })`: ~500K hidden
+ * books (mostly artwork records) is over the 16 MB cap on a single distinct
+ * result, so the phase threw on every run from 2026-10-30 and nothing was marked.
+ * The gallery holds ~20K books; they stream from an aggregation cursor and are
+ * looked up in batches by `id` OR `_id` (re-minted books, #4450).
  */
-async function markHiddenBooksGalleryRows(db) {
-  const hidden = await db.collection('books').distinct('id', { hidden: true });
-  let modified = 0;
-  for (let i = 0; i < hidden.length; i += 5000) {
-    const filter = { book_id: { $in: hidden.slice(i, i + 5000) }, book_hidden: { $ne: true } };
-    if (DRY_RUN) { modified += await db.collection('gallery_images').countDocuments(filter); continue; }
-    modified += (await db.collection('gallery_images').updateMany(filter, { $set: { book_hidden: true } })).modifiedCount;
+export async function markHiddenBooksGalleryRows(db, { dryRun = DRY_RUN, batchSize = 1000 } = {}) {
+  const gallery = db.collection('gallery_images');
+  const books = db.collection('books');
+  const cursor = gallery.aggregate(
+    [{ $sort: { book_id: 1 } }, { $group: { _id: '$book_id' } }],
+    { allowDiskUse: true, batchSize },
+  );
+  let modified = 0, staleHidden = 0, hiddenBooks = 0;
+
+  const flush = async (ids) => {
+    const oids = ids.filter(id => typeof id === 'string' && ObjectId.isValid(id) && id.length === 24).map(id => new ObjectId(id));
+    const found = await books.find(
+      { $or: [{ id: { $in: ids } }, { _id: { $in: [...ids, ...oids] } }] },
+      { projection: { _id: 1, id: 1, hidden: 1 } },
+    ).toArray();
+    // Key each book under every name the gallery might use for it.
+    const hiddenByKey = new Map();
+    for (const b of found) {
+      for (const k of [b.id, String(b._id)]) if (k != null && !hiddenByKey.has(k)) hiddenByKey.set(k, b.hidden === true);
+    }
+    const hidden = ids.filter(id => hiddenByKey.get(String(id)) === true);
+    const notHidden = ids.filter(id => hiddenByKey.get(String(id)) === false);
+    hiddenBooks += hidden.length;
+    if (notHidden.length) staleHidden += await gallery.countDocuments({ book_id: { $in: notHidden }, book_hidden: true });
+    if (!hidden.length) return;
+    const filter = { book_id: { $in: hidden }, book_hidden: { $ne: true } };
+    if (dryRun) { modified += await gallery.countDocuments(filter); return; }
+    modified += (await gallery.updateMany(filter, { $set: { book_hidden: true } })).modifiedCount;
+  };
+
+  let batch = [];
+  for await (const { _id } of cursor) {
+    if (_id == null) continue;
+    batch.push(_id);
+    if (batch.length >= batchSize) { await flush(batch); batch = []; }
   }
-  console.log(`[sync-worker] gallery_images book_hidden: ${DRY_RUN ? 'would mark' : 'marked'} ${modified} rows of hidden books`);
-  return modified;
+  if (batch.length) await flush(batch);
+
+  console.log(`[sync-worker] gallery_images book_hidden: ${dryRun ? 'would mark' : 'marked'} ${modified} rows of ${hiddenBooks} hidden books; ${staleHidden} rows still marked hidden for books no longer hidden (left alone)`);
+  return { modified, hidden_books: hiddenBooks, stale_hidden: staleHidden };
 }
 
 function authorSlugFn(author) {
@@ -959,6 +1021,19 @@ async function run() {
   const phasesCompleted = [];
 
   if (!GALLERY_ONLY && !USAGE_ONLY) {
+    // Lazy pages (#7343, #7346 review 1): finish any book a crashed or partly
+    // failed materialization stranded, BEFORE the counts below read its pages.
+    // A free manifest GET per stranded book; no paid work.
+    try {
+      const r = await recoverLazyPages(db, { dryRun: DRY_RUN });
+      const tally = r.results.reduce((t, x) => ({ ...t, [x.status]: (t[x.status] || 0) + 1 }), {});
+      console.log(`[sync-worker] Lazy-pages recovery: ${r.stale} stale lease(s), ${r.partial} partial write(s) → ${JSON.stringify(tally)}`);
+      phasesCompleted.push('lazy_pages_recovery');
+    } catch (err) {
+      console.error(`[sync-worker] Lazy-pages recovery phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'lazy_pages_recovery', error: err.message });
+    }
+
     try {
       countsResult = await syncPageCounts(db);
       phasesCompleted.push('counts');

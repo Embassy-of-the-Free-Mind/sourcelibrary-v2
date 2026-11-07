@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { PARTNER_TERMS_URL, PARTNER_TERMS_VERSION } from '@/lib/partner-terms-version';
 
 /**
  * POST /api/dataset/v1/request-key — Public endpoint to request an API key
@@ -16,11 +17,18 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { name, email, organization, use_case, tier } = body;
+  const { name, email, organization, use_case, tier, accept_terms } = body;
 
   if (!name || !email || !use_case) {
     return NextResponse.json(
       { error: 'name, email, and use_case are required' },
+      { status: 400 },
+    );
+  }
+
+  if (accept_terms !== PARTNER_TERMS_VERSION) {
+    return NextResponse.json(
+      { error: 'Agree to the terms of use to request a key.', terms_required: true, terms_version: PARTNER_TERMS_VERSION, terms_url: PARTNER_TERMS_URL },
       { status: 400 },
     );
   }
@@ -53,6 +61,7 @@ export async function POST(request: NextRequest) {
     organization: organization || null,
     use_case,
     requested_tier: tier || 'full',
+    terms_version: accept_terms,
     status: 'pending' as const,
     created_at: new Date(),
     reviewed_at: null,

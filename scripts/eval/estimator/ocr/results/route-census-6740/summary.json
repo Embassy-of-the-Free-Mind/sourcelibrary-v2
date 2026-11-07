@@ -1,0 +1,176 @@
+{
+ "generated": "2026-10-25T22:35:26.306Z",
+ "books": 134126,
+ "part1": {
+  "rows": 2261,
+  "ocr_rows": 1193,
+  "translation_rows": 897,
+  "guard_rows": 171,
+  "pages_walked": 30511395,
+  "unstamped_routes": {
+   "ocr|PaddleOCR-VL-1.6-0.9B": 1659279,
+   "ocr|bdrc-yigdzin-v1": 680439,
+   "translation|gemini-3.8-flash-low": 85104,
+   "ocr|claude-opus-5-5": 32240,
+   "ocr|kraken/omnisyr": 27679,
+   "translation|claude-opus-5-5": 18516,
+   "ocr|kraken/sophro-mhiro": 11247,
+   "ocr|ndl-koten/v3": 7133,
+   "translation|gemini-4-argon-low": 3841,
+   "ocr|gemini-3.8-flash-low": 2639,
+   "ocr|gemini-4-argon-high": 2018,
+   "ocr|bdrc-woodblock-easter2": 1711,
+   "ocr|gemini-4-argon-low": 354,
+   "ocr|zai-org/GLM-OCR": 272,
+   "ocr|claude-sonnet-5-5": 199,
+   "ocr|ia-legacy-ocr": 191,
+   "ocr|claude-sonnet-4-6": 75,
+   "ocr|ABBYY FineReader 8.0": 69,
+   "ocr|gemini-3.7-flash-low": 69,
+   "translation|claude-sonnet-4-6": 69,
+   "ocr|claude-fable-5-1": 48,
+   "ocr|ia-abbyy-hocr": 46,
+   "translation|gemini": 24,
+   "translation|gemini-2.0-flash-exp": 14,
+   "ocr|ABBYY FineReader 11.0 (Extended OCR)": 12,
+   "ocr|tla-manual": 12,
+   "translation|tla-manual": 12,
+   "ocr|claude-opus-4-6": 7,
+   "ocr|tesseract 5.3.0": 6,
+   "ocr|claude-fable-5-1+claude-opus-5-5": 5,
+   "translation|gemini-2.0-flash": 3,
+   "ocr|gemini": 2,
+   "translation|claude-opus-4-8": 1,
+   "translation|claude-haiku-4-5-20251001": 1
+  },
+  "unattributed_refusals": [
+   [
+    "English|1880 on",
+    12717
+   ],
+   [
+    "English|1700-1879",
+    2416
+   ],
+   [
+    "English|unknown",
+    115
+   ],
+   [
+    "Dutch|1880 on",
+    63
+   ],
+   [
+    "German|1880 on",
+    19
+   ],
+   [
+    "Spanish|1700-1879",
+    15
+   ],
+   [
+    "English|before 1700",
+    5
+   ],
+   [
+    "Latin|1880 on",
+    2
+   ],
+   [
+    "Sanskrit|1880 on",
+    1
+   ]
+  ],
+  "unattributed_refusals_total": 15353
+ },
+ "part2": {
+  "reference_pages": 964,
+  "pages_with_page": 964,
+  "rows": 596,
+  "scored": 596,
+  "by_ref_kind": {
+   "edition-e-text": 166,
+   "same-edition-transcription": 139,
+   "ocr-same-text": 99,
+   "wikisource-en": 77,
+   "corrected-served-ocr": 55,
+   "gutenberg": 35,
+   "same-leaf-transcription": 15,
+   "volunteer-span-correction": 10
+  },
+  "by_engine": {
+   "gemini-3-flash-preview": 310,
+   "gemini-3.1-flash-lite-preview": 102,
+   "PaddleOCR-VL-1.6-0.9B": 85,
+   "gemini-3.1-flash-lite": 72,
+   "ia-ocr": 21,
+   "gemini-2.5-flash": 6
+  },
+  "by_chart": {
+   "latin": 205,
+   "english": 171,
+   "chinese-manuscript": 84,
+   "greek": 47,
+   "chinese-print": 35,
+   "other:arabic": 24,
+   "other:indic": 14,
+   "volunteer": 10,
+   "hebrew": 6
+  },
+  "fame_web": {
+   "0": 80,
+   "1": 516
+  },
+  "anchored": {
+   "0": 359,
+   "1": 237
+  }
+ },
+ "part3": {
+  "cells": 671,
+  "by_class": {
+   "reread": 1008802,
+   "guard_refused": 41143,
+   "model_correction": 13341,
+   "human_correction": 44
+  },
+  "sampled": 15550,
+  "reference_pairs": 51,
+  "reference_verdicts": {
+   "better": 30,
+   "same": 12,
+   "worse": 9
+  },
+  "pair_classes_all": {
+   "ocr:reread": 898002,
+   "ocr:edit_same_read": 835635,
+   "translation:edit_same_read": 710644,
+   "translation:relocation": 518285,
+   "ocr:relocation": 368395,
+   "ocr:reread_same_model": 156778,
+   "translation:reread": 111251,
+   "ocr:filled_empty": 76604,
+   "ocr:guard_refused": 31105,
+   "translation:reread_same_model": 11302,
+   "ocr:model_correction": 10595,
+   "translation:guard_refused": 10311,
+   "translation:model_correction": 2785,
+   "translation:filled_empty": 1259,
+   ":filled_empty": 1090,
+   "translation:human_correction": 34,
+   "ocr:human_correction": 10
+  }
+ },
+ "part4": {
+  "rows": 463,
+  "routes": 37,
+  "window": "2026-08-26..2026-10-25 (exclusive)"
+ },
+ "part5": {
+  "did_not_read_production_only": 62,
+  "did_not_read_both": 16,
+  "accuracy_production_only": 17,
+  "accuracy_both": 12,
+  "experiment_only": 124
+ }
+}

@@ -1,0 +1,644 @@
+[
+  {
+    "book_id": "69f330b1876dd827cbc47bd5",
+    "slot": 1,
+    "title": "De legibus Angliae, ca. 1390",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Bracton's De legibus, a medieval English legal manuscript. Medieval law is outside the core esoteric traditions but within the library's remit of historical primary sources. No collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "This is a heavily abbreviated Gothic manuscript, so the printed_backsteps (72) and printed_repeats (105) come from misattributed numbers, not a scan splice. The OCR tags page-num 73 on both 148 and 149 (the pencil folio '73' appears in both frames, at the edge of the opening). On 150 it invents page-num 154, which appears nowhere in the image (O16). The leaves themselves run in sequence.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "utrum disseisitus praesens sit vel absens tempore disseisinae vel ipse sive canes vel eius paratus vel familia",
+            "image": "utrum disseisitus presens fuit vel absens tempore disseisine & utrum ipse sit [qui] eiciat vel eius p[ro]curator vel familia",
+            "problem": "invented 'canes' (dogs) and 'paratus', carried into the translation as 'or [his] dogs, or his equipment'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Expellere enim iniuriam iustam et arma iniqua",
+            "image": "repellat iniuriam vim iniustam & arma iniusta",
+            "problem": "'vim iniustam' is read as 'iniuriam iustam', which inverts 'unjust force' into 'just injury'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ille qui iniuste eicitur disseisitore praesente et si possit statim et sine intervallo",
+            "image": "ille qui iniuste & sine iudicio disseisitus est p[er] se si possit vel ... dum tamen sine aliquo intervallo",
+            "problem": "the abbreviated line is rebuilt as plausible Latin rather than transcribed; phrases not on the leaf. The whole page is of this kind: a loose expansion of the gist with large stretches confabulated",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "dabitur ei dilatio duorum annorum et xv. dierum",
+            "image": "dabitur ei dilacio t[ri]um annor[um] & xv dier[um] (reading uncertain)",
+            "problem": "number of years in the crusade essoin probably misread; low confidence",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ipse sive canes vel eius paratus vel familia",
+            "english": "or he himself, or [his] dogs, or his equipment, or his household",
+            "problem": "fluent translation of the confabulated OCR; a reader learns that dogs figure in Bracton's law of disseisin",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "iocose disseisitorie",
+            "english": "[he is] facetiously [acting] as a disseisor",
+            "problem": "nonsense from garbled OCR rendered as confident English",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation opens with '<margin></margin>' and then a stray unmatched '</margin>', plus <note> wrappers that restate the margin OCR ('original: ...')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 149,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "ad quem res spiritualis translata sunt",
+            "image": "ille ad quem res p[er] intervallu[m] translata fuit",
+            "problem": "'per intervallum' is misread as 'spiritualis'; the translation then speaks of 'spiritual things' transferred",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Est autem ista recognitio sive assisa ex pluribus iunctis in lapis",
+            "image": "Est autem ista recognitio sive assisa (com)plexa & pena multiplex ut infra",
+            "problem": "invented 'iunctis in lapis', rendered 'joined in the stone'",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "viribus et iuri lege iuri non subvenit ei",
+            "image": "viribus & non lege & ideo non subveniet ei",
+            "problem": "garbled opening",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "res spiritualis translata sunt",
+            "english": "him to whom the spiritual things were transferred",
+            "problem": "fluent rendering of a misread; the sense of the passage (transfer after an interval) is lost",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "ex pluribus iunctis in lapis",
+            "english": "is [composed] from several things joined in the stone",
+            "problem": "meaningless invented phrase translated as if real",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation repeatedly shows '<margin></margin>' followed by stray '</margin>' and '<meta>A decorative initial D...</meta>' twice. Markup and image descriptions leak into the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "OCR calls the green-ink marginal frame 'a heart-shaped diagram with a cross', significance high. It is a scribal bracket around a marginal note",
+            "severity": "minor",
+            "class": "O14"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 150,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Item qui competit villano solemniter in dominico domini regis ... de curia albis de vadinge x. annorum de placitis in eorum gloucester. anno. b. h. quarto.",
+            "image": "It[em] q[ua]n[do]q[ue] competit villano sokemanno in d[omi]nico d[omi]ni regis ... ut de terra Albis de Badinge ... de Patishull in com. Glouc. anno H. ... quinto",
+            "problem": "the case citation is misread: 'sokemanno' becomes 'solemniter', the justice Pattishall becomes 'de placitis', and the regnal year becomes 'quarto'",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "sic potest remanere in feodo toto caeli",
+            "image": "sic potest remanere in feodo tale tenementum (approx.)",
+            "problem": "'toto caeli' (whole of heaven) is not on the leaf",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "<page-num>154</page-num>",
+            "image": "no page number on the leaf",
+            "problem": "invented page number",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "anno. b. h. quarto",
+            "english": "in the year of King Henry the Fourth",
+            "problem": "anachronism: Bracton died in 1268 and cites Henry III-era cases; Henry IV reigned from 1399. Invented from a misread",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "villano solemniter ... si manu nocet burgum ... albis",
+            "english": "he who belongs to the villain is solemnly in the lord king's demesne if he harms the borough ... by white rents",
+            "problem": "nonsense presented as law",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "in feodo toto caeli",
+            "english": "the whole fee of heaven <note>a likely scribal error or metaphorical flourish for the entirety of the estate</note>",
+            "problem": "the note invents scholarly comment to explain away an OCR confabulation",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> blocks at the end of the translation (shown to readers if not stripped)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR of this abbreviated Gothic manuscript does not transcribe the leaf. It writes a plausible Latin paraphrase with invented words ('canes', 'spiritualis', 'in lapis', 'Henry the Fourth'), and the translation renders them fluently. An expert would reject it on sight. It should be held or re-OCRed with a lane suited to abbreviated legal manuscripts."
+  },
+  {
+    "book_id": "69b65ed7b3f4fc0441524eb8",
+    "slot": 2,
+    "title": "Theses de febre hectica",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Disputation theses on hectic fever (1584, e-rara). Early modern medicine fits the early-modern-science remit. No tradition or collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "12 pages, 11 OCR'd: likely a blank or a title verso. The one backstep comes from thesis numbers misread as page numbers. Note that the printed thesis number 'LXVIII' on page 6 is the printer's error for XXVIII.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "At Vniuerfim ... Aurium fordes / ſunt ficcæ",
+            "image": "At Vniuerſim ... Aurium ſordes ſunt ſiccæ",
+            "problem": "long s read as f in the first lines only (inconsistent with ſ later)",
+            "severity": "minor",
+            "class": "O9"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "factam curare arduum, nosse procliue",
+            "english": "to cure one established is arduous, to know [one at its end] is easy",
+            "problem": "the bracketed '[one at its end]' is invented; the source means that once established it is easy to recognise",
+            "severity": "minor"
+          },
+          {
+            "source": "LXVIII.",
+            "english": "XXVIII.",
+            "problem": "printer's misnumbering silently corrected without a note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "corpus suauiter mungatur",
+            "image": "corpus ſuauiter inungatur",
+            "problem": "'inungatur' (be anointed) is misread as 'mungatur' (be wiped)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "A` Balneo rosaceo aut Nenupharino corpus suauiter [in]ungatur",
+            "english": "The body should be gently cleansed from a rose or water-lily bath",
+            "problem": "should read 'after the bath, let the body be gently anointed with rose or water-lily [oil]'. The therapeutic instruction is changed",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Topica affecte parti ... ne uicina ledatur; exhibedus; uiolaru",
+            "image": "affectæ ... lædatur; exhibēdus; uiolarū",
+            "problem": "ligatures and tildes dropped (æ→e, macrons lost); spelling normalised",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, faithful read of a small printed medical disputation. The only meaning-changing slip is 'inungatur' (anoint) misread as 'mungatur', which turns an anointing after the bath into cleansing 'from' a bath. Fine to show."
+  },
+  {
+    "book_id": "69e759c2095c302d3fdde0e6",
+    "slot": 3,
+    "title": "El burlador de Sevilla y convidado de piedra",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "Tirso de Molina's Golden Age comedia (suelta, c.1700, UNC). A literary play has no tie to the library's traditions; the IA collections (spandr, americana) explain the import, not the shelf.",
+    "rights_flag": null,
+    "structure_note": "36 pages, 25 OCR'd, 23 translated: the play is partly unprocessed, so a reader meets untranslated pages. No numbering anomalies. Page 11's left margin is cut by the gutter in the scan, which hides speaker prefixes.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Es hijo de aquel señor / del Camârero Mayor",
+            "image": "Es hijo aqueste señor / del Camarero Mayor",
+            "problem": "normalised: the image says 'this lord is the son of the Chamberlain'",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "y y su orgullo",
+            "image": "y ya su orgullo",
+            "problem": "slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Dentr. Socorro, que me ahogo. / Tisb. Un hombre à otro aguarda, ... con vida el que le estorva.",
+            "english": "<note>From within: Help, I am drowning.</note> <note>Tisbea: One man awaits another ... with life the one who carries him.</note>",
+            "problem": "Tisbea's 20-line speech and the offstage cry are hidden inside <note> wrappers as prose, not verse lines of the play",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "source": "Anchises le hace Eneas",
+            "english": "he makes Aeneas to his Anchises",
+            "problem": "garbled: Aeneas carries him as his Anchises",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Tisb. Què nos mandas? Tisb. Coridon,",
+            "image": "[prefix cut by gutter]. Qué nos mandas? Tisb. Coridon,",
+            "problem": "the speaker prefix lost in the gutter was filled in as 'Tisb.', giving Tisbea both lines",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Salen Catalinon, Anfriso, y Coridon, Pescadores.",
+            "english": "Catalinon, Anfriso, and Coridon, Fishermen, exit.",
+            "problem": "'salen' (enter) translated as 'exit'; the stage direction is reversed",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Vanse, y salen Don Gonzalo de Ulloa, y Don Alonso de Castilla.",
+            "english": "They leave, and Don Gonzalo de Ulloa, and Don Alonso de Castilla exit.",
+            "problem": "same inversion: the King and Gonzalo enter",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "que idolatrarte desea / apenas, quando al momento",
+            "english": "who desires to bring you / hardly anything, when at the moment",
+            "problem": "'idolatrarte' (to idolise you) mistranslated",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "à Serpa ... Octava Maravilla",
+            "image": "à Cerpa ... Octava Marabilla",
+            "problem": "normalised spellings",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "al Convento de Yobrega",
+            "image": "al Convento de Yobregas",
+            "problem": "final s dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "eſte, ſu, ſe ...",
+            "image": "same",
+            "problem": "long s kept as ſ on this page but normalised to s on pages 10-11",
+            "severity": "minor",
+            "class": "O9"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "al Convento de Yobrega",
+            "english": "to the Convent of Odivelas <note>original: \"Yobrega\", likely referring to Odivelas or a monastery complex</note>",
+            "problem": "place name replaced: Yobregas/Xabregas is a different convent; Odivelas comes 20 lines later. Invented gloss",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The OCR is good. The translation turns 'salen' (enter) into 'exit' twice, hides a whole speech inside <note> wrappers, and swaps Xabregas for Odivelas. These are recoverable, but a reader of the play would notice. The play is also a doubtful fit for the shelf."
+  },
+  {
+    "book_id": "69e77a780fc6fc955e360177",
+    "slot": 4,
+    "title": "rDo rje gro lod gnam lcags 'bar ba",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Dorje Drolo sadhana/ritual manuscript (Gangtey collection via BL EAP). Content matches the title: Drolo, the eight vidyadharas, Padmasambhava's manifestations, and the numbered ritual sections.",
+    "rights_flag": null,
+    "structure_note": "Each image is a board with three pecha leaves (I5). Image 7 shows three rectos (with ༄༅། and margin folio numbers); images 6 and 8 show versos. Consecutive leaves are therefore split across photographs: page 7 holds sections 6-9 while page 8's middle leaf holds section 5. Reading order across the record is non-linear. Only 47 of 202 pages are translated. The OCR omits the marginal leaf numbers that would let a reader re-order.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མཆོད་པའ་ལྷ་མོའི་གང་",
+            "image": "མཆོད་པའི་ལྷ་མོའི་",
+            "problem": "vowel sign dropped; scattered slips of this kind",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལྷོ་རུ་གཤིན་རྗེ་ཞལ་གཅིག་ཕྱག་གཉིས",
+            "english": "In the South is Yamantaka with one face and two hands",
+            "problem": "gshin rje is Yama, not Yamantaka (gshin rje gshed)",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དྲག་པ་སྤྱན་པ་ནི",
+            "image": "དྲུག་པ་སྤྱན་འདྲེན་པ་ནི (approx.)",
+            "problem": "'sixth, the invitation' heading misread; the translation recovered it",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(no margin numbers)",
+            "image": "Tibetan folio numerals in the left margin of each leaf",
+            "problem": "leaf numbers dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སྤྲིན་གྱི་ཕུང་པོ་ལྟ་བུར་འཁྲིགས་པར་གྱུར།། O ༒",
+            "image": "red paper slips pasted over the line",
+            "problem": "pasted slips rendered as stray symbols",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཤར་དུ་པད་འབྱུང་མཐིང་ནག་རྒྱན་དྲུག་སྦས",
+            "english": "In the East is Padmasambhava, dark blue, hiding the six ornaments",
+            "problem": "'sbas' as 'hiding' is doubtful (likely 'adorned/concealed' idiom); low-stakes",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR and translation are serviceable for a Drolo ritual text. Deity names and ritual sections come through, with small slips (Yama rendered as Yamantaka). The main problem is structural: each photograph holds three leaves, rectos and versos are photographed separately, and a reader paging through cannot follow the text in order."
+  },
+  {
+    "book_id": "69c83bc96c6f3cc53c84f7a2",
+    "slot": 5,
+    "title": "Alle de wercken",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "Jacob Cats' collected works (Amsterdam 1658), a BPH holding. These pages come from 'Weduwe' and the index to the Christian Housewife. Dutch moral verse is peripheral to the esoteric core but belongs to the partner's holdings.",
+    "rights_flag": null,
+    "structure_note": "The catalogue language is 'Latin', but the text is Dutch verse; only the footnotes are Latin (I7). Each image is an unsplit two-page spread (printed pp. 192-193, 194-195), so one record holds two printed pages (I3). Printed backsteps and repeats follow from the spread numbering 'NNN-NNN' and the index pages. The run is in sequence (192 to 195, then the Tafel).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 231,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "befcheyt, defen, wijfe, ftreckt ...",
+            "image": "beſcheyt, deſen, wijſe, ſtreckt",
+            "problem": "long s read as f throughout the Dutch text (e.g. 'krevel-fucht'); readable but wrong letters everywhere",
+            "severity": "minor",
+            "class": "O8"
+          },
+          {
+            "ocr": "(footnote a of p.193 absent)",
+            "image": "a Genevenſi hæc eſt Conſtitutio quam refert & laudat Cypræus Tract. de ſponſ. cap. 9 num. 12.",
+            "problem": "one Latin footnote dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Men hoort den ouden tijt van jonge weeuwen klagen",
+            "english": "One hears the old times complain of young widows",
+            "problem": "'den ouden tijt' here means old folk/elders; literalism",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "A <meta> editorial summary opens the translation, and <summary>/<keywords> close it (shown to readers if not stripped)",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 232,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "Is indief aen het volck ... Dat 't foo ghytnietmin ... Sool koomt dan ... En w acht geen derderfel fpel ... Die g hy",
+            "image": "line starts hidden in the gutter of p.195 (Is ... ; Doch ſoo ghy niettemin ... ; Soo koomt ...)",
+            "problem": "line openings lost in the gutter are garbled or guessed rather than marked as illegible",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<meta>/<summary>/<keywords> editorial blocks wrap the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 233,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "(entries from 'danck op te houden ... Dieren door de welcke' through E., F. and the first half of G., ending 'Gesteenten kennen man en wijf')",
+            "image": "the whole third column of the spread: about 60 index entries (E: Elephant, Ecuwigheyt, Elisabeth van Valckenburgh...; F: the French 'Femme...' proverbs; G: Gebedt een noodigh beginsel ... Gesteenten)",
+            "problem": "an entire column of the index is silently omitted",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "Aetaon wordt verbeelt ... 65, b",
+            "image": "Actæon wordt verbeeſt ... 163, b",
+            "problem": "'verbeest' (turned into a beast) read as 'verbeelt' (depicted), and the folio reference is wrong",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Aenfprake tot de Bruydegom ... 65, b; Als het wijf waft ... 65, b; Anneau en main ... 65, b; Andromache ... 65, b; Apen, muys-katten ... 162, b; Alle gedierten ... 163, a",
+            "image": "67, a; 119, a; 63, b; 84; 157; 162, a",
+            "problem": "folio references in the index are wrong in many entries (a run of '65, b' repeated); an index with wrong numbers is useless",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "Godts vreede de befte regel onder de boden",
+            "image": "Godes vreeſe de beſte regel onder de boden",
+            "problem": "'fear of God' read as 'peace of God'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Aetaon wordt verbeelt",
+            "english": "Actaeon is represented",
+            "problem": "follows the misread; Actaeon is turned into a beast",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Als het wijf waft foo krijgt ht de man niet een goet woort",
+            "english": "When the wife grows <note>meaning: becomes pregnant or gains status</note> then the husband does not get a good word",
+            "problem": "'wast' is 'washes' (wash day); the note invents a wrong explanation",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Hengften wat by de vifichers genaemt wert",
+            "english": "\"Stallions,\" what they are called by the fishermen <note>a type of fishing vessel or gear</note>",
+            "problem": "unsupported gloss",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>, <summary>, <keywords> blocks in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The verse pages read well apart from the long-s-as-f convention and guessed gutter lines. The index page drops a whole column (about 60 entries) and gets many folio numbers wrong, which makes it unusable. The book is also catalogued as Latin when it is Dutch."
+  }
+]

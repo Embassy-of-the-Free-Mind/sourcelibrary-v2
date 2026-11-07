@@ -11,6 +11,8 @@ import {
   imageWindow,
   boundedImageUrl,
   imprintPrompt,
+  dateQuoteFault,
+  isShowThroughPage,
   // @ts-expect-error — .mjs script lib, no types
 } from '../../scripts/lib/titlepage-imprint.mjs';
 
@@ -144,5 +146,48 @@ describe('imageWindow / boundedImageUrl / imprintPrompt', () => {
     expect(imprintPrompt('image')).toMatch(/page IMAGES/);
     expect(imprintPrompt('text')).toMatch(/transcribed by OCR/);
     expect(() => imprintPrompt('audio')).toThrow();
+  });
+});
+
+// Guard v3: the wrong-date classes found by eye on the first draw (#7201). Every quote below is a real reply.
+describe('guard v3: dateQuoteFault / show-through / series labels', () => {
+  it('rejects bracketed and parenthesised years: a cataloguer or a pencil wrote them, not the printer', () => {
+    for (const q of ['(1499)', '[1728]', 'Basileae, [1554]', '[Genève] , Jean Belot , 1507.']) expect(dateQuoteFault(q)).toBe('bracketed_year');
+    expect(dateQuoteFault('MUTINÆ, )( M. DC. XC. VIII. )(')).toBeNull(); // a printer's ornament, not brackets
+  });
+  it('rejects a day and month with no imprint word (the occasion in a title, a dated dedication)', () => {
+    for (const q of ['DIE V. JVN. AN. M DC LX.', 'ad VII. d. Junii An. M DC LXXXI.', 'quae fuit 2. Junii Anno 1681.', 'Rome Id. Nouemb. M. cccc. lxxxiiii.']) {
+      expect(dateQuoteFault(q)).toBe('day_month_date');
+    }
+  });
+  it('keeps imprints, colophons dated to the day, and month words that are not dates', () => {
+    for (const q of [
+      'LVGDVNI, Apud Ioan. Tornaesium, M. D. LXI.',
+      'Impressum Venetiis die xx. Octobris 1499',
+      'Venetiis in aedibus Aldi mense Iunio M.D.',
+      'GIESSÆ, Literis Utzianis et Kargerianis, Anno 1689.',
+      'MDCX. Augustae Vindelicorum', // Augsburg, not August
+      'Anno M. DC. XXI. Maior',
+      'M D XXXXIX.',
+    ]) expect(dateQuoteFault(q)).toBeNull();
+  });
+  it('drops every field cited from a page the transcriber marked as mirrored show-through (text mode)', () => {
+    const ghost = '<warning>This image displays the verso of a printed title page. The text is visible only as mirrored bleed-through.</warning>\nGOTHAE Typis Reyherianis MDCCXLVIII';
+    expect(isShowThroughPage(ghost)).toBe(true);
+    expect(isShowThroughPage(TP)).toBe(false);
+    const r = checkImprint(
+      { title: null, names: [], date: { as_printed: 'MDCCXLVIII', year: 1748, calendar: 'CE', page: 2, quoted_line: 'GOTHAE Typis Reyherianis MDCCXLVIII' }, place: null, printer_publisher: null, edition_statement: null, title_page: null },
+      { mode: 'text', pages: new Map([[2, ghost]]) },
+    );
+    expect(r.fields.date).toBeNull();
+    expect(r.rejected[0].reason).toBe('show_through_page');
+  });
+  it('drops a Siku Quanshu cover label as a title', () => {
+    const r = checkImprint(
+      { title: { value: '四庫全書 子部', page: 1, quoted_line: '欽定四庫全書 子部' }, names: [], date: null, place: null, printer_publisher: null, edition_statement: null, title_page: null },
+      { mode: 'image', pages: new Map([[1, null]]) },
+    );
+    expect(r.fields.title).toBeNull();
+    expect(r.rejected[0].reason).toBe('series_label');
   });
 });

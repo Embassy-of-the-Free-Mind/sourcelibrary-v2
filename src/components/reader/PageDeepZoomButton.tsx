@@ -28,16 +28,51 @@ import {
 const DeepZoomInline = lazy(() => import('./DeepZoomInline'));
 const DeepZoomOverlay = lazy(() => import('@/components/artwork/DeepZoomOverlay'));
 
+/**
+ * A reader who closed the deep zoom that opened by itself has answered the
+ * question: it stays closed on later pages, on this browser, until they ask.
+ */
+const CLOSED_KEY = 'sl-reader-deepzoom-closed';
+function closedByReader(): boolean {
+  try { return window.localStorage.getItem(CLOSED_KEY) === '1'; } catch { return false; }
+}
+function rememberClosed(closed: boolean) {
+  try {
+    if (closed) window.localStorage.setItem(CLOSED_KEY, '1');
+    else window.localStorage.removeItem(CLOSED_KEY);
+  } catch { /* private mode */ }
+}
+
 export default function PageDeepZoomButton({
   manifest,
   title,
+  openByDefault = false,
+  bed = '#0d0c0b',
+  onInlineChange,
 }: {
   manifest: DeepZoomManifest;
   title: string;
+  /**
+   * Desktop only: open the tiled viewer as the page's image instead of waiting
+   * for a click. On touch the viewer's pan fights the swipe between pages, so a
+   * phone keeps the button.
+   */
+  openByDefault?: boolean;
+  /** What shows behind the image inside the viewer. */
+  bed?: string;
+  onInlineChange?: (inline: boolean) => void;
 }) {
-  const [inline, setInline] = useState(false);
+  const [inline, setInlineState] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  // Until the first view has drawn, the scan underneath stays visible, so a
+  // page turn never flashes an empty box.
+  const [drawn, setDrawn] = useState(false);
+  const [openedAutomatically, setOpenedAutomatically] = useState(false);
+  const setInline = (next: boolean) => {
+    setInlineState(next);
+    onInlineChange?.(next);
+  };
   const buttonRef = useRef<HTMLButtonElement>(null);
   // Follows the scroll so it stays reachable partway down a tall page scan.
   const buttonTop = useFloatingOverlayTop(buttonRef, !inline);
@@ -53,9 +88,24 @@ export default function PageDeepZoomButton({
 
   // Reset when the reader moves to a different page.
   useEffect(() => {
-    setInline(false);
+    const open = openByDefault
+      && window.matchMedia('(min-width: 1024px)').matches
+      && !closedByReader();
+    setInlineState(open);
+    setOpenedAutomatically(open);
+    setDrawn(false);
     setOverlay(false);
-  }, [manifest]);
+    onInlineChange?.(open);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- onInlineChange is a fresh closure each render; only a new page resets this.
+  }, [manifest, openByDefault]);
+
+  // The button is the way back in after a reader closed the viewer, and the only way in on a phone.
+  const openInline = () => {
+    if (openByDefault) rememberClosed(false);
+    setOpenedAutomatically(false);
+    setDrawn(false);
+    setInline(true);
+  };
 
   return (
     <>
@@ -63,7 +113,7 @@ export default function PageDeepZoomButton({
         <button
           ref={buttonRef}
           {...{ [LENS_AVOID_ATTR]: '' }}
-          onClick={() => (isDesktop ? setInline(true) : setOverlay(true))}
+          onClick={() => (isDesktop ? openInline() : setOverlay(true))}
           style={{ top: buttonTop, zIndex: OVERLAY_CONTROL_Z }}
           className="absolute right-2 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/55 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-colors"
           title="Open deep zoom: stream this page at full resolution"
@@ -74,9 +124,20 @@ export default function PageDeepZoomButton({
       )}
 
       {inline && (
-        <div className="absolute inset-0 z-20 bg-[#0d0c0b] rounded-lg overflow-hidden">
+        <div
+          className="absolute inset-0 z-20 overflow-hidden"
+          style={{ background: drawn || !openedAutomatically ? bed : 'transparent' }}
+        >
           <Suspense fallback={null}>
-            <DeepZoomInline manifest={manifest} />
+            <DeepZoomInline
+              manifest={manifest}
+              quiet={openedAutomatically}
+              // A real iframe, not useIsEmbedded(): that is also true on a partner's
+              // own subdomain, where there is no host page and the wheel should zoom.
+              wheelScrollsPage={window.self !== window.top}
+              onDrawn={() => setDrawn(true)}
+              onFailed={() => setInline(false)}
+            />
           </Suspense>
           <button
             onClick={() => {
@@ -90,7 +151,10 @@ export default function PageDeepZoomButton({
             <Maximize2 className="h-4 w-4" />
           </button>
           <button
-            onClick={() => setInline(false)}
+            onClick={() => {
+              if (openByDefault) rememberClosed(true);
+              setInline(false);
+            }}
             title="Exit deep zoom"
             aria-label="Exit deep zoom"
             className="absolute top-2 right-2 z-10 flex h-8 w-8 items-center justify-center rounded-md bg-black/55 text-stone-100 transition-colors hover:bg-black/80"

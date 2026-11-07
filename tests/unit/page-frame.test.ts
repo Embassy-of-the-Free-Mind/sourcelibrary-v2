@@ -287,3 +287,28 @@ describe('detectPageFrame on white canvas (#4276)', () => {
     expect(v).toEqual({ kind: 'frame', box: { x: 0, y: 0, w: 85, h: 140 } });
   });
 });
+
+describe('detectPageFrame on a page standing beside the bed (#8033)', () => {
+  // A fold-out plate on the right, full height; a shorter leaf on the left, black bed under it.
+  const below = 105;
+  it('shows a fold-out whole when the cut would take its foot (Cabala p.32)', () => {
+    const v = detectPageFrame(img(200, 140, (x, y) => (x >= 100 ? 180 : y >= below ? 15 : undefined)), 200, 140);
+    expect(v).toEqual({ kind: 'skip', reason: 'page-beside-bed' });
+  });
+
+  it('still trims bed that runs the whole way under a spread', () => {
+    const v = detectPageFrame(img(200, 140, (_x, y) => (y >= below ? 15 : undefined)), 200, 140);
+    expect(v.kind).toBe('frame');
+  });
+
+  it('still trims a bed with a credit strip or a book weight in it', () => {
+    const v = detectPageFrame(img(200, 140, (x, y) => (y >= below ? (x >= 20 && x < 60 && y >= 125 ? 230 : 15) : undefined)), 200, 140);
+    expect(v.kind).toBe('frame');
+  });
+
+  it('still trims when the lit stretch stops short of the image edge', () => {
+    // The book block's lower edge shows in the band, with only bed beyond it.
+    const v = detectPageFrame(img(200, 140, (x, y) => (y >= below ? (x >= 100 && y < 112 ? 180 : 15) : undefined)), 200, 140);
+    expect(v.kind).toBe('frame');
+  });
+});

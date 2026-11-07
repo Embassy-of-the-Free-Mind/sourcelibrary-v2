@@ -60,6 +60,15 @@ node scripts/iiif-discovery/import-from-cache.mjs --source=leiden --collection=u
 | Gallica (BnF) | ~20-40K | SRU API | Ready |
 | Biblissima | ~60K (aggregated) | IIIF Collections / Portal API | Ready |
 | Internet Archive | ~1M by language, all dates (Latin 200K, Chinese 717K, Sanskrit 93K) | Scraping API (cursor-based) | Ready |
+| BVPB (Spain), Alvin (Sweden), BND (Portugal) | 142K / 153K (old_prints + manuscript) / 51K | OAI-DC, `sources/oai-dc.mjs --repo=` | Harvested 2026-10-24 (#7294) |
+| Kramerius NKP + MZK (Czech) | 14K + 15K public pre-1900 | Solr, `sources/kramerius.mjs --site=` | Harvested 2026-10-24 |
+| Nasjonalbiblioteket (Norway) | 26K PD books, IIIF | JSON API, `sources/nb-norway.mjs` | Harvested 2026-10-24 |
+| Delpher (Netherlands) | 22K pre-1900 PERMIT | JSON API, `sources/delpher.mjs` | Harvested 2026-10-24 |
+| handrit.is (Iceland) | 18K MSS (4.4K imaged) | TEI on GitHub, `sources/handrit.mjs` | Harvested 2026-10-24 |
+
+Rank and dedupe any source's candidates against holdings, by interest tier:
+`npx tsx --env-file=.env.production.local scripts/audit/candidate-tier-survey.ts --source <s>`
+(term lists: `scripts/audit/acquisition-tier-terms.json`; per-source notes: `.claude/docs/library-harvest-registry.md`).
 
 ## Usage
 

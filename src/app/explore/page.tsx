@@ -9,7 +9,6 @@ import { getLibraryStats } from '@/lib/library-stats';
 import type { Db } from 'mongodb';
 import {
   ENTITY_STATS_CONFIG_ID,
-  canonicalEntitiesReadpathEnabled,
   type EntityStatsDoc,
 } from '@/lib/canonical-entities';
 
@@ -44,11 +43,14 @@ export const metadata: Metadata = {
 };
 
 /**
- * Canonical read path (#2979, behind CANONICAL_ENTITIES_READPATH): all
- * entity-side counts come from `system_config.entity_stats`, written nightly
- * by scripts/maintenance/build-canonical-entities.mjs — zero queries against
- * the ~1M-doc `entities` collection. The two `books` queries (total + century
- * heatmap) are unchanged from the legacy path.
+ * All entity-side counts come from `system_config.entity_stats`, written
+ * nightly by scripts/maintenance/build-canonical-entities.mjs — zero queries
+ * against the ~1.2M-doc `entities` collection. This page prerenders at build
+ * time, and the legacy path (distinct + six countDocuments over `entities`)
+ * failed whole production builds whenever a bulk `entities` writer pushed a
+ * count past maxTimeMS (#3373). Production already served this path behind
+ * CANONICAL_ENTITIES_READPATH; the hub no longer consults the flag, so
+ * unsetting it cannot bring those build-time counts back.
  *
  * Count semantics shift deliberately: with_dates / with_coordinates /
  * with_wikidata are CANONICAL counts (one per merged QID: 6,291 / 1,924 /
@@ -64,8 +66,12 @@ async function fetchExploreStatsCanonical() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     db.collection('system_config').findOne({ _id: ENTITY_STATS_CONFIG_ID as any }),
     liveBookCount(db),
+    // Covered by visible_year_heatmap (ensure-indexes.mjs): 0 docs examined,
+    // ~50-150 ms. Keep the predicate to exactly these two fields — an extra
+    // `$exists` forces a FETCH of every 17 KB book doc (5-60 s, #3373), and
+    // `$gt: 0` already excludes missing/null years.
     db.collection('books').aggregate([
-      { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
+      { $match: { visible: true, year: { $gt: 0 } } },
       {
         $group: {
           _id: {
@@ -87,7 +93,7 @@ async function fetchExploreStatsCanonical() {
   // than caching zeroed stats for the 24h revalidate window.
   if (!statsDoc) {
     throw new Error(
-      'system_config.entity_stats missing — run build-canonical-entities.mjs before enabling CANONICAL_ENTITIES_READPATH',
+      'system_config.entity_stats missing — run scripts/maintenance/build-canonical-entities.mjs',
     );
   }
 
@@ -141,133 +147,8 @@ async function fetchExploreStatsCanonical() {
   };
 }
 
-async function fetchExploreStats() {
-  const db = await getReadDb();
-
-  // Use estimatedDocumentCount (instant, uses collection metadata) and
-  // index-only queries for everything else — the entities collection is ~1M
-  // docs / ~1.9GB, so anything that touches documents (a $facet, a $group
-  // over the collection, or a count whose $exists predicate forces a FETCH)
-  // blows its time budget. Two shapes keep these index-only:
-  //  - bare `{ $ne: null }` (missing counts as null, so it needs no $exists)
-  //    is answered entirely from the wikidata_* partial-index bounds
-  //    (~300ms vs 7-17s measured with the $exists form);
-  //  - distinct('type') + one COUNT_SCAN per type instead of a $group.
-  const entityTypes = ((await db
-    .collection('entities')
-    .distinct('type', {}, { maxTimeMS: 25000 })) as (string | null)[])
-    .filter((t): t is string => t != null);
-
-  const [
-    totalEntities,
-    totalBooks,
-    typeCounts,
-    withDates,
-    withCoordinates,
-    withWikidata,
-    heatmapData,
-  ] = await Promise.all([
-    db.collection('entities').estimatedDocumentCount(),
-    liveBookCount(db),
-    Promise.all(entityTypes.map(async (t) => ({
-      type: t,
-      count: await db.collection('entities').countDocuments({ type: t }, { maxTimeMS: 25000 }),
-    }))),
-    db.collection('entities').countDocuments({
-      $or: [
-        { wikidata_birth_date: { $ne: null } },
-        { wikidata_death_date: { $ne: null } },
-      ],
-    }, { maxTimeMS: 25000 }),
-    db.collection('entities').countDocuments(
-      { wikidata_coordinates: { $ne: null } },
-      { maxTimeMS: 25000 },
-    ),
-    db.collection('entities').countDocuments(
-      { wikidata_id: { $ne: null } },
-      { maxTimeMS: 25000 },
-    ),
-
-    // Books by century — fast aggregation on books collection
-    db.collection('books').aggregate([
-      { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
-      {
-        $group: {
-          _id: {
-            $add: [
-              { $floor: { $divide: [{ $subtract: ['$year', 1] }, 100] } },
-              1,
-            ],
-          },
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ], { maxTimeMS: 15000 }).toArray(),
-  ]);
-
-  const heatmap = heatmapData.map((row) => ({
-    century: row._id as number,
-    type: 'book' as string,
-    count: row.count as number,
-  }));
-
-  const types: Record<string, number> = {};
-  for (const row of typeCounts) {
-    types[row.type] = row.count;
-  }
-
-  const dataSources = {
-    entities: {
-      label: 'Entity Index',
-      description: 'Extracted from AI-generated book indexes (people, places, concepts)',
-      count: totalEntities,
-    },
-    wikidata: {
-      label: 'Wikidata Alignment',
-      description: 'Entities linked to Wikidata via Wikipedia URLs and name matching',
-      count: withWikidata,
-      coverage: totalEntities > 0 ? +(withWikidata / totalEntities * 100).toFixed(1) : 0,
-    },
-    dates: {
-      label: 'Biographical Dates',
-      description: 'Birth/death years from Wikidata claims P569/P570',
-      count: withDates,
-    },
-    coordinates: {
-      label: 'Geographic Coordinates',
-      description: 'Lat/lon from Wikidata claim P625 (places) and P19 (birthplaces)',
-      count: withCoordinates,
-    },
-    books: {
-      label: 'Source Books',
-      description: 'Digitized historical texts from 13 partner libraries',
-      count: totalBooks,
-    },
-  };
-
-  // No try/catch: a thrown error during ISR revalidation keeps serving the
-  // last good page; catching it here would cache zeroed stats for the full
-  // 24h revalidate window (which is exactly what happened on 2026-07-04).
-  return {
-    totals: {
-      entities: totalEntities,
-      with_dates: withDates,
-      with_coordinates: withCoordinates,
-      with_wikidata: withWikidata,
-      books: totalBooks,
-    },
-    type_distribution: types,
-    heatmap,
-    top_entities_by_era: [],
-    data_sources: dataSources,
-  };
-}
-
 export default async function ExplorePage() {
-  const stats = canonicalEntitiesReadpathEnabled()
-    ? await fetchExploreStatsCanonical()
-    : await fetchExploreStats();
+  const stats = await fetchExploreStatsCanonical();
 
   return (
     <ContentPageLayout

@@ -1,6 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import digest from '@/data/pareto-sample-audit.json';
+import canonGapStatus from '../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
 
 import { publicExperiments, EXPERIMENTS, type ExperimentRecord, type ExperimentStatus } from '@/lib/experiments-index';
 
@@ -41,8 +40,11 @@ export function listExperiments(entries: ExperimentRecord[] = EXPERIMENTS): Expe
 
 /* ── Canon status: the newest scripts/catalog-coverage/results/canon-gap-status-YYYY-MM.json ── */
 
-const CANON_DIR = path.join(process.cwd(), 'scripts', 'catalog-coverage', 'results');
-const CANON_FILE = /^canon-gap-status-(\d{4}-\d{2})\.json$/;
+// A static import, not a readdir under process.cwd(): the file tracer cannot narrow a
+// cwd-relative path, so it shipped the whole repository with /quality — 500 MB on next 16.4,
+// past Vercel's 250 MB function limit (#7318). When a new month's file lands, move this
+// import to it; tests/unit/quality-center.test.ts fails until it does.
+export const CANON_STATUS_FILE = 'scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
 
 export type Tradition = {
   id: string;
@@ -58,11 +60,9 @@ export type Tradition = {
 
 export type CanonStatus = { file: string; generated_at: string; traditions: Tradition[] };
 
-export function latestCanonStatus(dir = CANON_DIR): CanonStatus {
-  const file = fs.readdirSync(dir).filter(f => CANON_FILE.test(f)).sort().pop();
-  if (!file) throw new Error(`no canon-gap-status-*.json in ${dir}`);
-  const j = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
-  return { file: `scripts/catalog-coverage/results/${file}`, generated_at: j.generated_at, traditions: j.traditions };
+export function latestCanonStatus(): CanonStatus {
+  const j = canonGapStatus as unknown as { generated_at: string; traditions: Tradition[] };
+  return { file: CANON_STATUS_FILE, generated_at: j.generated_at, traditions: j.traditions };
 }
 
 /**

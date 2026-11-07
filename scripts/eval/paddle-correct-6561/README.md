@@ -53,3 +53,12 @@ serve are a second job on main (`batch/review-brief.md`, written out in full).
    reads it but the review job), read back and hash-checked.
 5. `batch/cron.sh` (hourly on cloudlayer, `DRY=1` to rehearse): restarts a dead runner, comments progress every 6 h,
    and when the runner finishes uploads, starts `table-review-6561` on main through the box mesh, and removes itself.
+
+## gemini-3.1-flash-lite arms (#7263)
+
+Same rebuilt pages, drafts and plants; runner and P2 prompt in `scripts/eval/lite-correct-gpu-7263/` (PREREG there).
+`out-lite-correct` (the Gemini arms' correct prompt, image attached), `out-lite-noimg-correct` (no image),
+`out-lite-correct-r2` (repeat, 10 pages), `out-lite-p2-correct` (production-shaped prompt; `out-lite-p2-raw` is the raw
+reply, `p2-post.mjs` turns it into the scored row). `score.mjs` scores them beside the committed arms and adds
+`vs_paddle_ci95` and `wreck` to every arm's summary: `results/score-7263.json.gz`. Write-up:
+`scripts/eval/experiments/2026-10-24-lite-corrects-gpu-drafts-7263.md`.

@@ -1,0 +1,921 @@
+{
+ "pages": 250,
+ "outcomes": {
+  "corrected": 232,
+  "contain": 14,
+  "no-answer": 4
+ },
+ "correction_calls": 254,
+ "calls_per_page": 1.016,
+ "judge_calls": 62,
+ "ledger_rows_this_job": 316,
+ "cost_per_1k_pages_usd_at_plan_fee": 0.61,
+ "contains": [
+  {
+   "slug": "69c81aed6c6f3cc53c849851-p413",
+   "reason": "The image is cropped at the right margin, cutting off text at the ends of all lines.",
+   "true_contain": false
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p25",
+   "reason": "The draft transcribes page 5 (starting \"RAIMVNDVS. Hac vti debebant...\"), but this leaf is page 4 (with running header \"LIGNVM VITAE\" and text beginning \"rit. DIS. Tu ergo...\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p70",
+   "reason": "The draft is the text of page 50 (the next page / verso), whereas this image is page 49 (recto), titled \"IN IOANNEM BRACESCHVM GEBRI INTERPRETEM ANIMADVERSIO, AVthore Roberto Tauladano Aquitano.\"",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p115",
+   "reason": "The draft transcribes page 99 (signature N3) of the work, whereas this image is page 94 (catchword \"iam dictis\" leading to page 95).",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p137",
+   "reason": "The draft is from page 116 (Cap. VI, \"De praeparatione Iouis in speciali\"), whereas the image shows page 114 with the running header \"DE INVESTIGATIONE\" containing sections on \"Mundatio aluminum\", \"De uitro, & boracibus\", \"Mundatio aceti acerrimi\", and Cap. V (\"De praeparatione & melioratione corporum in genere\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p160",
+   "reason": "The draft transcribes page 136 (De Marte, Cap. XXXVII / Pars Quarta), whereas this image is page 135 (De Saturno, Cap. XXXIIII; De Ioue, Cap. XXXV; De Venere, Cap. XXXVI).",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p227",
+   "reason": "The draft transcribes page 198 containing chapters XXIII–XXVII, whereas this leaf is page 197 containing the title of the third part of Geber's work and chapters XIX–XXI.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p272",
+   "reason": "The draft transcribes page 243 (\"postea pone partem illius materiae...\"), whereas this image shows page 242 (\"LIBER SECRETORVM ALCHEMIAE.\" and the beginning of \"LOCI ALIQVOT PRACTICAE EX GEBERO DECLARATI\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p408",
+   "reason": "The draft transcribes page 132 (\"PRACTICA\"), but the image shows page 131 of Raymundus Lullus with headings on sublimation and fixation.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p430",
+   "reason": "The draft transcribes page 154 (\"DE ALCHIMIA\"), but this image is page 153 (\"RAYMVNDI LVLLII\") with completely different chapter sections and text.",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p475",
+   "reason": "The draft is from page 199 (De perfecto magisterio), whereas this image is page 198 (Aristoteles).",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p520",
+   "reason": "The draft transcribes page 243 (beginning \"id est spiritus:\"), whereas the image shows page 242 (running header \"DE THESAVRO\", beginning \"coniunctione apparentes\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p543",
+   "reason": "The draft transcribes page 266, whereas this image is page 265 (\"LAPIDIS PHILOSOPHICI NOMENCLATURAE\").",
+   "true_contain": true
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p565",
+   "reason": "The draft is from page 288, but the image shows page 287 of Geronticon Lib. I.",
+   "true_contain": true
+  }
+ ],
+ "no_answers": [
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p205",
+   "reason": "markers: reply cut before <<<END>>>"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p385",
+   "reason": "markers: reply cut before <<<END>>>"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p453",
+   "reason": "markers: reply cut before <<<END>>>"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p498",
+   "reason": "markers: reply cut before <<<END>>>"
+  }
+ ],
+ "changed_share": {
+  "corrected": 232,
+  "over_25pct_cap": [
+   [
+    "69dc557bcb6f7429748b8d13-p11",
+    0.576
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p15",
+    0.611
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p22",
+    0.468
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p25",
+    0.492
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p29",
+    0.458
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p32",
+    0.484
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p36",
+    0.333
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p39",
+    0.464
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p43",
+    0.394
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p46",
+    0.387
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p50",
+    0.551
+   ],
+   [
+    "69dc557bcb6f7429748b8d13-p54",
+    0.5
+   ],
+   [
+    "69b51e67768235dc65992a5f-p728",
+    0.257
+   ],
+   [
+    "69b51e67768235dc65992a5f-p760",
+    0.259
+   ],
+   [
+    "69b51e18efd8df28f2db058d-p34",
+    0.258
+   ],
+   [
+    "69b51e18efd8df28f2db058d-p158",
+    0.254
+   ],
+   [
+    "69b51e18efd8df28f2db058d-p442",
+    0.306
+   ],
+   [
+    "69b51e18efd8df28f2db058d-p460",
+    1.627
+   ],
+   [
+    "69b51eba47b06ecd581960d3-p76",
+    0.368
+   ],
+   [
+    "69b51eba47b06ecd581960d3-p188",
+    0.413
+   ],
+   [
+    "69b51eba47b06ecd581960d3-p207",
+    0.319
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p44",
+    0.619
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p168",
+    0.251
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p186",
+    0.335
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p280",
+    0.427
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p322",
+    0.857
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p362",
+    0.267
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p381",
+    0.291
+   ],
+   [
+    "69c81aed6c6f3cc53c849851-p544",
+    0.369
+   ],
+   [
+    "69bd9d726120d54bd0376d18-p75",
+    0.278
+   ],
+   [
+    "69bd9d726120d54bd0376d18-p316",
+    1.787
+   ],
+   [
+    "69b51e7f9a81ef7feb3d64c8-p40",
+    0.258
+   ],
+   [
+    "69b51e7f9a81ef7feb3d64c8-p172",
+    0.517
+   ],
+   [
+    "69b51e7f9a81ef7feb3d64c8-p257",
+    8.179
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p99",
+    0.429
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p153",
+    0.252
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p180",
+    0.28
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p205",
+    0.298
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p229",
+    0.385
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p242",
+    0.32
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p266",
+    0.342
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p292",
+    0.315
+   ],
+   [
+    "69af0a0a4c57359b8d2d0f49-p304",
+    0.327
+   ],
+   [
+    "69b638be1c1c21a373839d77-p14",
+    1.362
+   ],
+   [
+    "69b638be1c1c21a373839d77-p27",
+    0.536
+   ],
+   [
+    "69b638be1c1c21a373839d77-p41",
+    0.506
+   ],
+   [
+    "69b638be1c1c21a373839d77-p54",
+    0.918
+   ],
+   [
+    "69b638be1c1c21a373839d77-p67",
+    0.522
+   ],
+   [
+    "69b638be1c1c21a373839d77-p81",
+    0.443
+   ],
+   [
+    "69b638be1c1c21a373839d77-p94",
+    0.251
+   ],
+   [
+    "69b638be1c1c21a373839d77-p121",
+    0.318
+   ],
+   [
+    "69b638be1c1c21a373839d77-p147",
+    0.333
+   ],
+   [
+    "69b638be1c1c21a373839d77-p161",
+    0.382
+   ],
+   [
+    "69b638be1c1c21a373839d77-p174",
+    0.384
+   ],
+   [
+    "69b638be1c1c21a373839d77-p214",
+    0.277
+   ],
+   [
+    "69b638be1c1c21a373839d77-p227",
+    0.313
+   ],
+   [
+    "69b638be1c1c21a373839d77-p241",
+    0.401
+   ],
+   [
+    "69b638be1c1c21a373839d77-p254",
+    0.356
+   ],
+   [
+    "69b638be1c1c21a373839d77-p267",
+    0.394
+   ],
+   [
+    "69b638be1c1c21a373839d77-p281",
+    0.421
+   ],
+   [
+    "69b638be1c1c21a373839d77-p321",
+    0.435
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p47",
+    0.941
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p92",
+    0.915
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p182",
+    0.93
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p250",
+    0.979
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p295",
+    0.85
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p318",
+    0.91
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p340",
+    0.849
+   ],
+   [
+    "69bd9d056120d54bd0372a3a-p363",
+    1.049
+   ]
+  ],
+  "cli_ocr_cap_sees_zero_tokens": 232,
+  "median": 0.143
+ },
+ "opus_changed_share_same_measure": {
+  "corrected": 209,
+  "median": 0.149,
+  "over_25pct": 54
+ },
+ "c4": {
+  "shown": 231,
+  "misleading_L": [
+   100,
+   [
+    34.1,
+    46.2
+   ]
+  ],
+  "misleading_FC": [
+   30,
+   [
+    8.5,
+    16.6
+   ]
+  ],
+  "prefer": {
+   "FC": 210,
+   "L": 11,
+   "tie": 29
+  },
+  "material_loss_L": 80,
+  "material_loss_FC": 6,
+  "L_verdict_agreement_with_original_C_on_shown": {
+   "both_misleading": 62,
+   "c4_only": 20,
+   "orig_only": 22
+  },
+  "strip": {
+   "visible": 46,
+   "in_L": 8,
+   "in_FC": 0
+  }
+ },
+ "bar_a_halves": true,
+ "worse_pages": 11,
+ "bar_b_no_page_worse": false,
+ "worse_list": [
+  {
+   "slug": "69c81aed6c6f3cc53c849851-p381",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Hard page, right edge cropped. X drops 'non' ('qui biberit, sitiet'), which reverses the sense; Y drops 'ante' and garbles words. Y is less damaging"
+  },
+  {
+   "slug": "69c81aed6c6f3cc53c849851-p413",
+   "reasons": [
+    "false contain"
+   ],
+   "why": "FC serves L unchanged (not shown; original Step C L verdict)"
+  },
+  {
+   "slug": "69c81aed6c6f3cc53c849851-p507",
+   "reasons": [
+    "FC misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Right edge cropped; Y keeps only the cut text and loses 'non' and 'omnis' ('veram fide habere nisi'); X reads whole sentences"
+  },
+  {
+   "slug": "69c81aed6c6f3cc53c849851-p525",
+   "reasons": [
+    "L preferred, material"
+   ],
+   "why": "Right edge cropped; X marks each cut with '[...]', Y restores 'eſſe non potuiſſet', 'paganum', with f/ſ slips"
+  },
+  {
+   "slug": "69b51e7f9a81ef7feb3d64c8-p137",
+   "reasons": [
+    "FC misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y renders the recipe sign ℞ as '♃' (Jupiter/tin), inserting an ingredient-like symbol; X expands it as 'Recipe.' (X has minor 'quouis')"
+  },
+  {
+   "slug": "69af0a0a4c57359b8d2d0f49-p292",
+   "reasons": [
+    "FC misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y garbles ſ to f throughout and \"posterioritatemque\" to \"pofteritatemque\"; X faithful"
+  },
+  {
+   "slug": "69b638be1c1c21a373839d77-p281",
+   "reasons": [
+    "FC misleading, L not",
+    "L preferred, material"
+   ],
+   "why": "Y expands 'phibeā' as 'prohibeam' (forbid) instead of 'perhibeam' (bear witness to the truth); X keeps 'phibeā'"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p205",
+   "reasons": [
+    "no answer (markers: reply cut before <<<END>>>)"
+   ],
+   "why": "FC serves L unchanged (not shown; original Step C L verdict)"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p385",
+   "reasons": [
+    "no answer (markers: reply cut before <<<END>>>)"
+   ],
+   "why": "FC serves L unchanged (not shown; original Step C L verdict)"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p453",
+   "reasons": [
+    "no answer (markers: reply cut before <<<END>>>)"
+   ],
+   "why": "FC serves L unchanged (not shown; original Step C L verdict)"
+  },
+  {
+   "slug": "69bd9d056120d54bd0372a3a-p498",
+   "reasons": [
+    "no answer (markers: reply cut before <<<END>>>)"
+   ],
+   "why": "FC serves L unchanged (not shown; original Step C L verdict)"
+  }
+ ],
+ "c5": {
+  "shown": 231,
+  "misleading_FC": [
+   65,
+   [
+    21,
+    31.8
+   ]
+  ],
+  "misleading_O": [
+   30,
+   [
+    8.5,
+    16.6
+   ]
+  ],
+  "prefer": {
+   "FC": 37,
+   "O": 163,
+   "tie": 50
+  },
+  "material_loss_O": 13,
+  "material_loss_FC": 48,
+  "O_verdict_vs_c2": {
+   "c5_O_misleading": 30,
+   "c2_O_misleading": 31
+  }
+ },
+ "bar_c_stands_in_for_O": false,
+ "flash_correct_can_stand_in_for_opus": false,
+ "excluding_wrong_leaf_book": {
+  "pages": 225,
+  "L": 75,
+  "FC": 12,
+  "worse": 7,
+  "c5_FC": 48,
+  "c5_O": 5,
+  "c5_pref": {
+   "FC": 29,
+   "O": 163,
+   "tie": 33
+  }
+ },
+ "four_arms": {
+  "lite": {
+   "misleading": "C: 102 · C2: 111 · C4: 100"
+  },
+  "flash_reread": {
+   "misleading": 20,
+   "worse": 7,
+   "prefer_vs_L": {
+    "F": 201,
+    "L": 23,
+    "tie": 26
+   }
+  },
+  "opus_correct": {
+   "misleading": 31,
+   "worse": 1,
+   "prefer_vs_L": {
+    "O": 201,
+    "L": 2,
+    "tie": 47
+   },
+   "vs_F": {
+    "O": 30,
+    "F": 32,
+    "prefer": {
+     "O": 131,
+     "F": 43,
+     "tie": 76
+    }
+   }
+  },
+  "flash_correct": {
+   "misleading": 30,
+   "worse": 11,
+   "prefer_vs_L": {
+    "FC": 210,
+    "L": 11,
+    "tie": 29
+   },
+   "vs_O": {
+    "FC": 65,
+    "O": 30,
+    "prefer": {
+     "FC": 37,
+     "O": 163,
+     "tie": 50
+    }
+   }
+  }
+ },
+ "flash_reread_worse_pages_under_FC": [
+  {
+   "slug": "69b51e67768235dc65992a5f-p131",
+   "F_filter_cut": false,
+   "FC_outcome": "corrected",
+   "C4_FC": "flawed",
+   "C4_L": "flawed",
+   "prefer": "FC",
+   "FC_worse": false
+  },
+  {
+   "slug": "69b51e18efd8df28f2db058d-p353",
+   "F_filter_cut": false,
+   "FC_outcome": "corrected",
+   "C4_FC": "sound",
+   "C4_L": "misleading",
+   "prefer": "FC",
+   "FC_worse": false
+  },
+  {
+   "slug": "69b51eba47b06ecd581960d3-p49",
+   "F_filter_cut": false,
+   "FC_outcome": "corrected",
+   "C4_FC": "flawed",
+   "C4_L": "flawed",
+   "prefer": "FC",
+   "FC_worse": false
+  },
+  {
+   "slug": "69b51e7f9a81ef7feb3d64c8-p238",
+   "F_filter_cut": true,
+   "FC_outcome": "corrected",
+   "C4_FC": "flawed",
+   "C4_L": "flawed",
+   "prefer": "FC",
+   "FC_worse": false
+  },
+  {
+   "slug": "69af0a0a4c57359b8d2d0f49-p60",
+   "F_filter_cut": true,
+   "FC_outcome": "corrected",
+   "C4_FC": "flawed",
+   "C4_L": "misleading",
+   "prefer": "FC",
+   "FC_worse": false
+  },
+  {
+   "slug": "69af0a0a4c57359b8d2d0f49-p116",
+   "F_filter_cut": true,
+   "FC_outcome": "corrected",
+   "C4_FC": "flawed",
+   "C4_L": "flawed",
+   "prefer": "FC",
+   "FC_worse": false
+  },
+  {
+   "slug": "69b638be1c1c21a373839d77-p174",
+   "F_filter_cut": false,
+   "FC_outcome": "corrected",
+   "C4_FC": "flawed",
+   "C4_L": "flawed",
+   "prefer": "tie",
+   "FC_worse": false
+  }
+ ],
+ "second_family_judge": {
+  "pages": 60,
+  "parsed": 59,
+  "calls": 62,
+  "gemini": {
+   "prefer": {
+    "O": 56,
+    "L": 3,
+    "tie": 0
+   },
+   "misleading_O": 0,
+   "misleading_L": 27
+  },
+  "opus_same_pages": {
+   "prefer": {
+    "O": 58,
+    "L": 0,
+    "tie": 1
+   },
+   "misleading_O": 1,
+   "misleading_L": 27
+  },
+  "gemini_L_where_opus_O": 3,
+  "gemini_O_where_opus_L": 0,
+  "same_preference": 55,
+  "self_preference_suspected": false
+ },
+ "by_book": [
+  {
+   "book_id": "69dc557bcb6f7429748b8d13",
+   "year": 1500,
+   "L": 15,
+   "FC": 2,
+   "worse": 0,
+   "c4_pref": {
+    "FC": 25,
+    "L": 0,
+    "tie": 0
+   },
+   "c5_FC": 16,
+   "c5_O": 0,
+   "c5_pref": {
+    "FC": 0,
+    "O": 25,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51e67768235dc65992a5f",
+   "year": 1661,
+   "L": 4,
+   "FC": 0,
+   "worse": 0,
+   "c4_pref": {
+    "FC": 21,
+    "L": 2,
+    "tie": 2
+   },
+   "c5_FC": 3,
+   "c5_O": 3,
+   "c5_pref": {
+    "FC": 7,
+    "O": 15,
+    "tie": 3
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51e18efd8df28f2db058d",
+   "year": 1586,
+   "L": 17,
+   "FC": 3,
+   "worse": 0,
+   "c4_pref": {
+    "FC": 25,
+    "L": 0,
+    "tie": 0
+   },
+   "c5_FC": 8,
+   "c5_O": 0,
+   "c5_pref": {
+    "FC": 1,
+    "O": 23,
+    "tie": 1
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51eba47b06ecd581960d3",
+   "year": 1554,
+   "L": 18,
+   "FC": 0,
+   "worse": 0,
+   "c4_pref": {
+    "FC": 25,
+    "L": 0,
+    "tie": 0
+   },
+   "c5_FC": 7,
+   "c5_O": 1,
+   "c5_pref": {
+    "FC": 1,
+    "O": 24,
+    "tie": 0
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69c81aed6c6f3cc53c849851",
+   "year": 1708,
+   "L": 6,
+   "FC": 3,
+   "worse": 4,
+   "c4_pref": {
+    "FC": 17,
+    "L": 3,
+    "tie": 5
+   },
+   "c5_FC": 2,
+   "c5_O": 0,
+   "c5_pref": {
+    "FC": 3,
+    "O": 17,
+    "tie": 5
+   },
+   "outcomes": {
+    "corrected": 24,
+    "contain": 1
+   }
+  },
+  {
+   "book_id": "69bd9d726120d54bd0376d18",
+   "year": 1598,
+   "L": 4,
+   "FC": 1,
+   "worse": 0,
+   "c4_pref": {
+    "FC": 24,
+    "L": 1,
+    "tie": 0
+   },
+   "c5_FC": 2,
+   "c5_O": 0,
+   "c5_pref": {
+    "FC": 5,
+    "O": 14,
+    "tie": 6
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b51e7f9a81ef7feb3d64c8",
+   "year": 1616,
+   "L": 2,
+   "FC": 1,
+   "worse": 1,
+   "c4_pref": {
+    "FC": 23,
+    "L": 1,
+    "tie": 1
+   },
+   "c5_FC": 1,
+   "c5_O": 0,
+   "c5_pref": {
+    "FC": 4,
+    "O": 14,
+    "tie": 7
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69af0a0a4c57359b8d2d0f49",
+   "year": 1665,
+   "L": 6,
+   "FC": 1,
+   "worse": 1,
+   "c4_pref": {
+    "FC": 20,
+    "L": 2,
+    "tie": 3
+   },
+   "c5_FC": 6,
+   "c5_O": 1,
+   "c5_pref": {
+    "FC": 3,
+    "O": 17,
+    "tie": 5
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69b638be1c1c21a373839d77",
+   "year": 1522,
+   "L": 3,
+   "FC": 1,
+   "worse": 1,
+   "c4_pref": {
+    "FC": 22,
+    "L": 2,
+    "tie": 1
+   },
+   "c5_FC": 3,
+   "c5_O": 0,
+   "c5_pref": {
+    "FC": 5,
+    "O": 14,
+    "tie": 6
+   },
+   "outcomes": {
+    "corrected": 25
+   }
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "year": 1561,
+   "L": 25,
+   "FC": 18,
+   "worse": 4,
+   "c4_pref": {
+    "FC": 8,
+    "L": 0,
+    "tie": 17
+   },
+   "c5_FC": 17,
+   "c5_O": 25,
+   "c5_pref": {
+    "FC": 8,
+    "O": 0,
+    "tie": 17
+   },
+   "outcomes": {
+    "contain": 13,
+    "corrected": 8,
+    "no-answer": 4
+   }
+  }
+ ]
+}

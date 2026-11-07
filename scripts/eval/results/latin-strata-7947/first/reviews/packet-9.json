@@ -1,0 +1,657 @@
+[
+  {
+    "book_id": "69b52bdad6bd9f58edb24fe0",
+    "slot": 8,
+    "title": "Hugonis Satiliensis geomantia et alia aliorum opera",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 13th-century Latin miscellany (Laurenziana) of geomancy, Arabic-derived astrology (hyleg/alchochoden) and alchemical recipes. It belongs on an occult-sciences shelf, though no collection is set.",
+    "rights_flag": null,
+    "structure_note": "190 pages, all OCR'd, 174 translated. The three pages read are the right leaves in order (folio 19, an astrology leaf, folio 66). Nothing structural stands out; the defects are in the reading of the heavily abbreviated hand.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 47,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "(nothing; transcription starts at 'Via a’ p’fecta')",
+            "image": "top line 'ex eis res q' n' e' nob' cte. & potentia' n'ram uerum…' above the V initial",
+            "problem": "first line of column a dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "& alios.",
+            "image": "'& alios' followed by a red rubric 'q[ue] sequuntur capitula'",
+            "problem": "red rubric dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "& t’deur’ plus sac’.",
+            "image": "'& deus plus scit.' (the closing formula of each geomantic sign)",
+            "problem": "'and God knows more' misread as unintelligible abbreviations, which are then translated as 'it is dragged more, and sacred'; repeated in column b",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Ista su’t sig’ua’ amilioriu’ & p’p’ito’nu’ ex o’ib’s reb’s",
+            "image": "'Ista sunt signa amissionum & perditionum ex omnib(us) reb(us)'",
+            "problem": "'signs of losses and perditions' read as 'amilioriu'/p'p'ito'nu'', translated as 'signs of the better and of the preparations', which reverses the sense",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "Hoc e’ signu’ paup’tat’ & i’enit’ olau’ & amilior’",
+            "image": "'Hoc est signum paupertatis & ieiunii … & amission(is)'",
+            "problem": "garbled abbreviation expansion throughout; most sign-lists are pseudo-Latin ('i'enit'', 'u'etene'tic'')",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "& ag’z & foueaz & gloloriu’ & d’e’lau’oy",
+            "image": "'& agrorum & fovearum & … & thesauroru(m) & exercitu(um)'",
+            "problem": "'treasures and armies' lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Hoc e’ signu’ paup’tat’ & i’enit’ olau’ … & i’mari vene’ & i’vito.",
+            "english": "This is the sign of poverty and of the finding of oil … and to marry the vein, and in the guest.",
+            "problem": "confident English built on OCR gibberish with no uncertainty marker; most of the page reads as word salad",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Ista su’t sig’ua’ amilioriu’ & p’p’ito’nu’",
+            "english": "These are the signs of the better and of the preparations",
+            "problem": "the source says signs of losses and perditions; the reader gets the opposite",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "pangracii",
+            "english": "pancratium <note>a Greek term for all-in wrestling, here likely meaning a struggle or contest</note>",
+            "problem": "a confident note explaining a misread",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented apparatus: <note>A woodcut-like illustration of various geomantic figures appears in the margins</note> on a manuscript with dot figures",
+            "severity": "minor"
+          },
+          {
+            "note": "<insert> tags and a bare <note>19</note> in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 94,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "celi. Et ei natiuita<unclear>s</unclear> si fuerit uicior annis Almuten",
+            "image": "'celi. Et ei nadir. Si fuerit prior gradus ascendentis…'",
+            "problem": "first lines reconstructed into different Latin",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "(not transcribed; text runs straight to 'Accipe')",
+            "image": "red rubric '…ex medio celi' before the A initial",
+            "problem": "rubric dropped",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Et ueneris et domino domus eius … nocte ex ueneris … Aspice lunam",
+            "image": "the same abbreviated planet/word (looks like 'satno'/'latno') each time",
+            "problem": "one abbreviation is rendered as Venus in some places and as the Moon in others, so at least one reading is wrong; the hyleg rule (which luminary by day, which by night) becomes unreliable",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "many lines e.g. 'Et pika quatuor ad aliquem', 'pibit per in nocte'",
+            "image": "dense abbreviations not resolved",
+            "problem": "many lines smoothed into plausible but unfaithful Latin",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Et pika quatuor ad aliquem",
+            "english": "And select four to someone",
+            "problem": "unintelligible OCR rendered as fluent English, no uncertainty marker",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "nocte ex ueneris",
+            "english": "at night from Venus",
+            "problem": "carries the wrong planet into a technical rule, with no hedge",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>A large red initial A with blue penwork.</meta> and <note> page descriptions in the reading flow",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 141,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "et pone ipsum in olla",
+            "image": "'& pone ipsum in sole' (first recipe)",
+            "problem": "'put it in the sun' read as 'in a pot'; a process step changes",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "fiat rubeum colore auri … et erit sicut aurum",
+            "image": "'fiat … colore arg(enti)' / '& stagni & erit arg(entu)m'",
+            "problem": "silver (arg^ti, arg^m) read as gold more than once: whitening and silvering recipes become gold-making recipes",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "Molle de sulphure vivo",
+            "image": "'Molle de sulphure citrino'",
+            "problem": "citrine sulphur read as live sulphur",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "column b paragraphs (e.g. 'Si vis de rubeo facere aurum … de aqua sicca')",
+            "image": "different wording, with chapter markers ('C[apitulum]') and red initials",
+            "problem": "much of column b is reconstructed, not read",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "et erit sicut aurum",
+            "english": "and it will be like gold",
+            "problem": "translates the OCR faithfully, but gives a gold claim that the image (silver) does not make; fluent over garble elsewhere ('then flee with the water of gold with the water of alum-water')",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "lune callem",
+            "english": "moon-path <note>likely a specific prepared solution</note>",
+            "problem": "invented gloss on a misread",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real geomancy, astrology and alchemy manuscript, but the OCR does not read its abbreviations; it reconstructs them. Signs of loss become 'signs of the better', silver becomes gold, and the translation dresses the garble as fluent English. Not showable as a reading text."
+  },
+  {
+    "book_id": "6a08514149638a50931b85a3",
+    "slot": 57,
+    "title": "De fascino libri tres (Leonardo Vairo, Venice: Aldine, 1589)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A 16th-century demonological treatise on fascination and the evil eye; it belongs on an early-modern magic/occult shelf.",
+    "rights_flag": true,
+    "structure_note": "348 pages, 348 OCR'd, 345 translated. Printed page numbers 62, 148 and 334 fall at image positions 87, 173 and 259, which is consistent. The scans show a strip of the facing page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 87,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Rerum causae diuersae.</margin> placed before 'Fascinum praeterea'",
+            "image": "the side-notes sit beside slightly different lines",
+            "problem": "marginal notes repositioned between paragraphs; paragraph breaks invented",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 173,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "*et imparem numerum marem, et parem foeminam dicit; …*",
+            "english": "Macrobius gives the reason for this: \"He calls the odd number male …\"",
+            "problem": "the OCR's italics (the whole page is italic) are turned into quotation marks, so Vairo's paraphrase is presented as a Macrobius quotation",
+            "severity": "minor"
+          },
+          {
+            "source": "margin notes",
+            "english": "three margins moved to the end of the page",
+            "problem": "side-notes detached from their passages",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 259,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>cet, ad / biben / Pro pue / dunt / …</margin>",
+            "image": "line-ends of the facing page (p.335) visible at the right edge",
+            "problem": "the neighbour strip is transcribed as this page's marginalia",
+            "severity": "moderate",
+            "class": "I4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Contra viros probos pro improbis deprecantes, illos floccifaciendos … inculcant.",
+            "english": "Against those who pray for the righteous instead of the wicked, they inculcate that they are to be despised",
+            "problem": "the source means honest men who pray FOR the wicked; the English invents 'instead of' and makes the righteous the object",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "[Chri]stum eius sponsum penitus tollere, vel contumelijs afficere docent.",
+            "english": "as her spouse, or to treat Him with insults.",
+            "problem": "'they teach [men] to do away entirely with Christ her spouse' is dropped at the seam; the fragment has no verb",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "omnes luxuriae turpes & nefandos modos",
+            "english": "all base and nefarious modes of luxury",
+            "problem": "luxuria here means lust, not luxury",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented placeholder '<margin>... [partial marginalia fragments preserved from OCR] ...</margin>' in the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "<summary> and <keywords> tags in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean Aldine print with good OCR and mostly sound translation. One sense reversal on p.334 and some tag leaks. [rights note redacted]"
+  },
+  {
+    "book_id": "69f337b3876dd827cbc529da",
+    "slot": 17,
+    "title": "Pontificalis liber",
+    "tradition": null,
+    "shelf_fit": "doubtful",
+    "shelf_note": "A Roman Pontifical (liturgy for episcopal rites, 1485/1490 edition) with hand illumination. It is liturgy, not esoteric or early-modern science, and no collection is assigned.",
+    "rights_flag": null,
+    "structure_note": "Only 31 images of a book whose folios run past cc.xxxij: a selection of illuminated leaves, not the whole book (Harvard). The OCR tags the pages as <script>handwritten</script>, but p.16 says the chant was 'per errorem sine notis impressa', so this is a printed book with hand decoration.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "mysteria capiamus in omnibus",
+            "image": "'mysteriis capiam(us) i(n) moribus'",
+            "problem": "'in our ways of life' normalized to 'in all things'",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "hortatur eos communiter ad beniuolendum",
+            "image": "'ad beneuiuendu(m)'",
+            "problem": "'to living well' read as 'to goodwill'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Dicto pontifex",
+            "image": "'Quo dicto pontifex'",
+            "problem": "rubricated 'Quo' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "(no source on this page)",
+            "english": "patriarchal or archiepiscopal, by name of appeal: that you may use in your church on certain days … the pametias … having been dismissed … Concerning the blessing of an abbot.",
+            "problem": "a whole paragraph about the pallium, plus a heading, appended after a <column-break/>. It is neither in the OCR nor on the image; it comes from another page",
+            "severity": "serious",
+            "class": "T14"
+          },
+          {
+            "source": "pametias",
+            "english": "<gloss>likely a corruption of *panetias* or specific liturgical alms</gloss>",
+            "problem": "invented gloss on text not on this page",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta> image description at the top of the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "(nothing)",
+            "image": "the chant text under the staves in column a: 'Ne reminiscaris domine delicta nostra vel parentum nostrorum neque vindictam sumas de peccatis nostris'",
+            "problem": "the whole antiphon text is silently omitted; only the image-desc mentions notation",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "per crucem sine notis impla-",
+            "image": "'per errore(m) sine notis impressa'",
+            "problem": "the printer's note ('printed above by mistake without notes') is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Domine cliam e-dificet: p-usque po-tificis in-diao lo-cus",
+            "image": "decorated initial N: 'Nemo eccliam edificet: priusq(uam) pontificis iudicio locus atrii designetur'",
+            "problem": "the N initial is read as 'Domine'; 'No one shall build a church' becomes 'Lord … build'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "caption over the miniature 'Dne ne in fu[rore] … edificanda'",
+            "problem": "caption dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Domine cliam e-dificet: p-usque po-tificis in-diao lo-cus atrui de dignetur",
+            "english": "May the Lord build the church: and until the pontiff indicates the place of the atrium, may he deign",
+            "problem": "a prohibition (no one may build a church before the bishop has designated the site) becomes a prayer that the Lord build it; the rule is reversed",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "per crucem sine notis",
+            "english": "through the cross without notes",
+            "problem": "meaningless; the source is a printer's erratum",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 24,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>cc.xxxix.</page-num>",
+            "image": "'cc.xxxij.'",
+            "problem": "folio numeral misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Uimiterius benedictus seu pollu-tum",
+            "image": "'Quando Cimiterium benedictum violatum seu pollutum'",
+            "problem": "'Quando' and 'violatum' dropped at the decorated initial",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Per omnia etc.",
+            "image": "'Per d(omi)n(u)m &c.'",
+            "problem": "conclusion formula misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ubi sup faldiston-iu pcubat",
+            "english": "where he sits upon the faldstool",
+            "problem": "procumbat = kneels/prostrates on the faldstool, not sits",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "dictione tua maneant scificati",
+            "english": "...by your word may they remain sanctified",
+            "problem": "the split word bene-dictione (blessing) is rendered 'word'",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> tags in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A beautifully illuminated printed Pontifical, but the record is a 31-leaf selection. The pages contain a paragraph translated from another page, a dropped antiphon, and a church-building prohibition turned into a prayer. Fix before showing, and the shelf is doubtful."
+  },
+  {
+    "book_id": "6a26b95961b3857ed05a93d5",
+    "slot": 109,
+    "title": "Michael Alberti, Physices propositiones et positiones fundamentales (1721)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Stahlian physician's treatise on physics vs medicine, discussing Paracelsus, Helmont and the Archeus. It fits early-modern science/medicine.",
+    "rights_flag": null,
+    "structure_note": "pages_count 88, but only 25 pages are OCR'd and translated (eligible 25): about 70% of the book has no text. The page numbers read (7, 13, 19) match the image positions.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "motus et ratione et relatione figurarum",
+            "image": "'motus e ratione & relatione figurarum'",
+            "problem": "'e' (from) read as 'et'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Subinde 11) Physica",
+            "english": "Sometimes 11) Physics",
+            "problem": "subinde = next/further, in a numbered list",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> tags in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "sim in rebus naturalibus aeque ac supranaturalibus tam integer & purus intellectus praesupponi potest.",
+            "english": "sim in natural things just as in supernatural ones, such an intact and pure intellect cannot be presupposed.",
+            "problem": "'can be presupposed' turned into 'cannot'. The negation may sit on the previous page (the sentence starts there), so this may be a seam guess, not an outright inversion",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<note>continues from previous page</note> followed by the untranslated fragment 'sim'",
+            "severity": "minor",
+            "class": "T15"
+          },
+          {
+            "note": "<summary> and <keywords> tags in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Conf. Stahlii Opusc. Phys. chym. Med. p. 197. seqq.</margin>",
+            "image": "an inline italic reference line in the text block, not a side-note",
+            "problem": "furniture mis-tagged",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "diversi illi principes certis partibus corporis praepositi, a Dolaeo … depraedicati",
+            "english": "those diverse principles set over certain parts of the body",
+            "problem": "principes = princes/rulers (Dolaeus's named governors of body parts), not principles",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good OCR and generally faithful translation of a clean 1721 print. One possible negation slip at a page seam and summary-tag leaks. Only 25 of 88 pages have text."
+  },
+  {
+    "book_id": "6a4ba12edebad28d8e8dddbf",
+    "slot": 106,
+    "title": "Assertiones physiologicae de generica differentia partium humani corporis (Bokelius / Balber, Wittenberg)",
+    "tradition": null,
+    "shelf_fit": "fits",
+    "shelf_note": "A Wittenberg physiology disputation on Galen's Ars parva. It fits early-modern medicine.",
+    "rights_flag": null,
+    "structure_note": "22 pages, 22 OCR'd, only 13 translated. Page 7 is a handwritten contents list of other dissertations bound in the same volume (items 37–42), so the scan carries Sammelband material. place_published 'Berlin' is probably the holding library (SBB), not the imprint (Wittenberg), and published is 'Unknown'.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>s.</margin> … <margin>649</margin> … <margin>id</margin> <margin>els</margin> <margin>is</margin>",
+            "image": "letters at the left edge belonging to the facing page",
+            "problem": "neighbour-page strip read as marginalia, and carried into the translation",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "40. de Heine de mare.",
+            "image": "'de Feine de mare.' (initial could be F)",
+            "problem": "possible name misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<margin>ia</margin> <margin>649</margin>",
+            "english": "<margin>ia</margin> <margin>649</margin>",
+            "problem": "stub fragments kept in the reader text",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<summary> and <keywords> tags in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean thesis pages, read and translated well. The only blemishes are a neighbour-strip margin on the handwritten contents leaf and incomplete translation (13 of 22 pages)."
+  }
+]

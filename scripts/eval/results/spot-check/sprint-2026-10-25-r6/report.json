@@ -1,0 +1,785 @@
+{
+ "issue": 5914,
+ "date": "2026-10-25",
+ "typed": {
+  "headline": {
+   "n": 9,
+   "any_serious": {
+    "k": 2,
+    "n": 9,
+    "rate": 0.2222222222222222,
+    "ci": [
+     0.06322510654056959,
+     0.5474110333077882
+    ]
+   },
+   "inventing": {
+    "k": 1,
+    "n": 9,
+    "rate": 0.1111111111111111,
+    "ci": [
+     0.01989088741690992,
+     0.4349997083707909
+    ]
+   },
+   "by_kind": {
+    "confabulation": {
+     "k": 1,
+     "n": 9,
+     "rate": 0.1111111111111111,
+     "ci": [
+      0.01989088741690992,
+      0.4349997083707909
+     ]
+    },
+    "recitation": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "wrong_leaf": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "carry_over": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "show_through": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "illegible_fill": {
+     "k": 1,
+     "n": 9,
+     "rate": 0.1111111111111111,
+     "ci": [
+      0.01989088741690992,
+      0.4349997083707909
+     ]
+    },
+    "misread": {
+     "k": 2,
+     "n": 9,
+     "rate": 0.2222222222222222,
+     "ci": [
+      0.06322510654056959,
+      0.5474110333077882
+     ]
+    },
+    "mistranslation": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "omission": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "layout": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "added_gloss": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    },
+    "other": {
+     "k": 0,
+     "n": 9,
+     "rate": 0,
+     "ci": [
+      0,
+      0.299145051727044
+     ]
+    }
+   }
+  },
+  "by_exposure": {
+   "served": {
+    "n": 9,
+    "any_serious": {
+     "k": 2,
+     "n": 9,
+     "rate": 0.2222222222222222,
+     "ci": [
+      0.06322510654056959,
+      0.5474110333077882
+     ]
+    },
+    "inventing": {
+     "k": 1,
+     "n": 9,
+     "rate": 0.1111111111111111,
+     "ci": [
+      0.01989088741690992,
+      0.4349997083707909
+     ]
+    },
+    "by_kind": {
+     "confabulation": {
+      "k": 1,
+      "n": 9,
+      "rate": 0.1111111111111111,
+      "ci": [
+       0.01989088741690992,
+       0.4349997083707909
+      ]
+     },
+     "recitation": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "wrong_leaf": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "carry_over": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "show_through": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "illegible_fill": {
+      "k": 1,
+      "n": 9,
+      "rate": 0.1111111111111111,
+      "ci": [
+       0.01989088741690992,
+       0.4349997083707909
+      ]
+     },
+     "misread": {
+      "k": 2,
+      "n": 9,
+      "rate": 0.2222222222222222,
+      "ci": [
+       0.06322510654056959,
+       0.5474110333077882
+      ]
+     },
+     "mistranslation": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "omission": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "layout": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "added_gloss": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     },
+     "other": {
+      "k": 0,
+      "n": 9,
+      "rate": 0,
+      "ci": [
+       0,
+       0.299145051727044
+      ]
+     }
+    }
+   },
+   "withheld": {
+    "n": 1,
+    "any_serious": {
+     "k": 0,
+     "n": 1,
+     "rate": 0,
+     "ci": [
+      0,
+      0.7934506882081973
+     ]
+    },
+    "inventing": {
+     "k": 0,
+     "n": 1,
+     "rate": 0,
+     "ci": [
+      0,
+      0.7934506882081973
+     ]
+    },
+    "by_kind": {
+     "confabulation": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "recitation": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "wrong_leaf": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "carry_over": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "show_through": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "illegible_fill": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "misread": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "mistranslation": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "omission": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "layout": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "added_gloss": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     },
+     "other": {
+      "k": 0,
+      "n": 1,
+      "rate": 0,
+      "ci": [
+       0,
+       0.7934506882081973
+      ]
+     }
+    }
+   },
+   "no_english": {
+    "n": 0,
+    "any_serious": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "ci": null
+    },
+    "inventing": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "ci": null
+    },
+    "by_kind": {
+     "confabulation": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "recitation": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "wrong_leaf": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "carry_over": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "show_through": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "illegible_fill": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "misread": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "mistranslation": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "omission": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "layout": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "added_gloss": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "other": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     }
+    }
+   },
+   "hidden": {
+    "n": 0,
+    "any_serious": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "ci": null
+    },
+    "inventing": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "ci": null
+    },
+    "by_kind": {
+     "confabulation": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "recitation": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "wrong_leaf": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "carry_over": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "show_through": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "illegible_fill": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "misread": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "mistranslation": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "omission": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "layout": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "added_gloss": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     },
+     "other": {
+      "k": 0,
+      "n": 0,
+      "rate": null,
+      "ci": null
+     }
+    }
+   }
+  },
+  "all": {
+   "n": 10,
+   "any_serious": {
+    "k": 2,
+    "n": 10,
+    "rate": 0.2,
+    "ci": [
+     0.05668215093776685,
+     0.5098375308778678
+    ]
+   },
+   "inventing": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.017876212896073995,
+     0.4041500295247722
+    ]
+   },
+   "by_kind": {
+    "confabulation": {
+     "k": 1,
+     "n": 10,
+     "rate": 0.1,
+     "ci": [
+      0.017876212896073995,
+      0.4041500295247722
+     ]
+    },
+    "recitation": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "wrong_leaf": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "carry_over": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "show_through": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "illegible_fill": {
+     "k": 1,
+     "n": 10,
+     "rate": 0.1,
+     "ci": [
+      0.017876212896073995,
+      0.4041500295247722
+     ]
+    },
+    "misread": {
+     "k": 2,
+     "n": 10,
+     "rate": 0.2,
+     "ci": [
+      0.05668215093776685,
+      0.5098375308778678
+     ]
+    },
+    "mistranslation": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "omission": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "layout": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "added_gloss": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    },
+    "other": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci": [
+      0,
+      0.2775328030260577
+     ]
+    }
+   }
+  },
+  "books": 10,
+  "pages": 30,
+  "dropped_pages": 20
+ },
+ "fortnight": {
+  "books": 10,
+  "pages": 30,
+  "pages_with_serious": 7,
+  "serious_errors": 16,
+  "page_rate": 0.23333333333333334,
+  "page_rate_ci": [
+   0.06666666666666667,
+   0.4666666666666667
+  ],
+  "books_on_sight_defect": 8,
+  "book_defect_rate": 0.8,
+  "book_defect_rate_ci": [
+   0.5,
+   1
+  ]
+ },
+ "window": {
+  "runs": [
+   "2026-10-25"
+  ],
+  "books": 10,
+  "pages": 30,
+  "pages_with_serious": 7,
+  "serious_errors": 16,
+  "page_rate": 0.23333333333333334,
+  "page_rate_ci": [
+   0.06666666666666667,
+   0.4666666666666667
+  ],
+  "books_on_sight_defect": 8,
+  "book_defect_rate": 0.8,
+  "book_defect_rate_ci": [
+   0.5,
+   1
+  ]
+ },
+ "window_days": 56,
+ "top_classes": [
+  {
+   "class": "O6",
+   "score": 21,
+   "pages": 9
+  },
+  {
+   "class": "T8",
+   "score": 21,
+   "pages": 10
+  },
+  {
+   "class": "D1",
+   "score": 15,
+   "pages": 12
+  }
+ ],
+ "window_top_classes": [
+  {
+   "class": "O6",
+   "score": 21,
+   "pages": 9
+  },
+  {
+   "class": "T8",
+   "score": 21,
+   "pages": 10
+  },
+  {
+   "class": "D1",
+   "score": 15,
+   "pages": 12
+  }
+ ]
+}

@@ -30,7 +30,7 @@ const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('
 const LIMIT = parseInt(args.limit) || 0;
 const DELAY = parseInt(args['delay-ms']) || 1000;
 const DRY = 'dry-run' in args;
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; j.d.lomas@tudelft.nl)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const OAI = 'https://digi.ub.uni-heidelberg.de/cgi-bin/digioai.cgi';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const unxml = s => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").trim();
@@ -54,7 +54,7 @@ const { client, db } = await getScriptClient({ noTimeout: true });
 const col = db.collection('import_candidates');
 const filter = { source: 'heidelberg', status: 'discovered', heidelberg_resolved_at: { $exists: false } };
 const total = await col.countDocuments(filter);
-const cur = col.find(filter, { projection: { oai_id: 1, manifest_url: 1, title: 1, language: 1 } }).sort({ _id: 1 });
+const cur = col.find(filter, { projection: { oai_id: 1, manifest_url: 1, title: 1, language: 1 } }).batchSize(1000).sort({ _id: 1 });
 console.log(`[resolve-heidelberg] ${total} unresolved candidates${LIMIT ? `, limit ${LIMIT}` : ''}${DRY ? ' (dry run)' : ''}, 1 req / ${DELAY}ms`);
 
 let n = 0, ok = 0, noManifest = 0, err = 0, dupUrl = 0;

@@ -19,12 +19,32 @@
  * keeps new writers out: tests/unit/page-counter-writers.test.ts.
  */
 
-/** Match fragment selecting only visible (renderable) pages. */
-export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 } };
+import { isLazyPagesBook } from './pages-state.mjs';
 
-/** True iff a page renders in the reader (soft-hidden pages have page_number <= 0). */
+/**
+ * Match fragment: pages that are not a hidden repeat capture (#5056). A page
+ * with `repeat_of` (the `id` of the kept capture of the same leaf) keeps its
+ * page_number and id, so shortlinks and citations still resolve, but no reader
+ * list, counter or OCR/translation lane sees it. `null`, not `$exists`, so a
+ * restore that `$set`s null instead of `$unset`ting still restores.
+ */
+export const NOT_REPEAT_CAPTURE = { repeat_of: null };
+
+/** Match fragment selecting only visible (renderable) pages. */
+export const VISIBLE_PAGE_MATCH = { page_number: { $gt: 0 }, ...NOT_REPEAT_CAPTURE };
+
+/** True iff a page is a hidden repeat capture of another page (#5056). */
+export function isRepeatCapture(page) {
+  return page?.repeat_of != null;
+}
+
+/**
+ * True iff a page renders in the reader (soft-hidden pages have page_number <= 0;
+ * repeat captures carry `repeat_of`). A caller's projection must include
+ * `repeat_of`, or a repeat reads as visible.
+ */
 export function isVisiblePage(page) {
-  return (page?.page_number ?? 0) > 0;
+  return (page?.page_number ?? 0) > 0 && !isRepeatCapture(page);
 }
 
 /** True iff a page carries non-empty OCR text. */
@@ -361,7 +381,11 @@ export function initialPageCounters(n) {
  * reconciler fills `pages_translatable` on the books created without it (#5326).
  */
 export function diffPageCounters(book, stats) {
-  const after = pageCountersFromStats(stats);
+  // A manifest-only book (#7343 lazy pages) has no page docs BY DESIGN, or only
+  // part of them while materializePages() is writing. Its true count is the
+  // declared one, every page pending — never a recount of what exists yet, which
+  // would zero it and drop it from every `pages_count > 0` filter within 2 h.
+  const after = isLazyPagesBook(book) ? initialPageCounters(book.pages_count) : pageCountersFromStats(stats);
   const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book?.[c] ?? null]));
   const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
   return { before, after, changed };
@@ -382,6 +406,21 @@ export function recountSet(after, now) {
     pages_archived: after.pages_archived,
     page_counts_at: now,
   };
+}
+
+/**
+ * `last_translation_at` when a recount finds MORE translated pages than were stored
+ * ({} otherwise). The homepage "Recently Translated" slider and the library's
+ * recent-translation sort read this field, and only the old translate-worker set it:
+ * on 2026-10-27, 274 of the 279 public books the CLI lanes translated that week
+ * carried no stamp, so none of them appeared on either surface. Stamping it at the
+ * one counter writer covers every lane. A retranslation over existing English does
+ * not move the count and is not stamped.
+ */
+export function translationAdvancedSet(before, after, now) {
+  // A book never counted before (null) is not stamped: its pages may be years old.
+  const was = before?.pages_translated;
+  return typeof was === 'number' && (after?.pages_translated ?? 0) > was ? { last_translation_at: now } : {};
 }
 
 /**
@@ -421,13 +460,13 @@ export async function recountBook(db, bookId, { reason, now = new Date() } = {})
   if (typeof reason !== 'string' || reason === '') throw new Error('recountBook: pass { reason } naming the caller');
 
   const books = db.collection('books');
-  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1 };
+  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1, pages_state: 1 };
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
   const { before, after, changed } = diffPageCounters(book, row);
   if (!book) return { matched: false, reason, before: null, after, changed: [] };
 
-  const $set = recountSet(after, now);
+  const $set = { ...recountSet(after, now), ...translationAdvancedSet(before, after, now) };
   const state = computeTranslationState(after, { language: book.language, content_type: book.content_type });
   const stored = book.translation_state;
   if (translationStateChanged(stored, state)) $set.translation_state = { ...state, computed_at: now };

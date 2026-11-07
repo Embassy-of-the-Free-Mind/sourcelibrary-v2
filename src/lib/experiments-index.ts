@@ -28,7 +28,15 @@ export type ExperimentRecord = {
   /** null when the write-up has no header yet (the weekly garden lists those). */
   status: ExperimentStatus | null;
   decision: string | null;
+  /** Derived: a later entry's `supersedes:` sets this (and status) without editing the earlier file (#6553). */
   superseded_by: string | null;
+  /** What the entry's own header says; differs from `status` when a later entry superseded it. */
+  status_declared?: ExperimentStatus | null;
+  /** What the result should change (#6553): route | prompt | detector | judge | reference | figure | cost | guard | surface | repair | none. */
+  feeds?: string[];
+  /** Where an adopted change landed: repo paths or "PR #n". */
+  landed?: string[];
+  supersedes?: string[];
   issues: number[];
 };
 

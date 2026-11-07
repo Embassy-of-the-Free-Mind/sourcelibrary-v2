@@ -1,0 +1,58 @@
+{
+ "_prior_art": "PRIOR ART: none — looked in scripts/eval/estimator/router-table/ (dated builds and rules.json only; nothing names the live table) and scripts/lib/ocr-routing-table.json (hand-edited production routes, not the k/n decisions).",
+ "_doc": "The router table whose decisions are LIVE (#7809). Lanes read it at start (scripts/lib/router-binding.mjs) and page when they run another route than a cell's keep/switch decision. Moving `table` to a newer build is the act of deciding; scenario tables stay what-ifs. `cells` moves the pointer for the named cells only ({cell: {table, set, why}}: that cell's row comes from that build, every other cell from `table`; an older build keeps a cell where a newer `table` would carry a change nobody decided), so a decision about two cells does not carry every other change a rebuild makes. A waiver lets one cell run another route: {cell, lane?, set, until (at most 14 days after set), reason}. An expired or undated waiver counts as none.",
+ "table": "2026-11-01-validated-7263",
+ "set": "2026-11-01",
+ "why": "#7263 validated build (V1 pooled prior, V2 judge-validity gate, V3 multiplicity-controlled gate; scripts/eval/experiments/2026-11-01-router-validated-build-7263.md). Against 2026-10-31-correction-pass-7818, the cells V1-V3 move are explained there one by one (decision_diff.py). The cells whose change came from evidence pooled since 10-31 and that nobody decided (latin-blank/print and german-blank/print go to HOLD under the defect rule; see the 2026-11-01 reread-7853 note) stay on 7818 through `cells` below; french-lite/print and german-lite/print stay on Derek's #7853 decision.",
+ "cells": {
+  "latin-lite/print": {
+   "table": "2026-11-03-latin-v4-7263",
+   "set": "2026-11-03",
+   "why": "Derek took the default on 2026-11-03 (#7263): the 835K-page Latin print Flash-Lite queue is re-read at 4 a call (V4, PR #8000: 20/30 accepted against the served 9/30 and the correction's 14/30; English wrong end to end 7/30 against 15/26), then re-translated on latin-cli-agy4. rules.json script_split.planned carries it; the row's rule_alone shows the rule's own pick (agy-flash-low-read, whose pages come from other, easier frames, at four times the quota). Only this cell moves: the rebuild's other changes come from evidence pooled since 11-01 and nobody decided them. The lane: cli-ocr-lane.mjs correct --reread-per-call=4 --reread-languages=Latin."
+  },
+  "german-lite/print": {
+   "table": "2026-11-01-reread-7853",
+   "set": "2026-11-01",
+   "why": "Derek took the #7853 default on 2026-11-01: the stored Flash-Lite queue is re-read with agy read@4, not corrected. The build pools #7853 (rules.json route agy-flash-low@4-read, evidence/queue-routes-7853.score.json): read@4 123/150 against lite>opus 299/307, and the defect rule keeps lite>opus (the Opus bar; read@4 is not rated in defect-rates.json, and its #7853 wrong text, 0.44 a 1,000 words weighted, is over the bar's 0.20 + 0.15). The decision is unchanged (keep lite>opus); the re-read runs on the waiver below. Only this cell and french-lite/print move: the same rebuild also moves latin-blank/print and german-blank/print to HOLD and changes the routes of french-gpu-7263/print and italian-gpu-7263/print (main's rules.json rebuilt alone gives all but italian-gpu-7263's route, which moves with the random draws when routes are added), none of which was decided here."
+  },
+  "french-lite/print": {
+   "table": "2026-11-01-reread-7853",
+   "set": "2026-11-01",
+   "why": "Derek took the #7853 default on 2026-11-01. With #7853 pooled the cell switches from HOLD to agy-flash-low@4-read (k/n: the live route lite>opus has no defect verdicts): 55/60, 2 wrong text, against lite>agy-flash-low 108/132 and agy-flash-low-read 79/90. The lane: cli-ocr-lane.mjs correct --reread-per-call=4."
+  },
+  "latin-blank/print": {
+   "table": "2026-10-31-correction-pass-7818",
+   "set": "2026-11-01",
+   "why": "Kept on 7818 when the pointer moved to 2026-11-01-validated-7263 (#7263): its change there (switch pero>agy-flash-low-written -> HOLD, the defect rule's pick moving with the misleads weight) comes from evidence pooled since 10-31, not from V1-V3, and was not decided. V1-V3 do not move it."
+  },
+  "german-blank/print": {
+   "table": "2026-10-31-correction-pass-7818",
+   "set": "2026-11-01",
+   "why": "Kept on 7818 when the pointer moved to 2026-11-01-validated-7263 (#7263): its change there (keep agy-flash-low@4-written -> HOLD, the defect rule's pick moving with the misleads weight) comes from evidence pooled since 10-31, not from V1-V3, and was not decided. The @8 first-read waiver below still applies."
+  }
+ },
+ "waivers": [
+  {
+   "cell": "german-lite/print",
+   "lane": "correct",
+   "set": "2026-10-31",
+   "until": "2026-11-14",
+   "reason": "#7818: the agy correction beats no correction by +13 points (95% CI +5 to +22; 8 gained, 0 lost of 60 books) but not the Opus bar the table keeps (lite>opus). Opus has no capacity for ~410K pages. Re-decide by 11-14 with the defect-rate rule (#7824) or an Opus share.",
+   "superseded": "2026-11-01 (#7853): Derek took re-read over correction; the gex45 correction lines move to `correct --reread-per-call=4`, which runs on the reread waiver below. This waiver stays only until its date, for a correct run that has not moved yet."
+  },
+  {
+   "cell": "german-lite/print",
+   "lane": "reread",
+   "set": "2026-11-01",
+   "until": "2026-11-14",
+   "reason": "#7853 (Derek 2026-11-01, the default taken): read@4 beats the #7558 correction on the stored-lite queue, weighted accept 0.82 against 0.72 (24 lost / 9 gained, Holm p 0.027) and 31 against 50 severity-weighted defects a 1,000 words, at 0.34 agy calls a page against 1.0; it does not reach the Opus bar the table keeps (lite>opus 299/307), and Opus has no capacity for the queue. Re-decide by 11-14 with the correction waiver: the Opus share, or a bar other than Opus for this cell."
+  },
+  {
+   "cell": "german-blank/print",
+   "lane": "first-read",
+   "set": "2026-11-01",
+   "until": "2026-11-15",
+   "reason": "#6740 read-surface, Derek 2026-11-01: German first reads at 8 a call (agy-flash-low@8-written) on the pooled paired evidence (78 queue books, 8 a call won 8-1, fewer wrong-text pages, about half the quota a accepted page) although neither preregistered rule passed. A decision, not a pass. Stop: back to 4 (FIRST_READ_PER_CALL_BY_LANGUAGE in cli-ocr-lane.mjs) if the lane's acceptance k/n falls below live's. Re-decide by 11-15 with the cell's k/n under @8."
+  }
+ ]
+}

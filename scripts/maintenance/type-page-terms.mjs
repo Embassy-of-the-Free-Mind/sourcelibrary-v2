@@ -52,13 +52,13 @@ async function loadNamesFromMongo() {
   await client.connect();
   const db = client.db('bookstore');
   const records = [];
-  for await (const d of db.collection('canonical_entities').find({}, { projection: { name: 1, aliases: 1, type: 1, book_count: 1 } })) {
+  for await (const d of db.collection('canonical_entities').find({}, { projection: { name: 1, aliases: 1, type: 1, book_count: 1 } }).batchSize(1000)) {
     records.push({ source: 'canonical_entities', id: String(d._id), type: d.type, names: [d.name, ...(d.aliases || [])].filter(Boolean), weight: d.book_count || 1 });
   }
-  for await (const d of db.collection('entities').find({}, { projection: { name: 1, aliases: 1, type: 1, book_count: 1 } })) {
+  for await (const d of db.collection('entities').find({}, { projection: { name: 1, aliases: 1, type: 1, book_count: 1 } }).batchSize(1000)) {
     records.push({ source: 'entities', id: String(d._id), type: d.type, names: [d.name, ...(d.aliases || [])].filter(Boolean), weight: d.book_count || 1 });
   }
-  for await (const d of db.collection('authors').find({ is_person: { $ne: false }, merged_into: { $exists: false } }, { projection: { canonical_name: 1, variants: 1, aliases: 1, book_count: 1 } })) {
+  for await (const d of db.collection('authors').find({ is_person: { $ne: false }, merged_into: { $exists: false } }, { projection: { canonical_name: 1, variants: 1, aliases: 1, book_count: 1 } }).batchSize(1000)) {
     records.push({ source: 'authors', id: String(d._id), type: 'person', names: [d.canonical_name, ...(d.variants || []), ...(d.aliases || [])].filter(Boolean), weight: d.book_count || 1 });
   }
   await client.close();

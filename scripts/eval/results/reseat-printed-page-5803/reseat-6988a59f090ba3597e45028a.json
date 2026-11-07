@@ -1,0 +1,752 @@
+{
+ "book": "6988a59f090ba3597e45028a",
+ "issue": 5803,
+ "method": "Printed page number and first body line read off every image with gemini-3.1-flash-lite (scripts/audit/printed-page-image-read.mjs), matched to the stored text <page-num> and opening words (scripts/maintenance/plan-reseat-by-printed-page.mjs). Each row carries both signals; leaves whose own text already matches are not listed.",
+ "rows": [
+  {
+   "page": 1,
+   "src": null,
+   "check": "vacated: its text moved to leaf 201, and no stored text matched this leaf's image (printed page unread)"
+  },
+  {
+   "page": 2,
+   "src": null,
+   "check": "vacated: its text moved to leaf 202,204, and no stored text matched this leaf's image (printed page unread)"
+  },
+  {
+   "page": 4,
+   "src": null,
+   "check": "vacated: its text moved to leaf 203,205, and no stored text matched this leaf's image (printed page unread)"
+  },
+  {
+   "page": 11,
+   "src": null,
+   "check": "vacated: its text moved to leaf 101,103, and no stored text matched this leaf's image (printed page unread)"
+  },
+  {
+   "page": 14,
+   "src": 126,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.6 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 15,
+   "src": 125,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.7 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 16,
+   "src": 126,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.6 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 17,
+   "src": 125,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.7 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 18,
+   "src": 126,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.6 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 20,
+   "src": null,
+   "check": "vacated: its text moved to leaf 110, and no stored text matched this leaf's image (printed page 8)"
+  },
+  {
+   "page": 21,
+   "src": null,
+   "check": "vacated: its text moved to leaf 111, and no stored text matched this leaf's image (printed page 9)"
+  },
+  {
+   "page": 22,
+   "src": null,
+   "check": "vacated: its text moved to leaf 112, and no stored text matched this leaf's image (printed page 10)"
+  },
+  {
+   "page": 23,
+   "src": null,
+   "check": "vacated: its text moved to leaf 113, and no stored text matched this leaf's image (printed page 11)"
+  },
+  {
+   "page": 24,
+   "src": null,
+   "check": "vacated: its text moved to leaf 114, and no stored text matched this leaf's image (printed page 10)"
+  },
+  {
+   "page": 26,
+   "src": null,
+   "check": "vacated: its text moved to leaf 116, and no stored text matched this leaf's image (printed page 12)"
+  },
+  {
+   "page": 27,
+   "src": null,
+   "check": "vacated: its text moved to leaf 117, and no stored text matched this leaf's image (printed page 13)"
+  },
+  {
+   "page": 28,
+   "src": null,
+   "check": "vacated: its text moved to leaf 118, and no stored text matched this leaf's image (printed page 14)"
+  },
+  {
+   "page": 29,
+   "src": null,
+   "check": "vacated: its text moved to leaf 119, and no stored text matched this leaf's image (printed page 15)"
+  },
+  {
+   "page": 30,
+   "src": 140,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.16 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 31,
+   "src": null,
+   "check": "vacated: its text moved to leaf 121, and no stored text matched this leaf's image (printed page 17)"
+  },
+  {
+   "page": 32,
+   "src": 140,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.16 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 34,
+   "src": null,
+   "check": "vacated: its text moved to leaf 123,125, and no stored text matched this leaf's image (printed page 18)"
+  },
+  {
+   "page": 35,
+   "src": 145,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.19 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 37,
+   "src": null,
+   "check": "vacated: its text moved to leaf 127, and no stored text matched this leaf's image (printed page 21)"
+  },
+  {
+   "page": 44,
+   "src": 153,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.28 = text <page-num>; first line 0.86"
+  },
+  {
+   "page": 45,
+   "src": 155,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.29 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 46,
+   "src": 156,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.30 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 47,
+   "src": 158,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.31 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 48,
+   "src": 157,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.32 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 50,
+   "src": 160,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.34 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 51,
+   "src": 161,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.35 = text <page-num>; first line 0.89"
+  },
+  {
+   "page": 52,
+   "src": 162,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.36 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 53,
+   "src": 163,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.37 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 54,
+   "src": 164,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.38 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 55,
+   "src": 165,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.39 = text <page-num>; first line 0.83"
+  },
+  {
+   "page": 57,
+   "src": 167,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p55←165 … p58←168; first line 1.00"
+  },
+  {
+   "page": 58,
+   "src": 168,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.42 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 59,
+   "src": 170,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.43 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 60,
+   "src": 168,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.42 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 61,
+   "src": 170,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.43 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 62,
+   "src": 172,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.44 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 63,
+   "src": 175,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.45 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 64,
+   "src": 172,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.44 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 65,
+   "src": 175,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.45 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 66,
+   "src": 176,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.46 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 67,
+   "src": 177,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p66←176 … p68←178; first line 1.00"
+  },
+  {
+   "page": 68,
+   "src": 178,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.48 = text <page-num>; first line 0.80"
+  },
+  {
+   "page": 69,
+   "src": 179,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p68←178 … p71←181; first line 1.00"
+  },
+  {
+   "page": 70,
+   "src": 180,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p69←179 … p71←181; first line 1.00"
+  },
+  {
+   "page": 71,
+   "src": 181,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.51 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 72,
+   "src": 182,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.52 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 73,
+   "src": null,
+   "check": "vacated: its text moved to leaf 163,165, and no stored text matched this leaf's image (printed page 53)"
+  },
+  {
+   "page": 74,
+   "src": null,
+   "check": "vacated: its text moved to leaf 162,164, and no stored text matched this leaf's image (printed page 54)"
+  },
+  {
+   "page": 76,
+   "src": null,
+   "check": "vacated: its text moved to leaf 166, and no stored text matched this leaf's image (printed page 56)"
+  },
+  {
+   "page": 77,
+   "src": null,
+   "check": "vacated: its text moved to leaf 167, and no stored text matched this leaf's image (printed page 57)"
+  },
+  {
+   "page": 78,
+   "src": 188,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.58 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 79,
+   "src": 189,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p78←188 … p80←190; first line 1.00"
+  },
+  {
+   "page": 80,
+   "src": 190,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.60 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 81,
+   "src": 191,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.61 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 82,
+   "src": 192,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.62 = text <page-num>; first line 0.86"
+  },
+  {
+   "page": 83,
+   "src": null,
+   "check": "vacated: its text moved to leaf 173, and no stored text matched this leaf's image (printed page 63)"
+  },
+  {
+   "page": 84,
+   "src": null,
+   "check": "vacated: its text moved to leaf 174, and no stored text matched this leaf's image (printed page 64)"
+  },
+  {
+   "page": 85,
+   "src": null,
+   "check": "vacated: its text moved to leaf 175, and no stored text matched this leaf's image (printed page 65)"
+  },
+  {
+   "page": 86,
+   "src": null,
+   "check": "vacated: its text moved to leaf 176, and no stored text matched this leaf's image (printed page 66)"
+  },
+  {
+   "page": 87,
+   "src": null,
+   "check": "vacated: its text moved to leaf 177, and no stored text matched this leaf's image (printed page 67)"
+  },
+  {
+   "page": 88,
+   "src": 198,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.68 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 89,
+   "src": 199,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.69 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 90,
+   "src": 200,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.70 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 91,
+   "src": 201,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p90←200 … p92←202; first line 1.00"
+  },
+  {
+   "page": 92,
+   "src": 202,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.72 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 95,
+   "src": 205,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.75 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 96,
+   "src": null,
+   "check": "vacated: its text moved to leaf 188, and no stored text matched this leaf's image (printed page 76)"
+  },
+  {
+   "page": 97,
+   "src": 207,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p95←205 … p98←208; first line 1.00"
+  },
+  {
+   "page": 98,
+   "src": 208,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.78 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 99,
+   "src": 209,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.79 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 100,
+   "src": null,
+   "check": "vacated: its text moved to leaf 190, and no stored text matched this leaf's image (printed page 80)"
+  },
+  {
+   "page": 101,
+   "src": 11,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.81 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 103,
+   "src": 11,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.81 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 104,
+   "src": 14,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.82 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 105,
+   "src": 15,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p104←14 … p106←16; first line 1.00"
+  },
+  {
+   "page": 106,
+   "src": 16,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.84 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 107,
+   "src": 17,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p106←16 … p108←18; first line 1.00"
+  },
+  {
+   "page": 108,
+   "src": 18,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.86 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 109,
+   "src": null,
+   "check": "vacated: its text moved to leaf 199, and no stored text matched this leaf's image (printed page 87)"
+  },
+  {
+   "page": 110,
+   "src": 20,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.88 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 111,
+   "src": 21,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.89 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 112,
+   "src": 22,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.90 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 113,
+   "src": 23,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p112←22 … p114←24; first line 1.00"
+  },
+  {
+   "page": 114,
+   "src": 24,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.92 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 116,
+   "src": 26,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.94 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 117,
+   "src": 27,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.95 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 118,
+   "src": 28,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.96 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 119,
+   "src": 29,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.97 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 120,
+   "src": 30,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p119←29 … p121←31; first line 1.00"
+  },
+  {
+   "page": 121,
+   "src": 31,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.99 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 122,
+   "src": 32,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.100 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 123,
+   "src": 34,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.101 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 124,
+   "src": 32,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.100 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 125,
+   "src": 34,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.101 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 126,
+   "src": null,
+   "check": "vacated: its text moved to leaf 14,16,18, and no stored text matched this leaf's image (printed page 102)"
+  },
+  {
+   "page": 127,
+   "src": 37,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.103 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 140,
+   "src": 50,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.116 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 142,
+   "src": 52,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.118 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 145,
+   "src": 55,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.121 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 153,
+   "src": 61,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.127 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 155,
+   "src": 61,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.127 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 156,
+   "src": 67,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.128 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 157,
+   "src": 68,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.129 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 158,
+   "src": 67,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.128 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 159,
+   "src": 68,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.129 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 160,
+   "src": 70,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.130 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 161,
+   "src": 71,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.131 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 162,
+   "src": 74,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.132 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 163,
+   "src": 73,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.133 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 164,
+   "src": 74,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.132 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 165,
+   "src": 73,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.133 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 166,
+   "src": 76,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.134 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 167,
+   "src": 77,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.135 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 168,
+   "src": 78,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.136 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 169,
+   "src": 79,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.137 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 170,
+   "src": 80,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.138 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 171,
+   "src": 81,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.139 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 172,
+   "src": 82,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.140 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 173,
+   "src": 83,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p172←82 … p174←84; first line 1.00"
+  },
+  {
+   "page": 174,
+   "src": 84,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.142 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 175,
+   "src": 85,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.143 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 176,
+   "src": 86,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p175←85 … p177←87; first line 1.00"
+  },
+  {
+   "page": 177,
+   "src": 87,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.145 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 178,
+   "src": 88,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.146 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 179,
+   "src": 89,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.147 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 180,
+   "src": 90,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: interpolated in the run p179←89 … p181←91; first line 1.00"
+  },
+  {
+   "page": 181,
+   "src": 91,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.149 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 182,
+   "src": 92,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.150 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 188,
+   "src": 96,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.154 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 189,
+   "src": 99,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.155 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 190,
+   "src": 100,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.156 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 191,
+   "src": null,
+   "check": "vacated: its text moved to leaf 81, and no stored text matched this leaf's image (printed page 157)"
+  },
+  {
+   "page": 192,
+   "src": null,
+   "check": "vacated: its text moved to leaf 82, and no stored text matched this leaf's image (printed page 158)"
+  },
+  {
+   "page": 198,
+   "src": 108,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.162 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 199,
+   "src": 109,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.163 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 200,
+   "src": null,
+   "check": "vacated: its text moved to leaf 90, and no stored text matched this leaf's image (printed page 164)"
+  },
+  {
+   "page": 201,
+   "src": 1,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.165 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 202,
+   "src": 2,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.166 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 203,
+   "src": 4,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.167 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 204,
+   "src": 2,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.166 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 205,
+   "src": 4,
+   "check": "flash-lite image read (printed-page-read-v1) 2026-10-24: printed p.167 = text <page-num>; first line 1.00"
+  },
+  {
+   "page": 207,
+   "src": null,
+   "check": "vacated: its text moved to leaf 97, and no stored text matched this leaf's image (printed page unread)"
+  },
+  {
+   "page": 208,
+   "src": null,
+   "check": "vacated: its text moved to leaf 98, and no stored text matched this leaf's image (printed page unread)"
+  },
+  {
+   "page": 209,
+   "src": null,
+   "check": "vacated: its text moved to leaf 99, and no stored text matched this leaf's image (printed page unread)"
+  }
+ ]
+}

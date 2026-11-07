@@ -1,0 +1,2223 @@
+{
+ "drawn_at": "2026-10-26T09:24:20.995Z",
+ "n": 30,
+ "router_tests": true,
+ "cells": {
+  "zh-dice": {
+   "task": "ocr",
+   "lang": "Chinese",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "paddle",
+   "routes": [
+    "paddle",
+    "paddle>agy-flash-high",
+    "paddle>opus-correct"
+   ],
+   "correctors": {
+    "paddle>agy-flash-high": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-high"
+    },
+    "paddle>opus-correct": {
+     "by": "opus"
+    }
+   },
+   "kanripo": true,
+   "served": {
+    "paddle": "served (the stored draft)",
+    "paddle>agy-flash-high": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-high)",
+    "paddle>opus-correct": "this run's correction of the stored draft, not served (opus)"
+   },
+   "pages": [
+    {
+     "page_id": "6a3c637993327f06e83507b7",
+     "book_id": "6a3c637993327f06e8350792",
+     "page_number": 37,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "9235058a26d71795",
+     "qa_dice": 0.799,
+     "qa_pb": "KR3k0059_WYG_011-17a"
+    },
+    {
+     "page_id": "6a3c721501fe4f593c1dc04d",
+     "book_id": "6a3c721401fe4f593c1dc018",
+     "page_number": 53,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "f4e4a18b1e6b6f0e",
+     "qa_dice": 0.853,
+     "qa_pb": "KR1c0065_WYG_011-26a"
+    },
+    {
+     "page_id": "6a3c655f39b4508b04e2e50f",
+     "book_id": "6a3c655f39b4508b04e2e4a7",
+     "page_number": 103,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "2e4dcd9cb9b51c50",
+     "qa_dice": 0.802,
+     "qa_pb": "KR3k0058_WYG_100-16a"
+    },
+    {
+     "page_id": "6a3cec6a8642f0445b15c442",
+     "book_id": "6a3cec698642f0445b15c3f4",
+     "page_number": 78,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "a0db900e6f93d036",
+     "qa_dice": 0.884,
+     "qa_pb": "KR3k0020_WYG_009-38b"
+    },
+    {
+     "page_id": "6a3c76f301fe4f593c1febfb",
+     "book_id": "6a3c76f301fe4f593c1feade",
+     "page_number": 64,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "15bcadd09a2235db",
+     "qa_dice": 0.833,
+     "qa_pb": "KR1j0073_WYG_003-31b"
+    },
+    {
+     "page_id": "6a3c6fc539b4508b04e4d230",
+     "book_id": "6a3c6fc539b4508b04e4d1f8",
+     "page_number": 56,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "2a4299d29376dfd0",
+     "qa_dice": 0.878,
+     "qa_pb": "KR3k0029_WYG_004-28a"
+    },
+    {
+     "page_id": "6a3cebd38642f0445b1578f1",
+     "book_id": "6a3cebd38642f0445b1578bb",
+     "page_number": 54,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "4eff1ab9d890c21a",
+     "qa_dice": 0.654,
+     "qa_pb": "KR1a0028_WYG_003-1a"
+    },
+    {
+     "page_id": "6a3cb7d93dce6cfad7488ccf",
+     "book_id": "6a3cb7d93dce6cfad7488c67",
+     "page_number": 104,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "8124303dbd53808f",
+     "qa_dice": 0.894,
+     "qa_pb": "KR1d0068_WYG_077-4b"
+    },
+    {
+     "page_id": "6a3c663d39b4508b04e332d0",
+     "book_id": "6a3c663d39b4508b04e3329c",
+     "page_number": 52,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "22e5b2d11d1242a1",
+     "qa_dice": 0.879,
+     "qa_pb": "KR3k0046_WYG_003-25b"
+    },
+    {
+     "page_id": "6a3cb9f93dce6cfad749874a",
+     "book_id": "6a3cb9f93dce6cfad7498724",
+     "page_number": 38,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "56292f5340f4054f",
+     "qa_dice": 0.891,
+     "qa_pb": "KR3e0076_WYG_025-18b"
+    },
+    {
+     "page_id": "6a3cc2e8af74b230c690a885",
+     "book_id": "6a3cc2e8af74b230c690a77b",
+     "page_number": 111,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "56fa4078d4753418",
+     "qa_dice": 0.866,
+     "qa_pb": "KR1c0004_WYG_017-55a"
+    },
+    {
+     "page_id": "6a3c6b6239b4508b04e43878",
+     "book_id": "6a3c6b6239b4508b04e4380b",
+     "page_number": 109,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "c7a6483b75a29037",
+     "qa_dice": 0.896,
+     "qa_pb": "KR3j0049_WYG_003-33a"
+    },
+    {
+     "page_id": "6a3c617a879008ba7e15e7d8",
+     "book_id": "6a3c617a879008ba7e15e724",
+     "page_number": 57,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "bdecf38353aaff34",
+     "qa_dice": 0.81,
+     "qa_pb": "KR3k0056_WYG_229-28a"
+    },
+    {
+     "page_id": "6a3cbe92f9474f825c163945",
+     "book_id": "6a3cbe91f9474f825c1638ac",
+     "page_number": 29,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "03e9db7467910847",
+     "qa_dice": 0.838,
+     "qa_pb": "KR3k0060_WYG_016-14a"
+    },
+    {
+     "page_id": "6a3c65e139b4508b04e2fb62",
+     "book_id": "6a3c65e139b4508b04e2facc",
+     "page_number": 150,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "544bf9a6960f7f03",
+     "qa_dice": 0.796,
+     "qa_pb": "KR3k0058_WYG_049-11b"
+    },
+    {
+     "page_id": "6a3c72f301fe4f593c1e45a7",
+     "book_id": "6a3c72f201fe4f593c1e458a",
+     "page_number": 29,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "c3f8df92dd96a4c8",
+     "qa_dice": 0.899,
+     "qa_pb": "KR1e0090_WYG_011-14a"
+    },
+    {
+     "page_id": "6a3c6ba539b4508b04e44ca4",
+     "book_id": "6a3c6ba539b4508b04e44c6e",
+     "page_number": 54,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "8f7051274706eeee",
+     "qa_dice": 0.891,
+     "qa_pb": "KR3g0013_WYG_005-91b"
+    },
+    {
+     "page_id": "6a3c6d3001fe4f593c1b8939",
+     "book_id": "6a3c6d3001fe4f593c1b88d4",
+     "page_number": 101,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "5014c0b85a3abd75",
+     "qa_dice": 0.897,
+     "qa_pb": "KR3a0064_WYG_046-26a"
+    },
+    {
+     "page_id": "6a3c723201fe4f593c1dd127",
+     "book_id": "6a3c723201fe4f593c1dd0c9",
+     "page_number": 94,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "2031853acd88985d",
+     "qa_dice": 0.897,
+     "qa_pb": "KR1d0019_WYG_022-47a"
+    },
+    {
+     "page_id": "6a3c78ed01fe4f593c20c14d",
+     "book_id": "6a3c78ed01fe4f593c20c0c5",
+     "page_number": 136,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "3273554d2bc1371a",
+     "qa_dice": 0.877,
+     "qa_pb": "KR3a0059_WYG_002-67b"
+    },
+    {
+     "page_id": "6a3cc1bbec254ff6cae0eaa7",
+     "book_id": "6a3cc1baec254ff6cae0e99d",
+     "page_number": 108,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "c5f8a9898ffd6225",
+     "qa_dice": 0.865,
+     "qa_pb": "KR6q0012_WYG_001-48b"
+    },
+    {
+     "page_id": "6a3c6451af3c49b59c5ca59d",
+     "book_id": "6a3c6451af3c49b59c5ca54e",
+     "page_number": 79,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "210b43f093f627f3",
+     "qa_dice": 0.839,
+     "qa_pb": "KR3k0059_WYG_484-38a"
+    },
+    {
+     "page_id": "6a3ce6610a0011cb4bc05c97",
+     "book_id": "6a3ce6610a0011cb4bc05c5f",
+     "page_number": 56,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "af88b636dca943f0",
+     "qa_dice": 0.89,
+     "qa_pb": "KR1a0139_WYG_037-28a"
+    },
+    {
+     "page_id": "6a3c647039b4508b04e27127",
+     "book_id": "6a3c647039b4508b04e270ea",
+     "page_number": 60,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "b4f5eda8e9959f62",
+     "qa_dice": 0.834,
+     "qa_pb": "KR3k0059_WYG_552-28b"
+    },
+    {
+     "page_id": "6a3c754d01fe4f593c1f4835",
+     "book_id": "6a3c754d01fe4f593c1f4818",
+     "page_number": 29,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "4a306a48644e7ad7",
+     "qa_dice": 0.896,
+     "qa_pb": "KR6r0054_WYG_018-14a"
+    },
+    {
+     "page_id": "6a3cbf3bf9474f825c166ab5",
+     "book_id": "6a3cbf3bf9474f825c1669e5",
+     "page_number": 68,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "c2c931d1b5122f54",
+     "qa_dice": 0.794,
+     "qa_pb": "KR3f0043_WYG_002-10a"
+    },
+    {
+     "page_id": "6a3cb8ec3d799518cd71c4f5",
+     "book_id": "6a3cb8ec3d799518cd71c409",
+     "page_number": 58,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "96183f8b6e46734f",
+     "qa_dice": 0.87,
+     "qa_pb": "KR1e0004_WYG_017-29a"
+    },
+    {
+     "page_id": "6a3cc0f8ec254ff6cae081c5",
+     "book_id": "6a3cc0f8ec254ff6cae0812d",
+     "page_number": 151,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "b989bc7c3057fc8c",
+     "qa_dice": 0.897,
+     "qa_pb": "KR1a0114_WYG_008-45a"
+    },
+    {
+     "page_id": "6a3ceff94701a906f10f37ee",
+     "book_id": "6a3ceff94701a906f10f3742",
+     "page_number": 15,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "1fd663d2e76ec51d",
+     "qa_dice": 0.76,
+     "qa_pb": "KR1a0036_WYG_004-7b"
+    },
+    {
+     "page_id": "6a3c7a2e01fe4f593c215221",
+     "book_id": "6a3c7a2e01fe4f593c21513f",
+     "page_number": 45,
+     "draft_model": "PaddleOCR-VL-1.6-0.9B",
+     "draft_sha": "4db20dc92ae5daf3",
+     "qa_dice": 0.825,
+     "qa_pb": "KR3k0057_WYG_027-22a"
+    }
+   ],
+   "frame": {
+    "books": 10985,
+    "books_walked": 39,
+    "held_or_hidden": 0,
+    "no_eligible_page": 9,
+    "rule": "paddle_zh_reocr books, visible (their OCR-only lane holds allowed, no other hold); ocr.source paddle, not the guarded apply, own qa_screen screened 0.6 <= dice < 0.90, interior, >= 40 Han"
+   }
+  },
+  "de-lite": {
+   "task": "ocr",
+   "lang": "German",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "lite",
+   "routes": [
+    "lite",
+    "lite>agy-flash-low",
+    "lite>opus-correct"
+   ],
+   "correctors": {
+    "lite>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    },
+    "lite>opus-correct": {
+     "by": "opus"
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "lite": "served (the stored draft)",
+    "lite>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+    "lite>opus-correct": "this run's correction of the stored draft, not served (opus)"
+   },
+   "pages": [
+    {
+     "page_id": "69d37aff71a4c57344978cc5",
+     "book_id": "69c77c496a0f3d112faf964b",
+     "page_number": 46,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "6e4478ee67879be1"
+    },
+    {
+     "page_id": "6a267f6e88f11913ee9c91b5",
+     "book_id": "6a267f6e88f11913ee9c919b",
+     "page_number": 26,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "bb0fa36e5bdc2e62"
+    },
+    {
+     "page_id": "6a4913b8ae20621d947e3eee",
+     "book_id": "6a4913b8ae20621d947e3ed3",
+     "page_number": 27,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "099d3d653587fc58"
+    },
+    {
+     "page_id": "69906330ef12272ffdc901ff",
+     "book_id": "6990632fef12272ffdc900f2",
+     "page_number": 269,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "62be8875c0d11436"
+    },
+    {
+     "page_id": "6a267f4288f11913ee9c8c14",
+     "book_id": "6a267f4288f11913ee9c8bef",
+     "page_number": 37,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "0fba015891c7b135"
+    },
+    {
+     "page_id": "69f76214b2b698b3bb82f75c",
+     "book_id": "69c836d36c6f3cc53c84ecd6",
+     "page_number": 383,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "f5a908255b7747db"
+    },
+    {
+     "page_id": "69b51eae9a81ef7feb3d94cf",
+     "book_id": "69b51eae9a81ef7feb3d948a",
+     "page_number": 69,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "01079791b9632dd2"
+    },
+    {
+     "page_id": "6a26ceaf11e2d87b58a93dfe",
+     "book_id": "69ef37016c5c0455cc3f69e5",
+     "page_number": 19,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "4a919f4d88d6cb11"
+    },
+    {
+     "page_id": "69b51e73cf111105c429d641",
+     "book_id": "69b51e73cf111105c429d61f",
+     "page_number": 34,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "392355f457199138"
+    },
+    {
+     "page_id": "69f664d320bcf02baf4309e6",
+     "book_id": "69b4192e2b0edf3eaa2def0d",
+     "page_number": 118,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "2a52a0e2f978e70a"
+    },
+    {
+     "page_id": "69f512c72c50c99ed1a66846",
+     "book_id": "69c634823e8cae136d1497fa",
+     "page_number": 109,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "f2ac031bc19620be"
+    },
+    {
+     "page_id": "69dbcabf1040d1d5e20ae5f9",
+     "book_id": "69dbcabf1040d1d5e20ae5b5",
+     "page_number": 68,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "9da2ffb04cc89aea"
+    },
+    {
+     "page_id": "6a267d246c1f37c9c4f38c73",
+     "book_id": "6a267d246c1f37c9c4f38c16",
+     "page_number": 93,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "4e3fc1d5ee82171f"
+    },
+    {
+     "page_id": "6958dfb4dbe0f678e5c52971",
+     "book_id": "6958dfb3dbe0f678e5c5272c",
+     "page_number": 581,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "64998438a1c29995"
+    },
+    {
+     "page_id": "69b51e0befd8df28f2daf785",
+     "book_id": "69b51e0befd8df28f2daf767",
+     "page_number": 30,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "88f15c5483f88df7"
+    },
+    {
+     "page_id": "69b51e5bff09e4fe943ad190",
+     "book_id": "69b51e5bff09e4fe943ad0b5",
+     "page_number": 219,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "cc1c88fc3eb2bf87"
+    },
+    {
+     "page_id": "6a267bfc6c1f37c9c4f346c9",
+     "book_id": "6a267bfc6c1f37c9c4f346b2",
+     "page_number": 23,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "9b5ee7685e8579e8"
+    },
+    {
+     "page_id": "69c80b6f6c6f3cc53c846772",
+     "book_id": "69c80b4f6c6f3cc53c8466f0",
+     "page_number": 79,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "88fca7d1c1307620"
+    },
+    {
+     "page_id": "69aea5c357ed98c21d25aeba",
+     "book_id": "69aea5c357ed98c21d25ae38",
+     "page_number": 130,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "9532ea61fdaa461e"
+    },
+    {
+     "page_id": "6a267b2f6c1f37c9c4f30c50",
+     "book_id": "6a267b2f6c1f37c9c4f30be9",
+     "page_number": 103,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "e6f195a11a38951a"
+    },
+    {
+     "page_id": "6a267f4f88f11913ee9c8c6c",
+     "book_id": "6a267f4f88f11913ee9c8c51",
+     "page_number": 27,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "a499d9aa7e455918"
+    },
+    {
+     "page_id": "69bd9fe2f6d63c9197482d4d",
+     "book_id": "69bd9fe2f6d63c9197482b9b",
+     "page_number": 434,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "947eaf7835af61c5"
+    },
+    {
+     "page_id": "69f6d66d082a76724571c684",
+     "book_id": "69c823c96c6f3cc53c84b1b6",
+     "page_number": 425,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "cbf78709ce834fd5"
+    },
+    {
+     "page_id": "69d377a5d2177ffd1ddf8dbf",
+     "book_id": "69c808226c6f3cc53c845bd5",
+     "page_number": 31,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "2603c9d79d772866"
+    },
+    {
+     "page_id": "6a243c5a0f0e4f405e62e42c",
+     "book_id": "6a243c5a0f0e4f405e62e1f8",
+     "page_number": 564,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "cba86986a2cc5d2c"
+    },
+    {
+     "page_id": "6a212212f88bd9944a5840ed",
+     "book_id": "6a212212f88bd9944a5840d7",
+     "page_number": 22,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "068d6b89edaa8d10"
+    },
+    {
+     "page_id": "69bd9e7ef6d63c919747b2f3",
+     "book_id": "69bd9e7ef6d63c919747b26e",
+     "page_number": 133,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "e4d6eb61ba2c813f"
+    },
+    {
+     "page_id": "69f5036c64bf733e4036e86f",
+     "book_id": "69c6ebe4da9771c7163148a5",
+     "page_number": 84,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "c4a546be28c9f17b"
+    },
+    {
+     "page_id": "69d372c3495a5d8dfb42581e",
+     "book_id": "69c85caf6c6f3cc53c854d2f",
+     "page_number": 26,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "b84bb7053c80b55d"
+    },
+    {
+     "page_id": "69d387c69453b2919745bf54",
+     "book_id": "69099e2acf28baa1b4caeafb",
+     "page_number": 77,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "2b82744e1cc39e05"
+    }
+   ],
+   "frame": {
+    "books": 2736,
+    "books_walked": 71,
+    "held_or_hidden": 0,
+    "no_eligible_page": 41,
+    "rule": "visible German books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   }
+  },
+  "de-flash3": {
+   "task": "ocr",
+   "lang": "German",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "3flash",
+   "routes": [
+    "3flash",
+    "3flash>agy-flash-low",
+    "3flash>opus-correct"
+   ],
+   "correctors": {
+    "3flash>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    },
+    "3flash>opus-correct": {
+     "by": "opus"
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "3flash": "served (the stored draft)",
+    "3flash>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)",
+    "3flash>opus-correct": "this run's correction of the stored draft, not served (opus)"
+   },
+   "pages": [
+    {
+     "page_id": "6988c9aae8473dc32f3168af",
+     "book_id": "6988a5a0b35a40d0f7621798",
+     "page_number": 198,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "2c43bfda7e5bb303"
+    },
+    {
+     "page_id": "6a491765ae20621d947e7d0d",
+     "book_id": "6a491765ae20621d947e7ccf",
+     "page_number": 22,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "428bbff32e3fb721"
+    },
+    {
+     "page_id": "6a26c44baad44c98627ce962",
+     "book_id": "6a26c44baad44c98627ce958",
+     "page_number": 10,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "7ef91a7afc6e4e94"
+    },
+    {
+     "page_id": "6a26c557aad44c98627d628d",
+     "book_id": "6a26c557aad44c98627d6276",
+     "page_number": 23,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "a29b2c2db6bc8211"
+    },
+    {
+     "page_id": "6a98d18f37e8b166d9855246",
+     "book_id": "6a98d18f37e8b166d9855222",
+     "page_number": 36,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "77b1afc2df2e3211"
+    },
+    {
+     "page_id": "6a42629e744db9e3105ade31",
+     "book_id": "6a42629e744db9e3105ade1b",
+     "page_number": 22,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "a0838224ecb8c44a"
+    },
+    {
+     "page_id": "6aa927a329214a687db6404b",
+     "book_id": "6aa927a329214a687db63f04",
+     "page_number": 327,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "0f1b9d10aacd6308"
+    },
+    {
+     "page_id": "6992cbdc018b80967354c030",
+     "book_id": "6992cbdc018b80967354bf99",
+     "page_number": 151,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "9839330e836b0d29"
+    },
+    {
+     "page_id": "6a425b16744db9e3105a1e7e",
+     "book_id": "6a425b16744db9e3105a1e66",
+     "page_number": 24,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "499093fd51ee5121"
+    },
+    {
+     "page_id": "6a4921de1bbf4176e1e8519c",
+     "book_id": "6a4921dd1bbf4176e1e85183",
+     "page_number": 25,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "6ec4cf082227de41"
+    },
+    {
+     "page_id": "69aebc950b218b96da728ab9",
+     "book_id": "69aebc950b218b96da728a56",
+     "page_number": 99,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c067ff2af5205bec"
+    },
+    {
+     "page_id": "69c808616c6f3cc53c845d0f",
+     "book_id": "69c808356c6f3cc53c845c41",
+     "page_number": 136,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "dc56aef1b4b79e63"
+    },
+    {
+     "page_id": "69593045a41e40e9146a4f70",
+     "book_id": "69593045a41e40e9146a4cc2",
+     "page_number": 686,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "7df51d3ddb2d3e16"
+    },
+    {
+     "page_id": "69b51ddf261c58d63664c3be",
+     "book_id": "69b51ddf261c58d63664c2f0",
+     "page_number": 206,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "e6e0af3ab820a6d2"
+    },
+    {
+     "page_id": "697e371769af723f0d394478",
+     "book_id": "697e23cb32e94c72715dd0cf",
+     "page_number": 93,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8aedf238a6bc6e46"
+    },
+    {
+     "page_id": "6a1009d6f71729295096c5a4",
+     "book_id": "6a1009d6f71729295096c4dc",
+     "page_number": 200,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "ce0a563e34e04dc8"
+    },
+    {
+     "page_id": "69a99d146c7545e2236e1ecd",
+     "book_id": "69a99d136c7545e2236e1c44",
+     "page_number": 649,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "e40d89f7e03edd91"
+    },
+    {
+     "page_id": "6a26b93261b3857ed05a888e",
+     "book_id": "6a26b93261b3857ed05a8875",
+     "page_number": 25,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c5a6f2779f79ba63"
+    },
+    {
+     "page_id": "697cb2916fe54c1ad0b3b222",
+     "book_id": "697c8e0f6000fdec2f13060e",
+     "page_number": 163,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c12e04f81fbc7f64"
+    },
+    {
+     "page_id": "697b34ec1fd4195ac7f0c6ca",
+     "book_id": "697b0799083a1eb33f8e8112",
+     "page_number": 207,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "0fa890b4c962ba65"
+    },
+    {
+     "page_id": "6a4913baae20621d947e3f1c",
+     "book_id": "6a4913baae20621d947e3f0b",
+     "page_number": 17,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "662ec3934f348290"
+    },
+    {
+     "page_id": "69c70a0eda9771c716315eaa",
+     "book_id": "69c709e8da9771c716315e76",
+     "page_number": 25,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "4077e9298df14bae"
+    },
+    {
+     "page_id": "6992cbc6018b80967354affc",
+     "book_id": "6992cbc6018b80967354afba",
+     "page_number": 66,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8bf0d72e7f1c0811"
+    },
+    {
+     "page_id": "69906a1ad69de0e69806fe2a",
+     "book_id": "69906a1ad69de0e69806fd35",
+     "page_number": 245,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "1e56f924afac3c87"
+    },
+    {
+     "page_id": "69c89c58ba86cafc1eceffb9",
+     "book_id": "69c899586c6f3cc53c85cdbc",
+     "page_number": 28,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "6eaa893e17f626f8"
+    },
+    {
+     "page_id": "6a4923e2a45b99e46af95cfd",
+     "book_id": "6a4923e2a45b99e46af95c23",
+     "page_number": 17,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "f1770970a878aac9"
+    },
+    {
+     "page_id": "6a26be7b0e247ebad6de755c",
+     "book_id": "6a26be7b0e247ebad6de754b",
+     "page_number": 17,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "257b63248ef878a0"
+    },
+    {
+     "page_id": "69c8551e6c6f3cc53c853a3d",
+     "book_id": "69c855096c6f3cc53c853a0b",
+     "page_number": 26,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "efdabc4a3a598c11"
+    },
+    {
+     "page_id": "6a427d8d28e9db2e39c240d2",
+     "book_id": "6a427d8d28e9db2e39c240bb",
+     "page_number": 23,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "2f3e190525e91b65"
+    },
+    {
+     "page_id": "69c82f607774239312843ee9",
+     "book_id": "69c80da96c6f3cc53c846da6",
+     "page_number": 34,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "baa3f0bd6b826b4c"
+    }
+   ],
+   "frame": {
+    "books": 2736,
+    "books_walked": 52,
+    "held_or_hidden": 0,
+    "no_eligible_page": 22,
+    "rule": "visible German books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   }
+  },
+  "latin": {
+   "task": "ocr",
+   "lang": "Latin",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "lite",
+   "routes": [
+    "lite",
+    "lite>opus-correct",
+    "lite>agy-flash-low"
+   ],
+   "correctors": {
+    "lite>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "lite": "served (the stored draft)",
+    "lite>opus-correct": "experiment read, not served (#5924 oc-reads)",
+    "lite>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "69b51e18efd8df28f2db0684",
+     "book_id": "69b51e18efd8df28f2db058d",
+     "page_number": 247,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "0f04c4ad726e1c49"
+    },
+    {
+     "page_id": "69b638be1c1c21a373839e9d",
+     "book_id": "69b638be1c1c21a373839d77",
+     "page_number": 294,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "baa5941cfe930ffa"
+    },
+    {
+     "page_id": "69b51eba47b06ecd58196160",
+     "book_id": "69b51eba47b06ecd581960d3",
+     "page_number": 141,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "364edde05a9e57be"
+    },
+    {
+     "page_id": "69dc557bcb6f7429748b8d68",
+     "book_id": "69dc557bcb6f7429748b8d13",
+     "page_number": 85,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "df4bc4f0a26d75d9"
+    },
+    {
+     "page_id": "69af0a0a4c57359b8d2d0f85",
+     "book_id": "69af0a0a4c57359b8d2d0f49",
+     "page_number": 60,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "cf01d670f8d1697c"
+    },
+    {
+     "page_id": "69b51e67768235dc65992bb2",
+     "book_id": "69b51e67768235dc65992a5f",
+     "page_number": 339,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "8d14b2ce774bb782"
+    },
+    {
+     "page_id": "69b51e7f9a81ef7feb3d659a",
+     "book_id": "69b51e7f9a81ef7feb3d64c8",
+     "page_number": 210,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "4bbebdadcd967e6f"
+    },
+    {
+     "page_id": "69c81b3f6c6f3cc53c84990d",
+     "book_id": "69c81aed6c6f3cc53c849851",
+     "page_number": 205,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "f7c20f1df96e0de0"
+    },
+    {
+     "page_id": "69bd9d726120d54bd0376d63",
+     "book_id": "69bd9d726120d54bd0376d18",
+     "page_number": 75,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "57859c1b6fe8e476"
+    },
+    {
+     "page_id": "69b51e18efd8df28f2db05f6",
+     "book_id": "69b51e18efd8df28f2db058d",
+     "page_number": 105,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "d298239408e315d9"
+    },
+    {
+     "page_id": "69b638be1c1c21a373839e18",
+     "book_id": "69b638be1c1c21a373839d77",
+     "page_number": 161,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "1796dcb40c8b822f"
+    },
+    {
+     "page_id": "69b51eba47b06ecd58196173",
+     "book_id": "69b51eba47b06ecd581960d3",
+     "page_number": 160,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "10a77fa64484db1b"
+    },
+    {
+     "page_id": "69dc557bcb6f7429748b8d30",
+     "book_id": "69dc557bcb6f7429748b8d13",
+     "page_number": 29,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "ebcb9f3a77efb28a"
+    },
+    {
+     "page_id": "69af0a0a4c57359b8d2d0fbd",
+     "book_id": "69af0a0a4c57359b8d2d0f49",
+     "page_number": 116,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "5afe76ae53fb4e63"
+    },
+    {
+     "page_id": "69b51e67768235dc65992aa5",
+     "book_id": "69b51e67768235dc65992a5f",
+     "page_number": 70,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "f4319010e0497602"
+    },
+    {
+     "page_id": "69b51e7f9a81ef7feb3d64f9",
+     "book_id": "69b51e7f9a81ef7feb3d64c8",
+     "page_number": 49,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "b07bf9719818de4c"
+    },
+    {
+     "page_id": "69c81ba26c6f3cc53c849a04",
+     "book_id": "69c81aed6c6f3cc53c849851",
+     "page_number": 413,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "60d9e3c4f5dc4606"
+    },
+    {
+     "page_id": "69bd9d726120d54bd0376d72",
+     "book_id": "69bd9d726120d54bd0376d18",
+     "page_number": 90,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "d5c65e2bd78c2dd6"
+    },
+    {
+     "page_id": "69b51e18efd8df28f2db06ee",
+     "book_id": "69b51e18efd8df28f2db058d",
+     "page_number": 353,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "4842d780463ea22f"
+    },
+    {
+     "page_id": "69b638be1c1c21a373839dba",
+     "book_id": "69b638be1c1c21a373839d77",
+     "page_number": 67,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "5f264959e8c45757"
+    },
+    {
+     "page_id": "69b51eba47b06ecd58196157",
+     "book_id": "69b51eba47b06ecd581960d3",
+     "page_number": 132,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "e15837fdc64eb1c4"
+    },
+    {
+     "page_id": "69dc557bcb6f7429748b8d49",
+     "book_id": "69dc557bcb6f7429748b8d13",
+     "page_number": 54,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "a2179c7ca9654696"
+    },
+    {
+     "page_id": "69af0a0a4c57359b8d2d1022",
+     "book_id": "69af0a0a4c57359b8d2d0f49",
+     "page_number": 217,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "21bc8c2afd38431c"
+    },
+    {
+     "page_id": "69b51e67768235dc65992b94",
+     "book_id": "69b51e67768235dc65992a5f",
+     "page_number": 309,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "84d9ae6581a1918e"
+    },
+    {
+     "page_id": "69b51e7f9a81ef7feb3d65b6",
+     "book_id": "69b51e7f9a81ef7feb3d64c8",
+     "page_number": 238,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "1d603409e7d3fa95"
+    },
+    {
+     "page_id": "69c837e3f609d035727f6bf0",
+     "book_id": "69c81aed6c6f3cc53c849851",
+     "page_number": 168,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "df14dfe8a0240cbc"
+    },
+    {
+     "page_id": "69bd9d726120d54bd0376e18",
+     "book_id": "69bd9d726120d54bd0376d18",
+     "page_number": 256,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "a6c3bf91fe0f2d06"
+    },
+    {
+     "page_id": "69b51e18efd8df28f2db0723",
+     "book_id": "69b51e18efd8df28f2db058d",
+     "page_number": 406,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "2d67c4a3e0647679"
+    },
+    {
+     "page_id": "69b638be1c1c21a373839ec5",
+     "book_id": "69b638be1c1c21a373839d77",
+     "page_number": 334,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "e9138df8048612e0"
+    },
+    {
+     "page_id": "69b51eba47b06ecd581960f1",
+     "book_id": "69b51eba47b06ecd581960d3",
+     "page_number": 30,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "ee76181d29edf1ff"
+    }
+   ],
+   "frame": {
+    "pages": 225,
+    "books": 9,
+    "note": "the pilot's pages (2026-10-25); #5924 oc-reads: 250 lite Latin pages in 10 books; the wrong-leaf book (25 CONTAIN pages) left out",
+    "pilot_pages": 30,
+    "still_lite": 30
+   }
+  },
+  "latin-flash3": {
+   "task": "ocr",
+   "lang": "Latin",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "3flash",
+   "routes": [
+    "3flash",
+    "3flash>agy-flash-low"
+   ],
+   "correctors": {
+    "3flash>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "3flash": "served (the stored draft)",
+    "3flash>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "6a08518715c643eb1af4aafb",
+     "book_id": "6a08518715c643eb1af4a940",
+     "page_number": 443,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "4d0f5474cb499c7f"
+    },
+    {
+     "page_id": "6a4a7e7320c510eceebc582a",
+     "book_id": "6a4a7e7320c510eceebc581a",
+     "page_number": 16,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "7dc4376485cf9751"
+    },
+    {
+     "page_id": "6a4adbc72f55066780cb4bb9",
+     "book_id": "6a4adbc72f55066780cb4ba9",
+     "page_number": 16,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8873f3762605cd02"
+    },
+    {
+     "page_id": "6a49279bf7e0eb87cd019b8e",
+     "book_id": "6a49279bf7e0eb87cd019b8b",
+     "page_number": 3,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "eb3f8b75a0d1b79d"
+    },
+    {
+     "page_id": "6a42c71697284560a2b10e55",
+     "book_id": "6a42c71697284560a2b10e43",
+     "page_number": 18,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "000174aba0020fd4"
+    },
+    {
+     "page_id": "69b221d708069e96e8431770",
+     "book_id": "69b221d708069e96e8431644",
+     "page_number": 300,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "d0551b85b4836740"
+    },
+    {
+     "page_id": "69b2f4bd5ef23d31023f80d8",
+     "book_id": "69b2f4bd5ef23d31023f7f94",
+     "page_number": 324,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c508768eb6e5d4de"
+    },
+    {
+     "page_id": "6a43bb183c91e2a63d4dd5a3",
+     "book_id": "6a43bb183c91e2a63d4dd595",
+     "page_number": 14,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "b5188040abd4348e"
+    },
+    {
+     "page_id": "69ac840f274fb531f2b6bc9f",
+     "book_id": "69ac840f274fb531f2b6bc3c",
+     "page_number": 99,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "bae16794be177fdb"
+    },
+    {
+     "page_id": "6a4df5cceda60b645dd19519",
+     "book_id": "6a4df5cceda60b645dd19510",
+     "page_number": 9,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "eca078b981ccc491"
+    },
+    {
+     "page_id": "6a4df4f3739bc1fc670e6c3f",
+     "book_id": "6a4df4e6739bc1fc670e6854",
+     "page_number": 15,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "6490c2c41cf4d38d"
+    },
+    {
+     "page_id": "6a491b47ae20621d947e9d8a",
+     "book_id": "6a491b47ae20621d947e9d71",
+     "page_number": 25,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "7b935190ebd61158"
+    },
+    {
+     "page_id": "6a44441baa50a8e8f5052760",
+     "book_id": "6a44441baa50a8e8f5052753",
+     "page_number": 13,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "5df052161c793a74"
+    },
+    {
+     "page_id": "6a51aca55a26e4796c324f5c",
+     "book_id": "6a51aca55a26e4796c324f45",
+     "page_number": 23,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "6dcaaf071832954a"
+    },
+    {
+     "page_id": "69de98cb1b234a773e4395ba",
+     "book_id": "69de98cb1b234a773e4395a3",
+     "page_number": 23,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "66acaa157288b33b"
+    },
+    {
+     "page_id": "6a4bd8afce03c0929df13b85",
+     "book_id": "6a4bd8afce03c0929df13b76",
+     "page_number": 15,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "ae7abe8b753dbb08"
+    },
+    {
+     "page_id": "6a4d60c0e91798b676b43472",
+     "book_id": "6a4d60c0e91798b676b432e1",
+     "page_number": 25,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "b1e329667b37bb9e"
+    },
+    {
+     "page_id": "6a4c4f3c337431dba34fe662",
+     "book_id": "6a4c4f3c337431dba34fe656",
+     "page_number": 12,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "ed99f5465d9d068b"
+    },
+    {
+     "page_id": "6a4baaf8debad28d8e8e0664",
+     "book_id": "6a4baaf8debad28d8e8e0618",
+     "page_number": 9,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "55cd8040df9219f4"
+    },
+    {
+     "page_id": "6a4a6fd37b720133514b2adf",
+     "book_id": "6a4a6fd37b720133514b2ad2",
+     "page_number": 13,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "e4a7e54bd8ba5bab"
+    },
+    {
+     "page_id": "6a4f121fce720e255f3bfa30",
+     "book_id": "6a4f121fce720e255f3bfa19",
+     "page_number": 22,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "1c01449c940c4a59"
+    },
+    {
+     "page_id": "6a49f3fd60a0c3556c218d5e",
+     "book_id": "6a49f3fd60a0c3556c218d4e",
+     "page_number": 16,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "8a62bb6e18c326d5"
+    },
+    {
+     "page_id": "6a4f0cb7ce720e255f3be655",
+     "book_id": "6a4f0cb7ce720e255f3be64b",
+     "page_number": 9,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "d4102492d70bb729"
+    },
+    {
+     "page_id": "6a4de3c36aec9da58ec0cc49",
+     "book_id": "6a4de3c36aec9da58ec0cc35",
+     "page_number": 20,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "5fcb1d17242f54db"
+    },
+    {
+     "page_id": "6a4ef5271a64e53b6a0a1ed1",
+     "book_id": "6a4ef5271a64e53b6a0a1ec5",
+     "page_number": 12,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "a05856ecc447b7fc"
+    },
+    {
+     "page_id": "6a4a4c83547be098cf67f3ec",
+     "book_id": "6a4a4c83547be098cf67f38d",
+     "page_number": 24,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "073f6bfe3052a96a"
+    },
+    {
+     "page_id": "69dbc9621040d1d5e20a311b",
+     "book_id": "69dbc9611040d1d5e20a3074",
+     "page_number": 167,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "a3ebd28941a8a168"
+    },
+    {
+     "page_id": "6a4f362996ab344c790a27e4",
+     "book_id": "6a4f362996ab344c790a27c4",
+     "page_number": 18,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "0b5df3583cc2454d"
+    },
+    {
+     "page_id": "69b4d61cf22c8341a90b9aa8",
+     "book_id": "69b4d61cf22c8341a90b9a9a",
+     "page_number": 14,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "2767ce89cbccb0f1"
+    },
+    {
+     "page_id": "6a4f665d1cba01ec54e75975",
+     "book_id": "6a4f665d1cba01ec54e75968",
+     "page_number": 13,
+     "draft_model": "gemini-3-flash-preview",
+     "draft_sha": "c1838abe431cdee2"
+    }
+   ],
+   "frame": {
+    "books": 15731,
+    "books_walked": 38,
+    "held_or_hidden": 0,
+    "no_eligible_page": 8,
+    "rule": "visible Latin books not held; stored OCR by gemini-3-flash-preview, interior, >= 300 chars, not handwritten"
+   }
+  },
+  "fr-lite": {
+   "task": "ocr",
+   "lang": "French",
+   "paired": true,
+   "kind": "router-test",
+   "draft_route": "lite",
+   "routes": [
+    "lite",
+    "lite>agy-flash-low"
+   ],
+   "correctors": {
+    "lite>agy-flash-low": {
+     "by": "agy",
+     "model": "gemini-3.8-flash-low"
+    }
+   },
+   "kanripo": false,
+   "served": {
+    "lite": "served (the stored draft)",
+    "lite>agy-flash-low": "this run's correction of the stored draft, not served (agy gemini-3.8-flash-low)"
+   },
+   "pages": [
+    {
+     "page_id": "69f65a288549d0fe10975c9a",
+     "book_id": "69b419212b0edf3eaa2ded76",
+     "page_number": 69,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "431a76fb59d786e0"
+    },
+    {
+     "page_id": "69f6a676963c0bec3582ee99",
+     "book_id": "6909bf46cf28baa1b4caf6b5",
+     "page_number": 128,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "47b8f2ae8fa6ed87"
+    },
+    {
+     "page_id": "69f6ad0578ec39b89ca6709c",
+     "book_id": "69c894346c6f3cc53c85c090",
+     "page_number": 135,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "66ffceb10e2d9662"
+    },
+    {
+     "page_id": "69e3ff85b142e5dd9d6b06dd",
+     "book_id": "69e3ff85b142e5dd9d6b06cf",
+     "page_number": 14,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "be695ee3eca8e12a"
+    },
+    {
+     "page_id": "69af4a490c7af0237dfb99bc",
+     "book_id": "69af4a490c7af0237dfb9792",
+     "page_number": 554,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "1c16243037875682"
+    },
+    {
+     "page_id": "69f6b51582d66ab96d7ee645",
+     "book_id": "69c855f76c6f3cc53c853c31",
+     "page_number": 130,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "a07a0bba9cf1b631"
+    },
+    {
+     "page_id": "69d8ca1ca09828f83ddc9b51",
+     "book_id": "69d8ca1ca09828f83ddc9a51",
+     "page_number": 256,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "6d5cb9d09b2edab5"
+    },
+    {
+     "page_id": "69bd9fd0f6d63c919748255a",
+     "book_id": "69bd9fd0f6d63c91974824c8",
+     "page_number": 146,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "1776729424a47490"
+    },
+    {
+     "page_id": "69f69a01bcba82fc6026ec23",
+     "book_id": "69c807126c6f3cc53c84575f",
+     "page_number": 144,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "26cc31a208715165"
+    },
+    {
+     "page_id": "69b63e702a1dde00d5a9d983",
+     "book_id": "69b63e702a1dde00d5a9d827",
+     "page_number": 348,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "6246ff729760a553"
+    },
+    {
+     "page_id": "69905d412fd6a0399389f2d1",
+     "book_id": "69905d402fd6a0399389f20e",
+     "page_number": 195,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "ff1f4124afeb61fa"
+    },
+    {
+     "page_id": "69e961652beefe2f6f72b550",
+     "book_id": "69e961652beefe2f6f72b4a8",
+     "page_number": 168,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "076ff9394dc6c0d5"
+    },
+    {
+     "page_id": "69f6c29bcebc78a20d7c99c0",
+     "book_id": "69c81bf26c6f3cc53c849ad9",
+     "page_number": 311,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "cc647f71ebaefcac"
+    },
+    {
+     "page_id": "69e806acfdad300064d9fd25",
+     "book_id": "69e806acfdad300064d9fced",
+     "page_number": 56,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "642ea1f31d6a281f"
+    },
+    {
+     "page_id": "69b51eaf9a81ef7feb3d95b1",
+     "book_id": "69b51eaf9a81ef7feb3d957d",
+     "page_number": 52,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "7ebd8a88f4b49dcc"
+    },
+    {
+     "page_id": "69f6c665f25d10d34eba7310",
+     "book_id": "69c7fda46c6f3cc53c84349e",
+     "page_number": 360,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "a3f9f6827ba7cb5c"
+    },
+    {
+     "page_id": "6a357a2a82bf3ff3f867b7f2",
+     "book_id": "6a357a2a82bf3ff3f867b5dd",
+     "page_number": 533,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "d3a7818b032c8d77"
+    },
+    {
+     "page_id": "6a8ee22f90f5a0e4155eab82",
+     "book_id": "6a8ee22f90f5a0e4155eab07",
+     "page_number": 122,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "8655d79e79a016ba"
+    },
+    {
+     "page_id": "69b51e8e768235dc65995e0f",
+     "book_id": "69b51e8e768235dc65995de5",
+     "page_number": 42,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "5299e9ea6d794b61"
+    },
+    {
+     "page_id": "69f8c1350c0c281d4bd32dab",
+     "book_id": "69f8c1350c0c281d4bd32bfd",
+     "page_number": 430,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "50302f534bd781c6"
+    },
+    {
+     "page_id": "6ac4fce54ba7223afef75f71",
+     "book_id": "6ac4fce44ba7223afef75aa9",
+     "page_number": 1222,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "9e4d2cd1a8ebaaea"
+    },
+    {
+     "page_id": "69b51eac768235dc6599760b",
+     "book_id": "69b51eac768235dc659975d3",
+     "page_number": 56,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "5124235d34e9632b"
+    },
+    {
+     "page_id": "69e41a3d8a8dae1074c53736",
+     "book_id": "69e41a3d8a8dae1074c536a0",
+     "page_number": 150,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "f52e30c1cba8bfc6"
+    },
+    {
+     "page_id": "6a8f61d8ddd2f57fe0f8024e",
+     "book_id": "6a8f61d8ddd2f57fe0f8018f",
+     "page_number": 191,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "6bf9102264d6f5dd"
+    },
+    {
+     "page_id": "69b51ed3c35d928cea4efd3f",
+     "book_id": "69b51ed3c35d928cea4efbf0",
+     "page_number": 335,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "9a09ec822cc403bb"
+    },
+    {
+     "page_id": "69b6422909a998b4c36dd968",
+     "book_id": "69b6422909a998b4c36dd8f9",
+     "page_number": 111,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "c4a56299b71cae17"
+    },
+    {
+     "page_id": "69bda103f6d63c919748c922",
+     "book_id": "69bda103f6d63c919748c7c4",
+     "page_number": 350,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "0b6569d53fe2f7e7"
+    },
+    {
+     "page_id": "69907d225f855ec553e790e4",
+     "book_id": "69907d225f855ec553e78ee2",
+     "page_number": 514,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "38287b99acbccb0a"
+    },
+    {
+     "page_id": "6a4ad95ed6371d99e7668c2f",
+     "book_id": "6a4ad95ed6371d99e7668aad",
+     "page_number": 386,
+     "draft_model": "gemini-3.1-flash-lite",
+     "draft_sha": "75d9e5ee405e7ce9"
+    },
+    {
+     "page_id": "69d8ca29a09828f83ddc9f2b",
+     "book_id": "69d8ca29a09828f83ddc9e05",
+     "page_number": 294,
+     "draft_model": "gemini-3.1-flash-lite-preview",
+     "draft_sha": "5fa45051c3695145"
+    }
+   ],
+   "frame": {
+    "books": 885,
+    "books_walked": 75,
+    "held_or_hidden": 0,
+    "no_eligible_page": 45,
+    "rule": "visible French books not held; stored OCR by gemini-3.1-flash-lite/gemini-3.1-flash-lite-preview, interior, >= 300 chars, not handwritten"
+   }
+  },
+  "german": {
+   "task": "translation",
+   "lang": "German",
+   "paired": false,
+   "routes": [
+    "flash3",
+    "flash-lite",
+    "opus-cli"
+   ],
+   "pages": [
+    {
+     "page_id": "6975c95baa60a6958bc7c02c",
+     "book_id": "6974b646457dd8909910b9f5",
+     "page_number": 50,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69d373e6011f1553692d7194",
+     "book_id": "69c887a66c6f3cc53c85a109",
+     "page_number": 7,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69d36ee3df31615d4dc19884",
+     "book_id": "69c878bb6c6f3cc53c858317",
+     "page_number": 19,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267b476c1f37c9c4f313e3",
+     "book_id": "6a267b466c1f37c9c4f313cb",
+     "page_number": 24,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69d0eb27a85dfed871a617df",
+     "book_id": "69c581e41a75791c06b6824e",
+     "page_number": 16,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69f65d7704cea28490963a38",
+     "book_id": "69c7f5086c6f3cc53c841ae5",
+     "page_number": 99,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267ca56c1f37c9c4f368db",
+     "book_id": "6a267ca56c1f37c9c4f368cd",
+     "page_number": 14,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69825ea74b403268ef117a56",
+     "book_id": "698255f0571a901a01ef5a1c",
+     "page_number": 35,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "697da1303602dd54f305a0ff",
+     "book_id": "697d9c9c72d515cb07bb384e",
+     "page_number": 16,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a308d19d57c4b7e016006ca",
+     "book_id": "6a308ce6d57c4b7e016006c6",
+     "page_number": 2,
+     "route": "flash3",
+     "tr_source": "broadsheet-ocr"
+    },
+    {
+     "page_id": "69f67bc823514c359a4f7051",
+     "book_id": "69c842a76c6f3cc53c850d2e",
+     "page_number": 263,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6985d4cb020b6a52514d347b",
+     "book_id": "6985ca745eb811b263caf4d7",
+     "page_number": 50,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51dfc768235dc6598acba",
+     "book_id": "69b51dfc768235dc6598aca1",
+     "page_number": 25,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6980949b858344f2e9cbd592",
+     "book_id": "697e23c9a2b46f2d5c1bfa93",
+     "page_number": 381,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51dc6cf111105c428feda",
+     "book_id": "69b51dc6cf111105c428fed3",
+     "page_number": 7,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "697da89cd584c55753f4689f",
+     "book_id": "697d9c98f2b56306a9ec960c",
+     "page_number": 49,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a243c420f0e4f405e62d8af",
+     "book_id": "6a243c420f0e4f405e62d869",
+     "page_number": 70,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26c1140e247ebad6df3317",
+     "book_id": "6a26c1140e247ebad6df32ff",
+     "page_number": 24,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69c834906c6f3cc53c84e5a6",
+     "book_id": "69c834886c6f3cc53c84e598",
+     "page_number": 39,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "697b1cfd359175932e4ad599",
+     "book_id": "697b0799b42177f3ebcc7f4d",
+     "page_number": 97,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "697747279a1b6c8f75363c07",
+     "book_id": "697704f5a8ad77b9e64fc7c3",
+     "page_number": 351,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267cca6c1f37c9c4f37194",
+     "book_id": "6a267cca6c1f37c9c4f37190",
+     "page_number": 4,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6973a3ea8e61c845333e4816",
+     "book_id": "6970e35c9b09d309d780a25a",
+     "page_number": 33,
+     "route": "flash3",
+     "tr_source": "batch_api"
+    },
+    {
+     "page_id": "6a26bce8d6b178e5aad86c42",
+     "book_id": "6a26bce8d6b178e5aad86c2e",
+     "page_number": 20,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69c77170e9af1b8c699f0ba0",
+     "book_id": "69c7391b6a0f3d112faf78ab",
+     "page_number": 36,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51db9768235dc65987079",
+     "book_id": "69b51db9768235dc65987073",
+     "page_number": 6,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267c636c1f37c9c4f36034",
+     "book_id": "6a267c636c1f37c9c4f3602b",
+     "page_number": 9,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "697b21b591f301322614d5cc",
+     "book_id": "697b0799606defbadb0f6d0b",
+     "page_number": 127,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51dfd47b06ecd581880c6",
+     "book_id": "69b51dfd47b06ecd581880bc",
+     "page_number": 10,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51de0261c58d63664c4fe",
+     "book_id": "69b51de0261c58d63664c4fa",
+     "page_number": 4,
+     "route": "flash3",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6975c95baa60a6958bc7c02c",
+     "book_id": "6974b646457dd8909910b9f5",
+     "page_number": 50,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69d373e6011f1553692d7194",
+     "book_id": "69c887a66c6f3cc53c85a109",
+     "page_number": 7,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69d36ee3df31615d4dc19884",
+     "book_id": "69c878bb6c6f3cc53c858317",
+     "page_number": 19,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "6a267b476c1f37c9c4f313e3",
+     "book_id": "6a267b466c1f37c9c4f313cb",
+     "page_number": 24,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69d0eb27a85dfed871a617df",
+     "book_id": "69c581e41a75791c06b6824e",
+     "page_number": 16,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69f65d7704cea28490963a38",
+     "book_id": "69c7f5086c6f3cc53c841ae5",
+     "page_number": 99,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "6a267ca56c1f37c9c4f368db",
+     "book_id": "6a267ca56c1f37c9c4f368cd",
+     "page_number": 14,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69825ea74b403268ef117a56",
+     "book_id": "698255f0571a901a01ef5a1c",
+     "page_number": 35,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "697da1303602dd54f305a0ff",
+     "book_id": "697d9c9c72d515cb07bb384e",
+     "page_number": 16,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "6a308d19d57c4b7e016006ca",
+     "book_id": "6a308ce6d57c4b7e016006c6",
+     "page_number": 2,
+     "route": "opus-cli",
+     "tr_source": "broadsheet-ocr",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69f67bc823514c359a4f7051",
+     "book_id": "69c842a76c6f3cc53c850d2e",
+     "page_number": 263,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "6985d4cb020b6a52514d347b",
+     "book_id": "6985ca745eb811b263caf4d7",
+     "page_number": 50,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69b51dfc768235dc6598acba",
+     "book_id": "69b51dfc768235dc6598aca1",
+     "page_number": 25,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "6980949b858344f2e9cbd592",
+     "book_id": "697e23c9a2b46f2d5c1bfa93",
+     "page_number": 381,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "69b51dc6cf111105c428feda",
+     "book_id": "69b51dc6cf111105c428fed3",
+     "page_number": 7,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash3"
+    },
+    {
+     "page_id": "6a26b93861b3857ed05a8a12",
+     "book_id": "6a26b93861b3857ed05a8a01",
+     "page_number": 17,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26c0c30e247ebad6df26b4",
+     "book_id": "6a26c0c30e247ebad6df26af",
+     "page_number": 5,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26becd0e247ebad6de90b4",
+     "book_id": "6a26becd0e247ebad6de909a",
+     "page_number": 26,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26c15faad44c98627c004c",
+     "book_id": "6a26c15faad44c98627c0026",
+     "page_number": 38,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69bd9f41f6d63c919747ff8e",
+     "book_id": "69bd9f41f6d63c919747ff68",
+     "page_number": 38,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a243c510f0e4f405e62e189",
+     "book_id": "6a243c510f0e4f405e62e088",
+     "page_number": 257,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69e759fd095c302d3fdde9bb",
+     "book_id": "69e759fd095c302d3fdde96b",
+     "page_number": 80,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26c217aad44c98627c1b71",
+     "book_id": "6a26c217aad44c98627c1b6e",
+     "page_number": 3,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51cdf04616a7c1dfb25b8",
+     "book_id": "69b51cdf04616a7c1dfb2490",
+     "page_number": 296,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69bd9eedf6d63c919747d9de",
+     "book_id": "69bd9eedf6d63c919747d754",
+     "page_number": 650,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69ade6cc2fcf4ffa86cec2b7",
+     "book_id": "69ade6cc2fcf4ffa86cec233",
+     "page_number": 132,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26bc42d6b178e5aad820c7",
+     "book_id": "6a26bc42d6b178e5aad820c0",
+     "page_number": 7,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51e73cf111105c429d653",
+     "book_id": "69b51e73cf111105c429d61f",
+     "page_number": 52,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69bd9e7ef6d63c919747b301",
+     "book_id": "69bd9e7ef6d63c919747b26e",
+     "page_number": 147,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51e939a81ef7feb3d775e",
+     "book_id": "69b51e939a81ef7feb3d774b",
+     "page_number": 19,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26bc2cd6b178e5aad814dd",
+     "book_id": "6a26bc2cd6b178e5aad814c9",
+     "page_number": 20,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26be7b0e247ebad6de7568",
+     "book_id": "6a26be7b0e247ebad6de754b",
+     "page_number": 29,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26be4c0e247ebad6de71b3",
+     "book_id": "6a26be4c0e247ebad6de7195",
+     "page_number": 30,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267ea26c1f37c9c4f3ca18",
+     "book_id": "6a267ea26c1f37c9c4f3ca11",
+     "page_number": 7,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26bf6a0e247ebad6dec839",
+     "book_id": "6a26bf6a0e247ebad6dec826",
+     "page_number": 19,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26b9d561b3857ed05abb85",
+     "book_id": "6a26b9d561b3857ed05abb73",
+     "page_number": 18,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a20a12ca16b41b8475fa926",
+     "book_id": "6a20a12ba16b41b8475fa8c6",
+     "page_number": 96,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69bda135f6d63c919748ed52",
+     "book_id": "69bda135f6d63c919748ec78",
+     "page_number": 218,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "69b51db5ff09e4fe943a7ae9",
+     "book_id": "69b51db5ff09e4fe943a7ad6",
+     "page_number": 19,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26bd0ad6b178e5aad87c82",
+     "book_id": "6a26bd0ad6b178e5aad87c71",
+     "page_number": 17,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26c325aad44c98627c85be",
+     "book_id": "6a26c325aad44c98627c85ae",
+     "page_number": 16,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267fac88f11913ee9c96ad",
+     "book_id": "6a267fac88f11913ee9c967f",
+     "page_number": 46,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a491530a9e39181572e11c0",
+     "book_id": "6a491530a9e39181572e11ad",
+     "page_number": 19,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26c56eaad44c98627d6d96",
+     "book_id": "6a26c56eaad44c98627d6d82",
+     "page_number": 20,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a267ee76c1f37c9c4f3cfa5",
+     "book_id": "6a267ee76c1f37c9c4f3cf91",
+     "page_number": 20,
+     "route": "flash-lite",
+     "tr_source": "ai"
+    },
+    {
+     "page_id": "6a26b93861b3857ed05a8a12",
+     "book_id": "6a26b93861b3857ed05a8a01",
+     "page_number": 17,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "6a26c0c30e247ebad6df26b4",
+     "book_id": "6a26c0c30e247ebad6df26af",
+     "page_number": 5,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "6a26becd0e247ebad6de90b4",
+     "book_id": "6a26becd0e247ebad6de909a",
+     "page_number": 26,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "6a26c15faad44c98627c004c",
+     "book_id": "6a26c15faad44c98627c0026",
+     "page_number": 38,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69bd9f41f6d63c919747ff8e",
+     "book_id": "69bd9f41f6d63c919747ff68",
+     "page_number": 38,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "6a243c510f0e4f405e62e189",
+     "book_id": "6a243c510f0e4f405e62e088",
+     "page_number": 257,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69e759fd095c302d3fdde9bb",
+     "book_id": "69e759fd095c302d3fdde96b",
+     "page_number": 80,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "6a26c217aad44c98627c1b71",
+     "book_id": "6a26c217aad44c98627c1b6e",
+     "page_number": 3,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69b51cdf04616a7c1dfb25b8",
+     "book_id": "69b51cdf04616a7c1dfb2490",
+     "page_number": 296,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69bd9eedf6d63c919747d9de",
+     "book_id": "69bd9eedf6d63c919747d754",
+     "page_number": 650,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69ade6cc2fcf4ffa86cec2b7",
+     "book_id": "69ade6cc2fcf4ffa86cec233",
+     "page_number": 132,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "6a26bc42d6b178e5aad820c7",
+     "book_id": "6a26bc42d6b178e5aad820c0",
+     "page_number": 7,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69b51e73cf111105c429d653",
+     "book_id": "69b51e73cf111105c429d61f",
+     "page_number": 52,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69bd9e7ef6d63c919747b301",
+     "book_id": "69bd9e7ef6d63c919747b26e",
+     "page_number": 147,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    },
+    {
+     "page_id": "69b51e939a81ef7feb3d775e",
+     "book_id": "69b51e939a81ef7feb3d774b",
+     "page_number": 19,
+     "route": "opus-cli",
+     "tr_source": "ai",
+     "paired_with": "flash-lite"
+    }
+   ],
+   "served": {
+    "flash3": "served",
+    "flash-lite": "served",
+    "opus-cli": "this run's reads, not served (claude-translate.mjs read, one page a call)"
+   },
+   "frame": {
+    "books": 5882,
+    "routes": {
+     "flash3": {
+      "pages": 299823,
+      "books": 1210
+     },
+     "flash-lite": {
+      "pages": 146306,
+      "books": 990
+     }
+    },
+    "salt": "german-r2",
+    "books_left_out": 60,
+    "note": "visible German books dated 1500-1800; English newer than the OCR"
+   }
+  }
+ }
+}

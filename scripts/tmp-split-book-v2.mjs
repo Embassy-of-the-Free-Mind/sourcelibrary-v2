@@ -17,6 +17,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import { markDisplay } from './workers/lib/display-image.mjs';
 import crypto from 'crypto';
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -242,7 +243,7 @@ async function main() {
       // Display size (1200px wide)
       const displayBuf = await sharp(halfBuf).resize({ width: 1200, withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer();
       const displayKey = `pages/${BOOK_ID}/sp${id}.jpg`;
-      const displayUrl = await uploadToR2(displayKey, displayBuf);
+      const displayUrl = await uploadToR2(displayKey, await markDisplay(displayBuf, { bookId: BOOK_ID, pageNumber: id }));
 
       // Thumbnail (150px wide)
       const thumbBuf = await sharp(halfBuf).resize({ width: 150 }).jpeg({ quality: 60 }).toBuffer();

@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId, type Db } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
-import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, applyLinkRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { isBareGreeting, greetingReply, isKeepalivePing, pingReply, duplicateReply, sameMessage } from '@/lib/embassy/greeting';
 import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/lib/embassy/replay-cache';
@@ -40,6 +40,8 @@ const ANON_DAILY_CEILING = Number(process.env.LIBRARIAN_ANON_DAILY_CEILING) || 5
  *                    apply these rewrites to the streamed text
  *   image_removals — fabricated image embeds; clients strip them from the
  *                    streamed text
+ *   link_removals — dead author, artwork and collection links; clients unlink
+ *                    them in the streamed text and keep the words
  *   grounding_edits — span rewrites from the grounding pass (#5904): dropped
  *                    unsupported sentences, unquoted paraphrases, attached
  *                    page citations, corrected captions. Sent BEFORE
@@ -247,12 +249,17 @@ export async function POST(request: NextRequest) {
   let citationFixes: CitationFix[] = [];
   // Fabricated image embeds to strip, same round trip as citationFixes.
   let imageRemovals: string[] = [];
+  // Dead non-book links to unlink, same round trip again.
+  let linkRemovals: string[] = [];
   // Grounding edits (#5904), computed on the raw streamed text — applied first.
   let groundingEdits: Array<{ find: string; replace: string; at?: number }> = [];
 
   /** The text as the reader should see it: grounded, links repaired, dead images dropped. */
   const finalizeText = (text: string) =>
-    applyImageRemovals(applyCitationFixes(applyGroundingEdits(text, groundingEdits), citationFixes), imageRemovals);
+    applyLinkRemovals(
+      applyImageRemovals(applyCitationFixes(applyGroundingEdits(text, groundingEdits), citationFixes), imageRemovals),
+      linkRemovals,
+    );
 
   /** One canned step in place of the agentic loop — greeting, ping, or duplicate. */
   const cannedText: string | null = bareGreeting
@@ -324,6 +331,8 @@ export async function POST(request: NextRequest) {
           citationFixes = step.fixes || [];
         } else if (step.type === 'image_removals') {
           imageRemovals = step.removeUrls || [];
+        } else if (step.type === 'link_removals') {
+          linkRemovals = step.removeLinks || [];
         } else if (step.type === 'grounding_edits') {
           groundingEdits = step.edits || [];
         } else if (step.type === 'usage') {
@@ -445,6 +454,11 @@ export async function POST(request: NextRequest) {
           case 'image_removals':
             imageRemovals = step.removeUrls || [];
             await send({ type: 'image_removals', removeUrls: step.removeUrls });
+            break;
+
+          case 'link_removals':
+            linkRemovals = step.removeLinks || [];
+            await send({ type: 'link_removals', removeLinks: step.removeLinks });
             break;
 
           case 'grounding_edits':

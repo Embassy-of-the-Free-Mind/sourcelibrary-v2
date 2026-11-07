@@ -21,7 +21,7 @@ import { makeBookDoc } from './lib/book-docs.mjs';
 
 const GETTY_API = 'https://data.getty.edu/museum/collection';
 const GETTY_IIIF = 'https://media.getty.edu/iiif/image';
-const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
+const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
 const THUMB_WIDTH = 600;
 const MIN_DIMENSION = 800;
@@ -195,7 +195,7 @@ async function main() {
   const cursor = books.find(
     { 'image_source.provider': 'getty' },
     { projection: { 'image_source.identifier': 1 }, maxTimeMS: 30000 }
-  );
+  ).batchSize(1000);
   for await (const doc of cursor) {
     if (doc.image_source?.identifier) existingIds.add(doc.image_source.identifier);
   }

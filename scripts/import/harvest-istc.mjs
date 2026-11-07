@@ -263,7 +263,7 @@ async function main() {
   let existingIds = new Set();
   if (!STATS_ONLY) {
     console.log('Loading existing ISTC records for dupe check...');
-    const cursor = col.find({ source: SOURCE }, { projection: { source_id: 1 } });
+    const cursor = col.find({ source: SOURCE }, { projection: { source_id: 1 } }).batchSize(1000);
     for await (const doc of cursor) existingIds.add(doc.source_id);
     console.log(`Found ${existingIds.size} existing ISTC records\n`);
   }

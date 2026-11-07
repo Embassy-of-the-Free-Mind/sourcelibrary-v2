@@ -32,7 +32,7 @@ for (const b of books) {
     { book_id: b.id, 'translation.model': { $in: ['gemini-3.8-flash-low', 'gemini-3-flash-preview'] }, 'translation.updated_at': { $gte: SINCE } },
     { projection: { _id: 0, id: 1, page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.unreadable': 1,
       'ocr.updated_at': 1, 'translation.model': 1, 'translation.updated_at': 1, 'translation.data': 1,
-      'translation.engine.input.source_updated_at': 1, 'translation_withheld.reason': 1 } });
+      'translation.engine.input.source_updated_at': 1, 'translation_withheld.reason': 1 } }).batchSize(1000);
   for await (const p of cur) {
     if (!(p.translation?.data || '').trim()) continue;
     const m = p.translation.model; const wr = p.translation_withheld?.reason || null;

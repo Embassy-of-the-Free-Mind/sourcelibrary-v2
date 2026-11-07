@@ -226,7 +226,7 @@ async function scan({ roots, apply, checkpoint, manifestsDir }) {
     }
     // A revision may name the page by id or by _id; both map to the page's canonical id.
     const either = [...new Set(found.flatMap((p) => [p.id, String(p._id)].filter(Boolean)))];
-    const revs = db.collection('page_revisions').find({ page_id: { $in: either }, field: { $in: ['ocr', 'translation'] } }, { projection: { page_id: 1, field: 1, data: 1 } });
+    const revs = db.collection('page_revisions').find({ page_id: { $in: either }, field: { $in: ['ocr', 'translation'] } }, { projection: { page_id: 1, field: 1, data: 1 } }).batchSize(1000);
     for await (const rv of revs) addKept(pages.get(rv.page_id)?.id ?? rv.page_id, rv.field, rv.data);
     process.stderr.write(`\r  pages ${Math.min(i + 500, pageIds.length)}/${pageIds.length}`);
   }

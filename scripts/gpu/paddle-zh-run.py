@@ -35,7 +35,9 @@ a = ap.parse_args()
 
 from PIL import Image  # noqa: E402
 
-rows = [(l.rstrip('\n').split('\t') + [''])[:4] for l in open(a.manifest) if l.strip()]
+# pad to 4 columns, and skip a row with no image (a URL broken across lines left a 2-column fragment on the #6101
+# frame, and a fetcher thread that raised on it never handed its page back, so its runner waited forever)
+rows = [r for r in ((l.rstrip('\n').split('\t') + ['', '', ''])[:4] for l in open(a.manifest) if l.strip()) if r[2]]
 mine = [r for i, r in enumerate(rows) if i % a.workers == a.worker]
 out = lambda bid, pn, ext: os.path.join(a.root, 'out', bid, f'{pn}.{ext}')
 todo = [r for r in mine if not (os.path.exists(out(r[0], r[1], 'txt')) or os.path.exists(out(r[0], r[1], 'err')))]

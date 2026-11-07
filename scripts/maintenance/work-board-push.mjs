@@ -34,6 +34,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { readRegistry, standing } from '../lib/lane-stop.mjs';
 
 export const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v2';
 export const COLLECTION = 'ops_reports';
@@ -340,7 +341,17 @@ export function collectBox({ box, jobScript = '/root/bin/claude-job.sh', now = n
     window_days: WINDOW_DAYS,
     jobs,
     chains: collectChains(JD),
+    stops: collectStops(),
   };
+}
+
+/** Standing lane STOPs from this box's registry (scripts/lib/lane-stop.mjs, #7912). Strings redacted, no evidence. */
+export function collectStops(registryPath) {
+  return standing(readRegistry(registryPath)).map(r => ({
+    lane: redact(r.lane, 80), kind: r.kind, reason: redact(r.reason, 200), stopped_at: r.stopped_at,
+    lane_issue: r.lane_issue ?? null, ticket: r.ticket?.number ?? null, pages_waiting: r.pages_waiting ?? null,
+    stop_exists: fs.existsSync(r.stop_path),
+  }));
 }
 
 // ───────────────────────────────────────────── github side

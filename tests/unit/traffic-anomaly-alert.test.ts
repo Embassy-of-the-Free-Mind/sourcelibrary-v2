@@ -10,6 +10,9 @@ import {
   isSupposedlyBlocked,
   looksLikeEnumeration,
   looksLikeSpray,
+  looksLikeDesktopSurge,
+  deviceClass,
+  medianOf,
   prefix16,
   SPRAY_MIN_READS,
   SPRAY_MIN_SHARE,
@@ -269,5 +272,37 @@ describe('wide-shallow walker', () => {
   });
   it('reads the same tripwire collection the route writes', () => {
     expect(WORKER_TRIPWIRE_COLLECTION).toBe(TRIPWIRE_COLLECTION);
+  });
+});
+
+describe('desktop surge (#8353)', () => {
+  const base = { desktopBase: 13000, phoneBase: 2000 };
+  it('fires on a desktop jump phones did not see', () => {
+    expect(looksLikeDesktopSurge({ ...base, desktop: 80000, phone: 2100 })).toBe(true);
+  });
+  it('stays quiet for an audience, which shows up on phones too', () => {
+    expect(looksLikeDesktopSurge({ ...base, desktop: 80000, phone: 9000 })).toBe(false);
+  });
+  it('stays quiet on a normal day and on a small jump from a small base', () => {
+    expect(looksLikeDesktopSurge({ ...base, desktop: 14000, phone: 2000 })).toBe(false);
+    expect(looksLikeDesktopSurge({ desktopBase: 100, phoneBase: 50, desktop: 900, phone: 50 })).toBe(false);
+  });
+  it('sorts devices by what the user agent claims', () => {
+    expect(deviceClass('Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X)')).toBe('phone');
+    expect(deviceClass('Mozilla/5.0 (Linux; Android 14; Pixel 8)')).toBe('phone');
+    expect(deviceClass('Mozilla/5.0 (Windows NT 10.0; Win64; x64)')).toBe('desktop');
+    expect(deviceClass('Mozilla/5.0 (X11; Linux x86_64)')).toBe('other');
+  });
+  it('a median keeps a one-day surge out of the baseline', () => {
+    expect(medianOf([13000, 14000, 95000, 12000, 15000, 13500, 14500])).toBe(14000);
+  });
+});
+
+describe('loopback is not an exposed host (#8353)', () => {
+  it('ignores a local dev server, with or without a port', () => {
+    for (const h of ['127.0.0.1', 'localhost', 'localhost:3000', '127.0.0.1:3000', '::1']) expect(isUnexpectedHost(h)).toBe(false);
+  });
+  it('still flags a real outside host, including one that only looks local', () => {
+    for (const h of ['sourcelibrary-v2.vercel.app', 'localhost.evil.example', '127.0.0.1.evil.example']) expect(isUnexpectedHost(h)).toBe(true);
   });
 });

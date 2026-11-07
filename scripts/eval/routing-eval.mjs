@@ -108,7 +108,7 @@ async function seal(run) {
   if (P.visibility === 'hidden') q.visible = { $ne: true }; else if (P.visibility === 'visible') q.visible = true;
   if (P.created_before) q.created_at = { $lt: new Date(P.created_before) };
   const pop = Object.fromEntries(groups.map((g) => [g, []])); const heldOut = Object.fromEntries(groups.map((g) => [g, 0]));
-  for await (const b of db.collection('books').find(q, { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'image_source.provider': 1, created_at: 1 } })) {
+  for await (const b of db.collection('books').find(q, { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'image_source.provider': 1, created_at: 1 } }).batchSize(1000)) {
     const first = toLanguageCodes(b.language).codes[0];
     const g = P.families ? (first ? codeFamily(first) : null) : groups[0];
     if (!pop[g]) continue;

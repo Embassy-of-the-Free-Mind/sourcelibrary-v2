@@ -1,0 +1,5 @@
+{
+ "note": "Every mechanical cross-page flag on a block (B2) page, checked by eye against the reference and the 1/call reads of the same page (2026-10-27, job agy-ocr-per-call-6740). 'cleared' = not a block fault.",
+ "T1|B2|6a3c5e9540c88a541d8e3a28": { "verdict": "cleared", "why": "Kanripo's page break falls a column early: its p.97 ends 按唀當為俗誘字唁古文…, which the scan prints at the head of p.98; A1 and A1b both start p.98 with the same entry (唽嗽…當為俗誘字〇唁古文). The 8-Han run differs from theirs only by misread characters." },
+ "T1|B2|6a3c6181879008ba7e15eb38": { "verdict": "cleared", "why": "Kanripo's page break again: its p.39 ends 陶𢎞景授陸敬游十賚文可以安身丨丨顯祇遐福, which the scan prints at the head of p.40; A1 and A1b both read it there. B2's p.39 holds the same entries as A1's in another order (CER counts that), nothing from p.40." }
+}

@@ -1,0 +1,763 @@
+{
+ "books": 864,
+ "bad": 633,
+ "final": {
+  "bad": {
+   "n": 864,
+   "bad": 633,
+   "auc": 0.732,
+   "auc_ci": [
+    0.693,
+    0.769
+   ],
+   "logloss": 0.5796,
+   "logloss_ci": [
+    0.532,
+    0.631
+   ],
+   "slope": 0.516,
+   "slope_ci": [
+    0.411,
+    0.634
+   ],
+   "brier": 0.1889
+  },
+  "many_auc": 0.697,
+  "many_auc_ci": [
+   0.66,
+   0.732
+  ],
+  "seen_language": {
+   "n": 552,
+   "bad": 365,
+   "auc": 0.761
+  },
+  "unseen_language": {
+   "n": 312,
+   "bad": 268,
+   "auc": 0.606
+  },
+  "false_reassurance": [
+   {
+    "t": 0.1,
+    "called_good": 40,
+    "share_called_good": 0.046,
+    "false_reassurance": 0.3,
+    "fr_ci": [
+     0.174,
+     0.45
+    ],
+    "D_among_called_good": 5
+   },
+   {
+    "t": 0.15,
+    "called_good": 64,
+    "share_called_good": 0.074,
+    "false_reassurance": 0.266,
+    "fr_ci": [
+     0.156,
+     0.375
+    ],
+    "D_among_called_good": 6
+   },
+   {
+    "t": 0.2,
+    "called_good": 91,
+    "share_called_good": 0.105,
+    "false_reassurance": 0.385,
+    "fr_ci": [
+     0.286,
+     0.484
+    ],
+    "D_among_called_good": 17
+   },
+   {
+    "t": 0.25,
+    "called_good": 111,
+    "share_called_good": 0.128,
+    "false_reassurance": 0.423,
+    "fr_ci": [
+     0.333,
+     0.514
+    ],
+    "D_among_called_good": 23
+   },
+   {
+    "t": 0.3,
+    "called_good": 141,
+    "share_called_good": 0.163,
+    "false_reassurance": 0.461,
+    "fr_ci": [
+     0.383,
+     0.546
+    ],
+    "D_among_called_good": 34
+   },
+   {
+    "t": 0.35,
+    "called_good": 165,
+    "share_called_good": 0.191,
+    "false_reassurance": 0.473,
+    "fr_ci": [
+     0.394,
+     0.545
+    ],
+    "D_among_called_good": 41
+   },
+   {
+    "t": 0.4,
+    "called_good": 188,
+    "share_called_good": 0.218,
+    "false_reassurance": 0.484,
+    "fr_ci": [
+     0.415,
+     0.553
+    ],
+    "D_among_called_good": 52
+   },
+   {
+    "t": 0.5,
+    "called_good": 261,
+    "share_called_good": 0.302,
+    "false_reassurance": 0.49,
+    "fr_ci": [
+     0.429,
+     0.552
+    ],
+    "D_among_called_good": 76
+   }
+  ],
+  "agy_read_share": 0.0,
+  "by_language": {
+   "Hebrew": {
+    "n": 60,
+    "bad": 57,
+    "mean_pred": 0.689,
+    "auc": 0.515
+   },
+   "Persian": {
+    "n": 60,
+    "bad": 55,
+    "mean_pred": 0.713,
+    "auc": 0.553
+   },
+   "Arabic": {
+    "n": 58,
+    "bad": 43,
+    "mean_pred": 0.82,
+    "auc": 0.563
+   },
+   "Italian": {
+    "n": 58,
+    "bad": 36,
+    "mean_pred": 0.697,
+    "auc": 0.798
+   },
+   "French": {
+    "n": 57,
+    "bad": 35,
+    "mean_pred": 0.67,
+    "auc": 0.635
+   },
+   "Korean": {
+    "n": 57,
+    "bad": 54,
+    "mean_pred": 0.906,
+    "auc": 0.543
+   },
+   "Greek": {
+    "n": 54,
+    "bad": 40,
+    "mean_pred": 0.621,
+    "auc": 0.748
+   },
+   "Syriac": {
+    "n": 54,
+    "bad": 49,
+    "mean_pred": 0.546,
+    "auc": 0.543
+   },
+   "Japanese": {
+    "n": 53,
+    "bad": 49,
+    "mean_pred": 0.713,
+    "auc": 0.735
+   },
+   "Tibetan": {
+    "n": 50,
+    "bad": 19,
+    "mean_pred": 0.098,
+    "auc": 0.728
+   },
+   "German": {
+    "n": 46,
+    "bad": 34,
+    "mean_pred": 0.59,
+    "auc": 0.912
+   },
+   "Spanish": {
+    "n": 42,
+    "bad": 25,
+    "mean_pred": 0.641,
+    "auc": 0.666
+   },
+   "English": {
+    "n": 41,
+    "bad": 24,
+    "mean_pred": 0.451,
+    "auc": 0.811
+   },
+   "Dutch": {
+    "n": 41,
+    "bad": 19,
+    "mean_pred": 0.663,
+    "auc": 0.844
+   },
+   "Egyptian hieroglyphs": {
+    "n": 41,
+    "bad": 33,
+    "mean_pred": 0.877,
+    "auc": 0.723
+   },
+   "Latin": {
+    "n": 33,
+    "bad": 27,
+    "mean_pred": 0.726,
+    "auc": 0.586
+   },
+   "Sanskrit": {
+    "n": 30,
+    "bad": 25,
+    "mean_pred": 0.726,
+    "auc": 0.464
+   },
+   "Russian": {
+    "n": 27,
+    "bad": 9,
+    "mean_pred": 0.254,
+    "auc": 0.506
+   }
+  },
+  "coverage": {
+   "n": 864,
+   "coverage_90": 0.968,
+   "coverage_ci": [
+    0.956,
+    0.979
+   ],
+   "median_width": 15.5,
+   "lower_bound_zero_share": 0.98
+  }
+ },
+ "baseline": {
+  "bad": {
+   "n": 864,
+   "bad": 633,
+   "auc": 0.732,
+   "auc_ci": [
+    0.693,
+    0.769
+   ],
+   "logloss": 0.5787,
+   "logloss_ci": [
+    0.551,
+    0.609
+   ],
+   "slope": 0.855,
+   "slope_ci": [
+    0.683,
+    1.048
+   ],
+   "brier": 0.1955
+  },
+  "many_auc": 0.698,
+  "many_auc_ci": [
+   0.658,
+   0.732
+  ],
+  "seen_language": {
+   "n": 552,
+   "bad": 365,
+   "auc": 0.728
+  },
+  "unseen_language": {
+   "n": 312,
+   "bad": 268,
+   "auc": 0.6
+  },
+  "false_reassurance": [
+   {
+    "t": 0.1,
+    "called_good": 16,
+    "share_called_good": 0.019,
+    "false_reassurance": 0.438,
+    "fr_ci": [
+     0.188,
+     0.688
+    ],
+    "D_among_called_good": 1
+   },
+   {
+    "t": 0.15,
+    "called_good": 18,
+    "share_called_good": 0.021,
+    "false_reassurance": 0.5,
+    "fr_ci": [
+     0.278,
+     0.722
+    ],
+    "D_among_called_good": 3
+   },
+   {
+    "t": 0.2,
+    "called_good": 51,
+    "share_called_good": 0.059,
+    "false_reassurance": 0.392,
+    "fr_ci": [
+     0.255,
+     0.529
+    ],
+    "D_among_called_good": 8
+   },
+   {
+    "t": 0.25,
+    "called_good": 71,
+    "share_called_good": 0.082,
+    "false_reassurance": 0.38,
+    "fr_ci": [
+     0.268,
+     0.493
+    ],
+    "D_among_called_good": 9
+   },
+   {
+    "t": 0.3,
+    "called_good": 98,
+    "share_called_good": 0.113,
+    "false_reassurance": 0.367,
+    "fr_ci": [
+     0.276,
+     0.469
+    ],
+    "D_among_called_good": 14
+   },
+   {
+    "t": 0.35,
+    "called_good": 157,
+    "share_called_good": 0.182,
+    "false_reassurance": 0.484,
+    "fr_ci": [
+     0.408,
+     0.561
+    ],
+    "D_among_called_good": 33
+   },
+   {
+    "t": 0.4,
+    "called_good": 173,
+    "share_called_good": 0.2,
+    "false_reassurance": 0.503,
+    "fr_ci": [
+     0.428,
+     0.578
+    ],
+    "D_among_called_good": 43
+   },
+   {
+    "t": 0.5,
+    "called_good": 269,
+    "share_called_good": 0.311,
+    "false_reassurance": 0.502,
+    "fr_ci": [
+     0.446,
+     0.561
+    ],
+    "D_among_called_good": 67
+   }
+  ],
+  "agy_read_share": 0.0,
+  "by_language": {
+   "Hebrew": {
+    "n": 60,
+    "bad": 57,
+    "mean_pred": 0.587,
+    "auc": 0.594
+   },
+   "Persian": {
+    "n": 60,
+    "bad": 55,
+    "mean_pred": 0.683,
+    "auc": 0.64
+   },
+   "Arabic": {
+    "n": 58,
+    "bad": 43,
+    "mean_pred": 0.64,
+    "auc": 0.678
+   },
+   "Italian": {
+    "n": 58,
+    "bad": 36,
+    "mean_pred": 0.642,
+    "auc": 0.854
+   },
+   "French": {
+    "n": 57,
+    "bad": 35,
+    "mean_pred": 0.473,
+    "auc": 0.59
+   },
+   "Korean": {
+    "n": 57,
+    "bad": 54,
+    "mean_pred": 0.772,
+    "auc": 0.562
+   },
+   "Greek": {
+    "n": 54,
+    "bad": 40,
+    "mean_pred": 0.629,
+    "auc": 0.855
+   },
+   "Syriac": {
+    "n": 54,
+    "bad": 49,
+    "mean_pred": 0.565,
+    "auc": 0.604
+   },
+   "Japanese": {
+    "n": 53,
+    "bad": 49,
+    "mean_pred": 0.803,
+    "auc": 0.531
+   },
+   "Tibetan": {
+    "n": 50,
+    "bad": 19,
+    "mean_pred": 0.274,
+    "auc": 0.59
+   },
+   "German": {
+    "n": 46,
+    "bad": 34,
+    "mean_pred": 0.416,
+    "auc": 0.65
+   },
+   "Spanish": {
+    "n": 42,
+    "bad": 25,
+    "mean_pred": 0.62,
+    "auc": 0.68
+   },
+   "English": {
+    "n": 41,
+    "bad": 24,
+    "mean_pred": 0.154,
+    "auc": 0.658
+   },
+   "Dutch": {
+    "n": 41,
+    "bad": 19,
+    "mean_pred": 0.61,
+    "auc": 0.667
+   },
+   "Egyptian hieroglyphs": {
+    "n": 41,
+    "bad": 33,
+    "mean_pred": 0.755,
+    "auc": 0.633
+   },
+   "Latin": {
+    "n": 33,
+    "bad": 27,
+    "mean_pred": 0.626,
+    "auc": 0.707
+   },
+   "Sanskrit": {
+    "n": 30,
+    "bad": 25,
+    "mean_pred": 0.771,
+    "auc": 0.436
+   },
+   "Russian": {
+    "n": 27,
+    "bad": 9,
+    "mean_pred": 0.254,
+    "auc": 0.762
+   }
+  }
+ },
+ "secondary:B+T+M": {
+  "bad": {
+   "n": 864,
+   "bad": 633,
+   "auc": 0.743,
+   "auc_ci": [
+    0.704,
+    0.78
+   ],
+   "logloss": 0.5433,
+   "logloss_ci": [
+    0.494,
+    0.597
+   ],
+   "slope": 0.56,
+   "slope_ci": [
+    0.441,
+    0.69
+   ],
+   "brier": 0.1737
+  },
+  "many_auc": 0.717,
+  "many_auc_ci": [
+   0.681,
+   0.752
+  ],
+  "seen_language": {
+   "n": 552,
+   "bad": 365,
+   "auc": 0.761
+  },
+  "unseen_language": {
+   "n": 312,
+   "bad": 268,
+   "auc": 0.632
+  },
+  "false_reassurance": [
+   {
+    "t": 0.1,
+    "called_good": 21,
+    "share_called_good": 0.024,
+    "false_reassurance": 0.19,
+    "fr_ci": [
+     0.048,
+     0.381
+    ],
+    "D_among_called_good": 3
+   },
+   {
+    "t": 0.15,
+    "called_good": 38,
+    "share_called_good": 0.044,
+    "false_reassurance": 0.158,
+    "fr_ci": [
+     0.053,
+     0.289
+    ],
+    "D_among_called_good": 4
+   },
+   {
+    "t": 0.2,
+    "called_good": 56,
+    "share_called_good": 0.065,
+    "false_reassurance": 0.286,
+    "fr_ci": [
+     0.179,
+     0.411
+    ],
+    "D_among_called_good": 9
+   },
+   {
+    "t": 0.25,
+    "called_good": 75,
+    "share_called_good": 0.087,
+    "false_reassurance": 0.32,
+    "fr_ci": [
+     0.213,
+     0.413
+    ],
+    "D_among_called_good": 15
+   },
+   {
+    "t": 0.3,
+    "called_good": 101,
+    "share_called_good": 0.117,
+    "false_reassurance": 0.366,
+    "fr_ci": [
+     0.277,
+     0.455
+    ],
+    "D_among_called_good": 21
+   },
+   {
+    "t": 0.35,
+    "called_good": 134,
+    "share_called_good": 0.155,
+    "false_reassurance": 0.44,
+    "fr_ci": [
+     0.351,
+     0.522
+    ],
+    "D_among_called_good": 32
+   },
+   {
+    "t": 0.4,
+    "called_good": 156,
+    "share_called_good": 0.181,
+    "false_reassurance": 0.442,
+    "fr_ci": [
+     0.365,
+     0.519
+    ],
+    "D_among_called_good": 37
+   },
+   {
+    "t": 0.5,
+    "called_good": 210,
+    "share_called_good": 0.243,
+    "false_reassurance": 0.457,
+    "fr_ci": [
+     0.39,
+     0.524
+    ],
+    "D_among_called_good": 54
+   }
+  ],
+  "agy_read_share": 0.0,
+  "by_language": {
+   "Hebrew": {
+    "n": 60,
+    "bad": 57,
+    "mean_pred": 0.77,
+    "auc": 0.538
+   },
+   "Persian": {
+    "n": 60,
+    "bad": 55,
+    "mean_pred": 0.765,
+    "auc": 0.582
+   },
+   "Arabic": {
+    "n": 58,
+    "bad": 43,
+    "mean_pred": 0.829,
+    "auc": 0.574
+   },
+   "Italian": {
+    "n": 58,
+    "bad": 36,
+    "mean_pred": 0.733,
+    "auc": 0.819
+   },
+   "French": {
+    "n": 57,
+    "bad": 35,
+    "mean_pred": 0.708,
+    "auc": 0.616
+   },
+   "Korean": {
+    "n": 57,
+    "bad": 54,
+    "mean_pred": 0.897,
+    "auc": 0.494
+   },
+   "Greek": {
+    "n": 54,
+    "bad": 40,
+    "mean_pred": 0.651,
+    "auc": 0.755
+   },
+   "Syriac": {
+    "n": 54,
+    "bad": 49,
+    "mean_pred": 0.643,
+    "auc": 0.58
+   },
+   "Japanese": {
+    "n": 53,
+    "bad": 49,
+    "mean_pred": 0.803,
+    "auc": 0.643
+   },
+   "Tibetan": {
+    "n": 50,
+    "bad": 19,
+    "mean_pred": 0.231,
+    "auc": 0.718
+   },
+   "German": {
+    "n": 46,
+    "bad": 34,
+    "mean_pred": 0.62,
+    "auc": 0.922
+   },
+   "Spanish": {
+    "n": 42,
+    "bad": 25,
+    "mean_pred": 0.694,
+    "auc": 0.678
+   },
+   "English": {
+    "n": 41,
+    "bad": 24,
+    "mean_pred": 0.488,
+    "auc": 0.799
+   },
+   "Dutch": {
+    "n": 41,
+    "bad": 19,
+    "mean_pred": 0.706,
+    "auc": 0.835
+   },
+   "Egyptian hieroglyphs": {
+    "n": 41,
+    "bad": 33,
+    "mean_pred": 0.902,
+    "auc": 0.712
+   },
+   "Latin": {
+    "n": 33,
+    "bad": 27,
+    "mean_pred": 0.767,
+    "auc": 0.599
+   },
+   "Sanskrit": {
+    "n": 30,
+    "bad": 25,
+    "mean_pred": 0.764,
+    "auc": 0.464
+   },
+   "Russian": {
+    "n": 27,
+    "bad": 9,
+    "mean_pred": 0.266,
+    "auc": 0.531
+   }
+  },
+  "coverage": {
+   "n": 864,
+   "coverage_90": 0.978,
+   "coverage_ci": [
+    0.968,
+    0.987
+   ],
+   "median_width": 20.0,
+   "lower_bound_zero_share": 0.941
+  }
+ },
+ "config": {
+  "frozen_at": "2026-11-04",
+  "rule": "prereg \u00a74: B plus every family whose addition lowers dev out-of-fold log loss; logit unless HGB beats it by >= 0.02 log loss",
+  "families": [
+   "B",
+   "T",
+   "M",
+   "R"
+  ],
+  "kind": "logit",
+  "dev_oof": {
+   "auc": 0.826,
+   "logloss": 0.4861,
+   "slope": 1.051,
+   "hgb_logloss": 0.5247
+  },
+  "secondary": [
+   [
+    "B",
+    "T",
+    "M"
+   ]
+  ],
+  "secondary_why": "B+T+M needs no fresh agy read (R's strongest terms are the agy ones), so it is the variant that could score all 71,228 books; labelled, never the bar model"
+ }
+}

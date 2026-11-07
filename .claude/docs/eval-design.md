@@ -43,7 +43,7 @@ Every score row (§5) carries `measure`, one of:
 | `agreement` | **another engine's** output on the same leaf | "agreement with X" only | errors both engines share; **recitation** (engines agree on memorised text, #5093) |
 | `stability` | the **same engine's** repeat read | "repeat stability" only | anything systematic (a model that always misreads ſ as f is perfectly stable) |
 | `preference` | a **blind judge's** pairwise verdict (translation, §8) | "preferred by judge J on task T" | fidelity to source unless the judge packet is source-grounded (#5104) |
-| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`) |
+| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`). **judge@2** (`translation-corpus-audit/IMAGE-ADDENDUM.md`, from wave 2, #5274) is also shown the page image and records an OCR misreading as its own field, so a wrong leaf or a misread is no longer invisible to it; its score is still fidelity to the transcription, and a misread it misses is still missed. Quote which version a number comes from |
 | `judged_vs_reference` | **two blind judges'** rating of a candidate against the source text, with a **published human translation** of the same passage as a guide to meaning (`scripts/eval/translation-vs-reference/`, #5695) | "fidelity judged against a human reference (judge J)" | the page image, unless the source text was corrected by eye: scored against the OCR the same output reads 3.05, against the corrected text 2.53 (T4). The reference's own choices: where ours and the reference differ, the judge sided with ours 75 times and the reference 72 (Latin). Works nobody translated: every track expects a lower corpus mean. Its ceiling: a published translation judged against its own page scores 4.33, not 5 (#5762) |
 
 Rules:
@@ -69,7 +69,7 @@ Added 2026-10-01. A reader asks one thing of a served page: *does this English s
 | Link | Typical failure | Accuracy (reference) | Screen (agreement, stability) | Judged | Human reader of the original |
 |---|---|---|---|---|---|
 | 1. Leaf: the image shown is the leaf transcribed | wrong leaf (#4790, #5311) | none | three-read signature, 7 of 7 (#5313) | **blind**: the judge sees no image | yes |
-| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/DECISIONS.md`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
+| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/estimator/router-table/`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
 | 3. Translation: the English says what the text says | omission, invention, inversion | Tibetan vs 84000 only (§8) | none | corpus audit + monthly rerun (#5274); quality round 1 (#5438) | yes |
 
 What follows from the table:
@@ -244,7 +244,7 @@ A run is **done** when all four are true, and the EXPERIMENTS entry links each:
 2. `scripts/eval/experiments/<date>-<slug>.md` exists — one new file per entry, in the existing format (date · question · design · result · replicated? · artifact); `EXPERIMENTS.md` is generated from these on `main` and is never edited in a PR (#5436) — plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
 3. The dashboard JSON is regenerated (`benchmark-dashboard-data.mjs`) and the cell shows the run.
 4. The issue has the result posted, with the cell id.
-5. `scripts/eval/DECISIONS.md` (the ledger: one row per stratum × question — evidence, rule output, who decided and when, applied-in PR, re-measure trigger) has the row added or updated in the same PR. `EXPERIMENTS.md` is what was measured; `DECISIONS.md` is what we now do.
+5. A result that bears on a route reaches the router table as evidence (`rules.json`, `.claude/docs/routing.md`). `EXPERIMENTS.md` is what was measured; the table is what we now do. `scripts/eval/DECISIONS.md` is history and takes no new rows.
 
 Checks (follow-up issues; design here):
 - **Stranded-results check** (weekly, Hetzner or Actions): for every worktree in `.claude/worktrees/`, untracked or unpushed files under `scripts/eval/results/` or `scripts/eval/store/` older than 3 days → one issue comment on the run's issue, or a new `eval` issue if none. Two paid studies sat two weeks in dead worktrees.
@@ -269,7 +269,7 @@ A fix is **done** when the next review window's rate for that class falls, not w
 1. A cell reaches the grade its decision needs (§3.3) with a paired result (§7) and its five worst pages read by eye (#4735 rule 5).
 2. The session opens an issue **proposing** the change (routing constant, specialist lane, withholding rule), quoting the cell id, the paired table, the noise floor and the cost delta per year. It does **not** change `LATIN_SCRIPT_LANGUAGES` (`scripts/lib/translate-core.mjs`, imported by `scripts/lib/ocr-routing.mjs`, parity pinned by `tests/unit/translate-core-parity.test.ts`), an allowlist, or a lane.
 3. **Derek signs off** on any spend-affecting or reader-facing change (a comment on that issue). Settled decisions (Syriac → Kraken lane, #4883; translation non-Latin → lite, #4762) are not reopened by a new cell unless the cell is decision-grade and the issue says what changed.
-4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too. The ledger row in `scripts/eval/DECISIONS.md` moves from PENDING to DECIDED with the date and the PR.
+4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too. A route changes by the router table, not by a ledger row (`.claude/docs/routing.md`).
 5. After the change, the stability loop watches the affected stratum for 30 days (a free signal; not a quality claim).
 6. The store is never read by a production lane; a job that wants to act on eval evidence goes through steps 2–4. Writing to a store a job reads is actuation (`ingest_is_actuation`).
 
@@ -357,6 +357,32 @@ Encoded as `DECISION_CARDS` and `cardVerdict()` in `scripts/eval/lib/routing-rul
 | Signs | Derek (reader-facing) | Derek (reader-facing) |
 
 The 10-book floor, the "under 4" line and the 0.65 bound are **judgement calls**. A hold is cheap to be wrong about (pages wait), so it may start below directional; a flag changes what readers see, so it may not.
+
+### 10.3 Decide a route on defects per 1,000 words, against the live route (2026-10-30, #6740)
+
+A page counted accept/reject treats one misleading numeral and ten as the same, and ignores how long the page is. On 2026-10-27 a Tibetan corrector raised page identity while it turned "seventh" into "nine". So:
+
+1. **The rule is severity-weighted defect rates; accept k/n is a summary.**
+   - Count every defect the judge tags, per 1,000 words of the text it read: cosmetic, misleads, wrong_text.
+   - Compare within a script only: a Han character or a Tibetan syllable counts as one word.
+   - Tools: `scripts/eval/route-judge-6740/defect-rate.mjs` → `defect-rate.py`. The router table shows the rates beside k/n (`router-table/defect-rates.json`).
+   - A new OCR or translation record names its rates file in `defect_rates:` (enforced by `experiments-lint.mjs`).
+2. **Weights:**
+   - **Cosmetic = 0.**
+   - **Misleads is a cost, not a gate.** One slip on a page is not a failed page.
+   - **Wrong text is a gate.**
+3. **The bar is the live route.** That is the route the table runs now, or the stored text readers already see. It is not perfection, and it is not Opus. A candidate passes when its wrong text is no worse than the live route's, within a stated margin (0.15 per 1,000 words in #6740). A cell with no text yet (scans only) needs an absolute ceiling instead.
+4. **Calibrate the labels before weighting.** Re-read a sample of the tagged defects with a fresh call that sees only the quote and the leaf.
+   - In #6740, 80 were re-read: 32 of 40 wrong_text and 25 of 40 misleads held up as real errors.
+   - Severity moved both ways at the misleads/wrong_text line: 17 of the 40 misleads were called wrong_text.
+   - So deflate the counts by the confirmed share, and never treat one tag as exact.
+5. **Every judge run has a positive control.** Planted errors must come back quoted in a defect. In #6740:
+   - Latin, German and French: 158 of 160 planted errors were quoted.
+   - Tibetan: 16 of 20 were quoted, half of them as only cosmetic. There the judge's severities are a floor, and the Derge reference decides.
+6. **QA a correction pass as span diffs, not page scores.** A defect on the corrected text whose quote is not in the draft was introduced by the correction. Report introduced and removed per 1,000 words beside the page-level verdict. In #6740:
+   - agy Flash-low introduced 1.2 per 1,000 words on Latin print, most of them O6 word swaps.
+   - Opus introduced none on Latin print and 0.7 per 1,000 words on German Flash-Lite drafts.
+7. **Report quality the `quality-statements.md` way:** the measured rate and the measured errors, with n in books and the date. Neither harsh nor sugarcoated.
 
 ## 11. Gap table (measured 2026-09-25)
 
